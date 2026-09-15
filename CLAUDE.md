@@ -118,8 +118,8 @@ Les sessions successives emploient ces mots, et seulement ceux-là.
   phase 15).
 - **porte** — condition explicite de passage d'une phase à la suivante. Binaire.
 - **hybride** — un signal conditionné à un régime.
-- **nœud**, **moule** — vocabulaire du moteur RSL. Voir
-  `reference/rsl-squelette-v1.json`.
+- **nœud**, **moule** — vocabulaire du moteur tiers, utile pour le lire, sans
+  autorité sur nos propres schémas. Voir `reference/rsl-squelette-v1.json`.
 
 ---
 
@@ -148,16 +148,20 @@ reference/     documents externes en lecture seule, datés.
 
 **Langue.** Prose et documents en français. Code, noms de champs et clés de
 schéma en anglais, sans exception — y compris dans le catalogue YAML et les
-fiches JSON. **Une seule dérogation :** les champs imposés par RSL gardent le nom
-que RSL leur donne (`close_stamp`, `granularity_minutes`,
-`publication_lag_minutes`, `known_in_advance`, `root`, …), y compris quand ce nom
-est irrégulier.
+fiches JSON. Les clés sont choisies pour elles-mêmes, claires et régulières :
+**aucun vocabulaire externe ne s'impose au nôtre**, faute de contrainte
+d'interopérabilité (voir `decisions/DECISION-00-moteur-externe.md`).
 
-**Le moteur de backtest est externe** à ce dépôt. Son mode d'attache — sous-module,
-dépendance installée, copie — sera tranché en phase 10 par une décision écrite.
-`reference/rsl-squelette-v1.json` n'est pas le moteur : c'est une photographie
-datée de son vocabulaire, en lecture seule, que le catalogue doit respecter au
-mot près.
+**Le moteur de backtest est un composant tiers, et nous ne l'avons pas encore.**
+Il est attendu ; d'ici là, aucune ligne de code de ce projet n'en dépend, et son
+mode d'attache — sous-module, dépendance installée, reprise du code — sera
+tranché en phase 10 par une décision écrite. S'il n'arrive pas, la phase 10
+devient « construire un moteur ».
+`reference/rsl-squelette-v1.json` n'est pas ce moteur et n'en est pas
+l'auto-description : c'est la référence de conception d'un moteur tiers, datée et
+en lecture seule. Les chiffres qu'elle contient sont les constats d'un tiers, sur
+ses données : ils disent quoi vérifier, jamais ce qui est vrai ici. Voir
+`reference/README.md`.
 
 **Données.** Elles vivent hors du dépôt, à l'emplacement donné par la variable
 d'environnement `RSL_DATA_DIR` (voir `.env`, non versionné ; `.env.example` l'est).

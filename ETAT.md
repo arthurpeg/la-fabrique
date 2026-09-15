@@ -3,6 +3,9 @@
 **Phase courante :** 01 — la décision données (pas encore commencée)
 **Date de dernière mise à jour :** 2026-09-15
 **Dernière porte franchie :** aucune. Le projet vient d'être amorcé.
+**Décision la plus récente :** `decisions/DECISION-00-moteur-externe.md` — le
+moteur de backtest est un composant tiers, pas encore en main ; rien n'en dépend
+avant la phase 10.
 
 > Ce fichier est lu en premier par chaque session et mis à jour en dernier.
 > Les phases ci-dessous suivent **l'ordre de construction** (le juge avant
@@ -15,7 +18,7 @@
 
 | # | Phase | Porte | État |
 |---|---|---|---|
-| 01 | La décision données | Un fichier dans `decisions/` fixe fournisseur, univers, période, granularité, et chiffre l'adéquation au vocabulaire RSL. | à faire |
+| 01 | La décision données | Un fichier dans `decisions/` fixe fournisseur, univers, période, granularité, et chiffre l'adéquation aux besoins du projet. Rien ne la bloque : elle se prend sur nos besoins, pas sur le format d'un moteur tiers (D00). | à faire |
 | 02 | Le Panel point-in-time | Un panel se charge, est reproductible, et aucune ligne n'est visible avant son `close_stamp` + `publication_lag_minutes`. | à faire |
 | 03 | Le harnais d'IC calibré à la main | Le harnais reproduit à la main, sur un cas connu, un IC vérifié indépendamment. Figé et versionné à partir de là. | à faire |
 | 04 | Le registre et le verrou du holdout | Aucun chemin de code ne produit un IC sans écrire au registre ; la tranche `holdout` est inaccessible par construction. | à faire |
@@ -34,7 +37,7 @@
 | # | Phase | Porte | État |
 |---|---|---|---|
 | 09 | Premier passage complet sur 30 à 50 papiers | La chaîne tourne de bout en bout ; le registre compte tous les tests ; un rapport d'IC existe pour chaque signal. | à faire |
-| 10 | Une stratégie, un backtest | Un signal survivant devient une stratégie backtestée sur le moteur RSL. Une décision écrite fixe l'attache du moteur. | à faire |
+| 10 | Une stratégie, un backtest | Un signal survivant devient une stratégie backtestée. Une décision écrite fixe l'attache du moteur tiers — ou, s'il n'est pas arrivé, requalifie la phase en « construire un moteur ». | à faire |
 
 ## Acte IV — Étendre par risque croissant
 
