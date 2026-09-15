@@ -35,7 +35,8 @@ import pandas as pd
 
 from _common import OUT, data_dir, series_index
 
-# Arbitrary, fixed, inside the proposed research slice. Arbitrary is the point:
+# Arbitrary, fixed, inside the pool slice (2016-2023, see DECISION-01).
+# Arbitrary is the point:
 # nothing about this date is special, so nothing can be tuned to it.
 DEFAULT_ASOF = "2021-06-15 20:00:00+00:00"
 BASELINE = OUT / "pit_fingerprints.json"
