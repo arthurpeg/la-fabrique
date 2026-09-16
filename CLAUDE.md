@@ -140,7 +140,56 @@ signals/       les implémentations de signaux, une par signal.
 registry/      SCHEMA.md et tests.jsonl. Append-only. Irremplaçable.
 scripts/       outils ponctuels : portes, inventaires, vérifications.
 reference/     documents externes en lecture seule, datés.
+wiki/          la mémoire entre sessions, tenue par l'agent. Dérivée, sans
+               autorité. Voir « Wiki » ci-dessous et wiki/SCHEMA.md.
 ```
+
+---
+
+## Wiki
+
+`wiki/` est la mémoire du projet entre les sessions : un wiki en markdown que
+**l'agent écrit et tient lui-même**. Il existe parce qu'une session arrive froide
+et redécouvre sinon ce qui a déjà été payé. Établi par
+`decisions/DECISION-02-wiki.md` ; ses conventions internes sont dans
+`wiki/SCHEMA.md`.
+
+### Les deux règles permanentes
+
+**Avant de commencer un travail de fond** — lire `wiki/index.md` **et**
+`wiki/Failed Ideas/ledger.md`. Le second en entier : c'est le registre des idées
+déjà essayées et abandonnées, avec la raison. Il est là pour t'empêcher de
+repayer un cul-de-sac.
+
+**Avant de finir** — mettre à jour la ou les pages concernées, **ajouter une
+ligne datée à `wiki/log.md`**, et **ajouter une ligne à
+`wiki/Failed Ideas/ledger.md` pour tout abandon**, avec sa raison.
+
+Ces deux règles **s'ajoutent** à la séquence de démarrage et de fin de session
+ci-dessous ; elles n'en remplacent aucune étape.
+
+### Le wiki n'a aucune autorité
+
+Il **lie** vers la source — données, code, sorties, décisions, registre — et n'en
+recopie jamais le contenu comme source de vérité. Si une page et sa source se
+contredisent, **la source gagne** et la page est corrigée.
+
+En particulier, et cela découle des invariants III et IV :
+
+- **aucun IC, t-stat ou Sharpe n'est écrit dans le wiki** autrement que recopié
+  d'un rapport d'IC officiel, avec son `test_id`. Une page de wiki n'est jamais
+  un chemin de production d'IC ;
+- **une page de wiki ne vaut pas hypothèse pré-enregistrée.** Elle la référence ;
+- `wiki/log.md` est **append-only**, comme `registry/tests.jsonl` et `LECONS.md` ;
+- `wiki/hot.md` est **généré** par `wiki/update_hot.py` : ne pas l'éditer, hors
+  du bloc « Prochaines actions » prévu pour ça ;
+- `wiki/lessons.md` **synthétise** `LECONS.md`, qui reste seul autoritatif.
+
+Le lint mécanique se passe par `python wiki/update_hot.py --lint`.
+
+**Obsidian réécrit `.obsidian/graph.json` pendant qu'il tourne.** Ne modifier ce
+fichier que **fenêtre fermée**, sans quoi la modification est perdue au prochain
+enregistrement d'Obsidian.
 
 ---
 
@@ -192,6 +241,8 @@ trace écrite d'un choix, elle a le droit — et le devoir — de le rouvrir.
 
 Tu arrives froid. Tu ne sais rien de ce qui précède. Dans l'ordre :
 
+0. Lis `wiki/index.md`, puis `wiki/Failed Ideas/ledger.md` **en entier**, puis
+   `wiki/hot.md` pour l'état courant. Voir « Wiki » ci-dessus.
 1. Lis `ETAT.md`. Il te dit la phase courante, la dernière porte franchie, et la
    prochaine action.
 2. Lis `LECONS.md` en entier. Il est court, et il est là pour t'éviter de refaire
@@ -204,4 +255,6 @@ porte est ouverte.** Si `ETAT.md` et ce que tu lis dans le dépôt se contredise
 arrête-toi et signale la contradiction — ne tranche pas seul.
 
 En fin de session : mets `ETAT.md` à jour, et ajoute une entrée à `LECONS.md` si
-tu as appris quelque chose qui vaut d'être payé une seule fois.
+tu as appris quelque chose qui vaut d'être payé une seule fois. Puis mets à jour
+les pages de `wiki/` que tu as touchées, ajoute une ligne à `wiki/log.md`, et une
+ligne au registre des idées abandonnées si tu as abandonné quelque chose.

@@ -1,11 +1,14 @@
 # ÉTAT
 
 **Phase courante :** 02 — le Panel point-in-time (pas encore commencée)
-**Date de dernière mise à jour :** 2026-09-15
+**Date de dernière mise à jour :** 2026-09-16
 **Dernière porte franchie :** **01**, le 2026-09-15 — `scripts/gate_01_pit.py`
 passe, empreintes de préfixe déposées dans `scripts/out/pit_fingerprints.json`.
-**Décision la plus récente :** `decisions/DECISION-01-univers-et-donnees.md` —
-univers, grille actif × séance, métrique, tranches, traitement des roulements.
+**Décision la plus récente :** `decisions/DECISION-02-wiki.md` — un wiki tenu par
+l'agent sous `wiki/`, dérivé et sans autorité. N'affecte aucune porte.
+**Décision pertinente pour la phase courante :**
+`decisions/DECISION-01-univers-et-donnees.md` — univers, grille actif × séance,
+métrique, tranches, traitement des roulements.
 
 > Ce fichier est lu en premier par chaque session et mis à jour en dernier.
 > Les phases ci-dessous suivent **l'ordre de construction** (le juge avant
