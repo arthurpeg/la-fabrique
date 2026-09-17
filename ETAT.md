@@ -63,7 +63,7 @@ dont les types et valeurs permises se fixent maintenant.
 | Attendu | De qui | Bloque |
 |---|---|---|
 | Moteur de backtest | tiers | phase 10 |
-| Frais CME / EUREX, multiplicateurs de contrat | barèmes publics, à dépouiller | calibration du harnais, phase 03 |
+| Frais CME / EUREX, multiplicateurs de contrat | **nous** — barèmes publics, à dépouiller | la complétude du coût : tant qu'ils sont `null`, `harness/costs.py` ne rend qu'un **plancher** étiqueté, donc tout IC net est un **majorant de performance** (phase 10, et toute lecture nette d'ici là) |
 
 ## Prochaine action
 

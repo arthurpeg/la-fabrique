@@ -29,9 +29,15 @@ sources: [CLAUDE.md, decisions/DECISION-01-univers-et-donnees.md, ETAT.md]
 | Comment les données se lisent | [[concepts/panel]] · `panel/` · `D03` |
 | Le découpage en tranches | `D01` §5 · [[concepts/tranche]] |
 
-> **Sur cette machine** (poste de travail, 2026-09-17) : `RSL_DATA_DIR` vaut
-> `C:\Users\Mathis\Desktop\Cotations`, hors OneDrive. Une seconde copie
-> existe sous `C:\Users\Mathis\Cotations` : porte 01 rejouée sur les deux,
-> empreintes identiques à la ligne de base — **elles ne divergent pas**. C'est
-> celle du Bureau qui fait foi. `.env` n'est pas versionné : une autre machine
-> redéclare son propre chemin.
+> **Le projet tourne sur deux postes**, et `.env` n'est pas versionné : chacun
+> déclare son propre `RSL_DATA_DIR`. Ne pas lire ce qui suit comme si une seule
+> machine existait.
+>
+> | Poste | `RSL_DATA_DIR` | Vérifié le |
+> |---|---|---|
+> | Mathis | `C:\Users\Mathis\Desktop\Cotations`, hors OneDrive — une seconde copie sous `C:\Users\Mathis\Cotations`, empreintes identiques ; celle du Bureau fait foi | 2026-09-17 |
+> | Arthur | `D:\quant-data\Cotations` | 2026-09-17 — portes 01, 02 et 03 rejouées, mêmes empreintes et mêmes comptes |
+>
+> Les copies **ne divergent pas** : mêmes empreintes à la ligne de base des deux
+> côtés. Le chemin n'est jamais en dur dans le code — `panel/paths.py` le lit de
+> l'environnement ou de `.env`.
