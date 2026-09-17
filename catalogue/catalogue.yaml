@@ -493,8 +493,18 @@ todos:
   - id: fees
     field: instruments[*].fee_per_contract_usd
     blocks: la complétude du coût -- sans eux le coût reste un plancher étiqueté (harness/costs.py)
-    owed_by: barème CME (Non-Member Fee Finder) et liste de prix EUREX
-    note: jamais deviné ; la part fixe pèse dix fois plus lourd en micro (D01 §7)
+    owed_by: >-
+      Lucid Trading (prop firm) — son barème s'applique, pas la grille
+      membre/non-membre du CME. Relevé le 2026-09-17 sur
+      support.lucidtrading.com/en/articles/11508978 : 1,75 $/side sur NQ, ES et
+      YM, 2,30 sur GC, 2,00 sur CL, 2,40 sur les quatre devises ; micros à 0,50
+      (0,80 sur MGC). NON DÉPOSÉ ici : la page ne dit pas si ces montants sont
+      all-in ou si exchange/clearing/NFA s'ajoutent, et la conversion en bp
+      exige d'abord les multiplicateurs.
+    note: >-
+      jamais deviné ; la part fixe pèse dix fois plus lourd en micro (D01 §7), et
+      les contrats effectivement tradés seront des MICROS quand les séries
+      évaluées sont celles des minis — l'écart devra être écrit avant la phase 10.
 
 sources:
   manifest: $RSL_DATA_DIR/manifeste.json

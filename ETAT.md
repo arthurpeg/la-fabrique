@@ -1,18 +1,21 @@
 # ÉTAT
 
-**Phase courante :** 04 — le registre et le verrou du holdout (pas encore commencée)
+**Phase courante :** 05 — API de signal, sandbox, test de causalité (pas encore commencée)
 **Date de dernière mise à jour :** 2026-09-17
-**Dernière porte franchie :** **03**, le 2026-09-17 — `scripts/gate_03_harness.py`
-passe ses 41 vérifications, sur les 25 cellules retenues. **Le harnais est figé à partir d'ici** : il ne change
-que par une décision écrite, et tous les résultats antérieurs seraient alors
-réputés périmés.
-**Décision la plus récente :** `decisions/DECISION-04-harnais-ic.md` — IC de
-Spearman en série temporelle, poolé par observations, `t` déflaté deux fois,
-coût rendu comme plancher étiqueté, écriture au registre à chaque IC.
-**Décision pertinente pour la phase courante :** `DECISION-04` §4 — l'invariant
-III prend déjà effet (chaque IC écrit une ligne) ; la phase 04 doit en rendre le
-**contournement impossible** et verrouiller le holdout. Et `registry/SCHEMA.md`,
-dont les types et valeurs permises se fixent maintenant.
+**Dernière porte franchie :** **04**, le 2026-09-17 — `scripts/gate_04_registry.py`
+passe ses 1 484 vérifications. Le registre est incontournable (six contournements
+essayés, six refusés), le holdout est scellé derrière un jeton qui s'écrit avant
+de s'obtenir, et `registry/SCHEMA.md` est appliqué à l'écriture. **Fin de
+l'Acte I.**
+**Décision la plus récente :** `decisions/DECISION-05-registre-incontournable.md`
+— le nombre n'existe pas avant sa ligne : `_pool` et `_deflated_t` sont privées,
+un IC poolé exige un jeton délivré par le registre, et la ligne est écrite par la
+fonction qui produit la valeur. Le harnais a changé, donc **tous les résultats
+antérieurs sont périmés** — coût réel nul, `counted_tests()` valait 0.
+**Décision pertinente pour la phase courante :** `D05` § Ce qui reste ouvert —
+l'empreinte du **code de signal**, distincte de celle du harnais, se fixe en
+phase 05 avec l'API de signal. Et `D03`, pour ce que le Panel accepte de montrer
+à un signal.
 
 > Ce fichier est lu en premier par chaque session et mis à jour en dernier.
 > Les phases ci-dessous suivent **l'ordre de construction** (le juge avant
@@ -28,7 +31,7 @@ dont les types et valeurs permises se fixent maintenant.
 | 01 | La décision données | `decisions/DECISION-01` fixe univers, grille, métrique, tranches ; `gate_01_pit.py` passe. | **franchie 2026-09-15** |
 | 02 | Le Panel point-in-time | Un panel se charge, est reproductible ; aucune ligne n'est visible avant son horodatage ; la série ajustée à rebours n'utilise que les recollements ≤ t (D01 §6). | **franchie 2026-09-17** — `gate_02_panel.py`, 103 vérifications sur les 9 instruments |
 | 03 | Le harnais d'IC calibré à la main | Le harnais reproduit à la main, sur un cas connu, un IC vérifié indépendamment. IC en série temporelle poolé, statistique robuste à la corrélation transversale, modèle de coûts par cellule (D01 §2 et §7). Figé et versionné à partir de là. | **franchie 2026-09-17** — `gate_03_harness.py`, 41 vérifications |
-| 04 | Le registre et le verrou du holdout | Aucun chemin de code ne produit un IC sans écrire au registre ; la tranche `holdout` (2024-01-01 → 2026-08-28) est inaccessible par construction. | à faire |
+| 04 | Le registre et le verrou du holdout | Aucun chemin de code ne produit un IC sans écrire au registre ; la tranche `holdout` (2024-01-01 → 2026-08-28) est inaccessible par construction. | **franchie 2026-09-17** — `gate_04_registry.py`, 1 484 vérifications, `D05` |
 
 ## Acte II — Automatiser le jugement
 
@@ -67,22 +70,32 @@ dont les types et valeurs permises se fixent maintenant.
 
 ## Prochaine action
 
-**Phase 04 — le registre et le verrou du holdout.** Petite à écrire, impossible à
-rattraper.
+**Phase 05 — API de signal, sandbox, test de causalité.** L'Acte I est clos : le
+juge existe, il est calibré, et on ne peut plus l'éviter. L'Acte II commence, et
+c'est là que le premier agent entrera en scène — mais pas encore ici.
 
-Ce qui existe déjà : `harness/registry.py` écrit une ligne à chaque IC, et
-`counted_tests()` distingue les tests d'hypothèse des calibrations (`D04` §4).
-Trois lignes de calibration y figurent, `hypothesis_ref: null`, hors dénominateur.
+Ce qui existe déjà : le Panel refuse structurellement le futur (porte 02), et
+`evaluate()` reçoit des **scores**, pas un signal — le harnais est délibérément
+ignorant de ce qu'est un signal, et rien dans `D04` ne préjuge de cette interface.
 
-Ce que la porte exige **en plus**, et qui n'existe pas :
+Ce que la porte 05 exige, et qui n'existe pas :
 
-1. **Qu'aucun chemin de code ne puisse produire un IC sans écrire.** Aujourd'hui
-   c'est vrai par construction du seul point d'entrée, mais rien ne l'empêche
-   d'être contourné en important `harness.metric` directement. La porte demande
-   qu'on **essaie délibérément** et qu'on n'y arrive pas.
-2. **Que le holdout soit inaccessible depuis le chemin de recherche.** Le Panel
-   lève déjà `HoldoutLocked` et `SliceExceeded` ; il manque le jeton de descellage
-   et la preuve qu'il n'existe pas de détour.
-3. **Que `registry/SCHEMA.md` fixe les types, les valeurs permises et la
-   validation**, comme il annonce le faire en phase 04. Le champ `data_slice` y
-   nomme encore trois tranches quand `D01` §5 n'en a laissé que deux.
+1. **Le contrat de la fonction de signal.** Ce qu'elle reçoit (un Panel à une
+   date, rien d'autre), ce qu'elle rend, et son empreinte propre — `D05` laisse
+   ouvert le `code_hash` du **code de signal**, distinct de celui du harnais.
+   C'est ici qu'il se fixe.
+2. **Le scan AST et l'exécution isolée.** `gate_04_registry.py` §6 contient déjà
+   le squelette d'un scan syntaxique du dépôt ; la sandbox de signal est un
+   travail voisin, en plus strict.
+3. **Le test de causalité** : recalculer le signal en ne lui donnant que le passé,
+   et **attraper un look-ahead injecté exprès**. Un test qui n'a jamais rien
+   attrapé n'est pas un test.
+
+**Un point à trancher avant, et il n'est pas technique.** Le plan de montage fait
+des « cinq signaux codés à la main dont tu connais déjà la réponse » le banc
+d'essai de cette porte — et des portes 06 et 08. `signals/` est vide et ces
+signaux n'existent pas (décision de l'opérateur, 2026-09-17). Il faut donc soit
+coder deux à cinq signaux de référence intraday (`corpus/AMORCE.md`, entrées 1, 2
+et 6 — Gao 2018, Baltussen 2021, Wen 2021), soit une décision écrite qui
+redéfinit les portes 05, 06 et 08 sans vérité terrain. **Ne pas ouvrir la phase 05
+avant d'avoir tranché ça** : c'est le banc d'essai qui définit la porte.

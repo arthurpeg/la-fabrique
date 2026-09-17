@@ -19,7 +19,7 @@ import pandas as pd
 
 from harness import registry
 from harness.costs import costs_for
-from harness.metric import CellIC, cell_ic, deflated_t, forward_returns, pool
+from harness.metric import CellIC, cell_ic, forward_returns, record_pooled
 from harness.report import ICReport, effective_breadth
 from panel.panel import Panel
 from panel.sessions import session_date, window_labels
@@ -58,6 +58,17 @@ def evaluate(
             f"The grid holds {len(retained)} cells (D01 3)."
         )
 
+    # The ticket is taken BEFORE the first number is touched. What the test is
+    # about -- signal, hypothesis, stage, slice, horizon -- has to be nameable
+    # before the result exists, or it is not an hypothesis (invariant IV, D05).
+    ticket = registry.open_test(
+        signal_id=signal_id,
+        hypothesis_ref=hypothesis_ref,
+        stage=stage,
+        data_slice=panel.slice.name,
+        horizon=str(horizon),
+    )
+
     cells: list[CellIC] = []
     for root in sorted({root for root, _ in scores}):
         adjusted = panel.adjusted(root, columns=["close"])["close"]
@@ -70,25 +81,22 @@ def evaluate(
                 continue
             returns = forward_returns(close, sessions[mask], labels[mask], bars)
             aligned = scores[(root, window)].reindex(close.index)
-            measured = cell_ic(aligned, returns, close.index, root, window, bars)
+            measured = cell_ic(aligned, returns, close.index, root, window, bars, ticket)
             if measured is not None:
                 cells.append(measured)
 
-    ic, observations = pool(cells)
     instruments = len(panel.universe())
     breadth = effective_breadth()
-    t = deflated_t(ic, observations, bars, instruments, breadth)
-
-    test_id = registry.record_ic(
-        ic=ic,
-        t_stat=t["final"],
-        horizon=str(horizon),
-        data_slice=panel.slice.name,
-        signal_id=signal_id,
-        hypothesis_ref=hypothesis_ref,
-        stage=stage,
-        extra={"asof": str(panel.asof), "cells": len(cells), "observations": observations},
+    settled = record_pooled(
+        cells,
+        ticket,
+        horizon_bars=bars,
+        instruments=instruments,
+        effective_breadth=breadth,
+        extra={"asof": str(panel.asof), "cells": len(cells)},
     )
+    ic, observations, t = settled["ic"], settled["observations"], settled["t"]
+    test_id = settled["test_id"]
 
     return ICReport(
         test_id=test_id,

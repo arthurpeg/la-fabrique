@@ -41,9 +41,12 @@ Une page par phase de l'**ordre de construction** (`ETAT.md`, phases 01→15).
 - [[phases/phase-01-decision-donnees|Phase 01 — La décision données]] — univers, grille, métrique, tranches ; `franchie`
 - [[phases/phase-02-panel-pit|Phase 02 — Le Panel point-in-time]] — l'impossibilité du look-ahead se fabrique ici ; `franchie` 2026-09-17
 - [[phases/phase-03-harnais-ic|Phase 03 — Le harnais d'IC calibré]] — le juge, **figé** depuis le 2026-09-17 ; `franchie`
-- [[phases/phase-04-registre-et-holdout|Phase 04 — Le registre et le verrou du holdout]] — invariants III et V fabriqués, pas promis ; **phase courante**, `a-faire`
+- [[phases/phase-04-registre-et-holdout|Phase 04 — Le registre et le verrou du holdout]] — invariants III et V fabriqués, pas promis ; `franchie` 2026-09-17, **fin de l'Acte I**
+- Phase 05 — API de signal, sandbox, test de causalité — **phase courante**,
+  `a-faire`. Pas encore de page : un point non technique doit être tranché avant
+  de l'ouvrir (le banc d'essai — voir `ETAT.md` § Prochaine action).
 
-> Les phases 05 à 15 n'ont pas encore de page. On les crée en s'en approchant,
+> Les phases 06 à 15 n'ont pas encore de page. On les crée en s'en approchant,
 > pas d'avance : une page de phase lointaine est une page qui vieillit sans être
 > lue.
 

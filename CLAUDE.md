@@ -113,9 +113,11 @@ Les sessions successives emploient ces mots, et seulement ceux-là.
 - **rapport d'IC** — la sortie officielle du harnais : IC, t-stat, décomposition,
   contrôles. Seule source d'IC du projet.
 - **registre** — `registry/tests.jsonl`, append-only, une ligne par IC calculé.
-- **tranche** — découpe temporelle des données : `research` (on y travaille),
-  `validation` (on y confirme, parcimonieusement), `holdout` (scellé jusqu'à la
-  phase 15).
+- **tranche** — découpe temporelle des données : `pool` (recherche et validation
+  réunies, 2016-01-03 → 2023-12-31, travaillée en walk-forward purgé) et
+  `holdout` (2024-01-01 → 2026-08-28, scellé jusqu'à la phase 15). **Deux, pas
+  trois** : le bloc `validation` contigu a été abandonné par `D01` §5, deux ans
+  d'un unique régime baissier ne validant qu'un régime.
 - **porte** — condition explicite de passage d'une phase à la suivante. Binaire.
 - **hybride** — un signal conditionné à un régime.
 - **nœud**, **moule** — vocabulaire du moteur tiers, utile pour le lire, sans

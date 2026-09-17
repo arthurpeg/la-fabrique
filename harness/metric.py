@@ -24,6 +24,12 @@ corrections are applied by the code rather than recommended to the reader:
   cross-section  nine instruments hold ~4.2 independent bets, so pooling them
                  buys less than it appears: a division by sqrt(9 / 4.22), the
                  factor D01 2 names, computed from the phase-01 measurement.
+
+AND NOTHING HERE HANDS OUT A NUMBER ON ITS OWN. Since phase 04 the pooling and
+the deflation are private (`_pool`, `_deflated_t`); the only public way to a
+pooled IC is `record_pooled`, which demands a ticket and writes the registry line
+before it returns the value (D05). Importing this module is no longer a way
+around `evaluate`.
 """
 
 from __future__ import annotations
@@ -33,6 +39,8 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 from scipy import stats
+
+from harness.registry import RegistryBypass, Ticket, settle
 
 
 @dataclass(frozen=True)
@@ -85,8 +93,19 @@ def realised_horizon(
 
 
 def cell_ic(scores: pd.Series, returns: pd.Series, index: pd.DatetimeIndex,
-            root: str, window: str, horizon_bars: int) -> CellIC | None:
-    """The Spearman IC of one cell, or None when there is nothing to measure."""
+            root: str, window: str, horizon_bars: int, ticket: Ticket) -> CellIC | None:
+    """The Spearman IC of one cell, or None when there is nothing to measure.
+
+    A cell IC is a diagnostic and never a test on its own (D01 4) -- but it is
+    still an IC, so it is still unreachable without a live ticket. The ticket is
+    not spent here: one ticket buys one POOLED number and the line that records
+    it, whatever the number of cells that went into it.
+    """
+    if not isinstance(ticket, Ticket) or ticket.spent:
+        raise RegistryBypass(
+            "cell_ic needs a live Ticket from registry.open_test(). An IC that "
+            "nothing will record is an IC that must not be computed (invariant III)."
+        )
     frame = pd.concat([scores.rename("score"), returns.rename("ret")], axis=1).dropna()
     frame = frame[np.isfinite(frame["score"]) & np.isfinite(frame["ret"])]
     if len(frame) < 30 or frame["score"].nunique() < 2 or frame["ret"].nunique() < 2:
@@ -103,7 +122,7 @@ def cell_ic(scores: pd.Series, returns: pd.Series, index: pd.DatetimeIndex,
     )
 
 
-def pool(cells: list[CellIC]) -> tuple[float, int]:
+def _pool(cells: list[CellIC]) -> tuple[float, int]:
     """The pooled IC: cells weighted by their observations, and the total count.
 
     A plain average would give `6B x EUROPE` the weight of `NQ x US`. The pooled
@@ -116,8 +135,8 @@ def pool(cells: list[CellIC]) -> tuple[float, int]:
     return float((values * weights).sum() / weights.sum()), int(weights.sum())
 
 
-def deflated_t(ic: float, observations: int, horizon_bars: int,
-               instruments: int, effective_breadth: float) -> dict[str, float]:
+def _deflated_t(ic: float, observations: int, horizon_bars: int,
+                instruments: int, effective_breadth: float) -> dict[str, float]:
     """The naive t, then the same t once the two dependencies are paid for."""
     if observations < 3 or not np.isfinite(ic) or abs(ic) >= 1:
         return {"naive": float("nan"), "overlap": float("nan"), "final": float("nan"),
@@ -133,3 +152,31 @@ def deflated_t(ic: float, observations: int, horizon_bars: int,
         "overlap_factor": float(overlap_factor),
         "cross_section_factor": float(cross_factor),
     }
+
+
+def record_pooled(
+    cells: list[CellIC],
+    ticket: Ticket,
+    *,
+    horizon_bars: int,
+    instruments: int,
+    effective_breadth: float,
+    extra: dict | None = None,
+) -> dict:
+    """Pool, deflate, WRITE, and only then return. The write is not a courtesy.
+
+    This is the single public path from cell diagnostics to a pooled IC. It
+    spends the ticket, so the number and its line come into existence together
+    or not at all (invariant III, D05).
+    """
+    if not isinstance(ticket, Ticket):
+        raise RegistryBypass(
+            "record_pooled needs a Ticket from registry.open_test(); there is no "
+            "other way to obtain a pooled IC."
+        )
+    ic, observations = _pool(cells)
+    t = _deflated_t(ic, observations, horizon_bars, instruments, effective_breadth)
+    line = dict(extra or {})
+    line["observations"] = observations
+    test_id = settle(ticket, ic=ic, t_stat=t["final"], extra=line)
+    return {"ic": ic, "observations": observations, "t": t, "test_id": test_id}

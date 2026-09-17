@@ -30,6 +30,7 @@ from panel.catalogue import Catalogue, Slice, load_catalogue
 from panel.paths import data_dir
 from panel.rolls import back_adjust, visible_rolls
 from panel.sessions import session_date, session_date_of, window_labels
+from panel.unseal import UnsealToken
 
 INDEX_NAME = "ts_event"
 
@@ -75,15 +76,24 @@ class Panel:
     # -- opening -----------------------------------------------------------
 
     @classmethod
-    def open(cls, asof, slice: str = "pool", catalogue: Catalogue | None = None) -> Panel:
+    def open(
+        cls,
+        asof,
+        slice: str = "pool",
+        catalogue: Catalogue | None = None,
+        unseal: UnsealToken | None = None,
+    ) -> Panel:
         catalogue = catalogue or load_catalogue()
         wanted = catalogue.slice(slice)
 
-        if wanted.sealed:
+        if wanted.sealed and not isinstance(unseal, UnsealToken):
             raise HoldoutLocked(
                 f"slice {wanted.name!r} is sealed until phase {wanted.unseal_phase}. "
                 "It is opened once, at the very end, and a reopened holdout is no "
-                "longer a holdout (invariant V)."
+                "longer a holdout (invariant V). The only key is an UnsealToken from "
+                "panel.unseal.unseal_holdout(reason=...), which writes the gesture down "
+                "before it hands the key over -- and a truthy value of any other kind is "
+                "not a key."
             )
 
         asof = _as_utc(asof)

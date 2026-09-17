@@ -194,3 +194,27 @@ et passé sur NQ, parce qu'il s'ancrait sur la date du roulement au lieu de la
 barre où le saut atterrit réellement. Le symptôme à reconnaître : **un contrôle
 qui passe sur l'instrument le plus liquide et échoue sur les autres** désigne une
 hypothèse de calendrier, presque jamais une erreur de calcul.
+
+---
+
+## L09 — Un décodage implicite accuse un fichier qui n'a pas bougé
+
+**Ce qu'on croyait.** Comparer le registre à sa version commitée est trivial :
+`git show HEAD:registry/tests.jsonl`, on compare ligne à ligne, et toute
+différence signale une réécriture — exactement ce que l'append-only interdit.
+
+**Ce qui était vrai.** `subprocess.run(..., text=True)` décode la sortie avec
+l'encodage **de la machine**, cp1252 sous Windows, quand le fichier est lu en
+UTF-8. Toute ligne contenant un accent paraît alors réécrite. La porte 04 a
+accusé la ligne 13 du registre d'avoir été modifiée : elle était intacte, et
+c'était le mot « vérifier » à l'intérieur qui ne survivait pas au décodage.
+
+**Comment on s'en est aperçu.** Parce que la porte désignait **une seule ligne**
+sur vingt-cinq. Un vrai problème d'encodage aurait sali toutes les lignes ; un
+vrai problème d'append-only en aurait sali une et toutes les suivantes. Une seule
+ligne isolée, au milieu, ne correspond à aucune des deux — c'est cette forme-là
+qui trahit un artefact de lecture. Le réflexe : devant une comparaison de
+fichiers qui échoue, **vérifier d'abord comment les deux côtés ont été décodés**,
+avant de croire ce qu'elle raconte. `encoding="utf-8"` explicite des deux côtés,
+toujours, et jamais `text=True` seul sur une sortie susceptible de porter des
+accents.
