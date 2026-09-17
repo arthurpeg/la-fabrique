@@ -28,6 +28,7 @@ import pandas as pd
 
 from panel.catalogue import Catalogue, Slice, load_catalogue
 from panel.paths import data_dir
+from panel.rolls import back_adjust, visible_rolls
 from panel.sessions import session_date, session_date_of, window_labels
 
 INDEX_NAME = "ts_event"
@@ -96,12 +97,18 @@ class Panel:
         return cls(asof=asof, slice_=wanted, catalogue=catalogue)
 
     def truncate(self, end) -> Panel:
-        """The same panel, knowing less. It can never know more."""
+        """The same panel, knowing less. It can never know more, nor leave its slice."""
         end = _as_utc(end)
         if end > self.asof:
             raise LookaheadRefused(
                 f"truncate(end={end}) would move the as-of forward, from {self.asof}. "
                 "A panel loses its future, it never gains one."
+            )
+        session = session_date_of(end, self.catalogue)
+        if session < pd.Timestamp(self.slice.start).date():
+            raise SliceExceeded(
+                f"truncate(end={end}) lands in session {session}, before slice "
+                f"{self.slice.name!r} starts ({self.slice.start})."
             )
         return Panel(asof=end, slice_=self.slice, catalogue=self.catalogue)
 
@@ -149,8 +156,15 @@ class Panel:
     def windows(self, root: str) -> pd.Series:
         return window_labels(self.bars(root, columns=["close"]).index, self.catalogue)
 
-    def adjusted(self, root: str):
-        """The back-adjusted series. Blocked, on purpose, until the roll dates arrive."""
+    def adjusted(self, root: str, columns: list[str] | None = None) -> pd.DataFrame:
+        """Prices made comparable across contracts, using only the splices <= as-of.
+
+        The machinery is written and proven (panel/rolls.py, gate 02 clause 3a).
+        What is missing is data: the authoritative roll dates. Until they sit in
+        the catalogue this refuses, because the alternative -- the empirical
+        detection -- has holes that are systematic and correlated with the
+        regime, and an incomplete list is worse than none (L05, F09).
+        """
         instrument = self.catalogue.instrument(root)
         if instrument.roll_dates is None:
             raise RollDatesMissing(
@@ -160,9 +174,12 @@ class Panel:
                 "and its holes are systematic (L05, F09). Raw prices remain available "
                 "through bars()."
             )
-        raise NotImplementedError(
-            f"{root}: roll dates are present but the back-adjustment is not written yet."
-        )
+        wanted = list(columns) if columns else None
+        if wanted is not None and "close" not in wanted:
+            wanted = [*wanted, "close"]
+        frame = self.bars(root, columns=wanted)
+        rolls = visible_rolls(instrument.roll_dates, self.asof, instrument.splice_minute_utc)
+        return back_adjust(frame, rolls)
 
     def fingerprint(self, root: str) -> str:
         """A checksum of everything this panel can see of one instrument."""

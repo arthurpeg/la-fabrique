@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-09-16
+updated: 2026-09-17
 status: provisoire
 sources: [decisions/DECISION-01-univers-et-donnees.md, LECONS.md, scripts/out/a2_roll_diagnostics.json]
 ---
@@ -24,6 +24,11 @@ Le traitement retenu : à chaque date d'évaluation `t`, construire une série
 point-in-time car elle ne diffère de celle construite en `t+1` que par un facteur
 d'échelle uniforme, qui n'affecte ni les rendements ni les ratios. Le prix brut
 reste disponible séparément, pour les niveaux et l'exécution.
+
+**Écrit depuis le 2026-09-17** : `panel/rolls.py`, ajustement multiplicatif —
+le facteur d'échelle uniforme ci-dessus *est* la définition du multiplicatif
+([[Failed Ideas/ledger]] F14) — prouvé sur un cas synthétique par la porte 02,
+clause 3a. Il refuse tant que les dates manquent. Voir [[concepts/panel]].
 
 ## Ce que ça ne veut pas dire
 

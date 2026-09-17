@@ -11,11 +11,16 @@ Three checks, one per clause of the gate.
    sealed slice, or reaching into the holdout from the research path are all
    refused rather than allowed quietly.
 
-3. BACK-ADJUSTMENT. The back-adjusted series must use only the splices <= t
-   (D01 6). It cannot be built, let alone checked, without the authoritative
-   roll dates -- which are not in the catalogue. This check therefore FAILS,
-   and the gate stays shut. That is the intended outcome, not an accident:
-   a gate is never crossed "provisionally".
+3a. THE ADJUSTMENT ALGORITHM, on a synthetic series whose answer is known:
+   the artificial jumps go, the returns survive, and a series built at t agrees
+   with one built later up to a uniform factor. The part the algorithm cannot
+   separate -- the real move during the splice minute -- is measured here rather
+   than hoped away.
+
+3b. THE REAL SERIES. The machinery above is useless without the authoritative
+   roll dates, which are not in the catalogue. This check therefore FAILS, and
+   the gate stays shut. That is the intended outcome, not an accident: a gate is
+   never crossed "provisionally". What is missing is data, not code.
 
     python scripts/gate_02_panel.py
 
@@ -27,6 +32,9 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import numpy as np
+import pandas as pd
+
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
@@ -36,7 +44,9 @@ from panel import (  # noqa: E402
     Panel,
     RollDatesMissing,
     SliceExceeded,
+    back_adjust,
     load_catalogue,
+    visible_rolls,
 )
 
 EARLY = "2017-03-15 20:00"
@@ -46,6 +56,27 @@ FIRST_BAR = "2016-01-03 23:00"
 BEFORE_FIRST_BAR = "2016-01-03 22:59"
 INSIDE_HOLDOUT = "2025-06-02 20:00"
 SAMPLE = ("NQ", "GC", "6J")
+
+
+def synthetic(splice_minute_move_bp: float = 0.0):
+    """A series whose answer is known: a true price, spliced twice on purpose.
+
+    The raw series is the true one multiplied by 1.05 after the first splice and
+    by 0.97 more after the second -- two jumps that no market made. Whether the
+    market moved during the splice minute itself is the parameter, because that
+    is precisely the part the adjustment cannot tell apart from the artefact.
+    """
+    length, first_roll, second_roll = 300, 100, 200
+    index = pd.date_range("2020-06-01 00:00", periods=length, freq="1min", tz="UTC")
+    steps = 0.0001 * np.sin(np.arange(length))
+    steps[first_roll] = steps[second_roll] = splice_minute_move_bp / 10_000
+    truth = pd.Series(100 * np.cumprod(1 + steps), index=index, name="close")
+
+    raw = truth.to_numpy().copy()
+    raw[first_roll:second_roll] *= 1.05
+    raw[second_roll:] *= 1.05 * 0.97
+    frame = pd.DataFrame({"close": raw}, index=index)
+    return frame, truth, [index[first_roll], index[second_roll]]
 
 
 def main() -> int:
@@ -110,12 +141,59 @@ def main() -> int:
         f"the universe at {EARLY} changes depending on when the question is asked",
     )
     refuses(LookaheadRefused, lambda: first.truncate(end=LATE), "truncate vers le futur")
+    refuses(SliceExceeded, lambda: first.truncate(end="2015-06-01"), "truncate avant la tranche")
     refuses(HoldoutLocked, lambda: Panel.open(MIDDLE, slice="holdout"), "ouverture du holdout")
     refuses(SliceExceeded, lambda: Panel.open(INSIDE_HOLDOUT), "as-of dans le holdout")
     print("   aucune barre postérieure ; univers invariant ; look-ahead, holdout et "
           "tranche refusés")
 
-    print("3. série ajustée à rebours, recollements <= t")
+    print("3a. l'algorithme d'ajustement, sur un cas synthétique dont la réponse est connue")
+    flat, truth, rolls = synthetic(splice_minute_move_bp=0.0)
+    adjusted = back_adjust(flat, rolls)
+    ratio = adjusted["close"] / truth
+    check(
+        float(ratio.max() - ratio.min()) < 1e-9,
+        f"the adjusted series is not a uniform multiple of the true one "
+        f"(spread {float(ratio.max() - ratio.min()):.3e})",
+    )
+    check(
+        float((adjusted["close"].pct_change() - truth.pct_change()).abs().max()) < 1e-12,
+        "the adjusted returns differ from the true returns",
+    )
+
+    midpoint = flat.index[150]
+    early = back_adjust(flat.loc[flat.index <= midpoint], visible_rolls(rolls, midpoint))
+    late_view = adjusted.loc[adjusted.index <= midpoint, "close"]
+    drift = late_view / early["close"]
+    check(
+        len(visible_rolls(rolls, midpoint)) == 1,
+        "a splice later than the as-of is visible to the adjustment",
+    )
+    check(
+        float(drift.max() - drift.min()) < 1e-9,
+        "the series built at t and the series built later disagree by more than a uniform factor",
+    )
+    check(
+        float((early["close"].pct_change() - late_view.pct_change()).abs().max()) < 1e-12,
+        "the returns depend on when the series was built",
+    )
+
+    # The gap can only be read as the one-minute return at the splice, so it carries
+    # whatever the market did in that minute. Measured here rather than hoped away.
+    injected_bp = 5.0
+    moved, moved_truth, moved_rolls = synthetic(splice_minute_move_bp=injected_bp)
+    steps = (back_adjust(moved, moved_rolls)["close"] / moved_truth).round(12).unique()
+    absorbed = [steps[i] / steps[i + 1] - 1 for i in range(len(steps) - 1)]
+    check(
+        len(steps) == 3 and all(abs(a * 10_000 - injected_bp) < 1e-6 for a in absorbed),
+        f"the absorbed move is {[round(a * 10_000, 4) for a in absorbed]} bp, "
+        f"expected {injected_bp} bp at each of the two splices",
+    )
+    print(f"    jumps retirés, rendements préservés, propriété d'échelle vérifiée ; "
+          f"l'ajustement absorbe exactement le mouvement réel de la minute de recollement "
+          f"({injected_bp} bp injectés, {round(absorbed[0] * 10_000, 4)} bp absorbés)")
+
+    print("3b. la série ajustée des instruments réels")
     blocked = [r for r, i in catalogue.instruments.items() if i.roll_dates is None]
     for root in SAMPLE:
         refuses(RollDatesMissing, lambda root=root: first.adjusted(root), f"adjusted({root})")

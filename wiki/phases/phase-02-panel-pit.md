@@ -10,8 +10,9 @@ sources: [ETAT.md, decisions/DECISION-01-univers-et-donnees.md, decisions/DECISI
 
 # Phase 02 — Le Panel point-in-time
 
-**Phase courante.** Construite aux deux tiers ; la porte reste fermée sur un
-intrant externe. `scripts/gate_02_panel.py` le dit par un code de sortie.
+**Phase courante.** Le code est écrit — chargement, séances, ajustement compris.
+Il ne manque plus que de la **donnée** : les dates de roulement. 30 vérifications
+sur 31 passent ; `scripts/gate_02_panel.py` sort en 1.
 
 ## La porte
 
@@ -49,13 +50,20 @@ lèvera d'exception. Voir [[concepts/point-in-time]].
   Parquet**, donc le futur n'entre jamais dans le processus ; `truncate` ne va
   que vers le passé ; le holdout et les bornes de tranche lèvent.
   Voir [[concepts/panel]].
-- `scripts/gate_02_panel.py` : les trois clauses de la porte, 24 vérifications.
+- `panel/rolls.py` : l'ajustement à rebours, **multiplicatif** (`D01` §6 impose un
+  facteur d'échelle uniforme ; l'additif ne préserverait pas les rendements —
+  [[Failed Ideas/ledger]] F14). L'écart ne se lit qu'au rendement d'une minute à la
+  minute de raccord : il emporte donc un peu de mouvement réel, **mesuré** par la
+  porte (5,0 bp injectés, 5,0 bp absorbés) plutôt que passé sous silence.
+- `scripts/gate_02_panel.py` : les clauses de la porte, 31 vérifications.
 
 ## Ce qui manque — et c'est tout ce qui manque
 
 - **Les dates de roulement autoritatives**, et la confirmation « brutes ou
-  ajustées », demandées à l'auteur des données. **Intrant bloquant.**
-  `panel.adjusted()` existe et lève `RollDatesMissing` en les nommant.
+  ajustées », demandées à l'auteur des données. **Intrant bloquant, et le seul.**
+  L'algorithme les attend ; `panel.adjusted()` lève `RollDatesMissing` en les
+  nommant. À leur arrivée, la phase se ferme en remplissant
+  `roll.authoritative_dates` au catalogue et en rejouant la porte.
 
 **La porte ne peut pas être franchie sans elles** : la série ajustée à rebours en
 dépend. `CLAUDE.md` § Les interdits : *ne jamais franchir une porte

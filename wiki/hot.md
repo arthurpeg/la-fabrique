@@ -24,8 +24,8 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Dernière porte franchie** | **01**, le 2026-09-15 — `scripts/gate_01_pit.py` passe, empreintes de préfixe déposées dans `scripts/out/pit_fingerprints.json`. Rejouée le 2026-09-17 sur la machine courante : empreintes identiques. |
 | **Décision la plus récente** | `decisions/DECISION-03-panel-et-catalogue.md` — le paquet `panel/`, la coupe poussée dans le lecteur Parquet, le catalogue et son validateur. Ouvre la phase 02 sans franchir sa porte. |
 | **Tests au registre** | 0 |
-| **Idées abandonnées recensées** | 13 |
-| **Entrées au journal** | 2 |
+| **Idées abandonnées recensées** | 14 |
+| **Entrées au journal** | 3 |
 
 ## Ce qui bloque
 
@@ -44,20 +44,29 @@ coupe est poussée dans le lecteur Parquet, `truncate` ne va que vers le passé,
 holdout et la tranche sont verrouillés ; `scripts/gate_02_panel.py`, qui exécute
 les trois clauses de la porte.
 
-**Ce qui reste, et qui n'est pas de notre ressort :** la troisième clause — la
-série ajustée à rebours — est **non vérifiable** tant que les dates de roulement
-autoritatives ne sont pas au catalogue. `panel.adjusted()` lève
-`RollDatesMissing` en les nommant. `gate_02_panel.py` sort en 1. La porte n'est
-pas franchie, et ne le sera pas « provisoirement ».
+L'**algorithme d'ajustement** est écrit et prouvé sur un cas synthétique
+(`panel/rolls.py`, porte 02 clause 3a) : multiplicatif, sauts artificiels retirés,
+rendements préservés, série construite en `t` égale à celle construite plus tard
+à un facteur d'échelle près. Le mouvement réel de la minute de raccord, que
+l'estimation ne sait pas séparer de l'artefact, est **injecté et mesuré** plutôt
+qu'espéré : 5,0 bp pour 5,0 bp.
+
+**Ce qui reste, et qui n'est pas de notre ressort :** la clause 3b — la série
+ajustée des **instruments réels** — est **non vérifiable** tant que les dates de
+roulement autoritatives ne sont pas au catalogue. `panel.adjusted()` lève
+`RollDatesMissing` en les nommant. `gate_02_panel.py` sort en 1. **Ce qui manque
+est de la donnée, pas du code** : le jour où les dates arrivent, la phase se
+ferme en remplissant un champ du catalogue et en rejouant la porte.
 
 **À la réception des dates :** comparer avant d'adopter — l'écart avec la
 détection empirique mesure la méthode et fera une entrée dans `LECONS.md`
 (`D01` §6).
 
-## Les 2 dernières entrées du journal
+## Les 3 dernières entrées du journal
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-09-17 | `phase` | Phase 02 complétée côté code : panel/rolls.py, l'ajustement multiplicatif à rebours (D01 §6), prouvé sur un cas synthétique — sauts retirés, rendements préservés, facteur d'échelle entre deux dates de construction, mouvement de la minute de raccord injecté et mesuré ; truncate() refuse aussi de sortir de la tranche par le bas | 30 vérifications sur 31 ; porte 02 toujours NON franchie — ce qui manque est de la donnée, pas du code |
 | 2026-09-17 | `phase` | Phase 02 ouverte : D03 écrite, catalogue.yaml et son validateur, paquet panel/ (coupe poussée dans le lecteur Parquet, truncate vers le passé seul, holdout et tranche verrouillés), gate_02_panel.py ; porte 01 rejouée, empreintes identiques | 2 clauses sur 3 passent ; porte 02 NON franchie, bloquée sur les dates de roulement |
 | 2026-09-16 | `setup` | Création du wiki : squelette wiki/, SCHEMA, ledger des idées abandonnées, générateur de hot.md, crochets .claude, groupes de graphe Obsidian ; DECISION-02 écrite d'abord, CLAUDE.md complété d'une section « Wiki » | wiki opérationnel, 12 idées abandonnées recensées rétrospectivement depuis D01 et LECONS.md |
 

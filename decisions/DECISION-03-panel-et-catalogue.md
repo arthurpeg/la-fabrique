@@ -129,9 +129,9 @@ de roulement, le tick **mesuré**, et par cellule les chiffres de la phase 01.
 
 ### 4. La porte 02 reste fermée, et c'est désormais mécanique
 
-`scripts/gate_02_panel.py` exécute les trois clauses de la porte. Les deux
-premières passent (24 vérifications). La troisième **échoue**, faute des dates de
-roulement autoritatives. La porte n'est pas franchie, et le dépôt le dit
+`scripts/gate_02_panel.py` exécute les clauses de la porte : 31 vérifications,
+30 passent. Seule échoue la clause 3b — la série ajustée des instruments réels —
+faute des dates de roulement autoritatives. La porte n'est pas franchie, et le dépôt le dit
 maintenant par un code de sortie, pas par une phrase dans un fichier.
 
 ### 5. `CLAUDE.md` gagne deux lignes d'arbre
@@ -151,7 +151,7 @@ machine courante n'a pas `uv` : les scripts ont été exécutés avec l'interpr�
 
 | Point | Échéance | Statut |
 |---|---|---|
-| La série ajustée à rebours | **phase 02**, à réception des dates | méthode écrite, refuse ; comparer la liste reçue à la détection empirique avant d'adopter (`D01` §6) |
+| La série ajustée à rebours sur données réelles | **phase 02**, à réception des dates | l'algorithme est écrit et prouvé (complément ci-dessous) ; il refuse faute de dates. Comparer la liste reçue à la détection empirique avant d'adopter (`D01` §6) |
 | Le cache d'objets Panel | phase 03, quand le harnais balaiera des dates | non tranché : ce sera un cache de panels, jamais de séries entières |
 | Le calendrier de jours fériés par place | phase 03 | les séances se déduisent aujourd'hui des barres présentes, ce qui suffit tant qu'aucune grandeur ne compte des séances absentes |
 | Multiplicateurs et frais | phase 03 | `null`, `todo`, sources nommées (`D01` §7) |
@@ -167,3 +167,43 @@ machine courante n'a pas `uv` : les scripts ont été exécutés avec l'interpr�
    remplacer, pas le contourner.
 3. **Le volume relu devient le goulot** en phase 03 — le cache d'objets Panel est
    tranché par écrit, et cette décision est complétée.
+
+---
+
+## Complément du 2026-09-17 — l'algorithme d'ajustement, écrit avant les dates
+
+Cette décision annonçait que la série ajustée s'écrirait à réception des dates.
+Elle s'écrit maintenant, et seules les **dates** manquent : le jour où elles
+arrivent, la phase se ferme en remplissant un champ du catalogue et en rejouant
+la porte, pas en écrivant du code sous pression. Rien de ce qui suit n'invente
+une valeur de donnée.
+
+**Multiplicatif, pas additif.** `D01` §6 dit que la série construite en `t` ne
+diffère de celle construite en `t+1` que par un **facteur d'échelle uniforme**.
+C'est la définition de la convention multiplicative : chaque segment antérieur à
+un recollement est multiplié par les écarts qui le suivent. L'additive
+décalerait les niveaux d'une constante et **ne préserverait pas les rendements**
+— voir [[Failed Ideas/ledger]] F14.
+
+**Ce que l'estimation de l'écart coûte, et qui est mesuré.** Avec une série déjà
+recollée et rien d'autre, l'écart ne se lit qu'à un endroit : le rendement d'une
+minute à la minute de raccord. Ce rendement contient l'écart entre contrats
+**et** ce que le marché a réellement fait dans cette minute, et rien ici ne les
+sépare. L'ajustement retire donc un peu de mouvement réel avec l'artefact. Ce
+n'est pas une approximation cachée : la porte 02 l'injecte et le mesure — 5,0 bp
+injectés à la minute de raccord, 5,0 bp absorbés, exactement. C'est la même
+convention que le détecteur de la phase 01 (`scripts/roll_diagnostics.py`), et
+c'est la seule chose calculable sans données par échéance.
+
+**Ce que la porte vérifie désormais** (`scripts/gate_02_panel.py`, clause 3a, sur
+un cas synthétique dont la réponse est connue) : les sauts artificiels
+disparaissent ; les rendements ajustés égalent les vrais à 1e-12 ; la série
+construite en `t` et celle construite plus tard ne diffèrent que par un facteur
+uniforme ; un recollement postérieur à l'`asof` est invisible à l'ajustement.
+
+**Ce que ça ne fait pas :** franchir la porte. La clause 3b — les instruments
+réels — échoue toujours, et c'est de la donnée qui manque, pas du code.
+
+**Corrigé au passage :** `truncate()` refusait d'avancer l'`asof` mais acceptait
+de sortir de la tranche par le bas. Il lève désormais `SliceExceeded`, comme
+`open()`.

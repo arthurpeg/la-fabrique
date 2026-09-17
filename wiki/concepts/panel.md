@@ -50,16 +50,22 @@ signal qui tente d'avancer l'`asof` lève.
   figé à partir de la phase 03, le Panel ne l'est pas encore.
 - **`bars()` ne rend pas une série ajustée.** Elle rend le prix **brut**, et
   c'est voulu (`D01` §6) : les niveaux et l'exécution en ont besoin. Le
-  traitement du roulement se fera ici, au niveau du Panel, **jamais au niveau du
-  signal** — un signal qui corrige lui-même un recollement est un bug
+  traitement du roulement est écrit ici, au niveau du Panel, **jamais au niveau
+  du signal** — un signal qui corrige lui-même un recollement est un bug
   d'architecture. Voir [[concepts/roulement]].
+- **`RollDatesMissing` n'est pas « pas implémenté ».** `panel/rolls.py` contient
+  l'ajustement multiplicatif complet, prouvé sur un cas synthétique par la porte
+  02 (clause 3a) : sauts retirés, rendements préservés, facteur d'échelle entre
+  deux dates de construction. Ce qui manque est **de la donnée** — les dates de
+  roulement — et l'algorithme refuse plutôt que de les deviner.
 - **Le verrou du holdout n'est pas la phase 04.** Le Panel refuse la tranche
   scellée, mais la porte 04 exige davantage : qu'aucun chemin de code ne produise
   un IC sans écrire au registre. Elle n'est pas franchie pour autant.
 
 ## Où c'est fixé
 
-`D03` · `panel/panel.py` · `scripts/gate_02_panel.py` · `catalogue/catalogue.yaml`
+`D03` · `panel/panel.py` · `panel/rolls.py` · `scripts/gate_02_panel.py` ·
+`catalogue/catalogue.yaml`
 
 ## Voir aussi
 
