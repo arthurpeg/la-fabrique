@@ -1,14 +1,18 @@
 ---
 type: phase
-updated: 2026-09-16
+updated: 2026-09-17
 status: a-faire
 phase: 04
 gate: aucun chemin de code ne produit un IC sans écrire au registre ; la tranche holdout est inaccessible par construction
-blocked_by: phase 03
 sources: [ETAT.md, registry/SCHEMA.md, CLAUDE.md]
 ---
 
 # Phase 04 — Le registre et le verrou du holdout
+
+**Phase courante depuis le 2026-09-17.** Une partie est déjà debout :
+`harness/registry.py` écrit une ligne à chaque IC et `counted_tests()` exclut
+les calibrations (`D04` §4). Ce qui manque est la **preuve qu'on ne peut pas
+contourner** — l'écriture comme le holdout.
 
 ## La porte
 

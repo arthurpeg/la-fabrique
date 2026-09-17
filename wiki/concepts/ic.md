@@ -1,6 +1,6 @@
 ---
 type: concept
-updated: 2026-09-16
+updated: 2026-09-17
 status: stable
 sources: [CLAUDE.md, decisions/DECISION-01-univers-et-donnees.md, registry/SCHEMA.md]
 ---
@@ -46,10 +46,28 @@ afficher **les deux bornes, jamais la plus flatteuse seule**.
 Le **rapport d'IC** est la sortie officielle du harnais et la **seule source d'IC
 du projet**. Le wiki n'en est jamais une : voir `wiki/SCHEMA.md` § 0.
 
+## Comment on en obtient un
+
+```python
+from harness import evaluate
+report = evaluate(scores, panel, "30min", signal_id="...", hypothesis_ref="...")
+```
+
+`harness/`, **figé depuis le 2026-09-17** (`D04`). Spearman par cellule, poolé
+par nombre d'observations, `t` déflaté deux fois :
+
+| correction | facteur à 30 min | pourquoi |
+|---|---|---|
+| recouvrement | ÷ 5,48 = √30 | deux observations voisines partagent 29 barres |
+| transversale | ÷ 1,46 = √(9 / 4,224) | neuf instruments, ~4,2 paris |
+
+Soit **un `t` divisé par 8** avant tout jugement. Le rapport porte toujours les
+deux cibles et un coût **minoré** disant ce qui lui manque.
+
 ## État actuel
 
-`registry/tests.jsonl` : **0 ligne**. Le harnais n'existe pas encore — il se
-construit en [[phases/phase-03-harnais-ic]].
+`registry/tests.jsonl` : 3 lignes, toutes de `stage: 03-calibration` et sans
+hypothèse — **0 test compté** au dénominateur du FDR.
 
 ## Où c'est fixé
 

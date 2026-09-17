@@ -1,14 +1,19 @@
 ---
 type: phase
 updated: 2026-09-17
-status: a-faire
+status: franchie
 phase: 03
 gate: le harnais reproduit à la main, sur un cas connu, un IC vérifié indépendamment ; figé et versionné à partir de là
-blocked_by: frais et multiplicateurs (calibration des coûts seulement)
+closed: 2026-09-17
 sources: [ETAT.md, decisions/DECISION-01-univers-et-donnees.md]
 ---
 
 # Phase 03 — Le harnais d'IC calibré à la main
+
+**Franchie le 2026-09-17**, `scripts/gate_03_harness.py`, 19 vérifications.
+Un score qui **est** le rendement futur rend un IC de `1.000000000` ; une
+seconde implémentation le reproduit à 1e-12 ; du bruit rend `+0,00108` et un
+`t` final de `+0,06`. **Le harnais est figé.** Voir `D04` et [[concepts/ic]].
 
 ## La porte
 
@@ -43,10 +48,8 @@ C'est le juge, et l'ordre de construction veut le juge avant l'accusé
   `spread_floor_bp` mesuré + `fee_bp` **`null`** + `slippage_bp` déclaré et
   pessimiste. Voir [[concepts/cout-aller-retour]].
 
-## Ce qui manque
+## Ce qui manque encore — pour les coûts, pas pour le harnais
 
-- ~~La phase 02 (le Panel)~~ — **franchie le 2026-09-17**. Le harnais lit
-  désormais par [[concepts/panel]] : `Panel.open(asof=...)`, `bars()`, `adjusted()`.
 - **Les frais CME / EUREX par contrat** — `null`, `todo`, sources nommées dans
   `D01` §7. Ne pas deviner : `CLAUDE.md` § Les interdits.
 - **Les multiplicateurs de contrat** — idem.

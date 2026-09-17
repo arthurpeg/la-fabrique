@@ -40,8 +40,8 @@ Une page par phase de l'**ordre de construction** (`ETAT.md`, phases 01→15).
 
 - [[phases/phase-01-decision-donnees|Phase 01 — La décision données]] — univers, grille, métrique, tranches ; `franchie`
 - [[phases/phase-02-panel-pit|Phase 02 — Le Panel point-in-time]] — l'impossibilité du look-ahead se fabrique ici ; `franchie` 2026-09-17
-- [[phases/phase-03-harnais-ic|Phase 03 — Le harnais d'IC calibré]] — le juge, figé et versionné à partir de là ; **phase courante**, `a-faire`
-- [[phases/phase-04-registre-et-holdout|Phase 04 — Le registre et le verrou du holdout]] — invariants III et V fabriqués, pas promis ; `a-faire`
+- [[phases/phase-03-harnais-ic|Phase 03 — Le harnais d'IC calibré]] — le juge, **figé** depuis le 2026-09-17 ; `franchie`
+- [[phases/phase-04-registre-et-holdout|Phase 04 — Le registre et le verrou du holdout]] — invariants III et V fabriqués, pas promis ; **phase courante**, `a-faire`
 
 > Les phases 05 à 15 n'ont pas encore de page. On les crée en s'en approchant,
 > pas d'avance : une page de phase lointaine est une page qui vieillit sans être
@@ -58,6 +58,7 @@ Une page par phase de l'**ordre de construction** (`ETAT.md`, phases 01→15).
 - [[concepts/cout-aller-retour|Coût d'aller-retour]] — tick mesuré, frais `null`, glissement déclaré. `provisoire`
 - [[concepts/ic|IC — coefficient d'information]] — en série temporelle, poolé, et produit par le seul harnais. `stable`
 - [[concepts/largeur-effective|Largeur effective]] — ~4 paris pour 9 instruments ; la contrainte centrale. `stable`
+- [[concepts/harnais|Harnais]] — le juge : une seule porte, `evaluate`, et elle écrit au registre. `stable`
 - [[concepts/les-deux-ordres|Les deux ordres]] — construction contre exécution ; l'erreur la plus fréquente d'une session froide. `stable`
 - [[concepts/panel|Panel]] — la couche de données : ouvert à une date, il ne peut pas lire le futur. `provisoire`
 - [[concepts/point-in-time|Point-in-time]] — par construction, jamais par vigilance. `stable`
