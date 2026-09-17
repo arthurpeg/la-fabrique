@@ -25,7 +25,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Décision la plus récente** | `decisions/DECISION-03-panel-et-catalogue.md` — le paquet `panel/`, la coupe poussée dans le lecteur Parquet, le catalogue et son validateur. Ouvre la phase 02 sans franchir sa porte. |
 | **Tests au registre** | 0 |
 | **Idées abandonnées recensées** | 14 |
-| **Entrées au journal** | 3 |
+| **Entrées au journal** | 4 |
 
 ## Ce qui bloque
 
@@ -62,10 +62,11 @@ ferme en remplissant un champ du catalogue et en rejouant la porte.
 détection empirique mesure la méthode et fera une entrée dans `LECONS.md`
 (`D01` §6).
 
-## Les 3 dernières entrées du journal
+## Les 4 dernières entrées du journal
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-09-17 | `setup` | Emplacement des données fixé sur le poste de travail : RSL_DATA_DIR = C:\Users\Mathis\Desktop\Cotations (hors OneDrive) ; porte 01 rejouée sur les deux copies présentes | empreintes identiques à la ligne de base des deux côtés, catalogue valide, porte 02 inchangée (30/31) |
 | 2026-09-17 | `phase` | Phase 02 complétée côté code : panel/rolls.py, l'ajustement multiplicatif à rebours (D01 §6), prouvé sur un cas synthétique — sauts retirés, rendements préservés, facteur d'échelle entre deux dates de construction, mouvement de la minute de raccord injecté et mesuré ; truncate() refuse aussi de sortir de la tranche par le bas | 30 vérifications sur 31 ; porte 02 toujours NON franchie — ce qui manque est de la donnée, pas du code |
 | 2026-09-17 | `phase` | Phase 02 ouverte : D03 écrite, catalogue.yaml et son validateur, paquet panel/ (coupe poussée dans le lecteur Parquet, truncate vers le passé seul, holdout et tranche verrouillés), gate_02_panel.py ; porte 01 rejouée, empreintes identiques | 2 clauses sur 3 passent ; porte 02 NON franchie, bloquée sur les dates de roulement |
 | 2026-09-16 | `setup` | Création du wiki : squelette wiki/, SCHEMA, ledger des idées abandonnées, générateur de hot.md, crochets .claude, groupes de graphe Obsidian ; DECISION-02 écrite d'abord, CLAUDE.md complété d'une section « Wiki » | wiki opérationnel, 12 idées abandonnées recensées rétrospectivement depuis D01 et LECONS.md |
