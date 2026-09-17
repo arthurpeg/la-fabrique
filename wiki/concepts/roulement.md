@@ -25,10 +25,11 @@ point-in-time car elle ne diffère de celle construite en `t+1` que par un facte
 d'échelle uniforme, qui n'affecte ni les rendements ni les ratios. Le prix brut
 reste disponible séparément, pour les niveaux et l'exécution.
 
-**Écrit depuis le 2026-09-17** : `panel/rolls.py`, ajustement multiplicatif —
-le facteur d'échelle uniforme ci-dessus *est* la définition du multiplicatif
-([[Failed Ideas/ledger]] F14) — prouvé sur un cas synthétique par la porte 02,
-clause 3a. Il refuse tant que les dates manquent. Voir [[concepts/panel]].
+**Écrit et en service depuis le 2026-09-17** : `panel/rolls.py`, ajustement
+multiplicatif — le facteur d'échelle uniforme ci-dessus *est* la définition du
+multiplicatif ([[Failed Ideas/ledger]] F14). Les **527 dates autoritatives** sont
+au catalogue (`catalogue/roll_dates.json`), obtenues du fournisseur par
+`symbology.resolve`. Voir [[concepts/panel]].
 
 ## Le raccord tombe dans une fenêtre qu'on négocie
 
@@ -55,7 +56,10 @@ inutilisable tant que la série ajustée n'existe pas.
   volume (`.v.0`) décide de **la quantité d'historique qui existe** : l'or rendait
   136 702 barres au lieu de 3 717 717 (`LECONS.md` L01,
   [[Failed Ideas/ledger]] F01).
-- **Notre détection empirique n'est pas la liste.** Elle rend 3,4–3,6
+- **Notre détection empirique n'était pas la liste, et on sait maintenant de
+  combien.** Comparée à la liste autoritative avant adoption : **62,8 % de
+  rappel, 67 faux positifs** (`LECONS.md` L06). Le détail ci-dessous est ce
+  qu'on en croyait à l'époque. Elle rend 3,4–3,6
   roulements/an pour les indices là où il y en a 4, 8,5 pour CL là où il y en a
   12 ; 6A n'est pas tranché. Les trous sont **systématiques et corrélés au
   régime** — les années à taux proches de zéro. Une liste incomplète est plus

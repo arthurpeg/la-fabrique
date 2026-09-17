@@ -29,6 +29,8 @@ thing computable without contract-level data.
 
 from __future__ import annotations
 
+from typing import NamedTuple
+
 import pandas as pd
 
 PRICE_COLUMNS = ("open", "high", "low", "close")
@@ -51,13 +53,31 @@ def visible_rolls(rolls, asof: pd.Timestamp, splice_minute_utc: str = "00:00") -
     return sorted(stamp for stamp in parsed if stamp <= asof)
 
 
-def splice_ratios(reference: pd.Series, rolls) -> list[tuple[pd.Timestamp, float]]:
+class Splice(NamedTuple):
+    """One roll, and where it actually lands in a series that has holes."""
+
+    roll: pd.Timestamp  # the instant the vendor says the contract changed
+    bar: pd.Timestamp  # the first bar at or after it -- where the jump is observed
+    ratio: float  # that bar's price over the previous one
+
+
+def splice_ratios(reference: pd.Series, rolls) -> list[Splice]:
     """The observed jump at each splice: first price of the new contract over the last of the old.
 
     A roll falling outside the data -- before the first bar, or after the last --
     has no observable gap and is skipped rather than guessed.
+
+    WHEN THE MARKET WAS SHUT. The vendor dates a roll to a day; our series has a
+    bar at that instant only if the market was open. It usually is: 292 of the
+    333 rolls visible in mid-2023 fall on a bar at 00:00 UTC exactly. For the
+    other 41 -- almost all CL (31%) and GC (29%), whose rolls can land on a
+    weekend -- the first bar comes hours later, and the measured gap then spans
+    the closure: median 44.9 bp against 28.5 bp for an on-bar splice, and up to
+    3 648 bp. The adjustment absorbs that whole move. Applying it anyway is the
+    lesser evil -- skipping leaves an artificial jump of the same order in the
+    series -- but it is the widest form of the cost described above.
     """
-    ratios: list[tuple[pd.Timestamp, float]] = []
+    splices: list[Splice] = []
     index = reference.index
     for stamp in rolls:
         position = index.searchsorted(stamp, side="left")
@@ -67,15 +87,15 @@ def splice_ratios(reference: pd.Series, rolls) -> list[tuple[pd.Timestamp, float
         after = float(reference.iloc[position])
         if before <= 0 or after <= 0:
             continue
-        ratios.append((stamp, after / before))
-    return ratios
+        splices.append(Splice(roll=stamp, bar=index[position], ratio=after / before))
+    return splices
 
 
 def adjustment_factors(reference: pd.Series, rolls) -> pd.Series:
     """One multiplier per bar: the product of every gap that comes after it."""
     factors = pd.Series(1.0, index=reference.index, name="adjustment")
-    for stamp, ratio in splice_ratios(reference, rolls):
-        factors.loc[factors.index < stamp] *= ratio
+    for splice in splice_ratios(reference, rolls):
+        factors.loc[factors.index < splice.bar] *= splice.ratio
     return factors
 
 

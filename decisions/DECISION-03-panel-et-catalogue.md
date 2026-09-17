@@ -207,3 +207,33 @@ réels — échoue toujours, et c'est de la donnée qui manque, pas du code.
 **Corrigé au passage :** `truncate()` refusait d'avancer l'`asof` mais acceptait
 de sortir de la tranche par le bas. Il lève désormais `SliceExceeded`, comme
 `open()`.
+
+---
+
+## Complément du 2026-09-17 (soir) — les dates sont arrivées, la porte est franchie
+
+Les dates de roulement ont été obtenues le jour même, par
+`Historical.symbology.resolve` chez le fournisseur (`stype_in=continuous`,
+`stype_out=instrument_id`, 2016-01-03 → 2026-08-29), **facturé 0,00 $** : la
+symbologie n'est pas métrée. 527 roulements, déposés dans
+`catalogue/roll_dates.json` avec la requête qui les a produits.
+
+**Comparées avant d'être adoptées**, comme `D01` §6 l'exige — et le verdict est
+sévère pour notre détection empirique : **62,8 % de rappel, 67 faux positifs**
+(`scripts/compare_rolls.py`, `LECONS.md` L06). Deux corrections de fait en
+découlent : le cycle de GC n'est pas mensuel mais irrégulier, 5,07 par an (`L07`),
+et le symbole continu de FDAX **oscille** au lieu de rouler — 24 retours à une
+échéance déjà quittée. Un contrôle mécanique a été ajouté au validateur : un taux
+de roulement hors des bornes du cycle déclaré fait échouer le catalogue.
+
+**Un coût s'est révélé plus large qu'annoncé.** Le complément précédent disait que
+l'ajustement absorbe le mouvement réel d'**une minute**. C'est vrai pour 292 des
+333 roulements visibles à mi-2023 ; pour les 41 autres — 31 % de CL, 29 % de GC —
+le marché était fermé à l'instant du raccord et l'écart mesuré enjambe la
+fermeture : médiane 44,9 bp contre 28,5, jusqu'à 3 648 bp (`L08`).
+
+**Porte 02 franchie le 2026-09-17**, `scripts/gate_02_panel.py`, 43 vérifications.
+Les ticks ont été arrondis à la valeur que `D01` §7 déclare : la mesure brute
+portait le bruit de la soustraction flottante (GC mesuré 0,0999999999994543), et
+le validateur compare désormais avec une tolérance relative.
+

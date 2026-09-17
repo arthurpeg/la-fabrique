@@ -9,6 +9,7 @@ never replaced by a plausible default.
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
@@ -127,6 +128,18 @@ class Catalogue:
         return holes
 
 
+def _roll_dates(value, root: str, catalogue_path: Path) -> list[str] | None:
+    """The roll dates, in place or in the side file the catalogue points at.
+
+    A string is a file name beside the catalogue: the vendor answer, stored as
+    received. None means unknown, and stays unknown -- it is never a default.
+    """
+    if value is None or isinstance(value, list):
+        return value
+    payload = json.loads((catalogue_path.parent / value).read_text(encoding="utf-8"))
+    return payload["dates"].get(root)
+
+
 def _hour(text: str) -> float:
     hours, minutes = text.split(":")
     return int(hours) + int(minutes) / 60
@@ -192,7 +205,7 @@ def load_catalogue(path: Path = CATALOGUE) -> Catalogue:
             roll_rule=spec["roll"]["rule"],
             roll_cycle=spec["roll"]["cycle"],
             splice_minute_utc=spec["roll"]["splice_minute_utc"],
-            roll_dates=spec["roll"]["authoritative_dates"],
+            roll_dates=_roll_dates(spec["roll"]["authoritative_dates"], root, path),
             cells=cells,
         )
 

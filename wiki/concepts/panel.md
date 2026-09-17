@@ -1,7 +1,7 @@
 ---
 type: concept
 updated: 2026-09-17
-status: provisoire
+status: stable
 sources: [decisions/DECISION-03-panel-et-catalogue.md, decisions/DECISION-01-univers-et-donnees.md]
 ---
 
@@ -9,8 +9,6 @@ sources: [decisions/DECISION-03-panel-et-catalogue.md, decisions/DECISION-01-uni
 
 **La couche de données. Un Panel s'ouvre à une date, et ne peut pas lire une
 barre postérieure à cette date — pas « ne doit pas » : ne peut pas.**
-
-`provisoire` tant que la série ajustée à rebours n'est pas écrite.
 
 ## Ce que ça veut dire ici
 
@@ -21,7 +19,7 @@ p = Panel.open(asof="2021-06-15 20:00", slice="pool")
 p.universe()               # les instruments cotés à cette date
 p.bars("NQ", window="US")  # prix bruts, jamais une barre postérieure
 p.truncate(end=t)          # un panel qui en sait moins ; jamais davantage
-p.adjusted("NQ")           # RollDatesMissing, tant que les dates manquent
+p.adjusted("NQ")           # prix comparables entre échéances, splices <= asof
 ```
 
 Le mécanisme tient en une phrase : **la coupe est poussée dans le lecteur
@@ -38,7 +36,7 @@ cache lu par curiosité. Voir [[Failed Ideas/ledger]] F13.
 | `LookaheadRefused` | demander à un panel un instant postérieur au sien |
 | `SliceExceeded` | une date hors de la tranche travaillée |
 | `HoldoutLocked` | la tranche scellée ([[concepts/tranche]]) |
-| `RollDatesMissing` | la série ajustée, tant que les dates manquent |
+| `RollDatesMissing` | la série ajustée d'un instrument sans dates au catalogue |
 
 Chacun a son nom parce qu'un `ValueError` générique ne dit pas ce qui vient
 d'être tenté. `truncate` est l'accroche du test de causalité de la phase 05 : un
@@ -53,11 +51,11 @@ signal qui tente d'avancer l'`asof` lève.
   traitement du roulement est écrit ici, au niveau du Panel, **jamais au niveau
   du signal** — un signal qui corrige lui-même un recollement est un bug
   d'architecture. Voir [[concepts/roulement]].
-- **`RollDatesMissing` n'est pas « pas implémenté ».** `panel/rolls.py` contient
-  l'ajustement multiplicatif complet, prouvé sur un cas synthétique par la porte
-  02 (clause 3a) : sauts retirés, rendements préservés, facteur d'échelle entre
-  deux dates de construction. Ce qui manque est **de la donnée** — les dates de
-  roulement — et l'algorithme refuse plutôt que de les deviner.
+- **`adjusted()` n'est pas `bars()` avec une correction.** C'est une autre série :
+  `panel/rolls.py`, ajustement multiplicatif sur les recollements ≤ `asof`, prouvé
+  sur un cas synthétique **et** sur les instruments réels par la porte 02. Il
+  absorbe au passage le mouvement réel de la minute de raccord — et la fermeture
+  entière quand le raccord tombe hors barre (`LECONS.md` L08).
 - **Le verrou du holdout n'est pas la phase 04.** Le Panel refuse la tranche
   scellée, mais la porte 04 exige davantage : qu'aucun chemin de code ne produise
   un IC sans écrire au registre. Elle n'est pas franchie pour autant.

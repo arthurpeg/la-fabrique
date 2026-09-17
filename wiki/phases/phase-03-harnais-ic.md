@@ -1,10 +1,10 @@
 ---
 type: phase
-updated: 2026-09-16
+updated: 2026-09-17
 status: a-faire
 phase: 03
 gate: le harnais reproduit à la main, sur un cas connu, un IC vérifié indépendamment ; figé et versionné à partir de là
-blocked_by: phase 02
+blocked_by: frais et multiplicateurs (calibration des coûts seulement)
 sources: [ETAT.md, decisions/DECISION-01-univers-et-donnees.md]
 ---
 
@@ -45,7 +45,8 @@ C'est le juge, et l'ordre de construction veut le juge avant l'accusé
 
 ## Ce qui manque
 
-- La phase 02 (le Panel).
+- ~~La phase 02 (le Panel)~~ — **franchie le 2026-09-17**. Le harnais lit
+  désormais par [[concepts/panel]] : `Panel.open(asof=...)`, `bars()`, `adjusted()`.
 - **Les frais CME / EUREX par contrat** — `null`, `todo`, sources nommées dans
   `D01` §7. Ne pas deviner : `CLAUDE.md` § Les interdits.
 - **Les multiplicateurs de contrat** — idem.

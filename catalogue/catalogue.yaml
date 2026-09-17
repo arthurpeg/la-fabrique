@@ -72,7 +72,7 @@ instruments:
       rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
       cycle: quarterly
       splice_minute_utc: "00:00"
-      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
+      authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 0.25
     multiplier: null  # todo multipliers
     fee_per_contract_usd: null  # todo fees
@@ -116,7 +116,7 @@ instruments:
       rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
       cycle: quarterly
       splice_minute_utc: "00:00"
-      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
+      authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 0.25
     multiplier: null  # todo multipliers
     fee_per_contract_usd: null  # todo fees
@@ -160,7 +160,7 @@ instruments:
       rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
       cycle: quarterly
       splice_minute_utc: "00:00"
-      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
+      authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 1.0
     multiplier: null  # todo multipliers
     fee_per_contract_usd: null  # todo fees
@@ -202,10 +202,13 @@ instruments:
       years: 10.65
     roll:
       rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
-      cycle: monthly
+      # D01 §6 annonçait « mensuel » ; la liste autoritative dit 5,07 roulements/an,
+      # répartis sur dix mois et jamais en septembre ni octobre — les échéances
+      # actives de l'or ne sont pas mensuelles (LECONS L07).
+      cycle: irregular
       splice_minute_utc: "00:00"
-      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
-    tick: 0.0999999999994543
+      authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+    tick: 0.1  # mesuré 0.0999999999994543 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
     multiplier: null  # todo multipliers
     fee_per_contract_usd: null  # todo fees
     cells:
@@ -248,8 +251,8 @@ instruments:
       rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
       cycle: monthly
       splice_minute_utc: "00:00"
-      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
-    tick: 0.009999999999990905
+      authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+    tick: 0.01  # mesuré 0.009999999999990905 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
     multiplier: null  # todo multipliers
     fee_per_contract_usd: null  # todo fees
     cells:
@@ -292,8 +295,8 @@ instruments:
       rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
       cycle: quarterly
       splice_minute_utc: "00:00"
-      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
-    tick: 4.999999999988347e-05
+      authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+    tick: 5.0e-05  # mesuré 4.999999999988347e-05 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
     multiplier: null  # todo multipliers
     fee_per_contract_usd: null  # todo fees
     cells:
@@ -336,8 +339,8 @@ instruments:
       rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
       cycle: quarterly
       splice_minute_utc: "00:00"
-      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
-    tick: 9.999999999998899e-05
+      authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+    tick: 0.0001  # mesuré 9.999999999998899e-05 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
     multiplier: null  # todo multipliers
     fee_per_contract_usd: null  # todo fees
     cells:
@@ -380,8 +383,8 @@ instruments:
       rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
       cycle: quarterly
       splice_minute_utc: "00:00"
-      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
-    tick: 4.999999999987653e-07
+      authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+    tick: 5.0e-07  # mesuré 4.999999999987653e-07 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
     multiplier: null  # todo multipliers
     fee_per_contract_usd: null  # todo fees
     cells:
@@ -424,8 +427,8 @@ instruments:
       rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
       cycle: quarterly
       splice_minute_utc: "00:00"
-      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
-    tick: 4.999999999999449e-05
+      authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+    tick: 5.0e-05  # mesuré 4.999999999999449e-05 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
     multiplier: null  # todo multipliers
     fee_per_contract_usd: null  # todo fees
     cells:
@@ -469,22 +472,20 @@ instruments:
       years: 1.47
     roll:
       rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
-      cycle: null
+      # 51 bascules en 1,47 an pour 28 échéances distinctes, dont 24 retours à une
+      # échéance déjà quittée : le symbole continu oscille au lieu de rouler
+      # (LECONS L07). Troisième motif d'exclusion, indépendant des deux autres.
+      cycle: unstable
       splice_minute_utc: "00:00"
-      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
+      authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: null  # non mesuré : hors univers
     multiplier: null  # todo multipliers
     fee_per_contract_usd: null  # todo fees
     cells: null  # hors univers : la grille n'a pas été mesurée sur FDAX
 
 # Ce qui est inconnu, et de qui on l'attend. Un null sans todo est un bug.
+# Fermé le 2026-09-17 : roll-dates, reçu du fournisseur (voir roll_dates.json).
 todos:
-  - id: roll-dates
-    field: instruments[*].roll.authoritative_dates
-    blocks: phase 02
-    owed_by: auteur des données
-    note: comparer avant d'adopter ; l'écart avec la détection empirique mesure
-      ce que vaut la méthode et fera une entrée dans LECONS.md (D01 §6, F09)
   - id: multipliers
     field: instruments[*].multiplier
     blocks: calibration du harnais, phase 03

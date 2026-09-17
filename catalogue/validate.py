@@ -108,9 +108,13 @@ def main() -> int:
                 f"{root}: has a tick or cells but was never measured on the grid",
             )
             continue
+        # The measured tick carries float-subtraction noise (1860.3 - 1860.2 is
+        # 0.09999999999945), so the catalogue holds the round value D01 7 declares
+        # and the comparison is relative, never exact.
+        measured_tick = per_instrument["tick_observed"]
         check(
-            instrument.tick == per_instrument["tick_observed"],
-            f"{root}: tick is {instrument.tick}, measured {per_instrument['tick_observed']}",
+            abs(instrument.tick - measured_tick) <= 1e-6 * measured_tick,
+            f"{root}: tick is {instrument.tick}, measured {measured_tick}",
         )
 
         # 5. Each cell: the copied numbers, and the retention rule applied to them.
@@ -148,6 +152,40 @@ def main() -> int:
     retained = len(catalogue.retained_cells())
     check(retained == 25, f"{retained} retained cells, expected 25 (D01 3)")
 
+    # 5b. The roll dates: received from the vendor, so checked like any other claim.
+    rolls_file = REPO / "catalogue" / "roll_dates.json"
+    check(rolls_file.exists(), "roll_dates.json is missing but the catalogue points at it")
+    if rolls_file.exists():
+        rolls = json.loads(rolls_file.read_text(encoding="utf-8"))
+        # A rate far from the declared cycle means one of the two is wrong. It caught
+        # GC, declared monthly by D01 6 and rolling 5.07 times a year (L07).
+        bounds = {"quarterly": (3.5, 4.5), "monthly": (11.0, 13.0)}
+        for root, instrument in catalogue.instruments.items():
+            if instrument.roll_dates is None:
+                continue
+            check(
+                root in rolls["dates"],
+                f"{root}: points at roll_dates.json, which does not hold it",
+            )
+            dates = [pd_date(value) for value in instrument.roll_dates]
+            check(dates == sorted(set(dates)), f"{root}: roll dates are unsorted or duplicated")
+            start, end = pd_date(instrument.start[:10]), pd_date(instrument.end[:10])
+            outside = [str(d) for d in dates if not start <= d <= end]
+            check(not outside, f"{root}: roll dates outside the history: {outside[:3]}")
+            check(
+                rolls["splice_minute_utc"] == instrument.splice_minute_utc,
+                f"{root}: splice minute {instrument.splice_minute_utc} != "
+                f"{rolls['splice_minute_utc']} in roll_dates.json",
+            )
+            window = bounds.get(instrument.roll_cycle)
+            if window is not None:
+                rate = len(dates) / instrument.years
+                check(
+                    window[0] <= rate <= window[1],
+                    f"{root}: {rate:.2f} rolls a year, outside {window} for a "
+                    f"{instrument.roll_cycle} cycle",
+                )
+
     # 6. Every null is owed by a todo, and every todo owes a real null.
     todos = {entry["id"]: entry for entry in raw["todos"]}
     missing = catalogue.missing()
@@ -179,8 +217,12 @@ def main() -> int:
             f"{instrument.file}",
         )
 
+    total_rolls = sum(
+        len(i.roll_dates) for i in catalogue.instruments.values() if i.roll_dates is not None
+    )
     print(f"catalogue : {len(catalogue.instruments)} instruments, "
-          f"{len(catalogue.universe())} dans l'univers, {retained} cellules retenues")
+          f"{len(catalogue.universe())} dans l'univers, {retained} cellules retenues, "
+          f"{total_rolls} dates de roulement")
     for todo_id, roots in missing.items():
         if roots:
             print(f"  todo {todo_id:12s} ouvert sur {len(roots)} instruments "
@@ -199,6 +241,12 @@ def pd_next_day(date_text: str):
     import pandas as pd
 
     return (pd.Timestamp(date_text) + pd.Timedelta(days=1)).date()
+
+
+def pd_date(value):
+    import pandas as pd
+
+    return pd.Timestamp(value).date()
 
 
 if __name__ == "__main__":

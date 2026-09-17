@@ -39,8 +39,8 @@ Une page par phase de l'**ordre de construction** (`ETAT.md`, phases 01→15).
 `ETAT.md` fait foi ; ces pages le reflètent et l'étoffent.
 
 - [[phases/phase-01-decision-donnees|Phase 01 — La décision données]] — univers, grille, métrique, tranches ; `franchie`
-- [[phases/phase-02-panel-pit|Phase 02 — Le Panel point-in-time]] — l'impossibilité du look-ahead se fabrique ici ; `en-cours`, porte bloquée sur les dates de roulement
-- [[phases/phase-03-harnais-ic|Phase 03 — Le harnais d'IC calibré]] — le juge, figé et versionné à partir de là ; `a-faire`
+- [[phases/phase-02-panel-pit|Phase 02 — Le Panel point-in-time]] — l'impossibilité du look-ahead se fabrique ici ; `franchie` 2026-09-17
+- [[phases/phase-03-harnais-ic|Phase 03 — Le harnais d'IC calibré]] — le juge, figé et versionné à partir de là ; **phase courante**, `a-faire`
 - [[phases/phase-04-registre-et-holdout|Phase 04 — Le registre et le verrou du holdout]] — invariants III et V fabriqués, pas promis ; `a-faire`
 
 > Les phases 05 à 15 n'ont pas encore de page. On les crée en s'en approchant,

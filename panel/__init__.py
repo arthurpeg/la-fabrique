@@ -17,7 +17,7 @@ from panel.panel import (
     RollDatesMissing,
     SliceExceeded,
 )
-from panel.rolls import back_adjust, visible_rolls
+from panel.rolls import back_adjust, splice_ratios, visible_rolls
 
 __all__ = [
     "Catalogue",
@@ -33,5 +33,6 @@ __all__ = [
     "SliceExceeded",
     "back_adjust",
     "load_catalogue",
+    "splice_ratios",
     "visible_rolls",
 ]

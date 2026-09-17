@@ -17,7 +17,8 @@ sources: [CLAUDE.md, decisions/DECISION-01-univers-et-donnees.md, ETAT.md]
 | Quels instruments composent l'univers | `decisions/DECISION-01-univers-et-donnees.md` § Ce que ça verrouille, 1 |
 | Pourquoi FDAX est exclu | `D01` §1 · `LECONS.md` L02 · [[Failed Ideas/ledger]] F02 |
 | Quelle convention de roulement, et pourquoi | `D01` §6 · `LECONS.md` L01 · [[concepts/roulement]] |
-| Les dates de roulement | **pas encore reçues** — `ETAT.md` § Ce qui bloque ; par où les obtenir : [[phases/phase-02-panel-pit]] § Par où les dates s'obtiennent |
+| Les dates de roulement | `catalogue/roll_dates.json` — 527, reçues le 2026-09-17, avec la requête qui les a produites |
+| Ce que valait notre détection empirique | `LECONS.md` L06 · `scripts/compare_rolls.py` |
 | L'inventaire mesuré des fichiers | `scripts/out/a1_inventory.json` |
 | Les diagnostics de recollement | `scripts/out/a2_roll_diagnostics.json` |
 | La largeur effective mesurée | `scripts/out/a3_breadth.json`, `a5_breadth_intraday.json` |

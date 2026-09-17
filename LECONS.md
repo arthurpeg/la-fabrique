@@ -128,3 +128,69 @@ reconnaître : un détecteur dont le rendement **dépend de l'amplitude du phén
 produit une liste dont les trous sont systématiques et corrélés au régime, pas
 aléatoires. Une liste incomplète de dates de roulement est plus dangereuse
 qu'aucune liste, parce qu'elle donne le sentiment que le problème est traité.
+
+## L06 — Un détecteur jugé sur son compte, et non sur ses correspondances, paraît bien meilleur qu'il n'est
+
+**Ce qu'on croyait.** D'après `L05`, la détection empirique des recollements
+manquait « quelques » roulements, ceux des années à taux proches de zéro. Les
+comptes annuels — 3,4 à 3,6 par an pour les indices là où il y en a 4 —
+suggéraient un rendement de l'ordre de 90 %.
+
+**Ce qui était vrai.** Confrontée à la liste autoritative du fournisseur — 527
+roulements sur 2016-2026 — elle en retrouve **331, soit 62,8 %**, et date en plus
+**67 événements qui n'en sont pas**. Le rappel va de 97,6 % (6E, 41 sur 42) à
+38 % (6B, 16 sur 42) et 0 % (FDAX, 0 sur 51). Le compte annuel était trompeur
+parce que **manques et faux positifs se compensent** : NQ affichait 39 détections
+pour 42 roulements, soit 93 % en apparence, mais **32 seulement étaient
+réelles**. Et les manques ne sont pas concentrés sur les années à taux nul : pour
+CL ils sont répartis sur les onze années, de 4 à 8 par an. Une tolérance de
+±1 jour n'y change rien (62,8 % → 63,4 %) : ce sont de vrais manques, pas un
+décalage systématique.
+
+**Comment on s'en est aperçu.** En comparant **avant** d'adopter, comme `D01` §6
+l'exigeait — `scripts/compare_rolls.py`. L'occasion était unique : une fois la
+liste au catalogue, la question ne peut plus être posée. Le symptôme à
+reconnaître dépasse les roulements : **un compte juste n'est pas un compte de
+choses justes.** Tout détecteur évalué par « combien il en trouve » plutôt que
+par « lesquels il trouve » doit être supposé faux jusqu'à appariement.
+
+## L07 — Un cycle déclaré n'est pas un cycle observé
+
+**Ce qu'on croyait.** `D01` §6 : cycle trimestriel pour les indices et les
+devises, **mensuel pour GC et CL**.
+
+**Ce qui était vrai.** Pour CL, oui : 12,02 roulements par an. Pour GC, non :
+**5,07 par an**, répartis sur dix mois et **jamais en septembre ni en octobre**.
+Les échéances actives de l'or ne sont pas mensuelles, et un roulement au volume
+ne visite que celles-là. Le détecteur de la phase 01, configuré en « mensuel »
+pour GC, plafonnait mécaniquement à un événement par mois. Pire pour FDAX : 51
+bascules en 1,47 an, 52 intervalles pour **28 échéances distinctes**, dont **24
+retours à une échéance déjà quittée**. Le symbole continu n'y roule pas, il
+**oscille** — troisième motif d'exclusion, indépendant de la profondeur (`L02`)
+et de la corrélation (ledger F02).
+
+**Comment on s'en est aperçu.** En rapportant le compte de la liste autoritative
+au cycle déclaré, instrument par instrument. C'est désormais un contrôle
+mécanique de `catalogue/validate.py` : un taux hors de [3,5 ; 4,5] pour un cycle
+trimestriel, ou hors de [11 ; 13] pour un mensuel, fait échouer le catalogue.
+
+## L08 — Le raccord ne tombe pas toujours sur une barre, et alors il coûte cher
+
+**Ce qu'on croyait.** Le raccord tombant à 00:00 UTC, l'ajustement mesure l'écart
+sur **une minute** : il n'absorbe donc qu'une minute de mouvement réel avec
+l'artefact (`D03`, complément).
+
+**Ce qui était vrai.** Pour 292 des 333 roulements visibles à mi-2023, oui. Pour
+les 41 autres — **31 % des roulements de CL, 29 % de ceux de GC**, aucun sur les
+indices — le marché était fermé à cet instant, et la première barre suivante
+arrive des heures plus tard, jusqu'à **70 heures**. L'écart mesuré enjambe alors
+toute la fermeture : médiane **44,9 bp** contre 28,5 bp pour un recollement tombé
+sur une barre, et jusqu'à **3 648 bp**. C'est ce que l'ajustement absorbe, en
+silence, sur ces dates-là.
+
+**Comment on s'en est aperçu.** Par un échec de la porte 02 : le contrôle
+« l'ajustement ne touche aucun rendement hors recollement » a sauté sur GC et CL
+et passé sur NQ, parce qu'il s'ancrait sur la date du roulement au lieu de la
+barre où le saut atterrit réellement. Le symptôme à reconnaître : **un contrôle
+qui passe sur l'instrument le plus liquide et échoue sur les autres** désigne une
+hypothèse de calendrier, presque jamais une erreur de calcul.

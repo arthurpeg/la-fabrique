@@ -1,18 +1,18 @@
 ---
 type: phase
 updated: 2026-09-17
-status: en-cours
+status: franchie
 phase: 02
 gate: un panel se charge et est reproductible ; aucune ligne visible avant son horodatage ; la série ajustée à rebours n'utilise que les recollements <= t
-blocked_by: dates de roulement autoritatives, demandées à l'auteur des données
+closed: 2026-09-17
 sources: [ETAT.md, decisions/DECISION-01-univers-et-donnees.md, decisions/DECISION-03-panel-et-catalogue.md]
 ---
 
 # Phase 02 — Le Panel point-in-time
 
-**Phase courante.** Le code est écrit — chargement, séances, ajustement compris.
-Il ne manque plus que de la **donnée** : les dates de roulement. 30 vérifications
-sur 31 passent ; `scripts/gate_02_panel.py` sort en 1.
+**Franchie le 2026-09-17**, `scripts/gate_02_panel.py`, 43 vérifications.
+Les dates de roulement sont arrivées le jour même et la porte s'est fermée
+derrière elles. Voir [[phases/phase-03-harnais-ic]] pour la suite.
 
 ## La porte
 
@@ -59,15 +59,10 @@ lèvera d'exception. Voir [[concepts/point-in-time]].
 
 ## Ce qui manque — et c'est tout ce qui manque
 
-- **Les dates de roulement autoritatives**, et la confirmation « brutes ou
-  ajustées », demandées à l'auteur des données. **Intrant bloquant, et le seul.**
-  L'algorithme les attend ; `panel.adjusted()` lève `RollDatesMissing` en les
-  nommant. À leur arrivée, la phase se ferme en remplissant
-  `roll.authoritative_dates` au catalogue et en rejouant la porte.
-
-**La porte ne peut pas être franchie sans elles** : la série ajustée à rebours en
-dépend. `CLAUDE.md` § Les interdits : *ne jamais franchir une porte
-« provisoirement, on y reviendra »*.
+Plus rien. Les dates sont au catalogue (`catalogue/roll_dates.json`, 527
+roulements), obtenues par `symbology.resolve` chez le fournisseur, **facturé
+0,00 $**. `panel.adjusted()` construit la série ; `RollDatesMissing` ne se lève
+plus que pour un instrument dont les dates manqueraient.
 
 ## Pièges connus
 
@@ -111,12 +106,19 @@ raccord, lui, tombe à 00:00 UTC (`scripts/out/a2_roll_diagnostics.json`,
 « vendor hypothesis, supported », queue 20 à 25 fois plus lourde qu'aux autres
 minutes).
 
-## À faire à la réception des dates
+## Ce que la comparaison a donné — fait le 2026-09-17
 
-**Comparer avant d'adopter.** L'écart entre la liste reçue et la détection
-empirique mesure la méthode et fera l'objet d'une entrée dans `LECONS.md`
-(`D01` §6). Ne pas écraser silencieusement : c'est la seule occasion de chiffrer
-ce que vaut le détecteur.
+`scripts/compare_rolls.py`, exécuté **avant** l'adoption comme `D01` §6 l'exige.
+Le détecteur de la phase 01 retrouve **331 des 527 roulements — 62,8 %** — et
+date **67 événements qui n'en sont pas**. De 97,6 % (6E) à 38 % (6B) et 0 %
+(FDAX). Le compte annuel le faisait paraître à 90 % parce que manques et faux
+positifs se compensent (`LECONS.md` **L06**).
+
+Deux corrections de fait en sont sorties : GC ne roule pas mensuellement mais
+5,07 fois par an (**L07**), et FDAX **oscille** — 24 retours à une échéance déjà
+quittée. Et un coût plus large qu'annoncé : 41 des 333 roulements visibles à
+mi-2023 tombent hors barre, et l'ajustement y absorbe une fermeture entière —
+jusqu'à 3 648 bp (**L08**).
 
 ## Voir aussi
 

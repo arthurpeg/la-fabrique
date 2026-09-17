@@ -17,10 +17,13 @@ Three checks, one per clause of the gate.
    separate -- the real move during the splice minute -- is measured here rather
    than hoped away.
 
-3b. THE REAL SERIES. The machinery above is useless without the authoritative
-   roll dates, which are not in the catalogue. This check therefore FAILS, and
-   the gate stays shut. That is the intended outcome, not an accident: a gate is
-   never crossed "provisionally". What is missing is data, not code.
+3b. THE REAL SERIES, now that the authoritative roll dates are in the catalogue
+   (received 2026-09-17, see catalogue/roll_dates.json). Three things are asked
+   of it: that a series built at t agrees with one built later up to a uniform
+   factor; that returns away from the splices are untouched; and that every
+   splice known at t is actually applied. A fourth is asked of the DATES
+   themselves -- the vendor says a contract changed on those days, so our own
+   prices must show something there, and the check measures how much.
 
     python scripts/gate_02_panel.py
 
@@ -45,6 +48,7 @@ from panel import (  # noqa: E402
     RollDatesMissing,
     SliceExceeded,
     back_adjust,
+    splice_ratios,
     load_catalogue,
     visible_rolls,
 )
@@ -56,6 +60,7 @@ FIRST_BAR = "2016-01-03 23:00"
 BEFORE_FIRST_BAR = "2016-01-03 22:59"
 INSIDE_HOLDOUT = "2025-06-02 20:00"
 SAMPLE = ("NQ", "GC", "6J")
+REAL_SAMPLE = ("NQ", "GC", "CL")
 
 
 def synthetic(splice_minute_move_bp: float = 0.0):
@@ -194,16 +199,69 @@ def main() -> int:
           f"({injected_bp} bp injectés, {round(absorbed[0] * 10_000, 4)} bp absorbés)")
 
     print("3b. la série ajustée des instruments réels")
-    blocked = [r for r, i in catalogue.instruments.items() if i.roll_dates is None]
-    for root in SAMPLE:
-        refuses(RollDatesMissing, lambda root=root: first.adjusted(root), f"adjusted({root})")
+    blocked = [r for r in catalogue.universe() if catalogue.instrument(r).roll_dates is None]
     if blocked:
         failures.append(
             f"NON VÉRIFIABLE : dates de roulement absentes du catalogue pour "
-            f"{len(blocked)} instruments ({', '.join(blocked)}). Intrant attendu de "
-            f"l'auteur des données (todo roll-dates). Sans elles, la série ajustée à "
-            f"rebours ne peut être ni construite ni vérifiée."
+            f"{len(blocked)} instruments de l'univers ({', '.join(blocked)})."
         )
+
+    for root in REAL_SAMPLE:
+        rolls_at_t1 = visible_rolls(
+            catalogue.instrument(root).roll_dates,
+            first.asof,
+            catalogue.instrument(root).splice_minute_utc,
+        )
+        raw_t1 = first.bars(root, columns=["close"])["close"]
+        adjusted_t1 = first.adjusted(root, columns=["close"])["close"]
+        adjusted_t2 = late.adjusted(root, columns=["close"])["close"]
+
+        # Every splice known at t is applied -- none silently skipped.
+        applied = splice_ratios(raw_t1, rolls_at_t1)
+        check(
+            len(applied) == len(rolls_at_t1),
+            f"{root}: {len(applied)} splices applied out of {len(rolls_at_t1)} known at "
+            f"{first.asof}",
+        )
+
+        # A series built at t, and one built later and truncated back to t, differ by
+        # a uniform factor and by nothing else.
+        common = adjusted_t2.loc[adjusted_t2.index <= first.asof]
+        ratio = common / adjusted_t1
+        check(
+            len(common) == len(adjusted_t1),
+            f"{root}: the two constructions do not cover the same bars",
+        )
+        check(
+            float(ratio.max() / ratio.min() - 1) < 1e-9,
+            f"{root}: built at {first.asof} and built at {late.asof}, the series differ by "
+            f"more than a uniform factor (spread {float(ratio.max() / ratio.min() - 1):.3e})",
+        )
+
+        # Away from the splices, the adjustment changes no return at all.
+        # The jump lands on the first bar at or after the roll instant, which is not
+        # the roll instant itself when the market was shut that minute.
+        splice_stamps = {splice.bar for splice in applied}
+        off_bar = sum(1 for splice in applied if splice.bar != splice.roll)
+        raw_returns, adjusted_returns = raw_t1.pct_change(), adjusted_t1.pct_change()
+        off_splice = ~raw_returns.index.isin(splice_stamps)
+        check(
+            float((raw_returns[off_splice] - adjusted_returns[off_splice]).abs().max()) < 1e-9,
+            f"{root}: the adjustment moved a return away from a splice",
+        )
+
+        # And the dates themselves: the vendor claims a contract changed there, so our
+        # own prices must show something. This measures how much.
+        at_splice = raw_returns.index.isin(splice_stamps)
+        lift = float(raw_returns[at_splice].abs().median() / raw_returns.abs().median())
+        check(
+            lift > 5.0,
+            f"{root}: the one-minute move at the vendor splice minutes is only {lift:.1f}x "
+            f"the usual one -- the dates may not be the splices",
+        )
+        print(f"    {root:4s} {len(rolls_at_t1):3d} recollements appliqués "
+              f"({off_bar} hors barre), facteur uniforme vérifié, "
+              f"mouvement au raccord {lift:.0f}x l'ordinaire")
 
     print(f"\n{checked} vérifications")
     if failures:
