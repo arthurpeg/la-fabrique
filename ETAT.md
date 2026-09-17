@@ -12,10 +12,11 @@ l'Acte I.**
 un IC poolé exige un jeton délivré par le registre, et la ligne est écrite par la
 fonction qui produit la valeur. Le harnais a changé, donc **tous les résultats
 antérieurs sont périmés** — coût réel nul, `counted_tests()` valait 0.
-**Décision pertinente pour la phase courante :** `D05` § Ce qui reste ouvert —
-l'empreinte du **code de signal**, distincte de celle du harnais, se fixe en
-phase 05 avec l'API de signal. Et `D03`, pour ce que le Panel accepte de montrer
-à un signal.
+**Décision pertinente pour la phase courante :** `decisions/DECISION-06-signaux-de-reference.md`
+— les deux étalons contre lesquels les portes 05, 06 et 08 se démontrent, et
+l'interface provisoire `scores(panel, cells)` que la phase 05 doit formaliser.
+Et `D05` § Ce qui reste ouvert, pour l'empreinte du **code de signal**, distincte
+de celle du harnais.
 
 > Ce fichier est lu en premier par chaque session et mis à jour en dernier.
 > Les phases ci-dessous suivent **l'ordre de construction** (le juge avant
@@ -91,11 +92,15 @@ Ce que la porte 05 exige, et qui n'existe pas :
    et **attraper un look-ahead injecté exprès**. Un test qui n'a jamais rien
    attrapé n'est pas un test.
 
-**Un point à trancher avant, et il n'est pas technique.** Le plan de montage fait
-des « cinq signaux codés à la main dont tu connais déjà la réponse » le banc
-d'essai de cette porte — et des portes 06 et 08. `signals/` est vide et ces
-signaux n'existent pas (décision de l'opérateur, 2026-09-17). Il faut donc soit
-coder deux à cinq signaux de référence intraday (`corpus/AMORCE.md`, entrées 1, 2
-et 6 — Gao 2018, Baltussen 2021, Wen 2021), soit une décision écrite qui
-redéfinit les portes 05, 06 et 08 sans vérité terrain. **Ne pas ouvrir la phase 05
-avant d'avoir tranché ça** : c'est le banc d'essai qui définit la porte.
+**Le banc d'essai existe depuis le 2026-09-17** — c'était le préalable, il est
+levé. `D06` a tranché : **deux étalons**, pas cinq, tirés du corpus et écrits à la
+main — `gao-2018-intraday-momentum` (`H01`) et
+`baltussen-2021-intraday-momentum` (`H02`), avec leurs hypothèses
+pré-enregistrées dans `hypotheses/` **avant** toute mesure.
+
+**Aucun IC n'a été calculé sur eux** et `counted_tests()` vaut toujours 0 :
+`scripts/check_signals.py` ne vérifie que couverture, dispersion et causalité —
+257 vérifications, 25 cellules sur 25, médiane de 633 observations par cellule.
+La mesure de `H01` et `H02` attend les contrôles automatiques de la phase 06.
+Les cinq signaux du plan de montage (momentum 12-1, book-to-price…) sont écartés
+pour de bon : transversaux, mensuels, sur actions — ledger F17.

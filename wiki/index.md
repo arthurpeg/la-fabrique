@@ -52,7 +52,7 @@ Une page par phase de l'**ordre de construction** (`ETAT.md`, phases 01→15).
 
 ## Signaux — l'unité du produit fini
 
-- [[signaux/README|Signaux — dossier vide, et c'est correct]] — pourquoi il n'y a rien ici avant la phase 08
+- [[signaux/README|Signaux — deux étalons, et aucun candidat]] — `H01` et `H02`, écrits à la main pour donner un sujet aux portes 05, 06 et 08 ; **aucun IC calculé sur eux**
 
 ## Concepts — pour qu'on entende la même chose
 
