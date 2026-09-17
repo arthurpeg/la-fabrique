@@ -60,7 +60,7 @@ métrique, tranches, traitement des roulements — et `DECISION-03`.
 
 | Attendu | De qui | Bloque |
 |---|---|---|
-| Dates de roulement autoritatives, et confirmation « brutes ou ajustées » | auteur des données | **phase 02** |
+| Dates de roulement autoritatives, et confirmation « brutes ou ajustées » | auteur des données — une requête `symbology.resolve` chez Databento suffit, voir la page de phase 02 | **phase 02** |
 | Moteur de backtest | tiers | phase 10 |
 | Frais CME / EUREX, multiplicateurs de contrat | barèmes publics, à dépouiller | calibration du harnais, phase 03 |
 

@@ -83,6 +83,30 @@ dépend. `CLAUDE.md` § Les interdits : *ne jamais franchir une porte
   qui corrige lui-même un roulement est un bug d'architecture, pas une astuce.
 - Le prix **brut reste disponible séparément**, pour les niveaux et l'exécution.
 
+## Par où les dates s'obtiennent — vérifié le 2026-09-17
+
+Elles ne sont récupérables ni des fichiers (le parquet ne porte que
+`open, high, low, close, volume, ts_event` et une métadonnée de 104 caractères :
+**aucune identité de contrat par ligne**), ni du dépôt de données (deux commits,
+aucun script de génération), ni d'une règle de calendrier — `.v.0` roule au
+**basculement de volume**, pas à une date.
+
+Mais elles existent chez le fournisseur. Databento expose
+`Historical.symbology.resolve` : pour un symbole et une fenêtre de dates, il rend
+une liste d'intervalles `{d0, d1, s}` — début effectif, fin effective, symbole
+résolu. Avec `stype_in=continuous` (`NQ.v.0`) et `stype_out=raw_symbol` sur
+2016-01-03 → 2026-08-28, **chaque `d0` est une date de roulement** et `s` nomme
+l'échéance. C'est une requête de symbologie, pas un téléchargement de données.
+
+À demander à l'auteur des données, qui a la clé d'API. Deux réserves non levées :
+le coût éventuel de l'endpoint, et la longueur de fenêtre acceptée en un appel.
+
+Détail utile pour la comparaison : Databento classe les échéances **par le volume
+de la veille**, donc la bascule prend effet le jour suivant le croisement. Le
+raccord, lui, tombe à 00:00 UTC (`scripts/out/a2_roll_diagnostics.json`,
+« vendor hypothesis, supported », queue 20 à 25 fois plus lourde qu'aux autres
+minutes).
+
 ## À faire à la réception des dates
 
 **Comparer avant d'adopter.** L'écart entre la liste reçue et la détection

@@ -30,6 +30,19 @@ le facteur d'échelle uniforme ci-dessus *est* la définition du multiplicatif
 ([[Failed Ideas/ledger]] F14) — prouvé sur un cas synthétique par la porte 02,
 clause 3a. Il refuse tant que les dates manquent. Voir [[concepts/panel]].
 
+## Le raccord tombe dans une fenêtre qu'on négocie
+
+Mesuré le 2026-09-17 : **00:00 UTC vaut 19:00 à New York en hiver et 20:00 en
+été**. Dans les deux cas c'est **à l'intérieur de la fenêtre `ASIA`**
+(19:00 → 03:00) — et en hiver c'est sa toute première minute. La barre de
+recollement n'est donc pas reléguée dans la plage morte 16:00 → 19:00 : elle
+tombe dans une fenêtre **retenue**, celle qui contient `NQ × ASIA`, la meilleure
+cellule asiatique de la grille ([[concepts/cellule]]).
+
+Conséquence pour la phase 03 : **ça ne se contourne pas en changeant de fenêtre.**
+Toute grandeur calculée sur une fenêtre `ASIA` qui enjambe un roulement est
+inutilisable tant que la série ajustée n'existe pas.
+
 ## Ce que ça ne veut pas dire
 
 - **Neutraliser la barre de roulement ne suffit pas — de loin.** Le niveau de prix
