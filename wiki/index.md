@@ -1,6 +1,6 @@
 ---
 type: hub
-updated: 2026-09-16
+updated: 2026-09-17
 status: actif
 sources: [wiki/SCHEMA.md, decisions/DECISION-02-wiki.md]
 ---
@@ -39,7 +39,7 @@ Une page par phase de l'**ordre de construction** (`ETAT.md`, phases 01→15).
 `ETAT.md` fait foi ; ces pages le reflètent et l'étoffent.
 
 - [[phases/phase-01-decision-donnees|Phase 01 — La décision données]] — univers, grille, métrique, tranches ; `franchie`
-- [[phases/phase-02-panel-pit|Phase 02 — Le Panel point-in-time]] — l'impossibilité du look-ahead se fabrique ici ; `bloquee` sur les dates de roulement
+- [[phases/phase-02-panel-pit|Phase 02 — Le Panel point-in-time]] — l'impossibilité du look-ahead se fabrique ici ; `en-cours`, porte bloquée sur les dates de roulement
 - [[phases/phase-03-harnais-ic|Phase 03 — Le harnais d'IC calibré]] — le juge, figé et versionné à partir de là ; `a-faire`
 - [[phases/phase-04-registre-et-holdout|Phase 04 — Le registre et le verrou du holdout]] — invariants III et V fabriqués, pas promis ; `a-faire`
 
@@ -59,6 +59,7 @@ Une page par phase de l'**ordre de construction** (`ETAT.md`, phases 01→15).
 - [[concepts/ic|IC — coefficient d'information]] — en série temporelle, poolé, et produit par le seul harnais. `stable`
 - [[concepts/largeur-effective|Largeur effective]] — ~4 paris pour 9 instruments ; la contrainte centrale. `stable`
 - [[concepts/les-deux-ordres|Les deux ordres]] — construction contre exécution ; l'erreur la plus fréquente d'une session froide. `stable`
+- [[concepts/panel|Panel]] — la couche de données : ouvert à une date, il ne peut pas lire le futur. `provisoire`
 - [[concepts/point-in-time|Point-in-time]] — par construction, jamais par vigilance. `stable`
 - [[concepts/porte|Porte]] — binaire ; jamais franchie « provisoirement ». `stable`
 - [[concepts/registre|Registre]] — le compte des tests, irremplaçable et append-only. `stable`

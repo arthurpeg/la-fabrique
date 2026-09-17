@@ -1,16 +1,17 @@
 ---
 type: phase
-updated: 2026-09-16
-status: bloquee
+updated: 2026-09-17
+status: en-cours
 phase: 02
 gate: un panel se charge et est reproductible ; aucune ligne visible avant son horodatage ; la série ajustée à rebours n'utilise que les recollements <= t
 blocked_by: dates de roulement autoritatives, demandées à l'auteur des données
-sources: [ETAT.md, decisions/DECISION-01-univers-et-donnees.md]
+sources: [ETAT.md, decisions/DECISION-01-univers-et-donnees.md, decisions/DECISION-03-panel-et-catalogue.md]
 ---
 
 # Phase 02 — Le Panel point-in-time
 
-**Phase courante.** Bloquée sur un intrant externe.
+**Phase courante.** Construite aux deux tiers ; la porte reste fermée sur un
+intrant externe. `scripts/gate_02_panel.py` le dit par un code de sortie.
 
 ## La porte
 
@@ -33,20 +34,30 @@ lèvera d'exception. Voir [[concepts/point-in-time]].
 - L'empreinte de préfixe de la phase 01 (`scripts/out/pit_fingerprints.json`)
   donne le moyen de détecter une réécriture d'historique — `gate_01_pit.py` est à
   rejouer, pas à croire sur parole.
-- La définition de séance sera **déclarée par instrument au catalogue**, avec son
+- La définition de séance est **déclarée par instrument au catalogue**, avec son
   horloge de référence, pas déduite d'une constante globale (`D01` §8).
+- La porte 01 a été **rejouée le 2026-09-17** : empreintes identiques à celles du
+  2026-09-15. L'historique ne s'est pas réécrit.
 
-## Ce qui manque
+## Ce qui a été construit — 2026-09-17, `D03`
+
+- `catalogue/catalogue.yaml` : 10 instruments, 9 dans l'univers, 25 cellules
+  retenues, 3 `todos` ouverts. Chaque nombre y est recopié d'une mesure, et
+  `catalogue/validate.py` le re-dérive de sa source à chaque exécution — il
+  **réapplique la règle de rétention** au lieu de croire le drapeau.
+- `panel/` : un Panel s'ouvre à une date. La coupe est **poussée dans le lecteur
+  Parquet**, donc le futur n'entre jamais dans le processus ; `truncate` ne va
+  que vers le passé ; le holdout et les bornes de tranche lèvent.
+  Voir [[concepts/panel]].
+- `scripts/gate_02_panel.py` : les trois clauses de la porte, 24 vérifications.
+
+## Ce qui manque — et c'est tout ce qui manque
 
 - **Les dates de roulement autoritatives**, et la confirmation « brutes ou
   ajustées », demandées à l'auteur des données. **Intrant bloquant.**
-- Le calendrier de séance par instrument au catalogue (`catalogue/` est vide).
-- La structure du panel elle-même.
+  `panel.adjusted()` existe et lève `RollDatesMissing` en les nommant.
 
-## Ce qui est faisable maintenant, sans débloquer la porte
-
-Chargement, calendrier de séance par instrument, structure du panel. **Mais la
-porte ne peut pas être franchie sans les dates** : la série ajustée à rebours en
+**La porte ne peut pas être franchie sans elles** : la série ajustée à rebours en
 dépend. `CLAUDE.md` § Les interdits : *ne jamais franchir une porte
 « provisoirement, on y reviendra »*.
 

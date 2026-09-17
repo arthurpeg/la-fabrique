@@ -135,6 +135,8 @@ corpus/        pdf/ les papiers (ignoré par git) ; fiches/ les JSON extraits
                (versionnés — ce sont des résultats, pas des données).
 catalogue/     catalogue.yaml : l'inventaire des instruments et de leurs
                métadonnées point-in-time, et son validateur.
+panel/         la couche de données point-in-time. Un Panel s'ouvre à une date
+               et ne lit jamais une barre postérieure. Voir DECISION-03.
 harness/       le harnais d'évaluation. Code figé, versionné, protégé.
 signals/       les implémentations de signaux, une par signal.
 registry/      SCHEMA.md et tests.jsonl. Append-only. Irremplaçable.

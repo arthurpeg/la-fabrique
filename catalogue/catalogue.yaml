@@ -1,0 +1,502 @@
+# Catalogue des instruments — l'inventaire, et ce qu'on ne sait pas encore.
+#
+# Écrit en phase 02, gardé par catalogue/validate.py : chaque nombre recopié
+# ici est revérifié contre sa source à chaque exécution du validateur. Un champ
+# inconnu vaut null et ouvre une entrée dans `todos` — jamais une valeur
+# plausible inventée (CLAUDE.md, « Les interdits »).
+#
+# Sources : le manifeste du fournisseur, scripts/out/a1_inventory.json,
+# scripts/out/a8_session_grid.json, decisions/DECISION-01 et DECISION-03.
+
+schema_version: 1
+written: 2026-09-17
+phase: 2
+
+data:
+  root_env: RSL_DATA_DIR
+  provider: Databento
+  manifest: manifeste.json
+  manifest_generated: 2026-08-31
+  granularity: 1 minute
+  index: {name: ts_event, timezone: UTC}
+  columns: [open, high, low, close, volume]
+  splicing: raw  # séries recollées, pas ajustées à rebours (D01 §6)
+
+# La grille actif × séance. Trois fenêtres disjointes, ancrées à l'horloge de
+# la place et non à UTC (D01 §3). 16:00 → 19:00 n'appartient à aucune fenêtre.
+grid:
+  timezone: America/New_York
+  windows:
+    ASIA:   {start: "19:00", end: "03:00", crosses_midnight: true}
+    EUROPE: {start: "03:00", end: "09:30", crosses_midnight: false}
+    US:     {start: "09:30", end: "16:00", crosses_midnight: false}
+  uncovered:
+    start: "16:00"
+    end: "19:00"
+    reason: règlement et arrêt quotidien ; l'heure la plus mince de la journée
+
+# La date de séance. Une séance va du soir (19:00, ouverture Globex) au
+# lendemain 16:00 ; elle porte la date calendaire de sa fenêtre US. Décalée de
+# +6 h sur l'horloge locale, une séance tombe sur une seule date (D03).
+session_date:
+  rule: la séance porte la date calendaire de sa fenêtre US
+  anchor_shift_hours: 6
+
+# Les tranches. Deux, pas trois (D01 §5).
+slices:
+  pool:    {start: 2016-01-03, end: 2023-12-31, status: open}
+  holdout: {start: 2024-01-01, end: 2026-08-28, status: sealed, unseal_phase: 15}
+
+# Règle de rétention des cellules, posée AVANT lecture des chiffres (D01 §3).
+retention_rule:
+  median_volume_per_minute_min: 10
+  share_thin_bars_max: 0.25
+  round_trip_over_move15_max: 0.333
+
+instruments:
+  - root: NQ
+    name: Nasdaq 100
+    symbol: NQ.v.0
+    asset_class: equity_index
+    file: indices/NQ_v0_1m.parquet
+    exchange: CME/CBOT/NYMEX/COMEX
+    databento_dataset: GLBX.MDP3
+    clock: America/New_York
+    in_universe: true
+    history:
+      start: "2016-01-03 23:00:00+00:00"
+      end: "2026-08-28 20:59:00+00:00"
+      bars: 3728989
+      years: 10.65
+    roll:
+      rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
+      cycle: quarterly
+      splice_minute_utc: "00:00"
+      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
+    tick: 0.25
+    multiplier: null  # todo multipliers
+    fee_per_contract_usd: null  # todo fees
+    cells:
+      ASIA:
+        retained: true
+        spread_floor_bp: 0.21
+        median_volume_per_minute: 41.0
+        share_thin_bars: 0.116
+        median_abs_15min_move_bp: 3.0
+        round_trip_over_move: 0.07
+      EUROPE:
+        retained: true
+        spread_floor_bp: 0.26
+        median_volume_per_minute: 101.0
+        share_thin_bars: 0.025
+        median_abs_15min_move_bp: 4.4
+        round_trip_over_move: 0.06
+      US:
+        retained: true
+        spread_floor_bp: 0.79
+        median_volume_per_minute: 727.0
+        share_thin_bars: 0.0
+        median_abs_15min_move_bp: 8.5
+        round_trip_over_move: 0.09
+  - root: ES
+    name: S&P 500
+    symbol: ES.v.0
+    asset_class: equity_index
+    file: indices/ES_v0_1m.parquet
+    exchange: CME/CBOT/NYMEX/COMEX
+    databento_dataset: GLBX.MDP3
+    clock: America/New_York
+    in_universe: true
+    history:
+      start: "2016-01-03 23:00:00+00:00"
+      end: "2026-08-28 20:59:00+00:00"
+      bars: 3744976
+      years: 10.65
+    roll:
+      rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
+      cycle: quarterly
+      splice_minute_utc: "00:00"
+      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
+    tick: 0.25
+    multiplier: null  # todo multipliers
+    fee_per_contract_usd: null  # todo fees
+    cells:
+      ASIA:
+        retained: true
+        spread_floor_bp: 0.65
+        median_volume_per_minute: 87.0
+        share_thin_bars: 0.062
+        median_abs_15min_move_bp: 2.3
+        round_trip_over_move: 0.28
+      EUROPE:
+        retained: true
+        spread_floor_bp: 0.65
+        median_volume_per_minute: 270.0
+        share_thin_bars: 0.009
+        median_abs_15min_move_bp: 3.5
+        round_trip_over_move: 0.19
+      US:
+        retained: true
+        spread_floor_bp: 0.71
+        median_volume_per_minute: 2219.0
+        share_thin_bars: 0.0
+        median_abs_15min_move_bp: 6.2
+        round_trip_over_move: 0.11
+  - root: YM
+    name: Dow Jones
+    symbol: YM.v.0
+    asset_class: equity_index
+    file: indices/YM_v0_1m.parquet
+    exchange: CME/CBOT/NYMEX/COMEX
+    databento_dataset: GLBX.MDP3
+    clock: America/New_York
+    in_universe: true
+    history:
+      start: "2016-01-03 23:00:00+00:00"
+      end: "2026-08-28 20:59:00+00:00"
+      bars: 3702390
+      years: 10.65
+    roll:
+      rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
+      cycle: quarterly
+      splice_minute_utc: "00:00"
+      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
+    tick: 1.0
+    multiplier: null  # todo multipliers
+    fee_per_contract_usd: null  # todo fees
+    cells:
+      ASIA:
+        retained: false
+        spread_floor_bp: 0.32
+        median_volume_per_minute: 15.0
+        share_thin_bars: 0.346
+        median_abs_15min_move_bp: 2.2
+        round_trip_over_move: 0.15
+      EUROPE:
+        retained: true
+        spread_floor_bp: 0.32
+        median_volume_per_minute: 43.0
+        share_thin_bars: 0.077
+        median_abs_15min_move_bp: 3.4
+        round_trip_over_move: 0.09
+      US:
+        retained: true
+        spread_floor_bp: 0.43
+        median_volume_per_minute: 199.0
+        share_thin_bars: 0.003
+        median_abs_15min_move_bp: 6.1
+        round_trip_over_move: 0.07
+  - root: GC
+    name: Or
+    symbol: GC.v.0
+    asset_class: metal
+    file: metaux/GC_v0_1m.parquet
+    exchange: CME/CBOT/NYMEX/COMEX
+    databento_dataset: GLBX.MDP3
+    clock: America/New_York
+    in_universe: true
+    history:
+      start: "2016-01-03 23:00:00+00:00"
+      end: "2026-08-28 20:59:00+00:00"
+      bars: 3717717
+      years: 10.65
+    roll:
+      rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
+      cycle: monthly
+      splice_minute_utc: "00:00"
+      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
+    tick: 0.0999999999994543
+    multiplier: null  # todo multipliers
+    fee_per_contract_usd: null  # todo fees
+    cells:
+      ASIA:
+        retained: true
+        spread_floor_bp: 0.56
+        median_volume_per_minute: 45.0
+        share_thin_bars: 0.092
+        median_abs_15min_move_bp: 3.4
+        round_trip_over_move: 0.16
+      EUROPE:
+        retained: true
+        spread_floor_bp: 0.56
+        median_volume_per_minute: 97.0
+        share_thin_bars: 0.021
+        median_abs_15min_move_bp: 4.8
+        round_trip_over_move: 0.12
+      US:
+        retained: true
+        spread_floor_bp: 0.56
+        median_volume_per_minute: 129.0
+        share_thin_bars: 0.022
+        median_abs_15min_move_bp: 5.1
+        round_trip_over_move: 0.11
+  - root: CL
+    name: Petrole WTI
+    symbol: CL.v.0
+    asset_class: energy
+    file: energie/CL_v0_1m.parquet
+    exchange: CME/CBOT/NYMEX/COMEX
+    databento_dataset: GLBX.MDP3
+    clock: America/New_York
+    in_universe: true
+    history:
+      start: "2016-01-03 23:00:00+00:00"
+      end: "2026-08-28 20:59:00+00:00"
+      bars: 3734262
+      years: 10.65
+    roll:
+      rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
+      cycle: monthly
+      splice_minute_utc: "00:00"
+      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
+    tick: 0.009999999999990905
+    multiplier: null  # todo multipliers
+    fee_per_contract_usd: null  # todo fees
+    cells:
+      ASIA:
+        retained: true
+        spread_floor_bp: 1.55
+        median_volume_per_minute: 31.0
+        share_thin_bars: 0.184
+        median_abs_15min_move_bp: 6.0
+        round_trip_over_move: 0.26
+      EUROPE:
+        retained: true
+        spread_floor_bp: 1.55
+        median_volume_per_minute: 151.0
+        share_thin_bars: 0.016
+        median_abs_15min_move_bp: 12.4
+        round_trip_over_move: 0.12
+      US:
+        retained: true
+        spread_floor_bp: 1.55
+        median_volume_per_minute: 286.0
+        share_thin_bars: 0.012
+        median_abs_15min_move_bp: 14.2
+        round_trip_over_move: 0.11
+  - root: 6E
+    name: EUR/USD
+    symbol: 6E.v.0
+    asset_class: currency
+    file: forex/6E_v0_1m.parquet
+    exchange: CME/CBOT/NYMEX/COMEX
+    databento_dataset: GLBX.MDP3
+    clock: America/New_York
+    in_universe: true
+    history:
+      start: "2016-01-03 23:00:00+00:00"
+      end: "2026-08-28 20:59:00+00:00"
+      bars: 3696620
+      years: 10.65
+    roll:
+      rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
+      cycle: quarterly
+      splice_minute_utc: "00:00"
+      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
+    tick: 4.999999999988347e-05
+    multiplier: null  # todo multipliers
+    fee_per_contract_usd: null  # todo fees
+    cells:
+      ASIA:
+        retained: true
+        spread_floor_bp: 0.44
+        median_volume_per_minute: 27.0
+        share_thin_bars: 0.21
+        median_abs_15min_move_bp: 1.7
+        round_trip_over_move: 0.26
+      EUROPE:
+        retained: true
+        spread_floor_bp: 0.44
+        median_volume_per_minute: 125.0
+        share_thin_bars: 0.01
+        median_abs_15min_move_bp: 3.0
+        round_trip_over_move: 0.15
+      US:
+        retained: true
+        spread_floor_bp: 0.44
+        median_volume_per_minute: 118.0
+        share_thin_bars: 0.024
+        median_abs_15min_move_bp: 2.6
+        round_trip_over_move: 0.17
+  - root: 6B
+    name: GBP/USD
+    symbol: 6B.v.0
+    asset_class: currency
+    file: forex/6B_v0_1m.parquet
+    exchange: CME/CBOT/NYMEX/COMEX
+    databento_dataset: GLBX.MDP3
+    clock: America/New_York
+    in_universe: true
+    history:
+      start: "2016-01-03 23:00:00+00:00"
+      end: "2026-08-28 20:59:00+00:00"
+      bars: 3469740
+      years: 10.65
+    roll:
+      rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
+      cycle: quarterly
+      splice_minute_utc: "00:00"
+      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
+    tick: 9.999999999998899e-05
+    multiplier: null  # todo multipliers
+    fee_per_contract_usd: null  # todo fees
+    cells:
+      ASIA:
+        retained: false
+        spread_floor_bp: 0.77
+        median_volume_per_minute: 12.0
+        share_thin_bars: 0.424
+        median_abs_15min_move_bp: 2.2
+        round_trip_over_move: 0.35
+      EUROPE:
+        retained: true
+        spread_floor_bp: 0.77
+        median_volume_per_minute: 63.0
+        share_thin_bars: 0.051
+        median_abs_15min_move_bp: 3.8
+        round_trip_over_move: 0.2
+      US:
+        retained: true
+        spread_floor_bp: 0.77
+        median_volume_per_minute: 59.0
+        share_thin_bars: 0.089
+        median_abs_15min_move_bp: 3.1
+        round_trip_over_move: 0.25
+  - root: 6J
+    name: USD/JPY
+    symbol: 6J.v.0
+    asset_class: currency
+    file: forex/6J_v0_1m.parquet
+    exchange: CME/CBOT/NYMEX/COMEX
+    databento_dataset: GLBX.MDP3
+    clock: America/New_York
+    in_universe: true
+    history:
+      start: "2016-01-03 23:00:00+00:00"
+      end: "2026-08-28 20:59:00+00:00"
+      bars: 3684259
+      years: 10.65
+    roll:
+      rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
+      cycle: quarterly
+      splice_minute_utc: "00:00"
+      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
+    tick: 4.999999999987653e-07
+    multiplier: null  # todo multipliers
+    fee_per_contract_usd: null  # todo fees
+    cells:
+      ASIA:
+        retained: true
+        spread_floor_bp: 0.57
+        median_volume_per_minute: 41.0
+        share_thin_bars: 0.129
+        median_abs_15min_move_bp: 2.3
+        round_trip_over_move: 0.25
+      EUROPE:
+        retained: true
+        spread_floor_bp: 0.57
+        median_volume_per_minute: 62.0
+        share_thin_bars: 0.056
+        median_abs_15min_move_bp: 2.7
+        round_trip_over_move: 0.21
+      US:
+        retained: true
+        spread_floor_bp: 0.57
+        median_volume_per_minute: 73.0
+        share_thin_bars: 0.061
+        median_abs_15min_move_bp: 2.6
+        round_trip_over_move: 0.22
+  - root: 6A
+    name: AUD/USD
+    symbol: 6A.v.0
+    asset_class: currency
+    file: forex/6A_v0_1m.parquet
+    exchange: CME/CBOT/NYMEX/COMEX
+    databento_dataset: GLBX.MDP3
+    clock: America/New_York
+    in_universe: true
+    history:
+      start: "2016-01-03 23:00:00+00:00"
+      end: "2026-08-28 20:59:00+00:00"
+      bars: 3616630
+      years: 10.65
+    roll:
+      rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
+      cycle: quarterly
+      splice_minute_utc: "00:00"
+      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
+    tick: 4.999999999999449e-05
+    multiplier: null  # todo multipliers
+    fee_per_contract_usd: null  # todo fees
+    cells:
+      ASIA:
+        retained: true
+        spread_floor_bp: 0.71
+        median_volume_per_minute: 28.0
+        share_thin_bars: 0.197
+        median_abs_15min_move_bp: 3.1
+        round_trip_over_move: 0.23
+      EUROPE:
+        retained: true
+        spread_floor_bp: 0.71
+        median_volume_per_minute: 45.0
+        share_thin_bars: 0.098
+        median_abs_15min_move_bp: 3.8
+        round_trip_over_move: 0.19
+      US:
+        retained: true
+        spread_floor_bp: 0.71
+        median_volume_per_minute: 54.0
+        share_thin_bars: 0.099
+        median_abs_15min_move_bp: 3.3
+        round_trip_over_move: 0.22
+  - root: FDAX
+    name: DAX 40
+    symbol: FDAX.v.0
+    asset_class: equity_index
+    file: indices/FDAX_v0_1m.parquet
+    exchange: EUREX
+    databento_dataset: XEUR.EOBI
+    clock: null  # EUREX, heures européennes ; séance non tranchée (D01 §8)
+    in_universe: false
+    out_of_universe_reason: 1,46 an contre 10,65 ; absent de toute la tranche
+      pool ; corrélation 0,70-0,76 avec NQ/ES/YM ; conservé comme témoin
+      hors univers (D01 §1, L02, F02)
+    history:
+      start: "2025-03-11 00:15:00+00:00"
+      end: "2026-08-28 20:03:00+00:00"
+      bars: 365722
+      years: 1.47
+    roll:
+      rule: volume_switch  # .v.0 ; le calendaire détruisait l'historique (L01, F01)
+      cycle: null
+      splice_minute_utc: "00:00"
+      authoritative_dates: null  # todo roll-dates — intrant BLOQUANT, phase 02
+    tick: null  # non mesuré : hors univers
+    multiplier: null  # todo multipliers
+    fee_per_contract_usd: null  # todo fees
+    cells: null  # hors univers : la grille n'a pas été mesurée sur FDAX
+
+# Ce qui est inconnu, et de qui on l'attend. Un null sans todo est un bug.
+todos:
+  - id: roll-dates
+    field: instruments[*].roll.authoritative_dates
+    blocks: phase 02
+    owed_by: auteur des données
+    note: comparer avant d'adopter ; l'écart avec la détection empirique mesure
+      ce que vaut la méthode et fera une entrée dans LECONS.md (D01 §6, F09)
+  - id: multipliers
+    field: instruments[*].multiplier
+    blocks: calibration du harnais, phase 03
+    owed_by: fiches contrat CME
+  - id: fees
+    field: instruments[*].fee_per_contract_usd
+    blocks: calibration du harnais, phase 03
+    owed_by: barème CME (Non-Member Fee Finder) et liste de prix EUREX
+    note: jamais deviné ; la part fixe pèse dix fois plus lourd en micro (D01 §7)
+
+sources:
+  manifest: $RSL_DATA_DIR/manifeste.json
+  inventory: scripts/out/a1_inventory.json
+  grid: scripts/out/a8_session_grid.json
+  decisions: [DECISION-01-univers-et-donnees.md, DECISION-03-panel-et-catalogue.md]

@@ -1,8 +1,8 @@
 ---
 type: hub
-updated: 2026-09-16
+updated: 2026-09-17
 status: actif
-sources: [decisions/DECISION-01-univers-et-donnees.md, LECONS.md, corpus/AMORCE.md]
+sources: [decisions/DECISION-01-univers-et-donnees.md, decisions/DECISION-03-panel-et-catalogue.md, LECONS.md, corpus/AMORCE.md]
 ---
 
 # Registre des idées abandonnées
@@ -54,7 +54,7 @@ il ne le réécrit pas.
 | F10 | Retenir les **27 cellules** actif × séance | 2026-09-15 | 01 | Deux tombent sous la règle de rétention posée **avant** lecture des chiffres (volume médian ≥ 10 contrats/min, barres minces ≤ 25 %, aller-retour ≤ ⅓ du mouvement médian de 15 min) : `6B × ASIA` (42,4 % de barres minces, coût à 35 % du mouvement) et `YM × ASIA` (34,6 %, 15 contrats/min). | `D01` §3, `scripts/out/a8_session_grid.json` | Rien pour ces deux-là aux seuils actuels. Un changement de seuil serait une décision écrite. |
 | F11 | Exclure **`NQ × ASIA`**, « cas d'exclusion évident » | 2026-09-15 | 01 | **L'intuition était fausse et la mesure l'a retournée** : 41 contrats/minute, 11,6 % de barres minces, coût à **7 %** du mouvement médian — la meilleure cellule asiatique de la grille. Elle est retenue. Ligne gardée comme rappel : l'évidence non mesurée est un piège symétrique de l'espoir non mesuré. | `D01` §3 | Sans objet — c'est l'exclusion qui a été abandonnée, pas la cellule. |
 | F12 | Ancrer les **fenêtres de séance à UTC** | 2026-09-15 | 01 | Ferait dériver les fenêtres d'une heure deux fois par an, à des dates que personne n'a choisies. La disjonction des fenêtres — l'objet même de l'exigence UTC — est préservée dans `America/New_York`, la seule horloge où elle peut l'être pour neuf instruments tous sur CME Globex. | `D01` §3, §8 | Un instrument hors CME Globex dans l'univers, qui exigerait une définition de séance par instrument (déjà prévue au catalogue). |
-
+| F13 | Charger la **série entière en mémoire** puis n'exposer que le passé, plutôt que pousser la coupe dans le lecteur Parquet | 2026-09-17 | 02 | Le futur resterait dans le processus, et seule l'API l'en tiendrait éloigné — de la vigilance déguisée en architecture, là où l'invariant II exige une impossibilité. Et ça ne coûte rien : **0,09 s contre 0,08 s** pour lire NQ (1,88 M barres) avec la coupe poussée dans le lecteur. | `D03` § Les options, `panel/panel.py` | La disparition du filtrage à la lecture (changement de format ou de bibliothèque) — auquel cas il faut **remplacer** le mécanisme, pas revenir à celui-ci. |
 ---
 
 ## Idées annoncées mortes par la littérature, à tester quand même
