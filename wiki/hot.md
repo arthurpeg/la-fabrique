@@ -23,7 +23,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Phase courante** | 04 — le registre et le verrou du holdout (pas encore commencée) |
 | **Dernière porte franchie** | **03**, le 2026-09-17 — `scripts/gate_03_harness.py` passe ses 41 vérifications, sur les 25 cellules retenues. **Le harnais est figé à partir d'ici** : il ne change que par une décision écrite, et tous les résultats antérieurs seraient alors |
 | **Décision la plus récente** | `decisions/DECISION-04-harnais-ic.md` — IC de Spearman en série temporelle, poolé par observations, `t` déflaté deux fois, coût rendu comme plancher étiqueté, écriture au registre à chaque IC. |
-| **Tests au registre** | 22 |
+| **Tests au registre** | 25 |
 | **Idées abandonnées recensées** | 14 |
 | **Entrées au journal** | 8 |
 
