@@ -98,8 +98,12 @@ résolu. Avec `stype_in=continuous` (`NQ.v.0`) et `stype_out=raw_symbol` sur
 2016-01-03 → 2026-08-28, **chaque `d0` est une date de roulement** et `s` nomme
 l'échéance. C'est une requête de symbologie, pas un téléchargement de données.
 
-À demander à l'auteur des données, qui a la clé d'API. Deux réserves non levées :
-le coût éventuel de l'endpoint, et la longueur de fenêtre acceptée en un appel.
+À demander à l'auteur des données, qui a la clé d'API. **L'endpoint est documenté
+comme facturé $0.00** — Databento mètre les données au volume livré, pas la
+symbologie ni les métadonnées ; obtenir les dates ne rouvre donc pas le budget de
+[[Failed Ideas/ledger]] F04. Réserve restante : la longueur de fenêtre acceptée en
+un appel. En cas de doute, `metadata.get_cost` chiffre une requête avant de la
+lancer.
 
 Détail utile pour la comparaison : Databento classe les échéances **par le volume
 de la veille**, donc la bascule prend effet le jour suivant le croisement. Le
