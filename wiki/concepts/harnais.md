@@ -55,9 +55,10 @@ phase 05 ; rien ici ne préjuge de cette interface.
 
 ## Comment il a été calibré
 
-Porte 03, `scripts/gate_03_harness.py`, 19 vérifications : un score qui **est**
-le rendement futur rend `1.000000000` sur les trois cellules de calibration ; une
-seconde implémentation, écrite différemment, reproduit rendements et IC à 1e-12 ;
+Porte 03, `scripts/gate_03_harness.py`, 41 vérifications : un score qui **est**
+le rendement futur rend `1.000000000` sur les **25 cellules retenues**
+(5 958 995 observations) ; une seconde implémentation, écrite différemment,
+reproduit rendements et IC à 1e-12 ;
 un score indépendant du futur rend `+0,00108` et un `t` final de `+0,06`.
 
 ## Où c'est fixé

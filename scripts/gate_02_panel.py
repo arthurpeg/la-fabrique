@@ -59,8 +59,10 @@ LATE = "2023-06-14 20:00"
 FIRST_BAR = "2016-01-03 23:00"
 BEFORE_FIRST_BAR = "2016-01-03 22:59"
 INSIDE_HOLDOUT = "2025-06-02 20:00"
-SAMPLE = ("NQ", "GC", "6J")
-REAL_SAMPLE = ("NQ", "GC", "CL")
+# Tout l'univers, pas un échantillon : une clause vérifiée sur trois instruments
+# sur neuf est une clause vérifiée à un tiers.
+SAMPLE = ("NQ", "ES", "YM", "GC", "CL", "6E", "6B", "6J", "6A")
+REAL_SAMPLE = SAMPLE
 
 
 def synthetic(splice_minute_move_bp: float = 0.0):

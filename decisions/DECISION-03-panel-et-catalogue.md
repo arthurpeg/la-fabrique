@@ -152,8 +152,8 @@ machine courante n'a pas `uv` : les scripts ont été exécutés avec l'interpr�
 | Point | Échéance | Statut |
 |---|---|---|
 | La série ajustée à rebours sur données réelles | **phase 02**, à réception des dates | l'algorithme est écrit et prouvé (complément ci-dessous) ; il refuse faute de dates. Comparer la liste reçue à la détection empirique avant d'adopter (`D01` §6) |
-| Le cache d'objets Panel | phase 03, quand le harnais balaiera des dates | non tranché : ce sera un cache de panels, jamais de séries entières |
-| Le calendrier de jours fériés par place | phase 03 | les séances se déduisent aujourd'hui des barres présentes, ce qui suffit tant qu'aucune grandeur ne compte des séances absentes |
+| Le cache d'objets Panel | ~~phase 03~~ → **phase 09**, au walk-forward | non dû : le harnais de la phase 03 évalue à une seule date, et sa porte tourne en 38 s. Ce sera un cache de panels, jamais de séries entières |
+| Le calendrier de jours fériés par place | ~~phase 03~~ → **dès qu'une grandeur comptera des séances absentes** (phase 09 ou 10) | non dû : le harnais compte des observations, pas des séances. Les séances se déduisent des barres présentes |
 | Multiplicateurs et frais | phase 03 | `null`, `todo`, sources nommées (`D01` §7) |
 | `uv` sur cette machine | quand on y reviendra | absent ; `uv.lock` non rejoué |
 
@@ -232,7 +232,8 @@ l'ajustement absorbe le mouvement réel d'**une minute**. C'est vrai pour 292 de
 le marché était fermé à l'instant du raccord et l'écart mesuré enjambe la
 fermeture : médiane 44,9 bp contre 28,5, jusqu'à 3 648 bp (`L08`).
 
-**Porte 02 franchie le 2026-09-17**, `scripts/gate_02_panel.py`, 43 vérifications.
+**Porte 02 franchie le 2026-09-17**, `scripts/gate_02_panel.py`, 103 vérifications
+sur les neuf instruments de l'univers.
 Les ticks ont été arrondis à la valeur que `D01` §7 déclare : la mesure brute
 portait le bruit de la soustraction flottante (GC mesuré 0,0999999999994543), et
 le validateur compare désormais avec une tolérance relative.

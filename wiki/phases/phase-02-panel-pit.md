@@ -10,7 +10,7 @@ sources: [ETAT.md, decisions/DECISION-01-univers-et-donnees.md, decisions/DECISI
 
 # Phase 02 — Le Panel point-in-time
 
-**Franchie le 2026-09-17**, `scripts/gate_02_panel.py`, 43 vérifications.
+**Franchie le 2026-09-17**, `scripts/gate_02_panel.py`, 103 vérifications sur les neuf instruments.
 Les dates de roulement sont arrivées le jour même et la porte s'est fermée
 derrière elles. Voir [[phases/phase-03-harnais-ic]] pour la suite.
 
@@ -55,7 +55,7 @@ lèvera d'exception. Voir [[concepts/point-in-time]].
   [[Failed Ideas/ledger]] F14). L'écart ne se lit qu'au rendement d'une minute à la
   minute de raccord : il emporte donc un peu de mouvement réel, **mesuré** par la
   porte (5,0 bp injectés, 5,0 bp absorbés) plutôt que passé sous silence.
-- `scripts/gate_02_panel.py` : les clauses de la porte, 31 vérifications.
+- `scripts/gate_02_panel.py` : les clauses de la porte, 103 vérifications, tout l'univers.
 
 ## Ce qui manque — et c'est tout ce qui manque
 

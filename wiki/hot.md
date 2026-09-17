@@ -21,11 +21,11 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | | |
 |---|---|
 | **Phase courante** | 04 — le registre et le verrou du holdout (pas encore commencée) |
-| **Dernière porte franchie** | **03**, le 2026-09-17 — `scripts/gate_03_harness.py` passe ses 19 vérifications. **Le harnais est figé à partir d'ici** : il ne change que par une décision écrite, et tous les résultats antérieurs seraient alors |
+| **Dernière porte franchie** | **03**, le 2026-09-17 — `scripts/gate_03_harness.py` passe ses 41 vérifications, sur les 25 cellules retenues. **Le harnais est figé à partir d'ici** : il ne change que par une décision écrite, et tous les résultats antérieurs seraient alors |
 | **Décision la plus récente** | `decisions/DECISION-04-harnais-ic.md` — IC de Spearman en série temporelle, poolé par observations, `t` déflaté deux fois, coût rendu comme plancher étiqueté, écriture au registre à chaque IC. |
-| **Tests au registre** | 12 |
+| **Tests au registre** | 22 |
 | **Idées abandonnées recensées** | 14 |
-| **Entrées au journal** | 7 |
+| **Entrées au journal** | 8 |
 
 ## Ce qui bloque
 
@@ -56,10 +56,11 @@ Ce que la porte exige **en plus**, et qui n'existe pas :
    validation**, comme il annonce le faire en phase 04. Le champ `data_slice` y
    nomme encore trois tranches quand `D01` §5 n'en a laissé que deux.
 
-## Les 7 dernières entrées du journal
+## Les 8 dernières entrées du journal
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-09-17 | `audit` | Vérification des phases 02 et 03 : couverture des portes étendue de 3-4 instruments à l'univers entier (porte 02 : 103 vérifications, 9/9 ; porte 03 : 41, 25/25 cellules, IC parfait sur 5 958 995 observations) ; contournement de l'invariant III démontré et l'IC produit inscrit au registre (stage 04-audit) | les deux portes tiennent sur tout l'univers ; deux trous nommés : slippage_bp jamais déclaré (D01 §7), et evaluate() contournable — porte 04 |
 | 2026-09-17 | `gate` | PORTE 03 FRANCHIE : D04 écrite, paquet harness/ (IC Spearman par cellule, poolé par observations, t déflaté de √h puis de √(9/4,224), coût rendu comme plancher étiqueté, écriture au registre à chaque IC) et gate_03_harness.py | 19/19 ; score parfait -> IC 1.000000000, seconde implémentation à 1e-12, bruit -> IC +0,00108 et t final +0,06 ; harnais FIGÉ ; phase courante = 04 |
 | 2026-09-17 | `gate` | PORTE 02 FRANCHIE : dates de roulement obtenues du fournisseur par symbology.resolve (527, facturé 0,00 $), comparées AVANT adoption (compare_rolls.py) puis déposées au catalogue ; clause 3b réécrite sur les instruments réels ; L06, L07, L08 | gate_02_panel.py 43/43 ; détection empirique mesurée à 62,8 % de rappel et 67 faux positifs ; GC n'est pas mensuel (5,07/an) ; FDAX oscille ; phase courante = 03 |
 | 2026-09-17 | `mesure` | Deux vérifications : le raccord à 00:00 UTC tombe dans la fenêtre ASIA (19:00 NY en hiver, 20:00 en été) — pas dans la plage morte ; et les dates de roulement sont récupérables chez Databento par Historical.symbology.resolve (intervalles d0/d1/s, continuous -> raw_symbol), pas depuis nos fichiers | contrainte inscrite pour la phase 03 ; la demande à l'auteur des données devient précise |

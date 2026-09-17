@@ -152,7 +152,7 @@ registre est là pour rendre ce périmètre visible.
 | Le glissement (`slippage_bp`) | avant le premier signal réel, phase 08 | hypothèse déclarée et pessimiste, à écrire |
 | Le nombre et les frontières des plis du walk-forward | phase 09 | non tranché ; la calibration de la phase 03 n'en a pas besoin |
 | Le seuil de FDR opérationnel | phase 09, au premier lot | la référence reste `t > 3,0` (Harvey, Liu & Zhu) |
-| Les horizons retenus pour la production | phase 08 | le harnais les accepte tous ; la calibration en utilise un, 30 minutes, sur trois cellules |
+| Les horizons retenus pour la production | phase 08 | le harnais les accepte tous ; la calibration en utilise un, 30 minutes, sur les 25 cellules |
 
 ## Condition de révision
 
@@ -167,9 +167,9 @@ registre est là pour rendre ce périmètre visible.
 
 ## Complément du 2026-09-17 — porte franchie, et ce que la calibration a corrigé
 
-**Porte 03 franchie**, `scripts/gate_03_harness.py`, 19 vérifications. Un score
-qui **est** le rendement futur rend un IC de `1.000000000` sur les trois cellules
-de calibration (728 257 observations) ; une seconde implémentation des rendements
+**Porte 03 franchie**, `scripts/gate_03_harness.py`, 41 vérifications. Un score
+qui **est** le rendement futur rend un IC de `1.000000000` sur les **25 cellules
+retenues** (5 958 995 observations) ; une seconde implémentation des rendements
 et de l'IC, écrite différemment — position par position, sans `groupby` — les
 reproduit à 1e-12 ; un score indépendant du futur rend `+0,00108` et un `t` final
 de `+0,06`. Le harnais est **figé** à partir d'ici : il ne change que par une

@@ -52,7 +52,9 @@ from panel.sessions import session_date, window_labels  # noqa: E402
 
 ASOF = "2018-06-15 20:00"
 HORIZON = "30min"
-CELLS = (("NQ", "US"), ("GC", "EUROPE"), ("6J", "ASIA"))
+# Les 25 cellules retenues, pas trois : un harnais juste sur trois cellules est
+# un harnais dont on ignore le comportement sur les vingt-deux autres.
+HAND_CHECK_CELL = ("NQ", "US")
 
 
 def cell_series(panel: Panel, root: str, window: str):
@@ -91,7 +93,8 @@ def main() -> int:
             failures.append(message)
 
     bars = 30
-    series = {cell: cell_series(panel, *cell) for cell in CELLS}
+    cells = tuple(panel.cells())
+    series = {cell: cell_series(panel, *cell) for cell in cells}
 
     print("1. un cas connu : le score EST le rendement futur, l'IC doit valoir 1")
     perfect = {}
@@ -116,7 +119,7 @@ def main() -> int:
           f"{report_perfect.observations:,} observations".replace(",", " "))
 
     print("2. vérification indépendante, seconde implémentation")
-    cell = CELLS[0]
+    cell = HAND_CHECK_CELL
     close, sessions, windows = series[cell]
     rng = np.random.default_rng(20260917)
     positions = sorted(rng.choice(len(close) - bars - 1, size=400, replace=False).tolist())
@@ -203,7 +206,7 @@ def main() -> int:
     after = len(registry.REGISTRY.read_text(encoding="utf-8").splitlines())
     check(
         after - before == 1,
-        f"une évaluation sur {len(CELLS)} cellules a écrit {after - before} lignes au registre, "
+        f"une évaluation sur {len(cells)} cellules a écrit {after - before} lignes au registre, "
         f"pas 1 (D01 §4)",
     )
     check(

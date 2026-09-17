@@ -3,7 +3,7 @@
 **Phase courante :** 04 — le registre et le verrou du holdout (pas encore commencée)
 **Date de dernière mise à jour :** 2026-09-17
 **Dernière porte franchie :** **03**, le 2026-09-17 — `scripts/gate_03_harness.py`
-passe ses 19 vérifications. **Le harnais est figé à partir d'ici** : il ne change
+passe ses 41 vérifications, sur les 25 cellules retenues. **Le harnais est figé à partir d'ici** : il ne change
 que par une décision écrite, et tous les résultats antérieurs seraient alors
 réputés périmés.
 **Décision la plus récente :** `decisions/DECISION-04-harnais-ic.md` — IC de
@@ -26,8 +26,8 @@ dont les types et valeurs permises se fixent maintenant.
 | # | Phase | Porte | État |
 |---|---|---|---|
 | 01 | La décision données | `decisions/DECISION-01` fixe univers, grille, métrique, tranches ; `gate_01_pit.py` passe. | **franchie 2026-09-15** |
-| 02 | Le Panel point-in-time | Un panel se charge, est reproductible ; aucune ligne n'est visible avant son horodatage ; la série ajustée à rebours n'utilise que les recollements ≤ t (D01 §6). | **franchie 2026-09-17** — `gate_02_panel.py`, 43 vérifications |
-| 03 | Le harnais d'IC calibré à la main | Le harnais reproduit à la main, sur un cas connu, un IC vérifié indépendamment. IC en série temporelle poolé, statistique robuste à la corrélation transversale, modèle de coûts par cellule (D01 §2 et §7). Figé et versionné à partir de là. | **franchie 2026-09-17** — `gate_03_harness.py`, 19 vérifications |
+| 02 | Le Panel point-in-time | Un panel se charge, est reproductible ; aucune ligne n'est visible avant son horodatage ; la série ajustée à rebours n'utilise que les recollements ≤ t (D01 §6). | **franchie 2026-09-17** — `gate_02_panel.py`, 103 vérifications sur les 9 instruments |
+| 03 | Le harnais d'IC calibré à la main | Le harnais reproduit à la main, sur un cas connu, un IC vérifié indépendamment. IC en série temporelle poolé, statistique robuste à la corrélation transversale, modèle de coûts par cellule (D01 §2 et §7). Figé et versionné à partir de là. | **franchie 2026-09-17** — `gate_03_harness.py`, 41 vérifications |
 | 04 | Le registre et le verrou du holdout | Aucun chemin de code ne produit un IC sans écrire au registre ; la tranche `holdout` (2024-01-01 → 2026-08-28) est inaccessible par construction. | à faire |
 
 ## Acte II — Automatiser le jugement

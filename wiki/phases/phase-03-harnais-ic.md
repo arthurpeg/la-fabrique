@@ -10,7 +10,7 @@ sources: [ETAT.md, decisions/DECISION-01-univers-et-donnees.md]
 
 # Phase 03 — Le harnais d'IC calibré à la main
 
-**Franchie le 2026-09-17**, `scripts/gate_03_harness.py`, 19 vérifications.
+**Franchie le 2026-09-17**, `scripts/gate_03_harness.py`, 41 vérifications sur les 25 cellules.
 Un score qui **est** le rendement futur rend un IC de `1.000000000` ; une
 seconde implémentation le reproduit à 1e-12 ; du bruit rend `+0,00108` et un
 `t` final de `+0,06`. **Le harnais est figé.** Voir `D04` et [[concepts/ic]].
