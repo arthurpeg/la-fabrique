@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from harness import registry
+from harness import controls, registry
 from harness.costs import costs_for
 from harness.metric import CellIC, cell_ic, forward_returns, record_pooled
 from harness.report import ICReport, effective_breadth
@@ -57,6 +57,12 @@ def evaluate(
             f"scores given for cells that are not retained at this as-of: {unknown[:3]}. "
             f"The grid holds {len(retained)} cells (D01 3)."
         )
+
+    # The controls come FIRST, before the ticket: a degenerate signal computed no
+    # IC, so it must consume no line. `screen` raises `Degenerate` and writes
+    # nothing (D08).
+    scores, verdicts = controls.screen(scores, is_test=hypothesis_ref is not None)
+    refused = tuple(v for v in verdicts if not v.kept)
 
     # The ticket is taken BEFORE the first number is touched. What the test is
     # about -- signal, hypothesis, stage, slice, horizon -- has to be nameable
@@ -116,4 +122,6 @@ def evaluate(
         breadth=breadth,
         code_hash=registry.code_hash(),
         counted_tests=registry.counted_tests(),
+        warnings=controls.warnings_for(ic, scores),
+        refused_cells=refused,
     )

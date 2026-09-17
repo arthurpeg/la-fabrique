@@ -1,22 +1,25 @@
 # ÉTAT
 
-**Phase courante :** 06 — contrôles automatiques et réplication (pas encore commencée)
+**Phase courante :** 06 — contrôles automatiques et réplication (**ouverte, non franchie**)
 **Date de dernière mise à jour :** 2026-09-17
 **Dernière porte franchie :** **05**, le 2026-09-17 — `scripts/gate_05_signal_api.py`,
 29 vérifications. Les trois look-ahead injectés (`sandbox/tainted.py`) sont
 **attrapés**, chacun pour la raison écrite d'avance ; les deux étalons passent
-16 sondes sans une divergence. Avant elle, **04** le même jour —
-`gate_04_registry.py`, 1 843 vérifications, fin de l'Acte I.
-**Décision la plus récente :** `decisions/DECISION-07-contrat-de-signal.md` — un
-signal est un module qui expose `SIGNAL_ID`, `HYPOTHESIS`, `PAPER`,
-`EXPECTED_SIGN` et `scores(panel, cells, horizon_bars)` ; il est refusé s'il
-importe hors liste blanche ; et il n'est causal que si, pour chaque barre scorée,
-tronquer le panel juste après elle rend **exactement** le même score, index
-compris.
-**Décision pertinente pour la phase courante :** `D07` § Ce qui reste ouvert —
-les contrôles de dégénérescence (signal constant, 99 % de NaN, doublons) sont
-explicitement renvoyés à la phase 06, c'est sa porte. Et `D06`, pour les deux
-étalons sur lesquels ces contrôles s'exerceront.
+16 sondes sans une divergence.
+**État de la porte 06 :** sa **clause 1** est franchie — `gate_06_controls.py`,
+25 vérifications, quatre signaux dégénérés rejetés sans consommer une ligne de
+registre. Sa **clause 2**, la réplication d'un résultat publié, ne l'est pas, et
+la porte reste donc **ouverte** : une porte à moitié franchie est une porte non
+franchie.
+**Décision la plus récente :** `decisions/DECISION-08-controles-automatiques.md` —
+les contrôles de dégénérescence vivent dans `harness/controls.py`, empreintés avec
+le harnais, et s'exécutent **avant** que le jeton soit pris : un signal rejeté ne
+consomme aucune ligne. Le détecteur de « trop beau pour être vrai » signale sans
+bloquer. Le harnais a changé, donc **tous les résultats antérieurs sont périmés**
+— coût nul pour la dernière fois, `counted_tests()` vaut encore 0.
+**Décision pertinente pour la phase courante :** `D08` § Ce qui reste ouvert (le
+magasin de scores des signaux déjà testés, renvoyé en phase 11) et `D06` § Ce qui
+reste ouvert (la mesure de `H01` et `H02`, qui appartient à cette phase).
 
 > Ce fichier est lu en premier par chaque session et mis à jour en dernier.
 > Les phases ci-dessous suivent **l'ordre de construction** (le juge avant
@@ -32,14 +35,14 @@ explicitement renvoyés à la phase 06, c'est sa porte. Et `D06`, pour les deux
 | 01 | La décision données | `decisions/DECISION-01` fixe univers, grille, métrique, tranches ; `gate_01_pit.py` passe. | **franchie 2026-09-15** |
 | 02 | Le Panel point-in-time | Un panel se charge, est reproductible ; aucune ligne n'est visible avant son horodatage ; la série ajustée à rebours n'utilise que les recollements ≤ t (D01 §6). | **franchie 2026-09-17** — `gate_02_panel.py`, 103 vérifications sur les 9 instruments |
 | 03 | Le harnais d'IC calibré à la main | Le harnais reproduit à la main, sur un cas connu, un IC vérifié indépendamment. IC en série temporelle poolé, statistique robuste à la corrélation transversale, modèle de coûts par cellule (D01 §2 et §7). Figé et versionné à partir de là. | **franchie 2026-09-17** — `gate_03_harness.py`, 41 vérifications |
-| 04 | Le registre et le verrou du holdout | Aucun chemin de code ne produit un IC sans écrire au registre ; la tranche `holdout` (2024-01-01 → 2026-08-28) est inaccessible par construction. | **franchie 2026-09-17** — `gate_04_registry.py`, 1 484 vérifications, `D05` |
+| 04 | Le registre et le verrou du holdout | Aucun chemin de code ne produit un IC sans écrire au registre ; la tranche `holdout` (2024-01-01 → 2026-08-28) est inaccessible par construction. | **franchie 2026-09-17** — `gate_04_registry.py`, 1 933 vérifications, `D05` |
 
 ## Acte II — Automatiser le jugement
 
 | # | Phase | Porte | État |
 |---|---|---|---|
 | 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07` |
-| 06 | Contrôles automatiques et réplication | Le harnais réplique un résultat publié connu, contrôles compris, sans intervention. Première cible : la falsification de Mesfin (2026) rejouée avec notre modèle de coût (`corpus/AMORCE.md`, entrée 7). | à faire |
+| 06 | Contrôles automatiques et réplication | Le harnais réplique un résultat publié connu, contrôles compris, sans intervention. Première cible : la falsification de Mesfin (2026) rejouée avec notre modèle de coût (`corpus/AMORCE.md`, entrée 7). | **NON FRANCHIE** — clause 1 (dégénérescence) franchie 2026-09-17, `gate_06_controls.py` ; clause 2 (réplication) bloquée, voir ci-dessous |
 | 07 | Triage et extraction sur 20 papiers connus | 20 fiches produites ; le triage écarte ce qu'il doit écarter, sur un verdict humain de référence. Point de départ : `corpus/AMORCE.md`. | à faire |
 | 08 | Le codeur de signal | Une fiche produit un signal exécutable qui passe la sandbox, sans retouche manuelle. | à faire |
 
@@ -71,34 +74,51 @@ explicitement renvoyés à la phase 06, c'est sa porte. Et `D06`, pour les deux
 
 ## Prochaine action
 
-**Phase 06 — contrôles automatiques et réplication.** L'Acte II est ouvert : le
-juge est incontournable, le signal a un contrat, et un look-ahead injecté se fait
-attraper. Ce qui manque maintenant est le filtre qui refuse un signal *avant*
-qu'il atteigne le harnais.
+**Finir la phase 06.** Sa clause 1 est franchie ; deux choses restent, et elles
+sont de natures différentes.
 
-Ce que la porte 06 exige :
+### 1. Mesurer `H01` et `H02` — les deux premiers tests comptés du projet
 
-1. **Les contrôles de dégénérescence.** Un signal constant, ou à 99 % de NaN, est
-   rejeté **avant** d'atteindre le harnais — donc avant de consommer une ligne de
-   registre. `D07` les a explicitement renvoyés ici.
-2. **Couverture, dispersion, autocorrélation, doublons par corrélation.** Une
-   partie existe déjà dans `scripts/check_signals.py` et demande à devenir un
-   contrôle automatique plutôt qu'un script qu'on lance à la main.
-3. **Le détecteur de « trop beau pour être vrai »** : tout IC au-dessus de 0,10
-   déclenche un rapport de suspicion (`hypotheses/README.md`).
-4. **La réplication**, et c'est la vraie difficulté : rejouer la falsification de
-   Mesfin (2026) avec **notre** modèle de coût (`corpus/AMORCE.md`, entrée 7).
-   C'est la référence la plus proche de notre situation — même univers, même
-   granularité, même pauvreté de données — et sa friction supposée vaut 8 à 15 bp
-   quand notre tick mesuré en vaut 0,21.
+Tout est prêt : les hypothèses sont pré-enregistrées depuis le 2026-09-17, les
+étalons passent la porte 05, et les contrôles tournent devant le harnais. Il
+suffit d'appeler `evaluate()` avec `hypothesis_ref="H01"` puis `"H02"`.
 
-**C'est ici que `H01` et `H02` seront mesurés pour la première fois**, et ce
-seront les deux premiers tests comptés du projet : `counted_tests()` passera de 0
-à 2. Ne pas les mesurer avant que les contrôles ci-dessus tournent — c'est
-exactement l'ordre que `D06` a fixé.
+**C'est irréversible.** `counted_tests()` passera de **0 à 2**, et ces deux lignes
+compteront dans le dénominateur de toutes les corrections de tests multiples
+jusqu'à la phase 15. Elles sont corrélées — même cible, prédicteurs différents —
+et `H02` le dit : **elles ne sont jamais comptées comme deux tests indépendants**.
 
-**Un avertissement pour la session qui mesurera.** Les étalons produisent
-13 876 observations pour 15 669 scores : 88,6 %. Les 11,4 % perdus sont des
-ancres dont l'horizon de trente barres ne tient pas dans la dernière demi-heure
-de leur fenêtre, et `6A × US` n'en garde que 30 % — inscrit comme exemption
-écrite dans `check_signals.py`, pas comme seuil abaissé. Voir `L10`.
+Deux choses à savoir avant de lancer :
+- les étalons rendent **88,6 %** d'observations pour leurs scores, et `6A × US`
+  seulement 30 % (`L10`, exemption écrite dans `check_signals.py`) ;
+- le coût restera un **plancher étiqueté** tant que `fee_bp` et `slippage_bp`
+  sont `null` : l'IC net lu sera un **majorant de performance**. L'IC brut, lui,
+  ne dépend pas des frais.
+
+### 2. La clause 2 — réplication d'un résultat publié
+
+**Bloquée, et pas seulement par du travail à faire.** La cible nommée est la
+falsification de Mesfin (2026) : 14 familles de signaux OHLCV, aucune ne survit à
+2 points d'indice de friction supposée. La rejouer « avec notre modèle de coût »
+suppose de connaître notre coût — or `harness/costs.py` ne rend qu'un **plancher**,
+`fee_bp` et `slippage_bp` étant ouverts.
+
+Conséquence précise, à ne pas contourner : on peut conclure « ne survit pas même
+au plancher » (conclusion **négative**, valide), jamais « survit sous nos coûts »
+(conclusion **positive**, hors de portée tant que le coût est incomplet).
+
+Il faut donc, dans cet ordre :
+1. la **convention de provenance** des valeurs externes (`validate.py` refuse une
+   valeur externe sans `source_url` + date + valeur citée) — jamais écrite ;
+2. les **multiplicateurs** relevés sur les fiches contrat CME ;
+3. la réponse de **Lucid** sur le caractère all-in de ses commissions, et le
+   barème micro ou mini selon ce qui sera tradé ;
+4. une déclaration écrite de `slippage_bp`, pessimiste, comme `D04` l'exige ;
+5. **alors seulement** l'implémentation des familles de Mesfin, qui est du gros
+   travail et dépensera beaucoup de tests comptés — à pré-enregistrer.
+
+Un raccourci honnête existe et ne coûte presque rien : montrer que notre
+**plancher mesuré** (0,79 bp sur `NQ × US`, 1,55 bp sur la pire cellule) est déjà
+un ordre de grandeur sous les 8 à 15 bp que vaut sa friction supposée sur nos
+données. Ce n'est pas la réplication, c'en est la prémisse — et elle se vérifie
+sans dépenser un seul test.

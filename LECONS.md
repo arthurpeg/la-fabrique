@@ -244,3 +244,27 @@ chemin de calcul. Deux réflexes en sortent. **Toute arithmétique d'horloge se
 fait en unités entières**, jamais en heures flottantes comparées à un seuil. Et
 **un signal se juge d'abord sur le nombre d'observations qu'il produit**, pas sur
 le nombre de scores : les deux peuvent différer de tout, silencieusement.
+
+---
+
+## L11 — Le harnais a deux sortes de clients, et une règle écrite pour l'un casse l'autre
+
+**Ce qu'on croyait.** Un plancher de deux cellules survivantes est une règle
+simple et sans victime : un IC poolé sur une seule cellule n'est qu'un diagnostic
+de cellule promu en résultat, et `D01` §4 l'interdit. On l'applique partout.
+
+**Ce qui était vrai.** La **porte 03** est tombée dans la seconde qui a suivi. Sa
+calibration reproduit à la main l'IC d'**une seule** cellule, à 1e-12 — c'est tout
+son objet, et c'est ce qui prouve que le harnais mesure juste. La règle était
+bonne, la calibration aussi, et elles s'excluaient : le harnais sert deux sortes
+de clients — **des tests d'hypothèse et des calibrations de lui-même** — et une
+contrainte écrite en pensant aux premiers interdit les secondes.
+
+**Comment on s'en est aperçu.** En rejouant la porte 03 après avoir modifié le
+harnais, ce que `D05` impose justement. Sans ce réflexe, la règle serait passée
+en production et la prochaine session aurait trouvé une porte 03 cassée sans
+comprendre pourquoi. Le réflexe à garder : **toute contrainte ajoutée au chemin
+d'évaluation se teste contre une calibration autant que contre un test**, et si
+elle doit distinguer les deux, elle doit le faire explicitement — ici,
+`screen(..., is_test=hypothesis_ref is not None)`, dérogation écrite et vérifiée
+étroite par la porte 06.

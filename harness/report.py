@@ -55,6 +55,12 @@ class ICReport:
     breadth: float
     code_hash: str
     counted_tests: int
+    # Les contrôles de la phase 06. Les avertissements ne bloquent rien et
+    # voyagent avec le chiffre : un résultat gênant se lit, il ne se cache pas
+    # (D08). Les cellules refusées sont nommées, pour qu'un IC calculé sur sept
+    # cellules au lieu de vingt-cinq ne passe pas pour un IC sur vingt-cinq.
+    warnings: tuple[str, ...] = ()
+    refused_cells: tuple = ()
 
     @property
     def cost_floor_bp(self) -> float:
@@ -102,6 +108,17 @@ class ICReport:
         add("  un IC net calculé là-dessus serait un MINORANT de coût, "
             "donc un MAJORANT de performance.")
         add("")
+        if self.refused_cells:
+            add(f"cellules refusées par les contrôles (D08) : {len(self.refused_cells)} — "
+                "l'IC ci-dessus ne porte PAS sur elles")
+            for verdict in self.refused_cells:
+                root, window = verdict.cell
+                add(f"  {root:5s} {window:7s} {verdict.reason}")
+            add("")
+        for warning in self.warnings:
+            add(f"AVERTISSEMENT — {warning}")
+        if self.warnings:
+            add("")
         add(f"tests comptés au registre (hors calibrations) : {self.counted_tests}")
         add("")
         add("ventilation par cellule — DIAGNOSTIC, pas des tests (D01 §4) :")

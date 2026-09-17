@@ -10,6 +10,7 @@ issued by the registry, and the line is written by the call that produces the
 number. Importing `harness.metric` is not a way around this module.
 """
 
+from harness.controls import Degenerate, duplicate_of, screen, warnings_for
 from harness.costs import CellCost, cell_cost, costs_for
 from harness.evaluate import evaluate, horizon_to_bars
 from harness.metric import CellIC, cell_ic, forward_returns, record_pooled
@@ -34,6 +35,7 @@ __all__ = [
     "TARGET_IC_INDEPENDENT_WINDOWS",
     "CellCost",
     "CellIC",
+    "Degenerate",
     "ICReport",
     "RegistryBypass",
     "Ticket",
@@ -42,12 +44,15 @@ __all__ = [
     "code_hash",
     "costs_for",
     "counted_tests",
+    "duplicate_of",
     "effective_breadth",
     "evaluate",
     "forward_returns",
     "horizon_to_bars",
     "open_test",
     "record_pooled",
+    "screen",
     "settle",
     "validate_record",
+    "warnings_for",
 ]
