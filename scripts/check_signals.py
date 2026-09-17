@@ -24,13 +24,23 @@ sys.path.insert(0, str(REPO))
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
+from harness.metric import forward_returns  # noqa: E402 -- des rendements, jamais un IC
 from panel import Panel  # noqa: E402
-from signals import REFERENCE  # noqa: E402
+from signals import REFERENCE, _common  # noqa: E402
 
 ASOF = "2018-06-15 20:00"
 EARLIER = "2017-06-15 20:00"
 HORIZON_BARS = 30
 MIN_OBSERVATIONS = 30  # le seuil sous lequel le harnais refuse de mesurer une cellule
+
+# Cellules dont on sait, et qu'on écrit, qu'elles n'ont pas trente barres dans
+# leur dernière demi-heure. Ce n'est pas un défaut du signal, c'est une propriété
+# des données — et c'est écrit ici plutôt que d'abaisser le seuil, pour qu'une
+# NOUVELLE cellule qui tomberait sous la barre fasse échouer le contrôle.
+KNOWN_THIN = {
+    ("6A", "US"): "le dollar australien en séance US : 30 % des ancres seulement "
+                  "portent un horizon de trente barres entier",
+}
 
 
 def main() -> int:
@@ -83,6 +93,42 @@ def main() -> int:
         print(f"   dispersion : écart-type {spread.std():.5f}, "
               f"min {spread.min():+.4f}, max {spread.max():+.4f}, "
               f"part de zéros exacts {np.mean(spread == 0):.2%}")
+
+    # -- un score qui ne devient jamais une observation ne sert à rien -------
+    # Le contrôle qui manquait, et qui a coûté une porte : `forward_returns` est
+    # le calcul de rendements du harnais -- pas un IC, aucune corrélation. Il dit
+    # si les barres scorées ont bien un rendement futur À L'INTÉRIEUR de leur
+    # fenêtre. Sans lui, un signal peut produire 15 000 scores et zéro mesure.
+    print("\n--- les scores tombent-ils sur des barres mesurables ? ---")
+    # Les deux seuils sont ronds et choisis pour ce qu'ils veulent dire, pas pour
+    # laisser passer ce qui est là : sous 80 % globalement, l'essentiel du travail
+    # du signal est perdu ; sous 50 % sur une cellule, la barre d'ancrage n'y tient
+    # pas son horizon et la cellule ne dit rien de l'hypothèse.
+    for signal_id in produced:
+        usable = total_scored = 0
+        per_cell = []
+        for (root, window), series in produced[signal_id].items():
+            close, sessions = _common.cell_bars(panel, root, window)
+            labels = pd.Series(window, index=close.index)
+            returns = forward_returns(close, sessions, labels, HORIZON_BARS)
+            good = int(returns.reindex(series.index).notna().sum())
+            usable += good
+            total_scored += len(series)
+            per_cell.append((good / max(len(series), 1), root, window))
+        share = usable / max(total_scored, 1)
+        per_cell.sort()
+        thin = [
+            f"{r}x{w} ({s:.0%})"
+            for s, r, w in per_cell
+            if s < 0.5 and (r, w) not in KNOWN_THIN
+        ]
+        check(share >= 0.80,
+              f"{signal_id} : {share:.1%} des scores tombent sur une barre mesurable "
+              f"({usable} sur {total_scored}) — sous le seuil de 80 %")
+        check(not thin, f"{signal_id} : cellules sous 50 % de scores mesurables — {thin}")
+        worst = ", ".join(f"{r}x{w} {s:.0%}" for s, r, w in per_cell[:3])
+        print(f"   {signal_id} : {usable} observations pour {total_scored} scores "
+              f"({share:.1%}) ; les trois pires cellules — {worst}")
 
     # -- la causalité, en avance sur la porte 05 -----------------------------
     print("\n--- causalité : un panel qui en sait moins rend les mêmes scores ---")

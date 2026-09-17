@@ -218,3 +218,29 @@ fichiers qui échoue, **vérifier d'abord comment les deux côtés ont été dé
 avant de croire ce qu'elle raconte. `encoding="utf-8"` explicite des deux côtés,
 toujours, et jamais `text=True` seul sur une sortie susceptible de porter des
 accents.
+
+---
+
+## L10 — Une comparaison d'horloge en flottants décale l'ancre d'une barre, et le signal produit des scores qui ne se mesurent jamais
+
+**Ce qu'on croyait.** Placer l'ancre d'un signal « à trente minutes de la clôture
+de la fenêtre » est une question d'horloge, sans piège : on calcule les minutes
+restantes, on compare au seuil, on prend la première barre qui passe.
+
+**Ce qui était vrai.** Calculées en heures fractionnaires, les minutes restantes
+de la barre de 15:29 face à une clôture à 16:00 valent
+**31,000000000000004** — donc `<= 31` est **faux**, l'ancre glisse d'une barre, et
+le rendement à trente barres tombe **une barre au-delà** de la fenêtre. Le harnais
+le jette. `NQ × US`, la cellule la plus dense de la grille, produisait **615
+scores et zéro observation**. En minutes entières, la comparaison est exacte et la
+même cellule rend 100 %.
+
+**Comment on s'en est aperçu.** Pas par une exception — il n'y en a aucune — mais
+par un contrôle ajouté pour une autre raison : *combien des scores produits
+tombent sur une barre que le harnais sait mesurer*. Il répondait **0 %**. Et le
+motif désignait le coupable : les cellules `ASIA` passaient, `EUROPE` et `US`
+étaient à zéro, ce qui n'est pas une histoire de densité de données mais de
+chemin de calcul. Deux réflexes en sortent. **Toute arithmétique d'horloge se
+fait en unités entières**, jamais en heures flottantes comparées à un seuil. Et
+**un signal se juge d'abord sur le nombre d'observations qu'il produit**, pas sur
+le nombre de scores : les deux peuvent différer de tout, silencieusement.

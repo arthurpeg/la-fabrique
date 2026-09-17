@@ -37,12 +37,25 @@ ouvert).
 
 ## Ce qui a été vérifié sur eux
 
-`scripts/check_signals.py` — 257 vérifications, aucune corrélation calculée :
-couverture (25 cellules sur 25, médiane de 633 observations par cellule),
-dispersion non nulle, aucun score daté après l'as-of, et la **causalité** — un
-panel tronqué rend exactement les mêmes scores qu'un panel qui en sait plus.
-Ce dernier contrôle est un avant-goût de la porte 05, pas la porte elle-même :
-il constate, il n'attrape rien encore.
+`scripts/check_signals.py` — 261 vérifications, aucune corrélation calculée :
+couverture (25 cellules sur 25, médiane de 633 scores par cellule), dispersion
+non nulle, aucun score daté après l'as-of, causalité, et surtout **le nombre
+d'observations réellement mesurables**.
+
+Ce dernier contrôle est né en phase 05 et il a immédiatement payé : il répondait
+**0 %**. L'ancre tombait trente barres avant la clôture — donc l'horizon sortait
+de la fenêtre — à cause d'une comparaison d'horloge en flottants
+([[lessons|L10]]). Corrigé, il rend **88,6 %** : 13 876 observations pour
+15 669 scores.
+
+Les 11,4 % perdus sont réels : des ancres dont l'horizon de trente **barres** ne
+tient pas dans la dernière demi-heure de leur fenêtre, faute de barres. `6A × US`
+n'en garde que 30 %, et c'est inscrit comme **exemption écrite** dans
+`check_signals.py` plutôt que par un seuil abaissé — pour qu'une nouvelle cellule
+qui tomberait sous la barre fasse échouer le contrôle.
+
+Les deux étalons passent par ailleurs la porte 05 : 16 sondes de causalité
+chacun, zéro divergence. Voir [[phases/phase-05-api-de-signal]].
 
 ## Quand un vrai signal arrivera
 
