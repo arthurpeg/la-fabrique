@@ -8,7 +8,9 @@
 16 sondes sans une divergence.
 **État de la porte 06 :** sa **clause 1** est franchie — `gate_06_controls.py`,
 25 vérifications, quatre signaux dégénérés rejetés sans consommer une ligne de
-registre. Sa **clause 2**, la réplication d'un résultat publié, ne l'est pas, et
+registre. **`H01` et `H02` sont mesurées** depuis le 2026-09-18 :
+`counted_tests()` vaut **2**, et les deux sont dans le bruit (`t` final −0,28 et
+−0,12). Sa **clause 2**, la réplication d'un résultat publié, ne l'est pas, et
 la porte reste donc **ouverte** : une porte à moitié franchie est une porte non
 franchie. Le **premier maillon** de la chaîne qui la débloque est posé depuis le
 2026-09-18 — la convention de provenance (`D09`) ; le deuxième, les
@@ -102,27 +104,34 @@ sont réputées périmées, à coût nul — `counted_tests()` valait 0. Portes 
 05 et 06 rejouées vertes (41, 2 002, 29 et 25 vérifications) ; le registre passe
 à 58 lignes, toujours **0 test compté**. Voir `L12`.
 
-### 1. Mesurer `H01` et `H02` — les deux premiers tests comptés du projet
+### 1. ~~Mesurer `H01` et `H02`~~ — **fait le 2026-09-18**
 
-Tout est prêt : les hypothèses sont pré-enregistrées depuis le 2026-09-17, les
-étalons passent la porte 05, et les contrôles tournent devant le harnais. Il
-suffit d'appeler `evaluate()` avec `hypothesis_ref="H01"` puis `"H02"`.
+`scripts/measure_h01_h02.py`, tranche `pool`, as-of 2023-12-29, 25 cellules,
+~45 900 observations chacune. **`counted_tests()` : 0 → 2.**
 
-**C'est irréversible.** `counted_tests()` passera de **0 à 2**, et ces deux lignes
-compteront dans le dénominateur de toutes les corrections de tests multiples
-jusqu'à la phase 15. Elles sont corrélées — même cible, prédicteurs différents —
-et `H02` le dit : **elles ne sont jamais comptées comme deux tests indépendants**.
+| | IC poolé | t naïf | t final | Verdict pré-enregistré |
+|---|---|---|---|---|
+| `H01` | **−0,01061** | −2,27 | **−0,28** | rien à distinguer du bruit |
+| `H02` | **−0,00432** | −0,92 | **−0,12** | rien à distinguer du bruit |
 
-Deux choses à savoir avant de lancer :
-- les étalons rendent **88,6 %** d'observations pour leurs scores, et `6A × US`
-  seulement 30 % (`L10`, exemption écrite dans `check_signals.py`) ;
-- le coût restera un **plancher étiqueté** tant que `fee_bp` et `slippage_bp`
-  sont `null` : l'IC net lu sera un **majorant de performance**. L'IC brut, lui,
-  ne dépend pas des frais.
+Le signe est négatif là où les deux prédisaient positif, mais **ce n'est pas la
+clause de falsification qui s'applique** : « le motif existe à l'envers »
+exigeait un `t` final au-delà de 2. C'est « `t` final sous 2 : rien à distinguer
+du bruit ». Les deux hypothèses sont **non confirmées, pas retournées**.
 
-Le point 0 étant réparé, plus rien ne s'interpose : c'est **la prochaine
-action du projet**. La fenêtre où un changement de harnais était gratuit se
-referme ici.
+Et `H02`, qui s'annonçait « au moins aussi forte » que `H01`, est **plus
+faible** — regarder tout ce qui précède plutôt que la seule première demi-heure
+n'a rien ajouté.
+
+**Ce que la double déflation vient de coûter, et pourquoi c'est la bonne
+nouvelle.** Le `t` naïf de `H01` vaut −2,27 : un calcul sans précaution l'aurait
+déclaré significatif à 5 %, et le projet aurait tenu son premier « résultat ».
+Après division par 5,48 (recouvrement) puis 1,46 (9 instruments pour 4,22 paris),
+il vaut −0,28. **Un facteur 8.** C'est exactement ce pour quoi `D04` existe, et
+la première fois qu'on le voit mordre.
+
+Détails dans `hypotheses/H01…` et `H02…` § Le résultat, recopiés des rapports
+officiels avec leur `test_id`.
 
 ### 2. La clause 2 — réplication d'un résultat publié
 
@@ -157,3 +166,26 @@ Un raccourci honnête existe et ne coûte presque rien : montrer que notre
 un ordre de grandeur sous les 8 à 15 bp que vaut sa friction supposée sur nos
 données. Ce n'est pas la réplication, c'en est la prémisse — et elle se vérifie
 sans dépenser un seul test.
+
+### Une ouverture, apparue avec le résultat de `H01` et `H02`
+
+**Le blocage de la clause 2 est peut-être plus étroit qu'écrit ci-dessus, et il
+faut le vérifier avant de continuer à attendre les frais.**
+
+Le raisonnement tenu jusqu'ici : on ne peut pas conclure « survit sous nos coûts »
+tant que le coût est incomplet. C'est vrai. Mais **le résultat de Mesfin est
+négatif** — aucune des 14 familles ne survit. Répliquer un résultat négatif ne
+demande que la direction négative, et notre plancher est **plus bas** que sa
+friction supposée : si une famille ne survit pas même à un coût plus faible que
+le sien, sa conclusion est reproduite *a fortiori*.
+
+Mieux : `H01` et `H02` viennent de montrer qu'un signal peut être écarté **sans
+que le coût intervienne du tout** — un IC brut dans le bruit n'a pas besoin
+d'être diminué des frais pour être nul.
+
+Si cela tient, le vrai coût de la clause 2 n'est pas `fee_bp` : c'est le **budget
+de tests** (14 familles, 14 hypothèses à pré-enregistrer, 14 lignes au
+dénominateur) et le travail d'implémentation. Ce qui est une tout autre
+conversation, et une décision à écrire.
+
+**À trancher avant d'implémenter quoi que ce soit**, et sans dépenser un test.

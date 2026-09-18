@@ -4,7 +4,8 @@
 **Signal :** `gao-2018-intraday-momentum` (`signals/gao_2018_intraday_momentum.py`)
 **Origine :** Gao, Han, Li & Zhou (2018), « Market intraday momentum », *JFE*
 129(2):394-414 — `corpus/AMORCE.md`, entrée 1
-**Statut :** pré-enregistrée, **non testée**
+**Statut :** **testée le 2026-09-18** — voir « Le résultat » en fin de fichier.
+L'affirmation ci-dessous n'a pas été touchée d'un mot depuis le 2026-09-17.
 
 ## Ce qui est affirmé
 
@@ -58,3 +59,40 @@ distincte, qui appartient aux régimes (phase 13), et qui devra être
 pré-enregistrée séparément. La tester en même temps que celle-ci et retenir la
 meilleure des deux serait exactement ce que le registre est là pour rendre
 visible.
+
+---
+
+## Le résultat
+
+**Mesuré le 2026-09-18**, test `T-20260918T064151-bc4048` au registre. Tranche `pool`, as-of
+2023-12-29, 25 cellules, 45 908 observations, harnais `e9ef2087`. Recopié du
+rapport d'IC officiel ; le registre fait foi.
+
+| | |
+|---|---|
+| IC poolé | **−0,01061** |
+| t naïf | −2,27 |
+| t recouvrement | −0,42 (÷ 5,48) |
+| **t final** | **−0,28** (÷ 1,46) |
+
+**Verdict, selon les critères écrits avant la mesure.** Le signe observé est
+négatif là où le signe attendu était positif — mais la clause qui s'applique
+n'est pas « le motif existe à l'envers », qui exigeait un `t` final **au-delà de
+2** en valeur absolue. C'est la clause suivante : *« un IC poolé dont le `t`
+final reste sous 2 : rien à distinguer du bruit sur cet univers »*.
+
+**L'hypothèse n'est pas confirmée. Elle n'est pas non plus retournée.** Il n'y a
+rien ici, et c'est un résultat.
+
+Ce qui emporte le chiffre est la **double déflation** de `D04` : un `t` naïf de
+−2,27 — qu'un calcul sans précaution aurait appelé significatif — devient −0,28
+après division par 5,48 (recouvrement de 30 barres) puis par 1,46 (9 instruments
+pour 4,22 paris). Un facteur 8. C'est la première fois qu'on la voit mordre.
+
+La ventilation par cellule est un **diagnostic, pas 25 tests** (`D01` §4) : 15
+cellules négatives, 10 positives, la plus forte à −0,049 (`ES × ASIA`). Aucune
+cellule ne porte le résultat ; il n'y a pas de résultat à porter.
+
+**Ce que ça n'autorise pas.** Retester le même signal à un autre horizon, ou sur
+un sous-ensemble de cellules, après avoir vu ceci, serait une nouvelle hypothèse
+— pré-enregistrée avant, et comptée en plus.

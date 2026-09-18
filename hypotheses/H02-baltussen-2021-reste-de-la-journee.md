@@ -5,7 +5,8 @@
 (`signals/baltussen_2021_intraday_momentum.py`)
 **Origine :** Baltussen, Da, Lammers & Martens (2021), « Hedging demand and market
 intraday momentum », *JFE* 142(1) — `corpus/AMORCE.md`, entrée 2
-**Statut :** pré-enregistrée, **non testée**
+**Statut :** **testée le 2026-09-18** — voir « Le résultat » en fin de fichier.
+L'affirmation ci-dessous n'a pas été touchée d'un mot depuis le 2026-09-17.
 
 ## Ce qui est affirmé
 
@@ -65,3 +66,37 @@ hors de notre grille : notre horizon est intraday à clôture forcée (`D01` §3
 une hypothèse de réversion à plusieurs jours n'y a pas de place. Elle n'est pas
 écartée — elle est **hors domaine**, et le redeviendrait si l'horizon changeait
 (ledger F04, F05).
+
+---
+
+## Le résultat
+
+**Mesuré le 2026-09-18**, test `T-20260918T064409-acc2e3` au registre. Tranche `pool`, as-of
+2023-12-29, 25 cellules, 45 911 observations, harnais `e9ef2087`. Recopié du
+rapport d'IC officiel ; le registre fait foi.
+
+| | |
+|---|---|
+| IC poolé | **−0,00432** |
+| t naïf | −0,92 |
+| t recouvrement | −0,17 (÷ 5,48) |
+| **t final** | **−0,12** (÷ 1,46) |
+
+**Verdict, selon les critères écrits avant la mesure.** Comme pour
+[H01](H01-gao-2018-premiere-demi-heure.md) : signe négatif contre signe positif
+attendu, mais `t` final très en deçà de 2. **Rien à distinguer du bruit.**
+
+**Et la prédiction relative est démentie.** `H02` affirmait être « **au moins
+aussi forte** que `H01`, le prédicteur portant plus d'information ». Elle est
+**plus faible** : |−0,00432| contre |−0,01061|. Regarder tout ce qui précède
+plutôt que la seule première demi-heure n'a rien ajouté — sur notre univers, à
+cet horizon, dans cette tranche.
+
+C'est la partie du résultat qui apprend quelque chose. Les deux nombres étant
+dans le bruit, l'écart entre eux l'est aussi : on ne peut pas conclure que le
+prédicteur large est *pire*, seulement qu'il n'est pas meilleur, et que la raison
+avancée pour l'attendre meilleur ne s'est pas manifestée.
+
+**Comptage.** `H01` et `H02` portent sur la même cible. Le registre porte deux
+lignes parce que deux IC ont été calculés ; toute correction de tests multiples
+devra traiter la paire comme **corrélée, jamais indépendante**.

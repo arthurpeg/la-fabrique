@@ -66,8 +66,15 @@ deux cibles et un coût **minoré** disant ce qui lui manque.
 
 ## État actuel
 
-`registry/tests.jsonl` : 3 lignes, toutes de `stage: 03-calibration` et sans
-hypothèse — **0 test compté** au dénominateur du FDR.
+`registry/tests.jsonl` porte **2 tests comptés** au dénominateur du FDR — `H01`
+et `H02`, mesurées le 2026-09-18. Toutes les autres lignes sont des calibrations
+et des audits, sans hypothèse, hors dénominateur ; leur nombre monte à chaque
+porte rejouée et ne veut rien dire. Le compte qui compte est celui de
+`registry.counted_tests()`.
+
+La double déflation a mordu pour la première fois ce jour-là : le `t` naïf de
+`H01` valait −2,27, significatif à 5 % pour qui n'y regarde pas, et le `t` final
+−0,28. Le facteur 8 du tableau ci-dessus n'est pas théorique.
 
 ## Où c'est fixé
 

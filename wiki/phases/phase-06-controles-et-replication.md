@@ -89,8 +89,16 @@ moteur de recherche n'est pas une valeur citée, et `D09` la refuserait.
 
 ## Ce qui n'a pas encore été fait, et qui appartient à cette phase
 
-**`H01` et `H02` ne sont pas mesurés.** `counted_tests()` vaut **0**. Leur mesure
-fera les deux premiers tests comptés du projet, et elle est irréversible.
+**`H01` et `H02` sont mesurés** depuis le 2026-09-18 — les deux premiers tests
+comptés du projet, `counted_tests()` vaut **2**. Les deux sont **dans le bruit**
+(`t` final −0,28 et −0,12), avec un signe négatif là où le signe attendu était
+positif ; la clause de falsification qui s'applique est « rien à distinguer du
+bruit », pas « le motif existe à l'envers ». Voir [[signaux/README]].
+
+Ce qui s'est appris ce jour-là dépasse les deux chiffres : **la double déflation
+de `D04` mord**. Le `t` naïf de `H01` valait −2,27 — un calcul sans précaution
+aurait annoncé le premier résultat du projet. Divisé par 5,48 (recouvrement) puis
+1,46 (largeur), il vaut −0,28.
 
 **L'empreinte du harnais ne désignait pas le harnais** — découvert en marge le
 2026-09-18, et **réparé le même jour** par `D10`. `registry.code_hash()`

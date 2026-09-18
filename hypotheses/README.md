@@ -37,7 +37,11 @@ elle croit battre la littérature, et pas seulement l'espérer. Un IC au-dessus 
 
 ## L'état
 
-| # | Signal | Statut | Testée le |
-|---|---|---|---|
-| [H01](H01-gao-2018-premiere-demi-heure.md) | `gao-2018-intraday-momentum` | **pré-enregistrée, non testée** | — |
-| [H02](H02-baltussen-2021-reste-de-la-journee.md) | `baltussen-2021-intraday-momentum` | **pré-enregistrée, non testée** | — |
+| # | Signal | Statut | Testée le | Résultat |
+|---|---|---|---|---|
+| [H01](H01-gao-2018-premiere-demi-heure.md) | `gao-2018-intraday-momentum` | **testée** | 2026-09-18 | IC −0,01061, `t` final **−0,28** — non confirmée, dans le bruit (`T-20260918T064151-bc4048`) |
+| [H02](H02-baltussen-2021-reste-de-la-journee.md) | `baltussen-2021-intraday-momentum` | **testée** | 2026-09-18 | IC −0,00432, `t` final **−0,12** — non confirmée, dans le bruit (`T-20260918T064409-acc2e3`) |
+
+**`counted_tests()` vaut 2.** Ces deux lignes comptent au dénominateur de toute
+correction de tests multiples jusqu'à la phase 15 — et **jamais comme deux tests
+indépendants**, portant sur la même cible.

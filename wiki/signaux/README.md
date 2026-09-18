@@ -30,10 +30,22 @@ de la fenêtre pour `H02`. Ils sont corrélés **exprès** — accord de signe m
 58,3 % sur 15 822 paires — et ne seront jamais comptés comme deux tests
 indépendants.
 
-**Aucun IC n'a été calculé sur eux**, et `counted_tests()` vaut toujours 0. Les
-implémenter et les mesurer sont deux gestes ; seul le premier a eu lieu. La
-mesure attend les contrôles automatiques de la phase 06 (`D06` § Ce qui reste
-ouvert).
+**Mesurés le 2026-09-18** — les deux premiers tests comptés du projet.
+`counted_tests()` vaut **2**. Chiffres recopiés des rapports d'IC officiels, avec
+leur `test_id` ; le registre fait foi.
+
+| | IC poolé | `t` final | Verdict, écrit avant la mesure |
+|---|---|---|---|
+| `H01` (`T-20260918T064151-bc4048`) | −0,01061 | **−0,28** | rien à distinguer du bruit |
+| `H02` (`T-20260918T064409-acc2e3`) | −0,00432 | **−0,12** | rien à distinguer du bruit |
+
+Le signe observé est **négatif** là où les deux prédisaient positif — mais la
+clause qui s'applique n'est pas « le motif existe à l'envers », qui exigeait un
+`t` final au-delà de 2. Les deux sont **non confirmées, pas retournées**. Et
+`H02`, annoncée « au moins aussi forte » que `H01`, est plus faible.
+
+Ce ne sont pas pour autant des idées abandonnées : rien n'a été tué, il n'y avait
+rien. Voir `hypotheses/H01…` et `H02…` § Le résultat.
 
 ## Ce qui a été vérifié sur eux
 

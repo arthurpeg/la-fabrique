@@ -51,7 +51,7 @@ Une page par phase de l'**ordre de construction** (`ETAT.md`, phases 01→15).
 
 ## Signaux — l'unité du produit fini
 
-- [[signaux/README|Signaux — deux étalons, et aucun candidat]] — `H01` et `H02`, écrits à la main pour donner un sujet aux portes 05, 06 et 08 ; **aucun IC calculé sur eux**
+- [[signaux/README|Signaux — deux étalons, et aucun candidat]] — `H01` et `H02`, écrits à la main pour donner un sujet aux portes 05, 06 et 08 ; **mesurés le 2026-09-18, tous deux dans le bruit** — les 2 seuls tests comptés
 
 ## Concepts — pour qu'on entende la même chose
 

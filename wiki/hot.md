@@ -23,9 +23,9 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Phase courante** | 06 — contrôles automatiques et réplication (**ouverte, non franchie**) |
 | **Dernière porte franchie** | **05**, le 2026-09-17 — `scripts/gate_05_signal_api.py`, 29 vérifications. Les trois look-ahead injectés (`sandbox/tainted.py`) sont |
 | **Décision la plus récente** | `decisions/DECISION-10-empreinte-du-harnais.md` — `registry.code_hash()` empreinte désormais le **contenu** et non les octets (fins de ligne repliées), et |
-| **Tests au registre** | 58 |
+| **Tests au registre** | 61 |
 | **Idées abandonnées recensées** | 28 |
-| **Entrées au journal** | 15 |
+| **Entrées au journal** | 16 |
 
 ## Ce qui bloque
 
@@ -54,27 +54,34 @@ sont réputées périmées, à coût nul — `counted_tests()` valait 0. Portes 
 05 et 06 rejouées vertes (41, 2 002, 29 et 25 vérifications) ; le registre passe
 à 58 lignes, toujours **0 test compté**. Voir `L12`.
 
-### 1. Mesurer `H01` et `H02` — les deux premiers tests comptés du projet
+### 1. ~~Mesurer `H01` et `H02`~~ — **fait le 2026-09-18**
 
-Tout est prêt : les hypothèses sont pré-enregistrées depuis le 2026-09-17, les
-étalons passent la porte 05, et les contrôles tournent devant le harnais. Il
-suffit d'appeler `evaluate()` avec `hypothesis_ref="H01"` puis `"H02"`.
+`scripts/measure_h01_h02.py`, tranche `pool`, as-of 2023-12-29, 25 cellules,
+~45 900 observations chacune. **`counted_tests()` : 0 → 2.**
 
-**C'est irréversible.** `counted_tests()` passera de **0 à 2**, et ces deux lignes
-compteront dans le dénominateur de toutes les corrections de tests multiples
-jusqu'à la phase 15. Elles sont corrélées — même cible, prédicteurs différents —
-et `H02` le dit : **elles ne sont jamais comptées comme deux tests indépendants**.
+| | IC poolé | t naïf | t final | Verdict pré-enregistré |
+|---|---|---|---|---|
+| `H01` | **−0,01061** | −2,27 | **−0,28** | rien à distinguer du bruit |
+| `H02` | **−0,00432** | −0,92 | **−0,12** | rien à distinguer du bruit |
 
-Deux choses à savoir avant de lancer :
-- les étalons rendent **88,6 %** d'observations pour leurs scores, et `6A × US`
-  seulement 30 % (`L10`, exemption écrite dans `check_signals.py`) ;
-- le coût restera un **plancher étiqueté** tant que `fee_bp` et `slippage_bp`
-  sont `null` : l'IC net lu sera un **majorant de performance**. L'IC brut, lui,
-  ne dépend pas des frais.
+Le signe est négatif là où les deux prédisaient positif, mais **ce n'est pas la
+clause de falsification qui s'applique** : « le motif existe à l'envers »
+exigeait un `t` final au-delà de 2. C'est « `t` final sous 2 : rien à distinguer
+du bruit ». Les deux hypothèses sont **non confirmées, pas retournées**.
 
-Le point 0 étant réparé, plus rien ne s'interpose : c'est **la prochaine
-action du projet**. La fenêtre où un changement de harnais était gratuit se
-referme ici.
+Et `H02`, qui s'annonçait « au moins aussi forte » que `H01`, est **plus
+faible** — regarder tout ce qui précède plutôt que la seule première demi-heure
+n'a rien ajouté.
+
+**Ce que la double déflation vient de coûter, et pourquoi c'est la bonne
+nouvelle.** Le `t` naïf de `H01` vaut −2,27 : un calcul sans précaution l'aurait
+déclaré significatif à 5 %, et le projet aurait tenu son premier « résultat ».
+Après division par 5,48 (recouvrement) puis 1,46 (9 instruments pour 4,22 paris),
+il vaut −0,28. **Un facteur 8.** C'est exactement ce pour quoi `D04` existe, et
+la première fois qu'on le voit mordre.
+
+Détails dans `hypotheses/H01…` et `H02…` § Le résultat, recopiés des rapports
+officiels avec leur `test_id`.
 
 ### 2. La clause 2 — réplication d'un résultat publié
 
@@ -110,10 +117,34 @@ un ordre de grandeur sous les 8 à 15 bp que vaut sa friction supposée sur nos
 données. Ce n'est pas la réplication, c'en est la prémisse — et elle se vérifie
 sans dépenser un seul test.
 
+### Une ouverture, apparue avec le résultat de `H01` et `H02`
+
+**Le blocage de la clause 2 est peut-être plus étroit qu'écrit ci-dessus, et il
+faut le vérifier avant de continuer à attendre les frais.**
+
+Le raisonnement tenu jusqu'ici : on ne peut pas conclure « survit sous nos coûts »
+tant que le coût est incomplet. C'est vrai. Mais **le résultat de Mesfin est
+négatif** — aucune des 14 familles ne survit. Répliquer un résultat négatif ne
+demande que la direction négative, et notre plancher est **plus bas** que sa
+friction supposée : si une famille ne survit pas même à un coût plus faible que
+le sien, sa conclusion est reproduite *a fortiori*.
+
+Mieux : `H01` et `H02` viennent de montrer qu'un signal peut être écarté **sans
+que le coût intervienne du tout** — un IC brut dans le bruit n'a pas besoin
+d'être diminué des frais pour être nul.
+
+Si cela tient, le vrai coût de la clause 2 n'est pas `fee_bp` : c'est le **budget
+de tests** (14 familles, 14 hypothèses à pré-enregistrer, 14 lignes au
+dénominateur) et le travail d'implémentation. Ce qui est une tout autre
+conversation, et une décision à écrire.
+
+**À trancher avant d'implémenter quoi que ce soit**, et sans dépenser un test.
+
 ## Les 8 dernières entrées du journal
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-09-18 | `mesure` | H01 ET H02 MESURÉES — les deux premiers tests comptés du projet ; scripts/measure_h01_h02.py, tranche pool, as-of 2023-12-29, 25 cellules, ~45 900 observations chacune, harnais e9ef2087 ; pré-vol d'abord (scores et mesurabilité 89,9 %, aucune cellule sous les seuils, AUCUN IC) | counted_tests 0 -> 2 ; H01 IC -0,01061 t final -0,28, H02 IC -0,00432 t final -0,12 : signe négatif contre signe positif attendu, mais la clause qui s'applique est « t final sous 2 : rien à distinguer du bruit » — NON CONFIRMÉES, PAS RETOURNÉES ; H02 s'annonçait au moins aussi forte que H01 et est plus faible ; la DOUBLE DÉFLATION de D04 mord pour la première fois — t naïf -2,27 (significatif à 5 % sans précaution) devient -0,28, facteur 8 ; garde ajouté au script contre une ré-exécution ; ouverture notée à ETAT : répliquer un résultat NÉGATIF ne demande que la direction négative, donc la clause 2 est peut-être bloquée par le budget de tests et non par fee_bp |
 | 2026-09-18 | `decision` | D10 écrite et appliquée — l'empreinte du harnais porte sur le CONTENU et non sur les octets : .gitattributes fixe `* text=auto eol=lf` (114 fichiers réécrits en LF, aucun contenu committé changé — les blobs étaient déjà en LF), et `registry.code_hash()` replie les fins de ligne avant de hacher ; seule modification de harness/ depuis D08 | empreinte 12f9b2c1 -> e9ef2087, vérifiée IDENTIQUE que les 7 fichiers soient tous en LF ou tous en CRLF ; les 53 lignes antérieures réputées périmées pour un coût NUL — dernière fois que ce sera gratuit ; portes 03/04/05/06 rejouées vertes (41, 2 002, 29, 25 vérifications), registre 53 -> 58 lignes, counted_tests toujours 0 ; F27, F28 ; prochaine action du projet = mesurer H01 et H02 |
 | 2026-09-18 | `decision` | D09 écrite — provenance des valeurs externes : trichotomie mesurée/décidée/externe, liste CLOSE des externes corroborées, champs source/source_url/retrieved/quoted/applies_to ; validate.py §8, bloc `provenance:` au catalogue, source_url ajouté à roll_dates.json, scripts/check_provenance.py ; multiplicateurs CME NON relevés — cmegroup.com injoignable depuis le poste (timeout puis ECONNRESET sur 3 URLs) | 33 vérifications, 9 fautes refusées chacune pour la raison écrite d'avance ; le script a trouvé un défaut du garde lui-même — `12500` passait sous « 12,500,000 » par sous-chaîne — corrigé en comparaison numérique ; portes 01 et 02 rejouées vertes, registre inchangé à 53 lignes, counted_tests 0, aucun fichier de harness/ touché ; DÉCOUVERTE hors sujet mais sérieuse : `code_hash()` dépend des FINS DE LIGNE, les 3 empreintes du projet se reproduisent des mêmes blobs git — le harnais n'a jamais changé et gate_04 annonce 53 lignes périmées à tort ; L12, F25, F26 |
 | 2026-09-17 | `phase` | Phase 06 ouverte, CLAUSE 1 FRANCHIE : D08 écrite, harness/controls.py (dégénérescence avant le jeton, suspicion qui signale sans bloquer, comparateur de doublons score-contre-score), rapport portant avertissements et cellules refusées, gate_06_controls.py | 25 vérifications ; 4 signaux dégénérés rejetés sans consommer une ligne, 1 cellule morte isolée au milieu de vivantes et nommée dans le rapport, suspicion déclenchée à 0,35 et muette à 0,02 ; le plancher de 2 cellules a cassé la porte 03 (calibration à une cellule) -> dérogation écrite et vérifiée étroite ; L11, F22, F23, F24 ; harnais 5d6ce982 -> 12f9b2c1, portes 03/04/05 rejouées vertes ; CLAUSE 2 (réplication Mesfin) NON franchie et bloquée sur fee_bp/slippage_bp ; counted_tests toujours 0 |
@@ -121,7 +152,6 @@ sans dépenser un seul test.
 | 2026-09-17 | `decision` | Banc d'essai des portes 05, 06 et 08 : D06 écrite (deux étalons, pas cinq), hypotheses/ créé avec H01 et H02 pré-enregistrées AVANT toute mesure, signals/ implémenté à la main — gao_2018 (première demi-heure) et baltussen_2021 (reste de la fenêtre), tous deux prédisant la dernière demi-heure ; scripts/check_signals.py pour les contrôles | 257 vérifications : 25 cellules sur 25, 15 822 scores chacun, médiane 633 observations par cellule, causalité vérifiée (panel tronqué = mêmes scores), accord de signe 58,3 % entre les deux ; AUCUN IC calculé, counted_tests toujours 0 ; F17, F18 ; porte 04 rejouée, 32 modules à l'AST |
 | 2026-09-17 | `gate` | PORTE 04 FRANCHIE : D05 écrite (le nombre n'existe pas avant sa ligne — jeton délivré par le registre, `_pool` et `_deflated_t` privées, écriture par la fonction qui produit la valeur), jeton de descellage du holdout dans panel/unseal.py, registry/SCHEMA.md appliqué à l'écriture, gate_04_registry.py ; harnais modifié donc porte 03 rejouée | 1 484 vérifications ; 6 contournements essayés et refusés, 5 refus sur le holdout, 27 modules passés à l'AST ; code_hash 8c1b6512 -> 5d6ce982, les 25 lignes antérieures périmées pour un coût nul (counted_tests = 0) ; porte 03 rejouée à l'identique (IC +0,00108, t +0,06) ; L09, F15, F16 ; phase courante = 05 |
 | 2026-09-17 | `audit` | Reprise du travail poussé depuis le second poste, rejoué de zéro sur celui d'Arthur (RSL_DATA_DIR = D:\quant-data\Cotations) : uv sync, validateur du catalogue, portes 01, 02 et 03 ; corrections de péremption — la note « sur cette machine » de [[reference/ou-trouver-les-donnees]] devenue fausse à deux postes, et les deux todos du catalogue qui bloquaient encore « la calibration du harnais, phase 03 » alors que la porte 03 est franchie | rien ne manquait : catalogue VALIDE, portes 01/02/03 franchies aux mêmes comptes (103 et 41 vérifications), registre 22 -> 25 lignes (3 calibrations, 0 test compté) ; restent ouverts le moteur tiers (phase 10) et les deux todos multipliers/fees |
-| 2026-09-17 | `audit` | Vérification des phases 02 et 03 : couverture des portes étendue de 3-4 instruments à l'univers entier (porte 02 : 103 vérifications, 9/9 ; porte 03 : 41, 25/25 cellules, IC parfait sur 5 958 995 observations) ; contournement de l'invariant III démontré et l'IC produit inscrit au registre (stage 04-audit) | les deux portes tiennent sur tout l'univers ; deux trous nommés : slippage_bp jamais déclaré (D01 §7), et evaluate() contournable — porte 04 |
 
 Journal complet : [[log]]
 
