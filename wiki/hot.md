@@ -23,7 +23,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Phase courante** | 06 — contrôles automatiques et réplication (**ouverte, non franchie**) |
 | **Dernière porte franchie** | **05**, le 2026-09-17 — `scripts/gate_05_signal_api.py`, 29 vérifications. Les trois look-ahead injectés (`sandbox/tainted.py`) sont |
 | **Décision la plus récente** | `decisions/DECISION-12-cible-de-replication.md` — la clause 2 de la porte 06 |
-| **Tests au registre** | 77 |
+| **Tests au registre** | 80 |
 | **Idées abandonnées recensées** | 32 |
 | **Entrées au journal** | 21 |
 
