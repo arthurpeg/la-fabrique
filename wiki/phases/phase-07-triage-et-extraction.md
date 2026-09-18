@@ -22,7 +22,8 @@ Deux choses distinctes, et la seconde est la plus dure.
 
 **L'extraction** — d'un PDF à une fiche structurée : hypothèse, univers, horizon,
 construction du signal, résultats annoncés, ce qui manque
-([[index|vocabulaire de `CLAUDE.md`]]).
+([[index|vocabulaire de `CLAUDE.md`]]). **Le schéma est écrit** depuis le
+2026-09-18 : `corpus/SCHEMA.md`, gardé par `corpus/validate_fiches.py`.
 
 **Le triage** — décider qu'un papier est implémentable sur neuf futures intraday,
 en OHLCV, sans donnée extérieure.
@@ -54,16 +55,22 @@ savoir ce que les mesures diraient.
 
 ## Ce qu'il faudra trancher par écrit avant de coder
 
-**Le schéma de fiche.** Les trois fiches manuelles ne suivent pas exactement la
-même structure — l'une porte `incompatibilities`, une autre `transposability`.
-Un schéma versionné doit être écrit, comme `registry/SCHEMA.md` l'a été pour le
-registre.
+~~**Le schéma de fiche.**~~ **Fait le 2026-09-18** — `D14`, `corpus/SCHEMA.md`,
+`corpus/validate_fiches.py`. Le schéma n'est pas tiré des trois fiches manuelles,
+qui divergeaient ([[Failed Ideas/ledger#F35]]) : il reprend les **six champs que
+`CLAUDE.md` § Le vocabulaire nomme depuis le premier jour** — hypothèse, univers,
+horizon, construction du signal, résultats annoncés, ce qui manque — plus la
+`source` et la `transposability`, que la pratique a rendues indispensables. Les
+trois fiches ont été **réécrites** au schéma : c'était le test du schéma autant
+que des fiches.
 
-**`D09` étendu aux fiches.** Une valeur recopiée d'un papier est une **valeur
-externe** au sens exact de `D09` : rien dans le dépôt ne peut la contredire. Elle
-devrait porter sa citation comme les valeurs du catalogue. Les trois fiches
-manuelles le font déjà spontanément (champ `quoted`) ; rien ne l'impose encore.
-`L14` dit ce que coûte une valeur recopiée sans être revérifiée.
+~~**`D09` étendu aux fiches.**~~ **Fait le même jour.** Chaque résultat annoncé
+porte sa citation, et le validateur vérifie que **la valeur s'y retrouve**, en
+réutilisant `value_in_quote` — le garde même du catalogue. Deux échappatoires
+nommées plutôt que cachées : `derived` pour un nombre que *nous* avons calculé,
+`spelled_out` pour un nombre que le papier écrit en toutes lettres
+([[Failed Ideas/ledger#F36]]). `corpus/check_fiches_guard.py` montre le garde
+refuser **11 fautes**, chacune pour la raison prévue.
 
 **Ce que « écarte ce qu'il doit écarter » veut dire en chiffres.** Rappel et
 précision contre la colonne d'`AMORCE.md`, avec un seuil écrit **avant** de

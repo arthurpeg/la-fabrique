@@ -2,8 +2,7 @@
   "fiche_id": "mesfin-2026-ohlcv-falsification",
   "written": "2026-09-18",
   "written_by": "hand",
-  "note_on_provenance": "Écrite À LA MAIN, comme les étalons H01 et H02 (D06). Ce n'est PAS une sortie de l'extracteur de la phase 07, qui n'existe pas. Elle est faite ici parce que la clause 2 de la porte 06 vise ce papier et qu'on ne réplique pas un résultat qu'on n'a pas lu. Tout champ non lu dans le PDF vaut null.",
-
+  "note_on_provenance": "Écrite à la main, puis réécrite au schéma de D14 le même jour. L'extracteur de la phase 07 n'existe pas.",
   "source": {
     "authors": "Mathias Mesfin",
     "title": "Structural Limits of OHLCV-Based Intraday Momentum Signals in MNQ Futures: A Systematic Falsification Study",
@@ -16,79 +15,102 @@
     "amorce_entry": 7,
     "title_note": "corpus/AMORCE.md écrit « Intraday Signals » ; le titre exact porte « Intraday Momentum Signals »."
   },
-
   "claim": {
     "direction": "negative",
     "statement": "Aucune des quatorze familles de signaux intraday construites sur OHLCV ne dégage d'avantage négociable sur MNQ après coûts d'exécution réalistes.",
     "quoted": "None passed all five."
   },
-
   "universe": {
-    "instruments": ["MNQ", "MGC"],
+    "instruments": [
+      "MNQ",
+      "MGC"
+    ],
     "granularity": "5 minutes",
     "sessions": 947,
     "period": "2021-2025",
-    "note": "MGC n'apparaît que pour la famille 4.8 (OU mean reversion)."
+    "note": "MGC n'apparaît que pour la famille 4.8 (OU mean reversion). MNQ et MGC sont les contrats MICRO ; nos séries sont les minis NQ et GC."
   },
-
-  "signal_families": {
-    "count": 14,
-    "quoted": "ORB (Section 4.1, three variants), Asia expansion (4.2), Asia liquidity grab (4.3), gap fill and gap continuation (4.4, two families), volume spike and volume dry-up (4.5, two families), VVG classifier reversal, continuation, and close fade (4.6, three families counted as one family group), event day trend (4.7), and MGC OU mean reversion (4.8).",
-    "list": [
-      {"section": "4.1", "name": "Opening Range Breakout", "variants": 3},
-      {"section": "4.2", "name": "Asia expansion", "variants": 1},
-      {"section": "4.3", "name": "Asia liquidity grab", "variants": 1},
-      {"section": "4.4", "name": "gap fill", "variants": 1},
-      {"section": "4.4", "name": "gap continuation", "variants": 1},
-      {"section": "4.5", "name": "volume spike", "variants": 1},
-      {"section": "4.5", "name": "volume dry-up", "variants": 1},
-      {"section": "4.6", "name": "VVG classifier reversal / continuation / close fade", "variants": 3},
-      {"section": "4.7", "name": "event day trend", "variants": 1},
-      {"section": "4.8", "name": "MGC OU mean reversion", "variants": 1}
+  "horizon": {
+    "value": "intraday, au niveau du trade",
+    "reason": null,
+    "note": "Le critère porte sur le rendement NET PAR TRADE d'une règle de trading, pas sur un horizon de prédiction fixe. C'est ce qui le rend illisible par notre harnais."
+  },
+  "signal_construction": {
+    "value": "Quatorze familles réparties sur huit sous-sections : ORB (4.1, trois variantes), Asia expansion (4.2), Asia liquidity grab (4.3), gap fill et gap continuation (4.4), volume spike et volume dry-up (4.5), VVG classifier reversal / continuation / close fade (4.6, trois variantes), event day trend (4.7), MGC OU mean reversion (4.8).",
+    "reason": null,
+    "warning": "Les RÈGLES exactes de chaque famille sont dans les sections 4.1 à 4.8 et n'ont pas été relevées. Toute implémentation devrait les extraire famille par famille."
+  },
+  "reported_results": [
+    {
+      "name": "acceptance_criteria",
+      "value": null,
+      "unit": null,
+      "quoted": "T-statistic >= 2.0 on out-of-sample net returns, >= 30 trades per out-of-sample fold, positive net returns after instrument-appropriate friction, consistent direction across test years (2023, 2024, 2025), and permutation p < 0.001 where applicable.",
+      "note": "Le critère porte sur des rendements de trades, pas sur une corrélation de rang. Notre harnais produit un IC. Ce sont deux objets différents."
+    },
+    {
+      "name": "families_failing_below_friction",
+      "value": 11,
+      "unit": "familles",
+      "quoted": "Eleven signal families fail because their maximum gross return before friction is 0.07 to 1.50 points per trade, below the 2.0-point MNQ friction floor. Three families clear the friction gate but fail elsewhere.",
+      "spelled_out": "Eleven",
+      "note": "Le papier écrit le nombre en toutes lettres ; le garde vérifie le mot, la conversion en 11 est un geste humain (D14)."
+    },
+    {
+      "name": "gross_return_per_trade_max_points",
+      "value": 1.5,
+      "unit": "points d'indice par trade",
+      "quoted": "their maximum gross return before friction is 0.07 to 1.50 points per trade"
+    },
+    {
+      "name": "friction_mnq_points",
+      "value": 2.0,
+      "unit": "points d'indice, aller-retour",
+      "quoted": "Round-trip friction costs are instrument-specific. For MNQ: 2.0 points ($4.00 per micro contract), covering bid-ask spread, NinjaTrader exchange fees, and conservative slippage.",
+      "note": "TOUT COMPRIS — écart, frais d'échange et glissement. À comparer à notre plancher, qui est un écart SEUL."
+    },
+    {
+      "name": "friction_mnq_usd",
+      "value": 4.0,
+      "unit": "USD par contrat, aller-retour",
+      "quoted": "For MNQ: 2.0 points ($4.00 per micro contract)"
+    },
+    {
+      "name": "friction_mgc_points",
+      "value": 0.5,
+      "unit": "points, aller-retour",
+      "quoted": "For MGC: 0.50 points round-trip — 5 ticks at $1.00 per tick per contract — reflecting that instrument's different contract specification."
+    },
+    {
+      "name": "friction_in_bp_on_our_data",
+      "value": 1.36,
+      "unit": "bp d'aller-retour",
+      "derived": true,
+      "quoted": "For MNQ: 2.0 points ($4.00 per micro contract), covering bid-ask spread, NinjaTrader exchange fees, and conservative slippage.",
+      "note": "2 points au niveau médian de NQ mesuré sur notre tranche pool 2021-2023 (14 688), par scripts/check_mesfin_premise.py. Vérifié par une seconde route : 4,00 $ sur un notionnel MNQ de 29 376 $. À comparer à notre plancher NQ x US de 0,79 bp — voir LECONS L14."
+    },
+    {
+      "name": "walk_forward_folds",
+      "value": null,
+      "unit": null,
+      "quoted": "an expanding-window walk-forward structure with three OOS test periods: Fold 1 training 2022, OOS 2023; Fold 2 training 2022-2023, OOS 2024; Fold 3 training 2022-2024, OOS 2025 (partial, January-August).",
+      "note": "Deux de ses trois plis hors échantillon tombent dans notre holdout scellé."
+    }
+  ],
+  "transposability": {
+    "what_transfers": "Le VERDICT, et il est transportable : sa friction vaut 1,36 bp sur nos données, soit 1,7x notre plancher NQ x US et 0,9x notre pire cellule — et c'est un coût tout compris contre notre écart seul. Son résultat négatif ne peut donc pas être écarté au motif d'une hypothèse de coût déraisonnable (L14).",
+    "what_does_not_transfer": [
+      "La MÉTRIQUE. Son critère est un t sur des rendements nets par trade, avec un plancher de 30 trades par pli et une permutation p < 0,001. Notre harnais produit un IC de Spearman. Onze de ses quatorze familles échouent par INSUFFISANCE D'AMPLITUDE sous friction, ce qu'un IC ne voit pas. Mesurer son critère demanderait un évaluateur au niveau du trade — le moteur de backtest, phase 10.",
+      "LES ANNÉES. Ses trois plis hors échantillon testent 2023, 2024 et 2025 ; notre holdout couvre 2024-01-01 → 2026-08-28 et reste scellé (invariant V). SEUL LE PLI 1 est reproductible.",
+      "LES CONTRATS. MNQ et MGC sont les micros ; nos séries sont les minis NQ et GC. Les prix suivent, les multiplicateurs non — et les nôtres sont encore null."
     ],
-    "construction_detail": null,
-    "construction_note": "Les règles exactes de construction n'ont pas été relevées ici : elles sont dans les sections 4.1 à 4.8 et devront être extraites famille par famille avant toute implémentation."
+    "what_aligns_well": "Même classe d'actifs, même granularité d'esprit, même pauvreté de données : OHLCV seul. C'est le calibrage d'attente le plus proche de notre situation, et le plus inconfortable. La granularité 5 minutes contre 1 minute n'est pas un obstacle, elle s'agrège."
   },
-
-  "acceptance_criteria": {
-    "quoted": "T-statistic >= 2.0 on out-of-sample net returns, >= 30 trades per out-of-sample fold, positive net returns after instrument-appropriate friction, consistent direction across test years (2023, 2024, 2025), and permutation p < 0.001 where applicable.",
-    "metric": "rendement NET par trade d'une règle de trading",
-    "not_an_ic": true,
-    "note": "Le critère porte sur des rendements de trades, pas sur une corrélation de rang. Notre harnais produit un IC. Ce sont deux objets différents — voir `incompatibilities`."
+  "used_for": {
+    "hypothesis": null,
+    "role": "cible initiale de la clause 2 de la porte 06, ÉCARTÉE sur sa métrique (D12) ; conservée comme CALIBRAGE D'ATTENTE",
+    "outcome": "Le corpus implémentable doit être tenu pour attendu mort jusqu'à preuve du contraire. H01, H02 et H03 vont toutes dans ce sens."
   },
-
-  "friction": {
-    "MNQ": {"points_round_trip": 2.0, "usd_per_contract": 4.0},
-    "MGC": {"points_round_trip": 0.5, "usd_per_contract": 5.0},
-    "quoted": "Round-trip friction costs are instrument-specific. For MNQ: 2.0 points ($4.00 per micro contract), covering bid-ask spread, NinjaTrader exchange fees, and conservative slippage. For MGC: 0.50 points round-trip — 5 ticks at $1.00 per tick per contract.",
-    "all_in": true,
-    "in_bp_on_our_data": 1.36,
-    "in_bp_note": "2 points au niveau médian de NQ mesuré sur notre tranche pool 2021-2023 (14 688). Calculé par scripts/check_mesfin_premise.py. À comparer à notre plancher NQ×US de 0,79 bp, qui est un ÉCART SEUL — voir LECONS L14."
-  },
-
-  "reported_results": {
-    "gross_return_per_trade_points": [0.07, 1.5],
-    "quoted": "Eleven signal families fail because their maximum gross return before friction is 0.07 to 1.50 points per trade, below the 2.0-point MNQ friction floor. Three families clear the friction gate but fail elsewhere.",
-    "failure_split": {"below_friction": 11, "clear_friction_fail_elsewhere": 3}
-  },
-
-  "walk_forward": {
-    "quoted": "Fold 1: training 2022, OOS 2023. Fold 2: training 2022-2023, OOS 2024. Fold 3: training 2022-2024, OOS 2025 (partial, January-August).",
-    "folds": [
-      {"fold": 1, "training": "2022", "oos": "2023"},
-      {"fold": 2, "training": "2022-2023", "oos": "2024"},
-      {"fold": 3, "training": "2022-2024", "oos": "2025 (janvier-août)"}
-    ]
-  },
-
-  "incompatibilities": {
-    "note": "Ce qui empêche une réplication FIDÈLE chez nous. Écrit avant toute mesure.",
-    "metric": "Son critère est un t sur des rendements NETS par trade, avec un plancher de 30 trades par pli et une permutation p < 0,001. Notre harnais produit un IC de Spearman entre score et rendement à venir. Un IC non nul peut coexister avec un rendement par trade sous la friction : onze de ses quatorze familles échouent précisément pour cette raison-là, qui n'est pas une absence de prédiction mais une insuffisance d'amplitude. Mesurer son critère demanderait un évaluateur au niveau du trade — c'est-à-dire le moteur de backtest, phase 10.",
-    "years": "Ses trois plis hors échantillon testent 2023, 2024 et 2025. Notre tranche holdout couvre 2024-01-01 → 2026-08-28 et reste scellée jusqu'à la phase 15 (invariant V). SEUL LE PLI 1 est reproductible — un tiers de son plan hors échantillon.",
-    "instruments": "MNQ et MGC sont les contrats micro ; nos séries sont les minis NQ et GC. Les prix suivent, les multiplicateurs non — et les nôtres sont encore null (todo multipliers).",
-    "granularity": "5 minutes chez lui, 1 minute chez nous — celle-là n'est pas un obstacle, elle s'agrège."
-  },
-
   "what_is_missing": [
     "Les règles exactes de construction des 14 familles (sections 4.1 à 4.8), non relevées.",
     "Les trois catégories d'échec et les deux signaux de contrôle positif, mentionnés mais non relevés.",

@@ -114,17 +114,49 @@ humain de référence. »* Deux choses distinctes, et la seconde est la plus dur
    et il existe déjà. Il a été écrit en phase 01, avant tout ce qui suit, donc
    sans connaître les résultats — ce qui en fait un étalon honnête.
 
-### Ce qu'il faudra trancher par écrit avant de coder
+### Le premier maillon est posé — `D14`, le 2026-09-18
 
-- **Le schéma de fiche.** Les trois fiches manuelles ne suivent pas exactement la
-  même structure ; l'une porte `incompatibilities`, une autre `transposability`.
-  Un schéma versionné doit être écrit, et `D09` étendu aux fiches : une valeur
-  recopiée d'un papier est une **valeur externe**, et elle devrait porter sa
-  citation comme les valeurs du catalogue.
-- **Ce que « le triage écarte ce qu'il doit écarter » veut dire en chiffres** —
-  rappel et précision contre la colonne d'`AMORCE.md`, avec un seuil écrit avant
-  de mesurer. `L06` s'applique mot pour mot : *un compte juste n'est pas un compte
-  de choses justes*.
+Le **schéma de fiche** est écrit, et il n'est pas tiré des trois fiches
+manuelles : elles divergeaient, et aucune n'avait de champ `horizon`. Il reprend
+les **six champs que `CLAUDE.md` § Le vocabulaire nomme depuis le premier jour**,
+plus la `source` et la `transposability` que la pratique a rendues
+indispensables. `corpus/SCHEMA.md` le pose, `corpus/validate_fiches.py` le garde,
+`corpus/check_fiches_guard.py` montre ce garde **refuser 11 fautes**, chacune
+pour la raison prévue.
+
+**`D09` est étendu aux fiches.** Un résultat recopié d'un papier est une valeur
+externe : il porte sa citation, et `value_in_quote` — le garde même du catalogue
+— vérifie que la valeur s'y retrouve. Deux échappatoires **nommées** plutôt que
+cachées : `derived` pour un nombre que nous avons calculé, `spelled_out` pour un
+nombre que le papier écrit en toutes lettres. Ce second cas n'était pas prévu :
+le garde l'a trouvé sur Mesfin, qui écrit « *Eleven signal families fail* ».
+
+Les trois fiches ont été **réécrites** au schéma. C'était le test du schéma
+autant que des fiches : s'il n'avait pas su exprimer ce qu'elles disaient, c'est
+lui qui aurait été faux.
+
+### Prochaine action : le triage, et son seuil écrit avant mesure
+
+C'est l'autre moitié de la porte 07, et la plus dure. *« Le triage écarte ce
+qu'il doit écarter, sur un verdict humain de référence. »*
+
+Le verdict de référence **existe déjà** : la colonne « implémentable » de
+`corpus/AMORCE.md`, renseignée à la main sur **24 entrées** — `oui`, `partiel`,
+`non` — avec le motif de chacune. Elle a été écrite en **phase 01**, avant le
+harnais, avant les signaux, avant le moindre résultat. Son auteur ne pouvait pas
+savoir ce que les mesures diraient : c'est ce qui en fait un étalon utilisable.
+
+Ce qu'il faut trancher **par écrit et avant de coder le trieur** :
+
+- **ce que « écarte ce qu'il doit écarter » veut dire en chiffres** — rappel et
+  précision contre cette colonne, avec un seuil fixé **avant** de mesurer ;
+- **comment on traite `partiel`**, qui n'est ni un oui ni un non et que la
+  colonne emploie six fois ;
+- et la garde de `L06`, qui s'applique mot pour mot : *un compte juste n'est pas
+  un compte de choses justes*. Un trieur jugé sur « combien il en trouve »
+  plutôt que sur « lesquels » doit être supposé faux jusqu'à appariement — c'est
+  exactement ainsi que la détection de roulements avait paru bonne à 90 % en
+  n'étant juste qu'à 62,8 %.
 
 ### Ce qui reste ouvert par ailleurs
 
