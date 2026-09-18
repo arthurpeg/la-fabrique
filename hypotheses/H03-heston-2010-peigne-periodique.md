@@ -33,9 +33,18 @@ liberté : un ajustement de `P` après coup se verrait immédiatement.
 
 ## Le domaine
 
-- **Univers :** les 25 cellules retenues (`D01` §3), regroupées par période —
-  `P = 13` (US et EUROPE) et `P = 16` (ASIA), mesurées séparément pour que le
-  *pooling* ne mélange pas une dent et un creux.
+- **Univers :** les 25 cellules retenues (`D01` §3).
+
+  > **Précision du 2026-09-18, écrite à l'implémentation et avant le lancement de
+  > la mesure.** La première rédaction prévoyait de mesurer séparément les
+  > fenêtres de période 13 et celle de période 16, pour que le *pooling* ne
+  > mélange pas une dent et un creux. Le signal est finalement paramétré **en
+  > séances** (`lag_sessions`) et non en intervalles : le décalage en intervalles
+  > est alors calculé par fenêtre depuis le catalogue, de sorte qu'une dent est
+  > une dent dans les trois fenêtres à la fois. La séparation devient inutile, et
+  > les 25 cellules se poolent sans mélange. Les creux, eux, se comptent en
+  > intervalles (`j = 1…12`), valeurs qui ne sont multiples ni de 13 ni de 16.
+  > Aucun résultat n'avait été vu quand ceci a été écrit.
 - **Grandeur :** rendement de demi-heure, à l'intérieur de la fenêtre et de la
   séance.
 - **Tranche :** `pool` uniquement. Le `holdout` reste scellé (invariant V).
