@@ -74,11 +74,26 @@ class RegistryBypass(RuntimeError):
 
 
 def code_hash() -> str:
-    """A fingerprint of the harness as it stands, so a stale result can be spotted."""
+    """A fingerprint of the harness as it stands, so a stale result can be spotted.
+
+    On CONTENT, not on raw bytes: line endings are folded to \n before hashing.
+    Hashing the bytes read off the disk looked equivalent and was not. git
+    rewrites line endings on checkout, and a file rewritten by a tool comes back
+    with LF, so the mixture drifts file by file: the SAME harness wore four
+    different fingerprints across two machines while no line of code changed,
+    and gate 04 announced 53 stale registry lines that were not stale.
+
+    That is the dangerous direction. An alarm that rings for a non-reason gets
+    learned as noise, and then it no longer warns on the day the harness really
+    does change. The repo pins eol=lf in .gitattributes as well; this fold is
+    what makes the invariant hold even where that file is not honoured.
+
+    See LECONS.md L12 and decisions/DECISION-10.
+    """
     digest = hashlib.sha256()
     for path in sorted(HARNESS.glob("*.py")):
         digest.update(path.name.encode("utf-8"))
-        digest.update(path.read_bytes())
+        digest.update(path.read_bytes().replace(b"\r\n", b"\n"))
     return digest.hexdigest()[:16]
 
 

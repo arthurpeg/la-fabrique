@@ -506,6 +506,33 @@ todos:
       les contrats effectivement tradés seront des MICROS quand les séries
       évaluées sont celles des minis — l'écart devra être écrit avant la phase 10.
 
+# Les valeurs externes, et ce qui les atteste (D09).
+#
+# Une valeur recopiée d'un tiers n'entre au catalogue qu'accompagnée d'une
+# entrée ici : `catalogue/validate.py` §8 refuse le catalogue sinon, et refuse
+# symétriquement une entrée qui ne couvre plus rien. `quoted` porte les mots et
+# les UNITÉS du tiers, tels quels — le validateur y cherche la valeur déposée,
+# séparateurs ôtés, ce qui attrape la faute de recopie et non le menteur.
+#
+# La forme :
+#
+#   - id: cme-nq-contract-unit
+#     source: CME Group -- fiche contrat E-mini Nasdaq-100
+#     source_url: https://www.cmegroup.com/markets/equities/nasdaq/...
+#     retrieved: 2026-09-18
+#     quoted: "$20 x Nasdaq-100 Index"
+#     applies_to: [instruments.NQ.multiplier]
+#
+# Le multiplicateur déposé est l'unité de contrat telle que
+# `notionnel_usd = multiplier x prix` — vrai pour les neuf, quels que soient les
+# mots du CME (« $20 x index », « 100 troy ounces », « 125,000 euro ») (D09).
+#
+# VIDE aujourd'hui, et ce n'est pas un oubli : les deux seuls champs externes du
+# catalogue -- multiplier et fee_per_contract_usd -- sont encore `null` sur les
+# dix instruments, et leurs todos les doivent. La convention est écrite AVANT
+# les valeurs.
+provenance: []
+
 sources:
   manifest: $RSL_DATA_DIR/manifeste.json
   inventory: scripts/out/a1_inventory.json

@@ -1,0 +1,13 @@
+# D10 — l'empreinte du harnais ne doit pas dépendre du poste.
+#
+# `core.autocrlf=true` réécrivait les fins de ligne à chaque extraction, tandis
+# qu'un fichier réécrit par un outil ressortait en LF. Le mélange dérivait,
+# fichier par fichier, et `registry.code_hash()` — qui empreinte des octets —
+# changeait sans qu'une ligne de code bouge : le même harnais a porté quatre
+# numéros sur deux postes (`LECONS.md` L12).
+#
+# Ce fichier prime sur la configuration locale de git, sur tous les postes.
+* text=auto eol=lf
+
+# Le registre est irremplaçable : jamais de fusion automatique dessus.
+registry/tests.jsonl -merge

@@ -72,10 +72,36 @@ externes, les multiplicateurs CME, la réponse de Lucid sur le caractère all-in
 ses commissions, une déclaration écrite de `slippage_bp`. Voir `ETAT.md`
 § Prochaine action.
 
+**Premier maillon posé le 2026-09-18.** `D09` fixe la convention de provenance :
+toute valeur du catalogue est *mesurée*, *décidée* ou *externe*, et une valeur
+externe n'entre qu'avec `source`, `source_url`, `retrieved`, `quoted` et
+`applies_to`. `catalogue/validate.py` §8 refuse le catalogue sinon ;
+`scripts/check_provenance.py` le montre en train de refuser neuf fautes, chacune
+pour la raison écrite d'avance. Le registre `provenance:` est **vide** — les deux
+seuls champs externes du catalogue, `multiplier` et `fee_per_contract_usd`, sont
+encore `null` sur les dix instruments. La convention est écrite **avant** les
+valeurs, et c'est l'ordre voulu.
+
+**Deuxième maillon, non posé.** Les multiplicateurs CME ont été tentés le même
+jour : `cmegroup.com` est injoignable depuis le poste (timeout puis ECONNRESET
+sur trois URLs). Rien n'a été déposé — une valeur relevée dans un extrait de
+moteur de recherche n'est pas une valeur citée, et `D09` la refuserait.
+
 ## Ce qui n'a pas encore été fait, et qui appartient à cette phase
 
 **`H01` et `H02` ne sont pas mesurés.** `counted_tests()` vaut **0**. Leur mesure
 fera les deux premiers tests comptés du projet, et elle est irréversible.
+
+**L'empreinte du harnais ne désignait pas le harnais** — découvert en marge le
+2026-09-18, et **réparé le même jour** par `D10`. `registry.code_hash()`
+empreintait les octets sur disque, fins de ligne comprises : les trois empreintes
+du projet se reproduisent toutes des mêmes blobs git, et `gate_04` annonçait 53
+lignes périmées qui ne l'étaient pas. Deux gestes — `.gitattributes` fixant
+`eol=lf`, et le repli des fins de ligne dans l'empreinte — qui ne se recouvrent
+pas ([[Failed Ideas/ledger#F28]]). L'empreinte passe de `12f9b2c1` à `e9ef2087`,
+vérifiée invariante ; les portes 03 à 06 sont rejouées vertes et
+`counted_tests()` vaut toujours 0. Voir [[lessons|L12]] et
+[[Failed Ideas/ledger#F27]].
 
 ## Voir aussi
 

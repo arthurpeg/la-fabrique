@@ -1,7 +1,7 @@
 # ÉTAT
 
 **Phase courante :** 06 — contrôles automatiques et réplication (**ouverte, non franchie**)
-**Date de dernière mise à jour :** 2026-09-17
+**Date de dernière mise à jour :** 2026-09-18
 **Dernière porte franchie :** **05**, le 2026-09-17 — `scripts/gate_05_signal_api.py`,
 29 vérifications. Les trois look-ahead injectés (`sandbox/tainted.py`) sont
 **attrapés**, chacun pour la raison écrite d'avance ; les deux étalons passent
@@ -10,13 +10,23 @@
 25 vérifications, quatre signaux dégénérés rejetés sans consommer une ligne de
 registre. Sa **clause 2**, la réplication d'un résultat publié, ne l'est pas, et
 la porte reste donc **ouverte** : une porte à moitié franchie est une porte non
-franchie.
-**Décision la plus récente :** `decisions/DECISION-08-controles-automatiques.md` —
-les contrôles de dégénérescence vivent dans `harness/controls.py`, empreintés avec
-le harnais, et s'exécutent **avant** que le jeton soit pris : un signal rejeté ne
-consomme aucune ligne. Le détecteur de « trop beau pour être vrai » signale sans
-bloquer. Le harnais a changé, donc **tous les résultats antérieurs sont périmés**
-— coût nul pour la dernière fois, `counted_tests()` vaut encore 0.
+franchie. Le **premier maillon** de la chaîne qui la débloque est posé depuis le
+2026-09-18 — la convention de provenance (`D09`) ; le deuxième, les
+multiplicateurs, attend que `cmegroup.com` réponde.
+**Décision la plus récente :**
+`decisions/DECISION-10-empreinte-du-harnais.md` — `registry.code_hash()` empreinte
+désormais le **contenu** et non les octets (fins de ligne repliées), et
+`.gitattributes` fixe `eol=lf` sur tous les postes. L'empreinte passe **une fois**
+de `12f9b2c1` à `e9ef2087` ; les 53 lignes antérieures sont réputées périmées,
+pour un coût **nul** — aucune n'est un test compté, et c'est la dernière fois que
+ce sera gratuit. Portes 03, 04, 05 et 06 rejouées vertes.
+**Décision précédente :**
+`decisions/DECISION-09-provenance-des-valeurs-externes.md` — toute valeur du
+catalogue est **mesurée** (notre code, nos données), **décidée** (un fichier de
+`decisions/`) ou **externe** (recopiée d'un tiers) ; une valeur externe n'entre
+qu'accompagnée de sa source, citation comprise, et `catalogue/validate.py` §8
+refuse le catalogue sinon. Le harnais n'est pas touché : **aucun résultat
+antérieur n'est périmé** par elle.
 **Décision pertinente pour la phase courante :** `D08` § Ce qui reste ouvert (le
 magasin de scores des signaux déjà testés, renvoyé en phase 11) et `D06` § Ce qui
 reste ouvert (la mesure de `H01` et `H02`, qui appartient à cette phase).
@@ -74,8 +84,23 @@ reste ouvert (la mesure de `H01` et `H02`, qui appartient à cette phase).
 
 ## Prochaine action
 
-**Finir la phase 06.** Sa clause 1 est franchie ; deux choses restent, et elles
-sont de natures différentes.
+### 0. ~~Le défaut d'empreinte du harnais~~ — **réparé le 2026-09-18**
+
+`registry.code_hash()` empreintait les **octets sur disque** de `harness/*.py`,
+fins de ligne comprises : le même harnais a porté quatre numéros sur deux postes
+sans qu'une ligne de code bouge, et `gate_04` annonçait 53 lignes périmées qui ne
+l'étaient pas. Vérifié en reproduisant les trois empreintes historiques à partir
+des mêmes blobs git.
+
+Réparé par `D10`, en deux gestes : `.gitattributes` fixe `* text=auto eol=lf`
+(la cause, côté dépôt) et l'empreinte replie les fins de ligne avant de hacher
+(l'invariant, indépendant de la configuration git). Vérifié invariant :
+`e9ef2087` que les sept fichiers soient tous en LF ou tous en CRLF.
+
+**L'empreinte est passée de `12f9b2c1` à `e9ef2087`.** Les 53 lignes antérieures
+sont réputées périmées, à coût nul — `counted_tests()` valait 0. Portes 03, 04,
+05 et 06 rejouées vertes (41, 2 002, 29 et 25 vérifications) ; le registre passe
+à 58 lignes, toujours **0 test compté**. Voir `L12`.
 
 ### 1. Mesurer `H01` et `H02` — les deux premiers tests comptés du projet
 
@@ -95,6 +120,10 @@ Deux choses à savoir avant de lancer :
   sont `null` : l'IC net lu sera un **majorant de performance**. L'IC brut, lui,
   ne dépend pas des frais.
 
+Le point 0 étant réparé, plus rien ne s'interpose : c'est **la prochaine
+action du projet**. La fenêtre où un changement de harnais était gratuit se
+referme ici.
+
 ### 2. La clause 2 — réplication d'un résultat publié
 
 **Bloquée, et pas seulement par du travail à faire.** La cible nommée est la
@@ -108,9 +137,15 @@ au plancher » (conclusion **négative**, valide), jamais « survit sous nos co�
 (conclusion **positive**, hors de portée tant que le coût est incomplet).
 
 Il faut donc, dans cet ordre :
-1. la **convention de provenance** des valeurs externes (`validate.py` refuse une
-   valeur externe sans `source_url` + date + valeur citée) — jamais écrite ;
-2. les **multiplicateurs** relevés sur les fiches contrat CME ;
+1. ~~la **convention de provenance** des valeurs externes~~ — **faite** le
+   2026-09-18, `D09` ; `catalogue/validate.py` §8 refuse désormais une valeur
+   externe sans `source_url`, date et valeur citée, et
+   `scripts/check_provenance.py` le démontre sur neuf fautes ;
+2. les **multiplicateurs** relevés sur les fiches contrat CME — **tentés le
+   2026-09-18, `cmegroup.com` injoignable** depuis ce poste (timeout puis
+   ECONNRESET sur trois URLs). Les neuf champs restent `null`, `todo multipliers`
+   reste ouvert. À reprendre dès que le site répond ; le bloc `provenance:` du
+   catalogue porte la forme exacte de l'entrée à déposer ;
 3. la réponse de **Lucid** sur le caractère all-in de ses commissions, et le
    barème micro ou mini selon ce qui sera tradé ;
 4. une déclaration écrite de `slippage_bp`, pessimiste, comme `D04` l'exige ;

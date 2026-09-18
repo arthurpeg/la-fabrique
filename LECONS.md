@@ -268,3 +268,36 @@ d'évaluation se teste contre une calibration autant que contre un test**, et si
 elle doit distinguer les deux, elle doit le faire explicitement — ici,
 `screen(..., is_test=hypothesis_ref is not None)`, dérogation écrite et vérifiée
 étroite par la porte 06.
+
+---
+
+## L12 — Une empreinte d'octets n'identifie pas un fichier, elle identifie une copie de travail
+
+**Ce qu'on croyait.** `registry.code_hash()` empreinte le harnais. Si le nombre
+change, le harnais a changé, et `D05` l'énonce sans réserve : tous les résultats
+antérieurs sont périmés. C'est l'instrument de l'interdit « ne jamais modifier le
+harnais » — le seul.
+
+**Ce qui était vrai.** Il empreinte **les octets de ce disque-là**, fins de ligne
+comprises. Avec `core.autocrlf=true` et aucun `.gitattributes`, git réécrit les
+fins de ligne à chaque extraction, tandis qu'un fichier réécrit par un outil
+ressort en LF : le mélange dérive, fichier par fichier, sans qu'une ligne de code
+bouge. Les **trois** empreintes du projet — `8c1b6512`, `5d6ce982`, `12f9b2c1` —
+se reproduisent **toutes les trois** à partir des mêmes blobs git, en ne faisant
+varier que quelles fins de ligne portent quels fichiers. Le même harnais vaut
+`842a6ade` sur le poste d'aujourd'hui. Contenu identique, quatre numéros.
+
+**Comment on s'en est aperçu.** L'empreinte ne correspondait à aucune des 53
+lignes du registre alors que `git status` sur `harness/` était vide. Le symptôme
+à reconnaître : **une empreinte qui bouge sans diff**. Le test qui tranche est
+court et se refait — recalculer l'empreinte depuis les blobs git en essayant les
+mélanges de fins de ligne ; si l'un retombe sur la valeur attendue, le contenu
+n'a pas bougé.
+
+Et la vraie leçon est dans la conséquence. `gate_04_registry.py` annonce alors
+« 53 lignes périmées », c'est faux, et **il ne bloque pas**. Un signal d'alarme
+qui se déclenche pour une non-raison **s'apprend comme du bruit** : le jour où le
+harnais changera vraiment, ce nombre-là ne préviendra plus personne. Un garde qui
+crie à tort est pire qu'un garde absent. Corollaire général : **ce qu'on empreinte
+doit être le contenu, jamais son encodage** — c'est `L09` déplacée d'un cran,
+de la lecture vers l'empreinte.
