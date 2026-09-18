@@ -367,3 +367,33 @@ Le réflexe : **un nombre qui sert à décider se recalcule au moment de décide
 et une page qui affirme « nos propres données mesurent » doit nommer le script
 qui les a mesurées. C'est `D09` — la provenance des valeurs externes — dont on
 découvre ici qu'elle manque au wiki autant qu'au catalogue.
+
+---
+
+## L15 — Deux seaux qui se recouvrent laissent une hypothèse être validée par le mauvais phénomène
+
+**Ce qu'on croyait.** `H03` était pré-enregistrée dans les règles : trois clauses
+écrites avant la mesure, un motif prédit en entier, un témoin négatif intégré. Le
+peigne de Heston et al. se vérifierait en comparant les **dents** (décalages
+multiples d'une séance) aux **creux** (décalages non multiples), et la séparation
+des deux serait le résultat.
+
+**Ce qui était vrai.** Les deux seaux **se recouvraient**. Les creux étaient
+définis comme `j = 1…12`, et le retournement de court terme — un phénomène
+distinct, que le papier décrit séparément — comme `j = 1…3`, donc **à
+l'intérieur** des creux. La mesure a rendu une séparation nette, `+0,00177` et
+`p = 0,030` : elle venait **entièrement** du retournement court. Le seau retiré
+de ce qui ne lui appartenait pas, `j = 4…12`, la séparation tombe à `+0,00009` et
+`p = 0,247`. Le peigne n'existe pas ; un résumé automatique annonçait pourtant
+« séparation : OUI ».
+
+**Comment on s'en est aperçu.** En refusant le résumé et en redemandant *sur quoi*
+la séparation reposait. Rien ne le signalait : les 52 lignes sont justes, le
+harnais a bien travaillé, et l'hypothèse était bien pré-enregistrée. C'est la
+**définition des seaux** qui portait la faute, et une pré-inscription ne protège
+de rien si ce qu'elle inscrit est mal découpé.
+
+Le réflexe : **deux catégories qu'on va comparer doivent être disjointes, et on
+le vérifie en les écrivant**, pas après. Et le corollaire, plus dur : un test
+pré-enregistré qui « passe » se relit aussi attentivement qu'un test qui échoue —
+un résultat conforme est précisément celui que personne n'a envie d'examiner.

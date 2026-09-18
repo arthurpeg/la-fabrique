@@ -68,8 +68,9 @@ qui lui manque.
 
 ## État actuel
 
-`registry/tests.jsonl` porte **4 lignes comptées pour 2 hypothèses** — `H01` et
-`H02`, mesurées le 2026-09-18 puis reprises le même jour sous `D11`. Toutes les autres lignes sont des calibrations
+`registry/tests.jsonl` porte **56 lignes comptées pour 3 hypothèses** — `H01` et
+`H02` (deux lignes chacune : mesure puis reprise sous `D11`) et `H03` (52 lignes,
+un décalage par ligne, **un seul motif prédit**). Les trois sont sans résultat. Toutes les autres lignes sont des calibrations
 et des audits, sans hypothèse, hors dénominateur ; leur nombre monte à chaque
 porte rejouée et ne veut rien dire. Le compte qui compte est celui de
 `registry.counted_tests()`.

@@ -23,9 +23,9 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Phase courante** | 06 — contrôles automatiques et réplication (**ouverte, non franchie**) |
 | **Dernière porte franchie** | **05**, le 2026-09-17 — `scripts/gate_05_signal_api.py`, 29 vérifications. Les trois look-ahead injectés (`sandbox/tainted.py`) sont |
 | **Décision la plus récente** | `decisions/DECISION-12-cible-de-replication.md` — la clause 2 de la porte 06 |
-| **Tests au registre** | 83 |
-| **Idées abandonnées recensées** | 32 |
-| **Entrées au journal** | 21 |
+| **Tests au registre** | 128 |
+| **Idées abandonnées recensées** | 34 |
+| **Entrées au journal** | 22 |
 
 ## Ce qui bloque
 
@@ -122,47 +122,79 @@ annonçait comme le scénario inconfortable.
 le bruit **avant tout coût** : un IC brut nul n'a pas besoin qu'on lui retranche
 des frais. La convergence n'est pas une preuve, mais elle n'est pas rien.
 
-### Ce que la clause 2 demande, et la prochaine action
+### La clause 2 a été tentée, et elle n'est pas franchie
 
-**La cible a changé le 2026-09-18** (`D12`). Le blocage n'a jamais été les frais ;
-c'est la **métrique** qui ne correspondait pas, et cela ne s'est vu qu'en lisant
-le papier.
+**`H03` est mesurée** — 52 décalages, ~650 000 observations chacun, tranche
+`pool`, harnais `9ac3e45e`. `counted_tests()` : 4 → **56**, pour **une**
+hypothèse (`D11` et `D12` : on compte des hypothèses, pas des lignes).
 
-La nouvelle cible est **Heston, Korajczyk & Sadka (2010)** — continuation du
-rendement aux décalages multiples exacts d'une séance, retournement aux premiers
-décalages, rien de positif entre les deux. Un **peigne**, qui porte son propre
-témoin négatif : si les creux rendaient autant que les dents, il n'y aurait pas
-de périodicité, seulement un biais.
+**Le peigne n'est pas là.**
 
-Période dictée par le catalogue, pas par le résultat : **P = 13** demi-heures pour
-`US` et `EUROPE` (6,5 h), **P = 16** pour `ASIA` (8 h). Deux motifs distincts à
-retrouver. `H03` est **pré-enregistrée depuis le 2026-09-18**, avant toute mesure,
-et dit aussi ce qui se passe si le motif est absent — l'échec ne s'achète pas en
-redéfinissant la porte.
+| | médiane | |
+|---|---|---|
+| dents `m = 1…40` | +0,00065 | 28/40 positifs |
+| creux `j = 4…12` | +0,00056 | séparation **+0,00009**, p = **0,247** |
+| retournement court `j = 1, 2, 3` | −0,00815 | **3/3 négatifs**, `j=1` à `t` = −6,14 |
 
-**Prochaine action : implémenter le signal `heston-2010-periodicity`** dans
-`signals/`, à la main comme les étalons de `D06`, et le faire passer la porte 05
-(contrat, liste blanche, test de causalité) avant toute mesure. Puis mesurer
-`H03` : environ une centaine de lignes au registre pour **une** hypothèse.
+Le résumé automatique du script annonçait « séparation : OUI » à +0,00177 et
+p = 0,030. **Il avait tort, et la faute était dans `H03` elle-même** : ses creux
+étaient définis `j = 1…12` et son retournement court `j = 1…3`, donc **à
+l'intérieur**. La séparation venait entièrement du second. Seaux nettoyés, elle
+tombe à p = 0,247. Leçon `L15`.
+
+Ce qui reste est **le retournement de court terme** — net, `j=1` à IC −0,01150 et
+`t` −6,14 — c'est-à-dire la **préface** du motif chez Heston et al., pas le motif.
+
+**Ce que `H03` avait écrit d'avance, et qui s'applique :** l'absence du peigne est
+un résultat valide sur notre univers, mais la clause 2 **n'est pas franchie**. Un
+instrument qui ne retrouve pas ce qu'il devrait retrouver n'est pas validé contre
+une vérité extérieure. Il faut une **nouvelle cible, par décision écrite** — pas
+un assouplissement, et surtout pas une relecture indulgente de la clause B.
+
+### Prochaine action : trancher, par écrit, ce que la clause 2 peut encore être
+
+Trois cibles ont été examinées et deux sont tombées. C'est en soi une
+information : **une porte qui demande de répliquer un résultat publié suppose
+qu'un tel résultat soit (a) exprimé dans notre métrique et (b) présent sur notre
+univers.** Rien ne garantit les deux à la fois pour neuf futures intraday.
+
+Les pistes, sans qu'aucune soit tranchée :
+
+1. **Bollerslev et al. (2018)**, corpus entrée 12 — 50+ futures, notre univers
+   exact, et la justification directe de notre *pooling*. Sa réponse porte sur la
+   **volatilité réalisée** : il faudrait un second instrument à côté du harnais
+   d'IC. C'est du travail, pas un obstacle de principe.
+2. **Andersen & Bollerslev (1997)**, entrée 11 — la périodicité intra-journalière
+   de la volatilité, l'un des faits stylisés les plus robustes de la discipline.
+   Même remarque : c'est de la volatilité, pas un IC. Mais l'échec y serait
+   presque impensable, ce qui en fait une épreuve d'instrument honnête.
+3. **Redéfinir la clause 2** par décision écrite : admettre qu'à neuf futures et
+   4,22 paris, « répliquer un résultat publié » ne peut pas vouloir dire ce qu'on
+   croyait en phase 01, et dire ce que ça veut dire à la place.
+
+La troisième n'est pas un renoncement déguisé **à condition d'être écrite avant
+de savoir si la nouvelle cible passe** — sans quoi c'est exactement ce que `H03`
+interdit.
 
 ### Ce qui reste ouvert par ailleurs
 
 - les **multiplicateurs** CME (`cmegroup.com` injoignable depuis ce poste le
-  2026-09-18) et la réponse de **Lucid** sur ses commissions ; requis pour toute
-  lecture **nette** et pour la phase 10, mais ils ne bloquent plus la clause 2 ;
+  2026-09-18) et la réponse de **Lucid** ; requis pour toute lecture **nette** et
+  pour la phase 10, mais ils ne bloquent pas la clause 2 ;
 - une déclaration écrite de `slippage_bp`, pessimiste, comme `D04` l'exige ;
-- **Mesfin reste le calibrage d'attente le plus proche**, désormais lu, fiché et
-  **transportable** (`L14`) : le corpus implémentable doit être tenu pour
-  *attendu mort* jusqu'à preuve du contraire. `H01` et `H02` vont déjà dans ce
-  sens — dans le bruit, avant tout coût ;
-- **Bollerslev et al. (2018)** comme cible ultérieure, quand un instrument de
-  volatilité existera (phase 09 ou plus tard) ;
-- **Mesfin au niveau du trade**, quand le moteur de backtest existera (phase 10).
+- **Mesfin (2026)** reste le calibrage d'attente le plus proche, lu, fiché et
+  **transportable** (`L14`) : le corpus implémentable est *attendu mort*. Trois
+  hypothèses mesurées, trois fois rien — `H01`, `H02` et `H03` vont toutes dans ce
+  sens ;
+- **la ventilation par cellule de `H03`** n'a pas été inscrite (défaut de
+  `scripts/measure_h03.py`). La vérifier coûterait 52 lignes et ne pourrait
+  qu'affaiblir le motif ; noté plutôt que payé.
 
 ## Les 8 dernières entrées du journal
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-09-18 | `mesure` | H03 MESURÉE — 52 décalages (40 dents m=1..40, 12 creux j=1..12), tranche pool, as-of 2023-12-29, 25 cellules, ~650 000 observations par décalage, harnais 9ac3e45e ; counted_tests 4 -> 56 pour UNE hypothèse | LE PEIGNE N'EST PAS LÀ. Le script annonçait « séparation OUI » (+0,00177, p=0,030) et il avait tort : les seaux de H03 SE RECOUVRAIENT — creux j=1..12 contenant le retournement court j=1..3. Creux nettoyés (j=4..12) : dents +0,00065 contre creux +0,00056, séparation +0,00009, Mann-Whitney p=0,247. Aucune dent ne ressort : plus grand t +3,01 sur 40, quand la sélection seule rend un 95e centile de 3,22. Entre les multiples la réponse n'est pas « largement négative » : 5 positives sur 9. SEUL effet net : le retournement court, j=1 IC -0,01150 t -6,14 et j=2 -0,00815 t -4,35 — la préface du motif, pas le motif. CLAUSE 2 DE LA PORTE 06 NON FRANCHIE, comme H03 l'avait écrit d'avance ; il faut une nouvelle cible par décision écrite. Non vérifié faute de l'avoir inscrit : la ventilation par cellule (défaut du script, coûterait 52 lignes de plus et ne pourrait qu'affaiblir le motif). L15, F33, F34 |
 | 2026-09-18 | `signal` | Signal heston-2010-periodicity implémenté à la main (signals/heston_2010_periodicity.py) : un score par intervalle de demi-heure et non un par séance — le mécanisme de _common.run ne convenait pas et n'est pas réutilisé ; décalage paramétré EN SÉANCES pour les dents (traduit en intervalles par fenêtre depuis le catalogue) et EN INTERVALLES pour les creux ; rendement d'intervalle défini en BARRES, même définition que la cible du harnais ; scripts/check_heston.py et scripts/measure_h03.py écrits, H03 précisée sur ce point AVANT le lancement | contrôles verts : périodes P = 16/13/13 lues au catalogue et non espérées, liste blanche 0 refus, contrat conforme, CAUSALITÉ 0 divergence sur 16 sondes, écart d'échantillonnage mesuré à 30,0 barres donc étalement 1,00 — pas de déflation de recouvrement, ce que D11 doit faire pour des demi-heures disjointes ; pré-vol : 658 582 scores et 657 470 observations à m=1, soit 99,8 % de mesurabilité, aucune cellule mince ; le signal est tenu HORS de REFERENCE (les étalons de D06) et placé dans REPLICATION, pour que les portes gardent le sujet que D06 leur a donné |
 | 2026-09-18 | `decision` | D12 écrite — la clause 2 CHANGE DE CIBLE : Mesfin ne convient pas (son critère est un t sur des rendements nets par trade, le nôtre un IC ; onze de ses quatorze familles échouent par amplitude sous friction, ce qu'un IC ne voit pas ; et deux de ses trois plis hors échantillon tombent dans le holdout scellé). Nouvelle cible : Heston, Korajczyk & Sadka (2010), JF 65(4) — papier récupéré d'arXiv (1005.3535), lu, fiché ; H03 PRÉ-ENREGISTRÉE avant toute mesure | le résultat visé est une CORRÉLATION et un MOTIF DE SIGNES, pas une valeur : continuation aux décalages multiples d'une séance (dents), retournement aux premiers décalages, rien de positif entre les deux (creux) — le peigne porte son propre témoin négatif ; période dictée par le catalogue et non par le résultat : P = 13 demi-heures pour US et EUROPE (6,5 h), P = 16 pour ASIA (8 h), donc DEUX motifs distincts à retrouver ; aucune magnitude du papier n'est reprise comme attendue (sa mesure est transversale avec effet de marché retiré, il le dit lui-même) ; H03 = UNE hypothèse pour ~100 lignes de registre, et l'échec du motif ne franchirait PAS la porte — écrit avant de regarder ; Mesfin reste calibrage d'attente, fiché |
 | 2026-09-18 | `research` | Mesfin (2026) LU — PDF récupéré d'arXiv dans corpus/pdf/, texte extrait, fiche écrite à la main dans corpus/fiches/ (première fiche du projet, hors extracteur qui n'existe pas) ; corpus/AMORCE.md corrigé par une note datée, le texte d'origine conservé | les 14 familles nommées depuis la source (ORB x3, Asia expansion, Asia liquidity grab, gap fill, gap continuation, volume spike, volume dry-up, VVG x3, event day trend, MGC OU) ; sa friction CITÉE : « 2.0 points ($4.00 per micro contract), covering bid-ask spread, NinjaTrader exchange fees, and conservative slippage » — TOUT COMPRIS, et 4,00 $ sur 29 376 $ de notionnel = 1,36 bp, seconde route confirmant L14 ; DEUX OBSTACLES STRUCTURELS à la réplication, aucun lié aux frais : (1) son critère est un t sur RENDEMENTS NETS PAR TRADE, le nôtre un IC — onze familles échouent par amplitude sous friction, ce qu'un IC ne voit pas ; (2) ses plis hors échantillon testent 2023/2024/2025 et le holdout scellé couvre 2024-2026, donc SEUL LE PLI 1 est reproductible |
@@ -170,7 +202,6 @@ redéfinissant la porte.
 | 2026-09-18 | `decision` | D11 écrite et appliquée — la déflation de recouvrement se MESURE : facteur = sqrt(n / n_eff) avec n_eff = somme des n_c / max(1, h / écart_c), l'écart_c étant l'écart médian en barres entre deux observations de la cellule ; CellIC porte sampling_gap_bars, le rapport dit l'écart mesuré ; deux assertions périmées corrigées dans les portes 03 et 06 (elles exigeaient counted_tests == 0, vrai avant H01/H02 et faux depuis — elles vérifient désormais que LA PORTE ne dépense rien) | découvert à partir d'une question sur les anomalies mono-actif ; H01 et H02 scorent une fois par séance, observations espacées de 415 barres pour un horizon de 30, AUCUN recouvrement — le harnais leur retirait un facteur 5,48 ; empreinte e9ef2087 -> 9ac3e45e, portes 03/04/05/06 rejouées vertes, H01 et H02 REMESURÉES : IC inchangés (-0,01061 et -0,00432), t final -0,28 -> -1,56 et -0,11 -> -0,63, CONCLUSION INCHANGÉE (les deux sous 2) ; counted_tests 2 -> 4 pour DEUX hypothèses — la phase 15 compte des hypothèses, pas des lignes ; tests de référence T-20260918T065822-2b3e5d et T-20260918T070041-18cf25 ; L13, F29, F30 |
 | 2026-09-18 | `mesure` | H01 ET H02 MESURÉES — les deux premiers tests comptés du projet ; scripts/measure_h01_h02.py, tranche pool, as-of 2023-12-29, 25 cellules, ~45 900 observations chacune, harnais e9ef2087 ; pré-vol d'abord (scores et mesurabilité 89,9 %, aucune cellule sous les seuils, AUCUN IC) | counted_tests 0 -> 2 ; H01 IC -0,01061 t final -0,28, H02 IC -0,00432 t final -0,12 : signe négatif contre signe positif attendu, mais la clause qui s'applique est « t final sous 2 : rien à distinguer du bruit » — NON CONFIRMÉES, PAS RETOURNÉES ; H02 s'annonçait au moins aussi forte que H01 et est plus faible ; la DOUBLE DÉFLATION de D04 mord pour la première fois — t naïf -2,27 (significatif à 5 % sans précaution) devient -0,28, facteur 8 ; garde ajouté au script contre une ré-exécution ; ouverture notée à ETAT : répliquer un résultat NÉGATIF ne demande que la direction négative, donc la clause 2 est peut-être bloquée par le budget de tests et non par fee_bp |
 | 2026-09-18 | `decision` | D10 écrite et appliquée — l'empreinte du harnais porte sur le CONTENU et non sur les octets : .gitattributes fixe `* text=auto eol=lf` (114 fichiers réécrits en LF, aucun contenu committé changé — les blobs étaient déjà en LF), et `registry.code_hash()` replie les fins de ligne avant de hacher ; seule modification de harness/ depuis D08 | empreinte 12f9b2c1 -> e9ef2087, vérifiée IDENTIQUE que les 7 fichiers soient tous en LF ou tous en CRLF ; les 53 lignes antérieures réputées périmées pour un coût NUL — dernière fois que ce sera gratuit ; portes 03/04/05/06 rejouées vertes (41, 2 002, 29, 25 vérifications), registre 53 -> 58 lignes, counted_tests toujours 0 ; F27, F28 ; prochaine action du projet = mesurer H01 et H02 |
-| 2026-09-18 | `decision` | D09 écrite — provenance des valeurs externes : trichotomie mesurée/décidée/externe, liste CLOSE des externes corroborées, champs source/source_url/retrieved/quoted/applies_to ; validate.py §8, bloc `provenance:` au catalogue, source_url ajouté à roll_dates.json, scripts/check_provenance.py ; multiplicateurs CME NON relevés — cmegroup.com injoignable depuis le poste (timeout puis ECONNRESET sur 3 URLs) | 33 vérifications, 9 fautes refusées chacune pour la raison écrite d'avance ; le script a trouvé un défaut du garde lui-même — `12500` passait sous « 12,500,000 » par sous-chaîne — corrigé en comparaison numérique ; portes 01 et 02 rejouées vertes, registre inchangé à 53 lignes, counted_tests 0, aucun fichier de harness/ touché ; DÉCOUVERTE hors sujet mais sérieuse : `code_hash()` dépend des FINS DE LIGNE, les 3 empreintes du projet se reproduisent des mêmes blobs git — le harnais n'a jamais changé et gate_04 annonce 53 lignes périmées à tort ; L12, F25, F26 |
 
 Journal complet : [[log]]
 

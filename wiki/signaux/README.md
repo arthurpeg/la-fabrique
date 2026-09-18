@@ -51,6 +51,23 @@ clause qui s'applique n'est pas « le motif existe à l'envers », qui exigeait 
 Ce ne sont pas pour autant des idées abandonnées : rien n'a été tué, il n'y avait
 rien. Voir `hypotheses/H01…` et `H02…` § Le résultat.
 
+## Un troisième signal, qui n'est pas un étalon
+
+`heston-2010-periodicity` a été écrit le 2026-09-18 pour la **réplication** de la
+clause 2 (`D12`), et il est tenu **hors de `REFERENCE`** : les portes 05, 06 et 08
+itèrent sur ce dictionnaire, et `D06` leur a donné leur sujet. Il vit dans
+`REPLICATION`, avec ses propres contrôles (`scripts/check_heston.py`).
+
+Il diffère des étalons par sa forme : **un score par intervalle de demi-heure**,
+pas un par séance — 658 582 scores et 657 470 observations à `m = 1`, soit 99,8 %
+de mesurabilité contre 88,6 % pour les étalons.
+
+Son hypothèse `H03` a été mesurée le jour même, sur 52 décalages : **le peigne
+n'est pas là**. Dents à +0,00065 contre creux à +0,00056 hors retournement court,
+p = 0,25. Seul le retournement court ressort (`j=1` IC −0,0115, `t` −6,14), et
+c'est la préface du motif, pas le motif. Voir [[lessons|L15]] et
+[[Failed Ideas/ledger#F33]].
+
 ## Ce qui a été vérifié sur eux
 
 `scripts/check_signals.py` — 261 vérifications, aucune corrélation calculée :

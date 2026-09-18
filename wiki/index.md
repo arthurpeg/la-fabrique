@@ -51,7 +51,7 @@ Une page par phase de l'**ordre de construction** (`ETAT.md`, phases 01→15).
 
 ## Signaux — l'unité du produit fini
 
-- [[signaux/README|Signaux — deux étalons, et aucun candidat]] — `H01` et `H02`, écrits à la main pour donner un sujet aux portes 05, 06 et 08 ; **mesurés le 2026-09-18, tous deux dans le bruit** — les 2 seuls tests comptés
+- [[signaux/README|Signaux — deux étalons, et aucun candidat]] — `H01` et `H02`, écrits à la main pour donner un sujet aux portes 05, 06 et 08 ; **mesurés le 2026-09-18, tous deux dans le bruit**. Un troisième signal, `heston-2010-periodicity`, sert la réplication de la clause 2 (`H03`) : **le peigne n'est pas là**
 
 ## Concepts — pour qu'on entende la même chose
 

@@ -7,7 +7,8 @@ encore
 Cross-section of Stock Returns », *JF* 65(4):1369-1407 — `corpus/AMORCE.md`
 entrée 3, fiche `corpus/fiches/heston-2010-intraday-periodicity.json`
 **Rôle :** cible de la **clause 2 de la porte 06** (`D12`)
-**Statut :** pré-enregistrée, **non testée**
+**Statut :** **testée le 2026-09-18** — voir « Le résultat » en fin de fichier.
+L'affirmation ci-dessous n'a pas été touchée d'un mot depuis sa rédaction.
 
 ## Ce qui est affirmé
 
@@ -117,3 +118,92 @@ Le papier propose aussi des variations **conditionnelles** — heure de la journ
 taille, volume, écart. Elles appartiennent aux régimes (phase 13) et devront être
 pré-enregistrées séparément. Les tester en même temps que celle-ci et retenir la
 meilleure serait exactement ce que le registre existe pour rendre visible.
+
+---
+
+## Le résultat
+
+**Mesuré le 2026-09-18**, 52 décalages, tranche `pool`, as-of 2023-12-29, 25
+cellules, ~630 000 à 657 000 observations par décalage, harnais `9ac3e45e`.
+Recopié des rapports d'IC officiels ; le registre fait foi. `counted_tests()`
+passe de 4 à **56**, pour **une** hypothèse.
+
+### Ce que les trois clauses rendent
+
+| Clause | Médiane | Détail |
+|---|---|---|
+| **A** — dents `m = 1…40` | **+0,00065** | 28/40 positifs |
+| **B** — creux `j = 1…12` | **−0,00112** | 7/12 négatifs |
+| **C** — court `j = 1, 2, 3` | **−0,00815** | 3/3 négatifs |
+
+### Clause C — confirmée, et c'est le seul effet net de la mesure
+
+| | IC | `t` final |
+|---|---|---|
+| `j = 1` | **−0,01150** | **−6,14** |
+| `j = 2` | −0,00815 | −4,35 |
+| `j = 3` | −0,00248 | −1,33 |
+| `j = 4` | −0,00811 | −4,33 |
+
+Le retournement de court terme existe sur nos futures, et fortement. C'est ce que
+le papier décrit avant le peigne — rebond entre bid et ask, dislocations
+temporaires de liquidité.
+
+### Clauses A et B — non établies, et le seau B était mal construit
+
+**La faute est dans cette hypothèse, pas dans la mesure.** `H03` définit les
+creux comme `j = 1…12` et le retournement court comme `j = 1…3` : le second est
+un **sous-ensemble** du premier. La séparation « dents > creux » pouvait donc
+être produite par le retournement court seul, sans aucune périodicité. Elle l'a
+été :
+
+| | médiane des dents | médiane des creux | séparation | Mann-Whitney |
+|---|---|---|---|---|
+| creux tels qu'écrits, `j = 1…12` | +0,00065 | −0,00112 | +0,00177 | p = 0,030 |
+| creux **sans** le court, `j = 4…12` | +0,00065 | **+0,00056** | **+0,00009** | **p = 0,247** |
+
+Retirer du seau B ce qui appartenait au seau C fait disparaître la séparation.
+
+**Et aucune dent ne ressort de la sélection.** Le plus grand `t` des 40 vaut
+**+3,01** (`m = 5`) ; le maximum de `|t|` sur 40 tirages de bruit pur a une
+médiane de **2,38** et un 95ᵉ centile de **3,22**. La meilleure dent est donc
+*en dessous* de ce que la sélection produit seule. Le 28/40 de dents positives
+donne un binomial unilatéral de 0,0083, mais les 40 dents partagent les mêmes
+barres : le compte effectif est très inférieur à 40, et ce `p` est un plancher
+optimiste, pas un résultat.
+
+**Enfin, la moitié négative de la claim tombe aussi.** Le papier dit qu'entre les
+multiples la réponse reste « largement négative ». Chez nous, `j = 4…12` donne
+**5 valeurs positives sur 9**.
+
+### Le verdict, selon ce qui était écrit avant
+
+**Le peigne n'est pas là.** Ce qui est là est un retournement de court terme,
+c'est-à-dire la préface du motif et non le motif.
+
+`H03` § « Si le motif n'est pas là » l'avait prévu et la réponse ne se négocie
+pas : c'est **un résultat valide sur notre univers**, et **la clause 2 de la
+porte 06 n'est PAS franchie**. Un instrument qui ne retrouve pas ce qu'il devrait
+retrouver n'est pas validé contre une vérité extérieure. Il faut une **nouvelle
+cible, par décision écrite** — pas un assouplissement de celle-ci, et surtout pas
+une relecture indulgente de la clause B.
+
+### Ce que cette mesure n'a PAS vérifié
+
+`H03` § Ce qui la contredirait prévoyait aussi : « un peigne porté par une seule
+cellule sur les 25 : accident d'instrument ». **Cette clause n'a pas pu être
+vérifiée.** `scripts/measure_h03.py` n'a inscrit que l'IC poolé par décalage ;
+la ventilation par cellule, produite par le harnais, n'a pas été conservée. C'est
+un défaut du script, pas du harnais.
+
+La vérifier coûterait **52 lignes comptées de plus**, et elle ne pourrait que
+rendre le motif **plus faible** — jamais plus fort. Le verdict ne changerait donc
+pas. Le défaut est noté ici plutôt que payé.
+
+### Garde-fou, rappelé
+
+Aucun décalage n'est retenu comme signal. `j = 1` et `j = 2` sont des
+retournements nets, et ce ne sont **pas** des signaux tant qu'une hypothèse neuve
+ne les a pas pré-enregistrés, avec un coût d'aller-retour en face : notre
+plancher est de 0,21 à 1,55 bp, et `|IC| = 0,0115` sur une demi-heure ne dit rien
+d'un rendement net.

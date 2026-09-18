@@ -60,7 +60,7 @@ de lui-même, et une règle écrite pour les premiers interdisait les secondes.
 Dérogation écrite, et vérifiée **étroite** par la porte 06 elle-même. Voir
 [[lessons|L11]] et [[Failed Ideas/ledger#F24]].
 
-## Clause 2 — pourquoi elle est bloquée
+## Clause 2 — tentée le 2026-09-18, NON franchie
 
 Rejouer Mesfin (2026) « avec notre modèle de coût » suppose de connaître notre
 coût. `harness/costs.py` ne rend qu'un **plancher** : `fee_bp` et `slippage_bp`
@@ -86,6 +86,19 @@ valeurs, et c'est l'ordre voulu.
 jour : `cmegroup.com` est injoignable depuis le poste (timeout puis ECONNRESET
 sur trois URLs). Rien n'a été déposé — une valeur relevée dans un extrait de
 moteur de recherche n'est pas une valeur citée, et `D09` la refuserait.
+
+**Puis la cible a changé, et la tentative a échoué.** `L14` a montré que la
+friction de Mesfin est du même ordre que notre plancher, donc son verdict est
+transportable ; la lecture du papier a montré que sa **métrique** ne l'est pas
+(un `t` sur des rendements nets par trade, quand nous mesurons un IC). `D12` a
+donc visé **Heston, Korajczyk & Sadka (2010)**, dont le résultat est une
+corrélation. `H03` a été pré-enregistrée puis mesurée le jour même : **le peigne
+n'est pas là** — dents à +0,00065 contre creux à +0,00056 hors retournement
+court, p = 0,25. Seul le **retournement de court terme** ressort, nettement
+(`j=1` à IC −0,0115, `t` −6,14), et c'est la préface du motif, pas le motif.
+
+La clause 2 reste **non franchie**, comme `H03` l'avait écrit d'avance. Voir
+[[lessons|L15]] et [[Failed Ideas/ledger#F33]].
 
 ## Ce qui n'a pas encore été fait, et qui appartient à cette phase
 

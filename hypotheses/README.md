@@ -42,7 +42,7 @@ elle croit battre la littérature, et pas seulement l'espérer. Un IC au-dessus 
 | [H01](H01-gao-2018-premiere-demi-heure.md) | `gao-2018-intraday-momentum` | **testée** | 2026-09-18 | IC −0,01061, `t` final **−1,56** — non confirmée, dans le bruit (`T-20260918T065822-2b3e5d`) |
 | [H02](H02-baltussen-2021-reste-de-la-journee.md) | `baltussen-2021-intraday-momentum` | **testée** | 2026-09-18 | IC −0,00432, `t` final **−0,63** — non confirmée, dans le bruit (`T-20260918T070041-18cf25`) |
 
-| [H03](H03-heston-2010-peigne-periodique.md) | `heston-2010-periodicity` (à implémenter) | **pré-enregistrée, non testée** | — | cible de la clause 2 de la porte 06 (`D12`) |
+| [H03](H03-heston-2010-peigne-periodique.md) | `heston-2010-periodicity` | **testée** | 2026-09-18 | **peigne absent** — dents +0,00065 contre creux +0,00056 hors retournement court (p = 0,25) ; seul le retournement court ressort (`j=1` IC −0,0115, `t` −6,14). 52 lignes, **une** hypothèse |
 
 **`counted_tests()` vaut 4 pour DEUX hypothèses.** Chacune porte deux lignes : la
 première mesure et sa reprise sous `D11`, qui a corrigé la déflation de
