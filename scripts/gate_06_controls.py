@@ -6,9 +6,12 @@ d'IC ». Rejeté, et **sans consommer de ligne de registre** : il n'a produit au
 IC, il n'y a rien à inscrire, et un dénominateur gonflé de tests qui n'ont jamais
 eu lieu est aussi faux qu'un dénominateur absent (`D08`).
 
-La clause 2 de la porte — **la réplication d'un résultat publié** — n'est pas ici.
-Elle est bloquée, et pour une raison qui n'est pas du travail à faire : voir
-`ETAT.md` § Prochaine action.
+La clause 2 de la porte — **la réplication d'un résultat publié** — n'est pas
+ici : elle vit dans `scripts/measure_h04.py`, et elle a été **franchie le
+2026-09-18** (`H04`, Andersen & Bollerslev 1997). Les deux clauses sont donc
+tenues par deux scripts distincts, parce qu'elles mesurent deux choses
+différentes — un signal dégénéré d'un côté, une propriété des données de
+l'autre (`D13`).
 
 Les scores de cette porte sont **synthétiques**. Aucun n'est celui de `H01` ou de
 `H02` : voir un résultat sur une hypothèse pré-enregistrée avant sa mesure
@@ -219,7 +222,8 @@ def main() -> int:
     print(f"  registre : {len(registry.read_all())} lignes, {counted} test(s) compté(s), "
           f"inchangé par cette porte ; "
           f"harnais {registry.code_hash()}")
-    print("  CLAUSE 2 (réplication) : NON FRANCHIE — la porte 06 reste ouverte.")
+    print("  CLAUSE 2 (réplication) : franchie le 2026-09-18 par "
+          "scripts/measure_h04.py — la porte 06 est entière.")
     return 0
 
 

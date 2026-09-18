@@ -1,0 +1,75 @@
+{
+  "fiche_id": "andersen-bollerslev-1997-periodicity",
+  "written": "2026-09-18",
+  "written_by": "hand",
+  "note_on_provenance": "Écrite à la main, comme les fiches Mesfin et Heston. L'extracteur de la phase 07 n'existe pas. Tout champ non lu dans le PDF vaut null.",
+
+  "source": {
+    "authors": "Torben G. Andersen, Tim Bollerslev",
+    "title": "Intraday periodicity and volatility persistence in financial markets",
+    "journal": "Journal of Empirical Finance 4(2-3):115-158",
+    "year": 1997,
+    "source_url": "https://finance.martinsewell.com/stylized-facts/volatility/AndersenBollerslev1997b.pdf",
+    "pdf": "corpus/pdf/andersen-bollerslev-1997-periodicity.pdf",
+    "retrieved": "2026-09-18",
+    "peer_reviewed": true,
+    "amorce_entry": 11
+  },
+
+  "claim": {
+    "direction": "positive",
+    "statement": "La périodicité intra-journalière de la volatilité est si forte qu'elle domine la dynamique des rendements haute fréquence : toute dynamique intraday estimée sans l'en purger est faussée.",
+    "quoted_abstract": "The pervasive intraday periodicity in the return volatility in foreign exchange and equity markets is shown to have a strong impact on the dynamic properties of high frequency returns. Only by taking account of this strong intraday periodicity is it possible to uncover the complex intraday volatility dynamics that exists both within and across different financial markets."
+  },
+
+  "universe": {
+    "instruments": ["DM-$ (change)", "S&P 500 stock index futures"],
+    "granularity": "5 minutes",
+    "sp500_period": "1986-01-02 → 1989-12-31",
+    "sp500_observations": 79280,
+    "quoted": "composite stock index futures contract from January 2, 1986, through December 31, 1989, consisting of a total of 79,280 observations.",
+    "note": "Les futures S&P 500 sont ES chez nous — même contrat, même séance de bourse. C'est la référence la plus directement comparable du corpus."
+  },
+
+  "reported_results": {
+    "u_shape_sp500": {
+      "morning_pct": 0.095,
+      "midday_pct": 0.055,
+      "close_pct": 0.105,
+      "quoted": "The average absolute returns attain the commonly observed intraday U-shape, starting out at 0.095% in the morning, followed by a smooth decline to a level of 0.055% around noon and a steady rise to 0.105% towards the end of trading in the cash market.",
+      "ratio_peak_over_trough": 1.91,
+      "ratio_note": "0,105 / 0,055. C'est un RAPPORT, donc la seule grandeur transposable : nos barres font une minute et non cinq, donc les niveaux ne sont pas comparables."
+    },
+    "shape_variant": {
+      "quoted": "a tendency for the right part of the 'U' to occasionally rise above the left part, creating more of a 'J' shape ... this tendency appears to be concentrated on high volatility days.",
+      "note": "Un J est une confirmation du motif, pas une contradiction."
+    },
+    "correlogram_periodicity": {
+      "quoted": "the autocorrelation patterns for the absolute returns are strikingly regular ... The strong intraday pattern induces a distorted U-shape in the sample correlogram ... The slowly declining U-shape occupies exactly 80 intervals, corresponding to the daily frequency.",
+      "intervals_per_day_sp500": 80,
+      "note": "80 intervalles de 5 minutes = 400 minutes de séance. Chez nous la période est celle de la fenêtre, lue au catalogue."
+    },
+    "magnitude_of_the_effect_fx": {
+      "first_order_autocorr_abs_returns": 0.309,
+      "ljung_box_10": 36680,
+      "quoted": "the first order autocorrelation coefficient for the absolute 5-minute returns of rho = 0.309 exceeds the 1/sqrt(T) asymptotic standard error by almost a factor of one hundred, while the Ljung-Box statistic for up to tenth order serial correlation equals Q(10) = 36,680",
+      "note": "Sur le change, pas sur le S&P. Cité pour l'ORDRE DE GRANDEUR de l'effet : ce n'est pas un signal marginal, c'est la structure dominante des données."
+    }
+  },
+
+  "transposability": {
+    "what_transfers": "La FORME — creux au milieu de la séance, sommets aux extrémités — et la PÉRIODICITÉ du corrélogramme des rendements absolus à la fréquence de la séance. Les deux sont des motifs, pas des valeurs.",
+    "what_does_not_transfer": [
+      "Les niveaux. Leurs rendements sont à 5 minutes, les nôtres à 1 minute : un |r| moyen de 0,105 % n'a pas d'équivalent direct. Seul le RAPPORT sommet/creux est comparable.",
+      "L'époque. 1986-1989 contre 2016-2023. Le motif est réputé stable, et c'est justement ce qui en fait une épreuve d'instrument."
+    ],
+    "what_aligns_well": "Leur figure porte sur les futures S&P 500 pendant la séance de bourse américaine. Notre cellule ES x US est le même contrat sur la même fenêtre."
+  },
+
+  "why_this_target": "La clause 2 de la porte 06 a échoué sur Mesfin (métrique incompatible) puis sur Heston (motif absent). Celle-ci mesure une propriété des DONNÉES et non un pouvoir prédictif : elle ne produit aucun IC, donc elle ne dépense aucun test compté. Et son échec serait à peine concevable — ce qui est exactement ce qu'on demande à une épreuve d'instrument. Voir decisions/DECISION-13.",
+
+  "what_is_missing": [
+    "Le modèle périodique explicite de la section 5 (procédure de filtrage) n'est pas relevé : l'hypothèse H04 ne porte que sur les faits bruts, pas sur leur modélisation.",
+    "Les figures ne sont pas lisibles dans le texte extrait ; seuls les chiffres cités en prose ont été relevés."
+  ]
+}

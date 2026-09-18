@@ -397,3 +397,32 @@ Le réflexe : **deux catégories qu'on va comparer doivent être disjointes, et 
 le vérifie en les écrivant**, pas après. Et le corollaire, plus dur : un test
 pré-enregistré qui « passe » se relit aussi attentivement qu'un test qui échoue —
 un résultat conforme est précisément celui que personne n'a envie d'examiner.
+
+---
+
+## L16 — Un témoin négatif a une position, et mal placé il mesure un plancher
+
+**Ce qu'on croyait.** `H04` clause C comparait l'autocorrélation de `|r|` aux
+décalages **multiples d'une séance** à celle des décalages **voisins non
+multiples**. Le témoin était pris à 15 et 30 minutes du multiple : assez proche
+pour être comparable, assez loin pour n'être pas le même décalage. Cela semblait
+le bon réglage.
+
+**Ce qui était vrai.** À 15 ou 30 minutes d'un multiple de séance, on est presque
+à la **même phase du cycle intra-journalier** — c'est-à-dire là où l'effet
+cherché est presque aussi fort. Le témoin mesurait donc l'effet contre lui-même.
+L'écart obtenu valait **+0,0055 à +0,0104** ; placé à une demi-séance, en phase
+opposée, il vaut **+0,0457 à +0,0684**, soit **cinq à sept fois plus**. La clause
+tenait, mais elle rendait un **plancher** de l'effet, pas l'effet.
+
+**Comment on s'en est aperçu.** Parce que le résultat paraissait *trop faible
+pour un fait aussi réputé* — les auteurs rapportent un Ljung-Box de 36 680 — et
+que cette gêne a suffi à faire vérifier où le témoin était posé. Aucun contrôle
+ne l'aurait signalé : la clause passait.
+
+Le réflexe, qui prolonge `L13` : **« trop sévère » n'est pas un côté sûr**, et un
+témoin négatif mal placé est une sévérité involontaire. Quand un motif est
+périodique, le témoin se place à la **phase opposée**, jamais au voisinage — sans
+quoi on compare la crête à la crête. Et le corollaire : **un résultat qui passe
+mais paraît trop faible pour ce qu'on savait mérite le même examen qu'un résultat
+qui échoue.**

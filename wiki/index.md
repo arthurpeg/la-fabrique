@@ -43,9 +43,10 @@ Une page par phase de l'**ordre de construction** (`ETAT.md`, phases 01→15).
 - [[phases/phase-03-harnais-ic|Phase 03 — Le harnais d'IC calibré]] — le juge, **figé** depuis le 2026-09-17 ; `franchie`
 - [[phases/phase-04-registre-et-holdout|Phase 04 — Le registre et le verrou du holdout]] — invariants III et V fabriqués, pas promis ; `franchie` 2026-09-17, **fin de l'Acte I**
 - [[phases/phase-05-api-de-signal|Phase 05 — API de signal, sandbox, test de causalité]] — trois look-ahead injectés, trois attrapés ; `franchie` 2026-09-17
-- [[phases/phase-06-controles-et-replication|Phase 06 — Contrôles automatiques et réplication]] — **phase courante**, `en-cours` : clause 1 franchie, clause 2 bloquée sur le coût. C'est là que `H01` et `H02` seront mesurés.
+- [[phases/phase-06-controles-et-replication|Phase 06 — Contrôles automatiques et réplication]] — deux clauses, deux cibles tombées avant la bonne ; `franchie` 2026-09-18, **fin de l'Acte II côté jugement**
+- [[phases/phase-07-triage-et-extraction|Phase 07 — Triage et extraction]] — **phase courante**, `en-cours` : trois fiches écrites à la main servent de banc d'essai, et le verdict humain de référence existe depuis la phase 01
 
-> Les phases 07 à 15 n'ont pas encore de page. On les crée en s'en approchant,
+> Les phases 08 à 15 n'ont pas encore de page. On les crée en s'en approchant,
 > pas d'avance : une page de phase lointaine est une page qui vieillit sans être
 > lue.
 
@@ -75,8 +76,11 @@ Le corpus autoritatif est `corpus/AMORCE.md` (24 références) et, à partir de 
 phase 07, `corpus/fiches/`. Ces pages commentent et relient ; elles ne remplacent
 ni l'un ni l'autre.
 
-**Aucune de ces sources n'a été lue intégralement** — statut `repere`, pas `lu`.
+**Trois sources ont été lues le 2026-09-18** — Mesfin, Heston et
+Andersen & Bollerslev — et fichées dans `corpus/fiches/`, à la main. Les autres
+restent au statut `repere`.
 
+- [[research/andersen-bollerslev-1997-periodicite|Andersen & Bollerslev (1997) — Périodicité intra-journalière]] — **lu et fiché** ; la cible qui a franchi la clause 2. `lu`
 - [[research/bailey-2014-deflated-sharpe|Bailey & López de Prado (2014) — Deflated Sharpe ratio]] — la dernière opération du projet. `repere`
 - [[research/baltussen-2021-hedging-demand|Baltussen et al. (2021) — Hedging demand and market intraday momentum]] — 60+ futures, un mécanisme explicite. `repere`
 - [[research/bollerslev-2018-risk-everywhere|Bollerslev et al. (2018) — Risk everywhere]] — la justification du *pooling*. `repere`

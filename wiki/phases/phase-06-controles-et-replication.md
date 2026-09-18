@@ -1,7 +1,7 @@
 ---
 type: phase
 updated: 2026-09-17
-status: en-cours
+status: franchie
 phase: 06
 gate: un signal dégénéré est rejeté avant le harnais ; le harnais réplique un résultat publié connu
 sources: [ETAT.md, decisions/DECISION-08-controles-automatiques.md, harness/controls.py]
@@ -9,9 +9,24 @@ sources: [ETAT.md, decisions/DECISION-08-controles-automatiques.md, harness/cont
 
 # Phase 06 — Contrôles automatiques et réplication
 
-**Ouverte le 2026-09-17. NON FRANCHIE.** Sa clause 1 est franchie
-(`scripts/gate_06_controls.py`, 25 vérifications) ; sa clause 2 ne l'est pas, et
-une porte à moitié franchie est une porte non franchie.
+**Ouverte le 2026-09-17, FRANCHIE le 2026-09-18** — les deux clauses.
+Clause 1 : `scripts/gate_06_controls.py`, 25 vérifications. Clause 2 :
+`scripts/measure_h04.py`, 19 vérifications, après **deux cibles tombées**.
+
+> [!warning] Ce que cette porte valide, et rien de plus
+> La **chaîne de données** et la discipline de mesure — pas le harnais d'IC, qui
+> reste garanti par sa seule calibration à la main (porte 03). `D13` § Pourquoi
+> l'écrit sans détour.
+
+**Le chemin, parce qu'il compte plus que le verdict.** Mesfin (2026) a été écarté
+sur sa **métrique** — un `t` sur des rendements nets par trade, quand nous
+mesurons un IC ([[Failed Ideas/ledger#F31]], `D12`). Heston et al. (2010) a été
+pré-enregistré puis mesuré : **le motif n'est pas là** ([[Failed Ideas/ledger#F33]]).
+Andersen & Bollerslev (1997) a été retenu parce que sa réponse est une propriété
+des **données** et non un pouvoir prédictif : la forme en U de la volatilité
+intra-journalière, retrouvée sur `NQ`, `ES` et `YM` avec un rapport sommet/creux
+de **1,74 à 2,05** contre **1,91** chez les auteurs, sur le même contrat, trente
+ans plus tard. Et elle n'a coûté **aucun test compté**.
 
 ## La porte, en deux clauses
 

@@ -44,6 +44,8 @@ elle croit battre la littérature, et pas seulement l'espérer. Un IC au-dessus 
 
 | [H03](H03-heston-2010-peigne-periodique.md) | `heston-2010-periodicity` | **testée** | 2026-09-18 | **peigne absent** — dents +0,00065 contre creux +0,00056 hors retournement court (p = 0,25) ; seul le retournement court ressort (`j=1` IC −0,0115, `t` −6,14). 52 lignes, **une** hypothèse |
 
+| [H04](H04-andersen-bollerslev-1997-periodicite.md) | *(aucun signal — `scripts/measure_h04.py`)* | **testée** | 2026-09-18 | **les quatre clauses tiennent** — forme en U, rapports 1,74 à 2,05 contre 1,91 chez les auteurs ; **aucun IC, aucun test compté** |
+
 **`counted_tests()` vaut 4 pour DEUX hypothèses.** Chacune porte deux lignes : la
 première mesure et sa reprise sous `D11`, qui a corrigé la déflation de
 recouvrement. La correction de tests multiples de la phase 15 compte des
