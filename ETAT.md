@@ -16,6 +16,14 @@ franchie. Le **premier maillon** de la chaîne qui la débloque est posé depuis
 2026-09-18 — la convention de provenance (`D09`) ; le deuxième, les
 multiplicateurs, attend que `cmegroup.com` réponde.
 **Décision la plus récente :**
+`decisions/DECISION-12-cible-de-replication.md` — la clause 2 de la porte 06
+**change de cible**. Mesfin (2026), lu et fiché le 2026-09-18, ne convient pas :
+son critère est un `t` sur des **rendements nets par trade**, le nôtre un **IC**,
+et deux de ses trois plis hors échantillon tombent dans le `holdout` scellé. La
+nouvelle cible est **Heston, Korajczyk & Sadka (2010)**, dont le résultat est une
+corrélation et un **motif de signes** — donc lisible par notre instrument et
+robuste à la transposition d'univers. `H03` est pré-enregistrée.
+**Décision précédente :**
 `decisions/DECISION-11-deflation-de-recouvrement.md` — la déflation de
 recouvrement se **mesure** sur l'écart réel entre observations au lieu d'être
 supposée égale à `√h`. `H01` et `H02` scorent une fois par séance : leurs
@@ -153,57 +161,66 @@ officiels avec leur `test_id`.
 
 ### 2. La clause 2 — réplication d'un résultat publié
 
-**Bloquée, et pas seulement par du travail à faire.** La cible nommée est la
-falsification de Mesfin (2026) : 14 familles de signaux OHLCV, aucune ne survit à
-2 points d'indice de friction supposée. La rejouer « avec notre modèle de coût »
-suppose de connaître notre coût — or `harness/costs.py` ne rend qu'un **plancher**,
-`fee_bp` et `slippage_bp` étant ouverts.
+**Sa prémisse a été vérifiée le 2026-09-18, et elle est tombée.**
+`scripts/check_mesfin_premise.py`, aucun test dépensé.
 
-Conséquence précise, à ne pas contourner : on peut conclure « ne survit pas même
-au plancher » (conclusion **négative**, valide), jamais « survit sous nos coûts »
-(conclusion **positive**, hors de portée tant que le coût est incomplet).
+Le plan portait un « raccourci honnête » : montrer que notre plancher mesuré est
+un ordre de grandeur sous la friction supposée de Mesfin, et en conclure que son
+résultat négatif n'est pas transportable. Le calcul, refait sur nos données au
+lieu d'être cité, dit l'inverse.
 
-Il faut donc, dans cet ordre :
-1. ~~la **convention de provenance** des valeurs externes~~ — **faite** le
-   2026-09-18, `D09` ; `catalogue/validate.py` §8 refuse désormais une valeur
-   externe sans `source_url`, date et valeur citée, et
-   `scripts/check_provenance.py` le démontre sur neuf fautes ;
-2. les **multiplicateurs** relevés sur les fiches contrat CME — **tentés le
-   2026-09-18, `cmegroup.com` injoignable** depuis ce poste (timeout puis
-   ECONNRESET sur trois URLs). Les neuf champs restent `null`, `todo multipliers`
-   reste ouvert. À reprendre dès que le site répond ; le bloc `provenance:` du
-   catalogue porte la forme exacte de l'entrée à déposer ;
-3. la réponse de **Lucid** sur le caractère all-in de ses commissions, et le
-   barème micro ou mini selon ce qui sera tradé ;
-4. une déclaration écrite de `slippage_bp`, pessimiste, comme `D04` l'exige ;
-5. **alors seulement** l'implémentation des familles de Mesfin, qui est du gros
-   travail et dépensera beaucoup de tests comptés — à pré-enregistrer.
+| | bp d'aller-retour |
+|---|---|
+| friction de Mesfin — 2 points à la médiane NQ mesurée (14 688) | **1,36** |
+| notre plancher `NQ × US` | 0,79 — sa friction vaut **1,7×** |
+| notre **pire** cellule (CL) | 1,55 — sa friction vaut **0,9×** |
 
-Un raccourci honnête existe et ne coûte presque rien : montrer que notre
-**plancher mesuré** (0,79 bp sur `NQ × US`, 1,55 bp sur la pire cellule) est déjà
-un ordre de grandeur sous les 8 à 15 bp que vaut sa friction supposée sur nos
-données. Ce n'est pas la réplication, c'en est la prémisse — et elle se vérifie
-sans dépenser un seul test.
+La page qui portait la réserve annonçait « 8 à 15 bp » : **faux d'un facteur
+10**. Elle est corrigée, la réserve est retirée, et la leçon est `L14`. La
+comparaison est en outre défavorable à tort : notre plancher est un **écart
+seul**, quand ses 2 points sont une friction **tout compris**.
 
-### Une ouverture, apparue avec le résultat de `H01` et `H02`
+**Son verdict est transportable.** Le corpus implémentable doit donc être
+considéré comme *attendu mort* jusqu'à preuve du contraire — ce que `corpus/AMORCE.md`
+annonçait comme le scénario inconfortable.
 
-**Le blocage de la clause 2 est peut-être plus étroit qu'écrit ci-dessus, et il
-faut le vérifier avant de continuer à attendre les frais.**
+**Et nos deux premiers tests vont dans le même sens.** `H01` et `H02` sont dans
+le bruit **avant tout coût** : un IC brut nul n'a pas besoin qu'on lui retranche
+des frais. La convergence n'est pas une preuve, mais elle n'est pas rien.
 
-Le raisonnement tenu jusqu'ici : on ne peut pas conclure « survit sous nos coûts »
-tant que le coût est incomplet. C'est vrai. Mais **le résultat de Mesfin est
-négatif** — aucune des 14 familles ne survit. Répliquer un résultat négatif ne
-demande que la direction négative, et notre plancher est **plus bas** que sa
-friction supposée : si une famille ne survit pas même à un coût plus faible que
-le sien, sa conclusion est reproduite *a fortiori*.
+### Ce que la clause 2 demande, et la prochaine action
 
-Mieux : `H01` et `H02` viennent de montrer qu'un signal peut être écarté **sans
-que le coût intervienne du tout** — un IC brut dans le bruit n'a pas besoin
-d'être diminué des frais pour être nul.
+**La cible a changé le 2026-09-18** (`D12`). Le blocage n'a jamais été les frais ;
+c'est la **métrique** qui ne correspondait pas, et cela ne s'est vu qu'en lisant
+le papier.
 
-Si cela tient, le vrai coût de la clause 2 n'est pas `fee_bp` : c'est le **budget
-de tests** (14 familles, 14 hypothèses à pré-enregistrer, 14 lignes au
-dénominateur) et le travail d'implémentation. Ce qui est une tout autre
-conversation, et une décision à écrire.
+La nouvelle cible est **Heston, Korajczyk & Sadka (2010)** — continuation du
+rendement aux décalages multiples exacts d'une séance, retournement aux premiers
+décalages, rien de positif entre les deux. Un **peigne**, qui porte son propre
+témoin négatif : si les creux rendaient autant que les dents, il n'y aurait pas
+de périodicité, seulement un biais.
 
-**À trancher avant d'implémenter quoi que ce soit**, et sans dépenser un test.
+Période dictée par le catalogue, pas par le résultat : **P = 13** demi-heures pour
+`US` et `EUROPE` (6,5 h), **P = 16** pour `ASIA` (8 h). Deux motifs distincts à
+retrouver. `H03` est **pré-enregistrée depuis le 2026-09-18**, avant toute mesure,
+et dit aussi ce qui se passe si le motif est absent — l'échec ne s'achète pas en
+redéfinissant la porte.
+
+**Prochaine action : implémenter le signal `heston-2010-periodicity`** dans
+`signals/`, à la main comme les étalons de `D06`, et le faire passer la porte 05
+(contrat, liste blanche, test de causalité) avant toute mesure. Puis mesurer
+`H03` : environ une centaine de lignes au registre pour **une** hypothèse.
+
+### Ce qui reste ouvert par ailleurs
+
+- les **multiplicateurs** CME (`cmegroup.com` injoignable depuis ce poste le
+  2026-09-18) et la réponse de **Lucid** sur ses commissions ; requis pour toute
+  lecture **nette** et pour la phase 10, mais ils ne bloquent plus la clause 2 ;
+- une déclaration écrite de `slippage_bp`, pessimiste, comme `D04` l'exige ;
+- **Mesfin reste le calibrage d'attente le plus proche**, désormais lu, fiché et
+  **transportable** (`L14`) : le corpus implémentable doit être tenu pour
+  *attendu mort* jusqu'à preuve du contraire. `H01` et `H02` vont déjà dans ce
+  sens — dans le bruit, avant tout coût ;
+- **Bollerslev et al. (2018)** comme cible ultérieure, quand un instrument de
+  volatilité existera (phase 09 ou plus tard) ;
+- **Mesfin au niveau du trade**, quand le moteur de backtest existera (phase 10).

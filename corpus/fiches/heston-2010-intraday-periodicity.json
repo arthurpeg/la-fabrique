@@ -1,0 +1,65 @@
+{
+  "fiche_id": "heston-2010-intraday-periodicity",
+  "written": "2026-09-18",
+  "written_by": "hand",
+  "note_on_provenance": "Écrite À LA MAIN, comme la fiche Mesfin. Ce n'est pas une sortie de l'extracteur de la phase 07, qui n'existe pas. Tout champ non lu dans le PDF vaut null.",
+
+  "source": {
+    "authors": "Steven L. Heston, Robert A. Korajczyk, Ronnie Sadka",
+    "title": "Intraday Patterns in the Cross-section of Stock Returns",
+    "journal": "Journal of Finance 65(4):1369-1407",
+    "year": 2010,
+    "arxiv_id": "1005.3535",
+    "source_url": "https://arxiv.org/abs/1005.3535",
+    "pdf": "corpus/pdf/heston-2010-1005.3535.pdf",
+    "retrieved": "2026-09-18",
+    "peer_reviewed": true,
+    "amorce_entry": 3
+  },
+
+  "claim": {
+    "direction": "positive",
+    "statement": "Le rendement d'une demi-heure donnée continue aux lags qui sont des multiples exacts d'une journée de bourse, et cet effet dure au moins 40 séances ; aux autres lags il est en majorité négatif.",
+    "quoted_abstract": "We find a striking pattern of return continuation at half-hour intervals that are exact multiples of a trading day, and this effect lasts for at least 40 trading days.",
+    "quoted_body": "Looking beyond 13 lags, the return effects over half-hour intervals on subsequent days remain largely negative, with statistically significant positive effects at multiples of 13 lags, that is, 26, 39, 52, and 65. It appears that temporary price pressure is reversed at virtually all future times except at the same time interval on subsequent days."
+  },
+
+  "universe": {
+    "instruments": "actions américaines",
+    "granularity": "demi-heure",
+    "intervals_per_day": 13,
+    "quoted": "With 13 half-hour intervals per day and five trading days per week, this produces 65 lagged intervals."
+  },
+
+  "method": {
+    "specification": "r[i,t] = alpha[k,t] + gamma[k,t] * r[i,t-k] + u[i,t], régression TRANSVERSALE par lag k, à la Jegadeesh (1990) ; t de Fama-MacBeth (1973) sur la série des gamma[k,t].",
+    "units": "gamma en points de base",
+    "is_not_an_autocorrelation": true,
+    "quoted_warning": "Note that using cross-sectional regression in this way is different from measuring the autocorrelation of stock returns. In particular, the cross-sectional regression subtracts an overall market effect, which reduces variance and focuses on returns relative to other stocks."
+  },
+
+  "reported_results": {
+    "short_lag_reversal": "Les premiers lags sont négatifs — une phase de retournement de quelques heures, attribuée au rebond entre bid et ask et à des dislocations temporaires de liquidité.",
+    "daily_multiples_positive": "Les gamma culminent aux lags multiples exacts de 13 demi-heures.",
+    "smallest_t_first_week": 9.62,
+    "quoted_t": "Over the first week the smallest t-statistic at the daily frequency (lags 13, 26, 39, 52, and 65) is 9.62.",
+    "persistence_days": 40
+  },
+
+  "transposability": {
+    "what_transfers": "LA FORME DU MOTIF : négatif aux premiers lags, positif aux lags multiples de la période de la fenêtre, et positif AUX MULTIPLES SEULEMENT. C'est un peigne, et un peigne porte son propre témoin négatif — les lags non-multiples doivent rendre zéro ou négatif.",
+    "what_does_not_transfer": [
+      "La mesure elle-même. Leur gamma est une réponse TRANSVERSALE dont l'effet de marché est retiré ; le papier le dit lui-même. Neuf futures portant 4,22 paris indépendants ne se classent pas en coupe (D01 §2, ledger F03). Notre transposition est une corrélation EN SÉRIE TEMPORELLE par cellule — un autre objet.",
+      "Les magnitudes et les t. Un gamma transversal en points de base et un IC de rang par cellule ne se comparent pas. Aucune valeur numérique du papier n'est reprise comme attendue.",
+      "L'univers. Actions américaines chez eux, neuf futures CME chez nous."
+    ],
+    "what_aligns_well": "Leur journée de bourse fait 13 demi-heures (09:30-16:00). Nos fenêtres US (09:30-16:00) et EUROPE (03:00-09:30) font 6,5 h, soit 13 demi-heures elles aussi ; ASIA (19:00-03:00) en fait 16. La période du peigne est donc connue d'avance et DIFFÈRE par fenêtre — ce qui donne trois motifs distincts à retrouver au lieu d'un."
+  },
+
+  "why_this_target": "La clause 2 de la porte 06 demande que le harnais réplique un résultat publié connu. Elle exige donc une cible dont la réponse soit LISIBLE PAR NOTRE INSTRUMENT. Celle-ci l'est : c'est une corrélation, et c'est un motif de signes plutôt qu'une valeur, donc robuste à la transposition d'univers. Voir decisions/DECISION-12.",
+
+  "what_is_missing": [
+    "Les tableaux I et IA.I n'ont pas été relevés valeur par valeur ; seule la structure du motif et le t minimal de la première semaine l'ont été.",
+    "Les analyses conditionnelles (heure de la journée, taille, volume) ne sont pas relevées : elles appartiendraient aux régimes (phase 13) et devraient être pré-enregistrées séparément."
+  ]
+}

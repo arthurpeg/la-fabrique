@@ -332,3 +332,38 @@ Il n'y a pas de direction gratuite. Et : **une correction dont l'hypothèse est
 est calibrée sur le seul cas où elle a raison — c'est `L11` sous un autre
 visage, et la deuxième fois que le harnais se fait prendre à n'avoir qu'un
 client en tête.
+
+---
+
+## L14 — Un ordre de grandeur recopié n'est pas un ordre de grandeur calculé
+
+**Ce qu'on croyait.** La friction supposée par Mesfin (2026) — 2 points d'indice
+d'aller-retour — valait **8 à 15 bp** sur nos données, soit une quinzaine de fois
+l'écart d'un tick sur NQ. Une hypothèse de coût aussi lourde tuant n'importe quel
+signal intraday, son résultat négatif mesurait peut-être davantage son hypothèse
+que les signaux, et n'était donc pas transportable. C'était écrit dans
+`wiki/research/mesfin-2026-falsification` depuis le 2026-09-16, et `ETAT.md` en
+avait tiré un « raccourci honnête » pour franchir la clause 2 de la porte 06.
+
+**Ce qui était vrai.** 2 points sur un indice à 14 688 valent **1,36 bp**, pas
+13,6. L'erreur est un facteur 10, et elle renverse la conclusion : sa friction
+vaut **1,7×** notre plancher `NQ × US` et **0,9×** notre pire cellule — elle est
+plus légère que ce que nous mesurons nous-mêmes sur CL. Et notre plancher est un
+**écart seul**, frais et glissement encore `null`, quand ses 2 points sont une
+friction tout compris. Son verdict est transportable ; le raccourci qui devait
+l'écarter n'existe pas.
+
+**Comment on s'en est aperçu.** En faisant le calcul au lieu de le citer, au
+moment de s'en servir — `scripts/check_mesfin_premise.py`. Deux symptômes
+étaient visibles depuis le début, et personne ne les a lus. D'abord **aucun
+script ne produisait ce nombre** : il n'apparaissait que dans une page dérivée, et
+le wiki interdit nommément ce genre de chose — mais seulement pour les **IC**
+(`CLAUDE.md` § Wiki). La garde couvrait le nombre qui inquiétait, pas celui qui
+était faux. Ensuite la plage de niveaux citée, « 13 000 à 25 000 », ne
+correspondait pas à la tranche `pool`, dont le centile 99 est à 17 556 : le
+chiffre venait d'ailleurs tout en étant présenté comme mesuré chez nous.
+
+Le réflexe : **un nombre qui sert à décider se recalcule au moment de décider**,
+et une page qui affirme « nos propres données mesurent » doit nommer le script
+qui les a mesurées. C'est `D09` — la provenance des valeurs externes — dont on
+découvre ici qu'elle manque au wiki autant qu'au catalogue.

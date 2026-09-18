@@ -41,6 +41,25 @@ exige une donnée que je n'ai pas et qui coûte.
 > intraday : le résultat mesure peut-être davantage l'hypothèse que les signaux.
 > À rejouer avec mon propre modèle de coût — c'est une réplication à inscrire au
 > programme de la phase 06.
+>
+> **CORRECTION DU 2026-09-18 — la seconde réserve ci-dessus est fausse d'un
+> facteur 10, et elle est retirée.** Le calcul a été refait sur nos données au
+> lieu d'être cité (`scripts/check_mesfin_premise.py`) : 2 points d'indice au
+> niveau médian de NQ mesuré sur la tranche `pool` 2021-2023 (**14 688**) valent
+> **1,36 bp**, pas 8 à 15. Vérifié par une seconde route depuis le papier
+> lui-même : 4,00 $ sur un notionnel MNQ de 29 376 $ font 1,36 bp. Sa friction
+> vaut donc **1,7×** notre plancher `NQ × US` (0,79 bp) et **0,9×** notre pire
+> cellule (1,55 bp) — et la comparaison lui est encore défavorable à tort, car le
+> papier dit en toutes lettres que ses 2 points couvrent « bid-ask spread,
+> NinjaTrader exchange fees, and conservative slippage », quand notre plancher est
+> un **écart seul**, `fee_bp` et `slippage_bp` étant `null`.
+>
+> **Son verdict est donc transportable**, et l'entrée 7 doit être lue comme le
+> scénario inconfortable annoncé plus bas, pas comme une objection écartée. La
+> plage « 13 000 à 25 000 » citée ci-dessus comme mesurée sur mes données ne
+> correspond pas non plus à la tranche `pool`, dont le centile 99 est à 17 556.
+> La première réserve — préprint d'un auteur seul, non arbitré — tient toujours.
+> Voir `LECONS.md` L14 et `corpus/fiches/mesfin-2026-ohlcv-falsification.json`.
 
 > **Sur l'entrée 5.** Une réplication indépendante de l'ORB sur QQQ
 > ([dépôt public](https://github.com/giovannibrusco/zarattini-2023-orb-qqq))
