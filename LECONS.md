@@ -301,3 +301,34 @@ harnais changera vraiment, ce nombre-là ne préviendra plus personne. Un garde 
 crie à tort est pire qu'un garde absent. Corollaire général : **ce qu'on empreinte
 doit être le contenu, jamais son encodage** — c'est `L09` déplacée d'un cran,
 de la lecture vers l'empreinte.
+
+---
+
+## L13 — Une correction statistique écrite pour une forme de signal en punit une autre, et dans le sens qui ne se voit pas
+
+**Ce qu'on croyait.** La déflation de recouvrement de `D04` — diviser le `t` par
+`√h` — est une correction prudente et universelle. Prudente, donc sans risque :
+au pire elle est trop sévère, et trop sévère ne fait jamais de mal.
+
+**Ce qui était vrai.** Elle suppose un signal **scoré à chaque barre**, et `D04`
+le dit en toutes lettres : « deux observations voisines partagent `h−1` barres ».
+`H01` et `H02` scorent **une fois par séance** : leurs observations sont espacées
+de 415 barres pour un horizon de 30, et ne partagent rien. Le harnais leur a
+retiré un facteur **5,48** sans raison — `t` final −0,28 au lieu de −1,56. La
+conclusion tenait par chance, les deux étant dans le bruit de toute façon ; un
+signal à `t` naïf de 4 aurait affiché **0,5** et aurait été écarté.
+
+**Comment on s'en est aperçu.** Par une question sur *autre chose* — « une
+anomalie sur un seul actif reste une anomalie » — qui obligeait à calculer un `t`
+par cellule, donc à se demander ce que valait le `t` tout court. Jamais par une
+exception, jamais par une porte : **toutes les portes passaient**, parce
+qu'aucune ne testait la déflation contre un signal d'une autre forme que celui de
+sa calibration.
+
+Deux réflexes en sortent. **« Trop sévère » n'est pas un côté sûr** : une
+correction trop sévère rejette des signaux réels, et un rejet ne se plaint pas.
+Il n'y a pas de direction gratuite. Et : **une correction dont l'hypothèse est
+écrite doit être testée contre un cas qui viole cette hypothèse**, sans quoi elle
+est calibrée sur le seul cas où elle a raison — c'est `L11` sous un autre
+visage, et la deuxième fois que le harnais se fait prendre à n'avoir qu'un
+client en tête.

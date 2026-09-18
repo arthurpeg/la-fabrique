@@ -9,13 +9,21 @@
 **État de la porte 06 :** sa **clause 1** est franchie — `gate_06_controls.py`,
 25 vérifications, quatre signaux dégénérés rejetés sans consommer une ligne de
 registre. **`H01` et `H02` sont mesurées** depuis le 2026-09-18 :
-`counted_tests()` vaut **2**, et les deux sont dans le bruit (`t` final −0,28 et
-−0,12). Sa **clause 2**, la réplication d'un résultat publié, ne l'est pas, et
+`counted_tests()` vaut **4 pour deux hypothèses** (mesure puis reprise sous
+`D11`), et les deux sont dans le bruit (`t` final de référence −1,56 et −0,63). Sa **clause 2**, la réplication d'un résultat publié, ne l'est pas, et
 la porte reste donc **ouverte** : une porte à moitié franchie est une porte non
 franchie. Le **premier maillon** de la chaîne qui la débloque est posé depuis le
 2026-09-18 — la convention de provenance (`D09`) ; le deuxième, les
 multiplicateurs, attend que `cmegroup.com` réponde.
 **Décision la plus récente :**
+`decisions/DECISION-11-deflation-de-recouvrement.md` — la déflation de
+recouvrement se **mesure** sur l'écart réel entre observations au lieu d'être
+supposée égale à `√h`. `H01` et `H02` scorent une fois par séance : leurs
+observations sont espacées de 415 barres pour un horizon de 30 et ne se
+recouvrent pas ; le harnais leur retirait un facteur **5,48** sans raison.
+Empreinte `e9ef2087` → `9ac3e45e`, portes 03 à 06 rejouées vertes, `H01` et `H02`
+remesurées. Voir `L13`.
+**Décision précédente :**
 `decisions/DECISION-10-empreinte-du-harnais.md` — `registry.code_hash()` empreinte
 désormais le **contenu** et non les octets (fins de ligne repliées), et
 `.gitattributes` fixe `eol=lf` sur tous les postes. L'empreinte passe **une fois**
@@ -111,8 +119,13 @@ sont réputées périmées, à coût nul — `counted_tests()` valait 0. Portes 
 
 | | IC poolé | t naïf | t final | Verdict pré-enregistré |
 |---|---|---|---|---|
-| `H01` | **−0,01061** | −2,27 | **−0,28** | rien à distinguer du bruit |
-| `H02` | **−0,00432** | −0,92 | **−0,12** | rien à distinguer du bruit |
+| `H01` (`T-20260918T065822-2b3e5d`) | **−0,01061** | −2,27 | **−1,56** | rien à distinguer du bruit |
+| `H02` (`T-20260918T070041-18cf25`) | **−0,00432** | −0,92 | **−0,63** | rien à distinguer du bruit |
+
+Chiffres **repris sous `D11`** le même jour : la première mesure déflatait le `t`
+de 5,48 pour un recouvrement qui n'existe pas. L'IC n'a pas bougé, le verdict non
+plus. `counted_tests()` vaut **4 pour deux hypothèses** — voir
+`hypotheses/README.md` sur ce que la phase 15 doit compter.
 
 Le signe est négatif là où les deux prédisaient positif, mais **ce n'est pas la
 clause de falsification qui s'applique** : « le motif existe à l'envers »
@@ -123,12 +136,17 @@ Et `H02`, qui s'annonçait « au moins aussi forte » que `H01`, est **plus
 faible** — regarder tout ce qui précède plutôt que la seule première demi-heure
 n'a rien ajouté.
 
-**Ce que la double déflation vient de coûter, et pourquoi c'est la bonne
+**Ce que la déflation transversale coûte, et pourquoi c'est la bonne
 nouvelle.** Le `t` naïf de `H01` vaut −2,27 : un calcul sans précaution l'aurait
 déclaré significatif à 5 %, et le projet aurait tenu son premier « résultat ».
-Après division par 5,48 (recouvrement) puis 1,46 (9 instruments pour 4,22 paris),
-il vaut −0,28. **Un facteur 8.** C'est exactement ce pour quoi `D04` existe, et
-la première fois qu'on le voit mordre.
+Divisé par 1,46 (9 instruments pour 4,22 paris), il vaut −1,56.
+
+**Et ce que la déflation de recouvrement a failli coûter.** Elle retirait en plus
+un facteur 5,48 — `t` final −0,28 — pour un recouvrement qui n'existe pas à cette
+fréquence d'échantillonnage. Ici sans conséquence, les deux hypothèses étant dans
+le bruit de toute façon ; sur un signal à `t` naïf de 4, elle aurait affiché 0,5
+et l'aurait fait écarter sans bruit. Corrigé par `D11`, leçon `L13` : **« trop
+sévère » n'est pas un côté sûr, un rejet ne se plaint pas.**
 
 Détails dans `hypotheses/H01…` et `H02…` § Le résultat, recopiés des rapports
 officiels avec leur `test_id`.

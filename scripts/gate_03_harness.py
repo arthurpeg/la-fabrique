@@ -198,6 +198,7 @@ def main() -> int:
         "le glissement n'est pas signalé comme inconnu",
     )
     before = len(registry.REGISTRY.read_text(encoding="utf-8").splitlines())
+    counted_before = registry.counted_tests()
     evaluate(
         perfect, panel, HORIZON,
         signal_id="calibration-comptage",
@@ -209,13 +210,19 @@ def main() -> int:
         f"une évaluation sur {len(cells)} cellules a écrit {after - before} lignes au registre, "
         f"pas 1 (D01 §4)",
     )
+    # Ce que cette porte doit prouver : SES évaluations ne comptent pas, étant
+    # des calibrations. Elle a longtemps écrit `== 0`, ce qui était vrai tant que
+    # le projet n'avait testé aucune hypothèse et faux dès la première -- H01 et
+    # H02, le 2026-09-18. Un compteur global n'est pas une propriété du harnais.
     check(
-        registry.counted_tests() == 0,
-        f"{registry.counted_tests()} tests comptés alors que tout est calibration",
+        registry.counted_tests() == counted_before,
+        f"une calibration a fait passer counted_tests de {counted_before} à "
+        f"{registry.counted_tests()}",
     )
     print(f"   plancher {report_perfect.cost_floor_bp:.2f} bp, manquent "
           f"{', '.join(report_perfect.unknown_cost_components)} ; "
-          f"{after} lignes au registre, {registry.counted_tests()} test compté")
+          f"{after} lignes au registre, {registry.counted_tests()} test(s) compté(s), "
+          f"inchangé par cette porte")
 
     print("\n--- rapport d'IC, cas bruit ---")
     print(report_noise.render())

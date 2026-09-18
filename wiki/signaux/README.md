@@ -31,13 +31,17 @@ de la fenêtre pour `H02`. Ils sont corrélés **exprès** — accord de signe m
 indépendants.
 
 **Mesurés le 2026-09-18** — les deux premiers tests comptés du projet.
-`counted_tests()` vaut **2**. Chiffres recopiés des rapports d'IC officiels, avec
+`counted_tests()` vaut **4 pour ces deux hypothèses** — mesure puis reprise sous
+`D11`. Chiffres recopiés des rapports d'IC officiels, avec
 leur `test_id` ; le registre fait foi.
 
 | | IC poolé | `t` final | Verdict, écrit avant la mesure |
 |---|---|---|---|
-| `H01` (`T-20260918T064151-bc4048`) | −0,01061 | **−0,28** | rien à distinguer du bruit |
-| `H02` (`T-20260918T064409-acc2e3`) | −0,00432 | **−0,12** | rien à distinguer du bruit |
+| `H01` (`T-20260918T065822-2b3e5d`) | −0,01061 | **−1,56** | rien à distinguer du bruit |
+| `H02` (`T-20260918T070041-18cf25`) | −0,00432 | **−0,63** | rien à distinguer du bruit |
+
+Chiffres repris sous `D11` le 2026-09-18 ; les premières mesures déflataient le
+`t` d'un recouvrement qui n'existe pas à cette fréquence. L'IC est inchangé.
 
 Le signe observé est **négatif** là où les deux prédisaient positif — mais la
 clause qui s'applique n'est pas « le motif existe à l'envers », qui exigeait un

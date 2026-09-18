@@ -87,8 +87,12 @@ class ICReport:
         add(f"IC poolé          {self.ic:+.5f}   sur {self.observations:,} observations, "
             f"{len(self.cells)} cellules".replace(",", " "))
         add(f"t naïf            {self.t['naive']:+.2f}")
+        gap = self.t.get("sampling_gap_bars", float("nan"))
+        shared = max(0.0, self.horizon_bars - gap)
         add(f"t recouvrement    {self.t['overlap']:+.2f}   "
-            f"(÷ {self.t['overlap_factor']:.2f}, {self.horizon_bars} barres chevauchantes)")
+            f"(÷ {self.t['overlap_factor']:.2f} ; horizon {self.horizon_bars} barres, "
+            f"observations espacées de {gap:.0f} — "
+            f"{'aucun recouvrement' if shared <= 0 else f'{shared:.0f} barres partagées'})")
         add(f"t final           {self.t['final']:+.2f}   "
             f"(÷ {self.t['cross_section_factor']:.2f}, {self.instruments} instruments pour "
             f"{self.breadth:.2f} paris)")

@@ -55,6 +55,11 @@ def noise_scores(panel: Panel, cell: tuple[str, str], seed: int) -> pd.Series:
 def main() -> int:
     failures: list[str] = []
     checks = 0
+    # Ce que cette porte doit prouver : ELLE ne dépense aucun test. Elle a
+    # longtemps écrit `== 0`, ce qui était vrai tant qu'aucune hypothèse n'avait
+    # été testée et faux depuis H01 et H02 (2026-09-18). Un compteur global
+    # n'est pas une propriété de cette porte.
+    counted_before = registry.counted_tests()
 
     def check(condition: bool, message: str) -> None:
         nonlocal checks
@@ -198,7 +203,11 @@ def main() -> int:
 
     # -- verdict -------------------------------------------------------------
     counted = registry.counted_tests()
-    check(counted == 0, f"{counted} test(s) compté(s) : cette porte ne doit rien dépenser")
+    check(
+        counted == counted_before,
+        f"cette porte a fait passer counted_tests de {counted_before} à {counted} ; "
+        f"elle ne doit rien dépenser",
+    )
 
     print(f"\n{checks} vérifications")
     if failures:
@@ -207,7 +216,8 @@ def main() -> int:
             print(f"  - {line}")
         return 1
     print("PORTE 06, CLAUSE 1 : FRANCHIE — un signal dégénéré n'atteint pas le harnais")
-    print(f"  registre : {len(registry.read_all())} lignes, {counted} test compté ; "
+    print(f"  registre : {len(registry.read_all())} lignes, {counted} test(s) compté(s), "
+          f"inchangé par cette porte ; "
           f"harnais {registry.code_hash()}")
     print("  CLAUSE 2 (réplication) : NON FRANCHIE — la porte 06 reste ouverte.")
     return 0

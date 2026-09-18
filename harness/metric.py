@@ -18,9 +18,12 @@ any scale.
 THE T, DEFLATED TWICE. A naive t is wrong here in two independent ways, and both
 corrections are applied by the code rather than recommended to the reader:
 
-  overlap        h-bar forward returns sampled every bar share h-1 bars, so
-                 neighbouring observations are not independent. The effective
-                 count is about n / h, hence a division by sqrt(h).
+  overlap        h-bar forward returns can share bars, and then neighbouring
+                 observations are not independent. HOW MUCH they share is
+                 measured, not assumed: each cell reports the median gap, in
+                 bars, between two consecutive observations, and a cell whose
+                 gap is at least h shares nothing. Scored every bar, the factor
+                 is sqrt(h) as before; scored once a session, it is 1 (D11).
   cross-section  nine instruments hold ~4.2 independent bets, so pooling them
                  buys less than it appears: a division by sqrt(9 / 4.22), the
                  factor D01 2 names, computed from the phase-01 measurement.
@@ -53,6 +56,19 @@ class CellIC:
     observations: int
     horizon_median_minutes: float
     horizon_p99_minutes: float
+    # The median distance, in bars of this cell's series, between two
+    # consecutive observations. 1 means a score on every bar -- the fully
+    # overlapping case D04 had in mind. It defaults to 1 so that a caller who
+    # does not measure it gets the old, conservative treatment (D11).
+    sampling_gap_bars: float = 1.0
+
+    @property
+    def overlap_ratio(self) -> float:
+        """How many observations this cell's horizon spreads over. 1 = no overlap."""
+        gap = self.sampling_gap_bars
+        if not np.isfinite(gap) or gap <= 0:
+            return 1.0
+        return max(1.0, float(gap))
 
 
 def forward_returns(
@@ -92,6 +108,29 @@ def realised_horizon(
     return float(np.median(spans)), float(np.quantile(spans, 0.99))
 
 
+def sampling_gap(index: pd.DatetimeIndex, observed: pd.DatetimeIndex) -> float:
+    """The median distance, in bars of this cell, between two observations.
+
+    Measured on the cell's own series, which is the unit the horizon is counted
+    in: a US window holds ~390 one-minute bars, so consecutive sessions sit 390
+    apart and a thirty-bar horizon cannot reach from one to the next.
+
+    Why this is measured and not declared: a signal that claimed not to overlap
+    would buy a t multiplied by sqrt(h) on its word alone (D11, option 3).
+    """
+    if len(observed) < 2:
+        return 1.0
+    positions = index.get_indexer(observed)
+    positions = positions[positions >= 0]
+    if len(positions) < 2:
+        return 1.0
+    gaps = np.diff(np.sort(positions))
+    gaps = gaps[gaps > 0]
+    if not len(gaps):
+        return 1.0
+    return float(np.median(gaps))
+
+
 def cell_ic(scores: pd.Series, returns: pd.Series, index: pd.DatetimeIndex,
             root: str, window: str, horizon_bars: int, ticket: Ticket) -> CellIC | None:
     """The Spearman IC of one cell, or None when there is nothing to measure.
@@ -119,6 +158,7 @@ def cell_ic(scores: pd.Series, returns: pd.Series, index: pd.DatetimeIndex,
         observations=int(len(frame)),
         horizon_median_minutes=median_span,
         horizon_p99_minutes=p99_span,
+        sampling_gap_bars=sampling_gap(index, frame.index),
     )
 
 
@@ -135,14 +175,38 @@ def _pool(cells: list[CellIC]) -> tuple[float, int]:
     return float((values * weights).sum() / weights.sum()), int(weights.sum())
 
 
-def _deflated_t(ic: float, observations: int, horizon_bars: int,
+def _effective_observations(cells: list[CellIC], horizon_bars: int) -> tuple[float, float]:
+    """How many independent observations the cells really hold, and the gap.
+
+    Each cell contributes `n_c / f_c` with `f_c = max(1, h / gap_c)`: a cell
+    scored every bar spreads its horizon over h observations, a cell scored once
+    a session over one. Summing per cell is what keeps the mixed case honest --
+    neither the most overlapping cell nor a plain average of factors decides for
+    the others (D11).
+    """
+    total = sum(c.observations for c in cells)
+    if not total:
+        return 0.0, 1.0
+    effective = 0.0
+    for cell in cells:
+        spread = max(1.0, horizon_bars / cell.overlap_ratio)
+        effective += cell.observations / spread
+    gaps = np.array([c.overlap_ratio for c in cells], dtype=float)
+    weights = np.array([c.observations for c in cells], dtype=float)
+    median_gap = float(np.sum(gaps * weights) / weights.sum())
+    return effective, median_gap
+
+
+def _deflated_t(ic: float, observations: int, cells: list[CellIC], horizon_bars: int,
                 instruments: int, effective_breadth: float) -> dict[str, float]:
     """The naive t, then the same t once the two dependencies are paid for."""
     if observations < 3 or not np.isfinite(ic) or abs(ic) >= 1:
         return {"naive": float("nan"), "overlap": float("nan"), "final": float("nan"),
-                "overlap_factor": float("nan"), "cross_section_factor": float("nan")}
+                "overlap_factor": float("nan"), "cross_section_factor": float("nan"),
+                "sampling_gap_bars": float("nan")}
     naive = ic * np.sqrt(observations - 2) / np.sqrt(1 - ic**2)
-    overlap_factor = np.sqrt(max(horizon_bars, 1))
+    effective, gap = _effective_observations(cells, horizon_bars)
+    overlap_factor = np.sqrt(observations / effective) if effective > 0 else 1.0
     cross_factor = np.sqrt(instruments / effective_breadth)
     after_overlap = naive / overlap_factor
     return {
@@ -151,6 +215,7 @@ def _deflated_t(ic: float, observations: int, horizon_bars: int,
         "final": float(after_overlap / cross_factor),
         "overlap_factor": float(overlap_factor),
         "cross_section_factor": float(cross_factor),
+        "sampling_gap_bars": float(gap),
     }
 
 
@@ -175,7 +240,7 @@ def record_pooled(
             "other way to obtain a pooled IC."
         )
     ic, observations = _pool(cells)
-    t = _deflated_t(ic, observations, horizon_bars, instruments, effective_breadth)
+    t = _deflated_t(ic, observations, cells, horizon_bars, instruments, effective_breadth)
     line = dict(extra or {})
     line["observations"] = observations
     test_id = settle(ticket, ic=ic, t_stat=t["final"], extra=line)

@@ -96,3 +96,22 @@ cellule ne porte le résultat ; il n'y a pas de résultat à porter.
 **Ce que ça n'autorise pas.** Retester le même signal à un autre horizon, ou sur
 un sous-ensemble de cellules, après avoir vu ceci, serait une nouvelle hypothèse
 — pré-enregistrée avant, et comptée en plus.
+
+### Reprise du 2026-09-18 sous `D11` — le chiffre de référence
+
+La mesure ci-dessus a été faite sous un harnais qui déflatait le `t` de `√30`
+pour cause de recouvrement. **Ce signal ne se recouvre pas** : une observation
+par séance, espacées de 415 barres pour un horizon de 30. `D11` mesure désormais
+l'écart au lieu de le supposer, et la mesure a été reprise.
+
+| | avant `D11` | **référence** |
+|---|---|---|
+| test | `T-20260918T064151-bc4048` (périmé) | **`T-20260918T065822-2b3e5d`** |
+| harnais | `e9ef2087` | **`9ac3e45e`** |
+| IC poolé | −0,01061 | **−0,01061** — inchangé |
+| facteur de recouvrement | ÷ 5,48 | **÷ 1,00** |
+| **t final** | −0,28 | **−1,56** |
+
+**Le verdict ne change pas** : `|t| < 2`, rien à distinguer du bruit. C'est ce
+qui rend la correction peu coûteuse ici — et c'est précisément pourquoi elle a
+été faite maintenant plutôt que sur un signal dont le sort en aurait dépendu.

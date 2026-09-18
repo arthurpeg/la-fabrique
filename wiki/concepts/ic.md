@@ -58,23 +58,26 @@ par nombre d'observations, `t` déflaté deux fois :
 
 | correction | facteur à 30 min | pourquoi |
 |---|---|---|
-| recouvrement | ÷ 5,48 = √30 | deux observations voisines partagent 29 barres |
+| recouvrement | **mesuré** (`D11`) | ÷ √30 si le score est produit à chaque barre ; **÷ 1** s'il y en a un par séance, les observations étant alors espacées de ~415 barres pour un horizon de 30 |
 | transversale | ÷ 1,46 = √(9 / 4,224) | neuf instruments, ~4,2 paris |
 
-Soit **un `t` divisé par 8** avant tout jugement. Le rapport porte toujours les
-deux cibles et un coût **minoré** disant ce qui lui manque.
+Soit un `t` divisé par 8 pour un signal scoré à chaque barre, et **par 1,46
+seulement** pour un signal à une observation par séance. Le rapport porte toujours
+les deux cibles, l'écart d'échantillonnage mesuré, et un coût **minoré** disant ce
+qui lui manque.
 
 ## État actuel
 
-`registry/tests.jsonl` porte **2 tests comptés** au dénominateur du FDR — `H01`
-et `H02`, mesurées le 2026-09-18. Toutes les autres lignes sont des calibrations
+`registry/tests.jsonl` porte **4 lignes comptées pour 2 hypothèses** — `H01` et
+`H02`, mesurées le 2026-09-18 puis reprises le même jour sous `D11`. Toutes les autres lignes sont des calibrations
 et des audits, sans hypothèse, hors dénominateur ; leur nombre monte à chaque
 porte rejouée et ne veut rien dire. Le compte qui compte est celui de
 `registry.counted_tests()`.
 
-La double déflation a mordu pour la première fois ce jour-là : le `t` naïf de
-`H01` valait −2,27, significatif à 5 % pour qui n'y regarde pas, et le `t` final
-−0,28. Le facteur 8 du tableau ci-dessus n'est pas théorique.
+La déflation a mordu pour la première fois ce jour-là — et s'est révélée trop
+mordante : le `t` naïf de `H01` valait −2,27, le `t` final **−0,28**, dont un
+facteur 5,48 de recouvrement inexistant. Corrigé le jour même (`D11`), le `t`
+final de référence est **−1,56**. Voir [[lessons|L13]].
 
 ## Où c'est fixé
 

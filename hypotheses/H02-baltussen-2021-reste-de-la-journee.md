@@ -100,3 +100,18 @@ avancée pour l'attendre meilleur ne s'est pas manifestée.
 **Comptage.** `H01` et `H02` portent sur la même cible. Le registre porte deux
 lignes parce que deux IC ont été calculés ; toute correction de tests multiples
 devra traiter la paire comme **corrélée, jamais indépendante**.
+
+### Reprise du 2026-09-18 sous `D11` — le chiffre de référence
+
+Même raison que pour [H01](H01-gao-2018-premiere-demi-heure.md) : la déflation de
+recouvrement ne s'applique pas à un signal scoré une fois par séance.
+
+| | avant `D11` | **référence** |
+|---|---|---|
+| test | `T-20260918T064409-acc2e3` (périmé) | **`T-20260918T070041-18cf25`** |
+| harnais | `e9ef2087` | **`9ac3e45e`** |
+| IC poolé | −0,00432 | **−0,00432** — inchangé |
+| **t final** | −0,11 | **−0,63** |
+
+Verdict inchangé, et la comparaison avec `H01` non plus : `H02` reste **plus
+faible**, alors qu'elle s'annonçait au moins aussi forte.

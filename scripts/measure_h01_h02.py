@@ -19,8 +19,10 @@ Le coût reste un **plancher étiqueté** tant que `fee_bp` et `slippage_bp` son
 `null` : tout IC net lu ici serait un MAJORANT de performance. L'IC brut, lui,
 ne dépend pas des frais.
 
-Il a déjà tourné, le 2026-09-18 : `T-20260918T064151-bc4048` (H01) et
-`T-20260918T064409-acc2e3` (H02). **Le relancer dépenserait deux tests comptés de
+Il a tourné deux fois le 2026-09-18 : d'abord sous le harnais `e9ef2087`
+(`T-20260918T064151-bc4048`, `T-20260918T064409-acc2e3`, **périmés**), puis sous
+`9ac3e45e` après la correction de `D11` — `T-20260918T065822-2b3e5d` et
+`T-20260918T070041-18cf25`, qui font référence. **Le relancer dépenserait deux tests comptés de
 plus**, sur les mêmes hypothèses et les mêmes données, ce qui gonflerait le
 dénominateur sans rien apprendre. D'où le garde ci-dessous : il refuse de partir
 si `counted_tests()` n'est pas nul, sauf ordre explicite.
