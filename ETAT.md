@@ -1,7 +1,7 @@
 # ÉTAT
 
 **Phase courante :** 07 — triage et extraction sur 20 papiers connus
-**Date de dernière mise à jour :** 2026-09-18
+**Date de dernière mise à jour :** 2026-09-19
 **Dernière porte franchie :** **06**, le 2026-09-18 — les deux clauses.
 Clause 1 (dégénérescence) : `gate_06_controls.py`, 25 vérifications. Clause 2
 (réplication) : `scripts/measure_h04.py`, 19 vérifications, `H04` pré-enregistrée
@@ -15,13 +15,14 @@ calibration à la main (porte 03). `D13` § Pourquoi l'écrit sans détour, et a
 session ne doit lire cette porte comme davantage.
 
 **Décision la plus récente :**
-`decisions/DECISION-13-ce-que-la-clause-2-peut-etre.md` — après l'échec de deux
-cibles, la clause 2 est satisfaite quand **la chaîne reproduit un fait publié sur
-nos données**, et non quand le harnais d'IC reproduit un IC publié. Écrite
-**avant** la mesure de `H04`, comme `H03` l'exigeait.
-**Décisions pertinentes pour la phase courante :** `D06` (les fiches écrites à la
-main sont un banc d'essai, pas le produit de la phase 07) et `D09` (la provenance
-des valeurs externes, qui s'étendra aux fiches).
+`decisions/DECISION-15-seuil-du-triage.md` — le seuil du trieur, écrit **avant**
+que le trieur existe : appariement entrée par entrée à la colonne
+« implémentable » d'`AMORCE.md` (20 entrées, 13 `oui` / 5 `partiel` / 2 `non`),
+trois classes, quatre conditions en **effectifs** et non en pourcentages.
+**Décisions pertinentes pour la phase courante :** `D14` (le schéma de fiche),
+`D06` (les fiches écrites à la main sont un banc d'essai, pas le produit de la
+phase 07) et `D09` (la provenance des valeurs externes, étendue aux fiches).
+`D13` reste la référence pour ce que la porte 06 valide — et ne valide pas.
 
 **Les tests comptés :** `counted_tests()` vaut **56 pour trois hypothèses** —
 `H01` et `H02` (deux lignes chacune : mesure puis reprise sous `D11`), `H03`
@@ -110,7 +111,7 @@ humain de référence. »* Deux choses distinctes, et la seconde est la plus dur
    ailleurs, et il devrait l'être.
 2. **Le triage** — décider qu'un papier est implémentable sur neuf futures
    intraday. `corpus/AMORCE.md` porte déjà une colonne « implémentable »
-   renseignée à la main sur 24 entrées : **c'est le verdict humain de référence**,
+   renseignée à la main sur 20 entrées : **c'est le verdict humain de référence**,
    et il existe déjà. Il a été écrit en phase 01, avant tout ce qui suit, donc
    sans connaître les résultats — ce qui en fait un étalon honnête.
 
@@ -135,31 +136,63 @@ Les trois fiches ont été **réécrites** au schéma. C'était le test du sché
 autant que des fiches : s'il n'avait pas su exprimer ce qu'elles disaient, c'est
 lui qui aurait été faux.
 
-### Prochaine action : le triage, et son seuil écrit avant mesure
+### Le seuil du triage est écrit, et le juge existe — `D15`, le 2026-09-19
 
-C'est l'autre moitié de la porte 07, et la plus dure. *« Le triage écarte ce
-qu'il doit écarter, sur un verdict humain de référence. »*
+L'étalon a d'abord dû être **compté**, et il ne l'avait pas été : `ETAT.md`
+annonçait 24 entrées notées et six `partiel`. La colonne « implémentable »
+d'`AMORCE.md` en porte **20** — entrées 1 à 20, sections A à F ; les quatre de la
+section G (méthode) n'ont pas cette colonne — en **13 `oui` / 5 `partiel` /
+2 `non`**. Et `AMORCE.md` se contredisait lui-même : son § Verdict compte
+12 / 5 / 3, l'écart portant sur l'entrée 9. `D15` tranche que **la colonne fait
+foi**, et le § Verdict a reçu une note datée — le texte d'origine conservé, comme
+pour l'entrée 7.
 
-Le verdict de référence **existe déjà** : la colonne « implémentable » de
-`corpus/AMORCE.md`, renseignée à la main sur **24 entrées** — `oui`, `partiel`,
-`non` — avec le motif de chacune. Elle a été écrite en **phase 01**, avant le
-harnais, avant les signaux, avant le moindre résultat. Son auteur ne pouvait pas
-savoir ce que les mesures diraient : c'est ce qui en fait un étalon utilisable.
+**Le seuil, écrit avant toute mesure**, en effectifs et non en pourcentages : sur
+13 `oui`, un seul item vaut 7,7 points de rappel, et un seuil en pourcentage
+n'est qu'un effectif mal déguisé.
 
-Ce qu'il faut trancher **par écrit et avant de coder le trieur** :
+| | Condition | Effectif |
+|---|---|---|
+| A | `oui` classés autrement | ≤ 1 sur 13 |
+| B | `non` classés `oui` | 0 sur 2 |
+| C | `partiel` en désaccord | ≤ 2 sur 5 |
+| D | désaccords de deux crans | 0 |
 
-- **ce que « écarte ce qu'il doit écarter » veut dire en chiffres** — rappel et
-  précision contre cette colonne, avec un seuil fixé **avant** de mesurer ;
-- **comment on traite `partiel`**, qui n'est ni un oui ni un non et que la
-  colonne emploie six fois ;
-- et la garde de `L06`, qui s'applique mot pour mot : *un compte juste n'est pas
-  un compte de choses justes*. Un trieur jugé sur « combien il en trouve »
-  plutôt que sur « lesquels » doit être supposé faux jusqu'à appariement — c'est
-  exactement ainsi que la détection de roulements avait paru bonne à 90 % en
-  n'étant juste qu'à 62,8 %.
+**Le juge est écrit avant l'accusé, ici aussi** : `corpus/score_triage.py`,
+**10 vérifications**, vert — huit sorties de trieur fabriquées qui rendent
+chacune le verdict que `D15` écrit, et deux mutations d'`AMORCE.md` que le garde
+de l'étalon refuse. Le trieur, lui, n'existe pas encore.
+
+### Prochaine action : écrire le trieur, et ne le lancer qu'une fois
+
+**Ce qu'il voit est fixé par `D15`** : la ligne d'`AMORCE.md` privée de sa colonne
+verdict — référence, ce qu'il prédit, fréquence et univers, données exigées,
+accès. Exactement ce que l'auteur humain avait sous les yeux en phase 01. Pas le
+PDF : un trieur mieux informé que son étalon ne se mesure plus contre lui.
+
+**Conséquence heureuse, et il faut la voir** : cette moitié de la porte se juge
+**sans un seul PDF de plus**. Elle ne dépend pas du goulot d'acquisition qui
+bloque l'autre moitié.
+
+**Le premier passage fait foi.** Un trieur retouché après lecture de sa matrice
+est un trieur ajusté à son étalon. Tout passage ultérieur s'inscrit au § Journal
+de `D15` avec ce qui a changé, et le verdict final cite le nombre de passages —
+comme la phase 15 citera `counted_tests()`.
+
+Et la garde de `L06`, qui s'applique mot pour mot : *un compte juste n'est pas un
+compte de choses justes*. C'est ainsi que la détection de roulements avait paru
+bonne à 90 % en n'étant juste qu'à 62,8 % — d'où la matrice entière, et le motif
+exigé de chaque verdict.
 
 ### Ce qui reste ouvert par ailleurs
 
+- **l'extraction** — l'autre moitié de la porte 07 — bute sur l'**acquisition** :
+  **3 PDF** sur disque pour **20 fiches** demandées. Des 20 entrées notées, 12 ont
+  un lien libre, 2 sont derrière un péage (16, 17), et **6 n'ont aucun lien**
+  (6, 10, 14, 18, 19, 20 — la 14 étant en outre citée de mémoire, non vérifiée).
+  Que devient la porte si les 20 fiches ne sont pas atteignables depuis
+  `AMORCE.md` ? Élargir le corpus, ou requalifier la porte — **par écrit, et pas
+  au quinzième papier** ;
 - les **multiplicateurs** CME (`cmegroup.com` injoignable depuis ce poste le
   2026-09-18) et la réponse de **Lucid** ; requis pour toute lecture **nette** et
   pour la phase 10 ;
@@ -171,4 +204,11 @@ Ce qu'il faut trancher **par écrit et avant de coder le trieur** :
   compte honnête du nombre de tests qu'il a fallu pour les trouver* ;
 - **la ventilation par cellule de `H03`** n'a pas été inscrite (défaut de
   `scripts/measure_h03.py`) ; la combler coûterait 52 lignes et ne pourrait
-  qu'affaiblir un motif déjà absent. Noté plutôt que payé.
+  qu'affaiblir un motif déjà absent. Noté plutôt que payé ;
+- **un piège, trouvé le 2026-09-19 et non désamorcé : `ruff format .` à la racine
+  réécrirait 4 des 7 fichiers de `harness/`.** L'empreinte porte sur le contenu
+  (`harness/registry.py`, `code_hash`), donc un formatage machinal **périme les
+  56 tests comptés** et tout ce que `D05` en déduit. `ruff check harness/` passe ;
+  c'est le **formateur** qui diverge. Les 11 erreurs de lint réelles sont toutes
+  dans `scripts/` et se corrigent sans risque — **en excluant `harness/`
+  explicitement**. Ne jamais lancer `ruff format` sans chemin.

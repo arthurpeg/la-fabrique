@@ -1,6 +1,6 @@
 ---
 type: phase
-updated: 2026-09-18
+updated: 2026-09-19
 status: en-cours
 phase: 07
 gate: 20 fiches produites ; le triage écarte ce qu'il doit écarter, sur un verdict humain de référence
@@ -48,7 +48,8 @@ l'extracteur d'abord et vérifier ensuite inverserait l'ordre de construction �
 ## Le verdict humain de référence existe aussi, et il est honnête
 
 `corpus/AMORCE.md` porte une colonne « implémentable » renseignée à la main sur
-**24 entrées** — `oui`, `partiel`, `non` — avec le motif de chacune. Elle a été
+**20 entrées** (les 4 de la section G, méthode, n'ont pas de colonne) —
+13 `oui`, 5 `partiel`, 2 `non` — avec le motif de chacune. Elle a été
 écrite en **phase 01**, avant le harnais, avant les signaux, avant le moindre
 résultat. C'est ce qui en fait un étalon utilisable : son auteur ne pouvait pas
 savoir ce que les mesures diraient.
@@ -72,11 +73,51 @@ nommées plutôt que cachées : `derived` pour un nombre que *nous* avons calcul
 ([[Failed Ideas/ledger#F36]]). `corpus/check_fiches_guard.py` montre le garde
 refuser **11 fautes**, chacune pour la raison prévue.
 
-**Ce que « écarte ce qu'il doit écarter » veut dire en chiffres.** Rappel et
-précision contre la colonne d'`AMORCE.md`, avec un seuil écrit **avant** de
-mesurer. `L06` s'applique mot pour mot : *un compte juste n'est pas un compte de
-choses justes* — un trieur jugé sur « combien il en trouve » plutôt que sur
-« lesquels » doit être supposé faux jusqu'à appariement.
+~~**Ce que « écarte ce qu'il doit écarter » veut dire en chiffres.**~~ **Fait le
+2026-09-19** — `D15`, `corpus/score_triage.py`. Le seuil est écrit en
+**effectifs**, pas en pourcentages : sur 13 `oui`, un seul item vaut 7,7 points
+de rappel, donc « rappel ≥ 90 % » ne dit rien de plus que « au plus un manqué »
+et le dit moins bien ([[Failed Ideas/ledger#F37]]).
+
+| | Condition | Effectif |
+|---|---|---|
+| A | `oui` classés autrement | ≤ 1 sur 13 |
+| B | `non` classés `oui` | 0 sur 2 |
+| C | `partiel` en désaccord | ≤ 2 sur 5 |
+| D | désaccords de deux crans | 0 |
+
+Trois classes, **`partiel` non replié** : le replier effacerait la distinction
+qui a écarté Mesfin et cadré Heston ([[Failed Ideas/ledger#F38]]). `L06`
+s'applique mot pour mot — *un compte juste n'est pas un compte de choses justes*
+— d'où la **matrice entière** et le motif exigé de chaque verdict.
+
+**Et l'étalon a dû être compté avant d'être utilisé.** `ETAT.md` annonçait
+24 entrées notées et six `partiel` ; la colonne en porte **20**, en
+13 / 5 / 2. `AMORCE.md` se contredisait en plus lui-même — son § Verdict compte
+12 / 5 / 3, l'écart portant sur l'entrée 9. `D15` tranche que **la colonne fait
+foi** ([[Failed Ideas/ledger#F39]]), sans retirer l'entrée
+([[Failed Ideas/ledger#F40]]), et le § Verdict a reçu une note datée.
+
+**Le juge avant l'accusé, ici aussi.** `corpus/score_triage.py` rend
+**10 vérifications** vertes — huit sorties de trieur fabriquées, deux mutations
+d'`AMORCE.md` que le garde de l'étalon refuse — et le trieur n'existe pas encore.
+
+**Ce que le trieur verra** est fixé : la ligne d'`AMORCE.md` privée de sa colonne
+verdict, exactement ce que l'auteur humain avait en phase 01. Pas le PDF, qui le
+rendrait mieux informé que son étalon ([[Failed Ideas/ledger#F41]]) — et, effet
+de bord heureux, cette moitié de la porte se juge **sans un seul PDF de plus**.
+
+**Le premier passage fait foi** ; tout passage ultérieur s'inscrit au § Journal
+de `D15` avec ce qui a changé, et le verdict final cite le nombre de passages.
+
+## Ce qui bloque l'autre moitié : l'acquisition
+
+**3 PDF sur disque, 20 fiches demandées.** Des 20 entrées notées, 12 ont un lien
+libre, 2 sont derrière un péage (16, 17) et **6 n'ont aucun lien** (6, 10, 14,
+18, 19, 20 — la 14 étant en outre citée de mémoire et non vérifiée). Ce que
+devient la porte si les 20 fiches ne sont pas atteignables depuis `AMORCE.md` —
+élargir le corpus, ou requalifier la porte — se tranche **par écrit, et pas au
+quinzième papier**.
 
 ## Ce qu'on sait déjà du produit de cette phase
 

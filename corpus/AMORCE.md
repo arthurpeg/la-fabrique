@@ -122,6 +122,24 @@ exige une donnée que je n'ai pas et qui coûte.
 **24 références, dont 12 directement implémentables** avec mes données telles
 qu'elles sont (entrées 1 à 8, 11 à 14), 5 partiellement, 3 fermées, 4 de méthode.
 
+> **CORRECTION DU 2026-09-19 — ce paragraphe ne compte pas comme sa propre
+> colonne, et c'est la colonne qui fait foi.** Comptée ligne à ligne, la colonne
+> « implémentable » porte **20 verdicts** — entrées 1 à 20, sections A à F ; les
+> quatre entrées de la section G (méthode) n'ont pas cette colonne — répartis en
+> **13 `oui`, 5 `partiel`, 2 `non`**. Le paragraphe ci-dessus dit 12 / 5 / 3.
+> L'écart porte sur l'**entrée 9** (billet FRBNY), que la colonne marque `oui` et
+> que ce résumé range parmi les fermées.
+>
+> `D15` tranche : **la colonne fait foi**, parce que c'est elle que `D14`,
+> `ETAT.md` et la page de phase désignent comme verdict humain de référence,
+> parce qu'elle a été remplie ligne à ligne plutôt que résumée, et parce que son
+> `oui` se défend — « l'effet a disparu » se teste sur nos données, par le calcul
+> même de l'entrée 8. Le texte d'origine est conservé, comme pour l'entrée 7.
+>
+> **L'étalon est gelé à partir d'ici** (`D15` § Ce que ça verrouille) : cette
+> colonne ne se réécrit plus. Une erreur qu'on y trouverait s'inscrit en note
+> datée sous sa ligne.
+
 Le seuil de dix est franchi. **Je ne m'en satisfais pas, et voici pourquoi.**
 
 Compter les papiers flatte le résultat. Comptées en **idées indépendantes**, les

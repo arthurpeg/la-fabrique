@@ -46,9 +46,12 @@ elle croit battre la littérature, et pas seulement l'espérer. Un IC au-dessus 
 
 | [H04](H04-andersen-bollerslev-1997-periodicite.md) | *(aucun signal — `scripts/measure_h04.py`)* | **testée** | 2026-09-18 | **les quatre clauses tiennent** — forme en U, rapports 1,74 à 2,05 contre 1,91 chez les auteurs ; **aucun IC, aucun test compté** |
 
-**`counted_tests()` vaut 4 pour DEUX hypothèses.** Chacune porte deux lignes : la
-première mesure et sa reprise sous `D11`, qui a corrigé la déflation de
-recouvrement. La correction de tests multiples de la phase 15 compte des
+**`counted_tests()` vaut 56 pour TROIS hypothèses.** `H01` et `H02` portent deux
+lignes chacune : la première mesure et sa reprise sous `D11`, qui a corrigé la
+déflation de recouvrement. `H03` en porte 52 — 40 dents et 12 creux — pour **un
+seul motif prédit**. `H04` n'a produit aucun IC et n'a rien coûté.
+
+La correction de tests multiples de la phase 15 compte des
 **hypothèses éprouvées, pas des lignes écrites** — une reprise après changement
 du harnais n'est pas une recherche supplémentaire (`D11` § Ce que ça verrouille).
 Et `H01` et `H02` portant sur la même cible, elles ne valent de toute façon
