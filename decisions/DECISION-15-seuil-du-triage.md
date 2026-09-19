@@ -140,6 +140,40 @@ seule, sans avoir lu les papiers. Un désaccord peut désigner **le trieur ou
 l'étalon**, et le § Journal doit dire lequel, sans jamais corriger l'étalon après
 coup.
 
+## Complément du 2026-09-19 — qui peut être le trieur
+
+Écrit le jour même, **avant tout passage**, parce que la mise en œuvre a révélé
+une condition que le corps de la décision ne portait pas.
+
+**Une session qui a lu la colonne ne peut pas être le trieur.** Elle ne trierait
+pas, elle réciterait — et sa matrice serait parfaite pour la pire des raisons. La
+session qui a écrit cette décision est dans ce cas : elle a compté la colonne
+entrée par entrée pour en établir le dénominateur. **Elle est donc disqualifiée
+comme trieur**, et le dit ici plutôt que de produire un résultat flatteur.
+
+Le piège est structurel, pas accidentel : la séquence de démarrage de `CLAUDE.md`
+conduit toute session à lire `ETAT.md`, le wiki, puis le corpus — donc l'étalon.
+Une session arrive **contaminée par défaut**.
+
+Trois conséquences, toutes écrites dans `corpus/TRIAGE.md` :
+
+1. Le trieur reçoit **`corpus/triage_input.json`** — fabriqué par
+   `corpus/make_triage_input.py`, les 20 lignes privées de leur colonne verdict —
+   et **jamais `AMORCE.md`**, qui porte la réponse deux fois : dans la colonne, et
+   dans son § Verdict.
+2. **Les titres de section ne sont pas repris.** Le titre E dit « Carry et
+   structure de terme — *la famille que mes données ferment* » : c'est le verdict
+   lui-même, de la même main et du même jour. Le donner rendrait la condition B
+   satisfaite d'avance.
+3. Le § Journal note, pour chaque passage, **qui a trié et ce qu'il avait vu**.
+
+**Ce n'est pas une impossibilité par construction, et il faut le dire.** On
+n'empêche pas un lecteur de lire. `F13`, `F15`, `F16` et `F25` ont toutes écarté
+un garde extérieur au motif qu'il déguisait la vigilance en architecture ; ici
+l'architecture n'est pas disponible, donc la règle est **écrite et déclarée**
+plutôt que promise. C'est le même périmètre honnête que la porte 04 : aucun
+chemin public, et une déclaration pour le reste.
+
 ## Ce que ça verrouille
 
 - **La porte 07, moitié triage**, se vérifie désormais par
@@ -169,6 +203,13 @@ coup.
 
 *Un passage par ligne, écrit après coup, jamais effacé.*
 
-| # | Date | Ce qui a changé depuis le passage précédent | Désaccords A/B/C/D | Verdict |
-|---|---|---|---|---|
-| — | — | *(aucun passage à ce jour)* | — | — |
+Chaque ligne dit **qui a trié et ce qu'il avait vu** (§ Complément).
+
+| # | Date | Trieur, et ce qu'il avait vu | Ce qui a changé depuis le passage précédent | A/B/C/D | Verdict |
+|---|---|---|---|---|---|
+| — | — | *(aucun passage à ce jour)* | — | — | — |
+
+La session du 2026-09-19 qui a écrit cette décision **a lu la colonne** et ne peut
+donc pas trier. L'entrée du trieur est fabriquée et auditée
+(`corpus/triage_input.json`, 20 entrées, colonne verdict retirée) ; le juge est
+vert sur 10 vérifications ; il manque un trieur non contaminé.

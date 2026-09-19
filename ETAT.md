@@ -163,21 +163,47 @@ n'est qu'un effectif mal déguisé.
 chacune le verdict que `D15` écrit, et deux mutations d'`AMORCE.md` que le garde
 de l'étalon refuse. Le trieur, lui, n'existe pas encore.
 
-### Prochaine action : écrire le trieur, et ne le lancer qu'une fois
+### L'entrée du trieur est fabriquée et auditée — le 2026-09-19
 
-**Ce qu'il voit est fixé par `D15`** : la ligne d'`AMORCE.md` privée de sa colonne
-verdict — référence, ce qu'il prédit, fréquence et univers, données exigées,
-accès. Exactement ce que l'auteur humain avait sous les yeux en phase 01. Pas le
-PDF : un trieur mieux informé que son étalon ne se mesure plus contre lui.
+`corpus/make_triage_input.py` produit **`corpus/triage_input.json`** : les
+20 lignes d'`AMORCE.md` privées de leur colonne verdict, 3 à 5 champs selon la
+section, et **sans les titres de section** — le titre E dit « la famille que mes
+données ferment », ce qui est le verdict lui-même et rendrait la condition B
+satisfaite d'avance. `corpus/TRIAGE.md` pose le protocole complet.
 
 **Conséquence heureuse, et il faut la voir** : cette moitié de la porte se juge
 **sans un seul PDF de plus**. Elle ne dépend pas du goulot d'acquisition qui
 bloque l'autre moitié.
 
+### Prochaine action : un trieur NON CONTAMINÉ, et un seul passage
+
+**La condition que `D15` ne portait pas, et que la mise en œuvre a trouvée** :
+une session qui a **lu la colonne** ne peut pas être le trieur. Elle ne trierait
+pas, elle réciterait — et sa matrice serait parfaite pour la pire des raisons
+(`L15` : le résultat conforme est celui que personne n'examine). La session du
+2026-09-19 s'est **disqualifiée elle-même** à ce titre : elle a compté la colonne
+entrée par entrée pour établir le dénominateur de `D15`.
+
+Le piège est **structurel** : la séquence de démarrage de `CLAUDE.md` conduit
+toute session à lire `ETAT.md`, le wiki, puis le corpus — donc l'étalon. **Une
+session arrive contaminée par défaut, et celle-ci l'est dès qu'elle a lu ce
+paragraphe.**
+
+Donc, concrètement : le trieur est une session ou un agent qui **n'a vu ni la
+colonne, ni le § Verdict d'`AMORCE.md`, ni `D15` § Sur l'étalon, ni la présente
+section**. Il reçoit `corpus/triage_input.json`, la règle de classement et nos
+contraintes de données — tout est dans `corpus/TRIAGE.md` — et rend un JSON de
+20 verdicts **avec un motif chacun**. Puis :
+
+```
+python corpus/score_triage.py verdicts.json
+```
+
 **Le premier passage fait foi.** Un trieur retouché après lecture de sa matrice
-est un trieur ajusté à son étalon. Tout passage ultérieur s'inscrit au § Journal
-de `D15` avec ce qui a changé, et le verdict final cite le nombre de passages —
-comme la phase 15 citera `counted_tests()`.
+est un trieur ajusté à son étalon. Tout passage s'inscrit au § Journal de `D15`
+avec **qui a trié, ce qu'il avait vu**, et ce qui a changé depuis le précédent ;
+le verdict final cite le nombre de passages — comme la phase 15 citera
+`counted_tests()`.
 
 Et la garde de `L06`, qui s'applique mot pour mot : *un compte juste n'est pas un
 compte de choses justes*. C'est ainsi que la détection de roulements avait paru

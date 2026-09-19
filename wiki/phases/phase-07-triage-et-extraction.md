@@ -107,8 +107,26 @@ verdict, exactement ce que l'auteur humain avait en phase 01. Pas le PDF, qui le
 rendrait mieux informé que son étalon ([[Failed Ideas/ledger#F41]]) — et, effet
 de bord heureux, cette moitié de la porte se juge **sans un seul PDF de plus**.
 
+**L'entrée du trieur est fabriquée et auditée** : `corpus/make_triage_input.py`
+produit `corpus/triage_input.json` — 20 lignes, 3 à 5 champs selon la section,
+**titres de section non repris** (le titre E dit « la famille que mes données
+ferment », c'est le verdict lui-même). `corpus/TRIAGE.md` pose le protocole.
+
+**Et la mise en œuvre a trouvé une condition que `D15` ne portait pas** : une
+session qui a **lu la colonne** ne peut pas être le trieur — elle réciterait, et
+sa matrice serait parfaite pour la pire des raisons. Le piège est structurel : la
+séquence de démarrage de `CLAUDE.md` mène toute session à l'étalon, donc **une
+session arrive contaminée par défaut**. Celle du 2026-09-19 s'est disqualifiée
+elle-même ([[Failed Ideas/ledger#F42]]). Ce n'est pas une impossibilité par
+construction — `F13`, `F15`, `F16`, `F25` ont déjà refusé la vigilance déguisée
+en architecture — donc la règle est **écrite**, et le § Journal de `D15` note pour
+chaque passage qui a trié et ce qu'il avait vu.
+
 **Le premier passage fait foi** ; tout passage ultérieur s'inscrit au § Journal
 de `D15` avec ce qui a changé, et le verdict final cite le nombre de passages.
+
+**Il manque donc un trieur non contaminé.** Le reste est prêt : entrée auditée,
+juge vert sur 10 vérifications, protocole écrit.
 
 ## Ce qui bloque l'autre moitié : l'acquisition
 
