@@ -1,6 +1,6 @@
 ---
 type: hub
-updated: 2026-09-18
+updated: 2026-09-19
 status: genere
 sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 ---
@@ -12,7 +12,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 > Toute modification hors du bloc « Prochaines actions » sera perdue.
 > Pour changer ce qui s'affiche ici, édite `wiki/log.md` ou `ETAT.md`.
 
-*Régénérée le 2026-09-18.*
+*Régénérée le 2026-09-19.*
 
 ---
 
@@ -23,7 +23,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Phase courante** | 07 — triage et extraction sur 20 papiers connus |
 | **Dernière porte franchie** | **06**, le 2026-09-18 — les deux clauses. Clause 1 (dégénérescence) : `gate_06_controls.py`, 25 vérifications. Clause 2 (réplication) : `scripts/measure_h04.py`, 19 vérifications, `H04` pré-enregistrée |
 | **Décision la plus récente** | `decisions/DECISION-13-ce-que-la-clause-2-peut-etre.md` — après l'échec de deux cibles, la clause 2 est satisfaite quand **la chaîne reproduit un fait publié sur |
-| **Tests au registre** | 130 |
+| **Tests au registre** | 134 |
 | **Idées abandonnées recensées** | 36 |
 | **Entrées au journal** | 24 |
 
