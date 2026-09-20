@@ -1,6 +1,6 @@
 ---
 type: phase
-updated: 2026-09-19
+updated: 2026-09-20
 status: en-cours
 phase: 07
 gate: 20 fiches produites ; le triage écarte ce qu'il doit écarter, sur un verdict humain de référence
@@ -127,6 +127,39 @@ de `D15` avec ce qui a changé, et le verdict final cite le nombre de passages.
 
 **Il manque donc un trieur non contaminé.** Le reste est prêt : entrée auditée,
 juge vert sur 10 vérifications, protocole écrit.
+
+## Le passage 1 — 2026-09-20 : la moitié triage tient, à la limite exacte
+
+Le trieur a été un **agent séparé**, lancé depuis une session contaminée avec
+interdiction de lecture explicite, ne recevant que `corpus/triage_input.json`
+plus la règle et les contraintes recopiées dans sa consigne. Le passage est
+inscrit au § Journal de `D15` — la source fait foi, cette page ne fait que la
+refléter — et ses verdicts sont archivés dans `corpus/triage_passage_01.json`.
+
+**Les quatre conditions tiennent : A/B/C/D = 1/0/2/0.** Mais `A` et `C` sont **à
+leur maximum exact** (1 sur 1, 2 sur 2) : un désaccord de plus sur un `oui` ou
+sur un `partiel`, et rien ne passait. La porte le citera tel quel, avec le numéro
+du passage.
+
+Trois désaccords sur 20 (entrées 3, 17, 20), **aucun ne désignant une erreur de
+l'étalon**, qui n'a pas été touché. Le plus instructif est l'entrée 3 (Heston) :
+le trieur la classe `partiel` parce que le test d'origine est transversal et ne
+se transpose qu'en série temporelle par instrument — c'est **vrai**, `H03` l'a
+fait — mais la règle réserve `partiel` à une **donnée** manquante, pas à un
+travail de traduction. Confusion entre difficulté de transposition et absence de
+donnée.
+
+**Un défaut du protocole a été trouvé en le lançant.** `corpus/TRIAGE.md` § Ce
+que le trieur rend illustre le format de sortie avec **deux entrées réelles et
+leur verdict juste** — entrée 1 `oui`, entrée 18 `non` — et l'entrée 18 est l'un
+des **deux seuls `non`**, donc la moitié de la condition B. Quiconque reçoit ce
+fichier reçoit deux réponses sur vingt. Le passage 1 ne l'a pas reçu et a classé
+l'entrée 18 `non` sans l'indice. `TRIAGE.md` **n'a pas été corrigé pendant le
+passage** — corriger le protocole dans le geste qui l'applique est ce que « le
+premier passage fait foi » interdit — et la correction **est due avant tout
+passage 2**.
+
+Le passage n'a coûté **aucun test** : `counted_tests()` reste à 56.
 
 ## Ce qui bloque l'autre moitié : l'acquisition
 

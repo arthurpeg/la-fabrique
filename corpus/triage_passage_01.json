@@ -1,0 +1,26 @@
+{
+  "trieur": "agent general-purpose (Opus 5), contexte = corpus/triage_input.json seul + la regle de classement et les contraintes de donnees recues dans la consigne ; n'a lu ni AMORCE.md, ni TRIAGE.md, ni les scripts de triage, ni ETAT.md, ni LECONS.md, ni wiki/, ni decisions/, ni registry/, ni les fiches ou les PDF. A vu le CLAUDE.md du projet, injecte automatiquement en debut de session (constitution : invariants, vocabulaire, arborescence) — il ne contient aucun verdict de triage.",
+  "date": "2026-09-20",
+  "entries": [
+    {"entry": 1, "verdict": "oui", "reason": "Rendement de la premiere demi-heure contre celui de la derniere : pur OHLCV intraday, transposable tel quel d'un ETF a un future ; seul le conditionnement aux jours d'annonce macro exigerait un calendrier, et il n'est pas le coeur du signal."},
+    {"entry": 2, "verdict": "oui", "reason": "Le signal lui-meme est le rendement du reste de la seance contre les 30 dernieres minutes, calculable en OHLCV sur futures — le mecanisme de gamma court explique, mais n'est pas une donnee exigee."},
+    {"entry": 3, "verdict": "partiel", "reason": "Les prix intraday suffisent pour l'autocorrelation aux lags multiples d'une journee, mais le test d'origine est un tri transversal sur des milliers d'actions : a 4,22 paris effectifs il faut le retranscrire en serie temporelle par instrument."},
+    {"entry": 4, "verdict": "oui", "reason": "Desequilibre intraday mesure sur le prix seul, sur SPY/ES, donc directement sur ES a la minute."},
+    {"entry": 5, "verdict": "oui", "reason": "Cassure de l'opening range : bornes haut/bas d'une fenetre d'ouverture et franchissement, entierement dans l'OHLCV a 1 minute, et la grille actif x seance donne une definition naturelle de l'ouverture."},
+    {"entry": 6, "verdict": "oui", "reason": "Meme construction que Gao et al. appliquee au petrole, donc OHLCV intraday sur un instrument du meme type que ceux detenus."},
+    {"entry": 7, "verdict": "oui", "reason": "Etude explicitement OHLCV seul sur un future CME a barres intraday : les 14 familles se reimplementent telles quelles, et le resultat negatif se verifie contre nos propres couts."},
+    {"entry": 8, "verdict": "oui", "reason": "Fenetre horaire fixe sur E-mini, prix seuls ; la cellule EUROPE de la grille couvre 02:00-03:00 ET et la detention reste intraday au sein de la fenetre, les desequilibres d'ordres n'etant qu'une explication."},
+    {"entry": 9, "verdict": "oui", "reason": "Refutation de l'entree 8 sur exactement la meme mesure : rien de plus que les prix intraday, elle sert de controle de peremption du signal."},
+    {"entry": 10, "verdict": "partiel", "reason": "La decomposition overnight/intraday se transpose en decoupage par seance sur nos futures, mais le test d'origine trie une coupe d'actions US, ce que neuf instruments ne permettent pas, et la prime overnight au sens strict supposerait une detention hors fenetre."},
+    {"entry": 11, "verdict": "oui", "reason": "La periodicite intra-journaliere s'estime directement sur nos barres a 1 minute ; c'est une contrainte de methode a appliquer au harnais, pas une donnee a acquerir."},
+    {"entry": 12, "verdict": "oui", "reason": "Volatilite realisee agregee depuis les rendements a 1 minute, et l'estimation en panel sur neuf futures reste licite puisqu'elle n'est pas un pari transversal en deciles."},
+    {"entry": 13, "verdict": "oui", "reason": "Semi-variances realisees et sauts signes se construisent depuis les rendements a 1 minute, sans aucune donnee exterieure."},
+    {"entry": 14, "verdict": "oui", "reason": "HAR n'a besoin que de la volatilite realisee journaliere agregee depuis l'intraday, disponible sur toute la tranche pool."},
+    {"entry": 15, "verdict": "partiel", "reason": "Les prix suffisent, mais le signal exige de dater les reunions FOMC : calendrier absent des fichiers, gratuit et publie a l'avance par la Fed, donc obtenable."},
+    {"entry": 16, "verdict": "partiel", "reason": "Meme dependance que l'entree 15 : il manque seulement le calendrier FOMC, gratuit, pour tester l'attenuation post-2011."},
+    {"entry": 17, "verdict": "non", "reason": "La surprise d'annonce est l'ecart entre chiffre publie et consensus prealable : au-dela des horaires, le consensus d'analystes est une donnee payante dont nous ne disposons pas."},
+    {"entry": 18, "verdict": "non", "reason": "Le carry sur futures se mesure sur la pente entre deux echeances ; nous n'avons qu'une seule echeance par contrat et la deuxieme est une donnee payante."},
+    {"entry": 19, "verdict": "non", "reason": "Exige a la fois la deuxieme echeance pour la base et des series de stocks physiques, deux donnees absentes et payantes."},
+    {"entry": 20, "verdict": "non", "reason": "Une memoire de douze mois suppose une serie continue rouleee sur plusieurs echeances, que l'echeance unique interdit, et le portage mensuel est incompatible avec la cloture forcee en fin de fenetre."}
+  ]
+}

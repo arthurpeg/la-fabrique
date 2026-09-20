@@ -1,7 +1,7 @@
 # ÉTAT
 
 **Phase courante :** 07 — triage et extraction sur 20 papiers connus
-**Date de dernière mise à jour :** 2026-09-19
+**Date de dernière mise à jour :** 2026-09-20
 **Dernière porte franchie :** **06**, le 2026-09-18 — les deux clauses.
 Clause 1 (dégénérescence) : `gate_06_controls.py`, 25 vérifications. Clause 2
 (réplication) : `scripts/measure_h04.py`, 19 vérifications, `H04` pré-enregistrée
@@ -51,7 +51,7 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 |---|---|---|---|
 | 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07` |
 | 06 | Contrôles automatiques et réplication | Un signal dégénéré est rejeté avant le harnais ; la chaîne reproduit un fait publié sur nos données. La cible a changé deux fois : Mesfin (métrique incompatible, `D12`), Heston (motif absent, `H03`), puis Andersen & Bollerslev (`D13`). | **franchie 2026-09-18** — `gate_06_controls.py` (25) et `scripts/measure_h04.py` (19) |
-| 07 | Triage et extraction sur 20 papiers connus | 20 fiches produites ; le triage écarte ce qu'il doit écarter, sur un verdict humain de référence. Point de départ : `corpus/AMORCE.md`. | **PHASE COURANTE** — 3 fiches écrites à la main servent de banc d'essai |
+| 07 | Triage et extraction sur 20 papiers connus | 20 fiches produites ; le triage écarte ce qu'il doit écarter, sur un verdict humain de référence. Point de départ : `corpus/AMORCE.md`. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** bloquée sur l'acquisition, 3 PDF pour 20 fiches |
 | 08 | Le codeur de signal | Une fiche produit un signal exécutable qui passe la sandbox, sans retouche manuelle. | à faire |
 
 ## Acte III — Fermer la boucle une fois
@@ -175,40 +175,56 @@ satisfaite d'avance. `corpus/TRIAGE.md` pose le protocole complet.
 **sans un seul PDF de plus**. Elle ne dépend pas du goulot d'acquisition qui
 bloque l'autre moitié.
 
-### Prochaine action : un trieur NON CONTAMINÉ, et un seul passage
+### La moitié triage est tenue — passage 1, le 2026-09-20
 
-**La condition que `D15` ne portait pas, et que la mise en œuvre a trouvée** :
-une session qui a **lu la colonne** ne peut pas être le trieur. Elle ne trierait
-pas, elle réciterait — et sa matrice serait parfaite pour la pire des raisons
-(`L15` : le résultat conforme est celui que personne n'examine). La session du
-2026-09-19 s'est **disqualifiée elle-même** à ce titre : elle a compté la colonne
-entrée par entrée pour établir le dénominateur de `D15`.
+**Un trieur non contaminé a trié, une fois, et les quatre conditions de `D15`
+tiennent.** Le passage est inscrit au § Journal de `D15` avec ce qu'il avait vu ;
+ses 20 verdicts sont dans `corpus/triage_passage_01.json`. Il n'a coûté **aucun
+test** : `counted_tests()` reste à 56, le registre à 135 lignes.
 
-Le piège est **structurel** : la séquence de démarrage de `CLAUDE.md` conduit
-toute session à lire `ETAT.md`, le wiki, puis le corpus — donc l'étalon. **Une
-session arrive contaminée par défaut, et celle-ci l'est dès qu'elle a lu ce
-paragraphe.**
+| | Condition | Mesuré | Plafond |
+|---|---|---|---|
+| A | `oui` de l'étalon classés autrement | **1** | ≤ 1 sur 13 |
+| B | `non` de l'étalon classés `oui` | **0** | 0 sur 2 |
+| C | `partiel` de l'étalon en désaccord | **2** | ≤ 2 sur 5 |
+| D | désaccords de deux crans | **0** | 0 |
 
-Donc, concrètement : le trieur est une session ou un agent qui **n'a vu ni la
-colonne, ni le § Verdict d'`AMORCE.md`, ni `D15` § Sur l'étalon, ni la présente
-section**. Il reçoit `corpus/triage_input.json`, la règle de classement et nos
-contraintes de données — tout est dans `corpus/TRIAGE.md` — et rend un JSON de
-20 verdicts **avec un motif chacun**. Puis :
+**Ce qu'il faut lire dans ces quatre chiffres, et ne pas arrondir** : `A` et `C`
+sont **à leur maximum exact**. Un désaccord de plus sur un `oui` ou sur un
+`partiel`, et rien ne passait. Ce n'est pas une marge, c'est une limite atteinte,
+et le verdict de la porte 07 devra le citer tel quel avec le **numéro du
+passage** — comme la phase 15 citera `counted_tests()`.
 
-```
-python corpus/score_triage.py verdicts.json
-```
+Les trois désaccords (entrées 3, 17, 20) sont examinés un par un au § Journal de
+`D15`, avec le motif que le trieur a donné. **Aucun ne désigne une erreur de
+l'étalon**, et l'étalon n'a pas été touché. Le plus instructif est l'entrée 3
+(Heston) : le trieur la classe `partiel` parce que le test d'origine est
+transversal et ne se transpose qu'en série temporelle — c'est **factuellement
+vrai**, `H03` l'a fait — mais la règle réserve `partiel` à une **donnée**
+manquante, pas à un travail de traduction. Le trieur a confondu difficulté de
+transposition et absence de donnée.
 
-**Le premier passage fait foi.** Un trieur retouché après lecture de sa matrice
-est un trieur ajusté à son étalon. Tout passage s'inscrit au § Journal de `D15`
-avec **qui a trié, ce qu'il avait vu**, et ce qui a changé depuis le précédent ;
-le verdict final cite le nombre de passages — comme la phase 15 citera
-`counted_tests()`.
+**Comment le passage a été conduit, et ce qu'il a fallu contourner.** La session
+qui l'a lancé était contaminée (elle avait lu cette section) ; le trieur était un
+agent séparé, avec interdiction de lecture explicite, recevant
+`corpus/triage_input.json` et rien d'autre du corpus.
 
-Et la garde de `L06`, qui s'applique mot pour mot : *un compte juste n'est pas un
-compte de choses justes*. C'est ainsi que la détection de roulements avait paru
-bonne à 90 % en n'étant juste qu'à 62,8 % — d'où la matrice entière, et le motif
-exigé de chaque verdict.
+Et un **défaut du protocole a été trouvé là** : `corpus/TRIAGE.md` § Ce que le
+trieur rend illustre le format avec **deux entrées réelles et leur verdict
+juste** — entrée 1 `oui`, entrée 18 `non` — or l'entrée 18 est l'un des **deux
+seuls `non`**, donc la moitié de la condition B. Le passage 1 n'a pas reçu ce
+fichier : la règle et les contraintes lui ont été recopiées, avec un exemple de
+format neutre. Il a classé l'entrée 18 `non` sans l'indice. **`TRIAGE.md` reste à
+corriger avant tout passage 2** — il ne l'a pas été pendant le passage, corriger
+le protocole dans le geste qui l'applique étant précisément ce que « le premier
+passage fait foi » interdit.
+
+### Prochaine action : l'extraction, ou la requalification de la porte
+
+La moitié qui reste est l'**extraction**, et elle ne bute pas sur du code mais
+sur l'**acquisition** : **3 PDF sur disque pour 20 fiches demandées**. La
+question à trancher **par écrit, et pas au quinzième papier** : élargir le corpus
+au-delà d'`AMORCE.md`, ou requalifier ce que la porte 07 demande.
 
 ### Ce qui reste ouvert par ailleurs
 

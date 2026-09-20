@@ -25,7 +25,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Décision la plus récente** | `decisions/DECISION-15-seuil-du-triage.md` — le seuil du trieur, écrit **avant** que le trieur existe : appariement entrée par entrée à la colonne |
 | **Tests au registre** | 135 |
 | **Idées abandonnées recensées** | 42 |
-| **Entrées au journal** | 26 |
+| **Entrées au journal** | 27 |
 
 ## Ce qui bloque
 
@@ -129,40 +129,56 @@ satisfaite d'avance. `corpus/TRIAGE.md` pose le protocole complet.
 **sans un seul PDF de plus**. Elle ne dépend pas du goulot d'acquisition qui
 bloque l'autre moitié.
 
-### Prochaine action : un trieur NON CONTAMINÉ, et un seul passage
+### La moitié triage est tenue — passage 1, le 2026-09-20
 
-**La condition que `D15` ne portait pas, et que la mise en œuvre a trouvée** :
-une session qui a **lu la colonne** ne peut pas être le trieur. Elle ne trierait
-pas, elle réciterait — et sa matrice serait parfaite pour la pire des raisons
-(`L15` : le résultat conforme est celui que personne n'examine). La session du
-2026-09-19 s'est **disqualifiée elle-même** à ce titre : elle a compté la colonne
-entrée par entrée pour établir le dénominateur de `D15`.
+**Un trieur non contaminé a trié, une fois, et les quatre conditions de `D15`
+tiennent.** Le passage est inscrit au § Journal de `D15` avec ce qu'il avait vu ;
+ses 20 verdicts sont dans `corpus/triage_passage_01.json`. Il n'a coûté **aucun
+test** : `counted_tests()` reste à 56, le registre à 135 lignes.
 
-Le piège est **structurel** : la séquence de démarrage de `CLAUDE.md` conduit
-toute session à lire `ETAT.md`, le wiki, puis le corpus — donc l'étalon. **Une
-session arrive contaminée par défaut, et celle-ci l'est dès qu'elle a lu ce
-paragraphe.**
+| | Condition | Mesuré | Plafond |
+|---|---|---|---|
+| A | `oui` de l'étalon classés autrement | **1** | ≤ 1 sur 13 |
+| B | `non` de l'étalon classés `oui` | **0** | 0 sur 2 |
+| C | `partiel` de l'étalon en désaccord | **2** | ≤ 2 sur 5 |
+| D | désaccords de deux crans | **0** | 0 |
 
-Donc, concrètement : le trieur est une session ou un agent qui **n'a vu ni la
-colonne, ni le § Verdict d'`AMORCE.md`, ni `D15` § Sur l'étalon, ni la présente
-section**. Il reçoit `corpus/triage_input.json`, la règle de classement et nos
-contraintes de données — tout est dans `corpus/TRIAGE.md` — et rend un JSON de
-20 verdicts **avec un motif chacun**. Puis :
+**Ce qu'il faut lire dans ces quatre chiffres, et ne pas arrondir** : `A` et `C`
+sont **à leur maximum exact**. Un désaccord de plus sur un `oui` ou sur un
+`partiel`, et rien ne passait. Ce n'est pas une marge, c'est une limite atteinte,
+et le verdict de la porte 07 devra le citer tel quel avec le **numéro du
+passage** — comme la phase 15 citera `counted_tests()`.
 
-```
-python corpus/score_triage.py verdicts.json
-```
+Les trois désaccords (entrées 3, 17, 20) sont examinés un par un au § Journal de
+`D15`, avec le motif que le trieur a donné. **Aucun ne désigne une erreur de
+l'étalon**, et l'étalon n'a pas été touché. Le plus instructif est l'entrée 3
+(Heston) : le trieur la classe `partiel` parce que le test d'origine est
+transversal et ne se transpose qu'en série temporelle — c'est **factuellement
+vrai**, `H03` l'a fait — mais la règle réserve `partiel` à une **donnée**
+manquante, pas à un travail de traduction. Le trieur a confondu difficulté de
+transposition et absence de donnée.
 
-**Le premier passage fait foi.** Un trieur retouché après lecture de sa matrice
-est un trieur ajusté à son étalon. Tout passage s'inscrit au § Journal de `D15`
-avec **qui a trié, ce qu'il avait vu**, et ce qui a changé depuis le précédent ;
-le verdict final cite le nombre de passages — comme la phase 15 citera
-`counted_tests()`.
+**Comment le passage a été conduit, et ce qu'il a fallu contourner.** La session
+qui l'a lancé était contaminée (elle avait lu cette section) ; le trieur était un
+agent séparé, avec interdiction de lecture explicite, recevant
+`corpus/triage_input.json` et rien d'autre du corpus.
 
-Et la garde de `L06`, qui s'applique mot pour mot : *un compte juste n'est pas un
-compte de choses justes*. C'est ainsi que la détection de roulements avait paru
-bonne à 90 % en n'étant juste qu'à 62,8 % — d'où la matrice entière, et le motif
-exigé de chaque verdict.
+Et un **défaut du protocole a été trouvé là** : `corpus/TRIAGE.md` § Ce que le
+trieur rend illustre le format avec **deux entrées réelles et leur verdict
+juste** — entrée 1 `oui`, entrée 18 `non` — or l'entrée 18 est l'un des **deux
+seuls `non`**, donc la moitié de la condition B. Le passage 1 n'a pas reçu ce
+fichier : la règle et les contraintes lui ont été recopiées, avec un exemple de
+format neutre. Il a classé l'entrée 18 `non` sans l'indice. **`TRIAGE.md` reste à
+corriger avant tout passage 2** — il ne l'a pas été pendant le passage, corriger
+le protocole dans le geste qui l'applique étant précisément ce que « le premier
+passage fait foi » interdit.
+
+### Prochaine action : l'extraction, ou la requalification de la porte
+
+La moitié qui reste est l'**extraction**, et elle ne bute pas sur du code mais
+sur l'**acquisition** : **3 PDF sur disque pour 20 fiches demandées**. La
+question à trancher **par écrit, et pas au quinzième papier** : élargir le corpus
+au-delà d'`AMORCE.md`, ou requalifier ce que la porte 07 demande.
 
 ### Ce qui reste ouvert par ailleurs
 
@@ -197,6 +213,7 @@ exigé de chaque verdict.
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-09-20 | `mesure` | PASSAGE 1 DU TRIEUR — la moitié triage de la porte 07 est tenue. Trieur = agent general-purpose séparé, lancé depuis une session contaminée, avec interdiction de lecture explicite ; il n'a reçu que corpus/triage_input.json plus la règle de classement et les contraintes de données recopiées dans sa consigne. Inscrit au § Journal de D15 avec ce qu'il avait vu ; verdicts archivés dans corpus/triage_passage_01.json | LES QUATRE CONDITIONS TIENNENT, A/B/C/D = 1/0/2/0 — mais A ET C SONT À LEUR MAXIMUM EXACT (1 sur 1, 2 sur 2) : un désaccord de plus et rien ne passait. Trois désaccords sur 20, aucun ne désignant une erreur de l'étalon, qui n'a pas été touché. Le plus instructif est l'entrée 3 (Heston) : le trieur la classe `partiel` parce que le test d'origine est transversal et ne se transpose qu'en série temporelle — factuellement VRAI, H03 l'a fait — mais la règle réserve `partiel` à une DONNÉE manquante, pas à un travail de traduction ; confusion entre difficulté de transposition et absence de donnée. DÉFAUT DU PROTOCOLE TROUVÉ EN LE LANÇANT : corpus/TRIAGE.md § Ce que le trieur rend illustre le format avec DEUX ENTRÉES RÉELLES ET LEUR VERDICT JUSTE (entrée 1 `oui`, entrée 18 `non`), et l'entrée 18 est l'un des DEUX SEULS `non` — donc la moitié de la condition B donnée d'avance à quiconque reçoit ce fichier. Le passage 1 ne l'a PAS reçu et a classé l'entrée 18 `non` sans l'indice ; TRIAGE.md n'a PAS été corrigé pendant le passage (corriger le protocole dans le geste qui l'applique est ce que « le premier passage fait foi » interdit) — correction due avant tout passage 2. AUCUN test dépensé : counted_tests reste à 56, registre à 135 lignes. Reste la moitié EXTRACTION, bloquée sur l'acquisition (3 PDF pour 20 fiches) |
 | 2026-09-19 | `outil` | Phase 07, l'entrée du trieur et son protocole : corpus/make_triage_input.py fabrique déterministiquement corpus/triage_input.json (les 20 lignes d'AMORCE.md privées de leur colonne verdict, TITRES DE SECTION NON REPRIS — le titre E dit « la famille que mes données ferment », c'est le verdict lui-même) et l'audite ; corpus/TRIAGE.md pose le protocole ; D15 reçoit un § Complément daté, écrit AVANT tout passage | LA MISE EN ŒUVRE A TROUVÉ UNE CONDITION QUE D15 NE PORTAIT PAS : une session qui a LU la colonne ne peut pas être le trieur — elle réciterait, et sa matrice serait parfaite pour la pire des raisons (L15 : le résultat conforme est celui que personne n'examine). Le piège est structurel — la séquence de démarrage de CLAUDE.md conduit toute session à lire l'étalon, donc une session arrive CONTAMINÉE PAR DÉFAUT. La session du jour s'est disqualifiée elle-même comme trieur (F42) plutôt que de produire un résultat flatteur. Ce n'est pas une impossibilité par construction — on n'empêche pas un lecteur de lire, et F13/F15/F16/F25 ont déjà refusé la vigilance déguisée en architecture — donc la règle est ÉCRITE et le § Journal de D15 note pour chaque passage qui a trié et ce qu'il avait vu. État : entrée fabriquée et auditée (20 entrées, 3 à 5 champs selon la section), juge vert sur 10 vérifications, IL MANQUE UN TRIEUR NON CONTAMINÉ |
 | 2026-09-19 | `decision` | D15 écrite AVANT que le trieur existe : le seuil du triage, en EFFECTIFS et non en pourcentages (sur 13 `oui`, un item vaut 7,7 points de rappel — un seuil en % est un effectif mal déguisé, F37) ; trois classes et matrice de confusion entière, `partiel` NON replié (le replier effacerait la distinction qui a écarté Mesfin et cadré Heston, F38) ; quatre conditions — A ≤ 1 `oui` manqué sur 13, B = 0 `non` promu `oui`, C ≤ 2 `partiel` en désaccord sur 5, D = 0 désaccord de deux crans ; ce que le trieur VOIT est fixé : la ligne d'AMORCE.md privée de sa colonne verdict, exactement ce que l'auteur humain avait en phase 01, pas le PDF (F41) ; corpus/score_triage.py écrit et vérifié avant l'accusé | L'ÉTALON A DÛ ÊTRE COMPTÉ AVANT D'ÊTRE UTILISÉ, et il ne l'avait pas été : ETAT.md annonçait 24 entrées notées et six `partiel`, la colonne en porte 20 — 13 `oui` / 5 `partiel` / 2 `non`, les 4 entrées de la section G n'ayant pas cette colonne ; et AMORCE.md se contredisait lui-même — son § Verdict compte 12/5/3, l'écart portant sur l'entrée 9 (billet FRBNY), que la colonne marque `oui` et que le résumé range parmi les fermées. D15 tranche que LA COLONNE FAIT FOI (F39), l'entrée 9 n'est pas retirée (F40), et le § Verdict reçoit une note datée — texte d'origine conservé, comme pour l'entrée 7. score_triage.py : 10 vérifications vertes, huit sorties de trieur fabriquées rendant chacune le verdict que D15 écrit, et deux mutations d'AMORCE.md que le garde de l'étalon refuse. Le premier passage du trieur fera foi ; tout passage ultérieur s'inscrit au § Journal de D15 avec ce qui a changé. ETAT.md, hypotheses/README.md (counted_tests disait encore 4 pour deux hypothèses, c'est 56 pour trois) et la page de phase corrigés. Six portes rejouées vertes ce jour ; registre 130 -> 135 lignes, toutes des calibrations, counted_tests inchangé à 56 |
 | 2026-09-18 | `decision` | Phase 07, premier maillon : D14 écrite — le schéma de fiche n'est PAS tiré des trois fiches manuelles (elles divergent, F35) mais des six champs que CLAUDE.md § Le vocabulaire nomme depuis le premier jour, plus source et transposability ; corpus/SCHEMA.md, corpus/validate_fiches.py, corpus/check_fiches_guard.py ; D09 étendu aux fiches — un résultat recopié d'un papier est une VALEUR EXTERNE, il porte sa citation, et value_in_quote (le garde du catalogue) vérifie que la valeur s'y retrouve | les trois fiches manuelles REFUSÉES par leur propre schéma puis réécrites — c'était le test du schéma autant que des fiches ; aucune n'avait de champ `horizon`, la construction du signal portait deux noms différents ; le garde a attrapé un cas réel que je n'avais pas prévu — Mesfin écrit « Eleven signal families fail » en toutes lettres, donc aucun chiffre à retrouver : ajouté `spelled_out`, qui vérifie le MOT et NOMME la conversion comme un geste humain plutôt que de la cacher derrière `derived` (F36) ; check_fiches_guard.py : 23 vérifications, 11 fautes refusées chacune pour la raison prévue, fiche intacte acceptée ; reste la seconde moitié de la porte 07 — le triage, avec un seuil chiffré à écrire AVANT mesure (L06) |
@@ -204,7 +221,6 @@ exigé de chaque verdict.
 | 2026-09-18 | `mesure` | H03 MESURÉE — 52 décalages (40 dents m=1..40, 12 creux j=1..12), tranche pool, as-of 2023-12-29, 25 cellules, ~650 000 observations par décalage, harnais 9ac3e45e ; counted_tests 4 -> 56 pour UNE hypothèse | LE PEIGNE N'EST PAS LÀ. Le script annonçait « séparation OUI » (+0,00177, p=0,030) et il avait tort : les seaux de H03 SE RECOUVRAIENT — creux j=1..12 contenant le retournement court j=1..3. Creux nettoyés (j=4..12) : dents +0,00065 contre creux +0,00056, séparation +0,00009, Mann-Whitney p=0,247. Aucune dent ne ressort : plus grand t +3,01 sur 40, quand la sélection seule rend un 95e centile de 3,22. Entre les multiples la réponse n'est pas « largement négative » : 5 positives sur 9. SEUL effet net : le retournement court, j=1 IC -0,01150 t -6,14 et j=2 -0,00815 t -4,35 — la préface du motif, pas le motif. CLAUSE 2 DE LA PORTE 06 NON FRANCHIE, comme H03 l'avait écrit d'avance ; il faut une nouvelle cible par décision écrite. Non vérifié faute de l'avoir inscrit : la ventilation par cellule (défaut du script, coûterait 52 lignes de plus et ne pourrait qu'affaiblir le motif). L15, F33, F34 |
 | 2026-09-18 | `signal` | Signal heston-2010-periodicity implémenté à la main (signals/heston_2010_periodicity.py) : un score par intervalle de demi-heure et non un par séance — le mécanisme de _common.run ne convenait pas et n'est pas réutilisé ; décalage paramétré EN SÉANCES pour les dents (traduit en intervalles par fenêtre depuis le catalogue) et EN INTERVALLES pour les creux ; rendement d'intervalle défini en BARRES, même définition que la cible du harnais ; scripts/check_heston.py et scripts/measure_h03.py écrits, H03 précisée sur ce point AVANT le lancement | contrôles verts : périodes P = 16/13/13 lues au catalogue et non espérées, liste blanche 0 refus, contrat conforme, CAUSALITÉ 0 divergence sur 16 sondes, écart d'échantillonnage mesuré à 30,0 barres donc étalement 1,00 — pas de déflation de recouvrement, ce que D11 doit faire pour des demi-heures disjointes ; pré-vol : 658 582 scores et 657 470 observations à m=1, soit 99,8 % de mesurabilité, aucune cellule mince ; le signal est tenu HORS de REFERENCE (les étalons de D06) et placé dans REPLICATION, pour que les portes gardent le sujet que D06 leur a donné |
 | 2026-09-18 | `decision` | D12 écrite — la clause 2 CHANGE DE CIBLE : Mesfin ne convient pas (son critère est un t sur des rendements nets par trade, le nôtre un IC ; onze de ses quatorze familles échouent par amplitude sous friction, ce qu'un IC ne voit pas ; et deux de ses trois plis hors échantillon tombent dans le holdout scellé). Nouvelle cible : Heston, Korajczyk & Sadka (2010), JF 65(4) — papier récupéré d'arXiv (1005.3535), lu, fiché ; H03 PRÉ-ENREGISTRÉE avant toute mesure | le résultat visé est une CORRÉLATION et un MOTIF DE SIGNES, pas une valeur : continuation aux décalages multiples d'une séance (dents), retournement aux premiers décalages, rien de positif entre les deux (creux) — le peigne porte son propre témoin négatif ; période dictée par le catalogue et non par le résultat : P = 13 demi-heures pour US et EUROPE (6,5 h), P = 16 pour ASIA (8 h), donc DEUX motifs distincts à retrouver ; aucune magnitude du papier n'est reprise comme attendue (sa mesure est transversale avec effet de marché retiré, il le dit lui-même) ; H03 = UNE hypothèse pour ~100 lignes de registre, et l'échec du motif ne franchirait PAS la porte — écrit avant de regarder ; Mesfin reste calibrage d'attente, fiché |
-| 2026-09-18 | `research` | Mesfin (2026) LU — PDF récupéré d'arXiv dans corpus/pdf/, texte extrait, fiche écrite à la main dans corpus/fiches/ (première fiche du projet, hors extracteur qui n'existe pas) ; corpus/AMORCE.md corrigé par une note datée, le texte d'origine conservé | les 14 familles nommées depuis la source (ORB x3, Asia expansion, Asia liquidity grab, gap fill, gap continuation, volume spike, volume dry-up, VVG x3, event day trend, MGC OU) ; sa friction CITÉE : « 2.0 points ($4.00 per micro contract), covering bid-ask spread, NinjaTrader exchange fees, and conservative slippage » — TOUT COMPRIS, et 4,00 $ sur 29 376 $ de notionnel = 1,36 bp, seconde route confirmant L14 ; DEUX OBSTACLES STRUCTURELS à la réplication, aucun lié aux frais : (1) son critère est un t sur RENDEMENTS NETS PAR TRADE, le nôtre un IC — onze familles échouent par amplitude sous friction, ce qu'un IC ne voit pas ; (2) ses plis hors échantillon testent 2023/2024/2025 et le holdout scellé couvre 2024-2026, donc SEUL LE PLI 1 est reproductible |
 
 Journal complet : [[log]]
 

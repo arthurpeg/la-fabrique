@@ -207,9 +207,46 @@ Chaque ligne dit **qui a trié et ce qu'il avait vu** (§ Complément).
 
 | # | Date | Trieur, et ce qu'il avait vu | Ce qui a changé depuis le passage précédent | A/B/C/D | Verdict |
 |---|---|---|---|---|---|
-| — | — | *(aucun passage à ce jour)* | — | — | — |
+| **1** | 2026-09-20 | Agent `general-purpose` (Opus 5) lancé depuis une session contaminée, avec interdiction de lecture explicite. **A vu :** `corpus/triage_input.json` seul, plus la règle de classement et les contraintes de données recopiées dans sa consigne. **N'a vu ni** `AMORCE.md`, ni `TRIAGE.md`, ni `score_triage.py`, ni `ETAT.md`, ni `LECONS.md`, ni `wiki/`, ni `decisions/`, ni `registry/`, ni les fiches ou les PDF ; aucun accès web. **Réserve déclarée par lui-même :** `CLAUDE.md` lui a été injecté automatiquement — il ne porte aucun verdict de triage. | *(premier passage)* | 1 / 0 / 2 / 0 | **les quatre conditions tiennent** — 3 désaccords sur 20, verdicts dans `corpus/triage_passage_01.json` |
+
+**Ce que le passage 1 a donné, et ce qu'il n'a pas donné.** Il tient, mais **A et
+C sont à leur maximum exact** (1 sur 1, 2 sur 2) : un désaccord de plus sur un
+`oui` ou sur un `partiel`, et la moitié triage ne passait pas. Ce n'est pas une
+marge, c'est une limite atteinte, et le verdict de la porte doit le citer tel
+quel.
+
+Les trois désaccords, avec le motif du trieur, parce que `D15` demande qu'ils
+soient examinés et non comptés (`L06`) :
+
+| Entrée | Étalon | Trieur | Le motif, et ce qu'il désigne |
+|---|---|---|---|
+| 3 — Heston, Korajczyk & Sadka (2010) | `oui` | `partiel` | *« le test d'origine est un tri transversal sur des milliers d'actions : à 4,22 paris effectifs il faut le retranscrire en série temporelle par instrument »*. **Le trieur a raison sur les faits et l'étalon sur la classe.** La transposition a réellement eu lieu — `H03` l'a implémentée en autocorrélation par instrument et mesurée (52 lignes de registre, motif absent). Or une méthode qu'on transpose sans donnée extérieure reste `oui` au sens de la règle : c'est `partiel` qui exige une donnée manquante, pas un travail de traduction. Le trieur a confondu *difficulté de transposition* et *donnée absente*. |
+| 17 | `partiel` | `non` | *« le consensus d'analystes est une donnée payante dont nous ne disposons pas »*. Désaccord de fond sur ce que coûte la donnée, non sur la règle. |
+| 20 — Moskowitz et al. | `partiel` | `non` | *« douze mois de mémoire supposent une série roulée sur plusieurs échéances, que l'échéance unique interdit »*. Le trieur invoque une contrainte que la consigne lui a donnée telle quelle ; l'étalon la tenait pour transposable. |
+
+Aucun de ces trois ne désigne une erreur de l'étalon, et **l'étalon n'est pas
+touché** — la règle du § Ce que ça verrouille s'applique.
 
 La session du 2026-09-19 qui a écrit cette décision **a lu la colonne** et ne peut
 donc pas trier. L'entrée du trieur est fabriquée et auditée
 (`corpus/triage_input.json`, 20 entrées, colonne verdict retirée) ; le juge est
 vert sur 10 vérifications ; il manque un trieur non contaminé.
+
+> **Note du 2026-09-20.** Ce dernier point n'est plus vrai : le passage 1
+> ci-dessus a été trié par un agent non contaminé, lancé depuis une session qui,
+> elle, l'était. Le texte d'origine est conservé — il dit l'état du 2026-09-19.
+>
+> **Un défaut du protocole a été trouvé en lançant ce passage, et contourné sans
+> modifier le protocole.** `corpus/TRIAGE.md` § Ce que le trieur rend illustre le
+> format de sortie avec **deux entrées réelles et leur verdict juste** —
+> `{"entry": 1, "verdict": "oui"}` et `{"entry": 18, "verdict": "non"}`. L'entrée
+> 18 est l'un des **deux seuls `non`** de l'étalon, donc la moitié de la
+> condition B. Donner `TRIAGE.md` au trieur revient à lui donner deux réponses
+> sur vingt. Le passage 1 ne l'a **pas** reçu : la règle de classement et les
+> contraintes de données lui ont été recopiées dans sa consigne, avec un exemple
+> de format **neutre** (numéro et verdict en gabarit). Il a classé l'entrée 18
+> `non` sans l'indice.
+>
+> `TRIAGE.md` n'a pas été corrigé pendant le passage : corriger le protocole dans
+> le geste même qui l'applique est exactement ce que le § Le premier passage fait
+> foi interdit. **La correction est due**, et elle est à faire avant le passage 2.

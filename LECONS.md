@@ -426,3 +426,45 @@ périodique, le témoin se place à la **phase opposée**, jamais au voisinage �
 quoi on compare la crête à la crête. Et le corollaire : **un résultat qui passe
 mais paraît trop faible pour ce qu'on savait mérite le même examen qu'un résultat
 qui échoue.**
+
+
+---
+
+## L17 — Un protocole qui illustre son format avec des cas réels distribue les réponses qu'il prétend cacher
+
+**Le 2026-09-20**, au moment de lancer le premier passage du trieur.
+
+`corpus/TRIAGE.md` fait tout ce qu'il faut pour protéger l'étalon : il consacre sa
+première section à *qui peut être le trieur*, nomme les fichiers interdits,
+explique que `AMORCE.md` porte la réponse deux fois, et fabrique une entrée
+expurgée pour que le trieur n'ait jamais à l'ouvrir. Puis, quatre sections plus
+bas, il montre la forme du JSON attendu :
+
+```json
+{"entry": 1, "verdict": "oui", ...}
+{"entry": 18, "verdict": "non", ...}
+```
+
+**Les deux verdicts sont justes**, et l'entrée 18 est l'un des **deux seuls `non`**
+de l'étalon — c'est-à-dire la moitié de la condition B, celle qui vaut zéro sur
+deux. Le document écrit pour empêcher la contamination en était le vecteur.
+
+**Pourquoi ça ne se voit pas.** Un exemple de format n'est pas lu comme une
+donnée : il est lu comme de la syntaxe. L'auteur le remplit avec ce qu'il a sous
+la main — et ce qu'il a sous la main, parce qu'il vient de lire l'étalon, ce sont
+des cas réels avec leur vraie réponse. Le geste est machinal, et c'est exactement
+pour ça qu'il passe les relectures : personne ne relit un bloc de code
+d'illustration en se demandant *ce qu'il révèle*.
+
+**Ce que ça généralise.** Partout où un document sépare un juge d'un jugé — une
+consigne d'annotation, un jeu de tests dont on cache les attendus, une
+pré-inscription d'hypothèse — **les exemples appartiennent au même périmètre que
+les données**. Un gabarit s'écrit avec des valeurs fabriquées, ou avec des
+numéros qui n'existent pas dans le jeu réel.
+
+Le réflexe : **relire ses propres exemples comme un adversaire les lirait**, et
+se demander non pas « est-ce que c'est clair ? » mais « qu'est-ce que ça
+donne ? ». Et le corollaire de méthode, qui a joué ici : quand on découvre le
+défaut **au moment d'appliquer le protocole**, on contourne sans le corriger —
+corriger le protocole dans le geste même qui l'applique est ce que « le premier
+passage fait foi » interdit. On contourne, on déclare, on corrige après.
