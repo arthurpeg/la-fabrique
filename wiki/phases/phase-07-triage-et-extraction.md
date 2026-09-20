@@ -161,7 +161,71 @@ passage 2**.
 
 Le passage n'a coûté **aucun test** : `counted_tests()` reste à 56.
 
+## La moitié extraction a son juge — `D16`, le 2026-09-20
+
+Écrit **avant que l'extracteur existe**. `corpus/score_extraction.py`,
+**21 vérifications**, vert. La source fait foi : `decisions/DECISION-16-seuil-de-l-extraction.md`.
+
+Il ne juge **pas** la ressemblance aux trois fiches écrites à la main — trois
+items ne portent aucun seuil, et un seuil en pourcentage sur trois items est
+[[Failed Ideas/ledger#F37]] à nouveau. Il juge la **fidélité à la source** :
+cinq conditions à tolérance zéro, dont `F2`, qui exige que chaque `quoted` se
+retrouve **mot pour mot** dans le texte du papier.
+
+**Ce que `F2` ferme.** `D14` vérifiait qu'une `value` se retrouve dans sa
+`quoted` ; rien ne vérifiait que la `quoted` existe. Un extracteur qui fabrique
+**la citation et le chiffre qu'elle contient** passait `D14` sans une faute —
+exactement la valeur plausible inventée que `CLAUDE.md` § Les interdits nomme.
+
+**Ce qu'il ne sait pas faire** : dire qu'une fiche est *creuse*. Le diagnostic
+l'imprime, aucune condition ne le porte. Écrit dans `D16` § Pourquoi, et renvoyé
+à la phase 09, premier dénominateur réel.
+
+Trois options écartées et consignées : [[Failed Ideas/ledger#F43]] (apparier à
+l'étalon), [[Failed Ideas/ledger#F44]] (ressemblance de texte),
+[[Failed Ideas/ledger#F45]] (relecture humaine comme condition de porte).
+
+## Ce que `F2` a trouvé en rencontrant trois vrais papiers — 2026-09-20
+
+Les trois PDF de référence ont été récupérés et le juge lancé sur eux. **`F2`
+casse sur les trois**, pour trois raisons dont une seule est une faute. La
+source fait foi : `D16` § Complément du 2026-09-20.
+
+| Papier | Ce qui cloche | Qui a tort |
+|---|---|---|
+| Andersen & Bollerslev (1997) | c'est un **scan** : le texte extrait dit « the **fight** part » pour « right part » | **le texte** |
+| Mesfin (2026), `walk_forward_folds` | la citation vient d'un **tableau**, rendu en cellules | personne |
+| Mesfin (2026), `acceptance_criteria` | `quoted` est une **paraphrase**, pas une citation | **la fiche** |
+
+Le troisième est exactement ce que `F2` est fait pour attraper — et il l'a
+attrapé dans une fiche **écrite à la main** par une session qui avait lu le
+papier. Le mécanisme est juste ; c'est sa prémisse qui était trop simple.
+
+D'où la **réparation déclarée** : `quoted_source` (mot pour mot dans le texte) et
+`quoted_repair` dans une liste close — `ocr`, `math_notation`, `table`. Le geste
+de `D14` avec `spelled_out`, repris : on **nomme** la réparation humaine au lieu
+de la cacher. Ce qui ne bouge pas : il faut toujours une chaîne présente à la
+lettre, donc la paraphrase reste une faute.
+
+## La porte est requalifiée — `D17`, le 2026-09-20
+
+Elle ne demande plus **20 fiches**. Le 20 venait du nombre d'entrées notées
+d'`AMORCE.md`, pas d'une exigence : il ne testait rien. Elle demande un
+**extracteur jugé sur tout le corpus atteignable**, avec le recensement écrit de
+ce qui ne l'était pas — `G1` à `G4`, dont **`G3` : zéro retouche manuelle**, plus
+dure que le chiffre qu'elle remplace.
+
+Écartées et consignées : [[Failed Ideas/ledger#F46]] (tenir les 20),
+[[Failed Ideas/ledger#F47]] (élargir le corpus — **rouverte** si l'atteignable
+tombe sous 5 papiers, seuil écrit avant le recensement).
+
 ## Ce qui bloque l'autre moitié : l'acquisition
+
+> [!warning] **Corrigé le 2026-09-20 : il n'y a aucun PDF sur le poste d'Arthur.**
+> Le compte de « 3 PDF sur disque » ci-dessous était vrai sur le poste où ils ont
+> été récupérés. `corpus/pdf/` est dans `.gitignore` : les trois PDF n'ont jamais
+> traversé. Conséquence vérifiée — **`F4` casse aujourd'hui sur les trois fiches
+> de référence**. La source fait foi : `ETAT.md`.
 
 **3 PDF sur disque, 20 fiches demandées.** Des 20 entrées notées, 12 ont un lien
 libre, 2 sont derrière un péage (16, 17) et **6 n'ont aucun lien** (6, 10, 14,

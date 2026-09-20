@@ -15,6 +15,18 @@ calibration à la main (porte 03). `D13` § Pourquoi l'écrit sans détour, et a
 session ne doit lire cette porte comme davantage.
 
 **Décision la plus récente :**
+`decisions/DECISION-17-ce-que-la-porte-07-demande.md` — la porte 07 ne demande
+plus **20 fiches** : elle demande un **extracteur jugé sur tout le corpus
+atteignable**, avec le compte écrit de ce qui ne l'était pas. Quatre conditions
+en effectifs, `G1`–`G4`, dont `G3` : **zéro retouche manuelle**.
+**Décision précédente :**
+`decisions/DECISION-16-seuil-de-l-extraction.md` — le seuil de l'**extraction**,
+écrit avant que l'extracteur existe : une fiche produite est jugée sur sa
+**fidélité à la source** (chaque `quoted` mot pour mot dans le papier), pas sur
+sa ressemblance aux trois fiches écrites à la main — trois items ne portent aucun
+seuil. Cinq conditions à tolérance zéro, `corpus/score_extraction.py`,
+21 vérifications.
+**Décision précédente :**
 `decisions/DECISION-15-seuil-du-triage.md` — le seuil du trieur, écrit **avant**
 que le trieur existe : appariement entrée par entrée à la colonne
 « implémentable » d'`AMORCE.md` (20 entrées, 13 `oui` / 5 `partiel` / 2 `non`),
@@ -51,7 +63,7 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 |---|---|---|---|
 | 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07` |
 | 06 | Contrôles automatiques et réplication | Un signal dégénéré est rejeté avant le harnais ; la chaîne reproduit un fait publié sur nos données. La cible a changé deux fois : Mesfin (métrique incompatible, `D12`), Heston (motif absent, `H03`), puis Andersen & Bollerslev (`D13`). | **franchie 2026-09-18** — `gate_06_controls.py` (25) et `scripts/measure_h04.py` (19) |
-| 07 | Triage et extraction sur 20 papiers connus | 20 fiches produites ; le triage écarte ce qu'il doit écarter, sur un verdict humain de référence. Point de départ : `corpus/AMORCE.md`. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** bloquée sur l'acquisition, 3 PDF pour 20 fiches |
+| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 21 vérifications), son **extracteur non**, et **aucun PDF n'est sur ce poste** |
 | 08 | Le codeur de signal | Une fiche produit un signal exécutable qui passe la sandbox, sans retouche manuelle. | à faire |
 
 ## Acte III — Fermer la boucle une fois
@@ -219,22 +231,82 @@ corriger avant tout passage 2** — il ne l'a pas été pendant le passage, corr
 le protocole dans le geste qui l'applique étant précisément ce que « le premier
 passage fait foi » interdit.
 
-### Prochaine action : l'extraction, ou la requalification de la porte
+### La moitié extraction a son juge — `D16`, le 2026-09-20
 
-La moitié qui reste est l'**extraction**, et elle ne bute pas sur du code mais
-sur l'**acquisition** : **3 PDF sur disque pour 20 fiches demandées**. La
-question à trancher **par écrit, et pas au quinzième papier** : élargir le corpus
-au-delà d'`AMORCE.md`, ou requalifier ce que la porte 07 demande.
+**Écrit avant que l'extracteur existe**, comme `D15` l'a été avant le trieur.
+`corpus/score_extraction.py`, **21 vérifications**, vert.
+
+Ce qu'il juge n'est **pas** la ressemblance à une fiche écrite à la main. Il n'y
+en a que trois, et un seuil sur trois items ne distingue pas un extracteur
+correct d'un extracteur chanceux — c'est `F37` à nouveau, l'effectif mal
+déguisé. Il juge la **fidélité à la source**, qui se vérifie sans étalon :
+
+| | Condition | Tolérance |
+|---|---|---|
+| F1 | la fiche passe `validate_fiches.py` | 0 |
+| F2 | chaque `quoted` est **mot pour mot** dans le texte du papier | 0 |
+| F3 | chaque `value` numérique est dans sa citation | 0 |
+| F4 | le PDF désigné **existe**, `source_url` est une URL | 0 |
+| F5 | aucune **contradiction** factuelle avec la référence, s'il en existe une | 0 |
+
+**Ce que `F2` ferme, et qui était grand ouvert.** `D14` vérifiait qu'une `value`
+se retrouve dans sa `quoted` ; rien ne vérifiait que la `quoted` existe. Un
+extracteur qui fabrique **la citation et le chiffre qu'elle contient** passait
+`D14` sans une faute — et c'est précisément la machine à produire des valeurs
+plausibles inventées que l'interdit constitutionnel vise.
+
+**Ce que ce juge ne sait pas faire, et c'est écrit dans `D16` § Pourquoi** : dire
+qu'une fiche est *creuse*. Un extracteur qui recopierait fidèlement trois
+citations insignifiantes passerait les cinq conditions. Le diagnostic imprime de
+quoi le voir — les résultats de la référence laissés de côté — mais ne
+conditionne rien. La pertinence n'aura de dénominateur qu'en phase 09.
+
+### Un fait que ce fichier donnait faux : il n'y a **aucun** PDF sur ce poste
+
+`ETAT.md` annonçait « 3 PDF sur disque » depuis le 2026-09-18. **`corpus/pdf/`
+ne contient que son `.gitkeep`** : le dossier est dans `.gitignore`, les trois
+PDF n'ont jamais quitté le poste où ils ont été récupérés. C'est la même
+péremption que la note « sur cette machine » corrigée le 2026-09-17 — un fait
+vrai quelque part, écrit comme s'il l'était partout.
+
+Ce n'est pas cosmétique : **`F4` casse aujourd'hui sur les trois fiches de
+référence**, vérifié. Le juge le dit tout seul, ce qui est la bonne façon de
+l'apprendre.
+
+### Prochaine action : deux choses, et la seconde demande une décision
+
+1. **Récupérer les trois PDF de référence** — Mesfin (arXiv), Heston (arXiv
+   1005.3535), Andersen & Bollerslev (lien direct). Sans eux, rien de l'extraction
+   ne peut être ni écrit ni jugé sur ce poste.
+2. ~~Trancher par écrit ce que la porte 07 demande.~~ **Fait le 2026-09-20 :
+   `D17`.** La porte ne demande plus 20 fiches mais un extracteur jugé sur tout
+   le corpus atteignable, `G1`–`G4`.
+
+### Donc, dans l'ordre, ce qui vient maintenant
+
+1. **Le recensement des atteignables** — `G4` l'exige, et sans lui `G1` ne veut
+   rien dire puisqu'on choisirait après coup ce qui était à portée. 14 entrées
+   sur 20 portent un lien ; SSRN et ScienceDirect n'ont pas été essayés. C'est
+   peu de travail et ça décide de la taille de tout le reste.
+2. **Réparer les trois fiches de référence** — deux `quoted_source` à déclarer,
+   et **une citation fausse** dans Mesfin (`acceptance_criteria`) à corriger par
+   note datée. `D16` § Complément dit quoi faire et pourquoi ce n'est pas fait.
+3. **Apprendre `quoted_source` à `validate_fiches.py`**, faute de quoi `F1` reste
+   plus laxiste que `F3` sur une entrée réparée.
+4. **Écrire l'extracteur** — et il devra être **non contaminé** : une session qui
+   a lu la fiche de référence d'un papier ne peut pas l'extraire, elle
+   recopierait. Même piège que le trieur, même parade.
 
 ### Ce qui reste ouvert par ailleurs
 
-- **l'extraction** — l'autre moitié de la porte 07 — bute sur l'**acquisition** :
-  **3 PDF** sur disque pour **20 fiches** demandées. Des 20 entrées notées, 12 ont
-  un lien libre, 2 sont derrière un péage (16, 17), et **6 n'ont aucun lien**
-  (6, 10, 14, 18, 19, 20 — la 14 étant en outre citée de mémoire, non vérifiée).
-  Que devient la porte si les 20 fiches ne sont pas atteignables depuis
-  `AMORCE.md` ? Élargir le corpus, ou requalifier la porte — **par écrit, et pas
-  au quinzième papier** ;
+- **l'acquisition** : aucun PDF sur ce poste, 14 entrées sur 20 portant un lien,
+  2 derrière un péage (16, 17), 6 sans aucun lien (6, 10, 14, 18, 19, 20 — la 14
+  étant en outre citée de mémoire, non vérifiée). Voir la prochaine action ;
+- **deux fuites du même genre que celle de `TRIAGE.md`**, nommées par `D16` et
+  non encore corrigées : `corpus/SCHEMA.md` illustre ses exemples avec le
+  **contenu réel** de la fiche Andersen & Bollerslev, donc un extracteur qui lit
+  le schéma reçoit une réponse sur trois ; et **où vit le texte source** dont
+  `F2` vérifie les citations n'est pas tranché ;
 - les **multiplicateurs** CME (`cmegroup.com` injoignable depuis ce poste le
   2026-09-18) et la réponse de **Lucid** ; requis pour toute lecture **nette** et
   pour la phase 10 ;

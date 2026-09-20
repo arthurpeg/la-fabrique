@@ -70,19 +70,36 @@ Un JSON, exactement 20 entrées, et **un motif par entrée** — le juge refuse 
 entrée sans motif, parce que `D15` demande que chaque désaccord soit examiné et
 non compté (`L06`).
 
-```json
+**Gabarit — aucune entrée réelle, aucun verdict réel.** Les chevrons sont des
+trous à remplir ; le bloc n'est pas du JSON valide tel quel, et c'est voulu.
+
+```
 {
   "trieur": "<qui a trié, et ce qu'il avait vu>",
   "date": "AAAA-MM-JJ",
   "entries": [
-    {"entry": 1, "verdict": "oui", "reason": "prix intraday seuls ; la première et la dernière demi-heure se lisent sur nos barres"},
-    {"entry": 18, "verdict": "non", "reason": "exige la deuxième échéance, que nous n'avons pas et qui coûte"}
+    {"entry": <numéro 1 à 20>, "verdict": "<oui|partiel|non>", "reason": "<une phrase : ce qui rend le signal calculable, ou la donnée qui manque>"},
+    ...  (vingt en tout, une par numéro)
   ]
 }
 ```
 
 `verdict` vaut `oui`, `partiel` ou `non`. Les clés `trieur` et `date` ne sont pas
 lues par le juge ; elles sont là pour le § Journal de `D15`.
+
+> [!warning] **Pourquoi ce gabarit est vide, et doit le rester.**
+> Jusqu'au 2026-09-20, cette section illustrait le format avec **deux entrées
+> réelles et leur verdict juste** — l'entrée 1 en `oui`, l'entrée 18 en `non`.
+> L'entrée 18 est l'un des **deux seuls `non`** de l'étalon, donc **la moitié de
+> la condition B** : donner ce fichier au trieur, c'était lui donner deux
+> réponses sur vingt, dans le document même qui interdit de lire les réponses.
+>
+> Le passage 1 ne l'a pas reçu et a classé l'entrée 18 `non` sans l'indice ; le
+> défaut n'a donc rien coûté cette fois. Corrigé le 2026-09-20, **après** le
+> passage et jamais pendant. Voir `L17` et `D15` § Journal.
+>
+> **Un exemple appartient au même périmètre que les données qu'il illustre.** Il
+> se remplit de valeurs fabriquées, jamais de cas réels.
 
 ## Comment on le note
 

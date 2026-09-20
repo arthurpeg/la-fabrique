@@ -22,10 +22,10 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 |---|---|
 | **Phase courante** | 07 — triage et extraction sur 20 papiers connus |
 | **Dernière porte franchie** | **06**, le 2026-09-18 — les deux clauses. Clause 1 (dégénérescence) : `gate_06_controls.py`, 25 vérifications. Clause 2 (réplication) : `scripts/measure_h04.py`, 19 vérifications, `H04` pré-enregistrée |
-| **Décision la plus récente** | `decisions/DECISION-15-seuil-du-triage.md` — le seuil du trieur, écrit **avant** que le trieur existe : appariement entrée par entrée à la colonne |
+| **Décision la plus récente** | `decisions/DECISION-17-ce-que-la-porte-07-demande.md` — la porte 07 ne demande plus **20 fiches** : elle demande un **extracteur jugé sur tout le corpus |
 | **Tests au registre** | 135 |
-| **Idées abandonnées recensées** | 42 |
-| **Entrées au journal** | 27 |
+| **Idées abandonnées recensées** | 47 |
+| **Entrées au journal** | 29 |
 
 ## Ce qui bloque
 
@@ -173,22 +173,82 @@ corriger avant tout passage 2** — il ne l'a pas été pendant le passage, corr
 le protocole dans le geste qui l'applique étant précisément ce que « le premier
 passage fait foi » interdit.
 
-### Prochaine action : l'extraction, ou la requalification de la porte
+### La moitié extraction a son juge — `D16`, le 2026-09-20
 
-La moitié qui reste est l'**extraction**, et elle ne bute pas sur du code mais
-sur l'**acquisition** : **3 PDF sur disque pour 20 fiches demandées**. La
-question à trancher **par écrit, et pas au quinzième papier** : élargir le corpus
-au-delà d'`AMORCE.md`, ou requalifier ce que la porte 07 demande.
+**Écrit avant que l'extracteur existe**, comme `D15` l'a été avant le trieur.
+`corpus/score_extraction.py`, **21 vérifications**, vert.
+
+Ce qu'il juge n'est **pas** la ressemblance à une fiche écrite à la main. Il n'y
+en a que trois, et un seuil sur trois items ne distingue pas un extracteur
+correct d'un extracteur chanceux — c'est `F37` à nouveau, l'effectif mal
+déguisé. Il juge la **fidélité à la source**, qui se vérifie sans étalon :
+
+| | Condition | Tolérance |
+|---|---|---|
+| F1 | la fiche passe `validate_fiches.py` | 0 |
+| F2 | chaque `quoted` est **mot pour mot** dans le texte du papier | 0 |
+| F3 | chaque `value` numérique est dans sa citation | 0 |
+| F4 | le PDF désigné **existe**, `source_url` est une URL | 0 |
+| F5 | aucune **contradiction** factuelle avec la référence, s'il en existe une | 0 |
+
+**Ce que `F2` ferme, et qui était grand ouvert.** `D14` vérifiait qu'une `value`
+se retrouve dans sa `quoted` ; rien ne vérifiait que la `quoted` existe. Un
+extracteur qui fabrique **la citation et le chiffre qu'elle contient** passait
+`D14` sans une faute — et c'est précisément la machine à produire des valeurs
+plausibles inventées que l'interdit constitutionnel vise.
+
+**Ce que ce juge ne sait pas faire, et c'est écrit dans `D16` § Pourquoi** : dire
+qu'une fiche est *creuse*. Un extracteur qui recopierait fidèlement trois
+citations insignifiantes passerait les cinq conditions. Le diagnostic imprime de
+quoi le voir — les résultats de la référence laissés de côté — mais ne
+conditionne rien. La pertinence n'aura de dénominateur qu'en phase 09.
+
+### Un fait que ce fichier donnait faux : il n'y a **aucun** PDF sur ce poste
+
+`ETAT.md` annonçait « 3 PDF sur disque » depuis le 2026-09-18. **`corpus/pdf/`
+ne contient que son `.gitkeep`** : le dossier est dans `.gitignore`, les trois
+PDF n'ont jamais quitté le poste où ils ont été récupérés. C'est la même
+péremption que la note « sur cette machine » corrigée le 2026-09-17 — un fait
+vrai quelque part, écrit comme s'il l'était partout.
+
+Ce n'est pas cosmétique : **`F4` casse aujourd'hui sur les trois fiches de
+référence**, vérifié. Le juge le dit tout seul, ce qui est la bonne façon de
+l'apprendre.
+
+### Prochaine action : deux choses, et la seconde demande une décision
+
+1. **Récupérer les trois PDF de référence** — Mesfin (arXiv), Heston (arXiv
+   1005.3535), Andersen & Bollerslev (lien direct). Sans eux, rien de l'extraction
+   ne peut être ni écrit ni jugé sur ce poste.
+2. ~~Trancher par écrit ce que la porte 07 demande.~~ **Fait le 2026-09-20 :
+   `D17`.** La porte ne demande plus 20 fiches mais un extracteur jugé sur tout
+   le corpus atteignable, `G1`–`G4`.
+
+### Donc, dans l'ordre, ce qui vient maintenant
+
+1. **Le recensement des atteignables** — `G4` l'exige, et sans lui `G1` ne veut
+   rien dire puisqu'on choisirait après coup ce qui était à portée. 14 entrées
+   sur 20 portent un lien ; SSRN et ScienceDirect n'ont pas été essayés. C'est
+   peu de travail et ça décide de la taille de tout le reste.
+2. **Réparer les trois fiches de référence** — deux `quoted_source` à déclarer,
+   et **une citation fausse** dans Mesfin (`acceptance_criteria`) à corriger par
+   note datée. `D16` § Complément dit quoi faire et pourquoi ce n'est pas fait.
+3. **Apprendre `quoted_source` à `validate_fiches.py`**, faute de quoi `F1` reste
+   plus laxiste que `F3` sur une entrée réparée.
+4. **Écrire l'extracteur** — et il devra être **non contaminé** : une session qui
+   a lu la fiche de référence d'un papier ne peut pas l'extraire, elle
+   recopierait. Même piège que le trieur, même parade.
 
 ### Ce qui reste ouvert par ailleurs
 
-- **l'extraction** — l'autre moitié de la porte 07 — bute sur l'**acquisition** :
-  **3 PDF** sur disque pour **20 fiches** demandées. Des 20 entrées notées, 12 ont
-  un lien libre, 2 sont derrière un péage (16, 17), et **6 n'ont aucun lien**
-  (6, 10, 14, 18, 19, 20 — la 14 étant en outre citée de mémoire, non vérifiée).
-  Que devient la porte si les 20 fiches ne sont pas atteignables depuis
-  `AMORCE.md` ? Élargir le corpus, ou requalifier la porte — **par écrit, et pas
-  au quinzième papier** ;
+- **l'acquisition** : aucun PDF sur ce poste, 14 entrées sur 20 portant un lien,
+  2 derrière un péage (16, 17), 6 sans aucun lien (6, 10, 14, 18, 19, 20 — la 14
+  étant en outre citée de mémoire, non vérifiée). Voir la prochaine action ;
+- **deux fuites du même genre que celle de `TRIAGE.md`**, nommées par `D16` et
+  non encore corrigées : `corpus/SCHEMA.md` illustre ses exemples avec le
+  **contenu réel** de la fiche Andersen & Bollerslev, donc un extracteur qui lit
+  le schéma reçoit une réponse sur trois ; et **où vit le texte source** dont
+  `F2` vérifie les citations n'est pas tranché ;
 - les **multiplicateurs** CME (`cmegroup.com` injoignable depuis ce poste le
   2026-09-18) et la réponse de **Lucid** ; requis pour toute lecture **nette** et
   pour la phase 10 ;
@@ -213,14 +273,14 @@ au-delà d'`AMORCE.md`, ou requalifier ce que la porte 07 demande.
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-09-20 | `decision` | D17 ecrite — LA PORTE 07 REQUALIFIEE, et D16 CORRIGEE par le reel. D17 : la porte ne demande plus « 20 fiches » — le 20 venait du nombre d'entrees d'AMORCE.md, pas d'une exigence — mais un EXTRACTEUR JUGE SUR TOUT LE CORPUS ATTEIGNABLE, avec le recensement ecrit de ce qui ne l'etait pas. G1 zero papier atteignable non fiche, G2 zero fiche cassant D16, G3 ZERO RETOUCHE MANUELLE, G4 zero inatteignable non recense. Options ecartees : tenir les 20 (F46), elargir le corpus (F47, rouverte si l'atteignable tombe sous 5). Les 3 PDF de reference recuperes (arXiv x2, lien direct), pypdf ajoute aux dependances | D16 A RENCONTRE TROIS VRAIS PAPIERS ET SA PREMISSE A CASSE : F2 supposait que « le texte du papier » est une chaine bien definie. Elle ne l'est pas. Andersen & Bollerslev 1997 est un SCAN — son texte extrait dit « fight part » pour « right part », « pa » pour rho, « ]rt,,,] » pour \|R\| : le texte a tort, la fiche a raison. Mesfin : un tableau rendu en prose (personne n'a tort), et UNE VRAIE PARAPHRASE APPELEE CITATION dans acceptance_criteria — « >= 30 trades » ne figure pas dans la phrase citee. F2 a donc attrape, des son premier contact avec le reel, un defaut d'une fiche ECRITE A LA MAIN par une session qui avait lu le papier. Correctif ecrit AVANT tout passage (journal vide) : la REPARATION DECLAREE — `quoted_source` (mot pour mot dans le texte) + `quoted_repair` dans une liste CLOSE (ocr, math_notation, table), sur le modele de spelled_out de D14 : on NOMME la reparation au lieu de la cacher. Ce qui ne change pas : il faut toujours UNE chaine presente a la lettre, donc la paraphrase reste une faute. F3 suit desormais la chaine qui fait foi, sans quoi la reparation serait l'endroit ou loger un chiffre absent du papier. DECOUVERTE AU PASSAGE : validate_fiches (D14) ignore quoted_source et verifie le chiffre contre `quoted` — sur une entree reparee, F3 est PLUS STRICT que F1. Note, non corrige : D14 n'est pas ma decision a amender en passant. Les 3 fiches de reference ne passent PAS F2 aujourd'hui et ne sont PAS reecrites en silence (L17) — deux reparations a declarer, une citation fausse a corriger par note datee. Juge : 21 -> 32 verifications, vert. counted_tests reste a 56, harnais intouche (9ac3e45e). F46, F47 |
+| 2026-09-20 | `decision` | D16 écrite — LE SEUIL DE L'EXTRACTION, avant que l'extracteur existe. Une fiche produite est jugée sur sa FIDÉLITÉ À LA SOURCE et non sur sa ressemblance aux trois fiches écrites à la main : trois items ne portent aucun seuil (F43), et comparer la prose par ressemblance de texte mesurerait le style en croyant mesurer la justesse (F44). Cinq conditions à tolérance ZÉRO — F1 schéma de D14, F2 chaque `quoted` MOT POUR MOT dans le texte du papier, F3 chaque `value` dans sa citation, F4 le PDF désigné existe, F5 aucune CONTRADICTION factuelle avec la référence (l'absence n'en est pas une). corpus/score_extraction.py, et corpus/TRIAGE.md corrigé de sa fuite | CE QUE F2 FERME ÉTAIT GRAND OUVERT : D14 vérifiait qu'une `value` se retrouve dans sa `quoted`, rien ne vérifiait que la `quoted` EXISTE — un extracteur qui fabrique la citation ET le chiffre qu'elle contient passait D14 sans une faute, soit exactement la valeur plausible inventée que CLAUDE.md interdit. Juge vert sur 21 vérifications, dont une qui m'a corrigé : j'attendais F3 seule cassée sur une valeur absente de sa citation, F1 l'attrape aussi — le recouvrement est réel et c'est l'attente qui était fausse. LE JUGE A TROUVÉ UN FAIT FAUX DÈS SON PREMIER ESSAI SUR UNE VRAIE FICHE : F4 casse sur les TROIS fiches de référence, car corpus/pdf/ EST VIDE sur ce poste — le dossier est gitignoré et ETAT.md annonçait « 3 PDF sur disque » depuis le 2026-09-18, vrai sur l'autre poste seulement. Même péremption que la note « sur cette machine » du 2026-09-17. Corrigé dans ETAT.md et la page de phase. D16 nomme deux fuites du genre de L17 qu'elle NE corrige PAS : corpus/SCHEMA.md illustre ses exemples avec le contenu RÉEL de la fiche Andersen & Bollerslev (une réponse sur trois donnée à qui lit le schéma), et où vit le texte source de F2 n'est pas tranché. Ce que D16 assume et écrit : le juge ACCEPTE une fiche creuse — la fidélité est vérifiée, la PERTINENCE ne l'est pas, et elle n'aura de dénominateur qu'en phase 09. F43, F44, F45 ; aucun test dépensé, counted_tests reste à 56, harnais intouché |
 | 2026-09-20 | `mesure` | PASSAGE 1 DU TRIEUR — la moitié triage de la porte 07 est tenue. Trieur = agent general-purpose séparé, lancé depuis une session contaminée, avec interdiction de lecture explicite ; il n'a reçu que corpus/triage_input.json plus la règle de classement et les contraintes de données recopiées dans sa consigne. Inscrit au § Journal de D15 avec ce qu'il avait vu ; verdicts archivés dans corpus/triage_passage_01.json | LES QUATRE CONDITIONS TIENNENT, A/B/C/D = 1/0/2/0 — mais A ET C SONT À LEUR MAXIMUM EXACT (1 sur 1, 2 sur 2) : un désaccord de plus et rien ne passait. Trois désaccords sur 20, aucun ne désignant une erreur de l'étalon, qui n'a pas été touché. Le plus instructif est l'entrée 3 (Heston) : le trieur la classe `partiel` parce que le test d'origine est transversal et ne se transpose qu'en série temporelle — factuellement VRAI, H03 l'a fait — mais la règle réserve `partiel` à une DONNÉE manquante, pas à un travail de traduction ; confusion entre difficulté de transposition et absence de donnée. DÉFAUT DU PROTOCOLE TROUVÉ EN LE LANÇANT : corpus/TRIAGE.md § Ce que le trieur rend illustre le format avec DEUX ENTRÉES RÉELLES ET LEUR VERDICT JUSTE (entrée 1 `oui`, entrée 18 `non`), et l'entrée 18 est l'un des DEUX SEULS `non` — donc la moitié de la condition B donnée d'avance à quiconque reçoit ce fichier. Le passage 1 ne l'a PAS reçu et a classé l'entrée 18 `non` sans l'indice ; TRIAGE.md n'a PAS été corrigé pendant le passage (corriger le protocole dans le geste qui l'applique est ce que « le premier passage fait foi » interdit) — correction due avant tout passage 2. AUCUN test dépensé : counted_tests reste à 56, registre à 135 lignes. Reste la moitié EXTRACTION, bloquée sur l'acquisition (3 PDF pour 20 fiches) |
 | 2026-09-19 | `outil` | Phase 07, l'entrée du trieur et son protocole : corpus/make_triage_input.py fabrique déterministiquement corpus/triage_input.json (les 20 lignes d'AMORCE.md privées de leur colonne verdict, TITRES DE SECTION NON REPRIS — le titre E dit « la famille que mes données ferment », c'est le verdict lui-même) et l'audite ; corpus/TRIAGE.md pose le protocole ; D15 reçoit un § Complément daté, écrit AVANT tout passage | LA MISE EN ŒUVRE A TROUVÉ UNE CONDITION QUE D15 NE PORTAIT PAS : une session qui a LU la colonne ne peut pas être le trieur — elle réciterait, et sa matrice serait parfaite pour la pire des raisons (L15 : le résultat conforme est celui que personne n'examine). Le piège est structurel — la séquence de démarrage de CLAUDE.md conduit toute session à lire l'étalon, donc une session arrive CONTAMINÉE PAR DÉFAUT. La session du jour s'est disqualifiée elle-même comme trieur (F42) plutôt que de produire un résultat flatteur. Ce n'est pas une impossibilité par construction — on n'empêche pas un lecteur de lire, et F13/F15/F16/F25 ont déjà refusé la vigilance déguisée en architecture — donc la règle est ÉCRITE et le § Journal de D15 note pour chaque passage qui a trié et ce qu'il avait vu. État : entrée fabriquée et auditée (20 entrées, 3 à 5 champs selon la section), juge vert sur 10 vérifications, IL MANQUE UN TRIEUR NON CONTAMINÉ |
 | 2026-09-19 | `decision` | D15 écrite AVANT que le trieur existe : le seuil du triage, en EFFECTIFS et non en pourcentages (sur 13 `oui`, un item vaut 7,7 points de rappel — un seuil en % est un effectif mal déguisé, F37) ; trois classes et matrice de confusion entière, `partiel` NON replié (le replier effacerait la distinction qui a écarté Mesfin et cadré Heston, F38) ; quatre conditions — A ≤ 1 `oui` manqué sur 13, B = 0 `non` promu `oui`, C ≤ 2 `partiel` en désaccord sur 5, D = 0 désaccord de deux crans ; ce que le trieur VOIT est fixé : la ligne d'AMORCE.md privée de sa colonne verdict, exactement ce que l'auteur humain avait en phase 01, pas le PDF (F41) ; corpus/score_triage.py écrit et vérifié avant l'accusé | L'ÉTALON A DÛ ÊTRE COMPTÉ AVANT D'ÊTRE UTILISÉ, et il ne l'avait pas été : ETAT.md annonçait 24 entrées notées et six `partiel`, la colonne en porte 20 — 13 `oui` / 5 `partiel` / 2 `non`, les 4 entrées de la section G n'ayant pas cette colonne ; et AMORCE.md se contredisait lui-même — son § Verdict compte 12/5/3, l'écart portant sur l'entrée 9 (billet FRBNY), que la colonne marque `oui` et que le résumé range parmi les fermées. D15 tranche que LA COLONNE FAIT FOI (F39), l'entrée 9 n'est pas retirée (F40), et le § Verdict reçoit une note datée — texte d'origine conservé, comme pour l'entrée 7. score_triage.py : 10 vérifications vertes, huit sorties de trieur fabriquées rendant chacune le verdict que D15 écrit, et deux mutations d'AMORCE.md que le garde de l'étalon refuse. Le premier passage du trieur fera foi ; tout passage ultérieur s'inscrit au § Journal de D15 avec ce qui a changé. ETAT.md, hypotheses/README.md (counted_tests disait encore 4 pour deux hypothèses, c'est 56 pour trois) et la page de phase corrigés. Six portes rejouées vertes ce jour ; registre 130 -> 135 lignes, toutes des calibrations, counted_tests inchangé à 56 |
 | 2026-09-18 | `decision` | Phase 07, premier maillon : D14 écrite — le schéma de fiche n'est PAS tiré des trois fiches manuelles (elles divergent, F35) mais des six champs que CLAUDE.md § Le vocabulaire nomme depuis le premier jour, plus source et transposability ; corpus/SCHEMA.md, corpus/validate_fiches.py, corpus/check_fiches_guard.py ; D09 étendu aux fiches — un résultat recopié d'un papier est une VALEUR EXTERNE, il porte sa citation, et value_in_quote (le garde du catalogue) vérifie que la valeur s'y retrouve | les trois fiches manuelles REFUSÉES par leur propre schéma puis réécrites — c'était le test du schéma autant que des fiches ; aucune n'avait de champ `horizon`, la construction du signal portait deux noms différents ; le garde a attrapé un cas réel que je n'avais pas prévu — Mesfin écrit « Eleven signal families fail » en toutes lettres, donc aucun chiffre à retrouver : ajouté `spelled_out`, qui vérifie le MOT et NOMME la conversion comme un geste humain plutôt que de la cacher derrière `derived` (F36) ; check_fiches_guard.py : 23 vérifications, 11 fautes refusées chacune pour la raison prévue, fiche intacte acceptée ; reste la seconde moitié de la porte 07 — le triage, avec un seuil chiffré à écrire AVANT mesure (L06) |
 | 2026-09-18 | `gate` | PORTE 06 FRANCHIE — les deux clauses. D13 écrite AVANT la mesure (comme H03 l'exigeait) : après l'échec de deux cibles, la clause 2 est satisfaite quand la CHAÎNE reproduit un fait publié sur nos données, et non quand le harnais d'IC reproduit un IC publié. Cible : Andersen & Bollerslev (1997), papier récupéré, lu, fiché ; H04 pré-enregistrée ; scripts/measure_h04.py écrit dans scripts/ et NON dans harness/ — y ajouter un fichier périmerait les 56 lignes comptées | 19 vérifications, LES QUATRE CLAUSES TIENNENT : forme en U sur NQ/ES/YM, ouverture et clôture au-dessus du milieu, creux au milieu de séance, rapports sommet/creux 2,05 / 1,74 / 1,89 tous dans [1,4 ; 3,0] écrit d'avance — et ES x US, LE MÊME CONTRAT que leur figure, rend 1,74 contre leur 1,91 trente ans plus tard ; AUCUN IC calculé, counted_tests reste à 56. Deux défauts trouvés par le premier passage de l'instrument : (1) le garde interdisait aux paires d'autocorrélation d'enjamber la séance, ce qu'un décalage à la fréquence journalière fait PAR DÉFINITION — la clause C n'était pas mesurée et le script concluait quand même « les quatre clauses tiennent » ; (2) le témoin de la clause C était placé à ±15/30 min du multiple, presque à la MÊME PHASE du cycle : écart +0,006 à +0,010, contre +0,046 à +0,068 à phase opposée (diagnostic non pré-enregistré). La clause mesurait un PLANCHER de l'effet. L16 ; phase courante = 07 |
 | 2026-09-18 | `mesure` | H03 MESURÉE — 52 décalages (40 dents m=1..40, 12 creux j=1..12), tranche pool, as-of 2023-12-29, 25 cellules, ~650 000 observations par décalage, harnais 9ac3e45e ; counted_tests 4 -> 56 pour UNE hypothèse | LE PEIGNE N'EST PAS LÀ. Le script annonçait « séparation OUI » (+0,00177, p=0,030) et il avait tort : les seaux de H03 SE RECOUVRAIENT — creux j=1..12 contenant le retournement court j=1..3. Creux nettoyés (j=4..12) : dents +0,00065 contre creux +0,00056, séparation +0,00009, Mann-Whitney p=0,247. Aucune dent ne ressort : plus grand t +3,01 sur 40, quand la sélection seule rend un 95e centile de 3,22. Entre les multiples la réponse n'est pas « largement négative » : 5 positives sur 9. SEUL effet net : le retournement court, j=1 IC -0,01150 t -6,14 et j=2 -0,00815 t -4,35 — la préface du motif, pas le motif. CLAUSE 2 DE LA PORTE 06 NON FRANCHIE, comme H03 l'avait écrit d'avance ; il faut une nouvelle cible par décision écrite. Non vérifié faute de l'avoir inscrit : la ventilation par cellule (défaut du script, coûterait 52 lignes de plus et ne pourrait qu'affaiblir le motif). L15, F33, F34 |
-| 2026-09-18 | `signal` | Signal heston-2010-periodicity implémenté à la main (signals/heston_2010_periodicity.py) : un score par intervalle de demi-heure et non un par séance — le mécanisme de _common.run ne convenait pas et n'est pas réutilisé ; décalage paramétré EN SÉANCES pour les dents (traduit en intervalles par fenêtre depuis le catalogue) et EN INTERVALLES pour les creux ; rendement d'intervalle défini en BARRES, même définition que la cible du harnais ; scripts/check_heston.py et scripts/measure_h03.py écrits, H03 précisée sur ce point AVANT le lancement | contrôles verts : périodes P = 16/13/13 lues au catalogue et non espérées, liste blanche 0 refus, contrat conforme, CAUSALITÉ 0 divergence sur 16 sondes, écart d'échantillonnage mesuré à 30,0 barres donc étalement 1,00 — pas de déflation de recouvrement, ce que D11 doit faire pour des demi-heures disjointes ; pré-vol : 658 582 scores et 657 470 observations à m=1, soit 99,8 % de mesurabilité, aucune cellule mince ; le signal est tenu HORS de REFERENCE (les étalons de D06) et placé dans REPLICATION, pour que les portes gardent le sujet que D06 leur a donné |
-| 2026-09-18 | `decision` | D12 écrite — la clause 2 CHANGE DE CIBLE : Mesfin ne convient pas (son critère est un t sur des rendements nets par trade, le nôtre un IC ; onze de ses quatorze familles échouent par amplitude sous friction, ce qu'un IC ne voit pas ; et deux de ses trois plis hors échantillon tombent dans le holdout scellé). Nouvelle cible : Heston, Korajczyk & Sadka (2010), JF 65(4) — papier récupéré d'arXiv (1005.3535), lu, fiché ; H03 PRÉ-ENREGISTRÉE avant toute mesure | le résultat visé est une CORRÉLATION et un MOTIF DE SIGNES, pas une valeur : continuation aux décalages multiples d'une séance (dents), retournement aux premiers décalages, rien de positif entre les deux (creux) — le peigne porte son propre témoin négatif ; période dictée par le catalogue et non par le résultat : P = 13 demi-heures pour US et EUROPE (6,5 h), P = 16 pour ASIA (8 h), donc DEUX motifs distincts à retrouver ; aucune magnitude du papier n'est reprise comme attendue (sa mesure est transversale avec effet de marché retiré, il le dit lui-même) ; H03 = UNE hypothèse pour ~100 lignes de registre, et l'échec du motif ne franchirait PAS la porte — écrit avant de regarder ; Mesfin reste calibrage d'attente, fiché |
 
 Journal complet : [[log]]
 

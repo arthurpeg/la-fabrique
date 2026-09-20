@@ -194,7 +194,7 @@ chemin public, et une déclaration pour le reste.
 
 | Point | Échéance |
 |---|---|
-| **L'extraction** — l'autre moitié de la porte 07 — n'est pas ici. Elle bute sur l'acquisition : 3 PDF sur les 20 fiches demandées, 6 entrées sans lien, 2 derrière un péage | décision suivante, avant de ficher en série |
+| **L'extraction** — l'autre moitié de la porte 07 — n'est pas ici. ~~Elle bute sur l'acquisition : 3 PDF sur les 20 fiches demandées, 6 entrées sans lien, 2 derrière un péage~~ **Son seuil est écrit depuis le 2026-09-20 : `D16`.** Le compte de PDF ci-dessus était faux sur le poste d'Arthur, où il n'y en a aucun. Reste l'acquisition, et le nombre de fiches que la porte demande | `D16` pour le seuil ; l'acquisition reste ouverte |
 | Le **niveau de détail** d'une fiche produite automatiquement, que `corpus/SCHEMA.md` borne sans le fixer | même décision |
 | Ce que devient la porte si les 20 fiches ne sont **pas atteignables** depuis `AMORCE.md` — élargir le corpus, ou requalifier la porte par écrit | même décision, et pas au quinzième papier |
 | Le trieur jugé depuis un **PDF** plutôt que depuis une ligne de tableau — la vraie généralisation | phase 09 |
