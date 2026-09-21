@@ -1,0 +1,932 @@
+arXiv:1005.3535v1  [q-fin.TR]  19 May 2010
+Intraday Patterns in the Cross-section of Stock Returns
+STEVEN L. HESTON, ROBERT A. KORAJCZYK, and RONNIE SADKA ∗
+May 3, 2010
+Abstract
+Motivated by the literature on investment ﬂows and optimal trading , we examine intraday pre-
+dictability in the cross-section of stock returns. We ﬁnd a striking p attern of return continuation
+at half-hour intervals that are exact multiples of a trading day, and this eﬀect lasts for at least 40
+trading days. Volume, order imbalance, volatility, and bid-ask sprea ds exhibit similar patterns,
+but do not explain the return patterns. We also show that short-t erm return reversal is driven
+by temporary liquidity imbalances lasting less than an hour and bid-ask bounce. Timing trades
+can reduce execution costs by the equivalent of the eﬀective spre ad.
+∗ Heston is with the University of Maryland, Korajczyk is with Northwestern University, and Sadka is with Boston
+College. We thank Joseph Cerniglia, Ian Domowitz, Lisa Gold berg, Campbell Harvey (the editor), Ravi Jagannathan,
+Bruce Lehmann, Maureen O’Hara, Michael Pagano, Mark Seasho les, Avanidhar Subrahmanyam, Dimitri Vayanos,
+Julie Wu, the anonymous referees and associate editor, and s eminar participants at the NBER Microstructure Meeting;
+Center for Research in Econometric Analysis of Time Series, Aarhus Universitet; Boston College; Brandeis University;
+Cornell University; CREST-INSEE, Paris; HEC Montr´ eal; Mc Gill University; Northwestern University; University
+College Dublin; University of Southern California; the Cit igroup Quant Conference; Goldman Sachs; and PanAgora
+Asset Management for comments. We thank Lew Thorson for comp utational assistance. We acknowledge ﬁnancial
+support from PanAgora Asset Management and Korajczyk ackno wledges the ﬁnancial support of the Zell Center for
+Risk Research and the Jerome Kenney Fund. Forthcoming in the Journal of Finance.
+We postulate that systematic trading and institutional fun d ﬂows lead to predictable patterns in
+trading volume and order imbalances among common stocks. If these patterns are fully anticipated,
+then they should not cause predictability in stock returns. Yet, we ﬁnd periodicity in the cross-
+section of stock returns. To study the nature of intraday per iodicity we divide the trading day
+into 13 half-hour trading intervals. A stock’s return over a given trading interval is negatively
+related to its returns over recent intervals, consistent wi th the negative autocorrelation induced
+by bid-ask bounce and lack of resiliency in markets. However , there is a statistically signiﬁcant
+positive relation between a stock’s return over a given inte rval and its subsequent returns at daily
+frequencies (i.e., lags of 13, 26, 39, ... periods). That is, knowing that the equity return of XYZ,
+Inc. is high between 1:30 PM and 2:00 PM today has explanatory power for the return on XYZ, Inc.
+equity at the same time tomorrow and on subsequent days. This eﬀect is statistically signiﬁcant
+for at least 40 trading days.
+Two disparate strands of the literature, when taken togethe r, suggest the presence of intraday
+periodicity in trading volume and order imbalances. First, there is substantial evidence that fund
+ﬂows to certain types of institutional investors exhibit au tocorrelation. Del Guercio and Tkac (2002,
+Table 5) ﬁnd that ﬂows to mutual funds exhibit signiﬁcant aut ocorrelation while ﬂows to pension
+fund managers show much weaker autocorrelation. Frazzini a nd Lamont (2008, Figure 1) show
+that fund ﬂows into mutual funds in the current quarter are re lated to fund ﬂows in many future
+quarters (up to 18 quarters). Lou (2008) also ﬁnds evidence o f persistent fund ﬂows into and out of
+mutual funds. Blackburn, Goetzmann, and Ukhov (2007) ﬁnd th at the autocorrelation in mutual
+fund ﬂows varies by category, with value funds exhibiting gr eater autocorrelation in ﬂows than
+growth funds. Even without explicit autocorrelation in fun d ﬂows, there may be autocorrelation
+in trading by a given institutional manager. For example, so me managers rebalance individual
+customers’ separate accounts on successive days. Campbell , Ramadorai, and Schwartz (2009) use
+quarterly 13-F ﬁlings and intraday trading data from the New York Stock Exchange’s Trade and
+Quotation (TAQ) database to estimate the aggregate trading behavior of institutional investors at
+a daily frequency. Their evidence indicates that instituti onal trading is highly persistent. That is,
+institutional investment managers tend to buy or sell the sa me stocks on successive days.
+Second, there is a growing literature on trading algorithms that are designed to minimize trading
+costs or optimize the trade-oﬀ between trading costs and the uncertainty associated with the prices
+obtained over the trading program. For example, Bertsimas a nd Lo (1998) study the problem of
+minimizing the expected cost of executing an exogenously sp eciﬁed trade size over an exogenously
+given horizon. In the simplest version of their model the pri ce impact of trade is permanent and
+proportional to the number of shares traded while non-trade public information causes mean zero
+asset price changes. The lowest expected impact strategy is to trade an equal number of shares at
+every point in time. If conditional mean price changes are no nzero, then it would be optimal to
+either speed up or slow down trading relative to this base cas e (depending on the expected direction
+of price movements and the direction of trade).
+A number of papers extend the above results to incorporate th e risk of the trading program,
+in addition to the expected trading cost, for risk averse tra ders (e.g., Almgren and Chriss (2000),
+Grinold and Kahn (2000), Vayanos (2001), Huberman and Stanz l (2005), and Engle and Ferstenberg
+(2007)). Under price dynamics similar to Bertsimas and Lo (1 998) and a price impact function with
+permanent and transitory components, Almgren and Chriss (2 000) derive an eﬃcient frontier of
+optimal trading strategies that explicitly trade oﬀ execut ion costs with the risk of adverse price
+movements when traders have mean-variance utility. Linear price impact functions allow for closed-
+form solutions. The expected cost-minimizing strategy of B ertsimas and Lo (1998) is optimal for
+risk-neutral agents. Risk averse agents will generally liq uidate the portfolio more rapidly in order
+to reduce the variance of the execution cost. Thus, these pap ers imply a trading trajectory that
+executes quickly at the beginning of the trading horizon and slows down as time passes. Hora
+(2006) uses a diﬀerent preference speciﬁcation that leads to an optimal trading strategy that trades
+rapidly at the beginning and end of the trading horizon and mo re slowly in the middle of the
+period. The horizon over which trading takes place is genera lly unspeciﬁed in the models and could
+be a day, month, year, or some other interval. Almgren and Lor enz (2006) argue that a trading
+horizon of one day is consistent with the manner in which many institutions trade. In line with
+this view, Breen, Hodrick, and Korajczyk (2002) ﬁnd that 92. 5% of a sample of institutional orders
+are completed the same day that trading is initiated. The use of algorithmic trading has grown
+considerably and, as of 2007, was estimated to account for on e-third of equity trading volume in
+the United States (Hendershott, Jones, and Menkveld (2009) ).
+The autocorrelation of fund ﬂows and the use of trading algor ithms discussed above imply the
+existence of daily patterns in volume and order imbalances i n individual stocks. If Fund A receives
+fund ﬂows today and buys stock XYZ using the Almgren and Chris s (2000) algorithm, then A will
+trade XYZ more aggressively in the morning and less aggressi vely as the day progresses. Since fund
+ﬂows are autocorrelated, Fund A is likely to receive fund ﬂow s tomorrow. Further, because Fund
+A is likely to buy XYZ tomorrow using the same trading algorit hm, volume and order imbalances
+2
+in XYZ are likely to arise tomorrow at the same time as today. A necdotal evidence indicates
+that this periodicity may be likely to happen even without ex plicitly invoking trading algorithms.
+Large equity managers have demanding schedules that involv e client meetings, staﬀ meetings,
+compliance, and reporting. The decision to buy or sell stock may require research analysis or
+portfolio optimization. The manager must then decide wheth er to use brokers or whether to
+relay the transactions through a crossing network such as Po sit, Island, or Archipelago. These
+networks cross at certain times of the day, leaving unﬁlled o rders at the end of the crossing. A
+busy manager may therefore ﬁnd it cheap and expedient to exec ute these orders at speciﬁc times
+of the day, leaving the remaining time available for other tr ading, research, and risk management
+activity. The use of a trading algorithm that speciﬁes a part icular pattern of trades would only
+strengthen this periodicity. Additionally, some types of i nstitutional traders may have other reasons
+for demonstrating periodicity in trading. Index funds, for example, tend to trade at the close to
+reduce tracking error.
+The above conjectures about trading behavior imply periodi city in volume and order imbal-
+ance. Indeed, there is extensive evidence of intraday patte rns in volume and volatility (e.g., Wood,
+McInish, and Ord (1985), Harris (1986), Jain and Joh (1988), and Pagano, Peng, and Schwartz
+(2008)). However, while intraday patterns of volume and vol atility can be justiﬁed with models of
+discretionary liquidity trading (e.g., Admati and Pﬂeider er (1988) and Hora (2006)), predictable
+patterns in returns are harder to explain. We consider sever al possibilities, none of which fully
+explain the periodicity. For instance, a long-standing lit erature on intraday return patterns (e.g.,
+Wood, McInish, and Ord (1985), Harris (1986), and Jain and Jo h (1988)) shows that average re-
+turns tend to be higher at the beginning and end of the trading day. Our observed patterns are not
+consistent with a simple mean shift at the beginning and end o f the day. Additionally, the litera-
+ture documents a number of seasonal return patterns, say at t he monthly or quarterly frequency,
+in stock returns. Some of this periodicity is consistent wit h predictable patterns of trading by
+investors. For example, Keim (1989) ﬁnds that turn-of-the- year trading patterns induce patterns
+in the probability that trades occur at the ask price versus t he bid price. He ﬁnds that this trading
+pattern explains the size-related turn-of-the-year eﬀect i n stock prices. However, we ﬁnd that the
+return continuation at daily intervals is not due to the eﬀect found in Keim (1989), that is, to
+changes in the frequency of trades occurring at either the bi d or ask prices. Our intraday return
+pattern is stronger over the ﬁrst and last half-hours of the t rading day, as one might expect given
+the patterns in volume and volatility, but remains statisti cally signiﬁcant over the other periods
+3
+of the day. Thus, the intraday return pattern is not due simpl y to uniformly high returns at the
+beginning and end of the trading day.
+Markets may also respond to news that arrives on a daily sched ule. Newscasts and conference
+calls occur at regular times of the day, and behavioral biase s may cause traders to overreact or
+underreact to salient news (Tversky and Kahneman (1974)), l eading in turn to return periodicity.
+Our observed return periodicity is consistent with the info rmation acquisition model of Holden
+and Subrahmanyam (2002) if agents tend to become informed at intervals that correspond to our
+observed periodicity.
+Further, if there are regular news cycles, then traders may b e reluctant to hold stocks during
+risky times. For example, if market-wide information is rel eased at 3:30 PM, then high beta stocks
+may have a higher return premium at those times. This suggest s that daily phenomena will be
+more pronounced among risky stocks than safe stocks. We do no t ﬁnd support for this hypothesis.
+We also study whether the return periodicity is driven by sim ilar patterns in order ﬂow and
+liquidity. We show that trading volume has similar patterns to returns, that is, ﬁrms that experi-
+ence a relatively high change in their trading volume over a p articular half-hour interval typically
+experience a high change in their volume during the same half -hour interval during each of the
+next few days. Although related, the periodicity in trading volume does not completely explain
+the periodicity of returns. When we split volume into that du e to large versus small trade size,
+both measures of volume show daily periodicity, but neither explains the daily return periodicity.
+Oddly, the level of order imbalance (OI) does not exhibit obv ious periodicity, even when parti-
+tioned into small versus large trades. However, changes in o rder imbalance exhibit periodicity
+similar to returns, but the pattern in order imbalances does not explain the pattern in returns.
+Bid-ask spreads exhibit similar intraday periodicity as th at of returns, but spreads do not explain
+the return patterns.
+Several other tests suggest that the intraday periodicity a t the daily frequency is not simply an
+artifact of previously shown patterns. For example, it is no t concentrated in any particular weekday,
+and therefore is not a manifestation of the day-of-the-week eﬀect (see French (1980)), and it is not
+concentrated in any particular month (see Heston and Sadka ( 2008a, 2008b)). The eﬀect is also not
+particularly related to the turn-of-the-month eﬀect (Ariel (1987)) or the turn-of-the-quarter eﬀect
+(Carhart et al. (2002)). The pattern of intraday returns is h ighly persistent, lasting for two months
+(40 trading days). It is not due to a particular market capita lization group, inclusion in the S&P
+500 index, nor is it a manifestation of intraday movements in systematic risk. There is substantial
+4
+evidence of intraday periodicity of return volatility (And ersen and Bollerslev (1997)), which we also
+ﬁnd in our sample. However, patterns in volatility do not exp lain our return periodicity.
+Finally, we compare the results for the post-decimalizatio n period to prior periods, which include
+1993 to 1997, for which the minimum price increment was one-e ighth of a dollar, and 1997 to 2000,
+for which the minimum price increment was one-sixteenth of a dollar. We ﬁnd that the statistical
+signiﬁcance of the intraday periodicity is greatest in the p ost-decimalization period.
+In Section I we present our main ﬁndings regarding return con tinuation at daily frequencies
+and short-term return reversals. In Section II we study poss ible cross-sectional explanations for the
+ﬁndings. In Section III we study the properties of volume, or der imbalance, volatility, and liquidity
+while we provide additional diagnostics in Section IV. Our c onclusions are presented in Section V.
+I. Patterns of Resilience in Intraday Stock Returns
+We begin this study by measuring intraday persistence in the cross-section of stock returns. It is
+well known that short-term stock returns are negatively aut ocorrelated (e.g., Lehmann (1990) and
+Lo and MacKinlay (1990)). While this phenomenon does not occ ur in the model of Glosten and Mil-
+grom (1985), in which the spreads are due solely to adverse se lection caused by informed traders, it
+appears in other models with bid-ask spreads (Roll (1984) an d Glosten and Harris (1988)), specialist
+inventory eﬀects (Stoll (1978)), or other non-adverse selec tion costs associated with market-making.
+Here we study the resilience of stock prices based on the patt ern of autocorrelation over various
+horizons.
+A. Methodology and Main Results
+Our sample of ﬁrms consists of all New York Stock Exchange (NY SE) listed ﬁrms from January
+2001 through December 2005 that we are able to match with the N YSE Trade and Quotation
+(TAQ) database. We retain only assets whose CRSP share codes are 10 or 11, that is, we discard
+certiﬁcates, ADRs, shares of beneﬁcial interest, units, co mpanies incorporated outside the U.S.,
+Americus Trust components, closed-end funds, preferred st ocks, and REITs. The matching yielded
+data for 1,715 ﬁrms. The period of study is chosen to substant ially overlap the period of deci-
+malization, the transition to which occurred between Augus t 2000 and January 2001. We use the
+TAQ database to calculate intraday stock returns. For each s tock we calculate returns over half-
+hour intervals. This gives 13 intraday intervals per tradin g day from 9:30 a.m. to 4:00 p.m. This
+excludes after-hours trading and overnight open-close pri ce movements. Note that settlement on
+stock transactions occurs after the end of the trading day. T his means that trades at diﬀerent times
+5
+do not need to earn the risk-free rate intraday. In other word s, intraday stock returns compensate
+for liquidity and risk, not for the time value of money. In add ition to returns, we also measure
+changes in volume deﬁned as the change in the logarithm of the number of shares traded over a
+half-hour interval. The return and volume data provide meas ures of price and quantity movements
+of individual stocks throughout the day.
+We analyze intraday stock returns using the cross-sectiona l regression methodology of Jegadeesh
+(1990). For each lag, k, we run cross-sectional regressions of half-hour stock retu rns on returns
+lagged by k half-hour periods,
+ri,t = α k,t + γk,tri,t−k + ui,t, (1)
+where ri,t is the return on stock i in the half-hour interval t. The slope coeﬃcients γk,t represent the
+response of returns at half-hour t to returns over a previous interval lagged by k half-hour periods,
+the “return responses.” 1 In addition to the simple regression (1), we also use a multip le regression
+to estimate all return responses up to ﬁve trading days joint ly
+ri,t = α t + γ1,tri,t−1 + γ2,tri,t−2 + ... + γ65,tri,t−65 + ui,t. (2)
+Both the simple regression and the multiple regression use a ll ﬁrms with returns available in intervals
+t and t− k. Initially we present unconditional return responses, ave raging over diﬀerent times of the
+day t for each lag k. Later we examine conditional averages, including time-of -day variation in the
+magnitude of these eﬀects. We calculate the pattern of return eﬀects by averaging return responses
+over time for half-hour lags k. Note that using cross-sectional regression in this way is d iﬀerent
+from measuring the autocorrelation of stock returns. In par ticular, the cross-sectional regression
+subtracts an overall market eﬀect, which reduces variance an d focuses on returns relative to other
+stocks.
+Figure 1 presents the average return responses across diﬀere nt lags (Panel A) for lags up to one
+week.2 The data are scaled so the units for ˆγk are basis points. With 13 half-hour intervals per
+day and ﬁve trading days per week, this produces 65 lagged int ervals. Consistent with the previous
+literature, the ﬁrst several return responses are negative . This means that stock returns experience
+a reversal period lasting several hours. These reversals ma y be a manifestation of bid-ask bounce,
+time variation in the frequency of trades occurring at bid ve rsus ask prices (as in Keim (1989)), or
+temporary liquidity dislocations that take some time for li quidity providers to accommodate. We
+disentangle these eﬀects.
+[Figure 1 here]
+6
+The most striking pattern in Figure 1 is that, following the r eversal period, the return responses
+are positive, peaking at horizons that are exact multiples o f 13 half-hours, or one trading day. The
+ﬁgure shows clear periodicity at daily intervals. Panel B of Figure 1 plots the t-statistics of ˆγk, as
+estimated in Fama and MacBeth (1973). The t-statistics show the same type of periodicity. Over
+the ﬁrst week the smallest t-statistic at the daily frequency (lags 13, 26, 39, 52, and 65 ) is 9.62.
+Table I shows that the simple regression return responses ar e highly statistically signiﬁcant at
+almost all lags. The Internet Appendix (Table IA.I) 3 shows the results of the multiple regression
+responses are similar to the simple regression in magnitude , generally with greater statistical sig-
+niﬁcance. Over the period of one calendar day these results i ndicate that returns are temporarily
+reversed but then rebound.
+[Table I here]
+Looking beyond 13 lags, the return eﬀects over half-hour inte rvals on subsequent days remain
+largely negative, with statistically signiﬁcant positive eﬀects at multiples of 13 lags, that is, 26, 39,
+52, and 65. It appears that temporary price pressure is rever sed at virtually all future times except
+at the same time interval on subsequent days.
+Since the simple regression produces results almost identi cal to the multiple regression, the
+univariate speciﬁcation (1) seems adequate. By focusing on one lag at a time, we can easily
+examine a number of diﬀerent lags.
+The implicit portfolio weights in the portfolio returns obt ained from the estimated regression
+coeﬃcients, ˆγk, could be rather extreme since, as mentioned above, ˆγk is the return on a zero-cost
+portfolio whose excess return k periods ago is 100% (Lehmann and Modest (2005)). Therefore, we
+also study the returns to relatively well-diversiﬁed (equa l-weighted) long-short portfolios formed
+on the basis of lagged half-hour returns. Using the methodol ogy of Jegadeesh and Titman (1993),
+we sort stocks into equal-weighted deciles based on their re turns over a previous half-hour interval.
+Figure 2 and Table II present these results extending the lag s to roughly two trading months
+(520 lags). We form portfolios of ”losers” and ”winners” and calculate equal-weighted returns (in
+basis points) on portfolios of stocks that had the lowest and highest 10% of returns k periods ago,
+respectively. The column labeled ”10-1” is the average retu rn on a portfolio that is long the winners
+portfolio and short the losers portfolio. 4 This long-short average return is plotted as a function of
+k in Figure 2, along with the associated t-statistics.
+[Figure 2 and Table II here]
+7
+Based on a half-hour return on a given day, the average diﬀeren ce between the top decile of
+winners and the bottom decile of losers is 3.01 basis points a t the same time on the next day. To get
+a sense of the economic magnitude of this periodicity, we con sider a few comparisons. Being able to
+capture three basis points is similar in magnitude to the dai ly equity risk premium. 5 The eﬀect may
+be larger than the equity risk premium in terms of incrementa l Sharpe ratio since one needs to bear
+one day of risk to earn the risk premium but only needs to shift trade a fraction of a day to take
+advantage of the periodicity. Being able to capture three ba sis points is also similar in magnitude
+to saving a $0.01 commission on a stock priced at $30/share (w hich is in line with institutional
+commission rates on common stock). Alternatively, Gurliac ci, Jeria, and Soﬁanos (2009) ﬁnd that
+the typical quoted half-spread of S&P 500 stocks in their ben chmark (”normal” volatility) period
+(May 2008) is 1.7 basis points, which means that the average r eturn predictability is of the same
+order of magnitude as twice the quoted half-spread (the retu rn diﬀerence requires two trades, so
+the relevant comparison is twice the half spread). 6,7 Jeria and Soﬁanos (2008) evaluate institutional
+order executions for two alternative algorithms and ﬁnd tha t there is a 2.3 basis point diﬀerence
+between the implementation shortfall for the average order . They use this result to recommend that
+traders migrate from one algorithm to the other. Thus, for hi gh-frequency institutional traders,
+the eﬀect appears to be economically consequential, particu larly for high frequency traders (”Rise
+of the Machines,” The Economist, July 30, 2009).
+The average return diﬀerence remains positive, albeit small er, on subsequent days. The diﬀer-
+ence remains positive and statistically signiﬁcant for up t o 40 days (520 half-hours). It appears
+there is a persistent and predictable pattern in intraday st ock transaction prices. When a stock
+goes up on one day, buyers earn a return premium by buying the s tock prior to (or delaying sales
+until after) the same time interval on future days. Converse ly, sellers provide a discount by selling
+at this time when they could expect a higher average price 30 m inutes later.
+B. Reversals: Resiliency, Bid-Ask Bounce, and Periodicity in Order Imbalances
+A market is resilient when it replenishes depth rapidly afte r having been depleted by large
+transactions (see, for example, Coppejans, Domowitz, and M adhavan (2004) and Large (2007)).
+We expect to see large price movements due to these types of tr ades, followed by rapid reversals as
+new limit orders replenish the order book. In less resilient markets, the reversal will take longer,
+leading to a longer period of return reversals. Therefore, t he observed negative values of ˆγk at low
+values of k (Figure 1, Table I, and the Internet Appendix Table IA.I), an d the negative returns on
+the winners minus losers portfolios (Figure 2) may be due to l iquidity shocks when the market is
+8
+not very resilient. While this cause may be plausible for the negative ˆγk for k between one and
+eight, it is unlikely to explain the negative ˆγk for lags corresponding to two to ﬁve days ago.
+An alternative explanation for the negative values of ˆγk is some combination of bid-ask bounce
+and time variation in the frequency of trades occurring at bi d versus ask prices (as in Keim (1989)).
+In Roll (1984) there is an equal chance that a trade occurs at t he bid price or the ask price. This
+implies that order ﬂow is not autocorrelated, but that bid-a sk bounce induces negative ﬁrst-order
+autocorrelation in returns. In the Roll model there is no aut ocorrelation in returns at lags greater
+than k = 1. However, the empirical evidence shows that order imbala nces (signed order ﬂow) tend
+to be autocorrelated (Sadka (2006)), so trades at the ask wil l tend to be followed by trades with
+a higher probability of being at the ask. This type of pattern could lead to reversals that are not
+immediate (that is, return autocorrelation beyond the ﬁrst lag).
+Of course, both liquidity imbalances and bid-ask bounce are likely to be present in the data. To
+distinguish between lack of resiliency and bid-ask bounce, we reestimate ˆγk using returns calculated
+from only bid prices (deﬁned as the current bid quote for the t ransactions), from only ask prices,
+and from only midpoint prices, instead of from transaction p rices. If the observed return reversal
+pattern is due to lack of resiliency, we should see return rev ersals using the bid-to-bid, ask-to-ask,
+and midpoint-to-midpoint returns. Conversely, if the reve rsals are merely due to bid-ask bounce,
+then there should be no return reversals using bid-to-bid or ask-to-ask returns.
+In Figure 3 we plot the estimates, ˆγ k, and their t-statistics using bid-to-bid, ask-to-ask, and
+midpoint-to-midpoint returns. The only reversal that is st atistically signiﬁcant is that for k = 1.
+This is consistent with the market taking longer than 30 minu tes, but less that 60 minutes, to
+restore shocks to liquidity, consistent with the evidence i n Chordia, Roll, and Subrahmanyam
+(2005). Thus, there is evidence of a resiliency eﬀect at lag k = 1 only, and all of the reversals
+evident using transaction returns beyond lag k = 1 disappear using bid-to-bid and ask-to-ask
+returns. Our inference is that the negative values of ˆγk beyond lag 1 shown in Figures 1 and 2 are
+due to bid-ask bounce. Once that eﬀect is removed, there seems to be some evidence of momentum
+(positive values of ˆγk) in returns using bid-to-bid and ask-to-ask prices.
+[Figure 3 here]
+While the short-term reversals evident in Figures 1 and 2 are consistent with microstructure
+theory and give us a coherent picture of resiliency and bid-a sk bounce, the positive return responses
+at daily frequencies are much more diﬃcult to explain. We now turn to the nature of these return
+9
+continuations and their relation to other periodicity anom alies. We ﬁrst study patterns across
+past-return deciles and across diﬀerent times of the day.
+C. Patterns Across Past-Return Deciles
+We develop and compare strategies that hold stocks over a sin gle half hour interval to focus on
+the periodic return pattern based on past returns at diﬀerent lags. Table III shows the performance
+of stock deciles ranked on their performance in previous hal f-hour intervals. The strategies labeled
+”daily” sort stocks based on one half-hour interval at the sa me time on a previous day ( k =
+13, 26, 39, 52, or 65). The top row lists the decile number, with decile j at time t being made up
+of those stocks whose returns are in the jth decile (from lowest to highest) in period t − k for
+k = 13, 26, 39, 52, or 65.
+[Table III here]
+The nondaily strategies rank assets into deciles based on av erage returns over a previous 24-
+hour period except the daily lags. For example, the Day 1-Non daily strategy forms portfolios on
+the basis of their average returns over lags 1 through 12, the Day 2-Nondaily strategy uses average
+returns over lags 14 through 25, etc. By studying the returns on these decile portfolios we can
+observe any nonlinearity in the relation between average re turns across deciles, such as whether the
+daily pattern is concentrated in the upper or lower performi ng deciles.
+The table shows most of the statistical and economic signiﬁc ance comes from the extreme
+deciles. For example, the worst nondaily losers over the pre vious day earn an average of 3.16 basis
+points, while the best nondaily winners lose 1.51 basis poin ts per half-hour holding period. The
+average returns are nearly monotonic across intermediate d eciles. The signs are reversed for the
+daily decile strategies. For example, the worst decile of lo sers over the same interval of the previous
+day continue to lose an average of 1.35 basis points, while th e best decile of daily winners earn
+1.66 basis points per half-hour interval. The intermediate decile average returns are monotonic,
+but most of the signiﬁcance comes from the lowest and highest deciles.
+The magnitude of the daily response is most substantial on th e ﬁrst day, however there is a
+smaller persistent eﬀect. For lags beyond one day, the averag e daily winners minus losers decile
+spreads remain above one basis point per half-hour for lags o f up to ﬁve days (with t-statistics above
+8.7). By contrast, the magnitude of the negative nondaily wi nners minus losers decile spreads is
+less than one basis point. Average decile spreads for nondai ly strategies are statistically signiﬁcant
+for lags of at least four days.
+10
+D. Time of Day
+The return patterns in Figures 1 and 2 reﬂect average behavio r throughout the day. Investors
+can pay up to three extra basis points, on average, to execute trades at a particular time of day.
+However, it is possible this eﬀect is concentrated at certain times of the day. We ﬁrst investigate
+whether the intraday pattern is an artifact of biases in open ing or closing prices. Overnight orders
+are executed at the open, and many traders (for example, inde x funds concerned with minimizing
+daily tracking error) place market-on-close orders. Tempo rary price distortions caused by opening
+and closing procedures might produce predictability in sto ck returns that does not aﬀect stock
+prices at other times of the day.
+Table IV shows the excess return of winners minus losers deci le spread strategies during diﬀerent
+half-hour intervals throughout the day. Since the nondaily eﬀect is mainly driven by bid-ask bounce,
+we only report the results for the daily strategy. The full re sults are reported in the Internet
+Appendix (Table IA.III). For Day 1, the daily decile spreads are sorted based on the returns for lag
+13, while the nondaily spreads (in the Internet Appendix) ar e sorted based on the average returns
+for lags one through 12. The return eﬀect is quite pronounced i n the ﬁrst and last half-hours of
+trading. The Day 1 daily decile spread earns over 11 basis poi nts in the opening half-hour, while
+the Day 1 nondaily strategy loses over eight basis points. Th is is a diﬀerence of 19 basis points
+between these strategies in the opening half-hour. Similar ly, the Day 1 daily decile spread earns
+over eight basis points near the close of trading, while the c orresponding nondaily strategy loses
+11 basis points. A smaller eﬀect remains during the middle of t he day. The Day 1 daily strategy
+earns positive average excess returns in every half-hour in terval from 10:00 a.m. to 3:30 p.m.,
+averaging 1.75 basis points over this period. Meanwhile, th e Day 1 nondaily strategy declines in
+nearly every half-hour period, losing 3.74 basis points per half-hour over this period. This is a
+consistent pattern throughout the day. At longer lags, labe led Day 2 through Day 5 in Table IV,
+the return patterns are of a similar shape but smaller in abso lute value. When we average the
+second through twelfth intervals (that is, average returns from 10:00 a.m. to 3:30 p.m.), all the
+daily spreads are signiﬁcantly diﬀerent from zero at convent ional levels while the nondaily spreads
+are statistically signiﬁcant for Day 1 and Day 2.
+[Table IV here]
+Figure 4 shows that the periodic daily pattern of return stra tegies has a similar shape but
+diﬀerent magnitudes at diﬀerent times of the day. The daily str ategies earn a premium in the ﬁrst
+11
+half-hour of trading, the last half-hour, and in the interme diate intervals from 10:00 to 3:30. This
+evidence indicates that while the periodicity at daily inte rvals is stronger at the beginning and end
+of the trading day (as can be seen from the magnitudes of the co eﬃcients in the left side of the
+ﬁgure), it exists at all times (as can be seen from the magnitu des of the t-statistics in the right side
+of the ﬁgure). 8 For the intermediate intervals there is more anticipation o f the periodicity at lag 13
+since the coeﬃcients are signiﬁcantly positive for lags 10 t hrough 13. The top and bottom graphs in
+Figure 4 show some leakage from the closing half-hour to the n ext day’s opening half-hour. Figure
+4 is consistent with the argument that the patterns are mainl y, although not exclusively, driven by
+trading at or near the opening or closing of the trading day.
+[Figure 4 here]
+II. Potential Cross-sectional Explanations
+The pattern of daily return continuation has several potent ial explanations. One concern is the
+eﬀect of data errors caused by thinly traded stocks. After add ressing this, we consider whether size
+or risk can explain the return pattern. We also examine wheth er trading proﬁts of strategies based
+on return periodicity are wiped out by paying the bid-ask spr ead.
+A. Low Price and Thin Trading
+A major concern is whether the return continuation is driven by thinly traded stocks with inac-
+curately or irregularly measured returns. Returns on low-p riced stocks are most strongly aﬀected
+by discreteness. However, since our sample is from the post- decimalization period, we do not expect
+discreteness to be a major cause of return periodicity.
+Many stocks may not be traded throughout a half-hour interva l. For example, a stock might
+trade once at 12:01, and then a second time at 12:02, without a ny further activity before 12:30.
+While it is not clear whether this would impart a daily patter n in measured returns, we verify
+whether our results are contaminated by such inaccurate or i lliquid returns.
+Table V addresses these issues by repeating the decile sprea d analysis of Table III while elimi-
+nating low-priced and thinly traded stocks. We deﬁne low-pr iced stocks as stocks with share prices
+below $5. Removing the low-priced stocks decreases the nond aily reversal eﬀect (reported in Inter-
+net Appendix Table IA.IV). The average nondaily decile spre ad on Day 1 changes from -4.67 basis
+points per half-hour in Table III to -1.77 basis points (with a t-statistic of -8.07) in the Internet
+Appendix (Table IA.IV). Given that the reversals beyond lag k = 1 are driven by bid-ask bounce,
+one would expect some attenuation since low-priced and thin ly traded stock tend to have higher
+12
+percentage spreads.
+[Table V here]
+The daily continuation eﬀect shrinks less than the nondaily r eversal eﬀect. Table V shows that
+the daily decile spread earns 1.93 basis points (with a t-statistic of 10.34) on Day 1, whereas it
+earns roughly three basis points with all stocks in Table III . In both Table III and Table V the
+daily decile spread remains roughly one basis point per half -hour on Days 2 through 5.
+To address problems of thin trading, we also eliminate stock s that do not have an average of
+at least 10 trades per half-hour interval over the previous m onth. In other words, we use stocks
+that average at least one trade every three minutes. This ret ains roughly 80% of the stocks in our
+sample. The second column of Table V shows that this restrict ion does not aﬀect the results as
+much as eliminating the low-priced stocks. The daily decile spread earns 2.45 basis points (with a t-
+statistic of 18.44) per half-hour on Day 1, while the nondail y decile spread (in the Internet Appendix
+(Table IA.IV)) loses 3.17 basis points (with a t-statistic of -19.44). Results on subsequent days are
+similar to returns using the full sample, reported in Table I II. Overall, the reversal and continuation
+patterns are not an artifact of mismeasurement of the return on low-priced stocks or mistiming of
+returns on thinly traded stocks.
+B. Size and Transactions Costs
+A concern about the nature of intraday patterns in stock retu rns is market depth. If there is a
+return premium at certain times of the day then it may be compe nsation for illiquidity that makes
+stocks diﬃcult to trade at eﬃcient prices during those times . For example, Admati and Pﬂeiderer
+(1988) develop a model where traders pool trades in certain p eriods of the day in order to take
+advantage of the increased liquidity of pooling. This impli es a pattern primarily among smaller and
+less liquid stocks that face larger adverse selection probl ems. To the extent that ﬁrm size proxies
+for variation in adverse selection problems, it provides a c ontrol variable.
+In Table VI we sort stocks into three groups based on market ca pitalization at the end of the
+previous calendar year. In particular, the table reports th e decile spread strategies separately for
+small-, medium-, and large-capitalization ﬁrms, where eac h group contains 33% of the sample.
+The nondaily strategies on Day 1 (reported in the Internet Ap pendix (Table IA.V)) have returns
+that are more negative among small ﬁrms. This is consistent w ith small-cap ﬁrms having larger
+proportional spreads. The Day 1 nondaily decile spread lose s more than 10 basis points in the
+opening half-hour and more than 22 basis points in the closin g half-hour, while averaging a loss of
+13
+more than eight basis points in the mid-day half-hour interv als. Conversely, the daily decile spread
+strategies are more proﬁtable with small stocks. The Day 1 da ily strategy averages more than
+ﬁve basis points per half-hour. In contrast, average return s are in the range of one to three basis
+points for medium and large stocks. The average excess retur ns for strategies based on longer daily
+and nondaily lags are smaller and do not diﬀer much across size categories. However, almost all
+daily strategies maintain statistical signiﬁcance at the 9 5% level in all size categories at the open,
+mid-day, and close. This indicates that while a liquidity/m icrostructure eﬀect explanation may
+have merit, return periodicity is not associated exclusive ly with small ﬁrms.
+[Table VI here]
+An important consideration is the magnitude of transaction costs associated with the trading
+strategies implicit in our reported returns. We ﬁnd predict able excess returns of several basis points
+within a half-hour interval based on transaction prices. Ho wever, a trader with no other motive
+for trade must pay the ask price or accept the oﬀer price to get i mmediate execution and avert
+time slippage. Larger orders also lead to larger price impac ts. Table VII reports the decile spread
+results for strategies that buy at the oﬀer and sell at the bid. The average results are negative for
+all size categories at all times of the day, indicating that t he periodicity we ﬁnd does not indicate
+a pure proﬁt opportunity. It is important to remember that th ese results involve the round-trip
+transaction costs of two diﬀerent long-short decile strateg ies. Therefore, they incur the average cost
+of four transactions. For example, among small stocks the av erage decile spread return on the Day
+1 Nondaily strategy (reported in the Internet Appendix (Tab le IA.VI)) is -25.03 basis points, and
+the average decile spread return on the Day 1 Daily strategy i s -23.78 basis points. The Internet
+Appendix (Table IA.V) shows that the Day 1 Nondaily strategy lost 9.92 basis points among small
+stocks while Table VI shows that the Day 1 Daily strategy gain ed 5.16 basis points. Comparing
+the pre-transaction cost returns in Table VI to the post-spr ead return in Table VII, we see that the
+implied one-way spread cost is between four and seven basis p oints. While the diﬀerence between
+the performance of Daily and Nondaily strategies does not co ver the costs of two round-trips, it
+often compares favorably with the magnitude of one-way tran saction costs. This suggests that
+many investors have a demand for immediate execution of trad es and are not willing to shift their
+trades by 30 minutes to take advantage of the periodicity.
+[Table VII here]
+14
+These trading strategies are not likely to be proﬁtable for s tocks with large bid-ask spreads.
+Therefore, the results in Table VII exclude stocks that have a quoted relative spread of more than
+10 basis points at the beginning of a given trading interval. We also perform the analysis restricted
+to stocks with spreads less than ﬁve and 25 basis points, resp ectively. The results are similar to
+those in Table VII. Note that very few small stocks have sprea ds less than ﬁve basis points, so
+there is no point conditioning on less than ﬁve basis points. Since our reported raw proﬁts are not
+greater than 25 basis points, we do not condition on spreads g reater than 25 basis points. The
+results suggest that it is quite diﬃcult to proﬁt from these t ype of intraday strategies without some
+exogenous desire to trade.
+The transaction costs for medium and large stocks are substa ntially smaller than those for small
+stocks. Table VII shows that for medium stocks the average de cile spread results are roughly -20
+basis points and for large stocks they are roughly -14 basis p oints. This corresponds to one-way
+trading costs of less than ﬁve basis points. The losses of the Nondaily and Daily strategies in Table
+VII and the Internet Appendix (Table IA.VI) are smaller for m edium and large stocks than for
+small stocks.
+Our evidence for the nondaily reversal eﬀect is consistent wi th the results of Avramov, Chordia,
+and Goyal (2006), who ﬁnd that the reversals at weekly and mon thly intervals are smaller than
+transactions costs.
+C. Beta
+If high frequency changes in risk or liquidity inﬂuence inve stors’ demand for assets, then we
+might ﬁnd periodicity in returns due to periodicity in risk o r liquidity. For example, stocks might
+be riskier at certain times of the day when news is released, o r they might be subject to institutional
+transactions that follow a daily cycle. This section explor es these possibilities.
+A priori, it seems unlikely for stocks to have large ﬂuctuati ons in systematic risks during the day
+because companies do not change their ﬁnancial exposures fr om hour to hour. On the other hand,
+some economic series are released at scheduled times, and ﬁr ms may have exposure to systematic
+news released at those times. In this case traders may be relu ctant to hold stocks at these risky
+times. To assess this possibility we control for risk by regr essing stock returns on the equal-
+weighted market index. To correct for nonsynchronous tradi ng (Dimson (1979)), we include the
+contemporaneous half-hour market return along with 13 lead s and lags. The Internet Appendix
+(Table IA.VII) reports the average intercepts from these re gressions. Since the intraday interest
+rate is eﬀectively zero, these intercepts have the interpret ation of risk-adjusted returns.
+15
+The results reported in the Internet Appendix (Table IA.VII ) resemble the previous results
+using unadjusted average returns. The average risk-adjust ed return on decile return spreads of lag
+13 winners in excess of lag 13 losers is 3.03 basis points. The decile spread has a risk-adjusted
+return of -4.65 basis points when portfolios are formed on th e basis of returns over lags 1 through
+12. These eﬀects are particularly pronounced in the ﬁrst half -hour and last half-hour of the day,
+but remain statistically signiﬁcant in the middle of the day .
+The average risk-adjusted returns for the daily decile spre ads continue to be substantial in the
+opening and closing half-hour even when sorting on half-hou r returns up to ﬁve business days ago.
+The Day 5 average decile spread for k = 65 is 4.84 basis points in the ﬁrst half-hour, and 3.42
+basis points in the last half-hour. The eﬀect is much smaller i n the middle of the day, less than
+one basis point, but remains statistically signiﬁcant. The refore, controlling for market risk does
+not eliminate the daily pattern.
+These results also show that the periodicity is not an artifa ct of all stocks having high returns
+at certain times of the day and low returns at others, that is, simple mean shifts across half-hour
+intervals. If this were driving the results, risk-adjusted returns should eliminate the eﬀect since the
+risk adjustment takes out the market return. However, the ri sk-adjusted returns in the Internet
+Appendix (Table IA.VII) are almost identical to the unadjus ted returns in Table IV.
+III. V olume, Order Imbalance, and Related V ariables
+Autocorrelated fund ﬂows and a preference for trades at part icular times of the day should lead
+to periodicity in quantity variables (e.g., volume) and sig ned quantities (e.g., order imbalance),
+and possibly also in volatility and liquidity. As discussed above, at the aggregate level there is an
+extensive literature on intraday patterns in volume and vol atility. This literature is consistent with
+periodicity in volume, order imbalance, volatility, and li quidity of the type observed in returns.
+However, there may be diﬀerent intraday patterns that are als o consistent with this literature (for
+example, an intraday step function in which the means of all v ariables are shifted each period). We
+wish to determine whether these variables have periodicity similar to returns. If they do, we would
+like to know if past observations of these variables explain the return periodicity. We ﬁnd common
+periodic daily patterns in some of these variables, but show that these variables do not subsume
+the pattern of return predictability.
+All these variables are quite persistent in their levels, so the response coeﬃcients we observe by
+estimating equation (1) look diﬀerent than those for returns in Figure 1. This is to be expected,
+16
+given what we know about volume (Lo and Wang (2006)), order im balance (Sadka (2006)), volatility
+(Bollerslev (1986)), and liquidity (Korajczyk and Sadka (2 008)). In particular, the coeﬃcients using
+levels of these variables are positive and decay very slowly . However, when we look at changes (order
+imbalance) and percentage changes (volume, volatility, and spreads) in these variables, many display
+patterns that look similar to the return patterns shown in Fi gure 1.
+A. Volume and Order Imbalance
+To address trading-demand explanations of periodicity, we repeat the cross-sectional regression
+using volume data,
+vi,t = ak,t + gk,tvi,t−k + ui,t, (3)
+where vi,t is the percentage change in the volume of stock i traded over the half-hour interval t.
+The means and t-statistics9 of the time series of volume responses are plotted in Panel A o f Figure
+5. The pattern for ˆgt strongly resembles the return response pattern, ˆγt, in Figure 1. In particular,
+the cross-sectional volume response eﬀects are uniformly ne gative at all lags except multiples of
+13. Figure 5 shows the pattern for 65 lagged half-hour interv als corresponding to one week of
+calendar lags. Like the pattern of return responses, the eﬀec t of volume responses lasts much
+longer. The Internet Appendix (Figure IA.1) shows that the s trength of daily volume responses
+decays with longer lags, but remains positive and statistic ally signiﬁcant for up to 520 half-hour
+lags, corresponding to 40 days. Together Figures 1 and 5 (and the longer-term results in Figure
+2 and the Internet Appendix) show that the intraday cross-se ctions of daily return and volume
+display similar persistence lasting at least two months. No te that to the extent that volume and
+volatility are correlated, the volume pattern is consisten t with the patterns in intraday volatility
+documented in Andersen and Bollerslev (1997).
+[Figure 5 here]
+It is probable that orders of diﬀerent size convey diﬀerent inf ormation, and have diﬀerent ex-
+ecution costs. Small trades are primarily generated by indi vidual investors, whereas large trades
+are preponderantly institutional (Campbell, Ramadorai, a nd Schwartz (2009)). To check for dif-
+ferential eﬀects of volume generated by orders of diﬀerent siz es, for each 30-minute interval we
+determine the volume generated by trades of less than 1,000 s hares each (small trade volume) and
+the volume generated by trades of greater than or equal to 1,0 00 shares each (large trade volume).
+The Internet Appendix (Figure IA.2) shows the volume respon ses separately for small trades (Panel
+A) and large trades (Panel B). Percentage changes in both sma ll- and large-trade volume exhibit
+17
+the same pattern of periodicity that we see in returns in Figu re 1 and in overall volume in Figure
+5.
+It is possible that institutions disguise large trades by br eaking them into smaller ones, making
+it diﬃcult to detect their trades. Regardless of our ability to identify speciﬁc types of trades, price
+pressure is presumably caused by one-sided volume, not by ba lanced trading. Therefore, we also
+look at the behavior of changes in signed volume, order imbal ance. Order imbalance is deﬁned as
+the net signed volume over the interval, where the sign is det ermined by a variant of the Lee and
+Ready (1991) trade classiﬁcation algorithm. 10 For example, if a time interval had 100,000 shares
+transacted that were classiﬁed as buyer-initiated and 75,0 00 shares transacted that were classiﬁed
+as seller-initiated, then the order imbalance for the perio d would be 25,000 shares (equal to 100,000
+- 75,000). Panel D of Figure 5 shows that changes in order imba lance exhibit periodicity similar to
+but less pronounced than the periodicity in returns and volu me.
+The Internet Appendix (Figure IA.2) indicates that order im balance does not exhibit any ad-
+ditional periodicity when partitioned into small versus la rge trades, in contrast to the momentum
+results of Hvidkjaer (2008). Indeed, the periodic pattern i s absent in the order imbalance for large
+trades. Perhaps trade classiﬁcation algorithms for identi fying buyer-initiated versus seller-initiated
+trades produce noisy estimates for individual stocks over s hort horizons such as the half-hour in-
+tervals used here.
+B. Volatility and Bid-Ask Spreads
+Volatility tends to be high at the beginning and end of the tra ding day. In addition, Andersen
+and Bollerslev (1997) ﬁnd high returns for the S&P 500 compos ite stock index futures contract at
+the beginning and end of the day. It might be the case that move ments in volatility are driving the
+return periodicity we observe here.
+Movements in bid-ask spreads might also be related to moveme nts in volume, volatility, and
+returns. For example, Admati and Pﬂeiderer (1988) derive a m odel in which traders who have
+discretion on when to trade prefer to coordinate trading at t he same time. In this model, movements
+in volume, volatility, and liquidity are related, in equili brium.
+Figure 5 (Panel B) shows that percentage changes in volatili ty (measured by the absolute value
+of returns) exhibit intraday periodicity similar to that fo und for returns and volume.
+If market activity in individual stocks has daily periodici ty, then bid-ask spreads might follow
+the same pattern. We examine this to distinguish changes in e xecution costs from changes in
+underlying returns. In addition, since the high frequency r eturn bias discussed in Blume and
+18
+Stambaugh (1983) is related to bid-ask bounce, we wish to tes t whether the return patterns we
+ﬁnd are related to systematic changes in bid-ask spreads. Pa nel C of Figure 5 shows the t-statistics
+from cross-sectional regressions in which percentage chan ges in spreads are regressed on their lagged
+values. Spreads do not exhibit the type of periodicity that w e observe in returns. Therefore, it
+appears that the return periodicity is not merely an artifac t of a spread-induced bias in estimated
+returns.
+C. Does Periodicity in Related Variables Explain Periodicit y in Returns?
+We have shown that volume, order imbalance, and volatility h ave cross-sectional predictability
+with the same daily pattern as returns, whereas spreads do no t. We now turn to the question of
+whether the periodicity in these variables explain the retu rn predictability we observe. For example,
+daily patterns in institutional volume might aﬀect stock liq uidity and volatility at the same time
+each day. News cycles might trigger volume that causes inves tors to demand return premiums on
+a daily cycle.
+To control for these additional variables, we run cross-sec tional regressions of returns on lagged
+returns, including these additional lagged regressors. Th e regression is
+ri,t = α k,t + γ k,tri,t−k + δ′
+k,tVi,t−k + ei,t, (4)
+where the vector Vi,t−k includes percentage changes in volume (total shares traded during the lagged
+half-hour interval), volatility (absolute return), and re lative bid-ask spread; and absolute changes
+in order imbalance. If return predictability is caused by pr edictable market activity based on these
+variables, then including them should diminish or even subs ume the predictability of returns based
+on past returns. The values of ˆγk and the associated t-statistics are reported in Figure 6.
+[Figure 6 here]
+Surprisingly, Figure 6 shows that the daily pattern of cross -sectional return predictability is
+unaﬀected by including the additional regressors. In other w ords, volume, order imbalance, and
+volatility have similar patterns of intraday predictabili ty, but these variables do not explain daily
+return predictability.
+As an additional reﬁnement, we also regress returns on lagge d returns, lagged small-trade vol-
+ume, and lagged large-trade volume. The Internet Appendix ( Figure IA.2) reports the results. The
+results show that the return periodicity is not subsumed by l arge- or small-volume either.
+D. Pre-decimalization Results
+19
+We focus our analysis in this paper on the post-decimalizati on period. In Table VIII we compare
+the return spreads on daily-frequency strategies (lags 13, 26, 39, 52, and 65) over our sample period
+to two additional sample periods corresponding to tick size s of one-eighth and one-sixteenth of a
+dollar. We ﬁnd that the statistical signiﬁcance of the intra day periodicity is greatest in the post-
+decimalization period. This might be due to the increased us e of trading algorithms (of the sort
+discussed above) by institutional investors. Results duri ng the period when the tick size is one-
+sixteenth are quite unreliable and, hence, we present addit ional results in Table VIII, Panel B,
+where the returns are Winsorized at the 1% level each month. T hat is, for each calendar month
+and each strategy (e.g., lag 13) we set all observations belo w (above) the 1 st (99th) percentile to the
+value of the 1 st (99th) percentile. The Winsorized results do not represent imple mentable trading
+strategies, but reduce the inﬂuence of outliers. The Winsor ized results with one sixteenth tick
+size resemble the post-decimalization results, with sligh tly larger coeﬃcients and slightly smaller t-
+statistics. The larger coeﬃcients for the 1997 to 2000 perio d using the Winsorized estimator are not
+consistent with the hypothesis that the increase in algorit hmic trading is driving the periodicity.
+The Winsorized returns over the 1993 to 1997 period, when the minimum price increment was
+one-eighth, have the smallest coeﬃcients and t-statistics.
+[Table VIII here]
+IV. Additional Diagnostics
+The previous sections demonstrate a pattern of daily return continuation. This pattern is
+concentrated at the open and close, but also persists throug hout the day and lasts for many days.
+Because of the novelty of this eﬀect, it is important to verify that we have properly characterized
+the pattern (pervasive and not restricted to special days or periods). This section examines the
+pattern at a higher frequency and for diﬀerent calendar perio ds.
+A. Five-Minute Interval Returns
+Figure 1 shows that when using half-hour intervals, sometim es there appears to be slight spillover
+from one time interval to adjacent intervals. While the retu rn responses are most positive at exact
+multiples of one trading day (e.g., 13-half-hour lags), the y are often slightly positive at adjacent
+intervals too (e.g., 12 or 14 half-hour lags). In this sense t he choice of half-hour intervals seems
+adequate.
+It is conceivable, however, that our choice of interval mask s higher frequency phenomena. In ad-
+dition, we would like to ensure that our results are not sensi tive to the exact methodological choices.
+20
+Therefore, we recalculate returns over ﬁve-minute interva ls and estimate the return responses of
+equation (1). In this case there are 78 ﬁve-minute intervals during a trading day (omitting overnight
+returns).
+Figure 7 shows these high-frequency results. Figure 7 looks like a noisy version of Figure 1.
+The negative return reversal is most pronounced for the ﬁrst few ﬁve-minute lags, but persists for
+several days. And while there is a clear daily eﬀect at daily mu ltiples of 78 lags, the leakage of
+the neighboring ﬁve-minute intervals is also apparent. Ove rall, this graph conﬁrms the previous
+results and indicates that the half-hour return intervals a re ﬁne enough to faithfully characterize
+high frequency returns.
+[Figure 7 here]
+B. Day of Week
+A potential concern is the existence day-of-the-week eﬀects . French (1980) ﬁnds that the stock
+market earns diﬀerent average returns on diﬀerent days of the w eek. In particular, average returns
+on the day following a weekend are lower than average returns on other days. Therefore, we check
+whether our daily eﬀect is driven by a weekend eﬀect or part of so me other weekly pattern.
+The Internet Appendix (Table IA.VIII) shows the performanc e of our daily and nondaily decile
+spread strategies on diﬀerent days of the week. The eﬀect is rem arkably consistent throughout the
+week. The Day 1 nondaily strategy loses money at the open, mid -day, and close on every day. The
+amounts range from -3.51 basis points on Thursdays to -6.14 b asis points on Mondays. Meanwhile
+the Day 1 daily strategy earns a positive premium when averag ed over all half-hour intervals. This
+ranges from 2.62 basis points on Tuesdays to 3.44 basis point s on Wednesdays. The results for
+longer lags are weaker, but they have the same sign and are usu ally statistically signiﬁcant at the
+5% level. We conclude that the daily results are not limited t o a weekend eﬀect or other weekday
+pattern.
+C. Calendar Month and Turn-of-Month
+There are well-known monthly patterns in the stock market. T his includes both market-wide
+January eﬀects and year-long seasonality (Rozeﬀ and Kinney ( 1976), Bouman and Jacobsen (2002),
+and Kamstra, Kramer, and Levi (2003)) and cross-sectional r eturn patterns such as the size eﬀect
+at the turn of the year (Keim (1983)). In addition to ruling ou t weekday eﬀects, we want to ensure
+that the daily pattern is not an artifact of some other monthl y seasonal phenomenon.
+The Internet Appendix (Table IA.IX) reports the decile spre ad strategies for every calendar
+21
+month. Again, the results are strikingly consistent. The Da y 1 nondaily strategy loses money in
+every calendar month, ranging from -2.88 basis points in Jun e to -5.90 basis points in March. And
+the Day 1 daily strategy makes money in every month, ranging f rom 1.70 basis points in March to
+7.80 basis points in November. The longer lag strategies hav e a similar pattern, albeit smaller and
+less consistent. Nevertheless, the Day 5 daily strategy is s till proﬁtable in every calendar month.
+The results are not limited to a particular time of year, and c ertainly not limited to the turn of the
+year.
+While the results are not limited to turn of the year seasonal ity, they might be driven by intra-
+month patterns. Ariel (1987) shows that stocks earn a premiu m near the beginning and end of
+calendar months.
+The Internet Appendix (Table IA.X) controls for turn-of-mo nth eﬀects by separately reporting
+the combined results for trading days that occur on the ﬁrst o r last day of the month. The results
+are remarkably consistent. The Day 1 and Day 2 nondaily strat egies lose money at the open,
+mid-day, and close at both the turn of the month and the middle of the month, while the daily
+strategies make money at all times. With few exceptions the D ay 3, 4, and 5 strategies maintain
+this pattern. The pattern is thus not related to turn-of-the -month eﬀects.
+D. Index Membership
+If stocks rise and fall at the same time of day, then presumabl y there are buyers and sellers who
+persistently trade them at those times (with persistence in the direction of the trade). Index funds
+and benchmarked mutual funds are natural suspects for these actions. These funds may have large
+daily inﬂows or outﬂows and have an inelastic demand to inves t those funds to replicate the index.
+To economize on trading activity they might perform “basket trades” at the open of trade, and to
+minimize tracking error they would have a motivation to trad e near the close. This is consistent
+with previous results showing a strong eﬀect at these times.
+As a very rough cut at dealing with index fund behavior, we div ide the sample between ﬁrms
+in the S&P 500 and those that are not. The Internet Appendix (T able IA.XI) separates the decile
+spread results for S&P 500 ﬁrms and non-S&P 500 ﬁrms. The resu lts for both daily and non-daily
+strategies are generally stronger among the non-S&P 500 sto cks. For example, the average decile
+spread based on the previous nondaily returns loses 5.58 bas is points in the non-S&P 500 stocks,
+but loses less than one basis point in the S&P 500 index stocks . The Day 1 daily strategy earns
+3.28 basis points with the non-S&P 500 stocks, but earns only 2.19 basis points with the index
+stocks. This diﬀerence masks some interesting variation acr oss the day. The closing-period daily
+22
+eﬀect is much larger, relative to the intraday eﬀect, for the S& P 500 stocks. For example, the
+ratio of the last period to intraday daily returns for Day 1 is 9.61 (9.42/0.98) for S&P 500 stocks
+and 4.94 for non-S&P 500 stocks. The daily eﬀect is larger for S &P 500 stocks in absolute terms
+for Days 1 through 3, and in relative terms (versus the mid-da y period) for all ﬁve days. For the
+opening half-hour the daily eﬀects are smaller in absolute te rms but larger in relative terms for
+S&P stocks. The large relative daily eﬀect in the closing-per iod for S&P 500 stocks is consistent
+with index fund trading at the close driving some of the daily eﬀect. Similar eﬀects are shown for
+large versus small ﬁrms (reported above in Table IV), so it is not clear whether this eﬀect is an
+index eﬀect or a large capitalization eﬀect.
+V. Conclusion
+A growing literature suggests that institutional investme nt ﬂows inﬂuence asset prices (e.g.,
+Harris and Gruel (1986), Coval and Staﬀord (2007), Boyer (200 8), He and Krishnamurthy (2008),
+Lou (2008), Vayanos and Woolley (2008)). We postulate that s ystematic trading and institutional
+fund ﬂows lead to predictable patterns, not only in trading v olume and order imbalances, but also
+in returns of common stocks. We study the periodicity of cros s-sectional diﬀerences in returns
+using half-hour observation intervals in the period from Ja nuary 2001 through December 2005. We
+document pronounced intraday return reversals due to bid-a sk bounce, and these reversals last for
+several trading days. The market recovers from shocks to dep th in less than 60 minutes. However,
+we ﬁnd signiﬁcant continuation of returns at intervals that are multiples of a day and this eﬀect
+lasts for at least 40 trading days. This daily periodicity is of the same order of magnitude as current
+institutional commission rates and the quoted half-spread .
+Changes in trading volume, order imbalances, and volatilit y exhibit similar patterns, but do
+not explain the return patterns. The return continuation at daily frequencies is more pronounced
+for the ﬁrst and last half-hour periods. These eﬀects are not d riven by ﬁrm size, systematic risk
+premia, or inclusion in the S&P 500 index (as a proxy for tradi ng by index funds). The pattern
+is also not driven by particular months of the year, days of th e week, or by turn-of-the-month
+eﬀects. The periodicity at the daily frequency is observed wh en we also use bid-to-bid, ask-to-ask,
+or midpoint-to-midpoint returns, which implies that the pe riodicity is not merely due to patterns
+of where transactions prices occur relative to bid and ask pr ices.
+The results are consistent with investors having a predicta ble demand for immediacy at certain
+times of the day. The pattern does not present a proﬁt opportu nity in the absence of other motives
+23
+to trade, since strategies that attempt to take advantage of the daily periodicity lose money, after
+paying the bid-ask spread. However, the magnitude of the ret urn pattern is sizeable relative to
+several components of transactions costs such as commissio ns and eﬀective spreads.
+24
+References
+Admati, Anat, and Paul Pﬂeiderer, 1988, Theory of intra-day patterns: Volume and price variabil-
+ity, Review of Financial Studies 1, 3-40.
+Almgren, Robert, and Neil Chriss, 2000, Optimal execution o f portfolio transactions, Journal of
+Risk 3, 5-39.
+Almgren, Robert, and Julian Lorenz, 2006, Bayesian adaptiv e trading with a daily cycle, Journal
+of Trading 1, 38-46.
+Andersen, Torben G., and Tim Bollerslev, 1997, Intraday per iodicity and volatility persistence in
+ﬁnancial markets, Journal of Empirical Finance 4, 115-158.
+Ariel, Robert A., 1987, A monthly eﬀect in stock returns, Journal of Financial Economics 18,
+161-174.
+Avramov, Doron, Tarun Chordia, and Amit Goyal, 2006, Liquid ity and autocorrelations in indi-
+vidual stock returns, Journal of Finance 61, 2365-2394.
+Bertsimas, Dimitris, and Andrew W. Lo, 1998, Optimal contro l of execution costs, Journal of
+Financial Markets 1, 1-50.
+Blackburn, Douglas W., William N. Goetzmann, and Andrey D. U khov, 2007, Risk aversion and
+clientele eﬀects, Working paper, Indiana University.
+Blume, Marshall E., and Robert F. Stambaugh, 1983, Biases in computed returns: An application
+to the size eﬀect, Journal of Financial Economics 12, 387-404.
+Bollerslev, Tim, 1986, Generalized autoregressive condit ional heteroskedasticity, Journal of Econo-
+metrics 31, 307-327.
+Bouman, Sven, and Ben Jacobsen, 2002, The Halloween indicat or, ‘Sell in May and go away’:
+Another puzzle, American Economic Review 92, 1618-1635.
+Boyer, Brian H., 2008, Comovement among stocks with similar book-to-market ratios, Working
+paper, Brigham Young University.
+Breen, William J., Laurie Simon Hodrick, and Robert A. Koraj czyk, 2002, Predicting equity liq-
+uidity, Management Science 48, 470-483.
+Campbell, John Y., Tarun Ramadorai, and Allie Schwartz, 200 9, Caught on tape: Institutional
+trading, stock returns, and earnings announcements, Journal of Financial Economics 92,
+66–91.
+Carhart, Mark M., Ron Kaniel, David K. Musto, and Adam V. Reed , 2002, Leaning for the tape:
+Evidence of gaming behavior in equity mutual funds, Journal of Finance 58, 661-693.
+Chordia, Tarun, Richard Roll, and Avanidhar Subrahmanyam, 2005, Evidence on the speed of
+convergence to market eﬃciency, Journal of Financial Economics 76, 271-292.
+Coppejans, Mark, Ian Domowitz, and Ananth Madhavan, 2004, R esiliency in an automated auction,
+Working paper, ITG, Inc.
+Coval, Joshua, and Erik Staﬀord, 2007, Asset ﬁre sales (and pu rchases) in equity markets, Journal
+of Financial Economics 86, 479–512.
+Del Guercio, Diane, and Paula A. Tkac, 2002, The determinant s of the ﬂow of funds of managed
+portfolios: Mutual funds vs. pension funds, Journal of Financial and Quantitative Analysis
+37, 523-557.
+Dimson, Elroy, 1979, Risk measurement when shares are subje ct to infrequent trading, Journal of
+Financial Economics 7, 197-226.
+Engle, Robert, and Robert Ferstenberg, 2007, Execution ris k: It’s the same as investment risk,
+Journal of Trading 2, 10-20.
+25
+Fama, Eugene F., 1976, Foundations of Finance (Basic Books, New York).
+Fama Eugene F., and James D. MacBeth, 1973, Risk, return, and equilibrium: Empirical tests,
+Journal of Political Economy 81, 607-636.
+Frazzini, Andrea, and Owen A. Lamont, 2008, Dumb money: Mutu al fund ﬂows and the cross-
+section of stock returns, Journal of Financial Economics 88, 299–322.
+French, Kenneth R., 1980, Stock returns and the weekend eﬀect , Journal of Financial Economics
+8, 55-69.
+Glosten, Lawrence R., and Lawrence E. Harris, 1988, Estimat ing the components of the bid/ask
+spread, Journal of Financial Economics 21, 123-142.
+Glosten, Lawrence R., and Paul R. Milgrom, 1985, Bid, ask and transaction prices in a specialist
+market with heterogeneously informed traders, Journal of Financial Economics 14, 71-100.
+Goyenko, Ruslan Y., Craig W. Holden, and Charles A. Trzcinka , 2009, Do liquidity measures
+measure liquidity? Journal of Financial Economics 92, 153-181.
+Grinold, Richard C., and Ronald N. Kahn, 2000, Active Portfolio Management: A Quantitative
+Approach for Producing Superior Returns and Selecting Supe rior Returns and Controlling
+Risk, 2nd edition (McGraw-Hill, New York).
+Gurliacci, Mark, David Jeria, and George Soﬁanos, 2009, Whe n the going gets tough, the algos get
+going, Journal of Trading 4, 34-44.
+Harris, Lawrence, 1986, A transaction data study of weekly a nd intradaily patterns in stock returns,
+Journal of Financial Economics 16, 99-117.
+Harris, Lawrence, and Eitan Gurel, 1986, Price and volume eﬀe cts associated with changes in
+the S&P 500 list: New evidence for the existence of price pres sures, Journal of Finance 41,
+815–829.
+Hasbrouck, Joel, 2009, Trading costs and returns for U.S. eq uities: Estimating eﬀective costs from
+daily data, Journal of Finance 64, 1445-1477.
+He, Zhiguo, and Arvind Krishnamurthy, 2008, Intermediary a sset pricing, Working paper, North-
+western University.
+Hendershott, Terrence, Charles M. Jones, and Albert J. Menk veld, 2009, Does algorithmic trading
+improve liquidity? Working paper, University of Californi a, Berkeley.
+Heston, Steven L., and Ronnie Sadka, 2008a, Seasonality in t he cross-section of stock returns,
+Journal of Financial Economics 87, 418-445.
+Heston, Steven L., and Ronnie Sadka, 2008b, Seasonality in t he cross-section of stock returns: The
+international evidence, Forthcoming, Journal of Financial and Quantitative Analysis .
+Holden, Craig W., and Avanidhar Subrahmanyam, 2002, News ev ents, information acquisition, and
+serial correlation, Journal of Business 75, 1-32.
+Hora, Merrell, 2006, Tactical liquidity trading and intrad ay volume, Working paper, Credit Suisse.
+Huberman, Gur, and Werner Stanzl, 2005, Optimal Liquidity T rading, Review of Finance 9, 165–
+200.
+Hvidkjaer, Soeren, 2008, Small trades and the cross-sectio n of stock returns, Review of Financial
+Studies 21, 1123-1151.
+Jain, Prem C., and Gun-Ho Joh, 1988, The dependence between h ourly prices and trading volume,
+Journal of Financial and Quantitative Analysis 23, 269-283.
+Jegadeesh, Narasimhan, 1990, Evidence of predictable beha vior of security returns, Journal of
+Finance 45, 881-898.
+Jegadeesh, Narasimhan, and Sheridan Titman, 1993, Returns to buying winners and selling losers:
+Implications for stock market eﬃciency. Journal of Finance 48, 65-91.
+26
+Jeria, David, and George Soﬁanos, 2008, Algo evolution: Fro m 4Cast to OptimIS and lower short-
+fall, Street Smart 37, 1-5.
+Kamstra, Mark J., Lisa A. Kramer, and Maurice D. Levi, 2003, W inter blues: Seasonal aﬀective
+disorder (SAD) stock market returns, American Economic Review 93, 324-343.
+Keim, Donald B., 1983, Size-related anomalies and stock ret urn seasonality: Further evidence,
+Journal of Financial Economics 12, 13-32.
+Keim, Donald B., 1989, Trading patterns, bid-ask spreads, a nd estimated security returns: The
+case of common stocks at calendar turning points, Journal of Financial Economics 25, 75-97.
+Korajczyk, Robert A., and Ronnie Sadka, 2004, Are momentum p roﬁts robust to trading costs?
+Journal of Finance 59, 1039-1082.
+Korajczyk, Robert A., and Ronnie Sadka, 2008, Pricing the co mmonality across alternative mea-
+sures of liquidity, Journal of Financial Economics 87, 45-72.
+Large, Jeremy, 2007, Measuring the resiliency of an electro nic limit order book, Journal of Financial
+Markets 10, 1–25.
+Lee, Charles M. C., and Mark J. Ready, 1991, Inferring trade d irection from intraday data, Journal
+of Finance 46, 733-754.
+Lehmann, Bruce, 1990, Fads, martingales and market eﬃcienc y, Quarterly Journal of Economics
+105, 1-28.
+Lehmann, Bruce N., and David M. Modest, 2005, Diversiﬁcatio n and the optimal construction of
+basis portfolios, Management Science 51, 581–598.
+Lo, Andrew W., and A. Craig MacKinlay, 1990, When are contrar ian proﬁts due to stock market
+overreaction? Review of Financial Studies 3, 175-208.
+Lo, Andrew W., and Jiang Wang, 2006, Trading volume: Implica tions of an intertemporal capital
+asset pricing model, Journal of Finance 61, 2805-2840.
+Lou, Dong, 2008, A ﬂow-based explanation for return predict ability, Working paper, Yale Univer-
+sity.
+Pagano, Michael S., Lin Peng, and Robert A. Schwartz, 2008, T he quality of price formation
+at market openings and closings: Evidence from the Nasdaq st ock market, Working paper,
+Villanova University.
+Roll, Richard, 1984, A simple implicit measure of the eﬀectiv e bid-ask spread in an eﬃcient market,
+Journal of Finance 39, 1127-1139.
+Rozeﬀ, Michael S., and William R. Kinney, 1976, Capital marke t seasonality: The case of stock
+returns, Journal of Financial Economics 3, 379-402.
+Sadka, Ronnie, 2006, Momentum and post-earnings-announce ment drift anomalies: The role of
+liquidity risk, Journal of Financial Economics 80, 309–349.
+Stoll, Hans R., 1978, The supply of dealer services in securi ties markets, Journal of Finance 33,
+1133-1151.
+Tversky, Amos, and Daniel Kahneman, 1974, Judgment under un certainty: Heuristics and biases,
+Science 185, 1124-1131.
+Vayanos, Dimitri, 2001, Strategic trading in a dynamic nois y market, Journal of Finance 56, 131-
+171.
+Vayanos, Dimitri, and Paul Woolley, 2008, An institutional theory of momentum and reversal,
+Working paper, London School of Economics.
+Wood, Robert A., Thomas H. McInish, and J. Keith Ord, 1985, An investigation of transactions
+data for NYSE stocks, Journal of Finance 40, 723-739.
+27
+F ootnotes
+1. Following Fama (1976), these responses have the interpre tation of excess returns on cost-
+less portfolios that have excess returns of 100% in a previou s half-hour interval.
+2. We use Fama and MacBeth (1973) t-statistics, which assume no autocorrelation in the
+coeﬃcients of the cross-sectional regressions, because we ﬁnd no evidence of signiﬁcant autocorre-
+lation in the estimates, ˆγ k.
+3. The Internet Appendix is available on the Journal of Finance web site, at
+http://www.afajof.org/supplements.asp.
+4. The returns on the separate winners and losers portfolios are available in the Internet
+Appendix (Table IA.II).
+5. An 8% equity risk premium corresponds to approximately 3. 2 basis points per trading
+day (that is, 800/250).
+6. Korajczyk and Sadka (2004), Goyenko, Holden, and Trzcink a (2009), and Hasbrouck
+(2009) ﬁnd larger quoted spreads. However, these papers hav e sample periods that include both
+pre-decimalization data and some include less liquid stock s.
+7. In the Internet Appendix (Table IA.XI) we estimate the ret urn spread for S&P 500 stocks
+(which is the sample studied in Gurliacci, et al.) to be 2.19 b asis points.
+8. In the Internet Appendix (Figure IA.3) we present a versio n of Figure 4 that uses diﬀerent
+scaling of the return results, which makes it easier to disce rn the return patterns for the mid-day
+period.
+9. The estimates, ˆgt,k, do not display substantial autocorrelation so we do not mak e adjust-
+ments to the Fama-MacBeth standard errors.
+10. Given the increased transactions volume in our sample pe riod relative to that in Lee and
+Ready (1991), we do not require their ﬁve second minimum peri od between quotes and transactions.
+28

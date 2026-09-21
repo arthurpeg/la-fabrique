@@ -15,6 +15,12 @@ calibration à la main (porte 03). `D13` § Pourquoi l'écrit sans détour, et a
 session ne doit lire cette porte comme davantage.
 
 **Décision la plus récente :**
+`decisions/DECISION-18-le-texte-qui-fait-foi.md` — « le texte du papier »
+n'existe pas : il y a des **extractions**, qui diffèrent. Le texte qui fait foi
+est l'**union de deux extractions fixées d'avance et identiques pour tous les
+papiers**, versionnées dans `corpus/text/`. Un mode par papier est écarté : ce
+serait un bouton.
+**Décision précédente :**
 `decisions/DECISION-17-ce-que-la-porte-07-demande.md` — la porte 07 ne demande
 plus **20 fiches** : elle demande un **extracteur jugé sur tout le corpus
 atteignable**, avec le compte écrit de ce qui ne l'était pas. Quatre conditions
@@ -64,7 +70,7 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 |---|---|---|---|
 | 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07` |
 | 06 | Contrôles automatiques et réplication | Un signal dégénéré est rejeté avant le harnais ; la chaîne reproduit un fait publié sur nos données. La cible a changé deux fois : Mesfin (métrique incompatible, `D12`), Heston (motif absent, `H03`), puis Andersen & Bollerslev (`D13`). | **franchie 2026-09-18** — `gate_06_controls.py` (25) et `scripts/measure_h04.py` (19) |
-| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 32 vérifications), son **extracteur non** ; **recensement `G4` fait le 2026-09-21 — 19 atteignables sur 20**, 18 PDF enregistrés, et **les 3 fiches de référence passent les cinq conditions** |
+| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 32 vérifications), **son extracteur existe depuis le 2026-09-21** (`extract_fiche.py`) ; recensement `G4` fait — **19 atteignables sur 20**, 18 PDF, texte qui fait foi fixé par `D18` ; les 3 fiches de référence passent les cinq conditions ; **`G1` non tenu — 15 papiers restent à ficher** |
 | 08 | Le codeur de signal | Une fiche produit un signal exécutable qui passe la sandbox, sans retouche manuelle. | à faire |
 
 ## Acte III — Fermer la boucle une fois
@@ -321,17 +327,29 @@ où on le lance. Même péremption que la note « sur cette machine » corrigée
    un point là où le papier écrit deux points). **Heston n'a demandé aucune
    réparation** : ses cinq échecs venaient de l'extracteur de texte, pas de sa
    fiche. Voir `D16` § Complément du 2026-09-21.
-4. **Trancher quel mode d'extraction de texte fait foi** — **nouveau, et il
-   remonte en tête.** `pypdf` par défaut insère des espaces dans les mots d'un PDF
-   **né numérique** (« multiples o f 13 ») ; son mode `layout` rend les trois
-   fiches vertes sans en toucher une. Une `quoted_source` est définie **contre un
-   texte** : tant que le mode n'est pas écrit, chaque réparation déclarée du projet
-   repose sur un implicite.
-5. **Apprendre `quoted_source` à `validate_fiches.py`**, faute de quoi `F1` reste
-   plus laxiste que `F3` sur une entrée réparée.
-6. **Écrire l'extracteur** — et il devra être **non contaminé** : une session qui
-   a lu la fiche de référence d'un papier ne peut pas l'extraire, elle
-   recopierait. Même piège que le trieur, même parade.
+4. ~~Trancher quel mode d'extraction fait foi.~~ **Fait le 2026-09-21 : `D18`.**
+   Le texte qui fait foi est l'**union de deux extractions fixées d'avance et
+   identiques pour tous les papiers** — `pypdf` par défaut et `layout` —
+   produites par `corpus/extract_text.py` et **versionnées** dans `corpus/text/`
+   (36 fichiers, 6,2 Mo, empreintes au manifeste). Un mode par papier a été
+   **écarté** : ce serait un bouton qu'on tourne jusqu'à ce que la fiche passe.
+5. ~~Apprendre `quoted_source` à `validate_fiches.py`.~~ **Fait le 2026-09-21.**
+   L'asymétrie que `D16` avait nommée est fermée : le schéma contrôle désormais
+   le chiffre contre **la chaîne qui fait foi**. `check_fiches_guard` passe de 23
+   à **31 vérifications**, 15 fautes refusées.
+6. ~~La fuite de `corpus/SCHEMA.md`.~~ **Fermée le 2026-09-21**, et c'était un
+   préalable à l'extracteur, pas un nettoyage : le schéma illustrait ses exemples
+   avec le contenu **réel** d'une fiche de référence, et c'est le seul document du
+   corpus que l'extracteur a le droit de lire. Exemples refaits sur un papier
+   fictif ; la réparation déclarée y est désormais documentée, faute de quoi un
+   extracteur devant un texte abîmé paraphraserait.
+7. **L'extracteur existe** — `corpus/extract_fiche.py`, harnais **sans
+   intelligence d'extraction** : il prépare la consigne et juge la sortie.
+   L'extracteur est une **session séparée** qui reçoit le schéma, le texte du
+   papier, et **rien d'autre du corpus**. Premier passage lancé le 2026-09-21 sur
+   l'entrée 13.
+8. **Ficher les 15 papiers restants** — `G1` exige zéro atteignable non fiché.
+   `python corpus/extract_fiche.py --list` dit lesquels.
 
 ### Ce qui reste ouvert par ailleurs
 

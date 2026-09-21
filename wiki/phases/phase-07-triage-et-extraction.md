@@ -265,6 +265,37 @@ Sancetta, Strasser & Wolfe » quand le papier que son propre lien désigne est d
 Kurov, Wolfe & Gilbert. `AMORCE.md` **n'a pas été touché** : c'est l'étalon du
 triage (`D15`).
 
+## Le texte qui fait foi, et l'extracteur — le 2026-09-21
+
+**`D18` tranche une question que personne n'avait vue comme une question** :
+« le texte du papier » n'existe pas. Il y a des **extractions** d'un PDF, et
+elles diffèrent assez pour changer le verdict de `F2`. Le texte qui fait foi est
+désormais l'**union de deux extractions fixées d'avance et identiques pour tous
+les papiers** — `pypdf` par défaut et `layout` — versionnées dans `corpus/text/`
+(36 fichiers, 6,2 Mo). La source fait foi : `decisions/DECISION-18-le-texte-qui-fait-foi.md`.
+
+**L'option écartée est la plus instructive** : un mode déclaré **par papier**.
+Elle transformerait le choix du texte en bouton — l'extracteur échoue, on change
+son mode, il passe. C'est « modifier le harnais pour faire passer un signal »,
+transposé au corpus.
+
+**Trois verrous posés le même jour**, et chacun était un préalable à l'extracteur :
+
+| | Ce qui a changé |
+|---|---|
+| `validate_fiches.py` | connaît la **réparation déclarée** ; l'asymétrie `F1` plus laxiste que `F3`, nommée par `D16`, est fermée. Garde : 23 → **31 vérifications** |
+| `corpus/SCHEMA.md` | **fuite fermée** (`L17` de `LECONS.md`) : ses exemples portaient le contenu réel d'une fiche de référence, et c'est le **seul document du corpus que l'extracteur lit** |
+| `corpus/extract_fiche.py` | le harnais de l'extracteur, **sans intelligence d'extraction** : il prépare la consigne et juge la sortie |
+
+**Ce que l'extracteur voit, limitativement** : le schéma, le texte du papier, la
+consigne. Pas `AMORCE.md` qui porte le verdict de triage, pas `corpus/fiches/`
+qui porte les réponses, pas les décisions qui racontent ce que les papiers ont
+donné. Même parade que pour le trieur, pour la même raison.
+
+**État de `G1`** : 3 fichés, **15 à ficher**, 2 hors d'atteinte du fichage
+(entrée 6 inatteignable, entrée 9 en HTML). `G1` exige zéro atteignable non
+fiché : la porte 07 est loin d'être franchie.
+
 ## Ce qu'on sait déjà du produit de cette phase
 
 **Le corpus implémentable est attendu mort.** Mesfin (2026) est transportable

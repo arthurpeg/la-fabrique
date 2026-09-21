@@ -1,0 +1,2301 @@
+GOOD VOLATILITY , BAD VOLATILITY: SIGNED JUMPS AND THE
+PERSISTENCE OF VOLATILITY
+Andrew J. Patton and Kevin Sheppard*
+Abstract— Using estimators of the variation of positive and negative returns
+(realized semivariances) and high-frequency data for the S&P 500 Index
+and 105 individual stocks, this paper sheds new light on the predictability of
+equity price volatility. We show that future volatility is more strongly related
+to the volatility of past negative returns than to that of positive returns and
+that the impact of a price jump on volatility depends on the sign of the jump,
+with negative (positive) jumps leading to higher (lower) future volatility.
+We show that models exploiting these ﬁndings lead to signiﬁcantly better
+out-of-sample forecast performance.
+I. Introduction
+T
+HE development of estimators of volatility based on
+high-frequency (intradaily) information has led to great
+improvements in our ability to measure ﬁnancial market
+volatility. Recent work in this area has yielded estimators
+that are robust to market microstructure effects, feasible in
+multivariate applications, and can separate the volatility con-
+tributions of jumps from continuous changes in asset prices
+(see Andersen, Bollerslev, and Diebold, 2009, for a recent
+survey of this growing literature).
+1 A key application of these
+new estimators of volatility is in forecasting: better measures
+of volatility enable us to better gauge the current level of
+volatility and better understand its dynamics, both of which
+lead to better forecasts of future volatility. V olatility fore-
+casting, while long useful in risk management, has become
+increasingly important as volatility is now directly tradable
+using swaps and futures.
+2
+This paper uses high-frequency data to shed light on
+another key aspect of asset returns: the leverage effect and
+the impact of signed returns on future volatility more gen-
+erally. The observation that negative equity returns lead
+to higher future volatility than positive returns is a well-
+established empirical regularity in the autoregressing con-
+ditional heteroskedasticity (ARCH) literature (see the review
+articles by Bollerslev, Engle, and Nelson, 1994, and Andersen
+Received for publication October 13, 2011. Revision accepted for
+publication July 23, 2014. Editor: Mark W. Watson.
+* Patton: Duke University; Sheppard: University of Oxford.
+We thank Giampiero Gallo, Neil Shephard, and seminar participants at
+Cass Business School, CORE, Oxford, Pennsylvania, EC2 in Aarhus, Soci-
+ety for Financial Econometrics in Melbourne, and World Congress of the
+Econometric Society in Shanghai for helpful comments. Additional results
+and analyses are in an online appendix. Code used in this paper for com-
+puting realized quantities is available at www.kevinsheppard.com.
+A supplemental appendix is available online at http://www.mitpress
+journals.org/doi/suppl/10.1162/REST_a_00503.
+1 See Andersen et al. (2001, 2003), Barndorff-Nielsen and Shephard
+(2004, 2006), Zhang, Mykland, and Aït-Sahalia (2005), Aït-Sahalia,
+Mykland, and Zhang (2005), Barndorff-Nielsen et al. (2008), among others.
+2 A partial list of papers on this topic includes Andersen et al. (2000, 2003),
+Fleming, Kirby, and Ostdiek (2003), Corsi (2009), Liu and Maheu (2005),
+Lanne (2006, 2007), Chiriac and V oev (2007), Andersen et al. (2007), Visser
+(2008), and Chen and Ghysels (2011).
+et al., 2006, for example). 3 Recent work in this literature
+has also found evidence of this relationship using high-
+frequency returns (see Bollerslev, Litvinova, & Tauchen,
+2006; Barndorff-Nielsen, Kinnebrock, & Shephard, 2010;
+Visser, 2008; and Chen & Ghysels, 2011). We build on
+these papers to exploit this relationship and obtain improved
+volatility forecasts.
+We use a new estimator proposed by Barndorff-Nielsen
+et al. (2010), realized semivariance, which decomposes the
+usual realized variance into a component that relates only to
+positive high-frequency returns and a component that relates
+only to negative high-frequency returns.
+4 Previous studies
+have almost exclusively employed even functions of high-
+frequency returns (e.g., squares, absolute values), which of
+course eliminate any information that may be contained in the
+sign of these returns. High-frequency returns are generally
+small, and it might reasonably be thought that there is little
+information to be gleaned from whether they happen to lie
+above or below 0. Using a simple autoregressive model, as in
+Corsi (2009) and Andersen, Bollerslev, and Diebold (2007),
+and high-frequency data on the S&P 500 Index and 105 of
+its constituent ﬁrms over the period 1997 to 2008, we show
+that this is far from true.
+We present several novel ﬁndings about the volatility of
+equity returns. First, we ﬁnd that negative realized semivari-
+ance is much more important for future volatility than positive
+realized semivariance, and disentangling the effects of these
+two components signiﬁcantly improves forecasts of future
+volatility. This is true whether the measure of future volatil-
+ity is realized variance, bipower variation, negative realized
+semivariance, or positive realized semivariance. Moreover, it
+is true for horizons ranging from one day to three months,
+both in-sample and (pseudo-)out-of-sample. Second, we use
+realized semivariances to obtain a measure of signed jump
+variation, and we ﬁnd that is important for predicting future
+volatility, with volatility attributable to negative jumps lead-
+ing to signiﬁcantly higher future volatility and positive jumps
+leading to signiﬁcantly lower volatility. Thus, while jumps
+of both signs are indicative of volatility, their impacts on
+current returns and future volatility might lead one to label
+them “good volatility” and “bad volatility.” Previous research
+(Andersen et al., 2007; Forsberg & Ghysels, 2007; and Busch,
+3 Common ARCH models with a leverage effect include GJR-GARCH
+(Glosten, Jagannathan, & Runkle, 1993), TARCH (Zakoian, 1994), and
+EGARCH (Nelson, 1991).
+4 Semivariance, and the broader class of downside risk measures, has a
+long history in ﬁnance. Applications of semivariance in ﬁnance include
+Hogan and Warren (1974), who study semivariance in a general equilibrium
+framework; Lewis (1990), who examined its role in option performance; and
+Ang, Chen, and Xing (2006), who examined the role of semivariance and
+covariance in asset pricing. For more on semivariance and related measures,
+see Sortino and Satchell (2001).
+The Review of Economics and Statistics, July 2015, 97(3): 683–697
+© 2015 by the President and Fellows of Harvard College and the Massachusetts Institute of Technology
+doi:10.1162/REST_a_00503
+684 THE REVIEW OF ECONOMICS AND STA TISTICS
+Christensen, & Nielsen, 2011) reported that jumps were of
+only limited value for forecasting future volatility. Our ﬁnd-
+ing that the impact of jumps depends critically on the sign of
+the jump helps explain these results: averaging across both
+positive and negative jump variation, the impact on future
+volatility is near 0.
+5
+Bollerslev et al. (2006) were perhaps the ﬁrst to note that
+the sign of high-frequency returns contains useful informa-
+tion for future volatility, even several days into the future.
+They show that several standard stochastic volatility models
+are unable to match this feature. Chen and Ghysels (2011)
+propose a semiparametric model for aggregated volatility
+(e.g., daily or monthly) as a function of individual high-
+frequency returns. The coefﬁcient on lagged high-frequency
+returns is the product of a parametric function of the lag
+(related to the MIDAS model of Ghysels, Santa-Clara, &
+V alkanov, 2006) and a nonparametric function of the return.
+With this model, the authors obtain nonparametric “news
+impact curves” and document evidence that these curves
+are asymmetric for returns on the S&P 500 and Dow Jones
+indices. A forecasting model based on realized semivari-
+ances avoids some of the difﬁculties of the semiparametric
+MIDAS model of Chen and Ghysels (2011), such as the
+fact that estimation of news impact curves requires either
+a local estimator of spot volatility (a difﬁcult empirical prob-
+lem) or a method for dealing with the persistence in large
+returns, which makes estimation of the curve for larger values
+difﬁcult. Realized semivariances are simple daily statistics
+and require no choice of bandwidth or other smoothing
+parameters and no nonlinear estimation.
+We complement and extend existing work in a number
+of directions. First, we look at the leverage effect and fore-
+casting for a large set of assets—105 individual ﬁrms, and
+the S&P 500, the FTSE 100, and the EURO STOXX 50
+indexes—and verify that the usefulness of realized semivari-
+ances relative to realized variances is not restricted only to
+broad stock indices. Second, we show that negative semi-
+variances are useful for predicting a variety of measures of
+volatility: realized volatility, bipower variation, and both real-
+ized semivariances. Third, we show the usefulness of simple
+autoregressive models that we use, all of which can be esti-
+mated using least squares, across horizons ranging from one
+day to three months. We also present results on the informa-
+tion in signed jump variation, a measure that does not ﬁt into
+existing frameworks and helps us reconcile our ﬁndings with
+the existing literature.
+The remainder of the paper is organized as follows. Section
+II describes the volatility estimators that we use in our empiri-
+cal analysis. Section III discusses the high-frequency data that
+we study and introduces the models that we employ. Section
+IV presents empirical results on the gains from using realized
+semivariances for forecasting, and section V presents results
+from using signed jump variation for volatility forecasting.
+5 Corsi, Pirino, and Renò (2010) ﬁnd that jumps have a signiﬁcant and
+positive impact on future volatility, when measured using a new threshold-
+type estimator for the integrated variance.
+Section VI presents results for a pseudo-out-of-sample fore-
+casting application for the U.S. data and results for two
+international stock indexes. Section VII concludes.
+II. Decomposing Realized Variance Using Signed
+Returns
+In this section we brieﬂy describe the estimators that are
+used in our analysis, including the new estimators proposed
+by Barndorff-Nielsen et al. (2010).
+Consider a continuous-time stochastic process for log-
+prices, p
+t , which consists of a continuous component and
+a pure jump component,
+pt =
+∫ t
+0
+μsds +
+∫ t
+0
+σsdWs + Jt , (1)
+where μ is a locally bounded predictable drift process, σ is a
+strictly positive cádlág process, and J is a pure jump process.
+The quadratic variation of this process is
+[
+p, p
+]
+=
+∫ t
+0
+σ2
+s ds +
+∑
+0<s≤t
+(Δps)2 ,( 2 )
+where Δps = ps − ps− captures a jump, if present.
+Andersen et al. (2001) introduced a natural estimator for
+the quadratic variation of a process as the sum of frequently
+sampled squared returns, commonly known as realized vari-
+ance (RV). For simplicity, suppose that prices p
+0, ... , pn are
+observed at n+ 1 times, equally spaced on [0, t]. Using these
+returns, the n-sample realized variance, RV, is deﬁned below
+and can be shown to converge in probability to the quadratic
+variation as the time interval between observations becomes
+small (Andersen et al., 2003):
+RV =
+n∑
+i=1
+r2
+i
+p
+→
+[
+p, p
+]
+, as n →∞ , (3)
+where ri = pi −pi−1. Barndorff-Nielsen and Shephard (2006)
+extended the study of estimating volatility from simple esti-
+mators of the quadratic variation to a broader class, which
+includes bipower variation ( BV ). Unlike realized variance,
+the probability limit of BV includes only the component of
+quadratic variation due to the continuous part of the price
+process, the integrated variance,
+BV = μ
+−2
+1
+n∑
+i=2
+|ri|| ri−1|
+p
+→
+∫ t
+0
+σ2
+s ds, as n →∞ ,( 4 )
+where μ1 = √2/π. The difference of the above two estima-
+tors of price variability can be used to consistently estimate
+the variation due to jumps of quadratic variation:
+RV − BV
+p
+→
+∑
+0≤s≤t
+Δp2
+s . (5)
+Barndorff-Nielsen et al. (2010) introduced estimators that
+can capture the variation only due to negative or positive
+GOOD VOLA TILITY , BAD VOLA TILITY 685
+returns using the realized semivariance estimator. These
+estimators are deﬁned as
+RS+ =
+n∑
+i=1
+r2
+i I{ri > 0},
+(6)
+RS− =
+n∑
+i=1
+r2
+i I{ri < 0}.
+These estimators provide a complete decomposition of RV,
+in that RV = RS+ + RS−. This decomposition holds exactly
+for any n, as well as in the limit. We use this decomposition
+of realized volatility extensively in our empirical analysis
+below.
+6
+Barndorff-Nielsen et al. (2010) show that, like realized
+variance, the limiting behavior of realized semivariance
+includes variation due to both the continuous part of the price
+process and the jump component. The use of the indicator
+function allows the signed jumps to be extracted, with each
+of the realized semivariances converging to one-half of the
+integrated variance plus the sum of squared jumps with a
+negative or positive sign:
+RS
++ p
+→ 1
+2
+∫ t
+0
+σ2
+s ds +
+∑
+0≤s≤t
+Δp2
+s I{Δps > 0},
+(7)
+RS− p
+→ 1
+2
+∫ t
+0
+σ2
+s ds +
+∑
+0≤s≤t
+Δp2
+s I{Δps < 0}.
+Note that the ﬁrst term in the limit of both RS+ and RS−
+is one-half of the integrated variance. This has two impli-
+cations. First, it reveals that a “complete” decomposition of
+realized variance into continuous and jump components, and
+positive and negative components, yields only three, not four,
+terms; the continuous component of volatility is not decom-
+posable into positive and negative components. Second, it
+reveals that the variation due to the continuous component
+can be removed by simply subtracting one RS from the other,
+without the need to estimate it separately. The remaining part
+is what we deﬁne as the signed jump variation:
+ΔJ
+2 ≡ RS+ − RS−
+p
+→
+∑
+0≤s≤t
+Δp2
+s I{Δps > 0}−
+∑
+0≤s≤t
+Δp2
+s I{Δps < 0}.
+(8)
+In our analysis, we use RS+, RS−, and ΔJ2 to gain new
+insights into the empirical behavior of volatility as it relates
+to signed returns.
+6 Visser (2008) considers a similar estimator based on powers of absolute
+values of returns rather than squared returns. For one-step forecasts of the
+daily volatility of the S&P 500 Index, he ﬁnds that using absolute returns
+(i.e., a power of 1) leads to the best in-sample ﬁt. We leave the consider-
+ation of different powers for future research and focus on simple realized
+semivariances.
+III. Data and Models
+The data used in this paper consist of high-frequency trans-
+action prices on all stocks that were ever a constituent of the
+S&P 100 Index between June 23, 1997, and July 31, 2008.
+The start date corresponds to the ﬁrst day that U.S. equities
+traded with a spread less than one-eighth of a dollar.
+7 We also
+study the S&P 500 Index exchange traded fund (ETF), with
+ticker symbol SPDR, over this same period for comparison.
+Of the 154 distinct constituents of the S&P 100 Index over
+this time period, we retain for our analysis the 105 that were
+continuously available for at least four years.
+All prices are taken from the New Y ork Stock Exchange’s
+TAQ database. Data are ﬁltered to include only those occur-
+ring between 9:30:00 and 16:00:00 (inclusive) and are
+cleaned according to the rules detailed in appendix A. As we
+focus on price volatility over the trade day, overnight returns
+are excluded, and we avoid the need to adjust prices for splits
+or dividends.
+A. Business Time Sampling and Subsampling
+All estimators were computed daily, using returns sampled
+in business time rather than the more familiar calendar time
+sampling. That is, rather than use prices that are evenly spaced
+in calendar time (say, every 5 minutes), we use prices that are
+evenly spaced in “event” time (say, every ten transactions).
+(This implies, of course, that we sample more often during
+periods with greater activity and less often in quieter peri-
+ods.) Under some conditions, business-time sampling can be
+shown to produce realized measures with superior statistical
+properties (see Oomen, 2005), and this sampling scheme is
+now common in this literature (see Barndorff-Nielsen et al.,
+2008, and Bollerslev & Todorov, 2011, for example).
+8
+We sample prices 79 times per day, which corresponds
+to an average interval of 5 minutes. We use the ﬁrst and last
+prices of the day as our ﬁrst and last observations, and sample
+evenly across the intervening prices to obtain the remaining
+77 observations. The choice to sample prices using an approx-
+imate 5-minute window is a standard one and is motivated by
+the desire to avoid bid-ask bounce-type microstructure noise.
+Since price observations are available more often than our
+approximate 5 minute sampling period, there are many possi-
+ble grids of approximate 5-minute prices that could be used,
+depending on which observation is used for the ﬁrst sample.
+We use ten different grids of 5-minute prices to obtain ten
+different estimators, which are correlated but not identical,
+and then we average these to obtain our ﬁnal estimator. This
+approach, subsampling, was ﬁrst proposed by Zhang et al.
+7 Trading volume and the magnitude of microstructure noise that affects
+realized-type estimators both changed around this date (see Aït-Sahalia &
+Y u, 2009), and so we start our sample after this change took place.
+8 Recent work by Li et al. (2013) considers cases where trade arrivals are
+strongly related to volatility and shows that bias in realized variance can
+arise in such cases. That paper does not consider realized semivariance, and
+we assume that our data ﬁt into the usual framework where no such biases
+arise.
+686 THE REVIEW OF ECONOMICS AND STA TISTICS
+Table 1.— Data Summary Statistics
+SPDR Mean Q.05 Median Q.95
+Averages
+RV 1.154 4.391 1.758 3.542 10.675
+BV 1.131 3.821 1.540 2.999 9.521
+RS+ 0.583 2.192 0.887 1.777 5.286
+RS− 0.571 2.199 0.874 1.806 5.388
+ΔJ2 0.012 −0.008 −0.210 0.011 0.107
+ΔJ2+ 0.098 0.403 0.168 0.337 0.904
+ΔJ2− −0.086 −0.411 −1.032 −0.334 −0.150
+Autocorrelations
+RV 0.633 0.629 0.397 0.667 0.765
+BV 0.682 0.637 0.420 0.658 0.788
+RS+ 0.469 0.550 0.341 0.578 0.690
+RS− 0.704 0.592 0.340 0.624 0.757
+ΔJ2 −0.112 −0.013 −0.148 −0.003 0.092
+ΔJ2+ 0.029 0.112 0.015 0.115 0.206
+ΔJ2− 0.062 0.133 0.055 0.127 0.276
+RV BV RS + RS− ΔJ2 ΔJ2+ ΔJ2−
+Correlations
+RV – 0.981 0.945 0.942 0.071 0.512 −0.472
+BV 0.988 – 0.923 0.934 0.050 0.468 −0.452
+RS+ 0.965 0.931 – 0.787 0.373 0.720 −0.217
+RS− 0.943 0.962 0.824 – −0.252 0.238 −0.685
+ΔJ2 0.391 0.304 0.618 0.063 – 0.777 0.696
+ΔJ2+ 0.613 0.520 0.782 0.338 0.909 – 0.122
+ΔJ2− −0.340 −0.353 −0.148 −0.549 0.501 0.094 –
+The top panel contains the average values for realized variance ( RV), bipower variation (BV ), positive and negative semivariance (RS+ and RS− ), jump variation (ΔJ2 ), and signed jump variation (ΔJ2+ and ΔJ2− ),
+scaled by 100. The left column contains values for the S&P 500 ETF (SPDR). The right four columns contain the average, 5% and 95% quantiles, and the media n from the panel of 105 stocks. The second panel contains
+the ﬁrst autocorrelation for each of the series, and the right four columns report the average, 5% and 95% quantiles, and the median from the 105 individ ual stocks. The bottom panel contains the correlations for the
+seven variables; entries below the diagonal are computed using the SPDR data, and entries above the diagonal are average correlations for the 105 stoc ks.
+(2005). This procedure should produce a mild increase in
+precision relative to using a single estimator.
+B. V olatility Estimator Implementation
+Denote the observed log-prices on a given trade day as
+p0, p1, ... , pn where n+1 is the number of unique time stamps
+between 9:30:00 and 16:00:00 that have prices. Setting the
+number of price samples to 79 (which corresponds to sam-
+pling every 5 minutes on average), RV computed uniformly
+in business time starting from the jth observation equals
+RV
+( j) =
+78∑
+i=1
+(
+p⌊ik+jδ⌋− p⌊(i−1)k+jδ⌋
+)2
+, (9)
+where k = n/78, δ = n/78 × 1/10, and ⌊·⌋rounds down
+to the next integer. Prices outside of the trading day are set
+to the close price. The subsampled version is computed by
+averaging over ten uniformly spaced windows,
+RV = 1
+10
+9∑
+j=0
+RV( j). (10)
+Realized semivariances, RS+ and RS−, are constructed in an
+analogous manner.
+In addition to subsampling, the estimator for bipower vari-
+ation was computed by averaging multiple “skip” versions.
+Skip versions of other estimators, particularly those of higher-
+order moments (such as fourth moments, or “integrated
+quarticity”), were found to possess statistical properties supe-
+rior to returns computed using adjacent returns in Andersen
+et al. (2007). The “skip- q” bipower variation estimator is
+deﬁned as
+BV
+q = μ−2
+1
+78∑
+i=q+2
+⏐⏐p⌊ik⌋− p⌊(i−1)k⌋
+⏐⏐
+×
+⏐⏐p⌊(i−1−q)k⌋− p⌊(i−2−q)k⌋
+⏐⏐, (11)
+where μ1 = √2/π. The usual BV estimator is obtained when
+q = 0. We construct our estimator of bipower variation by
+averaging the skip-0 through skip-4 estimators, which repre-
+sents a trade-off between locality (skip-0) and robustness to
+both market microstructure noise and jumps that are not con-
+tained in a single sample (skip-4).
+9 Using a skip estimator
+was advocated in Huang and Tauchen (2005) as an impor-
+tant correction to bipower, which may be substantially biased
+in small samples, although to our knowledge the use of an
+average over multiple skip-q estimators is novel.
+10
+Table 1 presents some summary statistics for the vari-
+ous volatility measures used in this paper. The upper panel
+9 Events that are often identiﬁed as jumps in U.S. equity data correspond
+to periods of rapid price movement, although these jumps are usually char-
+acterized by multiple trades during the movement due to price continuity
+rules faced by market makers.
+10 We also conducted our empirical analysis using the MedRV estima-
+tor of Andersen, Dobrev, and Schaumburg (2012), which is an alternative
+jump-robust estimator of integrated variance. The resulting estimates and
+conclusions were almost identical to using BV , and we omit them in the
+interest of brevity.
+GOOD VOLA TILITY , BAD VOLA TILITY 687
+presents average values for realized variance, bipower varia-
+tion, positive and negative realized semivariances, and the
+signed jump variation measures. We see that the average
+value of daily RV for the SPDR was 1.154, implying 17.1%
+annualized volatility. The corresponding value for individ-
+ual ﬁrms was 33.2%, indicating the higher average volatility
+of individual stock returns compared with the market. These
+ﬁgures reveal that variation due to jumps represents around
+2% of total quadratic variation for the SPDR and around
+13% for the average individual ﬁrm in our collection of
+105 ﬁrms. (These proportions are ratios of averages of BV
+and RV across days. If we instead take the average of these
+ratios, we also get 2% and 13% as the proportion of qua-
+dratic variation due to jumps.) In the middle panel of this
+table, we observe that the ﬁrst-order autocorrelation of the
+SPDR volatility series ( RV, BV , RS
++, and RS−) ranges from
+0.47 to 0.70. The autocorrelations of the signed jump vari-
+ation series for the SPDR are lower, ranging from −0.11 to
+0.06. The corresponding ﬁgures for the individual ﬁrms are
+similar. The lower panel presents correlations between the
+various volatility measures where the continuous component
+of volatility produces large correlations in RV, BV , RS
++, and
+RS−. The correlation between RS+ and RS−, at around 80%,
+is markedly lower than the correlation between these and
+either RV or BV , indicating that there is novel information in
+this decomposition.
+C. Model Estimation and Inference
+We analyze the empirical features of these new measures
+of volatility using the popular heterogeneous autoregression
+(HAR) model (see Corsi, 2009, and Müller et al., 1997).
+HARs are parsimonious restricted versions of high-order
+autoregressions. The standard HAR in the realized variance
+literature regresses realized variance on three terms: the past
+1-day, 5-day, and 22-day average realized variances. To ease
+interpretation, we use a numerically identical reparameteri-
+zation where the second term consists of only the realized
+variances between lags 2 and 5, and the third term consists
+of only the realized variances between lag 6 and 22,
+¯y
+h,t+h = μ + φd yt + φw
+(
+1
+4
+4∑
+i=1
+yt−i
+)
++ φm
+(
+1
+17
+21∑
+i=5
+yt−i
+)
++ ϵt+h (12)
+where y denotes the volatility measure (e.g., RV, BV ), and
+¯yh,t+h = 1
+h
+∑ h
+i=1 yt+i is the h-day average cumulative volatil-
+ity.11 Throughout the paper, we use¯yw,t to indicate the average
+value over lags 2 to 5 and ¯ym,t to denote the average value
+between lags 6 and 22. We estimate the model above for
+forecast horizons ranging from h = 1 to 66 days.
+11 In the online appendix, we present results where the h-day ahead daily
+volatility measure, yt+h, rather than the cumulative volatility, is used as the
+dependent variable.
+Because the dependent variable in all of our regressions
+is a volatility measure, estimation by OLS has the unfortu-
+nate feature that the resulting estimates focus primarily on
+ﬁtting periods of high variance and place little weight on
+more tranquil periods. This is an important drawback in our
+applications, as the level of variance changes substantially
+across our sample period and the level of the variance and
+the volatility in the error are known to have a positive rela-
+tionship. To overcome this, we estimate our models using
+simple weighted least squares (WLS). To implement this, we
+ﬁrst estimate the model using OLS and then construct weights
+as the inverse of the ﬁtted value from that model.
+12
+The left-hand-side variable includes leads of multiple days,
+and so we use a Newey and West (1987) HAC to make
+inference on estimated parameters. The bandwidth used was
+2(h − 1), where h is the lead length of the left-hand-side
+variable.
+D. A Panel HAR for V olatility Modeling
+Separate estimation of the models on the individual ﬁrms’
+realized variance is feasible, but does not provide a direct
+method to assess the signiﬁcance of the average effect, and
+so we estimate a pooled unbalanced panel HAR with a ﬁxed
+effect to facilitate inference on the average value of param-
+eters. To illustrate, in the simplest speciﬁcation, the panel
+HAR is given by
+yh,i,t+h = μi + φd yi,t + φwyw,i,t + φmym,i,t + ϵi,t+h,
+i = 1, ... , nt , t = 1, ... , T ,
+where μi is a ﬁxed effect that allows each ﬁrm to have differ-
+ent levels of long-run volatility. Let Yi,t =[ yi,t , ¯yw,i,t , ¯ym,i,t]′;
+then the model for each ﬁrm’s realized variance can be
+compactly expressed as
+yh,i,t+h = μi + φ′Yi,t + ϵi,t+h, i = 1, ... , nt , t = 1, ... , T .
+Next, deﬁne ˜yh,i,t+h = yh,i,t+h − ˆυh,i and ˜Yi,t = Yi,t − ˆΥi, where
+ˆυh,i and ˆΥi are the WLS estimates of the mean of yh,i and Yi,
+respectively. The pooled parameters are then estimated by
+ˆφ =
+(
+T−1
+T∑
+t=1
+(
+n−1
+t
+nt∑
+i=1
+wi,t ˜Yi,t ˜Y′
+i,t
+))−1
+×
+(
+T−1
+T∑
+t=1
+(
+n−1
+t
+nt∑
+i=1
+wi,t ˜Yi,t ˜yh,i,t+h
+))
+, (13)
+12 This implementation of WLS is motivated by considering the residuals
+of the above regression to have heteroskedasticity related to the level of the
+process. This is related to standard asymptotic theory for realized measures
+(see Andersen et al., 2003). An alternative approach is to use OLS on log
+volatility, however, this leads to predictions of log volatility rather than
+volatility in levels, and the latter are usually of primary interest in economic
+applications. For comparison, tables 2, 3, and 4 in the online appendix
+present results from analyses based on log volatility and show that all of
+our conclusions hold using this alternative speciﬁcation.
+688 THE REVIEW OF ECONOMICS AND STA TISTICS
+where wi,t are the weights and nt are the number of ﬁrms in
+the cross section at date t.13
+Inference can be conducted using the asymptotic distribu-
+tion
+√
+T
+(ˆφ − φ0
+) d
+→ N
+(
+0, Σ−1ΩΣ−1)
+as T →∞ , (14)
+where Σ = plimT→∞T−1
+T∑
+t=1
+(
+n−1
+t
+nt∑
+i=1
+wi,t ˜Yi,t ˜Y′
+i,t
+)
+,
+Ω = avar
+(
+T−1/2
+T∑
+t=1
+zt+h
+)
+,
+zt+h = n−1
+t
+nt∑
+i=1
+wi,t ˜Yi,tϵi,t+h.
+In addition to the results from the panel estimation, we also
+ﬁt the models to each series individually and summarize the
+results as aggregates in the tables that follow.
+IV . Predicting V olatility Using Realized Semivariances
+Before moving into models that decompose realized
+volatility into signed components, it is useful to establish
+a set of reference results. We ﬁt a reference speciﬁcation, the
+standard HAR model,
+RVh,t+h = μ + φd RVt + φwRVw,t + φmRVm,t + ϵt+h,
+(15)
+to both the S&P 500 ETF and the panel where RVw,t is
+the average between lags 2 and 5 and RVm,t is the average
+value using lags 6 through 22. This model is identical to the
+speciﬁcation studied in Andersen et al. (2007). The panel
+version of the model is identical to equation (15) except for
+the inclusion ﬁxed effects to permit different long-run vari-
+ances for each asset. Tables 2A and 2B each contain four
+panels—one for each horizon 1, 5, 22, and 66. The ﬁrst
+line of each panel contains the estimated parameters and
+t-statistics for this speciﬁcation. These results are in line
+with those previously documented in the literature: substan-
+tial persistence, with φ
+d +φw +φm close to 1, and the role of
+recent information, captured by φd , diminishing as the hori-
+zon increases.14 The results for both the SPDR and the panel
+are similar, although the SPDR has somewhat larger coefﬁ-
+cients on recent information. The ﬁnal column reports the R
+2,
+13 Our analysis takes the cross-section size, nt , as ﬁnite while the
+time series length diverges. In our application we have nt ∈[ 71, 100]
+and T = 2,795. If an approximate factor structure holds in the
+returns we study, which is empirically plausible, then the same inference
+approach could be applied even if n
+t →∞ , as in that case, we would
+ﬁnd plimnt →∞V[n−1
+t
+∑ nt
+i=1 wi,t ˜Yi,tϵi,t]→ τ2 > 0. A similar result was found
+in the context of composite likelihood estimation, and this asymptotic dis-
+tribution can be seem as a special case of Engle, Shephard, and Sheppard
+(2008).
+14 Tables A.6a and A.6b in the online appendix contain corresponding
+results when the dependent variable is theh-day ahead daily volatility. These
+tables reveal that, as expected, much, but not all, of the predictive power in
+the model for cumulative realized variance occurs at short horizons.
+which is computed using the WLS parameter estimates and
+the original, unmodiﬁed data.
+A. Decomposing Recent Quadratic V ariation
+Given the exact decomposition of RV into RS+ and RS−,
+we extend equation (15) to obtain a direct test of whether
+signed realized variance is informative for future volatility.
+Here, we decompose only the most recent volatility ( RV
+t),
+and in the online appendix, we present results and analysis
+when all three volatility terms are decomposed. Applying this
+decomposition produces the speciﬁcation
+RVh,t+h = μ + φ+
+d RS+
+t + φ−
+d RS−
+t + φwRVw,t
++ φmRVm,t + ϵt+h. (16)
+The panel speciﬁcation of the above model includes ﬁxed
+effects but is otherwise identical. Note that if the decompo-
+sition of RV into RS
++ and RS− added no information, we
+would expect to ﬁnd φ+
+d = φ−
+d = φd .
+Our ﬁrst new empirical results using realized semivari-
+ances are presented in the second row of each panel of tables
+2A and 2B. In the models for the SPDR (table 2A), we ﬁnd
+that the coefﬁcient on negative semivariance is larger and
+more signiﬁcant than that on positive semivariance for all
+horizons. In fact, the coefﬁcient on positive semivariance
+is not signiﬁcantly different from 0 for h = 1, 5 and 22,
+while it is small and signiﬁcantly negative for h = 66. The
+semivariance model explains 10% to 20% more of the vari-
+ation in future volatility than the model that contains only
+realized variance. The effect of lagged RV implied by this
+speciﬁcation is (φ
++
+d + φ−
+d )/2, and we see that it is similar in
+magnitude to the coefﬁcient found in the reference speciﬁ-
+cation, where we include only lagged RV, which indicates
+that models that use only RV are essentially averaging the
+vastly different effects of positive and negative returns. The
+results for the panel of individual volatility series also reveal
+that negative semivariance has a larger and more signiﬁcant
+impact on future volatility, although in these results, we also
+ﬁnd that positive semivariance has signiﬁcant coefﬁcients.
+The difference in the results for the index and for the panel
+points to differences in the impact of idiosyncratic jumps in
+the individual ﬁrms’ volatility, which we explore in the next
+section.
+15
+Figure 1 contains the point estimates of φ+
+d and φ−
+d from
+equation (16) for all horizons between 1 and 66 along with
+pointwise conﬁdence intervals. For the SPDR, positive semi-
+variance plays essentially no role at any horizon. The effect
+of negative semivariance is signiﬁcant and positive, and it
+15 While the coefﬁcients on negative semivariances are positive for both
+the SPDR and the panel of individual stocks, one difference between the
+two sets of results is that the coefﬁcients on positive semivariances are
+generally insigniﬁcant or negative for the SPDR and positive for the panel
+of individual stocks. This may be due to the presence of idiosyncratic jumps
+in individual stocks, while these are averaged out in the SPDR market index
+and only systematic jump behavior is captured. We leave detailed analysis
+of idiosyncratic and systematic jumps for future research.
+GOOD VOLA TILITY , BAD VOLA TILITY 689
+Table 2.— HAR Estimation Results
+A. Estimation Results for the SPDR, Cumulative V olatility
+RVh,t+h = μ + φd RVt + φ+
+d RS+
+t + φ−
+d RS−
+t + γRVt I[rt<0] + φwRVw,t + φm RVm,t + ϵt+h
+φd φ+
+d φ−
+d
+γφ w φm R2
+h = 1 0.607
+(17.0)
+0.268
+(8.1)
+0.120
+(4.9)
+0.532
+−0.024
+(−0.3)
+1.182
+(13.0)
+0.291
+(9.3)
+0.120
+(4.9)
+0.611
+0.037
+(0.4)
+1.064
+(7.4)
+0.050
+(1.4)
+0.293
+(9.3)
+0.121
+(5.0)
+0.611
+h = 5 0.425
+(14.7)
+0.409
+(8.6)
+0.158
+(4.0)
+0.563
+−0.030
+(−0.7)
+0.862
+(13.4)
+0.421
+(8.8)
+0.155
+(4.0)
+0.620
+0.073
+(1.1)
+0.650
+(6.6)
+0.092
+(2.5)
+0.424
+(8.8)
+0.157
+(4.0)
+0.619
+h = 22 0.305
+(11.8)
+0.357
+(7.7)
+0.265
+(4.8)
+0.468
+−0.009
+(−0.3)
+0.628
+(9.9)
+0.359
+(7.5)
+0.261
+(4.8)
+0.508
+−0.012
+(−0.2)
+0.635
+(5.8)
+−0.003
+(−0.1)
+0.359
+(7.6)
+0.261
+(4.8)
+0.508
+h = 66 0.203
+(8.4)
+0.256
+(7.4)
+0.299
+(5.3)
+0.282
+−0.067
+(−2.2)
+0.501
+(7.3)
+0.253
+(6.8)
+0.294
+(5.3)
+0.313
+−0.121
+(−1.8)
+0.622
+(4.1)
+−0.054
+(−1.3)
+0.251
+(6.8)
+0.292
+(5.2)
+0.315
+B. HAR Estimation Results for the Panel of 105 Individual Stocks, Cumulative V olatility
+RVh,i,t+h = μi + φd RVi,t + φ+
+d RS+
+i,t + φ−
+d RS−
+i,t + γRVi,t I{ri,t < 0}+ φwRVw,i,t + φm RVm,i,t + ϵi,t+h
+φd φ+
+d φ−
+d
+γφ w φm R2
+h = 1 0.488
+(39.7)
+0.315
+(28.1)
+0.172
+(16.2)
+0.395
+0.268
+(15.6)
+0.704
+(24.5)
+0.317
+(28.7)
+0.172
+(16.4)
+0.398
+0.316
+(17.1)
+0.607
+(18.9)
+0.046
+(6.8)
+0.317
+(28.7)
+0.172
+(16.5)
+0.398
+h = 5 0.357
+(23.2)
+0.357
+(16.3)
+0.247
+(10.2)
+0.525
+0.158
+(11.4)
+0.551
+(19.0)
+0.359
+(16.4)
+0.247
+(10.3)
+0.529
+0.210
+(14.5)
+0.444
+(19.6)
+0.052
+(7.7)
+0.359
+(16.5)
+0.248
+(10.3)
+0.529
+h = 22 0.241
+(14.8)
+0.312
+(11.9)
+0.360
+(10.3)
+0.511
+0.091
+(7.3)
+0.388
+(12.8)
+0.314
+(11.9)
+0.360
+(10.4)
+0.513
+0.126
+(9.4)
+0.314
+(13.8)
+0.036
+(5.1)
+0.314
+(11.9)
+0.360
+(10.4)
+0.514
+h = 66 0.161
+(12.2)
+0.236
+(10.7)
+0.431
+(12.0)
+0.450
+0.044
+(3.9)
+0.275
+(8.8)
+0.238
+(10.6)
+0.431
+(12.1)
+0.452
+0.062
+(5.9)
+0.235
+(8.5)
+0.020
+(3.8)
+0.238
+(10.6)
+0.432
+(12.1)
+0.452
+Each of the four panels contains results for the forecast horizon indicated in the left-most column. Each panel contains three models. The ﬁrst model c orresponds to the reference model using only realized variance,
+the second decomposes realized variance into positive and negative realized semivariance at the ﬁrst lag, and the third speciﬁcation adds an asymmet ric term where the sign of the most recent daily return is used. In all
+cases in panel A, the R2 measure is constructed using the WLS parameter estimates and the original, unmodiﬁed data. In all cases in panel B, the ﬁnal column reports the average of the 105 R2 s for the individual assets
+constructed using the WLS parameter estimates and the original, unmodiﬁed data. Robust t-statistics are reported in parentheses.
+declines as the horizon increases. In the panel, both positive
+and negative semivariances are signiﬁcant, although the coef-
+ﬁcients differ substantially in magnitude for all horizons. The
+effect of positive semivariance is economically small from
+horizon 15. The smoothness indicated in both curves is a
+feature of the estimated parameters, no additional smoothing
+was used to produce these ﬁgures.
+As noted above, if the decomposition of RV into RS
++ and
+RS− added no new information, then we would expect to see
+φ+
+d = φ−
+d = φd . We reject this restriction at the 0.05 level for
+all but 3 of 66 horizons ( h = 36,43,48) for the SPDR, and in
+the panel this null is rejected for all horizons. 16 We interpret
+these ﬁndings as strong evidence that decomposing RV into
+16 Detailed test results for each horizon are omitted in the interests of
+brevity, but are available from the authors on request.
+its signed components signiﬁcantly improves the explanatory
+power of this model.
+Realized variance can be decomposed not only at the ﬁrst
+lag but at higher lags as well. A full decomposition allows
+for a reﬁned view of the sources of persistence of these two
+components of realized variance, and leads to a natural vector
+HAR (VHAR) speciﬁcation for RS
++ and RS−. We estimated
+this model using both RV and two semivariances as depen-
+dent variables, and present the results in appendix B. We ﬁnd
+that negative realized semivariance is much more important
+for both negative and positive realized semivariance, and dis-
+entangling the effects of these two components signiﬁcantly
+improves forecasts of both measures of future volatility.
+This holds for horizons ranging from one day to three
+months.
+690 THE REVIEW OF ECONOMICS AND STA TISTICS
+Figure 1 .— Estimated Coefﬁcients from a Model That Decomposes
+Realized V ariance into Its Signed Components,
+RVh,i,t+h = μi + φd RVi,t + φ+
+d RS+
+i,t + φ−
+d RS−
+i,t + φwRVw,i,t + φm RVm,i,t + ϵt+h
+Ninety-ﬁve precent conﬁdence intervals are indicated using dotted lines, and the estimated coefﬁcient
+from a standard HAR model, φd , is presented in a light solid line. The top panel contains results for the
+S&P 500 SPDR, and the bottom panel contains results for the panel of individual ﬁrm–realized variances.
+B. Comparison with a Simple Leverage Effect V ariable
+The classic leverage effect, whether due to varying ﬁrm
+leverage as in Black (1976) and Christie (1982) or volatil-
+ity feedback in Campbell and Hentschel (1992), is usually
+modeled using a lagged squared return interacted with an
+indicator for negative returns, as in Glosten et al. (1993). In
+this section, we determine whether our approach using infor-
+mation from realized semivariances adds anything beyond
+this simple approach. To do so, we augment the regressions
+from the previous section with a term that interacts the lagged
+realized variance with an indicator for negative lagged daily
+returns, RV
+t I{rt < 0}:17
+RVh,t+h = μ + φ+
+d RS+
+t + φ−
+d RS−
+t + γRVt I{rt <0}
++ φwRVw,t + φmRVm,t + ϵt+h. (17)
+If realized semivariance added no new information beyond
+the interaction variable, then we would expect φ+
+d = φ−
+d and
+γ to be signiﬁcant.
+The ﬁnal row in each panel of tables 2A and 2B contains the
+parameter estimates from this model. In all cases, the mag-
+nitude of the coefﬁcient on the interaction term is small, and
+we again ﬁnd that the coefﬁcient on negative realized semi-
+variance is much larger than that on positive semivariance.
+In models based on the SPDR, the interaction term has the
+opposite sign to what is commonly found at h = 22 and 66
+and is insigniﬁcant at the 1-day horizon. This coefﬁcient in
+the panel model is signiﬁcantly positive but small—generally
+17 We interact the indicator variable with the lagged realized variance
+rather than the lagged squared return as the latter is a noisier measure
+of volatility than the former. The results using the usual version of this
+interaction variable, r
+2
+t I{rt <0} are even weaker than those discussed here.
+only 10% of the magnitude the coefﬁcient on negative real-
+ized semivariance—and in all cases, the gain in R2 from
+including this interaction variable is just 0.001. 18
+The results in this section show that negative semivariance
+captures the asymmetric impact of negative and positive past
+returns on future volatility better than the usual method of
+using an indicator for the sign of the lagged daily return.
+This is true across all horizons considered (1, 5, 22, and 66
+days). Thus, there is more information about future volatility
+in the high-frequency negative variation of returns than in the
+direction of the price over a whole day.
+V . Signed Jump Information
+All of the models estimated thus far examine the role that
+decomposing realized variances into positive and negative
+realized semivariance can play in explaining future volatil-
+ity. These results consistently suggest that the information
+content of negative realized semivariance is substantially
+larger than that of positive realized semivariance. While the
+theory of Barndorff-Nielsen (2010) shows that the difference
+in these two can be attributed to differences in jump variation,
+the direct effect of jumps is diluted since realized semivari-
+ances also contain one-half of the integrated variance; see
+equation (7).
+In this section, we use signed jump variation, ΔJ
+2
+t ≡
+RS+
+t − RS−
+t , as a simple method to isolate the information
+from signed jumps. This difference eliminates the common
+integrated variance term and produces a measure that is posi-
+tive when a day is dominated by an upward jump and negative
+when a day is dominated by a downward jump. This measure
+has the advantage that a jump-robust estimator of integrated
+variance, such as BV or MedRV, is not needed; we obtain
+the measure simply as the difference between RS
++
+t and RS−
+t .
+If jumps are rare, as often found in the stochastic volatility
+literature, then this measure should broadly correspond to
+the jump variation when a jump occurs and to mean 0 noise
+otherwise.
+To explore the role that signed jumps play in future vari-
+ance, we formulate a model that contains signed jump vari-
+ation and an estimator of the variation due to the continuous
+part (bipower variation):
+RVh,t+h = μ + φJΔJ2
+t + φC BVt + φwRVw,t
++ φmRVm,t + ϵt+h. (18)
+The panel speciﬁcation includes ﬁxed effects but is otherwise
+identical.19
+18 We also considered a speciﬁcation that includes the indicator variable
+I{rt <0} in addition to the interaction variable; see Tables A.2a and A.2b
+in the online appendix. This table shows that our main results continue
+to hold in this more general speciﬁcation: the coefﬁcients on positive and
+negative semivariances are each qualitatively similar in size and are strongly
+signiﬁcantly different from each other, regardless of the inclusion of the
+indicator and interaction variable.
+19 It is worth noting that while this speciﬁcation is similar to our baseline
+model, equation (16), it is not nested by it, as it is not possible to construct
+GOOD VOLA TILITY , BAD VOLA TILITY 691
+Table 3.— Impact of Signed Jump V ariation on Future V olatility
+A. Results for the SPDR
+RMh,t+h = μ + φJΔJ2
+t + φJ+ ΔJ2+
+t + φJ− ΔJ2−
+t + φC BVt + φwRVw,t + φm RVm,t + ϵt+h
+RM φJ φJ+ φJ− φC φw φm R2
+h = 1 RV 0.645
+(17.5)
+0.255
+(7.8)
+0.119
+(4.9)
+0.561
+RV −0.572
+(−7.7)
+0.610
+(18.4)
+0.282
+(9.0)
+0.120
+(5.0)
+0.613
+RV −0.190
+(−2.1)
+−0.964
+(−5.5)
+0.545
+(16.8)
+0.289
+(9.4)
+0.120
+(5.0)
+0.621
+BV −0.549
+(−9.5)
+0.596
+(20.4)
+0.278
+(10.2)
+0.098
+(5.0)
+0.663
+h = 5 RV 0.466
+(14.0)
+0.389
+(8.2)
+0.156
+(3.9)
+0.584
+RV −0.408
+(−9.0)
+0.449
+(13.6)
+0.406
+(8.5)
+0.154
+(4.0)
+0.622
+RV −0.284
+(−3.9)
+−0.544
+(−6.1)
+0.426
+(11.9)
+0.409
+(8.6)
+0.154
+(4.0)
+0.622
+BV −0.392
+(−9.2)
+0.440
+(15.0)
+0.389
+(8.6)
+0.137
+(3.9)
+0.633
+h = 22 RV 0.346
+(11.7)
+0.334
+(7.1)
+0.262
+(4.8)
+0.485
+RV −0.276
+(−7.3)
+0.342
+(11.2)
+0.342
+(7.1)
+0.260
+(4.8)
+0.512
+RV −0.299
+(−3.8)
+−0.248
+(−2.3)
+0.346
+(10.0)
+0.341
+(7.0)
+0.260
+(4.8)
+0.513
+BV −0.264
+(−7.0)
+0.333
+(10.9)
+0.330
+(6.8)
+0.243
+(4.7)
+0.505
+h = 66 RV 0.237
+(9.3)
+0.237
+(6.6)
+0.296
+(5.4)
+0.290
+RV −0.244
+(−5.4)
+0.240
+(9.6)
+0.240
+(6.3)
+0.293
+(5.3)
+0.312
+RV −0.246
+(−3.1)
+−0.242
+(−1.9)
+0.240
+(8.3)
+0.240
+(6.0)
+0.293
+(5.3)
+0.312
+BV −0.233
+(−5.1)
+0.232
+(9.2)
+0.231
+(6.1)
+0.279
+(5.3)
+0.304
+B. Results for the Panel of 105 Individual Stocks
+RMh,i,t+h = μi + φJΔJ2
+i,t + φJ+ ΔJ2+
+i,t + φJ− ΔJ2−
+i,t + φC BVi,t + φwRVw,i,t + φm RVm,i,t + ϵi,t+h
+RM φJ φJ+ φJ− φC φw φm R2
+h = 1 RV 0.566
+(38.6)
+0.325
+(28.6)
+0.181
+(17.0)
+0.394
+RV −0.215
+(−10.5)
+0.563
+(40.0)
+0.327
+(29.1)
+0.182
+(17.2)
+0.397
+RV 0.048
+(2.5)
+−0.492
+(−12.2)
+0.502
+(38.1)
+0.330
+(29.5)
+0.182
+(17.3)
+0.399
+BV −0.178
+(−10.9)
+0.488
+(41.9)
+0.258
+(28.3)
+0.136
+(16.2)
+0.427
+h = 5 RV 0.414
+(22.8)
+0.364
+(16.4)
+0.255
+(10.4)
+0.524
+RV −0.195
+(−11.5)
+0.411
+(23.0)
+0.366
+(16.5)
+0.255
+(10.5)
+0.527
+RV −0.116
+(−5.2)
+−0.277
+(−12.2)
+0.392
+(20.9)
+0.367
+(16.6)
+0.255
+(10.5)
+0.527
+BV −0.161
+(−11.6)
+0.358
+(23.6)
+0.293
+(16.0)
+0.196
+(10.1)
+0.538
+h = 22 RV 0.281
+(13.7)
+0.316
+(12.1)
+0.366
+(10.3)
+0.510
+RV −0.146
+(−8.7)
+0.279
+(13.9)
+0.318
+(12.1)
+0.366
+(10.4)
+0.512
+RV −0.122
+(−5.3)
+−0.172
+(−7.8)
+0.273
+(13.0)
+0.319
+(12.1)
+0.366
+(10.4)
+0.512
+BV −0.120
+(−8.6)
+0.244
+(13.8)
+0.256
+(11.4)
+0.287
+(10.0)
+0.505
+h = 66 RV 0.182
+(11.2)
+0.242
+(10.8)
+0.437
+(12.1)
+0.448
+RV −0.114
+(−5.6)
+0.180
+(11.5)
+0.244
+(10.7)
+0.437
+(12.1)
+0.450
+RV −0.080
+(−4.3)
+−0.149
+(−4.9)
+0.171
+(11.5)
+0.245
+(10.6)
+0.437
+(12.1)
+0.450
+BV −0.092
+(−5.4)
+0.158
+(11.4)
+0.194
+(10.0)
+0.348
+(12.4)
+0.439
+Models that include signed jump information where quadratic variation has been decomposed into signed jump variation, ΔJ2 , and its continuous component using bipower variation, BV (robust t-statistics in
+parentheses). Each of the four panels contains results for the forecast horizon indicated at the left. RM indicates the dependent variable, realized variance ( RV) or bipower variation ( BV ). ΔJ2+
+t and ΔJ2−
+t decompose
+ΔJ2
+t using an indicator variable for the sign of the difference where ΔJ2+
+t = ΔJ2
+t I[RS+
+t −RS−
+t >0] . In all cases in panel A, the R2 measure is constructed using the WLS parameter estimates and the original, unmodiﬁed
+data. In all cases in panel B, the ﬁnal column reports the average of the 105 R2 s for the individual assets constructed using the WLS parameter estimates and the original, unmodiﬁed data.
+Results from the model with signed jumps are presented
+in the second row of each of the four panels in Tables
+3A and 3B. Signed jump variation, ΔJ
+2
+t , has a uniformly
+a measure of the continuous component of variation from the two realized
+semivariances alone.
+negative sign and is signiﬁcant for all forecast horizons. This
+reveals that days dominated by negative jumps lead to higher
+future volatility, while days with positive jumps lead to lower
+future volatility. This result is quite different from that of
+Andersen et al. (2007), who found that (unsigned) jumps
+lead to only a slight decrease in future variance in the S&P
+692 THE REVIEW OF ECONOMICS AND STA TISTICS
+500.20 By including information about the sign of the jump,
+we ﬁnd that the jump variable does indeed help predict future
+volatility.
+We next modify this model to use BV as the dependent
+variable in order to see whether signed jump variation is
+useful for predicting future continuous variation. The results
+from this model are presented in the bottom row of tables
+3A and 3B and reveal that using BV as the dependent vari-
+able resulted in virtually identical estimates to those obtained
+using RV. Thus, signed jump variation is indeed useful
+for predicting the continuous part of volatility. This is a
+novel ﬁnding and one that cannot be detected without draw-
+ing on information about the sign of the high-frequency
+returns.
+To determine whether the coefﬁcient on positive jump vari-
+ation differs from that of negative jump variation, and thus
+whether the impact of jumps is driven more by positive or
+negative jump variation, we extend this model to include∑ Δp
+2
+s I{Δps > 0} and ∑ Δp2
+s I{Δps < 0} separately. One
+option would be to subtract one-half of a consistent estimator
+of the IV , for example, to use RS
++
+t − 1
+2 BVt . We opt instead
+for a simpler speciﬁcation, which uses an indicator for which
+realized semivariance was larger. This model is
+RVh,t+h = μ + φJ+ΔJ2+
+t + φJ−ΔJ2−
+t + φC BVt
++ φwRVw,t + φmRVm,t + ϵt+h (19)
+where ΔJ2+
+t =
+(
+RS+
+t − RS−
+t
+)
+I{(RS+
+t − RS−
+t )> 0} and
+ΔJ2−
+t =
+(
+RS+
+t − RS−
+t
+)
+I{(RS+
+t − RS−
+t )< 0}.
+If the two signed jump components have equal predictive
+power, then we expect to ﬁnd φJ+ = φJ− = φJ .
+The penultimate row of each panel in table 3A contains
+estimates for this extended jump speciﬁcation. For the SPDR,
+we ﬁnd that both signed jump components have a negative
+sign, and for the longest two horizons ( h = 22 and h = 66),
+the coefﬁcients are almost equal. For the shorter two hori-
+zons (h = 1 and h = 5), the coefﬁcient on the negative jump
+component is larger in magnitude than on the positive jump
+component, indicating that the increase in future volatility
+is larger in magnitude following a negative jump than the
+decrease in future volatility following a positive jump. We test
+the null H
+0 : φJ+ = φJ− and reject only at the one-step-ahead
+horizon. In the panel, both types of jumps lead to higher future
+volatility for theh = 1 horizon, although the magnitude of the
+coefﬁcient differs by a factor of 10 and negative jumps have a
+larger effect. At longer horizons, “good” jumps lead to lower
+volatility while “bad” jumps lead to higher volatility.
+21 Figure
+2 contains a plot of the coefﬁcients for all 66 leads for both
+20 It should be noted, however, that Andersen et al. (2007) pretest for
+jumps, and so on days where no jump component is detected, their jump
+measure is exactly 0. Since we do not pretest, we may have a noisier jump
+measure, although it remains consistent for the object of interest.
+21 We note that this sign change in the reaction of future volatility to
+current price moves is consistent with the original “leverage” explana-
+tion offered by Black (1976), which focuses on the degree of ﬁnancial
+leverage of a ﬁrm, although that explanation does not distinguish between
+Figure 2 .— Estimated Coefﬁcients from a Model with Signed Jump
+V ariation and Bipower V ariation:
+RVh,i,t+h = μi +φJ+ΔJ2+ +φJ−ΔJ2− +φC BV−
+i,t +φwRVw,i,t +φm RVm,i,t +ϵi,t+h
+The top panel contains the estimated parameters for the S&P 500 SPDR, and the bottom panel contains
+the estimated parameters in the panel of individual ﬁrms. Dashed lines indicate 95% conﬁdence intervals.
+the SPDR and the panel. Aside from some mixed evidence
+for very short-term effects, both sets of coefﬁcients are neg-
+ative and signiﬁcant. The signiﬁcance of the variation due to
+positive jumps contrasts with the weaker evidence of signif-
+icance for positive realized semivariance. These results may
+be reconciled by noting that positive realized semivariance
+contains, in the limit, both the variation due to positive jumps
+and one-half of integrated variance, the latter also appear-
+ing in negative semivariance. By stripping out the integrated
+variance component and focusing only on the jump compo-
+nent, we ﬁnd that positive jumps have an important (negative)
+impact on future volatility. This model was also ﬁt to the
+individual ﬁrm series, and ﬁgure 3 shows the magnitude and
+statistical signiﬁcance of the coefﬁcient, which was signiﬁ-
+cantly negative in 83 series at the 1-day horizon and 89 at the
+5-day horizon, indicating a strong directional effect of jumps
+on future volatility.
+Finally, in the top row of each panel of table 3A, we con-
+sider a model with no jump variation measures; we include
+just BV at the 1-day lag, along with
+RVw,t and RVm,t . Con-
+sistent with the signiﬁcance of the signed jump variation
+measures in the speciﬁcations discussed above, we observe a
+substantial drop in R
+2, particularly at short horizons. For the
+SPDR, R2 falls from 0.61 to 0.56 for h = 1 and from 0.62 to
+0.58 for h = 5.
+small and large price moves (corresponding to continuous and jump vari-
+ation, in our framework). It may also be related to differences between
+the economic sources (e.g., news announcements, of positive and negative
+jumps; see Bajgrowicz, Scaillet, and Treccani, 2012, for related work).
+We do not attempt to identify individual jumps, and so the effects we
+report may be interpreted as average effects for positive and negative
+news.
+GOOD VOLA TILITY , BAD VOLA TILITY 693
+Figure 3 .— Effects of Signed Jump V ariation on Individual Firm
+V olatilities, Sorted by Size
+The magnitude of the coefﬁcient on ΔJ2 is indicated as distance from the horizontal axis. Solid bars
+indicate signiﬁcance at the 5% level.
+VI. Out-of-Sample Evidence
+This section presents two out-of-sample checks on the
+conclusions from the previous section on the importance
+of signed measures of variation. The ﬁrst is an analysis of
+two international stock indexes, the FTSE 100 index of U.K.
+stocks and the EURO STOXX 50 index of stocks from twelve
+European countries. The second is an analysis of the pseudo-
+out-of-sample forecasting performance of models based on
+those above.
+A. International Evidence
+The previous sections presented results for the SPDR,
+an exchange-traded fund tracking the S&P 500 Index of
+U.S. ﬁrms and for 105 individual U.S. ﬁrms. In this section
+we present results for the two international equity indexes
+noted above. Data on both indexes is taken from Thomson
+Reuters Tick History and covers the same period as the main
+results.
+22 Both indexes are computed from the underlying
+basket of 100 and 50 stocks, respectively, and prices were
+cleaned using rules 1, 2, 5, and 6 from appendix A using the
+local market trading times in place of U.S. open hours and
+daily tick history veriﬁed high-low range data. These data are
+much cleaner than TAQ data, and only six (high-frequency)
+observations were removed.
+Table 4 presents results for the FTSE and the STOXX. The
+top row of each panel presents results for a standard HAR,
+corresponding to the top row of each panel in table 2A for
+the SPDR. The second row presents results for a HAR model
+with the one-day lag of realized variance decomposed into
+positive and negative semivariance, equation (16), and can be
+22 The ﬁrst date available for the EURO STOXX 50 is February 26, 1998,
+and so we use that as the start date for that series. For the FTSE 100 Index,
+we start on June 23, 1997.
+compared with the second row of each panel in table 2A. In
+common with the results for the SPDR, we ﬁnd that negative
+realized semivariance is much more important for predicting
+future volatility than positive semivariance. For the FTSE
+index, positive semivariance is signiﬁcant for only the two
+shorter horizons. For the STOXX index, it is signiﬁcant at
+all four horizons, but has coefﬁcients that are less than one-
+half of those on negative semivariance in all cases. For both
+indexes and all four forecast horizons, we can reject, at the
+0.05 level, the null that φ
++
+d = φ−
+d , and thus we conclude that
+realized semivariances yield signiﬁcant explanatory gains for
+both of these indexes.
+The third row of each panel in table 4 presents results for a
+model that includes a measure of continuous and signed jump
+variation, equation (18), and can be compared with the results
+presented in the top row of each panel of table 3A. For both
+indexes and all four forecast horizons, we ﬁnd thatφ
+J is nega-
+tive, consistent with the results for the SPDR. This parameter
+is signiﬁcantly negative for all four horizons for the FTSE and
+for all but the longest horizon for the STOXX. This suggests
+that negative jumps lead to higher future volatility, while pos-
+itive jumps lead to lower future volatility, further motivating
+the monikers “bad volatility” and “good volatility.”
+B. Pseudo-Out-of-Sample F orecast Performance
+We now consider a pseudo-out-of-sample forecasting
+application to see whether the in-sample gains documented
+in sections IV and V lead to better forecasts out of sam-
+ple. We consider three classes of models, each with two or
+three variations. All models include
+RVw,t and RVm,t , and
+they differ in what previous-day information is used. The ﬁrst
+model, denoted ˆRV
+HAR
+, is the standard RV -HAR containing
+lags 1, 5, and 22 of RV, equation (15). The second, denoted
+ˆRV
+GJR
+, augments the standard HAR with an interaction term
+that allows for asymmetry in persistence when the previous
+daily return was negative, RV
+t I{rt <0}, equation (17). The
+second class of models uses information in positive and neg-
+ative semivariance: ˆRV
+RS
+is a speciﬁcation that decomposes
+recent realized variance into positive and negative semivari-
+ance, equation (16), and ˆRV
+RS−
+, is a restricted version of
+ˆRV
+RS
+where positive realized semivariance is excluded from
+the model, motivated by the relative magnitude of the coef-
+ﬁcient and limited signiﬁcance of this variable in tables 2A
+and 2B. The third class of models considers the informa-
+tion in jump variation: ˆRV
+BV
+is a model that excludes jump
+information and includes only bipower variation; ˆRV
+ΔJ2
+is a
+speciﬁcation that includes BVt and ΔJ2
+t , equation (18), and
+ˆRV
+ΔJ2±
+is a speciﬁcation that breaks ΔJ2
+t into its positive and
+negative components, equation (19).
+All forecasts are generated using rolling WLS regressions
+based on 1,004 observations (4 years), and parameter esti-
+mates are updated daily. Only series that contain at least 500
+out-of-sample data points are included, reducing the number
+of individual ﬁrms from 105 to 95. No restrictions on the
+694 THE REVIEW OF ECONOMICS AND STA TISTICS
+Table 4.— Models Fit on International Equity Market Realized V ariance and Semivariance
+RVh,t+h = μ + φd RVt + φ+
+d RS+
+t + φ−
+d RS−
+t + φJΔJ2
+t + φC BVt + φwRVw,t + φm RVm,t + ϵt+h
+φd φ+
+d φ−
+d
+φJ φC φw φm R2
+FTSE 100
+h = 1 0.489
+(8.4)
+0.341
+(6.9)
+0.169
+(4.6)
+0.362
+0.183
+(2.2)
+0.708
+(8.0)
+0.361
+(7.2)
+0.180
+(5.0)
+0.386
+−0.248
+(−3.7)
+0.579
+(7.8)
+0.344
+(6.9)
+0.184
+(5.0)
+0.412
+h = 5 0.373
+(7.7)
+0.450
+(10.2)
+0.175
+(3.8)
+0.449
+0.138
+(2.9)
+0.541
+(7.2)
+0.466
+(10.3)
+0.184
+(4.0)
+0.472
+−0.186
+(−4.4)
+0.466
+(6.8)
+0.441
+(10.2)
+0.183
+(3.9)
+0.496
+h = 22 0.250
+(8.0)
+0.366
+(5.6)
+0.333
+(4.5)
+0.369
+0.034
+(0.8)
+0.406
+(6.3)
+0.380
+(5.7)
+0.340
+(4.7)
+0.392
+−0.180
+(−3.6)
+0.299
+(7.1)
+0.367
+(5.4)
+0.341
+(4.7)
+0.401
+h = 66 0.171
+(6.5)
+0.308
+(5.7)
+0.292
+(3.9)
+0.245
+0.029
+(0.7)
+0.277
+(4.4)
+0.317
+(5.6)
+0.296
+(4.0)
+0.260
+−0.124
+(−2.7)
+0.198
+(4.4)
+0.313
+(5.6)
+0.298
+(3.9)
+0.268
+EURO STOXX 50
+h = 1 0.515
+(12.9)
+0.334
+(10.4)
+0.110
+(4.3)
+0.625
+0.209
+(3.7)
+0.727
+(12.6)
+0.361
+(11.1)
+0.119
+(4.7)
+0.640
+−0.227
+(−5.5)
+0.633
+(12.6)
+0.332
+(10.2)
+0.105
+(4.2)
+0.639
+h = 5 0.448
+(6.7)
+0.392
+(8.5)
+0.109
+(2.8)
+0.637
+0.243
+(3.6)
+0.582
+(7.0)
+0.412
+(8.8)
+0.116
+(3.0)
+0.645
+−0.148
+(−3.9)
+0.558
+(6.4)
+0.383
+(7.6)
+0.105
+(2.8)
+0.638
+h = 22 0.299
+(6.5)
+0.365
+(5.0)
+0.232
+(3.7)
+0.508
+0.165
+(3.2)
+0.386
+(5.5)
+0.379
+(5.1)
+0.236
+(3.8)
+0.513
+−0.101
+(−2.2)
+0.366
+(7.8)
+0.362
+(4.7)
+0.230
+(3.7)
+0.505
+h = 66 0.221
+(4.6)
+0.304
+(3.9)
+0.210
+(3.3)
+0.383
+0.122
+(2.4)
+0.284
+(3.5)
+0.315
+(3.8)
+0.213
+(3.3)
+0.388
+−0.071
+(−1.2)
+0.278
+(5.5)
+0.298
+(3.5)
+0.207
+(3.2)
+0.379
+The top panel contains models estimated on the realized variance of the FTSE 100 and the bottom contains results from the EURO STOXX 50. Models were ﬁt to 1-day, 1-week, 1-month, and 1-quarter-ahead
+cumulative realized variance. Each subpanel contains three models. The ﬁrst is a reference HAR, which includes only realized variance. The second de composes realized variance into positive and negative realized
+semivariance. The third splits recent volatility into a signed-jump measure, ΔJ2 , and bipower variation ( BV ), an estimate of the continuous component of variance.
+parameters are imposed and forecasts are occasionally neg-
+ative (approximately .004%), so an “insanity ﬁlter” is used
+to ensure that the forecasts were no smaller than the smallest
+realization observed in the estimation window.
+Forecast performance is evaluated using unconditional
+Diebold and Mariano (1995) and Giacomini and White
+(2006) tests, using the negative of the gaussian quasi-
+likelihood as the loss function,
+L
+(ˆRV
+h,t+h|t , RVh,t+h
+)
+= ln
+(ˆRVh,t+h|t
+)
++ RVh,t+h
+ˆRVh,t+h|t
+.
+This “QLIKE” loss function has been shown to be robust to
+noise in the proxy for volatility in Patton (2011) and to have
+good power properties in Patton and Sheppard (2009).
+Table 5 contains results from the forecasting analysis. Each
+of the three panels contains results from comparing one pair
+of forecasting models. Within each panel, the left-most col-
+umn contains the value of the DM test statistic for the S&P
+500 ETF, and the two right columns contain the percentage
+of the 95 individual series that favor each of the competing
+models using a two-sided 5% test.
+The top-left panel compares the standard HAR with a
+semivariance-based model that decomposes the ﬁrst lag.
+The DM test statistic is positive across all forecast hori-
+zons, indicating the superior out-of-sample performance of
+the semivariance model for the S&P 500 ETF, and rejects
+the null of equal performance in favor of the semivariance-
+based model in 22% to 30% of individual series. The middle
+panel of the top row compares the standard HAR to a
+model that includes only negative semivariance at the ﬁrst
+lag. This is our preferred realized semivariance speciﬁca-
+tion in light of the weak evidence of signiﬁcant positive
+semivariance, and this model has the same number of param-
+eters as the standard HAR. The restricted semivariance
+model outperforms the standard HAR at all horizons for
+the S&P 500 and provides better performance for individual
+stocks than the less parsimonious speciﬁcation. The top-
+right panel compares the parsimonious realized semivariance
+speciﬁcation to the realized variance HAR, which includes
+GOOD VOLA TILITY , BAD VOLA TILITY 695
+Table 5.— Out-of-Sample Forecast Comparison of Models for V olatility Forecasting
+ˆRV
+HAR
+– ˆRV
+RS ˆRV
+HAR
+– ˆRV
+RS−
+ˆRV
+GJR
+– ˆRV
+RS−
+SPDR Other Assets SPDR Other Assets SPDR Other Assets
+DM Favor HAR Favor RS DM Favor HAR Favor RS− DM Favor GJR Favor RS−
+h = 1 1.48 2.1 22.1 2.69 3.2 12.6 0.02 9.5 2.1
+h = 5 3.16 2.1 29.5 4.29 5.3 33.7 1.25 3.2 10.5
+h = 22 3.96 2.1 26.3 4.41 1.1 33.7 3.07 2.1 16.8
+h = 66 3.64 1.1 23.2 5.23 1.1 36.8 4.27 3.2 16.8
+ˆRV
+BV
+– ˆRV
+RS−
+ˆRV
+BV
+– ˆRV
+ΔJ2
+ˆRV
+BV
+– ˆRV
+ΔJ2±
+SPDR Other Assets SPDR Other Assets SPDR Other Assets
+DM Favor BV Favor RS− DM Favor BV Favor ΔJ2 DM Favor BV Favor ΔJ2±
+h = 1 2.21 7.4 8.4 −0.08 2.1 16.8 1.53 1.1 15.8
+h = 5 3.37 7.4 25.3 2.15 2.1 25.3 3.27 1.1 25.3
+h = 22 3.33 3.2 30.5 3.10 3.2 18.9 3.22 1.1 12.6
+h = 66 4.13 1.1 45.3 1.41 1.1 17.9 3.59 2.1 16.8
+Each of the panels contains results for tests of equal predictive accuracy. The left-most column contains the Diebold-Mariano-Giacomini-White tes t statistic for the S&P 500 SPDR, where a positive test statistic
+indicates that the realized semivariance model (or model using jump variation) outperformed the realized variance (or bipower variation) model. Th e remaining two columns report the percentage of the 95 individual
+loss differentials that reject the null and the direction of the rejection using a 5% two-sided test.
+the interaction variable using the sign of the lagged return.
+The interaction variable appears to help at short horizons,
+with the performance of that model being not signiﬁcantly
+different from our preferred semivariance speciﬁcation; how-
+ever, the asymmetry-augmented HAR is signiﬁcantly out-
+performed at longer horizons by the semivariance-based
+forecast.
+The lower-left panel compares models that differ in the
+one-day lag information. The ﬁrst model uses BV , while
+the second model uses negative semivariance ( RS
+−). We
+observe that negative semivariance outperforms BV for the
+SPDR at all four horizons. For individual series, the out-
+performance is signiﬁcant for all but the shortest horizon,
+where the two models perform comparably well. The mid-
+dle panel of the bottom row of table 5 compares a forecasting
+model that excludes jump information (from the one-day lag)
+with a model that includes it through the variable ΔJ
+2
+t .W e
+see that the model that incorporates signed jump informa-
+tion signiﬁcantly outperforms, for the SPDR, the one that
+does not for two out of the four horizons ( h = 5 and
+h = 22). For individual stocks, ΔJ
+2
+t signiﬁcantly outper-
+forms BV for between 17% and 25% of series. Finally, the
+lower-right panel compares the model based on BV with
+one that breaks jump variation into its positive and nega-
+tive components. We again ﬁnd that information from signed
+jumps signiﬁcantly improves out-of-sample forecast perfor-
+mance, although generally less than a simple model with only
+negative semivariance.
+Table 6 reports the out-of-sample R
+2 values for the seven
+forecasting models considered in table 5. Relative to a base-
+line HAR speciﬁcation, the best semivariance-based alterna-
+tive generates gains in out-of-sample R
+2 of between 1.1%
+(h = 66) and 3.0% for the SPDR ( h = 22), and between
+0.5% (h = 66) and 13.5% ( h = 1) for the individual stocks.
+Thus, statistically signiﬁcant gains documented in table 6 also
+correspond to economically meaningful improvements.
+Table 6.—Out-of-Sample R2 for the Alternative Models Used in the
+Forecast Evaluation
+ˆRV
+HAR ˆRV
+GJR ˆRV
+RS ˆRV
+RS−
+ˆRV
+BV ˆRV
+ΔJ2
+ˆRV
+ΔJ2±
+SPDR
+h = 1 66.7 69.0 67.8 68.8 68.0 68.9 69.3
+h = 5 64.8 67.8 67.8 67.6 65.6 67.7 67.8
+h = 22 52.4 53.0 54.1 53.9 53.0 54.1 54.1
+h = 66 42.8 43.0 43.8 43.7 43.1 43.7 43.9
+Individual
+h = 1 40.4 51.5 50.2 50.5 46.8 53.9 53.0
+h = 5 59.1 61.1 61.6 61.8 60.7 62.6 61.3
+h = 22 55.1 55.4 55.8 56.0 55.5 56.0 55.8
+h = 66 51.7 51.0 51.8 52.2 51.7 51.8 51.3
+The OOS R2 is computed as 1 minus the ratio of out-of-sample model-based MSE to the out-of-sample
+MSE from a forecast that includes only a constant. The largest value in each row is in bold.
+VII. Conclusion
+This paper shows the sizable and signiﬁcant gains for
+predicting equity volatility by incorporating signed high-
+frequency volatility information. Our analysis is based on
+the realized semivariance estimators recently proposed by
+Barndorff-Nielsen et al. (2010). These simple estimators
+allow us to decompose realized volatility into a part com-
+ing from positive high-frequency returns and a part coming
+from negative high-frequency returns. For three equity mar-
+ket indexes and a set of 105 individual stocks, we ﬁnd that
+negative realized semivariance is much more important for
+future volatility than positive realized semivariance, and dis-
+entangling the effects of these two components signiﬁcantly
+improves forecasts of future volatility. This is true whether
+the measure of future volatility is realized variance, bipower
+variation, negative realized semivariance, or positive realized
+semivariance, and it holds for horizons ranging from 1 day to
+3 months. We also ﬁnd that jump variation is important for
+predicting future volatility, with volatility attributable to neg-
+ative jumps leading to signiﬁcantly higher future volatility,
+696 THE REVIEW OF ECONOMICS AND STA TISTICS
+while positive jumps lead to signiﬁcantly lower volatility.
+This may explain earlier results in this literature (see Ander-
+sen et al., 2007, and Busch et al., 2011, for example), which
+found that jumps are of limited use for forecasting future
+volatility; only by including the jump size and sign are the
+gains from jumps realized. Assessing the usefulness of real-
+ized semivariances and signed jump variation in concrete
+ﬁnancial applications, such as portfolio management, den-
+sity forecasting, and derivatives pricing, as in Fleming et al.
+(2003), Maheu and McCurdy (2011), and Christoffersen and
+Jacobs (2004), for example, represents an interesting area for
+future research.
+REFERENCES
+Aït-Sahalia, Y acine, and Jialin Y u, “High Frequency Market Microstruc-
+ture Noise Estimates and Liquidity Measures,” Annals of Applied
+Statistics 3 (2009), 422–457.
+Aït-Sahalia, Y acine, Per A. Mykland, and Lan Zhang, “How Often to
+Sample a Continuous-Time Process in the Presence of Market
+Microstructure Noise,” Review of Financial Studies 18 (2005), 351.
+Andersen, Torben G., Tim Bollerslev, Peter F. Christoffersen, and Francis X.
+Diebold, “V olatility and Correlation Forecasting,” in G. Elliott,
+C. W. J. Granger, and A. Timmermann, eds.,Handbook of Economic
+F orecasting(Amsterdam: North-Holland Press, 2006).
+Andersen, Torben G., Tim Bollerslev, and Francis X. Diebold, “Roughing
+It Up: Including Jump Components in the Measurement, Modeling,
+and Forecasting of Return V olatility,” this review 89 (2007), 701–
+720.
+——— “Parametric and Nonparametric V olatility Measurement,” in Y acine
+Aït-Sahalia and Lars Peter Hansen, eds., Handbook of Financial
+Econometrics (Amsterdam: North-Holland, 2009).
+Andersen, Torben G., Tim Bollerslev, Francis X. Diebold, and Paul Labys,
+“Great Realizations,” Risk 13 (2000), 105–108.
+——— “The Distribution of Realized Exchange Rate V olatility,” Journal
+of the American Statistical Association 96 (2001), 42–55.
+——— “Modeling and Forecasting Realized V olatility,” Econometrica 71
+(2003), 3–29.
+Andersen, Torben G., Dobrislav Dobrev, and Ernst Schaumburg, “Jump-
+Robust V olatility Estimation Using Nearest Neighbor Truncation,”
+Journal of Econometrics 169 (2012), 75–93.
+Ang, Andrew, Joseph Chen, and Y uhang Xing, “Downside Risk,” Review
+of Financial Studies 19 (2006), 1191–1239.
+Bajgrowicz, Pierre, Olivier Scaillet, and Adrien Treccani, “Jumps in High-
+Frequency Data: Spurious Detections, Dynamics, and News,” Swiss
+Finance Institute research paper 11-36 (2012).
+Barndorff-Nielsen, Ole E., Peter Reinhard Hansen, Asger Lunde, and Neil
+Shephard, “Designing Realized Kernels to Measure the Ex Post V ari-
+ation of Equity Prices in the Presence of Noise,” Econometrica 76
+(2008), 1481–1536.
+——— “Realized Kernels to Practice: Trades and Quotes,” Econometrics
+Journal 12 (2009), 1–32.
+Barndorff-Nielsen, Ole E., Silja Kinnebrock, and Neil Shephard, “Mea-
+suring Downside Risk—Realised Semivariance,” in T. Bollerslev,
+J. Russell, and M. Watson, eds., V olatility and Time Series Econo-
+metrics: Essays in Honor of Robert F . Engle (New Y ork: Oxford
+University Press, 2010).
+Barndorff-Nielsen, Ole E., and Neil Shephard, “Econometric Analysis of
+Realised Covariation: High Frequency Based Covariance, Regres-
+sion and Correlation in Financial Economics,” Econometrica 73
+(2004), 885–925.
+——— “Econometrics of Testing for Jumps in Financial Economics Using
+Bipower V ariation,”Journal of Financial Econometrics 4 (2006),
+1–30.
+Black, Fischer, “Studies of Stock Prices V olatility Changes” (pp. 177–181),
+in Proceedings from the American Statistical Association, Busi-
+ness and Economics Statistics Section (Alexandria, V A: American
+Statistical Association, 1976).
+Bollerslev, Tim, Robert F. Engle, and Daniel B. Nelson, “ARCH Models,”
+in R. F. Engle and D. McFadden, eds., Handbook of Econometrics ,
+vol. 4 (Amsterdam: Elsevier North-Holland, 1994).
+Bollerslev, Tim, Julie Litvinova, and George Tauchen, “Leverage and
+V olatility Feedback Effects in High-Frequency Data,” Journal of
+Financial Econometrics 4 (2006), 353.
+Bollerslev, Tim, and Viktor Todorov, “Tails, Fears, and Risk Premia,”
+Journal of Finance 66 (2011), 2165–2211.
+Busch, Thomas, Bent J. Christensen, and Morten Ø. Nielsen, “The Role
+of Implied V olatility in Forecasting Future Realized V olatility and
+Jumps in Foreign Exchange, Stock, and Bond Markets,” Journal of
+Econometrics 160 (2011), 48–57.
+Campbell, John Y ., and Ludger Hentschel, “No News Is Good News: An
+Asymetric Model of Changing V olatility in Stock Returns,”Journal
+of Financial Economics 31 (1992), 281–318.
+Chen, Xilong, and Eric Ghysels, “News—Good or Bad—and Its Impact on
+V olatility Predictions over Multiple Horizons,”Review of Financial
+Studies 24 (2011), 46–81.
+Chiriac, Roxana, and V aleri V oev, “Long Memory Modelling of Realized
+Covariance Matrices,” University of Konstanz technical report (April
+2007).
+Christie, Andrew A., “The Stochastic Behavior of Common Stock V ari-
+ances: V alue, Leverage and Interest Rate Effects,” Journal of
+Financial Economics 10 (1982), 407–432.
+Christoffersen, Peter F., and Kris Jacobs, “Which GARCH Model for Option
+V aluation?,”Management Science 50 (2004), 1204–1221.
+Corsi, Fulvio, “A Simple Approximate Long-Memory Model of Realized
+V olatility,”Journal of Financial Econometrics 7 (2009), 174–196.
+Corsi, Fulvio, Davide Pirino, and Roberto Renò, “Threshold Bipower V ari-
+ation and the Impact of Jumps on V olatility Forecasting,”Journal of
+Econometrics 159 (2010), 276–288.
+Diebold, Francis X., and Roberto S. Mariano, “Comparing Predictive
+Accuracy,”Journal of Business and Economic Statistics 13 (1995),
+253–263.
+Engle, Robert F., Neil Shephard, and Kevin Sheppard, “Fitting V ast Dimen-
+sional Time-V arying Covariance Models,” Oxford-Man Institute of
+Quantitative Finance technical report (2008).
+Fleming, Jeff, Chris Kirby, and Barbara Ostdiek, “The Economic V alue of
+V olatility Timing Using ‘Realized’ V olatility,”Journal of Financial
+Economics 67 (2003), 473–509.
+Forsberg, Lars, and Eric Ghysels, “Why Do Absolute Returns Predict
+V olatility So Well?” Journal of Financial Econometrics 5 (2007),
+31–67.
+Ghysels, Eric, Pedro Santa-Clara, and Rossen V alkanov, “Predicting V olatil-
+ity: Getting the Most out of Return Data Sampled at Different
+Frequencies,” Journal of Econometrics 131 (2006), 59–95.
+Giacomini, Raffaella, and Halbert White, “Tests of Conditional Predictive
+Ability,”Econometrica 74 (2006), 1545–1578.
+Glosten, Lawrence R., Ravi Jagannathan, and David E. Runkle, “On the
+Relationship between the Expected V alue and the V olatility of the
+Nominal Excess Return on Stocks,” Journal of Finance 48 (1993),
+1779–1801.
+Hogan, William W., and James M. Warren, “Toward the Development
+of an Equilibrium Capital-Market Model Based on Semivariance,”
+Journal of Financial and Quantitative Analysis 9 (1974), 1–11.
+Huang, Xin, and George Tauchen, “The Relative Contribution of Jumps to
+Total Price V ariance,”Journal of Financial Econometrics 3 (2005),
+456–499.
+Lanne, Markku, “A Mixture Multiplicative Error Model for Realized
+V olatility,”Journal of Financial Econometrics 4 (2006), 594–616.
+——— “Forecasting Realized Exchange Rate V olatility by Decomposi-
+tion,” International Journal of F orecasting23 (2007), 307–320.
+Lewis, Alan L., “Semivariance and the Performance of Portfolios with
+Options,” Financial Analysts Journal 46 (1990), 67–76.
+Li, Yingying, Per A. Mykland, Eric Renault, Lan Zhang, and Xinghua
+Zheng, “Realized V olatility When Sampling Times Are Possibly
+Endogenous,” Econometric Theory 30 (2013), 1–26.
+Liu, Chun, and John M. Maheu, “Modeling and Forecasting Realized
+V olatility: The Role of Power V ariation,” University of Toronto
+technical report (November 2005).
+Maheu, John M., and Thomas H. McCurdy, “Do High Frequency Measures
+of V olatility Improve Forecasts of Return Distributions?”Journal of
+Econometrics 160 (2011), 69–76.
+GOOD VOLA TILITY , BAD VOLA TILITY 697
+Müller, Ulrich A., Michel M. Dacorogna, Rakhal D. Dave, Richard B.
+Olsen, Olivier V . Pictet, and Jacob E. von Weizsacker, “V olatilities
+of Different Time Resolutions: Analysing the Dynamics of Market
+Components,” Journal of Empirical Finance 4 (1997), 213–239.
+Nelson, Daniel B., “Conditional Heteroskedasticity in Asset Returns: A
+New Approach,” Econometrica 59 (1991), 347–370.
+Newey, Whitney K., and Kenneth D. West, “A Simple, Positive Deﬁ-
+nite, Heteroskedasticity and Autocorrelation Consistent Covariance
+Matrix,” Econometrica 55 (1987), 703–708.
+Oomen, Roel C. A., “Properties of Bias-Corrected Realized V ariance under
+Alternative Sampling Schemes,”Journal of Financial Econometrics
+3 (2005), 555–577.
+Patton, Andrew J., “V olatility Forecast Comparison Using Imperfect
+V olatility Proxies,”Journal of Econometrics 160 (2011), 246–256.
+Patton, Andrew J., and Kevin Sheppard, “Optimal Combinations of Realised
+V olatility Estimators,” International Journal of F orecasting 25
+(2009), 218–238.
+Sortino, Frank A., and Stephen Satchell, Managing Downside Risk in
+Financial Markets (Waltham, MA: Butterworth-Heinemann, 2001).
+Visser, Marcel P ., “Forecasting S&P 500 Daily V olatility using a Proxy
+for Downward Price Pressure,” Korteweg–de Vries Institute for
+Mathematics, University of Amsterdam technical report (2008).
+Zakoian, Jean-Michel, “Threshold Heteroskedastic Models,” Journal of
+Economic Dynamics and Control 18 (1994), 931–955.
+Zhang, Lan, Per A. Mykland, and Y acine Aït-Sahalia, “A Tale of Two
+Time Scales: Determining Integrated V olatility with Noisy High-
+Frequency Data,” Journal of the American Statistical Association
+100 (2005), 1394–1411.

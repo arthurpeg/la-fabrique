@@ -1,0 +1,1454 @@
+                       Micro Effects of Macro Announcements:
+                Real-Time Price Discovery in Foreign Exchange
+
+   By TORBEN G. ANDERSEN, TIM BOLLERSLEV, FRANCIS X. DIEBOLD, AND CLARA VEGA*
+
+
+          Using a new data set consisting of six years of real-time exchange-rate quotations,
+          macroeconomic expectations, and macroeconomic realizations, wecharacterize the
+          conditional means of U.S. dollar spot exchange rates. In particular, we /bullet5  nd that
+          announcement surprises produce conditional mean jumps; hence high-frequency
+          exchange-rate dynamics are linked to fundamentals. The details of the linkage are
+          intriguing and include announcement timing and sign effects. The sign effect refers
+          to the fact that the market reacts to news in an asymmetric fashion: bad news has
+          greater impact than good news, which we relate to recent theoretical work on
+          information processing and price discovery.  (JEL F3, F4, G1, C5)
+
+
+   How is news about  fundamentals incorpo-                         foreign exchange—   prices and fundamentals are
+rated into asset prices? The topic confronted by                    largely disconnected.1
+thisquestion—    characterization of the price dis-                    In this paper we provide an empirical exam-
+covery process—   isof basic importance to all of                   ination  of  price discovery  in  the challenging
+/bullet5  nancial  economics. Unfortunately, it  is also            context  of  foreign  exchange.  Using  a  newly
+one of the least well-understood issues. Indeed,                    constructed data set consisting of six years of
+some in/bullet6  uential empirical studies have gone so             real-time exchange-rate quotations, macroeco-
+far as to suggest that for some assets—   notably                   nomic expectations, and macroeconomic real-
+                                                                    izations (announcements), we characterize the
+                                                                    conditional means of U.S. dollar spot exchange
+                                                                    ratesforGerman Mark,BritishPound,Japanese
+   * Andersen:  Department  of  Finance,  Kellogg  School,          Yen, Swiss Franc, and the Euro. In particular,
+Northwestern University, and NBER (e-mail: t-andersen@              we show that announcement surprises (that is,
+kellogg.nwu.edu);  Bollerslev:  Department  of  Economics           thedifferencebetweenexpectationsand realiza-
+and   Finance,   Duke   University,   and   NBER   (e-mail:         tions,  or  “ news” )  produce  conditional  mean
+boller@econ.duke.edu); Diebold: Department of Econom-               jumps, and weprovide adetailed analysisofthe
+ics, Finance, and Statistics, University of Pennsylvania, and       speed and pattern of adjustment.
+NBER (e-mail: fdiebold@sas.upenn.edu); Vega: Graduate
+Group in Economics, University of Pennsylvania (e-mail:                We show that conditional mean adjustments
+cvega@ssc.upenn.edu). This work was supported by the                of exchange rates to news occur quickly, effec-
+National Science Foundation and the Wharton  Financial              tively amounting to “ jumps,”  in contrast to con-
+InstitutionsCenter. We aregratefulto Olsen and Associates           ditional variance adjustments, which are much
+for making available their real-time exchange-rate quota-
+tions data, and to Money Market Services International for          more gradual, and that an announcement’ s im-
+making  available  their  news  announcement  expectations          pact  depends  on  its  timing  relative  to  other
+data. For useful comments we thank three referees, as well          related announcements, and on whether the an-
+as Ricardo Cabellero, Dean Croushore, Kathryn Dominguez,            nouncementtimeisknown in advance.We/bullet5  nd,
+Bernard  Dumas,  Martin  Evans,  Michael  Fleming,  Jeff
+Frankel,  Linda  Goldberg,  Ken  Kavajecz,  Rich  Lyons,
+Nelson  Mark,  Frank  Schorfheide,  Nick  Souleles,  Allan
+Timmermann, Mark Watson, Ingrid Werner, and Jonathan                   1The classic statement is of course Richard A. Meese
+Wright,and participantsattheCAFConferencein Denmark                 and  Kenneth  Rogoff  (1983).  For  a good  survey  of  the
+on Market Microstructure and High-Frequency Data in Fi-             subsequent empirical exchange-rate literature through the
+nance, the University of Wisconsin Conference on Empiri-            early 1990’ s, see Jeffrey A. Frankel and Andrew K. Rose
+calModelsof ExchangeRates,theFederalReserveBank of                  (1995). In later work, Nelson C. Mark (1995) and Mark and
+Philadelphia Conference on Real-Time Data Analysis, the             Donggyu Sul (2001) /bullet5  nd that fundamentals matter in the
+NBER International Financeand MacroeconomicsProgram                 long run but not in the short run. Martin D. D. Evans and
+Meeting, and seminars at the University of Pennsylvania             Richard K. Lyons (2002) /bullet5  nd that order /bullet6  ow mattersin the
+and the University of Houston.                                      short run but fail to link order /bullet6  ow to fundamentals.
+                                                                38
+VOL. 93 NO. 1             ANDERSEN ET AL.: MICRO EFFECTS OF MACRO ANNOUNCEMENTS                                          39
+
+moreover, that the adjustment response pattern                  return volatility but do not consider the effects
+is characterized by a sign effect: bad news has                 of news on returns themselves.
+greater impact than good news. Finally, we re-                     Third, we use a new data set which spans a
+late our results to recent theoretical and empir-               comparatively long time period, and includes a
+ical  work  on  asset  return  volatility  and  its             broad set ofexchange ratesand macroeconomic
+association  with  information  processing  and                 indicators.
+price discovery.                                                   Notwithstanding the improvements obtained
+   Thepaperrelatesto earlier work in intriguing                 through the above consideration, our results are
+ways,but at leastthree featuresdifferentiateour                 quite consistent with prior related work. Indeed,
+/bullet5  ndings from previous results along important          several  studies  have  linked  macroeconomic
+dimensions. These include our focus on foreign                  news  announcements  to  jumps  in  exchange
+exchange  markets,  our  focus  on  conditional                 rates, and our /bullet5  ndings may be viewed as pro-
+mean as opposed to conditional variance, dy-                    viding  con/bullet5  rmation  and  elaboration.  Charles
+namicsandthelengthandbreadthofoursample                         Goodhart et al. (1993), for example, examine
+ofexchange-rateandannouncementdata.Letus                        one year of high-frequency Dollar/Pound ex-
+discuss them brie/bullet6  y in turn.                           change rates and two speci/bullet5  c news events—   a
+   First, we focus on foreign exchange markets                  U.S. trade /bullet5  gure announcement and a U.K. in-
+as opposed to stock or bond markets, and we                     terest-rate change—   and conclude in each case
+address the central open issue in exchange-rate                 that the news caused an exchange-rate jump.
+economics—   the  link  between  exchange  rates                Similarly, Alvaro Almeida et al. (1998) in their
+and  fundamentals. It is comforting, however,                   study  of  three  years  of  high-frequency  DM/
+that a number of recent papers focusing largely                 Dollar exchange rates and a larger set of news
+on bond markets reach conclusions similar to                    announcements, document systematic short-lived
+ours. Pierluigi Balduzzi et al. (2001), for exam-               news  effects.  Finally,  Kathryn  M.  Dominguez
+ple, examine the effects of economic news on                    (1999)  argues  that  most  large  exchange-rate
+prices in the U.S. interdealer government bond                  changes occur within ten seconds of a macroeco-
+market, /bullet5  nding strong news effects and quick           nomic news announcement, and that close timing
+incorporation of news into bond prices, while                   of central bank interventions to news announce-
+Michael  J.  Fleming  and  Eli  M.  Remolona                    ments increases their effectiveness.
+(1997, 1999) show that the largest bond price                      We proceed as follows. In Section I we de-
+movements  stem  from  the  arrival  of  news                   scribe  our  high-frequency  exchange-rate  and
+announcements.2                                                 macroeconomic  expectations  and  announce-
+   Second, we focus primarily on exchange-rate                  ments data. In Section II we characterize the
+conditional  means  as  opposed  to  conditional                speed and pattern of exchange-rate adjustment
+variances. That is, we focus primarily on the                   to  macroeconomic  news,  and  we  document,
+determination of exchange rates themselves, as                  among  other  things,  the  sign  effects  (i.e.,  a
+opposed  to  their  volatility. We  maintain  this              larger exchange-rate response to bad than good
+focus both because the conditional mean is of                   news).In SectionIIIwerelatethesigneffectsto
+intrinsic interest,  and  because high-frequency                recent theories of information processing and
+discrete-time volatility cannot be extracted ac-                price discovery. We conclude in Section IV.
+curately unlesstheconditional mean ismodeled
+adequately.Henceourwork differsinimportant                            I. Real-Time Exchange Rates, Expected
+respects from that of Louis H. Ederington and                     Fundamentals, and Announced Fundamentals
+Jae  Ha  Lee  (1993),  Richard  Payne  (1996),
+Andersen and Bollerslev (1998), and Bollerslev                     Throughoutthepaperweusedataonexchange-
+et al. (2000), for example, who examine calen-                  rate returns in conjunction with data on expecta-
+dar and news effects in high-frequency asset-                   tions  and  announcements  of  macroeconomic
+                                                                fundamentals. The data are novel in several re-
+                                                                spects, such as the simultaneous high frequency
+
+   2Also, in concurrent related work for T-bond futures,        and long calendar span of the exchange-rate re-
+Nikolaus Hautsch  and  Dieter  Hess (2001) report  highly       turns,  as  well  as  the  real-time  nature  of  the
+signi/bullet5  cant, but short-lived, price and volatility impacts inexpectations and announcements of fundamen-
+response to new and revised employment /bullet5  gures.         tals. Here we describe them in some detail.
+40                                                              THE AMERICAN ECONOMIC REVIEW                                              MARCH 2003
+
+              A.  Exchange-Rate Data                            downs, they capture the most important daily
+                                                                calendar effects.
+   The  raw  5-minute  CHF/$,  DM/$,  Euro/$,                      Finally, we deleted some of the returns con-
+Pound/$, and Yen/$ return series were obtained                  taminated by brief lapses in the Reuters data
+from  Olsen  and  Associates.  The  full  sample                feed. This problem, which occurs almost exclu-
+consists of continuously recorded 5-minute re-                  sively during the earliest part of the sample,
+turns from January 3, 1992 through December                     manifestsitself assequencesof zero or constant
+30, 1998, or 2,189 days, for a total of 2,189       z           5-minutereturnsin placeswheremissing quotes
+288  5  630,432  high-frequency  foreign  ex-                   had been interpolated. To remedy this, we sim-
+change (FX) return observations. As in Ulrich                   ply removed from each exchange-rate seriesthe
+A.Mu¨ lleret al.(1990)and Michel M. Dacorogna                   dayscontainingthe15longestzeroandconstant
+et  al.  (1993),  we  use  all  of  the  interbank              runs. Because of theoverlap among setsofdays
+quotes that  appeared  on  the  Reuters screen                  de/bullet5  ned by this criterion, we actually removed
+during  the  sample  period  to  construct  our                 only 25 days.
+5-minute returns. Each quote consists of a bid                     In theend weareleftwith1,724 daysof data,
+and an ask price together with a “ time stamp”                  containing  T  5  1,724      z  288  5  496,512
+to the nearest second. After /bullet5  ltering the data         high-frequency  5-minute  return  observations.
+for outliers and  other anomalies, we obtain                    Standard  descriptive  statistics reveal  that  the
+the average log price at each 5-minute mark                     5-minute returns have means that are negligible
+by  linearly interpolating  the  average  of  the               anddwarfedbythestandarddeviations,andthat
+log  bid  and  the  log  ask  at  the  two  closest             they are approximately symmetric but distinctly
+ticks. We then  construct continuously com-                     non-Gaussian, due to excess kurtosis. Ljung-
+poundedreturnsasthechange in these5-minute                      Box statistics indicate serial correlation in both
+average  log  bid  and  ask  prices.  Goodhart                  returns and absolute returns.
+et al. (1996) and Jon Danielsson and Payne                         To assess the economic relevance of the tem-
+(1999) /bullet5  nd  that the basic characteristics of          poral dependenciesin the return series,weturn to
+5-minute FX returns constructed from quotes                     the autocorrelations in column one of Figure 1.
+closely match those calculated from transac-                    Therawreturnsdisplay tiny, but neverthelesssta-
+tion prices (which are not generally available                  tistically signi/bullet5  cant, serial correlation at the very
+for the foreign exchange market).                               shortest lags, presumably due to microstructure
+   It is well known that the activity in the for-               effects. However, theshort-lagreturn serialcorre-
+eign exchange market slows decidedly during                     lation is negligible relative to the strong serial
+weekends and certain holiday nontrading peri-                   correlation in absolute returns, shown in column
+ods; see Mu¨ ller et al. (1990). Hence, as is stan-             two of Figure 1. The sample autocorrelations of
+dard in the literature, we explicitly excluded a                absolutereturnsdisplay very slow decay and pro-
+number of days from the raw 5-minute return                     nounced diurnal variation, in line with the results
+series.Wheneverwedid so, wealwayscutfrom                        of Dacorogna et al. (1993) and  Andersen  and
+21:05 GMT the night before to 21:00 GMT that                    Bollerslev  (1998).  Interestingly,  not  only  the
+evening. This particular de/bullet5  nition of a “ day”         shapes but also the amplitudes of the diurnal pat-
+was motivated by the ebb and /bullet6  ow in the daily          terns in absolute return autocorrelationsdiffer no-
+FX activity patterns documented in Bollerslev                   ticeably across currencies.
+and Ian Domowitz (1993) and keeps the daily
+periodicity intact. In addition to the thin week-                    B.  Expected Fundamentals, Announced
+end  trading  period  from  Friday  21:05  GMT                                Fundamentals, and News
+until Sunday 21:00 GMT, we removed several
+/bullet5  xed holidays, including Christmas (December              We use the International Money Market Ser-
+24– 26), New Year’ s (December 31– January 2),                  vices (MMS) real-time data on expected and
+and July Fourth. We also cut the moving holi-                   realized (“ announced” ) macroeconomic funda-
+daysofGoodFriday,EasterMonday,Memorial                          mentals, de/bullet5  ning “ news”   as the difference be-
+Day, July Fourth(when it fallsof/bullet5  ciallyon July         tween   expectations   and   realizations.   Every
+3), and Labor Day, as well as Thanksgiving                      week since 1977, MMS has conducted a Friday
+and the day after. Although our cuts do not                     telephone survey of about 40 money managers,
+account for all of the holiday market slow-                     collected  forecasts of all indicators to be re-
+VOL. 93 NO. 1             ANDERSEN ET AL.: MICRO EFFECTS OF MACRO ANNOUNCEMENTS                                                              41
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                           FIGURE 1. SAMPLE AUTOCORRELATION   FUNCTIONS
+                                                    RETURNS AND ABSOLUTE RETURNS
+Notes: Weplotthesampleautocorrelationsofreturnsand absolutereturnsfor /bullet5  vecurrencies,togetherwithBartlett’ sapproximate
+95-percentcon/bullet5  dencebandsunder thenullhypothesisofwhitenoise. In each graph, thevertical axisisthesampleautocorrelation
+andthehorizontalaxisisdisplacementin5-minuteintervals.Toavoidcontaminationfromshiftsinandoutofdaylightsavingtime,
+we calculate the sample autocorrelations using only days corresponding to U.S. daylight saving time.
+42                                                              THE AMERICAN ECONOMIC REVIEW                                              MARCH 2003
+
+leased during the next week, and reported the                     announcementtime.4Determinationofmarketex-
+median forecasts from the survey. Numerous                        pectations  is  similarly  straightforward:  we  use
+in/bullet6  uential  studies,  from  early  work  such  as        MMS survey data on expected federal fund rate
+Thomas  J.  Urich  and  Paul  Wachtel  (1984)                     targets from January 1992 to December 1998.5
+through  recent  work  such  as Balduzzi  et  al.                 The  announcements  themselves  are  trickier  to
+(2001), have veri/bullet5  ed that the MMS expecta-               construct, due to the pre-1994 FOMC secrecy;
+tions  contain  valuable  information  about  the                 we use the announcement data constructed by
+forecasted variable, and in most cases are unbi-                  Michael W. Brandt et al. (2001), kindly pro-
+ased and lessvariable than thoseproduced from                     vided by Kenneth Kavajecz.
+extrapolative   benchmarks   such   as   ARMA                        In  Figure  2  we  show  the  pattern  of  U.S.
+models.                                                           release dates throughout the month.6 This is of
+   Table 1 providesabriefdescription ofsalient                    potential importance, because there is some re-
+aspects of  U.S.  and  German  economic  news                     dundancy across indicators. For example, con-
+announcements. We show the total number of                        sumer and producer price indexes, although of
+observations in our news sample, the agency                       course not the same, are nevertheless related,
+reporting each announcement, and the time of                      and  Figure 2  reveals that  the producer price
+the announcement release. Note that U.S. an-                      index is released earlier in the month. Hence
+nouncements  times  are  known  in  advance,                      one might conjecture that producer price news
+whereasonly theday fortheGerman announce-                         would explain more exchange-rate return vari-
+ments are known in advance but their timing                       ation than consumer price news, as the typical
+within the day isvariable and unknown a priori.                   amount of consumer price news revealed may
+   The target Fed funds rate deserves special                     be  relatively  small  given  the  producer  price
+mention. The Federal Open Market  Commit-                         news revealed earlier in the month.
+tee’ s  (FOMC)  announcement  of  the  federal                       Because units of measurement differ across
+funds rate target, although likely producing im-                  economic variables, we follow Balduzzi et al.
+portant news, is nonstandard and hence is not                     (2001) in using standardized news. That is, we
+typically examined. It is nonstandard because                     divide the surprise by its sample standard devi-
+prior to February 1994 it was not announced;                      ation to facilitate interpretation. The standard-
+instead, the FOMC   signaled the target rate, but                 izednewsassociatedwith indicator  k attimet is
+did not state it explicitly, through open market
+operationsperformed from 11:30 to 11:35 A.M.
+Eastern time on the day of the FOMC meeting.                                          Skt5 Akt2 Ektsˆk      ,
+In  February  1994,  the  FOMC  began  to  an-
+nounce changes in the target rate on meeting
+days, albeit at irregular times, and from 1995                    whereAkt istheannounced valueof indicator  k,
+onward it announced the target rate on meeting                    Ekt is the market expected value of indicator  k
+days regularly at  2:15 P.M. Eastern time, as                     asdistilled in the MMS median forecast, and  sˆk
+described in Kenneth N. Kuttner (2001).                           is the sample standard deviation of  Akt 2 Ekt.
+   To assess the effects of FOMC news, we need                    Use ofstandardized newsfacilitatesmeaningful
+to knowannouncement daysand times, aswellas
+the market’ s expected Fed funds rate target and
+the announced (or signaled) value. Determination                     4The FOMC can also surprise the market by changing
+of  announcement  days  and  times  is  relatively                theFed fundstarget between FOMCmeetings.Becausethis
+straightforward. We collected the irregular 1994                  doesnot happen often in our sample(5 out of 62 times) and
+announcement times from Reuters.3 Before 1994                     we do not have theexact timing of such policy changes, we
+we use  an  11:30  A.M.  Eastern  announcement                    do not account for them. Similarly, data limitations prevent
+time, and after March, 1995 we use a 2:15 P.M.                    us from investigating the effect of Fed open market opera-
+                                                                  tions; see Campbell R. Harvey and Roger D. Huang (2002)
+                                                                  for a recent analysis involving the earlier 1982– 1988 time
+                                                                  period.
+   3The  announcement  times  were 11:05  A.M.  Eastern              5One could also attempt to infer expectations from Fed
+timeon 02/04/94, 2:20 P.M.on03/22/94 and07/06/94,2:30             funds futures prices, as in Glenn D. Rudebusch (1998) and
+P.M. on 11/15/94, 2:26 P.M. on 05/17/94, 2:23 P.M. on             Kuttner (2001).
+12/20/94, 1:17 P.M. on 08/16/94, 2:22 P.M. on 09/27/94,              6Thedesignofthe/bullet5  gurefollowsChart2 ofFlemingand
+2:24 P.M. on 02/01/95.                                            Remolona (1997).
+VOL. 93 NO. 1             ANDERSEN ET AL.: MICRO EFFECTS OF MACRO ANNOUNCEMENTS                                                                                                   43
+
+                                                   TABLE 1— U.S. AND GERMAN NEWS ANNOUNCEMENTS
+
+                                                                   Number of
+Announcement                                                     observations a       Sourceb                   Datesc                   Announcement time  d
+                                                                          U.S. Announcements
+                                                                       Quarterly Announcements
+ 1. GDP advance                                                     47               BEA            05/22/87– 10/30/98           8:30 A.M.
+ 2. GDP preliminary                                                46               BEA            06/17/87– 12/23/98           8:30 A.M.
+ 3. GDP /bullet5nal                                                         47               BEA            01/22/87– 11/24/98           8:30 A.M.
+                                                                        Monthly Announcements
+Real Activity
+ 4. Nonfarm payroll employment                         144               BLS            12/05/86– 12/04/98  e         8:30 A.M.
+ 5. Retail sales                                                       145               BC              12/11/86– 12/11/98           8:30 A.M.
+ 6. Industrial production                                        145              FRB            12/15/86– 12/16/98           9:15 A.M.
+ 7. Capacity utilization                                          145               FRB            12/15/86– 12/16/98           9:15 A.M.
+ 8. Personal income                                               142               BEA            12/18/86– 12/24/98  f         10:00/8:30 A.M. g
+ 9. Consumer credit                                              129               FRB            04/04/88– 12/07/98           3:00 P.M.h
+Consumption
+10. Personal consumption expenditures                143               BEA            12/18/86– 12/24/98  i          10:00/8:30 A.M. j
+11. New home sales                                               117               BC              03/02/89– 12/02/98           10:00 A.M.
+Investment
+12. Durable goods orders                                      143               BC              12/23/86– 12/23/98  k         8:30/9:00/10:00 A.M.l
+13. Construction spending                                     128               BC              04/01/88– 12/01/98  m        10:00 A.M.
+14. Factory orders                                                  127               BC              03/30/88– 12/04/98  n         10:00 A.M.
+15. Business inventories                                        129               BC              04/14/88– 12/15/98           10:00/8:30 A.M. o
+Government Purchases
+16. Government budget de/bullet5  cit                              124               FMS            04/21/88– 12/21/98  p         2:00 P.M.
+Net Exports
+17. Trade balance                                                   128              BEA            04/14/88– 12/17/98           8:30 A.M.
+Prices
+18. Producer price index                                        145               BLS            12/12/86– 12/11/98           8:30 A.M.
+19. Consumer price index                                      145               BLS            12/19/86– 12/15/98           8:30 A.M.
+Forward-looking
+20. Consumer con/bullet5  dence index                               90               CB              07/30/91– 12/29/98           10:00 A.M.
+21. NAPM index                                                    107               NAPM        02/01/90– 10/01/98           10:00 A.M.
+22. Housing starts                                                  145               BC              12/30/86– 12/30/98           8:30 A.M.
+23. Index of leading indicators                              145               CB              12/30/86– 12/30/98           8:30 A.M.
+                                                                       Six-Week Announcements
+FOMC
+24. Target federal funds rate                                    62               FRB            2/5/92– 12/22/98                2:15 P.M.q
+
+                                                                         Weekly Announcements
+25. Initial unemployment claims                           384               ETA            07/18/91– 12/31/98           8:30 A.M.
+26. Money supply, M1                                           628               FRB            12/04/86– 12/31/98           4:30 P.M.
+27. Money supply, M2                                           563               FRB            03/03/88– 12/31/98           4:30 P.M.
+28. Money supply, M3                                           563               FRB            03/03/88– 12/31/98           4:30 P.M.
+                                                                       German Announcements r
+                                                                       Quarterly Announcements
+29. GDP                                                                  24               GFSO          03/09/93– 12/03/98           Varies
+                                                                        Monthly Announcements
+Real Activity
+30. Employment                                                      59               FLO            04/06/93– 12/08/98           Varies
+31. Retail sales                                                         59               GFSO          04/14/93– 12/10/98           Varies
+32. Industrial production                                          63               GFSO          05/04/93– 12/07/98           Varies
+44                                                              THE AMERICAN ECONOMIC REVIEW                                              MARCH 2003
+
+                                                              TABLE 1— Continued.
+
+                                                        Number of
+Announcement                                          observations a       Sourceb                   Datesc                   Announcement time  d
+Investment
+33. Manufacturing orders                                       62                GFSO          04/06/93– 12/07/98           Varies
+34. Manufacturing output                                       64                GFSO          03/02/93– 12/07/98           Varies
+Net Exports
+35. Trade balance                                                    61                GFSO          07/13/93– 12/11/98           Varies
+36. Current account                                                61                BD              07/13/93– 12/11/98           Varies
+Prices
+37. Consumer price index                                       68                GFSO          03/01/93– 12/23/98           Varies
+38. Producer prices                                                 65                GFSO          03/18/93– 12/22/98           Varies
+39. Wholesale price index                                      68                GFSO          03/16/93– 12/16/98           Varies
+40. Import prices                                                    68                GFSO          03/26/93– 12/21/98           Varies
+Monetary
+41. Money stock M3                                               66                BD              03/18/93– 12/18/98           Varies
+
+Notes: We group the U.S. monthly news announcements into seven groups: Real activity, the four components of GDP
+(consumption, investment, government purchases, and net exports), prices, and forward-looking. Within each group, we list
+U.S. news announcements in chronological order.
+   aTotal number of observations in the announcements sample.
+   bBureau of Labor Statistics (BLS), Bureau of the Census (BC), Bureau of Economic Analysis (BEA), Federal Reserve
+Board (FRB),National Association of Purchasing Managers(NAPM),ConferenceBoard (CB),Financial Management Of/bullet5  ce
+(FMO), Employment and Training Administration (ETA),German Federal StatisticalOf/bullet5  ce(GFSO, StatistischesBundesamt
+Deutschland), Federal Labor Of/bullet5  ce (FLO, Bundesanstalt fu¨ r Arbeit), Bundesbank (BD).
+   cStarting and ending dates of the announcements sample.
+   dEastern Standard Time. Daylight saving time starts on the /bullet5  rst Sunday of April and endson the last Sunday of October.
+   e10/98 is a missing observation.
+   f11/95, 2/96, and 03/97 are missing observations.
+   gIn 01/94, the personal income announcement time moved from 10:00 A.M. to 8:30 A.M.
+   hBeginning in 01/96, consumer credit was released regularly at 3:00 P.M. Prior to this date the release times varied.
+   i11/95 and 2/96 are missing observations.
+   jIn 12/93, the personal consumption expenditures announcement time moved from 10:00 A.M. to 8:30 A.M.
+   k03/96 is a missing observation.
+   lWhenever GDP is released on the same day as durable goods orders, the durable goods orders announcement is moved
+to 10:00 A.M. On 07/96 the durable goods orders announcement was released at 9:00 A.M.
+   m01/96 is a missing observation.
+   n10/98 is a missing observation.
+   oIn 01/97, the business inventory announcement was moved from 10:00 A.M. to 8:30 A.M.
+   p05/88, 06/88, 11/98, 12/89, and 01/96 are missing observations.
+   qBeginning in 3/28/94, the Fed funds rate was released regularly at 2:15 P.M. Prior to this date the release times varied.
+   rPrior to 1994 the datarefer only to West Germany. Beginning in 1994, thedatarefer to theuni/bullet5  ed Germany. Thetiming
+of the German announcements is not regular, but they usually occur between 2:00 A.M. and 8:00 A.M. Eastern Standard
+Time.
+
+
+comparisons of responses of different exchange                                time that the MMS forecast isproduced and the
+rates to different pieces of news. Operationally,                             time that the macroeconomic indicator is real-
+we estimate the responses by regressing asset                                 ized; hence the MMS forecasts may be “ stale.”
+returns on news; because  sˆk is constant for any                             Just howstaletheyare,however,isanempirical
+indicator k, the standardization affects neither                              matter. This issue has been investigated already
+the statistical signi/bullet5  cance of response estimates                    in the context of news effects on interest rates
+nor the /bullet5  t of the regressions.                                       by Balduzzi etal. (1998),whoregresstheactual
+   Before proceeding, we pause to discuss in                                  announcement,  Ai, on the median forecast of
+greater detail the possibility that the MMS fore-                             the MMS survey,  Fi,  and the change in the
+casts may not capture all information available                               (very  announcement-sensitive)  ten-year  note
+immediately before the announcement. Surely                                   yield from the time of the survey to the time of
+information does not stop /bullet6  owing between the                         the announcement, Dy:
+VOL. 93 NO. 1             ANDERSEN ET AL.: MICRO EFFECTS OF MACRO ANNOUNCEMENTS                                                   45
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   FIGURE 2. U.S. MACROECONOMIC   ANNOUNCEMENT  RELEASE DATES DATA FOR MONTH X
+Notes: Weshowthesequenceof announcement datescorresponding to dataformonth X,formost oftheeconomicindicators
+used in the paper. For example, March (month X) consumer credit data are announced between May (month X   1 2) 5 and
+May 10. GDP data are special, because they are released only quarterly. Hence, the GDP data released in a given month are
+either advance, preliminary, or /bullet5  nal depending on whether themonth isthe /bullet5  rst, second, or third of thequarter. For example,
+/bullet5  rst quarter Q1 GDP advancedataareannounced between April (month X   11) 27 and May 4, /bullet5  rst quarter GDP preliminary
+dataareannounced between May (month X   12)27 and June4, and /bullet5  rst quarter GDP /bullet5  nal dataareannounced between June
+(month X 1 3) 27 and July 4. The table is based on 2001 Schedule of Release Dates for Principal Federal Economic
+Indicators, produced by the U.S. Of/bullet5  ce of Management and Budget and available at http://clinton4.nara.gov/textonly/OMB/
+pubpress/pei2001.html.
+
+
+
+        Ait5a0i1a1iFit1a2iDyt1 eit.                                  unbiased.7 More importantly for the issue at
+                                                                     hand, however, they also  /bullet5  nd that for most
+This particular regression facilitates the test-                     indicators the hypothesis that a2i 5 0 cannot
+ing  of several  hypotheses.  First,  if  there  is                  be rejected, indicating that the MMS forecasts
+information content in the MMS survey data,                          do not appear signi/bullet5  cantly stale.
+the coef/bullet5  cient estimates  a1i should be posi-
+tive  and  signi/bullet5  cant.  Second,  if  the  survey                   II. Exchange Rates and Fundamentals
+information  is  unbiased,  the  a0i  coef/bullet5cient
+estimates  should  be  insigni/bullet5  cant,  and  the                 We  will  specify  and  estimate  a  model  of
+slope terms a1i should be insigni/bullet5  cantly dif-               high-frequency  exchange-rate  dynamics  that
+ferent from unity. Finally, if expectations are                      allows  for  the  possibility  of  news  affecting
+revised between the survey and the announce-                         both the conditional mean and the conditional
+ment, there should be a reaction in the bond                         variance.  Our  goal  is  to  determine  whether
+price at the time of the forecast revision, and
+we  should  see  a  relationship  between  the                          7In addition to being unbiased, Douglas K. Pearce and
+change  in  yield  and  the  announcement.  As                       V. Vance Roley (1985) and Grant McQueen and Roley
+already  mentioned,  Balduzzi  et  al.  (2001)                       (1993)also/bullet5  nd thattheMMS surveysaremoreaccurate, in
+/bullet5  nd, as have many others, that most of the                  the sense of having lower mean squared errors, than the
+MMS forecasts contain information and are                            forecasts from standard autoregressive time-series models.
+46                                                              THE AMERICAN ECONOMIC REVIEW                                              MARCH 2003
+
+high-frequency  exchange-rate  movements  are                           We   allow   the   disturbance   term   in   the
+linked  to  fundamentals,  and  if  so  how.  Our                    5-minutereturnmodel(1)to beheteroskedastic.
+motivations are twofold. The /bullet5  rst motivation is             Following Andersen and Bollerslev (1998), we
+obviously the possibility of re/bullet5  ning our under-             estimate the model using a two-step weighted
+standing  of  the  fundamental  determinants  of                     least-squares (WLS) procedure. We /bullet5  rst esti-
+exchange rates, the central and still largely un-                    mate the conditional mean model (1) by ordi-
+resolved question of exchange-rate economics.                        nary  least-squares  regression,  and  then  we
+The second motivation is the possibility of im-                      estimate the time-varying volatility of  «t from
+proved high-frequency volatility estimation via                      the regression residuals, which we use to per-
+allowance for jumps due to news, as misspeci-                        form a weighted least-squaresestimation of (1).
+/bullet5  cation oftheconditional mean(forexampleby                  We approximatethedisturbance volatility using
+failing to allow for jumps, if jumps are in fact                     the model:
+present) will produce distorted volatility esti-
+mates in discrete time. 8                                            (2)         z«ˆtz5 c1c  sˆd~t!
+A.  Modeling the Response of Exchange Rates                                                       288
+                          to News                                                           K   OJ9
+   We model the 5-minute spot exchange rate,                                          1 O            bkj9zSk,t2j9z
+Rt, as a linear function of  I lagged values of                                           k51   j950
+itself, and J lags of news on each of  K funda-                                               Q   XdqcosX
+mentals:                                                                              1 X O                  q2pt
+
+                                                                                            q51               288 D
+                          I
+(1)      Rt5b01 O             biRt2i                                                                q2pt
+                        i51
+                                                                                      1fqsinX       288 D D
+
+                      K   OJ
+                1 O            bkjSk,t2j1«t,
+                    k51   j50                                                               R   OJ0
+                                                                                      1 O            grj0Dr,t2j0D 1 ut.
+           t5 1, ... , T.                                                                 r51  j050
+
+As  discussed   earlier,   K  5   41   and  T  5                     The left-hand-side variable,   z«ˆtz, is the absolute
+496,512. We chose  I 5 5 and J 5 2 based on                          value  of  the  residual  of  equation  (1),  which
+the Schwarz and Akaike information criteria.9                        proxiesforthevolatilityinthe5-minuteinterval
+                                                                     t. Asrevealedbytheright-handsideofequation
+                                                                     (2),  we  model  5-minute  volatility  as  driven
+   8In this paper, we are primarily interested in exchange-          partly by the volatility over the day containing
+rate volatility only insofar as it is relevant for inference         the 5-minute interval in question, sˆd(t), partly
+regarding exchange-rate conditional mean dynamics. We                by news Sk,t,  and partly by a calendar-effect
+have reserved for future work a detailed analysis of vola-           patternconsistinglargelyofintradayeffectsthat
+tility in relation to conditional mean and variance jumps.           capture  the  high-frequency  rhythm  of  devia-
+For a discussion of the effects of conditional mean and
+variance jumps on realized volatility, see Andersen et al.           tions of intraday volatility from the daily aver-
+(2003).                                                              age. Speci/bullet5  cally, we split the calendar effects
+   9We also tried allowing for negative   J, to account for
+announcement leakage before the of/bullet5  cial time, and more      into two parts. The /bullet5  rst is a Fourier /bullet6  exible
+generally to account for the fact that the MMS forecasts             form with trigonometric terms that obey a strict
+might  not  capture all  information  available immediately
+beforethe announcement, but doing so proved unnecessary.
+This accords with the earlier-discussed /bullet5  nding of Balduzzi
+et  al.  (2001)  that,  to  a  good  approximation,  the  MMS        likely some leakage, however small) then our estimated
+forecasts do capture all information available immediately           news response coef/bullet5  cients, which correspond only to the
+before the announcement. Moreover, if leakage   is present           impact at the time of the of/bullet5  cial announcement, are lower
+(and introspection, if not the empirics, suggests that thereis       bounds for the total news impact.
+VOL. 93 NO. 1             ANDERSEN ET AL.: MICRO EFFECTS OF MACRO ANNOUNCEMENTS                                                47
+
+periodicity of one day.10 The second is a set of                   constrain the response pattern in any way. Use
+dummy variables   Dr,t capturing the Japanese                      of a lower-ordered polynomial, however, con-
+lunch,  the  Japanese  open,  and  the  U.S.  late                 strainstheresponsein helpful ways:itpromotes
+afternoon during U.S. daylight saving time.                        parsimony and hence tractability, retains /bullet6  exi-
+   Let usexplain in greater detail. Consider /bullet5  rst         bility of approximation, and facilitates the im-
+the daily volatility, sˆd(t), which is the one-day-                position of sensible constraints on the response
+ahead volatility forecast for day   d(t) (the day                  pattern. For example, we can enforce the re-
+that contains time   t) from a simple daily con-                   quirement that the impact effect slowly fadesto
+ditionally Gaussian GARCH(1, 1) model using                        zero by imposing   p(J9) 5 0.
+spotexchange-ratereturnsfromJanuary2,1986                             Polynomial speci/bullet5  cations ensure that the re-
+through December 31, 1998. Because  sˆd(t) is                      sponse patterns are completely determined by
+intended to capture the “ average”   level of vol-                 the response horizon   J9, the polynomial order
+atility on day  d(t), it makessense to construct it                P,  and  the  endpoint  constraint  imposed  on
+using a GARCH(1, 1)model, which isroutinely                        p(J9). For news effects   S, we take J9 5 12,
+found  to  provide  accurate  approximations  to                   P 5 3, and p(J9) 5 0.13 The last condition
+daily asset return volatility dynamics.11                          leads to a polynomial with one less parameter;
+   Now consider the Fourier part for the calen-                    substituting  t 5 12 into p(t) we have, p(t) 5
+dar effects. This is a very /bullet6  exible functional            c0[1  2  (t/12)3]  1  c1t[1  2  (t/12)2]  1
+form that may be given a semi-nonparametric                        c2t2[1 2 (t/12)]. We estimate each polyno-
+interpretation (A. Ronald Gallant, 1981). The                      mial separately for all announcements and for
+Schwarz and Akaike information criteria chose                      each exchange rate. For example, payroll em-
+a rather low Q 5 4 for all currencies, which                       ployment polynomial parameter estimates are
+achieves  parametric  economy  and  promotes                       (cˆ0, cˆ1, cˆ2)5 (0.177175,20.0645, 0.008367) for
+smoothness in the intraday seasonal pattern.                       theDM/$,(0.163146, 20.05544,0.00704)forthe
+   Finally, consider the news effects  S and non-                  CHF/$, (0.114488,  20.03795, 0.00477) for the
+Fourier calendar effects  D. To promote tracta-                    Pound/$,(0.108867, 20.03186,0.004003)forthe
+bility while simultaneously maintaining /bullet6 exibility,        Euro/$, and (0.11717, 20.04619, 0.006289) for
+weimposepolynomialstructureon theresponse                          theYen/$.Finally, bkj9 5gkpk(j9), wheregkis
+patternsassociated withthe  bkj9 andgrj0 param-                    the coef/bullet5  cient estimate in equation (2). As for
+eters.12 For example, if a particular news sur-                    the  non-Fourier  calendar-effect  response  pat-
+prise affects volatility from time  t0to timet01                   ternsD, fortheJapanesemarketopeningweuse
+J9, we can represent the impact over the event                     J05 6,P5 1, p(J0)5 0, for the Japanese lunch
+window t  5  0,  1, ... ,  J9  by  a  polynomial                   hour we use J0 5 0 (i.e., a standard dummy
+speci/bullet5  cation,  p(t) 5 c0 1 c1t 1 ... 1 cPtP.              variable with no polynomial response), and for
+For P 5 J9 this would imply the estimation of                      the  U.S.  late  afternoon  during  U.S.  daylight
+J9 1 1 polynomial coef/bullet5  cients and would not               saving  time  we  use   J0  5  60,  P  5  2,  and
+                                                                   p(0) 5 p(J0) 5 0.14
+                                                                      In closing this subsection, we note that we
+   10Wealso translatethe Fourier terms leftward asappro-           could have handled the volatility dynamics dif-
+priateduring U.S. daylight saving time. (Only North Amer-          ferently. In particular, instead of estimating ex-
+ica and Europe have daylight saving time.)                         plicit parametric models of volatility dynamics,
+   11For surveys of GARCH modeling in /bullet5  nancial envi-
+ronments, see Bollerslev et al. (1992) and Diebold and Jose        we could have simply estimated equation (1)
+Lopez (1995). Other possibilities, also explored with little       using heteroskedasticity- and serial-correlation
+change in qualitative results, include use of daily realized
+volatilities as in Andersen et al. (2001) and Andersen et al.
+(2001a, 2003).
+   12This is particularly important in the case of condi-             13The “ constraint”  that volatility news effects linger for
+tional variance as opposed to conditional mean dynamics,           at most an hour ( J9 5 12) is nonbinding. Initial experi-
+because conditional variances turn out to adjust to shocks         mentation allowing for  J9 5 36 revealed that one hour was
+more slowly than do conditional means, thereby involving           enoughforfulladjustment, forall indicatorsand currencies.
+longer distributed lags, as we will subsequently emphasize.           14The Japanese opening is at 8 P.M. Eastern daylight
+Hence, although tractability did not require the imposition        saving time, the Japanese lunch hour is 11 P.M. through
+of polynomial shape on the conditional mean distributed            12:30  A.M.  Eastern  daylight  saving  time,  the U.S.  late
+lags, it greatly enhances the accuracy of the conditional          afternoon during daylight saving timeisde/bullet5  ned to start at3
+variance estimates.                                                P.M. Eastern daylight saving time.
+48                                                              THE AMERICAN ECONOMIC REVIEW                                              MARCH 2003
+
+consistent (HAC) standard errors. We /bullet5  nd that
+approach less attractive than the one we adopted,
+for at least three reasons. First, we are interested
+not only in performing heteroskedasticity-robust
+inference about the coef/bullet5  cients (done both by
+our WLS and by HAC estimation) in equation
+(1),  but  also  in  obtaining  the  most  ef/bullet5  cient
+estimates  of  those  coef/bullet5  cients.  Second,  al-
+though HAC estimation is asymptotically ro-
+bust to residual heteroskedasticity of unknown
+form, its general robustness may come at the
+price of inferior /bullet5  nite-sample performance rel-
+ative to the estimation of a well-speci/bullet5  ed para-
+metric volatility model.15Third, despite the fact
+that they are not central to the analysis in the
+present paper, both the intra- and interday vol-
+atility  patterns  are  of  intrinsic  /bullet5  nancial  eco-
+nomic interest and hence one may want estimates
+of these in other situations. Notwithstanding all
+of these a priori arguments against the use of
+HAC  estimation  in  the present  context, as a
+check on the robustness of our results, we also
+performed all of the empirical work related to
+themean effectsusing HAC estimation,with no
+change  in  any  of  the  qualitative  results  (al-
+though a number of the coef/bullet5  cients were no
+longer statistically signi/bullet5  cant).
+
+   B. News Effects I: News Announcements
+                  Matter, and Quickly
+
+   The model (1)– (2) provides an accurate ap-
+proximation to both conditional mean and con-
+ditional  variance  dynamics.  Since  the  model
+contains so many variables and  their lags, it
+would prove counterproductive to simply report
+all of the parameter estimates. Instead, Figure 3                             FIGURE 3. ACTUAL AND FITTED INTRADAY
+shows  the  actual  and  /bullet5  tted  average  intraday                               VOLATILITYPATTERNS
+volatility patterns, which obviously agree fairly                    Notes: The solid line is the average intraday pattern of the
+closely. Further, in Figure 4 we present graph-                      absolute residual return     z«ˆtz over the 288 5-minute intervals
+ically the results for the most important indica-                    within the day, where  «ˆt is the residual from the exchange-
+tors, and we discuss those results (and some                         rateconditional mean model (1) in thetext. Thedashed line
+others, not shown in the /bullet5  gure) in what follows.            is the /bullet5  tted intraday pattern of    z«ˆtz from the exchange-rate
+   Let us /bullet5  rst consider the effects of U.S. mac-            volatility model (2) in the text. To avoid contamination
+roeconomic news. Throughout, news exerts a                           from shifts in and out of daylight saving time, we construct
+                                                                     the /bullet5  gures using only days corresponding to U.S. daylight
+generally  statistically  signi/bullet5  cant  in/bullet6  uence  on saving time.
+exchange  rates,  whereas  expected  announce-
+ments generally do not. That is, only   unantici-
+pated shocks to fundamentals affect exchange       rates, in accordance with the predictions of ra-
+                                                                     tional expectations theory. Many U.S. indica-
+                                                                     tors have statistically signi/bullet5  cant news effects
+
+   15SeeC.RadhakrishnaRao (1970)andAndrewChesher                     across all currencies, including payroll employ-
+and Ian Jewitt (1987).                                               ment, durable goods orders, trade balance, ini-
+VOL. 93 NO. 1             ANDERSEN ET AL.: MICRO EFFECTS OF MACRO ANNOUNCEMENTS                                                   49
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                     FIGURE 4. EXCHANGE-RATE RESPONSES TO U.S. NEWS
+Notes: We graph the three news response coef/bullet5  cients associated with the exchange-rate conditional mean regression (1),
+corresponding to responses at the announcement, /bullet5  ve minutes after the announcement, and ten minutes after the announce-
+ment. We also show two standard error bands, under the null hypothesis of a zero response, obtained using the weighted
+least-squares estimation method described in the text.
+
+
+
+tial unemployment claims, NAPM index, retail                         tion (e.g., John  B.  Taylor, 1993).16 One can
+sales, consumer con/bullet5  dence, and advance GDP.                 see from the center panel of the /bullet5  rst row of
+   The general pattern is one of very quick ex-                      Figure  4,  for  example,  that  a  one  standard
+change-rate conditional mean adjustment, char-                       deviation  U.S.  payroll  employment  surprise
+acterized by a jump immediately following the                        tends to appreciate (if positive) or depreciate (if
+announcement, and little movement thereafter.                        negative) the dollar  against  the DM  by  0.16
+Favorable U.S.“ growth news”  tendsto produce
+dollarappreciation,and conversely.Thisiscon-
+sistentwithavarietyofmodelsofexchange-rate                              16For most of our macroeconomic indicators, including
+determination,  from  simple  monetary  models                       those on which we primarily focus, the sign of a “ good
+(e.g., Mark, 1995) to more sophisticated frame-                      shock”   is clear: movements associated with increased real
+works involving a U.S. central bank reaction                         U.S. economic activity are good for the dollar. Sometimes,
+                                                                     however,itisnotobviouswhich directionshould beviewed
+function displaying a preference for low in/bullet6  a-              as good, as perhaps with consumer credit.
+50                                                              THE AMERICAN ECONOMIC REVIEW                                              MARCH 2003
+
+percent.17 This is a sizeable move, from both                      forGermany(daybutnottime).Uncertainrelease
+statistical and  economic perspectives. On the                     times may result in  less market  liquidity  (and
+statistical side, we note that only 0.7 percent of                 trading) around the announcement times, hence
+our 5-minute returns show an appreciation or                       resulting in smaller news effects around the an-
+depreciation bigger than 0.10 percent. On the                      nouncements, ultimately producing a more grad-
+economic side, we note that 0.16 percent is also                   ual adjustment, perhaps for a few hours after the
+large  relative  to  the  average  DM/$  spread,                   announcements.   Alternatively,   greater   prean-
+which tends to be around 0.06 percent during                       nouncement leakage in Germany may result in
+the  period  we  study  (see,  Hendrik  Bessem-                    adjustments taking place gradually in the days
+binder,1994,andJoelHasbrouck,1999,Table1).                         prior to the actual announcement.
+   It is important to note that, although closely                     Most  of the explanatory  power  of the ex-
+timed  news events are  highly  correlated,  the                   change-rate conditional mean model (1) comes
+correlation does not create a serious multicolin-                  from the lagged values of the dependent vari-
+earity  problem  except  in  a  few  speci/bullet5  c  in-         able and the contemporaneous news announce-
+stances. For example, industrial production and                    ment. Hence, although 58 percent of the daysin
+capacity  utilization  are  released  at  the  same                our sample contain a news announcement, to a
+time, and they are highly correlated (0.64). In                    good approximation the news predicts only the
+general, however, the event that two announce-                     direction and magnitude of the exchange-rate
+ments within the same category (e.g., real ac-                     movement during the 5-minute post-release in-
+tivity) are released simultaneously is rare.                       tervals, which correspond to only two-tenths of
+   Now let us focus on the DM/$ rate in some                       one percent of the sample observations. To fo-
+detail.Itisofparticularinterestbothbecauseofits                    cus on the importance of news during announce-
+central role in the international /bullet5  nancial system         ment periods, we now estimate the model
+during the period under study, and because we
+have newsdata on both U.S. and German macro-                       (3)                   Rt5bkSkt1«t,
+economicindicators.18Firstconsidertheeffectsof
+U.S.  macroeconomic  news on  the  DM/$  rate.                     where Rt is the 5-minute return from time  t to
+Newsannouncementson a variety of U.S. indica-                      time t 1 1  and Skt is the standardized news
+tors signi/bullet5  cantly affect the DM/$ rate, including         corresponding to announcement  k (k 5 1, ... ,
+payroll employment, durable goods orders, trade                    41) at time t, and the estimates are based on
+balance, initial claims, NAPM index, retail sales,                 only those observations ( Rt, Skt) such that an
+consumercon/bullet5  dence,CPI,PPI,industrialproduc-               announcement was made at time   t.
+tion, leading indicators, housing starts, construc-                   We show the estimation results in Table 2,
+tion spending,federalfundsrate,newhomesales,                       which  contains a number of noteworthy fea-
+and GDP (advance, preliminary, and /bullet5  nal).                 tures. First, news on many of the fundamentals
+   Now consider the effect of  German macroeco-                    exerts a signi/bullet5  cant in/bullet6  uence on exchange rates.
+nomic newson the DM/$ rate. 19In sharp contrast                    This is of course expected, given our earlier
+to the large number of U.S. macroeconomic indi-                    estimation results for equation (1) as summa-
+catorswhosenewsaffecttheDM/$rate,onlyvery                          rized in Figure 4. News from FOMC delibera-
+few  of  the  German  macroeconomic  indicators                    tions, for example, clearly in/bullet6  uences exchange
+have a signi/bullet5  cant effect (M3 and industrial pro-          rates: the large and statistically signi/bullet5  cant co-
+duction). We conjecture that the disparity may be                  ef/bullet5  cients, and the high   R2’ s, are striking. Their
+duetothefact,detailedinTable1,thattherelease                       positive signs indicate that, as expected for ex-
+times  of  U.S.  macroeconomic  indicators  are                    ample in a standard monetary model, Fed tight-
+known exactly (day and time) but only inexactly                    ening is associated with dollar appreciation.20
+
+
+
+
+
+   17Weinterpretaone-standard-deviationsurpriseas“ typical.”          20It would beinteresting (with alonger sample of data) to
+   18German newsistheonly non-U.S.newsthatisreadily                examine the stability of theresponsecoef/bullet5  cient over different
+available from MMS.                                                stages of the business cycle; see, e.g., McQueen and Roley
+   19To a /bullet5  rst approximation, German news is relevant     (1993). According to the standard U.S. business-cycle chro-
+only  for DM/$ determination, in  contrast to  U.S. news,          nology produced by the National Bureau of Economic Re-
+which is relevant for the determination of all U.S. dollar         search, the United States was in an expansion from March of
+exchange rates.                                                    1991 until March of 2001; hence our entire sample.
+VOL. 93 NO. 1             ANDERSEN ET AL.: MICRO EFFECTS OF MACRO ANNOUNCEMENTS                                                                                   51
+
+                 TABLE 2— U.S. AND GERMAN CONTEMPORANEOUS  NEWS RESPONSE COEFFICIENTS AND   R2 VALUES
+
+                                                            Pound/$               Yen/$                 DM/$                CHF/$               Euro/$
+Announcement                                               bk         R2        bk         R2        bk         R2        bk         R2        bk         R2
+                                                                    U.S. Announcements
+                                                                 Quarterly Announcements
+ 1. GDP advance                                         0.029   0.098     0.036   0.102     0.08*   0.301     0.079* 0.307     0.061* 0.420
+ 2. GDP preliminary                                    0.038   0.134     0.022   0.081     0.055* 0.185     0.057* 0.207     0.017   0.048
+ 3. GDP /bullet5nal                                    20.004   0.004     0.019   0.048     0.017   0.029     0.010   0.007     0.006   0.010
+                                                                  Monthly Announcements
+Real Activity
+ 4. Nonfarm payroll employment               0.098* 0.189     0.084* 0.214     0.161* 0.237     0.144* 0.269     0.08*   0.232
+ 5. Retail sales                                            0.048* 0.225     0.019   0.066     0.067* 0.241     0.059* 0.170     0.041* 0.193
+ 6. Industrial production                             0.020* 0.105     0.019* 0.078     0.029* 0.131     0.034* 0.147     0.018* 0.086
+ 7. Capacity utilization                                0.017   0.061     0.016   0.055     0.021   0.046     0.023   0.058     0.018   0.041
+ 8. Personal income                                    0.007   0.015     0.001   0.000     0.006   0.007     0.003   0.001   20.005   0.005
+ 9. Consumer credit                                    0.002   0.002     0.009   0.019     0.004   0.012     0.002   0.002   20.002   0.004
+Consumption
+10. Personal consumption expenditures  20.003   0.003     0.005   0.006   20.007   0.010 20.011   0.012     0.007   0.008
+11. New home sales                                    0.002   0.002     0.011   0.030     0.01     0.015   20.002   0.001     0.005   0.003
+Investment
+12. Durable goods orders                            0.055* 0.266     0.027* 0.081     0.088* 0.363     0.085* 0.355     0.043* 0.237
+13. Construction spending                           0.019* 0.087     0.01*   0.026     0.031* 0.091     0.017* 0.034     0.015   0.030
+14. Factory orders                                       0.011   0.024     0.006   0.006     0.018   0.038     0.019   0.041     0.031* 0.102
+15. Business inventories                       20.004   0.008     0.01     0.029     0.009   0.012     0.002   0.001     0.007   0.015
+Government Purchases
+16. Government budget de/bullet5  cit                    0.007* 0.057     0.008   0.038     0.002   0.003     0.010   0.050     0.003   0.006
+Net Exports
+17. Trade balance                                         0.092* 0.529     0.112* 0.370     0.138* 0.585     0.124* 0.480     0.084* 0.414
+Prices
+18. Producer price index                              0.005   0.003     0.000   0.000     0.019   0.020     0.017   0.017     0.018* 0.046
+19. Consumer price index                            0.016   0.048     0.012   0.033     0.031* 0.101     0.035* 0.104     0.015   0.027
+Forward-looking
+20. Consumer con/bullet5  dence index                  0.037* 0.174     0.022* 0.103     0.058* 0.222     0.054* 0.214     0.035* 0.189
+21. NAPM index                                          0.028* 0.199     0.012* 0.036     0.039* 0.141     0.036* 0.146     0.025* 0.074
+22. Housing starts                                        0.006   0.008     0.005   0.007     0.017   0.028     0.02*   0.033     0.008   0.009
+23. Index of leading indicators                   0.012   0.031     0.009   0.006     0.012   0.009     0.011   0.005   20.005   0.005
+                                                                 Six-Week Announcements
+24. Target federal funds rate                       0.048* 0.229     0.050* 0.162     0.072* 0.259     0.072* 0.230     0.032   0.142
+                                                                  Weekly Announcements
+25. Initial unemployment claims            20.014* 0.025   20.012* 0.019   20.022* 0.036   20.026* 0.046   20.019* 0.058
+26. Money supply, M1                                0.000   0.000     0.000   0.000     0.004* 0.020     0.004* 0.019     0.002* 0.009
+27. Money supply, M2                                0.000   0.000 20.001   0.001     0.004* 0.019     0.005* 0.030     0.002* 0.013
+28. Money supply, M3                                0.000   0.000     0.001   0.002     0.002   0.004     0.004* 0.023     0.002* 0.011
+                                                                 German Announcements
+                                                                 Quarterly Announcements
+29. GDP                                            20.004   0.042 20.002   0.001 20.007   0.022 20.011   0.068 20.004   0.015
+                                                                  Monthly Announcements
+Real Activity
+30. Employment                                          0.000   0.000     0.002   0.001     0.000   0.000     0.01*   0.045     0.003   0.003
+31. Retail sales                                            0.001   0.001     0.004   0.008   20.003   0.004 20.002   0.003 20.01*   0.091
+32. Industrial production                       20.011* 0.059   20.009   0.036 20.017* 0.172   20.015* 0.105   20.005   0.015
+52                                                              THE AMERICAN ECONOMIC REVIEW                                              MARCH 2003
+
+                                                         TABLE 2— Continued.
+
+                                                  Pound/$               Yen/$                 DM/$                CHF/$               Euro/$
+Announcement                                     bk         R2        bk         R2        bk         R2        bk         R2        bk         R2
+Investment
+33. Manufacturing orders                      20.007   0.025 20.008   0.029 20.011   0.061 20.01     0.042 20.002   0.002
+34. Manufacturing output                     20.001   0.001 20.017* 0.091   20.007   0.041 20.009   0.048 20.007   0.034
+Net Exports
+35. Trade balance                                20.004   0.018     0.001   0.000     0.000   0.000     0.001   0.001   20.005   0.019
+36. Current account                             20.003   0.009     0.006   0.019   20.006   0.035 20.006   0.033 20.006   0.031
+Prices
+37. Consumer price index                     20.020* 0.159   20.004   0.016     0.000   0.000     0.007   0.016   20.001   0.001
+38. Producer prices                              20.002   0.003     0.003   0.012   20.003   0.003 20.004   0.011 20.008   0.015
+39. Wholesale price index                           0.000   0.000     0.003   0.003   20.011   0.039 20.003   0.005     0.004   0.012
+40. Import prices                                         0.007   0.079 20.009   0.049     0.003   0.005     0.006   0.019   20.003   0.003
+Monetary
+41. Money stock M3                            20.02*   0.215     0.000   0.000   20.033* 0.181   20.02*   0.113 20.023* 0.161
+
+Notes: We estimate the contemporaneous exchange-rate news response model,  Rt 5 bkSkt 1 «t, where Rt is the 5-minute
+return from time  t to time t 1 1 and Skt is the standardized news corresponding to announcement  k (k 5 1, ... , 41) made
+at time t. We estimate the regression using only those observations ( Rt, Skt) such that an announcement was made at time
+t. We report the  bˆk and R2 values, and we mark with an asterisk those coef/bullet5  cients that are statistically signi/bullet5  cant at the
+5-percent level, using heteroskedasticity- and autocorrelation-consistent standard errors.
+
+
+
+   Second, unlike the   R2 values for equation                                             C. News Effects II:
+(1),  which  are typically  very  small,  the   R2                                  Announcement Timing Matters
+values for equation (3) are often quite high.
+News  announcements  occur  comparatively                                  One might wonder whether, within the same
+rarely  and  have  a  nonnegligible  but  short-                        general category of macroeconomic indicators,
+lived impact on exchange rates; hence the   R2                          news  on  those  released  earlier  tend  to  have
+in an equation such as (3) must be low when                             greater  impact  than  those  released  later.  To
+computed across all 5-minute observations. In                           evaluate this conjecture, we grouped the U.S.
+contrast, one naturally expects higher  R2 val-                         indicators into seven types: real activity, con-
+ues when computed using only announcement                               sumption,  investment,  government  purchases,
+observations, although the precise size is of                           net exports,prices,andforward-looking.Within
+course an empirical matter. Table 2 reveals  R2                         each group, we arranged the announcements in
+values that are often around  0.3  and  some-                           the chronological order described in Figure 2.
+times approaching 0.6.                                                  The conjecture is generally veri/bullet5  ed. In the es-
+   Finally,  it  is  interesting  to  note  that  the                   timates of equation  (3) within each indicator
+results  of  Yin-Wong  Cheung  and  Clement                             group, the announcementsreleased earliest tend
+Yuk-Pang  Wong  (2000)  and  Cheung  and                                to have the most statistically signi/bullet5  cant coef/bullet5  -
+Menzie David Chinn (2001), obtained by sur-                             cients and the highest  R2 values.21 In Figure 5
+veying traders, cohere reassuringly with the                            we  plot  the  R2  of  equation  (3)  within  each
+model-based results documented here. In par-                            indicator group, as a function of the announce-
+ticular, Cheung and Chinn (2001) report that                            ment timing. The clearly prevalent downward
+traders believe that exchange rates adjust al-                          slopes reveal that the early announcements do
+most   instantaneously   following   news   an-                         indeed have the greatest impact.
+nouncements,  and  that  news  regarding  real                             The fact that “ announcement timing matters”
+variables  is  more  in/bullet6  uential  than  news  re-
+garding nominal variables, which is entirely                               21One exception is the nominal group; the consumer
+consistent with the empirical results reported                          price index seems more important than the producer price
+in Table 2.                                                             index, despite its earlier release date.
+VOL. 93 NO. 1             ANDERSEN ET AL.: MICRO EFFECTS OF MACRO ANNOUNCEMENTS                                                                    53
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                   FIGURE 5. U.S. NEWS EFFECTS AS A FUNCTION OF RELEASE TIME
+Notes: We estimate the contemporaneous exchange-rate news response model,  Rt 5 bkSkt 1 «t, where Rt is the 5-minute
+return from time  t to time t 1 1 and Skt is the standardized news corresponding to announcement  k (k 5 1, ... , 17) made
+at time t. We estimate the regression using only those observations ( Rt, Skt) such that an announcement was made at time
+t. On the vertical axis we display the  R2 values, and on the horizontal axis we display macroeconomic news announcements
+in the chronological order documented in Table 2. The “ news numbers”   are as follows:
+
+GDP                                            Real Activity                                 Investment                                  Forward-Looking
+1. GDP advance                  4. Payroll employment            10. Durable goods orders            14. Consumer con/bullet5  dence
+2. GDP preliminary           5. Retail sales                           11. Construction spending           15. NAPM index
+3. GDP /bullet5nal                      6. Industrial production           12. Factory orders                        16. Housing starts
+                                 7. Capacity utilization              13. Business inventories               17. Index of leading indicators
+                                 8. Personal income
+                                 9. Consumer credit
+
+
+
+
+helps  with  the  interpretation  of  our  earlier-                           speci/bullet5  cations. The reason is that many of the
+reported  empirical  results  in  Table  2,  which                            announcements are to some extent redundant,
+indicate that only seven of the 40 announce-                                  andthemarketthenonlyreactstothosereleased
+ments signi/bullet5  cantly impacted all the currency                         earlier. Hence, for example, U.S. durable goods
+54                                                              THE AMERICAN ECONOMIC REVIEW                                              MARCH 2003
+
+                                  TABLE 3— RETURN AND VOLATILITYNEWS RESPONSE COEFFICIENTS
+
+Announcement                                        Pound/$                 Yen/$                    DM/$                   CHF/$                   Euro/$
+                                                  Contemporaneous Return Response,  bk0
+Nonfarm payroll employment                   0.092*                  0.072*                  0.159*                  0.115*                   0.081*
+Durable goods orders                                 0.055*                  0.029*                  0.084*                  0.083*                  0.041*
+Trade balance                                             0.083*                  0.115*                  0.142*                  0.131*                  0.084*
+Initial unemployment claims                20.010*             20.009*             20.018*             20.024*             20.017*
+                                                Contemporaneous Volatility Response,  bk0
+Nonfarm payroll employment                   0.058*                  0.053*                  0.084*                  0.077*                   0.058*
+Durable goods orders                                 0.017*                  0.010*                  0.027*                  0.018*                  0.018*
+Trade balance                                             0.023*                  0.040*                  0.034*                  0.031*                  0.026*
+Initial unemployment claims                     0.003*                  0.004*                  0.010*                   0.010*                  0.005*
+                                                Cumulative Volatility Response, ¥j950J9    bkj9
+Nonfarm payroll employment                   0.356*                  0.328*                  0.519*                  0.476*                   0.356*
+Durable goods orders                                 0.106*                  0.060*                  0.163*                  0.114*                  0.108*
+Trade balance                                             0.139*                  0.244*                  0.210*                  0.191*                  0.161*
+Initial unemployment claims                     0.021*                  0.023*                  0.059*                   0.060*                  0.033*
+Notes: We estimate the exchange-rate conditional mean model (1),  Rt 5 b0 1 ¥i51I    biRt2i 1 ¥k51K   ¥j50J    bkjSk,t2j 1 «t,
+and we report estimates of the contemporaneous response of exchange-rate returns to news,  bk0. We also estimate the
+disturbance volatility model (2),
+
+                                K  OJ9                        Q  XdqcosX                                           R  OJ0
+   z«ˆtz5 c1c  sˆd~t!                    bkj9zSk,t2j9z1 X O                  q2pt                  q2pt                     grj0Dr,t2j0D 1 ut,
+                      2881Ok51      j95 0                    q51              288 D 1fqsinX         288 D D 1Or51      j050
+
+and we report estimates of the contemporaneous response of exchange-rate volatility to news,  bk0 5 gkpk(0), as described
+in the text. Finally, we also report estimates of the cumulative volatility response, ¥j95012   gkpk(j9), as described in the text.
+Asterisks denote statistical signi/bullet5  cance at the 5-percent level.
+
+
+
+orders matter for all  currency pairs but  U.S.                              raneous  volatility  response  or  the  contem-
+factory orders, which are released later, do not.                            poraneous return response, as shown  in the
+                                                                             bottom panel of the table.
+    D.  News Effects III: Volatility Adjusts to
+                       News Gradually                                             E. News Effects IV: Pure Announcement
+                                                                                         Effects are Present in Volatility
+   As discussed previously and documented in
+Figure 4, exchange rates adjust to news imme-                                    It is possible that the mere presence of an
+diately. It is interesting to note, however, that                            announcement  might  boost  volatility,  quite
+exchange-rate  volatilities  adjust only gradually,                          apart from the size of the associated surprise.
+with complete adjustment occurring only after                                To explore this possibility we add to the re-
+J9 5 12 5-minute periods, or one hour.                                       turns  equation  (1)   J  lags  of  announcement
+   We provide details in Table 3. As already                                 period dummies on each of  K fundamentals,
+noted, and as shown again in the top panel of                                and we also add to the volatility equation (2)
+the  table,  the  contemporaneous  return  re-                               J9 lags of announcement period dummies on
+sponse coef/bullet5  cients are sizeable and statisti-                       each of K fundamentals. As shown in Table
+cally signi/bullet5  cant, and the full response occurs                      4, the announcement dummies are generally
+immediately. In contrast, the contemporane-                                  insigni/bullet5  cant  in  the returns equation (1) but
+ous volatility response coef/bullet5  cients, although                       generally signi/bullet5  cant in the volatility equation
+statistically signi/bullet5  cant, are smaller, as shown                     (2), in line with earlier results for bond mar-
+in the middle panel of the table. Importantly,                               kets such as Fleming and Remolona (1997,
+however, the complete response of volatility                                 1999). News effects are still important, how-
+to news occurs only after an hour or so, and it                              ever, in both conditional mean and variance
+is noticeably larger than either the contempo-                               dynamics.
+VOL. 93 NO. 1             ANDERSEN ET AL.: MICRO EFFECTS OF MACRO ANNOUNCEMENTS                                                                                 55
+
+        TABLE 4— RETURN AND VOLATILITYNEWS RESPONSE COEFFICIENTS AND   ANNOUNCEMENT  DUMMY COEFFICIENTS
+
+Announcement                                         Pound/$                  Yen/$                    DM/$                   CHF/$                  Euro/$
+                                                          Contemporaneous Return Response
+Nonfarm payroll employment
+   bk0                                                       0.091*                   0.071*                  0.159*                  0.115*                  0.079*
+   uk0                                                       0.018                     0.008                    0.029*             20.002                    0.020
+Durable goods orders
+   bk0                                                       0.052*                   0.028*                  0.082*                  0.083*                  0.039*
+   uk0                                             20.023*              20.004               20.023*             20.017              20.010
+Trade balance
+   bk0                                                       0.086*                   0.121*                  0.144*                  0.131*                  0.085*
+   uk0                                                       0.013                     0.029                    0.013                    0.004                    0.012
+Initial claims
+   bk0                                             20.009*              20.009*             20.017*             20.023*             20.017*
+   uk0                                                       0.001                20.010*             20.005               20.002              20.006
+                                                        Contemporaneous Volatility Response
+Nonfarm payroll employment
+   bk0                                                       0.0173*                 0.0216*                0.0215*                0.0169*                0.015*
+   uk0                                                       0.0566*                 0.0436*                0.0873*                0.0837*                0.0597*
+Durable goods orders
+   bk0                                                       0.014*                   0.0098*                0.023*                  0.0148*                0.0144*
+   uk0                                                       0.0042                   0.0002                  0.0048                  0.0046                  0.0043
+Trade balance
+   bk0                                                       0.0226*                 0.0255*                0.0214*                0.0149*                0.0153*
+   uk0                                                       0.0001                   0.0174*                0.0162*                0.0198*                0.0141*
+Initial claims
+   bk0                                                       0.0005              20.0005                  0.0039*                0.0062*                0.002
+   uk0                                                       0.0035*                 0.0048*                0.0062*                0.0038*                0.0032*
+Notes: We add to equation (1)  J lags of announcement period dummies on each of   K fundamentals,  Rt 5 b0 1 ¥i51I
+biRt2i 1 ¥k51K    ¥j50J    bkjSk,t2j 1 ¥k51K    ¥j50J    ukjDk,t2j 1 «t, and we report estimates of the contemporaneous return
+response to  news and  to  announcement  periods,  bk0  and uk0,  respectively. We also  add  to  equation  (2)   J9  lags of
+announcement period dummies on each of  K fundamentals,
+
+                                        K  OJ9                         K  OJ9                          Q   XdqcosX
+        z«ˆtz5 c1c  sˆd~t!                        bkj9zSk,t2j9z1 O               ukj9Dk,t2 j91 X O                     q2pt                    q2pt
+                             2881 Ok5 1     j950                     k51   j950                      q5 1               288 D 1fqsinX           288 D D
+
+
+                       R  OJ0
+                 1O             grj0Dr,t2j0D 1 ut,
+
+                     r51   j050
+andreportestimatesofthecontemporaneousreturnresponseto newsand to announcement periods, bk0anduk0, respectively.
+Asterisks denote statistical signi/bullet5  cance at the 5-percent level.
+
+
+F. News Effects V: Announcement Effects are                                          (4)     bk5 5  b0k1 b1kSkt   if St# 0
+       Asymmetric—   Responses Vary with the                                                                  b2k1b3kSkt    if St. 0.
+                         Sign of the News
+    We have seen that newsabout macroeconomic                                        Inserting (4) into (3) yields the impact response
+fundamentals signi/bullet5  cantly affect high-frequency                             speci/bullet5  cation,
+exchangerates.Thusfarwehaveallowedonlyfor
+constantnewseffects,butitisnaturaltogofarther                                                                                      2 1«t   if St# 0
+and ask whether the news effects vary with the                                       (5)   Rt5 5  b0kSkt1 b1kSktb2kSkt1b3kSkt2 1«t    if St. 0.
+sign of the surprise. To address this issue we
+generalize equation (3) by allowing the impact
+response coef/bullet5  cient bk to be a linear function of                           Following Robert F. Engle and Victor K. Ng
+the  news surprise   Skt,  allowing  for a different                                 (1993), we call the union of  b0kSkt 1 b1kSkt2
+constant and slope on each side of the origin,                                       to the left of the origin and  b2kSkt1b3kSkt2 to the
+56                                                              THE AMERICAN ECONOMIC REVIEW                                              MARCH 2003
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                  FIGURE 6. U.S. NEWS IMPACT CURVES
+Notes: In the top row we show the news impact curves averaged across all macroeconomic fundamentals,  k 5 1, ... , 41. In
+the remaining rows we show the news impact curvesfor payroll employment, trade balance, durable good orders, and initial
+claims. See text for details.
+
+
+right oftheorigin the“ newsimpact curve.”22In                               the effect of macroeconomic news often varies
+the top rowof Figure6 we show thenewsimpact                                 withitssign.Inparticular,negativesurprisesoften
+curvesaveragedacrossallmacroeconomicfunda-                                  have greater impact than positive surprises. 23
+mentals,k5 1,...,41.It isclear that,on average,                                It is interesting to see whether the sign effect
+                                                                            prevails when we look separately at the most
+
+   22Despite the super/bullet5  cial resemblance in terms of docu-
+menting asymmetric responses to news, our work is very
+different  from  that  of  Engle  and  Ng  (1993)  and  many                   23To the best of our knowledge, such sign effects have
+subsequentrelatedstudies.Inparticular,theEngle– Ngnews                      not previously been documented for the foreign exchange
+impact curve tracks the   variance of equity   returns condi-               market.  Evidence of  asymmetric  conditional-mean  news
+tional  upon  the sign  and  size  of   past  returns   (with  no           effects  exists  in  other  contexts,  however.  For  example,
+allowance  for  a  time-varying  conditional  mean  return),                Jennifer Conrad et al. (2001) /bullet5  nd asymmetric effects of
+whereas our news impact curve tracks the   mean of foreign                  earnings news on  stock returns, while recent concurrent
+exchange returns conditional  upon  the  sign  and  size  of                work by Hautsch and Hess (2001) details an asymmetric
+macroeconomic news.                                                         responseto employment newsin theT-bond futuresmarket.
+VOL. 93 NO. 1             ANDERSEN ET AL.: MICRO EFFECTS OF MACRO ANNOUNCEMENTS                                           57
+
+important news announcements. In the remain-                     earnings. In such a situation, bad news gener-
+ing rows of Figure 6 we show the news impact                     ates a large negative response because it is a
+curves for payroll employment, trade balance,                    surprise, whereas good news generates little re-
+durable goods orders, and initial claims. The                    sponse because it is anticipated.
+sign  effect  is  generally  maintained,  although                  The second relevant strand of the literature
+there is some variation  across indicators and                   uses  a  rational-expectations  equilibrium  ap-
+currencies.Asymmetryin theYen/$,DM/$,and                         proach and focuses more on the market level as
+CHF/$  response  to  payroll  employment  and                    opposed to the /bullet5  rm level, as in Pietro Veronesi
+trade balance news, for example, is very pro-                    (1999),  Timothy  C.  Johnson  (2001a, b),  and
+nounced,  whereas it  is  largely  absent  in  the               Alexander David and Veronesi (2001). Veronesi
+Pound/$ and Euro/$ response.                                     (1999), in particular, models investors as (cor-
+   In the next section we explore more deeply                    rectly)  believing  that  the economy  follows a
+the economics behind the asymmetric response.                    two-state regime-switching process, with “ low”
+Recent  theoretical  models  suggest  that  the                  and “ high”   states corresponding to recessions
+asymmetry may be driven, in part, by the dy-                     and expansions. Agents solve a signal extrac-
+namics of uncertainty regarding the underlying                   tion problem to determine the probability  p(t)
+state of the economy. It turnsout that our MMS                   of being in the high state, and equilibrium asset
+data set contains not only expectations, but also                pricescan beshown to beincreasingand  convex
+a measure of the cross-sectional  dispersion of                  functions of  p(t).  The intuition  for this key
+expectations, the standard deviation. Using the                  result is simple. Suppose that p(t 2 1) ’  1,
+cross-sectionalstandarddeviation asaproxyfor                     i.e., investors believe that the high state almost
+state uncertainty, we can therefore directly as-                 surely prevails.Then if bad newsarrivesat time
+sess  a  key  mechanism  thought  to  generate                   t, two thingshappen: /bullet5  rst, expected futureasset
+asymmetric response, to which we now turn.                       values  decrease,  and  second,  p(t)  decreases
+                                                                 (i.e., state risk increases). Risk-averse investors
+     III. Asymmetric Response, Information                       require additional returns for bearing this addi-
+          Processing, and Price Discovery                        tional  risk;  hence  they  require  an  additional
+                                                                 discount  on  the  asset  price,  which  drops  by
+   Two strandsof literature imply asymmetry in                   more than it would in a present-value model.
+the response of exchange rates to news. In par-                  Conversely, suppose investors are con/bullet5  dent
+ticular,  they  imply  that  bad  news  in  “ good               that the low state prevails, i.e., p(t 2 1) ’  0.
+times”  should have an unusually large impact, a                 Then if good news arrives at time  t, expected
+view that is also common in the practitioner                     future  asset  values  increase,  but  p(t)  also
+community,  as  emphasized  by  Conrad  et  al.                  increases (i.e., state risk again increases). As
+(2001). Note that our entire sample takes place                  before, investorsrequireadditional returns for
+in good times—   1992 through 1998. Hence the                    bearing  this  additional  risk;  hence  they  re-
+theoretical prediction that “ bad news in good                   quire  a  discount  on  the  asset  price,  which
+times should have unusually large effects,”   de-                increases by less than it would in a present-
+generates in our sample period to “ bad news                     value model.
+should have unusually large effects,”  which, to                    For a number of reasons, it is not our inten-
+a reasonably good approximation, is what we                      tion here to explicitly test the practitioner claim
+found earlier.                                                   that pricesrespond moststrongly to bad newsin
+   The /bullet5  rst strand of the literature is “ behavior-     good times, or to directly implement Veronesi’ s
+al”  and focusesprimarilyon equities,atthe /bullet5  rm          model  or  to  combine  it  with  the  Barberis-
+level. NicholasBarberiset al. (1998), for exam-                  Shleifer-Vishy model. First, our data set is not
+ple, model investorsasbelieving that /bullet5  rm earn-          well-suited to thatpurpose;asmentionedabove,
+ings   follow   a   two-state   regime-switching                 it contains only the expansionary 1990’ s. Sec-
+process—    erroneously, as earnings actually fol-               ond, Conrad et al. (2001) have already made
+low a random walk—   with mean-reverting earn-                   admirable progress in that regard, /bullet5  nding gen-
+ings in state 0 and upward-trending earnings in                  eral support for the assertion that (stock) prices
+state1.Hencea seriesofpositiveearningsleads                      respond  most  strongly  to  bad  news  in  good
+investors to infer that state 1 holds, with the                  times.   Third,   the   Barberis-Schleifer-Vishny
+concomitant expectation of additional positive                   modelisnotparticularlywell-suitedtotheforex
+58                                                              THE AMERICAN ECONOMIC REVIEW                                              MARCH 2003
+
+context relevant here, as it focuses on the earn-
+ings stream for an individual /bullet5  rm.
+   Instead, we take astrue the practitioner claim
+that pricesrespond moststrongly to bad newsin
+good times, and we focus on the explanation
+embodied in Veronesi’ s model. We use an in-
+teresting feature of our MMS expectations data
+to assess the key alleged mechanism through
+which bad news in good times translates into
+large price moves: increased uncertainty about
+the state of the economy. In particular, we have
+data not only on  the median expectations of
+macroeconomic fundamentals, but also on the
+associated standard deviations across the indi-
+vidual forecasters. Hence we can check directly
+whether uncertainty about the state of the econ-
+omy, as proxied by the standard deviation of
+expectations across the individual forecasters,
+increases following the arrival of bad news in
+goodtimes.24Before proceeding to examine the
+effect of bad news arrivals on subsequent fore-
+cast dispersion, however, two issues arise.
+   First, it is not clear what timing in the data
+matches  the  generic  timing   in   the  model.
+Clearly, bad news at time   t 2  1  means that
+expectationsfortime  t areformedin abadnews
+environment, but what if the news at  t 2 2 was
+bad and the news at  t 2 1 was not? Perhaps
+agentshave amemory that lastslonger than one
+announcement  period,  so  that even  the latter
+case could be viewed as a bad news environ-
+ment. In general, we might say that we are in a
+bad news environment if the news was bad at
+any of times t 2 1, t 2 2, ... , t 2 d, for some
+d. Second, to enhance our chances of detecting                                 FIGURE 7. FORECAST UNCERTAINTY
+the “ Veronesi effect,”   if it exists, we may not                Notes: We plot the time series of cross-sectional standard
+want to track the arrival of all bad news, but                    deviations of the Money Market Services forecasts. The
+rather only bad news that exceeds some mini-                      shaded areas denote “ bad news”  times. See text for details.
+mal  threshold,  say  the   pth  percentile  of  the
+distribution of bad news, where  p, like d, must
+be chosen. As a benchmark, we simply set  d 5                     higher following bad news than at other times;
+1 and p 5 50 percent (i.e., the median).                          speci/bullet5  cally, the uncertainty of payroll employ-
+   Figure  7  plots  the  corresponding  standard                 ment is 30 percent higher, the uncertainty of
+deviation of the MMS payroll employment, du-                      durable goods orders is 6 percent higher, and
+rable goods orders, and trade balance forecasts.                  theuncertaintyofthetradebalanceis12percent
+The shaded areas indicate a bad news environ-                     higher. These effects are robust to reasonable
+ment  using the criteria   d 5  1  and p 5  50                    variation in   p and d.
+percent. Analyst forecast dispersion is indeed
+                                                                     IV. Concluding Remarks and Directions for
+
+   24Of course, the notion of forecast uncertainty and the                            Future Research
+forecastdispersionacrossforecastersarenotexactlyequivalent           The goal of the research on which this paper
+concepts. Victor Zarnowitz and Louis A. Lambros (1987)
+show, however, that they are generally positively correlated.     reportsistodeepen ourunderstandingofthelinks
+VOL. 93 NO. 1             ANDERSEN ET AL.: MICRO EFFECTS OF MACRO ANNOUNCEMENTS                                           59
+
+between  exchange-rate  movements  and  news                     haps order /bullet6  ow, may reasonably be expected to
+about fundamentals. To that end, in thispaper we                 respond to both.26 It is not obvious, however,
+have documented  important news effects, with                    how to do so in a compelling way; both the
+asymmetricresponsepatterns. Let usconclude by                    conceptual   and   the   practical   complications
+relating our results to work on order /bullet6  ow and           seem daunting.
+drawing implications for future research.                           Fourth, it will be of interest to attempt an
+   In recent innovative work, Evans and Lyons                    analysis of  structural  stability,  as the  market
+(2002) show that signed order /bullet6  ow is a good             may change its view about which news is im-
+predictor  of  subsequent  exchange-rate  move-                  portant  for  exchange  rates,  or  about  how  to
+ments.  This work  is important  in  that  it  en-               interpret the sign of a surprise. In some inter-
+hancesourunderstanding ofthe determinantsof                      pretations, for example,a positive U.S. in/bullet6  ation
+high-frequency exchange-rate movements, but                      surprise would tend to produce dollar depreci-
+less satisfying in that it remains ignorant about                ation (e.g., when the U.S. central bank reaction
+the determinants of high-frequency order /bullet6  ow.           function assigns relatively  low weight to the
+We, in contrast, have shown that news affects                    level of in/bullet6  ation), whereas in other interpreta-
+exchange rates. Combining our perspectives fo-                   tions it would produce dollar appreciation (e.g.,
+cuses attention on the causal links among news,                  when the U.S. central bank reaction function
+order /bullet6  ow, and forex movements, which in our            shows strong preference for low in/bullet6  ation, as in
+view is a prime candidate for future research. It                Taylor, 1993).
+will be of interest, for example, to determine                      Finally,welookforward tocharacterizing the
+whether news affects exchange rates via order                    joint responses of the foreign exchange, stock,
+/bullet6  ow or instantaneously.25 In work done subse-           and bond markets to real-time news surprises.
+quentlyto the/bullet5  rst draftofthispaper,Evansand             Responseshavenowbeen studied for each mar-
+Lyons (2001) and Kenneth A. Froot and Tarun                      ket in isolation: Fleming and Remolona (1999)
+Ramadorai (2002) tackle precisely that issue.                    and Balduzzi et al. (2001) study the bond mar-
+   A second key direction for future research is                 ket, Mark J. Flannery and Aris Protopapadakis
+pushing farther with the implications of Veronesi                (2002)studythestockmarket,andthispaper,of
+(1999) for the analysis of high-frequency news                   course, studies the foreign exchange market. A
+effects. Presently we have veri/bullet5  ed that the key         multivariateframework, however, will facilitate
+mechanism that ampli/bullet5  es the effects of bad news         analysis of cross-market movements and inter-
+in  good  times in  Veronesi’ s model—   increased               actions, or lack thereof, which may for example
+state  uncertainty—   is  operative  in  the  data.              shed light on agents’   views regarding central
+However, one could potentially go farther and                    bank reaction functions.
+exploit the broader implications of Veronesi’ s
+workforourapproach,namelythatnewseffects                                             REFERENCES
+are in general a function of state uncertainty, by
+including interactions of news with state uncer-                 Almeida, Alvaro; Goodhart, Charles A. E. and
+tainty in both our conditional mean and condi-                      Payne, Richard.  “ The Effects of Macroeco-
+tional  variance  speci/bullet5  cations.  This would  be           nomic News on High Frequency Exchange
+particularly interesting if data were available on                  Rate  Behavior.”       Journal  of  Financial  and
+exchange rates and fundamentals spanning bad                        Quantitative    Analysis      ,   September    1998,
+as well as good times, but as of this writing,                      33(3), pp. 383–  408.
+such data remain elusive.                                        Andersen, TorbenG.andBollerslev, Tim. “Deut-
+   Third, it would be of interest to explore not                    sche Mark-Dollar Volatility: Intraday Activ-
+only the effects of regularly scheduled quanti-                     ity Patterns, Macroeconomic Announcements,
+tative news on macroeconomic fundamentals,                          and Longer Run Dependencies.”               Journal of
+but  also  the  effects of  irregularly  scheduled,                 Finance, February 1998,          53(1), pp. 219–  65.
+qualitative “ headline news,”   as prices, and per-              Andersen, Torben G.; Bollerslev, Tim; Diebold,
+
+
+
+
+   25For instance, Kenneth R. French and Richard Roll               26Indirect evidence is provided by Dirk Eddelbu¨ ttel and
+(1986) and Fleming and Remolona (1999) both argue that           Thomas H. McCurdy (1998), who report signi/bullet5  cantly height-
+publicly available news may be incorporated in prices in-        ened foreign exchange-rate volatility in response to the mere
+stantaneously, even without trading.                             frequency of headlinenewsitemson theReutersnewsscreen.
+60                                                              THE AMERICAN ECONOMIC REVIEW                                              MARCH 2003
+
+   Francis X. and Ebens, Heiko.  “ The Distribu-               Cheung,  Yin-Wong  and  Chinn,  Menzie  David.
+   tion  of  Realized  Stock  Return  Volatility.”                “ Currency Traders and Exchange Rate Dy-
+   Journal of Financial Economics          , July 2001,           namics: A Survey of the U.S. Market.”            Jour-
+   61(1), pp. 43– 76.                                             nal  of  International  Money  and  Finance            ,
+Andersen, Torben G.; Bollerslev, Tim; Diebold,                    August 2001,      20(4), pp. 439– 71.
+   Francis X. and Labys, Paul. “ The Distribution              Cheung,  Yin-Wong  and  Wong,  Clement  Yuk-
+   of Realized Exchange Rate Volatility.”          Jour-          Pang.  “ A  Survey  of  Market  Practitioners’
+   nal of the American Statistical Association           ,        Views on Exchange Rate Dynamics.”                Jour-
+   March 2001a,      96(453), pp. 42– 55.                         nal   of   International   Economics        ,   August
+         . “ Modeling and Forecasting Realized                    2000,   51(2), pp. 401– 19.
+   Volatility.” Econometrica , 2003, 71 (forth-                Conrad, Jennifer; Cornell, Bradford and Landsman,
+   coming).                                                       Wayne.  “ When  Is  Bad  News  Really  Bad
+Balduzzi,Pierluigi; Elton,EdwinJ.andGreen,T.                      News?”   Unpublished manuscript, University
+   Clifton.  “ Economic  News  and  the  Yield                    of North Carolina-Chapel Hill, 2001.
+   Curve:  Evidence  from  the  U.S.  Treasury                 Dacorogna,Michel M.; Mu¨ ller,UlrichA.; Nagler,
+   Market.”    Salomon  Center  Working  Paper                    RobertJ.;Olsen,RichardB.andPictet,Olivier
+   No. S-98-5, New York University, 1998.                         V. “ A Geographical Model for the Daily and
+         .  “ Economic  News  and  Bond  Prices:                  Weekly  Seasonal  Volatility  in  the  Foreign
+   Evidence from the U.S. Treasury Market.”                       Exchange Market.”         Journal of International
+   Journal of Financial and Quantitative Anal-                    Money and Finance        , August 1993,     12(4), pp.
+   ysis, December 2001,       36(4), pp. 523–  43.                413–38.
+Barberis, Nicholas; Shleifer, Andrei and Vishny,               Danielsson, Jon andPayne, Richard. “RealTrad-
+   Robert. “ A  Model  of  Investor  Sentiment.”                  ing Patterns and Prices in Spot Foreign Ex-
+   Journal of Financial Economics          , September            change  Markets.”   Unpublished  manuscript,
+   1998,  49(3), pp. 307–  43.                                    London School of Economics, 1999.
+Bessembinder,  Hendrik.   “ Bid– Ask  Spreads  in              David, AlexanderandVeronesi,Pietro. “In/bullet6ation
+   the  Interbank  Foreign  Exchange  Markets.”                   and Earnings Uncertainty and the Volatility
+   Journal of Financial Economics          , June 1994,           of Asset Prices: An Empirical Investigation.”
+   35(3), pp. 317–  48.                                           Unpublished manuscript, University of Chi-
+Bollerslev, Tim; Cai, Jun and Song, Frank M.                      cago, 2001.
+   “ Intraday Periodicity, Long Memory Volatil-                Diebold, Francis X. and Lopez, Jose. “Modeling
+   ity, and Macroeconomic Announcement Ef-                        Volatility Dynamics,”   in Kevin Hoover, ed.,
+   fects  in  the  U.S.  Treasury  Bond  Market.”                 Macroeconometrics: Developments, tensions
+   Journal  of  Empirical  Finance        ,  May  2000,           and  prospects .  Boston,  MA:  Kluwer  Aca-
+   7(1), pp. 37– 55.                                              demic Press, 1995, pp. 427– 72.
+Bollerslev,  Tim;  Chou,  Ray  Y.  and  Kroner,                Dominguez,  Kathryn  M.  “ The  Market  Micro-
+   Kenneth F. “ ARCH Modeling in Finance: A                       structure of Central Bank Intervention.”   Na-
+   Review  of  the  Theory  and  Empirical  Evi-                  tional    Bureau    of    Economic    Research
+   dence.”Journal of Econometrics , April–May                     (Cambridge, MA) Working Paper No. 7337,
+   1992, 52(1– 2), pp. 5– 59.                                     1999.
+Bollerslev,TimandDomowitz,Ian. “ TradingPat-                   Eddelbu¨ ttel,DirkandMcCurdy,ThomasH. “The
+   terns and Prices in the Interbank Foreign Ex-                  Impact of News on Foreign Exchange Rates:
+   change    Market.”   Journal    of    Finance ,                Evidence from High Frequency Data.”   Un-
+   September 1993, 48(4), pp. 1421–  43.                          published manuscript, University of Toronto,
+Brandt, Michael W.; Edelen, R. and Kavajecz,                      1998.
+   K. A. “ Liquidity in the U.S.Treasury Market:               Ederington, Louis H. and Lee, Jae Ha.  “How
+   Asymmetric Information and Inventory Ef-                       MarketsProcess Information: NewsReleases
+   fects.”   Unpublished  manuscript,  University                 and Volatility.”Journal of Finance , Septem-
+   of Pennsylvania, 2001.                                         ber 1993, 48(4), pp. 1161– 91.
+Chesher, Andrew andJewitt, Ian. “ The Bias of a                Engle, Robert F. and Ng, Victor K.  “Measuring
+   Heteroskedasticity   Consistent   Covariance                   and Testing the Impact of News on Volatili-
+   Matrix Estimator.”Econometrica , September                     ty.” Journal  of  Finance ,  December  1993,
+   1987, 55(5), pp. 1217– 22.                                     48(5), pp. 1749– 78.
+VOL. 93 NO. 1             ANDERSEN ET AL.: MICRO EFFECTS OF MACRO ANNOUNCEMENTS                                      61
+
+Evans,MartinD.D.andLyons,RichardK. “Why                          sity of Chicago Press for NBER, 1996, pp.
+   Order Flow Explains Exchange Rates.”   Un-                    107–79.
+   published manuscript, University of Califor-               Harvey, Campbell R. and Huang, Roger D. “The
+   nia-Berkeley, 2001.                                           Impact of the Federal Reserve Bank’ s Open
+         . “ Order Flow and Exchange Rate Dy-                    Market  Operations.”       Journal  of  Financial
+   namics.”   Journal of Political Economy        , Feb-         Markets, April 2002,       5(2), pp. 223– 57.
+   ruary 2002,   110(1), pp. 170–  80.                        Hasbrouck, Joel.  “ Security Bid/Ask Dynamics
+Flannery,  Mark  J.  and  Protopapadakis,  Aris.                 with  Discreteness  and  Clustering:  Simple
+   “ Macroeconomic Factors Do In/bullet6  uence Ag-              Strategies  for  Modeling  and  Estimation.”
+   gregate Stock Returns.”      Review of Financial              Journal   of   Financial   Markets      ,   February
+   Studies, Summer 2002,        15(3), pp. 751–  82.             1999,   2(1), pp. 1– 28.
+Fleming,MichaelJ.andRemolona, Eli M. “What                    Hautsch,NikolausandHess,Dieter. “ What’ sSur-
+   Moves the Bond Market?” Economic Policy                       prising  about  Surprises? The  Simultaneous
+   Review, Federal Reserve Bank of New York,                     Price and Volatility Impact  of Information
+   December 1997,  3(4), pp. 31– 50.                             Arrival.”   Unpublished  manuscript,  Univer-
+         . “ Price Formation and Liquidity in the                sity of Konstanz, Germany, 2001.
+   U.S. Treasury Market: The Response to Pub-                 Johnson, Timothy C.  “ Return Dynamics When
+   lic Information.”    Journal of Finance      , Octo-          Persistence Is Unobservable.”         Mathematical
+   ber 1999,   54(5), pp. 1901– 15.                              Finance, October 2001a,        11(4), pp. 415–  45.
+Frankel, Jeffrey A. and Rose, Andrew K.  “Em-                           .  “ Volatility,  Momentum,  and  Time
+   pirical   Research   on   Nominal   Exchange                  Varying Skewness in Foreign Exchange Re-
+   Rates,”    in  Gene  Grossman  and  Kenneth                   turns.”     Unpublished   manuscript,   London
+   Rogoff, eds., Handbook of international eco-                  Business School, 2001b.
+   nomics.  Amsterdam:  North-Holland,  1995,                 Kuttner,KennethN. “ MonetaryPolicySurprises
+   pp. 1689– 1729.                                               and Interest Rates: Evidence from the Fed
+French, Kenneth R. and Roll, Richard.  “Stock                    Funds Futures Market.”        Journal of Monetary
+   ReturnVariances: TheArrivalofInformation                      Economics, June 2001,        47(3), pp. 523–  44.
+   and the Reaction of Traders.”Journal of Fi-                Mark, Nelson C.  “ Exchange Rates and Funda-
+   nancial Economics      , September 1986,       17(1),         mentals: Evidence on Long-Horizon Predict-
+   pp. 5–26.                                                     ability.”American Economic Review  , March
+Froot, Kenneth A. and Ramadorai, Tarun. “Cur-                    1995, 85(1), pp. 201– 18.
+   rency Returns, Institutional Investor Flows,               Mark, Nelson C. and Sul, Donggyu.  “Nominal
+   and Exchange-Rate Fundamentals.”  National                    Exchange  Rates  and  Monetary  Fundamen-
+   Bureau of Economic Research (Cambridge,                       tals:  Evidence  from  a  Small  Post-Bretton
+   MA) Working Paper No. 9101, 2002.                             Woods Panel.”      Journal of International Eco-
+Gallant, A. Ronald.  “ On  the Bias in  Flexible                 nomics, February 2001,        53(1), pp. 29– 52.
+   Functional Forms and an Essentially Unbi-                  McQueen, Grant and Roley, V. Vance.  “Stock
+   ased  Form:  The  Fourier  Flexible  Form.”                   Prices, News, and Business Conditions.”           Re-
+   Journal  of  Econometrics       ,  February  1981,            viewofFinancialStudies        ,Fall1993,    6(3),pp.
+   15(2), pp. 211–  45.                                          683–707.
+Goodhart,  Charles  A.  E.;  Hall,  Stephen  G.;              Meese, RichardA. and Rogoff,Kenneth. “Empir-
+   Henry,  S.  G.  Brian  and  Pesaran,  Bahram.                 ical Exchange Rate Models of the Seventies:
+   “ New Effects in a High-Frequency Model of                    Do  They  Fit  Out  of  Sample?” Journal of
+   the Sterling-Dollar Exchange Rate.”Journal                    International   Economics ,   February   1983,
+   of   Applied   Econometrics ,   January– March                14(1– 2), pp. 3– 24.
+   1993, 8(1), pp. 1– 13.                                     Mu¨ ller, Ulrich A.; Dacorogna, Michel M.; Olsen,
+Goodhart,  Charles;  Ito,  Takatoshi  and  Payne,                Richard B.; Pictet, Oliviet V.; Schwarz, Mat-
+   Richard. “ One Day in June 1993: A Study of                   thias  and  Morgenegg,  Claude.   “ Statistical
+   the Working  of  the  Reuters 2000– 2  Elec-                  Study of Foreign Exchange Rates, Empirical
+   tronic Foreign Exchange Trading System,”  in                  EvidenceofaPriceChangeScaling Law,and
+   Jeffrey A. Frankel, Giampaolo Galli, and Al-                  Intraday Analysis.” Journal of Banking and
+   berto Giovannini, eds., The microstructure of                 Finance, December 1990,  14(6), pp. 1189–
+   foreign exchange markets . Chicago: Univer-                   208.
+62                                                              THE AMERICAN ECONOMIC REVIEW                                              MARCH 2003
+
+Payne,  Richard.   “ Announcement  Effects  and                     in Practice.”Carnegie-Rochester Conference
+   Seasonality  in  the  Intra-day  Foreign  Ex-                    Series  on  Public  Policy ,  December  1993,
+   change  Market.”    Unpublished  manuscript,                     39(0), pp. 195– 214.
+   London School of Economics, 1996.                             Urich, Thomas J. and Wachtel, Paul.  “The Ef-
+Pearce, Douglas K. and Roley, V. Vance. “Stock                      fects  of  In/bullet6  ation  and  Money  Supply  An-
+   Prices  and  Economic  News.”             Journal  of            nouncements on Interest Rates.” Journal of
+   Business, January 1985,        58(1), pp. 49–  67.               Finance, September 1984, 39(4), pp. 1177–  88.
+Rao,  C.  Radhakrishna.   “ Estimation  of  Het-                 Veronesi, Pietro. “ Stock Market Overreaction to
+   eroscedastic  Variances  in  Linear  Models.”                    Bad News in Good Times: A Rational Ex-
+   Journal of the American Statistical Associa-                     pectationsEquilibriumModel.”ReviewofFi-
+   tion, March 1970, 65(1), pp. 161– 72.                            nancial Studies ,Winter1999, 12(5),pp.975–
+Rudebusch, Glenn D.  “ Do Measures of Mone-                         1007.
+   tary Policy in a VAR Make Sense?”Interna-                     Zarnowitz, Victor and Lambros, Louis A.  “Con-
+   tional  Economic  Review  ,  November  1998,                     sensus and Uncertainty in Economic Predic-
+   39(4), pp. 907– 31.                                              tion.”   Journal  of  Political  Economy         ,  June
+Taylor, John B. “ Discretion versus Policy Rules                    1987,   95(3), pp. 591–  621.

@@ -129,6 +129,37 @@ def check_fiche(name: str, fiche: dict) -> list[str]:
             if not quoted.strip():
                 bad.append(f"{where} : quoted est vide — un résultat recopié porte sa citation")
                 continue
+
+            # La RÉPARATION DÉCLARÉE de `D16` § Complément. `REPAIRS` est importée
+            # de `score_extraction` plutôt que recopiée ici : `D16` en est
+            # propriétaire, et deux définitions d'une même liste close divergent.
+            # L'import est tardif parce que `score_extraction` importe ce module
+            # pour `F1` — chacun a besoin de l'autre, aucun au chargement.
+            from score_extraction import REPAIRS  # noqa: PLC0415
+
+            source = entry.get("quoted_source")
+            repair = entry.get("quoted_repair")
+            if source is not None:
+                if not str(source).strip():
+                    bad.append(f"{where} : quoted_source est vide")
+                    continue
+                if repair not in REPAIRS:
+                    bad.append(
+                        f"{where} : quoted_source sans quoted_repair valide — "
+                        f"attendu l'un de {sorted(REPAIRS)}, reçu {repair!r} (D16)"
+                    )
+                    continue
+            elif repair is not None:
+                bad.append(f"{where} : quoted_repair déclaré sans quoted_source (D16)")
+                continue
+
+            # LA CHAÎNE QUI FAIT FOI est celle que `F2` cherche dans le papier.
+            # Sans cela, `F1` serait plus laxiste que `F3` sur une entrée réparée :
+            # un chiffre logé dans la version lisible et absent de la source
+            # passerait le schéma et casserait le juge. `D16` § Ce que ce
+            # complément a découvert l'avait nommé ; c'est corrigé ici.
+            quoted = str(source) if source else quoted
+
             value = entry.get("value")
             if isinstance(value, bool) or not isinstance(value, (int, float)):
                 continue

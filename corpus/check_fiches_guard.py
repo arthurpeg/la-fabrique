@@ -90,6 +90,37 @@ def case_resultats_vides(f):
     f["reported_results"] = []
 
 
+def case_reparation_sans_motif(f):
+    """Une réparation déclarée sans dire POURQUOI : l'échappatoire générique."""
+    entry = first_numeric(f)
+    entry["quoted_source"] = entry["quoted"]
+
+
+def case_motif_hors_liste(f):
+    """Un motif de réparation inventé : la liste de `D16` est CLOSE."""
+    entry = first_numeric(f)
+    entry["quoted_source"] = entry["quoted"]
+    entry["quoted_repair"] = "extraction_bizarre"
+
+
+def case_motif_sans_reparation(f):
+    """Un motif sans chaine source : rien n'est réparé, le champ ment."""
+    first_numeric(f)["quoted_repair"] = "ocr"
+
+
+def case_chiffre_loge_dans_la_lisible(f):
+    """LA FAUTE QUE `D16` AVAIT NOMMÉE SANS LA FERMER.
+
+    Le nombre est dans `quoted`, lisible, et ABSENT de `quoted_source`, qui fait
+    foi. Avant le 2026-09-21, `F1` l'acceptait et `F3` la refusait : le schéma
+    était plus laxiste que le juge, et la réparation déclarée devenait l'endroit
+    où loger un chiffre que le papier ne porte pas.
+    """
+    entry = first_numeric(f)
+    entry["quoted_source"] = "une phrase du papier sans le moindre nombre dedans"
+    entry["quoted_repair"] = "ocr"
+
+
 def case_intact(f):
     return None
 
@@ -109,6 +140,14 @@ CASES = [
      "peer_reviewed", True),
     ("un fiche_id qui ment sur le nom du fichier", case_nom_incoherent, "fiche_id", True),
     ("un papier qui n'annonce rien", case_resultats_vides, "reported_results est vide", True),
+    ("une réparation déclarée sans motif", case_reparation_sans_motif,
+     "quoted_repair valide", True),
+    ("un motif de réparation hors de la liste close", case_motif_hors_liste,
+     "quoted_repair valide", True),
+    ("un motif sans chaine source", case_motif_sans_reparation,
+     "sans quoted_source", True),
+    ("un chiffre logé dans la version lisible, absent de la source",
+     case_chiffre_loge_dans_la_lisible, "introuvable dans sa citation", True),
     ("la fiche intacte", case_intact, None, False),
 ]
 

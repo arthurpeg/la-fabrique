@@ -145,14 +145,45 @@ def anchor(res: dict) -> str:
     return res.get("quoted_source") or res.get("quoted") or ""
 
 
-def check_f2(fiche: dict, source_text: str) -> list[str]:
+def texts_of(fiche: dict) -> dict[str, str]:
+    """Les extractions déclarées du papier d'une fiche — `D18`.
+
+    Le texte qui fait foi n'est pas un fichier mais l'UNION de deux extractions
+    fixées d'avance et identiques pour tous les papiers, versionnées dans
+    `corpus/text/`. Aucun papier n'a de réglage propre : un mode choisi au cas
+    par cas serait un bouton qu'on tourne jusqu'à ce que la fiche passe.
+    """
+    stem = Path((fiche.get("source") or {}).get("pdf") or "").stem
+    if not stem:
+        raise InputError("la fiche ne dit pas de quel PDF elle vient (`source.pdf`)")
+    out = {}
+    for mode in ("default", "layout"):
+        path = REPO / "corpus" / "text" / f"{stem}.{mode}.txt"
+        if not path.is_file():
+            raise InputError(
+                f"extraction absente : {path.relative_to(REPO)} — "
+                "la produire avec `python corpus/extract_text.py` (D18)"
+            )
+        out[mode] = path.read_text(encoding="utf-8", errors="replace")
+    return out
+
+
+def check_f2(fiche: dict, source_text: str | dict[str, str]) -> list[str]:
     """F2 — chaque citation est mot pour mot dans le texte du papier.
 
     Une réparation déclarée déplace ce qui est cherché, jamais ce qui est exigé :
     il faut toujours UNE chaîne présente à la lettre dans le texte. Une
     paraphrase n'en fournit aucune, et c'est précisément ce que F2 attrape.
+
+    **`D18`** : le texte est l'UNION des extractions déclarées. Une citation est
+    tenue pour trouvée quand elle est présente à la lettre dans AU MOINS UNE.
+    L'exigence ne bouge pas — il faut toujours une chaîne littérale dans une
+    extraction réelle du PDF réel ; ce qui cesse, c'est que le verdict dépende
+    d'un réglage d'outil que personne n'avait choisi.
     """
-    haystack = normalize(source_text)
+    if isinstance(source_text, str):
+        source_text = {"texte": source_text}
+    haystacks = {k: normalize(v) for k, v in source_text.items()}
     faults = []
     for i, res in enumerate(fiche.get("reported_results") or []):
         name = res.get("name", f"#{i}")
@@ -177,14 +208,27 @@ def check_f2(fiche: dict, source_text: str) -> list[str]:
         # fragment doit être dans le texte, et dans l'ordre. C'est la forme
         # qu'emploient les trois fiches de référence.
         fragments = [f for f in re.split(r"\s*(?:\.\.\.|…)\s*", needle) if f.strip()]
-        cursor = 0
-        for frag in fragments:
-            pos = haystack.find(normalize(frag), cursor)
-            if pos < 0:
-                short = frag.strip()[:70]
-                faults.append(f"`{name}` : citation INTROUVABLE dans le papier — « {short}… »")
+
+        missed = {}
+        for mode, haystack in haystacks.items():
+            cursor, bad = 0, None
+            for frag in fragments:
+                pos = haystack.find(normalize(frag), cursor)
+                if pos < 0:
+                    bad = frag.strip()[:70]
+                    break
+                cursor = pos + len(normalize(frag))
+            if bad is None:
+                missed = {}
                 break
-            cursor = pos + len(normalize(frag))
+            missed[mode] = bad
+        if missed:
+            where = ", ".join(sorted(missed))
+            short = missed[sorted(missed)[0]]
+            faults.append(
+                f"`{name}` : citation INTROUVABLE dans le papier — « {short}… » "
+                f"(cherchée dans : {where})"
+            )
     return faults
 
 
@@ -282,7 +326,7 @@ def diagnose(fiche: dict, ref: dict | None) -> dict:
     return out
 
 
-def score(fiche_path: Path, source_text: str, ref: dict | None) -> dict:
+def score(fiche_path: Path, source_text: str | dict[str, str], ref: dict | None) -> dict:
     fiche = json.loads(fiche_path.read_text(encoding="utf-8"))
     conditions = {
         "F1": check_f1(fiche_path),
@@ -521,7 +565,9 @@ def self_check() -> int:
             "quoted_source": "a tendency for the fight part of the pattern to rise",
         }
     ]
-    case("F2 quoted_source SANS raison nommee", bad, False, "F2")
+    # Meme recouvrement que ci-dessus : F1 connait la reparation declaree
+    # depuis le 2026-09-21.
+    case("F2 quoted_source SANS raison nommee", bad, False, ["F1", "F2"])
 
     bad = _fiche()
     bad["reported_results"] = [
@@ -533,7 +579,11 @@ def self_check() -> int:
             "quoted_repair": "parce que",
         }
     ]
-    case("F2 raison HORS de la liste close", bad, False, "F2")
+    # Depuis le 2026-09-21, `validate_fiches` connait la reparation declaree :
+    # F1 attrape donc CE cas aussi. Le recouvrement s'est elargi en fermant
+    # l'asymetrie que `D16` avait nommee (F1 plus laxiste que F3 sur une
+    # entree reparee). L'attente est corrigee, pas le code.
+    case("F2 raison HORS de la liste close", bad, False, ["F1", "F2"])
 
     bad = _fiche()
     bad["reported_results"] = [
@@ -544,7 +594,11 @@ def self_check() -> int:
             "quoted_repair": "ocr",
         }
     ]
-    case("F2 raison declaree sans quoted_source", bad, False, "F2")
+    # Depuis le 2026-09-21, `validate_fiches` connait la reparation declaree :
+    # F1 attrape donc CE cas aussi. Le recouvrement s'est elargi en fermant
+    # l'asymetrie que `D16` avait nommee (F1 plus laxiste que F3 sur une
+    # entree reparee). L'attente est corrigee, pas le code.
+    case("F2 raison declaree sans quoted_source", bad, False, ["F1", "F2"])
 
     # Le chiffre est lu dans la chaîne QUI FAIT FOI, pas dans la version lisible :
     # sinon la réparation devient l'endroit où loger un nombre absent du papier.
@@ -561,7 +615,11 @@ def self_check() -> int:
     # F1 ne l'attrape PAS : `validate_fiches` ignore `quoted_source` et regarde
     # `quoted`, où 7,77 figure bien. Sur une entrée réparée, F3 est donc plus
     # strict que le garde de D14 — noté dans D16 § Ce qui reste ouvert.
-    case("F3 valeur presente dans `quoted` mais ABSENTE de la source", bad, False, "F3")
+    # Depuis le 2026-09-21, `validate_fiches` connait la reparation declaree :
+    # F1 attrape donc CE cas aussi. Le recouvrement s'est elargi en fermant
+    # l'asymetrie que `D16` avait nommee (F1 plus laxiste que F3 sur une
+    # entree reparee). L'attente est corrigee, pas le code.
+    case("F3 valeur presente dans `quoted` mais ABSENTE de la source", bad, False, ["F1", "F3"])
 
     # F3 — le chiffre qui ne figure pas dans sa propre citation.
     bad = _fiche()
@@ -635,18 +693,28 @@ def self_check() -> int:
 def main(argv: list[str]) -> int:
     if len(argv) >= 1 and argv[0] == "--check":
         return self_check()
-    if len(argv) < 2:
+    if len(argv) < 1:
         print(__doc__)
         return 1
-    fiche_path, text_path = Path(argv[0]), Path(argv[1])
+    fiche_path = Path(argv[0])
     ref = None
     if "--ref" in argv:
         ref = json.loads(Path(argv[argv.index("--ref") + 1]).read_text(encoding="utf-8"))
     if not fiche_path.is_file():
         raise InputError(f"fiche introuvable : {fiche_path}")
-    if not text_path.is_file():
-        raise InputError(f"texte du papier introuvable : {text_path}")
-    result = score(fiche_path, text_path.read_text(encoding="utf-8", errors="replace"), ref)
+
+    # `D18` : le texte qui fait foi se RESOUT depuis la fiche, il ne se choisit
+    # pas en ligne de commande. Un texte passe a la main serait un endroit ou
+    # loger une citation. L'argument reste accepte pour les essais, et le dit.
+    if len(argv) >= 2 and not argv[1].startswith("--"):
+        path = Path(argv[1])
+        if not path.is_file():
+            raise InputError(f"texte du papier introuvable : {path}")
+        print(f"[essai] texte impose : {path} — hors D18, le verdict ne fait pas foi")
+        texts = {"texte impose": path.read_text(encoding="utf-8", errors="replace")}
+    else:
+        texts = texts_of(json.loads(fiche_path.read_text(encoding="utf-8")))
+    result = score(fiche_path, texts, ref)
     print(render(result))
     return 0 if result["passed"] else 1
 

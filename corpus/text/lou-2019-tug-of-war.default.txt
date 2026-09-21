@@ -1,0 +1,2198 @@
+Journal of Financial Economics 134 (2019) 192–213 
+Contents lists available at ScienceDirect 
+Journal of Financial Economics 
+journal homepage: www.elsevier.com/locate/jfec 
+A tug of war: Overnight versus intraday expected returns /p82 
+Dong Lou a , b , Christopher Polk a , b , ∗, Spyros Skouras c 
+a Department of Finance, London School of Economics, London WC2A 2AE, UK 
+b CEPR, UK 
+c Department of International and European Economic Studies, Athens University of Economics and Business, 76 Patision St., Athens, 
+Greece 
+a r t i c l e i n f o 
+Article history: 
+Received 29 March 2017 
+Revised 5 March 2018 
+Accepted 23 March 2018 
+Available online 25 April 2019 
+JEL classiﬁcation: 
+G02 
+G12 
+G23 
+N22 
+Keywords: 
+Anomalies 
+Overnight returns 
+Intraday returns 
+Investor clienteles 
+a b s t r a c t 
+We link investor heterogeneity to the persistence of the overnight and intraday compo- 
+nents of returns. We document strong overnight and intraday ﬁrm-level return continua- 
+tion along with an offsetting cross-period reversal effect, all of which lasts for years. We 
+look for a similar tug of war in the returns of 14 trading strategies, ﬁnding in all cases that 
+proﬁts are either earned entirely overnight (for reversal and a variety of momentum strate- 
+gies) or entirely intraday, typically with proﬁts of opposite signs across these components. 
+We argue that this tug of war should reduce the effectiveness of clienteles pursuing the 
+strategy. Indeed, the smoothed spread between the overnight and intraday return compo- 
+nents of a strategy generally forecasts time variation in that strategy’s close-to-close per- 
+formance in a manner consistent with that interpretation. Finally, we link cross-sectional 
+and time-series variation in the decomposition of momentum proﬁts to a speciﬁc institu- 
+tional tug of war. 
+©2 0 1 9 Elsevier B.V. All rights reserved. 
+/p82 We are grateful to John Campbell, Randy Cohen, ML Cooper, Josh Co- 
+val, Kent Daniel, Roger Edelen, Joey Engelberg, Andrea Frazzini, Cam Har- 
+vey, Mike Hertzel, Robert Hodrick, Narasimhan Jegadeesh, Marcin Kacper- 
+czyk, Ralph Koijen, Toby Moskowitz, Paul Tetlock, Sheridan Titman, Dim- 
+itri Vayanos, Tuomo Vuolteenaho and seminar participants at Cass Busi- 
+ness School, Duisenberg School of Finance and Tinbergen Institute, Hong 
+Kong University, Hong Kong University of Science and Technology, IDC 
+Herzliya, IESE Business School, Imperial College, Leeds Business School, 
+London Business School, London School of Economics, Luxembourg School 
+of Finance, Manchester Business School, Renmin University, University of 
+Bristol, University of Minho, University of Minnesota, University of South- 
+ern California, University of Zurich, 2014 Financial Research Association 
+Conference, 2015 Adam Smith Asset Pricing Conference, 2015 Crete Con- 
+ference on Research on Economic Theory and Econometrics, 2015 NBER 
+Behavioral Finance Meeting, 2015 NBER Asset Pricing Meeting, 2015 West- 
+ern Finance Association Annual Meeting, 2018 American Finance Associ- 
+ation Annual Meeting, ArrowStreet Capital, Jump Trading, London Quant 
+Group, and Point72 Asset Management for helpful comments. We thank 
+Andrea Frazzini, Ken French, and Sophia Li for providing data used in the 
+analysis, Huaizhi Chen and Michela Verardo for assistance with TAQ, and 
+1. Introduction 
+A textbook approach to asset pricing uses the repre- 
+sentative investor framework in which agents are assumed 
+to be essentially identical. Though elegant and intuitive, a 
+large body of empirical research has documented failures 
+of this paradigm to explain stylized market facts ( Cochrane, 
+2004; Campbell, 2017 ). Based on those failures, a natural 
+extension is to allow for investor heterogeneity. 1 However, 
+Conrad Landis for assistance with TRTH. Financial support from the Paul 
+Woolley Centre at the LSE is gratefully acknowledged. 
+∗ Corresponding author at: Department of Finance, London School of 
+Economics, London WC2A 2AE, UK. 
+E-mail addresses: d.lou@lse.ac.uk (D. Lou), c.polk@lse.ac.uk (C. Polk), 
+skouras@aueb.gr (S. Skouras). 
+1 Harrison and Kreps (1978) study how heterogeneous beliefs can af- 
+fect asset pricing. Constantinides and Duﬃe (1996) study the importance 
+of heterogeneity in investor consumption in understanding key asset pric- 
+ing facts. Garleanu and Panageas (2015) use heterogeneity in investor 
+https://doi.org/10.1016/j.jﬁneco.2019.03.011 
+0304-405X/© 2019 Elsevier B.V. All rights reserved. 
+D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 193 
+since heterogeneity may affect asset prices in a variety 
+of (unobservable) ways and since the speciﬁc differences 
+studied in the prior literature provide only a modest im- 
+provement in explanatory power, it remains challenging to 
+understand what investor differences are particularly im- 
+portant and exactly why ( Cochrane, 2017 ). 
+We provide new insights to these issues by introduc- 
+ing a novel way to measure the importance of heterogene- 
+ity in asset markets. Our starting point is that one may be 
+able to identify the relevance of different types of agents 
+simply through the fact that they tend to trade at differ- 
+ent times during the day. For example, and as the primary 
+focus in our analysis, some investors may prefer to trade 
+at or near the morning open while others may prefer to 
+trade during the rest of the day up to and including the 
+market close. Since these two periods—when the market is 
+open vs. when it is closed—differ along several key dimen- 
+sions, including information ﬂow, price impact, and bor- 
+rowing costs, it seems likely that many aspects of investor 
+heterogeneity that might be relevant for asset pricing also 
+manifest themselves as a tendency to trade in one of these 
+periods rather than the other. In this light, the presence 
+of “overnight” and “intraday” clienteles seems a reasonable 
+and perhaps even natural starting point. 
+We thus view the overnight and intraday components 
+of returns as potentially reﬂecting the speciﬁc demand 
+by the corresponding clientele. Under this interpretation, 
+stocks that experience relatively strong overnight or intra- 
+day returns do so in part because of temporary demand 
+(and thus price pressure) from the clientele in question. 
+To the extent that clientele order ﬂow is persistent, stocks 
+that outperform overnight, for example, should, on aver- 
+age, continue to perform relatively well overnight in the 
+future. Furthermore, that price pressure (to the extent that 
+it is not fully informative) must eventually reverse, and is 
+more likely to do so during subsequent intraday periods 
+when the opposing clientele dominates market activity. In 
+other words, any back-and-forth, or tug of war , across the 
+two periods reﬂects and reveals the relative importance of 
+the overnight/intraday clienteles. 
+We take this new way of thinking about markets to the 
+data, providing the ﬁrst study of the persistence and rever- 
+sal patterns of these basic components of close-to-close re- 
+turns. 2 We show that stocks with relatively high overnight 
+returns over the last month have, on average, relatively 
+high overnight returns as well as relatively low intraday re- 
+turns in the subsequent month. Our ﬁndings are econom- 
+ically and statistically signiﬁcant; a portfolio that buys the 
+value-weight overnight winner decile and sells the value- 
+weight overnight loser decile has a three-factor overnight 
+alpha of 3.47% per month with an associated t -statistic 
+of 16.83 and a three-factor intraday alpha of −3 . 02% per 
+month ( t -statistic of −9 . 74 ). 
+This tug of war can be identiﬁed using either compo- 
+nent of close-to-close returns. Stocks with relatively high 
+preferences to shed light on asset pricing issues. He and Krishnamurthy 
+(2013) model the importance of investor type, speciﬁcally focusing on the 
+role of intermediaries. 
+2 All our results shown below are robust to different deﬁnitions of open 
+and close prices, as well as excluding small-cap stocks. 
+intraday returns have, on average, relatively high intraday 
+returns coupled with relatively low overnight returns in 
+the subsequent month. A portfolio that buys the value- 
+weight intraday winner decile and sells the value-weight 
+intraday loser decile has a three-factor intraday alpha of 
+2.41% per month ( t -statistic of 7.70) and a three-factor 
+overnight alpha of −1 . 77% per month ( t -statistic of −7 . 89 ). 
+Though these monthly patterns are striking, more sur- 
+prising is the fact that they persist even when we lag 
+our intraday/overnight return signals by as much as 60 
+months. Indeed, the corresponding t -statistics for the re- 
+sulting joint tests are well over 20. Of course, transaction 
+costs will make the actual proﬁtability of a trading strat- 
+egy exploiting these overnight/intraday patterns much less 
+attractive. But the magnitude of the t -statistics combined 
+with the fact that consequences of the tug of war we iden- 
+tify still can be measured years later strongly conﬁrm that 
+the patterns can neither be a statistical ﬂuke nor a mani- 
+festation of some high-frequency market microstructure ef- 
+fect. We argue that these novel patterns instead represent 
+a fundamental economic phenomenon in the market and 
+may shed insight on the importance of clienteles in driv- 
+ing the variation in expected returns. 
+Although we do not observe the fundamental drivers of 
+these intraday/overnight investor clienteles, we conjecture 
+that a part of this persistent investor preference/demand 
+in these two periods can be tied to various ﬁrm charac- 
+teristics. For example, some investors may be particularly 
+averse to idiosyncratic risk overnight, and therefore (al- 
+ways) reduce their exposure to high-idiosyncratic-volatility 
+stocks shortly before market close; consequently, we may 
+observe different return patterns associated with idiosyn- 
+cratic volatility during the intraday vs. overnight periods. 
+More speciﬁcally, we decompose the abnormal prof- 
+its associated with a standard list of ﬁrm characteristics 
+(that are known to forecast future close-to-close returns) 
+into their intraday and overnight components. By doing 
+so, we deliver new evidence about the cross-section of 
+average returns through a careful examination of exactly 
+when expected returns accrue. We ﬁnd that nine of the 
+14 strategies we study earn their entire premia intraday 
+(including size which is weak in our sample, yet only 
+marginally fails to achieve intraday signiﬁcance at con- 
+ventional levels—see footnote 14). The ﬁve exceptions to 
+this ﬁnding are all strategies based on past returns (or 
+their close cousin, earnings announcements)—four momen- 
+tum strategies (price, industry, earnings, and time-series 
+momentum) and the short-term reversal effect. These ﬁve 
+strategies all earn their premia overnight. More formally, 
+we can easily reject the hypothesis that returns to the 
+strategies we study are evenly distributed across these two 
+periods. Furthermore, we show that our results are not 
+attributable to macroeconomic or ﬁrm-speciﬁc news an- 
+nouncements. 
+In addition, we consistently ﬁnd an overnight/intraday 
+tug of war in strategy risk premia. For all strategies 
+that earn statistically signiﬁcant premia intraday (value, 
+proﬁtability, investment, market beta, idiosyncratic volatil- 
+ity, equity issuance, discretionary accruals, and share 
+turnover), there is an economically and statistically signif- 
+icant overnight premium that is opposite in sign; in other 
+194 D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 
+words, a positive risk premium is earned overnight for 
+the side of the trade that might naturally be deemed as 
+riskier. Our results thus reveal that these classic asset pric- 
+ing anomalies are in fact primarily intraday anomalies in 
+the sense that their overnight returns arguably make much 
+more intuitive sense. Unfortunately, our tests are unable to 
+link this cross-sectional variation in average overnight re- 
+turns to a formal model of risk, but we hope that this is a 
+promising avenue for future research. 
+We next exploit these strategy-speciﬁc tugs of war to 
+reveal the relative attractiveness of these strategies going 
+forward. We motivate this approach with intuition from 
+a simple model of limits of arbitrage, based on Gromb 
+and Vayanos (2010) , that we provide in the Internet Ap- 
+pendix. As is typically the case in that class of models, 
+since arbitrageurs are risk-averse, demand by uninformed 
+investors has price impact and results in abnormal trading 
+proﬁts going forward for those arbitrageurs. In particular, 
+the larger the uninformed demand, the larger the abnor- 
+mal trading proﬁts for arbitrageurs. 
+Our insight is simply that different times of the trad- 
+ing day will naturally have differing levels of participation 
+by arbitrageurs and that these differences should reveal 
+the magnitude of the uninformed trading demand, all else 
+equal. For example, if uninformed demand is rather low, 
+prices will move only slightly in the direction of that de- 
+mand at the open and then partially revert as more arbi- 
+trage capacity enters the market. The tug of war will then 
+be relatively small. If uninformed trading demand is in- 
+stead rather high, prices will move strongly in the direc- 
+tion at the open. Prices will revert at the close as more 
+arbitrage capacity comes in, but as the logic in the previ- 
+ous paragraph points out, will settle at a higher price than 
+before the arrival of uninformed demand. 3 Consequently, 
+when the relative magnitude of the demand is particularly 
+high, we should be able to observe a large realized tug of 
+war which should forecast larger than usual returns to bet- 
+ting against uninformed demand going forward. 
+Based on this motivation, we use the smoothed past re- 
+alized overnight and intraday return components of strate- 
+gies in a variable we dub TugOfWar (deﬁned in Eq. (1) in 
+Section 4.4 below) to forecast the strategies’ close-to- 
+close returns going forward. Our hypothesis is that the 
+smoothed past overnight minus intraday return spread 
+should positively forecast subsequent returns of strategies 
+whose average returns accrue primarily overnight (mo- 
+mentum and short-term reversal) and negatively forecast 
+returns on strategies with average returns that accrue pri- 
+marily intraday (size, book-to-market, proﬁtability, invest- 
+ment, beta, idiosyncratic volatility, issuance activity, accru- 
+als, and turnover). 
+Our results show that TugOfWar forecasts subsequent 
+close-to-close returns just as hypothesized and is robust to 
+controls for a host of popular well-known timing variables. 
+3 There are two opposing forces in these sorts of limits to arbitrage 
+models. On the one hand is the magnitude of the uninformed demand. On 
+the other hand is the risk tolerance of the arbitrageurs. Generally speak- 
+ing, we are interested in how the net difference between these two op- 
+posing forces varies through time. For ease of exposition, we focus on the 
+uninformed demand varying through time. 
+These controls include both aggregate variables such as the 
+lagged 12-month market return and market volatility, and 
+strategy-speciﬁc variables such as the smoothed past close- 
+to-close return on the strategy, the strategy’s characteris- 
+tic spread, and the difference in short interest between 
+the strategy’s long leg and short leg. The results are not 
+only statistically signiﬁcant but also economically impor- 
+tant. For a typical strategy in our sample, a one-standard- 
+deviation increase in TugOfWar forecasts a 1% higher close- 
+to-close strategy return, or about 18% of its monthly return 
+volatility. 
+Finally, we zoom in on one of the most widely used sig- 
+nals, price momentum, to provide more direct evidence of 
+the clientele mechanism. Motivated by recent work from 
+Lou and Polk (2018) , we study the way preferences of insti- 
+tutions to trade momentum stocks vary through time and 
+across stocks and whether this variation corresponds to 
+the overnight-intraday return decomposition of this strat- 
+egy. We study institutions as a source of clienteles as it is 
+reasonable to suspect that this group may have particular 
+preferences, not only in terms of whether they buy or sell 
+momentum stocks but also in terms of when they prefer 
+to trade. We therefore link institutional activity to our mo- 
+mentum decomposition in two steps. 
+We ﬁrst examine when institutional investors likely ini- 
+tiate trades. Speciﬁcally, we link changes in institutional 
+ownership to the components of contemporaneous ﬁrm- 
+level stock returns and ﬁnd that institutional ownership in- 
+creases more with intraday than with overnight returns. To 
+the extent that collective trading can move prices, this ev- 
+idence is consistent with the notion that institutions tend 
+to initiate trades throughout the day and particularly at the 
+close while the opposing clientele (individuals) are more 
+likely to initiate trades near the open. Indeed, institutions 
+may be forced to trade intraday given the larger quanti- 
+ties they tend to trade and the greater liquidity present at 
+that time. Our understanding is that many managed exe- 
+cution systems purposefully avoid the open given the rel- 
+atively high volatility brought about from large customer 
+orders and news from the overnight period. 4 We conﬁrm 
+these patterns using NYSE Trade and Quote (TAQ) data; 
+large trades (linked to institutions) are more likely to occur 
+near the close while small trades (linked to individuals) are 
+more likely to occur near the open. 
+We next study the extent to which institutions, relative 
+to individuals, trade momentum stocks. We ﬁnd that on 
+a value-weight basis (i.e., weights proportional to total as- 
+sets), institutions as a whole trade against the momentum 
+characteristic. Of course, this does not preclude a subset of 
+institutions, for example, mutual funds, from following a 
+momentum strategy (see Grinblatt et al., 1995 ) and partic- 
+ularly so for certain stocks at certain times, a point that we 
+exploit. 
+We condition both our trading and decomposition re- 
+sults on two key variables. The ﬁrst variable is a time- 
+series measure of the degree of investment activity in mo- 
+mentum strategies introduced by Lou and Polk (2018) . The 
+second variable is a cross-sectional measure of the aggre- 
+4 We thank an anonymous referee for making this point. 
+D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 195 
+gate active weight (in excess of the market weight) of all 
+institutions invested in a stock, which is likely related to 
+institutions’ rebalancing motives. 
+Either in the time series, when the amount of momen- 
+tum activity is particularly low, or in the cross-section, 
+when the typical institution holding a stock has a par- 
+ticularly strong need to rebalance, we ﬁnd that momen- 
+tum returns are relatively more negative during the day 
+(when institutions actively put on their trades) and rela- 
+tively more positive overnight. Both sorting variables gen- 
+erate variation in the spread between overnight and intra- 
+day momentum returns on the order of 2% per month. 
+The organization of our paper is as follows. 
+Section 2 motivates our work and brieﬂy summarizes 
+existing literature. Section 3 describes the data and em- 
+pirical methodology. Section 4 presents our main results. 
+Section 5 concludes. A broad set of auxiliary results and 
+robustness checks are provided in an Internet Appendix. 
+2. Motivation and related literature 
+Though we are the ﬁrst to measure the persistence of 
+the intraday and overnight components of ﬁrm-level re- 
+turns, we argue that such a decomposition is a natural one 
+as these two periods are different along several key dimen- 
+sions. 
+One key difference between these two periods is that 
+much of the overnight return may reﬂect more ﬁrm- 
+speciﬁc information. The United States stock market is 
+open from 9:30 am to 4:00 pm but a signiﬁcant portion 
+of earnings announcements occurs outside of these times. 
+More generally, ﬁrms tend to submit important regulatory 
+ﬁlings after the market has closed. 
+Second, it is reasonable to assume that the overnight 
+return is predominantly driven by trading of investors less 
+concerned with liquidity and price impact. Of course, after- 
+hours trading is much thinner than trading while markets 
+are open. Moreover, the pre-open auctions on the NYSE 
+and Nasdaq only average anywhere from one to four per- 
+cent of median daily volume, depending on the type of 
+stock. Finally, trading in the ﬁrst half hour of the day (the 
+interval in which we measure the open price), though sub- 
+stantial, is still signiﬁcantly less than the volume one ob- 
+serves intraday, particularly near or at the close. 5 
+Alternatively, trading at the close could reﬂect trades 
+that are not purely information-based. Presumably, many 
+of these trades are made to rebalance portfolios that were 
+previously optimal but no longer are. Indeed, some intra- 
+day trading may be a result of institutional capital ﬂows. 
+Perhaps some institutional investors’ mandates effectively 
+require capital to be invested immediately in the strategies 
+those investors pursue, once that capital arrives. 
+Researchers have shown since at least Fama (1965) that 
+volatility is higher during trading hours than non-trading 
+hours. 6 Recent work by Kelly and Clark (2011) sug- 
+5 Consistent with this idea, Barclay and Hendershott (2003) ﬁnd that 
+though prices are more eﬃcient and more information is revealed during 
+the day, an after-hours trade, on average, contains more information than 
+a trade made when markets are open. 
+6 See also French (1980) and French and Roll (1986) . 
+gests that aggregate stock returns on average are higher 
+overnight than intraday. 7 To our knowledge, this is the ﬁrst 
+paper decomposing ﬁrm-level returns as well as the re- 
+turns to popular characteristics into their overnight and 
+intraday components. By providing this evidence, our de- 
+composition brings new and important constraints to risk-, 
+intermediary-, or behavioral-based explanations of these 
+empirical regularities. 
+3. Data and methodology 
+Our core Center for Research in Security Prices (CRSP)- 
+Compustat US sample spans the period 1993–2013, con- 
+strained by the availability of TAQ data. We augment 
+these data with information on institutional ownership 
+from Thomson Financial. In our robustness tests, we also 
+use international data from Thomson Reuters Tick History 
+(TRTH). 
+To decompose the close-to-close return into its 
+overnight and intraday components, we use the volume- 
+weighted average price (VWAP) in the ﬁrst half hour of 
+trading (9:30 am–10:00 am) as reported in TAQ. 8 We rely 
+on VWAP to ensure that our open prices are robust. To 
+further safeguard against the possibility that our VWAP 
+may be driven by very small orders, we exclude observa- 
+tions where there are fewer than 1,0 0 0 shares traded in 
+the ﬁrst half hour (we have also checked that our results 
+are not sensitive to this restriction). 
+We ﬁrst measure the amount of trading activity asso- 
+ciated with our VWAP price by decomposing dollar trad- 
+ing volume over 30-minute intervals throughout the trad- 
+ing day. In particular, each month, we sum up the num- 
+ber of dollars traded in each of these half-hour windows. 
+Note that the ﬁrst half-hour window that starts at 9:30 
+am also includes the open auction and the last half-hour 
+window that starts at 3:30 pm also includes last-minute 
+(i.e., 4:00 pm) trades. We then compute the fraction of 
+total daily volume (i.e., the sum over these 13 windows) 
+that is accounted for by each 30-min interval. Fig. 1 dis- 
+plays the time-series average of these fractions. Consistent 
+with previous research, trading activity dips during the day 
+and then rises near the close. The percent of dollar trad- 
+ing volume from 9:30 am–4:00 pm that takes place in the 
+ﬁrst 30-minute window is 14.25%. For each ﬁrm i , we de- 
+ﬁne the intraday return, r i 
+intraday,s , as the price appreciation 
+between market open and close of the same day s , and 
+impute the overnight return, r i 
+ov ernight,s , based on this in- 
+traday return and the standard daily close-to-close return, 
+r i 
+close −to−close,s , 
+r i 
+intraday,s = 
+P i 
+close,s 
+P i 
+open,s 
+−1 , 
+7 See related work by Branch and Ma (2008, 2012) , Cliff et al. (2008) , 
+Cai and Qiu (2008) , and Berkman et al. (2009) . 
+8 We have also veriﬁed that our results are robust to using open prices 
+from other sources: (a) open prices as reported by the Center for Research 
+in Security Prices (CRSP) which also starts in 1993 (since their data are 
+sourced from TAQ), (b) the ﬁrst trade price from the Trade and Quote 
+(TAQ) database, and (c) the midpoint of the quoted bid-ask spread at the 
+open. Our ﬁndings are robust to using these alternative proxies for the 
+open price (results available upon request). 
+196 D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 
+Fig. 1. This ﬁgure shows dollar trading volume over 30-min intervals throughout the trading day for the period 1993–2013. In particular, we ﬁrst sum up 
+the amount of dollars traded in each of these half-hour windows. We then compute the fraction of total daily volume (i.e., the sum over these 13 windows) 
+that is accounted for by each 30-min interval. In other words, these bars sum up to 1. The ﬁrst half-hour window that starts at 9:30am also includes the 
+open auction. The last half-hour window that starts at 3:30 pm also includes last-minute (i.e., 4 pm) trades and trades from the closing auction. 
+r i 
+ov ernight,s = 
+1 + r i 
+close −to−close,s 
+1 + r i 
+intraday,s 
+−1 . 
+In other words, we assume that dividend adjustments, 
+share splits, and other corporate events that could me- 
+chanically move prices take place overnight. 9 Furthermore, 
+to ensure that the returns are actually achievable, if the 
+open price on day s for a particular stock is missing (which 
+happens very rarely as we exclude micro-cap stocks from 
+our sample), we hold the overnight position from the clos- 
+ing of day s −1 to the next available open price. Put dif- 
+ferently, we construct our return measures such that the 
+overnight and intraday returns aggregate up to exactly the 
+close-to-close return. Though conceptually clean, this as- 
+pect of our methodology has no appreciable impact on 
+our relative decomposition of average returns into their 
+overnight and intraday components. 
+We then accumulate these overnight and intraday re- 
+turns across days in each month t . 
+r i 
+intraday,t = 
+∏ 
+s ∈ t 
+(1 + r i 
+intraday,s ) −1 , 
+r i 
+ov ernight,t = 
+∏ 
+s ∈ t 
+(1 + r i 
+ov ernight,s ) −1 , 
+(1 + r i 
+intraday,t )(1 + r i 
+ov ernight,t ) = (1 + r i 
+t ) . 
+9 We know of no violation of this assumption in our sample. However, 
+we have redone our analysis excluding months in which dividends are 
+paid, and our results are nearly identical. 
+Thus, all of our analysis examines the intraday and 
+overnight components of the standard CRSP monthly re- 
+turn, r i 
+t . 
+We mostly focus on portfolios, where we typically re- 
+port the following three components: 
+r p 
+t = 
+∑ 
+i 
+w i 
+t−1 r i 
+t , 
+r p 
+intraday,t = 
+∑ 
+i 
+w i 
+t−1 r i 
+intraday,t , 
+r p 
+ov ernight,t = 
+∑ 
+i 
+w i 
+t−1 r i 
+ov ernight,t . 
+Of course (1 + r p 
+t ) ̸ = (1 + r p 
+intraday,t )(1 + r p 
+ov ernight,t ) , due 
+to 
+∑ 
+i 
+w i 
+t−1 r i 
+intraday,t r i 
+ov ernight,t (i.e., the interaction term), so 
+our portfolio decomposition does not sum exactly to the 
+close-to-close return. This discrepancy is small and can be 
+easily backed out from our tables. 
+The main objective of this study is to examine expected 
+returns during the overnight vs. intraday periods. In these 
+tests, we always exclude microcap stocks—i.e., those with a 
+price below $5 a share and those whose market capitaliza- 
+tion is in the bottom NYSE size quintile—from the sample 
+to mitigate microstructure issues. We decompose holding- 
+period returns on simple value-weight long-short portfo- 
+lios where breakpoints are always based on NYSE per- 
+centiles. We also decompose holding-period returns gener- 
+ated by Fama and MacBeth (1973) weighted least squares 
+(WLS) regressions (where the WLS weights in each cross- 
+D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 197 
+Table 1 
+Overnight/intraday return persistence/reversal. 
+This table reports overnight/intraday return persistence and reversal patterns. In Panel A, at the end of each month, all stocks are sorted into 
+deciles based on their lagged one-month overnight returns. In Panel B, stocks are sorted based on their lagged one-month intraday returns. We 
+then go long the value-weight winner decile and short the value-weight loser decile. The ﬁrst three columns show the overnight return in the 
+subsequent month of the two short-term reversal strategies, and the next three columns show the intraday returns in the subsequent month. 
+Stocks with prices below $5 a share and/or that are in the bottom NYSE size quintile are excluded from the sample. We report monthly portfolio 
+returns in excess of the risk-free rate, adjusted by the CAPM, and by the three-factor model. We compute t -statistics, shown in parentheses, based 
+on standard errors corrected for serial-dependence with 12 lags. 5% statistical signiﬁcance is indicated in bold. Sample period is 1993–2013. 
+Panel A: Portfolios sorted by one-month overnight returns 
+Overnight Intraday 
+Decile Excess CAPM 3-Factor Excess CAPM 3-Factor 
+1 −1.51% −1.70% −1.73% 1.62% 1.23% 1.06% 
+( −7.76) ( −9.88) ( −9.77) (4.76) (4.55) (4.15) 
+10 1.96% 1.73% 1.74% −1.63% −2.07% −1.96% 
+(8.17) (8.60) (8.69) ( −4.74) ( −8.58) ( −9.03) 
+10–1 3.47% 3.42% 3.47% −3.24% −3.30% −3.02% 
+(16.57) (16.57) (16.83) ( −9.34) ( −9.00) ( −9.74) 
+Panel B: Portfolios sorted by one-month intraday returns 
+Overnight Intraday 
+Decile Excess CAPM 3-Factor Excess CAPM 3-Factor 
+1 1.59% 1.32% 1.35% −1.51% −2.04% −2.14% 
+(5.51) (5.28) (5.04) ( −3.45) ( −6.58) ( −6.95) 
+10 −0.22% −0.41% −0.42% 0.69% 0.32% 0.27% 
+( −1.20) ( −2.68) ( −2.64) (2.51) (1.76) (1.57) 
+10–1 −1.81% −1.73% −1.77% 2.19% 2.36% 2.41% 
+( −8.44) ( −8.16) ( −7.89) (6.72) (7.56) (7.70) 
+sectional regression are proportional to market capitaliza- 
+tion). These regressions allow us to carefully decompose 
+partial effects. We report hypothesis tests as to whether 
+overnight and intraday average returns are equal (both as a 
+whole and on an hourly basis) in the context of our Fama- 
+MacBeth analysis. 
+4. Empirical results 
+4.1. Persistence in components of trading strategy returns 
+We believe it is reasonable that some investors prefer to 
+trade more intensively around the market open, while oth- 
+ers prefer to trade intensively later in the day. If the ﬁrm- 
+speciﬁc order ﬂow of such clienteles is persistent, then one 
+should see persistence in overnight and intraday returns as 
+well as a cross-period reversal (to the extent that the de- 
+mand is not fully informative). Thus, we check for the exis- 
+tence of intraday and overnight clienteles by decomposing 
+past returns into overnight and intraday components and 
+looking for these continuation and reversal patterns. 
+We ﬁrst look for these patterns linking one month to 
+the next. In Table 1 , at the end of each month, all stocks 
+are sorted into deciles based on their lagged one-month 
+overnight returns (Panel A) or lagged one-month intraday 
+returns (Panel B). In each sort, we then go long the value- 
+weight winner decile and short the value-weight loser 
+decile. We report monthly portfolio returns in excess of the 
+risk-free rate, adjusted by the Capital Asset Pricing Model 
+(CAPM), and by the three-factor model. 
+We ﬁnd extremely strong results. A hedge portfolio 
+based on past one-month overnight returns earns an aver- 
+age overnight excess return of 3.47% per month with an as- 
+sociated t -statistic of 16.57. This ﬁnding continues to hold 
+regardless of the risk adjustment as the three-factor alpha 
+is also 3.47% per month ( t -statistic of 16.83). This ﬁnding 
+is accompanied by a corresponding reversal in the intra- 
+day period. The one-month overnight return hedge portfo- 
+lio earns an average intraday excess return of −3 . 24% per 
+month with an associated t -statistic of −9 . 34 (three-factor 
+alpha of −3 . 02% per month with a t -statistic of −9 . 74 ). 
+This tug of war can be identiﬁed using either compo- 
+nent of close-to-close returns. If we instead sort stocks 
+based on past one-month intraday returns, the resulting 
+hedge portfolio earns an average intraday excess return of 
+2.19% per month with an associated t -statistic of 6.72. As 
+before, adjusting for three-factor exposure does not sub- 
+stantially reduce the effect; indeed, the three-factor alpha 
+is higher at 2.41% per month ( t -statistic of 7.70). Again, 
+we ﬁnd a corresponding reversal in the overnight period 
+as this one-month intraday return hedge portfolio earns 
+an average overnight excess return of −1 . 81% per month 
+with an associated t -statistic of −8 . 44 (three-factor alpha 
+of −1 . 77% per month with a t -statistic of −7 . 89 ). 
+In untabulated results, we conﬁrm that these results are 
+robust to replacing the VWAP open price with the mid- 
+point of the quoted bid-ask spread at the open. In par- 
+ticular, the portfolio based on past one-month overnight 
+returns has an overnight three-factor alpha of 1.88% ( t - 
+statistic of 8.75) and an intraday three-factor alpha of 
+−1 . 43% ( t -statistic of −7 . 05 ). Similarly, the portfolio based 
+on past one-month intraday returns has an intraday three- 
+factor alpha of 1.35% ( t -statistic of 4.86) and an overnight 
+198 D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 
+three-factor alpha of −0 . 85% ( t -statistic of −3 . 31 ). Given 
+these results, we feel conﬁdent that bid-ask bounce is not 
+responsible for our ﬁndings. 
+Heston et al. (2010) (henceforth HKS) document a sta- 
+tistically signiﬁcant positive relation between a stock’s re- 
+turn over a half-hour interval and the corresponding half- 
+hour return occurring on each of the next 40 trading days 
+and argue that their patterns are consistent with investors 
+having a predictable demand for immediacy at certain 
+times. However, HKS do not study how their half-hour in- 
+traday momentum effects aggregate or whether they per- 
+sist beyond two months and, more importantly, do not 
+study overnight returns at all. 
+Nevertheless, to conﬁrm that our ﬁndings are more 
+than just a simple aggregation of the HKS half-hour effect, 
+we include in our subsequent Fama-MacBeth regressions 
+(discussed in the next section and presented in Table 4 ) 
+the most recent one-month intraday return as a control for 
+the HKS ﬁnding. We continue to ﬁnd that both the past in- 
+traday and the past overnight returns independently fore- 
+cast next month’s intraday and overnight components. 
+Though our results are distinct from HKS, we do ex- 
+plore how the contribution to the intraday persistence and 
+overnight reversal varies across the HKS half-hour inter- 
+vals. Appendix Table A1 documents that returns within any 
+half-hour interval strongly negatively forecast next month’s 
+overnight return as well as strongly positively forecast next 
+month’s intraday return. We ﬁnd no obvious pattern in 
+forecasting strength, however, across these 13 half-hours of 
+the trading day. 
+With such high t -statistics, it is very unlikely that the 
+results are spurious; nevertheless, to conﬁrm that these 
+striking overnight/intraday momentum and reversal pat- 
+terns are robust, we replicate our analysis in nine large 
+non-US equity markets, again focusing on value-weight 
+portfolios. Those markets are Canada, France, Germany, 
+Italy, United Kingdom, Australia, Hong Kong, Japan, and 
+South Africa. Appendix Table A2 Panel A reports our ﬁnd- 
+ings. 
+For this sample, there is no short-term reversal effect 
+in close-to-close returns. This lack of a close-to-close ef- 
+fect hides strong patterns within the overnight and intra- 
+day periods that are further sharpened by examined sorts 
+on return components. Speciﬁcally, in every country, we 
+ﬁnd a strong one-month overnight continuation effect. On 
+a value-weighted basis across countries, a simple strategy 
+that buys last-month’s overnight winners and sells last- 
+month’s overnight losers earns an overnight premium of 
+2.31% with an associated t -statistic of 6.90. Similarly, in 
+each of the nine countries, we ﬁnd a strong one-month 
+intraday continuation effect. Across countries, the value- 
+weight average intraday return of buying last-month’s in- 
+traday winners and selling last-month’s intraday losers is 
+2.80% ( t -statistic of 6.23). As in the US, we also ﬁnd a 
+strong cross-period reversal in every country that is statis- 
+tically signiﬁcant and roughly equal in absolute magnitude. 
+Our interpretation of these ﬁndings is that certain clien- 
+teles persistently trade certain stocks in the same direction 
+in the ﬁrst half hour after market open, while others trade 
+later during the day, which is why we see this strong per- 
+sistence in overnight and intraday returns. If so, then these 
+patterns should persist. As a consequence, Fig. 2 reports 
+how the t -statistics associated with the four strategies an- 
+alyzed in Table 1 evolve in event time. Consistent with this 
+interpretation, for each of the four strategies, t -statistics in- 
+dicate statistical signiﬁcance up to ﬁve years later. 
+The international ﬁndings are similarly persistent. To 
+highlight this fact, we compute exponentially weighted 
+moving average overnight ( EW MA _ NIGHT ) and intraday 
+( EW MA _ DAY ) returns (with a half-life of 60 months and 
+skipping the most recent month to ensure we are not sim- 
+ply repackaging the one-month result documented above) 
+and use these variables to forecast subsequent overnight 
+and intraday returns in each of these markets. Appendix 
+Table A2 Panel B documents that on a value-weighted ba- 
+sis across countries, EW MA _ NIGHT forecasts next month’s 
+overnight return with a t -statistic of 5.10 while EW MA _ DAY 
+forecasts next month’s intraday return with a t -statistic 
+of 4.60. We also ﬁnd a strong cross-period reversal. On 
+a value-weight basis across countries, EW MA _ NIGHT fore- 
+casts next month’s intraday return with a t -statistic of 
+−3 . 38 while EW MA _ DAY forecasts next month’s overnight 
+return with a t -statistic of −3 . 74 . 
+Appendix Table A3 applies our EWMA approach to the 
+half-hour returns studied in Appendix Table A1 and gen- 
+erally ﬁnds that the low-frequency component in each 
+of the 13 half-hour intervals is independently informative 
+about next month’s overnight and intraday returns. The 
+sole exceptions are that the EWMA of past 10:30 am–
+11:00 am returns does not independently forecast subse- 
+quent overnight returns and that the EWMA of past 1:00 
+pm–1:30 pm returns does not independently forecast sub- 
+sequent intraday returns. Of course, since we are exam- 
+ining 13 half-hour intervals, we are still strongly able to 
+reject the null hypothesis that the 13 intraday coeﬃcients 
+are jointly < 0 as well as the null hypothesis that the 13 
+overnight coeﬃcients are jointly > 0. 
+4.2. The cross-section of expected return components 
+Given these remarkable patterns, we use our new ap- 
+proach to understand the importance of clienteles for ex- 
+pected close-to-close returns on popular trading strategies. 
+Speciﬁcally, we decompose the abnormal proﬁts associated 
+with a long list of trading strategies—size, value, price mo- 
+mentum, earnings momentum, industry momentum, time- 
+series momentum, proﬁtability, investment, idiosyncratic 
+volatility, beta, turnover, equity issuance, discretionary ac- 
+cruals, and short-term reversals—into their intraday and 
+overnight components. In each case, we simply report the 
+average CAPM alphas of the overnight and intraday compo- 
+nents of the zero-cost strategy; please see Appendix Table 
+A4 for the average excess returns, CAPM alphas, and, when 
+appropriate, three-factor alphas on both the long and the 
+short sides of these strategies. All of our conclusions are 
+robust to these different risk adjustments. 
+4.2.1. The equity premium 
+As a benchmark, we ﬁrst decompose the equity pre- 
+mium into its overnight and intraday components. Table 2 
+reports that the market portfolio ( CRSP ) as measured by 
+the value-weight CRSP universe has an average monthly 
+D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 199 
+Fig. 2. This ﬁgure shows the t -statistics of the overnight/intraday return persistence test, as reported in Table 1 . We extend our analysis in Table 1 by 
+varying the lag between the ranking period and holding period from one month all the way to 60 months (i.e., as shown by the X -axis). Stocks with prices 
+below $5 a share and/or that are in the bottom NYSE size quintile are excluded from the sample. The dotted curve corresponds to using lagged overnight 
+returns to forecast future overnight returns. The dashed curve corresponds to using lagged intraday returns to forecast future intraday returns. The dashed 
+with dotted markers curve corresponds to using lagged overnight returns to forecast future intraday returns. Finally, the dashed curve with square markers 
+corresponds to using lagged intraday returns to forecast future overnight returns. Sample period is 1993–2013. 
+intraday excess return of 0.38% and an average overnight 
+return of 0.55%. This breakdown lines up pretty well with 
+one simply based on the percentage of time corresponding 
+to each of these two periods. Speciﬁcally, the US market is 
+open for approximately 27% of the 24-h day and the pre- 
+mium earned then is roughly 40% of the total. As we shall 
+soon see, the decomposition results for the popular trad- 
+ing strategies we study are all very far from this natural 
+benchmark. 
+Our ﬁndings are, on the surface, inconsistent with pre- 
+vious work that has argued that the equity premium is pri- 
+marily an overnight phenomenon. However, much of that 
+research bases their conclusions on narrow market proxies 
+like an exchange-traded fund (ETF) tracking the Dow 30. 
+In Appendix Fig. A1, we compare an annualized version of 
+our decomposition of the CRSP value-weight index against 
+a similar decomposition of a value-weight portfolio of the 
+top 1% stocks of the NYSE sample (similar to the Dow 30). 
+The ﬁgure shows that for the largest stocks, essentially all 
+of their risk premium is earned overnight. This result fore- 
+shadows our next ﬁnding that the well-known small-stock 
+effect is entirely an intraday phenomenon. 
+4.2.2. Size, value, and momentum 
+We examine three well-known strategies that capture 
+the average returns associated with size and value ( Fama 
+and French, 1992 ) and momentum ( Jegadeesh and Titman, 
+1993 ). 10 We ﬁrst examine a strategy ( ME ) that goes long 
+the small-stock decile and short the large-stock decile. 
+Table 2 reports the overnight and intraday components of 
+ME ’s CAPM-adjusted returns. Essentially, all of the size pre- 
+mium occurs intraday. Speciﬁcally, the intraday CAPM al- 
+pha is 0.43% ( t -statistic of 1.85) while the overnight CAPM 
+alpha is only 0.11% ( t -statistic of 0.75). 
+We next decompose the returns on a strategy ( BM ) that 
+goes long the high book-to-market decile and short the 
+low book-to-market decile. We measure book-to-market- 
+equity ratios following Fama and French (1992) . Again, we 
+ﬁnd that essentially all of the value premium occurs in- 
+traday. Speciﬁcally, the intraday CAPM alpha is 0.48% ( t - 
+statistic of 2.21) while the overnight CAPM alpha is ac- 
+tually slightly negative, though not statistically signiﬁcant 
+( −0 . 10% per month, t -statistic of −0 . 67 ). 
+We then decompose the returns on a standard im- 
+plementation of the classic momentum strategy, MOM , of 
+Jegadeesh and Titman (1993) where we measure momen- 
+10 Fama and French (1992) argue that size and the book-to-market- 
+equity ratio describe the cross-section of average returns, subsuming 
+many other related characteristics. Fama and French (1993) propose a 
+three-factor model that includes not only a market factor but also a size 
+and value factor. Fama and French (1996) argue that these factors price a 
+variety of trading strategies except for the momentum effect of Jegadeesh 
+and Titman (1993) . See Campbell et al. (2018) for a comprehensive analy- 
+sis of how these patterns and the subsequent anomalies we study can or 
+cannot be explained by intertemporal asset pricing. 
+200 D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 
+Table 2 
+Overnight/intraday return decomposition. 
+This table reports returns to the CRSP index as well as various cross-sectional strategies during the day vs. at night. 
+In the left column of the ﬁrst row, we examine the overnight/intraday returns of the value-weight CRSP index. For 
+the rest of the table, we report returns of long-short portfolios where we go long one extreme value-weight decile 
+(quintile) and short the other extreme value-weight decile (quintile) based on a particular ﬁrm/industry characteristic. 
+In the right column of row 1, at the end of each month, all stocks are sorted into deciles based on the prior month 
+market capitalization. In row 2, stocks are sorted into decile portfolios based on lagged book-to-market ratio and lagged 
+12-month cumulative returns (skipping the most recent month), respectively. In the left column of row 3, stocks are 
+sorted into deciles based on prior quarter earnings surprises ( = actual earnings consensus forecast); in the right column, 
+all industries are sorted into quintiles based on lagged 12-month cumulative industry returns. In row 4, stocks are 
+sorted into deciles based on lagged return-to-equity and lagged asset growth, respectively. In row 5, stocks are sorted 
+into deciles based on lagged 12-month market betas (using daily returns with three lags and summing coeﬃcients) 
+and lagged 12-month daily idiosyncratic volatilities (with respect to the Carhart four-factor model), respectively. In 
+row 6, stocks are sorted into deciles based on equity issuance in the prior year and lagged discretionary accruals, 
+respectively. In row 7, stocks are sorted into deciles based on lagged 12-month share turnover and lagged one month 
+returns, respectively. To aid in the readability of the table, the cross-sectional strategies are designed to have positive 
+average returns based on the ﬁndings in previous research. Thus, we are long small-cap stocks, value stocks, past one- 
+year winners, high earnings surprise stocks, past one-month industry winners, high proﬁtability, low asset growth, low 
+beta, low idiosyncratic volatility, low equity issuance, low accruals, low turnover, and low past one-month losers. For 
+example, we go long small-cap stocks and short large-cap stocks. Stocks with prices below $5 a share and/or that are 
+in the bottom NYSE size quintile are excluded from the sample. We report monthly portfolio returns adjusted by the 
+CAPM in all instances except for the CRSP strategy, where we simply report excess returns. We compute t -statistics, 
+shown in parentheses, based on standard errors corrected for serial-dependence with 12 lags. 5% statistical signiﬁcance 
+is indicated in bold. Sample period is 1993–2013. 
+Overnight-intraday return decomposition 
+Overnight Intraday Overnight Intraday 
+CRSP 0.55% 0.38% ME 0.11% 0.43% 
+(3.62) (1.87) (0.75) (1.85) 
+BM −0.10% 0.48% MOM 0.98% −0.02% 
+( −0.67) (2.21) (3.84) ( −0.06) 
+SUE 0.56% 0.21% INDMOM 1.07% −0.63% 
+(3.20) (0.70) (6.47) ( −2.03) 
+ROE −0.95% 1.42% INV −0.28% 0.97% 
+( −6.25) (5.58) ( −2.10) (4.39) 
+BETA −0.49% 0.70% IVOL −1.46% 2.48% 
+( −2.17) (2.40) ( −5.23) (6.21) 
+ISSUE −0.52% 1.13% ACCRUALS −0.47% 1.10% 
+( −3.27) (6.13) ( −3.25) (4.73) 
+TURNOVER −0.29% 0.57% STR 0.93% −1.05% 
+( −1.98) (2.58) (4.28) ( −3.25) 
+tum over an 11-month ranking period and then skip a 
+month before forming portfolios. In sharp contrast to the 
+ﬁndings for size and value, essentially all of MOM ’s returns 
+are generated overnight. Speciﬁcally, the overnight CAPM 
+alpha is 0.98% ( t -statistic of 3.84) while the intraday CAPM 
+alpha is only −0 . 02% ( t -statistic of −0 . 06 ). 11 
+Although all momentum proﬁts occur from the closing 
+price to the opening price, the overnight return on MOM 
+is much less volatile (4.02% standard deviation) than the 
+close-to-close return (7.85% standard deviation). Thus, the 
+Sharpe Ratio of the overnight return on MOM is 0.77, more 
+than twice as high as the Sharpe Ratio of the close-to-close 
+return (0.31). Interestingly, on average, more of the neg- 
+ative skewness observed in momentum strategies ( Daniel 
+and Moskowitz, 2016 ) and present in MOM arrives intraday 
+rather than overnight. 12 Given that momentum differs dra- 
+matically from size and value as well as the other strate- 
+11 We follow the standard approach in the literature by examining 
+monthly holding periods on momentum strategies. However, our results 
+are robust to different holding periods (see Appendix Figs. A2 and A3 and 
+the related discussion). 
+12 Overnight MOM returns have a skewness of −1 . 08 while the skew- 
+ness of intraday MOM returns is −1 . 53 . 
+gies we study below, the Internet Appendix provides var- 
+ious additional robustness tests and auxiliary analyses in 
+Tables A10–A12. 
+4.2.3. Earnings momentum, industry momentum, and 
+time-series momentum 
+We next examine three other momentum strategies 
+to document whether our ﬁnding that momentum prof- 
+its accrue overnight continues to hold. Table 2 decomposes 
+the abnormal returns on an earnings momentum strategy 
+( SUE ). Our earnings momentum characteristic is simply the 
+difference between reported earnings and the consensus 
+forecast; this difference is scaled by the ﬁrm’s stock price. 
+As with price momentum, we ﬁnd that 100% of the returns 
+to SUE occur overnight. In particular, the CAPM alpha of a 
+long-short earnings momentum portfolio is 0.56% with a t - 
+statistic of 3.20. The corresponding intraday CAPM alpha is 
+indistinguishable from zero. 
+We then decompose the abnormal returns on an indus- 
+try momentum strategy ( INDMOM ). We follow Moskowitz 
+and Grinblatt (1999) and measure industry momentum 
+over a 12-month ranking period for 20 industries based on 
+standard industrial classiﬁcation (SIC) codes. Again, we ﬁnd 
+that 100% of the INDMOM effect occurs overnight. In par- 
+D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 201 
+Table 3 
+Time-series momentum returns. 
+This table reports returns to the time-series momentum strategy of Moskowitz et al. (2012) , during 
+the day vs. at night for the period 1996–2016, for 22 equity index futures listed in Panel B. In Panel 
+A, returns are calculated based on TRTH data, with intraday returns for each index calculated as the 
+returns of the front futures contract, from the 30-min VWAP centered on the “open” (deﬁned as the 
+minute before noon with the largest number of trades where trades are summed over all days), and the 
+30-min VWAP centered on the “close” (busiest minute after noon). Overnight returns are the returns 
+between the close on day t −1 and the open on day t of the front contract on date t (corresponding 
+to rolling on expiration), with any missing data handled as with our equity data. Speciﬁcally, we split 
+monthly returns exactly into intraday and overnight components, corresponding to returns of a strat- 
+egy that aims to execute intraday and overnight round-trips, without any forward-looking information 
+about which observations are available. Where there is a missing open price at date t , but there is a 
+close price at date t −1 , we deﬁne the overnight returns for day t as the percent price change between 
+the close price at date t −1 and the ﬁrst available open or close price on day t or later, assuming such 
+is available before contract expiration; if no such price is available, we use any one-minute VWAP that 
+is available on the last date before expiration; if no such price is available either, we assign zero to 
+this overnight return (though this scenario is extremely rare). Similarly, if an open price is available on 
+date t but a close price is not, we deﬁne intraday returns so that they correspond to the return of a 
+position opened at the open on day t . All intraday, overnight, or close-to-close drops of more than 30% 
+are treated as missing, as are increases of more than 50%, though excluding either has no qualitative ef- 
+fect on our results. From daily intraday, overnight, and close-to-close returns, we aggregate to monthly 
+returns as with our TAQ stock data used in cross-sectional momentum. The ﬁrst column reports the 
+simple monthly average return of the strategy; Column 2 reports the CAPM alpha; Column 3 reports 
+the Fama-French 3-Factor alpha; Column 4 reports the 4-Factor alpha, which adds the up minus down 
+(UMD) factor to the 3-Factor model. The last two columns report the standard deviation and skewness 
+of the overnight and intraday returns of the time-series momentum strategy. We compute t-statistics, 
+shown in parentheses, based on standard errors corrected for serial-dependence with 12 lags. 5% statis- 
+tical signiﬁcance is indicated in bold. 
+Panel A: Time-series momentum return decomposition 
+Raw CAPM 3-Factor 4-Factor Stdev Skew 
+Close-to-close 0.81% 1.29% 1.31% 1.50% 7.30% −0.491 
+(1.39) (2.04) (2.05) (2.42) 
+Overnight 1.10% 1.40% 1.42% 1.54% 4.24% 0.178 
+(2.67) (3.24) (3.18) (3.64) 
+Intraday −0.29% −0.10% −0.10% −0.04% 4.85% −2.767 
+( −0.78) ( −0.24) ( −0.26) ( −0.11) 
+Panel B: List of futures contracts 
+Equity index Start date 
+AEX (Netherlands) 14–Jan–2004 
+JSE (South Africa) 07–Jul–2005 
+Athens LargeCap (Greece) 26–May–20 0 0 
+S&P500 MINI (U.S) 10–Sep–1997 
+CAC40 (France) 07–Jan–1999 
+DAX (Germany) 04–Nov–2008 
+FTSE 100 (UK) 14–Nov–2001 
+SMI (Switzerland) 04–Nov–2008 
+HANG SENG (Hong Kong) 04–Sep–20 0 0 
+FTSE/MIB (Italy) 23–Mar–2004 
+BMFBOVESPA (Brazil) 15–Dec–2009 
+IPC (Mexico) 28–Jun–1999 
+TOPIX (Japan) 12–Jun–2001 
+KOPSI 200 (Korea) 13–Jan–1997 
+IBEX35 (Spain) 09–Jan–1996 
+RTS INDEX (Russia) 03–Oct–2006 
+CNX NIFTY (India) 11–Oct–2005 
+MSCI SINGAPORE 18–Jan–2005 
+Eurostoxx 50 (Europe) 04–Nov–2008 
+S&P Canada 60 10–Sep–1999 
+Taiwan 14–Jun–20 0 0 
+SPI200 (Australia) 03–May–20 0 0 
+ticular, the overnight CAPM alpha of a long-short indus- 
+try momentum portfolio is 1.07% with a t -statistic of 6.47. 
+The corresponding intraday CAPM alpha is quite negative 
+at −0 . 63% ( t -statistic of −2 . 03 ). 
+Finally, in Table 3 , we examine the intraday and 
+overnight returns of Moskowitz et al. ’s (2012) time-series 
+momentum strategy applied to a universe of 22 of the 
+most liquid futures on international equity indexes. Note 
+that Moskowitz, Ooi, and Pedersen study 59 future con- 
+tracts spanning all asset classes, but since equity mar- 
+kets are the focus of our paper, we restrict our atten- 
+tion only to futures on equity indexes, which is also ap- 
+202 D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 
+Table 4 
+Fama-MacBeth return regressions. 
+This table reports Fama-MacBeth regressions of monthly excess stock returns on lagged ﬁrm characteristics. The dependent 
+variable in the ﬁrst column is the close-to-close return in the following month; the dependent variable in the second column 
+is the overnight return in the following month, and the dependent variable in the third column is the intraday return in 
+the following month. In Column 4, we report the difference between the coeﬃcients in Columns 2 and 3 (i.e., overnight- 
+intraday). In Column 5, we report the difference between the overnight coeﬃcient ∗24/17.5 and intraday coeﬃcient ∗24/6.5. 
+The independent variables include the most recent one-month overnight return ( ret_night ), the most recent one-month intraday 
+return ( ret_day ), the exponentially weighted moving average ( ewma_night ) overnight return (with a half-life to 60 months and 
+skipping the most recent month), the exponentially weighted moving average ( ewma_day ) intraday return (with a half-life to 
+60 months and skipping the most recent month), the lagged 12-month cumulative stock return (skipping the most recent 
+month), market capitalization, book-to-market ratio, 12-month daily idiosyncratic volatility (with regard to the Carhart four- 
+factor model, with one lead and one lag), 12-month market beta (using daily returns with three lags), 12-month share turnover, 
+return-on-equity, asset growth, equity issuance, and discretionary accruals. Stocks with prices below $5 a share and/or that are 
+in the bottom NYSE size quintile are excluded from the sample. Stock returns are expressed in percentage terms. Observations 
+are weighted by lagged market capitalization in each cross-sectional regression. Standard errors, shown in brackets, are adjusted 
+for serial-dependence with 12 lags. ∗, ∗∗, ∗∗∗ denote statistical signiﬁcance at the 90%, 95%, and 99% level, respectively. Sample 
+period is 1993–2013. 
+X 100 Close-to-close Overnight Intraday Overnight-intraday Scaled difference 
+[1] [2] [3] [4] [5] 
+ret_night −0.161 4.585 ∗∗∗ −4.792 ∗∗∗ 9.377 ∗∗∗ 23.982 ∗∗∗
+[0.697] [0.480] [0.574] [0.802] [2.313] 
+ret_day −2.959 ∗∗∗ −7.4 4 4 ∗∗∗ 4.484 ∗∗∗ −11.928 ∗∗∗ −26.766 ∗∗∗
+[0.686] [0.863] [0.724] [1.437] [3.546] 
+ewma_night −4.910 16.836 ∗∗∗ −21.685 ∗∗∗ 38.520 ∗∗∗ 103.156 ∗∗∗
+[4.228] [2.804] [4.155] [5.639] [16.852] 
+ewma_day −2.456 −15.564 ∗∗∗ 13.583 ∗∗∗ −29.147 ∗∗∗ −71.499 ∗∗∗
+[3.566] [4.551] [4.002] [7.849] [19.577] 
+mom 0.232 0.640 ∗∗∗ −0.415 ∗∗ 1.056 ∗∗∗ 2.411 ∗∗∗
+[0.284] [0.143] [0.186] [0.176] [0.622] 
+size −0.076 0.141 ∗∗∗ −0.227 ∗∗∗ 0.368 ∗∗∗ 1.031 ∗∗∗
+[0.056] [0.028] [0.042] [0.045] [0.152] 
+bm 0.028 0.148 ∗∗∗ −0.120 ∗ 0.268 ∗∗∗ 0.646 ∗∗
+[0.074] [0.054] [0.071] [0.102] [0.295] 
+ivol −0.045 0.165 ∗∗ −0.149 ∗∗ 0.314 ∗∗∗ 0.777 ∗∗∗
+[0.097] [0.075] [0.063] [0.098] [0.254] 
+beta −0.073 0.125 −0.200 ∗ 0.325 ∗∗ 0.910 ∗∗
+[0.171] [0.119] [0.111] [0.151] [0.419] 
+turnover 0.102 ∗ 0.197 ∗∗∗ −0.124 ∗∗∗ 0.322 ∗∗∗ 0.729 ∗∗∗
+[0.061] [0.044] [0.038] [0.055] [0.147] 
+roe 0.214 −0.214 ∗∗ 0.427 ∗ −0.641 ∗∗ −1.870 ∗∗
+[0.250] [0.105] [0.244] [0.280] [0.934] 
+inv −0.531 ∗∗ 0.001 −0.542 ∗∗ 0.542 ∗∗ 2.001 ∗∗∗
+[0.210] [0.100] [0.197] [0.229] [0.752] 
+issue −0.878 ∗∗∗ −0.238 -0.635 ∗∗∗ 0.397 2.019 ∗∗
+[0.279] [0.217] [0.210] [0.327] [0.877] 
+accurals -0.403 −0.239 −0.210 -0.029 0.447 
+[0.477] [0.283] [0.434] [0.551] [1.703] 
+Adj- R 2 0.128 0.106 0.135 
+No. obs. 454,825 454,825 454,825 
+propriate because “intraday” and “overnight” periods are 
+much more well-deﬁned for equity markets than they are 
+for, say, USD/Yen currency futures. We list the markets we 
+study in Panel B of the table. As with cross-sectional mo- 
+mentum, time-series momentum occurs entirely overnight. 
+Table 3 Panel A documents that for our sample, the 
+monthly overnight CAPM alpha associated with time-series 
+momentum is 1.40% with a t -statistic of 3.24. The corre- 
+sponding intraday alpha is negative, economically negli- 
+gible, and statistically indistinguishable from zero. These 
+conclusions are robust to controlling for the Fama-French- 
+Carhart four-factor model. Interestingly, all of this strat- 
+egy’s negative return skewness comes from its intraday 
+component. 
+In summary, for the four different momentum strate- 
+gies studied in this paper, all of the abnormal proﬁts oc- 
+cur overnight. Indeed, in the case of industry momentum, 
+more than 100% of the close-to-close premium accrues 
+overnight, as there is a partially offsetting negative intra- 
+day premium. 
+4.2.4. Proﬁtability and investment 
+Researchers have documented that several other char- 
+acteristics generate cross-sectional variation in average re- 
+turns. Chief among these characteristics are proﬁtability—
+introduced by Haugen and Baker (1996) , conﬁrmed in 
+Vuolteenaho (2002) , and reﬁned in Novy-Marx (2013) , 
+and investment—introduced by Fairﬁeld et al. (2003) and 
+carefully analyzed in Titman et al. (2004) and Polk and 
+Sapienza (2009) . Indeed, Fama and French (2015) grant 
+that two factors based on proﬁtability and investment help 
+describe the cross-section of average returns, even in the 
+presence of their value factor, high minus low ( HML ). 
+D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 203 
+We examine a proﬁtability or return on equity strategy 
+( ROE ) that goes long the high proﬁtability decile and short 
+the low proﬁtability decile. Table 2 reports the overnight 
+and intraday components of ROE ’s CAPM alpha. More than 
+100% of the proﬁtability premium occurs intraday as ROE 
+has a very strong negative overnight CAPM alpha. Speciﬁ- 
+cally, the intraday CAPM alpha is 1.42% ( t -statistic of 5.58) 
+while the overnight CAPM alpha is −0 . 95% ( t -statistic of 
+−6 . 25 ). 
+We then examine a strategy ( INV ) that goes long the 
+low investment decile and short the high investment 
+decile. Table 2 reports the overnight and intraday compo- 
+nents of INV ’s CAPM alpha. We ﬁnd that more than 100% 
+of the low investment premium occurs intraday as there 
+is a statistically signiﬁcant negative CAPM alpha associated 
+with INV overnight. Speciﬁcally, the intraday CAPM alpha is 
+0.97% ( t -statistic of 4.39) while the overnight three-factor 
+alpha is −0 . 28% ( t -statistic of −2 . 10 ). 
+4.2.5. Beta and idiosyncratic volatility 
+The next two strategies we study relate to traditional 
+measures of risk. The fundamental measure of risk in the 
+asset-pricing model of Sharpe (1964) , Lintner (1965) , and 
+Black (1972) is market beta. However, empirical evidence 
+indicates that the security market line is too ﬂat on aver- 
+age ( Black, 1972; Frazzini and Pedersen, 2014 ). 
+We examine a strategy ( BETA ) that goes long the low- 
+beta decile and short the high-beta decile. We measure 
+beta using daily returns over the last year in a market 
+model regression. We include three lags of the market 
+in the regression and sum their coeﬃcients to take non- 
+synchronous trading issues into account ( Dimson, 1979 ). 
+Table 2 reports the overnight and intraday components 
+of BETA ’s CAPM alpha. More than 100% of the low-beta 
+premium occurs intraday as there is a negative premium 
+on our BETA strategy overnight. Speciﬁcally, the intra- 
+day CAPM alpha is 0.70% ( t -statistic of 2.40) while the 
+overnight CAPM alpha is -0.49% ( t -statistic of −2 . 17 ). 
+We next analyze a strategy ( IVOL ) that goes long the 
+low idiosyncratic volatility decile and short the high id- 
+iosyncratic volatility decile. Ang et al. (2006) argue that 
+high idiosyncratic stocks have abnormally low returns. We 
+measure idiosyncratic volatility as the volatility of the 
+residual from a daily Fama-French-Carhart four-factor re- 
+gression estimated over the prior year. Table 2 documents 
+that more than 100% of the IVOL premium occurs intra- 
+day. As a consequence, IVOL has a negative risk premium 
+overnight. Speciﬁcally, the intraday CAPM alpha for IVOL is 
+2.48% per month with an associated t -statistic of 6.21. The 
+corresponding overnight CAPM alpha is −1 . 46% per month 
+with a t -statistic of −5 . 23 . 
+4.2.6. Equity issuance and discretionary accruals 
+Our next group of strategies is related to ﬁrm ﬁnancing 
+and accounting decisions. Daniel and Titman (2006) show 
+that issuance activity negatively predicts cross-sectional 
+variation in average returns. Sloan (1996) documents a 
+strong negative correlation between discretionary accruals 
+and subsequent stock returns. We ﬁrst examine a strategy 
+( ISSUE ) that goes long the low-equity-issuance decile and 
+short the high-equity-issuance decile. Table 2 reports the 
+overnight and intraday components of ISSUE ’s CAPM alpha. 
+More than 100% of the issuance premium occurs intraday; 
+ISSUE has a very strong negative overnight CAPM alpha. 
+Speciﬁcally, the intraday CAPM alpha is 1.13% ( t -statistic of 
+6.13) while the overnight CAPM alpha is −0 . 52% ( t -statistic 
+of −3 . 27 ). 
+We then examine a strategy ( ACCRUALS ) that goes 
+long the low discretionary accruals decile and short the 
+high discretionary accruals decile. Table 2 reports the 
+overnight and intraday components of ACCRUALS ’s CAPM 
+alpha. Again, more than 100% of the accruals premium 
+occurs intraday as there is a statistically signiﬁcant nega- 
+tive overnight CAPM alpha associated with the ACCRUALS 
+strategy. Speciﬁcally, the intraday CAPM alpha is 1.10% ( t - 
+statistic of 4.73) while the overnight CAPM alpha is −0 . 47% 
+( t -statistic of −3 . 25 ). 
+4.2.7. Turnover and one-month return 
+The ﬁnal two strategies we study relate to liquidity 
+and price impact. Datar et al. (1998) show that turnover 
+( TURNOVER ) is negatively related to the cross-section of 
+average returns, and this ﬁnding is conﬁrmed in Lee and 
+Swaminathan (20 0 0) . Jegadeesh (1990) shows that buying 
+(selling) short-term losers (winners) is proﬁtable. 
+We ﬁrst examine a strategy ( TURNOVER ) that goes 
+long the low turnover decile and short the high turnover 
+decile. We measure turnover following Lee and Swami- 
+nathan (20 0 0) as the average daily volume over the last 
+year. Table 2 reports the overnight and intraday compo- 
+nents of TURNOVER ’s CAPM alpha. Again, more than 100% 
+of the negative turnover premium occurs intraday as there 
+is a statistically signiﬁcant negative expected return as- 
+sociated with TURNOVER overnight. Speciﬁcally, the intra- 
+day CAPM alpha is 0.57% ( t -statistic of 2.58) while the 
+overnight CAPM alpha is −0 . 29% ( t -statistic of −1 . 98 ). 
+We ﬁnally analyze a strategy ( STR ) that goes long the 
+low past one-month return decile and short the high past 
+one-month return turnover decile. Table 2 reports the 
+overnight and intraday components of STR ’s CAPM alpha. 
+Note that we ﬁnd no short-term reversal close-to-close ef- 
+fect, which is perhaps not surprising given that we exclude 
+microcaps from our sample, form value-weight portfolios, 
+and study a relatively recent time period. However, what 
+is surprising is that our decomposition reveals a strong 
+overnight reversal and a slightly stronger negative expected 
+return associated with STR intraday. Speciﬁcally, the intra- 
+day CAPM alpha is −1 . 05% ( t -statistic of −3 . 25 ) while the 
+overnight three-factor alpha is 0.93% ( t -statistic of 4.28). 
+4.2.8. Fama-MacBeth regressions 
+Though portfolio sorts are useful as a robust, nonpara- 
+metric approach to document the link between a charac- 
+teristic and the cross-section of average returns, this ap- 
+proach has diﬃculty controlling for more than just a very 
+small number of other characteristics and thus makes mea- 
+suring partial effects problematic. As a consequence, we 
+turn to Fama and MacBeth (1973) regressions to describe 
+the cross-section of overnight versus intraday expected re- 
+turns. Observations are weighted by lagged market capital- 
+ization in each cross-sectional regression to be consistent 
+with our portfolio analysis. Columns 1–3 of Table 4 report 
+204 D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 
+the following three regressions: a standard regression fore- 
+casting the cross-section of r close −to−close , a regression fore- 
+casting the cross-section of r overnight , and a regression fore- 
+casting the cross-section of r intraday . In each regression, we 
+include all of the characteristics studied above except for 
+earnings momentum, as it reduces the number of observa- 
+tions in each cross-section considerably. Also, for ease of 
+comparison to previous results, we use the raw character- 
+istic, distinguishing the variable from the strategies in the 
+above analysis by the use of lowercase. Thus, for example, 
+we expect a negative coeﬃcient on size in the regressions 
+in Table 4 , just as we expected a positive CAPM alpha on 
+the SIZE strategy in Table 2 that was constructed to buy 
+small stocks and sell large stocks. 
+To conﬁrm that our ﬁndings are distinct from those in 
+Section 4.1 , we include in the regressions in Table 4 the 
+most recent one-month intraday return ( ret _ day ), the most 
+recent one-month overnight return ( ret _ night), and both 
+ewma _ night and ewma _ day deﬁned in the previous subsec- 
+tion. 13 
+Regression (1) shows that, for our sample, only ret _ day, 
+inv , and issue are statistically signiﬁcant (on a value- 
+weighted basis). 14 Regression (3) reveals that many of 
+these characteristics are much stronger predictors of the 
+cross-section of intraday returns. In fact, size, ivol, turnover, 
+inv , and issue are all statistically signiﬁcant and beta and 
+roe are marginally signiﬁcant. Consistent with the results 
+from our portfolio sorts, the sign on ret _ day ﬂips to be 
+positive and statistically signiﬁcant. There are negative in- 
+traday mom and bm effects, though the estimate on the 
+latter is not signiﬁcant at the 5% level. 
+In the cross-section of overnight returns described by 
+regression (2), mom is very strong. Consistent with the 
+results in previous tables, there is a strong positive pre- 
+mium associated with ivol and turnover and a strong neg- 
+ative premium associated with roe . The positive premium 
+for beta is large but only marginally statistically signiﬁcant. 
+Interestingly, there is a positive premium for size and bm . 
+Overall, these regressions are broadly consistent with our 
+main ﬁndings. 
+It is worth emphasizing that these regressions control 
+for the persistence ﬁnding of Section 4.1 , in the sense 
+that characteristics predict return components even though 
+the regressions include lagged ﬁrm-level component re- 
+turns ( ret _ day, ret _ night, ewma _ night, ewma _ day ). More- 
+over, r et _ night, r et _ day, ewma _ night, and ewma _ day all 
+continue to strongly predict overnight and intraday returns 
+13 Appendix Table A5 reestimates these regressions dropping ret _ day, 
+ret _ night, ewma _ night, and ewma _ day, and including the past one-month 
+return, ret 1. 
+14 Several papers are consistent with our ﬁnding that the partial effects 
+associated with size and bm are relatively weak in our post-1992 sample 
+that focuses on relatively large stocks. In terms of size, Schwert (2003) ar- 
+gues that the small-ﬁrm effect disappeared shortly after the publication 
+of Banz (1981) . Moreover, Horowitz et al. (20 0 0) argue that stocks with 
+less than $5 million in market cap are entirely responsible for the small- 
+ﬁrm effect. Our data ﬁlters remove those stocks from our sample so we 
+would expect a weaker size effect. In terms of value, Fama and French 
+(2015) state in the abstract of their paper proposing a ﬁve-factor asset 
+pricing model that “With the addition of proﬁtability and investment fac- 
+tors, the value factor of the FF three factor model becomes redundant for 
+describing average returns in the sample we examine.”
+in the same way as the results in Fig. 2 . In particular, we 
+ﬁnd that ewma _ night predicts subsequent overnight and 
+intraday returns with a coeﬃcient of 16.8 ( t -statistic of 
+6.00) and −21 . 7 ( t -statistic of −5 . 22 ), respectively, while 
+ewma _ day forecasts subsequent intraday and overnight re- 
+turns with a coeﬃcient of 13.6 ( t -statistic of 3.39) and 
+−15 . 6 ( t -statistic of −3 . 42 ), respectively. We have also esti- 
+mated this regression skipping either two or three months 
+and the results are largely unchanged. 15 
+4.2.9. Testing for statistical differences between overnight 
+and intraday overnight premiums for Fama-French-Carhart 
+anomalies 
+Regressions (4) and (5) present the main statistical 
+tests of our decomposition of the cross-section of aver- 
+age returns. Regression (4) tests the hypothesis that the 
+overnight and intraday partial premiums for a particular 
+anomaly are equal. We easily reject a joint test of that null. 
+Regression (5) tests the hypothesis that the overnight and 
+intraday partial premiums for each anomaly are propor- 
+tional to the corresponding percentage of the 24-hour day. 
+We easily reject a test that this is jointly true across the 
+anomalies in question. 
+4.3. Return component patterns not explained by news 
+announcements 
+4.3.1. Macroeconomic news 
+Scheduled macroeconomic announcements are made 
+both when markets are open and when they are closed, in 
+roughly equal proportions. Of course, particular announce- 
+ments may be particularly relevant in terms of cross- 
+sectional differences in risk. We take a ﬁrst step in ana- 
+lyzing whether exposure to macroeconomic news can ex- 
+plain the cross-section of overnight versus intraday returns 
+by examining the cross-sectional response to a macroe- 
+conomic announcement that has been shown to be rel- 
+evant for the market as a whole, namely, the announce- 
+ment from the meeting of the Federal Open Market Com- 
+mittee (FOMC). Lucca and Moench (2015) show the market 
+response to macro announcements documented in Savor 
+and Wilson (2014) exclusively comes from the FOMC an- 
+nouncement and occurs during the 2pm-to-2pm period 
+prior to the scheduled FOMC announcements. Since the 
+market response is quite strong and covers both an intra- 
+day and overnight period, this announcement has the po- 
+tential to uncover differences in risk across these periods 
+for the strategies we study. 
+Appendix Table A6 Panel A reports the overnight and 
+intraday components for the day of the announcement as 
+well as the days before and after the announcement for the 
+characteristics studied above. We ﬁnd no statistically sig- 
+niﬁcant differences in average returns for any of the strate- 
+gies. Only BETA, IVOL , and ISSUE have statistically signiﬁ- 
+cant average returns over these days, and there is no obvi- 
+15 If we skip two months, the corresponding coeﬃcients are 15.8 ( t - 
+statistic of 5.77), −19 . 0 ( t -statistic of −5 . 33 ), 10.4 ( t -statistic of 3.90), and 
+−11 . 8 ( t -statistic of −3 . 30 ). If we skip three months, the corresponding 
+coeﬃcients are 14.1 ( t -statistic of 5.36), −17 . 4 ( t -statistic of −5 . 04 ), 9.5 
+( t -statistic of 3.66), and −10 . 6 ( t -statistic of −3 . 24 ). 
+D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 205 
+ous pattern within the intraday/overnight periods for these 
+characteristics. 
+4.3.2. Firm-speciﬁc news 
+One clear difference between the intraday and 
+overnight periods is that a signiﬁcant portion of ﬁrm- 
+speciﬁc news tends to be released after markets close. 
+Appendix Table A6 Panels B and C examine the role of 
+news announcements. Consistent with Engelberg et al. 
+(2019) , we ﬁnd that there is a statistically signiﬁcant 
+abnormal return on announcement days for most of the 
+strategies we study. However, there is no clear pattern 
+in terms of the overnight and intraday components of 
+these average abnormal returns. We ﬁnd that BM, MOM , 
+and STR have all of their earnings announcement premia 
+realized intraday. In contrast, we ﬁnd that ROE, IVOL , 
+and ACCRUALS have their earnings announcement premia 
+realized overnight. Finally, TURNOVER and ISSUE essentially 
+have their earnings announcement premia realized evenly 
+across the overnight and intraday periods. More broadly, 
+Appendix Table A6 Panel C documents that there is no 
+statistical difference between news and non-news months. 
+4.4. Forecasting close-to-close strategy returns with the tug 
+of war 
+As argued in the introduction, one way of thinking 
+about our documented intraday/overnight spread in vari- 
+ous return anomalies is that there are different investor 
+clienteles: while some investors bet against the anomaly in 
+question, others trade in the opposite direction, thus help- 
+ing create and prolong the anomalous pattern. To the ex- 
+tent that these different clienteles have varying degrees of 
+trading intensities during the day vs. at night, our novel 
+overnight/intraday return decomposition provides new in- 
+sights into their collective behavior and subsequent strat- 
+egy performance. 
+Consider modeling uninformed traders and arbitrageurs 
+trading at the open and close. Though some arbitrageurs 
+participate at both times of the day, there is more capac- 
+ity at the close. To ﬁx ideas, think of a positive demand 
+shock from these uninformed traders. That shock results in 
+overpriced assets, as arbitrageurs are risk-averse. Given the 
+relatively light participation by arbitrageurs at the open, 
+prices ﬁrst react strongly to the uninformed demand and 
+then revert to a lower, though still overpriced level at the 
+close. The price does not fully return to the true value at 
+the close as arbitrageurs must be compensated for bearing 
+the risk. 
+Of course, larger demand shocks will have a larger 
+price impact as arbitrageurs will require additional com- 
+pensation for the additional liquidity they provide. Thus, 
+both the initial back and forth from the open to the close 
+as well as the subsequent return from the close will be 
+higher, all else equal. We develop this model based on the 
+work of Gromb and Vayanos (2010) and formally prove this 
+claim in the Internet Appendix. 
+To take this prediction to the data, we deﬁne the vari- 
+able, TugOfWar s , for strategy s as follows: 
+r s,EW MA 
+ov ernight,t = λr s 
+ov ernight,t + (1 − λ) r s,EW MA 
+ov ernight ,t −1 , (1) 
+r s,EW MA 
+intraday,t = λr s 
+intraday,t + (1 − λ) r s,EW MA 
+int raday,t −1 , 
+T ugO fW ar s 
+t = r s,EW MA 
+ov ernight,t − r s,EW MA 
+intraday,t 
+for s ∈ overnight strategies, 
+T ugO fW ar s 
+t = r s,EW MA 
+intraday,t − r s,EW MA 
+ov ernight,t 
+for s ∈ intraday strategies, 
+where the overnight and intraday components of returns, 
+r s 
+ov ernight,t and r s 
+intraday,t , are deﬁned in Section 3 . We choose 
+a smoothing parameter λ that is consistent with a half-life 
+of 60 months (our results are robust to other half-lives). 16 
+By deﬁning TugOfWar in this way, the coeﬃcient in the 
+regression forecasting the close-to-close returns on strat- 
+egy s : 
+r s 
+t+1 = βT ugO fW ar s 
+t + ε s 
+t+1 , 
+is predicted to be positive regardless of whether the strat- 
+egy in question is an overnight or intraday strategy. 
+We also include in the regression a corresponding expo- 
+nentially weighted moving average (EWMA) of the lagged 
+monthly close-to-close strategy returns and monthly daily 
+strategy return volatility. Finally, we also include in the re- 
+gressions a host of other controls including the lagged 12- 
+month market return and market volatility, the character- 
+istic spread between the strategy’s long lag and short lag, 
+and the difference in short interest between the strategy’s 
+long leg and short leg. 17 
+As shown in Table 5 , our measure of a strategy’s tug 
+of war forecasts subsequent close-to-close strategy returns 
+just as predicted. All but one of the anomalies have the 
+predicted sign for the forecasting coeﬃcient, and six of the 
+11 anomalies are statistically signiﬁcant. We can easily re- 
+ject the null hypothesis that the forecasting coeﬃcients are 
+jointly zero ( p < 0.01). In terms of economic importance, 
+for the average strategy in our sample, a one-standard- 
+deviation increase in its TugOfWar s forecasts a 1.01% higher 
+close-to-close strategy return, or about 18% of its monthly 
+return volatility. 
+4.5. Price momentum and the institutional tug of war 
+Building on our general measure of investor hetero- 
+geneity, we next turn to a speciﬁc case of clientele trad- 
+ing to shed more light on the price momentum effect. To 
+this end, we focus on two speciﬁc clienteles, individuals 
+vs. institutions, who have different preferences for momen- 
+tum characteristics and tend to initiate trades at different 
+points in a day. 
+4.5.1. Evidence from recent US data 
+When do institutions trade? 
+16 We set the initial value of r s,EW MA 
+intraday,t and r s,EW MA 
+ov ernight,t to the ﬁrst observa- 
+tion of the corresponding component of a strategy’s returns. 
+17 Cohen et al. (2003) use the value spread to forecast time-series vari- 
+ation in expected returns on value-minus-growth strategies. Lou and Polk 
+(2018) show that the formation spread in the momentum characteristic 
+forecasts time-series variation in expected returns on momentum strate- 
+gies. Hanson and Sunderam (2014) document how time-series and cross- 
+sectional variation in short interest forecasts strategy returns. 
+206 D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 
+Table 5 
+Forecasting close-to-close factor returns. 
+This table reports regressions of close-to-close factor returns on lagged return 
+differentials between the overnight and intraday components of the same fac- 
+tor. The dependent variable in each row is the monthly return to a factor port- 
+folio (top decile minus bottom decile), and the independent variable of inter- 
+est is TugOfWar , deﬁned in Eq. ( 1 ) of Section 4.4 . Speciﬁcally, a strategy’s Tu- 
+gOfWar is the appropriately signed lagged difference between the exponentially 
+weighted moving average (EWMA) of the intraday component and the EWMA of 
+the overnight component of that strategy (as Eq. (1) details, for the two strate- 
+gies which have their premia earned overnight, MOM and STR, we instead sub- 
+tract the intraday EWMA from the overnight EWMA). We use a half-life of 60 
+months in the EWMA. We also include in the regression a corresponding EWMA 
+of the lagged factor return, and that of lagged monthly factor volatility. Other 
+controls include the lagged 12-month market return and market volatility, the 
+characteristic spread between the strategy’s long leg and short leg, and the dif- 
+ference in short interest between the strategy’s long leg and short leg. In row 1, 
+stocks are sorted into deciles based on the lagged 12-month cumulative return; in 
+row 2, stocks are sorted into deciles based on the lagged market capitalization; 
+in row 3, stocks are sorted into deciles based on lagged book-to-market ratio; 
+in row 4, stocks are sorted into deciles based on lagged proﬁtability; in row 5 
+stocks are sorted into deciles based on lagged asset growth; in row 6, stocks are 
+sorted into deciles based on lagged 12-month market betas (using daily returns 
+with three lags and summing coeﬃcients); in row 7, stocks are sorted into deciles 
+based on their lagged 12-month daily idiosyncratic volatilities (with regard to the 
+Carhart four-factor model); in row 8, stocks are sorted into deciles based on eq- 
+uity issuance in the prior year; in row 9, stocks are sorted into deciles based on 
+lagged discretionary accruals; in row 10, stocks are sorted into deciles based on 
+lagged 12-month share turnover; in row 11, stocks are sorted into deciles based 
+on lagged one-month returns. We compute t -statistics, shown in parentheses, 
+based on standard errors corrected for serial-dependence with 12 lags. 5% sta- 
+tistical signiﬁcance is indicated in bold. A statistical test of the null hypothesis 
+that the forecasting coeﬃcients on TugOfWar in these 11 regressions are jointly 
+zero is easily rejected ( p < 0.01). Sample period is 1993–2013. 
+DepVar = factor return t+1 
+TugOfWar t Factor return t Factor vol t 
+MOM 1.967 (2.48) 0.001 (0.00) −1.189 ( −1.46) 
+SIZE 1.027 (1.57) 0.557 (1.01) −1.207 ( −1.18) 
+BM −0.074 ( −0.12) −0.314 ( −0.39) 1.212 (1.30) 
+ROE 1.100 (2.47) −1.255 ( −1.29) 1.279 (1.62) 
+INV 1.339 (1.93) −1.061 ( −1.32) 0.821 (1.04) 
+BETA 1.340 (1.18) 0.024 (0.03) −0.427 ( −0.58) 
+IVOL 1.207 (2.11) −1.228 ( −1.33) 1.842 (1.76) 
+ISSUE 2.277 (2.86) −5.258 ( −4.00) 0.281 (0.41) 
+ACCURALS 0.470 (0.95) −1.197 ( −1.30) 2.045 (3.62) 
+TURNOVER 2.098 (3.53) −0.901 ( −0.93) 0.858 (0.95) 
+STR 1.402 (2.39) −2.890 ( −2.43) −1.236 ( −1.83) 
+We ﬁrst study when institutional investors tend to 
+trade. Fig. 3 provides suggestive evidence that small trades 
+occur more near the market open while large trades oc- 
+cur more near the market close. Speciﬁcally, this ﬁgure re- 
+ports dollar trading volume of large vs. small orders over 
+30-min intervals as a fraction of the daily volume for the 
+period 1993–20 0 0. Following previous research, we de- 
+ﬁne small orders as those below $50 0 0 and large orders 
+as those above $50,0 0 0. We end our analysis in 2001 as 
+this link between trade size and investor type no longer 
+holds because large institutions began splitting their orders 
+post-20 0 0. Since institutions tended to submit large orders 
+while individuals tended to submit small orders, these re- 
+sults are consistent with the view that institutions tended 
+to trade at market close and individuals at market open. 18 
+18 Though we follow the literature in assuming that institutions did not 
+consistently break up their trades before 2001, it might be the case that 
+For broader evidence over our full sample, we link 
+changes in institutional ownership to the components of 
+contemporaneous ﬁrm-level stock returns. In Table 6 Panel 
+A, we regress quarterly changes in institutional ownership 
+on the overnight and intraday components of contempo- 
+raneous returns. 19 We examine this relation across institu- 
+tional ownership quintiles as we expect the result to be 
+stronger for the subset of stocks where institutions are 
+more important. We ﬁnd that for all but the lowest institu- 
+tional ownership quintile, institutional ownership increases 
+more with intraday rather than overnight returns. 
+institutions choose to trade smaller amounts at or near the opening, e.g., 
+because of higher volatility or less liquidity at those times. Fig. 3 should 
+therefore be interpreted as somewhat speculative but suggestive evidence 
+consistent with the more detailed forthcoming evidence below. 
+19 Each panel of Table 6 only shows the top and bottom quintiles. Please 
+see Appendix Table A7 for the results for all quintiles. 
+D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 207 
+Fig. 3. This ﬁgure shows dollar trading volume of large (depicted by grey bars) vs. small orders (depicted by black bars) over 30-min intervals throughout 
+the trading day for the period 1993–20 0 0. We deﬁne small orders as those below $50 0 0 and large orders as those above $50,0 0 0. More speciﬁcally, we 
+ﬁrst sum up the amount of dollars traded in each of these half-hour windows. We then compute the fraction of total daily volume (i.e., the sum over these 
+13 windows) that is accounted for by each 30-min interval. In other words, both the black bars and grey bars sum up to 1. The ﬁrst half-hour window 
+that starts at 9:30am also includes the open auction. The last half-hour window that starts at 3:30 pm also includes the last-minute (i.e., 4 pm) trades and 
+closing auction. 
+To the extent that investors’ collective trading can move 
+prices, this evidence suggests that institutions are more 
+likely to trade signiﬁcantly after the open while individ- 
+uals are more likely to initiate trades near the open. Of 
+course, one could argue it is hard to know how to interpret 
+these correlations because institutional trading can both 
+drive stock returns and react to stock returns within the 
+quarter. Three reasons suggest that alternative interpreta- 
+tion of our results is unlikely. 
+First, our result is consistent with the usual understand- 
+ing as to how these two classes of investors approach mar- 
+kets. Professional investors tend to trade during the day, 
+and particularly near the close, taking advantage of the rel- 
+atively higher liquidity at that time. Conversely, individu- 
+als may be more likely to evaluate their portfolios in the 
+evening after work and thus may tend to make trades that 
+execute when markets open. Our discussions with asset 
+managers suggest that the typical manager tends not to 
+trade at the open. 
+Second, a reverse causality interpretation of our ﬁnd- 
+ings in Table 6 seems theoretically implausible. It would 
+be odd that institutions chase only intraday returns but not 
+overnight returns since the close-to-close returns are what 
+is important in theories predicting such behavior e.g., win- 
+dow dressing as in Lakonishok et al. (1991) . 
+Third, we conﬁrm our key result in alternative data, 
+speciﬁcally, using high-frequency daily institutional ﬂows 
+from Campbell et al. (2009) . We ﬁnd that our results con- 
+tinue to hold and, in fact, are statistically speaking much 
+stronger. Table 6 Panel B shows that for all but the lowest 
+institutional ownership quintile, daily institutional own- 
+ership increases much more with intraday rather than 
+overnight returns. 
+What types of stocks do institutions trade? 
+We then examine whether institutions trade with or 
+against the momentum characteristic, both on average and 
+conditional on key indicators. In particular, we forecast 
+quarterly changes in institutional ownership using a ﬁrm’s 
+momentum characteristic. 
+In Table 7 Panel A, we estimate both ordinary least 
+squares (OLS) and WLS (with weights tied to a ﬁrm’s 
+lagged market capitalization) cross-sectional regressions 
+and report the resulting Fama-MacBeth estimates. We ﬁrst 
+focus on the unconditional results, reported in Columns 1 
+and 3. When we weight ﬁrms equally, we ﬁnd no relation 
+between a stock’s momentum characteristic and its subse- 
+quent change in institutional ownership. Since our analysis 
+of returns mainly relies on value-weight portfolios, we also 
+examine the results when we weight observations by mar- 
+ket capitalization. In this case, we ﬁnd that institutions col- 
+lectively trade against the momentum characteristic. The 
+estimate is -0.260 with an associated standard error of 
+0.119. Of course, since a decrease in institutional ownership 
+is an increase in individual ownership, these ﬁndings sug- 
+208 D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 
+Table 6 
+Institutional trading and contemporaneous returns. 
+This table reports Fama-MacBeth regressions of changes in institu- 
+tional ownership on contemporaneous stock returns. The dependent 
+variable is the change in the fraction of shares outstanding held by 
+all institutional investors. The independent variable in Column 1 is the 
+cumulative overnight return measured in the contemporaneous period, 
+and the independent variable in Column 2 is the cumulative intraday re- 
+turn in the same period. Column 3 reports the difference between the 
+coeﬃcients on overnight vs. intraday cumulative returns. Panel A uses 
+quarterly changes in institutional ownership as reported in 13-F ﬁlings. 
+Panel B uses daily changes in institutional ownership as inferred from 
+large trades in the TAQ database (following Campbell, Ramadorai, and 
+Schwartz, 2009). Stocks with prices below $5 a share and/or that are in 
+the bottom NYSE size quintile are excluded from the sample. We further 
+sort stocks into ﬁve quintiles based on institutional ownership (IO) at 
+the beginning of the quarter and conduct the same regression for each 
+IO quintile. Standard errors, shown in brackets, are adjusted for serial- 
+dependence with 12 lags. ∗, ∗∗, ∗∗∗ denote statistical signiﬁcance at the 
+10%, 5%, and 1% level, respectively. Sample period is 1993–2013. 
+Panel A: Quarterly change in IO 
+DepVar = contemporaneous qtrly change in institutional ownership 
+IO Overnight return Intraday return Overnight-intraday 
+1 −0.003 0.030 ∗ −0.033 
+[0.007] [0.017] [0.022] 
+5 −0.008 0.070 ∗∗∗ −0.077 ∗∗∗
+[0.006] [0.010] [0.006] 
+5–1 −0.005 0.039 ∗ −0.044 ∗
+[0.008] [0.023] [0.027] 
+Panel B: Daily change in IO 
+DepVar = Contemporaneous daily change in institutional ownership 
+IO Overnight return Intraday return Overnight-intraday 
+1 0.177 ∗∗∗ 0.159 ∗∗∗ 0.018 
+[0.041] [0.019] [0.040] 
+5 0.130 ∗∗∗ 1.254 ∗∗∗ −1.123 ∗∗∗
+[0.039] [0.116] [0.104] 
+5–1 −0.047 1.095 ∗∗∗ −1.141 ∗∗∗
+[0.051] [0.078] [0.062] 
+gest that, on average, individuals, relative to institutions, 
+are the ones trading momentum. 
+These ﬁndings are consistent with Gompers and Met- 
+rick (2001) who ﬁnd a strong negative cross-sectional re- 
+lation between momentum and institutional ownership. Of 
+course, a subset of institutions may follow a momentum 
+strategy and be particularly important either at certain 
+times or for certain stocks. Below, we exploit two vari- 
+ables, comomentum and active weight that arguably proxy 
+for variation in momentum trading by institutions. We 
+also discuss the relationship between price momentum 
+and size, since institutions are likely more active in larger 
+stocks. 
+Comomentum forecasts time-variation in price momentum 
+component returns 
+Lou and Polk (2018) propose a novel approach to mea- 
+suring the amount of momentum trading based on time- 
+variation in the degree of high-frequency abnormal return 
+comovement among momentum stocks, dubbed comomen- 
+tum . This idea builds on Barberis and Shleifer (2003) , who 
+argue that institutional ownership can cause returns to co- 
+move above and beyond what is implied by their funda- 
+mentals. 20 Lou and Polk (2018) conﬁrm that their mea- 
+sure of the momentum crowd is a success based on three 
+empirical ﬁndings. First, comomentum is signiﬁcantly corre- 
+lated with existing variables plausibly linked to the size of 
+arbitrage capital. Second, comomentum forecasts relatively 
+low holding-period returns, relatively high holding-period 
+return volatility, and relatively more negative holding- 
+period return skewness for the momentum strategy. Fi- 
+nally, when comomentum is relatively high, the long-run 
+buy-and-hold returns to a momentum strategy are nega- 
+tive, consistent with times of relatively high amounts of 
+momentum investing pushing prices further away from 
+fundamentals. 
+Columns 2 and 4 in Table 7 Panel A report the results 
+from forecasting the time-series of cross-sectional regres- 
+sion coeﬃcients using comomentum . For robustness, we 
+simply measure comomentum using tercile dummies. Con- 
+sistent with the interpretation that comomentum measures 
+time-variation in the size of the momentum crowd, we 
+ﬁnd that institutions’ tendency to trade against the mo- 
+mentum characteristic is decreasing in comomentum . The 
+effect is statistically signiﬁcant for both the OLS and WLS 
+estimates. 
+Table 7 Panels B and C explore the implications of 
+this result for our decomposition of momentum proﬁts. 
+In particular, we partition the data into three subsam- 
+ples based on the relative value of comomentum . Follow- 
+ing Lou and Polk (2018) , we track the buy-and-hold per- 
+formance of MOM for two years following portfolio forma- 
+tion. Our prediction is that periods when comomentum is 
+low are times when institutions as a whole trade espe- 
+cially strongly against momentum. As a consequence, mo- 
+mentum proﬁts should be stronger and the momentum tug 
+of war (the difference between overnight and intraday av- 
+erage returns) should be larger. 
+That pattern is exactly what we ﬁnd. When comomen- 
+tum is low, we ﬁnd that the overnight excess returns to 
+momentum strategies are particularly strong in both Year 
+1 and Year 2 after classiﬁcation. However, when comomen- 
+tum is high, overnight excess returns turn negative. The 
+difference in the average monthly overnight return to mo- 
+mentum across high and low comomentum states of the 
+world is −1 . 02% in Year 1 and −2 . 14% in Year 2. Both 
+estimates are jointly statistically signiﬁcant ( t -statistics of 
+−1 . 82 and −5 . 15 , respectively). 
+A corresponding comomentum effect can be seen in the 
+average intraday returns to momentum. When comomen- 
+tum is low, we ﬁnd that the intraday excess returns to mo- 
+mentum strategies are particularly negative in both Year 
+1 and Year 2. However, when comomentum is high, these 
+excess returns turn positive. The difference in the average 
+monthly intraday return to momentum across high and 
+low comomentum states of the world is 0.72% in Year 1 and 
+1.11% in Year 2. Both estimates are jointly statistically sig- 
+niﬁcant ( t -statistics of 1.68 and 2.14, respectively). 
+20 Recent work by Anton and Polk (2014) uses a natural experiment to 
+conﬁrm that institutional ownership can cause this sort of comovement. 
+Lou (2012) shows that mutual fund ﬂow-induced trading could also lead 
+to excess stock return comovement. 
+D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 209 
+Table 7 
+Momentum trading. 
+This table examines the potential role of institutions’ momentum trading. Panel A reports two-stage Fama-MacBeth forecasting regres- 
+sions of changes in institutional ownership on the momentum characteristic. The dependent variable in the ﬁrst stage is the change in the 
+fraction of shares outstanding held by all institutional investors (as reported in 13F ﬁlings) in the subsequent quarter and the independent 
+variable is the lagged 12-month cumulative stock return. In the second stage, we regress the time-series of ﬁrst-stage momentum coeﬃ- 
+cients on a constant and on our measure of arbitrage trading in the momentum strategy, COMOM, a tercile dummy ranging from zero to 
+two that is constructed from comomentum, deﬁned as the average pairwise partial return correlation in both the winner and loser deciles 
+ranked in the previous 12 months. We estimate both stages by OLS in the ﬁrst two columns and by WLS (with weights proportional to 
+lagged market capitalization) in the next two columns. Changes in institutional ownership are expressed in percentage terms. Panels B and 
+C report, respectively, the overnight and intraday returns to the momentum strategy as a function of lagged comomentum. All months in 
+our sample are classiﬁed into three groups based on comomentum. Reported in these two panels are the overnight/intraday returns to the 
+momentum strategy (i.e., long the value-weight winner decile and short the value-weight loser decile) in the two years after portfolio for- 
+mation, following low to high COMOM. Stocks with prices below $5 a share and/or that are in the bottom NYSE size quintile are excluded 
+from the sample. Standard errors, reported in Panel A in brackets, and t -statistics, reported in Panels B and C in parentheses, are adjusted 
+for serial-dependence with 12 lags. R 2 (1st stage) is the average R 2 of all the cross-sectional regressions from the ﬁrst-stage (as in other 
+tables with Fama-MacBeth regressions) and is therefore constant across the second-stage speciﬁcations estimated with the same method. 
+R 2 (2nd stage) is the R 2 from the forecasting regression of Fama-MacBeth coeﬃcients on COMOM. In Panel A, ∗, ∗∗, ∗∗∗ denote statistical 
+signiﬁcance at the 10%, 5%, and 1% level, respectively. In Panels B and C, 5% statistical signiﬁcance is indicated by boldface values. Sample 
+period is 1993–2013. 
+Panel A: DepVar = Subsequent change in institutional ownership 
+X 100 Second-stage regression forecasting the Fama-MacBeth coeﬃcients 
+[1] [2] [3] [4] 
+OLS WLS 
+Constant 0.189 −0.083 −0.260 ∗∗ −0.689 ∗∗
+[0.117] [0.197] [0.119] [0.247] 
+COMOM 0.146 ∗ 0.214 ∗∗
+[0.085] [0.103] 
+Adj- R 2 (1 s t stage) 0.003 0.003 0.004 0.004 
+Adj- R 2 (2 s t stage) 0.023 0.052 
+No. obs. 181,891 181,891 181,891 181,891 
+Panel B: Overnight momentum returns 
+COMOM Year 1 Year 2 
+Rank No. obs. Estimate t -stat Estimate t-stat 
+1 72 1.20% (5.71) 0.86% (5.57) 
+2 72 1.02% (4.29) 0.22% (0.83) 
+3 72 0.17% (0.29) −1.28% ( −3.38) 
+3 −1 −1.02% ( −1.82) −2.14% ( −5.15) 
+Panel C: Intraday momentum returns 
+COMOM Year 1 Year 2 
+Rank No. obs. Estimate t-stat Estimate t-stat 
+1 72 −0.90% ( −2.82) −0.70% ( −2.86) 
+2 72 −0.88% ( −2.00) −0.61% ( −1.32) 
+3 72 −0.18% ( −0.37) 0.41% (0.90) 
+3 −1 0.72% (1.68) 1.11% (2.14) 
+Active weight forecasts the cross-section of price momen- 
+tum component returns 
+The second key indicator we use is the aggregate ac- 
+tive weight in a stock. We measure active weight as the dif- 
+ference between the aggregate weight of all institutions in 
+a stock and the weight of the stock in the value-weight 
+market portfolio. We conjecture that a relatively large ac- 
+tive weight will indicate a preference by those institutional 
+investors to rebalance toward market weights, due to risk 
+management concerns such as keeping within tracking er- 
+ror targets. To illustrate, imagine that institutions collec- 
+tively overweight stock S. If the stock goes up (down) in 
+value relative to the market, institutions will have an even 
+larger (smaller) weight in S, and will thus trade in a con- 
+trary manner to keep their tracking error small. The re- 
+verse is true for an initial underweight in stock S. 
+Columns 2 and 4 in Table 8 Panel A report the re- 
+sults from cross-sectional regressions forecasting quarterly 
+changes in institutional ownership using a ﬁrm’s momen- 
+tum characteristic, active weight , and the interaction be- 
+tween these two variables. For robustness, we simply mea- 
+sure active weight using quintile dummies. 
+Consistent with our conjecture that institutions with 
+high active weight in a stock are reluctant to let their po- 
+sitions ride, we ﬁnd that institutions’ tendency to trade 
+against the momentum characteristic is increasing in ac- 
+tive weight . The effect is statistically signiﬁcant for both the 
+OLS and WLS estimates. 
+Table 8 Panels B and C explore the implications of 
+this result for our decomposition of momentum proﬁts. 
+In particular, we independently sort stocks on momentum 
+and active weight into quintiles based on NYSE breakpoints 
+and form 25 value-weight portfolios. Our prediction is 
+that stocks with high active weight are stocks where 
+institutions as a whole particularly trade against mo- 
+mentum. As a consequence, momentum proﬁts should 
+210 D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 
+Table 8 
+Rebalancing trades. 
+This table examines the potential role of institutions’ rebalancing trades. Panel A reports 
+Fama-MacBeth forecasting regressions of changes in institutional ownership on the momen- 
+tum characteristic. The dependent variable is the change in the fraction of shares outstanding 
+held by all institutional investors (as reported in 13F ﬁlings) in the subsequent quarter. The 
+main independent variable is the lagged 12-month cumulative stock return. We also include 
+in the regression AWGHT, a quintile dummy constructed each quarter based on the active 
+weight of the aggregate institutional portfolio (i.e., the aggregate weight of all institutions in 
+a stock minus that in the market portfolio), as well as the interaction term between AWGHT 
+and the lagged 12-month return. We estimate OLS in the ﬁrst two columns and WLS (with 
+weights proportional to lagged market capitalization) in the next two columns. Panels B and 
+C report, respectively, the overnight and intraday returns to the momentum strategy as a 
+function of institutional active weight. In particular, in each month, stocks are sorted inde- 
+pendently into a 5 ×5 matrix by both institutional AWGHT from the most recent quarter 
+and lagged 12-month stock returns. Reported in these two panels are the overnight/intraday 
+returns to the momentum strategy (i.e., long the value-weight winner decile and short the 
+value-weight loser decile) in the following month. Stocks with prices below $5 a share and/or 
+that are in the bottom NYSE size quintile are excluded from the sample. Standard errors, re- 
+ported in Panel A in brackets, and t -statistics, reported in Panels B and C in parentheses, are 
+adjusted for serial-dependence with 12 lags. In Panel A, ∗, ∗∗, ∗∗∗ denote statistical signiﬁ- 
+cance at the 10%, 5%, and 1% level, respectively. In Panels B and C, 5% statistical signiﬁcance 
+is indicated by boldface values. Sample period is 1993–2013. 
+Panel A: DepVar = Subsequent change in institutional ownership 
+X 100 Fama-MacBeth regressions 
+[1] [2] [3] [4] 
+OLS WLS 
+MOM 0.189 0.620 ∗∗∗ −0.260 ∗∗ 0.210 ∗
+[0.117] [0.128] [0.119] [0.114] 
+MOM X AWGHT −0.182 ∗∗∗ −0.143 ∗∗∗
+[0.043] [0.046] 
+AWGHT −0.292 ∗∗∗ −0.178 ∗∗∗
+[0.022] [0.015] 
+Adj- R 2 0.003 0.015 0.004 0.017 
+No. obs. 181,891 181,891 181,891 181,891 
+Panel B: Overnight MOM returns 
+Institutional active weight 
+MOM 1 2 3 4 5 5–1 
+1 0.52% 0.00% −0.07% −0.08% −0.27% −0.79% 
+(1.91) (0.01) ( −0.33) ( −0.39) ( −1.21) ( −4.32) 
+5 0.79% 0.53% 0.44% 0.67% 1.15% 0.36% 
+(4.31) (2.60) (2.22) (3.64) (6.66) (3.37) 
+5-1 0.27% 0.53% 0.51% 0.75% 1.42% 1.15% 
+(1.10) (2.68) (2.72) (4.54) (7.92) (5.39) 
+Panel C: Intraday MOM returns 
+Institutional active weight 
+MOM 1 2 3 4 5 5-1 
+1 −0.36% 0.18% 0.71% 0.51% 0.38% 0.74% 
+( −0.92) (0.43) (1.63) (1.23) (1.03) (3.03) 
+5 −0.44% 0.44% 0.55% 0.24% −0.46% −0.02% 
+( −1.71) (1.45) (1.81) (0.87) ( −1.89) ( −0.14) 
+5 −1 −0.09% 0.26% −0.16% −0.27% −0.84% −0.76% 
+( −0.24) (0.75) ( −0.48) ( −0.84) ( −2.62) ( −2.70) 
+be stronger and the momentum tug of war should be 
+larger. 
+Again, that pattern is exactly what we ﬁnd. When ac- 
+tive weight is low, we ﬁnd that the overnight excess re- 
+turns to momentum strategies are relatively weak the next 
+month. When active weight is high, however, overnight re- 
+turns become strongly positive. The difference in the av- 
+erage monthly overnight return to momentum across high 
+and low active weight stocks is 1.15% with an associated t - 
+statistic of 5.39. 
+A corresponding effect can, again, be seen in the av- 
+erage intraday returns to momentum. When active weight 
+is low, the average intraday excess returns to momentum 
+strategies are close to zero. However, when active weight 
+is high, these average excess returns become quite nega- 
+tive. The difference in the average monthly intraday return 
+D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 211 
+to momentum across high and low active weight stocks is 
+−0 . 76% with an associated t -statistic of −2 . 70 . 
+Summary 
+Whether or not institutions are momentum traders is 
+an important research question in ﬁnance. Despite the im- 
+portance of this question, there is no clear consensus; the 
+answer appears to depend on both the type of institution 
+being studied and the sample in question. For our data, we 
+ﬁnd that on average, institutions tend to trade against mo- 
+mentum. 21 Moreover, there is interesting time-series and 
+cross-sectional variation in institutional momentum trad- 
+ing that goes hand-in-hand with variation in the decom- 
+position of momentum proﬁts into overnight and intraday 
+components. 
+Namely, in the time series, when the amount of mo- 
+mentum trading activity is particularly low, or in the cross- 
+section, when the typical institution holding a stock has a 
+particularly strong need to rebalance, we ﬁnd that insti- 
+tutions trade more strongly against momentum and that 
+momentum returns are even larger overnight and more 
+strongly reverse during the day. Both cases generate varia- 
+tion in the spread between overnight and intraday returns 
+on the order of 2% per month. 
+4.5.2. Price momentum decomposition varies with size: 
+non-US and pre-1962 evidence 
+In Appendix Table A10, Panels C and D we report that 
+the spread between overnight and intraday price momen- 
+tum returns is much stronger for large stocks relative to 
+small stocks. While we believe the comomentum and ac- 
+tive weight measures are better proxies for variation in in- 
+stitutional trading than market capitalization, it is worth 
+noting that results using this measure also agree with 
+our previous ﬁndings. This agreement is particularly im- 
+portant because the price momentum-capitalization rela- 
+tionship can be explored in data samples for which our 
+sharper proxies are unavailable, and in this subsection we 
+conﬁrm that the size-momentum component relationship 
+is stable across all samples we consider. 
+Evidence from non-US markets. To provide further evi- 
+dence of our ﬁnding that momentum proﬁts, particularly 
+for stocks held by institutional owners, accrue primarily 
+overnight, we decompose proﬁts to momentum strategies 
+in the nine non-US equity markets studied above. A sig- 
+niﬁcant challenge in decomposing momentum proﬁts in 
+non-US markets is the availability of reliable data for open 
+prices. We obtain that data from Thomson Reuters Tick 
+History database, which provides comprehensive microsec- 
+ond tick data for markets around the world since 1996. 22 
+To construct an open price, we followed our US method 
+and computed a VWAP price for each stock. 
+21 Our results are consistent with the ﬁndings of Badrinath and Wahal 
+(2002) , who show that institutions tend to be momentum traders when 
+they open new positions but are contrarian when they adjust existing 
+ones. 
+22 When processing the data, we also compared our accurate measures 
+of open prices to those found on Datastream. Our analysis indicated that 
+Datastream open prices can be quite misleading. Datastream was used to 
+calculate total returns for the close-to-close period, after ﬁltering the data 
+according to the procedures of Landis and Skouras (2018) . 
+Appendix Table A8 Panel A reports our ﬁndings. The 
+left-side of the table reports results for the full sample 
+of stocks, while the right-side of the table reports results 
+for large-cap stocks. Of course, large-cap stocks are much 
+more likely to be held by institutions. 
+For the full sample, we ﬁnd that momentum in non- 
+US markets is primarily an intraday phenomenon. For eight 
+of the nine countries in our sample, intraday momentum 
+proﬁts are larger than overnight momentum proﬁts. In- 
+deed, only two countries, Australia and South Africa, have 
+positive overnight momentum proﬁts that are statistically 
+signiﬁcant. A value-weight average of the close-to-close 
+momentum proﬁts is 1.28% per month ( t -statistic of 2.55) 
+with 0.96% ( t -statistic of 3.62) accruing intraday and only 
+0.23% ( t -statistic of 0.58) accruing overnight. 
+The results change dramatically for the large-cap sam- 
+ple. Now, six countries have overnight momentum prof- 
+its that are larger than the corresponding intraday proﬁts. 
+For all six of these countries, the overnight component of 
+momentum proﬁts is economically and statistically signiﬁ- 
+cant. Only one country, Germany, has large-cap momentum 
+returns that are statistically signiﬁcant intraday. A value- 
+weight average of the close-to-close momentum proﬁts for 
+the large-cap sample is 1.24% per month ( t -statistic of 2.17) 
+with a statistically insigniﬁcant 0.44% ( t -statistic of 1.24) 
+accruing intraday and a statistically signiﬁcant 0.80% ( t - 
+statistic of 2.50) accruing overnight. 
+As a consequence, the change in the overnight and in- 
+traday components as one moves from the full sample to 
+the large-cap sample goes the right way in terms of our in- 
+stitutional clientele interpretation and is quite statistically 
+signiﬁcant. Speciﬁcally, the overnight component increases 
+by 0.57% ( t -statistic of 3.13) and the intraday component 
+decreases by 0.52% ( t -statistic of −2 . 78 ). This difference- 
+in-difference test is consistent with our conjecture that we 
+should expect momentum to be more of an overnight phe- 
+nomenon among stocks with a larger institutional pres- 
+ence. 23 
+We also extend our industry momentum results to non- 
+US markets. Our focus is on four market regions (North 
+America, Europe, Asia, and Africa) to ensure reasonably 
+large industry cross-sections. We ﬁnd strong evidence that 
+industry momentum is an overnight phenomenon. Ap- 
+pendix Table A8 Panel B shows that across these four re- 
+gions, the average monthly close-to-close return is 1.01% 
+per month ( t -statistic of 2.67) with 0.90% ( t -statistic of 
+3.35) accruing overnight. 
+Evidence from pre-1962 US markets. Open prices are also 
+available from CRSP, sourced from the Wall Street Jour- 
+nal , for the 36-year period of 1927–1962. Of course, these 
+prices do not have the nice feature of the VWAP approach 
+used in the rest of our analysis in that they do not nec- 
+essarily represent traded prices. Nevertheless, this sam- 
+ple provides a potentially useful placebo test of our hy- 
+pothesis that institutional ownership is responsible for the 
+overnight momentum pattern, as institutional ownership 
+23 Though the equal-weight average intraday component is statistically 
+signiﬁcant, this is driven entirely by one country, Germany, whose ﬁnan- 
+cial system is known to be idiosyncratic. 
+212 D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 
+was very low for all but the largest stocks. Indeed, Blume 
+and Keim (2017) indicate that institutions, roughly speak- 
+ing, held only 5% of equity during most of this time. Con- 
+sistent with that observation, Panel A of Appendix Table 
+A9 shows that for this sample, momentum is primarily an 
+intraday phenomenon. Momentum has a monthly three- 
+factor alpha of 1.45% ( t -statistic of 4.43). The intraday com- 
+ponent is 1.03% ( t -statistic of 3.43), while the overnight 
+component is insigniﬁcant from zero (point estimate of 
+0.21% with a t -statistic of 0.97). 
+In the spirit of our international tests, we also ex- 
+amine whether the overnight component becomes more 
+important for large-cap stocks in the 1927–1962 sample. 
+Appendix Table A9 Panel B shows that this is the case. 
+Speciﬁcally, we ﬁnd that large-cap momentum has a 
+monthly three-factor alpha of 1.39% ( t -statistic of 4.74). 
+The intraday component is still large at 0.95% ( t -statistic 
+of 3.51). However, now the overnight component is sta- 
+tistically signiﬁcant from zero (point estimate of 0.34% 
+with a t -statistic of 2.05). In summary, though we have 
+less faith in the pre-1963 open price data, we do ﬁnd that 
+the results using those data are broadly consistent with 
+the view that institutional investors play an important 
+role in understanding why momentum is an overnight 
+phenomenon in the 1993–2013 sample. 
+5. Conclusions 
+We provide a novel decomposition of the cross-section 
+of expected returns into overnight and intraday com- 
+ponents. We ﬁrst show remarkable persistence in the 
+overnight and intraday components of ﬁrm-level returns, 
+which is consistent with clienteles persistently trading cer- 
+tain types of stocks either near the open or later during 
+the trading day. We then show that essentially all of the 
+abnormal returns on momentum and short-term reversal 
+strategies occur overnight while the abnormal returns on 
+other strategies occur intraday and that this pattern is not 
+driven by news. In general, these intraday strategies also 
+have an economically and statistically signiﬁcant overnight 
+premium that is opposite in sign to their well-known and 
+often-studied total effect. Taken all together, our ﬁndings 
+represent a challenge not only to traditional neoclassical 
+models of risk and return but also to intermediary- and 
+behavioral-based explanations of the cross-section of aver- 
+age returns. 
+We document that a relatively large difference between 
+overnight and intraday returns reveals the extent to which 
+investor clienteles are effectively engaged in a tug of war 
+over the direction of the strategy in question. We argue 
+that if a strategy’s tug of war at some point in time is 
+particularly intense, the clientele trading to harvest that 
+strategy’s anomalous close-to-close returns is more likely 
+to be constrained, and thus is more likely to leave part 
+of that strategy’s abnormal returns unexploited. Our em- 
+pirical results conﬁrm this tug of war interpretation: A 
+one-standard-deviation increase in a strategy’s TugOfWar 
+forecasts a close-to-close strategy return in the following 
+month that is 1% higher. Our tug of war measure thus pro- 
+vides a generic predictor for forecasting time-varying ex- 
+pected returns on anomalies. 
+Finally, we zoom in on a speciﬁc form of in- 
+vestor heterogeneity (institutions vs. individuals) and a 
+speciﬁc strategy (price momentum) to understand its 
+overnight/intraday return patterns in detail. Relative to in- 
+dividuals, we show that institutions as a class (on a value- 
+weight basis) tend to trade against momentum during the 
+day. The degree to which this is the case, however, varies 
+through time and across stocks, generating a tug of war 
+from intraday to overnight. Speciﬁcally, for those times or 
+those stocks where the institutional holders have a rela- 
+tively strong preference to trade against momentum, we 
+ﬁnd that momentum proﬁts are higher overnight, partially 
+revert intraday, and are larger close-to-close. 
+Though our ﬁndings originate from high-frequency de- 
+compositions of returns, they have important repercus- 
+sions for investors. For one thing, given the large eco- 
+nomic magnitudes of our results, it is possible that trad- 
+ing strategies going into and out of stocks even at this 
+high frequency may be proﬁtable after transaction costs 
+for execution-savvy short-term investors. This claim seems 
+particularly likely for trend-following strategies we have 
+studied that invest in highly liquid equity index futures. 
+Ignoring that possibility, and focusing on long-term in- 
+vestors, institutions trading the anomalies at a lower fre- 
+quency can nonetheless beneﬁt from our results by using 
+them to optimally time their orders—at the open vs. close 
+of trading, depending on the strategy they are pursuing. 
+Finally, our ﬁnding that our tug of war measure can guide 
+strategy timing should be of broad interest to long-horizon 
+investors exploiting anomalies. 
+Perhaps the ultimate beneﬁt of our decomposition ex- 
+ercise for long-horizon investors and researchers alike is 
+to shed light on the causes of these anomalies—to distin- 
+guish among, for example, risk-based vs. behavioral-based 
+vs. institutional-friction-based explanations for these well- 
+known asset pricing patterns. We hope our strategy timing 
+results offer a step in that direction. 
+References 
+Ang, A. , Hodrick, R.J. , Xing, Y. , Zhang, X. , 2006. The cross-section of volatil- 
+ity and expected returns. J. Finance 61, 259–299 . 
+Anton, M. , Polk, C. , 2014. Connected stocks. J. Finance 69, 1099–1127 . 
+Badrinath, S.G. , Wahal, S. , 2002. Momentum trading by institutions. J. Fi- 
+nance 57, 2449–2478 . 
+Banz, R.W. , 1981. The relationship between return and market value of 
+common stocks. J. Financ. Econ. 9, 103–126 . 
+Barberis, N. , Shleifer, A. , 2003. Style investing. J. Financ. Econ. 68, 161–199 . 
+Barclay, M. , Hendershott, T. , 2003. Price discovery and trading after hours. 
+Rev. Financ. Stud. 16, 1041–1073 . 
+Berkman, H., Koch, P. D., Tuttle, L., Zhang, Y., 2009. Dispersion of opin- 
+ions, short sale constraints, and overnight returns. Unpublished work- 
+ing paper. University of Auckland. 
+Black, F. , 1972. Capital market equilibrium with restricted borrowing. J. 
+Busin. 45, 4 4 4–454 . 
+Blume, M.E. , Keim, D. , 2017. The changing nature of institutional stock in- 
+vesting. Crit. Finance Rev. 6, 1–41 . 
+Branch, B., Ma, A., 2008. The overnight return, one more anomaly. Unpub- 
+lished working paper. University of Massachusetts. 
+Branch, B. , Ma, A. , 2012. Overnight return, the invisible hand behind in- 
+traday returns. J. Financ. Mark. 2, 90–100 . 
+Cai, T. T., Qiu, M., 2008. International evidence on overnight return 
+anomaly. Unpublished working paper. Massey University. 
+Campbell, J.Y. , 2017. Financial Decisions and Markets: A Course in Asset 
+Pricing. Princeton University Press, Princeton, NJ . 
+Campbell, J.Y. , Giglio, S. , Polk, C. , Turley, R. , 2018. An intertemporal capm 
+with stochastic volatility. J. Financ. Econ. 128, 207–233 . 
+D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 213 
+Campbell, J.Y. , Ramadorai, T. , Schwartz, A. , 2009. Caught on tape: institu- 
+tional trading, stock returns, and earnings announcements. J. Financ. 
+Econ. 92, 66–91 . 
+Cliff, M. T., Cooper, M. J., Gulen, H., 2008. Return differences between trad- 
+ing and non-trading hours: like night and day. Unpublished working 
+paper. Virginia Tech. 
+Cochrane, J.H. , 2004. Asset Pricing, Revised Edition. Princeton University 
+Press, Princeton, NJ. . 
+Cochrane, J.H. , 2017. Macro-ﬁnance. Rev. Finance 21, 945–985 . 
+Cohen, R. , Polk, C. , Vuolteenaho, T. , 2003. The value spread. J. Finance 58, 
+609–671 . 
+Constantinides, G. , Duﬃe, D. , 1996. Asset pricing with heterogenous con- 
+sumers. J. Polit. Econ. 104, 219–240 . 
+Daniel, K. , Moskowitz, T. , 2016. Momentum crashes. J. Financ. Econ. 122, 
+221–247 . 
+Daniel, K. , Titman, S. , 2006. Market reactions to tangible and intangible 
+information. J. Finance 61, 1605–1643 . 
+Datar, V.T. , Naik, N.Y. , Radcliffe, R. , 1998. Liquidity and asset returns: an 
+alternative test. J. Financ. Markets 1, 203–220 . 
+Dimson, E. , 1979. Risk measurement when shares are subject to infre- 
+quent trading. J. Financ. Econ. 7, 197–226 . 
+Engelberg, J. , McLean, R.D. , Pontiff, J. , 2019. Anomalies and news. J. Fi- 
+nance 73, 1971–2001 . 
+Fairﬁeld, P. , Whisenant, S. , Yohn, T. , 2003. Accrued earnings and growth: 
+implications for future proﬁtability and market mispricing. Account. 
+Rev. 78, 353–371 . 
+Fama, E.F. , 1965. The behavior of stock-market prices. J. Busin. 38, 34–105 . 
+Fama, E.F. , French, K.R. , 1992. The cross-section of expected stock returns. 
+J. Finance 47, 427–465 . 
+Fama, E.F. , French, K.R. , 1993. Common risk factors in the returns on 
+stocks and bonds. J. Financ. Econ. 33, 3–56 . 
+Fama, E.F. , French, K.R. , 1996. Multifactor explanations of asset pricing 
+anomalies. J. Finance 51, 55–84 . 
+Fama, E.F. , French, K.R. , 2015. A ﬁve-factor asset pricing model. J. Financ. 
+Econ. 116, 1–22 . 
+Fama, E.F. , MacBeth, J.D. , 1973. Risk, return, and equilibrium: empirical 
+tests. J. Polit. Econ. 81, 607–636 . 
+Frazzini, A. , Pedersen, L.H. , 2014. Betting against beta. J. Financ. Econ. 111, 
+1–25 . 
+French, K.R. , 1980. Stock returns and the weekend effect. J. Financ. Econ. 
+8, 55–69 . 
+French, K.R. , Roll, R. , 1986. Stock return variances: the arrival of informa- 
+tion of the reaction of traders. J. Financ. Econ. 17, 5–26 . 
+Garleanu, N. , Panageas, S. , 2015. Young, old, conservative, and bold: the 
+implications of heterogeneity and ﬁnite lives for asset pricing. J. Polit. 
+Econ. 123, 670–685 . 
+Gompers, P. , Metrick, A. , 2001. Institutional investors and asset prices. Q. 
+J. Econ. 116, 229–259 . 
+Grinblatt, M. , Titman, S. , Wermers, R. , 1995. Momentum investment 
+strategies, portfolio performance, and herding: a study of mutual fund 
+behavior. Am. Econ. Rev. 85, 1088–1105 . 
+Gromb, D. , Vayanos, D. , 2010. Limits of arbitrage: the state of the theory. 
+Annual Review of Financial Economics 2, 251–275 . 
+Hanson, S. , Sunderam, A. , 2014. The growth and limits of arbitrage: evi- 
+dence from short interest. Rev. Financ. Stud. 27, 1238–1286 . 
+Harrison, J.M. , Kreps, D.M. , 1978. Speculative investor behavior in a stock 
+market with heterogenous expectations. Q. J. Econ. 92, 323–336 . 
+Haugen, R.A. , Baker, N.L. , 1996. Commonality in the determinants of ex- 
+pected stock returns. J. Financ. Econ. 41, 401–439 . 
+He, Z. , Krishnamurthy, A. , 2013. Intermediary asset pricing. Am. Econ. Rev. 
+103, 732–770 . 
+Heston, S.L. , Korajczyk, R. , Sadka, R. , 2010. Intraday patterns in the cross–
+section of stock returns. J. Finance 65, 1369–1407 . 
+Horowitz, J.L. , Loughran, T. , Savin, N.E. , 20 0 0. Three analyses of the ﬁrm 
+size premium. J. Empir. Finance 7, 143–153 . 
+Jegadeesh, N. , 1990. Evidence of predictable behavior of security returns. 
+J. Finance 45, 881–898 . 
+Jegadeesh, N. , Titman, S. , 1993. Returns to buying winners and selling 
+losers: implications for stock market eﬃciency. J. Finance 48, 65–91 . 
+Kelly, M. , Clark, S. , 2011. Returns in trading versus non-trading hours: the 
+difference is day and night. J. Asset Manag. 12, 132–145 . 
+Lakonishok, J. , Shleifer, A. , Thaler, R. , Vishny, R. , 1991. Window dressing by 
+pension fund managers. Am. Econ. Rev. Papers Proc. 81, 227–231 . 
+Landis, C. F. M., Skouras, S., 2018. A granular approach to international 
+equity data from Thomson datastream. Unpublished working paper. 
+Athens University of Economics and Business. 
+Lee, C.M.C. , Swaminathan, B. , 20 0 0. Price momentum and trading volume. 
+J. Finance 55, 2017–2069 . 
+Lintner, J. , 1965. The valuation of risk assets on the selection of risky in- 
+vestments in stock portfolios and capital budgets. Rev. Econ. Stat. 47, 
+13–37 . 
+Lou, D. , 2012. A ﬂow-based explanation for return predictability. Rev. Fi- 
+nanc. Stud. 25, 3457–3489 . 
+Lou, D., Polk, C., 2018. Comomentum: inferring arbitrage activity from re- 
+turn correlations. Unpublished working paper. London School of Eco- 
+nomics. 
+Lucca, D.O. , Moench, E. , 2015. The pre-fomc announcement drift. J. Fi- 
+nance 70, 329–371 . 
+Moskowitz, T. , Grinblatt, M. , 1999. Do industries explain momentum? J. 
+Finance 54, 1249–1290 . 
+Moskowitz, T. , Ooi, Y.H. , Pedersen, L. , 2012. Time-series momentum. J. Fi- 
+nanc. Econ. 104, 228–250 . 
+Novy-Marx, R. , 2013. The other side of value: the gross proﬁtability pre- 
+mium. J. Financ. Econ. 108, 1–28 . 
+Polk, C. , Sapienza, P. , 2009. The stock market, and corporate investment: 
+a test of catering theory. Rev. Financ. Stud. 22, 187–217 . 
+Savor, P. , Wilson, M. , 2014. Asset pricing: a tale of two days. J. Financ. 
+Econ. 113, 117–201 . 
+Schwert, G.W. , 2003. Anomalies and market eﬃciency. In: Constan- 
+tinides, G., Harris, M., Stulz, R. (Eds.), Handbook of the Economics of 
+Finance, 1b. Eslevier Science, North Holland, pp. 939–974 . chapter 15 
+Sharpe, W. , 1964. Capital asset prices: a theory of market equilibrium un- 
+der conditions of risk. J. Finance 19, 425–442 . 
+Sloan, R. , 1996. Do stock prices fully reﬂect information in accruals and 
+cash ﬂows about future earnings? Account. Rev. 71, 289–315 . 
+Titman, S. , Wei, K.C. , Xie, F. , 2004. Capital investments and stock returns. 
+J. Financ. Quant. Anal. 39, 677–700 . 
+Vuolteenaho, T. , 2002. What drives ﬁrm-level stock returns? J. Finance 57, 
+233–264 . 

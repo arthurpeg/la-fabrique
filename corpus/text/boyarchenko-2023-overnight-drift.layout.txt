@@ -1,0 +1,2806 @@
+         NO.  917
+     FEBRUARY 2020
+                             The Overnight Drift
+         REVISED
+      AUGUST     2022
+
+
+                             Nina Boyarchenko | Lars C. Larsen | Paul Whelan
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The Overnight Drift
+Nina Boyarchenko, Lars C. Larsen, and Paul Whelan
+Federal Reserve Bank of New York Staff Reports, no. 917
+February 2020; revised August 2022
+JEL classification: G13, G14, G15
+
+
+
+
+
+
+                                                           Abstract
+
+
+This paper documents that U.S. equity returns are large and positive during the opening hours of
+European markets. These returns are pervasive, economically large, and highly statistically significant.
+Consistent with models of inventory risk, we demonstrate a strong relationship with order imbalances at
+the close of the preceding U.S. trading day. Rationalizing unconditionally positive “overnight drift”
+returns, we uncover an asymmetric reaction to demand shocks: market selloffs generate robust positive
+overnight reversals, while reversals following market rallies are much more modest. We argue that
+demand shock asymmetry can arise in inventory management models with time-varying dealer risk
+bearing capacity.
+
+Key words: overnight returns, immediacy, volatility risk, inventory risk
+
+
+
+
+
+
+
+
+
+_________________
+Boyarchenko     : Federal Reserve Bank of New York (email: nina.boyarchenko@ny.frb.org). Larsen,
+Whelan: Copenhagen Business School (emails: lcl.fi@cbs.dk, pawh.fi@cbs.dk). The authors thank
+Torben Andersen, Vincent Bogousslavsky, Andrea Buraschi, Pasquale Della Corte, Jens Dick-Nielsen,
+Darrell Duffie, Bjørn Eraker, Michael Fleming, Mathieu Fournier, Thomas Geelen, Ravi Jagannathan,
+David Lando, Dong Lou, Charles Martineau, Alex Michaelides, Philippe Mueller, Lasse Pedersen,
+Fabrice Tourre, Anders Trolle, Gyuri Venter, Andrea Vedolin, and audiences at various conferences and
+seminars for their comments and suggestions. Paul Whelan gratefully acknowledges financial support
+from the Danish Council for Independent Research (grant no. 9037-00105B) and the Danish Finance
+Institute (DFI). Lars C. Larsen gratefully acknowledge financial support from the Center for Financial
+Frictions (FRIC    , grant no. DNRF102).
+
+This paper presents preliminary findings and is being distributed to economists and other interested
+readers solely to stimulate discussion and elicit comments. The views expressed in this paper are those of
+the author(s) and do not necessarily reflect the position of the Federal Reserve Bank of New York or the
+Federal Reserve System. Any errors or omissions are the responsibility of the author(s).
+To view the authors’ disclosure statements, visit
+
+https://www.newyorkfed.org/research/staff_reports/sr917.html.
+
+    Sincetheadventofelectronictradinginthelate1990’s, U.S.S&P500indexfutureshavetraded
+close to 24 hours a day. In this paper, we document that, despite the 24 hour nature of the market,
+returns do not accrue linearly around the clock.  In fact, the largest positive returns are between
+2:00 and 3:00 - the opening of European markets in U.S. Eastern Time terms (ET) - averaging
+3.7% on an annualized basis (1.48 basis points per day).  We dub these positive average returns
+the ‘overnight drift’ and argue that the pattern is most likely driven by the overnight resolution of
+order imbalances arising from the end of the preceding U.S. trading day.
+    We begin by dissecting trading during the U.S. overnight session and introduce a number of
+tests which demonstrate that returns during the 2:00 – 3:00 window are special in both economic
+and statistical terms. First, inspired by the data mining literature, we conduct a bootstrap exercise
+toestimatethedistributionofteststatisticsofaveragehourlyreturns. Consideringthedistribution
+of point and t-statistic estimates for all hours we find a clear bi-modal distribution, with the 2:00 –
+3:00 return corresponding to the higher mode. Strikingly, when comparing the distribution for all
+hours with the overnight drift hour, we see that the lower 2.5% interval for overnight drift return
+point estimates lies above the pooled 97.5% interval.  Likewise, the lower 2.5% interval for the
+distribution of t-statistics lies above the pooled 97.5% interval.  Second, accounting for multiple
+testing concerns, we consider Bonferroni and Benjamini-Yekutieli adjusted critical values and show
+that the only hour which remains consistently significant in full sample and subsamples is 2:00 –
+3:00.
+    Next,followingthefundalphaliterature,westudythepersistenceofovernightdriftreturns: they
+are positive in 20 out of 23 years since 1998 and statistically significant in 17 of these. In contrast,
+for example, opening hour returns between 9:00 – 10:00 are on average large and negative but only
+during recessionary periods (2000-2003, 2007-2008 & 2009) and flat otherwise.  Furthermore, we
+show that the 2:00 – 3:00 return is statistically significant on every day of the week, and in 9 out
+of 12 months of the year, while returns during other periods of the day enter sporadically.
+    Thetheoreticalmarketmicrostructureliteratureofferstwobroadtypesofpotentialexplanations
+fortheovernightdriftpattern: thepresenceofdifferentiallyinformedtradersinthemarket,generat-
+ing asymmetric information, and inventory (risk) management by market makers. For asymmetric
+information alone to explain the overnight drift, (1) news revelation to informed traders would
+need to systematically occur between the U.S. market close and the European market open and
+(2) the information revealed overnight would need to be positive on average. We show that stan-
+
+
+                                                           1
+dard information releases, such as macroeconomic, monetary policy and earnings announcements,
+do not explain the overnight drift, suggesting that asymmetric information alone is an implausible
+explanation for the overnight drift.
+    Studying potential explanations, we argue that unconditionally positive returns around the
+openingofEuropeanmarketsareconsistentwithpredictionsfrommodelsofinventorymanagement
+anddemandforimmediacy,suchasGrossmanandMiller(1988)(GM).TheframeworkofGMshows
+that risk-averse market makers profit by providing liquidity to investors with asynchronous trading
+demands, generating mean reversion in prices as market makers absorb shocks to their inventories.1
+To understand how inventory management concerns can lead to the overnight drift, suppose there
+is selling pressure during the day, translating into an overall negative order imbalance by the end
+of regular trading hours. Market makers become net buyers, bearing inventory risk until they are
+able to sell to new market participants arriving overnight; however, they demand compensation for
+this in terms of positive expected returns.
+    A natural question that arises is why do price reversals not occur earlier upon the opening of
+overnight markets?  The answer is that, even though overnight volumes have grown steadily over
+our sample period, the close of regular trading at 16:15 marks the only time of the day when
+volumesjumpdiscontinuouslydown. EveninrecentyearsvolumesduringAsianopenhoursremain
+substantially below volumes at the U.S. close:  between 2009 – 2020 trading volumes in regular
+Asian hours (18:00 – 2:00) were 50 to 100 times lower than volumes during U.S. trading hours.
+Indeed,recastingthetradingdayin volume time,whereeachperiodhasafixednumberofcontracts
+traded, returns increase linearly in signed volume until around 60,000 contracts, corresponding to
+the average number of contracts traded by 3:00.2  In other words, it takes market makers roughly
+60,000 contracts to offset end-of-day order imbalances as of the previous day, with this re-balancing
+occurring earlier during the night as trading increases during Asian market hours.  Conditioning
+on end-of-day order imbalances, we show the relationship between signed volume and returns in
+volume-time is approximately linear but asymmetric; thus, re-cast in volume time, demand shock
+asymmetry is a more general feature of the data observable throughout Asian and European hours.
+    We study in greater detail predictions from GM-type models which state that returns for pro-
+
+
+   1The CME does not designate ‘specialist’ market makers in e-mini futures.   Instead, effective market makers are any
+participants willing to post limit orders on both sides of the order book and hence supplying liquidity (immediacy) to other
+traders in the market.
+   2As pointed out byEasley, de Prado, and O’Hara(2012),                       in the high-frequency world, trade time, as captured by volume,
+is a more relevant metric than clock time and models of immediacy and inventory risk, such asGrossman and Miller(1988),
+are implicitly set in volume time as it is assumed that a fixed number of trades occur in each period.
+
+                                                             2
+viding immediacy should be higher when order imbalances are larger or uncertainty is higher.  In
+order to exploit as much data as possible and to account for a time-trend in volumes, our main
+proxy for order imbalance is defined as relative signed volume, computed as signed volume over
+gross volume, and denoted RSVt.3 On average, close-to-close RSVt is negative consistent with the
+idea that the futures market is traded as a hedging instrument for the underlying.
+    SortingourfullsamplebasedonclosingRSVcloset       ,sampledbetween15:15–16:15,weshowthat
+order imbalances at U.S. close are followed by overnight price reversals as predicted by inventory
+models and that price reversals following market sell-offs are much stronger than following market
+rallies. Moreover,pricereversalsareaccompaniedbycontemporaneoustradingflowsintheexpected
+direction.4 We also study the additional intuitive prediction that market makers should not require
+a liquidity premium for holding zero inventory, and therefore order imbalances close to zero should
+havelittlepriceimpact. Consistentwiththisidea, whenclosingimbalancesareapproximatelyzero,
+we find reversal returns which are economically small and statistically indistinguishable from zero.
+    Next, we study the relationship between overnight returns and uncertainty.  In double sorts
+on RSVcloset        and the end-of-day level of VIX, we show that, conditional on the level of the VIX,
+average overnight returns are higher following days with greater negative end-of-day order imbal-
+ance. Conversely, conditional on the size of negative end-of-day order imbalance, average overnight
+returns are higher following days with greater end-of-day levels of the VIX. That is, consistent
+with the predictions of models of immediacy, price reversals are larger following days with larger
+end-of-day order imbalances and even more so if the large order imbalances coincide with periods
+of elevated uncertainty.
+    Double sorts on order imbalances and uncertainty also reveal that the distribution of the VIX
+is similar across positive and negative order imbalance days, suggesting that the asymmetry in
+price reversals is unlikely driven by a correlation between order imbalances and the level of asset
+returnvariance. Instead, wespeculatethatthisasymmetryisrelatedtomarketmakertime-varying
+risk-bearing capacity. The literature on financial intermediation has proposed a number of mech-
+anisms that can generate variation in effective risk aversion, including regulatory constraints, risk-
+management constraints, and funding constraints. Studying a simple extension to the benchmark
+
+
+   3Our findings are robust to tests based on signed volume over the sample period 2007 – 2020 for which total gross volumes
+were relatively stable.
+   4While hourly RSVt’s are negative during regular trading hours they are economically small at market close.  However,
+overnightimbalancesarepositiveandstronglystatisticallysignificantbetween2:00and3:00,mirroringunconditionallypositive
+returns during this hour.
+
+
+                                                            3
+GM model, we show that demand shock asymmetry arises when dealers face value-at-risk (VaR)
+constraints as inDanıelsson, Shin, and Zigrand(2004) andAdrian and Shin(2010,2014a).  In
+the data, negative end-of-day imbalances are associated with positive changes in return variance.5
+Positiveshockstovolatilityincreasethelikelihoodthatdealerconstraintsbind,magnifyingtheiref-
+fective risk aversion during sell-offs and increasing required compensation for providing immediacy.
+During market rallies the opposite intuition holds.6
+    Weconfirmourinventoryriskconjecturemoreformallybyestimatinghighfrequencypredictabil-
+ity regressions of returns on end-of-day order imbalance, and find statistically and economically
+significant loadings on the hours when London and Frankfurt financial markets open. Thus, high
+frequency returns become predictable as market makers transact with new participants arriving
+overnight, trading away order imbalances remaining from the previous U.S. trading day. Exploiting
+high frequency predictability regressions further, we conduct a natural experiment to test the rela-
+tionshipbetweentheovernightpricereversalsandthearrivalofovernighttraders. Inparticular, we
+exploit the fact that while the U.S. observes daylight savings time (DST), Japan does not, so that,
+asseenfromtheperspectiveofaU.S.trader,thetimingofJapanesemarketopeningchangesexoge-
+nously from 19:00 in winter to 20:00 in summer.7 Indeed, accounting for DST, return predictability
+around Tokyo open shifts forward by one hour when moving from winter to summer time, so that
+exogenous variation in the time of arrival of liquidity traders leads to predictable variation in the
+returns earned overnight.  Expanding the natural experiment to also include the 3 weeks of the
+year when the DST is asynchronous between the U.S. and Europe, we again find that the overnight
+return predictability shifts to the 4:00 – 5:00 hour (the first hour of regular trading in London and
+Frankfurt when the U.S. – Europe time difference is 4 hours).
+    We conclude by studying a set of trading strategies that exploit overnight price reversals. Pre-
+transactioncosts,atradingstrategythatgoeslongtheS&P500futuresbetween2:00and3:00earns
+aSharperatioof1.1andaccountingforbid-askspreadsthisreducesto−0.5. Extendingthetrading
+interval to the sub-period between 1:30 – 3:30 increases the pre-transaction cost Sharpe ratio to 1.3
+but with an associated post-transaction Sharpe ratio equal to 0.3. This is exactly what is predicted
+by models of inventory risk: market makers position their limit order books to incentivize trades
+
+
+   5This is the so called ‘leverage effect’ which is the well studied empirical fact that equity volatility tends to rise when
+returns are negative, and fall when returns are positive (see, for example,Black,1976).
+   6Alternatively, if the permitted VaR is given as a fraction of equity, rather than as a dollar amount, the VaR constraint
+becomes tighter when market maker equity declines.Brunnermeier and Pedersen(2009) show that similar dynamics can also
+arise when market makers have to post (cash) margins to fund levered positions.
+   7The Tokyo Stock Exchange trades from 9:00 to 15:00 in Japanese Standard Time.
+
+
+                                                             4
+that bring their inventory closer to their targets, and do so by making the trade, which pays the
+bid-ask spread, non-profitable.
+    Finally, we note that although the documented high frequency return patterns of this paper are
+not easily profitable, the persistent presence of the overnight drift suggests that the intraday timing
+of portfolio adjustments should be an important consideration for asset managers and institutional
+investors.  Indeed, market developments suggest that arbitrageurs are trying to capitalize on the
+patterns identified in this paper, with NightShares launching two exchange-traded funds (ETFs) in
+June 2022, targeted specifically at earning the overnight drift, citing financing costs and end-of-day
+order imbalances as driving forces behind the pattern.8
+
+
+Related                Literature:                                   In the time-series, existing studies have documented that equities earn
+a substantial proportion of their returns during the overnight period compared to the regular
+U.S. trading-hours (for example,Cliff, Cooper, and Gulen,2008orKelly and Clark,2011).  In
+work subsequent to ours,Bondarenko and Muravyev(2020) replicate our finding that the lion’s
+share of CTC equity futures returns are earned around the opening hours of European markets.
+    In the cross-section,Heston, Korajczyk, and Sadka(2010) study high frequency periodicity in
+firm level returns documenting persistent intraday return reversals, which the authors argue arise
+because investors have predictable demand for immediacy at certain points within the day. Lou,
+Polk, and Skouras(2017) document firm level reversal patterns between intraday and overnight
+returns:  overnight (intraday) returns predict subsequent overnight (intraday) returns positively,
+while overnight (intraday) returns predict subsequent intraday (overnight) returns negatively. The
+authors link this pattern to a ‘tug of war’ between retail investors trading at the beginning of the
+day and institutional investors who trade at the end of the day.Bogousslavsky(2018), on the other
+hand, studies institutional constraints and a cross-section of intraday pricing anomalies.
+    Finally, we motivate our empirical design from a literature that studies demand for immediacy
+and inventory risk (Grossman and Miller,1988;Vayanos,2001;Brunnermeier and Pedersen,2009;
+RostekandWeretka,2015). Acommonpredictionofthesemodelslinkspricereversalstotemporary
+order imbalances absorbed by liquidity providers.9  Indeed, theDuffie(2010) presidential address
+reviews price dynamics with ‘slow-moving’ capital and highlights that ‘Even in markets that are
+extremely active, price dynamics reflect slow capital when viewed from a high-frequency perspective.’
+
+
+   8See, for example, www.ft.com/content/e64bd276-c58f-441e-8cea-dccf58bbf46f
+
+   9For a textbook treatment we refer the reader toFoucault, Pagano, and R¨oell(2013).
+
+
+                                                             5
+                                                       I. Data
+
+Our primary focus is data on intraday trades and quotes for S&P 500 futures contracts traded on
+the Chicago Mercantile Exchange (CME). The initial S&P 500 futures contract was introduced by
+the CME in 1982, trading both by open outcry and electronically during U.S. regular trading hours
+concurrently with the cash market.10  This ‘big’ futures contract (henceforth SP) was originally
+quoted with a multiplier of $500 per unit of underlying, so that if the index trades, for example, at
+$500, the value of the SP contract is $250,000. As the index level rose over time, the SP contract
+became expensive to trade at this multiplier and the contract multiplier was cut to $250 times the
+index on November 3, 1997.11  In September 1993, the SP contract began trading electronically
+outside regular hours via the CME GLOBEX electronic trading platform.  The S&P 500 e-mini
+futures contract (henceforth ES) was introduced on September 9, 1997 and is quoted at fifty times
+the index, i.e. one-fifth of the big SP contract. The ‘e’ in e-mini is for electronic as trading takes
+place only on the CME GLOBEX platform which facilitates global trade for (almost) 24-hours
+a day, 5-days a week.  The two futures contracts have quarterly expiries on the third Thursday
+in March, June, September and December.  The most traded contract is almost always the front
+contract (the contract closest to expiry). Only when the front contract is close to expiry is the back
+contract (the contract second closest to expiry) more traded. This is because market participants
+roll their positions in advance of the expiry. We always use the most traded contract.
+    Exact trading times on CME platforms have changed over time but today trades are executed
+continuously from Sunday (18:00) – Friday (17:00), with a daily maintenance as of 2020 between
+17:00 and 18:00.12
+    Our primary data source exploits tick-by-tick data on trades and quotes for the ES contract
+fromRefinitivDatascopeSelect,whichwecomplementwithdataobtaineddirectlyfromtheCME.13
+The trades dataset includes the trade price, trade size and trade time. The quotes dataset includes
+quote price, quote size and quote time, with the first five levels of the order book available at all
+
+  10Regular trading hours are defined by the open outcry or pit session which trades between 9:30-16:15
+
+  11The minimum tick size was also cut to 0.25.  SeeKaragozoglu, Martell, and Wang(2003) for a discussion on how this
+change affected market liquidity and volatility.
+  12Between November 1994 and December 2012 the trading week began on Sunday at 18:30 and closed on Friday at 16:15.
+The trading day (other than Sundays) ran from 18:00 one day to 17:30 the following day with maintenance break between
+16:15 – 16:30.  From December 2012 to December 2015 trading began half an hour earlier on Sundays (18:00) and closed
+one hour later Fridays (17:15 ET). There was also a maintenance break from 23:00 to 00:00 on Tuesday through Friday from
+October 1998 to September 2003.
+  13Refinitiv Datascope Select was formerly known as Thomson Reuters Tick History.
+
+
+
+                                                              6
+times. All trades and quotes are time-stamped to the millisecond, using Universal Time (UT). We
+converttheUTtimestampstoU.S.EasternTime(ET),anddefinetheintraday(ID)andovernight
+(ON)tradingsessionsrelativetotheopeninghoursoftheU.S.cashequitymarket. Weidentifythe
+direction of trades by comparing the trade price to the most recent quoted prices of the top level
+in the limit order book: buy (sell) orders trade at the best available ask (bid) price.  Our sample
+period with 24 hour trading starts in January 1998 and ends in December 2020.14  Market depth
+for the first 5 levels of the order book is available since 2009.
+    Panel (a) of figure1displays within-the-month average daily trading volume for the           SP and
+ES contracts where the ES is further split by volumes within ON and ID trading sessions.  We
+measure volume as the total number of contracts traded in the most liquid contract, multiplying
+the volume for the SP contract by 5 (10 prior to 1998) to make its volume comparable to the ES.
+The figure shows that, since the advent of electronic trading, volume in the SP has trended down
+over time.  Instead, the trading volume in the ES (plotted in red for ON and blue for ID) was
+growing in the run up to the 2008 financial crisis, and thereafter stabilized at around 1-2 million
+contracts traded per day. Turning to panel (b), we see that, while the annual volume traded ON
+as a percentage of overall volume was small and constant at around 2% until the years 2002, it
+increased somewhat linearly to around 15% in 2010 and remained flat until 2018.  In 2018, with
+the level of the index above 2000, using the index multiplier of 50, this implies $15 billion traded
+daily during the overnight session. We also note that in the final years of our sample (2019 & 2020)
+the share of overnight trading in the ES has again increased and stands at around 20% of total
+volumes.
+                                                h                   i
+                                                  Insert figure1
+
+
+                                  II. Returns around the clock
+
+This section studies intraday returns computed from the most liquid e-mini contract, which is
+almost always the front month contract, except in expiration months when contracts are rolled.
+Returnsarecomputedfrommidquotesofbestbid-offers. OursampleperiodspansJanuary5, 1998
+– December 31, 2020 (23 years).
+
+
+  14Throughout the paper we use military time so that 2:00 corresponds to 2:00 a.m., and 16:30 corresponds to 4:30 p.m.
+
+
+
+
+                                                          7
+A.Main result
+
+The n-th log return on day t is defined as
+
+
+                                                 rNt,n =pt,nN −pt,n−1
+                                                                      N                                                          (1)
+
+for n = 1,...,N, where pt,nN  denotes the log price at time n/N on day t and N is the number
+of return observations throughout the day.  n = 0 and n = N corresponds to 18:00 when a new
+tradingdaybegins asdefined by theCME.Weworkinterchangeablywithhourly returns (N =24),
+15-minute returns (N =96), 5-minute returns (N =288), and 1-minute returns (N =1440).15
+    The grey bars in figure2display hour-by-hour log returns and the black line depicts cumulative
+5-minutelogreturns,averagedacrossalldaysinoursample. Estimatesareannualized inpercentage
+points and show that ON returns are positive, on average, between the hours of 00:00 and 4:00.
+Thirty minutes prior to the opening of the cash market at 9:30 equity returns are initially large and
+negative and become smaller in magnitude but remain persistently negative until 12:00.  We dub
+negative return realizations between 9:00 – 10:00 ‘opening hour’ returns.  The ID period is then
+characterized by a flat return profile until 15:00, which is followed by a sequence of positive returns
+that turn strongly negative after the maintenance break.
+    Thisovernightreturnpatternissurprising. Theredlineinfigure2plotsthecumulativeaverage
+return profile one would expect if information arrived continuously and returns accrued linearly,
+which contrasts starkly to the realised return profile displayed in back. On average, the CTC log
+returnis5.9%, whichisclosetotheaverageyearlylogreturnontheS&P500indexcash(excluding
+dividends).16 More than half of this return is generated during the ON session: from 16:15 to 9:30
+equity returns averaged 3.6% p.a. More striking than this, the return earned during the 2:00 to 3:00
+hour averaged 3.7% p.a. We dub this return sequence the ‘overnight drift’ (OD). Figure3displays
+a more granular view of returns around the OD.  Here, we see a persistent sequence of positive
+returns, which are clearly visible in almost every interval between 1:00 and 4:00, showing that the
+positive average return between 2:00 and 3:00 is not driven by within-the-hour outliers but instead
+represents a continuous drift over this interval of the overnight trading session.
+    What is special about this hour?  TableIIcollects opening and closing times for 14 global
+
+
+  15Our last observation on Fridays is at 18:00.  Our first observation on Sunday is at 18:01.  Thus the weekend return is
+incorporated into the first overnight return on Mondays.
+  16Standard equity futures contract do not give the owner the right to dividend claims.
+
+
+                                                            8
+equity markets, in the local time zone and in corresponding Eastern Time (ET). As U.S. regular
+trading hours on GLOBEX close, New Zealand, Australia, Japan, Singapore and then China open
+between 18:00 and 21:30. Day trading in these venues closes between 2:00 and 3:00, at which point
+Dubai, Russia, London and Europe open.  Thus, the OD coincides with the opening of regular
+trading on Euronext, Eurex, and the Frankfurt Deutsche B¨orse, as well as pre-market trading on
+the London Stock Exchange, all occurring at 2:00.  This observation highlights the geographical
+nature of 24-hour trading and provides a first clue towards a potential explanation.
+                                          h                                  i
+                                            Insert figure2and3here
+
+
+B.Summary statistics
+
+Stackinghourlyreturnsinthevector⃗randdenotingbyDadummymatrixcontainingappropriately
+located0and1’s,weestimatethe1×24vectorofmeanlogreturnsµviatheprojection⃗r =Dµ⊤+ε.
+TableIreportsestimatesfor        µandt-statisticscomputedfromHACrobuststandarderrors. Wealso
+report p-values adjusted for multiple testing, medians, standard deviations, skewness and kurtosis
+estimates.
+    Consider first panel (a) of tableIwhich collects          ON  return statistics.  Average returns for
+the hours {24-01, 01-02, 02-03} are equal to {0.46, 0.43, 1.5} basis points per hour per day (bps)
+with corresponding t-statistics equal to{2.8, 2.8, 7.1}, respectively. Due to the minimum tick size,
+median returns computed from quotes are often zero during the night. However, even the median
+quote return for the OD hour is large and positive equal to 0.64 bps.17 Consider now panel (b) of
+tableIwhich collects          ID return statistics. The opening hour return is strongly negative, equal to
+-1.2 bps with a t-statistic of 2.6, and the 17:00 – 18:00 return is equal to -0.43 bps with a t-statistic
+of -3.6. The remaining ID returns are flat and statistically indistinguishable from zero.
+    Within the 24 sub-periods of the day, there is reasonably large variation in average returns
+across hourly windows. Indeed, while the hours{24-01, 01-02, 02-03} are striking in both economic
+and statistical terms, there are other windows which are statistically significant at the 10% level
+over the full sample. This is to be expected since we are simultaneously testing more than one null
+hypothesis, and it is well known that an appropriate significance level such as α =0.05 is not valid
+due to an inflated probability of committing a type I error.  We account for the multiple testing
+
+  17The OA reports findings for returns computed from volume weighted average prices (VWAPs) which are very close to
+returns computed from quotes.
+
+
+                                                           9
+nature of our analysis in two ways.
+    First, we conduct a bootstrap exercise partitioning the day into 24 hourly sub-periods as in
+tableI. Distributions of test statistics are calculated using a block bootstrap (BS) sampling 10,000
+times, with the optimal block length chosen followingPatton, Politis, and White).  Panel(2009
+(a) of figure4plots the distribution of all hourly returns pooled together while panel (b) plots the
+distribution of returns during 2:00 – 3:00. Dotted blue lines mark 95% confidence intervals. Black
+dotted lines represent median estimates for specific hours. Each histogram is normalized such that
+it represents a probability density function estimate, i.e., the sum of the bar areas is equal to 1.
+In terms of economic magnitudes the OD return lies well above the upper 97.5% interval.  More
+striking, comparing panel (a) to panel (b), the lower 2.5% BS interval for the distribution of OD
+estimates lies above the pooled 97.5% interval.  Panel (c) repeats this exercise but plotting the
+distribution of all hourly pooled t-statistics while panel (c) plots the distribution of t-statistics for
+the OD hour.  The conclusion here is the same:  the statistical significance of the OD returns is
+extreme compared to all other hours. Moreover, panels (a) and (c) are clearly bi-model, which is
+due to unusually large returns realised between 2:00 – 3:00. Making this point clear, panels (e) and
+(f) compute the equivalent test statistics to panels (a) and (c) after removing 2:00 – 3:00. In these
+plots the second mode disappears further highlighting the unusual nature of the OD hour.
+                                         h                                         i
+                                            Insert tableIand figure4here
+
+    Second, we account for multiple testing by using the Bonferroni (BF) correction to control the
+family-wise error (FWER) and the Benjamini-Yekutieli (BY) procedure to control for the false
+discovery rate (FDR).18 Accounting for the multiple testing problem, we find that only the OD
+hour and the 17:00 – 18:00 hour are significant, and this holds for both BF and BY methods.19
+More specifically, using the BF correction the significance level is adjusted to α/m where m = 24
+hours is the number of tests.  At the 5% level, the BF adjusted significance level is 0.05/24 =
+0.0021 and it is 0.01/24 = 0.00042 at the 1% level.  With a p-value of 1.1·10−12, the OD hour
+is extremely statistically significant. The BY method is a ‘step up’ procedure that computes null
+specific thresholds starting from the least significant hypothesis and working up until significant
+
+
+  18The FWER is the probability of making one or more type I errors. The FDR is the expected ratio of the number of type
+I errors to the total number of rejections of the null.Harvey, Liu, and Saretto(2020) provides a recent survey of multiple
+testing procedures in the context of financial economic applications.
+  19Wenotethatbetween1998and2012tradewasclosedbetween17:30–18:00andin2020themaintenancebreakwasmoved
+to 17:00 – 18:00. In the following we do not further investigate the 17:00 – 18:00 hour as it is of little economic importance.
+Moreover, this hour is not significant when computing returns from trading prices instead of quotes (see table I in the OA).
+
+                                                             10
+alternative hypotheses are detected. The BY thresholds are reported in tableA.4(OA) at the 10%,
+5% and 1% levels and shows that the OD hour is the only significant return hour at the 1% level.
+    In summary, the evidence presented so far demonstrates that 2:00 – 3:00 is a special hour of the
+day, in both economic and statistical terms, and very far from what one should expect to see just
+by luck.
+
+
+C.Subsample Analysis and Persistence
+
+In addition to concerns related to multiple testing one could also be suspicious that the “outper-
+formance” of OD returns compared to other hours were sample specific or a result of data-mining.
+    A first simple test to address this concern splits the sample in two and recomputes figure2
+which is displayed in figure5.  Panel (a) considers the sample period January 1998 – December
+2010 and in panel (b) the sample period is January 2011 – December 2020. One observes that the
+overall pattern of 24 hour returns across subsamples is quite different.  On the one hand, in the
+first sample opening hour returns are large, negative and significant after accounting for multiple
+testing using a BF adjustment (blue highlighted bars) but are slightly positive and insignificant in
+the second sample period.  On the other hand, returns between 17:00 – 18:00 are insignificant in
+the first sample period but become significant in the second sample period. However, both samples
+share the common characteristic that OD returns are large, positive, and significant at the 5%.20
+                                               h                          i
+                                                 Insert figure5here
+
+    Second, a common approach used in the fund management literature to distinguish skill (out-
+performance) from luck is to study persistence in funds α (see, e.g.,Fama and French,2021).
+Analogously, figure6displays the cumulative log returns to a            $1 initial investment that trades var-
+ious sub-periods of the day. Panel (a) considers long positions in the hours {24-01, 01-02, 02-03}
+and panel (b) considers the cumulative returns that go short the opening and 17:00 – 18:00 hours
+of the day.
+    A passive CTC investment in e-mini futures (not shown) bears well known business cycle risk,
+as evidenced by large negative returns in the aftermath of the dot-com bubble, the 2008 financial
+crisis, and more recently during the early stages of the COVID pandemic.21  By contrast, a $1
+investment that holds e-mini futures for only one hour during the OD period would have returned
+
+  20Subsample statistics are reported in the OA.
+
+  21A $1 investment in e-mini futures CTC would have returned $3.8 by December 2020.
+
+                                                           11
+$2.4 by December 2020 and displays little variation (it is highly persistent).   A $1 investment
+trading either 24:00 – 1:00 or 1:00 – 2:00 would have yielded around half this value implying that
+the OD accounts for 50% of the total return earned for holding e-mini futures over the extended
+window 24:00 – 3:00.22 Panel (b) reveals that opening hour returns are persistently negative during
+recessions or states of distress (2000-2003, 2007-2008, 2020) but are otherwise flat. SectionBin the
+OA also shows that opening hour return are only significantly negative on Thursdays and Fridays
+suggesting they are due to a day of the week effect in bad states of the world.  Returns between
+17:00 – 18:00, on the other hand, are persistent but are smaller economically; comparable in size to
+the returns earned between 24:00 – 1:00 and 1:00 – 2:00.
+                                               h                           i
+                                                 Insert figures6here
+
+    Examining the overnight session further, figure7examines average returns year-by-year for the
+hours{24-01, 01-02, 02-03}.23 Panel (c) shows that OD returns were positive in 20 out of 23 years.
+Interestingly, the largest yearly average OD return (10.7% p.a.) occurred in 2020, during the initial
+year of the COVID pandemic.  The OD is slightly negative in the recessionary years of 2002 and
+2008, and again in 2019. The bottom panels report (1−p) values from t-tests against the null of
+zero. Panel (e) shows that, at the 10% level, the OD is significant in 17 out of 23 years. Splitting
+the sample year-by-year highlights the statistical and economic consistency of 2:00 – 3:00 returns
+compared to 12:00 – 1:00 or 1:00 – 2:00 returns.  Indeed, while the two hours that precede the
+regular opening hours in London are mostly positive, they are much smaller economically and are
+rarely significant at conventional levels. Moreover, sectionBin the OA studies these findings along
+a number of different dimensions and demonstrates that positive statistically significant average
+returns during 2:00 – 3:00 are a systematic feature or the data, present on all days of the week and
+9 out 12 months of the year.
+    While observing significant positive or negative return hours is certainly interesting, developing
+a unified explanation for all hours of the day is beyond the scope of this paper.  Instead, we will
+focus on the overnight return patterns straddling the opening of European markets, paying special
+attention attention to 2:00 – 3:00, which in economic and statistical terms is the salient hour of the
+day; thus allowing us to test theory driven hypotheses consistently over the entire sample.
+                                               h                           i
+                                                  Insert figure7here
+
+  22A detailed analysis of investment returns with and without transaction costs is delayed until sectionV.
+
+  23Figure A.5 in the OA reports year-by-year results for the hours 9:00 – 10:00 & 17:00–18:00.
+
+                                                            12
+                  III. Inventory management and price reversals
+
+In the section, we study a potential explanation for the overnight return patterns documented
+above.  To help frame the discussion of the confluence of factors that can explain an asymmetric
+overnight drift, it is helpful to start from the frictionless benchmark in, for example,Glosten and
+Milgrom(1985).Glosten and Milgrom(1985) consider the bid and ask price setting problem of
+a risk-neutral, zero-profit (competitive) market specialist (market maker) and show that, in the
+absence of any frictions, such as inventory costs and asymmetric information, the bid price equals
+the ask price and the expected return earned by the market maker is indeed 0.  Phenomena like
+the overnight drift – that is, high frequency price reversals with a non-zero unconditional mean –
+mustthusarisewhenoneormoreoftheassumptionsinthefrictionlessGlostenandMilgrom(1985)
+benchmark case are violated.
+    Thefirststrandofthemarketmicrostructureliteraturerelaxestheassumptionofnoasymmetric
+information (see e.g.Menkveld,2016, for an overview).Glosten and Milgrom(1985) show that,
+when risk-neutral, competitive market makers face informed traders, the optimal bid-ask spread
+is not zero, and increases in the amount of information present in the market.   Thus, for the
+overnight drift to arise as a result of asymmetric information, news revelation to informed traders
+has to systematically occur between the U.S. market close and the European market open – so that
+marketmakerssetalowerbidatU.S.marketcloseandahigheraskatEuropeanmarketopens–and
+the information revealed overnight has to be positive on average. In the Appendix, we show that
+theovernightdriftcannotbeexplainedbystandardinformationreleases, includingmacroeconomic,
+monetary policy and earnings announcements, suggesting that overnight information revelation is
+an unlikely source of the overnight drift.
+    Thesecondstrandofliteraturefocusesontheimpactofmarketmakerinventories(seee.g.Stoll,
+1978;AmihudandMendelson,1980;HoandStoll,1981,1983;MildensteinandSchleef,1983;O’Hara
+and Oldfield,1986;Grossman and Miller,1988;Shen and Starr,2002) and the costs of maintaining
+thoseinventories. Thisliteraturefindsthat, evenintheabsenceoffinancingconstraintsonthepart
+of the market makers, market makers that either face non-linear costs (Amihud and Mendelson,
+1980;Shen and Starr,2002) or that are risk-averse (O’Hara and Oldfield,1986) set bid-ask spreads
+in a way that reflects their inventory positions. In such models, the setting of the bid and the ask
+pricesdependonbothcontemporaneousdemandandsupplyandonthefutureexpectedvalueofthe
+
+
+
+                                                        13
+security. Price reversals can thus arise in models of inventory (risk) management due to variation
+in either order imbalances over time or in expectations of future value of the security (information
+revelation).
+    Finally,mostrecently,themarketmicrostructureliteraturehasstudiedthelinkbetweenfunding
+liquidity – that is, how constrained market makers are in funding their inventories – and market
+liquidity provision.Gromb and Vayanos(2002);Weill(2007);Brunnermeier and Pedersen(2005);
+Attari, Mello, and Ruckes(2005);Brunnermeier and Pedersen(2009) feature models in which
+capital-constrained market makers (or market makers with costly capital) undersupply market liq-
+uidity,leadingtotime-variationinmarketreturnsduetoorderimbalances,fundamentalinformation
+revelation and market maker capital constraints.  Given the implausibility of information revela-
+tion alone as the source of the overnight drift, in this Section, we focus on the implications of the
+inventory risk-management based models for market microstructure.
+    Moreconcretely, considerthefollowingstylizedexample. NewsisannouncedduringtheU.S.in-
+traday trading session that results in selling pressure at market close. Orders transact at the best
+available bids and, consequently, execute at successively lower prices down the order book. As the
+sell-off unfolds, prices drop below fundamental values because risk-averse market makers bear in-
+ventory risk. Market makers are compensated for bearing that risk through high expected returns,
+earned when they offload their excess inventory to new customers arriving overnight.
+    Grossman and Miller(1988) (GM) provides a framework that models such ‘liquidity events’
+through the supply and demand for immediacy. In GM, buyers and sellers arrive at different points
+in the trading day, which generates transient imbalances between buy and sell volumes.  Market
+makersofferimmediacytoincomingtradersbyabsorbingorderimbalancesandsubsequentlytrading
+themaway. Inour context, compensation forbearing inventory risk(a liquidity premium)is earned
+through expected returns for offloading positions to new customers arriving overnight, i.e., prices
+drop from S0 to S1 as the market sells off intraday and rebounds from S1 to S2 as trading begins
+in overseas timezones. Defining the overnight return as RON = (S2−S1)/S1, conditional expected
+returns based on date t=1 information are given by
+
+                                                                          Risk Bearing −1                         (2)
+                       E[RON|F1]=Dollar OrderImbalance  ×  ReturnVariance×   Capacity
+
+
+ModelsoftheGMtypeprovideanintuitivelinkbetweenliquidityprovision, demandforimmediacy
+and price formation.   The basic prediction of GM-type models is that the expected returns to
+
+                                                         14
+providing immediacy are higher when (1) order imbalances are larger; (2) when payoffs are more
+uncertain; (3) when the total risk bearing capacity of market makers is lower. In the following, we
+study our proposed explanation by testing these predictions.
+
+
+A.End-of-day Volumes
+
+To motivate an inventory management explanation, consider figure8which displays intraday and
+overnight trading volume patterns. To account for an increasing trend in trade over time, for each
+daywecomputethevolumeinevery5minuteintervalweightedbytheaveragevolumethatoccurred
+in a 5 minute interval on that day. A number above ‘1’ means there is more volume during a given
+5 minute interval compared to the daily average and vice-versa for a number below ‘1’.  Panel
+(a) shows that most trade occurs around the opening and close of the U.S. cash market.  Panel
+(b) zooms in on the overnight session revealing three U-shaped patterns: between 18:00 and 2:00
+(Asia), between 2:00 and 3:00 (European opening), and between 3:00 and 8:30 which coincides with
+scheduled U.S. macro announcements.
+    Quantifying intraday magnitudes in the recent sample, panels (c) plots average volumes for all
+hours of the day during 2020. With the index level at 3000 (late May & early June) closing volume
+in the 5 minute interval 16:10 - 16:15 averaged 85000×50×3000∼13 billion USD. By comparison,
+panel (d) zooms in on the overnight hours showing that volumes are an order of magnitude smaller.
+Cumulative volumes in the 8 hour period between 18:00 and 3:00 total 13500× 50× 3000 ∼ 2
+billion USD so that, even in 2020, overnight trading represents a small fraction of the volume in
+the 5-minute interval preceding the maintenance break.
+    Thekeytake-awayfromfigure8isthatthereisaneconomicallylargedownwardjumpinintraday
+volume at U.S. close and that overnight trading activity is between 50 to 100 times lower compared
+to the U.S. trading hours. From an inventory management perspective this makes order imbalances
+at close particularly risky since the extreme trading volumes leading up to U.S. close at 16.15 can
+generatelargeinventoryimbalances. Suchimbalancescannotbeimmediatelytradedawaywhenthe
+overnight session starts at 18:00 because the overnight trading activity is much lower.  Moreover,
+even in recent years, order imbalances can last most of the overnight period and cannot be resolved
+until European trading begins.
+
+                                              Insert figure8here        
+
+
+
+
+                                                         15
+B.Volume Time
+
+In the previous section, we showed that returns earned during the OD hour account for the bulk of
+total overnight returns and argued that this pattern is inconsistent with returns accruing linearly
+over time.  Instead, the high returns earned during the OD hour is in line with the basic idea
+of GM-style models, which imply that, conditional on an order imbalance, prices revert as new
+participants arrive and market makers offload their inventories.  In clock-time, the speed of mean
+reversion depends on the volume of new participants because market makers cannot manage inven-
+tory imbalances when trading activity is low.  Conversely, when trading activity is high, markets
+markers can offload quickly.
+    In this context, a natural alternative to clock time is to measure time elapsed in terms of the
+trading volume as first proposed byMandelbrot and Taylor(1967).              24   Specifically, we consider
+volume time, which advances one increment for every contract traded and thus equals cumulative
+trading volume. Volume time is a type of activity time, like tick time, advancing slowly when few
+contracts are traded (Asian hours) and quickly when many contracts are traded (U.S. hours). By
+definition, trade activity is constant in volume time and we therefore expect order imbalances to
+revert linearly to zero in volume time.  Thus, we also expect price reversals induced by inventory
+management to be linear when measured in volume time.
+    From the perspective of inventory risk models, the empirical measure of order imbalance would
+be net inventory held by market makers.  As these are not observable, we proxy for them from
+signed volume defined as
+                                        SV it =#buy orders−#sell orders,                                            (3)
+
+where # of orders is defined as the number of contracts, t is the day, and i is the period during the
+day. Note that SV it  is measured in dollar units consistent with equation2, and the sample period
+is 2007–2020 since total volume was relatively stationary during this period (see figure1).  Table
+A.7of the OA shows the intraday properties of      SV it while panels (a) and (b) of figureA.6show the
+distribution and time series of SV it  at U.S. close.
+    Figure9displayscumulativelogreturns(computedfromVWAPS)andcumulativesignedvolume
+inbothclocktimeandvolumetime, sortedby SVcloset       , whichisthesignedvolumemeasuredinthe
+
+
+  24Mandelbrot and Taylor(1967) argue that price changes follow a Pareto distribution in clock time but are normally
+distributed in volume time. This result was later generalized byAn´e and Geman(2000). More recently,Kyle and Obizhaeva
+(2016)proposeandtest“marketmicrostructureinvariance”,whichstatesthatthedistributionsofrisktransfersandtransaction
+costs are constant across assets when measured in business-time (activity time).
+
+                                                            16
+last hour before the maintenance break between 15:15–16:15.  Panel (a) and (c) are in clock time
+and we clearly see that price reversals are strongest at the opening of Asian (19:00 and 20:00) and
+European markets (2:00 and 3:00 ET) when volume jumps up, and that returns quickly flatten off
+after the initial hours of European trade. Panel (b) and (d) are in volume time. Following negative
+(positive) closing order imbalances, both signed volume and returns increase (decrease) essentially
+monotonically. Followingmarketsell-offs,mostoftheovernightreturnisearnedbythepoint60,000
+contracts are traded, or in other words, around the time when European markets open.
+    Corresponding positive closing order imbalances generate a smaller price impact than negative
+closing order imbalances, even if order flow is quite symmetric following positive versus negative
+end-of-day imbalances.  Thus, viewed from the perspective of volume time, we observe an almost
+linear but asymmetric demand shock response throughout Asian and European hours.
+
+                                               Insert figure9here        
+
+
+
+C.Economic Magnitudes
+
+Next, we evaluate the quantitative plausibility of an inventory risk hypothesis.  From the data,
+we can observe three of the four terms that enter equation2:  the expected overnight returns
+E[RON|F1], the end-of-day dollar order imbalance, and the (conditional) return variance. The final
+component – the risk-bearing capacity of the market is harder to observe directly. Instead, we note Risk Bearing
+that the risk bearing capacity can be expressed as                Capacity       =  N+1ARA where N is the number
+of market makers providing immediacy and ARA is absolute risk aversion common across market
+makers.  Recall further that the coefficient of relative risk aversion (RRA) is approximately the
+ARA multiplied by wealth, which allows us to re-cast equation2as a prediction for the RRA of
+the market makers in this market
+
+
+                                 RRA=           E[RON|F1]Dollar Order     ×  Wealth                                      (4)
+                                             Imbalance  ×  ReturnVariance
+
+where   Wealth denotes total capital of the market makers, (N +1)×Wealthi, that is allocated to
+supportingequitymarkettrades. Whilemarketparticipants’capitalallocationstoparticulartrades
+are notoriously hard to measure, we can follow the literature on financial intermediation (see e.g.
+Adrian and Shin,2014b) by proxying for            Wealth and proxy with the equity value-at-risk (VaR) of
+
+
+
+                                                          17
+large dealers.25  The total equity VaR of large dealers proxies for how much capital is at risk for
+these intermediaries when they provide liquidity in equity markets, and is thus closely related to
+the total risk bearing capacity of market makers in the market.26
+    We obtain the quarterly time series of average broker-dealer equity VaR from Bloomberg in
+order to perform a proxy calculation of implied market maker RRA. FigureA.9in the OA shows
+thetime-seriesofequityVaRvariesbetween50and750billionUSDbetween2000.Q1and2020.Q4,
+peaking in the financial crisis and rising again during the COVID-19 crisis.  Average equity VaR
+duringthesampleperiod2007Q1–2020Q4wasequalto300billionUSD,whichwetakeasourproxy
+for Wealth.  Then, from panel (b) of figure9, we take the realized overnight return, measured in
+volumetime, equalto∼17%p.a.asaproxyforexpectedovernightreturnsconditionalonamarket
+sell-off.  From panel (d) of figure9we obtain the corresponding resolved overnight market maker
+imbalance of ∼ 1500 contracts that, with the index level at 2000, equates to a dollar imbalance  Return
+of 1500×50×2000 = 150 billion USD. We measure                           Variance      as the unconditional level of the
+VIX2 in our sample, which was 20%2. The implied market maker relative risk aversion is therefore
+
+
+                                            RRA=      0.17150×0.04×300=8.5                                              (5)
+
+
+To put this estimate in context,Greenwood and Vayanos(2014) perform a similar conversion of
+Treasury arbitrageurs’ ARA to RRA to estimate a range of [7.6, 91.2] for the RRA. For mortgage
+backed security arbitrageursMalkhozov, Mueller, Vedolin, and Venter(2016) peform a similar
+calculation coming up with an estimate of 88. Our ‘back-of-the-envelope’ calculation suggests that,
+not only is an inventory risk explanation plausible from a qualitative perspective, but also from a
+quantitative one.27
+
+
+  25At the end of 2020, the five largest dealer banks were Bank of America, Citibank, JP Morgan, Goldman Sachs, and
+Morgan Stanley. As inAdrian and Shin(2014a), for firms which report VaRs at the 95% confidence level, we scale the VaR
+to the 99% using the Gaussian assumption.
+  26We discuss in the OA the assumptions behind using equity value-at-risk as a proxy for dealer capital committed to equity
+futures trades.
+  27Prior empirical literature has also studied the plausibility of inventory risk explanations though in more limited settings.
+Madhavan and Smidt(1993);Hansch, Naik, and Viswanathan(1998);Ready, Roussanov, and Ward(2013);Naik and Yadav
+(2003) find, in small samples of intraday data, that market makers control risk by mean-reverting their inventory positions
+towardtargetlevels. Using11yearsofdailydataonNYSEspecialistinventorypositionsandtradingrevenue,Comerton-Forde,
+Hendershott, Jones, Moulton, and Seasholes(2010) test directly for the relationship between funding and market liquidity
+and find that both aggregate market-level and specialist firm-level spreads widen when specialists have large positions or lose
+money. They further document that, consistent with models of time-varying risk-bearing capacity, these effects are non-linear.
+
+
+
+
+
+                                                               18
+D.End-of-day Order Imbalance
+
+We now study in more detail the prediction of GM-type models which states that returns for
+providing immediacy should be higher when order imbalances are larger.  In order to exploit as
+much data as possible, and following much of the empirical literature, our main proxy for order
+imbalance in the remaining is relative signed volume, measured as signed volume over total volume
+
+
+                                                RSV it = SV itTV it ∈[−1,1],                                                    (6)
+
+
+where TV it =#buy orders+#sell orders accounts for the increasing trend in total trading volume
+over the sample 1998–2020.28
+    TableIIIreports summary statistics for hourly        RSVt. On average, close-to-close RSVt is equal
+to−2.4% and is highly volatile. Negative CTC RSVt’s are consistentwith theidea thatthe futures
+market is traded as a hedging instrument for the underlying. However, while RSVt’s are negative
+during the day, they are largely positive between 1:00 – 4:00. During the OD hour, average RSVt
+is 2.4% with a t-statistic of 6.7, mirroring the unconditional positive returns during this hour. In
+the following, we use the last hour preceding the maintenance (15:15 – 16:15) to measure closing
+order imbalance, which we denote RSV closet     .29
+
+                                                 Insert tableIIIhere       
+
+
+    Figure10sortsalltradingdaysintogroupsbasedonclosingimbalances. Foreachgrouppanel(a)
+reportsreturnsduringAsianhours(18:00–1:00),(b)reportsreturnsduringEUopen(1:00–04:00),
+panels (c) & (d) report returns during the OD hour (2:00 – 3:00). The sorting is performed such
+that the groups are approximately equal in size and black bars indicate 95% confidence intervals.30
+    Summarising, figure10shows that (           i) order imbalances at U.S. close are followed by overnight
+pricereversalsaspredictedbyinventorymodels; and(ii)pricereversalsaremuchstrongerfollowing
+market sell-offs giving rise to an unconditional positive overnight drift.
+
+
+  28In the OA, we present counterparts to all of the results that follow using SVt as alternative measure of imbalance (for
+the sample 2007–2020 as above). The results are quantitatively similar using either measure and thus robust to whether we
+standardize by volume or not.
+  29Panel (c) and (d) of figureA.6show the distribution and time series of              RSV at U.S. close. RSVcloset       is stationary around
+zero throughout the sample period and its variance is stable.
+  30Note thatRSVcloset        is defined as buys minus sells so that a negative imbalance implies dealers are long and from equation
+2overnight expected returns should therefore be positive.
+
+
+
+                                                              19
+    Using RSV closet      as a sorting variable the conditional return pattern resembles a step function
+centered around zero. FigureA.7in the OA shows that, when sorting on                SV closet     , the conditional
+return pattern in monotonic, albeit with an asymmetric slope.  More importantly, in both cases,
+negative closing imbalances generate statistically significant positive overnight returns.
+
+                                               Insert figure10here         
+
+
+    Equation2containsanadditionalintuitivepredictionthatorderimbalancesclosetozeroshould
+have little price impact. Indeed, market makers should not require liquidity premium for holding
+zeroinventory. Panel(d)examinesthispredictionbyzoominginonOD returnsbasedonRSVcloset
+straddling zero. Consistent with an inventory channel, when closing imbalances are approximately
+zero we find reversal returns which are economically small and statistically indistinguishable from
+zero.
+
+
+E.Volatility risk
+
+The second prediction of equation2is that expected overnight returns are increasing in the return
+variance of the risky asset.  This is because risk-averse market makers demand a higher premium
+for holding larger price risk.  To allow for differential effects on volatility due to demand shock
+asymmetry, we split the sample into positive and negative closing order imbalance days and then
+construct double sorts – based on terciles of RSV and volatility – within each sub-sample. Panel a
+(panelb)oftableIVreportsdoublesortsconditionalonnegative(positive)            RSVcloset        days. Double
+sorted return averages are reported based on terciles of RSVcloset        and the closing level of the VIX
+sampled at 16:15 each day.31  Within each set, we also report average RSVcloset        and VIX levels
+(A1,A2,B1,B2). Double sorted OD return averages are reported (A3,B3) along with high minus
+low differences and p-values testing the difference against zero.
+    WefirstnotethatthedistributionofEOD VIXappearsquitesymmetricconditionalonpositive
+versus negative RSVcloset        days.  Thus, it is unlikely that asymmetric price impact is due to a
+correlation between order imbalance and the level of asset return variance.32 Considering panel (a)
+(positive RSVcloset       ) there is really no clear pattern is 3×3 sorted OD return averages. Panel (b)
+(negativeRSVcloset       )ontheotherhandisconsistentwithourpriorsfromequation2: (i)Conditional
+
+
+  31Tick-by-tick quotes for the VIX index are sourced from Refinitiv and complemented with data from CBOE.
+
+  32While changes in the VIX are highly negatively correlated with returns, the correlation between the level of the VIX and
+returns (order imbalance) is quite low.
+
+
+                                                            20
+on the level of the VIX, moving from low to high RSVcloset        states, the OD return averages are
+increasing.  (ii) Conditional on the level of the RSVcloset       , moving from low to high RSVcloset
+states, the OD return averages are also increasing. The only exception is in high VIX states where
+the impact of RSVcloset        is large but flat. Moreover, the high-minus-low return spreads are in the
+anticipateddirectionandstatisticallysignificantin5outof6cases. Thus,aspredictedbyGM-style
+models, price reversals are larger following days with large end-of-day order imbalances and even
+more so if the large order imbalances coincide with periods of heightened uncertainty.
+
+                                              Insert tableIVhere         
+
+
+
+F.Demand Shock Asymmetry
+
+Consistentwiththeliteratureondownwardslopingdemandcurvesandimperfectliquidityprovision,
+wehaveshownthatdemandshockshaveatemporarypriceimpactthatrevertsovertime. However,
+we have also shown a strong asymmetry in price impact in response to positive versus negative
+demand shocks. This asymmetry generates a positive unconditional overnight return which in clock
+time is concentrated in the hour from 2:00 – 3:00 (the OD).  In SectionIII.Bwe then showed
+that re-cast in volume time, that demand shock asymmetry is a more general feature of the data
+observable throughout Asian and European hours.
+    To the best of our knowledge, such an asymmetry is novel to the literature.  Now, recall from
+2that the conditional expected return to providing immediacy is the product of three terms: the
+end-of-day order imbalance, conditional variance of returns, and the inverse of the risk-bearing
+capacity of the market makers. TableIVshows that the first two terms are unlikely to contribute
+to the asymmetric response to positive and negative demand shocks: the distribution of demand
+shocks around ‘0’ is roughly symmetric and the distribution of the VIX conditional on the sign of
+the demand shock is roughly similar.  Instead, the asymmetric response to positive and negative
+demand shocks may be driven by contemporaneous changes in the risk-bearing capacity of the
+market makers. This may arise through two different channels.
+    First, since there are no designated market makers for e-mini contracts, there is no obligation
+on the part of institutions that normally act as market makers to continue doing so in the face of
+large sell-offs. That is, during large sell-offs, institutions that act as market makers may choose to
+exit the market, reducing the total risk-bearing capacity of the market maker segment.
+
+
+
+                                                          21
+    Second, those market makers that choose to remain during large sell-offs may reduce their
+individualrisklimitsinresponsetodeterioratingmarketconditions. SectionA.3intheOAoutlines
+howincreasesinvolatility,whichaccompanymarketsell-offs,maytranslateintohighereffectiverisk
+aversion when market makers face value-at-risk (VaR) constraints.  Increases in volatility tighten
+the VaR constraint for market makers, translating into higher effective risk aversion.  Conversely
+decreases in volatility do not translate into lower effective risk aversion once the VaR constraint is
+no longer binding.  Thus, an asymmetry in the pass through of positive versus negative volatility
+shocks can generate an asymmetry in return reversals following demand shocks.
+    Third,marketmakersmayfaceanasymmetryinfundingcostsasinBrunnermeierandPedersen
+(2009) who argue that decreases in risk-bearing capacity arise when market liquidity and funding
+liquidity interact in flight-to-quality episodes, with capital required for trading evaporating when
+marketreturnsarenegative. Indeed,duringprolongedperiodsofmarketsell-offs,theCMEincreases
+the required initial margins for futures positions.
+    Each of these mechanisms may contribute to time-variation in effective risk aversion; we leave
+further investigation of return reversal asymmetry for future research.
+
+
+                        IV.High frequency return predictability
+
+SectionIIdocumentedourcentralempiricalfindingandsectionIIIadoptedasortingbasedapproach
+totestourexplanation. Inthissection,westudyfurtherthelinkbetweenovernight expected returns
+and EOD order imbalances within a high frequency predictability framework.
+
+
+A.High Frequency Predictability and Order Imbalance
+
+Panel (a) of tableVreports point estimates from univariate regressions of hourly realised returns
+during the overnight session (18:00 – 6:00) on closing imbalances:
+
+
+                           rHt,n =µn+βRSVn    RSVcloset−1    +ϵt,n,    for n=1,...,12,                              (7)
+
+
+together with t-statistics computed from robust standard errors clustered within each month. Re-
+turns are measured in basis points, and RSVcloset−1   ∈[−1,1]. Thus, a point estimate of βRSVn     =−10
+implies a +1 basis point return response to a closing imbalance of RSVcloset−1    =−10%.
+    Consistent with an explanation based on inventory risk, we observe a strong negative relation
+
+
+                                                         22
+between the closing order imbalance and returns.  The relation is strongest between 2:00 – 4:00.
+The estimates are both economically and statistically significant. A 1-standard deviation (6.55%)
+decrease in RSVcloset−1     (a sell-off) induces a 6.55%·−17.49 = 1.15 basis point increase in returns
+between 2:00 – 3:00. We also observe a statistically significant negative relationship between 20:00
+– 21:00, corresponding to the opening of Japanese (TSE) and Australian (ASX) markets.
+    In panel (b) of TableV, we verify that order imbalance in the last hour of the U.S. trading day
+is the appropriate proxy for dealer inventory imbalances. We include order imbalances measured in
+the final three hours of the trading day (13:15–14:15, 14:15 – 15:15, and 15:15 – 16:15) as separate
+regressorsinamultivariateextensiontoequation7. Giventhehighlevelsoftradingactivityduring
+U.S. open hours, we expect order imbalances from earlier in the day to have been traded away prior
+to the end of the trading day and thus have no impact on overnight returns. This is indeed what
+is suggested by the estimates in TableV. For example, focusing on the 2:00 – 3:00 interval, the
+point estimates monotonically decline the earlier in the day the order imbalance is measured and
+are insignificant beyond 14:15.
+
+                                                Insert tableVhere       
+
+
+
+B.Falsification Test
+
+Microstructuretheorypredictsalinkbetweenorderimbalanceandreturns,bothcontemporaneously
+and at lagged intervals.  In inventory management models, high-frequency predictability arises as
+market makers adjust their quotes to resolve imbalances. The more liquid a market is, the shorter
+the period of predictability will be because market makers can quickly trade imbalances away. In
+illiquid markets such as corporate bonds predictability can last several days. Microstructure theory
+also predicts negative autocorrelation in returns due to a host market frictions and, indeed we do
+observe negatively autocorrelated returns for the e-mini but the generally large liquidity of the
+market implies autocorrelation coefficients only are significant for, at most, 30 minutes.33 However,
+the closing of U.S. trading hours is a special point in the trading day because volume is extremely
+high relative to the subsequent trading hours.
+    Our proposed explanation relies on a special relationship between closing order imbalance and
+returns around European open.  TableVIprovides a ‘falsification’ test for this claim.  For the
+
+  33See figureA.8in the OA.
+
+
+
+                                                           23
+overnight hours, panel (a) estimates univariate regressions of hourly returns on one hour lagged
+RSVt. Thereisonlyonesignificanthourbetween23:00–24:00andthesignispositivenotnegative.
+    Panel (b) extends the regression to include the previous 12 lagged hours of RSVt for the night
+hours.  Most of the point estimates in the table are insignificant.  However, focusing on the high-
+lighted purple diagonal estimates we find economically large and statistically significant return
+predictability arising from order imbalances at close of regular U.S. trading hours.  More specifi-
+cally, the point estimates are large at exactly the opening of Tokyo and European regular market
+opening times, even after controlling for all imbalances subsequent to U.S. close.
+
+                                               Insert tableVIhere         
+
+
+
+C.Demand Asymmetry and Volatility Risk
+
+The sorting based approach of the previous section revealed a strong asymmetry in price impact
+in response to positive vs.  negative demand shocks, which generates an unconditional positive
+overnight drift return (reversal) .  Panel (a) of tableVIIexplores the asymmetry in a regression
+design that interacts RSVcloset        with a dummy variable that takes on a value of ‘1’ if RSV closet−1   <0
+and ‘0’ otherwise
+
+
+ rHt,n =µn+βRSVn    RSV closet−1   +βNEGn                                                1  NEG,t+βRSV×NEGn            RSVt−1,close×       1  NEG,t+εt,n   n=1,...,12.
+
+
+We find that the dummy variable is large and statistically significant during only the OD hour.
+    Wealsoinvestigatethestandardinventoryriskpredictionthatpricereversalsshouldbeamplified
+in states of high volatility.  Testing this, we interact RSVcloset        with the level of the VIX index
+sampled at 16:15 ET
+
+
+          rHt,n =µn+βRSVn    RSV closet−1   +βVIXn    VIXcloset−1  +βRSV×VIXn           RSV closet−1  ×VIXcloset−1  +ϵt,n        (8)
+
+
+for n = 1,...,12. Panel (b) of TableVIIreports the estimates, showing that ex-ante volatility has
+a strong amplification effect on the relationship between order imbalance and overnight returns
+between 2:00 – 3:00.  A 1-standard deviation decrease in RSVcloset−1     when VIXcloset−1   = 20% (the
+average VIX level throughout the sample period is 19.8%) generates a return response of 66.39×
+(−6.55%)−5.33×(−6.55%)×20 = 2.6 basis points. With the VIX at its 90th percentile (30%)
+
+
+                                                           24
+the return response is 6.1 basis points and with the VIX at its 10th percentile (12 %) there is close
+to zero effect.
+                                                Insert tableVIIhere      
+
+
+
+D.Daylight savings tests
+
+The results so far highlight that large negative order imbalances at the end of the U.S. trading
+are subsequently resolved during the overnight trading session, as new customers arrive into the
+market. The 24-hour nature of the e-mini market allows us to provide additional evidence on this
+explanation by conducting a novel test that exploits exogenous variation, from the perspective of
+U.S.-based market makers, in the arrival time of Asia-based clients.  Specifically, we exploit the
+fact that while both U.S. and Europe observe daylight savings time (DST), Japan does not. From
+the perspective of U.S.-based market makers, clients based in Japan arrive at 19:00 during U.S.
+winter months (DST off) and at 20:00 during U.S. summer months (DST on). Thus, DST changes
+represents exogenous variation in the arrival time of Japan-based clients.
+    Figure11shows that, during the second half of our sample (January 2007 – December 2020),
+when the trading volume during Asian opening hours is non-negligible, there is a spike in e-mini
+trading volume at 21:00 when DST is not active (red line) which is exactly at the opening of the
+Tokyo stock exchange (TSE). When DST is active, the increase in volume occurs instead at 20:00,
+which again corresponds to the opening of TSE in the U.S. summer. Notice, also, a secondary spike
+in trading volume at 22:30 when the TSE re-opens after its lunch break during U.S. winter months
+and at 23:30 when the TSE re-opens after the lunch break during the U.S. summer months.34
+                                                Insert figure11here         
+
+
+    We now test more formally whether changes in the arrival time of Asia-based clients translates
+into a change in the timing of overnight returns.  Panel (a) of tableVIIIreports the estimated
+coefficients from a regression of hourly overnight returns between 18:00 – 23:00, measured in basis
+points, on order flow imbalance at the end of the preceding trading day, a dummy for U.S. DST,
+and an interaction between the two
+
+
+          rHt,n =µn+βRSVn    RSVt−1,close+βDSTn                                          1  DST,t+βRSV×DSTn           RSVt−1,close×       1  DST,t+εt,n        (9)
+
+
+  34For an in-depth discussion of the TSE lunch break and its effects on trading on the NIKKEI, seeLucca and Shachar
+(2014).
+
+                                                            25
+for n = 1,...,12, where the dummy variable takes on a value of 1 in summer time (DST active)
+and 0 in winter time (DST not active), with daylight savings seen from a U.S. perspective.  The
+sample period is 1998.1 – 2020.12.
+    ConsistentwiththehypothesisthatDSTcreatesexogenousvariationinthearrivaltimeofAsia-
+based clients, we see that the effect of RSV  moves forward by one hour when the U.S. goes from
+wintertosummertime. Toseethis, considerfirstU.S.wintertimewheretheDSTdummyequals0.
+Here, Australia opens at 18:00, TSE opens at 19:00, and Singapore opens at 20:00 (also, Shanghai
+opens at 20:15 and Hong Kong opens at 20:30). As expected, the effect of RSV negative in hours
+with market openings where new agents arrive. specifically, βSRVn     ={−9.34;−13.46;−6.70} for the
+hours 18:00 – 19:00, 19 – 20:00 and 20:00 – 21:00.
+    Next,inU.S.summertime,wheretheDSTdummyequals1,therearenomajormarketopenings
+at 18:00, TSE opens at 20:00, Australia opens at 19:00 or 20:00, and Singapore opens at 21:00.35
+Now, we find the effect of RSV by summing βRSVn    +βRSV×DSTn             ={1.43;−1.43;−6.85} and, indeed,
+we see that the effect of RSV shifts in accordance with DST.
+    WecanlikewiseexploitthefactthatDSTisobservedbothinEuropeandtheU.S.Thestandard
+time difference between New York and London is five hours but throughout our sample period the
+U.S.andEuropehaveswitchedtoDSTatdifferenttimes, typically1weekapart. Panel(b)oftable
+VIIIreports estimates of hourly overnight returns between 24:00 – 5:00 regressed on closing signed
+volume and a time difference dummy:
+
+
+rHt,n =µn+βRSVn    RSV closet−1  +βDIFFn                                                           1  DIFF,t+βRSV×DIFFn             RSVt−1,close×      1  DIFF,t+εt,n   n=1,...,12,
+
+
+wherethedummyvariabletakesonavalueof‘0’whenthetimedifferencebetweenLondonandNew
+Yorkis5hoursandavalueof‘1’whenthetimedifferenceis4hours. Wefindthatthepredictability
+of RSV disappear in the hour 2:00 – 3:00 on days where the U.S. - EU time difference only is four
+hours. Predictability due to an overnight return reversal shifts by two hours to 4:00 – 5:00, which
+is the first hour of regular trading in London and Frankfurt when the U.S. - EU time difference is 4
+hours. We note that there are less than 300 trading days here; thus, the point estimate is not well
+measured. However, the main takeaway of the European daylight savings test remains: when the
+U.S. and Europe are out of their usual 5 hour time-difference synchronization, consistent with idea
+
+
+  35Australia does not switch to winter (summer) time at exactly the same date where the U.S. switches to summer (winter)
+time. Therefore, seen from a U.S. perspective, Australia opens at 19:00 for short periods during the spring and fall.
+
+
+                                                          26
+that liquidity traders are no longer entering the market at this time, predictability during the OD
+hour disappears.
+
+                                              Insert tableVIIIhere       
+
+
+                                 V.Trading overnight reversals
+
+We conclude the paper by considering a set of trading strategies designed to exploit overnight
+price reversals, with and without transaction costs, and in doing so implicitly study how market
+makers set liquidity premiums in response to inventory shocks. The trading strategies we consider
+are stylized examples that expose an investor to holding the ES contract for a sub-period of each
+trading day compared to passively holding the ES contract. Returns on trading day j earned on a
+strategy that goes long the ES contract in the sub-period [t1,t2] are computed as
+
+
+                                               RLj,[t1,t2] = Pj,t2−Pj,t1Pj,t1     ,                                                   (10)
+
+
+where P denotes price of the ES contract.  The analogous short position earns RS = −RL.  Mid
+quotes are used to compute returns excluding transaction costs. Transaction costs are incorporated
+from bid-ask quotes in Refinitiv data and returns are computed from quotes as
+
+
+                          RLj,[t1,t2] = Pbidj,t2−Paskj,t1Paskj,t1,    RSj,[t1,t2] =−1× Paskj,t2−Pbidj,t1Pbidj,t1.                          (11)
+
+
+We consider the following strategies:
+
+    • long CTC: t1=16:15→ t2 = 16:15;                             • long OD: t1 = 2:00→ t2 = 3:00;
+
+    • long CTO: t1 = 16:15→ t2 = 9:30;                            • long OD+: t1 = 1:30→ t2 = 3:30
+
+    • long OTC: t1 = 9:30→ t2 = 16:15;
+
+    We also consider a conditional trading strategy that ‘buys-the-dip’, denoted BtD, which holds
+the e-mini during the OD+ period but only on trading days following a negative order flow at
+market close (RSV closet−1   < 0). We report findings for the sample period 2004.1 — 2020.12, as after
+this point the bid-ask spread during the overnight period reached its minimum tick size (see figure
+A.13).
+
+                                                           27
+    TableIX(a) reports summary statistics of the trading strategies when transaction costs are
+excluded.  Holding the ES contract continuously (the CTC strategy) since 2004.1 has yielded an
+average yearly return of 8.9% with a Sharpe ratio of 0.42.36 The beta is equal to 1 by definition as
+we use the CTC return as a proxy for the market return. CTO and OTC returns contributed an
+approximately equal proportion to the total return earned by a passive investor holding the index:
+Onanannualizedbasis, CTO returnsaveraged4.6%andOTC returnsaveraged4.2%. Adissection
+of this magnitude is not particularly surprising in itself. However, it is surprising that OD return
+component is comparable in size to the CTO and OTC returns, equal to 3.8% on average.  The
+OD strategy has a Sharpe ratio of 1.1, which outperforms the market Sharpe ratio, and arises
+from a combination of high excess returns and low volatility during the overnight drift period. The
+best performing strategy is the conditional versions of OD+ which holds the e-mini on ∼ 50% of
+trading days.  Returns from trading the BtD strategy are considerable larger than OD+ returns,
+whichweinterpretasadditionalevidenceinsupportoftheinventoryriskpredictionthatpast RSV
+should predict subsequently higher expected returns, as new agents arrive to market and liquidity
+suppliersoffloadtheirlongpositions. Inadditiontolargerreturns,theBtDstrategyreturnvariance
+is significantly lower and thereby the Sharpe ratio higher. Specifically, RSV closet−1   < 0 has a Sharpe
+ratio of 1.8 compared to 1.3 of OD+37.
+    TableIX(b) reports summary statistics post transaction costs. Returns on all simple strategies
+are significantly lower and only the OD+ strategy has a positive Sharpe ratio. However, the BtD
+strategy remains highly profitable (Sharpe ratio of 1.1) because it only pays the bid-ask spread
+on half the trading days when returns are higher.  This is exactly what we would expect from an
+inventory management perspective. Market makers earn the bid-ask spread, buying at the bid on
+negative closing RSV days and selling at the ask during the overnight trading session. In general,
+marketmakerspositiontheirlimitorderbookstoincentivizetradesthatbringtheirinventorycloser
+to their targets, making a contrarian trade – where a client would earn the bid-ask spread – less
+profitable.
+    It is important to highlight that small yet persistent intraday return seasonalities can have
+large low frequency effects. To illustrate this point, figure12depicts the cumulative returns of the
+CTC, OD,OD+ and BtD strategies for a one dollar investment in January 2004.  The overnight
+
+  36Sharpe ratios are computed from daily risk free rates implied by 4 week U.S. Treasury bills obtained from CRSP. Return
+volatilities (the denominator of the Sharpe ratio) are computed using daily data.
+  37The large number of zero returns is also what causes the large kurtosis. The positive skewness of BtD occurs because the
+RSV < 0 signal filters a significant fraction of the negative returns.
+
+                                                           28
+strategies have performed exceptionally well in the sense that they never experience large negative
+returns. Remarkably, the BtD strategy has positive returns during the financial crises even though
+the strategy never shorts the market.  Panel (a) displays returns for a hypothetical investor who
+trades without costs. Trading the OD (OD+), a one dollar initial investment in 2004 generated a
+portfolio value of $1.9 ($2.8) in December 2020. Panel (b) of figure12displays cumulative returns
+including transaction costs.  The CTC return remains unchanged as it is a passive strategy (we
+only have to roll the contract at a quarterly basis and pay for the spread between the initial buy in
+2004 and final sell in 2020). With transaction costs, the OD is not profitable in practice. However,
+the BtD strategy earns large positive returns, generating a portfolio value of $1.9 and while it does
+not beat a passive position in the market, it has a significantly higher Sharpe ratio and does not
+experience large losses related to the business cycle.
+                                     h                                            i
+                                       Insert tableIXand figure12here
+
+
+                                              VI.Conclusion
+
+In this paper, we study returns to holding U.S. equity futures around the clock and document a
+largepositivedriftinreturnsaccruingduringtheopeninghoursofEuropeanmarketregulartrading
+hours.
+    We argue that the large positive drift in returns is consistent with standard theories of demand
+for immediacy and the associated liquidity provision by risk-averse market makers. Consistent with
+such theories, we show that overnight returns have a strong relationship with (U.S.) end-of-day
+order imbalances, and that the relationship is asymmetric: while large negative order imbalances
+at the end of the U.S. trading day are followed by large return reversals overnight, the response to
+large positive end-of-day order imbalances is muted. This asymmetry in return reversals following
+negative and positive order imbalance days is what generates the unconditionally positive returns
+aroundEuropeanopeningtimes. Weconjecturethattheasymmetryinreturnreversalsarisedueto
+time-varying risk bearing capacity of market makers in this market, which decreases during periods
+of large market sell-offs.  Finally, we show that the demand for immediacy hypothesis is not only
+qualitatively consistent with the return and order flow patterns in the data but also provides a
+quantitatively-plausible explanation for the overnight drift.
+
+
+
+
+                                                           29
+                                                 References
+
+Adrian, Tobias, and Hyun Song Shin, 2010, Liquidity and leverage, Journal of Financial Interme-
+  diation 19, 418–437 Risk Transfer Mechanisms and Financial Stability.
+
+         , 2014a, Procyclical leverage and value-at-risk, Review of Financial Studies 27, 373–403.
+
+        ,2014b,Procyclicalleverageandvalue-at-risk, The Review of Financial Studies 27,373–403.
+
+Ai, Hengjie, and Ravi Bansal, 2018, Risk preferences and the macroeconomic announcement pre-
+  mium, Econometrica 86, 1383–1430.
+
+Amihud, Yakov, and Haim Mendelson, 1980, Dealership market:  Market-making with inventory,
+  Journal of Financial Economics 8, 31–53.
+
+Andersen, Torben G, Oleg Bondarenko, Albert S Kyle, and Anna A Obizhaeva, 2018, Intraday
+  trading invariance in the e-mini s&p 500 futures market, working paper.
+
+An´e, Thierry, and H´elyette Geman, 2000, Order flow, transaction clock, and normality of asset
+  returns, The Journal of Finance 55, 2259–2284.
+
+Attari, Mukarram, Antonio S Mello, and Martin E Ruckes, 2005, Arbitraging arbitrageurs, The
+  Journal of Finance 60, 2471–2511.
+
+Bernard, Victor L, and Jacob K Thomas, 1989, Post-earnings-announcement drift: delayed price
+  response or risk premium?, Journal of Accounting research 27, 1–36.
+
+Black, Fischer, 1976, Studies of stock price volatility changes, Proceedings of the 1976 Meetings of
+  the Americal Statistical Association, Business and Economics Statistics pp. 177–181.
+
+Bogousslavsky, Vincent, 2018, The cross-section of intraday and overnight returns, Working paper.
+
+Bondarenko, Oleg, and Dmitriy Muravyev, 2020, Market Return Around the Clock:  A Puzzle,
+  SSRN Abstract 3596245.
+
+Brunnermeier, Markus, and Lasse Heje Pedersen, 2009, Market liquidity and funding liquidity,
+  Review of Financial Studies 22, 2201–2238.
+
+
+
+                                                         30
+Brunnermeier, Markus K, and Lasse Heje Pedersen, 2005, Predatory trading, The Journal of Fi-
+  nance 60, 1825–1863.
+
+Christie, Andrew A, 1982, The stochastic behavior of common stock variances: Value, leverage and
+  interest rate effects, Journal of financial Economics 10, 407–432.
+
+Cliff, Michael, Michael Cooper, and Huseyin Gulen, 2008, Return differences between trading and
+  non-trading hours: Like night and day, Working paper.
+
+Comerton-Forde, Carole, Terrence Hendershott, Charles M Jones, Pamela C Moulton, and Mark S
+  Seasholes, 2010, Time variation in liquidity: The role of market-maker inventories and revenues,
+  The journal of finance 65, 295–331.
+
+Danıelsson, J´on, Hyun Song Shin, and Jean-Pierre Zigrand, 2004, The impact of risk regulation on
+  price dynamics, Journal of Banking & Finance 28, 1069–1087.
+
+Duffie, Darrell, 2010, Presidential address:  Asset price dynamics with slow-moving capital, The
+  Journal of Finance 65, 1237–1267.
+
+Easley, David, Marcos M. L´opez de Prado, and Maureen O’Hara, 2012, Flow toxicity and liquidity
+  in a high-frequency world, The Review of Financial Studies 25, 1457–1493.
+
+Fama, Eugene F, and Kenneth R French, 2021, Luck versus skill in the cross-section of mutual fund
+  returns, in The Fama Portfolio . pp. 261–300 (University of Chicago Press).
+
+Foucault, Thierry, Marco Pagano, and Ailsa R¨oell, 2013, Market liquidity:  theory, evidence, and
+  policy (Oxford University Press).
+
+Glosten, L., and P. Milgrom, 1985, Bid, ask, and transaction prices in a specialist market with
+  heterogeneously informed traders, Journal of Financial Economics pp. p. 71–100.
+
+Greenwood, Robin, and Dimitri Vayanos, 2014, Bond supply and excess bond returns, Review of
+  Financial Studies 27, 663–713.
+
+Gromb, D., and D. Vayanos, 2002, Equilibrium and welfare in markets with financially constrained
+  arbitrageurs, Journal of Financial Economics 66, 361–407.
+
+
+
+
+                                                          31
+Grossman, Sanford J, and Merton H Miller, 1988, Liquidity and market structure, the Journal of
+  Finance 43, 617–633.
+
+Hansch, Oliver, Narayan Y Naik, and S Viswanathan, 1998, Do inventories matter in dealership
+  markets? Evidence from the London Stock Exchange, The Journal of Finance 53, 1623–1656.
+
+Harvey, Campbell R, Yan Liu, and Alessio Saretto, 2020, An evaluation of alternative multiple
+  testing methods for finance applications, The Review of Asset Pricing Studies 10, 199–248.
+
+Heston, Steven L, Robert A Korajczyk, and Ronnie Sadka, 2010, Intraday patterns in the cross-
+  section of stock returns, The Journal of Finance 65, 1369–1407.
+
+Hirshleifer, David, Sonya Seongyeon Lim, and Siew Hong Teoh, 2009, Driven to distraction: Extra-
+  neous events and underreaction to earnings news, The Journal of Finance 64, 2289–2325.
+
+Ho, Thomas, and Hans R Stoll, 1981, Optimal dealer pricing under transactions and return uncer-
+  tainty, Journal of Financial Economics 9, 47–73.
+
+Ho, Thomas SY, and Hans R Stoll, 1983, The dynamics of dealer markets under competition, The
+  Journal of Finance 38, 1053–1074.
+
+Hu, Grace Xing, Jun Pan, Jiang Wang, and Haoxiang Zhu, 2019, Premium for heightened uncer-
+  tainty: Solving the fomc puzzle, Discussion paper, National Bureau of Economic Research.
+
+Karagozoglu, Ahmet K, Terrence F Martell, and George HK Wang, 2003, The split of the s&p 500
+  futures contract: Effects on liquidity and market dynamics, Review of Quantitative Finance and
+  Accounting 21, 323–348.
+
+Kelly, Michael A, and Steven P Clark, 2011, Returns in trading versus non-trading hours:  The
+  difference is day and night, Journal of Asset Management 12, 132–145.
+
+Kyle, Albert S, 1985, Continuous auctions and insider trading, Econometrica 53, 1315–1335.
+
+         , and Anna A Obizhaeva, 2016, Market microstructure invariance: Empirical hypotheses,
+  Econometrica 84, 1345–1404.
+
+Lou, Dong, Christopher Polk, and Spyros Skouras, 2017, A tug of war: Overnight versus intraday
+  expected returns, Working Paper, London School of Economics.
+
+                                                         32
+Lucca, David O., and Emanuel Moench, 2015, The pre-FOMC announcement drift, Journal of
+  Finance 70, 329–371.
+
+Lucca, David O., and Or Shachar, 2014, Lunch Anyone? Volatility on the Tokyo Stock Exchange
+  around the Lunch Break on May 23, 2013, and Stock Market Circuit Breakers, Liberty Street
+  Economics.
+
+Madhavan, Ananth, and Seymour Smidt, 1993, An analysis of changes in specialist inventories and
+  quotations, The Journal of Finance 48, 1595–1628.
+
+Malkhozov, Aytek, Philippe Mueller, Andrea Vedolin, and Gyuri Venter, 2016, Mortgage risk and
+  the yield curve, Review of Financial Studies 29, 1220–1253.
+
+Mandelbrot, Benoit, and Howard M. Taylor, 1967, On the distribution of stock price differences,
+  Operations Research 15, 1057–1062.
+
+Menkveld, Albert J, 2016, The economics of high-frequency trading, Annual Review of Financial
+  Economics 8, 1–24.
+
+Merton, R. C., 1974, On the pricing of corporate debt: The risk structure of interest rates, Journal
+  of Finance 29, 449–470.
+
+Mildenstein, Eckart, and Harold Schleef, 1983, The optimal pricing policy of a monopolistic market
+  maker in the equity market, The Journal of Finance 38, 218–231.
+
+Naik,NarayanY,andPradeepKYadav,2003,Dodealerfirmsmanageinventoryonastock-by-stock
+  or a portfolio basis?, Journal of Financial Economics 69, 325–353.
+
+O’Hara,Maureen,andGeorgeS.Oldfield,1986,Themicroeconomicsofmarketmaking,TheJournal
+  of Financial and Quantitative Analysis 21, 361–376.
+
+Patton, Andrew, Dimitris N Politis, and Halbert White, 2009, Correction to “automatic block-
+  length selection for the dependent bootstrap” by d. politis and h. white, Econometric Reviews
+  28, 372–375.
+
+Ready, Robert, Nikolai Roussanov, and Colin Ward, 2013, Commodity trade and the carry trade:
+  a tale of two countries, Working Paper, University of Rochester.
+
+
+                                                        33
+Rostek, Marzena, and Marek Weretka, 2015, Dynamic thin markets, The Review of Financial
+  Studies 28, 2946–2992.
+
+Sadka, Ronnie, 2006, Momentum and post-earnings-announcement drift anomalies:  The role of
+  liquidity risk, Journal of Financial Economics 80, 309–349.
+
+Savor,Pavel,andMungoWilson,2013,Howmuchdoinvestorscareaboutmacroeconomicrisk? ev-
+  idence from scheduled economic announcements, Journal of Financial and Quantitative Analysis
+  48, 343–375.
+
+         , 2014, Asset pricing: A tale of two days, Journal of Financial Economics 113, 171–201.
+
+Shen, Pu, and Ross M Starr, 2002, Market-makers’ supply and pricing of financial market liquidity,
+  Economics letters 76, 53–58.
+
+Stoll, Hans R, 1978, The supply of dealer services in securities markets, The Journal of Finance 33,
+  1133–1151.
+
+Vayanos, Dimitri, 2001, Strategic trading in a dynamic noisy market, The Journal of Finance 56,
+  131–171.
+
+Weill, Pierre-Olivier, 2007, Leaning against the wind, The Review of Economic Studies 74, 1329–
+  1354.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                         34
+35
+Abbreviation     Name            Open             Close             Time                       ET open       ET close
+                                                                            difference
+  NZSX**           New                   10:00             17:00               16               18:00             01:00
+                     Zealand
+    TSE*            Tokyo            09:00             15:00               13               20:00             02:00
+   ASX**        Australia          10:00             16:00               14               20:00             02:00
+   SGX*         Singapore         09:00             17:00               12               21:00             05:00
+    SSE*          Shanghai          09:15             15:00               12               21:15             03:00
+   HKE*       Hong Kong        09:30             16:00               12               21:30             04:00
+   NSE*             India             09:15             15:30               9.5               23:45             06:00
+   DIFX*           Dubai            10:00             14:00                8                02:00             06:00
+    RTS*            Russia            09:30             19:00                7                02:30             14:00
+    FWB         Frankfurt          08:00             20:00                6                02:00             14:00
+    JSE*            South                08:30             17:00                6                02:30             11:00
+                      Africa
+    LSE            London           08:00             16:30                5                03:00             11:30
+  BMF**       Sao Paulo         10:00             17:00                1                09:00             16:00
+   NYSE        New York         09:30             16:00                0                09:30             16:00
+    TSX           Toronto           09:30             16:00                0                09:30             16:00
+
+                Table II. Open and closing times of global equity cash indices
+ The table displays opening and closing times for 14 global equity markets, in the local
+ time zone and in corresponding Eastern Time Zone (ET) for June, 2018.  The abbrevia-
+ tions are NYSE=New York Stock Exchange, TSE=Tokyo Stock Exchange, LSE=London
+ StockExchange, HKE=HongKongStockExchange,NSE=NationalStockExchangeofIndia,
+ BMF=Bovespa Bolsa de Valores Mercadorias & Futuros de Sao Paulo, ASX=Australian Se-
+ curities Exchange, FWB=Frankfurt Stock Exchange Deutsche B¨orse, RTS=Russian Trading
+ System, JSE=JohannesburgStockExchange, DIFX=NASDAQDubai, SSE=ShanghaiStock
+ Exchange, SGX=Singapore Exchange, NZSX=New ZealandStock Exchange, TSX=Toronto
+ Stock Exchange.  Opening and closing times are collected from the public website of each
+ exchange.  * Denotes locations that do not observe Daylight Savings Time (DST). Relative
+ to the table, the time difference is plus 1 hour outside the U.S. DST period.  ** Denotes
+ locations south of equator that do observe DST. Relative to the table, the time difference is
+ plus 2 hours when outside the U.S. DST period and in the DST period of the given region.
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                              36
+37
+                   VIX Low     VIX Med     VIX High       VIX Low       VIX Med     VIX High
+                           Panel A1: Positive RSV                                  Panel A2: Average VIX
+RSV Low          1.23             1.29              1.20              12.71             19.16            31.56
+RSV Med          4.04             4.10              4.06              12.60             18.32            30.41
+RSV High         9.55             9.43              9.37              12.49             18.04            28.11
+
+                                                  Panel A3: OD Average Returns
+                   VIX Low     VIX Med     VIX High     High - Low       p-value
+RSV Low          0.59             0.80              2.33               1.74               0.54
+RSV Med         -2.41             1.96              6.02               8.43               0.00
+RSV High         -0.12            -0.11             -1.96              -1.84              0.44
+High-Low          0.71             0.91              4.30
+p-value              0.59             0.67              0.22
+
+
+                           Panel B1: Negative RSV                                   Panel B2: Average VIX
+RSV Low          -1.33            -1.32             -1.40              13.17             19.24            28.44
+RSV Med         -4.03            -4.12             -4.11              12.88             18.78            29.63
+RSV High         -9.56           -10.07            -9.66              12.88             19.19            30.63
+
+                                                  Panel B3: OD Average Returns
+                   VIX Low     VIX Med     VIX High     High - Low       p-value
+RSV Low          0.88             4.93             12.66              11.78              0.00
+RSV Med          3.23             6.33             13.03              9.80               0.00
+RSV High         4.42             8.93              7.01               2.60               0.31
+High-Low          3.54             3.99             -5.64
+p-value              0.02             0.09              0.12
+
+
+           Table IV. Double sorts on relative signed volume and closing VIX
+We split the sample into positive (panel a) and negative (panel b) closing relative signed
+volume. Within each set we double-sort trading days into terciles of relative signed volume
+RSV  and the closing level of the VIX.   Within each set we report average RSVs and
+VIX levels (A1,A2,B1,B2). Double sorted overnight drift OD return averages are reported
+(A3,B3) along with high minus low differences and p-values testing the difference against
+zero. Sample period is January 1998 – December 2020.
+
+
+
+
+
+
+
+
+                                                             38
+39
+                                                                                              (a)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    18-19    19-20    20-21    21-22    22-23   23-24    24-01    01-02    02-03    03-04    04-05   05-06
+RSV1HLag    -0.43    -1.31     -0.13     -0.25     0.34     0.24     2.21      0.98      0.10      0.72     0.52     0.68
+                   (-0.58)  (-1.51)   (-0.29)   (-0.59)   (0.97)   (0.70)   (7.98)   (2.13)   (0.18)   (0.68)   (0.61)   (0.75)
+
+RSV2HLag    -1.91    -0.49     1.18     -0.27     0.65     0.80     -0.34     0.03      0.96     -0.88    -1.70    0.58(b)
+                   (-0.76)  (-1.32)   (1.04)   (-0.61)   (2.02)   (2.28)   (-1.46)   (0.12)   (1.43)   (-1.42)  (-1.39)  (0.46)
+RSV3HLag             0.67     0.47      0.79      0.57     -0.12    0.85     0.34     -0.71     0.27     -1.56    -0.78    -1.13Table VI. Falsification test
+                    (0.19)   (0.21)   (1.36)   (1.26)   (-0.29)  (1.84)   (0.75)   (-2.04)   (1.00)   (-1.97)  (-0.99)  (-2.58)Panel (a) displays regression estimates of hourly overnight returns regressed on a one hour lag of relative signed
+                     volume. Panel (b) displays regression estimates of hourly overnight returns regressed on twelve lags of hourly relative
+RSV4HLag     1.27signed volume. Days where the time difference between London and New York is different from 5 hours are excluded.-1.09     1.23      0.57     0.54     0.40     0.22      1.46      0.39     -0.18     0.52     0.60
+                   (0.43)Estimates are in basis points. t-statistics reported in parenthesis are computed from robust standard errors clustered(-0.26)   (0.57)   (1.32)   (0.90)   (0.99)   (0.45)   (3.12)   (0.88)   (-0.25)   (0.57)   (0.76)
+                     within each month. Sample period is January 1998 – December 2020.
+RSV5HLag     0.12     2.87                 -6.45     2.66     0.22     0.02     0.93     -0.33     0.28      1.07     0.20    -1.87
+                   (0.04)   (0.66)        (-3.09)   (3.28)   (0.74)   (0.05)   (2.90)   (-0.95)   (0.44)   (1.18)   (0.26)  (-2.64)
+RSV6HLag    -0.70    -1.82     -0.1618-19    19-20    20-21    21-22   22-22   23-24   24-01   01-02   02-03   03-04   04-05   05-06-3.07    2.11     0.59     -0.51     -0.64     1.36      0.89     -0.21    0.00
+RSV1HLag   -0.41    -1.31    -0.04    -0.14    0.46    0.40    2.21    0.95    0.44    0.85     0.00     0.77(-0.19)  (-1.55)   (-0.05)(-1.74)  (2.00)   (1.97)   (-0.78)   (-2.03)   (2.29)   (0.71)   (-0.29)  (0.01)40
+RSV7HLag     1.53     -1.13     -1.64     -4.82(-0.55)  (-1.46)  (-0.08)  (-0.30)  (1.25)  (1.17)  (7.89)  (1.84)  (0.76)  (0.91)  (0.01)  (0.86)0.75    0.36     -0.49     0.13      1.30      0.50     -0.40    0.54
+µ                  -0.19     0.35     0.14     0.15     0.08    0.05    0.36    0.39    1.40    0.25    -0.04    0.03(0.50)   (-0.79)   (-0.86)   (-2.74)(0.56)  (0.47)   (-1.49)   (0.22)   (2.11)   (0.47)   (-0.58)  (0.67)
+
+RSV8HLag     1.42     2.78      0.93     -0.86    -1.08(-0.47)  (2.76)   (1.09)   (1.43)  (0.67)  (0.37)  (2.29)  (2.60)  (6.79)  (1.04)  (-0.13)  (0.14)1.17     2.86     -0.25     1.24      1.14     -0.69    -0.30
+Adj. R2(%)     0.01     0.05     0.00     0.00     0.01    0.01    0.61    0.07    0.01    0.01     0.00     0.01(0.18)   (1.28)   (0.76)   (-0.51)  (-0.55)(0.67)   (2.28)   (-1.00)   (1.74)   (1.00)   (-0.93)  (-0.66)
+
+RSV9HLag    -5.49     1.25     -5.56     0.02     -1.29    -1.55                       -4.09    -3.51     -0.67     -2.19    -0.40    -1.41
+                   (-1.25)   (0.45)   (-1.94)   (0.01)   (-0.88)  (-0.86)             (-4.23)  (-3.23)   (-1.62)   (-1.64)  (-0.44)  (-1.62)
+
+RSV10HLag   2.34     2.02     -3.72     -2.21    -1.40    -0.76    -1.02                           -2.93    -9.56     -1.20     1.49     0.86
+                   (1.29)   (0.77)   (-1.21)   (-1.06)  (-0.71)  (-0.53)  (-0.59)                (-1.61)  (-4.52)   (-3.24)   (2.19)   (1.11)
+
+RSV11HLag   -1.87     0.55      0.65     -4.57    -2.87    1.99     1.46     -2.52                            -9.21    -2.91    -0.09    -0.46
+                   (-0.98)   (0.30)   (0.24)   (-2.29)  (-1.59)  (1.23)   (1.10)   (-1.53)                   (-5.12)  (-1.41)  (-0.17)  (-0.94)
+
+RSV12HLag   -0.53     1.60     -1.04     3.26     -2.86    1.12     0.68      1.22     -4.61                             -14.94   -2.74    -0.35
+                   (-0.34)   (1.96)   (-0.46)   (1.81)   (-1.19)  (0.63)   (0.40)   (0.81)   (-3.54)                    (-5.11)  (-1.80)  (-1.03)
+
+µ                 -0.18     0.35      0.12      0.11     0.04     0.06     0.33      0.42      1.49      0.26     0.04     0.02
+                   (-0.42)   (2.78)   (0.94)   (1.14)   (0.31)   (0.57)   (2.15)   (2.72)   (7.88)   (0.97)   (0.14)   (0.10)
+Adj. R2(%)     -0.15    -0.04     0.03      0.09     -0.07    0.05     0.66      0.21      0.83      0.32     -0.07    0.02
+41
+                                                                                       (a) Asia
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                     (b) Europe
+                                                               Table VIII. Daylight saving tests
+                    Inpanel(a)hourlyovernightreturnsareregressedonclosingrelativesignedvolumeandadummyvariablefordaylight
+                    savings time:
+
+                               rHt,n =µn+βRSVn    RSVcloset−1   +βDSTn                                                             1  DST,t+βSV×DSTn          RSVt−1,close×         1  DST,t+εt,n   n=1,...,12,
+
+                    wherethedummyvariabletakesonavalueof‘0’inwintertime(DSTnotactive)and‘1’insummertime(DSTactive)
+                    and daylight savings is seen from a U.S. perspective. The Tokyo Stock Exchange (TSE) opens at 19:00 when DST is
+                    not active and at 20:00 when DST is active. Estimates are in basis points. In panel (b) hourly overnight returns are
+                    regressed on closing relative signed volume and time-zone difference dummy:
+
+                            rHt,n =µn+βRSVn    RSVcloset−1   +βDIFFn                                                                                    1  DIFF,t+βRSV×DIFFn              RSVt−1,close×         1  DIFF,t+εt,n   n=1,...,12,
+
+                    where the dummy variable takes on a value of ‘0’ when the time-zone difference between London and New York is 5
+                    hours (3282 observations) and a value of ‘1’ when the time-zone difference is 4 hours (240 observations). t-statistics
+                    reported in parenthesis are computed from robust standard errors clustered within months. Sample period is January
+                    1998 – December 2020.
+
+
+
+                       18-19    19-20    20-21    21-22    22-2324-01    01-02    02-03    03-04    04-05
+RSV                -9.34    -13.46    -6.70     -1.46     5.43
+RSV                 -7.93     -7.21    -31.32    -1.93     6.36
+                      (-2.11)  (-1.98)  (-1.62)  (-0.36)   (2.43)(-3.70)  (-1.44)  (-5.15)  (-0.33)   (1.23)
+
+DIFF               3.56      0.59      1.24      2.28     -1.63DST               -1.57     -0.08     -0.15     0.06      0.0842
+                      (-2.13)  (-0.28)  (-0.52)   (0.29)   (0.25)(2.18)   (2.05)   (2.91)   (1.26)   (-1.08)
+
+RSV ×DIFF    -7.24    31.00    37.30    15.00    -38.80RSV ×DST    10.77    12.03    -1.20     -0.17     -4.54
+                      (2.09)   (1.80)   (-0.27)  (-0.04)  (-1.73)(-0.96)   (2.53)   (1.73)   (1.50)   (-1.50)
+
+µ                      0.42      0.60      1.57     -0.11     -0.01
+µ                     0.54      0.42      0.26      0.02     -0.09
+                      (0.68)   (1.73)   (1.09)   (0.13)   (-0.51)(2.52)   (3.17)   (7.13)   (-0.30)  (-0.02)
+Adj. R2(%)        0.47      0.14      0.82      0.07      0.11
+Adj. R2(%)      0.11      0.13      0.09      0.01      0.03
+                                                             (a) Without Transaction Costs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                               (b) With Transaction Costs
+                                                        Table IX. Trading strategies
+                Summary statistics for returns of intraday trading strategies excluding (panel (a)) and including
+                (panel(b))transactioncosts. CTC iscontinuouslyholdingtheE-minicontract. CTO isholdingthe
+                contractfrom16:15to8:30; OTC isfrom9:30to16:15;−OR isshorteningtheopeningreturnsfrom
+                8:30 to 10:00; OD is the overnight drift from 2:00 to 3:00; OD+ is from 1:30 to 3:30. RSVcloset−1   <0
+                is a buy the dip strategy that goes long from 1:30 to 3:30 only on days following a negative closing
+                order flow. Means and standard deviations are in annualized percentages. The Sharpe ratios uses
+                the 4 week U.S. Treasury bill as the risk-free rate.  Betas are computed using the CTC return as
+                the market return. Returns excluding transaction cost are computed from mid quotes and returns
+                including transaction costs are computed from the best bid and ask prices quotes.  The sample
+                period is 2004.1 — 2020.12.  The trading strategies start in 2004 as this is where the overnight
+                bid/ask spread reached its effective minimum of 1 tick.
+
+
+
+
+
+
+
+
+
+                    CTC    CTO    OTC      OD     OD+   RSV closeCTC    CTO    OTC     OD    OD+   RSV closet−1   < 0t−1   < 0
+Mean               8.95      0.38    −0.05  −0.59    1.91            4.04Mean               8.95      4.62      4.20      3.75     6.21            6.0743
+Sdev               19.35    11.23    14.90     2.65      4.12            2.92Sdev                19.35    11.23    14.90     2.65     4.13            2.95
+Sharpe ratio    0.42   −0.04  −0.06  −0.54    0.26            1.10Sharpe ratio    0.42      0.34      0.23      1.10     1.30            1.78
+beta                 1.00      0.37      0.63      0.02      0.04            0.02beta                 1.00      0.37      0.63      0.02     0.04            0.02
+Skew                0.01   −0.68  −0.35     1.09      2.10            4.77
+Skew                0.01   −0.67  −0.33    1.18     2.16            4.89
+Kurt               20.06    20.84    13.67    32.81    41.61          99.87
+Kurt               20.06    20.86    13.65    32.91    41.88          98.60
+
+
+                                Figure 3. Intraday return averages
+This figure plots average 5 minute returns holding the e-mini contract for the hours 1.00 – 4.00.
+Sample period is January 1998 - December 2020.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                       46
+
+
+
+50
+51
+
+
+
+
+                                   The Overnight Drift
+                                        Internet Appendix
+
+    SectionsA.1reports supplementary results to our central empirical contribution which is the
+documentation of consistent positive returns for holding U.S. equity futures around the opening of
+European financial markets.  SectionA.3provides a survey ofGrossman and Miller(1988) (GM)
+interpreting the results of that paper in the context of our setting. SectionA.2reports robustness
+tests related to our market making explanation.   This section repeats our main inventory risk
+tests with an alternative measure of order imbalance. SectionA.4discusses a series of alternative
+explanations based on volatility risk, liquidity risk, the arrival of overnight news, and the resolution
+of uncertainty.
+
+                    A.1.Supplementary Results: Overnight Drift
+
+A.Relationship to existing overnight literature
+FigureA.1displays cumulative close-to-close (               CTC) log returns on S&P 500 futures: $1 invested
+at the beginning of 1983 becomes $27 dollars by the end of 2020, translating into an annual log
+return of 8.65%. Decomposing into intraday versus overnight components open-to-close (OTC) log
+returns averaged 5.12% while close-to-open (CTO) log returns averaged 3.53% This figure updates
+thefindingsofCliff,Cooper,andGulen(2008)andKellyandClark(2011)whobothdocumentthat
+equitiesearnasubstantialproportionoftheirreturnsduringtheovernightperiod. Overnightreturn
+patterns are also well discussed in the financial press.38.  We note here that earning a substantial
+overnight returns is not, in itself, that surprising.  Given the length of the overnight period one
+would even expect the overnight period to earn the largest return if information flowed continuous
+as in a Black-Scholes economy.  What is surprising, is that the overnight versus intraday return
+dissection onlybecomes noticeable afterthe advent of overnight electronicmarkets. Indeed, thered
+and blue lines track each other quite closely until after the introduction of GLOBEX and shortly
+before the introduction of the e-mini contract.  These dates are marked by vertical dotted lines.
+Our discovery of an overnight drift in U.S. equities during the opening of European markets and
+our explanation based on demand for immediacy are closely related to this long standing puzzle.
+                                             h                           i
+                                               Insert figureA.1here
+
+B.Supplementary Results: Section II
+B.1.Day of the week
+Panel (a) of figureA.3plots cumulative 5-minute returns sampled for each trading day of the week.
+In terms of close-to-close returns, rTUECTC ∼rWEDCTC ∼rTHUCTC while returns on Mondays and Fridays are
+significantly lower. Considering the OD, it is clearly visible in each day of the week, and displays
+far less dispersion than close-to-close returns, suggesting that it is a systematic phenomenon. Panel
+(a)ofTableA.5teststhisclaimformallyusingaregressiondummyframeworkasabove. Inalldays
+
+
+  38www.bloomberg.com/news/articles/2020-06-05/the-stock-rebound-really-gets-going-after-wall-street-logs-off
+www.bloombergquint.com/markets/volatility-bout-puts-outsize-overnight-stock-moves-in-focus
+
+
+                                                           1
+of the week, the 2:00 - 3:00 return is positive and significant at the 1% level and the magnitude of
+the returns is also quite similar.
+    Panel (b) of TableA.5, on the other hand, shows that the            OP returns are always negative but
+onlystatistically significanton Thursdays andFridays withmean returns equalto−2.10 and−3.03
+basis points per hour per day, with t-statistics equal to −2.02 and −2.76, respectively.  Figure
+A.10reports three pieces of suggestive evidence as to why the        OP occurs only on Thursdays and
+Fridays:  Firstly, we observe more U.S. macro announcements released at 8:30 on Thursdays and
+Fridays. Generally, we experience large positive returns leading up to announcements, as has been
+documented in the literature (Savor and Wilson(2013)).  We conjecture that (short-lived) price-
+reversalsfollowingthemacroannouncementspartlyexplainthenegativeopeningreturns. Secondly,
+we do not observe many FOMC announcements on Thursdays and Fridays and we also know that
+returns typically are positive in the hours leading up to FOMC announcements which subsequently
+donotrevertLuccaandMoench(2015). Thirdly,weobservemostnegativeearningsannouncements
+days are Thursdays and Fridays. In summary, while OP returns is concentrated in the final days
+of the week, OD returns are systematically positive and significant in each day of the week.
+                               Insert figureA.3andA.10and tableA.5here                             
+
+
+B.2.Month of the year
+Panel (b) of figureA.4plots average cumulative 5-minute returns across the trading day for the
+futures contract roll months March, June, September and December.  While ID returns display
+significantvariation,inparticularOP arelargeandnegativeinSeptemberequalto−3.45%,opening
+returns are either slightly positive or negative in other months. The OD, however, is clearly visible
+in all months.  More formally, TableA.6reports the statistical significance within each calendar
+month. ConsistentwithFigureA.4,the               ODdriftispositiveinallmonthsoftheyearandstatistically
+significant at conventional levels in 9 out of 12 months.
+                                     Insert figureA.4and tableA.6here                   
+
+
+            A.2.Supplementary Results: Section III & IV of paper
+
+SectionsIIIandIVconducted a number of tests of the relationship between the overnight drift
+and trading imbalances as predicted by by inventory risk models along the lines ofGrossman and
+Miller.  In these sections, we primarily measured end-of-day (EOD) order imbalances in terms of
+RSV and the sample period was 1998–2020. In this part of the OA we present counterparts to the
+results of the main body but using SV  instead.  We use the sample period 2007–2020 since total
+volumes were relatively stationary over this period, see figureA.6.                  39 Using the SV measure in the
+early sample period would be problematic since volumes has increased by more than a factor 1000
+since the early 2000’s; thus, an order imbalance of 1000 contracts would be massive in 1998 when
+the e-mini had just started trading but it would be small in 2020.
+    TableA.7reports summary statistics for hourly            SVt. On average, close-to-close SVt is equal to
+-2,217 contracts (t-stat = -3.27), is highly volatile, and negatively skewed. Indeed, the median SVt
+is actually positive.  Negative CTC SVt’s are consistent with the idea that the futures market is
+
+
+  39Closing order imbalances can be very extreme as seen in 2006 where the was a net selloff of more than 250,0000 contracts
+in the last hour of trading: A sense of calm that returned to the market Tuesday disappeared in the final minutes of trading as
+stocks gyrated and reversed earlier gains. see www.money.cnn.com/2006/05/23/markets/markets_newyork/index.htm.
+
+                                                            2
+traded as a hedging instrument for the underlying.  However, while SVt’s are negative during the
+day, they are largely positive overnight. During the OD hour, SVt is equal to 124 contracts with a
+t-statistic of 4.23, mirroring the unconditional positive returns during this hour. Panel (c) zoom in
+on the signed volume during the closing hour of U.S. trading. In the following, we use the last hour
+preceding the maintenance to measure closing order imbalances. Thus, SV closet      denotes the order
+imbalance based on all trades sampled during the hour 15:15 – 16:15.
+                                              Insert tableA.7here          
+
+
+    ConsistentwiththefindingsforthesampleperiodJanuary1998–December2020usingRSVcloset       ,
+figureA.7showsthatsortingdaysbasedon              SVcloset       ,positiveovernightreturnsoccuronlyonnights
+following market sell-offs (negative end-of-day order imbalances). Price reversals following market
+rallies are much more modest thus we have uncovered a strong demand asymmetry between long
+and short inventory positions. Consistent with the prediction of GM that higher price uncertainty
+should command a higher liquidity premium, tableA.8reports double sorts on          SVcloset        and EOD
+VIX and shows that the OD returns are amplified in states of higher ex-ante volatility but only
+following market sell-offs.  Finally, tableA.9confirms high frequency return predictability arising
+at the opening of European financial markets via projections onto SVcloset       .
+                        Insert figureA.6, figureA.7, tableA.8and tableA.9here                                       
+
+
+    From inventory models we know that order flow predicts returns.  However, the more liquid a
+market is, the shorter the period of predictability should be because liquidity providers can quickly
+trade imbalances away. In illiquid markets, such as corporate bonds, you can observe predictability
+over days.   For the e-mini, negatively autocorrelated return predictability usually  only lasts a
+couple of minutes. For example, figureA.8displays 5 minute predictability regressions of returns
+on lagged signed volume for lags out to one hour.   Only the first 5-minute lag is significantly
+negative. The bottom panel shows this pattern shows up in returns at the same frequency. What
+makes predictability by the order imbalance at the closing of U.S. trading hours special, is that the
+volumestransactedaremuchlargerthanthosetradedinthesubsequenthours. Therefore,amarket
+maker providing immediacy in this market is faced with a (potentially) large order imbalance at
+the end of the day that will take a long(er) time to trade away overnight, creating a longer-horizon
+return predictability overnight. Indeed, this is precisely the fundamental assumption of Grossman-
+Miller style models: market makers have to absorb excess order flow in the near term in the hope
+of new traders arriving at some point in the future.
+                                              Insert figureA.8here          
+
+
+                        A.3.Grossman and Miller (1988) Review
+
+There exists a risk free asset (cash), B, with a zero rate of return, and a risky futures contract that
+pays S3 at date t = 3 where S3 is conditionally normally distributed. Public information about S3
+arrives before trading in period 1 and again before trading in period 2:
+
+                                   S3 =S2+ϵ3 =S1+ϵ2+ϵ3 =µ+ϵ2+ϵ3,                                   (A.1)
+
+where news shocks ϵ2,ϵ3∼N(0,σ2t).
+
+                                                            3
+                                                   Trading Periods
+
+    Assume there are N  competitive market makers (MM) with a CARA utility function and
+identical risk aversions α. At t=0 dealers hold a non-zero cash position but a zero position in the
+risky asset: qMMn0      = 0. In period t = 1, a representative intraday liquidity trader (ID), who holds
+an initial endowment of qID0   futures contracts, executes a transaction of qID1   contracts.  Dealers
+provide immediacy at t = 1 by trading with the ID agent and next period t = 2 dealers meet a
+representative overnight liquidity trader (ON), who trades an offsetting amount. Denote the initial
+endowments of the ID and ON trader as qID0   = I = −qON0   .  Demand for immediacy thus arises
+because the liquidity demand by non-market-maker traders in period 1 is asynchronous with the
+liquidity supplied by overnight liquidity traders that arrive in period 2.  The ID liquidity trader
+thus faces the risk of delaying execution until one period later, or, offloading some of that trade
+now to the market markets who start with zero inventory but are willing to carry some inventory
+in exchange for a liquidity premium (expected transaction return).
+    The problem of determining equilibrium quantities and prices is solved backwards in time. At
+t=2,agenti∈{MM1,...MMn,ID,ON}maximizestheirexpectedutilitysubjecttotheirbudget
+constraints
+
+                                                 max
+                                                  qi2  E2−exp(−αWi3)                                               (A.2)
+                                            Wi2 =Bi2+qi2S2 =Bi1+qi1S2                                             (A.3)
+                                            Wi3 =Bi2+qi2S3                                                                (A.4)
+                                                 =Wi2 +qi2(S3−S2),                                                    (A.5)
+
+wheretheexpectationistakenconditionalontheinformationsetrealizedatdatet=2. Eliminating
+the cash position from the problem is equivalent to
+
+                                   max
+                                     qi2   α(Wi2 +qi2(E2[S3]−S2))− 12(αqi2σt)2.                                  (A.6)
+
+The first order condition is
+
+                                               q∗,i2  = E2[S3]−S2ασ2t                                                                (A.7)
+
+                                                ¯q∗,i2  = E2[S3]−S2ασ2t     −qi0,                                                 (A.8)
+
+where in the second line we have written the first order condition in ‘excess demand’ terms
+
+                                                       ¯qit =qit−qi0.                                                          (A.9)
+
+
+
+
+
+                                                     LO       4
+                                      EOD            EU
+
+                         t=0    ID     t=1    ON     t=2          t=3
+Market clearing in period 2 gives us:
+                             E2[S3]−S2                        E2[S3]−S2             E2[S3]−S2
+           0=X        ¯qi2 =       ασ2t     −I       +N·            ασ2t        +         ασ2t       +I     .             (A.10)
+                   i        |          {z          }         |       {z       }    |          {z          }
+                                      ¯q∗,ID2                      ¯q∗,MM2                  ¯q∗,ON2
+
+    Moving backwards one period, at t=1, the portfolio choice problem is now solved by the set of
+agents i∈{MM1,...MMn,ID} and given by
+
+                                             max
+                                               qi1  E1−exp(−αWi2)                                                   (A.11)
+                                             Wi2 =Bi1+qi1S2                                                               (A.12)
+                                             Wi1 =Bi1+qi1S1 =Bi0+qi0S1,                                          (A.13)
+
+which is equivalent to
+
+                                    max                                        2(αqi1σt)2.                                (A.14)
+                                      qi1   α(Wi1 +qi1(E1[S2]−S1))− 1
+
+The first order condition in excess demand terms is given by
+
+                                       ¯q∗,i1  = E1[S2]−S1ασ2t     −qi0 = µ−S1ασ2t   −qi0.                                    (A.15)
+
+Imposing market clearing in period t=1 and remembering qMM0     =0 and qID0   =I
+
+                                                      ¯qID1   +NqMM1     =0                                                   (A.16)
+
+                                                   (N +1)µ−S1ασ2t    =I,                                                  (A.17)
+
+and so the equilibrium clearing price is given by
+
+                                                   S1 =µ−Iσ2t    αN +1.                                                 (A.18)
+
+Atthispoint,itisworthmakingclearthattheID agentdoesnotoffloadtheirentireinitialposition
+to the MM. Substituting the equilibrium price back into the optimal demands we see
+
+                                            q∗,MM1       =   IN +1                                                                 (A.19)
+
+                                              ¯q∗,ID1     =−Nq∗,MM1       =−  NIN +1                                          (A.20)
+
+                                              q∗,ID1     =I−N   IN +1.                                                      (A.21)
+
+The larger the number of dealers present, the greater is the optimal initial position that is imme-
+diately traded. For example, with the introduction of a single EOD MM, 50% of the initial order
+imbalance will be carried overnight by the MM.  In the CME e-mini market, on average since
+2009, there are more than 30 dealers continually posting quotes at the best bid and ask, implying
+that 96% of imbalances, conditional on a liquidity event, will be absorbed end-of-day and carried
+
+                                                               5
+overnight.
+    Now, define the return RON = (S2−S1)/S1 which compensates the dealer for holding inven-
+tory between t = 1 → t = 2.  Then, from (A.17) and using         σ2t  = Var1[S2] = S21Var[S2/S1] =
+S21Var[RON]=S21σ2R,t, we have
+
+                                              (N +1)E1[S2]−S1αS21σ2R,t    =I                                              (A.22)
+
+                     ⇔                                       E1[S2]−S1S1        =S1I×σ2R,t×    αN +1,                 (A.23)
+
+which shows that expected overnight return are comprised of
+                                                                         Risk Bearing −1.                     (A.24)
+                         E1[RON]=Dollar OrderImbalance  ×  ReturnVariance×   Capacity
+
+From RON =(S2−S1)/S1, we can also consider the conditional covariance of the overnight return
+and the intraday order imbalance (from the perspective of period t=0 such that S1I is random):
+
+                                 cov0[S1I,RON]=−var0(S1I)σ2R,t×    αN +1,                               (A.25)
+
+which shows that the size of the reversal following the date t=1 imbalance is larger when
+    • dollar order imbalance is larger (more variable)
+    • conditional variance is larger
+
+    • dealer risk bearing capacity is smaller
+    While the size of the price reversal above is variable, the speed of the reversal happens very fast
+and always within one period. This is because qID0   =I =−qON0   . Relaxing this assumption one can
+solve for the case qID0   =I =−∆qON0   . The case of ∆ > 1 implies a large overnight demand while
+the case ∆<1 implies a small overnight demand. It is straightforward to solve this model and we
+find that lower overnight demand will increase the magnitude of return reversals but the speed of
+mean reversion (between t = 0 and t = 3) is slower.  Thus, lower overnight demand implies that
+overnight return reversals are not completed until later in the overnight session.
+    We now turn to the potential relationship between dealer risk bearing capacity and return
+variance. Keeping fixed the number of dealers, we can endogenize dealer risk aversion by incorpo-
+rating a value-at-risk (VaR) constraint into the market maker’s problem, as is done, for example, in
+Danıelsson,Shin,andZigrand(2004);AdrianandShin(2010,2014a)andthesubsequentliterature.
+More specifically, we modify the optimization problem (A.14) to include a VaR constraint, so that
+the market makers solve
+
+                        max     −α WMMi1      +qMMi1     (E1[S2]−S1)+ 12(αqMMi1     σt)2                       (A.26)
+                       qMMi1
+                             s.t.                                                           
+
+                            ¯p≥P1   WMMi                               −WMMi              .                   (A.27)
+                                       | 1      +qMMi1     (E1[S2]−S1){z}      2     ≥VaR
+                                                      h      i
+                                                  =E1  WMMi2
+
+
+                                                           6
+Thatis,themarketmakermaximizesexpectedutilityofprovidinginter-periodliquidity(asinA.14)
+but now subject to the probability of losses larger than the permitted value-at-risk (VaR) being
+lower than a pre-specified permitted probability ¯p. Denote by Φ(·) the distribution function of the
+standard normal. Then we can rewrite (A.27) as
+                                                               !
+                                                 Φ     −VaR       ≤ ¯p,
+                                                      σWMMi
+                                                          2
+or, equivalently,
+                                                           VaR         2
+                                         σ2WMMi                           ≡ ¯v.                                         (A.28)
+                                             2    ≤     Φ−1(1− ¯p)
+
+Here, σWMMi
+          2     is the volatility of period 2 wealth, given period 1 information, which, for the market
+makers, is given by σWMMi            1     σt. Denoting by αλt/2 the Lagrange multiplier on the simplified
+                           2     =qMMi
+VaR constraint (A.28), we can thus rewrite the market makers’ optimization problem as
+
+        max     α WMMi1      +qMMi1     (E1[S2]−S1)− 12(αqMMi1     σt)2− αλt2        ¯v− qMMi1     σt2         (A.29)
+        qMMi1
+
+            0= αλt2     ¯v− qMMi1     σt2  .                                                                                    (A.30)
+
+Thus, in the presence of a VaR constraint, the optimal demand by a market maker is given by
+
+                                               q∗,MM1       =    µ−S1(α+λt)σ2t,                                                 (A.31)
+
+and the market maker’s effective risk aversion becomes α+λt. For a given level of the permitted
+value-at-riskandpermittedprobability ¯p, increasesinvolatilitytightenthevalue-at-riskconstraint,
+raising the effective risk aversion of value-at-risk constrained market makers.   Similarly, if the
+permitted value-at-risk is given as a fraction of equity – so that VaR= φWMMi1      – rather than as a
+dollar amount, the value-at-risk constraint is tighter when market maker equity declines.
+    The framework above suggests that value-at-risk may serve as a reasonable proxy for market
+maker capital commitments to the trade.  Value-at-risk is a measure of economic capital, that is,
+the capital required to absorb losses in excess of expected loss due to current risks.  As noted
+in, for example, the BCBS white paper on “Range of practices and issues in economic capital
+frameworks”:40
+       Economic capital was originally developed by banks as a tool for capital allocation and
+       performance assessment.
+
+Inotherwords,banksusenotionsofeconomiccapitaltodeterminethecompositionoftheassetside
+of their balance sheets, both from the perspective of the relative size of different lines of business
+as well as from the perspective of allocating to business units within each line of business. We thus
+view that using a measure of economic capital as being appropriate in the context of evaluating
+marketmakerriskbearingcapacity. Althoughbankcapitalregulationhasfamouslyevolvedoverour
+sampleperiod, themajorregulatorychangeshavealimitedimpactoneconomiccapitalasitrelates
+
+  40https://www.bis.org/publ/bcbs152.pdf
+
+                                                           7
+to equity futures since both the futures and the underlying basket of securities are exchange-traded
+throughout our sample period, and are on-balance-sheet items for supervised institutions.41
+    More specifically, we focus on the equity VaR as opposed to the total VaR of reporting insti-
+tutions. Conversations that the Federal Reserve Bank of New York conducted with major market
+participantsfollowingtheimplementationofpost-crisisbankingregulationsuggestthatlargefinan-
+cialinstitutionsallowdifferentbusinesslinestomakeday-to-dayallocationdecisionsindependently,
+as long as the overall economic capital allocated to that business line (and, indeed, business unit) is
+not exhausted. Thus, for example, the equity futures “desk” makes day-to-daytrading decisions in-
+dependent of the Treasury desk. We thus view using equity VaR as balancing the desired definition
+of what constitutes a market maker in the market against the feasibility of granularity available in
+the data.
+    Acknowledging that our calculation is by its nature an approximation, we note that, even if the
+true economic capital allocated to the e-mini futures market is 10 times higher, our relative risk
+aversion estimate is comfortably within the range previously estimated in the literature.
+    Completing the derivation, the modified market clear condition in equationA.16becomes
+                                         µ−S1                   µ−S1
+                                            ασ2t      +N      (α+λt)σ2t        =I                                       (A.32)
+
+from which the equilibrium EOD price is now given by
+                                                                α2+αλt
+                                         S1 =µ−Iσ2t          N(α+λt)+α                                              (A.33)
+
+from which we identify the modified risk bearing capacity as
+
+                                              RBCt = N(α+λt)+αα2+αλt                                                   (A.34)
+
+Then from
+                                             ∂RBCt
+                                                ∂α    =−     1(α+λ)2 − Nα2                                             (A.35)
+                                             ∂RBCt
+                                                ∂λ     =−     1(α+λ)2                                                     (A.36)
+
+we see the sensitivity of     RBCt w.r.t risk aversion is strictly larger (in magnitude) compared to the
+non-constrained case, adjusted by a term that is the sensitivity of                RBC w.r.t the probability of the
+constraint binding. The expected overnight return becomes
+
+                                 Et[RON]=Dollar OrderImbalance  ×  ReturnVariance×RBC−1t                                (A.37)
+
+and from equationsA.35andA.36it is straightforward to show that expected overnight returns are
+strictly increasing in both risk aversion and the tightness of the dealer constraint.
+
+
+  41Post-crisis changes to capital regulation had the biggest impact on over-the-counter, non-centrally cleared, off-balance-
+sheet securities.
+
+
+
+
+                                                             8
+                                 A.4.Alternative Explanations
+
+In this subsection we link CRSP, Computstat and IBES datasets for S&P 500 firms to build in-
+traday and overnight earnings surprises, and consider international macro announcements from
+Bloomberg, and central bank announcements sourced from Bloomberg and central bank websites.
+We also exploit tick-by-tick trades and quotes on VIX futures (VX) sourced from Refinitiv and
+complemented with data from CBOE.
+
+A.Volatility Risk
+FigureA.11(a) depicts average realized intraday volatility (squared log returns) from 1998.1–
+2020.12sampledata1-minutefrequency. Theintradayvolatilitydisplaysthewell-knownU-shaped
+pattern for Asian, European and US trading hours where volatility is high at the beginning and
+at the end of each trading periodAndersen, Bondarenko, Kyle, and Obizhaeva(2018).  Across
+trading periods, the level of volatility is lowest during Asian trading hours and highest during US
+trading hours, relative to the average trading volume across the 3 periods.  Comparing average
+levels for each session, we find that US hours volatility is more than twice as large as Asian hours
+volatility and therefore considerably larger than estimates of return volatility using close-to-close
+prices.  The large spike in volatility at 8:30 is caused by the spike in volume observed just after
+US macro announcements. FigureA.11(b) plots time series of the realized volatility for each of the
+three trading periods.  The volatility is always lowest during Asian hours and highest during US
+hours but the difference has diminished over time as trading volume in the overnight session has
+picked up. The 3 time series are highly positively correlated, indicating that volatility increases on
+the same days for all three trading periods. More importantly, we do not observe an obvious link
+between realised quantities of risk and returns.
+
+                                             [Insert figureA.11here]
+
+B.Overnight Liquidity
+To measure liquidity risk we construct hourly estimates of 1)Kyle(1985) lambda (based on returns
+sampled at the 1-min frequency), 2) the Amihud price impact measure and 3) the bid-ask spread.
+FigureA.12depicts the average intraday patterns of these measures as well as their time series for
+the Asian, European and U.S. trading hours. As expected, intraday illiquidity is lowest during U.S.
+trading hours where the trading activity is highest and illiquidity is highest during Asian hours
+when the trading activity is at its lowest.  The bid-ask spread is very close to the minimum tick
+size (0.25 index points) at all times during the trading day. All liquidity measures experience large
+changesthroughoutthesampleperiod. Mostnotably,theovernightilliquidity(AsianandEuropean
+hours) has decreased strongly as overnight trading activity has picked up, and today is much closer
+to the illiquidity level in regular U.S. trading hours. Secondly, the illiquidity increases during times
+of crises, as one would expect.
+    Considering all three measures, we do not observe intraday patterns which could rationalize
+the OD returns with theories of liquidity risk. We see average intraday bid-ask spreads are almost
+alwaystradingattheminimumticksize, equalto0.25indexpoints. Thespreadisonlysignificantly
+higher after 16.30 when trading resumes after the maintenance break and volumes are close to zero
+(see figure8).  The jumps in the bid-ask spread at 8:30 and 10:00 corresponds to the U.S. macro
+announcements which are released at these times.
+
+
+                                                           9
+    Inaddition, sinceweobservetheaggregatelimitorderbookforthemarket, wecanalsomeasure
+intradayilliquiditybycomputingthedepthofthemarket. Marketdepthiscomputedasthenumber
+of contracts available in each 5 minute interval, and is reported for the first five levels on each side
+of the order book.  FigureA.14shows the intraday depth averaged across all days in the 2009.1-
+2020.12 sample.  Here we observe that, at each level, the depth of the bid is equal to the depth
+of the ask. We also note there are three depth regimes differentiated by Asia, European and U.S.
+trading hours. Depth is flat in Asian hours and rises throughout European hours.
+    At U.S. open, depth increases steeply, remains relatively flat during the regular U.S. hours and
+then spikes at U.S. close before dropping in the overnight market.  However, we also see that the
+overnight market remains highly liquid. For example, until 2.00 at the top level (L1) there are, on
+average, 100 contracts available, which in dollar terms with the S&P level at 2000 is equal to $10
+million at the bid or ask. Considering all levels, L1 - L5 depth rises to $80 million. Indeed, a highly
+liquid overnight market is consistent with the large overnight volumes traded in this market, which
+as noted in the introduction, have averaged in excess of $15 billion daily.
+                                       Insert figuresA.12andA.14here                      
+
+
+C.Overnight News
+We now consider if overnight news released after the U.S. cash market close are not immediately
+incorporated into prices during Asian hours but instead accumulate and are resolved at European
+open when trading volumes increase. Indeed, a large fraction of U.S. corporate earnings announce-
+ments are released after U.S. market close.  Furthermore, Asian and European macro or central
+bank information released during the U.S. overnight session may signal news about U.S. growth
+prospects.  Explanations for the overnight drift along these lines are related to a literature that
+shows conditional risk premia are higher on days prior to and on days of macroeconomic announce-
+ments.42 We study this conjecture by examining hour-by-hour returns conditional on U.S. earnings
+announcements., and U.S., Japanese or European macro- and central bank announcements.
+
+C.1.Earnings Announcements
+Wetestiffirm-specificannouncementspredictintradayreturns. Previousliterature(seee.g.Bernard
+and Thomas,1989;Sadka,2006, and the subsequent literature) has documented a positive (nega-
+tive) drift in stock prices of individual firms following a positive (negative) earnings announcement
+surprise. The earnings data is obtained from I/B/E/S and Compustat. FollowingHirshleifer, Lim,
+and Teoh(2009), for each firm              i and on day t we define the earnings surprise as
+
+                                                ESi,t = Ai,t−Fi,t−Pi,t−     ,
+
+whereAistheactualearningspershare(EPS)asreportedbythefirm, F isthemostrecentmedian
+forecast of the EPS and P is the stock price of the firm at the end of the quarter.  As I/B/E/S
+updates the professional forecasters’ expectations on a monthly basis, the shock is the difference
+between the actual earnings and forecasters expected earnings approximately 1 month prior to the
+announcementdate. Scalingtheshock A−F bythestockpriceimpliesthatfirmshocksareequally
+
+
+  42In the context of stock returns,Savor and Wilson(2014) show that equity risk premia are consistently larger on U.S.
+inflation, GDP and non-farm announcements days.Lucca and Moench(2015), on the other hand, document a drift in the
+U.S. stock market which precedes FOMC announcements.
+
+                                                           10
+weighted.43  We define the daily earnings surprise of the S&P 500 index, ESt, as the daily sum of
+all ESi.44
+    FigureA.15plots the time series of                  ESt.  The shocks are periodic on a quarterly basis and
+generally positive (∼ 75% of all shocks are positive). Notably, we see large negative shocks during
+the financial crisis and almost exclusively positive shocks following the crisis.
+    Totestthisconjectureformally,wesortalltradingdaysbasedonESt. Wechooseonlyannounce-
+ments that are published after U.S. close (16:00 ET). This is because the effect of announcements
+published early in the day should be incorporated into the price on that day, while announcements
+that occur after CTO hours could affect returns in these hours.  TableA.13reports the average
+returns for day t+1 after sorting on ESt. We sort all trading days into 5 groups based on ESt. In
+group1,ESt <0. Forgroup2-4,ESt ispositiveandincreasingbygroup. Group5isfordayswhere
+ESt is zero, i.e.  not a single firm announced their earnings prior to these days (this was ∼ 46%
+of all trading days.  The table contains a number of interesting findings.  First, we see a strong
+monotonic positive relation between earnings shocks and CTC returns across groups. Second, no
+news days have the highest CTC return, equal to 4.57 % p.a, with a t-statistic of 1.86, and in this
+sense “no news is good news”. Third, negative shocks are not incorporated into the price until the
+U.S. market opens, while positive shocks are incorporated immediately during the CTO period.
+However, most importantly for the focus of this paper, we do not detect a post close information
+effect: the OD is not driven by earnings announcements as it is positive and significantly different
+from zero for all 5 set of days.
+
+                                   [Insert figureA.15and tableA.13here]
+
+C.2.Macro and Central Banks
+From Bloomberg’s Economic Calendar we collect dates and times for
+    • U.S.: Non-farm Payrolls; CPI Ex Food and Energy; GDP QoQ.
+
+    • EU: Unemployment Rate; PPI MoM; Industrial Production SA MoM.
+
+    • U.K.: Jobless Claims Change; CPI Ex Food and Energy; QoQ.
+
+    • Japan: Jobless Rate; PPI MoM; Industrial Production MoM.
+Announcement times are generally close to 8:30 ET in the U.S., 2:00 ET in the Eurozone, 4:30 ET
+in the U.K, and 19:50 ET in Japan.
+    For central banks, we collect announcement dates and times from the websites of the following
+central banks: (i) FOMC; (ii) the ECB; (iii) the BoE; (iv) the BoJ. FOMC target rate announce-
+mentsarereleasedatorverycloseto14:15ET.ECBtargetannouncementsareat6:45ET,followed
+by a press conference at 7:30 ET. BoE announcement days often coincide with ECB days and the
+announcements are at 7:00 ET. Finally, BoJ announcements do not occur at a regular time but
+target rate decisions are generally announced between 22.00 and 1.00 ET. Our sample period is
+January 1998 to December 2020.
+    We test the effect of announcements on hourly subinterval returns in a regression framework
+with dummy variables which take a ‘1’ on days with an announcement and ‘0’ otherwise.  More
+specifically, the dummy takes a value of 1 if the announcement occurs within the current calendar
+
+  43EPS is earnings per share outstanding, implying that EPS/P is earnings per market cap.
+
+  44We also test specifications of ESS&P500t           where firms are value weighted and result are similar.
+
+                                                          11
+day. Thus, Japanese and European macro announcements are contemporaneous with the overnight
+return, while U.S. announcements occur subsequent to the overnight returns.  The regression we
+estimate is
+                             rHt,n =an+bn1    1  U.K.+bn2    1  EU+bn3    1  JP+bn4    1  U.S.+εnt,                          (A.38)
+where           1  i is a macro or central bank announcement dummy for country i.
+    Panel (a) of tableA.14reports estimates for macro announcements. The intercept during the
+OD hour(2:00–3:00)isestimatedtobe1.52bpswithat-statisticof5.98, i.e. thedriftispresenton
+non-announcement days and thus not driven by macro announcements. Furthermore, none of the
+announcement dummies are statistically different from the non-announcement days in this hour.
+The U.K. macro dummy is economically large and significant negative at the 10% level at 3:00
+(which is 8:00 in London).  More generally, we fail to detect an announcement effect in any of
+the overnight hours. U.S. announcements occur at 8:30 and indeed we see a large positive return
+of 3.22 bps with a t-statistics of 2.29.  Panel (b) of tableA.14reports estimates for central bank
+announcements. Again, the intercept is unaffected at 2:00-3:00 and we obtain an estimate of 1.40
+bps with a t-statistic of 6.52. The BoE dummy is economically large and marginally significantly
+positive between 4:00 - 5:00 consistent with central bank announcement premium.  The FOMC
+dummy is large but insignificant.
+
+                                             [Insert tableA.14here]
+
+    Summarizing, we fail to detect a relationship between the overnight drift and (i) earnings an-
+nouncements that are released after the close of the cash market, during Asian hours, or (ii)
+overnight news from Asian or European central bank or macro announcements; thus, it is unlikely
+that the overnight drift is driven by risk compensation related to announcement premia.
+
+C.3.Resolution of Uncertainty
+Theresultsdirectlyabovesuggestthattheovernightdriftisunlikelytoberelatedtoaninformation
+effect. Recent literature (see e.g.Ai and Bansal) for the theoretical argument andHu, Pan,(2018
+Wang, and Zhu(2019) for suggestive empirical evidence), however, has argued that resolution
+uncertainty, as measured by changes in the VIX, ahead of macroeconomic announcements could
+explainthepre-announcementdriftofLuccaandMoench(2015). Morerecently,inworksubsequent
+toours,BondarenkoandMuravyev(2020)postulateuncertaintyresolutionattheopenofEuropean
+markets as a possible explanation for the central empirical result of our paper (figure2).
+    To investigate this hypothesis, we consider changes in volatility by computing intraday and
+overnight VIX futures (VX) returns. Indeed, investors wanting to manage volatility risks around
+the clock can now trade VIX futures (VX) contracts in all time zones. VX futures are open nearly
+23 hours a day, 5 days a week, trading electronically on the CBOE futures exchange. VX is closed
+daily from 16:15 to 16:30 and from 17:00 to 18:00 ET. On Sundays, they start at 6:00 ET. VX
+futures trade with a dollar value of $1000× the level of the VIX Index. Regular expirations are on
+the Wednesday 30 days before the corresponding S&P 500 option expiration. Due to holidays the
+option expiration date may be irregular and settle on the preceding Tuesday. VX futures contracts
+trade with monthly expirations and we consider a position that trades the front month contract
+and rolls into the next-to-delivery contract on the Monday preceding expiration Wednesdays and
+thus avoiding settlement returns.
+    Panel (a) of figureA.16displays the average cumulative 5-minute log returns for the front
+month VX contract.  The intraday VX returns are relatively flat during the U.S. hours.  At the
+
+                                                          12
+closeofregularU.S.tradinghours,intherunuptothemaintenancebreak, VX returnsarestrongly
+negative,exceeding-80%p.a.45 DuringregularAsiantradinghoursVX returnsrebound,generating
+annualizedreturnsof50%between18:00and1:00. AttheopeningofEuropeanmarketsVX returns
+are negative, equal to 50% p.a between 2:00 and 4:00 Panel (a) of tableA.15reports average
+overnight hourly VX returns, measured in basis points, which are highly statistically significant
+around European open.
+    Focusing on VX returns at European open, one can easily rationalize a contemporaneous neg-
+ative co-movement with ES returns (absent a resolution of uncertainty conjecture) in terms of the
+‘leverage effect’, which is the well known empirical fact that equity volatility tends to fall (rise)
+when equity returns are positive (negative). A common explanation for this phenomenon is due to
+Black(1976) andChristie(1982) who argue that companies become mechanically more leveraged
+as equity prices decline relative value of their debt and, as a result, their equity values become
+more volatile as inMerton(1974). Panel (b) of figureA.16demonstrates the leverage effect in in-
+traday data by computing the intraday 1-minute correlations between ES and VX futures returns
+(rESt  ×rVXt   ) for intervals where we observe quote updates and averaging these over all days in our
+sample. During both overnight and intraday periods the correlation is close to -80% which demon-
+strates that economic interpretations of resolution of uncertainty based on a contemporaneous VIX
+relationship is limited: “correlation does not imply causation”.
+
+                                             [Insert figureA.16here]
+
+    More interesting, is the question of whether end-of-day order imbalances in one futures contract
+predict overnight returns in the other contract.  TableA.15answers this question by estimating
+twosetsofhighfrequencypredictabilityregressions. Panel(a)reportsmultivariateregressionswith
+e-mini returns on the left and EOD ES and VX order imbalances on the right hand side
+
+           ES rHt,n =µn+βESSVn      ES SV closet−1   +βVXSVn      VX SV closet−1   +ϵt,n,    for n=1,...,12,
+
+while panel (b) replaces the left hand sides with VX returns
+
+           VX rHt,n =µn+βVXSVn      VX SV closet−1   +βESSVn      ES SV closet−1   +ϵt,n,    for n=1,...,12.
+
+Summarizing the table, while ES imbalances at U.S. close predict subsequent overnight returns in
+both the ES and the VX contracts, VX imbalances only predict overnight VX returns. Overnight
+ES returns between 2:00 and 3:00 are forecastable by closing ES order imbalance after controlling
+for VX order imbalances. VX returns, on the other hand, are predicted by ES order imbalances
+between 2:00 and 3:00 and then subsequently we observe some marginally significant predictability
+by VX order imbalances between 4:00 and 6:00, albeit with positive and negative signs.
+    Thus, while ES and VX returns are contemporaneously mechanically linked through the lever-
+age effect, overnight returns in both markets are predicted by end-of-day imbalances in the ES,
+making the resolution of uncertainty hypothesis an unlikely explanation for the overnight drift.
+
+                                             [Insert tablesA.15here]
+
+
+
+
+
+
+
+
+
+
+  45Volumes between 16:15 and 18:00 are very low and we do not report returns or correlations for this period of the day.
+
+                                                          13
+14
+15
+16
+17
+18
+                                                                                                  (a) Overnight hourly returns
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                   (b) Intraday hourly returns
+                                                                          Table A.6. Month of year mean returns
+                          Mean returns are estimated for each month of the year by projecting hourly return series on a set
+                          of dummy variables, one for each hour of the day, for all days in the sample. Estimates are in basis
+                          points. t-statistics are computed from HAC robust standard errors. Sample period is January 1998
+                          — December 2020.
+
+
+
+
+
+
+Hour           09-10     10-11     11-12     12-13     13-14     14-15     15-16     16-17     17-18
+Hour           18-19     19-20     20-21     21-22     22-23     23-24     24-01     01-02    02-03    03-04     04-05     05-06     06-07     07-08     08-09
+January        -1.45      -3.15      -0.82      0.41       1.51       0.94       1.09      -0.31      -0.72
+January       -0.52      0.53      0.43      -0.01     -0.15     -0.39     -0.86     -0.08     1.28     -0.97      0.47      0.56      1.26      -0.12     -0.34
+t-stat          (-0.81)   (-1.57)   (-0.56)    (0.34)    (1.01)    (0.62)    (0.63)    (-0.34)   (-1.41)
+t-stat         (-0.45)    (0.87)    (0.70)    (-0.03)   (-0.28)   (-1.05)   (-1.83)   (-0.19)   (2.05)   (-1.07)    (0.58)    (0.65)    (1.63)    (-0.15)   (-0.28)
+February      -1.12      -0.96      0.55       0.65      -2.05      0.41       0.57      -0.87      -0.36
+February      -0.33      1.19      -0.57      0.06      -0.39     -0.43      0.29      1.09      2.06      0.07      -0.90     -0.79      0.51      1.17      -2.14
+t-stat          (-0.72)   (-0.51)    (0.35)    (0.57)    (-1.26)    (0.25)    (0.29)    (-0.96)   (-0.00)
+t-stat         (-0.36)    (2.09)    (-0.69)    (0.13)    (-0.83)   (-1.16)    (0.55)    (2.82)    (2.73)    (0.08)    (-1.10)   (-1.18)    (0.66)    (1.54)    (-1.75)
+March          -3.41      4.54       0.97       2.18      -2.69      1.71       1.37      -0.64      -0.82
+March         -4.49     -0.08      0.08      -1.61     -0.36     -0.10      2.13      0.84      2.13      1.48      -0.08     -0.22     -0.65     -0.44      2.81
+t-stat          (-1.48)    (2.13)    (0.54)    (1.37)    (-1.95)    (0.90)    (0.59)    (-0.65)   (-1.82)
+t-stat         (-2.64)   (-0.07)    (0.10)    (-1.23)   (-0.43)   (-0.15)    (1.84)    (1.32)    (2.14)    (1.47)    (-0.06)   (-0.23)   (-0.55)   (-0.40)    (1.76)
+April           -1.04      1.06      -0.17      1.15      -0.15      -1.49      1.15       2.75       0.09
+April           -0.87      0.21      -0.10      0.51      0.07      0.17      0.59      0.22      2.40      0.09      -0.28      1.49      0.13      1.72      0.51
+t-stat          (-0.77)    (0.62)    (-0.11)    (0.97)    (-0.12)   (-1.04)    (0.70)    (2.63)    (0.21)
+t-stat         (-0.83)    (0.46)    (-0.10)    (0.88)    (0.14)    (0.44)    (1.21)    (0.39)    (3.87)    (0.10)    (-0.37)    (2.11)    (0.17)    (2.16)    (0.36)19
+May            -0.34      0.73      0.27      -0.26      0.47      0.04      0.54      0.39      1.11      0.43      -0.60      0.23      -0.27      0.52      -0.92May            -0.24      -0.72      0.37       0.66      -0.77      -0.41      0.29      -0.75      -0.55
+t-stat         (-0.42)    (1.40)    (0.51)    (-0.51)    (1.14)    (0.11)    (1.46)    (0.90)    (1.91)    (0.58)    (-0.83)    (0.37)    (-0.43)    (0.72)    (-0.88)t-stat          (-0.19)   (-0.39)    (0.29)    (0.58)    (-0.73)   (-0.30)    (0.17)    (-1.07)   (-1.76)
+June           -0.82      0.89      0.51      0.31      0.06      0.25      0.47      0.09      1.92      0.45      -0.64      0.45      -0.09     -0.17      0.45June            -0.06      0.17       0.62      -1.63      0.23      -1.44      -1.90      0.34      -0.59
+t-stat         (-0.99)    (2.11)    (0.57)    (0.54)    (0.09)    (0.63)    (0.99)    (0.18)    (2.94)    (0.57)    (-0.79)    (0.70)    (-0.14)   (-0.25)    (0.42)t-stat          (-0.04)    (0.10)    (0.51)    (-1.58)    (0.20)    (-1.01)   (-1.26)    (0.48)    (-2.17)
+July            -0.34      0.06      -0.25     -0.29      0.79      0.44      -0.50      0.29      1.37     -0.19      0.84      0.19      1.24      1.16      -0.42July            -0.60      -1.73      -1.63      -0.88      2.83      -1.01      2.28      -0.66      -0.15
+t-stat         (-0.45)    (0.17)    (-0.56)   (-0.59)    (1.73)    (1.32)    (-1.51)    (0.81)    (2.57)   (-0.26)    (1.10)    (0.29)    (1.81)    (1.48)    (-0.38)t-stat          (-0.46)   (-1.02)   (-1.00)   (-0.78)    (2.38)    (-0.73)    (1.14)    (-0.77)   (-0.32)
+August        -2.12     -0.19      0.32      0.12      -0.21     -0.34      0.62      0.80      0.95      0.51      0.08      -1.03      0.73      -0.02     -0.41
+August         -1.59      -0.30      -0.94      0.76       1.20      -1.33      -0.87      0.82      -0.49
+t-stat         (-2.35)   (-0.46)    (0.49)    (0.20)    (-0.43)   (-0.68)    (1.44)    (1.59)    (1.33)    (0.52)    (0.11)    (-1.46)    (1.16)    (-0.03)   (-0.34)
+t-stat          (-1.14)   (-0.16)   (-0.67)    (0.62)    (1.04)    (-0.92)   (-0.41)    (1.15)    (-1.28)
+September     0.68      0.11      -0.39      0.38      -0.14     -0.45      0.22      0.62      2.71     -1.24      0.56      0.23      -2.17     -0.98     -0.46
+September    -3.45      -0.34      0.70      -0.68      0.68       1.22      -0.77      -0.18      -0.12
+t-stat          (0.44)    (0.15)    (-0.47)    (0.53)    (-0.26)   (-1.01)    (0.50)    (1.01)    (3.63)   (-1.11)    (0.58)    (0.26)    (-2.49)   (-1.12)   (-0.37)
+t-stat          (-1.98)   (-0.17)    (0.48)    (-0.53)    (0.48)    (0.70)    (-0.37)   (-0.17)   (-0.33)
+October       -2.12     -0.19      0.32      0.12      -0.21     -0.34      0.62      0.80      0.95      0.51      0.08      -1.03      0.73      -0.02     -0.41
+October        -1.59      -0.30      -0.94      0.76       1.20      -1.33      -0.87      0.82      -0.49
+t-stat         (-2.35)   (-0.46)    (0.49)    (0.20)    (-0.43)   (-0.68)    (1.44)    (1.59)    (1.33)    (0.52)    (0.11)    (-1.46)    (1.16)    (-0.03)   (-0.34)
+t-stat          (-1.14)   (-0.16)   (-0.67)    (0.62)    (1.04)    (-0.92)   (-0.41)    (1.15)    (-1.28)
+November     2.24      0.40      0.03      0.60      -0.08      0.32      1.20      0.07      0.63      1.61      0.04      -0.05      1.64      -1.57      1.70
+November     -1.56      1.24      -0.46      0.06       0.59       1.06       0.68       0.13      -1.26
+t-stat          (2.04)    (0.57)    (0.04)    (0.84)    (-0.11)    (0.56)    (2.12)    (0.14)    (0.73)    (1.62)    (0.04)    (-0.06)    (1.54)    (-1.62)    (1.33)
+t-stat          (-0.92)    (0.68)    (-0.32)    (0.04)    (0.40)    (0.55)    (0.26)    (0.14)    (-3.33)
+December      2.30      -0.07      0.88      -0.03     -0.44     -0.23      0.75      1.26      1.05      1.48      1.88      0.79      0.27      -1.02      0.56
+December     -0.38      1.37      -1.28      -0.17      -2.48      -0.93      -0.44      -0.03      -0.21
+t-stat          (2.56)    (-0.09)    (1.57)    (-0.08)   (-0.68)   (-0.51)    (1.32)    (2.61)    (2.19)    (1.93)    (2.62)    (1.13)    (0.40)    (-1.38)    (0.53)
+t-stat          (-0.24)    (0.75)    (-0.87)   (-0.15)   (-1.88)   (-0.55)   (-0.24)   (-0.02)   (-0.70)
+20
+                   VIX Low       VIX Med      VIX High       VIX Low       VIX Med     VIX High
+                             Panel A1: Positive SV                                   Panel A2: Average VIX
+SV Low          2,769.00        2,767.00        2,484.00            12.37             15.99            25.87
+SV Med         8,970.00        9,196.00        8,840.00            12.40             15.79            24.08
+SV High        17,597.00       20,315.50       22,295.00           13.24             18.33            28.27
+
+                                                   Panel A3: OD Average Returns
+                   VIX Low       VIX Med      VIX High      High - Low       p-value
+SV Low             1.52              -3.43             -1.24              -2.76              0.50
+SV Med            -1.54             -0.68              6.96               8.50               0.01
+SV High            0.33              -1.29              0.42               0.09               0.98
+High-Low          1.19              -2.14             -1.66
+p-value              0.50               0.41               0.77
+
+
+                            Panel B1: Negative SV                                    Panel B2: Average VIX
+SV Low         -2,747.50       -2,941.00       -3,031.00           13.84             18.41            27.14
+SV Med         -9,954.50      -10,052.00      -9,802.50           12.85             16.89            25.60
+SV High       -21,023.00     -25,804.00     -24,140.50          12.58             16.11            24.43
+
+                                                   Panel B3: OD Average Returns
+                   VIX Low       VIX Med      VIX High      High - Low       p-value
+SV Low            -0.01              1.20              13.27              13.28              0.00
+SV Med            4.14               2.59              18.12              13.98              0.00
+SV High            4.98              12.15             17.10              12.11              0.03
+High-Low          4.99              10.95              3.83
+p-value              0.03               0.00               0.54
+
+
+                 Table A.8. Double sorts on signed volume and closing VIX
+We split the sample into positive (panel a) and negative (panel b) closing signed volume.
+Within each set we double-sort trading days into terciles of relative signed volume RSV and
+the closing level of the VIX.  Within each set we report average RSVs and VIX levels
+(A1,A2,B1,B2).  Double sorted overnight drift OD return averages are reported (A3,B3)
+alongwithhighminuslowdifferencesandp-valuestestingthedifferenceagainstzero. Sample
+period is January 2007 – December 2020.
+
+
+
+
+
+
+
+
+                                                              21
+22
+                                                                                          (a)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  18-19   19-20   20-21   21-22   22-22   23-24   24-01   01-02   02-03   03-04   04-05   05-06
+SV1HLag    -8.68    -2.93    -1.43    5.65     4.50     6.29     6.04     7.11     0.51    -0.00    -1.80    1.60
+                 (-1.51)  (-1.59)  (-0.88)  (1.22)   (1.19)   (2.18)   (1.17)   (1.21)   (0.11)  (-0.00)  (-1.15)  (1.51)
+
+SV2HLag    -0.87    -2.51    -0.67    -4.79    4.81     2.19    -2.95    1.25    11.94   -14.67    0.60    -1.45
+                 (-1.69)  (-1.37)  (-0.16)  (-1.50)  (1.22)   (1.97)  (-1.00)  (0.42)   (1.64)  (-3.73)  (0.18)  (-0.86)
+                                                                                          (b)
+SV3HLag     0.24    -0.38    -4.83    0.25    -1.29    4.38     0.30    -3.63    0.68    -2.61    -4.70    -2.80
+                  (0.67)  (-1.82)  (-1.52)  (0.13)  (-0.32)  (2.43)   (0.16)  (-1.65)  (0.11)  (-0.53)  (-1.27)  (-1.20)Table A.10. Falsification test
+SV4HLag     0.34    -0.21    -0.79    2.75     3.82     1.70    -7.45    2.30    -2.52   -16.73   -0.91    5.00Panel (a) displays regression estimates of hourly overnight returns regressed on a one hour lag of signed volume. Panel
+                  (0.94)  (-0.99)  (-2.72)  (1.15)   (1.79)   (0.83)  (-3.16)  (0.91)  (-0.92)  (-2.43)  (-0.23)  (1.03)(b) displays regression estimates of hourly overnight returns regressed on twelve lags of hourly relative signed volume.
+                    Days where the time difference between London and New York is different from 5 hours are excluded. Estimates are
+SV5HLag    -0.20    0.12    -0.53    0.67     0.42     3.16     3.22    -2.69    -3.43    0.32     3.63    -6.70in basis points.  t-statistics reported in parenthesis are computed from robust standard errors clustered within each
+                 (-0.44)  (1.21)  (-3.23)  (2.80)   (0.20)   (1.75)   (1.76)  (-1.79)  (-0.87)  (0.05)   (0.54)  (-1.67)month. Sample period is January 1998 – December 2020.
+
+SV6HLag    -0.46    0.01     0.10    -0.13    0.58     2.09     0.07    -0.93    0.61    -1.06    -1.27    1.2918-19    19-20    20-21   21-22   22-22   23-24   24-01   01-02   02-03   03-04    04-05   05-06
+SV1HLag    -8.63    -2.83    -0.60    5.13    5.49    7.28    4.54    7.51    4.92    -1.61    -1.95    1.29(-0.94)  (0.06)   (0.33)  (-1.29)  (2.04)   (1.13)   (0.03)  (-0.36)  (0.21)  (-0.17)  (-0.64)  (0.44)23
+SV7HLag     0.25     0.12    -0.23    -0.44    0.17    -0.50    -0.12    -1.36    6.02    -0.91    0.76     0.85(-1.55)  (-1.50)  (-0.33)  (1.14)  (1.23)  (2.50)  (0.86)  (1.20)  (0.79)  (-0.47)  (-1.39)  (1.16)
+µ                -0.21     0.35     0.14     0.16    0.07    0.05    0.34    0.38    1.40     0.29     -0.03    0.03(0.46)   (0.49)  (-0.86)  (-2.77)  (1.85)  (-1.84)  (-0.06)  (-0.59)  (1.55)  (-0.18)  (0.31)   (0.31)
+SV8HLag    -0.38    0.15     0.04     0.24    -0.03    0.29     0.30    -0.71    2.42     6.77     0.85     0.95(-0.51)  (2.77)   (1.12)  (1.54)  (0.58)  (0.47)  (2.08)  (2.44)  (6.78)  (1.20)  (-0.12)  (0.14)
+Adj. R2(%)    0.11     0.06     0.00     0.22    0.23    0.57    0.12    0.28    0.07     0.01     0.05     0.02(-1.06)  (0.92)   (0.13)   (1.23)  (-0.18)  (1.67)   (0.93)  (-0.36)  (0.79)   (1.51)   (0.31)   (0.36)
+
+SV9HLag     0.21     0.11    -0.27    0.04    -0.03    -0.07    -0.40    -1.11    -2.48    -3.47    -6.65    2.06
+                  (0.34)   (0.59)  (-1.37)  (0.13)  (-0.09)  (-0.32)  (-3.88)  (-4.87)  (-1.18)  (-0.90)  (-1.78)  (0.81)
+
+SV10HLag   0.71     0.25    -0.29    -0.28    -0.06    -0.20    -0.31    -0.19    -1.58    -3.62    3.46     1.57
+                  (1.04)   (0.68)  (-1.76)  (-1.73)  (-0.35)  (-0.97)  (-1.69)  (-0.78)  (-4.44)  (-0.88)  (1.01)   (0.37)
+
+SV11HLag   -2.33    0.17    -0.18    -0.05    -0.05    0.24    -0.10    -0.11    -0.77    -0.34    -3.68    -1.23
+                 (-1.50)  (0.42)  (-0.81)  (-0.32)  (-0.28)  (1.03)  (-0.40)  (-0.57)  (-2.92)  (-0.76)  (-1.11)  (-0.79)
+
+SV12HLag   -2.63    -0.82    -0.37    0.06    -0.18    0.19    -0.02    0.35    -0.22    -0.59    -0.27    -0.26
+                 (-1.20)  (-1.10)  (-0.68)  (0.37)  (-1.51)  (0.89)  (-0.10)  (1.47)  (-1.28)  (-2.29)  (-1.19)  (-0.16)
+
+µ                -0.20    0.37     0.08     0.16     0.08     0.09     0.29     0.38     1.39     0.24     0.00     0.05
+                 (-0.49)  (2.84)   (0.61)   (1.46)   (0.73)   (0.79)   (1.89)   (2.47)   (7.12)   (1.03)   (0.00)   (0.23)
+Adj. R2(%)    0.20     0.02     0.38     0.50     0.49     1.38     1.04     0.82     1.79     0.99     0.08     0.07
+24
+                                                                                (a) Asia
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                              (b) Europe
+                                                         Table A.12. Daylight saving tests
+                  In panel (a) hourly overnight returns are regressed on closing relative signed volume and a dummy
+                  variable for daylight savings time:
+
+                       rHt,n =µn+βSVn  SVcloset−1   +βDSTn                                                  1  DST,t+βSV×DSTn          SVt−1,close×        1  DST,t+εt,n   n=1,...,12,
+
+                  where the dummy variable takes on a value of ‘0’ in winter time (DST not active) and ‘1’ in summer
+                  time (DST active) and daylight savings is seen from a U.S. perspective. The Tokyo Stock Exchange
+                  (TSE) opens at 19:00 when DST is not active and at 20:00 when DST is active.  Estimates are
+                  in basis points.  In panel (b) hourly overnight returns are regressed on closing signed volume and
+                  time-zone difference dummy:
+
+                   rHt,n =µn+βSVn  SVcloset−1   +βDIFFn                                                                     1  DIFF,t+βRSV×DIFFn              SVt−1,close×        1  DIFF,t+εt,n   n=1,...,12,
+
+                  where the dummy variable takes on a value of ‘0’ when the time-zone difference between London
+                  and New York is 5 hours and a value of ‘1’ when the time-zone difference is 4 hours.  t-statistics
+                  reported in parenthesis are computed from robust standard errors clustered within months. Sample18-19    19-20    20-21    21-22    22-2324-01    01-02    02-03    03-04    04-05
+SV                -0.67     -0.62     -0.96     0.42      0.40period is January 2007 – December 2020.
+SV                  -0.35     -0.34     -1.17     -0.15     0.24
+                  (-2.00)  (-3.54)  (-2.81)   (1.18)   (1.33)(-3.98)  (-1.18)  (-4.42)  (-0.57)   (1.20)
+
+DST              -1.48     0.80     -1.08     0.26     -0.04                       25
+DIFF             3.61      0.52      1.40      2.32     -1.57
+                  (-1.26)   (1.71)   (-2.07)   (1.01)   (-0.08)(2.27)   (1.43)   (3.77)   (1.28)   (-1.02)
+
+SV ×DIFF    -0.31     1.70      1.07      0.45     -1.86SV ×DST     0.69      0.44      0.44     -0.53     -0.36
+                   (1.38)   (1.40)   (1.12)   (-1.46)  (-1.09)(-0.40)   (2.20)   (0.86)   (0.78)   (-1.39)
+
+µ                     0.39      0.57      1.46     -0.12     0.01
+µ                   -0.05     -0.13     0.59     -0.23     -0.31
+                  (-0.04)  (-0.30)   (1.34)   (-1.68)  (-1.29)(2.38)   (3.09)   (6.57)   (-0.33)   (0.03)
+Adj. R2(%)      0.59      0.39      1.30      0.08      0.19
+Adj. R2(%)    0.10      0.26      0.52      0.07      0.06
+                                                            Table A.13. Earnings announcements
+                    We sort evening earnings announcements into negative, positive low/medium/high days, and non-
+                    announcement days.  Within each sort we compute average returns for the close-to-close (CTC),
+                    close-to-open (CTO), open-to-close (OTC), overnight drift (OD) and opening return (OP) periods.
+                    We report t-tests of the difference against the null of zero in parenthesis. Sample period is 1998.1 –
+                    2020.12.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                        (a) Macro
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                   (b) Central Banks
+
+                                                                    Table A.14. Announcements
+                    We test the effect of announcements on the fixing return pattern in a bilateral regression framework
+                    withdummyvariableswhichtakea‘1’ondayswithanannouncementand‘0’otherwise. Specifically,
+                    for each subinterval return we estimate the following regression
+
+                                           rHt,n =µn+bn1    1  U.K.+bn2    1  EU+bn3    1  JP+bn4    1  U.S.+εnt,    n=1,...,15,
+
+                    where for panel (a)          1  i is an employment, GDP or inflation announcement dummy for country i. For
+                    panel (b)             1  i is a central bank announcement dummy for country i. t-statistics are computed from
+                    HAC robust standard errors. Sample period is 1998.1 – 2020.12.
+                                CTC     CTO     OTC     OD      OR
+NEG                       -8.10     -1.85     -6.40     1.32     -2.1418       19       20       21       22       23       24       01       02       03       04       05       06       07       0818      19      20      21      22      23      24      01      02      03      04      05      06      07      08
+µ      -0.68    0.29     0.22     0.03    -0.00    -0.06    0.50     0.41     1.52     0.60    -0.16    0.06     0.42     0.09    -0.07
+µ         -0.08    0.19    -0.11    -0.13    -0.06    0.13     0.31     0.45     1.40     0.34    -0.41    0.14     0.42     0.02     0.38t-stat                      (-1.44)   (-0.64)   (-1.43)   (1.79)   (-1.34)
+POS-LOW                -0.30     -0.09     -0.21     1.53     -3.70(-1.57)  (1.25)   (0.79)   (0.13)  (-0.01)  (-0.35)  (2.38)   (2.13)   (5.98)   (1.77)  (-0.54)  (0.22)   (1.52)   (0.30)  (-0.16)(-0.23)  (1.03)  (-0.45)  (-0.71)  (-0.35)  (0.90)   (2.02)   (2.81)   (6.52)   (1.10)  (-1.49)  (0.58)   (1.70)   (0.06)   (0.91)26
+1BoE     -0.81    5.52     4.19     1.58    -0.78    -0.48    0.61    -0.36    -0.49    0.50     2.21    -1.86    0.19    -2.68    -1.981UK    0.66     0.29    -0.42    0.19    -0.42    0.04    -0.05    -0.69    -0.37    -1.48    0.21     0.22    -0.88    -0.18    0.89t-stat                      (-0.07)   (-0.04)   (-0.07)   (3.45)   (-2.60)
+       (1.02)   (0.43)  (-0.67)  (0.39)  (-0.85)  (0.10)  (-0.13)  (-1.36)  (-0.56)  (-1.74)  (0.24)   (0.31)  (-0.91)  (-0.22)  (0.85)(-0.65)  (3.18)   (2.67)   (1.38)  (-1.11)  (-0.65)  (0.73)  (-0.49)  (-0.52)  (0.30)   (1.61)  (-1.43)  (0.17)  (-1.29)  (-0.81)
+1ECB     0.80    -2.38    -0.60    -0.95    1.04    -0.66    -0.77    -1.22    0.21     0.45     1.63     0.29     1.78     2.68    -3.871EU   -0.38    0.18    -0.86    -0.45    -0.76    0.52    -0.78    0.25    -0.04    -1.53    0.60     0.58    -0.44    0.22    -0.67POS-MEDIUM          1.52      -0.41      1.87      1.96     -0.64
+t-stat                      (0.35)   (-0.18)   (0.50)   (3.25)   (-0.43)(-0.40)  (0.29)  (-1.37)  (-0.89)  (-1.11)  (1.16)  (-1.69)  (0.55)  (-0.06)  (-1.60)  (0.67)   (0.70)  (-0.57)  (0.28)  (-0.49)(0.89)  (-1.92)  (-0.32)  (-0.96)  (1.41)  (-1.06)  (-0.99)  (-1.73)  (0.23)   (0.28)   (1.14)   (0.23)   (1.63)   (1.34)  (-1.38)
+1BoJ      -0.18    0.07     0.75     1.80    -0.13    0.83     0.51    -0.06    0.15    -0.52    0.48    -0.41    -0.10    -1.19    1.84
+1JP    0.12     0.66     1.22     0.66    -0.02    0.54     0.15    -0.46    0.11     0.42     0.22     0.52     1.57    -0.39    -0.99POS-HIGH               4.89      4.58      0.32      1.17     -1.26
+       (0.12)   (1.07)   (1.88)   (0.99)  (-0.03)  (1.24)   (0.31)  (-0.88)  (0.16)   (0.45)   (0.24)   (0.68)   (1.73)  (-0.35)  (-0.76)(-0.11)  (0.05)   (0.85)   (2.16)  (-0.18)  (1.13)   (0.57)  (-0.07)  (0.15)  (-0.39)  (0.40)  (-0.44)  (-0.08)  (-1.23)  (0.94)
+1FOMC   -3.94    -0.29    0.35    -0.74    -0.31    -0.12    -0.43    1.27     1.39    -1.51    3.19     0.30     2.78     3.02    -4.28t-stat                      (1.19)    (2.08)    (0.09)   (2.50)   (-0.90)
+1US    1.15    -0.42    -0.61    -0.37    0.75    -0.13    0.18     0.00    -0.04    0.14    -0.16    -0.24    1.08    -1.01    3.22
+No Announcements    4.57      2.11      2.34      1.38     -1.31(2.01)  (-0.81)  (-1.09)  (-0.67)  (1.63)  (-0.34)  (0.40)   (2.27)  (-0.07)  (0.17)  (-0.23)  (-0.36)  (1.38)  (-1.35)  (2.29)(-1.57)  (-0.30)  (0.33)  (-0.71)  (-0.34)  (-0.18)  (-0.36)  (0.99)   (1.04)  (-0.84)  (2.13)   (0.23)   (1.50)   (1.07)  (-1.43)
+t-stat                      (1.86)    (1.60)    (1.17)   (4.91)   (-1.64)
+27
+
+
+
+31
+
+
+
+                                     Figure A.9. Equity VaR
+As inAdrian and Shin(2014a), for firms which report VaRs at the 95% confidence level, we
+scalethe VaR tothe 99%usingthe Gaussianassumption. This figuredisplays thetime-series
+of the resulting equity VaR. Source: Bloomberg. Sample period is 1999 Q1 – 2020 Q4.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                    35
+            (a) U.S. Macro Announcements              .              (b) FOMC Announcements
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  (c) Negative Earnings                                (d) Positive Earnings
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                               (e) No Earnings
+
+                         Figure A.10. Announcements per weekday
+Figuredisplaysthenumberoftradingdays,foreachdayoftheweek,whereU.S.macro,bank
+or earnings announcements are released. Sample period is 1998.1 – 2020.12.
+
+
+
+
+
+
+                                                      36
+
+
+
+40

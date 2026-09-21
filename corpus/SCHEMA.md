@@ -28,9 +28,9 @@ Six viennent de la constitution, deux de la pratique.
 Plus l'identité : `fiche_id`, `written`, `written_by`.
 
 Des champs supplémentaires sont **autorisés**. Un papier peut porter des choses
-qu'aucun schéma ne prévoit — `friction`, `walk_forward`, `acceptance_criteria`
-existent dans la fiche Mesfin parce que ce papier les impose. Le schéma fixe un
-plancher, pas un plafond.
+qu'aucun schéma ne prévoit — un modèle de coûts, une structure de validation, un
+critère d'acceptation propre à l'auteur. Le schéma fixe un plancher, pas un
+plafond.
 
 ---
 
@@ -51,7 +51,7 @@ plancher, pas un plafond.
 
 `authors`, `title`, `year`, `source_url` et `retrieved` sont exigés.
 `peer_reviewed` est un booléen : un préprint non arbitré n'est pas une revue à
-comité de lecture, et la distinction a déjà servi (Mesfin).
+comité de lecture, et la distinction a déjà servi.
 
 ---
 
@@ -60,14 +60,20 @@ comité de lecture, et la distinction a déjà servi (Mesfin).
 C'est ici que `D09` s'étend aux fiches. **Un résultat recopié d'un papier est une
 valeur externe** : rien dans le dépôt ne peut la contredire.
 
+> [!warning] **Les exemples de ce document sont FABRIQUÉS.** Ils citent un papier
+> qui n'existe pas. C'est `L17` : un gabarit rempli avec des cas réels distribue
+> les réponses qu'il prétend cacher, et ce document est lu par l'extracteur.
+> Corrigé le 2026-09-21 ; les exemples portaient jusque-là le contenu réel d'une
+> fiche de référence.
+
 ```json
 "reported_results": [
   {
-    "name": "u_shape_peak_over_trough",
-    "value": 1.91,
-    "unit": "rapport",
-    "quoted": "starting out at 0.095% in the morning … 0.055% around noon … 0.105% towards the end",
-    "note": "0,105 / 0,055. Calculé par nous à partir des trois niveaux cités."
+    "name": "afternoon_spread_bp",
+    "value": 3.4,
+    "unit": "bp",
+    "quoted": "the average effective spread widens to 3.4 basis points after 14:00",
+    "note": "Sur leur échantillon d'actions, pas sur des futures."
   }
 ]
 ```
@@ -81,17 +87,52 @@ qu'il **se retrouve dans `quoted`**, séparateurs ôtés — la même fonction
 prise en défaut sur `12500` contre `12,500,000`. Ce qui est attrapé n'est pas la
 source absente, qui se voit, mais la **faute de recopie**, qui ne se voit pas.
 
-Un nombre **dérivé** par nous — comme le rapport 1,91, que les auteurs ne
-donnent pas tel quel — n'a pas à figurer dans la citation : il porte
+Un nombre **dérivé** par nous — un rapport entre deux niveaux que les auteurs
+citent séparément, par exemple — n'a pas à figurer dans la citation : il porte
 `"derived": true`, et le contrôle numérique est alors levé. Le `note` doit dire
 comment il a été obtenu.
 
-**Et un nombre écrit en toutes lettres.** Mesfin écrit « *Eleven signal families
-fail* » : il n'y a aucun chiffre à retrouver. L'entrée porte alors
-`"spelled_out": "Eleven"`, et le validateur vérifie que **le mot** est dans la
-citation. Ce qu'il ne vérifie pas — que « Eleven » vaut 11 — reste un geste
+**Et un nombre écrit en toutes lettres.** Un papier peut écrire « *Seven of the
+strategies fail* » : il n'y a aucun chiffre à retrouver. L'entrée porte alors
+`"spelled_out": "Seven"`, et le validateur vérifie que **le mot** est dans la
+citation. Ce qu'il ne vérifie pas — que « Seven » vaut 7 — reste un geste
 humain, et le champ existe pour le **nommer** plutôt que pour le cacher derrière
 `derived`, qui signifierait à tort qu'un calcul a eu lieu.
+
+**Et quand le TEXTE EXTRAIT ne dit pas ce que le papier dit.** Un PDF scanné, une
+notation mathématique perdue, un tableau mis à plat : le texte où `quoted` est
+cherchée peut être abîmé là où la page est claire. L'entrée porte alors **deux**
+chaînes :
+
+```json
+{
+  "name": "afternoon_spread_bp",
+  "value": 3.4,
+  "quoted": "the average effective spread widens to 3.4 basis points after 14:00",
+  "quoted_source": "the average effective spread widens to 3.4 basis p0ints after 14:00",
+  "quoted_repair": "ocr"
+}
+```
+
+`quoted` reste ce que le papier dit ; `quoted_source` est ce que le **texte**
+porte, mot pour mot, et c'est elle qui est cherchée et qui fait foi pour le
+contrôle numérique. `quoted_repair` dit **pourquoi** les deux diffèrent, dans une
+liste **close** :
+
+| Motif | Quand |
+|---|---|
+| `ocr` | le PDF est un scan et son texte est corrompu |
+| `math_notation` | le papier écrit un symbole que l'extraction ne rend pas |
+| `table` | la citation vient d'un tableau, lu en cellules par l'extraction |
+
+**Ce que cela n'autorise pas, et c'est l'essentiel.** Il faut toujours **une
+chaîne présente à la lettre** dans le texte. Une réparation déplace ce qui est
+cherché, jamais ce qui est exigé. **Une paraphrase ne fournit aucune chaîne et
+reste une faute** : si la phrase du papier ne dit pas exactement ce qu'on
+voudrait lui faire dire, on cite ce qu'elle dit, ou on ne cite pas.
+
+Un motif hors de la liste, un `quoted_source` sans motif, un motif sans
+`quoted_source` : le validateur refuse les trois.
 
 ---
 
@@ -115,10 +156,11 @@ Trois sous-champs, tous exigés :
   transfère n'a pas été lu avec assez d'attention ;
 - `what_aligns_well` — ce qui, au contraire, tombe juste.
 
-**Pourquoi c'est obligatoire.** C'est ce champ qui a écarté Mesfin de la porte 06
-— sa métrique est un rendement net par trade, la nôtre un IC — et qui a cadré
-Heston, dont seul le motif transférait. Une fiche sans lui dit ce qu'un papier
-affirme, pas ce qu'il vaut ici.
+**Pourquoi c'est obligatoire.** C'est ce champ qui a déjà fait écarter une cible
+de réplication — sa métrique était un rendement net par trade, la nôtre un IC —
+et qui en a cadré une autre, dont seul le motif transférait. Une fiche sans lui
+dit ce qu'un papier affirme, pas ce qu'il vaut ici. Les cas sont dans
+`decisions/`, pas ici : ce document est lu par l'extracteur.
 
 ---
 
