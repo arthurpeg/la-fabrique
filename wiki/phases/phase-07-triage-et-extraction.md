@@ -240,7 +240,7 @@ tombe sous 5 papiers, seuil écrit avant le recensement).
 |---|---|
 | atteignables | **19 / 20** — 18 PDF, 1 HTML |
 | inatteignables | **1** — entrée 6, `refus_robot` |
-| PDF **sur le disque** | **3** — les 15 autres sont obtenus et vérifiés, non enregistrés |
+| PDF **sur le disque** | **18 / 18** depuis le 2026-09-21 — `corpus/fetch_pdfs.py --verify` le vérifie, cette page ne le prouve pas |
 
 **`D17` avait prévu 6 à 14 « selon ce que SSRN consent », et elle se trompait
 deux fois.** SSRN n'a rien consenti — contrôle anti-robot, vérifié en client

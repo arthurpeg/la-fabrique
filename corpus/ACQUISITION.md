@@ -122,10 +122,17 @@ conservé, comme pour les entrées 7 et 9.
 Le triage (`D15`, passage 1) a déjà jugé l'implémentabilité ; la pertinence des
 fiches n'aura de dénominateur qu'en phase 09, comme `D16` l'écrit.
 
-**Il ne dit pas que les PDF sont sur le disque.** Au 2026-09-21, **3 le sont**
-(entrées 3, 7, 11). Les 15 autres PDF atteignables ont été **obtenus et
-vérifiés**, non enregistrés. Les télécharger est le geste suivant, et il est
-distinct du recensement.
+**Il ne dit pas que les PDF sont sur le disque.** Ils y sont — les 18, depuis
+le 2026-09-21, par `corpus/fetch_pdfs.py` — mais c'est un **geste distinct**,
+et l'énoncé se périme : `corpus/pdf/` est ignoré par git. On le vérifie en
+lançant `python corpus/fetch_pdfs.py --verify`, jamais en lisant cette page.
+
+**Il ne dit pas que les textes sont exploitables.** Les 18 rendent du texte à
+`pypdf`, aucun n'est vide — et cela ne prouve rien sur la **justesse** de ce
+texte. L'entrée 11 en rend 2 787 caractères par page, et `D17` a établi que ce
+sont ceux d'un scan qui écrit « fight part » pour « right part ». Un compte de
+caractères ne distingue pas un texte d'un faux texte ; c'est `F2` qui juge, une
+citation à la fois.
 
 **Il se périme.** Un constat d'accès est vrai d'un poste et d'une heure — la
 leçon du 2026-09-21 sur `corpus/pdf/`. D'où le champ `checked` par entrée, et
@@ -138,3 +145,4 @@ d'où le fait que ce document renvoie au JSON plutôt que de recopier ses chiffr
 | # | Date | Atteignables | Inatteignables | Notes |
 |---|---|---|---|---|
 | 1 | 2026-09-21 | 19 / 20 (18 PDF, 1 HTML) | 1 — entrée 6, `refus_robot` | premier recensement ; SSRN refuse partout, sans conséquence sauf sur l'entrée 6 ; alertes ouvertes sur 9 et 16 |
+| — | 2026-09-21 | *(enregistrement, pas un recensement)* | — | **18 PDF écrits dans `corpus/pdf/`** par `fetch_pdfs.py`, 15 pris ce jour, 0 échec, chacun vérifié après écriture ; les 3 fiches de référence passent toujours `F4` |

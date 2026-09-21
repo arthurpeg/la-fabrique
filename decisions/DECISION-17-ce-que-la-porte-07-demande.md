@@ -131,6 +131,12 @@ qu'`AMORCE.md` porte pour le papier lui-même ; s'en tenir à ces liens rendait
 **5 sur 20**. Presque tous ces papiers vivent aussi au NBER, dans les rapports
 de la Fed, sur des pages d'auteurs ou dans des dépôts universitaires.
 
-**Ce qui reste à faire et ne l'est pas** : les 15 PDF atteignables hors de
-`corpus/pdf/` ont été **obtenus et vérifiés, non enregistrés**. Il n'y a
-toujours **aucun extracteur**, et `G1`, `G2`, `G3` ne sont pas mesurés.
+**Les 18 PDF atteignables sont enregistrés** — le 2026-09-21, par
+`corpus/fetch_pdfs.py`, 15 pris ce jour-là, aucun échec, chacun vérifié après
+écriture. Les noms de fichiers sont **déclarés** dans le script et non déduits
+d'une citation, faute de quoi une citation mal formée produirait en silence un
+fichier qu'aucune fiche ne retrouverait.
+
+**Ce qui reste à faire et ne l'est pas** : il n'y a toujours **aucun
+extracteur**, et `G1`, `G2`, `G3` ne sont pas mesurés. Le corpus est prêt ;
+l'automate qui doit le lire n'existe pas.
