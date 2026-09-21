@@ -468,3 +468,58 @@ donne ? ». Et le corollaire de méthode, qui a joué ici : quand on découvre l
 défaut **au moment d'appliquer le protocole**, on contourne sans le corriger —
 corriger le protocole dans le geste même qui l'applique est ce que « le premier
 passage fait foi » interdit. On contourne, on déclare, on corrige après.
+
+## L18 — Avant d'élargir une liste close, chercher si la cause n'est pas ailleurs
+
+**Le 2026-09-21**, en réparant les trois fiches de référence.
+
+Cinq citations de la fiche Heston étaient introuvables dans le texte du papier.
+Le mécanisme prévu pour ce cas existait : la **réparation déclarée** de `D16` —
+`quoted_source` mot pour mot dans le texte, `quoted_repair` nommant la raison
+dans une liste **close** : `ocr`, `math_notation`, `table`.
+
+La cause observée ne rentrait dans aucune des trois. Le texte extrait insérait
+des espaces à l'intérieur des mots : « multiples **o f** 13 », « half-hour
+**inte rvals** », « way is **d ifferent** ». La réponse qui vient d'elle-même est
+d'ajouter une quatrième valeur à la liste — `extraction_spacing`, ou quelque nom
+de ce genre — et de réparer les cinq citations.
+
+**Elle aurait été fausse deux fois.**
+
+D'abord parce que `ocr`, la valeur la plus proche, aurait été un **mensonge
+vérifiable** : les métadonnées du PDF disent *LaTeX with hyperref* et *GPL
+Ghostscript*. Le papier est **né numérique**. Une liste close ne vaut que si
+chacun de ses noms est vrai ; y loger un cas « à peu près » la vide de son sens
+plus sûrement que de l'élargir franchement.
+
+Ensuite et surtout parce que **la cause n'était pas dans la fiche**. Un test à la
+racine l'a montré en une minute : `pypdf` avec `extraction_mode="layout"` rend
+les cinq citations trouvables **sans toucher une ligne de la fiche**, et ne casse
+aucune des deux autres. Il n'y avait rien à réparer. La fiche avait raison depuis
+le début ; c'est l'outil de lecture qui se trompait.
+
+**Ce que la réparation aurait coûté.** Cinq `quoted_source` reproduisant
+fidèlement les fautes d'un extracteur mal réglé, une valeur de liste close
+inventée pour les couvrir, et une fiche de référence **dégradée pour ressembler à
+un défaut d'outil**. Le tout aurait été vert. C'est la forme la plus coûteuse de
+l'erreur : celle qui passe la porte.
+
+**Ce que ça généralise.** Une liste close, une liste blanche, une liste
+d'exceptions — c'est un aveu d'humilité écrit à l'avance : *voici les cas
+irréguliers que nous acceptons, nommés un par un*. Quand un cas nouveau s'y
+présente, la pression est de l'y ajouter, parce que le mécanisme est là, qu'il
+fonctionne, et qu'ajouter une ligne coûte moins que remettre en cause l'outil qui
+a produit le symptôme. **C'est précisément l'inverse qu'il faut faire** : une
+liste d'exceptions qui s'allonge est le symptôme d'une cause non cherchée, pas
+d'un monde irrégulier.
+
+Le réflexe, dans l'ordre : **d'où vient le symptôme, avant de savoir comment le
+nommer.** Et la question qui tranche : *si l'outil avait raison, la fiche
+aurait-elle tort ?* Ici la réponse était non, et elle s'obtenait en changeant un
+argument.
+
+Le corollaire tient en une phrase, et il rejoint `L17` : **la décision
+d'élargir la liste n'était pas la mienne à prendre en passant** — elle appartient
+à `D16`. Chercher la cause était donc la seule chose que je pouvais faire sans
+excéder mon mandat, et c'est celle qui a résolu le problème. La contrainte a
+mieux travaillé que ne l'aurait fait la liberté.

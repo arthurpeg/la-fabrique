@@ -1,6 +1,6 @@
 ---
 type: hub
-updated: 2026-09-16
+updated: 2026-09-21
 status: actif
 sources: [LECONS.md, decisions/DECISION-01-univers-et-donnees.md]
 ---
@@ -15,7 +15,15 @@ sources: [LECONS.md, decisions/DECISION-01-univers-et-donnees.md]
 > Si cette page et `LECONS.md` divergent, `LECONS.md` gagne et cette page est
 > corrigée.
 
-État : **5 leçons** (L01 → L05), toutes acquises en phase 01.
+État : **18 leçons** (L01 → L18) dans `LECONS.md`, qui fait foi.
+
+> [!warning] **Cette synthèse ne couvre que L01 → L05**, acquises en phase 01.
+> Constaté le 2026-09-21 : la page annonçait « 5 leçons » comme un état du projet
+> alors que `LECONS.md` en porte 18. Le compte est corrigé ; **la synthèse ne
+> l'est pas** — relire treize leçons pour en tirer les motifs communs est un
+> travail en soi, et le bâcler produirait précisément le genre de résumé plausible
+> que ce projet refuse. Les motifs ci-dessous restent vrais de L01 à L05 ; ils ne
+> prétendent rien des suivantes. Voir `LECONS.md` pour L06 à L18.
 
 ---
 
