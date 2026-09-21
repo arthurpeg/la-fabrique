@@ -64,7 +64,7 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 |---|---|---|---|
 | 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07` |
 | 06 | Contrôles automatiques et réplication | Un signal dégénéré est rejeté avant le harnais ; la chaîne reproduit un fait publié sur nos données. La cible a changé deux fois : Mesfin (métrique incompatible, `D12`), Heston (motif absent, `H03`), puis Andersen & Bollerslev (`D13`). | **franchie 2026-09-18** — `gate_06_controls.py` (25) et `scripts/measure_h04.py` (19) |
-| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 32 vérifications), son **extracteur non** ; **recensement `G4` fait le 2026-09-21 — 19 atteignables sur 20**, 18 PDF enregistrés |
+| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 32 vérifications), son **extracteur non** ; **recensement `G4` fait le 2026-09-21 — 19 atteignables sur 20**, 18 PDF enregistrés, et **les 3 fiches de référence passent les cinq conditions** |
 | 08 | Le codeur de signal | Une fiche produit un signal exécutable qui passe la sandbox, sans retouche manuelle. | à faire |
 
 ## Acte III — Fermer la boucle une fois
@@ -315,12 +315,21 @@ où on le lance. Même péremption que la note « sur cette machine » corrigée
    juste** : l'entrée 11 en rend 2 787 caractères par page et `D17` a montré
    que ce sont ceux d'un scan fautif. Aucun n'est vide ; la qualité reste
    l'affaire de `F2`.
-3. **Réparer les trois fiches de référence** — deux `quoted_source` à déclarer,
-   et **une citation fausse** dans Mesfin (`acceptance_criteria`) à corriger par
-   note datée. `D16` § Complément dit quoi faire et pourquoi ce n'est pas fait.
-4. **Apprendre `quoted_source` à `validate_fiches.py`**, faute de quoi `F1` reste
+3. ~~Réparer les trois fiches de référence.~~ **Fait le 2026-09-21 : les trois
+   passent les cinq conditions de `D16`.** Six entrées touchées et non trois — le
+   juge a trouvé une faute que `D16` n'avait pas vue (`families_failing_below_friction`,
+   un point là où le papier écrit deux points). **Heston n'a demandé aucune
+   réparation** : ses cinq échecs venaient de l'extracteur de texte, pas de sa
+   fiche. Voir `D16` § Complément du 2026-09-21.
+4. **Trancher quel mode d'extraction de texte fait foi** — **nouveau, et il
+   remonte en tête.** `pypdf` par défaut insère des espaces dans les mots d'un PDF
+   **né numérique** (« multiples o f 13 ») ; son mode `layout` rend les trois
+   fiches vertes sans en toucher une. Une `quoted_source` est définie **contre un
+   texte** : tant que le mode n'est pas écrit, chaque réparation déclarée du projet
+   repose sur un implicite.
+5. **Apprendre `quoted_source` à `validate_fiches.py`**, faute de quoi `F1` reste
    plus laxiste que `F3` sur une entrée réparée.
-5. **Écrire l'extracteur** — et il devra être **non contaminé** : une session qui
+6. **Écrire l'extracteur** — et il devra être **non contaminé** : une session qui
    a lu la fiche de référence d'un papier ne peut pas l'extraire, elle
    recopierait. Même piège que le trieur, même parade.
 

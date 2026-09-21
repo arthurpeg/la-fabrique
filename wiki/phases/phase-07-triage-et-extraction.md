@@ -189,6 +189,11 @@ l'étalon), [[Failed Ideas/ledger#F44]] (ressemblance de texte),
 
 ## Ce que `F2` a trouvé en rencontrant trois vrais papiers — 2026-09-20
 
+> [!note] **Réparé le 2026-09-21 : les trois fiches passent les cinq conditions.**
+> Six entrées touchées, pas trois ; et **Heston n'a rien demandé** — ses cinq
+> échecs venaient de `pypdf`, dont le mode `layout` les efface sans toucher la
+> fiche. La source fait foi : `D16` § Complément du 2026-09-21.
+
 Les trois PDF de référence ont été récupérés et le juge lancé sur eux. **`F2`
 casse sur les trois**, pour trois raisons dont une seule est une faute. La
 source fait foi : `D16` § Complément du 2026-09-20.

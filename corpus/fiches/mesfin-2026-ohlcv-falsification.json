@@ -45,16 +45,16 @@
       "name": "acceptance_criteria",
       "value": null,
       "unit": null,
-      "quoted": "T-statistic >= 2.0 on out-of-sample net returns, >= 30 trades per out-of-sample fold, positive net returns after instrument-appropriate friction, consistent direction across test years (2023, 2024, 2025), and permutation p < 0.001 where applicable.",
-      "note": "Le critère porte sur des rendements de trades, pas sur une corrélation de rang. Notre harnais produit un IC. Ce sont deux objets différents."
+      "quoted": "a T-statistic of at least 2.0 on out-of-sample (OOS) net returns, at least 30 trades per OOS fold, a positive net return after instrument-appropriate round-trip friction, consistent direction across the three OOS test years (2023, 2024, and 2025), and a permutation test p-value below 0.05 where applicable.",
+      "note": "Le critère porte sur des rendements de trades, pas sur une corrélation de rang. Notre harnais produit un IC. Ce sont deux objets différents. || NOTE DU 2026-09-21 — CITATION CORRIGEE. L'ancienne etait une PARAPHRASE, et pire : un COMPOSITE de deux passages. Texte d'origine conserve ici mot pour mot : « T-statistic >= 2.0 on out-of-sample net returns, >= 30 trades per out-of-sample fold, positive net returns after instrument-appropriate friction, consistent direction across test years (2023, 2024, 2025), and permutation p < 0.001 where applicable. ». Elle notait « >= » pour « at least » et abregeait, ce qui suffit a la rendre introuvable (F2) ; mais elle prenait en outre son SEUIL DE PERMUTATION dans le Tableau 3 (p < 0.001) tout en calquant le reste sur le resume (p < 0.05). LE PAPIER SE CONTREDIT LUI-MEME sur ce point — resume 0.05, Tableau 3 0.001 — et la fiche avait silencieusement fondu les deux. La citation retenue est celle du resume, verbatim. Le desaccord interne du papier est un fait sur LE PAPIER, non une faute de la fiche, et il est inscrit ici plutot que tranche. D16 disait que « >= 30 trades » ne figurait pas dans la phrase citee : C'EST INEXACT, le resume porte « at least 30 trades per OOS fold ». Le verdict de D16 tient (paraphrase), son motif etait faux."
     },
     {
       "name": "families_failing_below_friction",
       "value": 11,
       "unit": "familles",
-      "quoted": "Eleven signal families fail because their maximum gross return before friction is 0.07 to 1.50 points per trade, below the 2.0-point MNQ friction floor. Three families clear the friction gate but fail elsewhere.",
+      "quoted": "Eleven signal families fail because their maximum gross return before friction is 0.07 to 1.50 points per trade, below the 2.0-point MNQ friction floor.",
       "spelled_out": "Eleven",
-      "note": "Le papier écrit le nombre en toutes lettres ; le garde vérifie le mot, la conversion en 11 est un geste humain (D14)."
+      "note": "Le papier écrit le nombre en toutes lettres ; le garde vérifie le mot, la conversion en 11 est un geste humain (D14). || NOTE DU 2026-09-21 — CITATION CORRIGEE, faute trouvee par F2 et NON listee par D16. L'ancienne ajoutait une seconde phrase close par un point la ou le papier ecrit deux points et poursuit ; un caractere suffit a rendre une citation introuvable. Texte d'origine conserve : « Eleven signal families fail because their maximum gross return before friction is 0.07 to 1.50 points per trade, below the 2.0-point MNQ friction floor. Three families clear the friction gate but fail elsewhere. ». La citation est desormais coupee a la fin de la premiere phrase, qui porte seule le chiffre 11 (spelled_out)."
     },
     {
       "name": "gross_return_per_trade_max_points",
@@ -94,7 +94,9 @@
       "value": null,
       "unit": null,
       "quoted": "an expanding-window walk-forward structure with three OOS test periods: Fold 1 training 2022, OOS 2023; Fold 2 training 2022-2023, OOS 2024; Fold 3 training 2022-2024, OOS 2025 (partial, January-August).",
-      "note": "Deux de ses trois plis hors échantillon tombent dans notre holdout scellé."
+      "note": "Deux de ses trois plis hors échantillon tombent dans notre holdout scellé. || NOTE DU 2026-09-21 — REPARATION DECLAREE (D16 Complement, geste 1). Le papier donne ces plis dans le Tableau 2 ; l'extraction le rend en cellules a la file. `quoted` reste la version lisible, `quoted_source` est ce que le texte porte mot pour mot, et `quoted_repair: table` nomme pourquoi les deux different.",
+      "quoted_source": "an expanding-window walk-forward structure with three OOS test periods: Fold Training Data OOS Test Period 1 2022 2023 2 2022–2023 2024 3 2022–2024 2025 (partial, January–August)",
+      "quoted_repair": "table"
     }
   ],
   "transposability": {

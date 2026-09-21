@@ -177,8 +177,8 @@ qu'un schéma peut montrer sans montrer une réponse. Ouvert ci-dessous.
 | **Combien de fiches la porte 07 demande**, et depuis quel corpus : `AMORCE.md` n'en rend pas 20 atteignables. Question distincte de celle-ci, et elle n'est pas tranchée ici | décision suivante, avant de ficher en série |
 | **La pertinence d'une fiche** — qu'elle retienne ce qui compte dans le papier — qu'aucune des cinq conditions ne porte | phase 09, premier dénominateur réel |
 | **`validate_fiches.py` ignore `quoted_source`** et vérifie le chiffre contre `quoted` : sur une entrée réparée, `F1` est plus laxiste que `F3`. Le garde de `D14` doit l'apprendre | avant la première extraction réelle |
-| **Les trois fiches de référence ne passent pas `F2`** : deux réparations à déclarer, une citation fausse à corriger par note datée (voir le Complément) | avant la première extraction réelle |
-| **La qualité de l'extraction de texte** : `pypdf` sur un scan de 1997 rend « fight » pour « right ». Faut-il un OCR, un autre extracteur, ou accepter la réparation déclarée comme seule réponse ? | avant de ficher en série |
+| ~~**Les trois fiches de référence ne passent pas `F2`**~~ **Fait le 2026-09-21 : les trois passent les cinq conditions.** Six entrées touchées, et **Heston n'en a demandé aucune** — voir le Complément du 2026-09-21 | **fait** |
+| **La qualité de l'extraction de texte** — et la question a **changé de nature le 2026-09-21** : le défaut de `pypdf` abîme aussi un PDF **né numérique** (Heston), et son mode `layout` répare les trois fiches sans en toucher une. **Quel mode fait foi** est donc une décision à écrire, et elle conditionne toute `quoted_source` | **avant la première extraction réelle**, remontée |
 
 ## Complément du 2026-09-20 — `F2` rencontre trois vrais papiers, et sa prémisse casse
 
@@ -256,6 +256,77 @@ distinguer :
 **Aucun de ces trois gestes n'est fait ici.** Ils touchent des références gelées,
 et les faire dans le mouvement qui écrit leur juge est ce que `L17` vient
 d'apprendre à ne pas faire.
+
+## Complément du 2026-09-21 — les réparations faites, et ce qu'elles ont corrigé de ce document
+
+Les trois fiches de référence passent désormais les cinq conditions. Le § Journal
+ci-dessous reste **vide** : aucune extraction n'a eu lieu, et ce complément ne
+rattrape aucun résultat.
+
+### Ce qui a été fait, et ce que le Complément du 2026-09-20 n'avait pas vu
+
+Il annonçait **trois gestes**. Le juge, lancé sur les trois fiches, en a demandé
+**six** — et un de ceux qu'il annonçait s'est révélé inutile.
+
+| Fiche, entrée | Geste | Prévu par le Complément du 20 ? |
+|---|---|---|
+| A&B, `fx_first_order_autocorr_abs_returns` | `quoted_source` + `quoted_repair: ocr` (« pA » pour ρ, « 1/x/T » pour 1/√T) | oui, en gros |
+| A&B, `fx_ljung_box_10` | idem (« ]Rt,,,] » pour \|R\|, « QA(10) » pour Q(10)) | oui, en gros |
+| A&B, `shape_variant_j` | idem (« fight part » pour « right part ») | oui, en gros |
+| Mesfin, `walk_forward_folds` | `quoted_source` + `quoted_repair: table` | **oui** |
+| Mesfin, `acceptance_criteria` | citation corrigée, note datée, texte d'origine conservé | **oui** |
+| Mesfin, `families_failing_below_friction` | citation corrigée, note datée | **non — faute non vue** |
+
+`families_failing_below_friction` fermait sa citation par un **point** là où le
+papier écrit deux points et poursuit. Un caractère, et la citation est
+introuvable. Ce n'est pas une subtilité : c'est la démonstration que `F2` ne
+pardonne rien, ce qui est sa raison d'être.
+
+### Le motif donné pour `acceptance_criteria` était faux, le verdict tenait
+
+Le Complément du 20 écrivait que le papier dit seulement
+*« t-statistic of at least 2.0 on out-of-sample (oos) net returns »* et que
+« >= 30 trades » **ne figure pas** dans la phrase citée. **C'est inexact.** Le
+résumé de Mesfin poursuit : *« at least 30 trades per OOS fold »*. Le contenu
+était dans le papier ; c'est la **formulation** que la fiche avait réécrite
+(« >= » pour « at least », articles supprimés). Le verdict — paraphrase, donc
+faute — tient entièrement ; son motif était mal dit.
+
+**Et la faute était pire que dite.** La citation était un **composite** : son
+seuil de permutation (`p < 0.001`) vient du **Tableau 3**, le reste de la phrase
+vient du **résumé**, qui écrit `p < 0.05`. **Le papier se contredit lui-même**, et
+la fiche avait silencieusement fondu les deux passages en un seul. La citation
+retenue est celle du résumé, verbatim ; le désaccord interne du papier est
+inscrit en note comme un **fait sur le papier**, non tranché.
+
+### Heston n'avait rien à réparer — c'est l'extracteur qui avait tort
+
+Ses **cinq** citations échouaient, et aucune n'était fautive. Le texte rendu par
+`pypdf` insère des espaces à l'intérieur des mots : « multiples o f 13 »,
+« half-hour inte rvals », « way is d ifferent ».
+
+**Aucune valeur de la liste close ne nommait ce cas avec justesse.** `ocr` aurait
+été un **mensonge** : les métadonnées du PDF disent *LaTeX with hyperref* et
+*GPL Ghostscript* — il est **né numérique**, pas scanné. Plutôt que d'ouvrir la
+liste close en passant, l'hypothèse a été testée à la racine, et elle tombe :
+
+| | défaut | `extraction_mode="layout"` |
+|---|---|---|
+| Mesfin | `F2` tenue | `F2` tenue |
+| Andersen & Bollerslev | `F2` tenue | `F2` tenue |
+| Heston | **`F2` cassée (5)** | **`F2` tenue** |
+
+**Le mode `layout` répare Heston sans toucher une ligne de sa fiche, et ne casse
+aucune des deux autres.** Les six `quoted_source` écrites ce jour résistent aux
+deux modes, vérifié.
+
+**Ce que cela déplace.** La question ouverte « faut-il un OCR, un autre
+extracteur ? » n'était pas une question sur les **scans** : le défaut de `pypdf`
+abîme aussi un PDF propre. **Quel mode d'extraction fait foi** devient une
+décision à écrire avant toute extraction réelle — elle conditionne chaque
+`quoted_source` du projet, puisqu'une réparation déclarée est définie **contre un
+texte**. Elle n'est pas tranchée ici : ce n'est pas un seuil qu'on ajuste dans le
+geste qui l'applique.
 
 ## Journal des passages
 
