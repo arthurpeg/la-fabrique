@@ -70,7 +70,7 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 |---|---|---|---|
 | 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07` |
 | 06 | Contrôles automatiques et réplication | Un signal dégénéré est rejeté avant le harnais ; la chaîne reproduit un fait publié sur nos données. La cible a changé deux fois : Mesfin (métrique incompatible, `D12`), Heston (motif absent, `H03`), puis Andersen & Bollerslev (`D13`). | **franchie 2026-09-18** — `gate_06_controls.py` (25) et `scripts/measure_h04.py` (19) |
-| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 32 vérifications), **son extracteur existe depuis le 2026-09-21** (`extract_fiche.py`) ; recensement `G4` fait — **19 atteignables sur 20**, 18 PDF, texte qui fait foi fixé par `D18` ; les 3 fiches de référence passent les cinq conditions ; **`G1` non tenu — 15 papiers restent à ficher** |
+| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 32 vérifications), **son extracteur existe depuis le 2026-09-21** (`extract_fiche.py`) ; recensement `G4` fait — **19 atteignables sur 20**, 18 PDF, texte qui fait foi fixé par `D18` ; les 3 fiches de référence passent les cinq conditions ; **`G1` non tenu — 14 papiers restent à ficher** (passage 1 vert sur l'entrée 13) |
 | 08 | Le codeur de signal | Une fiche produit un signal exécutable qui passe la sandbox, sans retouche manuelle. | à faire |
 
 ## Acte III — Fermer la boucle une fois
@@ -346,9 +346,12 @@ où on le lance. Même péremption que la note « sur cette machine » corrigée
 7. **L'extracteur existe** — `corpus/extract_fiche.py`, harnais **sans
    intelligence d'extraction** : il prépare la consigne et juge la sortie.
    L'extracteur est une **session séparée** qui reçoit le schéma, le texte du
-   papier, et **rien d'autre du corpus**. Premier passage lancé le 2026-09-21 sur
-   l'entrée 13.
-8. **Ficher les 15 papiers restants** — `G1` exige zéro atteignable non fiché.
+   papier, et **rien d'autre du corpus**. **Passage 1 tenu le 2026-09-21** sur
+   l'entrée 13 (Patton & Sheppard) : **les cinq conditions tiennent**,
+   25 résultats, 7 réparations déclarées, 2 itérations, **aucune citation
+   refusée** — le seul échec portait sur la forme (`F1`), pas sur la fidélité.
+   `D16` § Journal dit ce qu'il a appris.
+8. **Ficher les 14 papiers restants** — `G1` exige zéro atteignable non fiché.
    `python corpus/extract_fiche.py --list` dit lesquels.
 
 ### Ce qui reste ouvert par ailleurs

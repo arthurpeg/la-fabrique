@@ -337,7 +337,48 @@ montré.
 
 | # | Date | Papier | Extracteur, et ce qu'il avait vu | F1–F5 | Ce que le diagnostic a montré |
 |---|---|---|---|---|---|
-| — | — | — | *(aucun passage à ce jour)* | — | — |
+| 1 | 2026-09-21 | entrée 13, Patton & Sheppard (2015) | agent séparé, interdiction de lecture explicite ; n'a reçu que `corpus/consignes/entree-13-*.md` — schéma, texte du papier, consigne. **Aucune fiche de référence n'existait pour ce papier** | **les cinq tiennent** | 25 résultats, **7 réparations déclarées** (5 `ocr`, 2 `table`), 2 itérations — voir ci-dessous |
+
+### Ce que le passage 1 a appris
+
+**Aucune citation n'a été refusée.** `F2` et `F3` sont passées du premier coup.
+Le seul échec de la première itération était `F1` — `signal_construction` écrit
+comme un objet structuré sans la clé `value` que le schéma exige. Le schéma a
+donc attrapé une faute de **forme**, pas de **fidélité**, ce qui est l'ordre
+souhaitable.
+
+**`D18` a été validée par le réel dès ce passage.** La citation
+`spdr_first_autocorr_max` n'est présente que dans l'extraction **`default`** :
+`layout` la casse. Sous l'option 2 de `D18` — `layout` seul — cette citation
+juste aurait été refusée. L'union n'est pas une précaution théorique ; elle a
+servi au premier essai.
+
+**Les sept réparations ont été vérifiées à la main**, après le juge et
+indépendamment de lui : chaque `quoted_source` est littéralement présente dans
+au moins une extraction, et **chaque valeur numérique est dans la chaîne qui fait
+foi** — le point où `D16` craignait qu'on loge un chiffre absent du papier. Les
+motifs sont honnêtes : quatre ligatures `ﬁ`, une césure de fin de ligne, une
+ligne éclatée par des exposants, deux lignes de tableau mises à plat.
+
+### Ce que ce passage a ouvert, et qui n'est pas tranché
+
+**Le côté *lisible* d'une réparation n'a aucune règle.** `D16` définit
+`quoted_source` au caractère près et laisse `quoted` « lisible ». Sur les deux
+réparations `table`, « lisible » est devenu une **glose en français** —
+« *Table 5, ligne h = 66 : la statistique DM du SPDR pour...* » — qui n'est plus
+une citation du tout. Rien de mécanique n'en souffre, `F2` et `F3` suivant
+`quoted_source`. Mais `quoted` est ce qu'un humain lit pour contrôler la fiche,
+et une glose n'est pas contrôlable contre le papier.
+
+**La fiche n'a PAS été retouchée**, et c'est `G3` de `D17` : zéro retouche
+manuelle. Corriger la sortie de l'extracteur à la main serait exactement la
+faille que `G3` ferme. Le constat est inscrit ici ; s'il faut une règle, c'est
+une décision, et l'extracteur sera relancé.
+
+**Et la limite que `D16` s'était donnée s'est vérifiée** : l'extracteur a
+lui-même fait remarquer que le choix de ses 25 résultats n'a été contrôlé par
+personne. Les cinq conditions sont mécaniques ; la **pertinence** n'aura de
+dénominateur qu'en phase 09, comme § Pourquoi l'écrit.
 
 Le juge est vert sur ses propres vérifications (`python
 corpus/score_extraction.py --check`) et **l'extracteur n'existe pas encore**.

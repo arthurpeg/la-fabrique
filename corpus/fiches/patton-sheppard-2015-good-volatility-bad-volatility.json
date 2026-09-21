@@ -1,0 +1,250 @@
+{
+  "fiche_id": "patton-sheppard-2015-good-volatility-bad-volatility",
+  "written": "2026-09-21",
+  "written_by": "extracteur-2026-09-21",
+
+  "source": {
+    "authors": "Andrew J. Patton, Kevin Sheppard",
+    "title": "Good Volatility, Bad Volatility: Signed Jumps and the Persistence of Volatility",
+    "year": 2015,
+    "source_url": "https://public.econ.duke.edu/~ap172/Patton_Sheppard_REStat_2015.pdf",
+    "pdf": "corpus/pdf/patton-sheppard-2015-good-volatility-bad-volatility.pdf",
+    "retrieved": "2026-09-21",
+    "peer_reviewed": true,
+    "amorce_entry": 13,
+    "venue": "The Review of Economics and Statistics, July 2015, 97(3): 683-697"
+  },
+
+  "claim": "Le signe des rendements haute fréquence porte de l'information sur la volatilité future, que les mesures paires (carrés, valeurs absolues) détruisent. En décomposant exactement la variance réalisée d'une journée en semi-variance positive (RS+) et négative (RS−), les auteurs affirment deux choses. (1) RS− prédit la volatilité future bien plus fortement que RS+, dont le coefficient est souvent nul ou négatif sur l'indice ; un modèle HAR qui sépare les deux explique nettement mieux la volatilité future qu'un HAR sur RV seule, et mieux qu'un terme de levier classique RV_t·I{r_t<0}. (2) La variation de saut signée ΔJ² = RS+ − RS− a un coefficient uniformément négatif : un jour dominé par un saut négatif augmente la volatilité future, un jour dominé par un saut positif la diminue — d'où « bad volatility » et « good volatility ». Ce dernier point explique pourquoi la littérature antérieure, qui moyennait les sauts des deux signes, trouvait les sauts inutiles pour prévoir la volatilité.",
+
+  "universe": "Actions américaines et indices actions, données de transactions haute fréquence. Échantillon principal : tous les titres ayant appartenu au S&P 100 entre le 23 juin 1997 et le 31 juillet 2008 ; sur 154 constituants distincts, 105 sont retenus (ceux disponibles en continu au moins quatre ans), plus l'ETF SPDR du S&P 500 sur la même période. Prix issus de la base TAQ du NYSE, filtrés entre 9:30:00 et 16:00:00 inclus, rendements overnight exclus. Hors échantillon géographique : FTSE 100 et EURO STOXX 50 (Thomson Reuters Tick History), même période, début 1998-02-26 pour le STOXX. Aucun futur, aucune matière première, aucun taux, aucun change.",
+
+  "horizon": {
+    "value": "1, 5, 22 et 66 jours de bourse",
+    "unit": "jours de bourse",
+    "note": "La variable de gauche est la volatilité cumulée moyenne sur h jours à venir ; les modèles sont estimés pour tous les h de 1 à 66 (figures 1 et 2), les tables ne rapportant que h = 1, 5, 22, 66. C'est un horizon de prévision de volatilité, pas de rendement."
+  },
+
+  "signal_construction": {
+    "value": "Pour chaque jour et chaque instrument : échantillonner 79 prix intraday en temps d'affaires (intervalle moyen 5 minutes), sur dix grilles décalées moyennées ; en tirer RS+ = somme des carrés des rendements positifs, RS− = somme des carrés des rendements négatifs, avec RV = RS+ + RS− exactement ; former ΔJ² = RS+ − RS−, et ses deux moitiés signées ΔJ²+ et ΔJ²− selon le signe de cette différence ; calculer BV (bipower variation, moyenne des versions skip-0 à skip-4). Ces quantités alimentent une régression HAR estimée en moindres carrés pondérés, où le terme du jour t est remplacé par ses composantes signées et où les termes hebdomadaire (retards 2 à 5) et mensuel (retards 6 à 22) restent sur RV. Le « signal » au sens du papier est donc la valeur prédite d'une volatilité cumulée à h jours, pas un score signé sur un rendement.",
+    "sampling": "Estimateurs calculés quotidiennement sur prix échantillonnés en temps d'affaires (tous les k ticks) et non en temps calendaire : 79 prix par jour, soit un intervalle moyen de 5 minutes, premier et dernier prix du jour imposés comme première et dernière observations. Dix grilles décalées sont calculées puis moyennées (subsampling, équations 9 et 10). Les prix hors séance sont fixés au prix de clôture.",
+    "components": [
+      "RV = somme des rendements intraday au carré sur la journée (équation 3).",
+      "RS+ = somme des r²_i pour r_i > 0 ; RS− = somme des r²_i pour r_i < 0 (équation 6). Décomposition exacte : RV = RS+ + RS−, pour tout n.",
+      "BV = bipower variation, équation 4, estimée en moyennant les versions skip-0 à skip-4 (équation 11), μ₁ = racine(2/π).",
+      "ΔJ² = RS+ − RS− (équation 8) : élimine la moitié de variance intégrée présente dans chaque semi-variance, positif quand la journée est dominée par un saut haussier, négatif sinon. Aucun estimateur robuste aux sauts n'est nécessaire, aucun pré-test de saut n'est fait.",
+      "ΔJ²+ = ΔJ² · I{RS+ − RS− > 0} et ΔJ²− = ΔJ² · I{RS+ − RS− < 0} (équation 19)."
+    ],
+    "model": "HAR (heterogeneous autoregression), reparamétrisé de façon numériquement identique : terme du jour t, moyenne des retards 2 à 5, moyenne des retards 6 à 22 (équation 12). Spécifications comparées : HAR de référence sur RV (15) ; RV décomposée au premier retard en RS+ / RS− (16) ; ajout d'un terme de levier γ·RV_t·I{r_t<0} (17) ; BV + ΔJ² (18) ; BV + ΔJ²+ + ΔJ²− (19).",
+    "estimation": "Moindres carrés pondérés (WLS) : OLS d'abord, puis poids = inverse de la valeur ajustée, pour ne pas laisser les périodes de forte variance dominer l'ajustement. Inférence par HAC Newey-West avec bande passante 2(h−1). Pour les 105 titres, panel HAR poolé non équilibré à effets fixes (équation 13), n_t entre 71 et 100 et T = 2 795.",
+    "no_lookahead_note": "Toutes les variables explicatives sont datées de t ou antérieures ; la variable de gauche est postérieure. Les paramètres in-sample, eux, sont estimés sur l'échantillon entier : seule la section VI (WLS roulantes) est hors échantillon."
+  },
+
+  "reported_results": [
+    {
+      "name": "universe_period",
+      "value": null,
+      "quoted": "S&P 100 Index between June 23, 1997, and July 31, 2008.",
+      "note": "Période de l'échantillon principal, actions US."
+    },
+    {
+      "name": "n_candidate_constituents",
+      "value": 154,
+      "quoted": "Of the 154 distinct constituents of the S&P 100 Index over",
+      "note": "154 candidats, dont 105 retenus (disponibles en continu au moins quatre ans)."
+    },
+    {
+      "name": "n_stocks_retained",
+      "value": 105,
+      "quoted": "this time period, we retain for our analysis the 105 that were",
+      "note": "105 titres retenus sur 154, critère : disponibles en continu au moins quatre ans. C'est un filtre de survie partiel."
+    },
+    {
+      "name": "samples_per_day",
+      "value": 79,
+      "quoted": "We sample prices 79 times per day, which corresponds",
+      "note": "Échantillonnage en temps d'affaires ; 79 prix correspondent à un intervalle moyen de 5 minutes, moyenné sur dix grilles décalées."
+    },
+    {
+      "name": "jump_share_of_qv_spdr_pct",
+      "value": 2,
+      "unit": "%",
+      "quoted": "2% of total quadratic variation for the SPDR and around",
+      "note": "Part de la variation quadratique due aux sauts, ETF S&P 500 ; ratio des moyennes de BV et RV."
+    },
+    {
+      "name": "jump_share_of_qv_individual_pct",
+      "value": 13,
+      "unit": "%",
+      "quoted": "13% for the average individual firm in our collection of",
+      "quoted_source": "13% for the average individual ﬁrm in our collection of",
+      "quoted_repair": "ocr",
+      "note": "Même ratio pour la firme moyenne des 105 : la part des sauts est six fois plus grande sur titre individuel que sur l'indice."
+    },
+    {
+      "name": "corr_rs_plus_rs_minus_pct",
+      "value": 80,
+      "unit": "%",
+      "quoted": "The correlation between RS+ and RS−, at around 80%,",
+      "note": "Corrélation entre les deux semi-variances, nettement plus basse que leurs corrélations avec RV ou BV (>0,92 en table 1) : c'est là que loge l'information nouvelle."
+    },
+    {
+      "name": "spdr_first_autocorr_max",
+      "value": 0.70,
+      "quoted": "the first-order autocorrelation of the SPDR volatility series (RV, BV, RS+, and RS−) ranges from 0.47 to 0.70.",
+      "quoted_source": "ranges from 0.47 to 0.70.",
+      "quoted_repair": "ocr",
+      "note": "Autocorrélation d'ordre 1 des séries de volatilité du SPDR : 0,47 à 0,70. Celles des séries de saut signé sont bien plus basses, de −0,11 à 0,06 : le signal de saut est presque sans mémoire, contrairement à la volatilité."
+    },
+    {
+      "name": "insample_explained_gain_low_pct",
+      "value": 10,
+      "unit": "%",
+      "quoted": "semivariance model explains 10% to 20% more",
+      "note": "Borne basse du gain d'explication de la variation de la volatilité future, modèle avec semi-variances contre modèle avec RV seule, SPDR, in-sample."
+    },
+    {
+      "name": "insample_explained_gain_high_pct",
+      "value": 20,
+      "unit": "%",
+      "quoted": "semivariance model explains 10% to 20% more",
+      "note": "Borne haute du même gain."
+    },
+    {
+      "name": "horizons_where_symmetry_not_rejected_spdr",
+      "value": 3,
+      "quoted": "all but 3 of 66 horizons ( h = 36,43,48) for the SPDR, and in",
+      "note": "Test de la restriction phi+_d = phi−_d = phi_d au seuil de 0,05 : rejeté sur 63 des 66 horizons pour le SPDR, et sur tous les horizons dans le panel."
+    },
+    {
+      "name": "leverage_interaction_r2_gain",
+      "value": 0.001,
+      "quoted": "including this interaction variable is just 0.001.",
+      "note": "Gain de R² apporté par le terme de levier classique RV_t·I{r_t<0} une fois les semi-variances présentes : quasi nul. L'asymétrie est mieux capturée par RS− que par le signe du rendement quotidien."
+    },
+    {
+      "name": "spdr_r2_h1_without_jump_info",
+      "value": 0.56,
+      "quoted": "SPDR, R2 falls from 0.61 to 0.56 for h = 1 and from 0.62 to",
+      "note": "R² in-sample du modèle sans mesure de saut signé (BV seul au retard 1) contre 0,61 avec ΔJ², horizon 1 jour, SPDR."
+    },
+    {
+      "name": "n_firms_signif_negative_deltaJ2_h1",
+      "value": 83,
+      "quoted": "significantly negative in 83 series at the 1-day horizon and 89 at the",
+      "quoted_source": "cantly negative in 83 series at the 1-day horizon and 89 at the",
+      "quoted_repair": "ocr",
+      "note": "Sur 105 séries individuelles, coefficient de ΔJ² significativement négatif dans 83 à l'horizon 1 jour et 89 à 5 jours."
+    },
+    {
+      "name": "signed_jump_direction",
+      "value": null,
+      "quoted": "with negative (positive) jumps leading to higher (lower) future",
+      "note": "Résultat qualitatif central, énoncé dans le résumé : c'est le signe du saut, non son amplitude, qui décide du sens de l'effet sur la volatilité future."
+    },
+    {
+      "name": "signed_jump_predicts_continuous_part",
+      "value": null,
+      "quoted": "using RV. Thus, signed jump variation is indeed useful for predicting the continuous part of volatility.",
+      "note": "En remplaçant RV par BV comme variable de gauche, les estimations sont pratiquement identiques : le saut signé prédit aussi la partie continue de la volatilité, pas seulement les sauts futurs."
+    },
+    {
+      "name": "oos_window_observations",
+      "value": 1004,
+      "quoted": "based on 1,004 observations (4 years)",
+      "note": "Fenêtre roulante des régressions WLS hors échantillon, paramètres remis à jour chaque jour."
+    },
+    {
+      "name": "oos_n_series",
+      "value": 95,
+      "quoted": "of individual firms from 105 to 95.",
+      "quoted_source": "of individual ﬁrms from 105 to 95.",
+      "quoted_repair": "ocr",
+      "note": "Seules les séries avec au moins 500 points hors échantillon sont gardées."
+    },
+    {
+      "name": "oos_pct_series_favoring_semivariance",
+      "value": 22,
+      "unit": "%",
+      "quoted": "based model in 22% to 30% of individual series.",
+      "note": "Borne basse du pourcentage des 95 séries individuelles où le test DM rejette l'égalité de performance en faveur du modèle à semi-variances (test bilatéral à 5 %). Lu autrement : dans 70 à 78 % des séries, on ne rejette pas."
+    },
+    {
+      "name": "oos_dm_stat_har_vs_rs_minus_h66",
+      "value": 5.23,
+      "quoted": "Table 5, ligne h = 66 : la statistique DM du SPDR pour la comparaison RV-HAR contre le modèle à semi-variance négative seule vaut 5.23, contre 3.64 pour la comparaison avec le modèle à deux semi-variances.",
+      "quoted_source": "h = 66 3.64 1.1 23.2 5.23 1.1 36.8 4.27 3.2 16.8",
+      "quoted_repair": "table",
+      "note": "Statistique positive = le modèle à semi-variance l'emporte. C'est la comparaison la plus favorable du papier hors échantillon, à l'horizon le plus long."
+    },
+    {
+      "name": "oos_r2_gain_spdr_max_pct",
+      "value": 3.0,
+      "unit": "%",
+      "quoted": "(h = 66) and 3.0% for the SPDR ( h = 22), and between",
+      "note": "Gain maximal de R² hors échantillon de la meilleure alternative à semi-variances contre le HAR de référence, SPDR ; borne basse 1,1 % à h = 66."
+    },
+    {
+      "name": "oos_r2_gain_individual_max_pct",
+      "value": 13.5,
+      "unit": "%",
+      "quoted": "0.5% (h = 66) and 13.5% ( h = 1) for the individual stocks.",
+      "note": "Même gain pour les titres individuels : 13,5 % à h = 1, mais seulement 0,5 % à h = 66. Le gain se concentre sur l'horizon court et sur les titres, pas sur l'indice."
+    },
+    {
+      "name": "oos_r2_spdr_h1_best_model_pct",
+      "value": 69.3,
+      "unit": "%",
+      "quoted": "Table 6, SPDR, h = 1 : R² hors échantillon de 66.7 pour le HAR de référence, 69.0 pour le HAR augmenté du terme de levier, 67.8 pour le modèle à deux semi-variances, 68.8 pour le modèle à semi-variance négative seule, 68.0 pour le modèle à BV, 68.9 pour le modèle à ΔJ² et 69.3 pour le modèle à ΔJ² signée.",
+      "quoted_source": "h = 1 66.7 69.0 67.8 68.8 68.0 68.9 69.3",
+      "quoted_repair": "table",
+      "note": "L'écart absolu entre le pire et le meilleur modèle vaut 2,6 points de R² : les gains sont réels mais petits en niveau."
+    },
+    {
+      "name": "panel_time_series_length",
+      "value": 2795,
+      "quoted": "and T = 2,795. If an approximate factor structure holds in the",
+      "note": "Longueur de la série temporelle du panel, en jours de bourse ; section transversale entre 71 et 100 titres selon la date."
+    },
+    {
+      "name": "international_signed_jump_sign",
+      "value": null,
+      "quoted": "is significantly negative for all four horizons for the FTSE and",
+      "quoted_source": "is signiﬁcantly negative for all four horizons for the FTSE and",
+      "quoted_repair": "ocr",
+      "note": "FTSE 100 et EURO STOXX 50 : phi_J négatif aux quatre horizons, significativement pour tous les horizons du FTSE et tous sauf le plus long pour le STOXX. C'est la seule vérification du papier sur un marché non américain."
+    }
+  ],
+
+  "what_is_missing": [
+    "Aucun rendement, aucun P&L, aucun Sharpe : la cible est la volatilité future et la métrique de succés est un R² (in-sample et hors échantillon) ou une statistique de Diebold-Mariano sur une perte QLIKE. Rien dans le papier ne dit ce que ces gains valent en argent.",
+    "Aucun coût de transaction, aucun spread, aucun slippage : le papier ne trade rien.",
+    "Les règles de nettoyage des prix sont renvoyées à l'annexe A, absente du texte fourni ; les règles 1, 2, 5 et 6 sont invoquées pour les indices internationaux sans être reproduites.",
+    "Le VHAR complet (décomposition à tous les retards) est renvoyé à l'annexe B, absente du texte fourni, de même que les tables A.2, A.6 et les résultats en log-volatilité de l'annexe en ligne.",
+    "Les tests de la restriction phi+_d = phi−_d = phi_d horizon par horizon ne sont pas rapportés : « available from the authors on request ».",
+    "Le nombre exact de tests effectués n'est pas comptabilisé : quatre horizons tabulés mais 66 estimés, sept modèles, deux variables dépendantes, trois indices plus un panel. Aucune correction de multiplicité.",
+    "L'algorithme exact d'échantillonnage en temps d'affaires des semi-variances n'est pas écrit : le papier dit seulement qu'elles sont construites « de manière analogue » à RV.",
+    "Le choix de 79 prix par jour, de dix grilles de subsampling et des skips 0 à 4 n'est justifié que par la convention et un compromis qualitatif ; aucune sensibilité à ces choix n'est montrée.",
+    "Aucune donnée de contrats à terme, aucune information de multiplicateur, de tick, de roulement ou de fuseau : le papier ne traite que des actions au comptant et des ETF.",
+    "Le traitement des jours écourtés, des halts et des jours fériés partiels n'est pas décrit.",
+    "La période hors échantillon n'est pas séparée de la période de découverte : l'analyse hors échantillon est pseudo-hors-échantillon, roulante sur les mêmes données 1997-2008, après que les modèles ont été choisis sur ces mêmes données in-sample."
+  ],
+
+  "transposability": {
+    "what_transfers": "Le mécanisme, pas les chiffres. Trois choses se recalculent telles quelles sur nos neuf futures intraday : (1) RS+ et RS− sont des sommes de carrés de rendements de barres, décomposition exacte de RV, sans paramètre à calibrer, sans bande passante, sans estimation non linéaire, et sans aucun accès au futur par construction ; (2) ΔJ² = RS+ − RS− n'exige aucun estimateur robuste aux sauts ni aucun pré-test, donc aucune décision discrétionnaire ; (3) l'affirmation testable — le signe de la variation intraday prédit quelque chose que la variation totale ne prédit pas — est une hypothèse pré-enregistrable et falsifiable, et la comparaison de référence (RS− seule contre RV seule, même nombre de paramètres) est honnête.",
+    "what_does_not_transfer": [
+      "L'univers : 105 actions et trois indices actions contre nos neuf futures. L'explication de levier de Black (1976), qui repose sur le levier financier d'une firme, n'a pas d'analogue pour un future de taux, de matière première ou de change ; l'asymétrie pourrait s'inverser (sur beaucoup de matières premières, c'est le saut haussier qui appelle la volatilité).",
+      "La cible : le papier prédit une volatilité future, pas un rendement signé. Notre métrique officielle est un IC entre un score et un rendement futur. Un R² de 0,61 sur une volatilité cumulée ne se convertit en rien chez nous ; il faudrait soit changer de cible, soit utiliser le signal comme conditionneur de régime plutôt que comme prédicteur direct.",
+      "L'horizon : de 1 à 66 jours de bourse. Nos horizons sont intraday. Rien dans le papier ne dit ce que devient l'asymétrie à quelques barres.",
+      "L'échantillonnage en temps d'affaires (tous les k ticks, dix grilles décalées, moyennées), qui suppose un flux de transactions tick par tick. Sur des barres de prix déjà agrégées en temps calendaire, l'estimateur n'est pas le même, et le papier ne dit pas de combien il diffère.",
+      "L'exclusion des rendements overnight, possible parce que la séance actions US va de 9:30 à 16:00. Nos futures cotent quasi en continu : la définition même de la « journée » sur laquelle RS+ et RS− se somment est une décision à prendre, pas une donnée du papier.",
+      "Le panel HAR poolé à effets fixes sur 105 titres, où T = 2795 et n_t va de 71 à 100. Avec neuf instruments hétérogènes (pas de facteur commun comparable à celui d'un S&P 100), ni le pooling ni son inférence asymptotique ne tiennent. Or c'est dans le panel, pas sur l'indice, que les effets sont les plus nets et les t-stats les plus gros (jusqu'à 40) — exactement ce qui ne nous est pas disponible.",
+      "La période 1997-2008 : microstructure d'avant la décimalisation aboutie et d'avant la domination du HFT, et elle se termine sur la crise. Nos tranches commencent en 2016.",
+      "Les niveaux chiffrés de corrélation, d'autocorrélation, de R² et de part de saut dans la variation quadratique (2 % pour l'indice, 13 % pour la firme moyenne) : ils dépendent du sous-jacent et du régime, et ne disent chez nous que ce qu'il faut vérifier.",
+      "La significativité affichée : elle provient de régressions sur des horizons chevauchants (volatilité cumulée à h jours), corrigées par un HAC mais estimées sur des données dont le chevauchement réduit fortement le nombre d'observations indépendantes. Une t-stat de 40 dans le panel ne vaut pas 40 écarts-types d'information indépendante.",
+      "L'évaluation hors échantillon elle-même : fenêtre roulante de 1004 jours sur la même période que la découverte, avec un « insanity filter » sur les prévisions négatives. Ce n'est pas un holdout scellé au sens de notre invariant V."
+    ],
+    "what_aligns_well": "Trois choses tombent juste. D'abord la cadence : l'échantillonnage visé est de 5 minutes en moyenne, ce qui est l'ordre de grandeur des barres intraday dont nous disposons, et le signal du jour t ne lit que des barres de t ou antérieures — l'invariant II est satisfait par construction, sans vigilance. Ensuite la parcimonie : RS+, RS−, BV et ΔJ² sont des statistiques quotidiennes simples, sans bande passante, sans lissage, sans estimation non linéaire, et toutes les régressions sont des moindres carrés — le coût d'implémentation et le nombre de degrés de liberté cachés sont faibles, ce qui limite la surface de sur-ajustement. Enfin la structure du papier fournit sa propre comparaison de référence : RS− seule contre RV seule, à nombre de paramètres égal, et BV seul contre BV + ΔJ². Ces paires sont directement transposables en un test « le signe ajoute-t-il quelque chose » sans nouvelle hypothèse à inventer.",
+    "candidate_use_here": "La piste la plus probable n'est pas un signal de rendement mais un détecteur de régime : ΔJ² normalisée par RV comme variable de conditionnement pour un hybride, l'hypothèse pré-enregistrée étant que les jours suivant une ΔJ² fortement négative sont des jours de volatilité élevée. Tout usage en prédiction de rendement signé serait une extrapolation que le papier ne soutient pas."
+  }
+}
