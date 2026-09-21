@@ -1,7 +1,7 @@
 # ÉTAT
 
 **Phase courante :** 07 — triage et extraction sur 20 papiers connus
-**Date de dernière mise à jour :** 2026-09-20
+**Date de dernière mise à jour :** 2026-09-21
 **Dernière porte franchie :** **06**, le 2026-09-18 — les deux clauses.
 Clause 1 (dégénérescence) : `gate_06_controls.py`, 25 vérifications. Clause 2
 (réplication) : `scripts/measure_h04.py`, 19 vérifications, `H04` pré-enregistrée
@@ -63,7 +63,7 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 |---|---|---|---|
 | 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07` |
 | 06 | Contrôles automatiques et réplication | Un signal dégénéré est rejeté avant le harnais ; la chaîne reproduit un fait publié sur nos données. La cible a changé deux fois : Mesfin (métrique incompatible, `D12`), Heston (motif absent, `H03`), puis Andersen & Bollerslev (`D13`). | **franchie 2026-09-18** — `gate_06_controls.py` (25) et `scripts/measure_h04.py` (19) |
-| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 21 vérifications), son **extracteur non**, et **aucun PDF n'est sur ce poste** |
+| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 21 vérifications), son **extracteur non** ; les **trois PDF de référence sont sur ce poste** depuis le 2026-09-20 (`D17`), et `F4` passe sur les trois fiches |
 | 08 | Le codeur de signal | Une fiche produit un signal exécutable qui passe la sandbox, sans retouche manuelle. | à faire |
 
 ## Acte III — Fermer la boucle une fois
@@ -261,23 +261,35 @@ citations insignifiantes passerait les cinq conditions. Le diagnostic imprime de
 quoi le voir — les résultats de la référence laissés de côté — mais ne
 conditionne rien. La pertinence n'aura de dénominateur qu'en phase 09.
 
-### Un fait que ce fichier donnait faux : il n'y a **aucun** PDF sur ce poste
+### Les trois PDF de référence sont sur ce poste — et ce paragraphe s'est périmé deux fois
 
-`ETAT.md` annonçait « 3 PDF sur disque » depuis le 2026-09-18. **`corpus/pdf/`
-ne contient que son `.gitkeep`** : le dossier est dans `.gitignore`, les trois
-PDF n'ont jamais quitté le poste où ils ont été récupérés. C'est la même
-péremption que la note « sur cette machine » corrigée le 2026-09-17 — un fait
-vrai quelque part, écrit comme s'il l'était partout.
+**État au 2026-09-21, vérifié par le juge lui-même** (`check_f4` de
+`corpus/score_extraction.py`, lancé sur les trois fiches) : `corpus/pdf/`
+contient les trois PDF — Mesfin (`2605.04004`), Heston (`1005.3535`),
+Andersen & Bollerslev — récupérés le 2026-09-20 par la session de `D17`, qui
+l'inscrit à son § Le recensement. **`F4` passe sur les trois.**
 
-Ce n'est pas cosmétique : **`F4` casse aujourd'hui sur les trois fiches de
-référence**, vérifié. Le juge le dit tout seul, ce qui est la bonne façon de
-l'apprendre.
+**Ce que ce paragraphe disait avant, et pourquoi il reste écrit.** Le
+2026-09-18, `ETAT.md` annonçait « 3 PDF sur disque » : vrai sur le poste où ils
+avaient été récupérés, faux ici, `corpus/pdf/` étant dans `.gitignore`. Le
+2026-09-20, `D16` a lancé son juge et **`F4` a cassé sur les trois fiches** — le
+juge a trouvé le fait faux tout seul, ce qui est la bonne façon de l'apprendre.
+La correction écrite ce jour-là a été rattrapée par la récupération des PDF
+quelques heures plus tard, **dans la même journée** — et elle est restée fausse
+dans l'autre sens jusqu'à aujourd'hui.
+
+**La leçon n'est donc pas « il n'y avait pas de PDF ».** Elle est que l'état
+d'un dossier ignoré par git **n'est pas un fait du dépôt** : il est vrai d'un
+poste et d'une heure, et ce fichier ne devrait pas l'affirmer sans le vérifier.
+Le seul énoncé qui ne se périme pas est celui du juge, qui répond à l'instant
+où on le lance. Même péremption que la note « sur cette machine » corrigée le
+2026-09-17, et deux fois plutôt qu'une.
 
 ### Prochaine action : deux choses, et la seconde demande une décision
 
-1. **Récupérer les trois PDF de référence** — Mesfin (arXiv), Heston (arXiv
-   1005.3535), Andersen & Bollerslev (lien direct). Sans eux, rien de l'extraction
-   ne peut être ni écrit ni jugé sur ce poste.
+1. ~~Récupérer les trois PDF de référence.~~ **Fait le 2026-09-20** — Mesfin
+   (arXiv), Heston (arXiv 1005.3535), Andersen & Bollerslev (lien direct) sont
+   dans `corpus/pdf/`, et `F4` passe sur les trois fiches.
 2. ~~Trancher par écrit ce que la porte 07 demande.~~ **Fait le 2026-09-20 :
    `D17`.** La porte ne demande plus 20 fiches mais un extracteur jugé sur tout
    le corpus atteignable, `G1`–`G4`.
@@ -299,7 +311,8 @@ l'apprendre.
 
 ### Ce qui reste ouvert par ailleurs
 
-- **l'acquisition** : aucun PDF sur ce poste, 14 entrées sur 20 portant un lien,
+- **l'acquisition** : 3 PDF sur ce poste, les trois de référence et aucun autre ;
+  14 entrées sur 20 portant un lien,
   2 derrière un péage (16, 17), 6 sans aucun lien (6, 10, 14, 18, 19, 20 — la 14
   étant en outre citée de mémoire, non vérifiée). Voir la prochaine action ;
 - **deux fuites du même genre que celle de `TRIAGE.md`**, nommées par `D16` et

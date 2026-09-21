@@ -1,6 +1,6 @@
 ---
 type: phase
-updated: 2026-09-20
+updated: 2026-09-21
 status: en-cours
 phase: 07
 gate: 20 fiches produites ; le triage écarte ce qu'il doit écarter, sur un verdict humain de référence
@@ -221,13 +221,17 @@ tombe sous 5 papiers, seuil écrit avant le recensement).
 
 ## Ce qui bloque l'autre moitié : l'acquisition
 
-> [!warning] **Corrigé le 2026-09-20 : il n'y a aucun PDF sur le poste d'Arthur.**
-> Le compte de « 3 PDF sur disque » ci-dessous était vrai sur le poste où ils ont
-> été récupérés. `corpus/pdf/` est dans `.gitignore` : les trois PDF n'ont jamais
-> traversé. Conséquence vérifiée — **`F4` casse aujourd'hui sur les trois fiches
-> de référence**. La source fait foi : `ETAT.md`.
+> [!note] **À jour au 2026-09-21 : les trois PDF de référence sont sur ce poste,
+> et `F4` passe sur les trois fiches.** Ils ont été récupérés le 2026-09-20 par la
+> session de `D17`. Cette page a porté successivement les deux erreurs inverses :
+> « 3 PDF sur disque » écrit depuis un autre poste, puis « aucun PDF » gardé
+> après leur récupération le jour même. `corpus/pdf/` est dans `.gitignore`,
+> **son état n'est donc pas un fait du dépôt** : il ne se lit pas ici, il se
+> vérifie en lançant `corpus/score_extraction.py`. La source fait foi :
+> `ETAT.md` § Les trois PDF de référence sont sur ce poste.
 
-**3 PDF sur disque, 20 fiches demandées.** Des 20 entrées notées, 12 ont un lien
+**3 PDF sur disque — les trois de référence, et aucun autre.** Des 20 entrées
+notées, 12 ont un lien
 libre, 2 sont derrière un péage (16, 17) et **6 n'ont aucun lien** (6, 10, 14,
 18, 19, 20 — la 14 étant en outre citée de mémoire et non vérifiée). Ce que
 devient la porte si les 20 fiches ne sont pas atteignables depuis `AMORCE.md` —
