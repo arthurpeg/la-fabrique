@@ -105,9 +105,10 @@ serait un mauvais emploi du seul temps dont dispose un opérateur seul.
 
 | Point | Échéance |
 |---|---|
-| **Combien de papiers sont réellement atteignables** : 14 entrées portent un lien, mais SSRN et ScienceDirect n'ont pas été essayés. Le recensement de `G4` le dira, et c'est la première chose à faire | avant d'écrire l'extracteur |
+| ~~**Combien de papiers sont réellement atteignables**~~ **Répondu le 2026-09-21 : 19 sur 20**, dont 18 en PDF. SSRN refuse partout (contrôle anti-robot), et c'est sans conséquence : les papiers vivent aussi ailleurs. Voir `corpus/ACQUISITION.md` et le § Journal ci-dessous | **fait** |
 | **Ce que devient un papier atteignable mais illisible** — scan trop dégradé pour que `F2` trouve quoi que ce soit, même avec réparation déclarée (`D16` § Complément) : inatteignable, ou fiché sans citation ? | au premier cas rencontré |
-| **Si le corpus atteignable descend sous 5 papiers**, la porte 07 ne testerait plus grand-chose et il faudrait rouvrir l'option 2. Le seuil est écrit **maintenant**, avant le recensement, pour qu'il ne soit pas choisi en le voyant | au recensement |
+| **Ce que devient un papier atteignable dont le texte n'est pas un PDF** — l'entrée 9 est un billet de blog en HTML, libre et sans démarche, donc atteignable à la lettre de la présente décision ; mais `F4` de `D16` exige un `source.pdf` qui existe. **Cas rencontré le 2026-09-21** | avant de ficher l'entrée 9 |
+| ~~**Si le corpus atteignable descend sous 5 papiers**~~ **Écarté le 2026-09-21 : 19 atteignables.** Le seuil avait été écrit avant le recensement, ce qui est la seule façon pour un seuil de valoir quelque chose | **fait** |
 
 ## Journal des passages
 
@@ -115,8 +116,21 @@ serait un mauvais emploi du seul temps dont dispose un opérateur seul.
 
 | # | Date | Corpus atteignable | Fiches produites | G1/G2/G3/G4 | Verdict |
 |---|---|---|---|---|---|
-| — | — | *(recensement non fait)* | — | — | — |
+| — | 2026-09-21 | **19 / 20** (18 PDF, 1 HTML) | — | `G4` tenu, le reste non mesuré | recensement seul, pas un passage de porte |
 
-À ce jour : **3 PDF récupérés** sur le poste d'Arthur le 2026-09-20 (Mesfin,
-Heston, Andersen & Bollerslev), **aucun extracteur**, et **aucun recensement**
-des atteignables.
+**Le recensement de `G4` est fait — le 2026-09-21.** `corpus/acquisition.json`,
+produit par `corpus/probe_acquisition.py` et gardé par
+`corpus/check_acquisition.py` (**11 vérifications**, vert). Le détail et ce
+qu'il a coûté d'apprendre sont dans `corpus/ACQUISITION.md`.
+
+**Ce que la présente décision avait prévu, et où elle se trompait.** Elle
+écrivait *« entre 6 et 14 fiches selon ce que SSRN consent »*. Le recensement
+rend **19**, au-dessus de la borne haute, et **SSRN n'a rien consenti** : il
+refuse tout client automatique, vérifié deux fois. La prévision prenait le lien
+qu'`AMORCE.md` porte pour le papier lui-même ; s'en tenir à ces liens rendait
+**5 sur 20**. Presque tous ces papiers vivent aussi au NBER, dans les rapports
+de la Fed, sur des pages d'auteurs ou dans des dépôts universitaires.
+
+**Ce qui reste à faire et ne l'est pas** : les 15 PDF atteignables hors de
+`corpus/pdf/` ont été **obtenus et vérifiés, non enregistrés**. Il n'y a
+toujours **aucun extracteur**, et `G1`, `G2`, `G3` ne sont pas mesurés.

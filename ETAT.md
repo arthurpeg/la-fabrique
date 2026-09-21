@@ -64,7 +64,7 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 |---|---|---|---|
 | 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07` |
 | 06 | Contrôles automatiques et réplication | Un signal dégénéré est rejeté avant le harnais ; la chaîne reproduit un fait publié sur nos données. La cible a changé deux fois : Mesfin (métrique incompatible, `D12`), Heston (motif absent, `H03`), puis Andersen & Bollerslev (`D13`). | **franchie 2026-09-18** — `gate_06_controls.py` (25) et `scripts/measure_h04.py` (19) |
-| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 32 vérifications), son **extracteur non** ; les **trois PDF de référence sont sur ce poste** depuis le 2026-09-20 (`D17`), et `F4` passe sur les trois fiches |
+| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 32 vérifications), son **extracteur non** ; **recensement `G4` fait le 2026-09-21 — 19 atteignables sur 20**, 3 PDF sur le disque |
 | 08 | Le codeur de signal | Une fiche produit un signal exécutable qui passe la sandbox, sans retouche manuelle. | à faire |
 
 ## Acte III — Fermer la boucle une fois
@@ -299,26 +299,44 @@ où on le lance. Même péremption que la note « sur cette machine » corrigée
 
 ### Donc, dans l'ordre, ce qui vient maintenant
 
-1. **Le recensement des atteignables** — `G4` l'exige, et sans lui `G1` ne veut
-   rien dire puisqu'on choisirait après coup ce qui était à portée. 14 entrées
-   sur 20 portent un lien ; SSRN et ScienceDirect n'ont pas été essayés. C'est
-   peu de travail et ça décide de la taille de tout le reste.
-2. **Réparer les trois fiches de référence** — deux `quoted_source` à déclarer,
+1. ~~Le recensement des atteignables.~~ **Fait le 2026-09-21 : 19 atteignables
+   sur 20**, dont 18 en PDF. `corpus/acquisition.json`, produit par
+   `corpus/probe_acquisition.py`, gardé par `corpus/check_acquisition.py`
+   (11 vérifications, vert), expliqué par `corpus/ACQUISITION.md`. **`D17` s'est
+   trompee sur ce point et son § Journal le dit** : elle prévoyait 6 à 14 « selon
+   ce que SSRN consent » ; SSRN n'a rien consenti (contrôle anti-robot, non
+   contourné) et le compte est plus haut quand même, parce que ces papiers vivent
+   aussi au NBER, à la Fed, sur des pages d'auteurs et dans des dépôts
+   universitaires. S'en tenir aux liens d'`AMORCE.md` aurait rendu **5**.
+2. **Télécharger les 15 PDF atteignables qui ne sont pas sur le disque** — ils
+   ont été **obtenus et vérifiés** au recensement, **non enregistrés**. Geste
+   distinct du recensement, et préalable à tout fichage.
+3. **Réparer les trois fiches de référence** — deux `quoted_source` à déclarer,
    et **une citation fausse** dans Mesfin (`acceptance_criteria`) à corriger par
    note datée. `D16` § Complément dit quoi faire et pourquoi ce n'est pas fait.
-3. **Apprendre `quoted_source` à `validate_fiches.py`**, faute de quoi `F1` reste
+4. **Apprendre `quoted_source` à `validate_fiches.py`**, faute de quoi `F1` reste
    plus laxiste que `F3` sur une entrée réparée.
-4. **Écrire l'extracteur** — et il devra être **non contaminé** : une session qui
+5. **Écrire l'extracteur** — et il devra être **non contaminé** : une session qui
    a lu la fiche de référence d'un papier ne peut pas l'extraire, elle
    recopierait. Même piège que le trieur, même parade.
 
 ### Ce qui reste ouvert par ailleurs
 
-- **l'acquisition** : 3 PDF sur ce poste, les trois de référence et aucun autre ;
-  **14 entrées sur 20 portent un lien, dont 12 un lien LIBRE** — les deux comptes
-  circulent tous les deux et ne se contredisent pas,
-  2 derrière un péage (16, 17), 6 sans aucun lien (6, 10, 14, 18, 19, 20 — la 14
-  étant en outre citée de mémoire, non vérifiée). Voir la prochaine action ;
+- **l'acquisition est recensée depuis le 2026-09-21** et ne bloque presque plus :
+  **19 atteignables sur 20**, un seul inatteignable — l'entrée 6 (Wen et al.,
+  pétrole), refusée par SSRN, péagée chez Elsevier, et sur ResearchGate seulement
+  contre une demande à l'auteur, ce que `D17` exclut. Il reste que **3 PDF
+  seulement sont sur le disque** ; les 15 autres sont obtenus et vérifiés, non
+  enregistrés. Le compte de liens d'`AMORCE.md` — 14 avec lien, dont 12 libres —
+  n'est plus le bon dénominateur : il décrit `AMORCE.md`, pas ce qui est à
+  portée ;
+- **deux alertes ouvertes par le recensement**, et aucune tranchée : l'entrée 9
+  est libre mais en **HTML**, donc atteignable pour `D17` et infichable pour `F4`
+  qui exige un `source.pdf` ; et la citation de l'**entrée 16** paraît fausse dans
+  `AMORCE.md` — elle dit « Kurov, Sancetta, Strasser & Wolfe », le papier que son
+  propre lien désigne est de **Kurov, Wolfe & Gilbert**. `AMORCE.md` n'a pas été
+  touché : c'est l'étalon du triage (`D15`), et on ne retouche pas un étalon en
+  passant ;
 - **deux fuites du même genre que celle de `TRIAGE.md`**, nommées par `D16` et
   non encore corrigées : `corpus/SCHEMA.md` illustre ses exemples avec le
   **contenu réel** de la fiche Andersen & Bollerslev, donc un extracteur qui lit

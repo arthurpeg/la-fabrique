@@ -221,7 +221,7 @@ dure que le chiffre qu'elle remplace.
 [[Failed Ideas/ledger#F47]] (élargir le corpus — **rouverte** si l'atteignable
 tombe sous 5 papiers, seuil écrit avant le recensement).
 
-## Ce qui bloque l'autre moitié : l'acquisition
+## L'acquisition est recensée — `G4`, le 2026-09-21
 
 > [!note] **À jour au 2026-09-21 : les trois PDF de référence sont sur ce poste,
 > et `F4` passe sur les trois fiches.** Ils ont été récupérés le 2026-09-20 par la
@@ -232,13 +232,33 @@ tombe sous 5 papiers, seuil écrit avant le recensement).
 > vérifie en lançant `corpus/score_extraction.py`. La source fait foi :
 > `ETAT.md` § Les trois PDF de référence sont sur ce poste.
 
-**3 PDF sur disque — les trois de référence, et aucun autre.** Des 20 entrées
-notées, **14 portent un lien** dont 12 un lien
-libre, 2 sont derrière un péage (16, 17) et **6 n'ont aucun lien** (6, 10, 14,
-18, 19, 20 — la 14 étant en outre citée de mémoire et non vérifiée). Ce que
-devient la porte si les 20 fiches ne sont pas atteignables depuis `AMORCE.md` —
-élargir le corpus, ou requalifier la porte — se tranche **par écrit, et pas au
-quinzième papier**.
+**19 atteignables sur 20**, dont 18 en PDF. La source fait foi :
+`corpus/acquisition.json`, gardé par `corpus/check_acquisition.py`
+(11 vérifications) et expliqué par `corpus/ACQUISITION.md`.
+
+| | Effectif |
+|---|---|
+| atteignables | **19 / 20** — 18 PDF, 1 HTML |
+| inatteignables | **1** — entrée 6, `refus_robot` |
+| PDF **sur le disque** | **3** — les 15 autres sont obtenus et vérifiés, non enregistrés |
+
+**`D17` avait prévu 6 à 14 « selon ce que SSRN consent », et elle se trompait
+deux fois.** SSRN n'a rien consenti — contrôle anti-robot, vérifié en client
+automatique (`403`) et dans un vrai navigateur, **non contourné**. Et le compte
+est plus haut quand même, parce que la prévision prenait **le lien qu'`AMORCE.md`
+porte pour le papier lui-même**. S'en tenir à ces liens rendait **5 sur 20** ;
+chercher le papier en rend 19. L'entrée 3 le montrait déjà : `AMORCE.md` n'en
+donne qu'un lien SSRN, et son PDF vient d'arXiv.
+
+Le seuil de `D17` — *rouvrir l'élargissement du corpus sous 5 atteignables* — est
+**largement écarté**, et il avait été écrit avant le recensement.
+
+**Deux alertes, ouvertes et non tranchées.** L'entrée 9 est libre mais en HTML :
+atteignable à la lettre de `D17`, infichable pour `F4` qui exige un `source.pdf`.
+Et la citation de l'entrée 16 paraît fausse dans `AMORCE.md` — « Kurov,
+Sancetta, Strasser & Wolfe » quand le papier que son propre lien désigne est de
+Kurov, Wolfe & Gilbert. `AMORCE.md` **n'a pas été touché** : c'est l'étalon du
+triage (`D15`).
 
 ## Ce qu'on sait déjà du produit de cette phase
 
