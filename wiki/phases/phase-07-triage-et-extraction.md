@@ -164,7 +164,9 @@ Le passage n'a coûté **aucun test** : `counted_tests()` reste à 56.
 ## La moitié extraction a son juge — `D16`, le 2026-09-20
 
 Écrit **avant que l'extracteur existe**. `corpus/score_extraction.py`,
-**21 vérifications**, vert. La source fait foi : `decisions/DECISION-16-seuil-de-l-extraction.md`.
+**32 vérifications**, vert — 21 à l'écriture de `D16`, portées à 32 par le
+correctif de `D17`. La source fait foi :
+`decisions/DECISION-16-seuil-de-l-extraction.md` et son § Complément.
 
 Il ne juge **pas** la ressemblance aux trois fiches écrites à la main — trois
 items ne portent aucun seuil, et un seuil en pourcentage sur trois items est
@@ -231,7 +233,7 @@ tombe sous 5 papiers, seuil écrit avant le recensement).
 > `ETAT.md` § Les trois PDF de référence sont sur ce poste.
 
 **3 PDF sur disque — les trois de référence, et aucun autre.** Des 20 entrées
-notées, 12 ont un lien
+notées, **14 portent un lien** dont 12 un lien
 libre, 2 sont derrière un péage (16, 17) et **6 n'ont aucun lien** (6, 10, 14,
 18, 19, 20 — la 14 étant en outre citée de mémoire et non vérifiée). Ce que
 devient la porte si les 20 fiches ne sont pas atteignables depuis `AMORCE.md` —
