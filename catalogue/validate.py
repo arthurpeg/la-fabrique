@@ -26,7 +26,12 @@ from panel.catalogue import load_catalogue  # noqa: E402
 from panel.paths import CATALOGUE, data_dir  # noqa: E402
 
 RETRIEVED = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-NUMBER = re.compile(r"\d+(?:\.\d+)?")
+# Un "-" n'est un SIGNE que s'il ne colle pas a un mot ou a un chiffre :
+# "115-158" sont des pages, "Nasdaq-100" un indice, "0.25-0.50" un intervalle,
+# mais " -2" et "(-3.02)" sont des nombres negatifs. Sans cette distinction le
+# garde REJETAIT tout negatif -- trouve le 2026-09-22 sur les premieres sorties
+# d'extracteur, ou 5 refus sur 10 etaient faux pour cette seule raison.
+NUMBER = re.compile(r"(?:(?<![\w.])-)?\d+(?:\.\d+)?")
 
 INVENTORY = REPO / "scripts" / "out" / "a1_inventory.json"
 GRID = REPO / "scripts" / "out" / "a8_session_grid.json"

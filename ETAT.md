@@ -351,17 +351,19 @@ où on le lance. Même péremption que la note « sur cette machine » corrigée
    25 résultats, 7 réparations déclarées, 2 itérations, **aucune citation
    refusée** — le seul échec portait sur la forme (`F1`), pas sur la fidélité.
    `D16` § Journal dit ce qu'il a appris.
-8. **CORRIGER `value_in_quote`, qui REJETTE À TORT TOUT NOMBRE NÉGATIF.** Trouvé
-   le 2026-09-22 en jugeant les premières sorties d'extracteur. `F1`
-   (`validate_fiches`) importe la fonction du **catalogue**, dont le motif est
-   `\d+(?:\.\d+)?` — **sans signe**. `F3` (`score_extraction`) a le sien,
-   `-?\d+(?:[.,]\d+)?`. Les deux ne sont **pas la même fonction** et ne rendent
-   pas le même verdict : **5 rejets sur 10 sont faux**, tous sur un nombre
-   négatif, et deux fiches ne sont refusées que pour cette raison. Dans cette
-   littérature un coefficient négatif est la règle, pas l'exception. **Ne pas
-   corriger à la hâte** : la fonction est celle de `D09`, partagée avec le
-   catalogue et `scripts/check_provenance.py` ; la corriger demande de rejouer
-   leurs gardes.
+8. ~~Corriger `value_in_quote`.~~ **Fait le 2026-09-22, et la fonction est
+   désormais UNIQUE.** Elle vivait en **deux exemplaires** — celui du catalogue
+   (`D09`), importé par `F1`, et une copie dans `score_extraction` utilisée par
+   `F3` — avec deux motifs de nombre différents. `score_extraction` importe
+   maintenant celle du catalogue : **une règle, une implémentation**.
+   Le motif n'a pas simplement reçu un signe : `(?:(?<![\w.])-)?\d+(?:\.\d+)?`,
+   où un `-` n'est un **signe** que s'il ne colle pas à un mot ni à un chiffre.
+   Un signe naïf aurait lu `115-158` (des pages), `0.25-0.50` (un intervalle) et
+   `Nasdaq-100` comme des négatifs — or `D09` s'appuie précisément sur la
+   citation `$20 x Nasdaq-100 Index`. **Effet mesuré : 5 fiches vertes → 7.**
+   Gardes rejoués verts : catalogue, `check_provenance` (33 vérifications, 9
+   fautes refusées), et **les six portes**, registre 135 → 140 lignes (des
+   calibrations), `counted_tests` inchangé à 56, harnais inchangé `9ac3e45e`.
 9. **Trancher `signal_construction` comme objet structuré.** **4 extracteurs
    indépendants sur 6 ont fait la même faute** : ils écrivent un objet
    (`sampling`, `components`, `model`…) sans la clé `value` que le schéma exige.

@@ -49,7 +49,13 @@ FACTUAL = ("source.year", "source.amorce_entry", "source.peer_reviewed", "horizo
 # Les champs de prose, imprimés par le diagnostic et conditionnant RIEN.
 PROSE = ("claim", "universe", "signal_construction", "what_is_missing")
 
-NUMBER = re.compile(r"-?\d+(?:[.,]\d+)?")
+# `value_in_quote` vient du CATALOGUE, comme pour `validate_fiches` : c'est la
+# fonction de `D09`, et il ne doit y en avoir qu'UNE. Il y en avait deux
+# jusqu'au 2026-09-22, avec deux motifs de nombre differents -- `F1` rejetait
+# les negatifs que `F3` acceptait. Deux implementations d'une meme regle
+# divergent toujours ; la seule parade est de n'en avoir qu'une.
+sys.path.insert(0, str(REPO / "catalogue"))
+from validate import value_in_quote  # noqa: E402
 
 
 class InputError(RuntimeError):
@@ -74,21 +80,6 @@ def normalize(text: str) -> str:
     text = text.translate(_DASHES).translate(_QUOTES).translate(_DQUOTES)
     text = re.sub(r"\s+", " ", text)
     return text.strip().lower()
-
-
-def value_in_quote(value: float | int, quoted: str) -> bool:
-    """Le nombre se retrouve-t-il dans la citation, séparateurs ôtés ?
-
-    Comparaison NUMÉRIQUE et non par sous-chaîne : `scripts/check_provenance.py`
-    a pris ce garde en défaut sur `12500` contre « 12,500,000 » (`D09`).
-    """
-    for raw in NUMBER.findall(quoted.replace(",", "").replace(" ", "").replace(" ", "")):
-        try:
-            if abs(float(raw.replace(",", ".")) - float(value)) < 1e-9:
-                return True
-        except ValueError:
-            continue
-    return False
 
 
 def dotted(fiche: dict, path: str):

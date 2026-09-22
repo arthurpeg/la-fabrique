@@ -213,10 +213,24 @@ def check_fiche(name: str, fiche: dict) -> list[str]:
     return bad
 
 
+def say(text: str) -> None:
+    """Imprime sans jamais planter sur un caractère que la console ignore.
+
+    Même défaut que celui trouvé dans le juge le 2026-09-22 : la console Windows
+    est en cp1252, et un signe moins ou une ligature venus d'un PDF font lever
+    `UnicodeEncodeError` — **le garde meurt au lieu de rendre son verdict**. Un
+    garde qui plante ne garde rien. Le remplacement est fait À L'AFFICHAGE
+    seulement : rien de ce qui est comparé ne change.
+    """
+    enc = sys.stdout.encoding or "utf-8"
+    sys.stdout.write(text.encode(enc, errors="replace").decode(enc, errors="replace"))
+    sys.stdout.write("\n")
+
+
 def main() -> int:
     files = sorted(FICHES.glob("*.json"))
     if not files:
-        print("aucune fiche dans corpus/fiches/")
+        say("aucune fiche dans corpus/fiches/")
         return 1
 
     failures: list[str] = []
@@ -230,15 +244,15 @@ def main() -> int:
         failures.extend(refusals)
         results = fiche.get("reported_results") or []
         state = "REFUSÉE" if refusals else "valide"
-        print(f"  {path.stem:42s} {len(results):2d} résultats · {state}")
+        say(f"  {path.stem:42s} {len(results):2d} résultats · {state}")
 
-    print(f"\n{len(files)} fiches")
+    say(f"\n{len(files)} fiches")
     if failures:
-        print("FICHES : INVALIDES")
+        say("FICHES : INVALIDES")
         for line in failures:
-            print(f"  - {line}")
+            say(f"  - {line}")
         return 1
-    print("FICHES : VALIDES — chaque résultat recopié porte sa citation")
+    say("FICHES : VALIDES — chaque résultat recopié porte sa citation")
     return 0
 
 
