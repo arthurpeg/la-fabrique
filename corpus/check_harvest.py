@@ -95,6 +95,9 @@ def faults(data: dict) -> list[str]:
         elif f.get("search") != declared[key]["search"]:
             out.append(f"H10 axe {key} : la recherche a CHANGE depuis le passage "
                        f"qui l'a utilise")
+        elif f.get("source", "openalex") != declared[key].get("source", "openalex"):
+            out.append(f"H10 axe {key} : la SOURCE de decouverte a change depuis "
+                       f"le passage qui l'a utilise")
     for w in data.get("works") or []:
         if not (w.get("axes") or []):
             out.append(f"H10 travail {w.get('openalex_id')} : AUCUN axe — il est "
@@ -117,11 +120,15 @@ def faults(data: dict) -> list[str]:
 
     seen_ids = set()
     for w in data.get("works") or []:
-        oid = w.get("openalex_id")
+        # L'identite est l'identifiant OpenAlex, ou LE DOI quand OpenAlex ne
+        # connait pas le travail — cas normal d'un depot SSRN qu'aucun autre
+        # depot ne reprend (`D21`, voie Crossref). Ce qui reste exige, c'est
+        # qu'une identite existe et soit unique : le nom de fichier en depend.
+        oid = w.get("openalex_id") or (f"doi:{w['doi']}" if w.get("doi") else None)
         label = oid or w.get("title", "?")[:40]
 
         if not oid:
-            out.append(f"H8 « {label} » : sans identifiant OpenAlex")
+            out.append(f"H8 « {label} » : ni identifiant OpenAlex ni DOI")
         elif oid in seen_ids:
             out.append(f"H8 {oid} : identifiant duplique")
         else:
@@ -260,14 +267,22 @@ def main() -> int:
 
     c = copy.deepcopy(real)
     c["works"][0]["openalex_id"] = None
-    checks.append(case("H8 identifiant absent", c, False, "H8"))
+    c["works"][0]["doi"] = None
+    checks.append(case("H8 ni identifiant OpenAlex ni DOI", c, False, "H8"))
+
+    # Un travail sans identifiant OpenAlex mais AVEC un DOI est legitime : c'est
+    # le depot SSRN qu'aucun autre depot ne reprend. Il doit passer.
+    c = copy.deepcopy(real)
+    c["works"][0]["openalex_id"] = None
+    c["works"][0]["doi"] = "10.2139/ssrn.9999999"
+    checks.append(case("H8 un DOI seul suffit comme identite", c, True, ""))
 
     c = copy.deepcopy(real)
-    c["families"]["A"]["oa_total"] = c["families"]["A"]["total"] + 1
+    c["families"][first_axis]["oa_total"] = c["families"][first_axis]["total"] + 1
     checks.append(case("H9 plus de libres que de travaux", c, False, "H9"))
 
     c = copy.deepcopy(real)
-    c["families"]["A"]["retrieved"] = c["query"]["per_family"] + 1
+    c["families"][first_axis]["retrieved"] = c["query"]["per_family"] + 1
     checks.append(case("H9 plafond depasse", c, False, "H9"))
 
     works = real.get("works") or []

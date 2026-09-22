@@ -16,6 +16,21 @@
 # tous les axes et restent fixes par `D20` : sous-champs OpenAlex 2002|2003,
 # depuis 1995-01-01, tri par citations, 60 par axe.
 
+# DEUX SOURCES DE DECOUVERTE, une seule de resolution.
+#
+#   source: openalex  (defaut) — cherche dans OpenAlex, qui rend directement les
+#                      emplacements libres. Un seul appel fait les deux.
+#   source: crossref            — cherche dans Crossref, qui indexe TOUT DOI
+#                      enregistre, y compris ceux de SSRN (prefixe 10.2139).
+#                      Crossref ne rend AUCUN texte : ses DOI sont ensuite
+#                      resolus par OpenAlex, qui dit ou vit une copie libre.
+#
+# CE QUE CETTE SECONDE VOIE PERMET, ET CE QU'ELLE NE PERMET PAS. Elle donne la
+# DECOUVERTE des papiers SSRN sans jamais toucher a ssrn.com — leur DOI suffit.
+# Elle ne donne PAS le texte de ceux qui n'existent nulle part ailleurs : un
+# papier SSRN qu'aucun depot ne reprend sort `sans_source_libre`, et c'est la
+# reponse juste. Le controle anti-robot de SSRN reste intouche (`D21`).
+
 axes:
 
   # --------------------------------------------------------------------------
@@ -123,3 +138,35 @@ axes:
     label: derive post-annonce
     added: 2026-09-22
     search: '"post-earnings announcement drift" OR "pre-announcement drift"'
+
+  # --------------------------------------------------------------------------
+  # ssrn — decouverte par Crossref sur le PREFIXE DOI 10.2139, celui que SSRN
+  # attribue a tout depot. Resolution par OpenAlex, comme les autres axes.
+  # Tri par citations (`is-referenced-by-count`), pour la meme raison que
+  # `cited_by_count:desc` ailleurs : un critere externe, stable et lisible.
+  # --------------------------------------------------------------------------
+  - id: ssrn:intraday-momentum
+    label: momentum intra-journalier, prepublications SSRN
+    added: 2026-09-22
+    source: crossref
+    search: 'intraday momentum return predictability'
+  - id: ssrn:futures-anomalies
+    label: anomalies sur futures, prepublications SSRN
+    added: 2026-09-22
+    source: crossref
+    search: 'futures market anomaly trading strategy'
+  - id: ssrn:volatility
+    label: volatilite realisee et sauts, prepublications SSRN
+    added: 2026-09-22
+    source: crossref
+    search: 'realized volatility intraday jumps forecasting'
+  - id: ssrn:trend-following
+    label: suivi de tendance et momentum, prepublications SSRN
+    added: 2026-09-22
+    source: crossref
+    search: 'time series momentum trend following managed futures'
+  - id: ssrn:replication
+    label: replication et multiplicite des tests, prepublications SSRN
+    added: 2026-09-22
+    source: crossref
+    search: 'backtest overfitting multiple testing false discovery finance'

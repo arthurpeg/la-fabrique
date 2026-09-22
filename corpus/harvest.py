@@ -127,6 +127,19 @@ PER_FAMILY = 60
 OPENALEX = "https://api.openalex.org/works"
 UNPAYWALL = "https://api.unpaywall.org/v2"
 
+# Crossref indexe TOUT DOI enregistre. SSRN attribue le prefixe 10.2139 a chacun
+# de ses depots, donc `/prefixes/10.2139/works` est la liste des papiers SSRN —
+# obtenue sans jamais toucher a ssrn.com, dont le controle anti-robot reste
+# intouche. Crossref ne rend AUCUN texte : c'est OpenAlex qui resout ensuite.
+#
+# Note du 2026-09-22 : l'endpoint de RECHERCHE d'Unpaywall a ete retire le
+# 18/09/2026 (`410 Gone`) et sa documentation designe OpenAlex comme son
+# successeur, « meme equipe, memes donnees ». `unpaywall_urls` ne reste qu'un
+# second avis par DOI, et n'apporte presque rien.
+CROSSREF = "https://api.crossref.org/works"
+SSRN_PREFIX = "10.2139"
+CROSSREF_SORT = "is-referenced-by-count"
+
 # Le « pool poli » d'OpenAlex et l'API d'Unpaywall demandent une adresse de
 # courriel. Elle n'est PAS ecrite en dur : c'est une donnee personnelle, et
 # l'envoyer a un tiers est un geste que l'utilisateur pose lui-meme, en
@@ -191,9 +204,14 @@ def get_json(url: str, timeout: int = 30, tries: int = 6) -> dict:
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 return json.loads(r.read())
         except urllib.error.HTTPError as e:
+            # Nommer l'hote : « 429 » sans dire QUI limite ne permet pas de
+            # savoir quel service ralentir. Defaut trouve le 2026-09-22.
+            host = urllib.parse.urlparse(url).netloc
             if e.code != 429 or attempt == tries:
-                raise
-            print(f"    429 — pause {delay:.0f} s ({attempt}/{tries - 1})", flush=True)
+                raise urllib.error.HTTPError(
+                    url, e.code, f"{e.reason} — {host}", e.headers, e.fp) from None
+            print(f"    429 {host} — pause {delay:.0f} s ({attempt}/{tries - 1})",
+                  flush=True)
             time.sleep(delay)
             delay *= 2
     raise RuntimeError("inatteignable")  # pragma: no cover
@@ -247,6 +265,55 @@ def query_url(search: str, per_page: int, oa_only: bool, sort: str | None) -> st
     if MAILTO:
         params["mailto"] = MAILTO
     return f"{OPENALEX}?{urllib.parse.urlencode(params)}"
+
+
+def crossref_url(search: str, rows: int) -> str:
+    """La liste des papiers SSRN correspondant a `search`, par prefixe de DOI."""
+    params = {
+        "filter": f"prefix:{SSRN_PREFIX},from-pub-date:{FROM_DATE}",
+        "query.bibliographic": search,
+        "rows": rows,
+        "sort": CROSSREF_SORT,
+        "order": "desc",
+        "select": "DOI,title,author,issued,container-title,is-referenced-by-count",
+    }
+    if MAILTO:
+        params["mailto"] = MAILTO
+    return f"{CROSSREF}?{urllib.parse.urlencode(params)}"
+
+
+def openalex_by_dois(dois: list[str]) -> dict[str, dict]:
+    """Resout des DOI en travaux OpenAlex, PAR PAQUETS.
+
+    OpenAlex accepte un OU sur `doi` avec `|`, jusqu'a 50 valeurs. Cinquante DOI
+    en une requete au lieu de cinquante : c'est ce qui rend la voie Crossref
+    tenable sans marteler un service qui nous limite deja.
+
+    La resolution est TOLERANTE : si OpenAlex nous limite, on garde ce qui a ete
+    resolu et on rend la main. La decouverte Crossref, elle, est acquise et ne
+    doit pas etre perdue parce qu'un second service a dit non — les deux pas
+    repondent a deux questions distinctes. Le reste se rattrape par `--resolve`.
+    """
+    out: dict[str, dict] = {}
+    for i in range(0, len(dois), 50):
+        lot = [d for d in dois[i:i + 50] if d]
+        if not lot:
+            continue
+        params = {"filter": "doi:" + "|".join(lot), "per-page": 50}
+        if MAILTO:
+            params["mailto"] = MAILTO
+        try:
+            page = get_json(f"{OPENALEX}?{urllib.parse.urlencode(params)}")
+        except urllib.error.HTTPError as e:
+            print(f"    resolution interrompue ({e.code}) — {len(out)} resolus, "
+                  f"le reste attend `--resolve`", flush=True)
+            return out
+        for w in page.get("results", []):
+            doi = (w.get("doi") or "").replace("https://doi.org/", "").lower()
+            if doi:
+                out[doi] = w
+        time.sleep(PAUSE_API)
+    return out
 
 
 def amorce_index() -> dict[str, int]:
@@ -309,6 +376,114 @@ def work_row(work: dict, axis: str, seen_titles: dict[str, int]) -> dict:
     }
 
 
+def migrate(data: dict) -> tuple[dict, int]:
+    """Traduit une moisson anterieure a `D21` vers le vocabulaire des axes.
+
+    Les passages 1 et 2 nommaient les familles « A ».. « F ». `D21` les nomme
+    `family:A`..`family:F`. La traduction porte sur DEUX endroits — les travaux
+    et le recensement des familles — et oublier le second a rendu `H10` rouge
+    sur six axes « absents du YAML ». Rien n'est efface : on renomme.
+    """
+    touched = 0
+    for w in data.get("works") or []:
+        if "axes" not in w:
+            w["axes"] = [f"family:{w.get('family')}"] if w.get("family") else []
+            touched += 1
+    fams = {}
+    for k, v in (data.get("families") or {}).items():
+        key = f"family:{k}" if len(k) == 1 else k
+        if key != k:
+            touched += 1
+        fams[key] = v
+    data["families"] = fams
+    return data, touched
+
+
+def do_resolve() -> int:
+    """Rattrape la resolution des travaux decouverts par Crossref.
+
+    Un papier peut etre DECOUVERT sans etre RESOLU — Crossref dit qu'il existe,
+    OpenAlex dit ou vit une copie libre, et le second peut nous limiter quand le
+    premier a repondu. Ce geste reprend les non resolus, et lui seul.
+    """
+    data = load()
+    todo = [w for w in data["works"]
+            if not w.get("openalex_id") and w.get("doi") and w.get("status") is None]
+    if not todo:
+        print("rien a resoudre")
+        return 0
+    print(f"{len(todo)} travail/travaux a resoudre chez OpenAlex")
+    resolved = openalex_by_dois([w["doi"] for w in todo])
+    done = 0
+    for w in todo:
+        oa = resolved.get(w["doi"])
+        if not oa:
+            continue
+        w["openalex_id"] = (oa.get("id") or "").rsplit("/", 1)[-1]
+        w["oa_status"] = (oa.get("open_access") or {}).get("oa_status")
+        w["oa_locations"] = [
+            {"host": ((loc.get("source") or {}).get("display_name")),
+             "pdf_url": loc.get("pdf_url"),
+             "landing_page_url": loc.get("landing_page_url")}
+            for loc in (oa.get("locations") or []) if loc.get("is_oa")
+        ]
+        done += 1
+    save(data)
+    print(f"{done} resolu(s), {len(todo) - done} toujours inconnus d'OpenAlex")
+    return 0
+
+
+def do_migrate() -> int:
+    data, touched = migrate(load())
+    save(data)
+    print(f"{touched} element(s) traduit(s) vers le vocabulaire de D21, sans reseau")
+    return 0
+
+
+def row_from_crossref(rec: dict, axis: str, seen_titles: dict[str, int]) -> dict:
+    """Un papier connu de Crossref mais INCONNU d'OpenAlex.
+
+    Il n'a donc aucun emplacement libre repertorie. On l'inscrit quand meme,
+    sonde a vide, et il sortira `sans_source_libre` : c'est la reponse juste
+    pour un depot SSRN qu'aucun autre depot ne reprend. L'omettre ferait croire
+    qu'on ne l'a pas cherche.
+    """
+    doi = (rec.get("DOI") or "").lower()
+    title = (rec.get("title") or [""])[0]
+    authors = [" ".join(filter(None, (a.get("given"), a.get("family"))))
+               for a in (rec.get("author") or [])][:8]
+    year = ((rec.get("issued") or {}).get("date-parts") or [[None]])[0][0]
+    dup = seen_titles.get(norm_title(title))
+    return {
+        "openalex_id": None,
+        "doi": doi,
+        "axes": [axis],
+        "title": title,
+        "authors": [a for a in authors if a],
+        "year": year,
+        "venue": (rec.get("container-title") or [None])[0],
+        "cited_by_count": rec.get("is-referenced-by-count"),
+        "oa_status": None,
+        "oa_locations": [],
+        "found_via": f"Crossref, prefixe {SSRN_PREFIX} (SSRN), axe {axis}, D21",
+        "duplicate_of": ({"rule": "titre normalise, AMORCE.md", "entry": dup}
+                         if dup else None),
+        "status": None, "reason": None, "source_url": None, "source_via": None,
+        "evidence": None, "refused_by": None, "attempts": [],
+        "checked": None, "pdf": None, "sha256": None,
+    }
+
+
+def work_key(row: dict) -> str:
+    """L'identite d'un travail. OpenAlex si connu, sinon son DOI.
+
+    Un papier decouvert par Crossref et resolu par OpenAlex porte le MEME
+    identifiant qu'un papier decouvert par OpenAlex : c'est ce qui fait que les
+    deux voies se dedoublonnent au lieu de s'additionner.
+    """
+    return row.get("openalex_id") or f"doi:{(row.get('doi') or '').lower()}"
+
+
 def do_search(per_family: int, pattern: str = "all") -> int:
     """Cherche, et AJOUTE a ce qui existe deja.
 
@@ -325,16 +500,9 @@ def do_search(per_family: int, pattern: str = "all") -> int:
     print(f"dedoublonnage : {len(seen_titles)} titres lus dans AMORCE.md")
 
     previous = json.loads(HARVEST.read_text(encoding="utf-8")) if HARVEST.is_file() else {}
+    previous, migres = migrate(previous)
     works = list(previous.get("works") or [])
-    # Migration des passages 1 et 2, anterieurs a `D21` : ils portaient
-    # `family: "A"`. Le champ est traduit, jamais efface — la trace de l'axe qui
-    # a fait entrer un papier est ce que `D21` veut garder.
-    migres = 0
-    for w in works:
-        if "axes" not in w:
-            w["axes"] = [f"family:{w.get('family')}"] if w.get("family") else []
-            migres += 1
-    by_id = {w["openalex_id"]: w for w in works}
+    by_id = {work_key(w): w for w in works}
     if works:
         print(f"passage precedent : {len(works)} candidats conserves, "
               f"{sum(1 for w in works if w.get('status'))} deja sondes"
@@ -343,21 +511,45 @@ def do_search(per_family: int, pattern: str = "all") -> int:
     axes = select_axes(pattern)
     print(f"axes lances : {len(axes)} — {', '.join(sorted(axes))}\n")
 
+    # Meme migration que pour les travaux, et elle avait ete OUBLIEE ici : les
+    # passages 1 et 2 ecrivaient les familles sous les cles « A »..« F ». Le
+    # garde `H10` l'a trouve tout seul en refusant six axes « absents du YAML ».
     families = dict(previous.get("families") or {})
     for key in sorted(axes):
         spec = axes[key]
         search = spec["search"]
-        total = get_json(query_url(search, 1, False, None))["meta"]["count"]
-        time.sleep(PAUSE_API)
-        page = get_json(query_url(search, per_family, True, SORT))
-        time.sleep(PAUSE_API)
-        oa_total = page["meta"]["count"]
+        source = spec.get("source", "openalex")
+
+        if source == "crossref":
+            # Decouverte chez Crossref, resolution chez OpenAlex. Les deux pas
+            # sont distincts parce qu'ils repondent a deux questions : « ce
+            # papier existe-t-il ? » et « ou vit une copie libre ? ».
+            page = get_json(crossref_url(search, per_family))["message"]
+            time.sleep(PAUSE_API)
+            items = page.get("items", [])
+            total = oa_total = page.get("total-results", 0)
+            resolved = openalex_by_dois([(it.get("DOI") or "").lower() for it in items])
+            rows = []
+            for it in items:
+                doi = (it.get("DOI") or "").lower()
+                oa = resolved.get(doi)
+                rows.append(work_row(oa, key, seen_titles) if oa
+                            else row_from_crossref(it, key, seen_titles))
+            oa_total = len(resolved)
+        else:
+            total = get_json(query_url(search, 1, False, None))["meta"]["count"]
+            time.sleep(PAUSE_API)
+            page = get_json(query_url(search, per_family, True, SORT))
+            time.sleep(PAUSE_API)
+            oa_total = page["meta"]["count"]
+            rows = [work_row(w, key, seen_titles) for w in page["results"]]
+
         kept, crossed = 0, 0
-        for w in page["results"]:
-            row = work_row(w, key, seen_titles)
-            if not row["openalex_id"]:
+        for row in rows:
+            k = work_key(row)
+            if k in ("", "doi:"):
                 continue
-            seen = by_id.get(row["openalex_id"])
+            seen = by_id.get(k)
             if seen is not None:
                 # Deja trouve par un autre axe : on note le croisement et on
                 # garde son statut de sondage. On ne le re-sonde pas.
@@ -365,15 +557,16 @@ def do_search(per_family: int, pattern: str = "all") -> int:
                     seen["axes"].append(key)
                     crossed += 1
                 continue
-            by_id[row["openalex_id"]] = row
+            by_id[k] = row
             works.append(row)
             kept += 1
         families[key] = {
             "label": spec["label"], "search": search, "added": str(spec.get("added")),
-            "total": total, "oa_total": oa_total,
-            "retrieved": len(page["results"]), "new": kept,
+            "source": source, "total": total, "oa_total": oa_total,
+            "retrieved": len(rows), "new": kept,
         }
-        print(f"  {key:34s} {total:>7,} travaux, {oa_total:>7,} libres"
+        tag = "resolus" if source == "crossref" else "libres"
+        print(f"  {key:34s} {total:>7,} travaux, {oa_total:>7,} {tag}"
               f" — {kept:>2} nouveaux, {crossed:>2} croises")
 
     dups = sum(1 for w in works if w["duplicate_of"])
@@ -557,7 +750,8 @@ def filename(work: dict) -> str:
     expression reguliere se casse en silence ») tenue autrement, sa table
     ecrite a la main ne passant pas a cent papiers. Voir `D20`.
     """
-    return f"{slug(work['title'])}-{work['openalex_id']}.pdf"
+    ident = work.get("openalex_id") or slug(work.get("doi") or "", 32) or "sans-id"
+    return f"{slug(work['title'])}-{ident}.pdf"
 
 
 def sha256(path: Path) -> str:
@@ -590,9 +784,9 @@ def do_fetch(dry_run: bool) -> int:
 
     for w in targets:
         name = filename(w)
-        if name in names and names[name] != w["openalex_id"]:
+        if name in names and names[name] != work_key(w):
             raise SystemExit(f"collision de nom : {name} — a corriger, pas a resoudre")
-        names[name] = w["openalex_id"]
+        names[name] = work_key(w)
         dest = PDFDIR / name
 
         if dry_run:
@@ -685,6 +879,8 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--search", action="store_true")
     ap.add_argument("--probe", action="store_true")
     ap.add_argument("--reverdict", action="store_true")
+    ap.add_argument("--migrate", action="store_true")
+    ap.add_argument("--resolve", action="store_true")
     ap.add_argument("--fetch", action="store_true")
     ap.add_argument("--report", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
@@ -706,6 +902,10 @@ def main(argv: list[str]) -> int:
         return do_probe(a.limit)
     if a.reverdict:
         return do_reverdict()
+    if a.migrate:
+        return do_migrate()
+    if a.resolve:
+        return do_resolve()
     if a.fetch:
         return do_fetch(a.dry_run)
     if a.report:
