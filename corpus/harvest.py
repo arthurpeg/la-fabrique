@@ -93,7 +93,17 @@ FAMILY_LABELS: dict[str, str] = {
 SUBFIELDS = "primary_topic.subfield.id:2002|2003"
 FROM_DATE = "1995-01-01"
 SORT = "cited_by_count:desc"
-PER_FAMILY = 25
+
+# Porte de 25 a 60 le 2026-09-22 par le § Journal de `D20`, passage 2. Le
+# passage 1 a rendu 43 PDF, sous la cible de 50 a 100 de la phase 09.
+#
+# **Creuser plus profond n'est pas changer la requete**, et c'est ce qui rend
+# cette revision licite : la recherche, le domaine et le tri ne bougent pas, donc
+# les 25 premiers de chaque famille sont le PREFIXE EXACT des 60 premiers. Rien
+# n'est re-selectionne en voyant ce que le passage 1 a rendu. Changer un
+# mot-cle, une famille, le domaine ou le tri resterait une decision a part
+# entiere — c'est cela que `D20` verrouille.
+PER_FAMILY = 60
 
 OPENALEX = "https://api.openalex.org/works"
 UNPAYWALL = "https://api.unpaywall.org/v2"
@@ -113,7 +123,10 @@ PUBLISHER_HOSTS = (
     "jstor.org", "aeaweb.org", "emerald.com", "degruyter.com",
 )
 
-PAUSE_API = 0.25
+# Sans `HARVEST_MAILTO`, OpenAlex nous met dans son pool COMMUN, qui limite plus
+# tot : 0,25 s suffisait au plafond de 25, pas a celui de 60. Mesure le
+# 2026-09-22, un `429` au passage 2.
+PAUSE_API = 1.5
 PAUSE_PROBE = 0.5
 
 
@@ -139,10 +152,28 @@ def norm_title(title: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", ascii_fold(title or "").lower()).strip()
 
 
-def get_json(url: str, timeout: int = 30) -> dict:
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        return json.loads(r.read())
+def get_json(url: str, timeout: int = 30, tries: int = 5) -> dict:
+    """Une requete de catalogue, avec RECUL PROGRESSIF sur un `429`.
+
+    Un `429` dit « trop vite » : la reponse juste est de ralentir, et c'est
+    exactement le contraire d'un contournement. Sans `HARVEST_MAILTO` on
+    interroge le pool COMMUN d'OpenAlex, qui limite plus tot — le passage 2 du
+    2026-09-22 s'y est casse. L'attente double a chaque essai et le nombre
+    d'essais est borne : au-dela, on s'arrete au lieu de marteler.
+    """
+    delay = 5.0
+    for attempt in range(1, tries + 1):
+        req = urllib.request.Request(url, headers={"User-Agent": UA})
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                return json.loads(r.read())
+        except urllib.error.HTTPError as e:
+            if e.code != 429 or attempt == tries:
+                raise
+            print(f"    429 — pause {delay:.0f} s ({attempt}/{tries - 1})", flush=True)
+            time.sleep(delay)
+            delay *= 2
+    raise RuntimeError("inatteignable")  # pragma: no cover
 
 
 def probe(url: str, timeout: int = 30) -> dict:
@@ -253,14 +284,29 @@ def work_row(work: dict, family: str, seen_titles: dict[str, int]) -> dict:
 
 
 def do_search(per_family: int) -> int:
+    """Cherche, et AJOUTE a ce qui existe deja.
+
+    Un passage ne remplace jamais le precedent : les travaux deja sondes gardent
+    leur statut, leur preuve et leur date de constat. Sans quoi approfondir la
+    moisson obligerait a resonder tout ce qui l'a deja ete — et effacerait le
+    constat date du passage anterieur, qui est une piece du dossier.
+    """
     if not MAILTO:
         print("note : HARVEST_MAILTO non renseigne — pool commun d'OpenAlex,\n"
               "       et Unpaywall sera saute au `--probe`. Voir .env.example.\n")
     today = str(date.today())
     seen_titles = amorce_index()
-    print(f"dedoublonnage : {len(seen_titles)} titres lus dans AMORCE.md\n")
+    print(f"dedoublonnage : {len(seen_titles)} titres lus dans AMORCE.md")
 
-    families, works, by_id = {}, [], {}
+    previous = json.loads(HARVEST.read_text(encoding="utf-8")) if HARVEST.is_file() else {}
+    works = list(previous.get("works") or [])
+    by_id = {w["openalex_id"]: w for w in works}
+    if works:
+        print(f"passage precedent : {len(works)} candidats conserves, "
+              f"{sum(1 for w in works if w.get('status'))} deja sondes")
+    print()
+
+    families = {}
     for key, search in FAMILIES.items():
         total = get_json(query_url(search, 1, False, None))["meta"]["count"]
         time.sleep(PAUSE_API)
@@ -286,17 +332,22 @@ def do_search(per_family: int) -> int:
               f"{oa_total:>7,} libres — {kept:>2} retenus")
 
     dups = sum(1 for w in works if w["duplicate_of"])
+    passages = list(previous.get("passages") or [])
+    passages.append({"date": today, "per_family": per_family,
+                     "candidats_apres": len(works), "mailto_set": bool(MAILTO)})
     data = {
         "decision": "D20",
         "checked": today,
         "query": {"from_date": FROM_DATE, "subfields": SUBFIELDS, "sort": SORT,
                   "per_family": per_family, "oa_only": True,
                   "source": "OpenAlex", "mailto_set": bool(MAILTO)},
+        "passages": passages,
         "families": families,
         "works": works,
     }
     save(data)
-    print(f"\n{len(works)} candidats retenus, dont {dups} deja dans AMORCE.md")
+    print(f"\n{len(works)} candidats au total, dont {dups} deja dans AMORCE.md")
+    print(f"a sonder : {sum(1 for w in works if w['status'] is None and not w['duplicate_of'])}")
     print(f"ecrit : {HARVEST.relative_to(REPO)} — AUCUN PDF n'a ete telecharge")
     return 0
 
@@ -555,9 +606,12 @@ def do_report() -> int:
     print(f"  {'fam':3s} {'famille':28s} {'total':>7s} {'libres':>7s} "
           f"{'pris':>5s} {'PDF':>5s}")
     for key, f in data["families"].items():
-        got = sum(1 for w in works if w["family"] == key and w["status"] == "atteignable")
+        mine = [w for w in works if w["family"] == key]
+        got = sum(1 for w in mine if w["status"] == "atteignable")
+        # Compte sur les travaux eux-memes, et non sur le `new` du dernier
+        # passage : apres un second passage, `new` ne dit plus que l'ajout.
         print(f"  {key:3s} {f['label']:28s} {f['total']:>7,} {f['oa_total']:>7,} "
-              f"{f['new']:>5} {got:>5}")
+              f"{len(mine):>5} {got:>5}")
 
     done = [w for w in works if w["status"]]
     ok = [w for w in works if w["status"] == "atteignable"]

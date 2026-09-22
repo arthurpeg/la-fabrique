@@ -67,8 +67,10 @@ littérature médicale et « trend following » ramène tout.
 **1995-01-01**, sous-champs OpenAlex **2002** (Economics and Econometrics) ou
 **2003** (Finance), en accès libre (`is_oa:true`).
 
-**Tri** : `cited_by_count:desc`. **Plafond** : 25 candidats par famille,
-soit 150 avant dédoublonnage.
+**Tri** : `cited_by_count:desc`. **Plafond** : ~~25~~ **60** candidats par
+famille, soit 360 avant dédoublonnage — porté de 25 à 60 le 2026-09-22, voir
+§ Journal, passage 2. Le chiffre d'origine est conservé barré : il dit ce que le
+passage 1 avait devant lui.
 
 **Ce que la requête pèse, mesuré le 2026-09-22 avant d'être figée** :
 
@@ -179,6 +181,39 @@ et le trieur n'aurait plus rien à écarter.
 |---|---|---|---|---|---|
 | — | 2026-09-22 | — | — | — | décision écrite, requête figée, aucun passage encore lancé |
 | 1 | 2026-09-22 | **132** (dont 5 déjà dans `AMORCE.md`) | **43** | **43**, 0 échec | `HARVEST_MAILTO` non renseigné, donc **Unpaywall sauté** |
+| 2 | 2026-09-22 | **319** (plafond porté à 60) | **123** | **123**, 0 échec | incrémental : les 132 du passage 1 conservés avec leur constat |
+
+**Le passage 2 atteint la cible** : 123 PDF, au-dessus des 50 à 100 visés, et
+**le rendement monte de 34 % à 39 %** (123 sur 314 sondés) sans qu'aucun critère
+ait changé — simple effet de la profondeur.
+
+| | Famille | travaux | libres | pris | PDF |
+|---|---|---|---|---|---|
+| A | momentum intra-journalier | 118 | 90 | 60 | **28** |
+| B | overnight contre intraday | 999 | 876 | 58 | 21 |
+| C | périodicité et volatilité | 5 876 | 4 521 | 54 | 20 |
+| D | annonces macroéconomiques | 1 088 | 889 | 51 | 21 |
+| E | carry et structure de terme | 7 959 | 6 451 | 43 | 11 |
+| F | momentum en série temporelle | 2 137 | 1 611 | 53 | 22 |
+
+La famille A est **épuisée** : 60 pris sur 90 libres, et le plafond y mord à
+peine. La famille E rend le moins (11 PDF sur 43) — `carry trade` et
+`commodity futures` sont largement publiés chez des éditeurs payants.
+
+**Répartition des refus** : 110 `peage`, 53 `sans_source_libre`, 28
+`refus_robot`. Le péage domine, ce qui est cohérent avec la finance académique.
+
+**Un `429` a cassé le premier essai du passage 2.** Sans `HARVEST_MAILTO`, les
+requêtes passent par le pool **commun** d'OpenAlex, qui limite plus tôt : 0,25 s
+entre appels suffisait au plafond de 25, pas à celui de 60. La réponse juste à
+un `429` est de **ralentir** — pause portée à 1,5 s et **recul progressif** (5,
+10, 20, 40 s, puis abandon). C'est l'inverse d'un contournement : le serveur dit
+« trop vite », on obéit.
+
+**Ce qui reste sur la table** : `HARVEST_MAILTO` n'est toujours pas renseigné,
+donc **Unpaywall n'a jamais été interrogé**. C'est le seul levier connu restant,
+et il appartient à l'utilisateur — l'adresse est une donnée personnelle envoyée à
+un tiers, et ce geste ne se pose pas à sa place.
 
 **Ce que le passage 1 a rendu**, par famille — « pris » est le plafond effectif
 après dédoublonnage inter-familles, « PDF » ce qui a été obtenu :
@@ -222,4 +257,41 @@ evidence », *Pacific-Basin Finance Journal* 80:102086**. Le recensement prouvai
 qu'**un** PDF arrivait, jamais que c'était **le bon**. **Non corrigé ici** : la
 réparation demande de retrouver le vrai Gao 2018, de re-sonder l'entrée et de
 régénérer son texte `D18` — c'est un acte distinct, et on ne retouche pas un
-recensement en passant.
+recensement en passant. **Fait le 2026-09-22** : aucune copie libre n'existe,
+l'entrée 1 est passée `inatteignable` / `refus_robot`, et le recensement est
+descendu de 19 à 18 atteignables (`ETAT.md`, `F53`).
+
+### Passage 2 — le plafond passe de 25 à 60, et pourquoi c'est licite
+
+**Le passage 1 a rendu 43 PDF**, sous la cible de 50 à 100 que la phase 09
+impose. Et 43 est un compte de PDF **bruts** : le triage en écartera une bonne
+part, puisque le moissonneur ne juge pas. Le plafond est donc porté à **60 par
+famille**.
+
+**Ce qui bouge, et ce qui ne bouge pas.** La recherche, le domaine, la fenêtre
+de dates et le tri sont **inchangés**. Seule la profondeur de lecture d'une
+liste déjà ordonnée augmente. Conséquence vérifiable : **les 25 premiers de
+chaque famille sont le préfixe exact des 60 premiers**, et les 132 candidats du
+passage 1 sont tous conservés avec leur statut et leur date de constat.
+
+**Pourquoi ce n'est pas l'ajustement que `D20` interdit.** L'interdit vise le
+choix qu'on referait **en voyant le résultat** — changer un mot-clé parce que la
+moisson déplaît, ajouter une famille parce qu'une autre déçoit. Rien de tel ici :
+aucun papier n'est re-sélectionné, aucun critère de contenu ne change, et
+l'ajout est **strictement additif**. Creuser plus profond dans une liste figée
+et changer la liste sont deux gestes différents, et seul le second est un bouton.
+
+**Ce qui reste interdit sans une nouvelle décision** : un mot-clé, une famille,
+le filtre de domaine, la fenêtre de dates, le tri. Ceux-là décident **quels**
+papiers peuvent apparaître ; le plafond ne décide que **combien** on en regarde.
+
+**Un trou du garde trouvé en faisant ce changement.** `check_harvest` comparait
+le plafond **à lui-même** — le JSON déclarait son propre `per_family` et `H9`
+vérifiait qu'il le respectait, donc un `--per-family 500` passait sans un mot.
+`H1` le compare désormais à la valeur déclarée dans le code, qui est la copie de
+travail de la présente décision.
+
+**Le moissonnage devient incrémental.** `--search` **ajoute** au lieu de
+remplacer : les travaux déjà sondés gardent statut, preuve et date. Sans quoi
+approfondir obligerait à tout re-sonder, et effacerait le constat daté du
+passage précédent — qui est une pièce du dossier, pas un brouillon.

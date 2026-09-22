@@ -44,7 +44,14 @@ REPO = Path(__file__).resolve().parents[1]
 HARVEST = REPO / "corpus" / "harvest.json"
 
 sys.path.insert(0, str(REPO / "corpus"))
-from harvest import FAMILIES, FROM_DATE, REASONS, SORT, SUBFIELDS  # noqa: E402
+from harvest import (  # noqa: E402
+    FAMILIES,
+    FROM_DATE,
+    PER_FAMILY,
+    REASONS,
+    SORT,
+    SUBFIELDS,
+)
 
 STATUSES = ("atteignable", "inatteignable", None)
 
@@ -65,6 +72,11 @@ def faults(data: dict) -> list[str]:
         out.append(f"H1 `sort` {q.get('sort')!r}, D20 dit {SORT!r}")
     if not q.get("oa_only"):
         out.append("H1 la moisson n'est pas restreinte au libre (`oa_only`)")
+    # Le plafond etait compare a LUI-MEME — le JSON declarait son propre plafond
+    # et `H9` verifiait qu'il le respectait, donc un `--per-family 500` passait
+    # sans un mot. Trou trouve le 2026-09-22 en portant le plafond a 60.
+    if q.get("per_family") != PER_FAMILY:
+        out.append(f"H1 `per_family` {q.get('per_family')!r}, D20 dit {PER_FAMILY!r}")
 
     fams = data.get("families") or {}
     if sorted(fams) != sorted(FAMILIES):
@@ -161,6 +173,10 @@ def main() -> int:
     c = copy.deepcopy(real)
     c["query"]["oa_only"] = False
     checks.append(case("H1 la moisson n'est plus restreinte au libre", c, False, "H1"))
+
+    c = copy.deepcopy(real)
+    c["query"]["per_family"] = PER_FAMILY * 20
+    checks.append(case("H1 le plafond a ete releve hors decision", c, False, "H1"))
 
     c = copy.deepcopy(real)
     c["families"].pop("F", None)
