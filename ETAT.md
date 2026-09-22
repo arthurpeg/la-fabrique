@@ -1,7 +1,7 @@
 # ÉTAT
 
 **Phase courante :** 07 — triage et extraction sur 20 papiers connus
-**Date de dernière mise à jour :** 2026-09-21
+**Date de dernière mise à jour :** 2026-09-22
 **Dernière porte franchie :** **06**, le 2026-09-18 — les deux clauses.
 Clause 1 (dégénérescence) : `gate_06_controls.py`, 25 vérifications. Clause 2
 (réplication) : `scripts/measure_h04.py`, 19 vérifications, `H04` pré-enregistrée
@@ -15,6 +15,16 @@ calibration à la main (porte 03). `D13` § Pourquoi l'écrit sans détour, et a
 session ne doit lire cette porte comme davantage.
 
 **Décision la plus récente :**
+`decisions/DECISION-20-le-moissonnage-du-corpus.md` — le moissonneur **ratisse
+et ne juge pas**. Requête écrite avant d'être lancée, six familles reprises des
+sections A–F d'`AMORCE.md`. Son produit alimente la **phase 09** et **n'entre
+pas dans `G1`–`G4`** (`F47`). Passage 1 : 132 candidats, **43 PDF**.
+**Décision précédente :**
+`decisions/DECISION-19-la-version-de-l-extracteur-de-texte.md` — la **version**
+de `pypdf` fait partie de la définition du texte qui fait foi. Épinglée à
+`==6.14.2` dans `pyproject.toml`. En changer est une décision écrite qui
+régénère les 36 fichiers et re-vérifie `F2` sur **toutes** les fiches.
+**Décision précédente :**
 `decisions/DECISION-18-le-texte-qui-fait-foi.md` — « le texte du papier »
 n'existe pas : il y a des **extractions**, qui diffèrent. Le texte qui fait foi
 est l'**union de deux extractions fixées d'avance et identiques pour tous les
@@ -370,20 +380,108 @@ où on le lance. Même péremption que la note « sur cette machine » corrigée
    Quatre fois la même erreur n'est pas quatre erreurs, c'est un défaut du
    schéma ou de la consigne.
 10. **Ficher les 8 papiers restants** — `G1` exige zéro atteignable non fiché.
-    `python corpus/extract_fiche.py --list` dit lesquels.
+    `python corpus/extract_fiche.py --list` dit lesquels. Chacun demande une
+    **session séparée** qui n'a pas lu `corpus/fiches/`. **Sauf l'entrée 1 :
+    son PDF est le mauvais papier** (voir l'alerte ci-dessous, `L20`) — la ficher
+    avant de l'avoir réparée produirait une fiche fidèle à un texte qui n'est pas
+    celui qu'elle annonce, et les cinq conditions n'y verraient rien.
+11. **Réparer les 3 fiches refusées** — andersen-2003, corsi-2009, lou-2019.
+    Elles se **refont**, elles ne se retouchent pas (`G3`).
+
+### Trois cassures trouvées et réparées le 2026-09-22
+
+Une session de vérification a lancé **tout ce qui est exécutable** dans le
+dépôt — six portes, les gardes du corpus et du catalogue, le lint du wiki.
+**Tout ce qui devait passer passait**, à trois exceptions, et les trois tenaient
+à la même cause de fond : *un fait vrai d'un poste, écrit comme un fait du
+dépôt*.
+
+| | Ce qui cassait | Réparé par |
+|---|---|---|
+| 1 | **15 PDF sur 18 absents** du disque, `ETAT.md` les annonçant présents | `corpus/fetch_pdfs.py` — 15 repris, 0 échec, 18 sur 18 vérifiés |
+| 2 | La fiche **Patton & Sheppard** échouait `F4`, son PDF étant absent | conséquence de 1 ; les cinq conditions tiennent à nouveau |
+| 3 | `extract_text.py --check` : **31 fichiers sur 36 divergents** | `D19` — `pypdf` épinglé à `==6.14.2` |
+
+**La troisième est la seule qui ait appris quelque chose**, et elle est
+inscrite en `L19`. `uv.lock` portait `pypdf 6.19.0` depuis le 2026-09-20 ; le
+texte qui fait foi a été produit le 2026-09-21 avec **6.14.2**, par un
+environnement en retard sur le verrou commité. Le manifeste le notait
+fidèlement — **noter n'est pas contraindre**.
+
+Deux causes possibles ont été séparées avant de trancher, les PDF venant d'être
+repris : le même corpus ré-extrait sous 6.14.2 rend **36 sur 36 conformes**, donc
+la version était seule en cause. Et la mesure a **retourné l'intuition** :
+6.19.0 récupère +0,05 % / +0,66 % de contenu mais **dégrade de 12 %** les
+lettres orphelines en mode `layout`. Aucune des deux versions n'est meilleure ;
+le choix s'est décidé sur le coût.
+
+**Ce qui n'a pas bougé** : le harnais (`9ac3e45ed8413e13`), `counted_tests()` à
+**56**, les six portes vertes après réparation. `uv lock` n'a déplacé que
+`pypdf` — `numpy`, `pandas`, `scipy` et `pyarrow` sont inchangés, donc aucun
+résultat de harnais n'est concerné.
+
+### ALERTE — l'entrée 1 du recensement désigne le mauvais papier
+
+**Trouvée le 2026-09-22 par le moissonneur, et c'est `L20`.**
+`corpus/pdf/gao-2018-market-intraday-momentum.pdf` — déclaré par
+`acquisition.json` comme *Gao, Han, Li & Zhou (2018), « Market intraday
+momentum », JFE 129(2):394-414* — est en réalité **Limkriangkrai, Chai & Zheng
+(2023), « Market intraday momentum: APAC evidence », *Pacific-Basin Finance
+Journal* 80:102086**. Treize pages, une autre revue, d'autres auteurs.
+
+Le recensement prouvait qu'**un** PDF arrivait, jamais que c'était **le bon**.
+Et les deux vérifications automatiques évidentes échouent toutes les deux : le
+titre attendu est une **sous-chaîne** du titre réel, et le papier APAC **cite**
+Gao et al. (2018) dès son résumé. Ce qui l'a attrapée est une **collision
+d'empreinte `sha256`** entre deux affirmations indépendantes sur les mêmes
+octets.
+
+**Ce que ça touche :**
+
+| | État |
+|---|---|
+| `corpus/text/gao-2018-*.txt` | **faux** — c'est le texte du papier APAC sous le nom de Gao, et il est commité |
+| fiches | **aucune** ne s'en sert : les 4 fiches sont Andersen & Bollerslev, Heston, Mesfin, Patton. Rien en aval n'est contaminé |
+| `G1` | l'entrée 1 reste comptée atteignable ; sa réparation ne change pas le compte, seulement le fichier |
+
+**Non corrigé, délibérément.** Réparer demande de retrouver le vrai Gao 2018, de
+corriger `ALTERNATES` dans `probe_acquisition.py`, de re-sonder l'entrée, de
+re-télécharger et de **régénérer son texte `D18`** — donc de toucher un artefact
+qui fait foi. C'est un acte distinct, et on ne retouche pas un recensement en
+passant, pas plus qu'un étalon. **À faire avant de ficher l'entrée 1.**
+
+### Le moissonneur existe — `D20`, le 2026-09-22
+
+`corpus/harvest.py` et son garde `corpus/check_harvest.py`
+(**16 vérifications**). Il **ratisse et ne juge pas** : le tri de
+l'implémentable reste au trieur, qui a son juge et son étalon. Il ne contient
+**aucune IA** — chercher et vérifier qu'un octet est `%PDF-` ne demande aucun
+jugement.
+
+**Passage 1** : 132 candidats, 127 sondés, **43 PDF enregistrés, 0 échec**,
+6 doublons. Sous la cible de 50 à 100, et la cause est réparable —
+`HARVEST_MAILTO` n'était pas renseigné, donc **Unpaywall n'a pas été interrogé**.
+
+**Son produit n'entre pas dans `G1`–`G4`** et ne fait pas bouger la porte 07
+d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 
 ### Ce qui reste ouvert par ailleurs
 
 - **l'acquisition est recensée depuis le 2026-09-21** et ne bloque presque plus :
   **19 atteignables sur 20**, un seul inatteignable — l'entrée 6 (Wen et al.,
   pétrole), refusée par SSRN, péagée chez Elsevier, et sur ResearchGate seulement
-  contre une demande à l'auteur, ce que `D17` exclut. Il reste que **3 PDF
-  seulement sont sur le disque** ; les 15 autres sont obtenus et vérifiés, non
-  enregistrés. Le compte de liens d'`AMORCE.md` — 14 avec lien, dont 12 libres —
-  n'est plus le bon dénominateur : il décrit `AMORCE.md`, pas ce qui est à
-  portée. **Les 18 PDF sont sur le disque depuis le 2026-09-21** — et cet
-  énoncé-là se périme, `corpus/pdf/` étant ignoré par git : le vérifier se fait
-  en lançant `python corpus/fetch_pdfs.py --verify` ;
+  contre une demande à l'auteur, ce que `D17` exclut. Le compte de liens
+  d'`AMORCE.md` — 14 avec lien, dont 12 libres — n'est plus le bon
+  dénominateur : il décrit `AMORCE.md`, pas ce qui est à portée. **Ne jamais
+  écrire ici combien de PDF sont sur le disque** : `corpus/pdf/` est ignoré par
+  git, l'énoncé est vrai d'un poste et d'une heure, et il s'est déjà périmé
+  trois fois — les 2026-09-18, 09-20 et 09-22. Le seul énoncé qui tient est
+  celui du garde, lancé à l'instant où on en a besoin :
+  `python corpus/fetch_pdfs.py --verify`. Ce qui, lui, est un fait du dépôt :
+  **les 18 PDF sont re-téléchargeables** — le 2026-09-22, les 15 absents ont été
+  repris depuis `acquisition.json` sans une seule source morte, et le texte
+  ré-extrait est **identique au manifeste** (`D19`), donc les sources sont
+  stables et l'acquisition est reproductible ;
 - **deux alertes ouvertes par le recensement**, et aucune tranchée : l'entrée 9
   est libre mais en **HTML**, donc atteignable pour `D17` et infichable pour `F4`
   qui exige un `source.pdf` ; et la citation de l'**entrée 16** paraît fausse dans

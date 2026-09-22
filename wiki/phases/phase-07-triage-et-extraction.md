@@ -1,6 +1,6 @@
 ---
 type: phase
-updated: 2026-09-21
+updated: 2026-09-22
 status: en-cours
 phase: 07
 gate: 20 fiches produites ; le triage écarte ce qu'il doit écarter, sur un verdict humain de référence
@@ -292,9 +292,38 @@ consigne. Pas `AMORCE.md` qui porte le verdict de triage, pas `corpus/fiches/`
 qui porte les réponses, pas les décisions qui racontent ce que les papiers ont
 donné. Même parade que pour le trieur, pour la même raison.
 
-**État de `G1`** : 3 fichés, **15 à ficher**, 2 hors d'atteinte du fichage
+**État de `G1`** : **4 fichés**, **14 à ficher**, 2 hors d'atteinte du fichage
 (entrée 6 inatteignable, entrée 9 en HTML). `G1` exige zéro atteignable non
 fiché : la porte 07 est loin d'être franchie.
+
+## La version de l'extracteur est épinglée — `D19`, le 2026-09-22
+
+**Ce que `D18` n'avait pas fixé** : avec quelle version de `pypdf`. Le garde
+qu'elle avait posé s'est déclenché le 2026-09-22 —
+`corpus/extract_text.py --check` a rendu **31 fichiers sur 36 divergents**,
+`pypdf 6.14.2 -> 6.19.0`. Le texte qui fait foi avait été produit par un
+environnement **en retard sur `uv.lock`**, qui portait déjà 6.19.0. Le manifeste
+notait la version ; **noter n'est pas contraindre**.
+
+`pypdf` est désormais épinglé à `==6.14.2` dans `pyproject.toml`. La source fait
+foi : `decisions/DECISION-19-la-version-de-l-extracteur-de-texte.md`, et la
+leçon est `L19`.
+
+**La mesure a retourné l'intuition**, et c'est ce qui rend la décision simple :
+
+| | contenu normalisé | lettres orphelines |
+|---|---|---|
+| mode `default` | +0,05 % | −0,8 % |
+| mode `layout` | +0,66 % | **+12,0 %** |
+
+6.19.0 récupère marginalement plus de contenu et dégrade de 12 % le découpage
+des mots en `layout` — le symptôme même de `L18`. **Aucune version n'est
+meilleure**, donc le choix s'est décidé sur le coût : rester ne coûte rien,
+monter coûte 36 fichiers régénérés et toutes les fiches re-vérifiées.
+
+**Et l'épinglage n'est pas un mur** : sous 6.19.0, aucune des 47 citations des
+4 fiches ne casse. Une montée future reste peu risquée — et reste une décision
+écrite, parce que « peu risquée » se vérifie et ne se suppose pas.
 
 ## Ce qu'on sait déjà du produit de cette phase
 
