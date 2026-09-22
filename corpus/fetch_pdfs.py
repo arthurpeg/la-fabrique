@@ -43,6 +43,10 @@ from probe_acquisition import MIN_PDF_BYTES, UA  # noqa: E402
 # Le nom de fichier par entree. Les trois premiers existaient deja et gardent
 # le nom que leur fiche designe — le changer casserait `F4` sur ces fiches.
 NAMES: dict[int, str] = {
+    # L'entree 1 est INATTEIGNABLE depuis le 2026-09-22 (`L20`), donc absente de
+    # `targets()`. Le nom reste ici parce qu'il est JUSTE : c'est l'URL qui etait
+    # fausse, pas lui. Ne PAS retelecharger sous ce nom sans avoir verifie la
+    # premiere page du PDF — c'est exactement la faute qui a ete reparee.
     1: "gao-2018-market-intraday-momentum.pdf",
     2: "baltussen-2021-hedging-demand-intraday-momentum.pdf",
     3: "heston-2010-1005.3535.pdf",

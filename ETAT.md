@@ -420,7 +420,7 @@ le choix s'est décidé sur le coût.
 `pypdf` — `numpy`, `pandas`, `scipy` et `pyarrow` sont inchangés, donc aucun
 résultat de harnais n'est concerné.
 
-### ALERTE — l'entrée 1 du recensement désigne le mauvais papier
+### RÉPARÉE le 2026-09-22 — l'entrée 1 désignait le mauvais papier
 
 **Trouvée le 2026-09-22 par le moissonneur, et c'est `L20`.**
 `corpus/pdf/gao-2018-market-intraday-momentum.pdf` — déclaré par
@@ -444,11 +444,41 @@ octets.
 | fiches | **aucune** ne s'en sert : les 4 fiches sont Andersen & Bollerslev, Heston, Mesfin, Patton. Rien en aval n'est contaminé |
 | `G1` | l'entrée 1 reste comptée atteignable ; sa réparation ne change pas le compte, seulement le fichier |
 
-**Non corrigé, délibérément.** Réparer demande de retrouver le vrai Gao 2018, de
-corriger `ALTERNATES` dans `probe_acquisition.py`, de re-sonder l'entrée, de
-re-télécharger et de **régénérer son texte `D18`** — donc de toucher un artefact
-qui fait foi. C'est un acte distinct, et on ne retouche pas un recensement en
-passant, pas plus qu'un étalon. **À faire avant de ficher l'entrée 1.**
+**Réparée le 2026-09-22.** Le vrai Gao 2018 a été cherché par cinq routes
+indépendantes, et **il n'a aucune copie libre atteignable** :
+
+| Route | Verdict |
+|---|---|
+| OpenAlex, par DOI `10.1016/j.jfineco.2018.05.009` | `oa_status=closed`, **0 emplacement libre** |
+| Semantic Scholar | `isOpenAccess=False`, `openAccessPdf: CLOSED` |
+| SSRN 2440866, le lien d'`AMORCE.md` | **403**, contrôle anti-robot, **non contourné** |
+| la seule copie libre indexée par un moteur | **`AccessDenied`**, y compris dans un vrai navigateur — index périmé |
+| ScienceDirect | péage Elsevier |
+
+**L'entrée 1 passe donc d'`atteignable` à `inatteignable`, raison
+`refus_robot`** — même situation et même étiquette que l'entrée 6, dont le
+recensement d'origine avait déjà tranché ainsi. Le recensement passe de **19 à
+18 atteignables**, très au-dessus du seuil de 5 que `D17` avait écrit pour
+rouvrir l'élargissement du corpus.
+
+**Ce qui a été fait, dans l'ordre :** l'URL Monash retirée d'`ALTERNATES` et
+remplacée par la prépublication SSRN, pour que le refus soit **inscrit comme
+preuve** plutôt que supposé ; `ALERTES[1]` écrit ; le recensement re-sondé en
+entier et **diffé contre sa sauvegarde — l'entrée 1 est le seul changement de
+statut** ; le PDF erroné supprimé du disque ; **les deux fichiers de
+`corpus/text/` supprimés du dépôt** et le manifeste `D18` reconstruit (17 PDF,
+34 fichiers, **0 texte réécrit**, donc les 34 autres sont intacts).
+
+**Un défaut latent trouvé en réparant, et il aurait mordu n'importe qui.** Le
+champ `pdf` de `acquisition.json` — le seul chemin par lequel `extract_fiche.py`
+relie une entrée à son fichier — **n'était écrit par aucun script**. Un
+`probe_acquisition.py --write` le détruisait donc en silence, et
+`extract_fiche --list` tombait sur un `KeyError`. Le champ est désormais produit
+par le recensement, depuis la table **déclarée** de `fetch_pdfs.NAMES`, avec un
+refus bruyant si un nom manque.
+
+**État de `G1` après réparation** : **10 fichées, 7 à ficher** (entrées 2, 5, 8,
+12, 18, 19, 20), **3 hors d'atteinte** (1 et 6 `refus_robot`, 9 en HTML).
 
 ### Le moissonneur existe — `D20`, le 2026-09-22
 

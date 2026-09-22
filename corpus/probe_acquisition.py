@@ -66,8 +66,12 @@ REASONS = {
 # ici sans dire d'ou elle vient est une valeur inventee au sens de CLAUDE.md.
 FOUND = "recherche web du 2026-09-21"
 ALTERNATES: dict[int, list[dict]] = {
-    1: [{"url": "https://researchmgt.monash.edu/ws/files/519509174/494419119_oa.pdf",
-         "via": FOUND, "note": "depot ouvert Monash"}],
+    # L'URL Monash retiree le 2026-09-22 : elle sert un AUTRE PAPIER (voir
+    # ALERTES[1] et `L20`). Reste la prepublication SSRN, sondee pour que le
+    # refus soit inscrit comme preuve plutot que suppose — meme forme que 6.
+    1: [{"url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2440866",
+         "via": "lien d'AMORCE.md",
+         "note": "prepublication SSRN — refus robot"}],
     3: [{"url": "https://arxiv.org/pdf/1005.3535",
          "via": "deja sur disque depuis le 2026-09-20 (D17)",
          "note": "arXiv, non liste par AMORCE"}],
@@ -103,6 +107,20 @@ ALTERNATES: dict[int, list[dict]] = {
 
 # Ce que le recensement a constate et qui n'est pas de son ressort.
 ALERTES: dict[int, str] = {
+    1: ("REPARE LE 2026-09-22, voir `L20`. Le recensement du 2026-09-21 declarait "
+        "cette entree atteignable sur une URL du depot Monash "
+        "(researchmgt.monash.edu/ws/files/519509174/494419119_oa.pdf). Cette URL "
+        "sert un AUTRE PAPIER : Limkriangkrai, Chai & Zheng (2023), « Market "
+        "intraday momentum: APAC evidence », Pacific-Basin Finance Journal "
+        "80:102086 — 13 pages, autre revue, autres auteurs. Trouve par COLLISION "
+        "D'EMPREINTE sha256 au passage 1 du moissonneur (D20), le meme fichier "
+        "etant servi pour le travail OpenAlex « APAC evidence ». Les deux "
+        "verifications automatiques evidentes echouent : le titre attendu est une "
+        "SOUS-CHAINE du titre reel, et le papier APAC CITE Gao et al. (2018) des "
+        "son resume. Aucune copie libre du vrai Gao 2018 n'a ete trouvee : "
+        "OpenAlex oa_status=closed avec 0 emplacement libre, Semantic Scholar "
+        "openAccessPdf=CLOSED, SSRN 403, ScienceDirect peage, et la seule copie "
+        "libre indexee rend AccessDenied y compris dans un navigateur."),
     16: ("AMORCE.md cite « Kurov, Sancetta, Strasser & Wolfe (2021) » mais le papier "
          "de Finance Research Letters 40 (2021) que son lien ScienceDirect designe "
          "(S1544612320315956) est de Kurov, Wolfe & Gilbert. Le PDF obtenu est la "
@@ -228,6 +246,18 @@ def main() -> int:
         rec = {**r, **v, "attempts": attempts, "checked": date.today().isoformat()}
         if r["entry"] in ALERTES:
             rec["alerte"] = ALERTES[r["entry"]]
+        # Le nom du fichier local, SEUL consommateur `extract_fiche.py`. Il vient
+        # de la table DECLAREE de `fetch_pdfs.py`, jamais d'un nom devine. Import
+        # differe : `fetch_pdfs` importe ce module, et le faire en tete serait
+        # circulaire. Le champ manquait a la sortie du recensement alors que le
+        # fichier le portait — donc un `--write` le detruisait en silence et
+        # cassait `extract_fiche --list`. Trouve le 2026-09-22 en reparant L20.
+        if v["status"] == "atteignable" and v.get("text_format") == "pdf":
+            from fetch_pdfs import NAMES
+            if r["entry"] not in NAMES:
+                raise SystemExit(f"entree {r['entry']} atteignable en PDF mais absente "
+                                 "de fetch_pdfs.NAMES — nom a declarer")
+            rec["pdf"] = f"corpus/pdf/{NAMES[r['entry']]}"
         out.append(rec)
         tag = v["status"] if v["status"] == "inatteignable" else f"atteignable/{v['text_format']}"
         print(f"{r['entry']:>2} | {tag:<18} | {(v['reason'] or v['source_url'] or '')[:74]}")
