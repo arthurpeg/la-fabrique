@@ -1,6 +1,6 @@
 ---
 type: hub
-updated: 2026-09-21
+updated: 2026-09-22
 status: genere
 sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 ---
@@ -12,7 +12,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 > Toute modification hors du bloc « Prochaines actions » sera perdue.
 > Pour changer ce qui s'affiche ici, édite `wiki/log.md` ou `ETAT.md`.
 
-*Régénérée le 2026-09-21.*
+*Régénérée le 2026-09-22.*
 
 ---
 
@@ -23,7 +23,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Phase courante** | 07 — triage et extraction sur 20 papiers connus |
 | **Dernière porte franchie** | **06**, le 2026-09-18 — les deux clauses. Clause 1 (dégénérescence) : `gate_06_controls.py`, 25 vérifications. Clause 2 (réplication) : `scripts/measure_h04.py`, 19 vérifications, `H04` pré-enregistrée |
 | **Décision la plus récente** | `decisions/DECISION-18-le-texte-qui-fait-foi.md` — « le texte du papier » n'existe pas : il y a des **extractions**, qui diffèrent. Le texte qui fait foi |
-| **Tests au registre** | 135 |
+| **Tests au registre** | 140 |
 | **Idées abandonnées recensées** | 47 |
 | **Entrées au journal** | 37 |
 
