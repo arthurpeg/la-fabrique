@@ -523,3 +523,51 @@ d'élargir la liste n'était pas la mienne à prendre en passant** — elle appa
 à `D16`. Chercher la cause était donc la seule chose que je pouvais faire sans
 excéder mon mandat, et c'est celle qui a résolu le problème. La contrainte a
 mieux travaillé que ne l'aurait fait la liberté.
+
+---
+
+## L19 — Un verrou de dépendances commité ne garantit pas l'environnement qui a tourné
+
+**Le 2026-09-22**, en lançant `corpus/extract_text.py --check` pour la première
+fois depuis la production du texte.
+
+**Ce qu'on croyait.** Que `uv.lock` étant commité, le texte versionné dans
+`corpus/text/` — celui qui *fait foi* pour `F2` depuis `D18` — était reproductible
+par toute session qui synchronise le dépôt.
+
+**Ce qui était vrai.** `uv.lock` portait `pypdf 6.19.0` depuis le commit du
+**2026-09-20**. Le texte a été produit le **2026-09-21** avec **6.14.2**, par un
+environnement **en retard sur le verrou commité**. Personne ne l'a vu, et rien
+n'était fait pour le voir : le verrou décrit ce qu'un `uv sync` *installerait*,
+jamais ce que l'interpréteur qui tourne *contient*.
+
+**Comment on s'en est aperçu.** `extract_text.py --check` a rendu **31 fichiers
+sur 36 divergents**, avec la mention `pypdf 6.14.2 -> 6.19.0`. Le symptôme est
+donc excellent — `D18` l'avait voulu bruyant, et il l'a été. Ce qui manquait
+n'était pas le garde, c'était qu'une version soit **fixée** plutôt que
+seulement **inscrite**. Le manifeste notait fidèlement `"pypdf": "6.14.2"` :
+**noter n'est pas contraindre.**
+
+**Le piège de diagnostic, et il a failli fonctionner.** Les 15 PDF manquants
+venaient d'être repris le matin même. Une divergence pouvait donc venir du
+*fichier* autant que de la *version*, et attribuer d'emblée à `pypdf` aurait été
+une conclusion non mesurée. Les deux causes ont été séparées dans un
+environnement jetable : le même corpus ré-extrait sous 6.14.2 rend **36 sur 36
+conformes**. La version était bien seule en cause — et, au passage, la preuve
+est faite que **les PDF repris sont identiques à ceux du 21**, donc que
+l'acquisition est reproductible.
+
+**Ce que la mesure a retourné.** L'intuition disait « une version récente lit
+mieux ». Mesuré sur les 18 papiers, 6.19.0 récupère **+0,05 %** de contenu en
+mode `default` et **+0,66 %** en `layout`, mais **dégrade de 12 %** les lettres
+orphelines en `layout` — le symptôme même de `L18`. Aucune des deux versions
+n'est meilleure. Le choix s'est donc décidé sur le coût, pas sur la qualité, et
+c'est `D19`.
+
+**Ce que ça généralise.** Dès qu'une sortie d'outil est **versionnée comme un
+résultat** — le texte de `D18`, demain un corpus moissonné — l'outil qui l'a
+produite entre dans la définition de ce résultat, au même titre que le harnais
+entre dans la définition d'un IC (`D10`). Il s'épingle, et en changer périme.
+La question à se poser devant un artefact versionné : *quelle version de quoi
+faudrait-il pour le reproduire, et qu'est-ce qui l'impose ?* Si la réponse est
+« c'est écrit quelque part », ce n'est pas imposé.
