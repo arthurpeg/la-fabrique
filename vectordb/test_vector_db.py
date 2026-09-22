@@ -213,9 +213,22 @@ def main() -> int:
         checks.that("ordre décroissant de score",
                     all(r[i]["score"] >= r[i + 1]["score"] for i in range(len(r) - 1)))
 
-        hit = db.hybrid_search("backwardated contracts carry", q, match_count=10)
+        hit = db.hybrid_search("commodity futures carry", q, match_count=10)
         checks.that("le plein texte remonte le bon papier",
                     any(row["paper_id"] == p2 for row in hit))
+
+        # `websearch_to_tsquery` combine les termes en ET. Un seul mot absent
+        # du morceau, et le plein texte ne rend RIEN — le classement retombe
+        # alors sur le seul vectoriel. Ce n'est pas un défaut, c'est le
+        # comportement à connaître avant d'écrire une requête.
+        #
+        # Vérifié ici parce que la première rédaction de ce test l'ignorait :
+        # elle cherchait « backwardated contracts carry » alors que
+        # « backwardated » vit dans `strategies.signals`, qui n'est PAS indexé
+        # par `chunks.tsv`. Le test échouait, le code avait raison.
+        et = db.hybrid_search("backwardated commodity futures", q, match_count=10)
+        checks.that("un terme absent annule le plein texte (sémantique ET)",
+                    len(et) == 4, f"rendu {len(et)}")
 
         none = db.hybrid_search("zzzzqqqq inexistant", q, match_count=10)
         checks.that("un texte sans correspondance rend quand même le vectoriel",

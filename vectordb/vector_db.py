@@ -28,6 +28,7 @@ from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import date
 from typing import Any, Literal
+from uuid import UUID
 
 import psycopg
 from psycopg.rows import dict_row
@@ -88,6 +89,21 @@ class Strategy:
     limitations: str | None = None
     embedding: Sequence[float] | None = None
     embedding_model: str | None = None
+
+
+def _stringify_ids(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Ramène tout identifiant à une chaîne.
+
+    Sans cela l'API parle DEUX langues : `insert_paper` rend un `str`, les
+    recherches rendaient un `uuid.UUID`, et `row["paper_id"] == paper_id`
+    valait `False` **en silence**. Trouvé en exécutant le test contre une vraie
+    base — aucune analyse statique ne l'aurait vu.
+    """
+    for row in rows:
+        for key, value in row.items():
+            if isinstance(value, UUID):
+                row[key] = str(value)
+    return rows
 
 
 def to_pgvector(values: Sequence[float] | None, dim: int = DEFAULT_DIM) -> str | None:
@@ -296,7 +312,7 @@ class VectorDB:
                 (to_pgvector(query_embedding, self.dim), match_count,
                  year_min, year_max, section),
             )
-            return cur.fetchall()
+            return _stringify_ids(cur.fetchall())
 
     def hybrid_search(
         self,
@@ -321,7 +337,7 @@ class VectorDB:
                 (query_text, to_pgvector(query_embedding, self.dim), match_count,
                  year_min, year_max, section, rrf_k),
             )
-            return cur.fetchall()
+            return _stringify_ids(cur.fetchall())
 
     def strategy_search(
         self,
@@ -344,4 +360,4 @@ class VectorDB:
                 (to_pgvector(query_embedding, self.dim), match_count,
                  asset, strategy_type, sharpe_min),
             )
-            return cur.fetchall()
+            return _stringify_ids(cur.fetchall())

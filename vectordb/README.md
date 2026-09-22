@@ -55,8 +55,11 @@ La migration n'est **pas idempotente** : `create type` échoue si le type
 existe. Pour rejouer à blanc :
 
 ```sql
-drop table if exists chunks, strategies, papers cascade;
-drop type  if exists section_type, strategy_type;
+-- L'ORDRE COMPTE : les fonctions dépendent des types, et `drop type` échoue
+-- tant qu'elles existent. Vérifié en rejouant la migration à blanc.
+drop function if exists vector_search, hybrid_search, strategy_search;
+drop table    if exists chunks, strategies, papers cascade;
+drop type     if exists section_type, strategy_type;
 ```
 
 ## 4. Connexion
@@ -125,6 +128,24 @@ et ne **mesure** pas : il ne se compare pas d'une requête à l'autre.
 RRF combine des *rangs* précisément parce qu'une distance cosinus et un
 `ts_rank_cd` ne vivent pas sur la même échelle — les additionner donnerait un
 nombre dont personne ne saurait dire ce qu'il mesure.
+
+**Le plein texte combine les termes en ET**, `websearch_to_tsquery` étant ainsi
+fait. Un seul mot absent du morceau et la moitié plein texte ne rend **rien** ;
+le classement retombe alors sur le seul vectoriel — silencieusement, puisque
+RRF n'a plus qu'une liste à fusionner.
+
+```
+'backwardated contracts carry'  ->  'backward' & 'contract' & 'carri'   aucune correspondance
+'commodity futures carry'       ->  'commod' & 'futur' & 'carri'        correspond
+```
+
+Ça n'est pas un défaut, c'est le comportement à connaître avant d'écrire une
+requête. Pour un OU explicite, `to_tsquery` avec `|` conviendrait mieux — c'est
+un changement de fonction, donc une décision.
+
+**Seul `chunks.content` est indexé en plein texte.** `strategies.signals` et
+`papers.abstract` ne le sont pas : une recherche hybride ne les atteindra
+jamais. C'est ce qui a fait échouer la première rédaction du test.
 
 ---
 
