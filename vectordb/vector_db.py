@@ -190,7 +190,20 @@ class VectorDB:
                    f"password={os.environ['PGPASSWORD']}")
         env_dim = os.environ.get("EMBEDDING_DIM")
         resolved = dim or (int(env_dim) if env_dim else DEFAULT_DIM)
-        return cls(psycopg.connect(dsn, row_factory=dict_row), resolved)
+        # `autocommit=True` N'EST PAS un relâchement : c'est ce qui rend
+        # `_tx()` explicite. En mode non-autocommit, la PREMIÈRE lecture ouvre
+        # déjà une transaction implicite, et le `conn.transaction()` qui suit
+        # n'est plus qu'un SAVEPOINT — qui ne valide rien. Comme
+        # `insert_paper` commence par une lecture (`find_existing_paper`),
+        # toutes les écritures devenaient des savepoints d'une transaction
+        # jamais validée, annulée au `close()`.
+        #
+        # Le symptôme, trouvé le 2026-09-22 : l'ingestion annonçait quatre
+        # papiers insérés, la base en contenait zéro. Le test ne pouvait pas le
+        # voir — il relisait sur la MÊME connexion, qui voit ses propres
+        # écritures non validées.
+        return cls(psycopg.connect(dsn, row_factory=dict_row, autocommit=True),
+                   resolved)
 
     def close(self) -> None:
         self.conn.close()

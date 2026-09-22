@@ -11,21 +11,85 @@ rien. Les vecteurs lui arrivent tout faits.
 vectordb/
   migrations/001_init_vector_db.sql   le schéma, les index, les 3 fonctions
   vector_db.py                        le client Python
+  ingest.py                           corpus/text/ -> la base
+  setup_env.py                        écrit DATABASE_URL sans exposer le secret
   test_vector_db.py                   le test de bout en bout
-  requirements.txt
 ```
+
+## L'ingestion
+
+```bash
+python vectordb/ingest.py --dry-run    # ce qu'il ferait, sans base ni réseau
+python vectordb/ingest.py              # ingère
+python vectordb/ingest.py --paper gao  # un seul papier
+```
+
+Elle relie deux pièces qui existaient et ne se parlaient pas : `corpus/text/`,
+le texte versionné de `D18`, et cette base. **Elle n'extrait aucun PDF de son
+propre chef** — le texte ingéré est celui qui fait foi.
+
+**Le mode `default`, pas `layout`.** `D18` définit le texte qui fait foi comme
+l'union des deux, et `F2` continue de chercher dans les deux. Mais une base
+vectorielle a besoin d'UN texte : `layout` aligne les colonnes avec des espaces
+de remplissage qui gonflent les morceaux sans rien porter.
+
+**Les pages sont reconstruites PUIS vérifiées.** `corpus/text/` recolle les
+pages avec `\n` : les frontières sont perdues. L'ingestion ré-extrait page par
+page sous le `pypdf` épinglé par `D19` et exige que le **recollage redonne
+exactement** le fichier qui fait foi. Si l'égalité tombe, elle s'arrête — une
+pagination approximative placerait les citations sur les mauvaises pages, faute
+silencieuse du genre que `L20` décrit.
+
+**Les octets NUL sont retirés, et comptés.** `pypdf` en produit — 10 sur les
+17 papiers — et PostgreSQL les refuse. La copie de recherche s'écarte donc du
+texte qui fait foi, de 10 octets, annoncés à l'écran. `corpus/text/` n'est pas
+touché.
+
+### La section est un indice, pas un fait
+
+`section` vient d'une heuristique d'**en-têtes**, et elle est faible. Mesuré au
+premier passage : sur les 98 pages de Boyarchenko, **deux en-têtes** trouvés ;
+sur Andersen (2003), **aucun** — son extraction écrase les espaces
+(`ByTORBENG.ANDERSEN`).
+
+Deux garde-fous en découlent :
+
+- en deçà de **deux sections distinctes** reconnues, tout le papier reste
+  `other` — étiqueter à moitié serait pire que ne pas étiqueter ;
+- ce qui **suit** la conclusion redevient `other` : annexes, tableaux et
+  références ne sont pas la conclusion. Sans cette bascule, Boyarchenko sortait
+  `conclusion` sur 101 morceaux de 171.
+
+Répartition obtenue : `methodology` 590, `other` 448, `results` 420, `intro`
+108, `conclusion` 28.
+
+### État après le premier passage
+
+| | |
+|---|---|
+| papiers | **17** |
+| morceaux | **1 594**, 1 220 caractères en moyenne |
+| pages couvertes | 1 à 97 |
+| embeddings | **aucun** — `NULL`, en attente d'un modèle |
+| taille | ~9,8 Mo |
+
+La recherche **plein texte fonctionne immédiatement** : le `tsvector` est une
+colonne générée. La **vectorielle attend des embeddings** — `vector_search` et
+la moitié sémantique de `hybrid_search` ne renvoient rien tant que la colonne
+est `NULL`.
 
 ---
 
 ## 1. Installer
 
 ```bash
-python -m pip install -r vectordb/requirements.txt
+uv sync
 ```
 
-**Volontairement hors de `pyproject.toml`.** Le verrou du dépôt vient d'être
-épinglé par `D19` (`pypdf==6.14.2`) ; y ajouter une dépendance sans rapport le
-ferait rejouer. À intégrer plus tard, par une décision.
+`psycopg` est dans `pyproject.toml` depuis le 2026-09-22 : l'ingestion a besoin
+de **`pypdf` et `psycopg` dans le même environnement**, ce qui a rendu caduc le
+choix précédent de les séparer. Vérifié en le faisant : le verrou ne déplace que
+`psycopg`, et **`pypdf` reste à 6.14.2** comme `D19` l'exige.
 
 ## 2. Choisir la dimension
 

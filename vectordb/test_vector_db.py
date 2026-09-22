@@ -58,6 +58,19 @@ class Checks:
             print(f"  [RATE] {label}{f' — {detail}' if detail else ''}")
 
 
+def a_moi(rows: list[dict], *paper_ids: str) -> list[dict]:
+    """Ne garde que les lignes des papiers de CE test.
+
+    Le test ne possède pas la base. Il l'a cru, et s'est cassé dès qu'elle a
+    contenu le vrai corpus : « backwardated commodity futures » touchait des
+    morceaux réels par le plein texte, et un compte global ne valait plus rien.
+    Les recherches vectorielles tenaient encore, mais par accident — les
+    morceaux réels ont `embedding IS NULL` et en sont exclus.
+    """
+    connus = set(paper_ids)
+    return [r for r in rows if r.get("paper_id") in connus]
+
+
 def main() -> int:
     rng = random.Random(SEED)
     checks = Checks()
@@ -114,6 +127,18 @@ def main() -> int:
         same = db.insert_paper(Paper(title="peu importe", doi="10.9999/test.0001"),
                                on_duplicate="return_existing")
         checks.that("`return_existing` rend l'id existant", same == p1)
+
+        # -- durabilité ---------------------------------------------------
+        # LA vérification qui manquait. Relire sur la même connexion ne prouve
+        # rien : une transaction non validée voit ses propres écritures. Il a
+        # fallu une SECONDE connexion pour découvrir que tout était annulé au
+        # `close()` — l'ingestion annonçait quatre papiers, la base en avait
+        # zéro. Une écriture n'est écrite que lorsqu'un AUTRE la voit.
+        print("\nDurabilité (seconde connexion)")
+        with VectorDB.from_env() as autre:
+            vu = autre.find_existing_paper(doi="10.9999/test.0001")
+        checks.that("le papier 1 est visible d'une autre connexion",
+                    vu == p1, f"vu={vu!r}")
 
         # -- morceaux -----------------------------------------------------
         print("\nMorceaux")
@@ -181,7 +206,7 @@ def main() -> int:
         # -- recherche vectorielle ----------------------------------------
         print("\nRecherche vectorielle")
         q = fake_embedding(rng, dim)
-        r = db.vector_search(q, match_count=10)
+        r = a_moi(db.vector_search(q, match_count=40), p1, p2)
         checks.that("rend les 4 morceaux", len(r) == 4, f"rendu {len(r)}")
         checks.that("chaque ligne porte le titre du papier",
                     all(row["title"] for row in r))
@@ -191,11 +216,11 @@ def main() -> int:
                     all(r[i]["similarity"] >= r[i + 1]["similarity"]
                         for i in range(len(r) - 1)))
 
-        r = db.vector_search(q, match_count=10, section="methodology")
+        r = a_moi(db.vector_search(q, match_count=40, section="methodology"), p1, p2)
         checks.that("filtre `section` appliqué",
                     len(r) == 1 and r[0]["section"] == "methodology", f"rendu {len(r)}")
 
-        r = db.vector_search(q, match_count=10, year_min=2015)
+        r = a_moi(db.vector_search(q, match_count=40, year_min=2015), p1, p2)
         checks.that("filtre `year_min` appliqué", len(r) == 3, f"rendu {len(r)}")
 
         r = db.vector_search(q, match_count=2)
@@ -203,7 +228,7 @@ def main() -> int:
 
         # -- recherche hybride --------------------------------------------
         print("\nRecherche hybride (RRF)")
-        r = db.hybrid_search("intraday momentum futures", q, match_count=10)
+        r = a_moi(db.hybrid_search("intraday momentum futures", q, match_count=60), p1, p2)
         checks.that("rend des résultats", len(r) > 0, f"rendu {len(r)}")
         checks.that("chaque ligne porte contenu, score, titre et page",
                     all({"content", "score", "title", "page"} <= set(row) for row in r))
@@ -213,7 +238,7 @@ def main() -> int:
         checks.that("ordre décroissant de score",
                     all(r[i]["score"] >= r[i + 1]["score"] for i in range(len(r) - 1)))
 
-        hit = db.hybrid_search("commodity futures carry", q, match_count=10)
+        hit = a_moi(db.hybrid_search("commodity futures carry", q, match_count=60), p1, p2)
         checks.that("le plein texte remonte le bon papier",
                     any(row["paper_id"] == p2 for row in hit))
 
@@ -226,29 +251,29 @@ def main() -> int:
         # elle cherchait « backwardated contracts carry » alors que
         # « backwardated » vit dans `strategies.signals`, qui n'est PAS indexé
         # par `chunks.tsv`. Le test échouait, le code avait raison.
-        et = db.hybrid_search("backwardated commodity futures", q, match_count=10)
+        et = a_moi(db.hybrid_search("backwardated commodity futures", q, match_count=60), p1, p2)
         checks.that("un terme absent annule le plein texte (sémantique ET)",
                     len(et) == 4, f"rendu {len(et)}")
 
-        none = db.hybrid_search("zzzzqqqq inexistant", q, match_count=10)
+        none = a_moi(db.hybrid_search("zzzzqqqq inexistant", q, match_count=60), p1, p2)
         checks.that("un texte sans correspondance rend quand même le vectoriel",
                     len(none) == 4, f"rendu {len(none)}")
 
         # -- recherche de stratégies --------------------------------------
         print("\nRecherche de stratégies")
-        r = db.strategy_search(q, match_count=10)
+        r = a_moi(db.strategy_search(q, match_count=40), p1, p2)
         checks.that("rend les 2 stratégies", len(r) == 2, f"rendu {len(r)}")
 
-        r = db.strategy_search(q, match_count=10, asset="oil")
+        r = a_moi(db.strategy_search(q, match_count=40, asset="oil"), p1, p2)
         checks.that("filtre `asset` appliqué", len(r) == 1 and r[0]["asset"] == "oil")
 
-        r = db.strategy_search(q, match_count=10, strategy_type="momentum")
+        r = a_moi(db.strategy_search(q, match_count=40, strategy_type="momentum"), p1, p2)
         checks.that("filtre `strategy_type` appliqué", len(r) == 1)
 
-        r = db.strategy_search(q, match_count=10, sharpe_min=0.5)
+        r = a_moi(db.strategy_search(q, match_count=40, sharpe_min=0.5), p1, p2)
         checks.that("`sharpe_min` garde celle qui dépasse", len(r) == 1)
 
-        r = db.strategy_search(q, match_count=10, sharpe_min=2.0)
+        r = a_moi(db.strategy_search(q, match_count=40, sharpe_min=2.0), p1, p2)
         checks.that("`sharpe_min` EXCLUT la stratégie sans Sharpe",
                     len(r) == 0, f"rendu {len(r)}")
 
@@ -257,9 +282,9 @@ def main() -> int:
         checks.that("le papier 2 est supprimé", db.delete_paper(p2))
         written.remove(p2)
         checks.that("supprimer deux fois rend False", not db.delete_paper(p2))
-        r = db.vector_search(q, match_count=10)
+        r = a_moi(db.vector_search(q, match_count=40), p1, p2)
         checks.that("ses morceaux sont partis avec lui", len(r) == 3, f"rendu {len(r)}")
-        r = db.strategy_search(q, match_count=10)
+        r = a_moi(db.strategy_search(q, match_count=40), p1, p2)
         checks.that("ses stratégies aussi", len(r) == 1, f"rendu {len(r)}")
 
     finally:

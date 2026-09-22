@@ -153,7 +153,7 @@ def main(visible: bool = False, region_forcee: str | None = None) -> int:
     try:
         import psycopg
     except ImportError:
-        print("\npsycopg absent : pip install -r vectordb/requirements.txt")
+        print("\npsycopg absent : lancer `uv sync` à la racine du dépôt")
         return 1
 
     if region_forcee:
