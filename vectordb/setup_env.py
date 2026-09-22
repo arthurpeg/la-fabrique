@@ -25,11 +25,37 @@ REPO = Path(__file__).resolve().parents[1]
 ENV = REPO / ".env"
 
 PROJECT_REF = "ztyohbvjsrujtjdpekvo"
-REGION = "eu-west-3"
-HOST = f"aws-0-{REGION}.pooler.supabase.com"
 PORT = 5432
 DATABASE = "postgres"
 USER = f"postgres.{PROJECT_REF}"
+
+# LA REGION N'EST PAS CONNUE, et l'avoir crue connue a coute cinq tentatives.
+# Elle avait ete « lue » dans un collage de l'utilisateur — qui etait en fait
+# mon propre exemple recopie. Un gabarit relu comme une mesure : c'est `L20`
+# sous une autre forme, le nom du bon papier apparaissant dans le mauvais.
+#
+# Donc on ne devine plus : on essaie les regions une par une et on garde celle
+# qui repond. Le pooler refuse un projet qu'il n'heberge pas (« Tenant or user
+# not found »), ce qui distingue nettement une mauvaise REGION d'un mauvais
+# MOT DE PASSE (« password authentication failed »).
+# Le PREFIXE compte autant que la region : Supabase a deux generations de
+# pooler, `aws-0-` et `aws-1-`. Ce projet vit sur `aws-1-eu-west-1`, trouve le
+# 2026-09-22 en sondant les deux familles AVEC UN MOT DE PASSE VOLONTAIREMENT
+# FAUX — « projet inconnu » (ENOTFOUND) et « mot de passe refuse » etant deux
+# erreurs distinctes, l'hote se trouve sans jamais employer le vrai secret.
+REGIONS = [
+    "eu-west-1", "eu-west-3", "eu-central-1", "eu-west-2", "eu-central-2",
+    "eu-north-1", "us-east-1", "us-east-2", "us-west-1", "us-west-2",
+    "ca-central-1", "ap-southeast-1", "ap-southeast-2", "ap-northeast-1",
+    "ap-northeast-2", "ap-south-1", "sa-east-1",
+]
+PREFIXES = ["aws-1", "aws-0"]
+
+# L'hote connu de CE projet, essaye en premier. Le balayage reste derriere :
+# si Supabase deplace le projet, le script le retrouvera au lieu d'echouer.
+HOSTS = ["aws-1-eu-west-1.pooler.supabase.com"] + [
+    f"{p}-{r}.pooler.supabase.com" for r in REGIONS for p in PREFIXES
+]
 
 PLACEHOLDERS = ("motdepasse", "your-password", "your_password", "colle", "xxx",
                 "password", "mot-de-passe")
@@ -59,10 +85,8 @@ def masque(secret: str) -> str:
     return f"{secret[:2]}{'*' * (len(secret) - 4)}{secret[-2:]}"
 
 
-def main(visible: bool = False) -> int:
+def main(visible: bool = False, region_forcee: str | None = None) -> int:
     print(f"Projet   : {PROJECT_REF}")
-    print(f"Région   : {REGION}")
-    print(f"Hôte     : {HOST}:{PORT}  (session pooler)")
     print(f"Fichier  : {ENV}\n")
     if not visible:
         print("La saisie ne s'affichera pas. Pour la voir : --visible")
@@ -101,9 +125,14 @@ def main(visible: bool = False) -> int:
             return 1
         _, brut, hote_donne, _ = m.groups()
         password = unquote(brut)
-        if hote_donne != HOST:
-            print(f"\n  hôte remplacé : {hote_donne}")
-            print(f"                -> {HOST}  (session pooler, IPv4)")
+        if (m2 := re.match(r"aws-0-(.+)\.pooler\.supabase\.com$", hote_donne)):
+            # La chaîne collée vient du bon onglet : elle PORTE la région.
+            region_forcee = region_forcee or m2.group(1)
+            print(f"\n  région lue dans la chaîne : {region_forcee}")
+        else:
+            print(f"\n  hôte ignoré : {hote_donne}")
+            print("              (connexion directe, joignable en IPv6 seulement —")
+            print("               on passera par le pooler, cherché ci-dessous)")
     else:
         password = saisie
 
@@ -115,36 +144,64 @@ def main(visible: bool = False) -> int:
 
     # Un mot de passe peut contenir @ : / ? # — qui sont la syntaxe même de
     # l'URI. Sans encodage, un seul de ces caractères coupe la chaîne en deux.
-    dsn = (f"postgresql://{USER}:{quote(password, safe='')}"
-           f"@{HOST}:{PORT}/{DATABASE}")
-
-    # Ce que le script a COMPRIS, avant d'agir. Cinq tentatives ont echoue
-    # faute de pouvoir verifier ce qui avait ete colle : prefixe double, hote
-    # tronque, gabarit laisse en place. Un recapitulatif coute trois lignes.
-    print("\n--- ce que je vais écrire ---")
+    print("\n--- ce que je vais chercher ---")
     print(f"  utilisateur  : {USER}")
     print(f"  mot de passe : {masque(password)}  ({len(password)} caractères)")
-    print(f"  hôte         : {HOST}:{PORT}")
     print(f"  base         : {DATABASE}")
+    print(f"  hôtes        : {len(HOSTS)} candidats, à commencer par le connu")
 
-    print("\nTest de la connexion…", flush=True)
     try:
         import psycopg
     except ImportError:
-        print("  psycopg absent : pip install -r vectordb/requirements.txt")
+        print("\npsycopg absent : pip install -r vectordb/requirements.txt")
         return 1
-    try:
-        with psycopg.connect(dsn, connect_timeout=20) as conn, conn.cursor() as cur:
-            cur.execute("select current_database(), current_user, version()")
-            db, user, version = cur.fetchone()
-            print(f"  connecté : {db} / {user}")
+
+    if region_forcee:
+        candidates = ([h for h in HOSTS if region_forcee in h]
+                      or [f"aws-1-{region_forcee}.pooler.supabase.com"])
+    else:
+        # Dédoublonne en gardant l'ordre : l'hôte connu reste en tête.
+        candidates = list(dict.fromkeys(HOSTS))
+
+    print(f"\nRecherche de l'hôte ({len(candidates)} candidats)…", flush=True)
+    dsn = None
+    mauvais_mdp = False
+    for host in candidates:
+        essai = (f"postgresql://{USER}:{quote(password, safe='')}"
+                 f"@{host}:{PORT}/{DATABASE}")
+        try:
+            with psycopg.connect(essai, connect_timeout=12) as conn, conn.cursor() as cur:
+                cur.execute("select current_database(), current_user, version()")
+                db, user, version = cur.fetchone()
+            print(f"  {host:<44} TROUVÉ")
+            print(f"\n  connecté : {db} / {user}")
             print(f"  {version.split(',')[0]}")
-    except Exception as e:
-        # Le message de psycopg peut contenir le DSN, donc le mot de passe.
-        message = re.sub(r"://[^@]*@", "://<masque>@", str(e))
-        print(f"  ÉCHEC : {type(e).__name__}: {message.strip()[:200]}")
-        print("\nRien n'a été écrit. Si le mot de passe est en cause, la page")
-        print("Settings > Database a un bouton « Reset database password ».")
+            dsn = essai
+            break
+        except Exception as e:
+            # Le message peut contenir le DSN, donc le mot de passe.
+            brut = re.sub(r"://[^@]*@", "://<masque>@", str(e)).strip()
+            court = brut.splitlines()[0][:70] if brut else type(e).__name__
+            if "password authentication failed" in brut.lower():
+                # Le pooler a RECONNU le projet et refusé le mot de passe :
+                # l'hôte est le bon, et continuer serait absurde.
+                print(f"  {host:<44} hôte correct, MOT DE PASSE REFUSÉ")
+                mauvais_mdp = True
+                break
+            motif = ("projet inconnu ici"
+                     if ("ENOTFOUND" in brut or "Tenant or user not found" in brut)
+                     else court)
+            print(f"  {host:<44} non — {motif}")
+
+    if dsn is None:
+        print("\nRien n'a été écrit.")
+        if mauvais_mdp:
+            print("La région est bonne, c'est le mot de passe qui ne passe pas.")
+            print("Settings > Database > « Reset database password », puis relance.")
+        else:
+            print("Aucun hôte n'a reconnu ce projet. Vérifie sur le tableau de")
+            print("bord (Settings > Database > Connection string > Session pooler)")
+            print("et relance avec :  --region <ce-qu-affiche-la-page>")
         return 1
 
     lines = read_other_lines()
@@ -160,4 +217,8 @@ def main(visible: bool = False) -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main(visible="--visible" in sys.argv))
+    argv = sys.argv[1:]
+    forcee = None
+    if "--region" in argv:
+        forcee = argv[argv.index("--region") + 1]
+    sys.exit(main(visible="--visible" in argv, region_forcee=forcee))
