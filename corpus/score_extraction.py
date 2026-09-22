@@ -690,6 +690,24 @@ def self_check() -> int:
     return 0
 
 
+def _print(text: str) -> None:
+    """Imprime sans jamais planter sur un caractere que la console ignore.
+
+    La console Windows est en cp1252 : une ligature `ﬀ`, un signe moins `−`
+    ou toute autre trouvaille d'un PDF fait lever `UnicodeEncodeError` a
+    `print`, et le juge MEURT au lieu de rendre son verdict. Trouve le
+    2026-09-22 sur deux fiches reelles, dont l'une passait les cinq conditions :
+    le verdict etait juste et personne ne pouvait le lire.
+
+    Un juge qui plante ne juge pas. Les caracteres que la console ne sait pas
+    rendre sont remplaces a l'AFFICHAGE seulement ; rien de ce qui est compare
+    ne change, la comparaison ayant lieu bien avant, sur le texte en memoire.
+    """
+    enc = sys.stdout.encoding or "utf-8"
+    safe = text.encode(enc, errors="replace").decode(enc, errors="replace")
+    sys.stdout.write(safe + "\n")
+
+
 def main(argv: list[str]) -> int:
     if len(argv) >= 1 and argv[0] == "--check":
         return self_check()
@@ -715,7 +733,7 @@ def main(argv: list[str]) -> int:
     else:
         texts = texts_of(json.loads(fiche_path.read_text(encoding="utf-8")))
     result = score(fiche_path, texts, ref)
-    print(render(result))
+    _print(render(result))
     return 0 if result["passed"] else 1
 
 

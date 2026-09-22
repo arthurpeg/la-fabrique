@@ -70,7 +70,7 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 |---|---|---|---|
 | 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07` |
 | 06 | Contrôles automatiques et réplication | Un signal dégénéré est rejeté avant le harnais ; la chaîne reproduit un fait publié sur nos données. La cible a changé deux fois : Mesfin (métrique incompatible, `D12`), Heston (motif absent, `H03`), puis Andersen & Bollerslev (`D13`). | **franchie 2026-09-18** — `gate_06_controls.py` (25) et `scripts/measure_h04.py` (19) |
-| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 32 vérifications), **son extracteur existe depuis le 2026-09-21** (`extract_fiche.py`) ; recensement `G4` fait — **19 atteignables sur 20**, 18 PDF, texte qui fait foi fixé par `D18` ; les 3 fiches de référence passent les cinq conditions ; **`G1` non tenu — 14 papiers restent à ficher** (passage 1 vert sur l'entrée 13) |
+| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 32 vérifications), **son extracteur existe depuis le 2026-09-21** (`extract_fiche.py`) ; recensement `G4` fait — **19 atteignables sur 20**, 18 PDF, texte qui fait foi fixé par `D18` ; les 3 fiches de référence passent les cinq conditions ; **`G1` non tenu — 10 fiches produites, 5 vertes, 8 papiers restent à ficher** ; `G2` non tenu — 5 fiches cassent `D16`, **dont 2 par un faux rejet du garde** |
 | 08 | Le codeur de signal | Une fiche produit un signal exécutable qui passe la sandbox, sans retouche manuelle. | à faire |
 
 ## Acte III — Fermer la boucle une fois
@@ -351,8 +351,24 @@ où on le lance. Même péremption que la note « sur cette machine » corrigée
    25 résultats, 7 réparations déclarées, 2 itérations, **aucune citation
    refusée** — le seul échec portait sur la forme (`F1`), pas sur la fidélité.
    `D16` § Journal dit ce qu'il a appris.
-8. **Ficher les 14 papiers restants** — `G1` exige zéro atteignable non fiché.
-   `python corpus/extract_fiche.py --list` dit lesquels.
+8. **CORRIGER `value_in_quote`, qui REJETTE À TORT TOUT NOMBRE NÉGATIF.** Trouvé
+   le 2026-09-22 en jugeant les premières sorties d'extracteur. `F1`
+   (`validate_fiches`) importe la fonction du **catalogue**, dont le motif est
+   `\d+(?:\.\d+)?` — **sans signe**. `F3` (`score_extraction`) a le sien,
+   `-?\d+(?:[.,]\d+)?`. Les deux ne sont **pas la même fonction** et ne rendent
+   pas le même verdict : **5 rejets sur 10 sont faux**, tous sur un nombre
+   négatif, et deux fiches ne sont refusées que pour cette raison. Dans cette
+   littérature un coefficient négatif est la règle, pas l'exception. **Ne pas
+   corriger à la hâte** : la fonction est celle de `D09`, partagée avec le
+   catalogue et `scripts/check_provenance.py` ; la corriger demande de rejouer
+   leurs gardes.
+9. **Trancher `signal_construction` comme objet structuré.** **4 extracteurs
+   indépendants sur 6 ont fait la même faute** : ils écrivent un objet
+   (`sampling`, `components`, `model`…) sans la clé `value` que le schéma exige.
+   Quatre fois la même erreur n'est pas quatre erreurs, c'est un défaut du
+   schéma ou de la consigne.
+10. **Ficher les 8 papiers restants** — `G1` exige zéro atteignable non fiché.
+    `python corpus/extract_fiche.py --list` dit lesquels.
 
 ### Ce qui reste ouvert par ailleurs
 

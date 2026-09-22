@@ -1,0 +1,295 @@
+{
+  "fiche_id": "corsi-2009-har-realized-volatility",
+  "written": "2026-09-21",
+  "written_by": "extracteur-entree-14",
+  "source": {
+    "authors": "Fulvio Corsi",
+    "title": "A Simple Approximate Long-Memory Model of Realized Volatility",
+    "year": 2009,
+    "source_url": "https://statmath.wu.ac.at/~hauser/LVs/FinEtricsQF/References/Corsi2009JFinEtrics_LMmodelRealizedVola.pdf",
+    "pdf": "corpus/pdf/corsi-2009-har-realized-volatility.pdf",
+    "retrieved": "2026-09-21",
+    "peer_reviewed": true,
+    "amorce_entry": 14,
+    "venue": "Journal of Financial Econometrics, 2009, Vol. 7, No. 2, 174-196"
+  },
+  "claim": "La volatilite realisee d'un actif se modelise par une cascade additive de trois composantes de volatilite attachees a trois horizons de marche (jour, semaine, mois), ce qui donne une simple regression lineaire de la RV du jour suivant sur les RV passees moyennees a un jour, une semaine et un mois (modele HAR-RV). Bien que ce processus soit formellement a memoire courte et sans integration fractionnaire, il reproduit la persistance, les queues epaisses et l'auto-similarite observees, et prevoit la volatilite aussi bien qu'un ARFIMA — mieux que des AR courts — a horizon un jour, une semaine et deux semaines, avec seulement quatre parametres estimes par MCO.",
+  "universe": {
+    "instruments": "Trois series tick-par-tick : le change au comptant USD/CHF (prix logarithmiques moyens bid/ask de l'ecran Reuters FXFX), les futures S&P500, et les futures sur obligation du Tresor americain a 30 ans (T-Bond).",
+    "periods": "USD/CHF de decembre 1989 a decembre 2003 (14 ans, 3599 observations quotidiennes) ; S&P500 Futures de janvier 1990 a juillet 2007 (4344 observations) ; T-Bond Futures de janvier 1990 a octobre 2003 (3391 observations).",
+    "cross_section": "Aucune. Les trois series sont estimees separement, une regression par actif ; il n'y a ni classement transversal ni portefeuille.",
+    "filters": "Pour l'USD/CHF, la volatilite realisee du week-end est exclue (du vendredi 21:00 GMT au dimanche 22:00 GMT) afin de ne pas avoir a modeliser la saisonnalite hebdomadaire de l'activite.",
+    "frequency": "Donnees tick-par-tick agregees en estimations quotidiennes de volatilite realisee ; la simulation du modele, elle, tourne au pas de deux heures."
+  },
+  "horizon": {
+    "value": "1 jour (modele et estimation) ; evaluation hors echantillon a 1 jour, 1 semaine et 2 semaines",
+    "reason": "Le modele estime predit RV du jour t+1d ; les previsions multi-periodes sont evaluees sur la volatilite agregee sur l'horizon (1 jour, 1 semaine, 2 semaines). Aucun horizon intrajournalier n'est teste."
+  },
+  "signal_construction": {
+    "target": "La volatilite realisee quotidienne RV(d), racine carree de la somme des rendements intrajournaliers au carre ; en pratique estimee tick-par-tick avec l'estimateur a deux echelles de Zhang, Ait-Sahalia et Mykland (2005), la frequence lente etant prise a dix ticks de rendement. Toutes les quantites sont annualisees.",
+    "aggregation": "Les volatilites realisees multi-periodes sont de simples moyennes des RV quotidiennes : RV(w) est la moyenne des cinq dernieres RV quotidiennes, RV(m) la moyenne sur le mois, le mois valant 22 jours ouvres.",
+    "regression": "Regression lineaire : RV(d)_{t+1d} = c + beta_d * RV(d)_t + beta_w * RV(w)_t + beta_m * RV(m)_t + omega_{t+1d}. Quatre parametres, tous estimes par MCO ordinaire, les regresseurs etant entierement observes a la date t.",
+    "inference": "Correction de covariance Newey-West pour correlation serielle d'ordre 5 ; les t-statistiques rapportees en sont issues.",
+    "estimation_windows": "En echantillon : parametres estimes sur l'echantillon complet puis previsions statiques a un pas. Hors echantillon : reestimation quotidienne sur une fenetre glissante de 1000 observations (pour AR(1), AR(3) et HAR(3)).",
+    "interpretation": "Le HAR(3) est lu comme un AR(22) reparametre par des restrictions economiquement interpretables, les poids autoregressifs prenant la forme d'une fonction en escalier a trois paliers ; les trois coefficients s'interpretent comme les poids respectifs des composantes de marche court, moyen et long terme."
+  },
+  "reported_results": [
+    {
+      "name": "sp500_beta_daily_in_sample",
+      "value": 0.372,
+      "unit": "coefficient",
+      "quoted": "beta_d : USD/CHF 0.352 | S&P500 0.372 | T-Bond 0.039",
+      "quoted_source": "βd 0.352 0.372 0.039",
+      "quoted_repair": "table",
+      "note": "Table 2, ligne des coefficients de la RV quotidienne, trois colonnes dans l'ordre USD/CHF, S&P500, T-Bond. Estimation en echantillon."
+    },
+    {
+      "name": "sp500_beta_weekly_in_sample",
+      "value": 0.343,
+      "unit": "coefficient",
+      "quoted": "beta_w : USD/CHF 0.323 | S&P500 0.343 | T-Bond 0.412",
+      "quoted_source": "βw 0.323 0.343 0.412",
+      "quoted_repair": "table",
+      "note": "Table 2. Pour le T-Bond, c'est la composante hebdomadaire (0.412) qui porte le poids, pas la quotidienne."
+    },
+    {
+      "name": "sp500_beta_monthly_in_sample",
+      "value": 0.224,
+      "unit": "coefficient",
+      "quoted": "beta_m : USD/CHF 0.235 | S&P500 0.224 | T-Bond 0.361",
+      "quoted_source": "βm 0.235 0.224 0.361",
+      "quoted_repair": "table",
+      "note": "Table 2. La somme des trois coefficients S&P500 vaut environ 0.94, proche de la racine unitaire."
+    },
+    {
+      "name": "tbond_beta_daily_tstat",
+      "value": 1.672,
+      "unit": "t-stat",
+      "quoted": "t-stat de beta_d : USD/CHF (13.501) | S&P500 (9.858) | T-Bond (1.672)",
+      "quoted_source": "(13.501) (9.858) (1.672)",
+      "quoted_repair": "table",
+      "note": "Table 2, ligne des t-statistiques sous les coefficients quotidiens ; Newey-West d'ordre 5. Seul coefficient non significatif du papier."
+    },
+    {
+      "name": "tbond_daily_component_not_significant",
+      "value": null,
+      "quoted": "The only exception is the coefficient of daily realized volatility for",
+      "quoted_source": "The only exception is the coefﬁcient of daily realized volatility for",
+      "quoted_repair": "ocr",
+      "note": "L'auteur l'impute au bruit de microstructure et a une frequence d'arrivee des ticks plus faible sur le T-Bond : l'estimation de la RV quotidienne y est plus bruitee, donc la composante quotidienne perd sa significativite au profit des moyennes plus longues. Resultat qualitatif, sans chiffre propre."
+    },
+    {
+      "name": "newey_west_serial_correlation_order",
+      "value": 5,
+      "unit": "lags",
+      "quoted": "Newey–West correction for serial correlation of order 5.",
+      "note": "Choix d'inference, Table 2. Les t-stats du papier en dependent."
+    },
+    {
+      "name": "sp500_observations_in_sample",
+      "value": 4344,
+      "unit": "observations quotidiennes",
+      "quoted": "January 1990 to July 2007 (4344 observations), and T-Bond Futures from January 1990 to October 2003",
+      "note": "Taille d'echantillon S&P500 Futures. USD/CHF : 3599 ; T-Bond : 3391 (note de la Table 2)."
+    },
+    {
+      "name": "monthly_component_length_working_days",
+      "value": 22,
+      "unit": "jours ouvres",
+      "quoted": "monthly realized volatility (which corresponds to 22 working",
+      "note": "C'est ce qui fixe le modele non contraint de reference a un AR(22)."
+    },
+    {
+      "name": "har_restrictions_vs_ar22",
+      "value": 19,
+      "unit": "restrictions",
+      "quoted": "Given the high number of restrictions (19) and observations, rejection of the joint test F could somehow",
+      "note": "Note de bas de page 15 : le HAR(3) impose 19 restrictions a l'AR(22), et l'auteur reconnait que le rejet du F-test joint etait previsible."
+    },
+    {
+      "name": "sp500_f_test_har_vs_ar22",
+      "value": 3.498,
+      "unit": "statistique F",
+      "quoted": "F-test : USD/CHF 2.801 | S&P500 3.498 | T-Bond 4.585",
+      "quoted_source": "F-test 2.801 3.498 4.585",
+      "quoted_repair": "table",
+      "note": "Table 3. Les restrictions du HAR sont rejetees pour les trois series (valeurs critiques a 1% : 1.910, 1.909, 1.912)."
+    },
+    {
+      "name": "sp500_bic_har3",
+      "value": 2.585,
+      "unit": "BIC",
+      "quoted": "BIC HAR(3) : USD/CHF 1.935 | S&P500 2.585 | T-Bond 1.910",
+      "quoted_source": "HAR(3) 1.935 2.585 1.910",
+      "quoted_repair": "table",
+      "note": "Table 3, bloc BIC. A comparer au BIC de l'AR(22) non contraint : 1.969 / 2.611 / 1.938. Le BIC prefere nettement le HAR(3) sur les trois series, alors que l'AIC ne tranche pas."
+    },
+    {
+      "name": "sp500_in_sample_r2_har3",
+      "value": 0.707,
+      "unit": "R2 Mincer-Zarnowitz",
+      "quoted": "HAR(3) : USD/CHF RMSE 2.607 MAE 1.757 R2 0.565 | S&P500 RMSE 3.605 MAE 2.305 R2 0.707 | T-Bond RMSE 2.576 MAE 1.905 R2 0.236",
+      "quoted_source": "HAR(3) 2.607 1.757 0.565 3.605 2.305 0.707 2.576 1.905 0.236",
+      "quoted_repair": "table",
+      "note": "Table 4, previsions a un jour en echantillon. R2 d'une regression de Mincer-Zarnowitz de la RV ex post sur la prevision — c'est un R2 sur un NIVEAU de volatilite, pas sur un rendement."
+    },
+    {
+      "name": "sp500_in_sample_r2_ar1",
+      "value": 0.648,
+      "unit": "R2 Mincer-Zarnowitz",
+      "quoted": "AR(1) : USD/CHF RMSE 2.803 MAE 1.938 R2 0.493 | S&P500 RMSE 3.927 MAE 2.542 R2 0.648 | T-Bond RMSE 2.770 MAE 2.080 R2 0.109",
+      "quoted_source": "AR(1) 2.803 1.938 0.493 3.927 2.542 0.648 2.770 2.080 0.109",
+      "quoted_repair": "table",
+      "note": "Table 4. Le gain du HAR sur l'AR(1) a un jour en echantillon est de 0.059 de R2 sur le S&P500 (0.707 contre 0.648) : reel, mais modeste."
+    },
+    {
+      "name": "sp500_out_of_sample_r2_har3_1day",
+      "value": 0.696,
+      "unit": "R2 Mincer-Zarnowitz",
+      "quoted": "HAR(3), S&P500 : 1 jour RMSE 3.873 MAE 2.475 R2 0.696 | 1 semaine RMSE 3.352 MAE 2.237 R2 0.698 | 2 semaines RMSE 3.539 MAE 2.437 R2 0.627",
+      "quoted_source": "HAR(3) 3.873 2.475 0.696 3.352 2.237 0.698 3.539 2.437 0.627",
+      "quoted_repair": "table",
+      "note": "Table 5, bloc S&P500, hors echantillon, reestimation quotidienne sur fenetre glissante de 1000 observations."
+    },
+    {
+      "name": "sp500_out_of_sample_r2_har3_2weeks",
+      "value": 0.627,
+      "unit": "R2 Mincer-Zarnowitz",
+      "quoted": "HAR(3), S&P500 : 1 jour RMSE 3.873 MAE 2.475 R2 0.696 | 1 semaine RMSE 3.352 MAE 2.237 R2 0.698 | 2 semaines RMSE 3.539 MAE 2.437 R2 0.627",
+      "quoted_source": "HAR(3) 3.873 2.475 0.696 3.352 2.237 0.698 3.539 2.437 0.627",
+      "quoted_repair": "table",
+      "note": "Meme ligne de la Table 5, colonne 2 semaines. A comparer a l'ARFIMA (0.633) : l'ARFIMA reprend un leger avantage au bihebdomadaire."
+    },
+    {
+      "name": "sp500_out_of_sample_r2_ar1_2weeks",
+      "value": 0.166,
+      "unit": "R2 Mincer-Zarnowitz",
+      "quoted": "AR(1), S&P500 : 1 jour RMSE 4.170 MAE 2.669 R2 0.640 | 1 semaine RMSE 4.878 MAE 3.550 R2 0.323 | 2 semaines RMSE 5.273 MAE 4.012 R2 0.166",
+      "quoted_source": "AR(1) 4.170 2.669 0.640 4.878 3.550 0.323 5.273 4.012 0.166",
+      "quoted_repair": "table",
+      "note": "Table 5. C'est le resultat le plus fort du papier : a deux semaines, hors echantillon, le HAR(3) tient 0.627 de R2 la ou l'AR(1) tombe a 0.166. L'ecart nait de l'horizon, pas du jour suivant."
+    },
+    {
+      "name": "sp500_out_of_sample_r2_arfima_2weeks",
+      "value": 0.633,
+      "unit": "R2 Mincer-Zarnowitz",
+      "quoted": "ARFIMA, S&P500 : 1 jour RMSE 4.085 MAE 2.762 R2 0.651 | 1 semaine RMSE 3.409 MAE 2.403 R2 0.678 | 2 semaines RMSE 3.502 MAE 2.478 R2 0.633",
+      "quoted_source": "ARFIMA 4.085 2.762 0.651 3.409 2.403 0.678 3.502 2.478 0.633",
+      "quoted_repair": "table",
+      "note": "Table 5. Le HAR bat l'ARFIMA a 1 jour et 1 semaine, le perd de peu a 2 semaines — et l'auteur rappelle en note 16 que les previsions ARFIMA ne sont pas vraiment hors echantillon, d ayant ete estime sur l'echantillon complet."
+    },
+    {
+      "name": "tbond_out_of_sample_r2_har3_1day",
+      "value": 0.264,
+      "unit": "R2 Mincer-Zarnowitz",
+      "quoted": "HAR(3), T-Bond : 1 jour RMSE 2.568 MAE 1.886 R2 0.264 | 1 semaine RMSE 1.516 MAE 1.153 R2 0.440 | 2 semaines RMSE 1.401 MAE 1.052 R2 0.438",
+      "quoted_source": "HAR(3) 2.568 1.886 0.264 1.516 1.153 0.440 1.401 1.052 0.438",
+      "quoted_repair": "table",
+      "note": "Table 5, bloc T-Bond. Le meme modele passe de 0.696 (S&P500) a 0.264 (T-Bond) a un jour : la qualite de la mesure de RV domine la qualite du modele."
+    },
+    {
+      "name": "out_of_sample_moving_window",
+      "value": 1000,
+      "unit": "observations",
+      "quoted": "The AR(1), AR(3), and HAR(3) are daily reestimated on a moving window of 1000",
+      "note": "Protocole hors echantillon de la Table 5. L'ARFIMA fait exception : son d est pre-estime sur l'echantillon entier, ce qui le rend non comparable au sens strict."
+    },
+    {
+      "name": "arfima_gph_d_order_of_magnitude",
+      "value": 0.4,
+      "unit": "coefficient d'integration fractionnaire",
+      "quoted": "which for values of d around 0.4 induces a cutoff error of about",
+      "quoted_source": "which for values ofd around 0.4 induces a cutoff error of about",
+      "quoted_repair": "ocr",
+      "note": "Ordre de grandeur du d fractionnaire du benchmark ARFIMA ; l'erreur de troncature de l'expansion de Taylor (limite 1000) vaut alors environ 4%."
+    },
+    {
+      "name": "rv_estimator_slow_frequency_ticks",
+      "value": 10,
+      "spelled_out": "ten",
+      "unit": "ticks",
+      "quoted": "with the slower frequency of ten ticks returns",
+      "note": "Frequence lente de l'estimateur a deux echelles de Zhang, Ait-Sahalia et Mykland (2005), appliquee aux trois series. C'est la seule specification de frequence d'echantillonnage donnee pour la RV : il n'y a pas de pas de temps fixe."
+    },
+    {
+      "name": "usdchf_weekend_exclusion_window",
+      "value": null,
+      "quoted": "from Friday 21:00 GMT to Sunday 22:00 GMT",
+      "note": "Filtre de calendrier applique a l'USD/CHF, pour eviter d'avoir a modeliser explicitement la saisonnalite induite par le week-end. Aucun filtre equivalent n'est documente pour les deux series de futures."
+    },
+    {
+      "name": "simulation_calibrated_betas",
+      "value": 0.36,
+      "unit": "coefficient",
+      "quoted": "They are β(d) = 0.36, β(w) = 0.28, and β(m) = 0.28.",
+      "note": "Parametres de la SIMULATION (section 2.4), calibres a la main pour obtenir des resultats realistes — ils ne sont pas estimes et ne doivent pas etre confondus avec ceux de la Table 2."
+    },
+    {
+      "name": "simulation_length_years",
+      "value": 600,
+      "unit": "annees equivalentes",
+      "quoted": "(approximately 600 years)",
+      "note": "Longueur de la trajectoire simulee (150 000 observations quotidiennes) servant a comparer les faits stylises simules aux donnees USD/CHF (3599 observations). L'ecart de taille d'echantillon entre les deux cotes de la comparaison est enorme et assume par l'auteur."
+    },
+    {
+      "name": "simulation_bars_per_day",
+      "value": 12,
+      "unit": "pas par jour",
+      "quoted": "of two hours (2 h) (corresponding to M = 12 for a full 24-hour trading day). The",
+      "note": "La simulation tourne au pas de deux heures sur une journee de 24 heures — hypothese FX, non transposable telle quelle a une seance de futures."
+    },
+    {
+      "name": "usdchf_daily_return_kurtosis_actual",
+      "value": 4.74,
+      "unit": "kurtosis",
+      "quoted": "USD/CHF : kurtosis des rendements quotidiens 4.74 | hebdomadaires 3.82 | mensuels 3.24",
+      "quoted_source": "USD/CHF 4.74 3.82 3.24",
+      "quoted_repair": "table",
+      "note": "Table 1, donnees reelles. Le crossover queue epaisse vers queue fine quand l'intervalle d'agregation augmente."
+    },
+    {
+      "name": "har_simulated_daily_return_kurtosis",
+      "value": 4.89,
+      "unit": "kurtosis",
+      "quoted": "HAR(3)-RV simule : kurtosis des rendements quotidiens 4.89 | hebdomadaires 3.90 | mensuels 3.50",
+      "quoted_source": "HAR(3)-RV 4.89 3.90 3.50",
+      "quoted_repair": "table",
+      "note": "Table 1, donnees simulees, a comparer ligne a ligne aux 4.74 / 3.82 / 3.24 empiriques. Le modele reproduit l'exces de kurtosis et sa decroissance, mais avec des queues legerement plus epaisses."
+    },
+    {
+      "name": "long_memory_is_apparent_not_true",
+      "value": null,
+      "quoted": "model shows a volatility memory that is at least as long as that of empirical data",
+      "note": "Affirmation centrale du papier : le HAR est theoriquement a memoire courte et ne devrait pas presenter de decroissance hyperbolique asymptotique, mais sur l'intervalle d'agregation considere il imite la memoire longue observee. Qualitatif, appuye sur les seules Figures 4 a 7 — aucun test formel de memoire longue n'est rapporte."
+    }
+  ],
+  "what_is_missing": [
+    "Aucune regle de trading, aucune position, aucun rendement : le papier prevoit un niveau de volatilite, il ne produit jamais un signal directionnel ni un P&L. Il n'y a donc ni cout de transaction, ni slippage, ni capacite.",
+    "Aucun IC, aucune correlation de rang, aucune metrique transversale. La seule metrique de qualite est le R2 d'une regression de Mincer-Zarnowitz de la RV ex post sur la prevision, serie par serie.",
+    "Aucun test de significativite sur les DIFFERENCES de performance hors echantillon : pas de Diebold-Mariano, pas de Model Confidence Set, pas d'intervalle de confiance sur les R2 de la Table 5. Les classements de modeles sont lus a l'oeil sur des ecarts parfois inferieurs a 0.01.",
+    "Aucun compte du nombre de specifications essayees avant de retenir le triplet jour / semaine / mois ; l'auteur ecrit lui-meme que d'autres composantes pourraient etre ajoutees.",
+    "Le pas d'echantillonnage intrajournalier de la RV n'est pas donne en unites de temps : seul 'dix ticks' comme frequence lente de l'estimateur a deux echelles. Aucune sensibilite a ce choix n'est rapportee, alors que le resultat T-Bond montre que le bruit d'estimation de la RV fait ou defait la significativite des coefficients.",
+    "Aucun detail de nettoyage des donnees tick : filtres de prix aberrants, gestion des roulements de contrats futures, prise en compte des seances et des interruptions. Pour un future, la construction de la serie continue est decisive et n'est pas decrite.",
+    "Aucun traitement du gap overnight ni de la volatilite hors seance pour les deux series de futures, alors que le seul filtre de calendrier documente concerne le week-end de l'USD/CHF.",
+    "Aucune separation des sauts ni effet de levier : l'auteur les renvoie explicitement a des extensions futures.",
+    "Aucun ecart-type ni intervalle sur les coefficients hors echantillon, alors qu'ils sont reestimes chaque jour sur une fenetre glissante : la stabilite temporelle des betas n'est montree nulle part (elle est seulement suggeree comme sous-produit possible).",
+    "La comparaison ARFIMA est biaisee en faveur du benchmark ET contre lui a la fois : d est estime sur l'echantillon complet (donc look-ahead, reconnu en note 16), mais l'ARFIMA souffre du choix arbitraire de la troncature de Taylor. Aucun des deux effets n'est quantifie.",
+    "Les parametres de la simulation (0.36 / 0.28 / 0.28) sont calibres 'pour obtenir des resultats realistes' : aucun critere d'ajustement, aucune procedure d'estimation, donc aucun moyen de juger la reproduction des faits stylises autrement qu'a l'oeil."
+  ],
+  "transposability": {
+    "what_transfers": "La forme fonctionnelle : trois moyennes glissantes emboitees de la volatilite realisee passee (1 jour, 5 jours, 22 jours) comme regresseurs, estimees par MCO sur fenetre glissante. Elle ne coute presque rien, n'a que quatre parametres, se calcule sur n'importe quel instrument pour lequel on sait construire une barre intrajournaliere, et n'utilise par construction que du passe — donc elle est compatible avec un Panel ouvert a une date et avec un walk-forward purge. Transfere aussi l'enseignement structurel : ce qui predit la volatilite n'est pas un lag unique mais un escalier d'horizons, la composante longue portant l'essentiel quand la mesure courte est bruitee. Le cas T-Bond transfere comme avertissement operationnel : sur un instrument a faible frequence d'arrivee des transactions, l'estimateur de RV devient si bruite que la composante quotidienne perd toute significativite — un diagnostic a refaire instrument par instrument chez nous.",
+    "what_does_not_transfer": [
+      "La cible. Le papier predit un NIVEAU de volatilite ; notre harnais juge un score par sa correlation avec un rendement futur. Un R2 de 0.70 sur la RV ne dit rien d'un IC : la RV est fortement autocorrelee, et une prevision naive en capte deja l'essentiel. Les chiffres de la Table 4 et de la Table 5 ne sont donc comparables a aucun chiffre de notre registre.",
+      "La journee de 24 heures. La simulation suppose M = 12 pas de deux heures sur une seance continue, et le seul filtre de calendrier documente (vendredi 21:00 GMT a dimanche 22:00 GMT) est un filtre FX. Nos neuf futures ont des seances, des interruptions, des heures de reglement et des gaps overnight qui cassent la definition meme de 'un jour' du papier.",
+      "L'estimateur de volatilite realisee. Le papier calcule la RV tick-par-tick avec l'estimateur a deux echelles de Zhang, Ait-Sahalia et Mykland, frequence lente a dix ticks : cela exige des donnees de transaction. Avec des barres, la RV est un autre estimateur, avec un autre biais de microstructure — et le T-Bond montre que ce changement suffit a annuler un coefficient.",
+      "L'horizon. Le grain le plus fin du papier est la prevision a un jour ; ses resultats les plus forts sont a une et deux semaines. Un signal intrajournalier n'est teste nulle part et ne peut pas s'appuyer sur ces chiffres.",
+      "La dimension transversale, qui est absente. Trois series estimees separement ne disent rien d'un classement entre neuf instruments a une date donnee, ni d'un IC poole, ni d'une normalisation inter-instruments.",
+      "Le periode et la microstructure. 1989-2007, avec un S&P500 encore largement a la criee et un USD/CHF sur ecran Reuters, contre 2016-2026 entierement electronique : la frequence d'arrivee des ticks, qui est precisement la variable dont depend la qualite de la RV chez Corsi, a change d'ordre de grandeur.",
+      "Les valeurs numeriques des coefficients (0.372 / 0.343 / 0.224 et les autres). Elles sont attachees a des series annualisees particulieres sur un echantillon particulier ; les reprendre comme parametres au lieu de les reestimer serait importer l'echantillon d'un tiers.",
+      "L'annualisation et le niveau. Toutes les quantites du papier sont annualisees pour etre comparables entre frequences ; notre chaine travaille sur des scores standardises, et le passage de l'un a l'autre n'est pas neutre.",
+      "Le protocole de validation. Fenetre glissante de 1000 observations, reestimation quotidienne, pas de purge ni d'embargo entre estimation et evaluation. Ce n'est pas notre walk-forward purge et cela ne franchit aucune de nos portes.",
+      "Le benchmark ARFIMA tel qu'il est construit : son d est pre-estime sur l'echantillon entier, ce qui est un look-ahead assume par l'auteur. Aucune de nos comparaisons ne peut se faire ainsi."
+    ],
+    "what_aligns_well": "Deux des trois series du papier sont des futures (S&P500 et T-Bond a 30 ans), donc la classe d'actifs et la structure de donnees intrajournalieres tombent juste. La construction est deterministe, sans parametre cache, sans acces reseau, et strictement causale : a la date t, seules des RV realisees jusqu'a t entrent dans la regression — l'invariant II est respecte par construction, sans vigilance. Le cout de calcul est negligeable, ce qui permet de la reestimer en walk-forward sans contrainte. Enfin, la decomposition en trois horizons fournit directement des candidats de VARIABLE DE REGIME (niveau de volatilite long terme, rapport court/long) plus qu'un signal de rendement : c'est sous cette forme — conditionneur de regime pour l'etape 05, pas signal de l'etape 02 — que le papier a le plus de chances de servir chez nous."
+  }
+}

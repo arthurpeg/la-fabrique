@@ -1,0 +1,327 @@
+{
+  "fiche_id": "zarattini-2024-beat-the-market-spy",
+  "written": "2026-09-21",
+  "written_by": "extracteur-2026-09-21",
+
+  "source": {
+    "authors": "Carlo Zarattini, Andrew Aziz, Andrea Barbon",
+    "title": "Beat the Market: An Effective Intraday Momentum Strategy for S&P500 ETF (SPY)",
+    "year": 2024,
+    "source_url": "https://alexandria.unisg.ch/bitstreams/a99aba00-f967-49b3-aceb-f544dc386e0b/download",
+    "pdf": "corpus/pdf/zarattini-2024-beat-the-market-spy.pdf",
+    "retrieved": "2026-09-21",
+    "peer_reviewed": false,
+    "amorce_entry": 4,
+    "note": "Papier de travail diffuse hors revue a comite de lecture (premiere version 10 mai 2024, version citee 3 fevrier 2025). Aucune mention d'arbitrage dans le texte ; deux des trois auteurs sont praticiens (Concretum Research, Peak Capital Trading), le troisieme academique (University of St.Gallen / Swiss Finance Institute)."
+  },
+
+  "claim": {
+    "statement": "Sur un instrument unique tres liquide (SPY), le prix qui sort d'une zone de bruit definie heure-par-heure a partir du mouvement absolu moyen depuis l'Open sur les 14 jours precedents signale un desequilibre offre/demande persistant, et suivre ce mouvement jusqu'a la cloture du jour est rentable net de couts. Contrairement a la litterature anterieure (Gao et al., Baltussen et al., Rosa) qui restreint le trading aux 30 dernieres minutes, la position peut s'ouvrir des le matin.",
+    "quoted": "our model does not limit the trading to the last 30-minutes of the trading session;",
+    "mechanism": "Sous-reaction a l'information (effet de disposition, attention limitee, capital lent) ; en appui, le hedging gamma des teneurs d'options qui amplifie les tendances intraday quand leur gamma est negatif.",
+    "quoted_mechanism": "Furthermore, our evidence of sizeable momentum effects at an intraday frequency sup-"
+  },
+
+  "universe": {
+    "instruments": "Un seul instrument dans le corps du papier : SPY, l'ETF le plus liquide repliquant le S&P 500. VIX utilise uniquement comme variable de regime.",
+    "period": "Mai 2007 a avril 2024 pour le corpus principal (les tables de la FAQ vont jusqu'a decembre 2024 / janvier 2025).",
+    "data": "Donnees 1-minute OHLCV d'IQFeed ; backtests et tests statistiques sous Matlab R2023a.",
+    "quoted": "data from IQFeed, covering the period from May 2007 to April 2024. All backtests and",
+    "extensions": "La FAQ etend les memes regles a d'autres ETF et actions US (Q12) et a 33 marches a terme (Q13 : 21 matieres premieres, 12 indices actions, janvier 2007 a septembre 2024).",
+    "sample_size_days": 2620,
+    "quoted_sample_size": "Unconditional 2620 12 5.34 43% 1.7",
+    "quoted_sample_size_repair": "table"
+  },
+
+  "horizon": {
+    "value": "intraday, de l'entree jusqu'a la cloture de seance (16:00) au plus tard",
+    "detail": "Les decisions (entree, sortie, stop, retournement) ne sont prises qu'aux intervalles semi-horaires HH:00 et HH:30. Toute position est debouclee au plus tard au Close, ou plus tot en cas de franchissement du stop suiveur. Aucune exposition overnight. La premiere position possible est a 10:00.",
+    "quoted": "Positions are unwound either at market Close or if there is a crossover to the opposite",
+    "quoted_grid": "specifically at HH:00 and HH:30. This timing mechanism ensures that decisions are"
+  },
+
+  "signal_construction": {
+    "value": "Noise Area gap-ajustee, franchissement de borne, stop suiveur bande courante / VWAP, taille ciblant 2% de volatilite quotidienne",
+    "steps": [
+      "1. Pour chaque jour t-i (i = 1..14) et chaque heure HH:MM, calculer le mouvement absolu depuis l'Open : move = |Close(t-i,HH:MM) / Open(t-i,9:30) - 1|.",
+      "2. sigma(t, 9:30-HH:MM) = moyenne de ces 14 mouvements, donc un seuil dependant de l'heure du jour.",
+      "3. Bornes gap-ajustees : UpperBound = max(Open(t,9:30), Close(t-1,16:00)) * (1 + VM * sigma) ; LowerBound = min(Open(t,9:30), Close(t-1,16:00)) * (1 - VM * sigma). VM (Volatility Multiplier) vaut 1 dans le papier.",
+      "4. La Noise Area est l'intervalle [LowerBound, UpperBound]. Tant que le prix y reste, aucune position.",
+      "5. Aux seuls instants HH:00 et HH:30 : long si le prix est au-dessus de UpperBound, short s'il est en dessous de LowerBound. Un franchissement de la borne opposee ferme et retourne la position.",
+      "6. Stop suiveur du modele final : Long stop = max(UpperBound, VWAP) ; Short stop = min(LowerBound, VWAP). Le VWAP est calcule uniquement sur les heures de marche. Les stops ne peuvent se declencher qu'aux intervalles semi-horaires.",
+      "7. Dimensionnement : Shares(t) = floor(AUM(t-1) * min(4, sigma_target / sigma_SPY,t) / Open(t,9:30)), avec sigma_target = 2% et sigma_SPY estime sur 14 rendements quotidiens (denominateur 13). Levier plafonne a 4x. Le modele de base, lui, engage 100% de l'equity.",
+      "8. Cloture de toute position au Close."
+    ],
+    "lookback_days": 14,
+    "volatility_multiplier": 1,
+    "quoted": "average movements recorded over the previous 14 days. Mathematically, the Noise Area",
+    "quoted_stop": "Long TrailingStopt,HH :M M= max(U Bt,HH :M M, V W APt,HH :M M)",
+    "quoted_stop_repair": "math_notation",
+    "look_ahead_note": "Toutes les entrees du calcul sont anterieures a l'instant de decision : sigma sur t-14..t-1, Open du jour, Close de la veille, VWAP courant. Rien dans la construction ne lit une barre posterieure. C'est le point qui rend ce papier implementable sous la contrainte Panel."
+  },
+
+  "cost_model": {
+    "commission_per_share_usd": 0.0035,
+    "quoted_commission": "commission fee of $0.0035 per share, which represents the entry-level commission charged",
+    "slippage_per_share_usd": 0.001,
+    "quoted_slippage": "by Interactive Brokers. Additionally, we account for a slippage of $0.001 per share, which",
+    "slippage_measurement": "Slippage estimee par une experience reelle sur compte Interactive Brokers de $100,000 en avril 2024 : plus de 1,000 trades, plus de $50 millions de notionnel, slippage moyen ~$0.001, mediane $0.0005.",
+    "quoted_measurement": "average slippage recorded is approximately $0.001, with a median value even lower at",
+    "initial_capital_usd": 100000
+  },
+
+  "reported_results": [
+    {
+      "name": "total_return_final_model_pct",
+      "value": 1985,
+      "unit": "%",
+      "quoted": "The intraday momentum portfolio achieves a remarkable total return of 1,985%, with an",
+      "note": "Modele final : stop = bande courante + VWAP, taille dynamique ciblant 2% de vol, net de couts, mai 2007 a avril 2024 (17 ans)."
+    },
+    {
+      "name": "annualized_return_final_model_pct",
+      "value": 19.6,
+      "unit": "%",
+      "quoted": "annualized return of 19.6%, and a Sharpe Ratio of 1.33, underscoring its robustness and",
+      "note": "IRR du modele final. L'alpha annualise de la regression contre SPY vaut aussi 19.6% (Table 3), beta -0.07."
+    },
+    {
+      "name": "sharpe_final_model",
+      "value": 1.33,
+      "unit": "ratio",
+      "quoted": "annualized return of 19.6%, and a Sharpe Ratio of 1.33, underscoring its robustness and",
+      "note": "Chiffre phare du papier. A comparer au Sharpe de 0.45 de SPY buy-and-hold sur la meme periode (Table 3)."
+    },
+    {
+      "name": "sharpe_base_model_opposite_band",
+      "value": 0.61,
+      "unit": "ratio",
+      "quoted": "of 6.2% and a volatility of 10.9%. This resulted in a Sharpe Ratio of 0.61. Despite the",
+      "note": "Modele de base (stop a la bande opposee, taille 100%) : rendement total 178%, IRR 6.2%, vol 10.9%. Il sous-performe SPY buy-and-hold (227% total). Le papier ne cache pas que la version naive n'a pas d'edge convaincant."
+    },
+    {
+      "name": "sharpe_currband_vwap_model",
+      "value": 1.24,
+      "unit": "ratio",
+      "quoted": "from 0.61 to 1.24, while the Hit Ratio decreased to 43% due to tighter stops. As exhibited",
+      "note": "Etape intermediaire : stop resserre (bande courante + VWAP), taille toujours a 100%. IRR 9.7%, vol 7.7%. Tout l'ecart entre Sharpe 0.61 et 1.24 vient du seul stop suiveur ; l'ecart 1.24 -> 1.33 vient du dimensionnement en volatilite."
+    },
+    {
+      "name": "skewness_shift_currband_vwap",
+      "value": 1.29,
+      "unit": "skewness",
+      "quoted": "As exhibited in Table A1, the skewness shifts to positive (from -1.24 to 1.29) and the worst daily re-",
+      "quoted_source": "in Table A1, the skewness shifts to positive (from -1.24 to 1.29) and the worst daily re-",
+      "quoted_repair": "ocr",
+      "note": "La skewness passe de -1.24 a +1.29 et le pire jour de -10.3% a -4.8%. C'est l'argument central du papier : le stop resserre achete de l'asymetrie, pas seulement du rendement. Le texte extrait coupe la phrase en fin de ligne ; quoted_source est la portion presente telle quelle."
+    },
+    {
+      "name": "number_of_trades_final_model",
+      "value": 7668,
+      "unit": "trades",
+      "quoted": "result in a significant increase in the total number of trades, rising from 5,494 to 7,668",
+      "note": "Sur 17 ans, soit 1.8 trade par jour (Table 4). Le stop resserre augmente de 40% le nombre de trades : le cout de transaction est une variable de premier ordre ici, pas un detail."
+    },
+    {
+      "name": "unconditional_daily_pnl_tstat",
+      "value": 5.34,
+      "unit": "t-stat",
+      "quoted": "Unconditional | Observations 2620 | Avg.PnL (in bps) 12 | t-stat 5.34 | Hit Ratio 43% | Sharpe Ratio 1.7",
+      "quoted_source": "Unconditional 2620 12 5.34 43% 1.7",
+      "quoted_repair": "table",
+      "note": "Le seul chiffre du papier qui ressemble a un test de significativite d'un rendement moyen : 12 bps par jour sur 2620 jours, t = 5.34. Aucune correction pour tests multiples n'est appliquee, et les 8 patterns de la Table 5 plus les 5 jours de la Table 6 sont testes sur le meme echantillon."
+    },
+    {
+      "name": "nr4_pattern_daily_pnl_bps",
+      "value": 22,
+      "unit": "bp/jour",
+      "quoted": "ing an average return of 22 basis points with a t-statistic of 5.14 and a Hit Ratio of 45%.",
+      "note": "NR4 (plus petit range des 4 derniers jours) sur 660 observations : le meilleur des 8 patterns quotidiens testes. Conditionnement de regime de compression de volatilite -> tendance intraday."
+    },
+    {
+      "name": "triangle_pattern_daily_pnl_bps",
+      "value": 14,
+      "unit": "bp/jour",
+      "quoted": "with an average daily return of 14 basis points and a t-statistic of 3.19.",
+      "note": "Triangle (high < highs des 2 jours precedents et low > lows des 2 jours precedents), 664 observations, t = 3.19. Deuxieme pattern significatif apres NR4."
+    },
+    {
+      "name": "trend_day_pattern_daily_pnl_bps",
+      "value": -2,
+      "unit": "bp/jour",
+      "quoted": "Trend | Observations 215 | Avg.PnL (in bps) -2 | t-stat -0.24 | Hit Ratio 40% | Sharpe Ratio -0.3",
+      "quoted_source": "Trend 215 -2 -0.24 40% -0.3",
+      "quoted_repair": "table",
+      "note": "Resultat negatif utile : suivre la tendance intraday le lendemain d'un trend day n'a aucun edge (t = -0.24). Le papier publie ses patterns qui echouent."
+    },
+    {
+      "name": "wednesday_daily_pnl_bps",
+      "value": 18,
+      "unit": "bp/jour",
+      "quoted": "Wednesday | Observations 530 | Avg.PnL (in bps) 18 | t-stat 3.42 | Hit Ratio 45% | Sharpe Ratio 2.4",
+      "quoted_source": "Wednesday 530 18 3.42 45% 2.4",
+      "quoted_repair": "table",
+      "note": "Meilleur jour de la semaine, attribue aux jours FOMC et aux expirations d'options. Lundi n'est pas significatif (t = 1.84), ce que les auteurs expliquent par une premiere position seulement a 10:00."
+    },
+    {
+      "name": "sharpe_when_vix_above_40",
+      "value": 3.5,
+      "unit": "ratio",
+      "quoted": "remarkably, when the VIX exceeds 40, the Sharpe Ratio escalates to an impressive 3.50.",
+      "note": "Regime de volatilite : le Sharpe passe d'environ 1.50 (VIX > 6) a 3.50 (VIX > 40), puis redescend pour des VIX encore plus eleves, faute d'observations. Lu depuis la Figure 8, pas depuis une table : aucun compte d'observations n'est fourni par seuil."
+    },
+    {
+      "name": "rsi_regression_beta",
+      "value": -3.25,
+      "unit": "bp par point de RSI",
+      "quoted": "we obtain a value of beta of -3.25 with a p-value of 0.001. The results indicate that the",
+      "note": "Regression des rendements quotidiens de la strategie (en bps) sur le RSI 5 jours de SPY de la veille au close. Pente negative significative : proxy de desequilibre gamma. C'est le seul conditionnement du papier construit a partir d'une variable point-in-time calculable sur nos donnees."
+    },
+    {
+      "name": "sharpe_with_istar_slippage_model",
+      "value": 1.17,
+      "unit": "ratio",
+      "quoted": "at 1.17 (versus 1.33), with the yearly alpha remaining well above 15% (versus 20%).",
+      "note": "Robustesse aux couts : en remplacant le slippage forfaitaire de $0.001 par le modele d'impact I-Star de Kissell-Malamut calibre large-cap (a1 = 687, a2 = 0.70, a3 = 0.72), le Sharpe tombe de 1.33 a 1.17. Environ 12% du Sharpe part dans le seul modele de cout."
+    },
+    {
+      "name": "optimal_lookback_sharpe",
+      "value": 1.5,
+      "unit": "ratio",
+      "quoted": "Ratio from 1.35 to 1.50.",
+      "note": "Q14 : le lookback optimal ex-post est 90 jours et non les 14 retenus, ce qui porterait le Sharpe de 1.35 a 1.50. Les auteurs s'en servent comme preuve de non-suroptimisation. A noter : le Sharpe de reference cite ici est 1.35, pas le 1.33 du corps du papier."
+    },
+    {
+      "name": "optimal_volatility_multiplier",
+      "value": 1.5,
+      "unit": "multiplicateur",
+      "quoted": "The optimal Volatility Multiplier is 1.5 (versus 1), which raises the Sharpe",
+      "note": "Meme argument sur le second parametre : VM optimal 1.5 contre 1 retenu, Sharpe 1.35 -> 1.55. Le papier ne compte que 2 parametres libres, ce qui borne (sans l'annuler) le risque de data-mining."
+    },
+    {
+      "name": "futures_markets_tested",
+      "value": 33,
+      "unit": "marches",
+      "quoted": "We applied the same rules to 33 different futures markets globally, covering 21 commodi-",
+      "note": "Q13 : 21 matieres premieres et 12 indices actions, janvier 2007 a septembre 2024. C'est le resultat le plus directement pertinent pour un univers de futures intraday, mais les noms d'instruments sont masques par des asterisques dans la table, sauf quatre indices actions."
+    },
+    {
+      "name": "futures_average_sharpe",
+      "value": 0.6,
+      "unit": "ratio",
+      "quoted": "instruments was 0.60, while a well-diversified portfolio trading all assets simultaneously",
+      "note": "Sharpe moyen par instrument sur les 33 futures : 0.60, soit moins de la moitie du 1.33 de SPY. Seuls 2 des 33 instruments ont un rendement total negatif. C'est l'ordre de grandeur honnete a attendre sur un futures pris isolement."
+    },
+    {
+      "name": "futures_diversified_portfolio_sharpe",
+      "value": 1.65,
+      "unit": "ratio",
+      "quoted": "achieved an impressive Sharpe Ratio of 1.65. The main summary statistics for each in-",
+      "note": "Portefeuille diversifie sur les 33 futures simultanement. L'ecart 0.60 -> 1.65 vient de la diversification, pas d'un edge par instrument : le gain est structurel et non predictif."
+    },
+    {
+      "name": "sp500_future_sharpe",
+      "value": 1.32,
+      "unit": "ratio",
+      "quoted": "S&P500 | Equity | TotRet 2,501% | CAGR 19.8% | Vol 14.9% | SR 1.32 | MDD 23% | HitRatio 43% | Skew 2.9",
+      "quoted_source": "S&P500 Equity 2,501 19.8 14.9 1.32 23 43 2.9",
+      "quoted_repair": "table",
+      "note": "Le futures S&P500 (Q13) reproduit quasi exactement le resultat SPY : SR 1.32 contre 1.33. C'est la seule ligne du papier qui parle d'un instrument de notre nature, meme si la periode (2007-2024) et la construction du contrat continu ne sont pas documentees."
+    },
+    {
+      "name": "nasdaq_future_sharpe",
+      "value": 1.23,
+      "unit": "ratio",
+      "quoted": "Nasdaq | Equity | TotRet 1,533% | CAGR 16.8% | Vol 13.6% | SR 1.23 | MDD 26% | HitRatio 43% | Skew 2.1",
+      "quoted_source": "Nasdaq Equity 1,533 16.8 13.6 1.23 26 43 2.1",
+      "quoted_repair": "table",
+      "note": "Second indice actions nomme. Russell (SR 0.45) et S&P 400 MidCap (SR 0.80) sont nettement plus faibles : la dispersion entre indices actions va de 0.45 a 1.32, ce qui relativise le chiffre SPY."
+    },
+    {
+      "name": "volatility_target_daily_pct",
+      "value": 2,
+      "unit": "%",
+      "quoted": "of 2% (sigma_target = 2%). Practically, if the recent daily volatility of SPY is 4%, we would",
+      "quoted_source": "of 2% ( σtarget = 2%). Practically, if the recent daily volatility of SPY is 4%, we would",
+      "quoted_repair": "math_notation",
+      "note": "Cible de volatilite quotidienne du dimensionnement dynamique. L'indice de sigma est perdu par l'extraction."
+    },
+    {
+      "name": "leverage_cap",
+      "value": 4,
+      "unit": "x",
+      "quoted": "the leverage for the active strategy is capped at 4x.",
+      "note": "Plafond de levier du modele final. Sans lui, le dimensionnement 2% / sigma exploserait dans les regimes de tres basse volatilite."
+    },
+    {
+      "name": "worst_and_best_trade_final_model",
+      "value": 9.1,
+      "unit": "%",
+      "quoted": "best trade realizes a return of 9.1%, significantly outperforming the worst trade return",
+      "note": "Meilleur trade +9.1% (10-Oct-2018) contre pire trade -2.9% (31-Jul-2013), Table 4. Asymetrie revendiquee du modele final apres resserrement du stop."
+    },
+    {
+      "name": "worst_quarters_strategy_positive",
+      "value": null,
+      "unit": null,
+      "quoted": "tently delivered positive returns in each of these challenging periods. Empirical evidence",
+      "note": "Q7, resultat qualitatif : sur les 10 pires trimestres du S&P 500 (Q4 2008 -22%, Q1 2020 -19%, Q2 2022 -16%, etc.), la strategie est positive a chaque fois. Lu d'une table de la FAQ, sans t-stat ni intervalle : 10 observations, aucune inference possible."
+    },
+    {
+      "name": "commission_regime_share_of_days_pct",
+      "value": 20,
+      "unit": "%",
+      "quoted": "approximately 20% of the days, we benefit from lower commission fees due to a 1-month",
+      "note": "Le backtest suppose donc un tarif mixte : $0.0035 par action la plupart du temps, $0.0020 quand le volume mensuel depasse 300,000 actions. Le detail exact de ce melange n'est pas donne."
+    }
+  ],
+
+  "what_is_missing": [
+    "Aucune separation hors echantillon. Tous les chiffres, y compris les sensibilites au lookback (Q6) et au Volatility Multiplier (section 4.4), sont calcules sur le meme echantillon 2007-2024. Il n'existe ni walk-forward, ni holdout, ni periode reservee.",
+    "Aucun compte du nombre de configurations testees. Le papier rapporte 8 lookbacks, une grille de VM, 8 patterns quotidiens, 5 jours de la semaine, plusieurs seuils de VIX, 3 SMA, 33 futures, sans jamais corriger pour tests multiples ; les t-stats des Tables 5 et 6 sont a lire comme des t-stats bruts.",
+    "Aucune metrique de type IC ou correlation de rang. Le papier ne produit jamais de score par date : il produit un PnL de strategie. Rien dans le papier ne peut etre recopie directement comme IC.",
+    "Le nombre d'observations par seuil de VIX n'est pas donne (Figure 8). Les auteurs reconnaissent eux-memes que la decroissance du Sharpe au-dela d'un certain VIX vient du manque d'observations, mais ne chiffrent pas.",
+    "Definition exacte du VWAP absente : une note de bas de page dit qu'il est calcule sur les seules heures de marche et renvoie a une publication anterieure. Ancrage (ouverture de seance ? glissant ?) et traitement du premier tick non precises.",
+    "Arrondi et taille minimale : la formule Shares = floor(AUM / Open) suppose des actions entieres, sans dire comment sont traites les jours ou le calcul donne zero, ni s'il y a un minimum.",
+    "Aucun cout de financement ni de pret-emprunt pour la jambe short, alors que la strategie est short sur une part substantielle des jours et utilise jusqu'a 4x de levier.",
+    "Aucun traitement des dividendes, des splits, ou du fait que SPY distribue trimestriellement, alors que les bornes sont des ratios de prix bruts.",
+    "Donnees non partageables (Q2 : contrat IQFeed), donc replication impossible a l'identique ; les auteurs renvoient a du code public mais pas aux donnees.",
+    "Incoherences numeriques non expliquees entre tables : Hit Ratio 43% (Tables 2, 3, 5, 6) contre 37% au niveau trade (Table 4) ; pire jour -4.5% (Table A1, modele Dyn.) contre -4.8% annonce dans le texte pour le modele a 100% ; nombre de trades 7,668 (Table 4, texte) contre 7,964 (Q22) ; Sharpe final 1.33 (corps) contre 1.35 (Q6, Q14, Q22) et rendement total 1,985% contre 2,382% (Q22) ou 2,108% (Q6, lookback 14). Les periodes different parfois (avril 2024 contre decembre 2024) mais le papier ne le dit jamais explicitement.",
+    "La Table Q13 masque 29 des 33 instruments par des asterisques : impossible de savoir si nos neuf futures y figurent, ni comment les contrats continus ont ete construits (regles de roll, ajustement).",
+    "Aucune analyse de capacite au-dela de l'experience de slippage sur $100,000 ; les auteurs reconnaissent que le chiffre monterait avec la taille sans le chiffrer.",
+    "Aucune mesure d'autocorrelation ou de chevauchement entre les sous-echantillons conditionnels (NR4, NR7, Triangle se recouvrent largement puisque tous trois selectionnent des jours de compression de range)."
+  ],
+
+  "transposability": {
+    "what_transfers": "Le motif central est integralement calculable sur nos donnees : la Noise Area ne demande que de l'OHLCV intraday, aucune donnee externe, aucun reseau. sigma(t, heure du jour) est une moyenne des 14 jours precedents, l'Open du jour et le Close de la veille sont connus a l'instant de decision, le VWAP est cumulatif depuis l'ouverture. La construction est point-in-time par nature : il n'existe aucun chemin par lequel une barre posterieure entre dans le calcul, ce qui la rend compatible avec la contrainte Panel sans amenagement. Transferent aussi : la grille de decision semi-horaire (qui reduit mecaniquement le sur-trading et le bruit de microstructure), la separation nette entre signal d'entree et regle de sortie, le fait que le gros du gain vienne du stop suiveur et du dimensionnement plutot que du signal lui-meme, et les deux conditionnements de regime construits sur des variables endogenes point-in-time (RSI 5 jours de la veille au close, patterns de compression de range type NR4/Triangle). Enfin, les auteurs ont eux-memes applique les memes regles a 12 indices actions a terme (Q13), et le futures S&P500 y reproduit le resultat SPY (SR 1.32 contre 1.33) : la nature de l'instrument n'est pas un obstacle de principe.",
+    "what_does_not_transfer": [
+      "La metrique. Le papier produit un rendement net de couts et un Sharpe de portefeuille ; notre harnais produit un IC sur un score. Aucun chiffre du papier n'est comparable a un IC, et la chaine entiere du papier (stop suiveur, dimensionnement, plafond de levier) est une chaine de construction de portefeuille, pas une chaine de score. Seule la variable de franchissement de borne (distance normalisee du prix a la Noise Area) peut etre transformee en score continu, et ce n'est pas ce que le papier teste.",
+      "Le modele de cout. $0.0035 de commission et $0.001 de slippage par action sont des grandeurs d'actions US chez un courtier retail. Sur futures, le cout est en ticks par contrat plus une commission par contrat ; le passage exige le multiplicateur et le tick de chacun de nos neuf instruments, qui ne sont pas dans le papier. Le modele I-Star de la Q15 est calibre sur des actions large-cap et ne se transpose pas davantage.",
+      "Le dimensionnement. Shares = floor(AUM * min(4, 2% / sigma) / Open) suppose une granularite d'actions a quelques centaines de dollars. Sur futures, l'unite est un contrat valant souvent des dizaines de milliers de dollars : le ciblage de volatilite a 2% devient grossier ou impossible a petit capital, et le plafond 4x est un plafond de courtier actions, sans rapport avec la marge initiale d'un futures.",
+      "L'horloge. Toute la construction est indexee sur la seance actions US 9:30-16:00 : les bornes sont time-of-day dependantes, la premiere position est a 10:00, le Close du calcul est celui de 16:00. Nos neuf futures ont des seances, des fuseaux et des pauses differents ; la notion meme d'Open de seance doit etre redefinie instrument par instrument, et le decoupage semi-horaire n'a pas la meme signification sur un marche a seance longue.",
+      "Le VWAP heures-de-marche. Un futures cotant quasi 24h, restreindre le VWAP aux heures de marche exige de definir ce que sont les heures de marche, choix arbitraire qui change l'objet. Le stop suiveur max(UB, VWAP) n'est donc pas le meme objet chez nous.",
+      "Le VIX comme variable de regime. C'est la volatilite implicite du S&P 500 ; il ne conditionne rien de pertinent pour un futures de matiere premiere ou de taux, et pour nos futures actions il reintroduit une dependance a une donnee externe, avec son propre lag de publication.",
+      "Toute l'histoire du desequilibre gamma (section 4.5). Elle repose sur le complexe d'options SPX/SPY, les expirations du mercredi et du vendredi, les 0-DTE et le call-overwriting institutionnel. Le proxy RSI survit comme variable, mais son interpretation causale ne survit pas hors des sous-jacents a marche d'options profond.",
+      "Les effets de calendrier. Jour de la semaine, jours FOMC, expirations : ce sont des artefacts du calendrier actions US. Les reproduire chez nous serait un nouveau test, pas un transfert.",
+      "La periode. L'echantillon 2007-2024 tire une part decisive de sa performance du GFC (2008 : +63.4%), de 2018 (+61.1%) et de COVID. Notre pool commence en 2016, donc apres les deux tiers de ces regimes, et 2016-2017 sont precisement les deux seules annees negatives du papier (-12.8% et -6.9%). Le chevauchement 2024 tombe dans notre holdout et ne peut pas servir de verification.",
+      "L'absence de roll. SPY est un instrument continu ; nos futures exigent un contrat continu, et les deux quantites qui definissent les bornes (Open du jour, Close de la veille) sont exactement celles qu'un roll corrompt. Un saut de roll non ajuste declencherait un faux signal de gap, puisque les bornes sont gap-ajustees par construction.",
+      "L'instrument unique. Rien dans le papier n'est cross-sectionnel : il n'y a ni tri, ni dispersion, ni notion de score relatif entre instruments. La partie qui nous interesserait le plus (comment combiner neuf instruments) est exactement celle que la Q13 traite en une ligne, sans methode.",
+      "Les chiffres eux-memes. Sharpe 1.33, 1,985%, 22 bps sur NR4 : ce sont des constats de tiers sur leurs donnees, jamais des valeurs a attendre chez nous. Le seul ordre de grandeur a peu pres transferable est le SR moyen de 0.60 par futures de la Q13, pas les chiffres SPY."
+    ],
+    "what_aligns_well": "Le papier tombe juste sur quatre points pour nous. Un : c'est du time-series momentum intraday sur instrument unique, exactement la forme que peut prendre un signal sur neuf futures suivis independamment, sans besoin de cross-section. Deux : il ne consomme que de l'OHLCV 1-minute et aucune donnee externe, donc aucune dependance reseau et aucune metadonnee point-in-time manquante a inventer. Trois : il est construit de facon strictement causale, ce qui rend la porte look-ahead franchissable sans reecriture. Quatre : il est honnete sur ses fragilites d'une maniere directement reutilisable - il publie ses patterns qui echouent (Trend day, t = -0.24), il montre que son modele naif sous-performe le buy-and-hold (SR 0.61 contre 0.45 mais rendement total 178% contre 227%), il chiffre la perte de Sharpe quand on durcit le modele de cout (1.33 -> 1.17), et il donne les deux seuls parametres libres avec leur sensibilite. Un papier a deux parametres et a sensibilites publiees est un bien meilleur candidat de replication qu'un papier a dix parametres tus. Le point d'attache naturel chez nous est la distance normalisee du prix a la Noise Area, prise comme score continu a une heure fixe de la seance, evaluee en IC par le harnais - c'est-a-dire le signal du papier sans sa machinerie de portefeuille."
+  },
+
+  "acceptance_criteria_of_authors": {
+    "description": "Le papier n'annonce aucun seuil d'acceptation ecrit avant mesure. Le seul critere explicite est l'interpretation des t-stats annoncee dans la section 4.2.",
+    "quoted": "that the expected return is not statistically different from zero at a 10% confidence level.",
+    "note": "Seuil a 10%, pose apres coup et applique a 13 sous-echantillons sans correction. A ne pas reprendre tel quel."
+  },
+
+  "replication_notes": {
+    "code_available": true,
+    "quoted": "Yes! We shared the Matlab and Python versions of the code in www.concretumgroup.",
+    "data_available": false,
+    "quoted_data": "agreements, we are unable to share the specific database used in this research.",
+    "note": "Code public (Matlab et Python, plus un indicateur TradingView PineScript), donnees IQFeed non partageables. La replication est donc possible sur le code mais pas sur les donnees exactes."
+  }
+}

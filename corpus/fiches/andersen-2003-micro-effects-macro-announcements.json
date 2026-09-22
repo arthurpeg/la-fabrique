@@ -1,0 +1,272 @@
+{
+  "fiche_id": "andersen-2003-micro-effects-macro-announcements",
+  "written": "2026-09-21",
+  "written_by": "extracteur (session 2026-09-21)",
+  "source": {
+    "authors": "Torben G. Andersen, Tim Bollerslev, Francis X. Diebold, and Clara Vega",
+    "title": "Micro Effects of Macro Announcements: Real-Time Price Discovery in Foreign Exchange",
+    "year": 2003,
+    "source_url": "https://public.econ.duke.edu/~boller/Published_Papers/aer_03.pdf",
+    "pdf": "corpus/pdf/andersen-2003-micro-effects-macro-announcements.pdf",
+    "retrieved": "2026-09-21",
+    "peer_reviewed": true,
+    "amorce_entry": 17,
+    "note": "American Economic Review, vol. 93 no. 1, mars 2003, p. 38-62."
+  },
+  "claim": {
+    "statement": "Les surprises macroeconomiques programmees (realisation moins prevision de consensus, standardisee) deplacent la moyenne conditionnelle des taux de change au comptant par un saut quasi instantane dans les 5 minutes qui suivent l'annonce : les prix haute frequence sont donc relies aux fondamentaux. La reponse est asymetrique (une mauvaise nouvelle pese plus qu'une bonne), et elle depend du moment de publication de l'indicateur dans le mois (les annonces les plus precoces d'un groupe dominent les suivantes, redondantes).",
+    "quoted": "we find that announcement surprises produce conditional mean jumps; hence high-frequency exchange-rate dynamics are linked to fundamentals.",
+    "quoted_source": "we /bullet5 nd that announcement surprises produce conditional mean jumps; hence high-frequency exchange-rate dynamics are linked to fundamentals.",
+    "quoted_repair": "ocr",
+    "secondary_claim_quoted": "In particular, negative surprises often have greater impact than positive surprises."
+  },
+  "universe": {
+    "instruments": "Cinq taux de change au comptant contre dollar US : CHF/$, DM/$, Euro/$, Pound/$, Yen/$ (cotations interbancaires Reuters agregees par Olsen and Associates).",
+    "asset_class": "devises au comptant (spot FX), marche de gre a gre",
+    "frequency": "barres de 5 minutes, 288 par jour",
+    "period": "3 janvier 1992 - 30 decembre 1998",
+    "news_universe": "41 indicateurs macroeconomiques (28 americains, 13 allemands) avec previsions de consensus MMS",
+    "quoted": "The raw 5-minute CHF/$, DM/$, Euro/$, Pound/$, and Yen/$ return series were obtained from Olsen and Associates.",
+    "note": "L'Euro/$ ne peut exister qu'a partir de 1999 ; sur la periode etudiee il s'agit d'une serie synthetique heritee du panier, le papier ne le precise pas. Apres filtrage des week-ends, feries et lapses du flux Reuters, il reste 1 724 jours."
+  },
+  "horizon": {
+    "value": "5 minutes",
+    "reason": "Le papier mesure une reponse CONTEMPORAINE : le rendement de 5 minutes de t a t+1 regresse sur la nouvelle publiee a t, plus les reponses a +5 et +10 minutes lues sur la Figure 4. Il n'y a aucun horizon predictif au sens d'un signal connu avant la barre qu'il predit : l'ajustement de la moyenne est decrit comme un saut immediat, l'ajustement de la volatilite comme complet apres une heure.",
+    "quoted": "where Rt is the 5-minute return from time t to time t+1",
+    "quoted_source": "whereRtis the 5-minute return from time ttotimet11",
+    "quoted_repair": "math_notation"
+  },
+  "signal_construction": {
+    "summary": "Pour chaque indicateur k et chaque date d'annonce t, la nouvelle standardisee est S_kt = (A_kt - E_kt) / sigma_k, ou A_kt est la valeur annoncee, E_kt la mediane des previsions de l'enquete MMS du vendredi precedent, et sigma_k l'ecart-type d'echantillon des surprises de l'indicateur k. Deux modeles : (1) un modele de moyenne conditionnelle sur toutes les barres de 5 minutes, R_t regresse sur 5 retards de lui-meme et sur 3 retards (j = 0,1,2) de la nouvelle de chacun des 41 indicateurs, estime par MCO puis par moindres carres ponderes avec une volatilite modelisee (GARCH(1,1) journalier + forme flexible de Fourier a Q = 4 + variables muettes de calendrier) ; (3) une regression restreinte aux seules barres portant une annonce, R_t = b_k S_kt + eps_t, coefficient et R2 par indicateur et par paire. L'asymetrie est obtenue en laissant b_k etre lineaire en S_kt separement de chaque cote de l'origine, ce qui donne une 'news impact curve' quadratique par morceaux.",
+    "quoted": "Skt = (Akt - Ekt) / sigma_hat_k, where Akt is the announced value of indicator k, Ekt is the market expected value of indicator k as distilled in the MMS median forecast, and sigma_hat_k is the sample standard deviation of Akt - Ekt.",
+    "quoted_source": "Skt5Akt2Ektsˆk ,whereAktis the announced value of indicator k,Ektis the market expected value of indicator kas distilled in the MMS median forecast, and sˆkis the sample standard deviation of Akt2Ekt.",
+    "quoted_repair": "math_notation",
+    "sizing_quoted": "As discussed earlier, K = 41 and T = 496,512. We chose I = 5 and J = 2 based on the Schwarz and Akaike information criteria.",
+    "sizing_quoted_source": "As discussed earlier, K541andT5496,512. We chose I55andJ52basedonthe Schwarz and Akaike information criteria.",
+    "sizing_quoted_repair": "math_notation"
+  },
+  "reported_results": [
+    {
+      "name": "sample_days_raw",
+      "value": 2189,
+      "unit": "jours",
+      "quoted": "from January 3, 1992 through December 30, 1998, or 2,189 days",
+      "note": "Echantillon brut avant exclusion des week-ends, feries et jours contamines."
+    },
+    {
+      "name": "sample_observations_used",
+      "value": 496512,
+      "unit": "barres de 5 minutes",
+      "quoted": "In the end we are left with 1,724 days of data, containing T = 1,724 x 288 = 496,512 high-frequency 5-minute return observations.",
+      "quoted_source": "In the end we are left with 1,724 days of data, containingT51,724z2885496,512high-frequency 5-minute return observations.",
+      "quoted_repair": "math_notation",
+      "note": "1 724 jours retenus sur 2 189, soit 288 barres par jour."
+    },
+    {
+      "name": "mms_survey_forecasters",
+      "value": 40,
+      "unit": "prevision nistes",
+      "quoted": "MMS has conducted a Friday telephone survey of about 40 money managers",
+      "note": "La prevision de consensus est la mediane de cette enquete hebdomadaire ; sa dispersion transversale sert de proxy d'incertitude d'etat."
+    },
+    {
+      "name": "payroll_surprise_dm_move_pct",
+      "value": 0.16,
+      "unit": "pourcent du taux de change",
+      "quoted": "a one standard deviation U.S. payroll employment surprise tends to appreciate (if positive) or depreciate (if negative) the dollar against the DM by 0.16",
+      "note": "Surprise d'un ecart-type sur l'emploi non agricole americain, effet sur le DM/$ dans la barre de 5 minutes de l'annonce. La phrase se poursuit par 'percent' a la page suivante du texte extrait."
+    },
+    {
+      "name": "five_min_returns_above_010pct_share",
+      "value": 0.7,
+      "unit": "pourcent des barres",
+      "quoted": "only 0.7 percent of our 5-minute returns show an appreciation or depreciation bigger than 0.10 percent",
+      "note": "Sert d'etalon statistique : le saut de 0.16 % appartient a la queue extreme de la distribution des barres de 5 minutes."
+    },
+    {
+      "name": "average_dm_usd_spread_pct",
+      "value": 0.06,
+      "unit": "pourcent",
+      "quoted": "0.16 percent is also large relative to the average DM/$ spread, which tends to be around 0.06 percent during the period we study",
+      "note": "Seul cout de transaction cite dans le papier, et il n'entre dans aucune regression : c'est une comparaison d'ordre de grandeur, pas un net de frais."
+    },
+    {
+      "name": "payroll_contemporaneous_response_row",
+      "value": 0.161,
+      "unit": "pourcent par ecart-type de surprise",
+      "quoted": "4. Nonfarm payroll employment | Pound/$ b_k 0.098* R2 0.189 | Yen/$ 0.084* 0.214 | DM/$ 0.161* 0.237 | CHF/$ 0.144* 0.269 | Euro/$ 0.08* 0.232",
+      "quoted_source": "4. Nonfarm payroll employment 0.098* 0.189 0.084* 0.214 0.161* 0.237 0.144* 0.269 0.08* 0.232",
+      "quoted_repair": "table",
+      "note": "Table 2, equation (3) estimee sur les seules barres d'annonce. L'asterisque marque la significativite a 5 % avec ecarts-types HAC. Le plus gros coefficient de toute la table pour l'activite reelle."
+    },
+    {
+      "name": "trade_balance_contemporaneous_response_row",
+      "value": 0.585,
+      "unit": "R2",
+      "quoted": "17. Trade balance | Pound/$ b_k 0.092* R2 0.529 | Yen/$ 0.112* 0.370 | DM/$ 0.138* 0.585 | CHF/$ 0.124* 0.480 | Euro/$ 0.084* 0.414",
+      "quoted_source": "17. Trade balance 0.092* 0.529 0.112* 0.370 0.138* 0.585 0.124* 0.480 0.084* 0.414",
+      "quoted_repair": "table",
+      "note": "Table 2. Le R2 le plus eleve de la table, sur DM/$ : 0.585 de la variance des barres d'annonce de la balance commerciale."
+    },
+    {
+      "name": "fomc_target_rate_response_row",
+      "value": 0.259,
+      "unit": "R2",
+      "quoted": "24. Target federal funds rate | Pound/$ 0.048* R2 0.229 | Yen/$ 0.050* 0.162 | DM/$ 0.072* 0.259 | CHF/$ 0.072* 0.230 | Euro/$ 0.032 0.142",
+      "quoted_source": "24. Target federal funds rate 0.048* 0.229 0.050* 0.162 0.072* 0.259 0.072* 0.230 0.032 0.142",
+      "quoted_repair": "table",
+      "note": "Table 2, 62 observations FOMC. Signe positif : un resserrement de la Fed apprecie le dollar."
+    },
+    {
+      "name": "announcement_bar_r2_upper_range",
+      "value": 0.6,
+      "unit": "R2",
+      "quoted": "Table 2 reveals R2 values that are often around 0.3 and sometimes approaching 0.6.",
+      "quoted_source": "Table 2 reveals R2values that are often around 0.3 and some- times approaching 0.6.",
+      "quoted_repair": "ocr",
+      "note": "Ces R2 sont calcules SUR LES SEULES barres d'annonce ; sur l'ensemble des barres, le papier dit que les R2 de l'equation (1) sont 'typically very small'."
+    },
+    {
+      "name": "significant_announcements_all_currencies",
+      "value": 7,
+      "spelled_out": "seven",
+      "unit": "annonces sur 40",
+      "quoted": "only seven of the 40 announcements significantly impacted all the currency",
+      "quoted_source": "only seven of the 40 announce- ments signi/bullet5 cantly impacted all the currency",
+      "quoted_repair": "ocr",
+      "note": "Le chiffre n'apparait qu'en toutes lettres. C'est le taux de survie brut du papier : sept indicateurs sur quarante portent a travers les cinq paires. Le papier l'explique par la redondance entre annonces d'un meme groupe."
+    },
+    {
+      "name": "days_containing_an_announcement_pct",
+      "value": 58,
+      "unit": "pourcent des jours",
+      "quoted": "although 58 percent of the days in our sample contain a news announcement",
+      "note": "Mais l'effet ne porte que sur les intervalles de 5 minutes post-publication, que le papier chiffre a deux dixiemes de un pour cent des observations de l'echantillon."
+    },
+    {
+      "name": "payroll_contemporaneous_volatility_response_dm",
+      "value": 0.084,
+      "unit": "coefficient de reponse de |residu|",
+      "quoted": "Contemporaneous Volatility Response, b_k0 | Nonfarm payroll employment | Pound/$ 0.058* | Yen/$ 0.053* | DM/$ 0.084* | CHF/$ 0.077* | Euro/$ 0.058*",
+      "quoted_source": "Contemporaneous Volatility Response, bk0Nonfarm payroll employment 0.058*0.053*0.084*0.077*0.058*",
+      "quoted_repair": "table",
+      "note": "Table 3, panneau du milieu."
+    },
+    {
+      "name": "payroll_cumulative_volatility_response_dm",
+      "value": 0.519,
+      "unit": "coefficient de reponse cumule de |residu|",
+      "quoted": "Cumulative Volatility Response, sum over j'=0..J' of b_kj' | Nonfarm payroll employment | Pound/$ 0.356* | Yen/$ 0.328* | DM/$ 0.519* | CHF/$ 0.476* | Euro/$ 0.356*",
+      "quoted_source": "Cumulative Volatility Response, ¥j950J9 bkj9Nonfarm payroll employment 0.356*0.328*0.519*0.476*0.356*",
+      "quoted_repair": "table",
+      "note": "Table 3, panneau du bas. A comparer au 0.084 contemporain : la volatilite continue d'absorber la nouvelle bien apres que la moyenne a fini de sauter."
+    },
+    {
+      "name": "volatility_cumulative_over_contemporaneous_ratio_dm_payroll",
+      "value": 6.2,
+      "unit": "rapport sans dimension",
+      "derived": true,
+      "quoted": "Cumulative Volatility Response, sum over j'=0..J' of b_kj' | Nonfarm payroll employment | DM/$ 0.519*",
+      "quoted_source": "Cumulative Volatility Response, ¥j950J9 bkj9Nonfarm payroll employment 0.356*0.328*0.519*0.476*0.356*",
+      "quoted_repair": "table",
+      "note": "Calcul par nous : 0.519 (reponse cumulee de volatilite, Table 3 panneau du bas, DM/$) divise par 0.084 (reponse contemporaine de volatilite, meme table panneau du milieu, DM/$) = 6.18, arrondi a 6.2. Aucun rapport de ce genre n'est publie par les auteurs."
+    },
+    {
+      "name": "volatility_full_adjustment_lags",
+      "value": 12,
+      "unit": "intervalles de 5 minutes",
+      "quoted": "with complete adjustment occurring only after J' = 12 5-minute periods, or one hour",
+      "quoted_source": "with complete adjustment occurring only after J9512 5-minute periods, or one hour",
+      "quoted_repair": "math_notation",
+      "note": "Contraste central du papier : moyenne conditionnelle = saut immediat, variance conditionnelle = une heure. Les auteurs precisent en note que la contrainte J'=12 est non saturante (un essai a J'=36 a montre qu'une heure suffisait)."
+    },
+    {
+      "name": "forecast_dispersion_increase_after_bad_news_payroll_pct",
+      "value": 30,
+      "unit": "pourcent d'augmentation de la dispersion",
+      "quoted": "the uncertainty of payroll employment is 30 percent higher, the uncertainty of durable goods orders is 6 percent higher, and the uncertainty of the trade balance is 12 percent higher.",
+      "quoted_source": "the uncertainty of payroll employ- ment is 30 percent higher, the uncertainty of durable goods orders is 6 percent higher, and the uncertainty of the trade balance is 12 percent higher.",
+      "quoted_repair": "ocr",
+      "note": "Test du mecanisme de Veronesi (1999) : l'incertitude d'etat, mesuree par l'ecart-type transversal des previsions MMS, monte apres une mauvaise nouvelle. Definition d'un environnement de mauvaise nouvelle : d = 1, p = 50 %."
+    },
+    {
+      "name": "industrial_production_capacity_utilization_correlation",
+      "value": 0.64,
+      "unit": "correlation",
+      "quoted": "they are highly correlated (0.64)",
+      "note": "Seul cas de multicolinearite serieuse reconnu par les auteurs : deux indicateurs publies a la meme minute (9:15). Ailleurs la simultaneite intra-groupe est dite rare."
+    },
+    {
+      "name": "sign_effect",
+      "value": null,
+      "quoted": "In particular, negative surprises often have greater impact than positive surprises.",
+      "note": "Asymetrie lue sur les 'news impact curves' moyennees sur les 41 fondamentaux. Prononcee sur Yen/$, DM/$ et CHF/$ pour l'emploi et la balance commerciale, largement absente sur Pound/$ et Euro/$. Aucun chiffre d'asymetrie n'est publie."
+    },
+    {
+      "name": "announcement_timing_matters",
+      "value": null,
+      "quoted": "The clearly prevalent downward slopes reveal that the early announcements do indeed have the greatest impact.",
+      "note": "Dans chacun des sept groupes d'indicateurs americains, le R2 de l'equation (3) decroit avec le rang de publication dans le mois. Exception signalee : l'IPC bat l'IPP malgre sa publication plus tardive."
+    },
+    {
+      "name": "german_announcements_mostly_insignificant",
+      "value": null,
+      "quoted": "only very few of the German macroeconomic indicators have a signi/bullet5 cant effect (M3 and industrial pro- duction)",
+      "note": "Contraste explicatif propose par les auteurs : l'heure exacte des publications americaines est connue a l'avance, celle des publications allemandes non (seul le jour l'est). Conjecture, non testee."
+    },
+    {
+      "name": "announcement_dummies_move_volatility_not_returns",
+      "value": null,
+      "quoted": "the announcement dummies are generally insigni/bullet5 cant in the returns equation (1) but generally signi/bullet5 cant in the volatility equation (2)",
+      "note": "Effet 'pur annonce' : la simple tenue d'une publication gonfle la volatilite sans deplacer la moyenne. Seule la surprise deplace la moyenne."
+    },
+    {
+      "name": "hac_robustness_check",
+      "value": null,
+      "quoted": "we also performed all of the empirical work related to the mean effects using HAC estimation, with no change in any of the qualitative results",
+      "note": "La parenthese qui suit dans le papier temoigne du cout : un certain nombre de coefficients n'etaient plus statistiquement significatifs sous HAC. Le seul controle de robustesse chiffre du papier est donc a moitie perdant."
+    },
+    {
+      "name": "sample_covers_expansion_only",
+      "value": null,
+      "quoted": "Note that our entire sample takes place in good times— 1992 through 1998.",
+      "note": "Limite de regime assumee par les auteurs : la prediction theorique 'mauvaise nouvelle en bon temps' degenere chez eux en 'mauvaise nouvelle'. Le papier ne peut pas separer les deux."
+    }
+  ],
+  "what_is_missing": [
+    "Aucune evaluation hors echantillon : tous les coefficients et R2 sont in-sample sur 1992-1998, sans decoupe temporelle, sans walk-forward, sans holdout.",
+    "Aucune metrique de type IC ou correlation de rang : la mesure est un R2 de regression contemporaine par indicateur et par paire, sur une coupe d'evenements, pas une correlation transversale entre score et rendement futur.",
+    "Aucun rendement net : les frais et le spread n'entrent dans aucune regression ; le spread DM/$ de 0.06 % n'apparait que comme comparaison d'ordre de grandeur.",
+    "Aucune strategie, aucun backtest, aucun P&L, aucun Sharpe. Le papier mesure une reaction, pas une exploitabilite.",
+    "Le signal est contemporain, pas predictif : R_t est le rendement de t a t+1 et S_kt est connu a t ; le papier ne teste a aucun moment une prevision du rendement d'une barre posterieure a celle de l'annonce.",
+    "Aucune analyse de latence ni de faisabilite d'execution : les coefficients sont mesures a l'instant officiel de publication, sur des cotations indicatives, pas sur des transactions executables.",
+    "Les valeurs sigma_k (ecart-type d'echantillon des surprises par indicateur) ne sont pas publiees, donc les nouvelles standardisees ne sont pas reconstructibles depuis le papier.",
+    "Les parametres estimes du GARCH(1,1) journalier et des termes de Fourier ne sont pas reportes ; seuls trois coefficients polynomiaux par paire sont donnes, pour l'emploi seulement.",
+    "L'asymetrie de signe n'est chiffree nulle part : elle est montree graphiquement (Figure 6) et decrite qualitativement.",
+    "Aucune analyse de stabilite structurelle : les auteurs la listent eux-memes parmi les directions futures, faute d'echantillon couvrant une recession.",
+    "Aucune donnee sur les actions, les obligations ou les matieres premieres : le papier renvoie a d'autres etudes pour ces marches et reserve le cadre multivarie aux travaux futurs.",
+    "Le decompte des tests n'est pas tenu : 41 indicateurs x 5 paires x plusieurs specifications sont estimes, avec un seuil a 5 % et aucune correction de multiplicite."
+  ],
+  "transposability": {
+    "what_transfers": "Le motif, pas les chiffres. Une publication macro programmee est un evenement horodate, connu a l'avance, dont la surprise deplace immediatement le prix des instruments sensibles au dollar et aux taux, et dont la volatilite reste elevee environ une heure apres. Trois elements de methode transferent tels quels a nos neuf futures intraday : (a) la standardisation de la surprise par son propre ecart-type d'echantillon, qui rend comparables des indicateurs d'unites differentes ; (b) la hierarchie de redondance — dans un groupe d'indicateurs correles, la publication la plus precoce du mois porte l'essentiel de l'information et les suivantes n'ajoutent presque rien, ce qui est directement une instruction de taxonomie (etape 06) ; (c) le decouplage moyenne/variance, qui dit que si l'on mesure quelque chose autour d'une annonce, la fenetre de moyenne est de l'ordre de la barre et la fenetre de variance de l'ordre de l'heure. L'asymetrie de signe est un candidat d'hybride au sens de notre vocabulaire : un signal conditionne au signe de la surprise.",
+    "what_does_not_transfer": [
+      "L'univers : cinq paires de change au comptant de gre a gre, construites par interpolation lineaire entre les deux cotations Reuters les plus proches de chaque marque de 5 minutes, contre nos neuf futures listes, avec leurs sessions, leurs multiplicateurs, leurs ticks et leurs carnets. Rien de la microstructure mesuree ici n'est la notre.",
+      "La donnee d'entree elle-meme : le signal S_kt exige les previsions medianes MMS et l'ecart-type transversal des previsions. Nous n'avons pas de donnees d'anticipation ; sans elles, la surprise n'est pas calculable comme le papier l'ecrit, et un substitut (modele extrapolatif) est explicitement ce que les auteurs disent etre moins bon que MMS.",
+      "L'epoque et le regime : 1992-1998, DM pre-euro, une unique expansion americaine de mars 1991 a mars 2001 de l'aveu des auteurs, ecran Reuters, spreads de 6 points de base. Notre pool commence en 2016. Ni les niveaux de reaction, ni les R2, ni meme la liste des indicateurs qui comptent ne peuvent etre reportes.",
+      "Le calendrier d'annonces : les heures de publication de la Table 1 sont celles des annees 1990 (revenu personnel passe de 10:00 a 8:30 en 01/94, taux FOMC irregulier avant 1995). Aucune de ces heures ne peut etre recopiee ; elles doivent etre etablies point-in-time chez nous, sans quoi c'est du look-ahead de calendrier.",
+      "La metrique : R2 d'une regression contemporaine estimee sur les seules barres d'annonce. Ce n'est pas un IC, et le rapprochement est trompeur — un R2 de 0.585 sur 128 evenements selectionnes ne se compare a aucun chiffre que notre harnais produit.",
+      "Le caractere contemporain de la mesure : S_kt et R_t partagent la meme barre. Transpose tel quel chez nous, ce serait un score qui lit le futur de sa propre barre. Toute reprise exige de decaler la mesure d'au moins une barre, et le papier ne dit rien de ce qui survit a ce decalage — il affirme au contraire 'little movement thereafter'.",
+      "Les annonces allemandes, dont l'heure intrajournaliere n'est pas connue a l'avance : leur non-significativite est une propriete de la donnee de 1993-1998, pas un resultat exploitable.",
+      "Les resultats de la Table 4 sur les muettes d'annonce en volatilite, qui supposent un modele de volatilite parametrique complet (GARCH journalier + Fourier a Q=4 + muettes de seance japonaise et d'apres-midi americaine) cale sur la periodicite du marche des changes 24h/24 ; nos futures n'ont pas cette periodicite.",
+      "L'ordre de grandeur economique : 0.16 % de mouvement contre 0.06 % de spread est un ratio de marche de change des annees 1990. Sur nos futures, la comparaison utile est en ticks et en frais par contrat, et elle n'est pas faite ici."
+    ],
+    "what_aligns_well": "Trois choses tombent juste. D'abord la granularite : le papier travaille sur des barres de 5 minutes, ce qui est notre echelle, et sur 496 512 observations, ce qui est un ordre de grandeur comparable au notre. Ensuite l'absence naturelle de look-ahead dans le declencheur : le calendrier des publications americaines est connu a l'avance (jour et heure), donc un signal conditionne a l'instant d'annonce est structurellement point-in-time, a condition que la VALEUR annoncee, elle, ne soit lue qu'apres sa publication reelle — c'est exactement le type de lag de publication que notre catalogue doit porter, et que nous devrons marquer null tant qu'il n'est pas etabli. Enfin l'honnetete du papier sur ses propres limites : il nomme son regime unique, il nomme la perte de significativite sous HAC, il nomme la redondance entre indicateurs. Ce sont trois avertissements directement reutilisables comme controles chez nous, plutot que comme resultats a repliquer.",
+    "replication_verdict": "Non replicable en l'etat, faute de donnees d'anticipation. Ce qui reste utilisable est un motif de conception — evenement programme, surprise standardisee, redondance intra-groupe, fenetre moyenne courte contre fenetre variance longue — a instruire chez nous avec nos propres donnees et notre propre metrique, et non un resultat a reproduire."
+  },
+  "method_notes": {
+    "estimation": "MCO puis moindres carres ponderes en deux etapes, ponderation par une volatilite modelisee ; verification par ecarts-types HAC (memes resultats qualitatifs, moins de significativite).",
+    "polynomial_response": "Les reponses en volatilite sont contraintes par un polynome d'ordre P = 3 sur J' = 12 retards avec p(J') = 0.",
+    "leakage_treatment": "Les auteurs ont essaye des retards negatifs J pour capter une fuite avant l'heure officielle, sans utilite ; ils notent que si fuite il y a, leurs coefficients sont des bornes inferieures de l'impact total.",
+    "fomc_special_case": "Avant fevrier 1994, la Fed ne publiait pas sa cible : les auteurs utilisent les valeurs signalees reconstruites par Brandt, Edelen et Kavajecz (2001), et ignorent les 5 changements intra-reunion sur 62, faute d'horodatage."
+  }
+}

@@ -1,0 +1,286 @@
+{
+  "fiche_id": "lou-2019-tug-of-war",
+  "written": "2026-09-21",
+  "written_by": "extracteur (session 2026-09-21)",
+  "source": {
+    "authors": "Dong Lou, Christopher Polk, Spyros Skouras",
+    "title": "A tug of war: Overnight versus intraday expected returns",
+    "year": 2019,
+    "source_url": "https://personal.lse.ac.uk/polk/research/TugOfWar.pdf",
+    "pdf": "corpus/pdf/lou-2019-tug-of-war.pdf",
+    "retrieved": "2026-09-21",
+    "peer_reviewed": true,
+    "amorce_entry": 10,
+    "journal": "Journal of Financial Economics 134 (2019) 192-213"
+  },
+  "claim": {
+    "summary": "Le rendement close-to-close se decompose en une composante overnight (cloture -> ouverture) et une composante intraday (ouverture -> cloture) qui ne sont pas interchangeables : chacune persiste fortement d'un mois sur l'autre au niveau du titre, avec un renversement croise entre les deux periodes, et l'effet reste mesurable jusqu'a cinq ans plus tard.",
+    "secondary": [
+      "Les primes des strategies classiques s'accumulent presque entierement dans une seule des deux periodes : overnight pour les strategies fondees sur les rendements passes (momentum prix, industrie, earnings, time-series momentum, reversal court terme), intraday pour les autres (taille, valeur, profitabilite, investissement, beta, volatilite idiosyncratique, emission d'actions, accruals, turnover), avec le plus souvent une prime de signe oppose dans l'autre periode.",
+      "L'ecart lisse entre composante overnight et composante intraday d'une strategie (la variable TugOfWar) predit positivement le rendement close-to-close futur de cette strategie.",
+      "Interpretation avancee : deux clienteles (institutions plutot a la cloture, particuliers plutot a l'ouverture) tirent la corde en sens contraire ; l'intensite de ce tir a la corde mesure la demande non informee et donc la rentabilite a venir de l'arbitrage."
+    ],
+    "mechanism": "Persistance de l'ordre-flux d'une clientele qui trade toujours au meme moment de la journee (continuation intra-periode), plus reversion de la pression sur les prix quand la clientele opposee domine (renversement croise). Le cadre formel invoque est un modele de limites a l'arbitrage a la Gromb et Vayanos (2010), place en Internet Appendix et donc absent du texte fourni."
+  },
+  "universe": {
+    "primary": "Actions americaines CRSP-Compustat, 1993-2013 (borne par la disponibilite de TAQ), hors micro-caps : titres sous 5 $ et titres du quintile de taille NYSE le plus bas exclus ; portefeuilles long-short value-weight, points de coupure toujours sur percentiles NYSE.",
+    "secondary": [
+      "22 futures sur indices actions internationaux (liste en Table 3 Panel B), 1996-2016, donnees TRTH — c'est l'echantillon du test de time-series momentum, et le seul de l'article qui porte sur des futures.",
+      "Neuf marches actions non-US (Canada, France, Allemagne, Italie, Royaume-Uni, Australie, Hong Kong, Japon, Afrique du Sud), donnees TRTH depuis 1996.",
+      "Actions americaines 1927-1962, prix d'ouverture CRSP issus du Wall Street Journal (test placebo sur la detention institutionnelle).",
+      "Proprietes institutionnelles trimestrielles Thomson Financial (13-F) et flux institutionnels quotidiens inferes de TAQ."
+    ],
+    "instrument_count": 22,
+    "note_instrument_count": "22 vaut pour le seul sous-echantillon de futures ; l'echantillon principal en actions compte des milliers de titres et n'est pas denombre dans le texte."
+  },
+  "horizon": {
+    "value": "1 mois",
+    "detail": "Formation a la fin de chaque mois, detention le mois suivant ; les rendements quotidiens overnight et intraday sont capitalises a l'interieur du mois. Le meme effet est teste avec un decalage de 1 a 60 mois entre periode de classement et periode de detention (Fig. 2), et reste significatif jusqu'a cinq ans. Le momentum prix utilise un classement 11 mois avec un mois saute ; les variables EWMA ont une demi-vie de 60 mois et sautent le mois le plus recent."
+  },
+  "signal_construction": {
+    "return_decomposition": "Pour chaque titre i et chaque jour s : r_intraday = P_close,s / P_open,s - 1, ou P_open est le VWAP de la premiere demi-heure de cotation (9:30-10:00) issu de TAQ, les jours avec moins de 1 000 actions echangees sur cette demi-heure etant exclus. Le rendement overnight est impute par r_overnight = (1 + r_close-to-close) / (1 + r_intraday) - 1, ce qui affecte a l'overnight les dividendes, splits et autres evenements corporate. Les deux composantes s'agregent exactement au rendement close-to-close du titre. Passage au mois par produit des (1 + r) quotidiens.",
+    "portfolio": "Tri en deciles (quintiles pour l'industrie) sur la caracteristique, long le decile extreme favorable, short l'autre, ponderation par capitalisation ; report des composantes overnight et intraday du rendement du portefeuille, en exces du taux sans risque, ajuste CAPM ou trois facteurs. La decomposition du portefeuille ne somme pas exactement au close-to-close a cause du terme d'interaction.",
+    "tug_of_war": "Eq. (1) : EWMA des composantes overnight et intraday du rendement de la strategie (demi-vie 60 mois) ; TugOfWar = EWMA_overnight - EWMA_intraday pour les strategies dont la prime s'accumule overnight (MOM, STR), et l'inverse pour les strategies intraday, de sorte que le coefficient predit soit positif dans tous les cas. Regression r_{t+1} = beta * TugOfWar_t + eps, avec controles : EWMA du rendement close-to-close de la strategie, volatilite mensuelle de la strategie, rendement et volatilite du marche sur 12 mois, ecart de caracteristique entre les deux jambes, ecart de short interest entre les deux jambes.",
+    "futures_variant": "Pour les futures, l'ouverture est le VWAP 30 minutes centre sur la minute d'avant midi comptant le plus de transactions, la cloture le VWAP 30 minutes centre sur la minute la plus active d'apres midi ; contrat front, roulement a l'expiration ; toute baisse de plus de 30 % ou hausse de plus de 50 % (intraday, overnight ou close-to-close) est traitee comme manquante.",
+    "lambda": null,
+    "reason_lambda": "Le papier dit choisir un lambda de lissage 'consistent with a half-life of 60 months' mais n'ecrit jamais la valeur numerique de lambda ; elle n'est pas inventee ici."
+  },
+  "reported_results": [
+    {
+      "name": "overnight_sorted_hedge_overnight_3f_alpha_monthly_pct",
+      "value": 3.47,
+      "unit": "% par mois",
+      "quoted": "3.47% per month ( t -statistic of 16.83)",
+      "note": "Tri en deciles sur le rendement overnight du mois precedent, long decile gagnant value-weight, short decile perdant ; alpha trois facteurs de la composante overnight du mois suivant. Table 1 Panel A. t-stat corriges sur 12 lags."
+    },
+    {
+      "name": "overnight_sorted_hedge_overnight_3f_tstat",
+      "value": 16.83,
+      "unit": "t-stat",
+      "quoted": "3.47% per month ( t -statistic of 16.83)",
+      "note": "Meme citation que l'entree precedente ; t-statistique associee a l'alpha overnight trois facteurs."
+    },
+    {
+      "name": "overnight_sorted_hedge_intraday_3f_alpha_monthly_pct",
+      "value": -3.02,
+      "unit": "% par mois",
+      "quoted": "alpha of −3.02% per month with a t-statistic of −9.74)",
+      "quoted_source": "alpha of −3 . 02% per month with a t -statistic of −9 . 74 )",
+      "quoted_repair": "math_notation",
+      "note": "Renversement croise : le meme portefeuille trie sur l'overnight passe perd en intraday le mois suivant. L'extraction PDF a disloque les nombres negatifs en italique ('−3 . 02%')."
+    },
+    {
+      "name": "intraday_sorted_hedge_intraday_3f_alpha_monthly_pct",
+      "value": 2.41,
+      "unit": "% par mois",
+      "quoted": "2.41% per month ( t -statistic of 7.70)",
+      "note": "Symetrique : tri sur le rendement intraday du mois precedent, alpha trois facteurs de la composante intraday du mois suivant. Table 1 Panel B."
+    },
+    {
+      "name": "mom_overnight_capm_alpha_monthly_pct",
+      "value": 0.98,
+      "unit": "% par mois",
+      "quoted": "alpha is 0.98% ( t -statistic of 3.84)",
+      "note": "Momentum prix (classement 11 mois, un mois saute) : la totalite de la prime est overnight ; l'alpha CAPM intraday correspondant est -0,02 % (t = -0,06), non recopie ici faute de chaine propre dans le texte."
+    },
+    {
+      "name": "mom_overnight_return_stdev_monthly_pct",
+      "value": 4.02,
+      "unit": "% (ecart-type mensuel)",
+      "quoted": "much less volatile (4.02% standard deviation)",
+      "note": "Volatilite de la composante overnight du momentum."
+    },
+    {
+      "name": "mom_close_to_close_return_stdev_monthly_pct",
+      "value": 7.85,
+      "unit": "% (ecart-type mensuel)",
+      "quoted": "close-to-close return (7.85% standard deviation)",
+      "note": "Volatilite du momentum close-to-close, pour comparaison avec l'entree precedente."
+    },
+    {
+      "name": "mom_overnight_sharpe",
+      "value": 0.77,
+      "unit": "Sharpe",
+      "quoted": "Sharpe Ratio of the overnight return on MOM is 0.77",
+      "note": "Le papier ajoute que c'est plus du double du Sharpe close-to-close (0,31) ; l'horizon d'annualisation du ratio n'est pas precise dans le texte."
+    },
+    {
+      "name": "tsmom_futures_universe_size",
+      "value": 22,
+      "unit": "contrats",
+      "quoted": "for the period 1996–2016, for 22 equity index futures listed in Panel B",
+      "note": "Seul echantillon de futures du papier : les 22 futures sur indices actions les plus liquides, 1996-2016, donnees TRTH. Moskowitz, Ooi et Pedersen (2012) en etudiaient 59 toutes classes d'actifs ; les auteurs restreignent aux indices actions."
+    },
+    {
+      "name": "tsmom_overnight_capm_alpha_monthly_pct",
+      "value": 1.40,
+      "unit": "% par mois",
+      "quoted": "1.40% with a t -statistic of 3.24",
+      "note": "Time-series momentum sur les 22 futures indices actions : l'alpha CAPM mensuel de la composante overnight. C'est le resultat le plus proche de notre univers."
+    },
+    {
+      "name": "tsmom_overnight_row_stdev_monthly_pct",
+      "value": 4.24,
+      "unit": "% (ecart-type mensuel)",
+      "quoted": "Ligne 'Overnight' de la Table 3 Panel A : Raw 1.10%, CAPM 1.40%, 3-Factor 1.42%, 4-Factor 1.54%, Stdev 4.24%, Skew 0.178",
+      "quoted_source": "Overnight 1.10% 1.40% 1.42% 1.54% 4.24% 0.178",
+      "quoted_repair": "table",
+      "note": "Ecart-type de la composante overnight du time-series momentum sur futures ; la skewness overnight est positive (0,178), a l'inverse de l'intraday."
+    },
+    {
+      "name": "tsmom_close_to_close_capm_alpha_monthly_pct",
+      "value": 1.29,
+      "unit": "% par mois",
+      "quoted": "Ligne 'Close-to-close' de la Table 3 Panel A : Raw 0.81%, CAPM 1.29%, 3-Factor 1.31%, 4-Factor 1.50%, Stdev 7.30%, Skew −0.491",
+      "quoted_source": "Close-to-close 0.81% 1.29% 1.31% 1.50% 7.30% −0.491",
+      "quoted_repair": "table",
+      "note": "Le close-to-close du time-series momentum sur futures : alpha CAPM 1,29 % pour une volatilite de 7,30 %, contre 1,40 % pour 4,24 % en overnight seul."
+    },
+    {
+      "name": "tsmom_intraday_row_stdev_monthly_pct",
+      "value": 4.85,
+      "unit": "% (ecart-type mensuel)",
+      "quoted": "Ligne 'Intraday' de la Table 3 Panel A : Raw −0.29%, CAPM −0.10%, 3-Factor −0.10%, 4-Factor −0.04%, Stdev 4.85%, Skew −2.767",
+      "quoted_source": "Intraday −0.29% −0.10% −0.10% −0.04% 4.85% −2.767",
+      "quoted_repair": "table",
+      "note": "La composante intraday du time-series momentum sur futures est nulle en moyenne mais porte toute l'asymetrie negative de la strategie (skew -2,767 contre +0,178 overnight)."
+    },
+    {
+      "name": "equity_premium_intraday_excess_return_monthly_pct",
+      "value": 0.38,
+      "unit": "% par mois",
+      "quoted": "intraday excess return of 0.38% and an average overnight",
+      "note": "Indice CRSP value-weight : 0,38 % intraday contre 0,55 % overnight. C'est le benchmark 'naturel' dont toutes les strategies etudiees s'ecartent."
+    },
+    {
+      "name": "market_open_share_of_24h_pct",
+      "value": 27,
+      "unit": "%",
+      "quoted": "open for approximately 27% of the 24-h day",
+      "note": "Sert de repartition de reference : le marche est ouvert environ 27 % du nycthemere et capte environ 40 % de la prime, ce qui rend les decompositions 100/0 des strategies d'autant plus anormales."
+    },
+    {
+      "name": "first_half_hour_share_of_daily_dollar_volume_pct",
+      "value": 14.25,
+      "unit": "%",
+      "quoted": "first 30-minute window is 14.25%",
+      "quoted_source": "ﬁrst 30-minute window is 14.25%",
+      "quoted_repair": "ocr",
+      "note": "Part du volume en dollars 9:30-16:00 traitee dans la fenetre 9:30-10:00, celle qui sert a construire le prix d'ouverture VWAP. Ligature 'fi' dans le texte extrait."
+    },
+    {
+      "name": "strategies_earning_premia_intraday_count",
+      "value": 9,
+      "unit": "strategies",
+      "spelled_out": "nine",
+      "quoted": "when expected returns accrue. We find that nine of the",
+      "quoted_source": "when expected returns accrue. We ﬁnd that nine of the",
+      "quoted_repair": "ocr",
+      "note": "Neuf des 14 strategies etudiees gagnent toute leur prime en intraday ; le nombre est ecrit en toutes lettres. Ligature 'fi' dans le texte extrait."
+    },
+    {
+      "name": "strategies_decomposed_count",
+      "value": 14,
+      "unit": "strategies",
+      "quoted": "14 strategies we study earn their entire premia intraday",
+      "note": "Les cinq exceptions sont les strategies fondees sur les rendements passes : momentum prix, industrie, earnings, time-series, et le reversal court terme, toutes overnight."
+    },
+    {
+      "name": "tugofwar_forecast_one_sd_close_to_close_pct",
+      "value": 1.01,
+      "unit": "% par mois",
+      "quoted": "increase in its TugOfWar^s forecasts a 1.01% higher",
+      "quoted_source": "increase in its TugOfWar s forecasts a 1.01% higher",
+      "quoted_repair": "math_notation",
+      "note": "Pour la strategie moyenne de l'echantillon, une hausse d'un ecart-type de TugOfWar predit un rendement close-to-close superieur de 1,01 % le mois suivant. L'exposant 's' de TugOfWar^s est rendu comme un mot separe par l'extraction."
+    },
+    {
+      "name": "tugofwar_forecast_share_of_return_volatility_pct",
+      "value": 18,
+      "unit": "%",
+      "quoted": "or about 18% of its monthly",
+      "note": "La meme hausse d'un ecart-type vaut environ 18 % de la volatilite mensuelle du rendement de la strategie."
+    },
+    {
+      "name": "tugofwar_anomalies_tested_count",
+      "value": 11,
+      "unit": "anomalies",
+      "quoted": "11 anomalies are statistically significant",
+      "quoted_source": "11 anomalies are statistically signiﬁcant",
+      "quoted_repair": "ocr",
+      "note": "Six des 11 anomalies ont un coefficient de prevision significatif, toutes sauf une ont le signe predit, et le test joint de nullite des coefficients est rejete (p < 0,01). Ligature 'fi' dans le texte extrait."
+    },
+    {
+      "name": "intl_overnight_continuation_premium_monthly_pct",
+      "value": 2.31,
+      "unit": "% par mois",
+      "quoted": "2.31% with an associated t -statistic of 6.90",
+      "note": "Moyenne ponderee par capitalisation sur neuf marches actions non-US : acheter les gagnants overnight du mois precedent et vendre les perdants overnight rapporte 2,31 % overnight le mois suivant."
+    },
+    {
+      "name": "intl_intraday_continuation_premium_monthly_pct",
+      "value": 2.80,
+      "unit": "% par mois",
+      "quoted": "2.80% ( t -statistic of 6.23)",
+      "note": "Symetrique intraday sur les memes neuf marches non-US. Dans ces marches, il n'y a aucun effet de reversal court terme close-to-close : l'effet n'apparait qu'une fois la decomposition faite."
+    },
+    {
+      "name": "mom_overnight_spread_high_vs_low_active_weight_monthly_pct",
+      "value": 1.15,
+      "unit": "% par mois",
+      "quoted": "low active weight stocks is 1.15%",
+      "note": "Ecart de rendement overnight du momentum entre titres a forte et faible active weight institutionnelle, t-statistique de 5,39. Conditionnement en coupe transversale sur le besoin de rebalancement des institutions."
+    },
+    {
+      "name": "fama_macbeth_observations",
+      "value": 454825,
+      "unit": "observations",
+      "quoted": "No. obs. : 454,825 pour chacune des trois regressions de Fama-MacBeth (close-to-close, overnight, intraday)",
+      "quoted_source": "No. obs. 454,825 454,825 454,825",
+      "quoted_repair": "table",
+      "note": "Taille de l'echantillon des regressions de Table 4, apres exclusion des titres sous 5 $ et du quintile NYSE le plus bas."
+    },
+    {
+      "name": "intraday_overnight_definition_caveat",
+      "value": null,
+      "quoted": "much more well-defined for equity markets than they are",
+      "quoted_source": "much more well-deﬁned for equity markets than they are",
+      "quoted_repair": "ocr",
+      "note": "Resultat qualitatif et central pour nous : les auteurs justifient de restreindre leur test futures aux indices actions par le fait que les notions d'intraday et d'overnight y sont bien mieux definies que, disent-ils, pour un future de change USD/Yen. Ligature 'fi' dans le texte extrait."
+    },
+    {
+      "name": "comomentum_conditioned_overnight_mom_spread",
+      "value": null,
+      "quoted": "world is −1 . 02% in Year 1 and −2 . 14% in Year 2. Both",
+      "note": "Ecart de rendement overnight mensuel du momentum entre etats de comomentum haut et bas : -1,02 % en annee 1 et -2,14 % en annee 2 (t = -1,82 et -5,15). Valeur laissee a null parce que l'entree porte deux nombres et non un ; les chiffres sont dans la citation, disloquee par l'extraction ('−1 . 02%')."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun cout de transaction n'est modelise. Les auteurs le concedent explicitement en introduction : les couts rendront la rentabilite reelle d'une strategie exploitant ces motifs 'much less attractive'. Or la strategie implicite est un aller-retour quotidien (entrer a la cloture, sortir a l'ouverture, ou l'inverse) : environ 21 allers-retours par mois. Aucun chiffre de spread, de slippage ni de frais n'est donne.",
+    "Aucun IC ni aucune correlation de rang. La metrique est un alpha mensuel de portefeuille long-short (CAPM, trois facteurs, quatre facteurs) et des coefficients de Fama-MacBeth. Rien dans le papier ne se lit directement comme notre metrique.",
+    "La valeur numerique de lambda dans l'EWMA n'est jamais ecrite ; seule la demi-vie de 60 mois l'est.",
+    "Les seuils horaires exacts pour les futures ne sont donnes que de maniere relative ('la minute d'avant midi comptant le plus de transactions') ; aucun fuseau, aucune heure absolue, aucun calendrier de session par contrat.",
+    "La composition detaillee du gap overnight des futures (roulements, sessions electroniques nocturnes, marches ouverts presque 24 h) n'est pas discutee au-dela du choix de restreindre l'analyse aux indices actions.",
+    "Le modele formel de limites a l'arbitrage, les tests de robustesse, la liste des 22 futures avec leurs caracteristiques de contrat et l'essentiel des tableaux A1-A12 sont renvoyes a un Internet Appendix absent du texte fourni.",
+    "Aucune tentative de relier la prime overnight en coupe transversale a un modele de risque : les auteurs ecrivent que leurs tests en sont incapables.",
+    "Aucun multiplicateur, tick, frais ni horaire d'aucun contrat : rien de ce qu'il faudrait pour reimplementer sur futures n'est dans le papier.",
+    "Les donnees (TAQ, TRTH, Thomson Financial 13-F, flux institutionnels de Campbell, Ramadorai et Schwartz) sont toutes sous licence et hors de portee ; aucune replication a l'identique n'est possible."
+  ],
+  "transposability": {
+    "what_transfers": "Le motif de fond : decomposer un rendement de periode en un segment 'marche ferme' et un segment 'marche ouvert' et regarder si le signal vit dans l'un plutot que dans l'autre. Deux choses precises transferent chez nous. (1) Le test de time-series momentum de la Table 3 porte sur 22 futures sur indices actions, c'est-a-dire exactement la nature d'instrument de notre univers : la prime y est entierement overnight (alpha CAPM 1,40 %, t = 3,24) alors que l'intraday est nul, et l'overnight est deux fois moins volatil que le close-to-close tout en portant une skewness positive. (2) La construction de TugOfWar est reimplementable sans donnee externe : c'est une EWMA de deux composantes de rendement propres, donc un signal calculable a partir de barres intraday et d'un prix de cloture, sans look-ahead si les composantes sont calculees a la date de leur realisation. La lecon de conception la plus reutilisable est negative : un signal dont la performance nette est nulle close-to-close peut etre fortement non nul dans chaque sous-periode, avec des signes opposes — mesurer sur le close-to-close seul peut masquer entierement un effet.",
+    "what_does_not_transfer": [
+      "Les tris en deciles en coupe transversale. Neuf instruments ne forment pas dix deciles ; toute la partie 'cross-section of expected returns' du papier, soit la majeure partie de ses resultats, est structurellement hors de portee.",
+      "La metrique. Alphas CAPM et trois facteurs mensuels d'un portefeuille long-short value-weight, avec facteurs actions americains (marche, SMB, HML, UMD) : ces facteurs n'existent pas pour notre univers, et notre juge produit un IC, pas un alpha.",
+      "Les caracteristiques d'entreprise : book-to-market, return-on-equity, croissance d'actif, emission d'actions, accruals discretionnaires, surprises de resultats, turnover de titres. Un future sur indice n'a aucune de ces caracteristiques.",
+      "Le mecanisme explicatif lui-meme : detention institutionnelle 13-F, comomentum, active weight, taille des ordres TAQ. Rien de cela n'est observable sur des futures, donc le conditionnement par regime que le papier propose (comomentum, active weight) n'est pas reproductible chez nous.",
+      "Les filtres d'univers : exclusion des titres sous 5 $, quintile de taille NYSE le plus bas, points de coupure NYSE, exclusion des jours a moins de 1 000 actions echangees dans la premiere demi-heure.",
+      "La definition meme de la frontiere overnight/intraday. Les auteurs restreignent explicitement leur test futures aux indices actions parce que ces notions y sont bien mieux definies que pour un future de change, et pour nos contrats a session electronique quasi continue, il faut une convention ecrite avant mesure — la leur (VWAP 30 min autour de la minute la plus active avant et apres midi) n'est pas transposable telle quelle sans connaitre les sessions de chaque contrat.",
+      "L'imputation du rendement overnight par r_overnight = (1 + r_c2c)/(1 + r_intraday) - 1, qui repose sur l'hypothese que dividendes et splits tombent overnight : sans objet et potentiellement trompeur sur des futures (roulements de contrat, ecarts de base).",
+      "L'echantillon et la periode. 1993-2013 pour les actions, 1996-2016 pour les futures : anterieurs a notre pool, avec un regime de microstructure different (les auteurs arretent meme une partie de l'analyse en 2001 parce que les institutions ont commence a fractionner leurs ordres).",
+      "Les annonces de resultats et les annonces macro comme controles : non applicables titre par titre chez nous.",
+      "La rentabilite nette. Le papier ne chiffre aucun cout, alors que sa strategie implicite fait un aller-retour par jour ; nos neuf contrats ont chacun leurs frais et leur tick, et rien dans le papier ne permet de savoir ce qui survit."
+    ],
+    "what_aligns_well": "Trois choses tombent juste. D'abord l'instrument : le seul test futures du papier porte sur des futures sur indices actions liquides et conclut que la prime de time-series momentum y est entierement overnight — c'est une hypothese directement pre-enregistrable et testable chez nous, contrat par contrat. Ensuite l'horizon : formation mensuelle, detention mensuelle, avec persistance jusqu'a 60 mois de decalage, ce qui est compatible avec un walk-forward purge et n'exige pas de donnees infra-minute. Enfin la forme du signal : TugOfWar est un ecart lisse entre deux series de rendements propres, donc un candidat de signal deterministe, sans dependance reseau, dont l'absence de look-ahead est verifiable par construction. Le papier fournit aussi un candidat naturel de regime (l'intensite du tir a la corde) qui, chez nous, devrait etre redefini sur des variables observables sur futures.",
+    "closest_replication_target": "Le decoupage overnight / intraday du rendement de chacun de nos neuf contrats, puis un signal de continuation par composante (le rendement overnight passe prevoit le rendement overnight futur, et negativement le rendement intraday futur), evalue en IC par le harnais. La cible secondaire est TugOfWar comme signal de timing d'un signal deja retenu — mais cela suppose qu'un signal existe deja, donc c'est une piste de phase de combinaison, pas d'extraction."
+  }
+}

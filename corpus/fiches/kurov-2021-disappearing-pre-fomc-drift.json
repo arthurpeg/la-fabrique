@@ -1,0 +1,384 @@
+{
+  "fiche_id": "kurov-2021-disappearing-pre-fomc-drift",
+  "written": "2026-09-21",
+  "written_by": "extracteur-phase-07",
+  "source": {
+    "authors": "Alexander Kurov, Marketa Halova Wolfe, Thomas Gilbert",
+    "title": "The Disappearing Pre-FOMC Announcement Drift",
+    "year": 2021,
+    "year_note": "Le texte fourni porte « First Draft: January 11, 2018 », « This Draft: September 14, 2020 » et « Finance Research Letters (Forthcoming) ». L'année 2021 est celle de l'entrée d'amorce et de la parution en revue ; le texte lui-même ne la donne pas.",
+    "source_url": "https://www.skidmore.edu/economics/documents/KurovWolfeGilbert-TheDisappearingPre-FOMC-Announce-Drift-200914.pdf",
+    "pdf": "corpus/pdf/kurov-2021-disappearing-pre-fomc-drift.pdf",
+    "retrieved": "2026-09-21",
+    "peer_reviewed": true,
+    "peer_reviewed_note": "Annoncé « Finance Research Letters (Forthcoming) » et remerciant « two anonymous referees » : accepté en revue à comité de lecture. Le texte fourni est la version manuscrite de l'auteur, pas la version éditeur.",
+    "amorce_entry": 16
+  },
+  "claim": {
+    "statement": "Le pre-FOMC drift documenté par Lucca et Moench (2015) — de larges rendements positifs des actions américaines avant les annonces programmées du FOMC — a essentiellement disparu après 2015, non seulement pour les annonces sans conférence de presse (comme chez Boguth, Gregoire et Martineau 2019) mais aussi pour celles avec conférence de presse ; les auteurs attribuent ce déclin à une baisse de l'incertitude de marché (VIX, TYVIX) plutôt qu'à la publication académique du résultat.",
+    "quoted": "essentially disappeared after 2015 in both announcements accompanied by press",
+    "secondary_quoted": "We discuss a possible",
+    "mechanism": "Le drift pré-annonce rémunère la résolution d'une incertitude élevée en amont d'une annonce programmée (Hu, Pan, Wang, Zhu 2019). Quand l'incertitude ambiante baisse — sortie du ZLB en décembre 2015, VIX moyen passant de 17.7 à 14.7 — la prime à résoudre disparaît, et le drift avec elle.",
+    "rejected_alternative": {
+      "statement": "Les auteurs écartent explicitement l'explication « McLean et Pontiff » (la prédictibilité meurt une fois publiée) : elle n'expliquerait pas pourquoi le drift a d'abord persisté sur les annonces avec conférence de presse après la fin de l'échantillon LM.",
+      "quoted": "driving our result because it does not not explain why after the end of the LM sample period"
+    }
+  },
+  "universe": {
+    "instruments": "Un seul sous-jacent : le S&P 500, traité par ses futures. E-mini S&P 500 nearby contract du 10 septembre 1997 à décembre 2019 ; futures S&P 500 (grand contrat) de septembre 1994 au 9 septembre 1997.",
+    "quoted": "We use intraday E-mini S&P 500 nearby contract futures prices.",
+    "splice_quoted": "begins only on September 10, 1997, we use the S&P 500 futures from September 1994 to",
+    "events": "131 réunions programmées du FOMC de septembre 1994 à mars 2011 (période LM, toutes sans conférence de presse) ; 70 réunions d'avril 2011 à décembre 2019 (période post-LM), dont 40 avec et 30 sans conférence de presse.",
+    "events_quoted": "December 2019 contains 70 scheduled meetings: 40 and 30 meetings with and without press",
+    "sample_period": "septembre 1994 – décembre 2019",
+    "control_sample": "Jours sans annonce : 4 082 observations sur la période LM, 2 184 sur la période post-LM, servant de contrefactuel au rendement moyen.",
+    "frequency": "prix intraday, agrégés en rendements de fenêtre d'événement (log-rendements sur 24 h, ou de l'ouverture de la veille à 15 minutes avant l'annonce)",
+    "conditioning_variables": "indicatrice conférence de presse ; indicatrice post-ZLB (liftoff de décembre 2015) ; VIX et TYVIX à la clôture deux jours avant l'annonce, standardisés (moyenne 0, écart-type 1)"
+  },
+  "horizon": {
+    "value": "de l'ouverture du marché actions la veille de l'annonce à 15 minutes avant l'annonce (mesure principale, ~29 heures calendaires, ~5 h 45 de séance actions) ; variante LM : les 24 heures se terminant 15 minutes avant l'annonce",
+    "quoted": "we initially focus on the return in 24 hours ending 15 minutes",
+    "main_window_quoted": "day before the announcement to 15 minutes before the announcement",
+    "note": "L'horizon est une fenêtre d'événement, pas un horizon de prévision glissant : il n'y a ni rebalancement périodique ni horizon h générique. La fenêtre se ferme 15 minutes avant l'annonce, donc avant toute publication d'information, ce qui rend la position sortable sans connaître le contenu de l'annonce."
+  },
+  "signal_construction": {
+    "value": "Il n'y a pas de score transversal : le « signal » est une règle d'événement binaire, déclenchée par le calendrier public du FOMC. (1) Prendre le calendrier des réunions programmées du FOMC ; (2) entrer long le future d'indice à l'ouverture du marché actions la veille de l'annonce ; (3) sortir 15 minutes avant l'heure d'annonce (2:15 pm jusqu'en mars 2011, 12:30 ou 2:15 pm d'avril 2011 à janvier 2013, 2:00 pm depuis mars 2013) ; (4) ne retenir que les réunions accompagnées d'une conférence de presse (le drift est absent sans conférence) ; (5) conditionner au régime d'incertitude : le drift n'existe qu'avant le liftoff du ZLB (décembre 2015) et son ampleur est liée au niveau du VIX à la clôture deux jours avant l'annonce. Rendement de log : Rt = ln(Pt/Pt−1).",
+    "announcement_time_quoted": "and at 2:00 pm since March 2013",
+    "return_definition_quoted": "ln(Pt/Pt−1). Following LM, we initially focus on the return in 24 hours ending 15 minutes",
+    "regression_1": {
+      "quoted": "Ret_t = beta0 + beta1 PostZLB_t + eps_t",
+      "quoted_source": "Rett =β0 +β1PostZLB t +ϵt",
+      "quoted_repair": "math_notation",
+      "note": "Régression d'étude d'événement par MCO sur les 40 annonces avec conférence de presse, avril 2011 – décembre 2019, erreurs-types robustes à l'hétéroscédasticité."
+    },
+    "regression_2": {
+      "quoted": "Ret_t = beta0 + beta1 PostZLB_t + beta2 VIX_{t-2} + eps_t",
+      "quoted_source": "Rett =β0 +β1PostZLB t +β2VIX t−2 +ϵt",
+      "quoted_repair": "math_notation",
+      "note": "Ajoute le niveau du VIX (puis du TYVIX, puis les deux) à la clôture deux jours avant l'annonce, standardisé."
+    },
+    "note": "Aucune formule de score n'est donnée parce qu'aucune n'est nécessaire : la variable explicative est le calendrier. Ce qui doit être codé chez nous, c'est une indicatrice d'événement point-in-time plus un état de régime, pas une transformation de prix."
+  },
+  "reported_results": [
+    {
+      "name": "lm_pre_fomc_drift_bp",
+      "value": 49,
+      "unit": "bp",
+      "quoted": "the returns on average increase by 49 basis points during 24 hours before the FOMC",
+      "note": "Résultat de Lucca et Moench (2015), recopié par les auteurs, septembre 1994 – mars 2011. C'est la référence contre laquelle tout le papier se mesure."
+    },
+    {
+      "name": "lm_share_of_annual_returns_pct",
+      "value": 80,
+      "unit": "%",
+      "quoted": "accounting for approximately 80% of annual returns",
+      "note": "Part des rendements annuels des actions américaines attribuée aux 24 h pré-FOMC sur la période LM. Chiffre de LM, non recalculé ici."
+    },
+    {
+      "name": "lm_pre_fomc_mean_log_return_pct",
+      "value": 0.492,
+      "unit": "%",
+      "quoted": "the point estimate between LM (0.488) and our paper (0.492) is due to LM using",
+      "note": "Moyenne du log-rendement pré-FOMC sur les 131 annonces de la période LM (Table 1). L'écart avec 0.488 de LM vient de l'usage des futures au lieu de l'indice spot."
+    },
+    {
+      "name": "post_lm_pre_fomc_mean_log_return_pct",
+      "value": 0.047,
+      "unit": "%",
+      "quoted": "Mean 0.492 0.009 0.047 0.038",
+      "quoted_source": "Mean 0 .492 0 .009 0.047 0 .038",
+      "quoted_repair": "table",
+      "note": "Table 1, ligne Mean : 0.492 (pré-FOMC, période LM), 0.009 (jours sans annonce, LM), 0.047 (pré-FOMC, post-LM avril 2011 – décembre 2019), 0.038 (jours sans annonce, post-LM). Le drift post-LM est dix fois plus faible et proche du jour ordinaire."
+    },
+    {
+      "name": "n_meetings_lm",
+      "value": 131,
+      "unit": "réunions",
+      "quoted": "Our data and method follow LM and BGM. There are 131 scheduled FOMC meetings from",
+      "note": "Septembre 1994 – mars 2011, toutes sans conférence de presse."
+    },
+    {
+      "name": "n_meetings_post_lm",
+      "value": 70,
+      "unit": "réunions",
+      "quoted": "December 2019 contains 70 scheduled meetings: 40 and 30 meetings with and without press",
+      "note": "Avril 2011 – décembre 2019."
+    },
+    {
+      "name": "n_meetings_with_press_conference_post_lm",
+      "value": 40,
+      "unit": "réunions",
+      "quoted": "December 2019 contains 70 scheduled meetings: 40 and 30 meetings with and without press",
+      "note": "C'est l'échantillon complet des régressions de la Table 3. Quarante événements : la taille d'échantillon est le point faible du papier, et les auteurs le disent."
+    },
+    {
+      "name": "n_meetings_without_press_conference_post_lm",
+      "value": 30,
+      "unit": "réunions",
+      "quoted": "December 2019 contains 70 scheduled meetings: 40 and 30 meetings with and without press",
+      "note": "Colonne 1 de la Table 2 (avril 2011 – décembre 2018 : depuis janvier 2019 toute annonce a une conférence de presse)."
+    },
+    {
+      "name": "bgm_n_announcements_with_press_conference",
+      "value": 27,
+      "unit": "annonces",
+      "quoted": "panel includes 27 and 25 announcements with (blue line) and without (red line) press conferences,",
+      "note": "Réplication de la période BGM (avril 2011 – septembre 2017), Figure 1 panneau bas."
+    },
+    {
+      "name": "bgm_n_announcements_without_press_conference",
+      "value": 25,
+      "unit": "annonces",
+      "quoted": "panel includes 27 and 25 announcements with (blue line) and without (red line) press conferences,",
+      "note": "Même figure. Le drift n'apparaît que sur la ligne bleue (avec conférence de presse)."
+    },
+    {
+      "name": "n_announcements_per_half_with_press_conference",
+      "value": 20,
+      "unit": "annonces",
+      "quoted": "20 announcements from April 2011 to December 2015, and the second half comprises 20",
+      "note": "La coupe en deux moitiés de 20 observations coïncide avec le liftoff du ZLB de décembre 2015. C'est le découpage central du papier, et il est motivé par un événement macro daté, pas par une recherche de rupture."
+    },
+    {
+      "name": "mean_pre_fomc_return_with_pc_2011_2015_pct",
+      "value": 0.445,
+      "unit": "%",
+      "quoted": "the mean pre-FOMC return is 0.445",
+      "note": "Avril 2011 – décembre 2015, annonces avec conférence de presse, de l'ouverture de la veille à 15 min avant l'annonce. Erreur-type 0.133 (Table 2)."
+    },
+    {
+      "name": "mean_pre_fomc_return_with_pc_2011_2015_bp",
+      "value": 44,
+      "unit": "bp",
+      "quoted": "a positive return of approximately 44 basis points",
+      "note": "Même quantité que ci-dessus, exprimée en points de base par les auteurs, et comparée par eux à l'ampleur du drift de la période LM."
+    },
+    {
+      "name": "t_stat_pre_fomc_with_pc_2011_2015",
+      "value": 3.35,
+      "unit": "t",
+      "derived": true,
+      "quoted": "Mean −0.051 0.445 0.092 0.043 0.054",
+      "note": "Calculé par nous : 0.445 / 0.133, moyenne et erreur-type de la colonne « With PC 04/2011-12/2015 » de la Table 2, arrondi à deux décimales. Les auteurs ne publient pas ce t-stat ; il est reconstruit pour comparaison avec la seconde moitié."
+    },
+    {
+      "name": "mean_pre_fomc_return_with_pc_2016_2019_pct",
+      "value": 0.092,
+      "unit": "%",
+      "quoted": "(January 2016 to December 2019) is 0.092",
+      "note": "Janvier 2016 – décembre 2019, annonces avec conférence de presse. Erreur-type 0.069 (Table 2). Le drift tombe à un cinquième de sa valeur antérieure."
+    },
+    {
+      "name": "t_stat_pre_fomc_with_pc_2016_2019",
+      "value": 1.33,
+      "unit": "t",
+      "derived": true,
+      "quoted": "Mean −0.051 0.445 0.092 0.043 0.054",
+      "note": "Calculé par nous : 0.092 / 0.069, moyenne et erreur-type de la colonne « With PC 01/2016-12/2019 » de la Table 2, arrondi à deux décimales. Sous 2 : le résidu de drift n'est pas distinguable de zéro sur 20 observations."
+    },
+    {
+      "name": "mean_non_announcement_return_2016_2019_pct",
+      "value": 0.054,
+      "unit": "%",
+      "quoted": "of Table 2) is 0.054",
+      "note": "Rendement moyen des jours SANS annonce, janvier 2016 – décembre 2019, même fenêtre (ouverture de la veille à 13:45). À comparer aux 0.092 pré-FOMC : l'écart est de 4 bp et non significatif."
+    },
+    {
+      "name": "st_dev_pre_fomc_with_pc_2011_2015_pct",
+      "value": 0.596,
+      "unit": "%",
+      "quoted": "St. Dev. 0.774 0.596 0.307 1.090 0.969",
+      "quoted_source": "St. Dev. 0 .774 0.596 0.307 1.090 0.969",
+      "quoted_repair": "table",
+      "note": "Table 2, ligne St. Dev., colonnes : sans CP, avec CP 2011-2015, avec CP 2016-2019, jours sans annonce 2011-2015, jours sans annonce 2016-2019."
+    },
+    {
+      "name": "st_dev_pre_fomc_with_pc_2016_2019_pct",
+      "value": 0.307,
+      "unit": "%",
+      "quoted": "St. Dev. 0.774 0.596 0.307 1.090 0.969",
+      "quoted_source": "St. Dev. 0 .774 0.596 0.307 1.090 0.969",
+      "quoted_repair": "table",
+      "note": "L'écart-type des rendements pré-FOMC est quasiment divisé par deux après le liftoff : ce n'est pas seulement la moyenne qui tombe, c'est toute la dispersion. Cohérent avec l'explication par l'incertitude réduite."
+    },
+    {
+      "name": "mean_without_press_conference_close_to_zero",
+      "value": null,
+      "quoted": "return for announcements without press conferences is close to zero",
+      "note": "Résultat qualitatif, avril 2011 – décembre 2018 (colonne 1 de la Table 2). Confirme BGM : sans conférence de presse, pas de drift. La moyenne de la Table 2 est négative."
+    },
+    {
+      "name": "wilcoxon_two_halves_rejected_at_pct",
+      "value": 1,
+      "unit": "%",
+      "quoted": "Wilcoxon rank-sum test and reject the null hypothesis of equal central tendency at 1% level.",
+      "note": "Test non paramétrique entre les deux moitiés (2011-2015 contre 2016-2019) des annonces avec conférence de presse : les distributions de rendement pré-FOMC diffèrent."
+    },
+    {
+      "name": "wilcoxon_pc_vs_non_announcement_2016_2019_not_rejected",
+      "value": null,
+      "quoted": "We cannot reject the null hypothesis of equal central tendency",
+      "note": "Depuis janvier 2016, les jours d'annonce avec conférence de presse ne se distinguent plus des jours ordinaires. C'est le résultat le plus dur du papier : l'anomalie n'est plus mesurable."
+    },
+    {
+      "name": "post_zlb_x_press_conference_interaction_coefficient",
+      "value": -0.353,
+      "unit": "%",
+      "quoted": "on the interaction term is -0.353 also statistically",
+      "note": "Note de bas de page 11, spécification alternative sur les annonces avec ET sans conférence de presse. Même valeur que le coefficient de l'indicatrice post-ZLB de la colonne (1) de la Table 3, significatif à 5%."
+    },
+    {
+      "name": "press_conference_indicator_coefficient",
+      "value": 0.497,
+      "unit": "%",
+      "quoted": "press conference indicator variable is 0.497",
+      "note": "Note de bas de page 11 : avant le liftoff, la présence d'une conférence de presse vaut ~50 bp de rendement pré-annonce, significatif à 5%. L'interaction avec le post-ZLB en reprend 35."
+    },
+    {
+      "name": "post_zlb_drift_not_significant",
+      "value": null,
+      "quoted": "reported in Table 3), which measures the mean pre-FOMC drift after the ZLB liftoﬀ, is not",
+      "quoted_repair": "ocr",
+      "quoted_source": "reported in Table 3), which measures the mean pre-FOMC drift after the ZLB liftoﬀ, is not",
+      "note": "La somme beta0 + beta1 — le drift moyen après le liftoff du ZLB — n'est pas statistiquement significative. Le drift n'est pas seulement plus faible : il n'est plus distinguable de zéro."
+    },
+    {
+      "name": "vix_mean_before_zlb_liftoff",
+      "value": 17.7,
+      "unit": "points de VIX",
+      "quoted": "17.7 and 14.7 before and after the ZLB",
+      "note": "VIX moyen avant le liftoff de décembre 2015. La différence avec l'après est significative à 1%."
+    },
+    {
+      "name": "vix_mean_after_zlb_liftoff",
+      "value": 14.7,
+      "unit": "points de VIX",
+      "quoted": "17.7 and 14.7 before and after the ZLB",
+      "note": "VIX moyen après le liftoff. Trois points de VIX en moins : c'est toute la variable explicative du papier."
+    },
+    {
+      "name": "tyvix_mean_before_zlb_liftoff",
+      "value": 5.9,
+      "unit": "points de TYVIX",
+      "quoted": "the average TYVIX is 5.90 and 4.68 before and after the ZLB",
+      "note": "TYVIX (volatilité implicite du 10 ans américain), mesure alternative d'incertitude de politique monétaire, avant le liftoff. Le papier écrit 5.90."
+    },
+    {
+      "name": "tyvix_mean_after_zlb_liftoff",
+      "value": 4.68,
+      "unit": "points de TYVIX",
+      "quoted": "the average TYVIX is 5.90 and 4.68 before and after the ZLB",
+      "note": "Après le liftoff ; différence significative à 1%."
+    },
+    {
+      "name": "vix_coefficient_spec2",
+      "value": 0.229,
+      "unit": "% par écart-type de VIX",
+      "quoted": "VIX that is now 0.193 compared to 0.229",
+      "note": "Table 3 colonne (2) : un écart-type de VIX (standardisé) en plus vaut ~23 bp de rendement pré-FOMC, significatif à 1%. L'indicatrice post-ZLB devient alors insignifiante : c'est le VIX qui porte l'information, pas la date."
+    },
+    {
+      "name": "vix_coefficient_spec4",
+      "value": 0.193,
+      "unit": "% par écart-type de VIX",
+      "quoted": "VIX that is now 0.193 compared to 0.229",
+      "note": "Table 3 colonne (4), VIX et TYVIX ensemble. Le TYVIX n'est pas significatif en présence du VIX."
+    },
+    {
+      "name": "adjusted_r2_spec1",
+      "value": 0.1,
+      "unit": "R2 ajusté",
+      "quoted": "Adjusted R2 0.10 0.27 0.18 0.27",
+      "quoted_source": "Adjusted R2 0.10 0 .27 0 .18 0 .27",
+      "quoted_repair": "table",
+      "note": "Table 3 : R2 ajusté des quatre spécifications. La seule indicatrice post-ZLB explique 10% de la variance des rendements pré-FOMC ; ajouter le VIX monte à 0.27."
+    },
+    {
+      "name": "vix_log_change_announcement_days_before_zlb_pct",
+      "value": -6.52,
+      "unit": "%",
+      "quoted": "on days of these announcements is -6.52%",
+      "note": "Variation moyenne en log du VIX les jours d'annonce avec conférence de presse, avant le liftoff, significative à 1% : forte résolution d'incertitude."
+    },
+    {
+      "name": "vix_log_change_announcement_days_after_zlb_pct",
+      "value": -1.27,
+      "unit": "%",
+      "quoted": "after the ZLB liftoff, the mean log-change is an insignificant -1.27%.",
+      "quoted_source": "after the ZLB liftoﬀ, the mean log-change is an insigniﬁcant -1.27%.",
+      "quoted_repair": "ocr",
+      "note": "Après le liftoff, la chute du VIX le jour de l'annonce n'est plus significative, et la différence avec l'avant est significative à 5%. Il n'y a plus d'incertitude à résoudre, donc plus de prime à percevoir en amont."
+    },
+    {
+      "name": "n_non_announcement_days_lm_period",
+      "value": 4082,
+      "unit": "jours",
+      "quoted": "Obs. 131 4,082 70 2,184",
+      "quoted_source": "Obs. 131 4,082 70 2,184",
+      "quoted_repair": "table",
+      "note": "Table 1, ligne Obs. : 131 annonces et 4 082 jours sans annonce sur la période LM ; 70 annonces et 2 184 jours sans annonce sur la période post-LM."
+    },
+    {
+      "name": "fed_funds_rate_increases_after_liftoff",
+      "value": 9,
+      "unit": "hausses",
+      "spelled_out": "nine",
+      "quoted": "of our sample period, there were nine increases of 0.25% followed by three decreases of 0.25%.",
+      "note": "Note de bas de page 9. Contexte de régime : le taux cible était 0-0.25% jusqu'en décembre 2015. La « seconde moitié » de l'échantillon est donc un régime de resserrement puis de détente, pas un simple bloc temporel."
+    },
+    {
+      "name": "fed_funds_rate_decreases_after_liftoff",
+      "value": 3,
+      "unit": "baisses",
+      "spelled_out": "three",
+      "quoted": "of our sample period, there were nine increases of 0.25% followed by three decreases of 0.25%.",
+      "note": "Même note de bas de page 9 ; les trois baisses sont celles de 2019."
+    },
+    {
+      "name": "drift_start_time_shifted_to_previous_open",
+      "value": null,
+      "quoted": "day, earlier than during the LM period.",
+      "note": "Résultat qualitatif hérité de BGM et confirmé ici : sur la période post-2011, le drift commence à l'ouverture du marché actions de la veille, et non 24 h avant l'annonce. La fenêtre de mesure correcte dépend donc du régime — un piège pour toute réplication qui garderait la fenêtre LM."
+    },
+    {
+      "name": "bootstrapped_bands_identical",
+      "value": null,
+      "quoted": "with bootstrapped standard errors are almost identical to those constructed with the regular",
+      "note": "Contrôle de robustesse des bandes de confiance de la Figure 2, motivé par la petite taille d'échantillon (20 observations par moitié)."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun coût de transaction, aucun slippage, aucune marge : le papier mesure des rendements bruts de fenêtre d'événement. Le résidu de 0.092% (9 bp) de la seconde moitié est du même ordre que le coût aller-retour plausible d'une position tenue une séance sur un future d'indice — le papier ne le dit pas et ne le teste pas.",
+    "Aucun IC, aucun rang, aucune métrique transversale : la statistique du papier est une moyenne de rendement et son erreur-type sur 20 à 131 événements. Rien n'est directement comparable à notre rapport d'IC.",
+    "Aucun Sharpe, aucune série de P&L, aucun drawdown : on ne sait pas ce que la règle aurait rapporté nette de tout.",
+    "Aucune donnée après décembre 2019. La question posée en conclusion — l'incertitude du COVID-19 a-t-elle fait revenir le drift ? — est laissée ouverte. Or 2020 et au-delà est précisément la zone qui nous intéresse.",
+    "Un seul instrument. Rien sur les taux, l'or, le pétrole, les devises ou les indices non américains, alors que l'explication par l'incertitude de politique monétaire s'y appliquerait naturellement (le TYVIX est utilisé comme régresseur, jamais le future du 10 ans comme actif).",
+    "Aucun compte du nombre de spécifications essayées. Trois fenêtres d'annonce, plusieurs fenêtres pour les jours sans annonce, quatre spécifications de régression, deux mesures d'incertitude : les résultats non retenus sont « available upon request » (note 5), donc invérifiables.",
+    "Le point de coupure (liftoff du ZLB, décembre 2015) tombe exactement au milieu des 40 annonces avec conférence de presse. Le papier justifie ce choix par un événement macro, mais ne teste pas de rupture endogène ni d'autre date.",
+    "Aucune règle d'entrée exécutable : pas de prix d'entrée précis à l'ouverture, pas de traitement du roll de contrat (« nearby contract » sans règle de roulement), pas de gestion du passage grand contrat / E-mini en 1997.",
+    "Le lag de publication du calendrier FOMC n'est pas discuté. Il est public à l'avance, donc sans look-ahead, mais la date exacte à laquelle chaque réunion devient connue n'est pas donnée.",
+    "Le VIX et le TYVIX sont standardisés (moyenne 0, écart-type 1) sur l'échantillon entier : le coefficient de 0.229 n'est pas interprétable en unités brutes de VIX sans refaire la standardisation, et cette standardisation plein-échantillon est elle-même un léger look-ahead que le papier ne signale pas.",
+    "La colonne « sans conférence de presse » s'arrête en décembre 2018 sans que le texte l'explique explicitement au lecteur (la raison est que depuis janvier 2019 toute annonce en a une) : le groupe de contrôle disparaît en fin d'échantillon.",
+    "Les valeurs des figures (bandes de confiance, profils intraday des CAR) ne sont pas tabulées : les chiffres du profil heure par heure ne sont pas récupérables du texte."
+  ],
+  "transposability": {
+    "what_transfers": "Trois choses. (1) Le motif de fond : une anomalie de calendrier documentée et publiée peut cesser d'exister, et le savoir vaut mieux que la retrouver. (2) Le conditionnement par un régime d'incertitude — un niveau de volatilité implicite mesuré à une date strictement antérieure (clôture J-2) — est exactement la forme d'hybride que notre étape 05 prévoit, et il est ici construit sans look-ahead. (3) La discipline de comparer l'événement à un contrefactuel de jours ordinaires calculé sur la MÊME fenêtre horaire : notre harnais doit faire pareil, sans quoi un effet d'heure de la journée se déguise en effet d'annonce.",
+    "what_does_not_transfer": [
+      "Un seul instrument, donc aucune coupe transversale : notre métrique officielle est un IC sur un panel d'instruments, et un IC transversal sur N=1 n'existe pas. Il faudrait soit une variante temporelle de la métrique, soit appliquer le signal aux neuf futures simultanément — ce que le papier n'a jamais fait.",
+      "La fréquence : environ huit réunions du FOMC par an, soit ~8 observations annuelles et 20 sur toute une moitié d'échantillon. Notre pool 2016-01-03 → 2023-12-31 n'en contient qu'environ 64 par instrument. Toute t-stat calculée là-dessus est fragile, et cela doit être écrit avant mesure, pas découvert après.",
+      "La période testée. L'échantillon du papier s'arrête en décembre 2019 ; notre pool commence le 2016-01-03. L'intersection est exactement la sous-période où les auteurs montrent que l'effet est MORT. Répliquer le résultat positif est impossible chez nous ; seul le résultat nul est vérifiable.",
+      "La métrique : un rendement moyen en pourcentage sur une fenêtre d'événement, avec erreur-type et test de Wilcoxon. Rien de cela ne produit un IC, et un IC ne se déduit pas d'un rendement moyen.",
+      "La variable conditionnante principale — annonce avec ou sans conférence de presse — a cessé de varier en janvier 2019 : toutes les réunions ont désormais une conférence de presse. Sur notre pool, cette indicatrice est constante à partir de 2019 et le groupe de contrôle du papier n'existe plus.",
+      "Le régime ZLB / post-ZLB est un événement macro unique et non répétable (décembre 2015). Il ne peut pas servir d'étiquette de régime réutilisable dans notre taxonomie d'étape 06 ; il faudrait le remplacer par un état continu (niveau de VIX, niveau de taux) au prix d'une hypothèse supplémentaire.",
+      "Le VIX et le TYVIX sont des séries externes absentes de notre panel de prix. Les intégrer suppose une entrée de catalogue avec son fuseau, son heure de clôture et son lag de publication point-in-time — aucune de ces valeurs n'est donnée par le papier, et aucune ne doit être inventée.",
+      "La pertinence de l'événement FOMC est spécifique aux actifs sensibles à la politique monétaire américaine. Sur nos neuf futures intraday, elle est plausible pour un indice actions ou un taux, douteuse pour une matière première agricole : appliquer la même indicatrice aux neuf sans discrimination fabriquerait du bruit et gonflerait le compteur de tests.",
+      "La fenêtre traverse une nuit (ouverture actions de la veille → 13:45/14:00 du lendemain). Elle exige des barres de session étendue, un alignement inter-journées et une règle de roll ; notre couche Panel doit pouvoir ouvrir une fenêtre à cheval sur deux jours sans jamais lire de barre postérieure.",
+      "Les heures citées (2:15 pm, 12:30 pm, 2:00 pm) sont en heure de New York et changent trois fois sur l'échantillon. Le calendrier des annonces ET l'historique de leurs horaires seraient une donnée externe à cataloguer, avec ses changements de fuseau.",
+      "Aucun coût n'est modélisé. Le seul effet encore mesurable sur notre période (0.092%, non significatif) est plus petit que les frictions plausibles : même s'il survivait statistiquement, il ne survivrait pas économiquement.",
+      "Le raccord grand contrat S&P 500 / E-mini en septembre 1997 est un choix de série que nous n'avons pas à reproduire et qui ne concerne que la partie ancienne de leur échantillon.",
+      "L'explication finale (incertitude réduite) repose sur des régressions à 40 observations avec R2 ajusté de 0.10 à 0.27 ; les auteurs eux-mêmes la donnent avec un « small sample caveat ». Ce n'est pas une hypothèse suffisamment établie pour servir de base à un régime chez nous sans être re-testée et comptée."
+    ],
+    "what_aligns_well": "L'actif est un future d'indice intraday, mesuré sur son contrat nearby : c'est presque littéralement notre univers, et si le ES fait partie de nos neuf, la réplication mécanique ne pose aucun problème d'instrument. L'horizon — quelques heures à une journée — est celui de nos signaux. La fenêtre se ferme 15 minutes AVANT l'annonce, donc la règle est structurellement sans look-ahead : la position est ouverte et fermée sur de l'information publique et antérieure, ce qui satisfait l'invariant II par construction et non par vigilance. Le conditionnement par le VIX à la clôture J-2 est lui aussi strictement antérieur. Enfin, le papier est un résultat NÉGATIF daté et chiffré : il nous dit avec précision ce qu'il ne faut pas espérer trouver sur 2016-2019, ce qui en fait une entrée utile au registre des idées abandonnées avant même d'avoir consommé un test.",
+    "candidate_use": "Comme test de calibration du harnais plutôt que comme signal candidat : une règle d'événement dont le papier affirme qu'elle ne produit plus rien sur notre période est un excellent cas où notre chaîne doit répondre « rien », et le vérifier coûte une seule ligne de registre."
+  }
+}

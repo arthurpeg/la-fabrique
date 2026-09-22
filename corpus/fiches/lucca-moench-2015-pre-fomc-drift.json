@@ -1,0 +1,377 @@
+{
+  "fiche_id": "lucca-moench-2015-pre-fomc-drift",
+  "written": "2026-09-21",
+  "written_by": "extracteur-2026-09-21",
+  "source": {
+    "authors": "David O. Lucca, Emanuel Moench",
+    "title": "The Pre-FOMC Announcement Drift",
+    "year": 2013,
+    "source_url": "https://www.newyorkfed.org/medialibrary/media/research/staff_reports/sr512.pdf",
+    "pdf": "corpus/pdf/lucca-moench-2015-pre-fomc-drift.pdf",
+    "retrieved": "2026-09-21",
+    "peer_reviewed": false,
+    "amorce_entry": 15,
+    "year_note": "Le texte fourni est le Federal Reserve Bank of New York Staff Report no. 512, daté « September 2011; revised August 2013 ». Aucune ligne du texte ne porte l'année 2015 que porte le fiche_id : je n'invente pas cette date et je retiens celle du document, 2013.",
+    "peer_reviewed_note": "La première page indique que le document présente des résultats préliminaires diffusés pour susciter la discussion et recueillir des commentaires, et que les vues sont celles des auteurs : c'est un staff report, pas un article arbitré.",
+    "quoted": "Federal Reserve Bank of New York Staff Reports, no. 512"
+  },
+  "claim": {
+    "statement": "Les actions américaines réalisent en moyenne un excès de rendement large et fortement significatif dans la fenêtre de 24 heures qui précède les annonces programmées du FOMC, sans retournement ultérieur ; ce rendement n'existe ni sur les titres du Trésor et les futures de taux courts, ni avant les autres annonces macroéconomiques majeures, et il résiste aux contrôles de valeurs extrêmes, de petit échantillon et de data-snooping.",
+    "quoted": "We document large average excess returns on U.S. equities in anticipation of monetary policy"
+  },
+  "universe": {
+    "primary": "Indice S&P500 (SPX), rendement logarithmique en excès du taux sans risque, dividendes inclus, en intraday (fenêtres 2pm-2pm) depuis septembre 1994 et en close-to-close quotidien avant 1994.",
+    "secondary": [
+      "indices actions internationaux : DAX, FTSE 100, CAC40, IBEX, SMI, TSX, NIKKEI 225 (close-to-close, devise locale, hors dividendes)",
+      "portefeuilles actions US triés par taille (10 déciles) et par industrie (49 portefeuilles Fama-French), plus les indices CRSP value- et equal-weighted",
+      "revenu fixe : bons et notes du Trésor on-the-run 3M, 2Y, 5Y, 10Y ; future fed funds de première (ou deuxième) échéance ; quatrième contrat Eurodollar",
+      "future E-mini S&P500 utilisé comme proxy de liquidité intraday (volumes), disponible à partir de septembre 1997"
+    ],
+    "sample": "janvier 1960 – mars 2011, avec un accent sur les sous-échantillons post-1980 et post-1994 ; l'analyse intraday couvre septembre 1994 – mars 2011",
+    "events": "réunions programmées du FOMC uniquement (les réunions non programmées et les téléconférences sont exclues) ; huit par an depuis 1981",
+    "quoted": "January 1960 and March 2011 with a special emphasis on the post-1980 and post-1994 samples."
+  },
+  "horizon": {
+    "value": "24 heures : de 14h00 ET la veille d'une annonce programmée du FOMC à 14h00 ET le jour de l'annonce, soit environ quinze minutes avant la publication du communiqué. Avant 1994, l'horizon est le rendement close-to-close du jour de la réunion programmée.",
+    "unit": "hours",
+    "events_per_year": 8,
+    "quoted": "period from 2 pm on the day before a scheduled FOMC announcement until 2 pm on the day"
+  },
+  "signal_construction": {
+    "value": "Le « signal » est un indicateur de calendrier, pas un score continu : une variable muette valant 1 quand une annonce programmée du FOMC doit être publiée dans les 24 heures suivantes, 0 sinon. Elle est régressée sur le rendement en excès du SPX, avec ou sans constante, écarts-types de Huber-White. Le calendrier des réunions programmées est public à l'avance (feuilles d'information de la presse avant septembre 2001, site du Board ensuite), donc connaissable ex ante. Les conditionnements testés en section 3.8 ajoutent des variables retardées : pente de la courbe des taux (deuxième composante principale des taux zéro-coupon 1-5 ans, retardée de deux jours), niveau du VIX à la clôture deux jours avant la réunion, et moyenne des huit derniers rendements pre-FOMC (MA8). Les contrôles de volatilité et de liquidité sont décomposés en niveau retardé et innovation par des AR(1).",
+    "quoted": "is equal to one on scheduled pre-FOMC announcement windows and zero otherwise. In alternative",
+    "note": "La spécification est l'équation (1) du papier ; sa forme littérale est donnée dans l'entrée de résultat capm_cross_sectional_lambda pour la régression transversale, et dans le texte pour la régression principale."
+  },
+  "reported_results": [
+    {
+      "name": "pre_fomc_24h_excess_return_bp_post1994",
+      "value": 49,
+      "unit": "bp",
+      "quoted": "average been 49 basis points, with a t-statistic of more than 4.5 based on Huber-White standard",
+      "note": "Rendement en excès 2pm-2pm du SPX sur les 131 fenêtres pre-FOMC de septembre 1994 à mars 2011. Le tableau 2 donne 0.488 pour le même coefficient."
+    },
+    {
+      "name": "pre_fomc_24h_t_stat_post1994",
+      "value": 4.5,
+      "unit": "t-stat",
+      "quoted": "average been 49 basis points, with a t-statistic of more than 4.5 based on Huber-White standard",
+      "note": "Écarts-types robustes de Huber-White. L'appendice donne la valeur exacte de 4.51 pour ce t-statistique."
+    },
+    {
+      "name": "n_pre_fomc_observations_post1994",
+      "value": 131,
+      "unit": "observations",
+      "quoted": "98 of the 131 pre-FOMC announcement returns are positive in our sample",
+      "note": "131 réunions programmées exploitables entre septembre 1994 et mars 2011 : une observation (1er juillet 1998) est perdue faute de données intraday, une autre (26 mars 1996) est exclue car le communiqué a été publié le matin."
+    },
+    {
+      "name": "positive_pre_fomc_returns_post1994",
+      "value": 98,
+      "unit": "observations",
+      "quoted": "98 of the 131 pre-FOMC announcement returns are positive in our sample",
+      "note": "Environ trois quarts des fenêtres pre-FOMC sont positives ; 33 sont négatives. Sur les autres jours, positifs et négatifs sont à peu près à parité."
+    },
+    {
+      "name": "scheduled_fomc_meetings_per_year",
+      "value": 8,
+      "unit": "meetings/year",
+      "spelled_out": "eight",
+      "quoted": "place eight times per year since the early 1980s, and were scheduled much more frequently before",
+      "note": "Contrainte dure d'échantillon : huit événements par an depuis le début des années 1980, contre jusqu'à 18 par an dans les années 1960."
+    },
+    {
+      "name": "annualized_excess_return_pre_fomc_pct",
+      "value": 3.89,
+      "unit": "%/an",
+      "quoted": "has on average been 3.89% per year, it has only been 0.88% on all remaining trading",
+      "note": "Rendement en excès annualisé cumulé gagné dans les fenêtres pre-FOMC de 24 heures, post-1994."
+    },
+    {
+      "name": "annualized_excess_return_other_days_pct",
+      "value": 0.88,
+      "unit": "%/an",
+      "quoted": "has on average been 3.89% per year, it has only been 0.88% on all remaining trading",
+      "note": "Rendement en excès annualisé cumulé gagné sur tous les autres jours de bourse, post-1994."
+    },
+    {
+      "name": "share_of_annual_excess_returns_pct",
+      "value": 80,
+      "unit": "%",
+      "quoted": "since 1994 about 80% of realized excess stock returns",
+      "note": "Part des rendements actions en excès réalisés aux États-Unis attribuable aux 24 heures précédant les annonces, depuis 1994."
+    },
+    {
+      "name": "sharpe_ratio_2pm_to_2pm_post1994",
+      "value": 1.14,
+      "unit": "Sharpe annualisé",
+      "quoted": "would have earned a large annualized Sharpe ratio of 1.14 as reported in the Table",
+      "note": "Stratégie : acheter le SPX à 14h00 la veille d'une réunion programmée, vendre quinze minutes avant l'annonce, cash le reste du temps. Sharpe annualisé = racine de 8 fois le Sharpe par réunion ; brut de coûts."
+    },
+    {
+      "name": "announcement_to_close_return_post1994",
+      "value": null,
+      "unit": null,
+      "quoted": "right before the announcement until the market close is essentially zero",
+      "note": "Le coefficient sur la fenêtre 2pm-to-close est 0.002 au tableau 2 : tout le rendement est gagné avant l'annonce, rien à l'annonce ni après. C'est la dissociation que le papier ne parvient pas à expliquer."
+    },
+    {
+      "name": "close_to_close_fomc_return_bp_post1994",
+      "value": 33,
+      "unit": "bp",
+      "quoted": "somewhat lower at about 33 basis points in the sample period",
+      "note": "Mesuré en close-to-close, donc en incluant l'après-midi qui suit l'annonce au lieu de celui qui la précède : le différentiel baisse de 49 à 33 bp."
+    },
+    {
+      "name": "close_to_close_sharpe_post1994",
+      "value": 0.84,
+      "unit": "Sharpe annualisé",
+      "quoted": "yields a considerable annualized Sharpe Ratio of 0.84 as",
+      "note": "Sharpe annualisé de la version close-to-close, brut de coûts."
+    },
+    {
+      "name": "close_to_2pm_sharpe_post1994",
+      "value": 1.43,
+      "unit": "Sharpe annualisé",
+      "quoted": "with a Sharpe Ratio of 1.43 for the close-to-2pm window and a",
+      "note": "Test de sensibilité au choix exact de la fenêtre : la fenêtre clôture-veille → 14h00 fait mieux que la fenêtre 2pm-2pm."
+    },
+    {
+      "name": "close_t_minus_2_to_2pm_drift_bp",
+      "value": 54,
+      "unit": "bp",
+      "quoted": "pre-FOMC drift of 54 basis points with associated Sharpe ratio of about 1 in the close two days",
+      "note": "Fenêtre allongée : clôture de t-2 → 14h00 de t. Le résultat ne dépend pas d'un calage fin de la fenêtre de 24 heures."
+    },
+    {
+      "name": "excess_return_std_dev_pct",
+      "value": 1.2,
+      "unit": "%",
+      "quoted": "The standard deviation of the excess returns is about 1.2% both on FOMC days and on other",
+      "note": "En variance, les actions ne sont pas plus risquées les jours de FOMC : c'est l'argument central contre une explication par le risque."
+    },
+    {
+      "name": "kurtosis_pre_fomc_vs_other",
+      "value": 25.61,
+      "unit": "kurtosis",
+      "quoted": "Kurtosis, toutes observations : 25.61 pour les rendements pre-FOMC contre 15.91 les autres jours ; en excluant les 1 % extrêmes, 5.22 contre 3.71",
+      "quoted_source": "Kurtosis 25.61 15.91 5.22 3.71",
+      "quoted_repair": "table",
+      "note": "Tableau 3, lu en cellules par l'extraction : quatre colonnes (pre-FOMC et autres jours, toutes observations puis hors 1 % extrêmes). Les queues épaisses sont la raison pour laquelle les auteurs refont l'inférence par bootstrap."
+    },
+    {
+      "name": "trimmed_mean_pre_fomc_bp",
+      "value": 45,
+      "unit": "bp",
+      "quoted": "mean pre-FOMC announcement return is still very large at 45 basis points while the mean return",
+      "note": "Après suppression des 1 % supérieurs et inférieurs (deux observations), le rendement moyen reste à 45 bp contre 1 bp les autres jours, et la significativité augmente. Le plus gros point extrême positif est +9.5 % le 29 octobre 2008."
+    },
+    {
+      "name": "pre_fomc_return_bp_1980_1993",
+      "value": 20,
+      "unit": "bp",
+      "quoted": "averaged to a statistically significant 20 basis points in excess of the 2 basis points earned on all",
+      "quoted_source": "averaged to a statistically signiﬁcant 20 basis points in excess of the 2 basis points earned on all",
+      "quoted_repair": "ocr",
+      "note": "Sous-échantillon 1980-1993, en close-to-close le jour de la réunion programmée. Avant 1980, les rendements pre-FOMC sont essentiellement nuls (0.005 % au tableau 4)."
+    },
+    {
+      "name": "pre_fomc_differential_bp_1960_2011",
+      "value": 16.7,
+      "unit": "bp",
+      "quoted": "earned in the pre-FOMC window is estimated to be 16.7 basis",
+      "note": "524 réunions programmées sur plus de cinquante ans de données quotidiennes ; significatif à 1 %. Le rendement des autres jours est estimé à 0.9 bp, non significatif."
+    },
+    {
+      "name": "pre_fomc_return_bp_1980_2011",
+      "value": 36,
+      "unit": "bp",
+      "quoted": "to 36 basis in the 1980-2011 sample with with a t-statistic of 4.86",
+      "note": "Citation recopiée telle quelle, y compris la répétition « with with » du texte. Le tableau 4 donne 0.355 pour ce coefficient et l'appendice 36.6 bp pour la moyenne."
+    },
+    {
+      "name": "pre_fomc_t_stat_1980_2011",
+      "value": 4.86,
+      "unit": "t-stat",
+      "quoted": "to 36 basis in the 1980-2011 sample with with a t-statistic of 4.86",
+      "note": "Même régression, t-statistique asymptotique."
+    },
+    {
+      "name": "sharpe_ratio_1980_2011",
+      "value": 0.92,
+      "unit": "Sharpe annualisé",
+      "quoted": "would have delivered an annualized Sharpe ratio of 0.92",
+      "note": "Même stratégie que post-1994, sur trente ans ; brut de coûts."
+    },
+    {
+      "name": "no_return_reversal",
+      "value": null,
+      "unit": null,
+      "quoted": "evidence of pre-FOMC return reversals in either sample",
+      "note": "Régressions sur les cinq jours avant et les cinq jours après : seule la muette pre-FOMC est significative, les sommes cumulées avant et après sont statistiquement nulles (p-values 0.842 et 0.939 post-1994). Sans cette absence de retournement, la décomposition des rendements annuels ne tiendrait pas."
+    },
+    {
+      "name": "data_snooping_reality_check_pct",
+      "value": 99.98,
+      "unit": "%",
+      "quoted": "shows that 99.98 percent of maximum absolute t-statistics are",
+      "note": "Reality check à la White (2000) : on rééchantillonne le rendement 2pm-2pm et on retient le plus grand t-statistique absolu parmi dix annonces (FOMC plus neuf annonces macro). 99.98 % des maxima sont inférieurs au 4.51 observé, soit une probabilité de snooping inférieure à 0.02 %."
+    },
+    {
+      "name": "international_pre_fomc_low_bp",
+      "value": 29,
+      "unit": "bp",
+      "quoted": "FOMC estimates ranging from 29 basis points in Switzerland to 52 basis points in France. In all",
+      "note": "Cinq indices européens (DAX, FTSE100, CAC40, IBEX, SMI), close-to-close, post-1994 ; ces clôtures ne contiennent jamais l'annonce américaine à cause du décalage horaire."
+    },
+    {
+      "name": "international_pre_fomc_high_bp",
+      "value": 52,
+      "unit": "bp",
+      "quoted": "FOMC estimates ranging from 29 basis points in Switzerland to 52 basis points in France. In all",
+      "note": "Borne haute de l'intervalle international (CAC40)."
+    },
+    {
+      "name": "international_sharpe_high",
+      "value": 1.04,
+      "unit": "Sharpe annualisé",
+      "quoted": "countries the Sharpe ratios of an FOMC only investment strategy range between 0.75 and 1.04.",
+      "note": "Les Sharpe des cinq pays européens vont de 0.75 à 1.04 ; le NIKKEI 225 est le seul grand indice sans rendement significatif (coefficient 0.03, Sharpe 0.01)."
+    },
+    {
+      "name": "no_effect_in_fixed_income",
+      "value": null,
+      "unit": null,
+      "quoted": "we find no such effect in U.S. Treasury securities and",
+      "note": "Post-1994, aucun coefficient n'est significatif pour les Treasuries 3M/2Y/5Y/10Y, le future fed funds ni le quatrième Eurodollar. Post-1980, seul le 10 ans est significatif à 10 %, avec un coefficient inférieur à un point de base, entièrement dû à quelques points extrêmes de 1980."
+    },
+    {
+      "name": "no_pre_announcement_effect_other_macro",
+      "value": null,
+      "unit": null,
+      "quoted": "Other major U.S. macroeconomic new announcements also do not give",
+      "note": "Neuf annonces testées (NFPAY, INCLM, GDPADV, ISM, IP, HSTART, PPI, CPI, PI). Aucune n'est significative post-1994 ; la plus grande est Housing Starts à 13 bp avec un écart-type de 9 bp. Post-1980, seul le PPI est significatif à 10 %, avec un signe négatif."
+    },
+    {
+      "name": "yield_curve_slope_effect_bp",
+      "value": 19,
+      "unit": "bp",
+      "quoted": "that a one standard deviation increase in the slope lowers the pre-FOMC drift by about 19 (15)",
+      "note": "Régime : une hausse d'un écart-type de la pente de la courbe des taux abaisse le drift de 19 bp post-1994 (15 bp post-1980). La pente est la deuxième composante principale des taux zéro-coupon 1-5 ans, retardée de deux jours par rapport au jour de l'annonce — donc connaissable avant la fenêtre."
+    },
+    {
+      "name": "vix_effect_bp",
+      "value": 31,
+      "unit": "bp",
+      "quoted": "one-standard deviation increase in the VIX is associated to pre-FOMC returns that are 31 basis",
+      "note": "Régime : le VIX est pris à la clôture deux jours avant la réunion, donc ex ante. Coefficient 0.31 post-1994, 0.26 post-1980, significatif à 1 % dans les deux cas."
+    },
+    {
+      "name": "joint_regime_regression_r2_pct",
+      "value": 18,
+      "unit": "%",
+      "quoted": "fraction (18%) of the time series variation in pre-FOMC returns (column 8).",
+      "note": "Régression conjointe pente + VIX + MA8 (moyenne des huit derniers rendements pre-FOMC) : les trois gardent leur significativité et expliquent 18 % de la variation temporelle post-1994 (12 % post-1980)."
+    },
+    {
+      "name": "capm_cross_sectional_lambda",
+      "value": 0.468,
+      "unit": "% par unité de bêta",
+      "quoted": "The result from the second-stage cross sectional regression is R̄_FOMC = −0.099[0.10] + 0.468[0.149] β̂,",
+      "quoted_source": "The result from the second-stage cross sectional regression is ¯RF OM C = −.099[0.10] + 0.468[0.149] ˆβ,",
+      "quoted_repair": "math_notation",
+      "note": "Régression transversale de seconde étape sur 49 portefeuilles d'industrie et 10 déciles de taille ; écarts-types corrigés de l'erreur d'estimation des bêtas (Shanken 1992). Le prix du risque de marché est significatif, la constante ne l'est pas : la coupe transversale des rendements des jours de FOMC est expliquée par le seul bêta de marché."
+    },
+    {
+      "name": "capm_r_squared_pct_fomc_days",
+      "value": 65,
+      "unit": "%",
+      "quoted": "the CAPM regression on FOMC announcement days is 65%",
+      "note": "R² ajusté de la régression transversale sur les jours d'annonce FOMC : un unique facteur de marché suffit, ce qui n'est pas le cas les autres jours."
+    },
+    {
+      "name": "price_of_market_risk_bp",
+      "value": 47,
+      "unit": "bp",
+      "quoted": "is estimated to be 47 basis points and highly statistically",
+      "note": "Même régression, coefficient de pente exprimé en points de base dans le texte (0.468 dans la figure 5)."
+    },
+    {
+      "name": "volatility_and_volume_lower_before_announcement",
+      "value": null,
+      "unit": null,
+      "quoted": "The liquidity patterns match those for realized volatility: both are lower",
+      "note": "Volatilité réalisée et volumes sont plus bas dans la fenêtre pre-FOMC puis bondissent à l'annonce. Les volumes sont mesurés sur le contrat E-mini S&P500 le plus traité, rapportés à leur moyenne des 21 jours précédents. C'est l'effet « quiet-before-the-storm »."
+    },
+    {
+      "name": "vix_innovation_control_drop_bp",
+      "value": 18,
+      "unit": "bp",
+      "quoted": "estimate on the pre-FOMC dummy by 18 basis points, or a third of the average pre-FOMC return",
+      "note": "Sur l'échantillon post-septembre 1997 (introduction de l'E-mini), le drift de référence est de 54 bp ; contrôler l'innovation du VIX le ramène à 36 bp."
+    },
+    {
+      "name": "joint_liquidity_volatility_control_bp",
+      "value": 32,
+      "unit": "bp",
+      "quoted": "on the pre-FOMC dummy is now 32 basis points but remains highly statistically",
+      "note": "Contrôle conjoint des innovations de VIX et de volume E-mini : le coefficient tombe à 32 bp mais reste très significatif. Une fraction du drift, pas sa totalité, s'explique par la baisse de volatilité et de liquidité."
+    },
+    {
+      "name": "emini_tracks_cash_index",
+      "value": null,
+      "unit": null,
+      "quoted": "the SPX very closely and exhibits almost identical pre-FOMC announcement returns as the cash",
+      "note": "Point décisif pour la transposabilité : les auteurs constatent explicitement que le future E-mini S&P500, négociable depuis septembre 1997, présente des rendements pre-FOMC quasi identiques à ceux de l'indice comptant. Aucun chiffre n'est donné pour cette comparaison."
+    },
+    {
+      "name": "announcement_time_changed_after_sample",
+      "value": null,
+      "unit": null,
+      "quoted": "Since April 2011, the time of the release has varied between 12:30 pm and",
+      "note": "L'horloge sur laquelle tout le papier repose a changé juste après la fin de l'échantillon : de septembre 1994 à mars 2011 le communiqué tombait à 14h15 ET, ensuite l'heure varie. Toute réplication postérieure doit reconstruire l'heure de publication réunion par réunion."
+    },
+    {
+      "name": "policy_surprise_uncorrelated",
+      "value": null,
+      "unit": null,
+      "quoted": "the magnitude of the ex-ante returns are (unsurprisingly) not associated with the ex-post policy",
+      "note": "Les coefficients sur la surprise de politique monétaire mesurée par les futures fed funds (Kuttner) sont économiquement et statistiquement nuls dans les deux échantillons ; celui sur la surprise actions vaut -12 bp post-1994, non significatif. Le drift n'anticipe pas le contenu de la décision."
+    },
+    {
+      "name": "detectable_in_real_time",
+      "value": null,
+      "unit": null,
+      "quoted": "as early as 1990 in some speciﬁcations and as of 2000 across all speciﬁcations. These results thus",
+      "note": "Analyse en fenêtres glissantes de cinq et dix ans et en pondérations exponentielles de demi-vie cinq et dix ans : le drift était détectable en temps réel par un investisseur, pas seulement ex post. Citation recopiée avec la ligature de l'extraction."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun coût : ni frais, ni spread bid-ask, ni impact, ni slippage n'entrent dans les Sharpe annoncés (1.14, 0.92, 1.43). Le papier mesure un rendement brut sur indice comptant, qui n'est même pas négociable tel quel.",
+    "Aucune tranche de holdout : toutes les régressions, y compris l'analyse dite « out-of-sample » du tableau 12, sont des ré-estimations en fenêtres glissantes sur le même échantillon. Rien n'est scellé.",
+    "L'échantillon s'arrête en mars 2011, et les auteurs signalent eux-mêmes qu'à partir d'avril 2011 l'heure de publication varie. Aucune information sur la période qui nous concerne.",
+    "Le nombre de spécifications essayées n'est pas déclaré dans son ensemble : le reality check ne couvre que dix muettes d'annonces macro, pas l'ensemble des fenêtres, sous-échantillons, pondérations et conditionnements présentés dans le papier.",
+    "Les rendements internationaux sont hors dividendes et hors taux sans risque, contrairement au SPX : les niveaux ne sont pas comparables entre les deux panels.",
+    "L'analyse transversale (tailles, industries) est quotidienne faute de données intraday désagrégées ; les rendements close-to-close mélangent pré- et post-annonce pour le TSX et pour les portefeuilles US.",
+    "Aucune donnée sur les futures actions hors E-mini S&P500, et l'E-mini n'est utilisé que comme proxy de volume : aucun chiffre de rendement pre-FOMC n'est publié pour lui, seulement l'affirmation qu'il est « presque identique » au comptant.",
+    "Le papier ne propose aucune explication qui survive à ses propres tests : il se clôt en qualifiant le drift d'énigme. Aucun mécanisme n'est donc disponible pour juger de sa stabilité future.",
+    "Aucune matrice de corrélation entre le signal pre-FOMC et d'autres effets de calendrier (fin de mois, expiration, autres événements programmés) n'est fournie."
+  ],
+  "transposability": {
+    "what_transfers": "Le motif et sa mécanique : un événement programmé, dont la date est publiée à l'avance et dont l'heure était fixe sur l'échantillon, concentre un rendement dans une fenêtre intraday strictement antérieure à la publication de l'information. La construction est sans look-ahead par nature — le calendrier du FOMC est connaissable à toute date passée — et se code comme une fonction du seul calendrier, sans donnée de marché autre que le prix. Trois conditionnements de régime sont eux aussi ex ante et donc transposables tels quels : pente de la courbe des taux retardée de deux jours, VIX à la clôture deux jours avant, et moyenne des huit derniers rendements de l'événement (MA8). Le fait que le drift n'apparaisse ni sur le revenu fixe ni avant les autres annonces macro est une contrainte utile : elle indique où ne pas chercher. Enfin, les auteurs affirment explicitement que le future E-mini S&P500 présente des rendements pre-FOMC quasi identiques à ceux de l'indice comptant, ce qui rend le motif au moins plausible sur un future actions de notre univers.",
+    "what_does_not_transfer": [
+      "La métrique. Le papier mesure une moyenne de rendements d'événement et un Sharpe annualisé ; notre harnais produit un IC. Un indicateur binaire de calendrier, identique pour tous les instruments à une date donnée, n'a aucune dispersion transversale et ne produit donc pas d'IC transversal : il faudrait soit le convertir en score conditionné par instrument, soit reconnaître que le papier ne fournit pas une cible directement évaluable chez nous.",
+      "La taille d'échantillon. Huit événements par an. Sur notre tranche pool 2016-2023, cela fait environ soixante-quatre observations, soit deux fois moins que les 131 du papier, et elles sont déjà toutes postérieures à la fin de son échantillon. Un t-statistique de 4.5 obtenu sur 131 observations ne dit rien sur ce que soixante-quatre produiront.",
+      "L'univers. Le résultat est un résultat actions. Sur nos neuf futures intraday, les classes que le papier teste explicitement et où il ne trouve rien — Treasuries à toutes maturités, futures fed funds, Eurodollar — devraient être écartées a priori plutôt que testées comme si l'hypothèse y valait. Les matières premières et les devises ne sont pas testées du tout : le papier ne dit rien sur elles, ni pour ni contre.",
+      "L'horloge. Le papier repose sur une publication à 14h15 ET, invariante de septembre 1994 à mars 2011 ; il note lui-même qu'à partir d'avril 2011 l'heure varie entre 12h30 et 14h00. Toute la fenêtre 2pm-2pm est donc un artefact de période. Sur notre pool, l'heure de publication doit être reconstruite réunion par réunion, et cette donnée n'existe pas dans notre catalogue : c'est un null et une entrée todo, pas une valeur plausible recopiée du papier.",
+      "Les coûts. Un Sharpe brut de 1.14 sur huit allers-retours par an tient sur indice comptant sans frottement. Nos neuf futures ont un multiplicateur, un tick et des frais, dont aucun n'est renseigné ici : le papier ne fournit aucun élément permettant d'estimer ce que la stratégie devient nette.",
+      "La coupe transversale. Le papier montre que la dispersion des rendements de jour de FOMC entre portefeuilles est expliquée à 65 % par le seul bêta de marché, constante non significative. Autrement dit, il n'y a rien à trier : la seule chose que le bêta fait varier, c'est l'exposition au même facteur unique. Sur neuf futures, cela suggère que tout écart entre instruments reflètera leur bêta actions, pas un signal propre.",
+      "La tranche. L'échantillon du papier (1960-2011, intraday 1994-2011) ne recouvre ni notre pool (2016-2023) ni notre holdout. Aucun chiffre du papier ne peut servir de référence à comparer aux nôtres ; ils indiquent quoi vérifier, jamais ce qui est vrai ici.",
+      "L'absence de mécanisme. Les auteurs rejettent tour à tour l'explication par le risque, la réallocation de risque à la Duffie, les bonnes nouvelles, la fuite d'information, la volatilité et la liquidité, et concluent sur une énigme. Un effet sans mécanisme identifié n'offre aucune raison de le croire stable quinze ans plus tard — et l'attention publique considérable reçue par ce papier est elle-même un motif de décroissance qu'il ne pouvait pas mesurer."
+    ],
+    "what_aligns_well": "Trois choses tombent juste. D'abord la granularité : le papier travaille en intraday sur des fenêtres de quelques heures, exactement l'échelle de notre univers, et non en rendements mensuels comme la plupart des papiers d'anomalie. Ensuite la construction sans look-ahead : un calendrier d'événements programmés publié à l'avance est le cas le plus simple de donnée point-in-time, et se loge sans effort dans un Panel qui refuse de lire une barre postérieure — la seule précaution étant le lag de publication du calendrier lui-même, qu'il faut renseigner et non deviner. Enfin les régimes : pente, VIX et MA8 sont trois conditionnements explicitement horodatés ex ante par les auteurs (retard de deux jours pour la pente et le VIX), ce qui en fait des hypothèses de régime pré-enregistrables telles quelles, sans réinterprétation de notre part."
+  },
+  "notes": {
+    "pre_registration_relevance": "Le papier fournit par lui-même trois hypothèses de régime distinctes (pente basse, VIX haut, MA8 positif) et une hypothèse de combinaison (les trois conjointement, 18 % de la variance expliquée). Si l'une d'elles est retenue, elle doit être écrite et horodatée avant de voir son résultat chez nous.",
+    "test_count_warning": "Le papier lui-même compte ses tests : reality check sur dix muettes d'annonces, bootstrap de petit échantillon, bootstrap de moyenne nulle. C'est un exemple rare de comptage honnête, mais il ne couvre pas les fenêtres alternatives (2pm-2pm, 2pm-close, close-close, close-2pm, close t-2 - 2pm), les sous-échantillons, ni les schémas de pondération du tableau 12."
+  }
+}
