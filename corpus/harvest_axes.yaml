@@ -1,0 +1,125 @@
+# Les axes de moissonnage — D21
+#
+# Un axe est un PERIMETRE DE RECHERCHE, pas un verdict d'implementabilite. Le
+# moissonneur ratisse et ne juge pas ; le tri reste au trieur (D15).
+#
+# REGLE, et c'est la seule qui compte ici :
+#   ajouter un axe est LIBRE. Modifier un axe QUI A DEJA SERVI ne l'est pas.
+#   `harvest.json` enregistre la chaine exacte utilisee a chaque passage, et
+#   `check_harvest.py` (H10) refuse tout ecart. On ouvre autant de pistes qu'on
+#   veut ; aucune ne se reecrit apres avoir vu ce qu'elle a rendu.
+#
+# Un axe stérile ne se supprime pas : il recoit une cle `retired:` datee, le
+# texte d'origine conserve (D21 § Ce qui reste ouvert).
+#
+# Le filtre de domaine, la fenetre de dates, le tri et le plafond sont communs a
+# tous les axes et restent fixes par `D20` : sous-champs OpenAlex 2002|2003,
+# depuis 1995-01-01, tri par citations, 60 par axe.
+
+axes:
+
+  # --------------------------------------------------------------------------
+  # family — les six sections d'AMORCE.md. Reversees telles quelles depuis D20,
+  # avec leur date d'origine, pour que les passages 1 et 2 restent lisibles.
+  # NE PAS MODIFIER : elles ont servi.
+  # --------------------------------------------------------------------------
+  - id: family:A
+    label: momentum intra-journalier
+    added: 2026-09-22
+    search: '"intraday momentum" OR "market intraday momentum"'
+  - id: family:B
+    label: overnight contre intraday
+    added: 2026-09-22
+    search: '"overnight return" OR "overnight drift" OR "tug of war"'
+  - id: family:C
+    label: periodicite et volatilite
+    added: 2026-09-22
+    search: '"intraday periodicity" OR "realized volatility" OR "HAR model"'
+  - id: family:D
+    label: annonces macroeconomiques
+    added: 2026-09-22
+    search: '"macroeconomic announcements" OR "FOMC announcement drift"'
+  - id: family:E
+    label: carry et structure de terme
+    added: 2026-09-22
+    search: '"carry trade" OR "commodity futures" OR "term structure of futures"'
+  - id: family:F
+    label: momentum en serie temporelle
+    added: 2026-09-22
+    search: '"time series momentum" OR "trend following" OR "managed futures"'
+
+  # --------------------------------------------------------------------------
+  # asset — la classe d'actif. Notre univers est de neuf futures (D01) : indices,
+  # metaux, energie, devises. Les actions et la crypto sont moissonnees quand
+  # meme, un motif y etant souvent publie AVANT d'etre transpose aux futures.
+  # --------------------------------------------------------------------------
+  - id: asset:equity-index-futures
+    label: futures sur indices actions
+    added: 2026-09-22
+    search: '"index futures" OR "S&P 500 futures" OR "E-mini" OR "stock index futures"'
+  - id: asset:fx
+    label: devises et futures de change
+    added: 2026-09-22
+    search: '"currency futures" OR "foreign exchange market" OR "FX intraday"'
+  - id: asset:commodities
+    label: matieres premieres, energie et metaux
+    added: 2026-09-22
+    search: '"crude oil futures" OR "gold futures" OR "commodity market intraday"'
+  - id: asset:rates
+    label: taux et obligataire
+    added: 2026-09-22
+    search: '"Treasury futures" OR "bond market intraday" OR "interest rate futures"'
+  - id: asset:crypto
+    label: crypto-actifs
+    added: 2026-09-22
+    search: '"cryptocurrency intraday" OR "bitcoin futures" OR "crypto market efficiency"'
+
+  # --------------------------------------------------------------------------
+  # method — comment le papier mesure, plutot que ce qu'il trouve. Contraint les
+  # phases 03 et 08 (le harnais, le codeur de signal) autant que la recherche.
+  # --------------------------------------------------------------------------
+  - id: method:realized-vol
+    label: volatilite realisee et sauts
+    added: 2026-09-22
+    search: '"realized variance" OR "jump detection" OR "bipower variation"'
+  - id: method:event-study
+    label: etude d'evenement et fenetres d'annonce
+    added: 2026-09-22
+    search: '"event study" AND ("high frequency" OR "intraday window")'
+  - id: method:machine-learning
+    label: apprentissage automatique en prevision de rendement
+    added: 2026-09-22
+    search: '"machine learning" AND ("return prediction" OR "asset pricing")'
+  - id: method:microstructure
+    label: microstructure et carnet d'ordres
+    added: 2026-09-22
+    search: '"order flow imbalance" OR "limit order book" OR "price impact"'
+  - id: method:replication
+    label: replication, p-hacking et multiplicite des tests
+    added: 2026-09-22
+    search: '"replication crisis" OR "multiple testing" OR "data snooping" OR "deflated Sharpe"'
+
+  # --------------------------------------------------------------------------
+  # anomaly — le motif predit. C'est l'axe le plus proche de ce que la phase 08
+  # devra coder.
+  # --------------------------------------------------------------------------
+  - id: anomaly:reversal
+    label: retournement de court terme
+    added: 2026-09-22
+    search: '"short-term reversal" OR "intraday reversal" OR "return reversal"'
+  - id: anomaly:seasonality
+    label: saisonnalite et effets de calendrier
+    added: 2026-09-22
+    search: '"seasonality in returns" OR "day-of-the-week effect" OR "turn-of-the-month"'
+  - id: anomaly:volatility-premium
+    label: prime de risque de volatilite
+    added: 2026-09-22
+    search: '"variance risk premium" OR "volatility risk premium" OR "VIX premium"'
+  - id: anomaly:liquidity
+    label: liquidite et cout de transaction
+    added: 2026-09-22
+    search: '"liquidity premium" OR "transaction costs" AND ("futures" OR "intraday")'
+  - id: anomaly:announcement-drift
+    label: derive post-annonce
+    added: 2026-09-22
+    search: '"post-earnings announcement drift" OR "pre-announcement drift"'

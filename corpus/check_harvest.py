@@ -45,12 +45,12 @@ HARVEST = REPO / "corpus" / "harvest.json"
 
 sys.path.insert(0, str(REPO / "corpus"))
 from harvest import (  # noqa: E402
-    FAMILIES,
     FROM_DATE,
     PER_FAMILY,
     REASONS,
     SORT,
     SUBFIELDS,
+    load_axes,
 )
 
 STATUSES = ("atteignable", "inatteignable", None)
@@ -78,12 +78,35 @@ def faults(data: dict) -> list[str]:
     if q.get("per_family") != PER_FAMILY:
         out.append(f"H1 `per_family` {q.get('per_family')!r}, D20 dit {PER_FAMILY!r}")
 
+    # H10 — LE refus qui porte `D21`. Ajouter un axe est libre ; en modifier un
+    # QUI A DEJA SERVI ne l'est pas. `harvest.json` garde la chaine exacte du
+    # passage ; si le YAML en dit une autre, un axe a ete reecrit APRES avoir vu
+    # ce qu'il rendait — et tout ce qu'il a ramene change retroactivement de sens.
+    try:
+        declared = load_axes()
+    except Exception as e:  # noqa: BLE001 — un YAML casse est une faute, pas un plantage
+        declared = {}
+        out.append(f"H10 `harvest_axes.yaml` illisible : {type(e).__name__}: {e}")
+
     fams = data.get("families") or {}
-    if sorted(fams) != sorted(FAMILIES):
-        out.append(f"H1 familles {sorted(fams)}, D20 en fige {sorted(FAMILIES)}")
     for key, f in fams.items():
-        if key in FAMILIES and f.get("search") != FAMILIES[key]:
-            out.append(f"H1 famille {key} : la recherche a change depuis D20")
+        if key not in declared:
+            out.append(f"H10 axe {key} utilise mais absent de harvest_axes.yaml")
+        elif f.get("search") != declared[key]["search"]:
+            out.append(f"H10 axe {key} : la recherche a CHANGE depuis le passage "
+                       f"qui l'a utilise")
+    for w in data.get("works") or []:
+        if not (w.get("axes") or []):
+            out.append(f"H10 travail {w.get('openalex_id')} : AUCUN axe — il est "
+                       "dans le corpus sans trace de ce qui l'y a fait entrer")
+            continue
+        for ax in w["axes"]:
+            if ax not in fams:
+                out.append(f"H10 travail {w.get('openalex_id')} : axe {ax} "
+                           "inconnu du recensement des axes")
+                break
+
+    for key, f in fams.items():
         # H9 — coherence des comptes.
         if (f.get("oa_total") or 0) > (f.get("total") or 0):
             out.append(f"H9 famille {key} : {f.get('oa_total')} libres "
@@ -167,8 +190,19 @@ def main() -> int:
     checks.append(case("H1 le tri a change depuis D20", c, False, "H1"))
 
     c = copy.deepcopy(real)
-    c["families"]["A"]["search"] = '"intraday momentum" AND profitable'
-    checks.append(case("H1 la recherche d'une famille a change", c, False, "H1"))
+    first_axis = sorted(c["families"])[0]
+    c["families"][first_axis]["search"] = '"intraday momentum" AND profitable'
+    checks.append(case("H10 un axe a ete REECRIT apres avoir servi", c, False, "H10"))
+
+    c = copy.deepcopy(real)
+    c["families"]["anomaly:invente-apres-coup"] = dict(
+        c["families"][first_axis], label="axe non declare")
+    checks.append(case("H10 un axe utilise sans etre declare", c, False, "H10"))
+
+    c = copy.deepcopy(real)
+    if c["works"]:
+        c["works"][0]["axes"] = ["asset:jamais-declare"]
+        checks.append(case("H10 un travail portant un axe inconnu", c, False, "H10"))
 
     c = copy.deepcopy(real)
     c["query"]["oa_only"] = False
@@ -178,9 +212,13 @@ def main() -> int:
     c["query"]["per_family"] = PER_FAMILY * 20
     checks.append(case("H1 le plafond a ete releve hors decision", c, False, "H1"))
 
+    # Un axe ABSENT n'est plus une faute depuis `D21` : lancer un sous-ensemble
+    # d'axes est legitime. Ce qui reste une faute, c'est un papier SANS AUCUN
+    # axe — il serait dans le corpus sans trace de ce qui l'y a fait entrer.
     c = copy.deepcopy(real)
-    c["families"].pop("F", None)
-    checks.append(case("H1 une famille manquante", c, False, "H1"))
+    if c["works"]:
+        c["works"][0]["axes"] = []
+        checks.append(case("H10 un travail sans aucun axe", c, False, "H10"))
 
     c = copy.deepcopy(real)
     c["works"][0]["status"] = "peut-etre"

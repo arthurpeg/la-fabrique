@@ -69,23 +69,42 @@ from probe_acquisition import MIN_PDF_BYTES, REASONS, UA  # noqa: E402
 # DECISION ECRITE, et tout comptage de corpus anterieur devient perime.
 # ---------------------------------------------------------------------------
 
-FAMILIES: dict[str, str] = {
-    "A": '"intraday momentum" OR "market intraday momentum"',
-    "B": '"overnight return" OR "overnight drift" OR "tug of war"',
-    "C": '"intraday periodicity" OR "realized volatility" OR "HAR model"',
-    "D": '"macroeconomic announcements" OR "FOMC announcement drift"',
-    "E": '"carry trade" OR "commodity futures" OR "term structure of futures"',
-    "F": '"time series momentum" OR "trend following" OR "managed futures"',
-}
+AXES_FILE = REPO / "corpus" / "harvest_axes.yaml"
 
-FAMILY_LABELS: dict[str, str] = {
-    "A": "momentum intra-journalier",
-    "B": "overnight contre intraday",
-    "C": "periodicite et volatilite",
-    "D": "annonces macroeconomiques",
-    "E": "carry et structure de terme",
-    "F": "momentum en serie temporelle",
-}
+
+def load_axes() -> dict[str, dict]:
+    """Les axes declares, depuis `corpus/harvest_axes.yaml` — `D21`.
+
+    Un axe est un PERIMETRE de recherche, pas un verdict. Ajouter un axe est
+    libre ; en modifier un qui a deja servi ne l'est pas, et `check_harvest.py`
+    (`H10`) refuse l'ecart en comparant a la chaine enregistree au passage.
+    """
+    import yaml
+
+    doc = yaml.safe_load(AXES_FILE.read_text(encoding="utf-8"))
+    out = {}
+    for a in doc["axes"]:
+        if a["id"] in out:
+            raise SystemExit(f"axe duplique dans harvest_axes.yaml : {a['id']}")
+        if a.get("retired"):
+            continue
+        out[a["id"]] = a
+    return out
+
+
+def select_axes(pattern: str) -> dict[str, dict]:
+    """`all`, `family` (tout un axe), ou `anomaly:carry` (un seul)."""
+    axes = load_axes()
+    if pattern in ("all", "*"):
+        return axes
+    if ":" in pattern:
+        chosen = {k: v for k, v in axes.items() if k == pattern}
+    else:
+        chosen = {k: v for k, v in axes.items() if k.split(":", 1)[0] == pattern}
+    if not chosen:
+        raise SystemExit(f"aucun axe ne correspond a {pattern!r} — "
+                         f"connus : {', '.join(sorted(axes))}")
+    return chosen
 
 # 2002 Economics and Econometrics, 2003 Finance. Sans cette contrainte,
 # « overnight » ramene la litterature medicale et « trend following » ramene
@@ -152,7 +171,7 @@ def norm_title(title: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", ascii_fold(title or "").lower()).strip()
 
 
-def get_json(url: str, timeout: int = 30, tries: int = 5) -> dict:
+def get_json(url: str, timeout: int = 30, tries: int = 6) -> dict:
     """Une requete de catalogue, avec RECUL PROGRESSIF sur un `429`.
 
     Un `429` dit « trop vite » : la reponse juste est de ralentir, et c'est
@@ -161,7 +180,11 @@ def get_json(url: str, timeout: int = 30, tries: int = 5) -> dict:
     2026-09-22 s'y est casse. L'attente double a chaque essai et le nombre
     d'essais est borne : au-dela, on s'arrete au lieu de marteler.
     """
-    delay = 5.0
+    # 10, 20, 40, 80, 160 s. Porte de 5 a 10 le 2026-09-22 : au troisieme axe
+    # lance dans la meme session, le pool commun refusait encore apres 75 s
+    # cumulees. Plus on a demande, plus il faut attendre — c'est la regle, et on
+    # l'applique au lieu de la contourner.
+    delay = 10.0
     for attempt in range(1, tries + 1):
         req = urllib.request.Request(url, headers={"User-Agent": UA})
         try:
@@ -243,7 +266,7 @@ def amorce_index() -> dict[str, int]:
     return out
 
 
-def work_row(work: dict, family: str, seen_titles: dict[str, int]) -> dict:
+def work_row(work: dict, axis: str, seen_titles: dict[str, int]) -> dict:
     oid = (work.get("id") or "").rsplit("/", 1)[-1]
     title = work.get("title") or work.get("display_name") or ""
     doi = (work.get("doi") or "").replace("https://doi.org/", "") or None
@@ -253,7 +276,10 @@ def work_row(work: dict, family: str, seen_titles: dict[str, int]) -> dict:
     dup = seen_titles.get(norm_title(title))
     return {
         "openalex_id": oid,
-        "family": family,
+        # Un papier peut entrer par PLUSIEURS axes, et c'est enregistre : savoir
+        # lequel l'a amene n'a pas d'interet, savoir qu'il est au croisement de
+        # deux pistes en a (`D21`).
+        "axes": [axis],
         "title": title,
         "authors": [a for a in authors if a],
         "year": work.get("publication_year"),
@@ -267,7 +293,7 @@ def work_row(work: dict, family: str, seen_titles: dict[str, int]) -> dict:
              "landing_page_url": loc.get("landing_page_url")}
             for loc in (work.get("locations") or []) if loc.get("is_oa")
         ],
-        "found_via": f"OpenAlex, famille {family}, requete de D20",
+        "found_via": f"OpenAlex, axe {axis}, requete de D20/D21",
         "duplicate_of": ({"rule": "titre normalise, AMORCE.md", "entry": dup}
                          if dup else None),
         "status": None,
@@ -283,7 +309,7 @@ def work_row(work: dict, family: str, seen_titles: dict[str, int]) -> dict:
     }
 
 
-def do_search(per_family: int) -> int:
+def do_search(per_family: int, pattern: str = "all") -> int:
     """Cherche, et AJOUTE a ce qui existe deja.
 
     Un passage ne remplace jamais le precedent : les travaux deja sondes gardent
@@ -300,43 +326,63 @@ def do_search(per_family: int) -> int:
 
     previous = json.loads(HARVEST.read_text(encoding="utf-8")) if HARVEST.is_file() else {}
     works = list(previous.get("works") or [])
+    # Migration des passages 1 et 2, anterieurs a `D21` : ils portaient
+    # `family: "A"`. Le champ est traduit, jamais efface — la trace de l'axe qui
+    # a fait entrer un papier est ce que `D21` veut garder.
+    migres = 0
+    for w in works:
+        if "axes" not in w:
+            w["axes"] = [f"family:{w.get('family')}"] if w.get("family") else []
+            migres += 1
     by_id = {w["openalex_id"]: w for w in works}
     if works:
         print(f"passage precedent : {len(works)} candidats conserves, "
-              f"{sum(1 for w in works if w.get('status'))} deja sondes")
-    print()
+              f"{sum(1 for w in works if w.get('status'))} deja sondes"
+              + (f", {migres} migres vers D21" if migres else ""))
 
-    families = {}
-    for key, search in FAMILIES.items():
+    axes = select_axes(pattern)
+    print(f"axes lances : {len(axes)} — {', '.join(sorted(axes))}\n")
+
+    families = dict(previous.get("families") or {})
+    for key in sorted(axes):
+        spec = axes[key]
+        search = spec["search"]
         total = get_json(query_url(search, 1, False, None))["meta"]["count"]
         time.sleep(PAUSE_API)
         page = get_json(query_url(search, per_family, True, SORT))
         time.sleep(PAUSE_API)
         oa_total = page["meta"]["count"]
-        kept = 0
+        kept, crossed = 0, 0
         for w in page["results"]:
             row = work_row(w, key, seen_titles)
             if not row["openalex_id"]:
                 continue
-            if row["openalex_id"] in by_id:
-                continue  # le meme travail trouve par deux familles
+            seen = by_id.get(row["openalex_id"])
+            if seen is not None:
+                # Deja trouve par un autre axe : on note le croisement et on
+                # garde son statut de sondage. On ne le re-sonde pas.
+                if key not in seen.setdefault("axes", []):
+                    seen["axes"].append(key)
+                    crossed += 1
+                continue
             by_id[row["openalex_id"]] = row
             works.append(row)
             kept += 1
         families[key] = {
-            "label": FAMILY_LABELS[key], "search": search,
+            "label": spec["label"], "search": search, "added": str(spec.get("added")),
             "total": total, "oa_total": oa_total,
             "retrieved": len(page["results"]), "new": kept,
         }
-        print(f"  {key} {FAMILY_LABELS[key]:28s} {total:>7,} travaux, "
-              f"{oa_total:>7,} libres — {kept:>2} retenus")
+        print(f"  {key:34s} {total:>7,} travaux, {oa_total:>7,} libres"
+              f" — {kept:>2} nouveaux, {crossed:>2} croises")
 
     dups = sum(1 for w in works if w["duplicate_of"])
     passages = list(previous.get("passages") or [])
     passages.append({"date": today, "per_family": per_family,
-                     "candidats_apres": len(works), "mailto_set": bool(MAILTO)})
+                     "axes": sorted(axes), "candidats_apres": len(works),
+                     "mailto_set": bool(MAILTO)})
     data = {
-        "decision": "D20",
+        "decision": "D20+D21",
         "checked": today,
         "query": {"from_date": FROM_DATE, "subfields": SUBFIELDS, "sort": SORT,
                   "per_family": per_family, "oa_only": True,
@@ -603,15 +649,16 @@ def do_report() -> int:
     data = load()
     works = data["works"]
     print(f"moisson du {data['checked']} — requete de {data['decision']}\n")
-    print(f"  {'fam':3s} {'famille':28s} {'total':>7s} {'libres':>7s} "
-          f"{'pris':>5s} {'PDF':>5s}")
+    print(f"  {'axe':32s} {'total':>7s} {'libres':>7s} {'pris':>5s} {'PDF':>5s}")
     for key, f in data["families"].items():
-        mine = [w for w in works if w["family"] == key]
-        got = sum(1 for w in mine if w["status"] == "atteignable")
         # Compte sur les travaux eux-memes, et non sur le `new` du dernier
         # passage : apres un second passage, `new` ne dit plus que l'ajout.
-        print(f"  {key:3s} {f['label']:28s} {f['total']:>7,} {f['oa_total']:>7,} "
+        mine = [w for w in works if key in (w.get("axes") or [])]
+        got = sum(1 for w in mine if w["status"] == "atteignable")
+        print(f"  {key:32s} {f['total']:>7,} {f['oa_total']:>7,} "
               f"{len(mine):>5} {got:>5}")
+    croises = sum(1 for w in works if len(w.get("axes") or []) > 1)
+    print(f"  {'(au croisement de 2 axes ou plus)':32s} {'':>7s} {'':>7s} {croises:>5}")
 
     done = [w for w in works if w["status"]]
     ok = [w for w in works if w["status"] == "atteignable"]
@@ -643,10 +690,18 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--per-family", type=int, default=PER_FAMILY)
     ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument("--axis", default="all",
+                    help="`all`, un axe entier (`anomaly`) ou un seul "
+                         "(`anomaly:reversal`). Voir corpus/harvest_axes.yaml")
+    ap.add_argument("--axes", action="store_true", help="liste les axes declares")
     a = ap.parse_args(argv)
 
+    if a.axes:
+        for k, v in sorted(load_axes().items()):
+            print(f"  {k:34s} {v['label']:38s} (declare le {v.get('added')})")
+        return 0
     if a.search:
-        return do_search(a.per_family)
+        return do_search(a.per_family, a.axis)
     if a.probe:
         return do_probe(a.limit)
     if a.reverdict:
