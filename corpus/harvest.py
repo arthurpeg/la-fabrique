@@ -140,6 +140,22 @@ CROSSREF = "https://api.crossref.org/works"
 SSRN_PREFIX = "10.2139"
 CROSSREF_SORT = "is-referenced-by-count"
 
+# NBER attribue le prefixe 10.3386 a ses documents de travail, et sert leur PDF
+# a une adresse PREVISIBLE. Ce depot est la version libre de quantite de papiers
+# payants en finance : les entrees 18 et 19 d'`AMORCE.md` sont exactement cela.
+NBER_PREFIX = "10.3386"
+NBER_PDF = "https://www.nber.org/system/files/working_papers/{wp}/{wp}.pdf"
+
+# CORE agrege 57 M de textes integraux depuis 16 000 depots. Gratuit sans cle
+# (debit reduit), meilleur avec une cle gratuite : `CORE_API_KEY` dans `.env`.
+CORE = "https://api.core.ac.uk/v3/search/works"
+CORE_KEY = os.environ.get("CORE_API_KEY", "").strip() or None
+
+# La VERSION DU RESOLVEUR. Un verdict `inatteignable` ne vaut que pour l'ensemble
+# de portes qu'on a essayees ce jour-la : en ajouter une PERIME les refus
+# anterieurs, sans toucher aux reussites. `--probe --retry` les reprend.
+RESOLVERS = "2026-09-22b : openalex + nber + landing + core"
+
 # Le « pool poli » d'OpenAlex et l'API d'Unpaywall demandent une adresse de
 # courriel. Elle n'est PAS ecrite en dur : c'est une donnee personnelle, et
 # l'envoyer a un tiers est un geste que l'utilisateur pose lui-meme, en
@@ -610,6 +626,102 @@ def unpaywall_urls(doi: str) -> list[dict]:
     return out
 
 
+def nber_urls(title: str) -> list[dict]:
+    """La version NBER d'un papier, si elle existe — methode 1.
+
+    Presque tout papier de finance payant a une version de travail libre. Le
+    recensement l'a mesure : s'en tenir au lien d'`AMORCE.md` rendait 5
+    atteignables sur 20, chercher le PAPIER en rendait 19. Ici on cherche le
+    papier dans le catalogue de Crossref, restreint au prefixe du NBER, puis on
+    derive l'adresse du PDF — celle-la meme qui sert deja les entrees 18 et 19.
+
+    Crossref ne nous limite pas, ce qui rend ce detour gratuit en debit.
+    """
+    if not title.strip():
+        return []
+    params = {"filter": f"prefix:{NBER_PREFIX}", "query.bibliographic": title,
+              "rows": 3, "select": "DOI,title"}
+    if MAILTO:
+        params["mailto"] = MAILTO
+    try:
+        items = get_json(f"{CROSSREF}?{urllib.parse.urlencode(params)}",
+                         tries=2)["message"].get("items", [])
+    except Exception:
+        return []
+    out = []
+    want = norm_title(title)
+    for it in items:
+        got = norm_title((it.get("title") or [""])[0])
+        # Titre IDENTIQUE apres normalisation, pas « proche » : une version de
+        # travail porte le meme titre, et une approximation ferait entrer un
+        # autre papier sous le nom de celui-ci — c'est exactement `L20`.
+        if got != want:
+            continue
+        m = re.search(r"/(w\d+)$", it.get("DOI") or "")
+        if m:
+            out.append({"url": NBER_PDF.format(wp=m.group(1)),
+                        "via": f"NBER, version de travail ({it['DOI']}), titre identique"})
+    return out
+
+
+def landing_page_pdfs(url: str, limit: int = 4) -> list[dict]:
+    """Les liens PDF d'une page de depot — methode 2.
+
+    Beaucoup d'emplacements libres n'ont pas de `pdf_url` mais une
+    `landing_page_url` : la fiche du depot, ou la page personnelle d'un auteur.
+    Le PDF y est lie, il n'est simplement pas annonce au catalogue. On lit CETTE
+    page — celle que le catalogue nous a designee — et rien d'autre : aucun
+    moteur de recherche, aucun site qui nous refuse, aucun contournement.
+    """
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": UA})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            if "html" not in (r.headers.get("Content-Type") or ""):
+                return []
+            html = r.read(600_000).decode("utf-8", "replace")
+    except Exception:
+        return []
+    out, seen = [], set()
+    for href in re.findall(r'href=["\']([^"\']+)["\']', html, re.I):
+        if ".pdf" not in href.lower():
+            continue
+        full = urllib.parse.urljoin(url, href)
+        if full in seen:
+            continue
+        seen.add(full)
+        out.append({"url": full, "via": f"lien PDF trouve sur la page de depot {url}"})
+        if len(out) >= limit:
+            break
+    return out
+
+
+def core_urls(doi: str, title: str) -> list[dict]:
+    """Le texte integral chez CORE — methode 3.
+
+    CORE agrege 57 M de textes integraux depuis 16 000 depots, et c'est le seul
+    des trois qui HEBERGE les fichiers au lieu d'y renvoyer. Sans cle il repond
+    quand meme, a debit reduit ; `CORE_API_KEY` dans `.env` l'ouvre davantage.
+    """
+    if not doi and not title.strip():
+        return []
+    q = f'doi:"{doi}"' if doi else f'title:"{title[:120]}"'
+    params = {"q": q, "limit": 3}
+    headers = {"Authorization": f"Bearer {CORE_KEY}"} if CORE_KEY else {}
+    try:
+        req = urllib.request.Request(f"{CORE}?{urllib.parse.urlencode(params)}",
+                                     headers={"User-Agent": UA, **headers})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            d = json.loads(r.read())
+    except Exception:
+        return []
+    out = []
+    for w in (d.get("results") or [])[:3]:
+        for key in ("downloadUrl", "fullTextIdentifier"):
+            if w.get(key):
+                out.append({"url": w[key], "via": f"CORE ({key})"})
+    return out
+
+
 def pdf_candidates(work: dict) -> list[dict]:
     """Toutes les URL ou le PDF pourrait vivre, depots AVANT editeurs.
 
@@ -617,15 +729,29 @@ def pdf_candidates(work: dict) -> list[dict]:
     derriere peage (mesure de `D20` — OpenAlex rend `bronze` sur ScienceDirect).
     Il est sonde quand meme, en dernier : c'est la sonde qui tranche, pas l'ordre.
     """
-    repos, publishers = [], []
+    repos, publishers, landings = [], [], []
     for loc in work.get("oa_locations") or []:
         url = loc.get("pdf_url")
-        if not url:
-            continue
-        via = f"OpenAlex, depot « {loc.get('host')} »"
-        (publishers if any(h in url for h in PUBLISHER_HOSTS) else repos).append(
-            {"url": url, "via": via})
-    out = repos + unpaywall_urls(work.get("doi") or "") + publishers
+        if url:
+            via = f"OpenAlex, depot « {loc.get('host')} »"
+            (publishers if any(h in url for h in PUBLISHER_HOSTS) else repos).append(
+                {"url": url, "via": via})
+        elif loc.get("landing_page_url"):
+            landings.append(loc["landing_page_url"])
+
+    # L'ORDRE EST LE FOND DU SUJET. Les depots d'abord, parce qu'ils servent
+    # vraiment ; le NBER ensuite, parce qu'une version de travail libre vaut
+    # mieux qu'un editeur qui refusera ; les pages de depot et CORE apres,
+    # parce qu'ils coutent une requete de plus ; les editeurs en DERNIER, parce
+    # qu'ils annoncent « libre » et refusent une fois sur deux (mesure du
+    # 2026-09-22 : 290 `pdf_url` annonces, 123 tenus).
+    out = list(repos)
+    out += nber_urls(work.get("title") or "")
+    for lp in landings[:2]:
+        out += landing_page_pdfs(lp)
+    out += core_urls(work.get("doi") or "", work.get("title") or "")
+    out += unpaywall_urls(work.get("doi") or "")
+    out += publishers
     seen, uniq = set(), []
     for c in out:
         if c["url"] not in seen:
@@ -706,10 +832,32 @@ def do_reverdict() -> int:
     return 0
 
 
-def do_probe(limit: int | None) -> int:
+def do_probe(limit: int | None, retry: bool = False) -> int:
+    """Sonde les candidats non encore juges, et avec `--retry` les REFUS perimes.
+
+    Un verdict `inatteignable` ne vaut que pour l'ensemble de portes essayees ce
+    jour-la. Ajouter un resolveur ne change pas QUELS papiers sont regardes — le
+    denominateur ne bouge pas — mais il perime les refus, jamais les reussites :
+    un PDF obtenu reste obtenu. `RESOLVERS` inscrit sur chaque travail ce qui a
+    ete essaye, pour que la peremption soit visible au lieu d'etre supposee.
+    """
     data = load()
     today = str(date.today())
     todo = [w for w in data["works"] if w["status"] is None and not w["duplicate_of"]]
+    stale = [w for w in data["works"]
+             if w.get("status") == "inatteignable"
+             and w.get("resolvers") != RESOLVERS and not w["duplicate_of"]]
+    if retry:
+        # Les refus perimes D'ABORD, et c'est deliberé : ils forment
+        # l'experience PROPRE. Ces papiers ont deja ete refuses par la chaine
+        # precedente, donc tout succes y est attribuable aux resolveurs ajoutes,
+        # sans confondant de composition. Un lot de candidats neufs, lui,
+        # melange l'effet du resolveur et celui du sujet.
+        todo = stale + todo
+        print(f"reprise : {len(stale)} refus perimes par un resolveur plus large")
+    elif stale:
+        print(f"note : {len(stale)} refus datent d'un resolveur plus etroit — "
+              f"`--probe --retry` les reprend")
     if limit:
         todo = todo[:limit]
     print(f"{len(todo)} candidats a sonder "
@@ -726,6 +874,7 @@ def do_probe(limit: int | None) -> int:
         w.update(verdict(cands, attempts))
         w["attempts"] = attempts
         w["checked"] = today
+        w["resolvers"] = RESOLVERS
         mark = "PDF " if w["status"] == "atteignable" else f"{w['reason']:<18}"
         print(f"  {i:>3}/{len(todo)} {mark} {w['title'][:56]}")
         if i % 10 == 0:
@@ -881,6 +1030,8 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--reverdict", action="store_true")
     ap.add_argument("--migrate", action="store_true")
     ap.add_argument("--resolve", action="store_true")
+    ap.add_argument("--retry", action="store_true",
+                    help="avec --probe : reprend les refus perimes par un resolveur plus large")
     ap.add_argument("--fetch", action="store_true")
     ap.add_argument("--report", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
@@ -899,7 +1050,7 @@ def main(argv: list[str]) -> int:
     if a.search:
         return do_search(a.per_family, a.axis)
     if a.probe:
-        return do_probe(a.limit)
+        return do_probe(a.limit, a.retry)
     if a.reverdict:
         return do_reverdict()
     if a.migrate:
