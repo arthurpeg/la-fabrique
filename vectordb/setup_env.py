@@ -19,7 +19,7 @@ import getpass
 import re
 import sys
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, unquote
 
 REPO = Path(__file__).resolve().parents[1]
 ENV = REPO / ".env"
@@ -56,19 +56,41 @@ def main() -> int:
     print("Le mot de passe ne s'affichera pas pendant la saisie.")
     print("C'est celui de la BASE, pas celui de ton compte Google.\n")
 
-    password = getpass.getpass("Mot de passe de la base : ").strip()
+    print("Colle SOIT le mot de passe seul, SOIT la chaîne `postgresql://…`")
+    print("entière telle que Supabase l'affiche — les deux marchent.\n")
+    saisie = getpass.getpass("Mot de passe ou chaîne de connexion : ").strip()
 
-    if not password:
+    if not saisie:
         print("\nRien saisi. Rien n'a été écrit.")
         return 1
+
+    if saisie.startswith(("http://", "https://")):
+        print("\nC'est l'adresse d'une page web, pas une chaîne de connexion.")
+        print("Celle qu'il faut commence par `postgresql://`. Rien n'a été écrit.")
+        return 1
+
+    if saisie.startswith("postgresql://"):
+        # La chaîne entière a été collée. On n'en garde QUE le mot de passe et
+        # on reconstruit l'hôte : Supabase propose aussi la connexion DIRECTE
+        # (`db.<ref>.supabase.co`), qui n'est joignable qu'en IPv6 — donc pas
+        # depuis un poste qui n'en a pas. Le pooler, lui, répond en IPv4.
+        m = re.match(r"postgresql://([^:]+):([^@]+)@([^:/]+):(\d+)/", saisie)
+        if not m:
+            print("\nChaîne incomplète ou tronquée — un collage coupé, sans doute.")
+            print("Rien n'a été écrit.")
+            return 1
+        _, brut, hote_donne, _ = m.groups()
+        password = unquote(brut)
+        if hote_donne != HOST:
+            print(f"\n  hôte remplacé : {hote_donne}")
+            print(f"                -> {HOST}  (session pooler, IPv4)")
+    else:
+        password = saisie
+
     low = password.lower()
     if any(p in low for p in PLACEHOLDERS):
         print(f"\nCe texte ressemble à un gabarit ({password[:4]}…), pas à un mot "
               "de passe. Rien n'a été écrit.")
-        return 1
-    if password.startswith(("http://", "https://", "postgresql://")):
-        print("\nC'est une URL, pas un mot de passe. Il faut UNIQUEMENT le mot de "
-              "passe. Rien n'a été écrit.")
         return 1
 
     # Un mot de passe peut contenir @ : / ? # — qui sont la syntaxe même de
