@@ -149,7 +149,7 @@ NBER_PDF = "https://www.nber.org/system/files/working_papers/{wp}/{wp}.pdf"
 # CORE agrege 57 M de textes integraux depuis 16 000 depots. Gratuit sans cle
 # (debit reduit), meilleur avec une cle gratuite : `CORE_API_KEY` dans `.env`.
 CORE = "https://api.core.ac.uk/v3/search/works"
-CORE_KEY = os.environ.get("CORE_API_KEY", "").strip() or None
+CORE_KEY: str | None = None  # renseigne plus bas, apres _load_env_file()
 
 # La VERSION DU RESOLVEUR. Un verdict `inatteignable` ne vaut que pour l'ensemble
 # de portes qu'on a essayees ce jour-la : en ajouter une PERIME les refus
@@ -161,7 +161,32 @@ RESOLVERS = "2026-09-22b : openalex + nber + landing + core"
 # l'envoyer a un tiers est un geste que l'utilisateur pose lui-meme, en
 # renseignant `HARVEST_MAILTO` dans `.env`. Sans elle, OpenAlex repond quand
 # meme (pool commun) et Unpaywall est saute, ce qui est dit a l'ecran.
+def _load_env_file() -> None:
+    """Charge `.env` sans ecraser l'environnement deja pose.
+
+    Le depot n'avait aucun chargeur : `panel/paths.py` n'y cherche que
+    `RSL_DATA_DIR=`. Ecrire `HARVEST_MAILTO=...` dans `.env` ne faisait donc
+    RIEN, en silence. Constate le 2026-09-22, apres l'avoir recommande deux
+    fois. Meme fonction dans `vectordb/vector_db.py`, ce module devant rester
+    lisible seul.
+    """
+    env_file = REPO / ".env"
+    if not env_file.is_file():
+        return
+    for raw in env_file.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key, value = key.strip(), value.strip().strip('"').strip("'")
+        if key and value and key not in os.environ:
+            os.environ[key] = value
+
+
+_load_env_file()
+
 MAILTO = os.environ.get("HARVEST_MAILTO", "").strip() or None
+CORE_KEY = os.environ.get("CORE_API_KEY", "").strip() or None
 
 # Hotes d'editeurs : leur `pdf_url` est le plus souvent une page derriere
 # peage. Sondes en DERNIER, jamais exclus — c'est la sonde qui tranche.

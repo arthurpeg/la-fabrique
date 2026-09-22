@@ -27,6 +27,7 @@ from collections.abc import Sequence
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import date
+from pathlib import Path
 from typing import Any, Literal
 from uuid import UUID
 
@@ -91,6 +92,31 @@ class Strategy:
     embedding_model: str | None = None
 
 
+def load_env_file(path: Path | None = None) -> int:
+    """Charge `.env` dans l'environnement, SANS écraser ce qui y est déjà.
+
+    Le dépôt n'avait aucun chargeur : `panel/paths.py` n'y cherche qu'une seule
+    ligne, `RSL_DATA_DIR=`. Écrire `DATABASE_URL=...` dans `.env` ne faisait
+    donc RIEN, en silence — le genre de panne qui se diagnostique une heure
+    plus tard. Les variables déjà posées gagnent, pour qu'un lancement
+    ponctuel (`DATABASE_URL=... python ...`) reste souverain.
+    """
+    env_file = path or Path(__file__).resolve().parents[1] / ".env"
+    if not env_file.is_file():
+        return 0
+    loaded = 0
+    for raw in env_file.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key, value = key.strip(), value.strip().strip('"').strip("'")
+        if key and value and key not in os.environ:
+            os.environ[key] = value
+            loaded += 1
+    return loaded
+
+
 def _stringify_ids(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Ramène tout identifiant à une chaîne.
 
@@ -149,6 +175,7 @@ class VectorDB:
         variables séparées. Aucune valeur par défaut pour le mot de passe :
         un identifiant deviné est un identifiant qui finit dans un dépôt.
         """
+        load_env_file()
         dsn = os.environ.get("DATABASE_URL", "").strip()
         if not dsn:
             missing = [k for k in ("PGHOST", "PGDATABASE", "PGUSER", "PGPASSWORD")
