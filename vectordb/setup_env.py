@@ -48,17 +48,37 @@ def read_other_lines() -> list[str]:
             if not line.strip().startswith("DATABASE_URL")]
 
 
-def main() -> int:
+def masque(secret: str) -> str:
+    """De quoi RECONNAÎTRE un mot de passe sans le révéler.
+
+    Deux caractères à chaque bout suffisent à voir qu'on s'est trompé de
+    chaîne, ou qu'un collage a été tronqué — ce qui est arrivé cinq fois.
+    """
+    if len(secret) <= 4:
+        return "*" * len(secret)
+    return f"{secret[:2]}{'*' * (len(secret) - 4)}{secret[-2:]}"
+
+
+def main(visible: bool = False) -> int:
     print(f"Projet   : {PROJECT_REF}")
     print(f"Région   : {REGION}")
     print(f"Hôte     : {HOST}:{PORT}  (session pooler)")
     print(f"Fichier  : {ENV}\n")
-    print("Le mot de passe ne s'affichera pas pendant la saisie.")
-    print("C'est celui de la BASE, pas celui de ton compte Google.\n")
+    if not visible:
+        print("La saisie ne s'affichera pas. Pour la voir : --visible")
+    print("C'est le mot de passe de la BASE, pas celui de ton compte Google.\n")
 
     print("Colle SOIT le mot de passe seul, SOIT la chaîne `postgresql://…`")
     print("entière telle que Supabase l'affiche — les deux marchent.\n")
-    saisie = getpass.getpass("Mot de passe ou chaîne de connexion : ").strip()
+
+    if visible:
+        print("MODE VISIBLE : ce que tu tapes s'affiche, et reste dans l'historique")
+        print("du terminal. À utiliser pour vérifier un collage, puis réinitialiser")
+        print("le mot de passe si tu préfères.\n")
+        saisie = input("Mot de passe ou chaîne de connexion : ").strip()
+    else:
+        saisie = getpass.getpass("Mot de passe ou chaîne de connexion : ").strip()
+        print(f"  ({len(saisie)} caractères reçus)")
 
     if not saisie:
         print("\nRien saisi. Rien n'a été écrit.")
@@ -98,6 +118,15 @@ def main() -> int:
     dsn = (f"postgresql://{USER}:{quote(password, safe='')}"
            f"@{HOST}:{PORT}/{DATABASE}")
 
+    # Ce que le script a COMPRIS, avant d'agir. Cinq tentatives ont echoue
+    # faute de pouvoir verifier ce qui avait ete colle : prefixe double, hote
+    # tronque, gabarit laisse en place. Un recapitulatif coute trois lignes.
+    print("\n--- ce que je vais écrire ---")
+    print(f"  utilisateur  : {USER}")
+    print(f"  mot de passe : {masque(password)}  ({len(password)} caractères)")
+    print(f"  hôte         : {HOST}:{PORT}")
+    print(f"  base         : {DATABASE}")
+
     print("\nTest de la connexion…", flush=True)
     try:
         import psycopg
@@ -131,4 +160,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(visible="--visible" in sys.argv))
