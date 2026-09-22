@@ -15,6 +15,11 @@ calibration à la main (porte 03). `D13` § Pourquoi l'écrit sans détour, et a
 session ne doit lire cette porte comme davantage.
 
 **Décision la plus récente :**
+`decisions/DECISION-20-le-moissonnage-du-corpus.md` — le moissonneur **ratisse
+et ne juge pas**. Requête écrite avant d'être lancée, six familles reprises des
+sections A–F d'`AMORCE.md`. Son produit alimente la **phase 09** et **n'entre
+pas dans `G1`–`G4`** (`F47`). Passage 1 : 132 candidats, **43 PDF**.
+**Décision précédente :**
 `decisions/DECISION-19-la-version-de-l-extracteur-de-texte.md` — la **version**
 de `pypdf` fait partie de la définition du texte qui fait foi. Épinglée à
 `==6.14.2` dans `pyproject.toml`. En changer est une décision écrite qui
@@ -392,6 +397,51 @@ le choix s'est décidé sur le coût.
 **56**, les six portes vertes après réparation. `uv lock` n'a déplacé que
 `pypdf` — `numpy`, `pandas`, `scipy` et `pyarrow` sont inchangés, donc aucun
 résultat de harnais n'est concerné.
+
+### ALERTE — l'entrée 1 du recensement désigne le mauvais papier
+
+**Trouvée le 2026-09-22 par le moissonneur, et c'est `L20`.**
+`corpus/pdf/gao-2018-market-intraday-momentum.pdf` — déclaré par
+`acquisition.json` comme *Gao, Han, Li & Zhou (2018), « Market intraday
+momentum », JFE 129(2):394-414* — est en réalité **Limkriangkrai, Chai & Zheng
+(2023), « Market intraday momentum: APAC evidence », *Pacific-Basin Finance
+Journal* 80:102086**. Treize pages, une autre revue, d'autres auteurs.
+
+Le recensement prouvait qu'**un** PDF arrivait, jamais que c'était **le bon**.
+Et les deux vérifications automatiques évidentes échouent toutes les deux : le
+titre attendu est une **sous-chaîne** du titre réel, et le papier APAC **cite**
+Gao et al. (2018) dès son résumé. Ce qui l'a attrapée est une **collision
+d'empreinte `sha256`** entre deux affirmations indépendantes sur les mêmes
+octets.
+
+**Ce que ça touche :**
+
+| | État |
+|---|---|
+| `corpus/text/gao-2018-*.txt` | **faux** — c'est le texte du papier APAC sous le nom de Gao, et il est commité |
+| fiches | **aucune** ne s'en sert : les 4 fiches sont Andersen & Bollerslev, Heston, Mesfin, Patton. Rien en aval n'est contaminé |
+| `G1` | l'entrée 1 reste comptée atteignable ; sa réparation ne change pas le compte, seulement le fichier |
+
+**Non corrigé, délibérément.** Réparer demande de retrouver le vrai Gao 2018, de
+corriger `ALTERNATES` dans `probe_acquisition.py`, de re-sonder l'entrée, de
+re-télécharger et de **régénérer son texte `D18`** — donc de toucher un artefact
+qui fait foi. C'est un acte distinct, et on ne retouche pas un recensement en
+passant, pas plus qu'un étalon. **À faire avant de ficher l'entrée 1.**
+
+### Le moissonneur existe — `D20`, le 2026-09-22
+
+`corpus/harvest.py` et son garde `corpus/check_harvest.py`
+(**16 vérifications**). Il **ratisse et ne juge pas** : le tri de
+l'implémentable reste au trieur, qui a son juge et son étalon. Il ne contient
+**aucune IA** — chercher et vérifier qu'un octet est `%PDF-` ne demande aucun
+jugement.
+
+**Passage 1** : 132 candidats, 127 sondés, **43 PDF enregistrés, 0 échec**,
+6 doublons. Sous la cible de 50 à 100, et la cause est réparable —
+`HARVEST_MAILTO` n'était pas renseigné, donc **Unpaywall n'a pas été interrogé**.
+
+**Son produit n'entre pas dans `G1`–`G4`** et ne fait pas bouger la porte 07
+d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 
 ### Ce qui reste ouvert par ailleurs
 

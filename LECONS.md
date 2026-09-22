@@ -571,3 +571,68 @@ entre dans la définition d'un IC (`D10`). Il s'épingle, et en changer périme.
 La question à se poser devant un artefact versionné : *quelle version de quoi
 faudrait-il pour le reproduire, et qu'est-ce qui l'impose ?* Si la réponse est
 « c'est écrit quelque part », ce n'est pas imposé.
+
+---
+
+## L20 — Vérifier qu'un PDF est arrivé ne vérifie pas que c'est le bon papier
+
+**Le 2026-09-22**, au premier passage du moissonneur (`D20`).
+
+**Ce qu'on croyait.** Que `corpus/acquisition.json` recensait 19 papiers
+atteignables, chacun prouvé par un `application/pdf` d'au moins 20 000 octets
+commençant par `%PDF-`. `ACQUISITION.md` § Comment le constat est fait est
+explicite et fier de l'être : *« Une URL qui répond 200 ne prouve rien. Une page
+de résumé répond 200 derrière un péage. »*
+
+**Ce qui était vrai.** La preuve établit qu'**un** PDF est arrivé. Elle
+n'établit nulle part que c'est **celui qu'on a demandé**. L'entrée 1 du
+recensement — *Gao, Han, Li & Zhou (2018), « Market intraday momentum », JFE
+129(2):394-414* — désigne une URL du dépôt Monash qui sert en réalité
+**Limkriangkrai, Chai & Zheng (2023), « Market intraday momentum: APAC
+evidence », *Pacific-Basin Finance Journal* 80:102086**. Treize pages, une autre
+revue, d'autres auteurs, cinq ans d'écart.
+
+**Comment on s'en est aperçu**, et c'est le cœur de la leçon : **par une
+collision d'empreintes entre deux affirmations indépendantes sur les mêmes
+octets**. Le moissonneur dédoublonne par `sha256` ; il a trouvé que le PDF servi
+pour le travail OpenAlex « APAC evidence » était **le même fichier** que celui
+enregistré sous le nom de Gao 2018. Deux sources, deux noms, un seul fichier :
+au moins l'une des deux a tort.
+
+**Les deux vérifications automatiques évidentes échouent toutes les deux**, et
+il faut le savoir avant de les écrire :
+
+| Test | Verdict sur l'entrée 1 | Pourquoi il se trompe |
+|---|---|---|
+| le titre d'`AMORCE.md` est dans la 1re page | **passe** | « Market intraday momentum » est une **sous-chaîne** de « Market intraday momentum: APAC evidence » |
+| premier auteur **et** année dans les 2 premières pages | **passe** | le papier APAC **cite** Gao et al. (2018) dès son résumé |
+
+Un papier ressemble à un autre papier, et **le nom du bon papier apparaît dans
+le mauvais** — c'est même la règle en littérature académique, où l'on cite ce
+qu'on prolonge. Aucune heuristique de métadonnée ne s'en sort seule.
+
+**Ce que ça aurait coûté si le moissonneur n'avait pas existé.** L'entrée 1
+n'est pas encore fichée. Si elle l'avait été, la fiche aurait porté le nom de
+Gao 2018 et les chiffres de Limkriangkrai 2023 — et **`F2` et `F4` auraient
+toutes deux été vertes** : les citations existent bien dans ce texte-là, et le
+PDF désigné existe bien. Le garde le plus strict du projet aurait validé une
+fiche sur le mauvais papier, sans une faute à signaler. C'est la forme la plus
+coûteuse de l'erreur, celle qui passe la porte — comme `L18`.
+
+**Et l'artefact versionné est déjà faux** : `corpus/text/gao-2018-*.txt`, le
+texte qui *fait foi* au sens de `D18`, est le texte du papier APAC sous le nom
+de Gao. Il est commité. Aucune fiche ne s'en sert à ce jour, donc rien en aval
+n'est contaminé — mais le fait qu'il ait traversé `D17`, `D18`, `D19` et deux
+gardes sans être vu mesure exactement ce que la chaîne ne regarde pas.
+
+**Ce que ça généralise.** Une preuve répond toujours à **la question qu'elle
+pose**, et jamais à celle qu'on croit poser. « Le texte est-il arrivé ? » et
+« est-ce le bon texte ? » sont deux questions, et la première ne rend pas la
+seconde. Devant un garde, la question à se poser n'est pas *« que vérifie-t-il
+? »* mais *« qu'est-ce qui passerait quand même ? »*.
+
+Le seul contrôle qui a marché est **redondant par construction** : deux sources
+indépendantes qui nomment le même objet, et qu'on compare. C'est le même motif
+que la porte 03 — une seconde implémentation écrite différemment — et que `L12`,
+où l'empreinte d'un même harnais différait selon le poste. Quand un fait compte,
+il se fait affirmer deux fois par deux chemins qui ne se parlent pas.
