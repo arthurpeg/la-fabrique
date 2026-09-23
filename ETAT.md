@@ -215,17 +215,42 @@ registre **entier**, les 56 tests antérieurs compris.
 
 ### Ce qui bloque la phase 09, maintenant que le budget est fixé
 
-1. **Il manque 33 fiches.** `D25` engage un lot de 50 ; le corpus en porte **17**.
-   Soit on en produit 33 de plus — l'extracteur sait le faire, et la base
-   vectorielle porte 136 papiers moissonnés — soit on réduit `N` par un
-   amendement écrit à `D25`.
-2. **La matrice de corrélation des 50 signaux** doit être produite **avant**
-   d'appliquer `BH` : la procédure suppose une dépendance positive, et plusieurs
-   papiers d'intraday momentum donneront des signaux corrélés.
-   `scripts/calibrate_coder.py` sait déjà mesurer une corrélation entre deux
-   signaux.
-3. **`scripts/gate_09.py` n'existe pas.** Il appliquera `BH` et refusera de
-   rendre un verdict sur un lot non clos.
+**Le triage des 119 moissonnés est fait — le 2026-09-23.** Quatre sessions
+séparées, lots de 30, échelle de `D15`. Relancer par
+`python corpus/merge_triage.py`, ne pas recopier (`L21`) :
+
+| Verdict | Nombre |
+|---|---|
+| `oui` — calculable entièrement sur nos 9 futures | **10** |
+| `partiel` — l'idée transfère, il manque quelque chose | **29** |
+| `non` | **80** |
+
+**39 retenus.** Avec les 17 fiches existantes, le gisement est de **56** pour un
+lot de 50 : jouable, mais sans marge. Les `partiel` sont 29 sur 39, et une part
+tombera à l'écriture de la fiche ou au codage. **Si on descend sous 50, `D25`
+s'amende par écrit** — on n'ajuste pas en silence.
+
+**Réserve honnête sur ce triage :** le lot 1 a rendu **0 `oui`** quand le lot 3
+en a rendu **4**. Les lots sont ordonnés par titre, donc l'écart peut venir du
+contenu autant que de la sévérité du trieur. **Non tranché**, et il ne faut pas
+le supposer.
+
+### Donc, dans l'ordre, ce qui vient maintenant
+
+1. **Geler le texte des 39 retenus** — `python corpus/extract_text.py`. Ils sont
+   `harvest` aujourd'hui, donc leur texte n'est pas reproductible depuis le
+   dépôt et `F2` ne peut pas s'en servir (`D22`). Coût mesuré : `corpus/text/`
+   pèse 6,0 Mo pour 17 papiers.
+2. **Les ficher** — `corpus/extract_fiche.py`, une session séparée par papier.
+   Il l'a fait 7 fois le 2026-09-23, dont 5 vertes au premier essai.
+3. **Déclarer par écrit le lot de 50** — une liste de `fiche_id` datée, **avant**
+   la première mesure. C'est la clause `C2` de `D25`, et c'est elle qui rend
+   Benjamini-Hochberg valide.
+4. **Mesurer la corrélation entre les signaux du lot** avant d'appliquer `BH` —
+   la procédure suppose une dépendance positive.
+   `scripts/calibrate_coder.py` sait déjà comparer deux signaux.
+5. **Écrire `scripts/gate_09.py`** — il applique `BH` et refuse un verdict sur un
+   lot non clos.
 
 ### Ce qui reste dû par ailleurs, et qui n'a pas bougé
 
