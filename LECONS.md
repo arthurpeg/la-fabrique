@@ -636,3 +636,37 @@ indépendantes qui nomment le même objet, et qu'on compare. C'est le même moti
 que la porte 03 — une seconde implémentation écrite différemment — et que `L12`,
 où l'empreinte d'un même harnais différait selon le poste. Quand un fait compte,
 il se fait affirmer deux fois par deux chemins qui ne se parlent pas.
+
+---
+
+## L21 — Un compte qui rapproche deux listes perd ce qui manque à la clé du rapprochement
+
+**Le 2026-09-23**, `ETAT.md` annonçait `G1 = 7` papiers à ficher. La mesure en a
+donné **8**. L'écart était l'**entrée 9** — un billet HTML de la Fed de New York,
+`atteignable` au recensement, sans fiche, et donc bien dans `G1`.
+
+Elle disparaissait parce que le rapprochement naturel entre « papiers
+atteignables » et « fiches produites » se fait par **nom de PDF**, et que
+l'entrée 9 n'en a pas : son `pdf` vaut `null`. La clé du rapprochement excluait
+silencieusement le seul élément qui ne la possède pas — c'est-à-dire exactement
+celui dont l'absence était le sujet.
+
+Le même passage portait « 19 atteignables sur 20, 18 PDF », chiffres du
+recensement du 2026-09-21, restés écrits après que `L20` a fait basculer
+l'entrée 1 en `inatteignable` le 2026-09-22. Le compte réel est **18 et 17**.
+
+**La leçon.** Un compte obtenu en rapprochant deux listes ne vaut que si l'on a
+d'abord vérifié que **chaque élément possède la clé**. Ceux qui ne l'ont pas ne
+produisent pas d'erreur : ils sortent du compte sans bruit, et du bon côté —
+celui qui arrange. Le contrôle qui le trouve est de compter **la population
+entière** et de vérifier que les deux moitiés la reconstituent : ici,
+`atteignables = fichés + non fichés`, et non de compter les non fichés
+directement.
+
+**Ce qui en découle pour la porte 07 :** `G1`–`G4` n'ont **aucun compteur
+unique** — il n'existe pas de `scripts/gate_07.py`, là où les portes 01 à 06 en
+ont un. Un effectif sans script est un effectif qu'on recopie, et un effectif
+recopié se périme. C'est la troisième fois qu'un chiffre de `ETAT.md` se révèle
+faux en le mesurant (les deux précédentes : `L20`, et les PDF d'un dossier
+ignoré par git). **Tant que `gate_07.py` n'existe pas, aucun effectif `G1`–`G4`
+écrit dans `ETAT.md` ne doit être lu sans être relancé.**

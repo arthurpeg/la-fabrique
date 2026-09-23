@@ -63,7 +63,7 @@ paramètre du signal de référence.
 ## Ce qui manque
 
 - **`code_signal.py`** — l'accusé. Il n'existe pas.
-- **`G1` et `G2` de la porte 07** le précèdent : 7 papiers restent à ficher,
+- **`G1` et `G2` de la porte 07** le précèdent : 8 papiers restent à ficher,
   3 fiches cassent `D16`. Un codeur sans fiches n'a rien à coder.
 - **La calibration sur Baltussen** — impossible tant que l'entrée 2 n'est pas
   fichée. Les deux étalons de `D06` n'ont pas de fiche, et l'entrée 1 est
