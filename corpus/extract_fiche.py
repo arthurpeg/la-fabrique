@@ -160,22 +160,34 @@ def already_fichees() -> set[str]:
 
 
 def do_list() -> int:
+    """Ce qui reste à ficher, sur la population que `D24` désigne.
+
+    Le tri suit `corpus/acquisition.json`, qui porte `fichable` depuis `D24` :
+    ce fichier fait foi, et ce code ne le redéduit pas. Jusqu'au 2026-09-23 il
+    le redéduisait — `text_format != "pdf"` — et c'est ce qui l'a fait
+    diverger de `scripts/gate_07.py`, qui comptait lui sur `status`. Deux
+    déductions parallèles de la même chose finissent toujours par différer.
+    """
     done = already_fichees()
-    todo, blocked = [], []
+    todo, inatteignables, non_fichables = [], [], []
     for row in census():
         if row["status"] != "atteignable":
-            blocked.append((row["entry"], row["reason"]))
-        elif row["text_format"] != "pdf":
-            blocked.append((row["entry"],
-                            f"texte en {row['text_format']} — D18 ne traite que les PDF"))
+            inatteignables.append((row["entry"], row["reason"]))
+        elif not row.get("fichable"):
+            non_fichables.append((row["entry"],
+                                  row.get("fichable_reason") or "RAISON NON ECRITE"))
         elif fiche_id_for(row) not in done:
             todo.append(row["entry"])
     print(f"fichees      : {len(done)}")
     print(f"a ficher     : {len(todo)} -> {todo}")
-    print(f"hors d'atteinte du fichage : {len(blocked)}")
-    for n, why in blocked:
+    print(f"inatteignables            : {len(inatteignables)}")
+    for n, why in inatteignables:
         print(f"  entree {n:>2} : {why}")
-    print("\n`G1` de D17 exige ZERO papier atteignable non fiche.")
+    print(f"atteignables NON FICHABLES : {len(non_fichables)}  (D24)")
+    for n, why in non_fichables:
+        print(f"  entree {n:>2} : {why}")
+    print("\n`G1` de D17, tel que `D24` le borne, exige ZERO papier")
+    print("FICHABLE non fiche. Le non-fichable est compte a part, jamais efface.")
     return 0
 
 

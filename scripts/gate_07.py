@@ -5,10 +5,17 @@ extracteur jugé sur **tout le corpus atteignable**, le reste étant recensé av
 sa raison. Quatre conditions en effectifs, toutes à **zéro**, qui valent
 ENSEMBLE :
 
-    G1  papiers atteignables NON FICHÉS
+    G1  papiers FICHABLES non fichés — `D24`
     G2  fiches produites ne passant pas les cinq conditions de `D16`
     G3  fiches ayant demandé une RETOUCHE MANUELLE après production
     G4  papiers inatteignables NON RECENSÉS, avec la raison
+
+**`D24` sépare `atteignable` de `fichable`**, et `G1` ne compte que les seconds.
+*Atteignable* dit ce que le monde nous consent — un fait daté sur l'extérieur.
+*Fichable* dit ce que notre outillage sait traiter — un fait sur nous. Un format
+que l'extracteur ne sait pas lire n'est pas un échec de l'extracteur. Ce qui
+sort de `G1` ne disparaît pas pour autant : il est compté, nommé, et sa raison
+écrite, dans sa propre colonne.
 
 **Pourquoi ce script existe.** Jusqu'au 2026-09-23, `G1`–`G4` étaient les seuls
 effectifs du projet sans compteur — les portes 01 à 06 en ont chacune un. Le
@@ -113,16 +120,25 @@ def main(argv: list[str]) -> int:
     atteignables = [e for e in entrees if e["status"] == "atteignable"]
     inatteignables = [e for e in entrees if e["status"] != "atteignable"]
 
+    # `D24` : ATTEIGNABLE et FICHABLE sont deux choses. Le premier dit ce que le
+    # monde nous consent — un fait sur l'extérieur, daté, qui change. Le second
+    # dit ce que notre outillage sait traiter — un fait sur nous. `G1` ne compte
+    # que les FICHABLES : un format que l'extracteur ne sait pas lire n'est pas
+    # un échec de l'extracteur.
+    fichables = [e for e in atteignables if e.get("fichable")]
+    non_fichables = [e for e in atteignables if not e.get("fichable")]
+
     # -- G1 ------------------------------------------------------------------
     fichees, manquants = [], []
-    for e in atteignables:
+    for e in fichables:
         k = cle(e)
         (fichees if k and k in par_pdf else manquants).append(e)
 
     # LE CONTRÔLE DE `L21` : les deux moitiés doivent reconstituer la
     # population. Sans lui, un élément sans clé sort du compte SANS ERREUR,
     # et du côté qui arrange.
-    reconstitue = len(fichees) + len(manquants) == len(atteignables)
+    reconstitue = (len(fichees) + len(manquants) == len(fichables)
+                   and len(fichables) + len(non_fichables) == len(atteignables))
 
     # -- G2 ------------------------------------------------------------------
     rouges: list[tuple[Path, list[str]]] = []
@@ -158,23 +174,15 @@ def main(argv: list[str]) -> int:
     autre = len(atteignables) - pdf
     print(f"recensement : {len(entrees)} entrées — {len(atteignables)} atteignables "
           f"({pdf} PDF, {autre} autre), {len(inatteignables)} inatteignables")
+    print(f"              dont {len(fichables)} FICHABLES "
+          f"et {len(non_fichables)} atteignable(s) non fichable(s) — `D24`")
     print(f"fiches produites : {len(toutes)}\n")
-
-    # `G1` A DEUX LECTURES, ET CE SCRIPT NE TRANCHE PAS ENTRE ELLES.
-    # `D17` compte les « atteignables non fichés », et l'entrée 9 est
-    # `atteignable` : son texte s'obtient sans péage. Mais elle est en HTML, et
-    # `F4` exige un `source.pdf` tandis que `D18` ne traite que les PDF — d'où
-    # `corpus/extract_fiche.py --list`, qui la range « hors d'atteinte du
-    # fichage » et annonce 7. Les deux lectures sont défendables ; les départager
-    # demande une décision écrite, pas un choix de programmeur. Les deux sont
-    # donc imprimées, et la plus exigeante fait le verdict.
-    infichables = [e for e in manquants if (e.get("text_format") or "pdf") != "pdf"]
 
     g1, g2, g3, g4 = len(manquants), len(rouges), len(retouchees), len(sans_raison)
     g3_txt = "  —" if g3_sans_objet else f"{g3:>3}"
     g3_note = ("SANS OBJET — aucun extracteur n'a produit en série"
                if g3_sans_objet else "(exige 0)")
-    print(f"  G1  atteignables non fichés                  {g1:>3}   (exige 0)")
+    print(f"  G1  FICHABLES non fichés (D24)               {g1:>3}   (exige 0)")
     print(f"  G2  fiches cassant D16                       {g2:>3}   (exige 0)")
     print(f"  G3  fiches retouchées à la main              {g3_txt}   {g3_note}")
     print(f"  G4  inatteignables sans raison écrite        {g4:>3}   (exige 0)")
@@ -192,15 +200,27 @@ def main(argv: list[str]) -> int:
         for n, k in sorted(repasses.items(), key=lambda x: -x[1]):
             print(f"      {k} passages : {n}")
 
-    if infichables:
-        print("\n  ATTENTION — `G1` a DEUX lectures, et ce script ne tranche pas :")
-        print(f"    {g1} en comptant tout atteignable non fiché (D17, lecture littérale)")
-        print(f"    {g1 - len(infichables)} en écartant les {len(infichables)} atteignable(s) "
-              f"NON FICHABLE(S) en l'état,")
-        print("      dont le texte n'est pas un PDF — `F4` exige `source.pdf` et `D18` ne")
-        print("      traite que les PDF. C'est le compte de corpus/extract_fiche.py --list.")
-        print("    Le verdict ci-dessous retient la lecture LA PLUS EXIGEANTE. Les")
-        print("    départager demande une décision écrite (D18 § Ce qui reste ouvert).")
+    # `D24` § Pourquoi : ce qui sort de `G1` ne disparaît pas. Un papier que
+    # notre outillage ne sait pas lire est compté, nommé, et sa raison écrite —
+    # exactement comme l'inatteignable de `G4`. Sans cette colonne, la porte
+    # deviendrait franchissable en n'améliorant pas l'outillage, en silence.
+    sans_raison_fichable: list[str] = []
+    if non_fichables:
+        print(f"\n  ATTEIGNABLES MAIS NON FICHABLES — {len(non_fichables)}, hors `G1` "
+              "par `D24`, JAMAIS hors de vue :")
+        for e in non_fichables:
+            raison = e.get("fichable_reason") or "RAISON NON ÉCRITE"
+            print(f"    entrée {e['entry']:>2} [{e.get('text_format') or '?':>4}] "
+                  f"{raison} — {e['citation'][:50]}")
+            if not e.get("fichable_reason"):
+                sans_raison_fichable.append(
+                    f"entrée {e['entry']} est non fichable SANS RAISON ÉCRITE — `D24` "
+                    "l'exige, au même titre que `G4` pour l'inatteignable"
+                )
+        if len(non_fichables) > 2:
+            print(f"    {len(non_fichables)} dépasse le seuil de deux que `D24` laisse "
+                  "ouvert :")
+            print("    la limite d'outillage demande à être rouverte, pas contournée.")
 
     if a.detail:
         if manquants:
@@ -222,7 +242,7 @@ def main(argv: list[str]) -> int:
                 print(f"   entrée {e['entry']:>2} {e['citation'][:70]}")
 
     # -- verdict -------------------------------------------------------------
-    fautes: list[str] = []
+    fautes: list[str] = list(sans_raison_fichable)
     if not reconstitue:
         fautes.append(
             f"les deux moitiés ne reconstituent pas la population : "

@@ -44,8 +44,8 @@ Une page par phase de l'**ordre de construction** (`ETAT.md`, phases 01→15).
 - [[phases/phase-04-registre-et-holdout|Phase 04 — Le registre et le verrou du holdout]] — invariants III et V fabriqués, pas promis ; `franchie` 2026-09-17, **fin de l'Acte I**
 - [[phases/phase-05-api-de-signal|Phase 05 — API de signal, sandbox, test de causalité]] — trois look-ahead injectés, trois attrapés ; `franchie` 2026-09-17
 - [[phases/phase-06-controles-et-replication|Phase 06 — Contrôles automatiques et réplication]] — deux clauses, deux cibles tombées avant la bonne ; `franchie` 2026-09-18, **fin de l'Acte II côté jugement**
-- [[phases/phase-07-triage-et-extraction|Phase 07 — Triage et extraction]] — **phase courante**, `en-cours` : trois fiches écrites à la main servent de banc d'essai, et le verdict humain de référence existe depuis la phase 01
-- [[phases/phase-08-codeur-de-signal|Phase 08 — Le codeur de signal]] — **pas ouverte, mais son juge est écrit** : `D23` et `scripts/score_signal.py`, six conditions à tolérance zéro, aucun IC dépensé
+- [[phases/phase-07-triage-et-extraction|Phase 07 — Triage et extraction]] — `franchie` 2026-09-23 : **17 fiches, 450 résultats cités**, produites par sept sessions séparées, `G1`–`G4` à zéro. A demandé `D24` et `L22` pour le devenir
+- [[phases/phase-08-codeur-de-signal|Phase 08 — Le codeur de signal]] — **phase courante** depuis le 2026-09-23 : le juge existe (`D23`, `score_signal.py`, six conditions à tolérance zéro, aucun IC dépensé), **l'accusé manque** — `code_signal.py`
 
 > Les phases 09 à 15 n'ont pas encore de page. On les crée en s'en approchant,
 > pas d'avance : une page de phase lointaine est une page qui vieillit sans être

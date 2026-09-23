@@ -1,20 +1,47 @@
 # ÉTAT
 
-**Phase courante :** 07 — triage et extraction sur 20 papiers connus
+**Phase courante :** 08 — le codeur de signal
 **Date de dernière mise à jour :** 2026-09-23
-**Dernière porte franchie :** **06**, le 2026-09-18 — les deux clauses.
-Clause 1 (dégénérescence) : `gate_06_controls.py`, 25 vérifications. Clause 2
+**Dernière porte franchie :** **07**, le 2026-09-23 — les quatre effectifs de
+`D17` à zéro, mesurés par `scripts/gate_07.py` (**relancer, ne pas recopier** —
+`L21`). **17 fiches, 450 résultats cités**, produites par **sept sessions
+séparées** n'ayant vu que leur consigne et le texte de leur papier, comme `D16`
+§ Qui peut être l'extracteur l'exige. **9 essais pour 7 fiches, 1,29 par fiche.**
+
+**Ce que la porte 07 valide, et rien de plus.** Que **l'extracteur** produit, sans
+retouche manuelle, des fiches qui passent les cinq conditions de `D16`. **Pas que
+les fiches soient bonnes** : `D16` § Pourquoi le dit depuis le début — une fiche
+creuse, ou fidèle à un aspect secondaire du papier, passe les cinq conditions. La
+pertinence n'aura de dénominateur qu'en phase 09.
+
+**Deux choses ont dû exister pour que cette porte soit franchissable**, et elles
+manquaient toutes deux le matin même :
+
+- **`G3` n'était pas mesurable.** La condition la plus dure de `D17` n'avait aucun
+  registre d'état d'origine, donc aucune donnée n'aurait pu la rendre fausse. Un
+  compteur naïf aurait trouvé zéro et la porte se serait franchie sur une
+  condition jamais évaluée. `corpus/PRODUCED.json` l'établit — `L22`.
+- **`G1` mélangeait deux populations.** `D24` sépare *atteignable* (ce que le
+  monde nous consent) de *fichable* (ce que notre outillage sait traiter). `G1`
+  ne compte que les seconds ; l'entrée 9, billet HTML, est comptée **dans sa
+  propre colonne avec sa raison**, jamais effacée.
+
+**Porte précédente : 06**, le 2026-09-18 — les deux clauses. Clause 1
+(dégénérescence) : `gate_06_controls.py`, 25 vérifications. Clause 2
 (réplication) : `scripts/measure_h04.py`, 19 vérifications, `H04` pré-enregistrée
 puis mesurée — la forme en U de la volatilité intra-journalière est retrouvée sur
 `NQ`, `ES` et `YM`, avec un rapport sommet/creux de **1,74 à 2,05** contre
-**1,91** chez Andersen & Bollerslev (1997) sur le même contrat.
-
-**Ce que la porte 06 valide, et rien de plus.** La **chaîne de données** et la
-discipline de mesure. **Pas le harnais d'IC**, qui reste garanti par sa seule
-calibration à la main (porte 03). `D13` § Pourquoi l'écrit sans détour, et aucune
-session ne doit lire cette porte comme davantage.
+**1,91** chez Andersen & Bollerslev (1997) sur le même contrat. Elle valide la
+**chaîne de données** et la discipline de mesure, **pas le harnais d'IC**, qui
+reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
 **Décision la plus récente :**
+`decisions/DECISION-24-atteignable-et-fichable.md` — *atteignable* et
+*fichable* sont deux choses. Le premier dit ce que le monde nous consent, le
+second ce que notre outillage sait traiter. **`G1` ne compte que les
+fichables** ; ce qui en sort est compté et nommé dans sa propre colonne,
+jamais effacé. C'est ce qui a permis de franchir la porte 07.
+**Décision précédente :**
 `decisions/DECISION-23-seuil-du-codeur-de-signal.md` — le seuil de la porte 08,
 **écrit avant que le codeur existe**. Six conditions à tolérance zéro, dont
 `S5` : **toute constante numérique du code se retrouve dans la fiche** — `F2`
@@ -96,8 +123,8 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 |---|---|---|---|
 | 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07` |
 | 06 | Contrôles automatiques et réplication | Un signal dégénéré est rejeté avant le harnais ; la chaîne reproduit un fait publié sur nos données. La cible a changé deux fois : Mesfin (métrique incompatible, `D12`), Heston (motif absent, `H03`), puis Andersen & Bollerslev (`D13`). | **franchie 2026-09-18** — `gate_06_controls.py` (25) et `scripts/measure_h04.py` (19) |
-| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE — mais il ne reste qu'un point.** `scripts/gate_07.py` compte les quatre effectifs depuis le 2026-09-23 ; ne plus les recopier (`L21`). Mesure du 2026-09-23 : **`G1` = 1**, **`G2` = 0**, **`G3` = 0**, **`G4` = 0**. Moitié **triage** tenue au passage 1 du 2026-09-20 (A/B/C/D = 1/0/2/0). Moitié **extraction** : **17 fiches, 450 résultats cités**, produites par sept sessions séparées le 2026-09-23 — `D16` § Qui peut être l'extracteur. **`G3` était INMESURABLE** jusque-là, faute de registre d'état d'origine : `corpus/PRODUCED.json` l'établit, sha256 octet pour octet. **9 essais pour 7 fiches, 1,29 par fiche** — deux fiches rejetées sur un point de schéma ont été renvoyées à leur extracteur plutôt que réparées à la main. **Le seul point restant est l'entrée 9** : atteignable pour `D17`, infichable pour `F4` qui exige un `source.pdf`, et `D18` ne traite que les PDF. `G1` vaut donc 1 ou 0 selon la lecture, et **les départager demande une décision écrite** — le compteur imprime les deux et retient la plus exigeante |
-| 08 | Le codeur de signal | **Son seuil est écrit depuis le 2026-09-23 — `D23`.** Six conditions à tolérance zéro : contrat de `D07`, liste blanche, causalité, non-dégénérescence, **fidélité à la fiche** (`S5` : toute constante du code s'y retrouve) et **zéro retouche manuelle**. Aucun IC n'est calculé pour franchir cette porte. | **le juge EST ÉCRIT, l'accusé n'existe pas** — `scripts/score_signal.py`, **25 vérifications**, refuse chacune des six fautes sur des signaux fabriqués (2026-09-23). `S5` mesurée sur les cas réels : 3 signaux × 10 fiches, elle **refuse 40 % des appariements** — nécessaire, pas suffisante, et `D23` § Pourquoi le dit. **`code_signal.py` reste à construire**, et `G1`/`G2` de la porte 07 le précèdent : un codeur sans fiches n'a rien à coder |
+| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **FRANCHIE le 2026-09-23** — `scripts/gate_07.py`, les quatre effectifs a ZERO : `G1` = `G2` = `G3` = `G4` = 0. **17 fiches, 450 resultats cites**, produites par sept sessions separees n'ayant vu que leur consigne (`D16`). **9 essais pour 7 fiches, 1,29 par fiche** — deux fiches rejetees sur un point de schema, renvoyees a leur extracteur et non reparees a la main. `corpus/PRODUCED.json` rend `G3` mesurable, ce qu'il n'etait pas (`L22`). `D24` separe *atteignable* de *fichable* : l'entree 9 (HTML) est atteignable et hors de `G1`, **comptee dans sa propre colonne avec sa raison**, jamais effacee |
+| 08 | Le codeur de signal | **Son seuil est écrit depuis le 2026-09-23 — `D23`.** Six conditions à tolérance zéro : contrat de `D07`, liste blanche, causalité, non-dégénérescence, **fidélité à la fiche** (`S5` : toute constante du code s'y retrouve) et **zéro retouche manuelle**. Aucun IC n'est calculé pour franchir cette porte. | **PHASE COURANTE depuis le 2026-09-23.** Le juge est ecrit : `scripts/score_signal.py`, **25 verifications**. `S5` mesuree sur les cas reels — 3 signaux x 10 fiches, elle **refuse 40 % des appariements** : necessaire, pas suffisante, `D23` § Pourquoi. **L'accuse manque** : `code_signal.py`, et `signals/PRODUCED.json` sans lequel `S6` sera `sans objet` comme `G3` l'etait (`L22`). La porte 07 etant franchie, le codeur a **17 fiches** de matiere |
 
 ## Acte III — Fermer la boucle une fois
 
@@ -127,51 +154,45 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 
 ## Prochaine action
 
-**UN SEUL POINT SÉPARE DE LA PORTE 07, ET IL DEMANDE UNE DÉCISION, PAS DU CODE.**
+**LA PORTE 07 EST FRANCHIE. LA PHASE 08 EST OUVERTE, ET SON JUGE EXISTE DÉJÀ.**
 
-Mesuré le 2026-09-23 par `python scripts/gate_07.py` — ne pas recopier ce
-chiffre, le relancer (`L21`) :
+`D23` a écrit le seuil du codeur avant que le codeur existe, et
+`scripts/score_signal.py` le tient — 25 vérifications, une faute fabriquée par
+condition. **Ce qui manque est l'accusé** : `code_signal.py`, la session qui
+reçoit une fiche et rend un module de signal.
 
-| | Effectif | Exigé |
-|---|---|---|
-| `G1` | **1** — l'entrée 9, et rien d'autre | 0 |
-| `G2` | **0** — les 17 fiches passent `D16` | 0 |
-| `G3` | **0** — aucune retouche manuelle | 0 |
-| `G4` | **0** | 0 |
+Il a maintenant de quoi travailler : **17 fiches** là où il y en avait 10 ce
+matin.
 
-**L'entrée 9 est atteignable ET infichable, et les deux sont vrais.** Le billet
-de la Fed de New York s'obtient sans péage, donc `D17` le compte `atteignable` ;
-mais `F4` exige un `source.pdf` et `D18` ne traite que les PDF, donc rien ne
-permet de le ficher. `corpus/extract_fiche.py --list` l'écarte et annonce
-`G1 = 0` ; `scripts/gate_07.py`, lecture littérale de `D17`, annonce `G1 = 1`.
+### Ce que la phase 08 demande, dans l'ordre
 
-**Ce désaccord ne se tranche pas en programmant.** Trois issues, toutes
-défendables, et c'est bien pourquoi il faut l'écrire :
+1. **`corpus/code_signal.py`** — le harnais du codeur, sur le patron exact de
+   `corpus/extract_fiche.py` : `--prepare` écrit une consigne qui ne contient que
+   la fiche et le contrat de `D07`, `--record` fige l'état de production pour
+   `S6`, `--judge` appelle `score_signal.py`. **Le codeur ne voit ni `signals/`,
+   qui contient la réponse, ni les hypothèses pré-enregistrées** — même parade
+   que pour le trieur et l'extracteur.
+2. **`signals/PRODUCED.json`** — sans lui, `S6` est `sans objet` exactement comme
+   `G3` l'était ce matin, et la porte 08 ne peut pas se franchir. `L22`.
+3. **Le premier signal produit**, jugé sur les six conditions.
 
-1. **étendre `D18` au HTML** — une troisième extraction déclarée, et `F4` accepte
-   un `source.html` ;
-2. **sortir l'entrée 9 du corpus atteignable** — `D17` distinguerait alors
-   *atteignable* de *fichable*, et le recensement porterait les deux ;
-3. **la laisser bloquer la porte** — cohérent avec « une porte à moitié franchie
-   est une porte non franchie », mais bloquer une phase entière sur un billet de
-   blog mérite d'être assumé par écrit plutôt que subi.
+### Ce que la phase 08 ne demande PAS, et qu'il faut se retenir de faire
 
-Tant que ce n'est pas tranché, **la porte 07 reste non franchie**, et la phase 08
-(`D23`, juge écrit, `code_signal.py` à construire) ne s'ouvre pas.
+**Aucun IC.** `D23` § Pourquoi : juger un codeur sur son IC le sélectionnerait
+sur son résultat, et surtout le nombre de tests est la seule chose que la phase
+15 ne peut pas recalculer. Un IC dépensé pour savoir si du code compile est perdu
+pour toujours.
+
+### Ce qui reste dû par ailleurs, et qui n'a pas bougé
+
+| Point | Pourquoi ça compte |
+|---|---|
+| **Frais CME / EUREX, multiplicateurs** — tous `null` | tant qu'ils le sont, `harness/costs.py` ne rend qu'un **plancher étiqueté**, donc tout IC net est un **majorant de performance** |
+| **`slippage_bp` à déclarer** | même famille |
+| **`ruff format harness/`** reformaterait 4 fichiers | le harnais est **figé et versionné** ; le reformater changerait son empreinte et **périmerait les 56 tests comptés**. Ne pas lancer |
+| **Le texte qui fait foi pour le HTML** | `D24` § Ce qui reste ouvert. Si `D18` s'étend au HTML, l'entrée 9 redevient fichable, `G1` repasse à 1, et **la porte 07 est réputée non franchie jusqu'à ce qu'elle soit fichée** |
 
 ---
-
-### Ce qui a été fait le 2026-09-23, et qui n'est plus à faire
-
-- `scripts/gate_07.py` — les quatre effectifs se comptent, ils ne se recopient
-  plus. Il porte le contrôle de `L21` : les deux moitiés doivent reconstituer la
-  population, sans quoi un élément sans clé sort du compte en silence.
-- **17 fiches**, 450 résultats cités, produites par **sept sessions séparées**
-  qui n'ont vu que leur consigne — `D16` § Qui peut être l'extracteur.
-- `corpus/PRODUCED.json` — **`G3` était inmesurable** faute d'état d'origine
-  figé. Le registre l'établit, sha256 octet pour octet. **9 essais pour 7
-  fiches**, et la porte imprime ce nombre : produire sans retouche au cinquième
-  essai ne dit pas la même chose qu'au premier.
 
 ### Ce qui existe déjà, et qui est le banc d'essai — pas le produit
 

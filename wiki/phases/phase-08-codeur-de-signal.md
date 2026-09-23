@@ -1,7 +1,7 @@
 ---
 type: phase
 updated: 2026-09-23
-status: juge-ecrit-accuse-absent
+status: en-cours
 phase: 08
 gate: une fiche produit un signal executable qui passe la sandbox, sans retouche manuelle
 sources: [ETAT.md, decisions/DECISION-23-seuil-du-codeur-de-signal.md, scripts/score_signal.py]
@@ -9,7 +9,8 @@ sources: [ETAT.md, decisions/DECISION-23-seuil-du-codeur-de-signal.md, scripts/s
 
 # Phase 08 — Le codeur de signal
 
-**Pas encore ouverte** : la porte 07 la précède. Mais **son juge est déjà écrit**,
+**Ouverte le 2026-09-23**, à la fermeture de la porte 07. **Son juge était déjà
+écrit**,
 comme [[phase-07-triage-et-extraction|`D15` l'a été avant le trieur et `D16`
 avant l'extracteur]]. C'est l'ordre de construction de `CLAUDE.md` — le juge
 avant l'accusé.
@@ -63,8 +64,11 @@ paramètre du signal de référence.
 ## Ce qui manque
 
 - **`code_signal.py`** — l'accusé. Il n'existe pas.
-- **`G1` et `G2` de la porte 07** le précèdent : 8 papiers restent à ficher,
-  3 fiches cassent `D16`. Un codeur sans fiches n'a rien à coder.
+- ~~`G1` et `G2` de la porte 07~~ — **franchie le 2026-09-23**. Le codeur a
+  **17 fiches** de matière.
+- **`signals/PRODUCED.json`** — sans lui `S6` est `sans objet`, et la porte ne
+  peut pas se franchir. Exactement la situation de `G3` le matin du 2026-09-23 ;
+  voir [[lessons|`L22`]].
 - **La calibration sur Baltussen** — impossible tant que l'entrée 2 n'est pas
   fichée. Les deux étalons de `D06` n'ont pas de fiche, et l'entrée 1 est
   inatteignable ([[lessons|`L20`]]).

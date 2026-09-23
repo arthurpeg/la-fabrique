@@ -1,7 +1,7 @@
 ---
 type: phase
-updated: 2026-09-22
-status: en-cours
+updated: 2026-09-23
+status: franchie
 phase: 07
 gate: 20 fiches produites ; le triage écarte ce qu'il doit écarter, sur un verdict humain de référence
 sources: [ETAT.md, corpus/AMORCE.md, decisions/DECISION-06-signaux-de-reference.md]
@@ -9,9 +9,32 @@ sources: [ETAT.md, corpus/AMORCE.md, decisions/DECISION-06-signaux-de-reference.
 
 # Phase 07 — Triage et extraction
 
-**Ouverte le 2026-09-18**, à la fermeture de la porte 06. C'est la première phase
-de l'Acte II qui produit quelque chose que le projet consommera ensuite : des
-**fiches**.
+**FRANCHIE le 2026-09-23.** Les quatre effectifs de `D17` sont à zéro :
+`G1` = `G2` = `G3` = `G4` = 0, mesurés par `scripts/gate_07.py` — **relancer, ne
+pas recopier** ([[lessons|`L21`]]).
+
+**17 fiches, 450 résultats cités**, produites par **sept sessions séparées**
+n'ayant vu que leur consigne et le texte de leur papier, comme `D16` § Qui peut
+être l'extracteur l'exige. **9 essais pour 7 fiches**, soit 1,29 par fiche : deux
+fiches rejetées sur un point de schéma ont été renvoyées à leur extracteur, et
+non réparées à la main — les réparer aurait été exactement la faute que `G3`
+existe pour compter.
+
+**Ce que la porte valide, et rien de plus** : que l'extracteur produit sans
+retouche des fiches qui passent `D16`. **Pas que les fiches soient bonnes.** Une
+fiche creuse passe les cinq conditions, et `D16` § Pourquoi le dit depuis le
+début. La pertinence n'aura de dénominateur qu'en phase 09.
+
+**Deux choses manquaient le matin même**, et sans elles la porte n'était pas
+franchissable :
+
+- **`G3` n'était pas mesurable** — aucun registre d'état d'origine, donc aucune
+  donnée n'aurait pu le rendre faux. `corpus/PRODUCED.json` l'établit ; voir
+  [[lessons|`L22`]].
+- **`G1` mélangeait deux populations** — `decisions/DECISION-24` sépare
+  *atteignable* de *fichable*.
+
+**Ouverte le 2026-09-18**, à la fermeture de la porte 06.
 
 ## La porte
 
