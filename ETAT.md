@@ -1,7 +1,8 @@
 # ÉTAT
 
 **Phase courante :** 09 — premier passage complet sur 30 à 50 papiers
-**Date de dernière mise à jour :** 2026-09-23
+**Date de dernière mise à jour :** 2026-09-23 (17:34 UTC — `scripts/gate_09.py`
+écrit, voir § Prochaine action)
 **Dernière porte franchie :** **08**, le 2026-09-23 — `scripts/gate_08.py`. Un
 signal produit par une session de codage séparée tient les **six conditions de
 `D23` au premier essai**, et aucun signal produit n'a été retouché à la main.
@@ -223,9 +224,23 @@ registre **entier**, les 56 tests antérieurs compris.
    d'appliquer `BH` : la procédure suppose une dépendance positive, et plusieurs
    papiers d'intraday momentum donneront des signaux corrélés.
    `scripts/calibrate_coder.py` sait déjà mesurer une corrélation entre deux
-   signaux.
-3. **`scripts/gate_09.py` n'existe pas.** Il appliquera `BH` et refusera de
-   rendre un verdict sur un lot non clos.
+   signaux. Format attendu par la porte : `scripts/out/lot_09_correlations.json`,
+   voir l'en-tête de `scripts/gate_09.py`.
+3. ~~`scripts/gate_09.py` n'existe pas.~~ **Écrit le 2026-09-23**, avant le lot —
+   le juge avant l'accusé, comme `score_triage.py` et `score_signal.py` avant
+   lui. Il applique `BH` (unilatéral, signe pré-enregistré via `EXPECTED_SIGN`)
+   et refuse tout verdict tant que : le lot n'est pas déclaré dans
+   `hypotheses/LOT-09.json` (format fixé par ce script, faute d'exister
+   ailleurs), que chaque hypothèse n'a pas son fichier dans `hypotheses/`, que
+   la matrice de corrélation n'existe pas ou ne couvre pas exactement les
+   signaux du lot, ou qu'une hypothèse n'a pas exactement une mesure au
+   registre sous le harnais courant. **12 vérifications** (`--check`), vert —
+   elles relisent le tableau de seuils de `D25` à l'envers (`t`=2,88 → `p`
+   ≤0,0020, etc.) et vérifient le pas de `BH` lui-même. Lancé sans lot, il
+   répond correctement NON FRANCHIE : c'est l'état attendu, pas une panne.
+   **Zéro hypothèse retenue sera un résultat VALIDE de la porte**, pas un
+   échec — elle juge que le protocole a été suivi, pas que la pêche a été
+   bonne.
 
 ### Ce qui reste dû par ailleurs, et qui n'a pas bougé
 
