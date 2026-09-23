@@ -96,7 +96,7 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 |---|---|---|---|
 | 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07` |
 | 06 | Contrôles automatiques et réplication | Un signal dégénéré est rejeté avant le harnais ; la chaîne reproduit un fait publié sur nos données. La cible a changé deux fois : Mesfin (métrique incompatible, `D12`), Heston (motif absent, `H03`), puis Andersen & Bollerslev (`D13`). | **franchie 2026-09-18** — `gate_06_controls.py` (25) et `scripts/measure_h04.py` (19) |
-| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 32 vérifications), **son extracteur existe depuis le 2026-09-21** (`extract_fiche.py`) ; recensement `G4` fait — **18 atteignables sur 20** (17 PDF, 1 HTML), texte qui fait foi fixé par `D18`. **Le « 19 sur 20, 18 PDF » écrit ici jusqu'au 2026-09-23 datait d'avant `L20`**, qui a fait basculer l'entrée 1 en `inatteignable` le 2026-09-22 ; les 3 fiches de référence passent les cinq conditions ; **`G1` non tenu — 10 fiches produites, 8 papiers restent à ficher** (entrées 2, 5, 8, **9**, 12, 18, 19, 20). **Le « 7 » écrit ici jusqu'au 2026-09-23 omettait l'entrée 9** — elle est atteignable en **HTML**, donc sans `pdf` dans le recensement, et tout rapprochement par nom de PDF la perd. Elle est de surcroît **infichable en l'état** : `F4` exige un `source.pdf` et `D18` ne traite que les PDF, ce que `D18` laisse ouvert à son § Ce qui reste ouvert. Elle compte dans `G1` quand même : une condition qu'on n'a pas les moyens de tenir reste non tenue ; **`G2` non tenu — 3 fiches cassent `D16`** : Andersen 2003, Corsi 2009, Lou 2019, toutes sur `F1` (schéma) et `F3` (valeur dans sa citation), **aucune sur `F2`** donc aucune citation inventée. Compté le 2026-09-23 en lançant les juges, non recopié |
+| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE — mais il ne reste qu'un point.** `scripts/gate_07.py` compte les quatre effectifs depuis le 2026-09-23 ; ne plus les recopier (`L21`). Mesure du 2026-09-23 : **`G1` = 1**, **`G2` = 0**, **`G3` = 0**, **`G4` = 0**. Moitié **triage** tenue au passage 1 du 2026-09-20 (A/B/C/D = 1/0/2/0). Moitié **extraction** : **17 fiches, 450 résultats cités**, produites par sept sessions séparées le 2026-09-23 — `D16` § Qui peut être l'extracteur. **`G3` était INMESURABLE** jusque-là, faute de registre d'état d'origine : `corpus/PRODUCED.json` l'établit, sha256 octet pour octet. **9 essais pour 7 fiches, 1,29 par fiche** — deux fiches rejetées sur un point de schéma ont été renvoyées à leur extracteur plutôt que réparées à la main. **Le seul point restant est l'entrée 9** : atteignable pour `D17`, infichable pour `F4` qui exige un `source.pdf`, et `D18` ne traite que les PDF. `G1` vaut donc 1 ou 0 selon la lecture, et **les départager demande une décision écrite** — le compteur imprime les deux et retient la plus exigeante |
 | 08 | Le codeur de signal | **Son seuil est écrit depuis le 2026-09-23 — `D23`.** Six conditions à tolérance zéro : contrat de `D07`, liste blanche, causalité, non-dégénérescence, **fidélité à la fiche** (`S5` : toute constante du code s'y retrouve) et **zéro retouche manuelle**. Aucun IC n'est calculé pour franchir cette porte. | **le juge EST ÉCRIT, l'accusé n'existe pas** — `scripts/score_signal.py`, **25 vérifications**, refuse chacune des six fautes sur des signaux fabriqués (2026-09-23). `S5` mesurée sur les cas réels : 3 signaux × 10 fiches, elle **refuse 40 % des appariements** — nécessaire, pas suffisante, et `D23` § Pourquoi le dit. **`code_signal.py` reste à construire**, et `G1`/`G2` de la porte 07 le précèdent : un codeur sans fiches n'a rien à coder |
 
 ## Acte III — Fermer la boucle une fois
@@ -127,8 +127,51 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 
 ## Prochaine action
 
-**La phase 07 est ouverte** : construire le **triage** et l'**extraction**, et les
-juger contre un verdict humain de référence.
+**UN SEUL POINT SÉPARE DE LA PORTE 07, ET IL DEMANDE UNE DÉCISION, PAS DU CODE.**
+
+Mesuré le 2026-09-23 par `python scripts/gate_07.py` — ne pas recopier ce
+chiffre, le relancer (`L21`) :
+
+| | Effectif | Exigé |
+|---|---|---|
+| `G1` | **1** — l'entrée 9, et rien d'autre | 0 |
+| `G2` | **0** — les 17 fiches passent `D16` | 0 |
+| `G3` | **0** — aucune retouche manuelle | 0 |
+| `G4` | **0** | 0 |
+
+**L'entrée 9 est atteignable ET infichable, et les deux sont vrais.** Le billet
+de la Fed de New York s'obtient sans péage, donc `D17` le compte `atteignable` ;
+mais `F4` exige un `source.pdf` et `D18` ne traite que les PDF, donc rien ne
+permet de le ficher. `corpus/extract_fiche.py --list` l'écarte et annonce
+`G1 = 0` ; `scripts/gate_07.py`, lecture littérale de `D17`, annonce `G1 = 1`.
+
+**Ce désaccord ne se tranche pas en programmant.** Trois issues, toutes
+défendables, et c'est bien pourquoi il faut l'écrire :
+
+1. **étendre `D18` au HTML** — une troisième extraction déclarée, et `F4` accepte
+   un `source.html` ;
+2. **sortir l'entrée 9 du corpus atteignable** — `D17` distinguerait alors
+   *atteignable* de *fichable*, et le recensement porterait les deux ;
+3. **la laisser bloquer la porte** — cohérent avec « une porte à moitié franchie
+   est une porte non franchie », mais bloquer une phase entière sur un billet de
+   blog mérite d'être assumé par écrit plutôt que subi.
+
+Tant que ce n'est pas tranché, **la porte 07 reste non franchie**, et la phase 08
+(`D23`, juge écrit, `code_signal.py` à construire) ne s'ouvre pas.
+
+---
+
+### Ce qui a été fait le 2026-09-23, et qui n'est plus à faire
+
+- `scripts/gate_07.py` — les quatre effectifs se comptent, ils ne se recopient
+  plus. Il porte le contrôle de `L21` : les deux moitiés doivent reconstituer la
+  population, sans quoi un élément sans clé sort du compte en silence.
+- **17 fiches**, 450 résultats cités, produites par **sept sessions séparées**
+  qui n'ont vu que leur consigne — `D16` § Qui peut être l'extracteur.
+- `corpus/PRODUCED.json` — **`G3` était inmesurable** faute d'état d'origine
+  figé. Le registre l'établit, sha256 octet pour octet. **9 essais pour 7
+  fiches**, et la porte imprime ce nombre : produire sans retouche au cinquième
+  essai ne dit pas la même chose qu'au premier.
 
 ### Ce qui existe déjà, et qui est le banc d'essai — pas le produit
 

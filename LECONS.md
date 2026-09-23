@@ -670,3 +670,35 @@ recopié se périme. C'est la troisième fois qu'un chiffre de `ETAT.md` se rév
 faux en le mesurant (les deux précédentes : `L20`, et les PDF d'un dossier
 ignoré par git). **Tant que `gate_07.py` n'existe pas, aucun effectif `G1`–`G4`
 écrit dans `ETAT.md` ne doit être lu sans être relancé.**
+
+---
+
+## L22 — Une condition qu'on ne peut pas mesurer n'est pas « tenue », elle est absente
+
+`G3` de `D17` — *aucune fiche retouchée à la main après production* — est la
+condition la plus dure de la porte 07, et la plus utile : un extracteur dont on
+répare les sorties n'est pas un extracteur. Elle est restée **trois jours sans
+aucun moyen de la mesurer**, parce que rien ne figeait l'état d'une fiche au
+moment où l'automate l'écrivait. Sans état d'origine, « a-t-elle bougé ? » n'a
+pas de réponse.
+
+Le danger n'est pas qu'elle casse : c'est qu'elle **paraisse tenue**. Un compteur
+naïf aurait trouvé zéro fiche retouchée — puisqu'il n'avait rien à comparer — et
+la porte se serait franchie sur une condition jamais évaluée. `scripts/gate_07.py`
+l'affiche donc **`SANS OBJET`** et non `0`, et refuse la porte tant qu'elle l'est.
+
+**La règle.** Pour toute condition d'une porte, se demander d'abord *par quelle
+donnée elle serait fausse*. Si la réponse est « aucune », la condition n'existe
+pas encore, et l'écrire zéro est un mensonge du même ordre qu'un dénominateur
+absent. C'est la contrepartie de `L21` : là, un compte perdait un élément sans
+bruit ; ici, un compte entier valait zéro pour la même raison — rien à compter.
+
+**Le corollaire, qui a failli coûter la mesure.** Une fois le registre écrit, il
+a fallu distinguer deux gestes que le sha256 confond : l'**extracteur qui
+repasse** sur sa propre sortie après un verdict rouge, et l'**humain qui
+répare**. Les confondre fausse `G3` dans les deux sens — interdire la
+reproduction empêcherait toute boucle automatique, l'autoriser sans compter
+laisserait « produit sans retouche » signifier « au neuvième essai ». Le registre
+garde donc **chaque passage**, et la porte imprime le nombre sans en faire une
+condition. Même geste que `spelled_out` dans `D14` : **nommer le geste humain
+plutôt que le cacher ou l'interdire.**
