@@ -189,6 +189,7 @@ pour toujours.
 |---|---|
 | **Frais CME / EUREX, multiplicateurs** — tous `null` | tant qu'ils le sont, `harness/costs.py` ne rend qu'un **plancher étiqueté**, donc tout IC net est un **majorant de performance** |
 | **`slippage_bp` à déclarer** | même famille |
+| **`scripts/gate_06_controls.py` ÉCRIT au registre** — une ligne de calibration par passage (`porte-06-cellule-morte`, `hypothesis_ref: null`) | Légitime : le registre est append-only et `counted_tests` ne bouge pas, une calibration n'étant pas un test. Mais **le passer dans une revue de gardes n'est pas gratuit** — `registry/tests.jsonl` est irremplaçable, et il a gagné une ligne le 2026-09-23 pour cette seule raison. Les autres gardes (`gate_07`, `score_*`, `validate_*`, `check_*`) n'écrivent rien |
 | **`ruff format harness/`** reformaterait 4 fichiers | le harnais est **figé et versionné** ; le reformater changerait son empreinte et **périmerait les 56 tests comptés**. Ne pas lancer |
 | **Le texte qui fait foi pour le HTML** | `D24` § Ce qui reste ouvert. Si `D18` s'étend au HTML, l'entrée 9 redevient fichable, `G1` repasse à 1, et **la porte 07 est réputée non franchie jusqu'à ce qu'elle soit fichée** |
 
