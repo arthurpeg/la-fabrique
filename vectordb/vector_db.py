@@ -35,6 +35,8 @@ import psycopg
 from psycopg.rows import dict_row
 
 Section = Literal["intro", "methodology", "results", "conclusion", "other"]
+# `D22` : d'ou vient le texte, et ce qu'on a le droit d'en faire.
+TextSource = Literal["authoritative", "harvest"]
 StrategyType = Literal["momentum", "carry", "mean_reversion", "other"]
 
 DEFAULT_DIM = 768
@@ -67,6 +69,9 @@ class Paper:
     doi: str | None = None
     pdf_url: str | None = None
     abstract: str | None = None
+    # SANS defaut, delibarement (`D22`) : inserer un papier oblige a dire d'ou
+    # vient son texte. Un defaut ferait passer l'oubli pour un choix.
+    text_source: TextSource | None = None
 
 
 @dataclass(slots=True)
@@ -271,12 +276,13 @@ class VectorDB:
         with self._tx() as cur:
             cur.execute(
                 """
-                insert into papers (title, authors, year, doi, pdf_url, abstract)
-                values (%s, %s, %s, %s, %s, %s)
+                insert into papers (title, authors, year, doi, pdf_url, abstract,
+                                    text_source)
+                values (%s, %s, %s, %s, %s, %s, %s)
                 returning id
                 """,
                 (paper.title, list(paper.authors), paper.year, paper.doi,
-                 paper.pdf_url, paper.abstract),
+                 paper.pdf_url, paper.abstract, paper.text_source),
             )
             return str(cur.fetchone()["id"])
 

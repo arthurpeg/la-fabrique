@@ -96,6 +96,10 @@ CITATION = re.compile(r"\*\*(?P<authors>[^*]+?)\s*\((?P<year>\d{4})\)\*\*"
                       r"(?:.*?[«]\s*(?P<title>.+?)\s*[»])?", re.S)
 
 
+HARVEST = REPO / "corpus" / "harvest.json"
+HARVEST_PDFDIR = REPO / "corpus" / "pdf" / "harvest"
+
+
 @dataclass(slots=True)
 class Source:
     """Un papier prêt à être ingéré : ses métadonnées et son texte paginé."""
@@ -106,6 +110,10 @@ class Source:
     year: int | None
     pdf_url: str | None
     pages: list[str]
+    # `D22` : `authoritative` si le texte vient de `corpus/text/`, `harvest`
+    # s'il est lu du PDF à l'ingestion. Les deux cherchent ; seul le premier
+    # peut servir à `F2`.
+    text_source: str = "authoritative"
 
 
 # ---------------------------------------------------------------------------
@@ -278,15 +286,62 @@ def sources(filtre: str | None = None) -> list[Source]:
     return out
 
 
+def harvest_sources(filtre: str | None = None) -> list[Source]:
+    """Les papiers moissonnés — texte lu du PDF, `text_source = harvest`.
+
+    Aucune vérification de recollage ici, et c'est le point : il n'y a AUCUN
+    texte versionné contre quoi vérifier. C'est exactement ce que `D22`
+    inscrit dans la colonne plutôt que de le laisser à la prose — un morceau
+    `harvest` est indiscernable d'un morceau `D18` une fois en base.
+    """
+    if not HARVEST.is_file():
+        raise VectorDBError("corpus/harvest.json absent — lancer le moissonneur")
+    works = json.loads(HARVEST.read_text(encoding="utf-8"))["works"]
+    par_pdf = {Path(w["pdf"]).name: w for w in works if w.get("pdf")}
+
+    out = []
+    for pdf in sorted(HARVEST_PDFDIR.glob("*.pdf")):
+        if filtre and filtre.lower() not in pdf.stem.lower():
+            continue
+        w = par_pdf.get(pdf.name)
+        if w is None:
+            # Un PDF sur le disque que la moisson ne connaît pas : on ne devine
+            # pas ses métadonnées, on le saute en le disant.
+            print(f"  ignoré, absent de harvest.json : {pdf.name}")
+            continue
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            from pypdf import PdfReader
+
+            try:
+                pages = [(p.extract_text() or "") for p in PdfReader(str(pdf)).pages]
+            except Exception as e:  # noqa: BLE001 — un PDF cassé n'arrête pas les 122 autres
+                print(f"  ignoré, illisible ({type(e).__name__}) : {pdf.name}")
+                continue
+        out.append(Source(
+            stem=pdf.stem,
+            title=w.get("title") or pdf.stem.replace("-", " "),
+            authors=list(w.get("authors") or []),
+            year=w.get("year"),
+            pdf_url=w.get("source_url"),
+            pages=pages,
+            text_source="harvest",
+        ))
+    return out
+
+
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description="Ingestion du corpus — D18 vers vectordb")
     ap.add_argument("--dry-run", action="store_true",
                     help="montre ce qui serait inséré, sans base ni réseau")
     ap.add_argument("--paper", default=None, help="n'ingérer qu'un papier")
+    ap.add_argument("--harvest", action="store_true",
+                    help="les papiers moissonnés (texte NON versionné, D22) "
+                         "au lieu des 17 d'AMORCE")
     a = ap.parse_args(argv)
 
     try:
-        papers = sources(a.paper)
+        papers = harvest_sources(a.paper) if a.harvest else sources(a.paper)
     except VectorDBError as e:
         print(f"ARRÊT : {e}")
         return 1
@@ -294,7 +349,16 @@ def main(argv: list[str]) -> int:
         print("aucun papier ne correspond")
         return 1
 
-    print(f"{len(papers)} papier(s), texte du mode `{MODE}`, pagination vérifiée\n")
+    if a.harvest:
+        print(f"{len(papers)} papier(s) MOISSONNÉ(S) — texte lu du PDF à "
+              "l'instant, `text_source = harvest` (D22).")
+        print("Ce texte NE FAIT PAS FOI : aucune pagination n'est vérifiée, car")
+        print("il n'existe aucun texte de référence contre quoi la vérifier.")
+        print("`F2` ne doit pas s'en servir, et rien ici n'est reproductible")
+        print("depuis le dépôt — `corpus/pdf/` est ignoré par git.\n")
+    else:
+        print(f"{len(papers)} papier(s), texte du mode `{MODE}`, "
+              "pagination vérifiée\n")
     plan = [(s, split_pages(s.pages)) for s in papers]
 
     print(f"  {'papier':<46} {'pages':>5} {'morceaux':>9}  sections")
@@ -334,7 +398,7 @@ def main(argv: list[str]) -> int:
             try:
                 paper_id = db.insert_paper(Paper(
                     title=s.title, authors=s.authors, year=s.year,
-                    pdf_url=s.pdf_url,
+                    pdf_url=s.pdf_url, text_source=s.text_source,
                 ))
             except DuplicatePaper as e:
                 print(f"  {s.stem[:46]:<46} déjà en base ({e.paper_id[:8]}…)")
