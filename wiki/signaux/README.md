@@ -21,8 +21,8 @@ Voir `decisions/DECISION-06-signaux-de-reference.md`.
 
 | Signal | Hypothèse | Papier | Signe attendu | Mesuré ? |
 |---|---|---|---|---|
-| `gao-2018-intraday-momentum` | `H01` | Gao, Han, Li & Zhou (2018), *JFE* 129(2) — [[research/gao-2018-intraday-momentum]] | **+** | **non** |
-| `baltussen-2021-intraday-momentum` | `H02` | Baltussen, Da, Lammers & Martens (2021), *JFE* 142(1) — [[research/baltussen-2021-hedging-demand]] | **+** | **non** |
+| `gao-2018-intraday-momentum` | `H01` | Gao, Han, Li & Zhou (2018), *JFE* 129(2) — [[research/gao-2018-intraday-momentum]] | **+** | **oui, 2026-09-18 — dans le bruit** |
+| `baltussen-2021-intraday-momentum` | `H02` | Baltussen, Da, Lammers & Martens (2021), *JFE* 142(1) — [[research/baltussen-2021-hedging-demand]] | **+** | **oui, 2026-09-18 — dans le bruit** |
 
 Les deux prédisent la **dernière demi-heure** d'une fenêtre de séance, par des
 prédicteurs différents : les trente premières minutes pour `H01`, tout le reste
