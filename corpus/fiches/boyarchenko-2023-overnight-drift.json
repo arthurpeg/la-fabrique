@@ -1,0 +1,286 @@
+{
+  "fiche_id": "boyarchenko-2023-overnight-drift",
+  "written": "2026-09-23",
+  "written_by": "session-extraction-entree-08",
+  "source": {
+    "authors": "Nina Boyarchenko, Lars C. Larsen, and Paul Whelan",
+    "title": "The Overnight Drift",
+    "year": 2022,
+    "source_url": "https://www.newyorkfed.org/medialibrary/media/research/staff_reports/sr917.pdf",
+    "pdf": "corpus/pdf/boyarchenko-2023-overnight-drift.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": false,
+    "amorce_entry": 8,
+    "note": "Federal Reserve Bank of New York Staff Reports, no. 917. Le texte porte « February 2020; revised August 2022 » ; l'annee retenue est celle de la revision presente dans le PDF. Le fiche_id parle de 2023 : le texte fourni ne porte aucune trace d'une version 2023, et aucune annee n'a ete inventee pour la faire coller. Le papier se declare lui-meme non arbitre : « This paper presents preliminary findings and is being distributed to economists and other interested readers solely to stimulate discussion and elicit comments. », d'ou peer_reviewed = false."
+  },
+  "claim": "Les rendements des futures S&P 500 e-mini ne s'accumulent pas lineairement autour de l'horloge : la plus grande partie du rendement de la seance overnight est gagnee dans l'unique heure 02:00-03:00 ET, qui coincide avec l'ouverture des marches europeens (Euronext, Eurex, Francfort ; pre-marche de Londres). Les auteurs nomment ce motif l'« overnight drift » (OD). Ils l'expliquent non par l'information asymetrique (les annonces macro, de politique monetaire et de resultats ne l'expliquent pas) mais par la gestion d'inventaire des teneurs de marche au sens de Grossman et Miller (1988) : un desequilibre d'ordres negatif a la cloture americaine (15:15-16:15 ET) laisse les teneurs de marche longs, porteurs de risque d'inventaire, et ils sont remuneres par un rendement positif attendu lorsqu'ils cedent leur inventaire aux nouveaux participants arrivant la nuit. Le volume overnight etant 50 a 100 fois plus faible qu'aux heures americaines, ce reequilibrage ne peut se faire avant l'ouverture europeenne. La reaction aux chocs de demande est asymetrique : les renversements apres selloff sont forts, ceux apres rallye sont mineurs, et c'est cette asymetrie qui produit un drift inconditionnellement positif. L'amplitude croit avec la taille du desequilibre et avec le VIX de cloture, et disparait quand les desequilibres de cloture sont proches de zero. Un test de decalage horaire (DST americain/japonais, et les trois semaines ou le decalage US-Europe passe a 4 heures) montre que la predictibilite se deplace avec l'heure d'arrivee des nouveaux participants.",
+  "universe": {
+    "instruments": "Un seul instrument : le contrat future S&P 500 e-mini (ES) sur CME GLOBEX, contrat le plus traite (front month sauf en mois de roulement). Le contrat « big » SP sert de comparaison de volume. Les futures VIX (VX) servent a un test alternatif ; CRSP/Compustat/I/B/E/S servent aux surprises de resultats.",
+    "data": "Trades et quotes tick-by-tick de Refinitiv Datascope Select, completes par des donnees du CME. Horodatage a la milliseconde en UT, converti en ET. Cinq niveaux de carnet disponibles depuis 2009. Direction des trades identifiee en comparant le prix de transaction aux meilleures cotes (achat = au ask, vente = au bid).",
+    "period": "Janvier 1998 - decembre 2020 (23 ans) pour le resultat principal. Sous-echantillons : 1998-2010 et 2011-2020. Le signed volume brut (SV) n'est utilise que sur 2007-2020, le volume total n'y etant stationnaire qu'a partir de la. Les strategies de trading sont mesurees sur 2004.1-2020.12, apres que le spread overnight a atteint son tick minimum.",
+    "quoted": "Our sample period spans January 5, 1998"
+  },
+  "horizon": {
+    "value": "Une heure. Le rendement predit est celui de la fenetre 02:00-03:00 ET (et sa variante elargie OD+ 01:30-03:30). Le signal est mesure sur 15:15-16:15 ET la veille, soit un delai d'environ 10 heures entre la fin de la mesure du signal et le debut de la fenetre de rendement.",
+    "note": "Les regressions de predictibilite couvrent les 12 heures overnight 18:00-06:00, une regression par heure ; l'heure 02:00-03:00 est celle ou le coefficient est le plus fort. Le papier travaille aussi en temps-volume, ou l'horizon devient « environ 60 000 contrats echanges »."
+  },
+  "signal_construction": {
+    "value": "RSV_close : volume signe relatif mesure sur la derniere heure precedant la pause de maintenance, 15:15-16:15 ET. RSV = (nombre de contrats a l'achat moins nombre de contrats a la vente) / (nombre de contrats a l'achat plus nombre de contrats a la vente), borne dans [-1, 1]. La direction d'un trade est donnee par comparaison au meilleur bid/ask au moment du trade. Le signal est negativement lie au rendement de 02:00-03:00 : RSV_close negatif (selloff) predit un rendement positif. Version conditionnelle « buy-the-dip » (BtD) : detenir l'e-mini de 01:30 a 03:30 uniquement les jours suivant RSV_close < 0, soit environ la moitie des jours.",
+    "alternatives": "SV_close, le volume signe brut en nombre de contrats (achats moins ventes) sur la meme heure, utilise sur 2007-2020 seulement. Les deux mesures donnent des resultats quantitativement proches. Double tri : terciles de RSV_close croises avec le niveau du VIX echantillonne a 16:15.",
+    "note": "Le papier ne publie pas de code. La classification acheteur/vendeur suppose de disposer des quotes au sommet du carnet a la milliseconde ; c'est la seule dependance de donnees non triviale."
+  },
+  "reported_results": [
+    {
+      "name": "od_hourly_return_bp",
+      "value": 1.48,
+      "unit": "bp par heure et par jour",
+      "quoted": "3.7% on an annualized basis (1.48 basis points per day)",
+      "note": "Rendement log moyen de l'heure 02:00-03:00 ET, calcule sur mid-quotes, 1998-2020."
+    },
+    {
+      "name": "od_annualized_return_pct",
+      "value": 3.7,
+      "unit": "% par an",
+      "quoted": "3.7% on an annualized basis (1.48 basis points per day)",
+      "note": "Le meme rendement, annualise. A comparer au rendement close-to-close de 5.9% sur la meme periode."
+    },
+    {
+      "name": "od_hourly_return_tstat",
+      "value": 7.1,
+      "unit": "t-stat",
+      "quoted": "with corresponding t-statistics equal to {2.8, 2.8, 7.1}, respectively.",
+      "note": "t-stats des heures {24-01, 01-02, 02-03} ; 7.1 est celle de l'heure OD. Ecarts-types HAC robustes. Le tableau I donne 7.13."
+    },
+    {
+      "name": "od_hourly_return_pvalue",
+      "value": 1.1e-12,
+      "unit": "p-value",
+      "quoted": "With a p-value of 1.1 · 10−12, the OD hour",
+      "quoted_source": "With a p-value of 1 .1 · 10−12, the OD hour",
+      "quoted_repair": "math_notation",
+      "spelled_out": "1 .1 · 10−12",
+      "note": "L'extraction disloque le nombre (« 1 .1 ») et rend l'exposant a plat (« 10−12 ») ; le papier ecrit 1.1 fois dix puissance moins douze. Seuil Bonferroni a 5% : 0.05/24 = 0.0021. L'heure OD est la seule significative au seuil Benjamini-Yekutieli de 1%."
+    },
+    {
+      "name": "od_years_positive",
+      "value": 20,
+      "unit": "annees sur 23",
+      "quoted": "Panel (c) shows that OD returns were positive in 20 out of 23 years.",
+      "note": "Negatif en 2002, 2008 et 2019 seulement."
+    },
+    {
+      "name": "od_years_significant",
+      "value": 17,
+      "unit": "annees sur 23",
+      "quoted": "Panel (e) shows that, at the 10% level, the OD is significant in 17 out of 23 years.",
+      "note": "Seuil de 10%, t-test annee par annee contre zero."
+    },
+    {
+      "name": "od_max_yearly_return_pct",
+      "value": 10.7,
+      "unit": "% par an",
+      "quoted": "the largest yearly average OD return (10.7% p.a.) occurred in 2020",
+      "note": "Annee du COVID. A noter pour nous : la meilleure annee du signal est une annee de crise, ce qui est coherent avec le canal capacite de prise de risque."
+    },
+    {
+      "name": "od_months_significant",
+      "value": 9,
+      "unit": "mois sur 12",
+      "quoted": "significant at conventional levels in 9 out of 12 months.",
+      "note": "L'OD est positif dans les douze mois, significatif dans neuf. Il est aussi positif et significatif a 1% chacun des cinq jours de la semaine."
+    },
+    {
+      "name": "od_sharpe_pre_costs",
+      "value": 1.1,
+      "unit": "Sharpe annualise",
+      "quoted": "a Sharpe ratio of 1.1 and accounting for bid-ask spreads this reduces to −0.5.",
+      "note": "Strategie longue ES de 02:00 a 03:00, 2004.1-2020.12. Le tableau IX donne 1.10."
+    },
+    {
+      "name": "od_sharpe_post_costs",
+      "value": -0.5,
+      "unit": "Sharpe annualise",
+      "quoted": "a Sharpe ratio of 1.1 and accounting for bid-ask spreads this reduces to −0.5.",
+      "spelled_out": "−0.5",
+      "note": "Le signe moins du papier est le signe mathematique U+2212, pas le tiret ASCII ; d'ou spelled_out. C'est le resultat le plus important pour nous : le motif est reel, la strategie naive ne survit pas au spread. Le tableau IX donne -0.54."
+    },
+    {
+      "name": "btd_sharpe_pre_costs",
+      "value": 1.8,
+      "unit": "Sharpe annualise",
+      "quoted": "ratio of 1.8 compared to 1.3 of OD+",
+      "note": "Strategie conditionnelle « buy-the-dip » (long 01:30-03:30 les jours suivant RSV_close < 0), hors couts. Le tableau IX donne 1.78."
+    },
+    {
+      "name": "odplus_sharpe_pre_costs",
+      "value": 1.3,
+      "unit": "Sharpe annualise",
+      "quoted": "ratio of 1.8 compared to 1.3 of OD+",
+      "note": "Strategie OD+ inconditionnelle (long 01:30-03:30 tous les jours), hors couts. Le tableau IX donne 1.30."
+    },
+    {
+      "name": "btd_sharpe_post_costs",
+      "value": 1.1,
+      "unit": "Sharpe annualise",
+      "quoted": "strategy remains highly profitable (Sharpe ratio of 1.1) because it only pays the bid-ask spread",
+      "note": "Le conditionnement sur RSV_close < 0 est ce qui sauve la strategie apres couts : elle ne paie le spread qu'un jour sur deux, et ces jours-la les rendements sont plus eleves."
+    },
+    {
+      "name": "od_beta_on_rsv_close_bp",
+      "value": -17.49,
+      "unit": "bp par unite de RSV",
+      "quoted": "(a sell-off) induces a 6.55% · −17.49 = 1.15 basis point increase in returns",
+      "quoted_source": "t−1 (a sell-off) induces a 6 .55% · −17.49 = 1 .15 basis point increase in returns",
+      "quoted_repair": "math_notation",
+      "spelled_out": "−17.49",
+      "note": "Coefficient de la regression univariee du rendement horaire 02:00-03:00 sur RSV_close de la veille, RSV exprime dans [-1, 1]. L'extraction colle l'indice « t−1 » en tete de ligne et disloque « 1 .15 ». Le tableau V donne -17.46 (panel a) et -17.25 (panel b, multivarie)."
+    },
+    {
+      "name": "od_return_response_1sd_bp",
+      "value": 1.15,
+      "unit": "bp",
+      "quoted": "(a sell-off) induces a 6.55% · −17.49 = 1.15 basis point increase in returns",
+      "quoted_source": "t−1 (a sell-off) induces a 6 .55% · −17.49 = 1 .15 basis point increase in returns",
+      "quoted_repair": "math_notation",
+      "spelled_out": "1 .15",
+      "note": "Reponse du rendement 02:00-03:00 a une baisse d'un ecart-type (6.55%) de RSV_close. Ordre de grandeur a retenir : le signal deplace le rendement horaire de 1.15 bp pour un choc typique, contre une moyenne inconditionnelle de 1.48 bp."
+    },
+    {
+      "name": "od_return_response_vix90_bp",
+      "value": 6.1,
+      "unit": "bp",
+      "quoted": "the return response is 6.1 basis points and with the VIX at its 10th percentile (12 %) there is close",
+      "note": "Regression avec interaction RSV_close x VIX_close. Reponse a une baisse d'un ecart-type de RSV quand le VIX est a son 90e percentile (30%), contre 2.6 bp au VIX moyen (20%) et quasiment zero au 10e percentile (12%). C'est le regime conditionnel le plus net du papier."
+    },
+    {
+      "name": "od_return_neg_rsv_low_tercile_high_vix_bp",
+      "value": 12.66,
+      "unit": "bp",
+      "quoted": "Panel B3, OD Average Returns, ligne RSV Low : VIX Low 0.88, VIX Med 4.93, VIX High 12.66, High moins Low 11.78, p-value 0.00",
+      "quoted_source": "RSV Low 0.88 4.93 12.66 11.78 0.00",
+      "quoted_repair": "table",
+      "note": "Tableau IV, double tri sur les jours a RSV_close negatif. Le rendement OD moyen passe de 0.88 bp (VIX bas) a 12.66 bp (VIX haut) dans le tercile de RSV le plus bas. Sur les jours a RSV_close positif (panel A3), aucun motif clair."
+    },
+    {
+      "name": "implied_market_maker_rra",
+      "value": 8.5,
+      "unit": "aversion relative au risque",
+      "quoted": "RRA = 0.17 / (150 × 0.04 × 300) = 8.5",
+      "quoted_source": "150 × 0.04 × 300 = 8.5 (5)",
+      "quoted_repair": "math_notation",
+      "note": "Equation (5), calcul de coin de table : rendement overnight realise en temps-volume de 17% p.a., desequilibre dollar de 150 milliards, VIX au carre a 20%, VaR actions moyenne des dealers de 300 milliards. L'extraction met la fraction a plat. A comparer a [7.6, 91.2] pour les arbitragistes du Tresor (Greenwood et Vayanos) et 88 pour les MBS."
+    },
+    {
+      "name": "cto_annualized_return_pct",
+      "value": 3.6,
+      "unit": "% par an",
+      "quoted": "equity returns averaged 3.6% p.a.",
+      "note": "Rendement de la seance overnight complete, 16:15 a 09:30. L'heure OD seule (3.7%) le depasse : tout le reste de la nuit est en moyenne negatif."
+    },
+    {
+      "name": "ctc_annualized_log_return_pct",
+      "value": 5.9,
+      "unit": "% par an",
+      "quoted": "return is 5.9%, which is close to the average yearly log return on the S&P 500 index cash (excluding",
+      "note": "Rendement log close-to-close moyen de l'e-mini, 1998-2020, hors dividendes. Reference contre laquelle lire l'OD."
+    },
+    {
+      "name": "ctc_sharpe_2004_2020",
+      "value": 0.42,
+      "unit": "Sharpe annualise",
+      "quoted": "average yearly return of 8.9% with a Sharpe ratio of 0.42.",
+      "note": "Detention continue de l'ES depuis 2004.1, hors couts. C'est le Sharpe de marche que les strategies OD depassent avant couts."
+    },
+    {
+      "name": "asian_vs_us_volume_ratio_low",
+      "value": 50,
+      "unit": "multiple",
+      "quoted": "Asian hours (18:00 – 2:00) were 50 to 100 times lower than volumes during U.S. trading hours.",
+      "note": "Le rapport annonce est un intervalle de 50 a 100 ; la valeur retenue est la borne basse, la borne haute (100) figure dans la meme citation. C'est le fait qui rend le mecanisme possible : l'inventaire ne peut pas etre solde avant l'ouverture europeenne."
+    },
+    {
+      "name": "volume_to_full_reversal_contracts",
+      "value": 60000,
+      "unit": "contrats",
+      "quoted": "returns increase linearly in signed volume until around 60,000 contracts",
+      "note": "En temps-volume, le renversement est essentiellement acheve apres environ 60 000 contrats echanges, ce qui correspond au volume cumule atteint vers 03:00 ET. Le papier traduit ainsi l'horloge en horloge d'activite."
+    },
+    {
+      "name": "od_rsv_mean_pct",
+      "value": 2.4,
+      "unit": "%",
+      "quoted": "is 2.4% with a t-statistic of 6.7, mirroring the unconditional positive returns during this hour.",
+      "note": "Le desequilibre d'ordres pendant l'heure OD elle-meme est positif, alors que le RSV close-to-close moyen est negatif (-2.4%) : les teneurs de marche vendent pendant l'heure OD."
+    },
+    {
+      "name": "od_rsv_tstat",
+      "value": 6.7,
+      "unit": "t-stat",
+      "quoted": "is 2.4% with a t-statistic of 6.7, mirroring the unconditional positive returns during this hour.",
+      "note": "Test contre zero du RSV moyen de l'heure 02:00-03:00."
+    },
+    {
+      "name": "od_one_dollar_cumulative_usd",
+      "value": 2.4,
+      "unit": "USD pour 1 USD investi",
+      "quoted": "$2.4 by December 2020 and displays little variation (it is highly persistent).",
+      "note": "Un dollar investi seulement pendant l'heure OD, depuis 1998, hors couts. A comparer a 3.8 dollars pour une detention close-to-close continue, bien plus volatile."
+    },
+    {
+      "name": "bid_ask_spread_index_points",
+      "value": 0.25,
+      "unit": "points d'indice",
+      "quoted": "always trading at the minimum tick size, equal to 0.25 index points.",
+      "note": "Le spread est au tick minimum quasiment toute la journee, y compris la nuit, depuis 2004. C'est ce plancher qui suffit a detruire le Sharpe de la strategie OD naive."
+    },
+    {
+      "name": "overnight_share_of_volume_pct",
+      "value": 20,
+      "unit": "% du volume total",
+      "quoted": "the share of overnight trading in the ES has again increased and stands at around 20% of total",
+      "note": "En 2019-2020. La part etait d'environ 2% jusqu'en 2002 puis 15% de 2010 a 2018. La structure de volume du marche change fortement sur l'echantillon."
+    },
+    {
+      "name": "od_intercept_non_announcement_bp",
+      "value": 1.52,
+      "unit": "bp",
+      "quoted": "is estimated to be 1.52 bps with a t-statistic of 5.98",
+      "note": "Constante de la regression du rendement 02:00-03:00 sur des indicatrices d'annonces macro (US, UK, EU, Japon). Le drift subsiste les jours sans annonce et aucune indicatrice n'est significative a cette heure. Meme conclusion pour les annonces de banques centrales (1.40 bp, t = 6.52) et pour les resultats d'entreprises."
+    },
+    {
+      "name": "zero_imbalance_no_reversal",
+      "value": null,
+      "unit": null,
+      "quoted": "we find reversal returns which are economically small and statistically indistinguishable from",
+      "note": "Resultat qualitatif, et le plus discriminant du papier : quand le desequilibre de cloture est proche de zero, il n'y a pas de renversement. C'est la prediction du modele d'inventaire (pas de prime de liquidite pour un inventaire nul) et c'est ce qui distingue l'explication par l'inventaire d'une simple saisonnalite horaire."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun IC, aucune correlation de rang, aucune metrique transversale : le papier mesure des rendements moyens par fenetre horaire et des betas de regression. Il n'existe aucun chiffre du papier directement comparable a notre rapport d'IC.",
+    "Aucun code, aucune donnee publiee. La reproduction exige des trades et quotes tick-by-tick avec le sommet du carnet, source payante (Refinitiv Datascope Select plus CME).",
+    "La regle de classification acheteur/vendeur est decrite en une phrase (comparaison au meilleur bid/ask) mais le traitement des cas ambigus, des trades au milieu du spread et des enchemes d'ouverture n'est pas precise.",
+    "Les bornes des groupes de la figure 10 (tri sur RSV_close) ne sont pas chiffrees dans le texte ; seuls les terciles du tableau IV le sont, et uniquement en moyenne de groupe.",
+    "Les couts sont modelises par le seul spread bid-ask observe. Aucune commission, aucun frais de clearing, aucun cout de roulement chiffre en dehors d'une mention.",
+    "Le traitement des jours feries, des seances raccourcies et des roulements de contrat n'est pas decrit au-dela de « on prend toujours le contrat le plus traite ».",
+    "Aucun multiplicateur, tick ou frais n'est donne pour un autre instrument que l'ES ; rien ne permet de transposer les magnitudes a nos neuf futures sans mesure propre.",
+    "Le papier ne dit pas si le signal resterait exploitable apres 2020, et son echantillon s'arrete avant notre pool.",
+    "La VaR actions des dealers est trimestrielle et issue de Bloomberg : le canal « capacite de prise de risque » n'est jamais teste sur une variable disponible en temps reel."
+  ],
+  "transposability": {
+    "what_transfers": "Le motif, pas le chiffre. Ce qui se transpose est une hypothese testable et bien formee : un desequilibre d'ordres mesure sur la derniere heure de la seance la plus liquide d'un instrument predit negativement le rendement de la fenetre ou arrive la vague de liquidite suivante. La construction du signal est simple, deterministe, sans acces au futur, et ne demande que des trades classifiables : RSV = (achats - ventes) / (achats + ventes) sur une fenetre fixee, borne dans [-1, 1], donc naturellement comparable entre instruments de volumes tres differents - c'est precisement la raison pour laquelle les auteurs preferent RSV a SV, et cette raison vaut chez nous. Se transposent aussi les trois conditionnements : l'asymetrie du signe (le renversement est fort apres un desequilibre vendeur, faible apres un desequilibre acheteur), l'amplification par la volatilite ex-ante, et l'annulation quand le desequilibre est proche de zero. Ce dernier point est une falsification bon marche : un signal qui « marche » aussi quand le desequilibre est nul n'est pas un signal d'inventaire. Se transpose enfin le protocole de falsification par decalage horaire : si le mecanisme est bien l'arrivee de participants, la predictibilite doit se deplacer avec l'heure d'ouverture des places, et non rester collee a une heure de l'horloge.",
+    "what_does_not_transfer": [
+      "La metrique. Le papier mesure un rendement moyen annualise et un Sharpe sur un instrument unique ; notre harnais produit un IC. Aucun chiffre du papier n'est un IC, et rien dans la fiche ne doit etre lu comme une prediction d'IC.",
+      "L'univers. Un seul instrument contre neuf. Le papier n'a pas de coupe transversale : il n'y a rien a classer, donc rien qui ressemble a notre facon de scorer plusieurs instruments a une date. Transposer demande de reinterpreter le signal comme un score par instrument, ce que le papier ne fait jamais.",
+      "L'heure 02:00-03:00 ET elle-meme. Elle vaut pour un sous-jacent americain dont la clientele suivante est europeenne. Pour un future dont la clientele principale est deja europeenne ou asiatique, l'heure d'arrivee de la liquidite est ailleurs, et le papier montre lui-meme (test DST) que la fenetre se deplace. Coder « 02:00-03:00 » en dur serait recopier un resultat, pas un mecanisme.",
+      "Les magnitudes. 1.48 bp par heure, 3.7% annualise, un beta de -17.49 : ce sont des constats d'un tiers sur l'ES entre 1998 et 2020. Ils disent quoi verifier, jamais ce qui est vrai chez nous.",
+      "La donnee. RSV exige des trades classifies acheteur/vendeur, donc les quotes au sommet du carnet a la milliseconde. Si notre couche de donnees ne porte que des barres, RSV n'est pas calculable et il faut un substitut - lequel ne sera pas le signal du papier.",
+      "Le modele de couts. Le papier ne compte que le spread bid-ask observe sur l'ES, l'un des contrats les plus liquides du monde, a son tick minimum. Nos neuf futures n'ont ni le meme tick ni le meme spread, et ces valeurs ne sont pas encore renseignees : elles valent null tant qu'elles n'ont pas ete mesurees.",
+      "La periode. 1998-2020 ne recouvre notre pool (2016-2023) que sur cinq ans, et le papier documente lui-meme un changement structurel majeur sur son echantillon (part du volume overnight passant d'environ 2% a environ 20%).",
+      "Le proxy de capacite de prise de risque. La VaR actions trimestrielle des grands dealers, obtenue via Bloomberg, n'existe pas dans notre chaine et ne peut pas entrer dans un signal point-in-time.",
+      "Les Sharpe annonces comme critere d'acceptation. Un Sharpe de 1.1 avant couts et -0.5 apres est, pour le papier, une confirmation theorique (les teneurs de marche rendent le trade contrarien non rentable) ; pour nous ce serait un echec. Le papier lui-meme ecrit que ces motifs ne sont « not easily profitable »."
+    ],
+    "what_aligns_well": "Trois choses tombent juste. D'abord l'ordre temporel : le signal est ferme a 16:15, la fenetre de rendement s'ouvre des heures plus tard, et il n'existe aucun chemin par lequel le signal pourrait voir le futur. C'est exactement la forme que notre invariant II impose par construction - la transposition n'aurait pas a se battre contre le papier sur ce point. Ensuite la discipline de tests multiples : le papier compte ses tests (24 heures), applique Bonferroni et Benjamini-Yekutieli, et conduit un bootstrap par blocs de 10 000 tirages pour situer l'heure OD dans la distribution de toutes les heures. C'est le geste que notre registre exige, fait spontanement par les auteurs - et c'est aussi ce qui rend le resultat credible plutot qu'exhume. Enfin l'honnetete sur les couts : les auteurs publient le Sharpe post-couts negatif de leur strategie principale au lieu de s'arreter au chiffre brut, et en tirent une lecture theorique. Un papier qui montre son propre echec de rentabilite est une cible de replication plus sure qu'un papier qui n'annonce que des succes."
+  },
+  "validation_structure": "Le papier porte une structure de validation propre a ses auteurs, qui n'est pas prevue par notre schema et merite d'etre notee : (1) bootstrap par blocs, 10 000 tirages, longueur de bloc choisie selon Patton, Politis et White (2009), comparant la distribution des 24 heures a celle de la seule heure OD - l'intervalle bas a 2.5% de l'heure OD se situe au-dessus de l'intervalle haut a 97.5% du groupe ; (2) corrections Bonferroni et Benjamini-Yekutieli sur 24 tests ; (3) deux sous-echantillons (1998-2010, 2011-2020) ou le motif survit alors que les autres heures changent de signe ; (4) persistance annee par annee, mois par mois, jour de semaine par jour de semaine ; (5) un test de falsification (regression sur les RSV retardes d'une a douze heures) ; (6) une experience naturelle exogene (decalages DST US/Japon et US/Europe). C'est, a notre connaissance, une pre-enregistrement implicite du seuil : les auteurs fixent la correction avant de regarder quelle heure survit.",
+  "mechanism": "Grossman et Miller (1988) etendu a une contrainte de value-at-risk. Le rendement overnight attendu est le produit de trois termes : desequilibre d'ordres en dollars, variance des rendements, et inverse de la capacite de prise de risque des teneurs de marche. L'asymetrie vient du troisieme terme : une hausse de volatilite (qui accompagne les selloffs, effet de levier) resserre la contrainte VaR et augmente l'aversion au risque effective ; une baisse de volatilite ne la relache pas symetriquement une fois la contrainte non mordante. Trois canaux sont evoques pour la variation de capacite : sortie des teneurs de marche non designes pendant les selloffs, reduction des limites de risque individuelles, et asymetrie des couts de financement (marges initiales relevees par le CME en periode de stress). Les auteurs laissent le depart entre ces canaux a des travaux futurs."
+}

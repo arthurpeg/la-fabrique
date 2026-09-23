@@ -1,0 +1,299 @@
+{
+  "fiche_id": "bollerslev-2018-risk-everywhere",
+  "written": "2026-09-23",
+  "written_by": "claude-opus-5 — session d'extraction isolée, entrée 12",
+  "source": {
+    "authors": "Tim Bollerslev, Benjamin Hood, John Huss, Lasse Heje Pedersen",
+    "title": "Risk Everywhere: Modeling and Managing Volatility",
+    "year": 2018,
+    "journal": "The Review of Financial Studies, v. 31 n. 7, 2729-2773",
+    "source_url": "https://public.econ.duke.edu/~boller/Published_Papers/rfs_18.pdf",
+    "pdf": "corpus/pdf/bollerslev-2018-risk-everywhere.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "amorce_entry": 12
+  },
+
+  "claim": "Les volatilités réalisées de plus de cinquante instruments liquides — futures de matières premières, indices actions, taux, et change au comptant — se ressemblent fortement une fois normalisées par leur moyenne d'échantillon : mêmes distributions inconditionnelles, mêmes structures d'autocorrélation, forts effets de contagion intra- et inter-classes. Le papier soutient qu'on peut exploiter cette communauté en estimant les modèles de risque en panel sur tous les actifs à la fois (« mega »), après avoir « centré » les modèles sur une moyenne longue en expansion pour éliminer l'intercept propre à chaque actif, et en remplaçant les marches d'escalier du HAR par un mélange lisse de quatre EWMA (le modèle HExp), éventuellement augmenté d'un facteur de risque global retardé (HExpGl). Résultat affirmé : les modèles contraints battent hors échantillon les modèles estimés actif par actif — ce qui est l'inverse du classement en échantillon — et ce gain se traduit en utilité réelle pour un investisseur qui cible une volatilité constante. La cible prédite est une VOLATILITÉ à 20 jours, jamais un rendement : le papier ne produit aucun signal de rendement et aucun IC.",
+
+  "universe": "58 actifs répartis en quatre classes : 20 matières premières (futures), 21 indices actions (futures, marchés développés et émergents), 8 futures de taux (10 ans Australie, Allemagne 10a et 5a, Canada, Japon, Royaume-Uni, États-Unis 10a et 5a) et 9 taux de change au comptant. Données intraday agrégées en barres d'une minute, RV calculée à échantillonnage 5 minutes avec sous-échantillonnage (moyenne des cinq grilles décalées d'une minute), rendements overnight au carré ajoutés à la RV intraday. Sources : Thomson Reuters Tick History, TickData.com, Olsen Data pour le change ; calendriers FinCal. Dates de départ échelonnées, la plus ancienne au 22 octobre 1992 (matières premières), la plus récente au 1er janvier 2004 ; toutes les séries s'arrêtent le 30 septembre 2014. Nombre moyen d'observations par actif : 5 407 (matières premières), 3 812 (actions), 4 042 (taux), 3 351 (change).",
+
+  "horizon": {
+    "value": 20,
+    "unit": "jours de bourse",
+    "quoted": "We will focus our discussion on a 1-month (i.e., 20-day) forecast horizon. We",
+    "note": "Horizon principal : la variance réalisée moyenne sur les 20 jours suivants, prédite en direct (et non par itération d'un modèle à un jour). L'annexe A.2.2 mentionne des horizons journalier, hebdomadaire et à 60 jours en robustesse, sans en publier les chiffres dans le texte fourni."
+  },
+
+  "signal_construction": {
+    "value": "HExp : la RV future à 20 jours, diminuée d'un facteur de long terme RV_LR (moyenne en expansion des RV quotidiennes du début de l'échantillon jusqu'à t), est régressée sur quatre moyennes mobiles exponentielles des RV quotidiennes passées, elles aussi diminuées de RV_LR, avec des centres de masse fixés à 1, 5, 25 et 125 jours. Les poids EWMA sont tronqués à 500 retards et le taux de décroissance se déduit du centre de masse par lambda = log(1 + 1/CoM). Aucun paramètre de réglage libre : l'estimation est un simple MCO, actif par actif, ou en panel à effets fixes sur une classe d'actifs (« Panel »), ou sur les 58 actifs à la fois (« Mega »).",
+    "centering": "Le « centrage » consiste à soustraire RV_LR des deux côtés de la régression. Il remplace l'intercept b0 propre à chaque actif par un intercept implicite variable dans le temps (1 - b(1)) * RV_LR, ce qui rend tous les coefficients sans échelle et permet de les contraindre à être communs entre actifs de niveaux de risque très différents.",
+    "global_factor": "HExpGl ajoute un cinquième régresseur : l'EWMA de centre de masse 5 jours du facteur global GlRV. GlRV est la moyenne des RV normalisées de tous les actifs, remise à l'échelle de l'actif considéré. Il est construit ACTIF PAR ACTIF pour interdire le look-ahead dû aux fuseaux horaires : tout actif dont les heures de marché chevaucheraient la journée de bourse suivante de l'actif cible est décalé d'un jour, et ce décalage est refait jour par jour pour suivre les changements d'horaires de marché.",
+    "note": "Modèles concurrents implémentés pour comparaison : moyenne statique en expansion, variance glissante 21 jours sur rendements quotidiens au carré, RV glissante 21 jours, HAR (Corsi 2009), MIDAS à polynôme bêta (cutoff k = 50, theta1 = 1, theta2 par recherche sur grille en plein échantillon). Un « insanity filter » (Swanson et White 1997) remplace toute prévision dépassant la RV mensuelle maximale observée jusque-là par RV_LR."
+  },
+
+  "reported_results": [
+    {
+      "name": "n_assets_total",
+      "value": 58,
+      "unit": "actifs",
+      "quoted": "Our data covers a total of 58 different assets across commodities (20), equities",
+      "note": "Répartition : 20 matières premières, 21 actions, 8 taux, 9 devises."
+    },
+    {
+      "name": "n_equity_index_futures",
+      "value": 21,
+      "unit": "actifs",
+      "quoted": "two decades and covering 20 commodities, 21 equity indices, 8 ﬁxed-income",
+      "note": "Même phrase que la ligne suivante du papier, « futures, and 9 currencies »."
+    },
+    {
+      "name": "rv_sampling_frequency_min",
+      "value": 5,
+      "unit": "minutes",
+      "quoted": "We rely on a common 5-minute sampling frequency for calculating the",
+      "note": "Fréquence commune à tous les actifs, justifiée par les signature plots de l'annexe A.1.3 et par Liu, Patton et Sheppard (2015). Sous-échantillonnage : moyenne des cinq RV obtenues en décalant le début de journée d'une minute."
+    },
+    {
+      "name": "avg_annualized_vol_commodities_pct",
+      "value": 25.4,
+      "unit": "% annualisé",
+      "quoted": "25.4% and 20.6%, respectively, compared to 10.3% for foreign exchange, and",
+      "note": "Moyenne des volatilités réalisées quotidiennes annualisées par classe : matières premières 25.4 %, actions 20.6 %, change 10.3 %."
+    },
+    {
+      "name": "avg_annualized_vol_fixed_income_pct",
+      "value": 3.1,
+      "unit": "% annualisé",
+      "quoted": "just 3.1% for ﬁxed income.",
+      "note": "Les taux sont de très loin la classe la moins volatile ; c'est aussi celle où le papier trouve les plus faibles gains d'utilité."
+    },
+    {
+      "name": "rv_1day_autocorr_by_class",
+      "value": 0.707,
+      "unit": "corrélation",
+      "quoted": "1-day autocorr. commodities 0.516 equities 0.707 fixed income 0.481 foreign exchange 0.517",
+      "quoted_source": "1-day autocorr. 0.516 0.707 0.481 0.517",
+      "quoted_repair": "table",
+      "note": "Table 1, autocorrélation à 1 jour des RV quotidiennes moyennées par classe ; la value retenue est celle des actions. Décroissance lente : 0.480 à 20 jours, 0.228 à 100 jours, 0.105 à 250 jours pour les actions."
+    },
+    {
+      "name": "normalized_rv_distributions_similar",
+      "value": null,
+      "quoted": "“normalized risk measures” have almost identical unconditional distributions",
+      "note": "Résultat qualitatif central : la RV divisée par sa moyenne d'échantillon a presque la même loi d'un actif à l'autre et d'une classe à l'autre. Le papier insiste que cette ressemblance n'est PAS mécanique, la normalisation ne coûtant qu'un degré de liberté (pas deux, comme une standardisation moyenne/écart-type)."
+    },
+    {
+      "name": "ks_test_pvalue_commodities_vs_fixed_income",
+      "value": 0.0087,
+      "unit": "p-value",
+      "quoted": "distributions in Figure 3 are identical, with a p-value of .0087 for commodities and ﬁxed income, and p-values",
+      "spelled_out": ".0087",
+      "note": "Nuance importante et facile à manquer : les tests de Kolmogorov-Smirnov par paires REJETTENT l'identité des quatre distributions normalisées (p < .0001 pour toutes les autres paires). « Presque identiques » n'est pas « identiques »."
+    },
+    {
+      "name": "avg_corr_with_global_factor_by_class",
+      "value": 0.721,
+      "unit": "corrélation",
+      "quoted": "Global: commodities 0.410 equities 0.721 fixed income 0.547 foreign exchange 0.633",
+      "quoted_source": "Global 0.410 0.721 0.547 0.633",
+      "quoted_repair": "table",
+      "note": "Table 2, panel A : corrélation contemporaine moyenne des RV de chaque classe avec le facteur global GlRV ; la value retenue est celle des actions. Ces corrélations dépassent systématiquement les corrélations inter-classes."
+    },
+    {
+      "name": "global_vol_vs_unusual_sentiment_corr",
+      "value": 0.197,
+      "unit": "corrélation mensuelle",
+      "quoted": "sentiment measure minus its sample mean, equals 0.197.",
+      "note": "Le facteur de volatilité globale est négativement corrélé au sentiment Baker-Wurgler (−0.123) mais positivement à sa valeur absolue centrée, et fortement négativement à la prime de risque de variance (−0.454)."
+    },
+    {
+      "name": "oos_r2_mega_hexp_all_assets_pct",
+      "value": 47.3,
+      "unit": "% de R2 hors échantillon",
+      "quoted": "47.3% with daily RV s, directly underscoring the informational advantages afforded by the use of",
+      "note": "R2 hors échantillon moyen sur tous les actifs, horizon 20 jours, modèle HExp estimé en mega-panel. Même chiffre que la case correspondante de la Table 5."
+    },
+    {
+      "name": "oos_r2_mega_hexp_daily_squared_returns_pct",
+      "value": 44.0,
+      "unit": "% de R2 hors échantillon",
+      "quoted": "for the mega HExp model, for example, improves from 44.0% with the daily squared returns to",
+      "quoted_source": "for the mega HExp model, for example, improves from 44 .0% with the daily squared returns to",
+      "quoted_repair": "math_notation",
+      "spelled_out": "44 .0",
+      "note": "Même modèle, mêmes contraintes, mais facteurs construits sur des rendements quotidiens au carré au lieu des RV intraday : 44.0 % contre 47.3 %. C'est le chiffrage du gain apporté par la donnée haute fréquence elle-même, indépendamment du modèle."
+    },
+    {
+      "name": "oos_r2_mega_all_assets_row_pct",
+      "value": 50.6,
+      "unit": "% de R2 hors échantillon",
+      "quoted": "All assets, Mega: HAR 46.2% MIDAS 46.7% HExp 49.2% HExpGl 50.6%",
+      "quoted_source": "Mega – – – 46.2% 46.7% 49.2% 50.6%",
+      "quoted_repair": "table",
+      "note": "Table 5, dernière ligne du bloc « All assets ». La value retenue est celle de HExpGl. À comparer à la ligne « Indiv. » de ce même bloc : statique 2.1 %, 21-daily 7.1 %, 21-day RV 27.7 %, HAR 42.8 %, MIDAS 43.4 %, HExp 47.3 %, HExpGl 49.5 %."
+    },
+    {
+      "name": "in_sample_dm_tstat_indiv_hexp_vs_mega_hexp_all_assets",
+      "value": -2.21,
+      "unit": "t-stat de Diebold-Mariano",
+      "quoted": "HExp model for all assets equals −2.21. Among the mega-based models,",
+      "spelled_out": "−2.21",
+      "note": "EN ÉCHANTILLON, le modèle mega est statistiquement inférieur au modèle individuel — par construction. Hors échantillon le classement s'inverse : la Table 5 prend le mega HExp comme référence et tous les autres modèles, y compris les HExp individuels, ont des t-stats négatives (−1.93 pour l'ensemble des actifs, ligne « Indiv. »). Le papier ne fournit pas d'intervalle de confiance sur les R2 eux-mêmes."
+    },
+    {
+      "name": "forecast_variance_reduction_mega_vs_indiv_hexp_pct",
+      "value": 30,
+      "unit": "% de réduction",
+      "quoted": "of the forecasts is reduced by almost 30% for the mega model that restrict",
+      "note": "Mécanisme avancé pour expliquer la supériorité hors échantillon : le biais de prévision est négligeable pour tous les modèles, c'est la VARIANCE des prévisions que le panel réduit. Arbitrage biais-variance, pas modèle plus « vrai » — le papier le dit explicitement."
+    },
+    {
+      "name": "fx_individual_models_fail_oos",
+      "value": null,
+      "quoted": "individually estimated dynamic risk models perform rather poorly, clearly",
+      "note": "Sur le change, le HAR individuel tombe à 28.6 % de R2 hors échantillon alors que le mega HAR atteint 47.7 % et le mega HExpGl 56.8 %. C'est le cas extrême qui porte l'argument du papier : l'estimation individuelle est fragile."
+    },
+    {
+      "name": "centered_vs_uncentered_oos_r2_gain_pct",
+      "value": 0.6,
+      "unit": "points de R2",
+      "quoted": "model, the out-of-sample R2 for the same mega-based model is 0.6% higher for the “centered”",
+      "quoted_source": "model, the out-of-sample R2 for the same mega-based model is 0 .6% higher for the “centered”",
+      "quoted_repair": "math_notation",
+      "spelled_out": "0 .6",
+      "note": "Le modèle « non centré » gagne 0.8 point de R2 en échantillon et en perd 0.6 hors échantillon : le centrage se paie en ajustement et se rembourse en prévision."
+    },
+    {
+      "name": "intraday_overnight_split_oos_r2_pct",
+      "value": 46.8,
+      "unit": "% de R2 hors échantillon",
+      "quoted": "2 of 46.8%, compared to the average R2 of 47.3% for the single",
+      "note": "Annexe A.2.4 : modéliser séparément la composante intraday et la composante overnight puis recombiner ne bat PAS le modèle unique sur la RV journalière entière (46.8 % contre 47.3 %). Résultat négatif utile : la séparation intraday/overnight ne rapporte rien ici."
+    },
+    {
+      "name": "assumed_sharpe_ratio",
+      "value": 0.4,
+      "unit": "Sharpe annualisé",
+      "quoted": "annualized Sharpe ratio and coefﬁcient of risk aversion to be SR =0.4 and",
+      "note": "Hypothèse, pas mesure : le Sharpe conditionnel est SUPPOSÉ constant, et fixé à 0.4 avec une aversion au risque gamma = 2. Tous les chiffres d'utilité sont proportionnels à ces deux valeurs."
+    },
+    {
+      "name": "volatility_target_pct",
+      "value": 20,
+      "unit": "% de volatilité annualisée",
+      "quoted": "optimally targets an annualized volatility of 20% (similar to the average",
+      "note": "Cible de volatilité SR/gamma = 20 %, d'où une utilité maximale de 4 % de la richesse par an avec une prévision parfaite."
+    },
+    {
+      "name": "utility_gain_hexpgl_vs_static_bps",
+      "value": 48,
+      "unit": "bps par an",
+      "quoted": "our global risk factor (HExpGl) is worth about 48 basis points (bps) per year",
+      "note": "Gain d'utilité réalisée, sans coûts de transaction, tous actifs confondus, contre le meilleur modèle de risque statique possible."
+    },
+    {
+      "name": "utility_gain_hexpgl_vs_daily_model_bps",
+      "value": 19,
+      "unit": "bps par an",
+      "quoted": "model relative to a simple risk model based on daily data is 19 bps per year",
+      "note": "Contre un modèle de première génération fondé sur les rendements quotidiens au carré."
+    },
+    {
+      "name": "utility_gain_hexpgl_vs_21day_rv_bps",
+      "value": 8,
+      "unit": "bps par an",
+      "quoted": "8 bps per year. These utility gains are of the same magnitude as institutional",
+      "note": "Contre une moyenne glissante 21 jours des RV. C'est le gain marginal réel de tout l'appareil de modélisation face à une moyenne mobile naïve sur la même donnée haute fréquence."
+    },
+    {
+      "name": "utility_gain_hexp_vs_static_all_assets_bps",
+      "value": 46,
+      "unit": "bps par an",
+      "quoted": "that of having a static risk model is 0.46%, or 46 bps (and even more, 48 bps,",
+      "note": "Décomposition du chemin statique → HExpGl : 46 bps pour HExp, 48 bps pour HExpGl."
+    },
+    {
+      "name": "utility_gain_static_to_daily_bps",
+      "value": 29,
+      "unit": "bps par an",
+      "quoted": "simpler dynamic risk model. Indeed, the utility increases by 29 bps when",
+      "note": "Premier palier, et de loin le plus gros : passer d'un risque constant à n'importe quel modèle dynamique quotidien."
+    },
+    {
+      "name": "utility_gain_daily_to_21day_rv_bps",
+      "value": 12,
+      "unit": "bps par an",
+      "quoted": "Utility further increases by 12 bps when moving from the daily risk model to",
+      "note": "Deuxième palier : valeur de la donnée intraday, à modèle naïf constant."
+    },
+    {
+      "name": "utility_gain_21day_rv_to_hexp_bps",
+      "value": 6,
+      "unit": "bps par an",
+      "quoted": "increase of 6 bps, while the HExpGl model adds an additional 2 bps.",
+      "note": "Troisième et quatrième paliers : 6 bps pour HExp au-dessus d'une RV glissante 21 jours, puis 2 bps pour l'ajout du facteur global. Sur 48 bps au total, 41 sont acquis avant tout modèle sophistiqué."
+    },
+    {
+      "name": "transaction_cost_spread_window_months",
+      "value": 9,
+      "unit": "mois",
+      "quoted": "each of the assets over the last nine months of the sample.",
+      "spelled_out": "nine",
+      "note": "Coût de transaction = spread bid-ask médian de chaque actif sur les neuf derniers mois de l'échantillon (soit fin 2013 - septembre 2014), appliqué en plein (pas en demi-spread) et linéaire dans la variation de position. Table A1 donne le coût supposé actif par actif, de 0.7 bp (Allemagne 10a, EUR-USD) à 8.1 bps (USD-NOK)."
+    },
+    {
+      "name": "gradual_trading_speed_pct",
+      "value": 15,
+      "unit": "% du chemin vers la cible par jour",
+      "quoted": "positions are only traded 15% toward the zero-cost optimal targets each day.",
+      "note": "Stratégie de ralentissement à la Garleanu-Pedersen. Sans elle (ligne « Full » de la Table 6), l'ordre des modèles change : le modèle quotidien de première génération devient le plus coûteux, et MIDAS, plus lent, a la plus faible rotation. Avec elle, HExp et HExpGl redeviennent les meilleurs."
+    },
+    {
+      "name": "headline_utility_claim_pct_of_wealth",
+      "value": 0.5,
+      "unit": "% de la richesse par an",
+      "quoted": "realistic assumptions, our robust dynamic risk models are worth close to 0.5%",
+      "note": "Formulation de la conclusion, contre un modèle de risque statique."
+    }
+  ],
+
+  "what_is_missing": [
+    "Aucun coefficient estimé n'est publié dans le texte fourni : ni les quatre bêtas du HExp, ni le bêta du facteur global, ni les intercepts. Figure 6 ne montre que les coefficients de retard implicites, graphiquement. Une réimplémentation doit tout réestimer.",
+    "Aucun IC, aucune corrélation de rang, aucun rendement : la cible prédite est une variance réalisée. Le papier ne mesure jamais de pouvoir prédictif sur les rendements, donc rien ici n'est directement comparable à notre métrique.",
+    "Le paramètre theta2 du MIDAS est choisi par recherche sur grille en PLEIN échantillon, ce que les auteurs reconnaissent : leurs résultats MIDAS ne sont pas réellement hors échantillon. La comparaison HExp contre MIDAS est donc favorable à MIDAS, pas l'inverse.",
+    "Le facteur global GlRV est construit à partir des 58 actifs. Le papier ne dit pas combien d'actifs sont nécessaires pour qu'il reste informatif, ni comment sa valeur se dégrade sur un panel réduit.",
+    "Les règles exactes de roulement des contrats (fenêtres, dates de première notification, calendrier GSCI par matière première) sont décrites qualitativement — « typically fall around 3-6 days prior to contract expiry » — mais aucune table de règles par instrument n'est fournie.",
+    "Aucun multiplicateur de contrat, aucun tick, aucun fuseau horaire explicite, aucune heure d'ouverture/fermeture par instrument : le papier renvoie à la base FinCal et à des « liquidity plots » non reproduits.",
+    "Les coûts de transaction supposés (Table A1) sont des spreads médians de 2013-2014 seulement, et le papier ne dit pas comment ils évoluent sur les deux décennies de l'échantillon, alors que la majorité du backtest se déroule avant.",
+    "L'Online Appendix porte une part importante des résultats cités (distributions par actif, coefficients individuels, autres hypothèses de coûts, modèles HAR-free, mélanges de polynômes bêta) et n'est pas dans le texte fourni.",
+    "Aucun code, aucune donnée : TRTH, TickData et Olsen Data sont tous des fournisseurs payants.",
+    "Les R2 hors échantillon n'ont pas d'intervalle de confiance ; seule la différence de perte entre modèles est testée, par des tests de Diebold-Mariano dont les auteurs notent eux-mêmes qu'ils ne sont pas formellement justifiés hors échantillon (pertes non stationnaires quand la fenêtre d'estimation s'étend).",
+    "Le nombre de spécifications essayées n'est pas compté : centré/non centré, quatre horizons, variance contre volatilité, intraday/overnight séparés, polynômes linéaires, hyperboliques, mélanges de bêtas, HAR-free, autres hypothèses de coût. Chacune est rapportée comme « n'a pas fait mieux », sans registre de tests."
+  ],
+
+  "transposability": {
+    "what_transfers": "Le motif, pas le résultat. Trois choses s'emportent chez nous. (1) La construction de la RV : barres minute, échantillonnage 5 minutes, sous-échantillonnage sur cinq grilles décalées, overnight ajouté au carré — c'est une recette complète et déterministe, sans paramètre libre, applicable telle quelle à des futures intraday. (2) Le centrage sur une moyenne longue EN EXPANSION : soustraire RV_LR des deux côtés rend les coefficients sans échelle et autorise l'estimation poolée d'instruments de niveaux de risque incomparables ; la moyenne en expansion ne lit que le passé, elle est compatible par construction avec notre couche point-in-time. (3) L'estimation poolée elle-même, et sa justification : l'ordre des modèles s'INVERSE entre l'échantillon et le hors-échantillon, et le mécanisme avancé — réduction de la variance des prévisions de près de 30 %, biais négligeable — est un argument général qui vaut pour tout paramètre estimé sur peu d'instruments. Pour neuf instruments, c'est un avertissement direct contre l'estimation instrument par instrument. Transférable aussi, et gratuite : la convention de retard du facteur global, actif par actif et jour par jour, pour qu'aucune heure de marché ne chevauche la journée suivante de l'actif cible.",
+    "what_does_not_transfer": [
+      "La cible. Le papier prédit une volatilité réalisée à 20 jours ; nous cherchons un score qui classe des instruments par rendement futur. Un R2 de 47 % sur une variance n'a aucun équivalent en IC, et la conversion n'existe pas. Rien de ce papier ne se réplique comme signal de rendement.",
+      "La métrique. L'utilité réalisée en bps par an suppose un Sharpe conditionnel CONSTANT, fixé à 0.4, et une aversion gamma = 2 ; elle est proportionnelle à ces deux nombres posés a priori. C'est une métrique de qualité de prévision de risque, pas une mesure de pouvoir prédictif, et elle ne passe pas par notre harnais.",
+      "L'échelle du panel. 58 actifs sur quatre classes contre neuf futures ; le facteur global GlRV est la moyenne des RV normalisées de tous les actifs et perd son sens sur neuf instruments d'un même sous-ensemble. Le gain propre au facteur global n'est de toute façon que de 2 bps sur 48.",
+      "La diversité des classes. L'argument central est la ressemblance ENTRE classes d'actifs — actions, taux, matières premières, change. Sur un univers plus étroit, l'essentiel du gain de pooling a déjà été capté par la classe elle-même, et le papier montre que Panel et Mega sont proches (49.2 % contre 48.7 % tous actifs).",
+      "Les neuf taux de change, qui sont du comptant et non des futures : leur session est quasi continue, sans overnight au sens du papier, et c'est précisément la classe où les écarts entre estimations individuelles et poolées sont les plus spectaculaires. Ce cas extrême ne vaut pas sur un univers de futures listés.",
+      "La période. L'échantillon s'arrête le 30 septembre 2014 et commence en 1992-2005 selon les actifs : il ne recouvre aucune de nos tranches. Les niveaux de volatilité, les spreads et la microstructure de 1992-2014 ne disent rien des nôtres.",
+      "Les coûts. Spreads médians des neuf derniers mois de l'échantillon, spread plein, coût linéaire dans la variation de position, pas d'impact de marché ni de dépendance à la volatilité — les auteurs le reconnaissent. Nos frais et nos ticks sont à établir, pas à recopier de la Table A1.",
+      "L'horizon de rebalancement quotidien à 15 % du chemin : c'est un paramètre choisi, non optimisé, illustratif. Le prendre pour une valeur calibrée serait une faute.",
+      "Les chiffres d'utilité (48, 46, 29, 12, 6, 2 bps) sont des constats d'un tiers sur ses données et son univers. Ils disent quoi vérifier, jamais ce qui est vrai chez nous.",
+      "La branche MIDAS, dont le theta2 est choisi en plein échantillon : chez nous cela violerait l'invariant II, et aucun chiffre MIDAS de ce papier ne peut servir de référence hors échantillon."
+    ],
+    "what_aligns_well": "Quatre choses tombent juste. D'abord l'objet : des futures liquides, en données intraday, roulés selon une règle explicite fondée sur la liquidité relative du contrat proche et du contrat lointain — c'est exactement la forme de notre univers et le papier décrit une règle de roulement utilisable. Ensuite le protocole : fenêtre d'estimation en EXPANSION, prévision hors échantillon à chaque date, R2 hors échantillon défini contre une référence qui n'utilise que le passé (RV_LR) — c'est un walk-forward, discipline compatible avec la nôtre, et les auteurs prennent soin de définir la référence du R2 de la même façon en et hors échantillon pour que les deux se comparent. Ensuite l'anti-look-ahead par construction plutôt que par vigilance : le facteur global est décalé actif par actif et jour par jour pour qu'aucune heure de marché ne puisse chevaucher la journée suivante de l'actif prédit — c'est notre invariant II, appliqué par un tiers, à un cas de fuseaux horaires que nous rencontrerons. Enfin l'honnêteté sur les résultats négatifs, qui est directement exploitable : séparer intraday et overnight ne rapporte rien (46.8 % contre 47.3 %), les décompositions saut/continu et semi-variances signées ne rapportent rien à l'horizon mensuel, les polynômes hyperboliques et les mélanges de bêtas non plus, et un simple modèle statique atteint déjà une utilité proche du maximum quand la volatilité est stable. Ce sont autant de culs-de-sac que nous n'avons pas à repayer.",
+    "candidate_use": "Ce papier ne fournit pas un signal candidat. Il fournit (a) une recette de mesure de volatilité réalisée à 5 minutes utilisable comme brique de régime — la volatilité étant l'axe de régime le plus évident — et (b) un argument méthodologique contre l'estimation instrument par instrument sur un petit univers. Aucun IC ne sort de là sans une hypothèse supplémentaire, écrite et horodatée, reliant un état de volatilité prédite à un rendement attendu."
+  },
+
+  "evaluation_protocol": {
+    "estimation_schemes": "Trois : « Individual Asset » (MCO actif par actif), « Panel » (coefficients communs à l'intérieur d'une classe d'actifs), « Mega » (coefficients communs aux 58 actifs).",
+    "out_of_sample": "Fenêtre d'estimation en expansion, prévision à 20 jours, R2 hors échantillon défini contre la moyenne longue en expansion RV_LR au dénominateur, à la manière de Campbell et Thompson (2008). Un actif doit avoir au moins une année civile complète de RV pour entrer dans l'estimation.",
+    "significance": "Tests de Diebold-Mariano sur les différentiels de perte quadratique standardisée (standardisée par la moyenne de la variation réalisée), avec t-stats robustes. Référence : le HExp individuel en échantillon, le mega HExp hors échantillon, le HExp à hypothèses de coûts identiques pour l'utilité.",
+    "caveat": "Les auteurs notent que les tests DM hors échantillon ne sont pas formellement justifiés comme tests de spécification, les erreurs d'estimation diminuant avec la taille de la fenêtre et rendant les pertes non stationnaires."
+  }
+}

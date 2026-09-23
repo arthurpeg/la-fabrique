@@ -1,0 +1,430 @@
+{
+  "fiche_id": "koijen-2018-carry",
+  "written": "2026-09-23",
+  "written_by": "session d'extraction isolee — entree 18",
+  "source": {
+    "authors": "Ralph S.J. Koijen, Tobias J. Moskowitz, Lasse Heje Pedersen, Evert B. Vrugt",
+    "title": "Carry",
+    "year": 2013,
+    "source_url": "https://www.nber.org/system/files/working_papers/w19325/w19325.pdf",
+    "pdf": "corpus/pdf/koijen-2018-carry.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": false,
+    "amorce_entry": 18,
+    "note": "Le PDF fourni est le NBER Working Paper No. 19325, date d'aout 2013 ; le texte dit lui-meme que ces papiers ne sont pas arbitres (« They have not been peer-reviewed »). Le fiche_id porte 2018, annee de la publication en revue (Journal of Financial Economics), mais la version lue et citee ici est celle de 2013 : tous les chiffres de cette fiche viennent d'elle, et rien ne garantit qu'ils soient identiques dans la version publiee."
+  },
+
+  "claim": "Le « carry » d'un titre — son rendement attendu sous l'hypothese que son prix ne bouge pas — est observable a l'avance et ne depend d'aucun modele d'evaluation. Les auteurs affirment que ce carry predit positivement les rendements futurs, en coupe transversale ET en serie temporelle, dans neuf classes d'actifs (actions indicielles mondiales, obligations d'Etat mondiales 10 ans, pente 10a-2a de ces memes courbes, Treasuries americains par maturite, matieres premieres, devises, credit americain, options d'indice calls et puts). Une strategie longue les titres a carry eleve et courte ceux a carry faible degage un Sharpe annualise eleve dans chaque classe, et un Sharpe nettement superieur une fois les neuf strategies diversifiees entre elles, parce que leurs correlations inconditionnelles sont proches de zero. Le carry n'est pas capture par les facteurs value, momentum et time-series momentum : les alphas restent positifs et significatifs dans presque toutes les classes. Le rendement du carry se decompose en une part statique (etre en moyenne long des titres a rendement inconditionnel eleve) et une part dynamique (la variation du carry autour de sa moyenne predit les rendements) ; la part dynamique domine dans plusieurs classes. Enfin, toutes les strategies de carry perdent simultanement pendant les memes episodes, qui coincident avec les recessions mondiales — ce qui est presente comme un risque commun, et non comme un risque de krach a la maniere du carry devises (la skewness du portefeuille diversifie est proche de zero).",
+
+  "universe": {
+    "description": "Neuf classes d'actifs, toutes a frequence mensuelle, principalement via futures et forwards.",
+    "asset_classes": [
+      "actions : 13 futures sur indices actions nationaux (US S&P 500, Canada, UK, France, Allemagne, Espagne, Italie, Pays-Bas, Suede/Norvege selon les passages, Suisse, Japon, Hong Kong, Australie)",
+      "devises : 20 contrats forward de change a 1 mois (19 pays plus les US dont le carry est nul par construction)",
+      "matieres premieres : 24 futures (6 energie, 8 agriculture, 3 bovins/porcins, 7 metaux)",
+      "obligations d'Etat mondiales : 10 marches, futures SYNTHETIQUES construits a partir de courbes zero-coupon",
+      "pente de courbe : long 10 ans / court 2 ans dans ces memes 10 marches",
+      "US Treasuries : portefeuilles obligataires CRSP de 1 a 12, 13 a 24, 25 a 36, 37 a 48, 49 a 60 et 61 a 120 mois, ajustes par la duration",
+      "credit US : indices Barclays Intermediate et Long-term, qualites AAA, AA, A, BAA",
+      "options d'indice actions US : 10 indices, calls et puts, deux groupes de delta (out of the money et at the money)"
+    ],
+    "periods": "Les dates de debut different par instrument (Table I). Les plus longues remontent a aout 1971 (Treasuries), janvier 1973 (credit), janvier 1980 (matieres premieres), novembre 1983 (devises et obligations). Les series s'arretent en septembre 2012, sauf les options (janvier 1996 a decembre 2011). Les figures decrivent le facteur global sur 1972 a septembre 2012.",
+    "note": "Aucune action individuelle : la brique elementaire est un indice, un contrat ou un portefeuille obligataire, jamais un titre unique — a l'exception des options, ou l'unite est un contrat option sur indice."
+  },
+
+  "horizon": {
+    "value": "1 mois",
+    "note": "Le carry est mesure a la fin du mois t et rapporte au rendement du mois t+1 ; les portefeuilles sont rebalances chaque mois. Les positions optionnelles sont prises le dernier jour de bourse du mois sur des contrats a 30-60 jours d'echeance et tenues un mois. Aucun resultat intraday, hebdomadaire ou journalier n'est rapporte : les rendements quotidiens des futures actions sont agreges en rendements mensuels."
+  },
+
+  "signal_construction": {
+    "value": "Carry d'un futures pleinement collateralise : C_t = (S_t - F_t) / F_t, ou S_t est le prix spot et F_t le prix du futures. Le signal est ensuite classe en coupe, et les poids du portefeuille sont proportionnels au rang.",
+    "steps": [
+      "1. Definition generale : le carry est le rendement du titre si les conditions de marche restent identiques. Pour un futures dont le capital alloue egale le prix du futures, C_t = (S_t - F_t)/F_t.",
+      "2. Devises : le carry se reduit au differentiel de taux d'interet etranger moins local, multiplie par un facteur d'echelle proche de un, 1/(1+rf_t). Donnees : forwards 1 mois.",
+      "3. Actions : le carry est le rendement du dividende ATTENDU (extrait des prix de futures, donc prospectif) moins le taux sans risque local, multiplie par S_t/F_t. Les prix de futures sont interpoles lineairement entre les deux echeances les plus proches pour obtenir un futures synthetique a un mois — interpolation utilisee POUR LE CARRY SEULEMENT, jamais pour les rendements.",
+      "4. Matieres premieres : faute de prix spot fiables, le carry est la pente entre deux echeances de futures, C_t = (F1_t - F2_t) / (F2_t * (T2 - T1)), soit le rendement de convenance net des couts de stockage, en excedent du taux sans risque. Trois echeances (premiere, deuxieme, troisieme) sont utilisees, interpolees lineairement a une maturite constante d'un mois. Les metaux LME sont traites a part (cash et 3 mois constants, interpoles).",
+      "5. Obligations mondiales : futures synthetiques a un mois sur un zero-coupon 10 ans, construits depuis des courbes zero-coupon a maturite constante. Le carry vaut approximativement le spread de rendement (10 ans moins taux court) PLUS un terme de « roll down » egal a moins la duration modifiee multipliee par la variation de rendement le long de la courbe supposee constante.",
+      "6. Pente de courbe : carry de la position 10 ans moins carry de la position 2 ans, dans chaque pays.",
+      "7. Treasuries US et credit US : meme calcul que les obligations mondiales, mais la taille de position est divisee par la duration, et le carry est divise par la meme duration pour rester coherent avec la position.",
+      "8. Options : le carry est le rapport du prix de l'option a maturite T-1 et volatilite implicite sigma_{T-1} sur son prix a maturite T, moins un ; il se lit approximativement comme la somme du theta et du roll-down sur la courbe de volatilite implicite (vega), rapportee au prix de l'option.",
+      "9. Construction du portefeuille : poids w_i_t = z_t * (rang(C_i_t) - (N_t + 1)/2), ou z_t normalise la somme des positions longues a 1 et des courtes a -1. Rebalancement mensuel. Ce schema est celui d'Asness-Moskowitz-Pedersen (2012) et de Moskowitz-Ooi-Pedersen (2012).",
+      "10. Deux variantes de signal : le « current carry » (fin de mois t) et « carry1-12 », moyenne mobile du carry sur les 12 derniers mois, destinee a lisser les saisonnalites (calendriers de dividendes, saisonnalite des matieres premieres). Tous les resultats du corps du papier utilisent le current carry ; les resultats carry1-12 sont en annexe C et sont dits typiquement plus forts.",
+      "11. Facteur global (GCF) : moyenne des neuf strategies de carry ponderee par l'inverse de la volatilite d'echantillon de chacune, pour que chaque classe contribue a peu pres egalement a la volatilite totale.",
+      "12. Strategies de timing (Table VII) : pour chaque titre, long si le carry est positif, court s'il est negatif (Panel A) ; ou long/court selon que le carry est au-dessus/en-dessous de sa moyenne d'echantillon glissante sur cinq ans (Panel B). Puis moyenne equiponderee au sein de la classe."
+    ],
+    "look_ahead_flags": [
+      "La ponderation du facteur global utilise « the inverse of its FULL SAMPLE volatility » : c'est une normalisation calculee sur tout l'echantillon, donc non disponible en temps reel. Elle affecte le Sharpe de 1.10 du GCF, pas les Sharpe par classe.",
+      "La decomposition statique/dynamique de la Table V utilise des moyennes temporelles sur tout l'echantillon (E_n(w_n,t)) : c'est une decomposition comptable ex post, pas une strategie implementable.",
+      "Le Panel B de la Table VII utilise une moyenne glissante sur cinq ans, ce qui est propre ; mais le texte principal decrit ailleurs le timing comme « above its long-run mean », formulation qui serait, elle, retrospective."
+    ]
+  },
+
+  "reported_results": [
+    {
+      "name": "carry_sharpe_average_across_asset_classes",
+      "value": 0.74,
+      "unit": "Sharpe annualise",
+      "quoted": "with the average being 0.74 across all asset classes. A carry strategy in every asset",
+      "note": "Moyenne des Sharpe des neuf strategies de carry (Table II Panel A). Le resume et l'introduction arrondissent ce chiffre a 0.7."
+    },
+    {
+      "name": "passive_sharpe_average_across_asset_classes",
+      "value": 0.21,
+      "unit": "Sharpe annualise",
+      "quoted": "the same. A passive exposure to the asset classes only generates a 0.21 Sharpe ratio on",
+      "note": "Reference de comparaison : exposition passive equiponderee dans chaque classe, moyennee sur les classes."
+    },
+    {
+      "name": "global_carry_factor_sharpe",
+      "value": 1.10,
+      "unit": "Sharpe annualise",
+      "quoted": "remarkable Sharpe ratio of 1.10 per annum. A diversified passive long position in all",
+      "note": "Facteur global (GCF) : moyenne des neuf strategies ponderee par l'inverse de la volatilite PLEIN ECHANTILLON de chacune."
+    },
+    {
+      "name": "diversified_passive_sharpe",
+      "value": 0.47,
+      "unit": "Sharpe annualise",
+      "quoted": "asset classes produces only a 0.47 Sharpe ratio. These numbers suggest carry is a strong",
+      "note": "Le passif diversifie, construit de la meme maniere que le GCF, sert de temoin."
+    },
+    {
+      "name": "global_carry_factor_mean_annual_pct",
+      "value": 6.75,
+      "unit": "% par an",
+      "quoted": "All asset classes (global carry factor) Carry 6.75 6.12 -0.02 5.24 1.10",
+      "quoted_source": "ll asset classes (global carry factor) Carry 6.75 6.12 -0.02 5.24 1.10",
+      "quoted_repair": "table",
+      "note": "Ligne de la Table II Panel A : moyenne 6.75, ecart-type 6.12, skewness -0.02, kurtosis 5.24, Sharpe 1.10. L'extraction perd le A initial en tete de ligne de tableau. La skewness quasi nulle est l'argument central contre l'explication par le risque de krach."
+    },
+    {
+      "name": "global_equities_carry_mean_annual_pct",
+      "value": 9.14,
+      "unit": "% par an",
+      "quoted": "Global equities Carry 9.14 10.42 0.22 4.74 0.88",
+      "quoted_source": "lobal equities Carry 9.14 10.42 0.22 4.74 0.88",
+      "quoted_repair": "table",
+      "note": "Table II Panel A. L'extraction perd le G initial."
+    },
+    {
+      "name": "global_equities_carry_sharpe",
+      "value": 0.88,
+      "unit": "Sharpe annualise",
+      "quoted": "Global equities Carry 9.14 10.42 0.22 4.74 0.88",
+      "quoted_source": "lobal equities Carry 9.14 10.42 0.22 4.74 0.88",
+      "quoted_repair": "table",
+      "note": "Skewness POSITIVE (0.22) pour le carry actions, contrairement au carry devises."
+    },
+    {
+      "name": "fi_10y_carry_sharpe",
+      "value": 0.52,
+      "unit": "Sharpe annualise",
+      "quoted": "Fixed income 10Y global Carry 3.85 7.45 -0.43 6.66 0.52",
+      "note": "Table II Panel A. C'est l'une des deux seules classes ou le carry ne bat pas le passif (Sharpe EW 0.74)."
+    },
+    {
+      "name": "fi_10y_2y_slope_carry_sharpe",
+      "value": 0.66,
+      "unit": "Sharpe annualise",
+      "quoted": "Fixed income 10Y−2Y global Carry 3.77 5.72 -0.22 5.49 0.66",
+      "note": "Table II Panel A, pente de courbe."
+    },
+    {
+      "name": "us_treasuries_carry_sharpe",
+      "value": 0.68,
+      "unit": "Sharpe annualise",
+      "quoted": "US Treasuries Carry 0.46 0.67 0.47 10.46 0.68",
+      "note": "Table II Panel A. Rendements exprimes en niveaux tres faibles parce que les positions sont ajustees par la duration."
+    },
+    {
+      "name": "commodities_carry_mean_annual_pct",
+      "value": 11.22,
+      "unit": "% par an",
+      "quoted": "Commodities Carry 11.22 18.78 -0.40 4.55 0.60",
+      "note": "Table II Panel A. A comparer au passif equipondere matieres premieres, 1.05% pour 13.45 de volatilite."
+    },
+    {
+      "name": "commodities_carry_sharpe",
+      "value": 0.60,
+      "unit": "Sharpe annualise",
+      "quoted": "Commodities Carry 11.22 18.78 -0.40 4.55 0.60",
+      "note": "La classe la plus proche de notre univers par sa nature (futures sur matieres premieres)."
+    },
+    {
+      "name": "currencies_carry_sharpe",
+      "value": 0.68,
+      "unit": "Sharpe annualise",
+      "quoted": "Currencies Carry 5.29 7.80 -0.68 4.46 0.68",
+      "note": "Le carry devises classique. Skewness -0.68, la plus negative des classes hors options."
+    },
+    {
+      "name": "credit_carry_sharpe",
+      "value": 0.47,
+      "unit": "Sharpe annualise",
+      "quoted": "Credit Carry 0.24 0.52 1.32 18.19 0.47",
+      "note": "Table II Panel A. Kurtosis 18.19 : queues tres epaisses malgre une skewness positive."
+    },
+    {
+      "name": "options_calls_carry_sharpe",
+      "value": 0.37,
+      "unit": "Sharpe annualise",
+      "quoted": "Options calls Carry 64 172 -2.82 14.49 0.37",
+      "note": "Le plus faible des neuf. Skewness -2.82, kurtosis 14.49."
+    },
+    {
+      "name": "options_puts_carry_sharpe",
+      "value": 1.80,
+      "unit": "Sharpe annualise",
+      "quoted": "Options puts Carry 179 99 -1.75 10.12 1.80",
+      "note": "Le plus eleve des neuf, sur l'echantillon d'options le plus court (1996-2011) et l'actif le plus couteux a negocier."
+    },
+    {
+      "name": "carry_sharpe_range_across_asset_classes",
+      "value": null,
+      "quoted": "ratios for the carry strategies range from 0.37 for call options to 1.80 for put options,",
+      "note": "Entree qualitative : donne la dispersion complete, les bornes etant deja saisies au-dessus."
+    },
+    {
+      "name": "carry_mean_return_min_us_credit_pct",
+      "value": 0.24,
+      "unit": "% (par mois, niveau de la Table II pour le credit)",
+      "quoted": "have significant positive returns. The average returns to carry range from 0.24% for US",
+      "note": "Borne basse de la dispersion des rendements moyens. Le papier insiste : les volatilites sont si differentes que seuls les Sharpe sont comparables."
+    },
+    {
+      "name": "carry_mean_return_max_put_options_pct",
+      "value": 179,
+      "unit": "%",
+      "quoted": "credit to 179% for US equity index put options. However, these strategies face markedly",
+      "note": "Borne haute. Un rendement de 179% pour 99 de volatilite : l'ordre de grandeur des options n'a aucun equivalent ailleurs."
+    },
+    {
+      "name": "pct_dynamic_component_equities",
+      "value": 101,
+      "unit": "% du rendement du carry",
+      "quoted": "Equities global -0.1% 9.3% 101%",
+      "quoted_source": "quities global -0.1% 9.3% 101%",
+      "quoted_repair": "table",
+      "note": "Table V : la composante statique est legerement negative (-0.1%), la dynamique vaut 9.3%, d'ou 101%. Tout le rendement du carry actions vient de la variation du carry, pas d'un biais long permanent. L'extraction perd le E initial."
+    },
+    {
+      "name": "pct_dynamic_component_fi_10y",
+      "value": 86,
+      "unit": "% du rendement du carry",
+      "quoted": "Fixed income - 10Y global 0.6% 3.3% 86%",
+      "note": "Table V."
+    },
+    {
+      "name": "pct_dynamic_component_us_treasuries",
+      "value": 42,
+      "unit": "% du rendement du carry",
+      "quoted": "US Treasuries 0.3% 0.2% 42%",
+      "note": "Table V : ici la part statique domine legerement."
+    },
+    {
+      "name": "pct_dynamic_component_commodities",
+      "value": 64,
+      "unit": "% du rendement du carry",
+      "quoted": "Commodities 4.1% 7.1% 64%",
+      "note": "Table V. Une part statique de 4.1% par an pour les matieres premieres : etre en moyenne long les contrats en backwardation rapporte deja, independamment du timing."
+    },
+    {
+      "name": "pct_dynamic_component_credit",
+      "value": 30,
+      "unit": "% du rendement du carry",
+      "quoted": "passive and dynamic components is approximately equal. For credit, only 30% of carry",
+      "note": "La plus faible part dynamique des neuf classes."
+    },
+    {
+      "name": "predictive_coefficient_equities_both_fixed_effects",
+      "value": 1.14,
+      "unit": "coefficient c de la regression r_{i,t+1} = a_i + b_t + c*C_{i,t}",
+      "quoted": "Equities global X X 1.14 4.15 Currencies X X 1.09 2.69",
+      "quoted_source": "quities global X X 1.14 4.15 Currencies X X 1.09 2.69",
+      "quoted_repair": "table",
+      "note": "Table VI, avec effets fixes contrat ET temps : c = 1.14 (t = 4.15) pour les actions, c = 1.09 (t = 2.69) pour les devises. c = 1 signifie que l'investisseur encaisse exactement le carry ; c > 1 que le prix s'apprecie en plus. L'extraction perd le E initial."
+    },
+    {
+      "name": "predictive_coefficient_commodities_both_fixed_effects",
+      "value": 0.01,
+      "unit": "coefficient c de la regression r_{i,t+1} = a_i + b_t + c*C_{i,t}",
+      "quoted": "Commodities X X 0.01 0.13",
+      "note": "Table VI. LE SEUL ECHEC de la regression predictive : pour les matieres premieres, le coefficient est nul et non significatif (t = 0.13). Les auteurs l'attribuent aux effets saisonniers et renvoient a carry1-12 en annexe C. C'est la classe la plus proche de notre univers : ce resultat merite d'etre retenu avant tout autre."
+    },
+    {
+      "name": "bond_carry_vs_yield_spread_signal_correlation",
+      "value": 0.90,
+      "unit": "correlation",
+      "quoted": "signal is 0.90, and if we use the yield spread, instead of the carry, as a signal for form",
+      "note": "Correlation temporelle moyenne (entre pays) entre le spread de rendement 10 ans - 3 mois et le signal de carry obligataire. Le carry ajoute surtout le terme de roll-down."
+    },
+    {
+      "name": "bond_carry_vs_yield_spread_returns_correlation",
+      "value": 0.91,
+      "unit": "correlation",
+      "quoted": "portfolios, the returns generated are 0.91 correlated.",
+      "note": "Aveu utile : en obligataire, le carry est presque le spread de rendement deja connu. La nouveaute est moindre dans cette classe."
+    },
+    {
+      "name": "equity_carry_vs_dividend_yield_strategy_correlation",
+      "value": 0.07,
+      "unit": "correlation",
+      "quoted": "strategy is only 0.07 and between carry1-12 and dividend yield strategies is only 0.29. At",
+      "note": "Annexe D : la strategie de carry actions est quasi orthogonale a une strategie triant sur le rendement du dividende historique. Le carry est prospectif, le dividend yield retrospectif."
+    },
+    {
+      "name": "us_equity_carry_vs_dividend_yield_timeseries_correlation",
+      "value": 0.30,
+      "unit": "correlation",
+      "quoted": "The time series correlation between the dividend yield and the carry is only 0.30. This",
+      "note": "Annexe D, serie longue US (janvier 1945 a decembre 2012). Deux raisons donnees : la soustraction du taux a un mois, et le lissage sur 12 mois qui porte sur les prix ET les dividendes du cote du carry."
+    },
+    {
+      "name": "us_equity_average_dividend_yield_pct",
+      "value": 3.36,
+      "unit": "%",
+      "quoted": "yield equals 3.36%. Second, carry displays important seasonal variation as a result of",
+      "note": "Annexe D, echantillon 1945-2012."
+    },
+    {
+      "name": "us_equity_average_carry_bp",
+      "value": -7,
+      "unit": "points de base",
+      "spelled_out": "−7bp",
+      "quoted": "that the average carry equals−7bp during our sample period, while the average dividend",
+      "note": "Le carry actions moyen est QUASI NUL, parce que le taux court moyen egale a peu pres le rendement du dividende moyen. Tout le rendement de la strategie vient donc de la coupe et du timing, jamais d'un niveau moyen. L'extraction colle « equals » au signe moins ; le nombre est ecrit avec un moins typographique U+2212, d'ou spelled_out."
+    },
+    {
+      "name": "synthetic_bond_futures_correlation_with_actual",
+      "value": 0.95,
+      "unit": "correlation",
+      "quoted": "actual futures returns and our synthetic futures returns are in excess of 0.95.",
+      "note": "Controle de construction : les futures obligataires du papier sont synthetiques, derives de courbes zero-coupon. La correlation avec les vrais futures depasse 0.95 dans les six pays ou ils existent."
+    },
+    {
+      "name": "global_recession_indicator_during_carry_drawdowns",
+      "value": 0.33,
+      "unit": "valeur moyenne de l'indicateur",
+      "quoted": "the global recession indicator equals 0.33 versus 0.19 during carry expansions. To show",
+      "note": "L'indicateur est une moyenne ponderee par le PIB d'indicatrices regionales de recession. 0.33 contre 0.19 : le lien avec le cycle est reel mais loin d'etre mecanique."
+    },
+    {
+      "name": "global_recession_indicator_during_carry_expansions",
+      "value": 0.19,
+      "unit": "valeur moyenne de l'indicateur",
+      "quoted": "the global recession indicator equals 0.33 versus 0.19 during carry expansions. To show",
+      "note": "Meme phrase, autre borne."
+    },
+    {
+      "name": "commodities_carry_mean_during_expansions_pct",
+      "value": 21.49,
+      "unit": "% par an",
+      "quoted": "Commodities Carry 21.49 17.33 -13.23 20.24",
+      "note": "Table VIII : en expansions du carry, 21.49% par an pour 17.33 de volatilite."
+    },
+    {
+      "name": "commodities_carry_mean_during_drawdowns_pct",
+      "value": -13.23,
+      "unit": "% par an",
+      "quoted": "Commodities Carry 21.49 17.33 -13.23 20.24",
+      "note": "Meme ligne de la Table VIII : en drawdowns du carry global, -13.23% par an pour 20.24 de volatilite. L'ecart entre les deux regimes est le fait le plus important du papier pour nous."
+    },
+    {
+      "name": "put_options_passive_return_during_drawdowns_pct",
+      "value": 132,
+      "unit": "% par an",
+      "quoted": "payoff a handsome 132% per annum, but a carry strategy on those same put options would",
+      "note": "Exposition passive longue aux puts pendant les recessions mondiales."
+    },
+    {
+      "name": "put_options_carry_return_during_drawdowns_pct",
+      "value": -22,
+      "unit": "% par an",
+      "spelled_out": "−22%",
+      "quoted": "have returned −22%. Even for the asset classes that also experience negative passive",
+      "note": "Meme periode, meme sous-jacent : le passif gagne 132%, le carry perd 22%. Le moins est un U+2212, d'ou spelled_out."
+    },
+    {
+      "name": "currencies_carry_timing_sharpe",
+      "value": 0.78,
+      "unit": "Sharpe annualise",
+      "quoted": "Currencies 7.86 10.08 -0.72 5.63 0.78 5.04 9.50 -0.50 4.35 0.53",
+      "note": "Table VII Panel A : strategie de pur timing (long si carry positif, court sinon), sans aucune information transversale. Sharpe 0.78, superieur au 0.68 de la strategie transversale. Panel B (timing par rapport a la moyenne glissante 5 ans) donne 0.53."
+    },
+    {
+      "name": "commodity_carry_alpha_after_value_and_momentum_bp_per_month",
+      "value": 64,
+      "unit": "points de base par mois",
+      "quoted": "per month, but remains economically large at 64 basis points per month and statistically",
+      "note": "Table IV : l'alpha du carry matieres premieres tombe de 93 a 64 points de base par mois quand on controle par value et momentum, mais reste significatif. Le R2 passe de moins de 1% a 20%."
+    },
+    {
+      "name": "n_equity_index_futures",
+      "value": 13,
+      "unit": "instruments",
+      "quoted": "we use, including the starting date for each of the series. There are 13 country equity",
+      "note": "Taille de la coupe actions. Le texte principal liste la Norvege, l'annexe B la Suede, pour le meme ticker OMX : une incoherence du papier, pas de l'extraction."
+    },
+    {
+      "name": "n_commodities",
+      "value": 24,
+      "unit": "instruments",
+      "quoted": "The commodities sample covers 24 commodities futures dating as far back as January",
+      "note": "Taille de la coupe matieres premieres — presque trois fois notre univers entier."
+    },
+    {
+      "name": "n_global_bond_markets",
+      "value": 10,
+      "unit": "instruments",
+      "quoted": "The global fixed income sample covers 10 government bonds starting as far back as",
+      "note": "Taille de la coupe obligataire ; les memes 10 marches servent pour la pente 10a-2a."
+    }
+  ],
+
+  "what_is_missing": [
+    "AUCUN cout de transaction n'est chiffre nulle part. Le papier reconnait explicitement que « the carry strategy faces larger transaction costs, greater funding issues, and limits to arbitrage than a passive strategy », mais ne donne ni spread, ni slippage, ni frais de roulement, ni rotation mensuelle des portefeuilles. Tous les Sharpe rapportes sont bruts.",
+    "Aucun IC ni aucune correlation de rang signal-rendement n'est rapporte. La metrique est le Sharpe et, pour la predictibilite, un coefficient de regression panel. Il n'existe aucun chiffre directement comparable a notre rapport d'IC.",
+    "Aucun compte du nombre de specifications testees. Le papier evoque des variantes de ponderation (top 20, 25 ou 30%), deux definitions du signal (current carry, carry1-12), deux niveaux d'agregation (titre, region/groupe), avec et sans effets fixes, deux Panels de timing — sans jamais dire combien de combinaisons ont ete examinees ni corriger quoi que ce soit pour les tests multiples.",
+    "Aucun holdout. Les « out-of-sample tests » invoques sont l'application du meme signal a d'autres classes d'actifs sur la meme periode, pas une tranche temporelle scellee.",
+    "Aucun code, aucune donnee publiee. Les tickers Bloomberg et Datastream sont donnes, mais les series construites (futures synthetiques obligataires, prix interpoles) ne le sont pas.",
+    "Aucun lag de publication ni aucune convention de fuseau horaire. Le papier dit « at the end of each month » sans preciser l'heure ni le fuseau, et sans dire le delai entre la disponibilite d'un prix de cloture et son utilisation. Pour les actions, un controle est mentionne (retirer le premier jour de bourse du mois, pour tester l'effet des prix de reglement non synchrones) mais son resultat chiffre n'est pas donne — seulement « Our results are robust to these changes ».",
+    "Aucune regle de roulement explicite pour les futures autres que les actions (roules 3 jours avant expiration) et les matieres premieres (indices GSCI roules du 5e au 9e jour ouvrable). Pour les autres classes, rien.",
+    "Aucun multiplicateur de contrat, aucune taille de tick, aucun montant de marge. Le capital alloue est pose egal au prix du futures par convention, sans reference aux marges reelles.",
+    "Aucun ecart-type ni intervalle de confiance sur les Sharpe eux-memes : les t-statistiques rapportees portent sur les alphas de regression et sur le coefficient c, jamais sur les ratios de Sharpe.",
+    "La capacite et l'impact de marche ne sont jamais abordes, alors que les options d'indice et le credit sont les classes aux plus gros chiffres.",
+    "La version lue est un working paper non arbitre ; l'ecart eventuel avec la version publiee en 2018 n'est pas connaissable depuis ce texte."
+  ],
+
+  "transposability": {
+    "what_transfers": "Le motif general, et lui seul : un signal calculable ex ante a partir de la seule structure des prix de futures — la pente entre deux echeances du meme contrat — trie les instruments en coupe et prevoit un ordre de rendements futurs. Trois elements sont directement reutilisables chez nous. (1) La formule du carry matieres premieres, C_t = (F1_t - F2_t) / (F2_t * (T2 - T1)), ne demande QUE deux prix de futures d'echeances differentes, jamais un prix spot, jamais une donnee fondamentale, jamais un reseau : elle est structurellement compatible avec notre Panel et avec l'invariant II. (2) La ponderation par rang, w_i_t proportionnel a rang(C_i_t) - (N_t+1)/2, est une recette de coupe transversale sans parametre libre, directement transposable a neuf instruments. (3) La distinction statique / dynamique est un diagnostic, pas une strategie : elle dit si un signal gagne parce qu'il est en moyenne long les bons contrats ou parce que sa variation informe — question qui se pose a l'identique chez nous et que notre harnais peut trancher.",
+    "what_does_not_transfer": [
+      "L'HORIZON. Tout le papier est mensuel : carry mesure en fin de mois, rendement du mois suivant, rebalancement mensuel. Notre univers est intraday. Rien dans ce texte ne dit si un carry calcule sur la pente de la courbe des futures porte encore de l'information a l'echelle de quelques heures — et il y a une raison mecanique de douter : le carry par mois de la Table I varie de quelques pourcents ANNUELS, soit une derive quotidienne minuscule devant le bruit intraday.",
+      "SEPT DES NEUF CLASSES. Devises (forwards 1 mois), obligations d'Etat mondiales (courbes zero-coupon), pente 10a-2a, Treasuries US (portefeuilles CRSP), credit US (indices Barclays), options calls, options puts : aucune de ces classes n'existe dans notre univers de neuf futures. Seules les actions indicielles et les matieres premieres ont un analogue chez nous — et les chiffres les plus spectaculaires du papier (Sharpe 1.80, rendement 179%) viennent precisement des options, la classe la plus eloignee.",
+      "LE SHARPE COMME METRIQUE. Le papier ne produit pas un seul IC. Ses Sharpe sont bruts de couts, sur des portefeuilles longs-courts rebalances mensuellement. Notre harnais produit un IC. Aucun chiffre de cette fiche ne peut servir de cible de replication : ils ne mesurent pas la meme chose.",
+      "LA TAILLE DE LA COUPE. 24 matieres premieres, 20 devises, 13 indices actions : la ponderation par rang de l'equation (23) suppose une coupe assez large pour que le rang soit informatif. Avec neuf instruments, dont plusieurs correles entre eux, la dispersion des rangs est pauvre et le bruit d'echantillonnage domine. Le papier lui-meme montre que l'agregation en cinq regions degrade les Sharpe.",
+      "LA POSSIBILITE MEME DE CALCULER LE CARRY ACTIONS ET DEVISES. Le carry actions exige le dividende ATTENDU extrait des prix de futures interpoles, le carry devises un differentiel de taux. Ces donnees ne sont pas dans notre catalogue ; si elles n'y sont pas, la valeur est null et une entree todo s'ouvre — elle ne s'invente pas.",
+      "L'ECHANTILLON. 1971-2012 pour les plus longues series, 1980-2012 pour les matieres premieres. Notre pool va de 2016 a 2023. Le papier couvre trois grandes recessions mondiales (1972-1975, 1980-1982, 2008-2009) ; aucune n'est dans notre pool. Le resultat central sur les drawdowns n'est donc pas verifiable chez nous — et son absence de verification ne vaut pas infirmation.",
+      "LA PONDERATION PAR L'INVERSE DE LA VOLATILITE PLEIN ECHANTILLON du facteur global. Elle regarde le futur par construction. Le Sharpe de 1.10 est indisponible en temps reel et ne doit jamais servir de reference.",
+      "LES INTERPOLATIONS DE PRIX. Le papier interpole lineairement les prix de futures pour obtenir une maturite constante d'un mois. A l'echelle intraday, interpoler entre deux echeances peu liquides fabrique du signal la ou il n'y a que du bruit de cotation ; la procedure demanderait a etre entierement repensee, pas transposee.",
+      "LE RESULTAT LE PLUS PROCHE DE NOUS EST LE PLUS MAUVAIS. Sur matieres premieres, la regression predictive de la Table VI donne c = 0.01 avec t = 0.13, non significatif, avec ou sans effets fixes. Les auteurs l'imputent a la saisonnalite et renvoient a carry1-12 en annexe. Un signal de carry teste chez nous herite de ce doute, pas de l'enthousiasme du resume.",
+      "LA SAISONNALITE ET SON REMEDE. Le remede propose est une moyenne mobile sur 12 mois du carry. Douze mois de moyenne mobile sont hors de portee d'un signal intraday sans changer completement de nature ; et notre pool de huit ans offre peu d'observations independantes a cette echelle."
+    ],
+    "what_aligns_well": "Trois choses tombent juste. D'abord la matiere premiere du signal : notre univers est fait de futures, et le carry matieres premieres du papier ne demande rien d'autre que deux prix de futures du meme sous-jacent a deux echeances — c'est exactement ce qu'un Panel point-in-time sait servir sans jamais lire une barre posterieure. Ensuite l'honnetete du papier sur ses propres limites : il signale lui-meme que le carry obligataire est correle a 0.90 au spread de rendement deja connu, que le coefficient predictif des matieres premieres est nul, que les couts de transaction ne sont pas comptes, et que les strategies de carry perdent toutes ensemble dans les memes episodes — quatre avertissements qu'une session ulterieure n'aura pas a redecouvrir. Enfin la question des regimes : la Table VIII oppose explicitement deux etats du monde (expansions et drawdowns du carry global) et montre que les memes strategies changent de signe entre les deux. C'est la forme meme de notre notion d'hybride — un signal conditionne a un regime — et c'est une hypothese ecrivable et horodatable avant toute mesure, a condition de definir le regime sur nos propres donnees et non sur un indicateur de recession mondiale qui n'existe pas dans notre pool."
+  },
+
+  "implementation_notes_for_us": {
+    "cheapest_testable_form": "Le carry matieres premieres, equation (10) : pour chaque instrument, (F1 - F2) / (F2 * (T2 - T1)), soit la pente normalisee de la courbe des futures. Deux prix, aucune donnee externe, aucun reseau. C'est la seule des neuf constructions du papier qui tienne entierement dans notre catalogue actuel tel qu'il est decrit.",
+    "what_must_be_decided_before_any_measure": [
+      "A quelle frequence le signal est reevalue, et avec quel lag entre l'observation des deux prix et la prise de position.",
+      "Comment T2 - T1 est defini quand les echeances ne sont pas mensuelles — le papier divise par le nombre de mois, notre calendrier de contrats peut differer.",
+      "Si le signal est transversal (neuf instruments classes entre eux, avec le probleme de coupe etroite signale plus haut) ou en serie temporelle (chaque instrument compare a sa propre histoire de carry, forme de la Table VII Panel B, qui utilise une moyenne glissante sur cinq ans et est donc sans look-ahead).",
+      "Le regime, s'il y en a un, ecrit et horodate AVANT de voir le resultat, conformement a l'invariant IV."
+    ],
+    "what_would_violate_our_rules_if_copied_as_is": [
+      "Ponderer par l'inverse de la volatilite plein echantillon (GCF) : look-ahead par construction, interdit par l'invariant II.",
+      "Reprendre la decomposition statique/dynamique de la Table V comme une strategie : ce sont des moyennes plein echantillon, un diagnostic ex post et non un signal.",
+      "Inventer un multiplicateur, un tick ou un frais pour reproduire un Sharpe : le papier n'en donne aucun, la valeur reste null et une entree todo s'ouvre."
+    ]
+  }
+}

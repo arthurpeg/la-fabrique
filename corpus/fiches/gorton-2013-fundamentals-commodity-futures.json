@@ -1,0 +1,255 @@
+{
+  "fiche_id": "gorton-2013-fundamentals-commodity-futures",
+  "written": "2026-09-23",
+  "written_by": "session-extraction-entree-19",
+  "source": {
+    "authors": "Gary B. Gorton, Fumio Hayashi, and K. Geert Rouwenhorst",
+    "title": "The Fundamentals of Commodity Futures Returns",
+    "year": 2007,
+    "source_url": "https://www.nber.org/system/files/working_papers/w13249/w13249.pdf",
+    "pdf": "corpus/pdf/gorton-2013-fundamentals-commodity-futures.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": false,
+    "amorce_entry": 19,
+    "year_note": "Le texte fourni est la version NBER Working Paper No. 13249, datee July 2007 (page de garde : « NBER Working Paper 13249 », « July 2007 »). L'annee 2013 du fiche_id n'apparait nulle part dans le texte fourni ; je ne l'invente pas comme annee de source. peer_reviewed=false parce que le document fourni est un working paper NBER, non une revue a comite de lecture."
+  },
+  "claim": "Les primes de risque des futures de matieres premieres varient dans le temps et en coupe transversale avec le niveau des stocks physiques, comme le predit la Theorie du Stockage : stocks bas -> base (backwardation) elevee, volatilite future du spot elevee, prime de risque elevee. Comme les stocks sont mal mesures et publies avec retard, les auteurs utilisent trois signaux de prix qui proxient l'etat des stocks — la base des futures, le rendement futures des 12 mois passes, la variation du prix spot sur 12 mois — et montrent que ces signaux predisent les rendements excedentaires de portefeuilles tries. Les rendements des strategies « momentum » et « backwardation » proviennent donc en partie de la selection de matieres premieres quand les stocks sont bas. En revanche, les positions des intervenants (« hedging pressure » des Commercials du rapport CFTC) sont correlees contemporainement aux prix mais ne predisent pas les primes de risque ex-ante : l'hypothese keynesienne de pression de couverture est rejetee.",
+  "universe": "Futures de matieres premieres, donnees MENSUELLES, decembre 1969 a decembre 2006. Point de depart : les 36 futures etudies par Gorton et Rouwenhorst (2006), negocies sur NYMEX, NYBOT, CBOT, CME et LME en 2004. L'electricite est retiree (pas de stock par nature), l'or et l'argent aussi (« essentially financial futures »), ce qui laisse 33 matieres premieres pour le Tableau 1 ; le Sucre et le Rough Rice sont ensuite abandonnes faute de stocks mensuels, d'ou 31 matieres premieres pour l'analyse principale. Groupes : Metals, Softs, Grains, Meats, Energies. Prix futures : Commodities Research Bureau (CRB) et London Metals Exchange (LME). Stocks physiques : sources heterogenes par matiere (LME warehouse stocks, USDA, DOE Monthly Energy Review, NYBOT, NYMEX — detail en Appendice B). Positions : Commitment of Traders de la CFTC (Tableau 9 : 1986-2006 ; LME non couvert, Butter et Coal exclus).",
+  "horizon": {
+    "value": "1 mois",
+    "reason": "Le rendement excedentaire est calcule de la fin du mois t a la fin du mois t+1 sur le contrat le plus proche n'expirant pas pendant le mois suivant ; les signaux (base, stocks normalises, momentum 12 mois) sont mesures a la fin du mois t. La fenetre de LOOKBACK des signaux de momentum est en revanche de 12 mois."
+  },
+  "signal_construction": {
+    "value": "Quatre signaux, tous mesures a la fin du mois, puis tri transversal en deux moities (top half / bottom half) equiponderees, rebalancees mensuellement, mesurees en ecart a un indice equipondere de toutes les matieres disponibles ce mois-la. (1) Stocks normalises I/I* : I est le stock effectif de fin de mois, I* le stock « normal » obtenu en appliquant un filtre Hodrick-Prescott au LOG des stocks de chaque matiere (parametre de lissage 160 000, equivalent mensuel = ce chiffre multiplie par 81, selon Ravn et Uhlig (2002)). (2) Base des futures : « (F1/F2 -1) * 365/(D2 - D1) », F1 le contrat le plus proche, F2 le suivant, D1 et D2 le nombre de jours jusqu'a la derniere date de negociation de chacun ; annualisee, exprimee en pourcentage. (3) Futures Momentum : rendement futures des 12 mois precedant la formation du portefeuille. (4) Spot Momentum : variation en pourcentage sur 12 mois du prix spot, mesure par le prix du contrat le plus proche de l'echeance. Le rendement excedentaire mensuel est (F(t+1,T) - F(t,T)) / F(t,T) sur le contrat dont l'echeance T est posterieure a la fin du mois t+1. Regressions auxiliaires : base sur I/I* par spline cubique avec 1 seul noeud place a I/I* = 1, plus 12 dummies mensuelles, erreurs-types Newey-West a bande de 12 mois ; rendement excedentaire mensuel sur I/I* de debut de mois plus dummies mensuelles."
+  },
+  "reported_results": [
+    {
+      "name": "n_commodities_with_monthly_inventories",
+      "value": 31,
+      "unit": "matieres premieres",
+      "quoted": "we collect a comprehensive historical monthly dataset of inventories for 31 individual",
+      "quoted_source": "we collect a comprehensive historical monthly datas et of inventories for 31 individual",
+      "quoted_repair": "ocr",
+      "note": "Conclusion du papier. Ces 31 matieres couvrent « a 37-year period between 1969 and 2006 » ; le Tableau 1 en compte 33, Sucre et Rough Rice etant ensuite ecartes faute de stocks mensuels."
+    },
+    {
+      "name": "n_commodities_positive_risk_premium_of_33",
+      "value": 26,
+      "unit": "matieres premieres sur 33",
+      "quoted": "Of the 33 sample commodities 26 (21) earned a positive risk",
+      "quoted_source": "Of the 33 sam ple commodities 26 (21) earned a positive risk",
+      "quoted_repair": "ocr",
+      "note": "26 en moyenne arithmetique, 21 en moyenne geometrique, sur la periode propre a chaque matiere se terminant en decembre 2006."
+    },
+    {
+      "name": "equally_weighted_index_excess_return_pct_pa",
+      "value": 5.48,
+      "unit": "% par an",
+      "quoted": "An equally-weighted index earned an excess return of 5.48% per annum.",
+      "note": "Indice equipondere, rebalance mensuellement, de tous les futures disponibles chaque mois. Rendement excedentaire (non collateralise), pas un rendement total."
+    },
+    {
+      "name": "equally_weighted_index_average_basis_pct",
+      "value": -2.1,
+      "unit": "% par an",
+      "spelled_out": "−2.10",
+      "quoted": "commodities had an average basis of −2.10%, indicating that on average across commodities and",
+      "quoted_source": "commodities had an average basis of −2.10%, indicat ing that on average across commodities and",
+      "quoted_repair": "ocr",
+      "note": "spelled_out donne le nombre tel que la citation l'ecrit : le signe est le caractere Unicode U+2212 (MINUS SIGN), pas un trait d'union ASCII, donc -2.1 n'est pas reconnaissable mecaniquement dans la citation. Fait notable : la base moyenne est negative (contango) alors que la prime de risque longue moyenne est positive — le « roll yield » positif n'est donc PAS une condition necessaire d'une prime de risque positive."
+    },
+    {
+      "name": "average_pairwise_correlation_between_commodity_futures",
+      "value": 0.12,
+      "unit": "correlation",
+      "quoted": "average low (0.12). The average correlation of individual returns with the return on the equally-",
+      "quoted_source": "average low (0.12). The average correlation of indi vidual returns with the return on the equally-",
+      "quoted_repair": "ocr",
+      "note": "Correlation moyenne par paires entre futures de matieres premieres. La phrase suivante donne 0.40 pour la correlation moyenne avec l'indice equipondere."
+    },
+    {
+      "name": "inventory_lowest_first_order_autocorrelation",
+      "value": 0.71,
+      "unit": "autocorrelation d'ordre 1",
+      "quoted": "First, inventory levels are persistent. At 0.71 inventories of",
+      "note": "0.71 est le MINIMUM de l'echantillon (Soybean Meal) ; la phrase poursuit en indiquant que l'autocorrelation mediane depasse 0.90. Stocks detrended/desaisonnalises. C'est la persistance qui justifie un signal a 12 mois de lookback."
+    },
+    {
+      "name": "basis_on_inventory_pooled_slope_energy",
+      "value": -154.6,
+      "unit": "points de base annualises par unite de I/I*",
+      "spelled_out": "–154.6",
+      "quoted": "–154.6), while many Industrial Metals tend to have slope coefficients that are relatively small in",
+      "note": "Pente poolee OLS du groupe Energies pour la regression spline de la base sur I/I*, evaluee a I = I*. La phrase suivante donne –5.1 pour les Industrial Metals : les matieres difficiles a stocker ont une base bien plus sensible aux chocs de stocks. spelled_out donne le nombre tel que la citation l'ecrit : le signe est un tiret demi-cadratin Unicode (U+2013), pas un trait d'union ASCII."
+    },
+    {
+      "name": "copper_basis_inventory_slope_at_075_inventory",
+      "value": -15.3,
+      "unit": "pente de la base sur I/I*",
+      "spelled_out": "–15.3",
+      "quoted": "–3.2 (t = –0.61) and steepens to –15.3 ( t = –2.76) when inventories drop by 25%",
+      "note": "Illustration de la non-linearite : pour le Cuivre, la pente passe de –3.2 (non significative) a I=I* a –15.3 (t = –2.76) a I/I* = 0.75. Le texte precise que la difference de 12.1 est significative a 5% (t = 5.64). spelled_out : signes en tiret demi-cadratin Unicode (U+2013)."
+    },
+    {
+      "name": "low_minus_high_inventory_portfolio_return_pct_pa",
+      "value": 8.06,
+      "unit": "% par an",
+      "quoted": "out-performance was 8.06 % ( t = 3.19)",
+      "note": "Tri sur les stocks normalises I/I*, moitie basse contre moitie haute, decembre 1969 - decembre 2006. Le Tableau 5 Panel A donne High -3.85, Low 4.21, H-L -8.06 (t = -3.19), soit Low-High = +8.06. Notez le t = 3.19 sur 444 mois : c'est un t-stat de moyenne serie temporelle Newey-West, pas un IC."
+    },
+    {
+      "name": "low_inventory_beats_high_inventory_pct_of_months",
+      "value": 56,
+      "unit": "% des mois",
+      "quoted": "High Inventory portfolios in 56% of the months between 1969 and 2006.",
+      "quoted_source": "High Inventory portfolios in 56% of the months betw een 1969 and 2006.",
+      "quoted_repair": "ocr",
+      "note": "Taux de succes mensuel du tri sur stocks : a peine au-dessus de 50%, alors que la moyenne annualisee est de 8.06%. Le rendement vient d'une faible asymetrie repetee, pas d'une regularite forte."
+    },
+    {
+      "name": "basis_spread_between_low_and_high_inventory_portfolios_pct",
+      "value": 12,
+      "unit": "% (base annualisee)",
+      "quoted": "High Inventory portfolios exceeds 12% ( t = 14.51)",
+      "note": "La base du portefeuille Low Inventory depasse celle du portefeuille High Inventory de plus de 12%, t = 14.51. C'est la mesure la plus forte du papier : la base EST un proxy des stocks, bien plus surement qu'elle n'est un predicteur de rendement."
+    },
+    {
+      "name": "prior_12m_futures_return_spread_low_minus_high_inventory_pct_pa",
+      "value": 15,
+      "unit": "% par an",
+      "quoted": "difference prior to inclusion in the portfolio is about 15% per annum ( t = 6.45)",
+      "quoted_source": "difference prior to inclusion in the portfolio is a bout 15% per annum ( t = 6.45)",
+      "quoted_repair": "ocr",
+      "note": "Les matieres a stocks bas ont deja connu de forts rendements futures sur 12 mois : le tri sur stocks et le tri momentum prennent des positions correlees."
+    },
+    {
+      "name": "high_basis_portfolio_excess_return_pct_pa",
+      "value": 5.42,
+      "unit": "% par an",
+      "quoted": "equally-weighted index by 5.42% annualized ( t = 3.98) while the Low Basis portfolio",
+      "note": "Portefeuille High Basis en ecart a l'indice equipondere, echantillon complet depuis 1969."
+    },
+    {
+      "name": "low_basis_portfolio_underperformance_pct_pa",
+      "value": 4.82,
+      "unit": "% par an",
+      "quoted": "underperformed the average commodity by 4.82% ( t = −3.44)",
+      "note": "Sous-performance du portefeuille Low Basis par rapport a l'indice equipondere ; le signe negatif du t-stat est ecrit avec U+2212 dans le texte."
+    },
+    {
+      "name": "high_minus_low_basis_return_pct_pa",
+      "value": 10.23,
+      "unit": "% par an",
+      "quoted": "and Low Basis portfolio was positive in 58% of the months and averaged 10.23% annualized",
+      "note": "La strategie base (carry) long/short. Le t-stat, 3.73, est donne sur la ligne suivante du texte, coupee par l'extraction. Taux de succes mensuel : 58%."
+    },
+    {
+      "name": "high_minus_low_demeaned_basis_return_pct_pa",
+      "value": 10.13,
+      "unit": "% par an",
+      "quoted": "difference between High and Low (de-meaned) Basis portfolios is 10.13% ( t = 3.52), which is not",
+      "quoted_source": "difference between High and Low (de-meaned) Basis p ortfolios is 10.13% ( t = 3.52), which is not",
+      "quoted_repair": "ocr",
+      "note": "Resultat NON REPORTE en tableau (« Unreported results »), donc invérifiable dans le papier. Il tranche pourtant une question centrale : le tri sur base demeanee par matiere (donc purement temporel) rapporte 10.13% contre 10.23% sur base brute — le rendement vient de la variation TEMPORELLE de la base, pas de differences transversales permanentes de storabilite."
+    },
+    {
+      "name": "high_minus_low_futures_momentum_return_pct_pa",
+      "value": 13.36,
+      "unit": "% par an",
+      "quoted": "Momentum commodity futures by 13.36% per annum ( t = 4.93), earning positive excess returns",
+      "note": "Tri sur le rendement futures des 12 mois precedents, echantillon complet. Taux de succes mensuel : 58% (65% depuis 1990)."
+    },
+    {
+      "name": "high_minus_low_spot_momentum_return_pct_pa",
+      "value": 13.85,
+      "unit": "% par an",
+      "quoted": "Momentum portfolio by 13.85 % annualized ( t = 4.95) over the full sample, and by 16.03%",
+      "note": "Tri sur la variation du prix spot sur 12 mois ; 16.03% sur les 16 dernieres annees (t = 4.47)."
+    },
+    {
+      "name": "correlation_high_basis_high_momentum_returns",
+      "value": 0.87,
+      "unit": "correlation",
+      "quoted": "the correlation between the returns to High Basis and High Momentum portfolios, which is 0.87",
+      "quoted_source": "the correlation between the returns to High Basis a nd High Momentum portfolios, which is 0.87",
+      "quoted_repair": "ocr",
+      "note": "Le chiffre le plus important du papier pour nous : base et momentum 12 mois ne sont PAS deux paris independants. Compter deux signaux quand on en a un seul a 0.87 fausse tout compte de tests."
+    },
+    {
+      "name": "high_basis_alpha_vs_low_inventory_portfolio_pct_pa",
+      "value": 2.4,
+      "unit": "% par an",
+      "quoted": "2.4% p.a. ( t = 1.58)",
+      "note": "Intercept de la regression des rendements excedentaires du portefeuille High Basis sur ceux du portefeuille Low Inventories. Les auteurs l'appellent « a significant intercept » alors que t = 1.58 : leur qualificatif ne tient pas au seuil conventionnel de 5%. Resultat non reporte en tableau."
+    },
+    {
+      "name": "high_momentum_alpha_vs_low_inventory_portfolio_pct_pa",
+      "value": 4.0,
+      "unit": "% par an",
+      "quoted": "has an intercept of 4.0% p.a. ( t = 2.27)",
+      "note": "Meme regression pour le portefeuille High Momentum. Il reste donc une composante des rendements base/momentum orthogonale aux stocks — l'explication par les stocks n'est pas complete. Resultat non reporte en tableau."
+    },
+    {
+      "name": "cross_sectional_basis_return_regression_rsq_pct",
+      "value": 52,
+      "unit": "% (R-squared)",
+      "quoted": "A simple linear regression has an R-squared of 52%.",
+      "note": "Figure 1 : base moyenne contre rendement excedentaire moyen, 26 matieres, 1990/12-2006/12. Regression TRANSVERSALE sur des moyennes d'echantillon, pas une prediction. Les auteurs avertissent explicitement que base et rendements sont correles ex-post meme quand les primes de risque ex-ante sont nulles."
+    },
+    {
+      "name": "cross_sectional_basis_return_regression_slope",
+      "value": 0.73,
+      "unit": "point de prime de risque annuelle par point de base moyenne",
+      "quoted": "RP =  7.13 +0.73 BASIS",
+      "quoted_repair": "table",
+      "quoted_source": "RP =  7.13 +0.73 BASIS ",
+      "note": "Equation portee par la Figure 1, aplatie par l'extraction (d'ou quoted_repair=table). Intercept 7.13% p.a. : meme une matiere a base moyenne nulle a porte une prime de risque positive sur 1990-2006."
+    },
+    {
+      "name": "hedging_pressure_predictive_regression_rsq_pct",
+      "value": 1,
+      "unit": "% (R-squared moyen)",
+      "quoted": "below 1%, compared to 10% on average in the",
+      "note": "R-squared MOYEN des regressions PREDICTIVES du rendement futures sur la pression de couverture (position nette longue des Commercials en % de l'open interest) : sous 1%, contre 10% en moyenne pour les regressions CONTEMPORAINES. C'est le rejet de l'hypothese de hedging pressure : les positions suivent les prix, elles ne les precedent pas."
+    },
+    {
+      "name": "average_net_short_position_of_commercials_pct_open_interest",
+      "value": 10,
+      "unit": "% de l'open interest",
+      "quoted": "commercials across commodities is about 10%, which indicates that commercials are both long",
+      "note": "Position nette courte moyenne des Commercials, toutes matieres confondues, 1986-2006. Ecart-type moyen de la position nette : 15% par mois."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun cout de transaction, aucun spread, aucun cout de roulement : tous les rendements annonces sont bruts, sur des portefeuilles rebalances chaque mois sur la moitie de l'univers disponible.",
+    "Aucun IC, aucun rang de correlation, aucun Sharpe : la metrique du papier est un rendement annualise de portefeuille trie en deux moities et son t-stat Newey-West. Rien n'est directement comparable au rapport d'IC de notre harnais.",
+    "Le nombre de specifications essayees n'est jamais donne. Le choix du lookback de 12 mois est justifie a posteriori (« Unreported results show that sorting on longer term measures of past futures returns increases the dispersion between the inventory characteristics of the momentum portfolios »), le nombre de noeuds du spline est choisi apres experimentation (« We experimented with J on our data, and decided to set J=1 »), et plusieurs resultats cles (base demeanee, alphas 2.4% et 4.0%, tris sur hedging pressure) sont annonces comme « unreported ». Aucun compte de tests.",
+    "Le delai de publication des stocks est declare INCONNU par les auteurs eux-memes, et ils reconnaissent que ce delai peut creer mecaniquement une correlation entre stocks et rendements futurs sans aucune prime de risque : « the tests do not control for (unknown) publication delays in the release of inventory data ». Les revisions de donnees ne sont pas traitees non plus.",
+    "Le filtre Hodrick-Prescott definissant I* est bilateral et applique a la serie complete : la valeur de I* a une date donnee depend de stocks POSTERIEURS. Le papier ne discute jamais ce look-ahead. Tous les resultats fondes sur I/I* en sont affectes (Tableaux 3, 4, 5, et les caracteristiques « Inventories » des Tableaux 6-8).",
+    "Aucun holdout : toutes les periodes sont vues ; les sous-periodes 1986-2006 et 1990/12-2006/12 sont des sous-ensembles de l'echantillon complet, pas des echantillons independants.",
+    "Pas de ponderation ni de contrainte de capacite : portefeuilles equiponderes, nombre de matieres variable dans le temps (sept seulement en decembre 1969), sans que l'effet de ce nombre croissant sur les t-stats soit discute.",
+    "Aucune donnee intraday, aucune heure de mesure : tout est de fin de mois. Le papier ne dit rien du moment de la journee ou les prix sont releves.",
+    "Aucun ajustement de multiplicateur, de tick, de devise ni de fuseau ; les frais de financement du collateral ne sont pas modelises (les rendements sont des rendements excedentaires sur futures).",
+    "Le detail du calcul de la base pour les matieres a echeances irregulieres, et le traitement des periodes de suspension de negociation (etain 1986-1989, repris a partir du 30/06/1990), sont mentionnes mais leur effet sur les resultats n'est jamais quantifie."
+  ],
+  "transposability": {
+    "what_transfers": "Le MOTIF, pas les chiffres. Trois elements survivent a un univers de neuf futures intraday : (1) la pente de la courbe des futures (la base, ou carry) est un etat mesurable a partir des seuls prix, calculable sans donnees exterieures, sans lag de publication et sans revision — c'est exactement le type de signal que notre contrainte point-in-time admet sans effort ; (2) l'idee qu'un signal de momentum long et un signal de carry ne sont pas deux paris independants — ici 0.87 de correlation entre les rendements des portefeuilles High Basis et High Momentum — ce qui est directement une contrainte sur le comptage de tests du registre et sur toute future combinaison ; (3) la mise en garde, formulee par les auteurs eux-memes, qu'une correlation ex-post entre base et rendements existe meme quand la prime de risque ex-ante est nulle : un R-squared transversal de 52% sur des moyennes d'echantillon (Figure 1) ne prouve aucune predictibilite. Transfere aussi le principe general du papier : substituer un proxy de PRIX a une donnee fondamentale mal datee, precisement pour eviter le lag de publication.",
+    "what_does_not_transfer": [
+      "L'horizon. Tout le papier est mensuel (rendement de fin de mois t a fin de mois t+1, signaux a 12 mois de lookback). Notre univers est intraday : ni les rendements annonces, ni leurs t-stats, ni la persistance des stocks (autocorrelation mediane > 0.90 MENSUELLE) ne disent quoi que ce soit a l'echelle de la journee.",
+      "La variable fondamentale elle-meme. Les stocks physiques n'existent pas pour un future financier : les auteurs retirent explicitement l'electricite faute de stock, et l'or et l'argent parce qu'ils sont « essentially financial futures ». Tout signal fonde sur I/I* est mort chez nous des que l'instrument n'est pas une matiere stockable.",
+      "Le filtre Hodrick-Prescott definissant le stock « normal » I*. Il est bilateral et calcule sur l'echantillon complet : il lit le futur. Sous l'invariant II, ce signal ne peut pas etre implemente tel quel ; il faudrait un equivalent causal, qui ne serait plus le signal du papier.",
+      "La taille de la coupe transversale. Les tris en deux moities portent sur 31 matieres (jusqu'a 33), avec un nombre croissant dans le temps. Sur neuf instruments, un tri moitie/moitie donne des portefeuilles de quatre ou cinq lignes : la dispersion transversale que le papier exploite n'existe pas, et les t-stats transversaux annonces ne se transposent pas.",
+      "La diversification. La correlation moyenne par paires entre futures de matieres premieres est 0.12 ; nos neuf futures intraday sont vraisemblablement bien plus correles entre eux, donc l'ecart-type du portefeuille trie et les t-stats qui en decoulent ne sont pas reproductibles.",
+      "La metrique. Le papier mesure un rendement annualise de portefeuille long/short equipondere et son t-stat Newey-West. Notre harnais produit un IC. Aucune des valeurs de reported_results n'est un IC, et aucune ne peut etre comparee a un IC sans etre recalculee par le harnais.",
+      "Les donnees de positions CFTC (Commitment of Traders). Hebdomadaires, publiees avec retard, absentes pour le LME, et de toute facon sans equivalent intraday. Le test de hedging pressure n'est pas reproductible chez nous.",
+      "Les dummies mensuelles et la saisonnalite des recoltes, qui structurent les regressions des Tableaux 2, 3 et 4. Elles n'ont aucun analogue dans un univers intraday.",
+      "La periode. 1969-2006, hors de nos tranches (pool 2016-2023, holdout 2024-2026). Aucun chiffre du papier ne vaut comme attente pour nos donnees.",
+      "Les grandeurs annoncees, toutes brutes de couts. Une strategie a 10-13% par an, rebalancee mensuellement sur la moitie d'un univers de 31 matieres, n'annonce rien sur ce qui reste net a une frequence intraday ou les couts dominent."
+    ],
+    "what_aligns_well": "Deux choses tombent juste. D'abord la base : si nos neuf instruments ont au moins deux echeances cotees, la formule du papier — (F1/F2 - 1) * 365/(D2 - D1), F1 le contrat le plus proche, F2 le suivant, D1 et D2 en jours jusqu'a la derniere negociation — est calculable point-in-time, sans donnee exterieure, sans reseau, et sans lag. Elle donne un candidat de signal implementable tel quel, a condition que le catalogue porte les dates de derniere negociation (sinon : null et entree todo). Ensuite l'exigence de datation : l'argument central du papier pour passer des stocks aux prix est precisement le notre — une donnee publiee avec un retard inconnu et revisee ensuite ne peut pas fonder un signal honnete. Le papier fournit donc, ecrit par ses auteurs, l'argument qui nous interdit d'utiliser leur propre variable fondamentale. Enfin, le resultat sur la base demeanee (10.13% contre 10.23%) indique ou chercher : c'est la variation TEMPORELLE du carry, pas le classement permanent entre instruments, qui porte le signal — hypothese qui, chez nous, se testerait sur neuf instruments sans dependre d'une large coupe transversale."
+  },
+  "notes_supplementaires": {
+    "comptage_de_tests": "Le papier presente au moins quatre tris de portefeuilles (stocks, base, momentum futures, momentum spot), chacun sur trois periodes, plus des regressions par matiere et par groupe sur 31 matieres et deux tableaux de regressions de hedging pressure — et annonce en plus cinq resultats « unreported ». Aucun ajustement pour tests multiples n'est mentionne. Les quatre signaux principaux prennent des positions fortement correlees (0.87 entre base et momentum), ce qui reduit le nombre de paris independants sans reduire le nombre de t-stats affiches.",
+    "cible_de_replication_possible": "Si une cible devait etre retenue de ce papier, ce serait le signal de base/carry (variation temporelle, demeanee par instrument), et non le signal de stocks. Le signal de stocks est non implementable chez nous pour deux raisons independantes et cumulatives : absence de donnee de stock pour des futures non stockables, et look-ahead structurel du filtre HP. Toute hypothese devra etre ecrite et horodatee avant mesure."
+  }
+}

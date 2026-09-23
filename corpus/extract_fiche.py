@@ -30,6 +30,7 @@ l'extracteur : il cite ce qu'il lit. Le choix est **fixe pour tous les papiers**
 un texte choisi par papier serait le bouton que `D18` refuse.
 
     python corpus/extract_fiche.py --prepare <entree>   # ecrit la consigne
+    python corpus/extract_fiche.py --record <fiche.json> --entry N  # fige G3
     python corpus/extract_fiche.py --judge <fiche.json> # juge une sortie
     python corpus/extract_fiche.py --list               # ce qui reste a ficher
 
@@ -39,6 +40,8 @@ Code de sortie 1 si l'entree est inconnue, ou si la fiche jugee ne passe pas.
 from __future__ import annotations
 
 import argparse
+import datetime as dt
+import hashlib
 import json
 import subprocess
 import sys
@@ -49,6 +52,7 @@ CENSUS = REPO / "corpus" / "acquisition.json"
 SCHEMA = REPO / "corpus" / "SCHEMA.md"
 FICHES = REPO / "corpus" / "fiches"
 WORK = REPO / "corpus" / "consignes"
+PRODUCED = REPO / "corpus" / "PRODUCED.json"
 
 MODE = "default"  # D18, fixe pour tous les papiers
 
@@ -208,6 +212,72 @@ def do_prepare(n: int) -> int:
     return 0
 
 
+def empreinte(path: Path) -> str:
+    """Le sha256 du fichier, octet pour octet.
+
+    Octet pour octet et non JSON normalisé : une réindentation EST une
+    retouche, et `G3` doit la voir. Normaliser avant de hacher laisserait
+    passer exactement le geste qu'on cherche à compter.
+    """
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def enregistrer_production(path: Path, entree: int | None = None) -> dict:
+    """Inscrit une fiche AU MOMENT OÙ L'AUTOMATE VIENT DE L'ÉCRIRE.
+
+    `G3` de `D17` compte les fiches retouchées à la main après production, et
+    c'est la condition la plus dure de la porte : un extracteur dont on répare
+    les sorties n'est pas un extracteur. Elle ne se mesure que si l'état
+    d'origine est figé quelque part — d'où ce registre, même geste que
+    `signals/PRODUCED.json` pour `S6` de `D23`.
+
+    **À appeler avant toute relecture humaine.** Inscrire après une correction
+    graverait la correction comme état d'origine, et `G3` vaudrait zéro en
+    disant le contraire de ce qu'il mesure.
+    """
+    registre = json.loads(PRODUCED.read_text(encoding="utf-8")) if PRODUCED.is_file() else {}
+    nom = path.stem
+    ligne = registre.get(nom) or {"entry": entree, "attempts": []}
+
+    # UNE REPRODUCTION N'EST PAS UNE RETOUCHE, et les confondre fausse `G3`
+    # dans les deux sens. Quand l'extracteur repasse sur sa propre sortie
+    # après un verdict rouge, la fiche reste celle d'un automate : rien n'a
+    # été réparé à la main. Mais le NOMBRE D'ESSAIS est lui-même un résultat —
+    # « produit sans retouche » à la cinquième tentative ne dit pas la même
+    # chose qu'à la première — donc chaque passage est inscrit, jamais écrasé.
+    ligne.setdefault("attempts", []).append({
+        "produced": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
+        "sha256": empreinte(path),
+    })
+    if entree is not None:
+        ligne["entry"] = entree
+    ligne["sha256"] = ligne["attempts"][-1]["sha256"]
+    ligne["produced"] = ligne["attempts"][-1]["produced"]
+    registre[nom] = ligne
+    PRODUCED.write_text(
+        json.dumps(dict(sorted(registre.items())), ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return registre[nom]
+
+
+def do_record(path: Path, entree: int | None) -> int:
+    if not path.is_file():
+        raise SystemExit(f"fiche introuvable : {path}")
+    ligne = enregistrer_production(path, entree)
+    n = len(ligne["attempts"])
+    print(f"inscrite : {path.stem}  (essai {n})")
+    print(f"  sha256   {ligne['sha256'][:16]}…")
+    print(f"  produite {ligne['produced']}")
+    if n > 1:
+        print(f"  L'EXTRACTEUR A REPASSÉ {n} FOIS sur cette fiche. Ce n'est pas une")
+        print("  retouche manuelle, et `G3` ne casse pas — mais le compte est gardé :")
+        print("  « produit sans retouche » au cinquième essai ne dit pas la même chose")
+        print("  qu'au premier.")
+    print("\nTOUTE MODIFICATION À LA MAIN DE CE FICHIER CASSERA `G3`.")
+    return 0
+
+
 def do_judge(path: Path) -> int:
     if not path.is_file():
         raise SystemExit(f"fiche introuvable : {path}")
@@ -216,6 +286,18 @@ def do_judge(path: Path) -> int:
         capture_output=True, text=True, encoding="utf-8", errors="replace",
     )
     print(r.stdout or r.stderr)
+
+    # Le juge DIT aussi si la fiche a bougé depuis sa production. Sans cela,
+    # une session pourrait corriger puis rejuger, voir du vert, et croire la
+    # porte franchie — alors que `G3` vient de casser.
+    if PRODUCED.is_file():
+        registre = json.loads(PRODUCED.read_text(encoding="utf-8"))
+        ligne = registre.get(path.stem)
+        if ligne and ligne["sha256"] != empreinte(path):
+            print(f"\n  G3 CASSÉ — {path.stem} a été MODIFIÉE depuis sa production "
+                  f"du {ligne['produced']}.")
+            print("  Une fiche réparée à la main ne prouve plus rien de l'extracteur.")
+            return 1
     return r.returncode
 
 
@@ -224,12 +306,17 @@ def main() -> int:
     ap.add_argument("--prepare", type=int, metavar="ENTREE")
     ap.add_argument("--judge", type=Path, metavar="FICHE")
     ap.add_argument("--list", action="store_true")
+    ap.add_argument("--record", type=Path, metavar="FICHE",
+                    help="inscrire une fiche au registre de production (G3)")
+    ap.add_argument("--entry", type=int, default=None, metavar="N")
     args = ap.parse_args()
 
     if args.list:
         return do_list()
     if args.prepare is not None:
         return do_prepare(args.prepare)
+    if args.record is not None:
+        return do_record(args.record, args.entry)
     if args.judge is not None:
         return do_judge(args.judge)
     print(__doc__)

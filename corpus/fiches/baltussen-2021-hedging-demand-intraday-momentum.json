@@ -1,0 +1,303 @@
+{
+  "fiche_id": "baltussen-2021-hedging-demand-intraday-momentum",
+  "written": "2026-09-23",
+  "written_by": "session-extraction-isolee-entree-02",
+  "source": {
+    "authors": "Guido Baltussen, Zhi Da, Sten Lammers, Martin Martens",
+    "title": "Hedging demand and market intraday momentum",
+    "year": 2021,
+    "source_url": "https://www3.nd.edu/~zda/intramom.pdf",
+    "pdf": "corpus/pdf/baltussen-2021-hedging-demand-intraday-momentum.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "amorce_entry": 2,
+    "venue": "Journal of Financial Economics 142 (2021) 377-403"
+  },
+  "claim": "Le rendement de la derniere demi-heure avant la cloture (r_LH) est positivement predit par le rendement du reste de la meme journee (r_ROD : de la cloture de la veille jusqu'a 30 minutes avant la cloture), sur plus de 60 futures d'actions, d'obligations, de matieres premieres et de devises, de decembre 1974 a mai 2020. Ce predicteur r_ROD bat le predicteur r_ONFH (nuit + premiere demi-heure) de Gao et al. (2018), surtout lorsque les deux sont de signes opposes. La cause avancee est la demande de couverture des participants en gamma negatif (teneurs de marche d'options, ETF a effet de levier), qui doivent acheter quand le prix monte et vendre quand il baisse, et qui concentrent l'essentiel de leur couverture avant la cloture. Corollaire teste : la pression de prix etant transitoire, r_LH se retourne sur les un a trois jours suivants.",
+  "universe": {
+    "summary": "Plus de 60 contrats a terme de marches developpes, quatre classes d'actifs, donnees tick-by-tick agregees en barres d'une minute (open, close, volume), fournisseur Tick Data LLC.",
+    "equity_index_futures": 17,
+    "government_bond_futures": 16,
+    "commodity_futures": 21,
+    "currency_futures": 8,
+    "equity_cash_indices_also_covered": 12,
+    "period": "decembre 1974 - mai 2020 (par contrat : de 1974-12-04 pour le franc suisse a 2010 pour les plus recents)",
+    "volume_data_from": 2003,
+    "grouping": "poolage par classe d'actifs, puis sous-groupes geographiques (USA, EU, Australasia) pour actions et obligations, et categoriels (metals, energies, softs) pour les matieres premieres ; portefeuilles 1/N par classe pour les strategies",
+    "filters": "prix non positifs retires, jours non ouvres retires, jours de cloture anticipee retires, jours de volume total inferieur a 100 contrats retires (procedure Barndorff-Nielsen et al. 2008)",
+    "contract_selection": "contrat le plus liquide (generalement le plus proche de l'echeance), roule quand le volume quotidien du contrat suivant depasse celui du contrat courant ; contrats standards remplaces par leurs versions mini apres introduction"
+  },
+  "horizon": {
+    "value": "30 minutes",
+    "detail": "La variable predite est le rendement des 30 dernieres minutes de la seance (r_LH), predit par l'information de la meme journee jusqu'a c-30. Les tests de reversion portent ensuite sur 1, 2 et 3 jours."
+  },
+  "signal_construction": {
+    "value": "A chaque date t et pour chaque contrat, decouper la journee de negociation en cinq intervalles allant de la cloture du jour t-1 a la cloture du jour t, sur les heures 'communes' du marche sous-jacent : la nuit (ON), la premiere demi-heure (FH), le milieu de journee (M), l'avant-derniere demi-heure (SLH) et la derniere demi-heure (LH). Le signal est le rendement du reste de la journee, r_ROD,t = P(c-30,t) / P(c,t-1) - 1 : le rendement d'un achat a la cloture de la veille et d'une vente 30 minutes avant la cloture du jour t. Il se lit a c-30, n'utilise que des prix anterieurs a cet instant, et predit le rendement des 30 dernieres minutes, r_LH. Il s'evalue de deux manieres : en regression, r_LH,t = a + b_ROD * r_ROD,t + e_t, avec un R2 hors echantillon contre la moyenne historique recursive (fenetre extensible, minimum 500 observations) ; en strategie, par une position binaire prise a c-30 et tenue jusqu'a la cloture, longue si r_ROD,t est positif, courte sinon. Les predicteurs concurrents se construisent sur le meme decoupage : r_ONFH,t = P(o+30,t)/P(c,t-1) - 1, r_M,t = P(c-60,t)/P(o+30,t) - 1, r_SLH,t = P(c-30,t)/P(c-60,t) - 1. Aucun parametre n'est ajuste, aucune donnee exterieure aux prix intraday n'entre dans le calcul ; seules les heures d'ouverture et de cloture retenues pour chaque marche, et la regle de roll du contrat le plus liquide, sont des choix prealables.",
+    "definition": "r_ROD,t = P(c-30,t) / P(c,t-1) - 1 : rendement d'achat a la cloture de la veille et de vente 30 minutes avant la cloture du jour t. Predicteurs alternatifs : r_ONFH,t = P(o+30,t)/P(c,t-1) - 1 ; r_M,t = P(c-60,t)/P(o+30,t) - 1 ; r_SLH,t = P(c-30,t)/P(c-60,t) - 1. Cible : r_LH, rendement des 30 dernieres minutes.",
+    "partition": "La journee de negociation va de la cloture du jour t-1 a la cloture du jour t, decoupee en cinq parties : ON (nuit), FH (premiere demi-heure), M (milieu de journee), SLH (avant-derniere demi-heure), LH (derniere demi-heure). ONFH = ON + FH ; ROD = ON + FH + M + SLH.",
+    "session_hours": "Les heures retenues sont les heures 'communes' du marche sous-jacent (ex. 09:30-16:00 pour le S&P E-Mini), et non les heures elargies du future ; pour obligations, devises et matieres premieres, les heures sont choisies sur des pics de volume. Les changements d'horaires dans le temps sont corriges.",
+    "regressions": [
+      "r_LH,t = a + b_ONFH * r_ONFH,t + e_t (Eq. 5)",
+      "r_LH,t = a + b_ONFH * r_ONFH,t + b_M * r_M,t + b_SLH * r_SLH,t + e_t (Eq. 6)",
+      "r_LH,t = a + b_ROD * r_ROD,t + e_t (Eq. 7)",
+      "r_LH,t = a + b_ONFH * r_ONFH,t + b_ROD * r_ROD,t + e_t (Eq. 11, course de chevaux)"
+    ],
+    "trading_rule": "Strategie de timing binaire : position longue sur la derniere demi-heure si le predicteur est positif, courte sinon.",
+    "trading_rule_quote": "If the predictor return is positive, we will earn the last",
+    "out_of_sample_protocol": "R2 hors echantillon contre la moyenne historique recursive, fenetre extensible, minimum 500 observations (environ deux ans) ; test de Clark et West (2007).",
+    "out_of_sample_quote": "window, requiring at least 500 observations, or about two",
+    "roll_quote": "and roll it over when the daily tick volume of the next",
+    "jump_definition_quote": "below (above) the 10% (90%) percentile of the full-sample",
+    "inference": "T-statistiques avec erreurs standards groupees sur le temps et le marche (Cameron et al. 2011) pour les regressions poolees ; Newey-West pour les regressions individuelles."
+  },
+  "reported_results": [
+    {
+      "name": "n_futures_covered",
+      "value": 60,
+      "unit": "contrats",
+      "quoted": "Using intraday returns on over 60 futures on equities,",
+      "note": "Resume. Le detail donne 17 actions + 16 obligations + 21 matieres premieres + 8 devises = 62 contrats."
+    },
+    {
+      "name": "sample_start_year",
+      "value": 1974,
+      "unit": "annee",
+      "quoted": "period ranging from December 1974 to May 2020.",
+      "note": "Periode totale de l'echantillon, toutes classes confondues ; chaque contrat a sa propre date de debut (Tables A1-A4)."
+    },
+    {
+      "name": "asset_class_timing_sharpe_min",
+      "value": 0.87,
+      "unit": "Sharpe annualise",
+      "quoted": "yielding Sharpe ratios between 0.87 and 1.73.",
+      "note": "Borne basse de la fourchette des Sharpe des strategies de timing sur r_ROD, au niveau des classes d'actifs (devises, Table 6 Panel D). Brut de couts."
+    },
+    {
+      "name": "asset_class_timing_sharpe_max",
+      "value": 1.73,
+      "unit": "Sharpe annualise",
+      "quoted": "yielding Sharpe ratios between 0.87 and 1.73.",
+      "note": "Borne haute : futures d'indices actions (Table 6 Panel A). Brut de couts."
+    },
+    {
+      "name": "equity_pooled_rod_tstat",
+      "value": 7.29,
+      "unit": "t-stat",
+      "quoted": "r ROD has the highest t-value, 7.29.",
+      "note": "Table 2, Panel A, colonne (3) : regression poolee des futures actions, r_LH sur r_ROD. Erreurs standards groupees temps x marche."
+    },
+    {
+      "name": "equity_pooled_rod_oos_r2_pct",
+      "value": 2.88,
+      "unit": "%",
+      "quoted": "In addition, r ROD has the highest out-of-sample R-squared (R2 OOS), 2.88%. In contrast,",
+      "quoted_source": "OOS ), 2.88%. In contrast,",
+      "quoted_repair": "math_notation",
+      "note": "R2 hors echantillon de r_ROD, futures actions poolees (Table 2 Panel A, colonne 3). L'extraction disloque l'indice OOS de R2 sur une ligne separee."
+    },
+    {
+      "name": "equity_pooled_onfh_oos_r2_pct",
+      "value": -1.71,
+      "unit": "%",
+      "quoted": "in this extended equity futures index sample, r ONF H has a negative R2 OOS, −1.71%. Interestingly, the R2",
+      "quoted_source": "OOS , −1.71%. Interestingly, the R 2",
+      "quoted_repair": "math_notation",
+      "spelled_out": "−1.71",
+      "note": "Le predicteur de Gao et al. (2018), r_ONFH, a un R2 hors echantillon NEGATIF sur l'echantillon actions etendu : il fait moins bien que la moyenne historique recursive. Le signe moins est le caractere U+2212."
+    },
+    {
+      "name": "equity_rod_timing_annualized_return_pct",
+      "value": 6.86,
+      "unit": "% par an",
+      "quoted": "Panel A: Equity index futures — η(r ROD ): Avg ret 6.86%, Std dev 3.96%, SR 1.73, Success 0.55 ; Panel B: Government bond futures — η(r ROD ): Avg ret 2.16%, Std dev 1.33%, SR 1.62, Success 0.55",
+      "quoted_source": "η(r ROD ) 6.86 3.96 1.73 0.55 2.16 1.33 1.62 0.55",
+      "quoted_repair": "table",
+      "note": "Table 6, ligne η(r ROD). L'extraction met la table a plat : les quatre premiers nombres sont le panel actions (rendement moyen, ecart-type, Sharpe, taux de succes), les quatre suivants le panel obligations. Brut de couts de transaction."
+    },
+    {
+      "name": "bond_rod_timing_sharpe",
+      "value": 1.62,
+      "unit": "Sharpe annualise",
+      "quoted": "Panel B: Government bond futures — η(r ROD ): Avg ret 2.16%, Std dev 1.33%, SR 1.62, Success 0.55",
+      "quoted_source": "η(r ROD ) 6.86 3.96 1.73 0.55 2.16 1.33 1.62 0.55",
+      "quoted_repair": "table",
+      "note": "Meme ligne de la Table 6, colonne Sharpe du panel obligations. Brut de couts."
+    },
+    {
+      "name": "equity_always_long_sharpe",
+      "value": 0.11,
+      "unit": "Sharpe annualise",
+      "quoted": "Panel A: Equity index futures — Always Long: Avg ret 0.44%, Std dev 4.20%, SR 0.11, Success 0.53",
+      "quoted_source": "Always Long 0.44 4.20 0.11 0.53 0.48 1.42 0.34 0.53",
+      "quoted_repair": "table",
+      "note": "Table 6, benchmark 'Always Long' (toujours long sur la derniere demi-heure), panel actions. C'est la reference qui isole ce que le timing apporte : 0.11 contre 1.73 pour η(r_ROD)."
+    },
+    {
+      "name": "timing_daily_success_rate_floor",
+      "value": 0.5,
+      "unit": "taux de succes quotidien",
+      "quoted": "0.50 on the timing strategies.",
+      "spelled_out": "0.50",
+      "note": "Les taux de succes quotidiens sont declares 'well above' 0.50 ; la Table 6 les situe entre 0.53 et 0.61 selon la strategie et la classe."
+    },
+    {
+      "name": "equity_horse_race_full_sample_beta_rod",
+      "value": 3.65,
+      "unit": "coefficient x100",
+      "quoted": "Full sample: βONF H 1.14 (1.39), βROD 3.65 (5.28), R2 2.49",
+      "quoted_source": "(1 . 39) 3 . 65",
+      "quoted_repair": "table",
+      "spelled_out": "3 . 65",
+      "note": "Table 3, Panel A (futures actions), ligne 'Full sample', regression conjointe Eq. (11). Lu comme : t-stat de βONFH = 1.39 (insignifiant) puis βROD = 3.65 (t = 5.28). L'extraction insere des espaces autour du point decimal."
+    },
+    {
+      "name": "equity_contracts_with_positive_significant_oos_r2",
+      "value": 14,
+      "unit": "contrats",
+      "quoted": "14 contracts. In addition,",
+      "note": "Sur un total de 17 futures d'indices actions (Table B1), le R2 hors echantillon de r_ROD est positif et significatif pour 14 contrats ; r_ROD bat r_ONFH sur 10 contrats."
+    },
+    {
+      "name": "bond_contracts_with_positive_significant_oos_r2",
+      "value": 11,
+      "unit": "contrats",
+      "quoted": "R2 OOS is positive and signiﬁcant for 11 contracts;",
+      "quoted_source": "OOS is positive and signiﬁcant for 11 contracts;",
+      "quoted_repair": "math_notation",
+      "note": "Sur 16 futures obligataires (Table B2) ; r_ROD a un R2 hors echantillon superieur a celui de r_ONFH pour 13 contrats."
+    },
+    {
+      "name": "commodity_currency_share_of_contracts_significant_oos_r2_pct",
+      "value": 40,
+      "unit": "%",
+      "quoted": "Still, for about 40% to 50%",
+      "note": "Borne basse de la fourchette 40%-50% des contrats de matieres premieres (Table B3) et de devises (Table B4) pour lesquels r_ROD a un R2 hors echantillon positif et significatif. L'effet y est nettement plus faible que sur actions et obligations."
+    },
+    {
+      "name": "days_with_negative_nge",
+      "value": 2930,
+      "unit": "jours",
+      "quoted": "2930 days with a negative NGE and 3158 with a positive",
+      "note": "De 1996 a mai 2020. Le regime de gamma negatif — celui ou l'effet existe — ne couvre donc qu'environ 48% des jours."
+    },
+    {
+      "name": "intraday_momentum_absent_when_nge_positive",
+      "value": null,
+      "quoted": "days with positive NGE, however, there is no signiﬁcant",
+      "note": "Table 7 : regression de r_LH sur r_ROD conditionnee au signe du NGE de la veille. Sur les jours de NGE positif, pas de momentum intrajournalier significatif. C'est le resultat de regime le plus directement utilisable."
+    },
+    {
+      "name": "intraday_momentum_stronger_when_nge_negative",
+      "value": null,
+      "quoted": "much more pronounced on negative NGE days.",
+      "note": "Table 7. Le coefficient sur r_ROD passe a 6.63 (t = 4.78, R2 3.58%) quand NGE(t-1) < 0, contre 0.82 (t = 1.03) quand NGE(t-1) >= 0 ; ces deux chiffres viennent d'un tableau que l'extraction disloque, et ne sont pas repris ici comme entrees chiffrees."
+    },
+    {
+      "name": "nge_interaction_coefficient",
+      "value": -123.04,
+      "unit": "coefficient x100",
+      "quoted": "NGE * r ROD,t −123.04 (−3.42)",
+      "quoted_source": "NGE ∗ r ROD,t −123 . 04",
+      "quoted_repair": "table",
+      "spelled_out": "−123 . 04",
+      "note": "Table 8, colonne (3) : plus le gamma net est negatif, plus le momentum intrajournalier est fort (t = -3.42). Signe negatif car NGE negatif multiplie par ce coefficient augmente la pente sur r_ROD."
+    },
+    {
+      "name": "letf_indexing_interaction_equity",
+      "value": 1.79,
+      "unit": "coefficient",
+      "quoted": "Indexing LETF · r ROD 1.79 (2.20)",
+      "quoted_source": "Indexing LET F · r ROD 1 . 79",
+      "quoted_repair": "table",
+      "spelled_out": "1 . 79",
+      "note": "Table 9, Panel A (futures actions), colonne (1) : la part de marche des ETF a effet de levier amplifie la pente de r_ROD, t = 2.20, significatif a 5%. Echantillon juin 2006 - mai 2020."
+    },
+    {
+      "name": "letf_share_of_market_on_close_volume_pct",
+      "value": 16.8,
+      "unit": "%",
+      "quoted": "LETF rebalancing made up 16.8% (50.2%) of the",
+      "note": "Valeur externe citee de Cheng et Madhavan (2010), a fin fevrier 2009 : 16.8% du volume market-on-close un jour ou le marche bouge de 1%, 50.2% un jour a 5%. Ce n'est pas une mesure des auteurs."
+    },
+    {
+      "name": "equity_two_day_reversal_coefficient",
+      "value": -29.05,
+      "unit": "coefficient x100",
+      "quoted": "r LH,t −29.05 (−3.16)",
+      "quoted_source": "−29 . 05",
+      "quoted_repair": "table",
+      "spelled_out": "−29 . 05",
+      "note": "Table 11, Panel A (actions) : regression du rendement des deux jours suivants sur r_LH du jour. Coefficient -29.05, t = -3.16, significatif a 1%. La pression de prix se retourne."
+    },
+    {
+      "name": "reversal_present_in_all_four_asset_classes",
+      "value": null,
+      "quoted": "In all four markets, we observe reversals, although",
+      "note": "Table 11. Le retournement est significatif sur actions, obligations et matieres premieres ; il ne l'est pas sur devises. Figure 5 : le pouvoir predictif de r_ROD revient a zero en un jour sur devises, deux jours sur actions et matieres premieres, trois jours sur obligations."
+    },
+    {
+      "name": "jump_returns_predict_post_jump_returns",
+      "value": null,
+      "quoted": "The results in Table 10 conﬁrm that cumulative jump",
+      "note": "Table 10 : les rendements cumules jusqu'a un saut (demi-heure au-dela du 10e/90e percentile) predisent positivement le rendement post-saut, et predisent encore significativement r_LH dans les quatre classes — la couverture intrajournaliere est donc incomplete et l'essentiel se fait en fin de journee."
+    },
+    {
+      "name": "no_transaction_costs_in_results",
+      "value": null,
+      "quoted": "Note that we do not consider transaction costs.",
+      "note": "Tous les rendements, Sharpe et taux de succes de la Table 6 sont bruts. Les auteurs ajoutent que la strategie 'might not be exploitable to many investors after accounting for transaction costs'."
+    },
+    {
+      "name": "sp500_net_of_cost_sharpe_qualitative",
+      "value": null,
+      "quoted": "the effect in the S&P 500 futures yields a positive net",
+      "note": "Seule affirmation nette de couts du papier : un Sharpe net positif sur le future S&P 500 en supposant un cout d'un tick. Aucune valeur de tick, aucun Sharpe net chiffre, aucune table a l'appui."
+    },
+    {
+      "name": "predictability_stops_at_cash_market_close",
+      "value": null,
+      "quoted": "does not extend to the futures return beyond 4:00pm",
+      "note": "Table 12 : r_ROD predit fortement r_LH jusqu'a la cloture du cash a 16:00 ET, mais ne predit pas le rendement du future entre 16:00 et 16:15 ET, alors que le volume y reste eleve. Le point d'ancrage du signal est l'heure de reglement des produits couverts, pas la fin de seance du future."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun cout de transaction dans les resultats principaux ; le seul chiffre net est qualitatif ('un tick') sans valeur de tick, sans Sharpe net, sans table.",
+    "Aucun multiplicateur de contrat, taille de tick, frais d'exchange ou cout de roll : la conversion en P&L monetaire est impossible depuis le papier.",
+    "Les heures de negociation retenues pour chaque marche et leur evolution dans le temps ne sont pas publiees ('available upon request'), alors que tout le decoupage ON/FH/M/SLH/LH en depend.",
+    "Aucun turnover chiffre, alors que la strategie rebalance chaque jour et prend une position directionnelle sur 30 minutes.",
+    "Aucun IC ni correlation de rang : la metrique du papier est un R2 de regression poolee, un R2 hors echantillon et un Sharpe de strategie binaire.",
+    "Le proxy NGE repose sur quatre hypotheses declarees (tous les options delta-couvertes, calls achetes par les teneurs de marche, puts vendus par eux, couverture exacte des deltas) et ignore l'OTC ; les auteurs reconnaissent que l'echantillon 'misses many long puts and short calls typically done OTC'.",
+    "Pas de donnees de taille de marche pour les matieres premieres, donc pas de part LETF calculable pour cette classe ; pas de donnees LETF du tout pour les devises.",
+    "Aucun lag de publication, fuseau horaire de reference unique, ou regle de traitement des jours de changement d'heure n'est specifie au-dela de 'local exchange time zone'.",
+    "Aucune tranche de holdout : tous les resultats sont in-sample ou pseudo-hors-echantillon par fenetre extensible sur la meme periode.",
+    "Le nombre total de specifications testees n'est pas declare ; le papier rapporte des dizaines de regressions (Tables 2 a 12, B1 a B4, D1 a D2) sans compteur de tests."
+  ],
+  "transposability": {
+    "what_transfers": [
+      "La construction du signal est structurellement sans look-ahead : r_ROD n'utilise que la cloture de la veille et le prix a c-30 du jour, et la cible r_LH est posterieure. Un Panel ouvert a c-30 suffit a le calculer.",
+      "Le signal est un nombre par instrument et par date (un rendement, ou son signe), ce qui est exactement la forme attendue par notre harnais.",
+      "L'horizon de 30 minutes et le decoupage de la journee en intervalles fixes sont transposables a des futures intraday sans donnee exterieure.",
+      "Le comparatif explicite r_ONFH contre r_ROD fournit deux hypotheses distinctes et pre-enregistrables, avec une prediction de direction (r_ROD gagne, surtout quand les signes different).",
+      "La prediction de reversion sur un a trois jours est un controle falsifiable qui ne coute pas de donnee supplementaire.",
+      "Le fait mesure est documente sur quatre classes d'actifs et sur deux sous-periodes (1974-1999 et 2000-2020), donc il ne repose pas sur une seule fenetre."
+    ],
+    "what_does_not_transfer": [
+      "Les Sharpe de 0.87 a 1.73 sont calcules sur des portefeuilles 1/N de 8 a 21 contrats par classe d'actifs. Avec neuf futures au total, la diversification transversale qui produit ces Sharpe disparait ; les chiffres par contrat individuel (Tables B1-B4) sont bien plus faibles et souvent non significatifs.",
+      "La metrique du papier (R2 poole, R2 hors echantillon, Sharpe d'une strategie de timing binaire) n'est pas la notre : aucun IC n'est publie, et aucun de ces chiffres ne peut servir de cible de replication directe.",
+      "La periode 1974-2020 ne recouvre notre pool (2016-2023) que partiellement ; les sous-periodes ou l'effet est le plus net pour certaines classes sont anterieures a notre premiere barre.",
+      "Le canal cause — NGE d'OptionMetrics et SqueezeMetrics, NAV de LETF de Bloomberg — exige des donnees que nous n'avons pas. Le regime 'gamma negatif', qui est pourtant la condition sous laquelle l'effet existe, n'est pas reproductible tel quel chez nous.",
+      "Les heures de seance sont choisies au cas par cas (heures du sous-jacent pour les actions, pics de volume ailleurs) et ne sont pas publiees ; notre definition de seance sera necessairement differente, ce qui deplace les frontieres ON/FH/M/SLH/LH et donc le signal lui-meme.",
+      "Tous les resultats sont bruts de couts, de spread et de roll, alors que la strategie exige un aller-retour quotidien sur une fenetre de 30 minutes : la part du resultat qui survit aux couts n'est pas mesuree ici.",
+      "Les donnees sont des barres d'une minute construites depuis du tick-by-tick ; si notre panel a une granularite plus grossiere, les prix a o+30, c-60 et c-30 ne sont pas reconstituables a l'identique.",
+      "Le resultat de la Table 12 montre que le pouvoir predictif s'arrete a la cloture du marche cash (16:00 ET) et non a celle du future (16:15 ET) : l'effet depend de l'heure de reglement des produits couverts, information de calendrier propre a chaque instrument qui n'est pas dans le papier.",
+      "L'effet est nettement plus faible sur matieres premieres et devises (R2 poole de 0.15% et 0.19%, 40% a 50% des contrats seulement) : si notre univers de neuf futures penche de ce cote, la transposition perd l'essentiel de sa force."
+    ],
+    "what_aligns_well": [
+      "L'instrument du papier est le meme que le notre : des futures, lus en intraday, sur plusieurs classes d'actifs.",
+      "Le signal est deterministe, sans parametre a ajuster, sans donnee de reference externe, sans acces reseau : il tient dans une fonction de quelques lignes sur le Panel.",
+      "Le papier fournit une hierarchie de predicteurs a tester (r_ONFH, r_M, r_SLH, r_ROD) qui donne un jeu d'hypotheses pre-enregistrables plutot qu'un seul signal a valider.",
+      "Le conditionnement au signe du NGE est exactement la forme d'un hybride au sens de notre vocabulaire : un signal conditionne a un regime ; meme sans le proxy NGE, il indique ou chercher un regime substitut.",
+      "La reversion annoncee sur un a trois jours donne un controle de coherence independant : si notre signal survit mais que la reversion est absente, le mecanisme invoque n'est pas celui qui agit chez nous."
+    ]
+  }
+}

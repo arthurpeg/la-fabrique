@@ -29,6 +29,7 @@ et l'écart est une faute, pas un silence.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import subprocess
 import sys
@@ -132,11 +133,22 @@ def main(argv: list[str]) -> int:
             rouges.append((f, fautes))
 
     # -- G3 ------------------------------------------------------------------
+    # `G3` se mesure en comparant l'empreinte D'AUJOURD'HUI à celle inscrite
+    # au moment de la production. Une fiche dont le sha256 a bougé a été
+    # retouchée — quelle que soit la raison, et sans qu'il faille y penser.
     g3_sans_objet = not PRODUITES.is_file()
     retouchees: list[str] = []
+    orphelines: list[str] = []
+    essais: dict[str, int] = {}
     if not g3_sans_objet:
         produites = json.loads(PRODUITES.read_text(encoding="utf-8"))
-        retouchees = [n for n, d in produites.items() if d.get("retouchee")]
+        for nom, d in produites.items():
+            essais[nom] = len(d.get("attempts") or [1])
+            f = FICHES / f"{nom}.json"
+            if not f.is_file():
+                orphelines.append(nom)
+            elif hashlib.sha256(f.read_bytes()).hexdigest() != d["sha256"]:
+                retouchees.append(nom)
 
     # -- G4 ------------------------------------------------------------------
     sans_raison = [e for e in inatteignables if not e.get("reason")]
@@ -166,6 +178,19 @@ def main(argv: list[str]) -> int:
     print(f"  G2  fiches cassant D16                       {g2:>3}   (exige 0)")
     print(f"  G3  fiches retouchées à la main              {g3_txt}   {g3_note}")
     print(f"  G4  inatteignables sans raison écrite        {g4:>3}   (exige 0)")
+
+    # LE COMPTE DES ESSAIS N'EST PAS UNE CONDITION, ET IL EST IMPRIMÉ QUAND MÊME.
+    # `G3` ne casse pas quand l'extracteur repasse sur sa propre sortie — rien
+    # n'a été réparé à la main. Mais « produit sans retouche » au cinquième
+    # essai ne dit pas la même chose qu'au premier, et une porte qui tait ce
+    # nombre laisse croire à une précision qu'elle n'a pas mesurée.
+    if essais:
+        repasses = {n: k for n, k in essais.items() if k > 1}
+        total = sum(essais.values())
+        print(f"\n  essais de l'extracteur : {total} pour {len(essais)} fiche(s) "
+              f"— {total / len(essais):.2f} par fiche")
+        for n, k in sorted(repasses.items(), key=lambda x: -x[1]):
+            print(f"      {k} passages : {n}")
 
     if infichables:
         print("\n  ATTENTION — `G1` a DEUX lectures, et ce script ne tranche pas :")
@@ -206,8 +231,15 @@ def main(argv: list[str]) -> int:
     for nom, n in (("G1", g1), ("G2", g2), ("G4", g4)):
         if n:
             fautes.append(f"{nom} = {n}, exige 0")
-    if not g3_sans_objet and g3:
-        fautes.append(f"G3 = {g3}, exige 0")
+    if not g3_sans_objet:
+        if g3:
+            fautes.append(f"G3 = {g3}, exige 0 — retouchée(s) : {', '.join(retouchees)}")
+        if orphelines:
+            fautes.append(
+                f"{len(orphelines)} fiche(s) inscrite(s) au registre de production mais "
+                f"ABSENTE(S) de corpus/fiches/ : {', '.join(orphelines)} — une fiche "
+                "produite puis supprimée est une retouche, la plus radicale"
+            )
 
     compte = registry.counted_tests()
     if compte != compte_avant:

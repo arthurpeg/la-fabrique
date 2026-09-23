@@ -1,0 +1,297 @@
+{
+  "fiche_id": "moskowitz-2012-time-series-momentum",
+  "written": "2026-09-23",
+  "written_by": "session d'extraction isolee — entree 20 (Claude Opus 5)",
+  "source": {
+    "authors": "Tobias J. Moskowitz, Yao Hua Ooi, Lasse Heje Pedersen",
+    "title": "Time series momentum",
+    "year": 2012,
+    "source_url": "https://w4.stern.nyu.edu/facdir/lpederse/papers/TimeSeriesMomentum.pdf",
+    "pdf": "corpus/pdf/moskowitz-2012-time-series-momentum.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "amorce_entry": 20,
+    "note": "Journal of Financial Economics 104 (2012) 228-250. Recu le 16 aout 2010, accepte le 12 aout 2011."
+  },
+
+  "claim": "Le rendement en exces des 12 derniers mois d'un contrat future predit positivement son propre rendement du mois suivant, instrument par instrument (et non en coupe transversale). L'effet est present sur les 58 contrats examines — indices actions, devises, matieres premieres, obligations d'Etat — persiste environ un an, puis se retourne partiellement sur les quatre annees suivantes. Un portefeuille diversifie de ces strategies, chaque position dimensionnee a volatilite ex ante constante, degage un alpha significatif contre les facteurs de risque standards et se comporte le mieux dans les marches extremes.",
+
+  "universe": {
+    "description": "58 contrats futures et forwards parmi les plus liquides au monde, quatre classes d'actifs, donnees mensuelles.",
+    "breakdown": "24 matieres premieres, 12 paires de devises croisees (issues de neuf devises sous-jacentes), neuf indices actions de pays developpes, 13 futures obligataires d'Etat de pays developpes.",
+    "period_full": "janvier 1965 - decembre 2009",
+    "period_used_for_strategy_evaluation": "janvier 1985 - decembre 2009",
+    "period_out_of_sample_extension": "1966 - 1985",
+    "positions_of_traders_data": "CFTC, hebdomadaire (positions du mardi), janvier 1986 - decembre 2009, couvrant seulement une partie des contrats (la plupart des matieres premieres et devises, et uniquement les instruments US parmi les actions et obligations).",
+    "frequency": "rendements quotidiens composes en un indice cumule, mais toute l'analyse de signal est mensuelle.",
+    "sources": "principalement Datastream, Bloomberg et diverses bourses ; details en annexe A du papier."
+  },
+
+  "horizon": {
+    "value": "look-back 12 mois, detention 1 mois (strategie de reference 'TSMOM')",
+    "lookback_months": 12,
+    "holding_months": 1,
+    "grid_tested": "look-back et detention balayes independamment sur {1, 3, 6, 9, 12, 24, 36, 48} mois (Table 2) ; regressions predictives sur des retards h = 1 a 60 mois (Fig. 1).",
+    "reason": "Non nul : le papier annonce explicitement son horizon de reference et le grille entierement."
+  },
+
+  "signal_construction": {
+    "value": "Signal binaire sur le signe du rendement en exces passe, position dimensionnee a l'inverse de la volatilite ex ante.",
+    "steps": [
+      "Pour chaque instrument s et chaque mois t, calculer le rendement en exces cumule sur les k mois precedents (k = 12 pour la strategie de reference).",
+      "Prendre le SIGNE de ce rendement : long si positif, short si negatif. Aucun classement transversal n'intervient.",
+      "Estimer la volatilite ex ante sigma_t par une moyenne exponentiellement ponderee des carres des rendements quotidiens retardes, annualisee par le facteur 261, avec un centre de masse des poids fixe a 60 jours ; le parametre delta verifie delta/(1-delta) = 60.",
+      "Utiliser l'estimation de volatilite en t-1 appliquee aux rendements de la date t — le papier declare que c'est precisement pour interdire tout look-ahead.",
+      "Dimensionner la position a 40% / sigma_t, soit une volatilite annualisee ex ante de 40% par position.",
+      "Moyenner a poids egaux sur tous les instruments disponibles a la date t pour obtenir le facteur TSMOM diversifie ; pour h > 1, moyenner les h portefeuilles encore actifs a la maniere de Jegadeesh et Titman (1993), ce qui evite les observations chevauchantes."
+    ],
+    "formula": "r^{TSMOM,s}_{t,t+1} = sign(r^s_{t-12,t}) * (40% / sigma^s_t) * r^s_{t,t+1}",
+    "note": "Le choix de 40% est declare 'inconsequential' par les auteurs ; il est fait pour que le portefeuille equipondere sorte a environ 12% de volatilite annualisee. Une seconde specification, lineaire et non signee, est utilisee pour la decomposition (poids w = (1/N) * r_{t-12,t})."
+  },
+
+  "reported_results": [
+    {
+      "name": "instruments_with_positive_12m_tsmom_profits",
+      "value": 58,
+      "unit": "contrats",
+      "quoted": "but for every asset contract we examine (58 in total).",
+      "note": "Les profits de momentum a 12 mois sont positifs pour chacun des 58 contrats, pas seulement en moyenne."
+    },
+    {
+      "name": "contracts_tsmom_significant_at_5pct",
+      "value": 52,
+      "unit": "contrats",
+      "quoted": "and 52 are statistically different from zero at the 5%",
+      "note": "Citation tronquee a la ligne du texte fourni ; la phrase complete dit que les 58 contrats ont un rendement TSMOM positif et que 52 d'entre eux sont statistiquement differents de zero au seuil de 5%."
+    },
+    {
+      "name": "diversified_tsmom_annual_sharpe_above_one",
+      "value": null,
+      "unit": "ratio de Sharpe annualise",
+      "quoted": "a Sharpe ratio greater than one on an annual basis, or",
+      "note": "Valeur nulle a dessein : le papier annonce une borne ('greater than one'), pas un chiffre. Les ratios de Sharpe par contrat ne sont donnes qu'en figure (Fig. 2), non tabules, et sont declares bruts."
+    },
+    {
+      "name": "tsmom_sharpe_relative_to_equity_market",
+      "value": 2.5,
+      "unit": "multiple",
+      "quoted": "roughly 2.5 times the Sharpe ratio for the equity market",
+      "note": "Rapport annonce entre le Sharpe du portefeuille TSMOM diversifie et celui du portefeuille de marche actions."
+    },
+    {
+      "name": "tsmom_alpha_vs_fama_french_monthly_pct",
+      "value": 1.58,
+      "unit": "% par mois",
+      "quoted": "these factors of about 1.58% per month or 4.75% per",
+      "note": "Alpha de la regression du TSMOM diversifie sur MSCI World, SMB, HML et UMD (Table 3, Panel A, donnees mensuelles)."
+    },
+    {
+      "name": "tsmom_alpha_vs_fama_french_quarterly_pct",
+      "value": 4.75,
+      "unit": "% par trimestre",
+      "quoted": "these factors of about 1.58% per month or 4.75% per",
+      "note": "Meme regression, rendements trimestriels non chevauchants (pour absorber les effets de trading non synchrone entre marches)."
+    },
+    {
+      "name": "tsmom_alpha_vs_fama_french_monthly_tstat",
+      "value": 7.99,
+      "unit": "t-statistique",
+      "quoted": "Table 3, Panel A, ligne mensuelle : t-statistiques (MSCI World 1.89 ; SMB -0.84 ; HML -0.21 ; UMD 6.78 ; intercept 7.99)",
+      "quoted_source": "(t-Stat) (1.89) ( /C0 0.84) ( /C0 0.21) (6.78) (7.99)",
+      "quoted_repair": "table",
+      "note": "Ligne de tableau mise a plat par l'extraction ; le signe moins est rendu par la sequence /C0. Le 7.99 est la t-stat de l'intercept, soit celle de l'alpha de 1.58% par mois."
+    },
+    {
+      "name": "tsmom_alpha_vs_amp_everywhere_monthly_pct",
+      "value": 1.09,
+      "unit": "% par mois",
+      "quoted": "1.09% per month with a t-stat of 5.40 or 2.93% per quarter",
+      "note": "Alpha residuel apres controle par les facteurs value et momentum 'everywhere' d'Asness, Moskowitz et Pedersen (2010), qui sont eux transversaux et diversifies entre classes d'actifs (Table 3, Panel B)."
+    },
+    {
+      "name": "tsmom_alpha_vs_amp_everywhere_monthly_tstat",
+      "value": 5.4,
+      "unit": "t-statistique",
+      "quoted": "1.09% per month with a t-stat of 5.40 or 2.93% per quarter",
+      "spelled_out": "5.40",
+      "note": "Le papier ecrit 5.40 avec un zero final ; spelled_out nomme la lecture 5.40 = 5.4."
+    },
+    {
+      "name": "tsmom_alpha_vs_amp_everywhere_quarterly_pct",
+      "value": 2.93,
+      "unit": "% par trimestre",
+      "quoted": "1.09% per month with a t-stat of 5.40 or 2.93% per quarter",
+      "note": "Meme regression en rendements trimestriels non chevauchants ; t-stat annoncee de 4.12 dans la phrase suivante."
+    },
+    {
+      "name": "tsmom_12m_lookback_1m_holding_alpha_tstat_all_assets",
+      "value": 6.61,
+      "unit": "t-statistique",
+      "quoted": "Table 2, Panel A (toutes classes d'actifs), ligne look-back 12 mois : detention 1 mois 6.61 ; 3 mois 5.60 ; 6 mois 4.44 ; 9 mois 3.69 ; 12 mois 2.85 ; 24 mois 1.68 ; 36 mois 0.66 ; 48 mois 0.46",
+      "quoted_source": "12 6.61 5.60 4.44 3.69 2.85 1.68 0.66 0.46",
+      "quoted_repair": "table",
+      "note": "Cellule (k=12, h=1) de la grille look-back x detention, celle qui sert ensuite de strategie de reference. La grille entiere est publiee : 64 cellules par panel, cinq panels — c'est un compte de tests visible, rare dans la litterature."
+    },
+    {
+      "name": "tsmom_factor_annualized_volatility_pct",
+      "value": 12,
+      "unit": "% par an",
+      "quoted": "an annualized volatility of 12% per year over the sample",
+      "note": "Volatilite realisee du facteur TSMOM equipondere sur 1985-2009, chaque position etant dimensionnee a 40% de volatilite ex ante."
+    },
+    {
+      "name": "tsmom_out_of_sample_sharpe_1966_1985",
+      "value": 1.1,
+      "unit": "ratio de Sharpe annualise",
+      "quoted": "signiﬁcant return and an annualized Sharpe ratio of 1.1,",
+      "note": "Extension hors echantillon demandee par le referee, sur les instruments disponibles avant 1985 — donc un univers plus etroit."
+    },
+    {
+      "name": "tsmom_on_xsmom_beta_all_assets",
+      "value": 0.66,
+      "unit": "beta",
+      "quoted": "0.66 with a t-statistic of 15.17 and R-square of 44%.",
+      "note": "Regression du TSMOM diversifie sur le momentum transversal (XSMOM) applique aux memes actifs : les deux sont lies (R2 de 44%) sans se confondre."
+    },
+    {
+      "name": "tsmom_on_xsmom_alpha_bp_per_month",
+      "value": 76,
+      "unit": "points de base par mois",
+      "quoted": "alpha of 76 basis points per month with a t-statistic of",
+      "note": "Intercept de la meme regression ; la t-stat annoncee juste apres est 5.90. Le momentum transversal n'absorbe donc pas le momentum temporel."
+    },
+    {
+      "name": "tsmom_all_assets_autocovariance_component_monthly_pct",
+      "value": 0.54,
+      "unit": "% par mois",
+      "quoted": "Table 5, Panel B, ligne ALL : decomposition XSMOM (Auto 0.53%, Cross -0.03%, Mean 0.12%, Total 0.61%) et decomposition TSMOM (Auto 0.54%, Mean squared 0.29%, Total 0.83%)",
+      "quoted_source": "ALL 0.53% /C0 0.03% 0.12% 0.61% 0.54% 0.29% 0.83%",
+      "quoted_repair": "table",
+      "note": "Ligne de tableau mise a plat ; le signe moins est rendu par /C0. La composante d'auto-covariance (0.54%) domine le total TSMOM de 0.83% par mois ; la composante lead-lag, qui alimente le momentum transversal, est negative (-0.03%)."
+    },
+    {
+      "name": "umd_loading_on_tsmom_factor",
+      "value": 0.49,
+      "unit": "coefficient de regression",
+      "quoted": "to UMD, which has a positive 0.49 loading on TSMOM and",
+      "note": "UMD est construit sur des actions individuelles americaines, qui ne figurent dans aucun des 58 contrats du TSMOM ; son alpha residuel (-0.28%, t = -0.93) est non significatif."
+    },
+    {
+      "name": "tsmom_avg_pairwise_correlation_within_equities",
+      "value": 0.37,
+      "unit": "correlation",
+      "quoted": "from 0.37 to 0.38 for equities and ﬁxed income futures to",
+      "note": "Correlation moyenne par paires des strategies TSMOM a l'interieur d'une classe d'actifs (Table 4, Panel A) : 0.37 actions, 0.38 obligations, 0.10 matieres premieres, 0.07 devises. Entre classes, les correlations vont de 0.05 a 0.21 et sont toutes superieures a celles des positions longues passives, souvent negatives."
+    },
+    {
+      "name": "correlation_between_contract_sharpe_and_illiquidity",
+      "value": -0.16,
+      "unit": "correlation",
+      "quoted": "Correlation (Sharperatio, Illiquidity) = -0.16",
+      "note": "Annotation de la Fig. 2. L'illiquidite est un rang normalise du volume quotidien en dollars, mesure sur un instantane de juin 2010 — pas une serie temporelle. Le signe negatif suggere que ce sont plutot les contrats LIQUIDES qui portent le plus de momentum temporel."
+    },
+    {
+      "name": "tsmom_quarterly_on_squared_market_return_coefficient",
+      "value": 1.99,
+      "unit": "coefficient de regression",
+      "quoted": "Table 3, Panel C, premiere ligne trimestrielle : coefficient MSCI World -0.01, coefficient MSCI World au carre 1.99",
+      "quoted_source": "Coefﬁcient /C0 0.01 1.99",
+      "quoted_repair": "table",
+      "note": "Regression des rendements TSMOM trimestriels sur le rendement de marche et son carre : le beta de marche est nul, le terme quadratique est positif — profil de paiement en straddle."
+    },
+    {
+      "name": "tsmom_quarterly_on_squared_market_return_tstat",
+      "value": 3.88,
+      "unit": "t-statistique",
+      "quoted": "Table 3, Panel C, premiere ligne trimestrielle : t-statistiques MSCI World -0.17, MSCI World au carre 3.88",
+      "quoted_source": "(t-Stat) ( /C0 0.17) (3.88)",
+      "quoted_repair": "table",
+      "note": "Seule la composante quadratique est significative ; le beta de marche lineaire ne l'est pas."
+    },
+    {
+      "name": "full_tsmom_12m_univariate_predictive_coefficient",
+      "value": 0.019,
+      "unit": "coefficient de regression",
+      "quoted": "Table 6, premiere ligne : coefficient du rendement futures des 12 mois precedents ('Full TSMOM') 0.019, intercept 0.09%, R2 0.6%",
+      "quoted_source": "Coefﬁcient 0.019 0.09% 0.6%",
+      "quoted_repair": "table",
+      "note": "Regression du rendement futures mensuel sur le rendement futures des 12 mois precedents. C'est le resultat le plus proche d'un IC chez nous : une pente predictive univariee, pas un rendement de strategie."
+    },
+    {
+      "name": "full_tsmom_12m_univariate_predictive_tstat",
+      "value": 3.57,
+      "unit": "t-statistique",
+      "quoted": "Table 6, premiere ligne : t-statistiques du coefficient 'Full TSMOM' 3.57 et de l'intercept 1.31",
+      "quoted_source": "t-Stat (3.57) (1.31)",
+      "quoted_repair": "table",
+      "note": "Meme regression que l'entree precedente."
+    },
+    {
+      "name": "full_tsmom_12m_univariate_predictive_r2_pct",
+      "value": 0.6,
+      "unit": "% de R2",
+      "quoted": "Table 6, premiere ligne : coefficient du rendement futures des 12 mois precedents ('Full TSMOM') 0.019, intercept 0.09%, R2 0.6%",
+      "quoted_source": "Coefﬁcient 0.019 0.09% 0.6%",
+      "quoted_repair": "table",
+      "note": "Chiffre decisif pour calibrer une attente : le pouvoir predictif d'un signal TSMOM mensuel est de l'ordre de 0.6% de R2. Les decompositions spot (R2 0.3%) et roll (R2 0.3%) sont du meme ordre."
+    },
+    {
+      "name": "return_persistence_months_before_reversal",
+      "value": 12,
+      "unit": "mois",
+      "quoted": "persistence in returns for one to 12 months that partially reverses over longer horizons,",
+      "note": "Resume de l'abstract : continuation sur un a douze mois, puis retournement PARTIEL — les auteurs y lisent une sous-reaction initiale suivie d'une sur-reaction retardee."
+    },
+    {
+      "name": "number_of_commodity_futures_in_sample",
+      "value": 24,
+      "unit": "contrats",
+      "quoted": "Our data consist of futures prices for 24 commodities,",
+      "note": "Premiere des quatre briques de l'univers : 24 matieres premieres, 12 paires de devises, neuf indices actions, 13 futures obligataires."
+    },
+    {
+      "name": "speculators_profit_at_the_expense_of_hedgers",
+      "value": null,
+      "unit": null,
+      "quoted": "speculators and hedgers, we ﬁnd that speculators proﬁt from time series momentum at",
+      "note": "Resultat qualitatif issu des donnees de positions CFTC : les speculateurs sont positionnes dans le sens de la tendance, reduisent leur exposition au moment ou la tendance se retourne, et la chose est vraie pour tous les contrats sauf le future S&P 500. Aucun chiffre de gain n'est attribue a ce canal."
+    }
+  ],
+
+  "what_is_missing": [
+    "Aucun modele de couts. Les ratios de Sharpe par contrat sont explicitement qualifies de 'gross' dans la legende de la Fig. 2, et aucune hypothese de spread, de commission ou d'impact n'est donnee nulle part. Le seul chiffre operationnel est l'usage de marge, annonce a 'about 5-20%'.",
+    "Aucun IC, aucune correlation de rang, aucun t-stat d'IC. Le papier mesure des alphas de regression, des t-stats de pente et des R2 ; la metrique officielle de La Fabrique n'apparait pas et ne peut pas etre deduite de ce qui est publie.",
+    "Les ratios de Sharpe par contrat ne sont donnes qu'en figure (Fig. 2), sans table : on ne peut pas savoir lequel des 58 contrats porte quel Sharpe.",
+    "Les t-statistiques par retard des Fig. 1 (panels A, B, C) ne sont pas tabulees non plus ; seule la forme de la courbe est lisible.",
+    "La valeur numerique de delta n'est pas donnee — seul le centre de masse (60 jours) l'est. La valeur exacte doit etre rededuite de delta/(1-delta) = 60.",
+    "La regle de roulement des contrats n'est specifiee que par 'typically the nearest or next nearest-to-delivery contract' : ni date de bascule, ni ajustement de prix, ni traitement des jours de non-cotation.",
+    "Aucun multiplicateur, tick, horaire ni fuseau n'est donne pour aucun des 58 contrats — l'annexe A ne donne que les bourses et les fournisseurs de donnees.",
+    "Aucun compte du nombre total de specifications testees. La grille (k, h) de la Table 2 est publiee entierement, ce qui est honnete, mais le papier ne dit jamais combien de variantes ont ete essayees avant de retenir (12, 1).",
+    "Aucun holdout. L'extension 1966-1985 est presentee comme hors echantillon, mais elle a ete faite a la demande d'un referee, donc apres avoir vu les resultats principaux.",
+    "Le lien entre la regression predictive de la Table 6 (R2 de 0.6%) et les alphas de la Table 3 (1.58% par mois, t = 7.99) n'est jamais reconcilie : le lecteur ne sait pas combien de l'alpha vient du signal et combien vient du dimensionnement en volatilite inverse.",
+    "Les rendements en niveau du facteur TSMOM (moyenne, volatilite, Sharpe du portefeuille diversifie) ne sont jamais tabules ; ils ne sont lisibles que via la Fig. 3 en echelle logarithmique."
+  ],
+
+  "transposability": {
+    "what_transfers": "Le motif central — le signe du rendement passe d'un instrument predit son propre rendement futur — est definissable a n'importe quelle frequence et ne demande aucune coupe transversale, donc il tient sur neuf instruments comme sur cinquante-huit. Trois choses de methode transferent telles quelles : (1) l'estimateur de volatilite ex ante, exponentiellement pondere, applique en t-1 aux rendements de t, dont les auteurs disent explicitement qu'il est choisi pour son absence de biais de look-ahead — c'est notre invariant II, ecrit par eux avant nous ; (2) la publication de la grille complete look-back x detention plutot que de sa meilleure cellule, qui est la forme la plus proche d'un compte de tests qu'on trouve dans la litterature ; (3) la decomposition auto-covariance / lead-lag / moyennes, qui dit ou chercher la source d'un signal de tendance et permet de distinguer un effet temporel d'un effet transversal deguise. Le resultat que les contrats les plus liquides portent AUTANT de momentum que les moins liquides (correlation -0.16) transfere aussi : il enleve un argument selon lequel notre univers, restreint aux plus liquides, serait le mauvais endroit ou chercher.",
+    "what_does_not_transfer": [
+      "L'horizon. Tout le papier est mensuel : look-back de 12 mois, detention de 1 mois, 25 ans d'echantillon. Notre univers est intraday. Rien dans le papier ne dit que la structure d'auto-covariance a 12 mois existe a l'echelle de quelques barres, et l'argument des auteurs selon lequel les hautes frequences sont 'contaminated by market microstructure effects such as stale prices' pointe explicitement contre la transposition vers le court terme.",
+      "La diversification. Le Sharpe superieur a 1 vient de la moyenne equiponderee sur 58 contrats faiblement correles (0.07 a 0.38 par paires). Neuf instruments ne peuvent structurellement pas reproduire cette reduction de variance : le chiffre de Sharpe est une propriete de l'univers, pas du signal.",
+      "La metrique. Leurs resultats sont des alphas de regression contre MSCI World, SMB, HML, UMD, GSCI et Barclays Aggregate — tous mensuels et sans equivalent intraday. Notre sortie officielle est un IC. Aucun des chiffres de la Table 2 ou de la Table 3 ne peut servir de cible de replication.",
+      "Les donnees de positions CFTC. Elles sont hebdomadaires, publiees avec retard, et ne couvrent qu'une partie des contrats (uniquement les instruments US parmi les actions et obligations). Toute la section 6 — speculateurs contre couvreurs, VAR, etudes d'evenement — est inaccessible chez nous.",
+      "La decomposition spot / roll yield. Elle exige le prix au comptant et la forme de la courbe des futures ; une serie continue intraday d'un seul contrat ne les porte pas. La Table 6 entiere, qui est pourtant le resultat le plus proche d'un IC, repose sur cette decomposition.",
+      "La periode. 1965-2009, avec une evaluation centree sur 1985-2009, s'arrete sept ans avant le debut de notre tranche pool (2016-01-03). Le regime de microstructure, d'electronification et de vitesse d'execution n'est pas le meme.",
+      "Le dimensionnement a 40% de volatilite ex ante et l'usage de marge de 5-20%. Ce sont des hypotheses de rebalancement mensuel ; a l'intraday elles impliqueraient un rythme de transaction dont le papier ne dit rien.",
+      "Les couts. Les Sharpe sont bruts et le papier n'ouvre jamais la question. A l'horizon mensuel c'est une approximation defendable ; a l'intraday les couts dominent et un signal dont le R2 est de 0.6% ne survivrait pas necessairement a un spread.",
+      "Le lien au momentum transversal (UMD, XSMOM, indices de hedge funds). Il demande un univers d'actions individuelles et des facteurs mensuels publies ; il n'a aucun analogue chez nous."
+    ],
+    "what_aligns_well": "L'univers est fait de futures, et seulement de futures, liquides, choisis explicitement pour eviter la contamination par l'illiquidite et les prix perimes — c'est exactement le critere de notre catalogue. Le signal est trivialement implementable : un signe et une division par une volatilite, sans donnee fondamentale, sans dependance reseau, sans univers auxiliaire ; il se code en quelques lignes contre un Panel qui ne lit pas le futur. L'estimateur de volatilite est deja ecrit sous la forme point-in-time que notre couche de donnees impose. Et la discipline de reporting — grille complete de (k, h), resultats par classe d'actifs, extension hors echantillon — est plus proche de notre registre que la moyenne de la litterature : ce papier publie assez de cellules pour qu'on puisse compter ses propres tests, ce qui en fait une bonne cible pour calibrer ce qu'un compte honnete devrait ressembler."
+  },
+
+  "additional_notes": {
+    "look_ahead_statement": "Les auteurs declarent explicitement se premunir du look-ahead sur l'estimation de volatilite : ils utilisent l'estimation en t-1 appliquee aux rendements de t. C'est une declaration de methode, pas une garantie structurelle — chez nous c'est le Panel qui l'empeche par construction.",
+    "overlapping_observations": "Pour les detentions h > 1, la methodologie Jegadeesh-Titman produit une seule serie mensuelle en moyennant les h portefeuilles actifs, ce qui evite les observations chevauchantes. C'est un point de methode reutilisable si un jour nos horizons se chevauchent.",
+    "robustness_claims_without_numbers": "Plusieurs affirmations de robustesse sont faites sans chiffre publie : resultats 'robustes' sur des instruments plus illiquides (non reportes), resultats 'presque identiques' avec les indices cash au lieu des futures actions, profits 'legerement plus forts' sur le contrat lointain pour les matieres premieres, resultats 'qualitativement similaires' en MCO sans ajustement de volatilite, robustesse a des longueurs de retard VAR entre 12 et 24. Aucune de ces cinq affirmations n'est chiffree.",
+    "extraction_quality": "Le texte fourni est une extraction PDF ou le signe moins est rendu par la sequence /C0, la ligature fi par le caractere unique correspondant, et les tableaux sont mis a plat en lignes de cellules. Les entrees concernees portent quoted_source et quoted_repair."
+  }
+}

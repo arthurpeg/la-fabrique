@@ -1,0 +1,358 @@
+{
+  "fiche_id": "zarattini-2024-profitable-day-trading-us-equity",
+  "written": "2026-09-23",
+  "written_by": "session d'extraction isolee — entree-05",
+  "source": {
+    "authors": "Carlo Zarattini, Andrea Barbon, Andrew Aziz",
+    "title": "A Profitable Day Trading Strategy For The U.S. Equity Market",
+    "year": 2024,
+    "source_url": "https://alexandria.unisg.ch/bitstreams/3c2989c4-688d-4d78-8a71-f02690990d51/download",
+    "pdf": "corpus/pdf/zarattini-2024-profitable-day-trading-us-equity.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": false,
+    "amorce_entry": 5,
+    "note": "Papier de travail date du 16 fevrier 2024, diffuse par SSRN (abstract 4729284) et par le Swiss Finance Institute. Aucune mention d'une revue a comite de lecture dans le texte ; deux des trois auteurs sont affilies a une societe commerciale (Concretum Research) et un a des societes de formation au trading (Peak Capital Trading, Bear Bull Traders), ce qui est un conflit d'interet a garder en tete."
+  },
+  "claim": {
+    "statement": "Un breakout de l'opening range (ORB), pris uniquement dans le sens de la premiere bougie de n minutes, est en moyenne non rentable sur l'ensemble des actions americaines liquides ; il devient fortement rentable lorsqu'on le restreint aux actions dont le volume de l'opening range est anormalement eleve par rapport a sa propre moyenne des 14 derniers jours (Relative Volume >= 100%), et surtout aux 20 plus fortes de la journee. Le desequilibre offre/demande revele par les premieres minutes persisterait alors toute la seance. La rentabilite decroit fortement quand la longueur de l'opening range augmente (5 < 15 < 30, 60 minutes).",
+    "mechanism": "Un catalyseur fondamental (resultats, FDA, M&A, guidance) pousse les institutionnels a repositionner ; ce flux se voit dans un volume d'ouverture anormal, et cree une tendance intraday directionnelle exploitable. Le Relative Volume sert de mesure d'anormalite, le signe de la premiere bougie de mesure de direction.",
+    "quoted": "A stock is considered in play when it shows unusual",
+    "quoted_secondary": "sis is that this imbalance will persist throughout the session, creating exploitable intraday"
+  },
+  "universe": {
+    "description": "Toutes les actions cotees sur les places americaines (NYSE et Nasdaq) du 1er janvier 2016 au 31 decembre 2023, environ 7 000 titres, base exempte de biais du survivant (titres delistes inclus). Sur cet univers, des filtres journaliers point-in-time : prix d'ouverture > 5 $, volume moyen sur 14 jours >= 1 000 000 actions, ATR 14 jours > 0,50 $. La strategie retenue y ajoute Relative Volume >= 100% et ne garde que les 20 plus forts Relative Volume du jour.",
+    "instrument_count": 7000,
+    "period_start": "2016-01-01",
+    "period_end": "2023-12-31",
+    "asset_class": "actions americaines (single names)",
+    "data_sources": "CRSP pour les donnees quotidiennes/univers, IQFeed pour l'intraday ; intraday NON ajuste des splits et dividendes",
+    "quoted": "This universe comprised approximately 7,000 stocks and was free from",
+    "quoted_secondary": "both NYSE and Nasdaq) from January 1, 2016 to December 31, 2023",
+    "quoted_data": "Intraday data for all stocks were obtained from IQFeed."
+  },
+  "horizon": {
+    "value": "intraday — entree au franchissement du range des n premieres minutes (n = 5, 15, 30 ou 60), sortie au stop ou a la cloture de 16:00 ET le meme jour",
+    "holding_period": "moins d'une seance",
+    "quoted": "at the end of the trading session (i.e., 4:00 pm ET).",
+    "note": "Aucune position n'est portee overnight : le profit target est la fin de journee."
+  },
+  "signal_construction": {
+    "value": "1) A 9:30 ET, observer la premiere bougie de n minutes (n = 5 dans le cas principal). 2) Si elle est haussiere (cloture > ouverture), n'autoriser qu'un stop d'achat au plus haut du range ; si elle est baissiere, n'autoriser qu'un stop de vente au plus bas du range ; si doji (open = close), pas d'ordre. 3) Calculer RelativeVolume(t,j) = volume de l'opening range du jour t divise par la moyenne des volumes d'opening range des 14 jours precedents pour le meme titre. 4) Filtrer : prix d'ouverture > 5 $, volume moyen 14 jours >= 1 000 000 actions, ATR 14 jours > 0,50 $, RelativeVolume >= 100%. 5) Classer et ne retenir que les 20 plus forts RelativeVolume du jour. 6) Stop loss a 10% de l'ATR 14 jours depuis le prix d'entree ; sortie a la cloture sinon. 7) Dimensionner pour que le stop coute 1% du capital alloue a la position, avec un levier maximum de 4x.",
+    "relative_volume_formula_quoted": "RelativeV olumet,j = ORV olumet,j",
+    "relative_volume_note": "L'extraction du PDF disloque la formule : le numerateur et le denominateur sont mis a plat sur cinq lignes successives (\"RelativeV olumet,j = ORV olumet,j\", puis \"1\", \"14\", \"P14\", \"i=1 ORV olumet-1,j\"). Lue sur la page, la formule est le volume d'opening range du jour t divise par la moyenne des volumes d'opening range des 14 jours precedents du meme titre.",
+    "quoted_definition": "where ORV olumet,j represents the volume traded in stock j during the first 5-minutes",
+    "quoted_direction": "our system would only take a short position.",
+    "quoted_doji": "(open = close) forming in the first 5 minutes, no order was placed.",
+    "quoted_filters": [
+      "The opening price had to be above $5.",
+      "The average trading volume over the previous 14 days had to be at least 1,000,000",
+      "The ATR over the previous 14 days had to be more than $0.50.",
+      "The Relative Volume had to be at least 100%.",
+      "Trade the stocks with the top 20 Relative Volume."
+    ],
+    "quoted_stop": "In case the order was triggered, we placed a stop loss order at a 10% ATR distance from",
+    "quoted_sizing": "incurred on the capital deployed for that position would be 1%. We also set a maximum",
+    "point_in_time": "Le signal est causal par construction : tout ce qu'il utilise (ATR 14 jours, volume moyen 14 jours, volume et signe de l'opening range du jour) est connu a l'instant de l'entree. Les auteurs revendiquent explicitement l'absence de hindsight dans les filtres."
+  },
+  "cost_model": {
+    "commissions_usd_per_share": 0.0035,
+    "quoted": "starting capital of $25,000 and incorporated a commission cost of $0.0035 per share",
+    "slippage": null,
+    "slippage_reason": "le papier ne modelise aucun slippage ni spread : les ordres stop sont supposes executes au niveau exact du plus haut/plus bas du range, ce qui est optimiste pour un ordre stop sur un titre en volume anormal",
+    "borrow_cost": null,
+    "borrow_cost_reason": "la moitie des trades sont des ventes a decouvert sur des titres en actualite ; aucun cout d'emprunt ni contrainte de disponibilite du titre n'est mentionne",
+    "starting_capital_usd": 25000,
+    "max_leverage": 4,
+    "quoted_leverage": "leverage constraint at 4x, in accordance with the majority of US FINRA-regulated bro-"
+  },
+  "reported_results": [
+    {
+      "name": "orb_base_total_net_return_pct",
+      "value": 29,
+      "unit": "%",
+      "quoted": "ORB Base | Total Return 29% | IRR 3.2% | Volatility 6.6% | Sharpe Ratio 0.48 | Hit Ratio 41.4% | MDD 13% | Worst Day -0.8% | Alpha 3.3% | Beta 0.01",
+      "quoted_source": "ORB Base 29% 3.2% 6.6% 0.48 41.4% 13% -0.8% 3.3% 0.01",
+      "quoted_repair": "table",
+      "note": "Table 1 et Table 2, strategie de base sans filtre de Relative Volume, 2016-2023, net de commissions. Le texte courant annonce ailleurs 30% (\"appreciated by 30%, resulting in a net profit of only $7,500\") : les deux chiffres coexistent dans le papier, la table dit 29%."
+    },
+    {
+      "name": "orb_base_irr_pct",
+      "value": 3.2,
+      "unit": "% par an",
+      "quoted": "soared from 3.2% in the ORB Base to an impressive 41.6%.",
+      "note": "Rendement annualise de la strategie de base sur tout l'univers."
+    },
+    {
+      "name": "orb_base_annual_volatility_pct",
+      "value": 6.6,
+      "unit": "% par an",
+      "quoted": "mately 6.6%. This resulted in a Sharpe Ratio of 0.48, which was significantly lower than",
+      "note": "La citation commence au milieu du mot \"approximately\", coupe par la mise en page de l'extraction."
+    },
+    {
+      "name": "orb_base_sharpe",
+      "value": 0.48,
+      "unit": null,
+      "quoted": "This resulted in a Sharpe Ratio of 0.48, which was significantly lower than",
+      "note": "Sharpe sans taux sans risque (voir what_is_missing)."
+    },
+    {
+      "name": "orb_base_hit_ratio_pct",
+      "value": 41.4,
+      "unit": "%",
+      "quoted": "ORB Base | Total Return 29% | IRR 3.2% | Volatility 6.6% | Sharpe Ratio 0.48 | Hit Ratio 41.4% | MDD 13% | Worst Day -0.8% | Alpha 3.3% | Beta 0.01",
+      "quoted_source": "ORB Base 29% 3.2% 6.6% 0.48 41.4% 13% -0.8% 3.3% 0.01",
+      "quoted_repair": "table",
+      "note": "Taux de jours gagnants, pas de trades gagnants — la table porte sur des rendements de portefeuille quotidiens."
+    },
+    {
+      "name": "orb_base_mdd_pct",
+      "value": 13,
+      "unit": "%",
+      "quoted": "(MDD) was only 13%, compared to the S&P 500’s MDD of 34% within the same time",
+      "note": "Drawdown maximal de la strategie de base."
+    },
+    {
+      "name": "orb_base_worst_day_pct",
+      "value": -0.8,
+      "unit": "%",
+      "quoted": "performance was notably better, with a maximum loss of only -0.8% in a single day, com-",
+      "note": "Pire journee de la strategie de base, contre -10,9% pour le S&P 500 le 16 mars 2020."
+    },
+    {
+      "name": "orb_base_alpha_annual_pct",
+      "value": 3.26,
+      "unit": "% par an",
+      "quoted": "an alpha of 3.26% per annum represented the profit",
+      "note": "Alpha d'une regression a un seul facteur (rendements quotidiens contre S&P 500). Aucune t-stat n'est donnee. La Table 1 arrondit a 3.3%."
+    },
+    {
+      "name": "orb_base_beta",
+      "value": 0.01,
+      "unit": null,
+      "quoted": "ORB Base | Total Return 29% | IRR 3.2% | Volatility 6.6% | Sharpe Ratio 0.48 | Hit Ratio 41.4% | MDD 13% | Worst Day -0.8% | Alpha 3.3% | Beta 0.01",
+      "quoted_source": "ORB Base 29% 3.2% 6.6% 0.48 41.4% 13% -0.8% 3.3% 0.01",
+      "quoted_repair": "table",
+      "note": "Beta quasi nul contre S&P 500 : c'est l'argument de decorrelation du papier."
+    },
+    {
+      "name": "orb_relvol_top20_total_net_return_pct",
+      "value": 1637,
+      "unit": "%",
+      "quoted": "to approximately $435,000, equating to an extraordinary total net return of 1,637%.",
+      "note": "Resultat principal : ORB 5 minutes restreint aux 20 plus forts Relative Volume, 2016-2023, net de commissions, 25 000 $ de capital initial."
+    },
+    {
+      "name": "orb_relvol_top20_irr_pct",
+      "value": 41.6,
+      "unit": "% par an",
+      "quoted": "soared from 3.2% in the ORB Base to an impressive 41.6%.",
+      "note": "Rendement annualise de la strategie filtree."
+    },
+    {
+      "name": "orb_relvol_top20_annual_volatility_pct",
+      "value": 14.8,
+      "unit": "% par an",
+      "quoted": "ORB + Rel Vol | Total Return 1,637% | IRR 41.6% | Volatility 14.8% | Sharpe Ratio 2.81 | Hit Ratio 48.4% | MDD 12% | Worst Day -1.61% | Alpha 35.8% | Beta 0.00",
+      "quoted_source": "ORB + Rel Vol 1,637% 41.6% 14.8% 2.81 48.4% 12% -1.61% 35.8% 0.00",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "orb_relvol_top20_sharpe",
+      "value": 2.81,
+      "unit": null,
+      "quoted": "over 1,600%, with a Sharpe ratio of 2.81, and an annualized alpha of 36%, significantly",
+      "note": "Chiffre phare du papier ; a comparer aux 0,48 de la strategie de base sur le meme univers et la meme periode."
+    },
+    {
+      "name": "orb_relvol_top20_hit_ratio_pct",
+      "value": 48.4,
+      "unit": "%",
+      "quoted": "ORB + Rel Vol | Total Return 1,637% | IRR 41.6% | Volatility 14.8% | Sharpe Ratio 2.81 | Hit Ratio 48.4% | MDD 12% | Worst Day -1.61% | Alpha 35.8% | Beta 0.00",
+      "quoted_source": "ORB + Rel Vol 1,637% 41.6% 14.8% 2.81 48.4% 12% -1.61% 35.8% 0.00",
+      "quoted_repair": "table",
+      "note": "Moins d'un jour gagnant sur deux : le gain vient de l'asymetrie gain/perte (stop serre a 10% ATR, sortie a la cloture), pas du taux de reussite."
+    },
+    {
+      "name": "orb_relvol_top20_mdd_pct",
+      "value": 12,
+      "unit": "%",
+      "quoted": "ORB + Rel Vol | Total Return 1,637% | IRR 41.6% | Volatility 14.8% | Sharpe Ratio 2.81 | Hit Ratio 48.4% | MDD 12% | Worst Day -1.61% | Alpha 35.8% | Beta 0.00",
+      "quoted_source": "ORB + Rel Vol 1,637% 41.6% 14.8% 2.81 48.4% 12% -1.61% 35.8% 0.00",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "orb_relvol_top20_worst_day_pct",
+      "value": -1.61,
+      "unit": "%",
+      "quoted": "ORB + Rel Vol | Total Return 1,637% | IRR 41.6% | Volatility 14.8% | Sharpe Ratio 2.81 | Hit Ratio 48.4% | MDD 12% | Worst Day -1.61% | Alpha 35.8% | Beta 0.00",
+      "quoted_source": "ORB + Rel Vol 1,637% 41.6% 14.8% 2.81 48.4% 12% -1.61% 35.8% 0.00",
+      "quoted_repair": "table",
+      "note": "Pire journee degradee par rapport a la base (-0,8%), effet de concentration sur 20 titres."
+    },
+    {
+      "name": "orb_relvol_top20_alpha_annual_pct",
+      "value": 36,
+      "unit": "% par an",
+      "quoted": "strikingly, the alpha surged to an impressive 36% per annum.",
+      "note": "Table 2 donne 35.8%. Aucune t-stat, aucune erreur standard, un seul facteur (S&P 500)."
+    },
+    {
+      "name": "orb_relvol_top20_beta",
+      "value": 0.0,
+      "unit": null,
+      "quoted": "ORB + Rel Vol | Total Return 1,637% | IRR 41.6% | Volatility 14.8% | Sharpe Ratio 2.81 | Hit Ratio 48.4% | MDD 12% | Worst Day -1.61% | Alpha 35.8% | Beta 0.00",
+      "quoted_source": "ORB + Rel Vol 1,637% 41.6% 14.8% 2.81 48.4% 12% -1.61% 35.8% 0.00",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "sp500_total_return_pct",
+      "value": 198,
+      "unit": "%",
+      "quoted": "outperforming the passive S&P 500 return of 198% over the same period.",
+      "note": "Benchmark buy-and-hold, meme periode 2016-2023."
+    },
+    {
+      "name": "sp500_sharpe",
+      "value": 0.78,
+      "unit": null,
+      "quoted": "the 0.78 Sharpe ratio for the S&P 500."
+    },
+    {
+      "name": "sp500_mdd_pct",
+      "value": 34,
+      "unit": "%",
+      "quoted": "(MDD) was only 13%, compared to the S&P 500’s MDD of 34% within the same time"
+    },
+    {
+      "name": "avg_pnl_per_trade_relvol_below_100pct_in_R",
+      "value": -0.02,
+      "unit": "R (unites de risque)",
+      "quoted": "5-minute ORB trades was notably low at -0.02R.",
+      "note": "C'est le resultat le plus transposable du papier : le PnL moyen par trade est negatif quand le volume de l'opening range est sous sa moyenne 14 jours. Net de commissions."
+    },
+    {
+      "name": "avg_pnl_per_trade_relvol_above_100pct_in_R",
+      "value": 0.08,
+      "unit": "R (unites de risque)",
+      "quoted": "to 0.08R per trade when the Relative Volume exceeded 100%.",
+      "note": "Meme population, seul le filtre de Relative Volume change : le signe du PnL moyen bascule."
+    },
+    {
+      "name": "avg_pnl_per_trade_relvol_above_30x_in_R",
+      "value": 0.38,
+      "unit": "R (unites de risque)",
+      "quoted": "soared to 0.38R.",
+      "note": "Monotonie revendiquee de la relation Relative Volume / PnL (Figure 4). Le nombre de trades par bucket n'est pas donne, donc aucune erreur standard n'est calculable."
+    },
+    {
+      "name": "relvol_top_bucket_threshold_pct",
+      "value": 3000,
+      "unit": "%",
+      "quoted": "Relative Volume of over 30x (or more than 3,000%), the average profitability per trade",
+      "note": "Seuil du bucket extreme de la Figure 4 ; les auteurs notent eux-memes que ce bucket est trop rare pour constituer une strategie."
+    },
+    {
+      "name": "orb_15m_relvol_total_return_pct",
+      "value": 272,
+      "unit": "%",
+      "quoted": "15m-ORB + Rel Vol | Total Return 272% | IRR 17.4% | Volatility 12.2% | Sharpe Ratio 1.43 | Hit Ratio 44.7% | MDD 11% | Alpha 16.9% | Beta -0.01",
+      "quoted_source": "15m-ORB + Rel Vol 272% 17.4% 12.2% 1.43 44.7% 11% 16.9% -0.01",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "orb_15m_relvol_sharpe",
+      "value": 1.43,
+      "unit": null,
+      "quoted": "15m-ORB + Rel Vol | Total Return 272% | IRR 17.4% | Volatility 12.2% | Sharpe Ratio 1.43 | Hit Ratio 44.7% | MDD 11% | Alpha 16.9% | Beta -0.01",
+      "quoted_source": "15m-ORB + Rel Vol 272% 17.4% 12.2% 1.43 44.7% 11% 16.9% -0.01",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "orb_30m_relvol_sharpe",
+      "value": 0.21,
+      "unit": null,
+      "quoted": "30m-ORB + Rel Vol | Total Return 21% | IRR 2.3% | Volatility 11.1% | Sharpe Ratio 0.21 | Hit Ratio 42.4% | MDD 35% | Alpha 2.8% | Beta 0.01",
+      "quoted_source": "30m-ORB + Rel Vol 21% 2.3% 11.1% 0.21 42.4% 35% 2.8% 0.01",
+      "quoted_repair": "table",
+      "note": "Effondrement a 30 minutes : Sharpe 0,21 et MDD 35%, alors que la meme regle a 5 minutes donne 2,81 et 12%. C'est la fragilite la plus voyante du papier."
+    },
+    {
+      "name": "orb_60m_relvol_sharpe",
+      "value": 0.4,
+      "unit": null,
+      "quoted": "60m-ORB + Rel Vol | Total Return 39% | IRR 4.1% | Volatility 10.2% | Sharpe Ratio 0.40 | Hit Ratio 42.3% | MDD 21% | Alpha 4.4% | Beta 0.01",
+      "quoted_source": "60m-ORB + Rel Vol 39% 4.1% 10.2% 0.40 42.3% 21% 4.4% 0.01",
+      "quoted_repair": "table",
+      "note": "La decroissance n'est pas monotone : 60 minutes fait mieux que 30 minutes, ce que le papier ne commente pas."
+    },
+    {
+      "name": "orb_combo_all_timeframes_sharpe",
+      "value": 1.99,
+      "unit": null,
+      "quoted": "COMBO | Total Return 234% | IRR 15.8% | Volatility 7.9% | Sharpe Ratio 1.99 | Hit Ratio 47.3% | MDD 7% | Alpha 15.0% | Beta 0.00",
+      "quoted_source": "COMBO 234% 15.8% 7.9% 1.99 47.3% 7% 15.0% 0.00",
+      "quoted_repair": "table",
+      "note": "Portefeuille equipondere des quatre horizons. Sharpe intermediaire, mais MDD de 7%, le plus bas de toutes les variantes."
+    },
+    {
+      "name": "orb_combo_all_timeframes_total_return_pct",
+      "value": 234,
+      "unit": "%",
+      "quoted": "COMBO | Total Return 234% | IRR 15.8% | Volatility 7.9% | Sharpe Ratio 1.99 | Hit Ratio 47.3% | MDD 7% | Alpha 15.0% | Beta 0.00",
+      "quoted_source": "COMBO 234% 15.8% 7.9% 1.99 47.3% 7% 15.0% 0.00",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "universe_size_stocks",
+      "value": 7000,
+      "unit": "titres",
+      "quoted": "This universe comprised approximately 7,000 stocks and was free from",
+      "note": "Taille de l'univers avant filtres ; le nombre de titres eligibles par jour n'est pas donne."
+    },
+    {
+      "name": "prior_paper_tqqq_orb_total_return_pct",
+      "value": 1484,
+      "unit": "%",
+      "quoted": "1,484% between 2016 and 2023, while a passive investment in the QQQ ETF would have",
+      "note": "Resultat d'un papier anterieur des memes auteurs [23], sur TQQQ, meme periode 2016-2023. Cite ici pour montrer que cette periode a deja ete travaillee par les auteurs avant le present papier : le chiffre de 1 637% n'est pas une premiere exploration de l'echantillon."
+    }
+  ],
+  "what_is_missing": [
+    "Inference statistique : aucune t-stat, aucune erreur standard, aucun intervalle de confiance nulle part dans le papier. Les alphas (3,26% et 36% par an) sont annonces sans leur significativite. Aucun test de robustesse par sous-periode.",
+    "Nombre de trades : il n'est jamais donne, ni par strategie ni par bucket de Relative Volume. Les moyennes de PnL en R de la Figure 4 sont donc invalidables.",
+    "Donnees de la Figure 4 : les bornes des buckets de Relative Volume ne sont pas tabulees ; seuls trois points sont cites en prose (-0,02R, 0,08R, 0,38R).",
+    "Hors echantillon : aucun decoupage in-sample / out-of-sample, aucun holdout. Les annees 2016-2023 servent a la fois a constater la relation Relative Volume / PnL et a mesurer la performance de la strategie qui l'exploite. Les auteurs revendiquent la robustesse par argument et non par mesure — le papier ecrit mot pour mot : \"were minimal and based on economic rationale rather than retrospective optimization,\".",
+    "Comptage des essais : quatre horizons, plusieurs seuils de Relative Volume, un top-20 non justifie, un stop a 10% de l'ATR repris d'un papier anterieur — aucun compte des essais n'est tenu. Le choix de 20 titres et de 10% ATR n'est explique nulle part.",
+    "Execution : aucun slippage, aucun spread, aucune modelisation du remplissage des ordres stop. Sur un titre dont le volume d'ouverture fait 30x sa moyenne, l'hypothese d'execution au niveau exact du plus haut du range est la plus optimiste possible.",
+    "Couts de la vente a decouvert : aucun cout d'emprunt de titres ni contrainte de disponibilite, alors que la moitie des positions sont des ventes a decouvert sur des titres en actualite — precisement ceux qui sont chers ou impossibles a emprunter.",
+    "Suspensions et trous de cotation : le traitement des suspensions, des ouvertures retardees et des trous de liquidite n'est pas decrit ; ce sont des evenements frequents sur les titres a fort Relative Volume.",
+    "Taux sans risque : il est exclu des regressions et des Sharpe, choix assume en note de bas de page — \"For the purposes of simplicity, the risk-free rate was not included in the regression analysis.\" — mais qui rend les Sharpe non comparables a ceux d'autres travaux.",
+    "Explication du resultat principal : les auteurs reconnaissent ne pas savoir pourquoi le 5 minutes surclasse les autres horizons — \"The reason for the 5-minute ORB’s superior performance is unclear and warrants\" further investigation.",
+    "Conflit d'interet : aucune declaration, alors que deux affiliations sur quatre sont des societes vendant de la formation ou de la recherche au trading de detail."
+  ],
+  "transposability": {
+    "what_transfers": "Le motif central, et lui seul : conditionner un signal de breakout intraday a l'anormalite du volume de la fenetre d'ouverture, mesuree comme un ratio au propre passe recent de l'instrument (volume de la fenetre sur moyenne des 14 memes fenetres precedentes). Ce ratio est sans unite, sans dimension, calculable point-in-time sur n'importe quel instrument ayant une session et un volume, donc sur nos neuf futures. La bascule de signe du PnL moyen de part et d'autre de 100% (-0,02R contre 0,08R) est la forme testable : elle dit que le Relative Volume est un conditionneur de regime, pas un predicteur de direction. Transferent aussi : l'idee que le signe de la premiere bougie porte la direction et que le volume porte la confiance ; l'horizon intraday sans position overnight ; la normalisation du risque par l'ATR, qui rend les instruments comparables entre eux ; et le fait, mesure ici, que l'avantage s'effondre quand on allonge la fenetre d'ouverture — ce qui, chez nous, est une hypothese de regime a preenregistrer avant mesure, pas un acquis.",
+    "what_does_not_transfer": [
+      "La selection transversale des 20 plus forts Relative Volume du jour : elle suppose des milliers de candidats quotidiens. Avec neuf instruments, un 'top 20' n'existe pas, et tout classement transversal degenere. Le filtre doit devenir un seuil en serie temporelle par instrument, ce qui n'est pas la meme regle et ne herite d'aucun des chiffres du papier.",
+      "Le concept meme de Stock in Play : il repose sur un catalyseur fondamental mono-nom (resultats, FDA, M&A, changement de direction). Un future sur indice, sur taux ou sur energie n'a pas de conseil d'administration ; son catalyseur est macro, partage par tout le complexe, donc non idiosyncratique — le mecanisme economique invoque par les auteurs n'a pas d'analogue direct.",
+      "Les filtres d'univers en dollars et en actions : prix > 5 $, volume moyen >= 1 000 000 actions, ATR > 0,50 $. Ces seuils sont calibres sur le nuage des actions americaines ; transposes tels quels a des futures ils n'ont aucun sens (un contrat n'a pas de prix par action, son volume se compte en contrats de valeur notionnelle tres variable).",
+      "Le modele de couts : 0,0035 $ par action. Chez nous le cout est par contrat, plus un spread en ticks ; la conversion n'est pas un changement d'unite mais un changement de structure, et le papier ne donne ni le nombre de trades ni la taille moyenne de position qui permettraient de la refaire.",
+      "L'ouverture a 9:30 ET comme evenement unique et net : nos futures cotent quasiment en continu. 'L'opening range' doit etre redefini (ouverture du cash, ouverture de session, reprise apres maintenance), et ce choix est une decision structurante, pas un detail d'implementation.",
+      "La metrique : le papier juge en rendement net, Sharpe, alpha contre S&P 500 et PnL en R. Notre harnais juge en IC. Aucun des chiffres de la Table 1, 2 ou 3 ne peut etre compare a une sortie de notre harnais ; ils ne peuvent servir que de direction attendue, jamais de cible a repliquer.",
+      "La diversification par le nombre : le Sharpe de 2,81 s'appuie sur 20 positions decorrelees par jour sur des catalyseurs independants. Neuf instruments largement correles par le macro ne peuvent pas reproduire cette reduction de variance, meme si le signal par instrument avait le meme edge.",
+      "L'absence de biais du survivant comme argument de qualite : elle ne concerne que des actions delistables. Sur nos futures, le sujet est le raccordement des contrats (roll), que le papier n'aborde evidemment pas.",
+      "La vente a decouvert symetrique : gratuite et sans contrainte sur un future, mais dans le papier elle porte un cout d'emprunt non modelise — donc la moitie des trades du papier sont mesures avec un biais favorable qui, chez nous, n'existe pas. La comparaison des deux cotes n'est pas transposable en l'etat.",
+      "Le levier 4x plafonne par la reglementation FINRA : contrainte reglementaire propre au courtage actions de detail americain, sans equivalent sur des futures ou le levier vient du deposit initial."
+    ],
+    "what_aligns_well": "La periode 2016-01-01 / 2023-12-31 couvre exactement notre tranche pool (2016-01-03 -> 2023-12-31) : ce papier a ete ecrit sur des annees que nous pouvons travailler, et il ne touche pas notre holdout — ce qui est une bonne nouvelle pour nous, et une mauvaise pour lui, puisque rien dans le papier n'a jamais ete teste hors de cette fenetre. Le signal est journalier, une observation par instrument et par jour, ce qui est la cadence naturelle d'un IC en coupe. La construction est causale par nature : rien dans le Relative Volume, l'ATR 14 jours ou le signe de la premiere bougie ne regarde apres l'instant de decision — l'invariant II est respecte par construction du signal lui-meme, sans vigilance. Les donnees requises sont des barres intraday de volume et de prix, exactement ce que notre couche Panel expose. Enfin, la forme du resultat le plus utile est deja celle d'un conditionnement (PnL moyen selon un bucket de Relative Volume), donc directement exprimable en hypothese de regime au sens de l'etape 05."
+  },
+  "author_acceptance_criteria": {
+    "value": "Aucun critere d'acceptation chiffre n'est pose avant mesure. Le papier conclut a la robustesse par un argument de parcimonie ('parameters were minimal and based on economic rationale rather than retrospective optimization') et non par un test. Il n'y a ni hypothese preenregistree, ni seuil annonce a l'avance, ni compte des essais.",
+    "reason": "Signale explicitement parce que c'est la difference la plus nette entre ce papier et le protocole de La Fabrique : une conclusion de robustesse fondee sur une intention, pas sur une mesure."
+  },
+  "implementability_notes": {
+    "value": "Le signal transposable se reduit a une fonction courte et sans etat : ratio du volume de la fenetre d'ouverture a la moyenne des 14 memes fenetres precedentes, signe de la premiere bougie, normalisation par l'ATR 14 jours. Aucune donnee externe, aucune donnee fondamentale, aucun acces reseau, aucun univers a reconstituer. Les donnees necessaires sont des barres intraday de prix et de volume. Le point de conception non tranche par le papier, et qui decide de tout chez nous, est la definition de l'ouverture sur un instrument cotant en continu.",
+    "reason": null
+  }
+}
