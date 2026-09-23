@@ -106,6 +106,22 @@ qui n'ont jamais eu lieu est aussi faux qu'un dénominateur absent »*.
 utile : un automate dont on répare les sorties à la main n'est pas un automate,
 et la phase 09 en a besoin trente à cinquante fois.
 
+**`S5` est nécessaire, pas suffisante — et c'est mesuré.** En croisant les trois
+signaux écrits à la main avec les dix fiches, `S5` **refuse 12 appariements sur
+30, soit 40 %**. Elle en laisse donc passer 60 %, dont les mauvais : le signal
+Heston passe `S5` contre la fiche Lou (2019), qui n'a rien à voir.
+
+La raison n'est pas réparable, et il vaut mieux l'écrire que la poursuivre : deux
+papiers d'un même domaine **partagent leurs paramètres**. `30` minutes est la
+demi-heure de Gao, le décalage de Heston et la fenêtre de Patton & Sheppard à la
+fois. Une constante juste pour le mauvais papier reste une constante juste.
+
+Ce que `S5` attrape réellement, et que rien d'autre n'attrapait, c'est un
+paramètre **inventé** — absent de toute recette. C'est exactement l'interdit
+constitutionnel, et c'est tout ce qu'une vérification de fidélité peut promettre
+sans étalon. Pousser `S5` plus loin la transformerait en vérification de
+*pertinence*, qui par la présente décision n'a pas de juge automatique.
+
 **Ce que ce juge ne saura PAS faire, et c'est écrit ici.** Il ne dira pas si le
 signal est *le bon*. Un codeur qui produirait un signal fidèle à une fiche
 creuse, ou fidèle à un aspect secondaire du papier, passerait les six
@@ -131,7 +147,7 @@ dénominateur qu'en phase 09.
 
 | Point | Échéance |
 |---|---|
-| **La liste close des constantes admissibles** — son contenu exact se fixera en écrivant le juge, sur les trois signaux existants qui servent de cas connus | à l'écriture de `score_signal.py` |
+| ~~**La liste close des constantes admissibles**~~ — **fixée** le 2026-09-23 : `CONVENTIONS` = {0, 1, -1, 2}, `DU_DEPOT` = {60, 24, 9}, `CHAMPS_RECETTE` = les quatre champs où vit la recette, `MODULES_DU_DEPOT` = {`_common.py`}. `30` en est **exclu** — voir journal | close, l'élargir est une décision |
 | **La calibration sur Baltussen** — impossible tant que l'entrée 2 n'est pas fichée. C'est `G1` qui la débloque | après `G1` |
 | **Gao, entrée 1** — étalon désigné par `D06` et devenu inatteignable. `D06` n'est pas rouverte ici : si une copie libre réapparaît, la calibration se fera sur deux sujets au lieu d'un | si l'entrée 1 redevient atteignable |
 | **Que faire d'un signal qui passe les six conditions mais dont la fiche est creuse** — la question de la pertinence, renvoyée à la phase 09 comme `D16` l'a fait | phase 09 |
@@ -144,3 +160,33 @@ dénominateur qu'en phase 09.
 | # | Date | Signal | S1–S6 | Verdict |
 |---|---|---|---|---|
 | — | 2026-09-23 | décision écrite, aucun codeur n'existe | — | seuil posé, juge à écrire |
+| — | 2026-09-23 | `scripts/score_signal.py` écrit, 25/25 fautes fabriquées refusées | — | juge en place |
+| — | 2026-09-23 | `S5` mesurée : 3 signaux × 10 fiches, **refuse 12/30 = 40 %** | — | nécessaire, pas suffisante — écrit au § Pourquoi |
+
+## Journal des calibrations de la liste close
+
+*Ce que les cas réels ont forcé à changer, et pourquoi. `L18` : avant d'élargir
+une liste close, chercher si la cause n'est pas ailleurs.*
+
+**2026-09-23 — `_common.py` exempté, plutôt que `24` ajouté à `DU_DEPOT`.**
+`S5` signalait `signals/_common.py:74` pour la constante `24` dans
+`(end_minutes - minutes) % (24 * 60)`. La cause n'était pas la liste mais le
+**périmètre** : `_common.py` est du dépôt, écrit à la main, et n'est pas la
+sortie du codeur. D'où `MODULES_DU_DEPOT`. Le trou apparent — un codeur qui
+cacherait ses paramètres dans un utilitaire partagé — est fermé ailleurs : le
+codeur produit exactement un module, et toucher un fichier du dépôt casse `S6`.
+
+**2026-09-23 — `30` RETIRÉ de `DU_DEPOT`, et la recherche restreinte à quatre
+champs.** `S5` passait contre *n'importe quelle* fiche. Mesuré plutôt que
+supposé, pour deux causes cumulées :
+
+- une fiche entière porte **41 à 194 nombres distincts** — `reported_results`
+  est plein de t-stats, de Sharpes et de tailles d'échantillon qui ne
+  paramètrent aucun code — contre **2 à 25** pour `signal_construction`. Sur la
+  seule fiche Heston, **19 des 101 entiers de 0 à 100** s'y trouvaient par
+  hasard. D'où `CHAMPS_RECETTE` ;
+- `30` était exempté comme horizon de grille (`D01` §2). Or c'est aussi le
+  **seul paramètre** du signal de référence Gao. L'exempter rendait invisible
+  exactement ce que `S5` existe pour voir. Un horizon légitime se retrouve dans
+  le champ `horizon` de la fiche, qui est fouillé — l'exemption était inutile
+  autant que nuisible.
