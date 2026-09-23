@@ -73,10 +73,73 @@ Répartition obtenue : `methodology` 590, `other` 448, `results` 420, `intro`
 | embeddings | **aucun** — `NULL`, en attente d'un modèle |
 | taille | ~9,8 Mo |
 
-La recherche **plein texte fonctionne immédiatement** : le `tsvector` est une
-colonne générée. La **vectorielle attend des embeddings** — `vector_search` et
-la moitié sémantique de `hybrid_search` ne renvoient rien tant que la colonne
-est `NULL`.
+## Les embeddings — locaux et gratuits
+
+```bash
+python vectordb/embed.py --dry-run   # ce qu'il ferait
+python vectordb/embed.py             # calcule et écrit, reprenable
+```
+
+`BAAI/bge-base-en-v1.5` via `fastembed` : **768 dimensions**, ONNX sur
+processeur, **pas de `torch`**, 0,21 Go, licence MIT. Aucune clé, aucun coût,
+aucun réseau après le téléchargement du modèle.
+
+**Pourquoi 768 et pas 1536.** Vérifié plutôt que supposé : `fastembed` offre
+`[256, 384, 512, 768, 1024]`, et **aucun modèle libre ne fait 1 536** — ce
+chiffre appartient à OpenAI. Le choix était donc payer une clé ou migrer la
+colonne. Migrer tant qu'elle était **vide** ne coûtait rien ; après coup il
+aurait fallu tout recalculer.
+
+| | 1536 | **768** |
+|---|---|---|
+| un vecteur | 6 144 o | **3 072 o** |
+| index HNSW | référence | **~2× plus léger** |
+| coût | ~0,02 $ + clé | **0 €** |
+
+La qualité ne suit **pas** la dimension mais l'entraînement :
+`bge-base-en-v1.5` est entraîné pour la **récupération documentaire**, là où
+`text-embedding-3-small` est généraliste.
+
+Mesuré : **1 594 morceaux en 14,4 min**, ~1,7 par seconde.
+
+### Ce que ça achète, mesuré sur le corpus
+
+```
+« carry commodity futures roll yield »
+   plein texte  ->  0 résultat      (sémantique ET : les 4 mots jamais ensemble)
+   vectorielle  ->  0.768  « Carry » (Koijen)
+```
+
+### Le modèle est ANGLAIS
+
+| requête | similarité | papier |
+|---|---|---|
+| 🇫🇷 « rendement de la première demi-heure… » | 0,477 | **faux** |
+| 🇬🇧 « the first half-hour return predicts… » | **0,733** | juste |
+| 🇫🇷 « primes de risque sur les annonces… » | 0,565 | **faux** |
+| 🇬🇧 « risk premium around central bank announcements » | **0,706** | juste |
+
+Le corpus est en anglais : **il s'interroge en anglais**. Un modèle
+multilingue existe aussi en 768 — donc sans migration de colonne — mais
+imposerait de recalculer les 1 594 vecteurs.
+
+### Le piège des préfixes
+
+`bge` n'encode **pas** un passage et une requête de la même façon :
+
+```python
+QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
+```
+
+Les confondre dégrade la récupération **sans rien casser de visible**.
+`embed_query()` l'applique, `embed_texts()` non.
+
+### Changer de modèle coûte cher, et c'est voulu
+
+Deux modèles produisent des vecteurs incomparables, et rien dans les nombres ne
+le dirait. La colonne `embedding_model` porte le nom sur chaque ligne, et la
+contrainte `*_embedding_provenance` **refuse un vecteur sans elle** : un mélange
+est rejeté au lieu de passer en silence.
 
 ---
 
