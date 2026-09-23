@@ -48,12 +48,16 @@ matin.
 
 ### Ce que la phase 08 demande, dans l'ordre
 
-1. **`corpus/code_signal.py`** — le harnais du codeur, sur le patron exact de
-   `corpus/extract_fiche.py` : `--prepare` écrit une consigne qui ne contient que
-   la fiche et le contrat de `D07`, `--record` fige l'état de production pour
+1. ~~Le harnais du codeur.~~ **Fait le 2026-09-23 : `scripts/code_signal.py`** —
+   à côté de son juge, comme `extract_fiche.py` est à côté du sien.
+   `--prepare` écrit la consigne, `--record` fige l'état de production pour
    `S6`, `--judge` appelle `score_signal.py`. **Le codeur ne voit ni `signals/`,
-   qui contient la réponse, ni les hypothèses pré-enregistrées** — même parade
-   que pour le trieur et l'extracteur.
+   qui contient trois implémentations écrites à la main, ni `hypotheses/`, qui
+   contient les réponses attendues** — même parade que pour le trieur et
+   l'extracteur. Il voit en revanche **l'interface** de `signals/_common.py`,
+   résumée à la main et non recopiée : lui refuser l'outillage partagé
+   l'obligerait à réécrire une mécanique d'horloge dont `S5` lui compterait
+   ensuite les constantes.
 2. **`signals/PRODUCED.json`** — sans lui, `S6` est `sans objet` exactement comme
    `G3` l'était ce matin, et la porte 08 ne peut pas se franchir. `L22`.
 3. **Le premier signal produit**, jugé sur les six conditions.
