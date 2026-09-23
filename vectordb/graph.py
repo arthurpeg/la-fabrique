@@ -58,7 +58,11 @@ def fetch(db: VectorDB, top: int) -> dict:
                 from chunks where embedding is not null
                 group by paper_id
             )
-            select a.paper_id, b.paper_id, 1 - (a.v <=> b.v) as sim
+            -- ALIASER LES DEUX COLONNES, sans quoi elles s'appellent toutes
+            -- deux `paper_id` et `dict_row` ne garde QUE LA SECONDE : les 231
+            -- arêtes sortaient avec la similarité à la place du premier
+            -- identifiant, et le graphe entier était faux sans une erreur.
+            select a.paper_id as pa, b.paper_id as pb, 1 - (a.v <=> b.v) as sim
             from cent a join cent b on a.paper_id < b.paper_id
         """)
         paires = cur.fetchall()
@@ -82,8 +86,7 @@ def fetch(db: VectorDB, top: int) -> dict:
     # deux sens, puis dédoublonné. Une arête gardée par l'un des deux suffit.
     voisins: dict[str, list[tuple[str, float]]] = {}
     for row in paires:
-        a, b, s = str(row["paper_id"]), str(row["b_paper_id"] if "b_paper_id" in row
-                                            else list(row.values())[1]), row["sim"]
+        a, b, s = str(row["pa"]), str(row["pb"]), row["sim"]
         voisins.setdefault(a, []).append((b, s))
         voisins.setdefault(b, []).append((a, s))
 
@@ -103,6 +106,16 @@ def fetch(db: VectorDB, top: int) -> dict:
                 "page": e["page"], "section": e["section"],
                 "excerpt": (e["excerpt"] or "").strip(),
             })
+
+    connus = {str(p["id"]) for p in papers}
+    inconnues = [(a, b) for a, b in gardees if a not in connus or b not in connus]
+    if inconnues:
+        raise SystemExit(
+            f"{len(inconnues)} arête(s) désignent un papier inexistant, par ex. "
+            f"{inconnues[0]} — l'extraction s'arrête plutôt que de produire un "
+            "graphe faux. C'est la faute de 2026-09-23 : deux colonnes nommées "
+            "`paper_id` dans la même requête, `dict_row` ne gardant que la seconde."
+        )
 
     return {
         "papers": [{
