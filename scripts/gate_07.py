@@ -148,6 +148,16 @@ def main(argv: list[str]) -> int:
           f"({pdf} PDF, {autre} autre), {len(inatteignables)} inatteignables")
     print(f"fiches produites : {len(toutes)}\n")
 
+    # `G1` A DEUX LECTURES, ET CE SCRIPT NE TRANCHE PAS ENTRE ELLES.
+    # `D17` compte les « atteignables non fichés », et l'entrée 9 est
+    # `atteignable` : son texte s'obtient sans péage. Mais elle est en HTML, et
+    # `F4` exige un `source.pdf` tandis que `D18` ne traite que les PDF — d'où
+    # `corpus/extract_fiche.py --list`, qui la range « hors d'atteinte du
+    # fichage » et annonce 7. Les deux lectures sont défendables ; les départager
+    # demande une décision écrite, pas un choix de programmeur. Les deux sont
+    # donc imprimées, et la plus exigeante fait le verdict.
+    infichables = [e for e in manquants if (e.get("text_format") or "pdf") != "pdf"]
+
     g1, g2, g3, g4 = len(manquants), len(rouges), len(retouchees), len(sans_raison)
     g3_txt = "  —" if g3_sans_objet else f"{g3:>3}"
     g3_note = ("SANS OBJET — aucun extracteur n'a produit en série"
@@ -156,6 +166,16 @@ def main(argv: list[str]) -> int:
     print(f"  G2  fiches cassant D16                       {g2:>3}   (exige 0)")
     print(f"  G3  fiches retouchées à la main              {g3_txt}   {g3_note}")
     print(f"  G4  inatteignables sans raison écrite        {g4:>3}   (exige 0)")
+
+    if infichables:
+        print("\n  ATTENTION — `G1` a DEUX lectures, et ce script ne tranche pas :")
+        print(f"    {g1} en comptant tout atteignable non fiché (D17, lecture littérale)")
+        print(f"    {g1 - len(infichables)} en écartant les {len(infichables)} atteignable(s) "
+              f"NON FICHABLE(S) en l'état,")
+        print("      dont le texte n'est pas un PDF — `F4` exige `source.pdf` et `D18` ne")
+        print("      traite que les PDF. C'est le compte de corpus/extract_fiche.py --list.")
+        print("    Le verdict ci-dessous retient la lecture LA PLUS EXIGEANTE. Les")
+        print("    départager demande une décision écrite (D18 § Ce qui reste ouvert).")
 
     if a.detail:
         if manquants:

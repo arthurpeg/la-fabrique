@@ -154,8 +154,19 @@ def main(argv: list[str]) -> int:
         par_source[p["source"]] = par_source.get(p["source"], 0) + 1
     print(f"  par origine : {par_source}")
     if sans_vecteur:
-        print(f"  {len(sans_vecteur)} papier(s) SANS aucun vecteur — isolés dans "
-              "le graphe, les embeddings ne sont pas finis")
+        # DEUX CAUSES DISTINCTES, et les confondre envoie chercher au mauvais
+        # endroit : soit le papier a des morceaux qui attendent l'embedding,
+        # soit il n'a AUCUN morceau — un PDF dont l'extraction n'a rien rendu,
+        # et aucun embedding n'y changera rien.
+        vides = [p for p in sans_vecteur if p["chunks"] == 0]
+        attente = [p for p in sans_vecteur if p["chunks"] > 0]
+        if attente:
+            print(f"  {len(attente)} papier(s) avec des morceaux NON VECTORISÉS — "
+                  "relancer vectordb/embed.py")
+        for p in vides:
+            print(f"  SANS AUCUN MORCEAU : « {(p['title'] or '?')[:58]} » — "
+                  "l'extraction du PDF n'a rien rendu ; isolé dans le graphe, "
+                  "et ce n'est pas l'embedding qui manque")
     poids = [e["w"] for e in data["edges"]]
     if poids:
         print(f"  similarité des arêtes : {min(poids):.3f} à {max(poids):.3f}")
