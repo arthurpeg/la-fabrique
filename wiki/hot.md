@@ -23,7 +23,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Phase courante** | 09 — premier passage complet sur 30 à 50 papiers |
 | **Dernière porte franchie** | **08**, le 2026-09-23 — `scripts/gate_08.py`. Un signal produit par une session de codage séparée tient les **six conditions de `D23` au premier essai**, et aucun signal produit n'a été retouché à la main. |
 | **Décision la plus récente** | `decisions/DECISION-25-budget-de-tests.md` — le budget de la phase 09. |
-| **Tests au registre** | 164 |
+| **Tests au registre** | 165 |
 | **Idées abandonnées recensées** | 54 |
 | **Entrées au journal** | 56 |
 
