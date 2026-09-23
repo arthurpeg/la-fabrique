@@ -162,6 +162,42 @@ dénominateur qu'en phase 09.
 | — | 2026-09-23 | décision écrite, aucun codeur n'existe | — | seuil posé, juge à écrire |
 | — | 2026-09-23 | `scripts/score_signal.py` écrit, 25/25 fautes fabriquées refusées | — | juge en place |
 | — | 2026-09-23 | `S5` mesurée : 3 signaux × 10 fiches, **refuse 12/30 = 40 %** | — | nécessaire, pas suffisante — écrit au § Pourquoi |
+| 1 | 2026-09-23 | `baltussen-2021-hedging-demand-intraday-momentum`, produit par une session séparée à partir de la seule fiche | **6/6 au premier essai** | **PASSE** — `scripts/code_signal.py --judge`, aucun IC calculé |
+
+## La calibration sur Baltussen — faite le 2026-09-23
+
+`D23` la prévoyait dès sa rédaction : *« Quand l'entrée 2 sera fichée, on fera
+coder Baltussen et on inscrira la corrélation obtenue au § Journal. Elle ne
+conditionne rien. »* L'entrée 2 a été fichée le matin même ; la mesure a pu être
+faite le soir. `scripts/calibrate_coder.py` la produit.
+
+**Corrélation poolée : 0,5334**, sur 15 644 paires et 25 cellules, entre le
+module produit par le codeur et `signals/baltussen_2021_intraday_momentum.py`,
+écrit à la main.
+
+**Ce n'est pas un IC**, et la distinction n'est pas cosmétique : aucun rendement
+n'entre dans ce calcul, aucune ligne n'est écrite au registre, et le script casse
+si le compte a bougé. Il est resté à **160 lignes, 56 tests comptés**.
+
+**La dispersion par cellule dit plus que la moyenne**, et c'est pourquoi elle est
+inscrite ici :
+
+| Fenêtre | Corrélation |
+|---|---|
+| `ES`, `NQ`, `YM` en **US** | 0,76 · 0,80 · 0,76 |
+| `ES`, `NQ`, `YM` en **ASIA** / **EUROPE** | 0,28 à 0,41 |
+| devises et matières premières | 0,28 à 0,73 |
+
+Les deux lectures se rejoignent **là où le papier parle** — la séance américaine
+des indices actions — et divergent ailleurs. Ce n'est pas surprenant : le module
+produit code `r_ROD`, le rendement depuis la clôture de la veille, qui franchit
+une frontière de séance ; l'implémentation humaine code la première demi-heure de
+la fenêtre. Ce sont deux recettes différentes tirées du même papier.
+
+**Ce que ce chiffre ne dit pas.** Que le codeur a raison. L'implémentation
+humaine n'est pas la vérité, c'est une lecture — une corrélation basse peut
+signifier que le codeur a dévié, ou que l'humain avait simplifié. C'est
+exactement pourquoi `D23` en a fait une calibration et non un seuil.
 
 ## Journal des calibrations de la liste close
 

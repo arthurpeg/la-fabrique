@@ -519,7 +519,11 @@ def main(argv: list[str]) -> int:
     if not a.no_data:
         from panel import Panel
 
-        panel = Panel.open(ASOF, slice_name="pool")
+        # `slice`, et non `slice_name` : la faute datait du 2026-09-23 et n'a
+        # tenu que parce que le juge n'avait jamais été lancé AVEC données —
+        # `--check` et `--no-data` ne passent pas par ici. Un chemin de code
+        # qu'aucun garde n'emprunte n'est pas un chemin vérifié.
+        panel = Panel.open(ASOF, slice="pool")
 
     verdicts = juger(module, fiche, panel)
     print(rendre(verdicts, getattr(module, "SIGNAL_ID", a.module)))

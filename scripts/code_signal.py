@@ -341,6 +341,9 @@ def enregistrer(path: Path) -> dict:
     a la main. Chaque passage est donc inscrit, jamais ecrase, et le compte des
     essais est lui-meme un resultat.
     """
+    # Un chemin relatif est la façon NORMALE de désigner un fichier depuis la
+    # racine du dépôt, et c'est ce qu'on tape. `relative_to` le refusait.
+    path = path.resolve()
     source = path.read_text(encoding="utf-8")
     fautes = scan.scan_source(source, path.name)
     if fautes:

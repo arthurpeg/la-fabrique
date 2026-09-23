@@ -1,7 +1,7 @@
 ---
 type: phase
 updated: 2026-09-23
-status: en-cours
+status: franchie
 phase: 08
 gate: une fiche produit un signal executable qui passe la sandbox, sans retouche manuelle
 sources: [ETAT.md, decisions/DECISION-23-seuil-du-codeur-de-signal.md, scripts/score_signal.py]
@@ -9,11 +9,24 @@ sources: [ETAT.md, decisions/DECISION-23-seuil-du-codeur-de-signal.md, scripts/s
 
 # Phase 08 — Le codeur de signal
 
-**Ouverte le 2026-09-23**, à la fermeture de la porte 07. **Son juge était déjà
-écrit**,
-comme [[phase-07-triage-et-extraction|`D15` l'a été avant le trieur et `D16`
-avant l'extracteur]]. C'est l'ordre de construction de `CLAUDE.md` — le juge
-avant l'accusé.
+**FRANCHIE le 2026-09-23**, le jour même de son ouverture. Un signal produit par
+une session de codage séparée — `baltussen-2021-hedging-demand-intraday-momentum`
+— tient les **six conditions au premier essai**. `scripts/gate_08.py` le compte.
+
+**Aucun IC n'a été calculé pour la franchir.** Registre inchangé : 160 lignes,
+56 tests comptés.
+
+**Ce sur quoi elle repose est mince : un seul signal.** La porte demandait
+littéralement *« une fiche produit un signal exécutable qui passe la sandbox,
+sans retouche manuelle »*, et c'est tenu. Relever la barre après avoir vu le
+résultat serait l'image inverse de la baisser après un échec.
+
+**La calibration de `D06` est faite** — `D23` l'avait reportée faute de fiche
+pour l'entrée 2, fichée le matin même : **corrélation 0,5334** avec
+l'implémentation humaine, sur 15 644 paires. Ce n'est **pas un IC** et elle **ne
+conditionne rien**. Le détail par cellule est au § La calibration de `D23` : les
+deux lectures se rejoignent là où le papier parle (0,76–0,80 en fenêtre US pour
+les indices actions) et divergent ailleurs (0,28–0,41).
 
 ## La porte
 

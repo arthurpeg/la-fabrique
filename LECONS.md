@@ -702,3 +702,34 @@ laisserait « produit sans retouche » signifier « au neuvième essai ». Le re
 garde donc **chaque passage**, et la porte imprime le nombre sans en faire une
 condition. Même geste que `spelled_out` dans `D14` : **nommer le geste humain
 plutôt que le cacher ou l'interdire.**
+
+---
+
+## L23 — Un chemin de code qu'aucun garde n'emprunte n'est pas un chemin vérifié
+
+`scripts/score_signal.py` a été écrit le 2026-09-23 avec 25 vérifications au
+vert, et il portait une faute qui le faisait **casser à la première utilisation
+réelle** : `Panel.open(ASOF, slice_name="pool")`, là où le paramètre s'appelle
+`slice`. Une ligne, un `TypeError` immédiat, rien de subtil.
+
+Elle a survécu parce que **aucun des deux modes qui avaient été lancés ne passe
+par là** : `--check` juge le juge sur des cas fabriqués, et `--no-data` saute
+justement l'ouverture du panel. Le seul chemin non exercé était le seul qui
+comptait — celui qui juge un vrai signal sur de vraies données.
+
+Le même jour, `scripts/code_signal.py --record` refusait un chemin relatif,
+c'est-à-dire la façon normale de désigner un fichier depuis la racine du dépôt.
+Même cause : la fonction n'avait été appelée que par ses propres tests.
+
+**La règle.** Un garde vert ne dit rien des chemins qu'il n'emprunte pas. Quand
+un outil a un mode « rapide » et un mode « complet », c'est le complet qui porte
+le risque, et c'est celui qu'on ne lance pas. Avant de déclarer un outil écrit,
+**l'exercer une fois pour de vrai** — sur la donnée réelle, avec les arguments
+qu'on tapera.
+
+**Ce qui a rendu la faute bénigne, et qu'il faut garder.** Les deux défauts ont
+cassé **bruyamment et tout de suite**, par une exception. Une faute de ce genre
+qui rendrait un résultat plausible au lieu de lever serait restée invisible —
+c'est la différence entre `L21`, où un compte perdait un élément en silence, et
+celle-ci. Écrire du code qui casse fort est ce qui permet de ne pas l'avoir
+vérifié.

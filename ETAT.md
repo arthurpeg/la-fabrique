@@ -1,8 +1,21 @@
 # ÉTAT
 
-**Phase courante :** 08 — le codeur de signal
+**Phase courante :** 09 — premier passage complet sur 30 à 50 papiers
 **Date de dernière mise à jour :** 2026-09-23
-**Dernière porte franchie :** **07**, le 2026-09-23 — les quatre effectifs de
+**Dernière porte franchie :** **08**, le 2026-09-23 — `scripts/gate_08.py`. Un
+signal produit par une session de codage séparée tient les **six conditions de
+`D23` au premier essai**, et aucun signal produit n'a été retouché à la main.
+**Aucun IC n'a été calculé pour la franchir**, et c'est la règle qui compte : le
+nombre de tests est la seule chose que la phase 15 ne peut pas recalculer.
+
+**Ce qu'elle repose sur, et qui est mince : UN signal.** La porte demandait
+littéralement *« une fiche produit un signal exécutable qui passe la sandbox,
+sans retouche manuelle »*, et c'est tenu. Relever la barre après avoir vu le
+résultat serait l'image inverse de la baisser après un échec — `D17` a
+requalifié la porte 07 **avant** de mesurer, jamais après. La quantité est le
+sujet de la phase 09, qui a son propre compte.
+
+**Porte précédente : 07**, le 2026-09-23 — les quatre effectifs de
 `D17` à zéro, mesurés par `scripts/gate_07.py` (**relancer, ne pas recopier** —
 `L21`). **17 fiches, 450 résultats cités**, produites par **sept sessions
 séparées** n'ayant vu que leur consigne et le texte de leur papier, comme `D16`
@@ -124,7 +137,7 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 | 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07` |
 | 06 | Contrôles automatiques et réplication | Un signal dégénéré est rejeté avant le harnais ; la chaîne reproduit un fait publié sur nos données. La cible a changé deux fois : Mesfin (métrique incompatible, `D12`), Heston (motif absent, `H03`), puis Andersen & Bollerslev (`D13`). | **franchie 2026-09-18** — `gate_06_controls.py` (25) et `scripts/measure_h04.py` (19) |
 | 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **FRANCHIE le 2026-09-23** — `scripts/gate_07.py`, les quatre effectifs a ZERO : `G1` = `G2` = `G3` = `G4` = 0. **17 fiches, 450 resultats cites**, produites par sept sessions separees n'ayant vu que leur consigne (`D16`). **9 essais pour 7 fiches, 1,29 par fiche** — deux fiches rejetees sur un point de schema, renvoyees a leur extracteur et non reparees a la main. `corpus/PRODUCED.json` rend `G3` mesurable, ce qu'il n'etait pas (`L22`). `D24` separe *atteignable* de *fichable* : l'entree 9 (HTML) est atteignable et hors de `G1`, **comptee dans sa propre colonne avec sa raison**, jamais effacee |
-| 08 | Le codeur de signal | **Son seuil est écrit depuis le 2026-09-23 — `D23`.** Six conditions à tolérance zéro : contrat de `D07`, liste blanche, causalité, non-dégénérescence, **fidélité à la fiche** (`S5` : toute constante du code s'y retrouve) et **zéro retouche manuelle**. Aucun IC n'est calculé pour franchir cette porte. | **PHASE COURANTE depuis le 2026-09-23.** Le juge est ecrit : `scripts/score_signal.py`, **25 verifications**. `S5` mesuree sur les cas reels — 3 signaux x 10 fiches, elle **refuse 40 % des appariements** : necessaire, pas suffisante, `D23` § Pourquoi. **L'accuse manque** : `code_signal.py`, et `signals/PRODUCED.json` sans lequel `S6` sera `sans objet` comme `G3` l'etait (`L22`). La porte 07 etant franchie, le codeur a **17 fiches** de matiere |
+| 08 | Le codeur de signal | **Son seuil est écrit depuis le 2026-09-23 — `D23`.** Six conditions à tolérance zéro : contrat de `D07`, liste blanche, causalité, non-dégénérescence, **fidélité à la fiche** (`S5` : toute constante du code s'y retrouve) et **zéro retouche manuelle**. Aucun IC n'est calculé pour franchir cette porte. | **FRANCHIE le 2026-09-23** — `scripts/gate_08.py`. Un signal produit par une session de codage separee, `baltussen-2021-hedging-demand-intraday-momentum`, tient les **six conditions au premier essai**. `signals/PRODUCED.json` rend `S6` mesurable, ce qu'il n'etait pas (`L22`). **Aucun IC calcule.** La calibration de `D06`, que `D23` avait reportee faute de fiche, est faite : **correlation 0,5334** avec l'implementation humaine, 15 644 paires — elle **ne conditionne rien** |
 
 ## Acte III — Fermer la boucle une fois
 
@@ -154,48 +167,51 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 
 ## Prochaine action
 
-**LA PORTE 07 EST FRANCHIE. LA PHASE 08 EST OUVERTE, ET SON JUGE EXISTE DÉJÀ.**
+**LES PORTES 07 ET 08 SONT FRANCHIES. LA PHASE 09 EST OUVERTE — et c'est la
+première qui dépense des tests.**
 
-`D23` a écrit le seuil du codeur avant que le codeur existe, et
-`scripts/score_signal.py` le tient — 25 vérifications, une faute fabriquée par
-condition. **Ce qui manque est l'accusé** : `code_signal.py`, la session qui
-reçoit une fiche et rend un module de signal.
+Relancer plutôt que recopier (`L21`) :
 
-Il a maintenant de quoi travailler : **17 fiches** là où il y en avait 10 ce
-matin.
+```
+python scripts/gate_07.py      # G1 = G2 = G3 = G4 = 0
+python scripts/gate_08.py      # 1 signal, 6/6, aucune retouche
+```
 
-### Ce que la phase 08 demande, dans l'ordre
+### Ce que la phase 09 demande
 
-1. ~~Le harnais du codeur.~~ **Fait le 2026-09-23 : `scripts/code_signal.py`** —
-   à côté de son juge, comme `extract_fiche.py` est à côté du sien.
-   `--prepare` écrit la consigne, `--record` fige l'état de production pour
-   `S6`, `--judge` appelle `score_signal.py`. **Le codeur ne voit ni `signals/`,
-   qui contient trois implémentations écrites à la main, ni `hypotheses/`, qui
-   contient les réponses attendues** — même parade que pour le trieur et
-   l'extracteur. Il voit en revanche **l'interface** de `signals/_common.py`,
-   résumée à la main et non recopiée : lui refuser l'outillage partagé
-   l'obligerait à réécrire une mécanique d'horloge dont `S5` lui compterait
-   ensuite les constantes.
-2. **`signals/PRODUCED.json`** — sans lui, `S6` est `sans objet` exactement comme
-   `G3` l'était ce matin, et la porte 08 ne peut pas se franchir. `L22`.
-3. **Le premier signal produit**, jugé sur les six conditions.
+> La chaîne tourne de bout en bout ; le registre compte tous les tests ; un
+> rapport d'IC existe pour chaque signal.
 
-### Ce que la phase 08 ne demande PAS, et qu'il faut se retenir de faire
+Les trois maillons existent maintenant et sont jugés chacun par son propre
+script : trieur (`D15`), extracteur (`D16`, `D17`, `D24`), codeur (`D23`).
+**Ce que la phase 09 ajoute est le premier IC**, et c'est un changement de
+nature : jusqu'ici aucune porte n'a dépensé une ligne de registre.
 
-**Aucun IC.** `D23` § Pourquoi : juger un codeur sur son IC le sélectionnerait
-sur son résultat, et surtout le nombre de tests est la seule chose que la phase
-15 ne peut pas recalculer. Un IC dépensé pour savoir si du code compile est perdu
-pour toujours.
+### Ce qu'il faut trancher AVANT de lancer quoi que ce soit
+
+`D23` § Ce qui reste ouvert le nomme déjà, et c'est maintenant que ça mord :
+
+> **Le budget d'itérations d'une boucle de génération** — combien d'essais, quel
+> seuil ajusté à ce nombre, quelle règle d'arrêt. La présente décision juge UN
+> signal ; elle ne dit rien d'une recherche automatique qui en produirait des
+> milliers.
+
+**Chaque signal mesuré consomme une ligne de registre, et le dénominateur de la
+phase 15 en dépend.** Trente à cinquante papiers, c'est trente à cinquante tests
+au moins — contre 56 comptés aujourd'hui. Lancer la boucle sans décision écrite
+sur le budget reviendrait à choisir ce nombre par accident.
+
+Une décision écrite est donc le préalable, pas du code.
 
 ### Ce qui reste dû par ailleurs, et qui n'a pas bougé
 
 | Point | Pourquoi ça compte |
 |---|---|
-| **Frais CME / EUREX, multiplicateurs** — tous `null` | tant qu'ils le sont, `harness/costs.py` ne rend qu'un **plancher étiqueté**, donc tout IC net est un **majorant de performance** |
+| **Frais CME / EUREX, multiplicateurs** — tous `null` | tant qu'ils le sont, `harness/costs.py` ne rend qu'un **plancher étiqueté**, donc tout IC net est un **majorant de performance**. La phase 09 produit justement des IC |
 | **`slippage_bp` à déclarer** | même famille |
-| **`scripts/gate_06_controls.py` ÉCRIT au registre** — une ligne de calibration par passage (`porte-06-cellule-morte`, `hypothesis_ref: null`) | Légitime : le registre est append-only et `counted_tests` ne bouge pas, une calibration n'étant pas un test. Mais **le passer dans une revue de gardes n'est pas gratuit** — `registry/tests.jsonl` est irremplaçable, et il a gagné une ligne le 2026-09-23 pour cette seule raison. Les autres gardes (`gate_07`, `score_*`, `validate_*`, `check_*`) n'écrivent rien |
 | **`ruff format harness/`** reformaterait 4 fichiers | le harnais est **figé et versionné** ; le reformater changerait son empreinte et **périmerait les 56 tests comptés**. Ne pas lancer |
-| **Le texte qui fait foi pour le HTML** | `D24` § Ce qui reste ouvert. Si `D18` s'étend au HTML, l'entrée 9 redevient fichable, `G1` repasse à 1, et **la porte 07 est réputée non franchie jusqu'à ce qu'elle soit fichée** |
+| **`scripts/gate_06_controls.py` ÉCRIT au registre** | une ligne de calibration par passage. Légitime (`counted_tests` ne bouge pas) mais **pas gratuit** — le passer dans une revue de gardes coûte une ligne irremplaçable. Les autres gardes n'écrivent rien |
+| **Le texte qui fait foi pour le HTML** | `D24` § Ce qui reste ouvert. Si `D18` s'étend au HTML, l'entrée 9 redevient fichable, `G1` repasse à 1, et la porte 07 est réputée non franchie |
 
 ---
 
