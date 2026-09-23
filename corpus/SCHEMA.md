@@ -134,6 +134,47 @@ voudrait lui faire dire, on cite ce qu'elle dit, ou on ne cite pas.
 Un motif hors de la liste, un `quoted_source` sans motif, un motif sans
 `quoted_source` : le validateur refuse les trois.
 
+**Et quand l'extraction disloque LE NOMBRE LUI-MÊME.** Le cas ci-dessus suppose
+un texte abîmé *autour* d'un chiffre intact. Il arrive que le chiffre soit la
+victime : `pypdf` rend `−3.02` par `−3 . 02` quand le papier l'écrit en
+italique, et `T = 496,512` par `T51,724z2885496,512` quand il colle une égalité
+entière. Aucune comparaison numérique ne peut plus aboutir, alors même que
+`quoted_source` est bien présente à la lettre.
+
+L'entrée porte alors, **en plus** de la réparation, un `spelled_out` qui donne
+le nombre **tel que la citation l'écrit** :
+
+```json
+{
+  "name": "overnight_sorted_hedge_intraday_3f_alpha_monthly_pct",
+  "value": -3.02,
+  "quoted": "alpha of −3.02% per month with a t-statistic of −9.74)",
+  "quoted_source": "alpha of −3 . 02% per month with a t -statistic of −9 . 74 )",
+  "quoted_repair": "math_notation",
+  "spelled_out": "−3 . 02"
+}
+```
+
+C'est la règle 4 appliquée telle qu'elle est écrite — *« une `value` numérique
+introuvable dans sa `quoted`, sauf `derived: true` ou `spelled_out` »* — et non
+une exception nouvelle. Le champ avait été décrit pour les nombres **en
+toutes lettres** ; sa fonction est plus générale, et c'est celle-ci : **nommer
+le geste humain qui relie une `value` à une citation où aucune machine ne la
+reconnaît.**
+
+**Ce que cela n'affaiblit pas.** `spelled_out` doit toujours se retrouver à la
+lettre dans la citation, laquelle doit toujours se retrouver à la lettre dans le
+texte. Un extracteur qui voudrait loger un chiffre inventé devrait donc
+fabriquer une chaîne réellement présente dans le PDF — ce qui est exactement ce
+que `F2` interdit.
+
+**Ce que cela ne vérifie pas**, et qui reste un geste humain nommé : que
+`−3 . 02` *vaille* `-3.02`. Comme pour « Seven » et 7, le champ existe pour
+**montrer** cette lecture, pas pour la garantir. Quand le décodage n'est pas
+évident, la `note` le rend vérifiable : pour Andersen (2003), l'extraction rend
+`=` par `5` et `'` par `9`, ce que confirment quatre occurrences indépendantes
+du même papier — `K541`, `P53`, `p(J9)50`, `J9512`.
+
 ---
 
 ## `horizon` et `signal_construction` — `null` se justifie

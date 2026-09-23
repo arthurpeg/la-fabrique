@@ -37,6 +37,7 @@
     "quoted_repair": "math_notation"
   },
   "signal_construction": {
+    "value": "Standardiser chaque surprise macroeconomique : S_kt = (A_kt - E_kt) / sigma_k, ou A_kt est la valeur annoncee, E_kt la mediane des previsions MMS du vendredi precedent, et sigma_k l'ecart-type d'echantillon des surprises de l'indicateur k. Regresser ensuite le rendement de la barre de 5 minutes sur cinq retards de lui-meme et trois retards (j = 0,1,2) de la nouvelle standardisee de chacun des 41 indicateurs, par MCO puis par moindres carres ponderes avec une volatilite modelisee. La sortie est une REPONSE MOYENNE A UNE ANNONCE, pas un score par instrument et par date : le papier decrit une propriete des donnees.",
     "summary": "Pour chaque indicateur k et chaque date d'annonce t, la nouvelle standardisee est S_kt = (A_kt - E_kt) / sigma_k, ou A_kt est la valeur annoncee, E_kt la mediane des previsions de l'enquete MMS du vendredi precedent, et sigma_k l'ecart-type d'echantillon des surprises de l'indicateur k. Deux modeles : (1) un modele de moyenne conditionnelle sur toutes les barres de 5 minutes, R_t regresse sur 5 retards de lui-meme et sur 3 retards (j = 0,1,2) de la nouvelle de chacun des 41 indicateurs, estime par MCO puis par moindres carres ponderes avec une volatilite modelisee (GARCH(1,1) journalier + forme flexible de Fourier a Q = 4 + variables muettes de calendrier) ; (3) une regression restreinte aux seules barres portant une annonce, R_t = b_k S_kt + eps_t, coefficient et R2 par indicateur et par paire. L'asymetrie est obtenue en laissant b_k etre lineaire en S_kt separement de chaque cote de l'origine, ce qui donne une 'news impact curve' quadratique par morceaux.",
     "quoted": "Skt = (Akt - Ekt) / sigma_hat_k, where Akt is the announced value of indicator k, Ekt is the market expected value of indicator k as distilled in the MMS median forecast, and sigma_hat_k is the sample standard deviation of Akt - Ekt.",
     "quoted_source": "Skt5Akt2Ektsˆk ,whereAktis the announced value of indicator k,Ektis the market expected value of indicator kas distilled in the MMS median forecast, and sˆkis the sample standard deviation of Akt2Ekt.",
@@ -60,7 +61,8 @@
       "quoted": "In the end we are left with 1,724 days of data, containing T = 1,724 x 288 = 496,512 high-frequency 5-minute return observations.",
       "quoted_source": "In the end we are left with 1,724 days of data, containingT51,724z2885496,512high-frequency 5-minute return observations.",
       "quoted_repair": "math_notation",
-      "note": "1 724 jours retenus sur 2 189, soit 288 barres par jour."
+      "note": "L'extraction colle l'egalite entiere sans separateur : `containingT51,724z2885496,512`. La citation etait TRONQUEE a `containingT5` et ne portait donc pas la valeur ; elle est ici etendue jusqu'au chiffre. Le controle numerique echoue quand meme, `2885496,512` se lisant comme un seul nombre — d'ou `spelled_out`. Decodage : `5` rend `=` et `z` rend le signe multiplicatif, ce que confirme `K541andT5496,512` ailleurs dans le meme papier.",
+      "spelled_out": "496,512"
     },
     {
       "name": "mms_survey_forecasters",
@@ -175,10 +177,11 @@
       "name": "volatility_full_adjustment_lags",
       "value": 12,
       "unit": "intervalles de 5 minutes",
-      "quoted": "with complete adjustment occurring only after J' = 12 5-minute periods, or one hour",
-      "quoted_source": "with complete adjustment occurring only after J9512 5-minute periods, or one hour",
+      "quoted": "exchange-rate volatilities adjust only gradually, with complete adjustment occurring only after J' = 12 5-minute periods, or one hour.",
+      "quoted_source": "exchange-rate volatilities adjust only gradually, with complete adjustment occurring only after J9512 5-minute periods, or one hour.",
       "quoted_repair": "math_notation",
-      "note": "Contraste central du papier : moyenne conditionnelle = saut immediat, variance conditionnelle = une heure. Les auteurs precisent en note que la contrainte J'=12 est non saturante (un essai a J'=36 a montre qu'une heure suffisait)."
+      "note": "L'extraction rend `=` par `5` et le prime `'` par `9` : `J9512` est `J' = 12`. Decodage verifiable sur trois autres occurrences du meme papier — `P53` pour `P = 3`, `p(J9)50` pour `p(J') = 0`, `K541` pour `K = 41`. Le chiffre 12 n'etant pas isolable, la valeur est rattachee par `spelled_out` plutot que par correspondance numerique.",
+      "spelled_out": "J9512"
     },
     {
       "name": "forecast_dispersion_increase_after_bad_news_payroll_pct",

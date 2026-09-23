@@ -26,6 +26,7 @@
     "reason": "Le modele estime predit RV du jour t+1d ; les previsions multi-periodes sont evaluees sur la volatilite agregee sur l'horizon (1 jour, 1 semaine, 2 semaines). Aucun horizon intrajournalier n'est teste."
   },
   "signal_construction": {
+    "value": "Modele HAR-RV en cascade. Estimer la volatilite realisee quotidienne RV(d) ; en former les moyennes hebdomadaire RV(w) (cinq dernieres RV quotidiennes) et mensuelle RV(m) (22 jours ouvres) ; regresser par MCO RV(d)_{t+1d} = c + beta_d*RV(d)_t + beta_w*RV(w)_t + beta_m*RV(m)_t, dont les trois regresseurs sont entierement observes en t. La sortie est une PREVISION DE VOLATILITE, pas un score signe sur un rendement.",
     "target": "La volatilite realisee quotidienne RV(d), racine carree de la somme des rendements intrajournaliers au carre ; en pratique estimee tick-par-tick avec l'estimateur a deux echelles de Zhang, Ait-Sahalia et Mykland (2005), la frequence lente etant prise a dix ticks de rendement. Toutes les quantites sont annualisees.",
     "aggregation": "Les volatilites realisees multi-periodes sont de simples moyennes des RV quotidiennes : RV(w) est la moyenne des cinq dernieres RV quotidiennes, RV(m) la moyenne sur le mois, le mois valant 22 jours ouvres.",
     "regression": "Regression lineaire : RV(d)_{t+1d} = c + beta_d * RV(d)_t + beta_w * RV(w)_t + beta_m * RV(m)_t + omega_{t+1d}. Quatre parametres, tous estimes par MCO ordinaire, les regresseurs etant entierement observes a la date t.",

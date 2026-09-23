@@ -38,6 +38,7 @@
     "detail": "Formation a la fin de chaque mois, detention le mois suivant ; les rendements quotidiens overnight et intraday sont capitalises a l'interieur du mois. Le meme effet est teste avec un decalage de 1 a 60 mois entre periode de classement et periode de detention (Fig. 2), et reste significatif jusqu'a cinq ans. Le momentum prix utilise un classement 11 mois avec un mois saute ; les variables EWMA ont une demi-vie de 60 mois et sautent le mois le plus recent."
   },
   "signal_construction": {
+    "value": "Decomposer le rendement quotidien en deux composantes : intraday r = P_close/P_open - 1, ou P_open est le VWAP de la premiere demi-heure, et overnight par difference, (1 + r_close-to-close)/(1 + r_intraday) - 1, de sorte que les deux se recomposent exactement. Trier en deciles sur la caracteristique, long/short les extremes ponderes par capitalisation, et rapporter separement les deux composantes. Le signal proprement dit est TugOfWar = EWMA(overnight) - EWMA(intraday) a demi-vie 60 mois, oriente pour que le coefficient predit soit positif, et il predit le rendement du mois suivant de la strategie.",
     "return_decomposition": "Pour chaque titre i et chaque jour s : r_intraday = P_close,s / P_open,s - 1, ou P_open est le VWAP de la premiere demi-heure de cotation (9:30-10:00) issu de TAQ, les jours avec moins de 1 000 actions echangees sur cette demi-heure etant exclus. Le rendement overnight est impute par r_overnight = (1 + r_close-to-close) / (1 + r_intraday) - 1, ce qui affecte a l'overnight les dividendes, splits et autres evenements corporate. Les deux composantes s'agregent exactement au rendement close-to-close du titre. Passage au mois par produit des (1 + r) quotidiens.",
     "portfolio": "Tri en deciles (quintiles pour l'industrie) sur la caracteristique, long le decile extreme favorable, short l'autre, ponderation par capitalisation ; report des composantes overnight et intraday du rendement du portefeuille, en exces du taux sans risque, ajuste CAPM ou trois facteurs. La decomposition du portefeuille ne somme pas exactement au close-to-close a cause du terme d'interaction.",
     "tug_of_war": "Eq. (1) : EWMA des composantes overnight et intraday du rendement de la strategie (demi-vie 60 mois) ; TugOfWar = EWMA_overnight - EWMA_intraday pour les strategies dont la prime s'accumule overnight (MOM, STR), et l'inverse pour les strategies intraday, de sorte que le coefficient predit soit positif dans tous les cas. Regression r_{t+1} = beta * TugOfWar_t + eps, avec controles : EWMA du rendement close-to-close de la strategie, volatilite mensuelle de la strategie, rendement et volatilite du marche sur 12 mois, ecart de caracteristique entre les deux jambes, ecart de short interest entre les deux jambes.",
@@ -67,7 +68,8 @@
       "quoted": "alpha of −3.02% per month with a t-statistic of −9.74)",
       "quoted_source": "alpha of −3 . 02% per month with a t -statistic of −9 . 74 )",
       "quoted_repair": "math_notation",
-      "note": "Renversement croise : le meme portefeuille trie sur l'overnight passe perd en intraday le mois suivant. L'extraction PDF a disloque les nombres negatifs en italique ('−3 . 02%')."
+      "note": "Renversement croise : le meme portefeuille trie sur l'overnight passe perd en intraday le mois suivant. L'extraction disloque les nombres negatifs en italique en inserant des espaces autour du point decimal (`-3 . 02%`), ce qui empeche toute correspondance numerique ; la valeur est donc rattachee par `spelled_out`, qui reste une chaine litterale du texte.",
+      "spelled_out": "−3 . 02"
     },
     {
       "name": "intraday_sorted_hedge_intraday_3f_alpha_monthly_pct",
@@ -113,7 +115,7 @@
     },
     {
       "name": "tsmom_overnight_capm_alpha_monthly_pct",
-      "value": 1.40,
+      "value": 1.4,
       "unit": "% par mois",
       "quoted": "1.40% with a t -statistic of 3.24",
       "note": "Time-series momentum sur les 22 futures indices actions : l'alpha CAPM mensuel de la composante overnight. C'est le resultat le plus proche de notre univers."
@@ -219,7 +221,7 @@
     },
     {
       "name": "intl_intraday_continuation_premium_monthly_pct",
-      "value": 2.80,
+      "value": 2.8,
       "unit": "% par mois",
       "quoted": "2.80% ( t -statistic of 6.23)",
       "note": "Symetrique intraday sur les memes neuf marches non-US. Dans ces marches, il n'y a aucun effet de reversal court terme close-to-close : l'effet n'apparait qu'une fois la decomposition faite."
