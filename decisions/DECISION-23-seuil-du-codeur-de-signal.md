@@ -1,0 +1,146 @@
+# D23 — Le seuil du codeur de signal, écrit avant qu'il existe
+
+**Date :** 2026-09-23
+**Phase :** 08
+**État :** prise
+
+## La question
+
+`ETAT.md` pose la porte 08 : *« Une fiche produit un signal exécutable qui passe
+la sandbox, sans retouche manuelle. »* Trois mots y sont flous — **exécutable**,
+**passe**, et surtout **produit** : à quoi reconnaît-on qu'un signal code bien
+*cette* fiche plutôt qu'une autre ?
+
+## Ce que la situation impose, et qui n'était pas prévu
+
+`D06` désigne deux étalons pour cette porte : Gao et al. (2018), entrée 1, et
+Baltussen et al. (2021), entrée 2 — implémentés à la main dans `signals/`.
+L'idée était de comparer le signal produit par un agent à l'implémentation
+humaine du même papier.
+
+**Aucun des deux n'a de fiche.** L'entrée 1 est devenue **inatteignable** le
+2026-09-22 : l'URL qui la servait désignait un autre papier (`L20`), et aucune
+copie libre du vrai Gao 2018 n'existe. L'entrée 2 est encore **à ficher**.
+
+Le codeur prend une **fiche** en entrée. Il ne peut donc, au mieux, être
+comparé à une implémentation humaine que sur **un seul papier** — et `F43` a
+déjà tranché qu'un seuil sur trois items ne distingue pas un automate correct
+d'un automate chanceux. Sur un item, la question ne se pose même plus.
+
+## Les options
+
+**1. La corrélation à l'implémentation humaine comme seuil.** Écartée par ce
+qui précède : un seul sujet disponible, et il n'est pas encore fiché.
+
+**2. Une relecture humaine de chaque signal produit.** Écartée pour la raison
+de `F45` : elle ne s'automatise pas, et la phase 09 en demandera trente à
+cinquante.
+
+**3. L'IC du signal produit comme critère.** Écartée, et c'est la plus
+dangereuse. Juger un codeur sur l'IC qu'il obtient, c'est **sélectionner le
+code sur son résultat** — la définition même du surajustement. Et chaque essai
+consommerait une ligne de registre, gonflant le dénominateur de la phase 15
+avec des tentatives de codage qui ne sont pas des hypothèses.
+
+**4. La fidélité à la fiche, vérifiable sans étalon.** Retenue.
+
+## Le choix
+
+**Un signal produit est jugé sur six conditions, toutes à tolérance zéro, qui
+valent ENSEMBLE.** `scripts/score_signal.py` les vérifie.
+
+| | Condition | Vérifié par |
+|---|---|---|
+| **S1** | le module satisfait le contrat de `D07` — `SIGNAL_ID`, `HYPOTHESIS`, `PAPER`, `EXPECTED_SIGN`, `scores(panel, cells, horizon_bars)` | `sandbox/contract.py` |
+| **S2** | il n'importe rien hors de la liste blanche | `sandbox/scan.py` |
+| **S3** | **il est causal** — score identique sur panel tronqué et panel entier | `sandbox/causality.py` |
+| **S4** | il n'est pas dégénéré, et ses scores tombent sur des barres **mesurables** | `harness/controls.py`, `L10` |
+| **S5** | **toute constante numérique du code se retrouve dans la fiche** | nouveau |
+| **S6** | **zéro retouche manuelle** après production | protocole |
+
+**Aucun IC n'est calculé pour franchir cette porte.** Comme la clause 1 de la
+porte 06, le jugement se fait **avant** le harnais et **sans consommer de ligne
+de registre**.
+
+**La corrélation aux étalons est une calibration, pas un seuil.** Quand l'entrée
+2 sera fichée, on fera coder Baltussen et on inscrira la corrélation obtenue au
+§ Journal. Elle **ne conditionne rien** : elle dit ce que le codeur sait faire
+sur un sujet connu, comme la porte 03 calibre le harnais à la main.
+
+## Pourquoi
+
+**`S5` est la condition qui porte la décision**, et elle est l'exacte transposée
+de `F2`.
+
+`F2` exige qu'une citation soit **mot pour mot** dans le texte du papier, parce
+que sans cela un extracteur qui fabrique la citation *et* le chiffre qu'elle
+contient passait `D14` sans une faute. Le même trou existe ici : un codeur qui
+écrit `fenetre = 30` alors que la fiche dit quarante-cinq minutes produit un
+signal **qui tourne, qui est causal, qui n'est pas dégénéré** — et qui ne code
+pas ce papier. Rien ne l'attraperait.
+
+Exiger que chaque nombre du code se retrouve dans la fiche ferme cela sans
+étalon, et **c'est l'interdit constitutionnel appliqué au code** : *ne jamais
+inventer une valeur de données*. Un paramètre qui n'est pas dans la fiche est
+un paramètre inventé.
+
+Comme pour `F2`, il faudra une **liste close d'échappatoires nommées** — une
+constante qui vient de `catalogue.yaml` (un tick, un multiplicateur), une
+qui vient de `D01` (un horizon, une fenêtre de séance), une qui est une
+convention de langage (`0`, `1`, `100` pour un pourcentage). Ce que la liste ne
+couvre pas est refusé, et l'élargir est une décision — `L18`.
+
+**Pourquoi aucun IC.** Deux raisons, et la seconde est la vraie.
+
+La première : un codeur jugé sur l'IC est sélectionné sur le résultat. Après
+vingt tentatives, on garderait celle qui mesure le mieux — c'est-à-dire du
+surajustement déguisé en ingénierie.
+
+La seconde : **le nombre de tests est la seule chose que la phase 15 ne peut pas
+recalculer**. Un IC dépensé pour savoir si du code compile est un IC perdu pour
+toujours. La porte 06 l'a déjà établi pour les signaux dégénérés — *« il n'a
+produit aucun IC, il n'y a rien à inscrire, et un dénominateur gonflé de tests
+qui n'ont jamais eu lieu est aussi faux qu'un dénominateur absent »*.
+
+**`S6` reprend `G3` de `D17`**, qui est la condition la plus dure et la plus
+utile : un automate dont on répare les sorties à la main n'est pas un automate,
+et la phase 09 en a besoin trente à cinquante fois.
+
+**Ce que ce juge ne saura PAS faire, et c'est écrit ici.** Il ne dira pas si le
+signal est *le bon*. Un codeur qui produirait un signal fidèle à une fiche
+creuse, ou fidèle à un aspect secondaire du papier, passerait les six
+conditions. La pertinence n'a pas de juge automatique — `D16` le disait déjà de
+l'extraction, et c'est la même limite un cran plus bas. Elle n'aura de
+dénominateur qu'en phase 09.
+
+## Ce que ça verrouille
+
+- **`scripts/score_signal.py` devient le juge de la porte 08**, et se montre
+  refusant chacune des six fautes sur des signaux fabriqués, comme
+  `score_triage.py` et `score_extraction.py` le font pour les leurs.
+- **La liste close des constantes admissibles** est une pièce du dépôt, au même
+  titre que `REASONS` de `D17` et `REPAIRS` de `D16`.
+- **Le codeur est une session séparée** qui reçoit la fiche, le contrat de
+  `D07`, et **rien d'autre** — ni `signals/`, qui contiendrait la réponse, ni
+  les hypothèses pré-enregistrées. Même parade que pour le trieur et
+  l'extracteur.
+- **Changer une condition périme tout signal produit avant**, comme `D16` pour
+  les fiches et `D10` pour le harnais.
+
+## Ce qui reste ouvert
+
+| Point | Échéance |
+|---|---|
+| **La liste close des constantes admissibles** — son contenu exact se fixera en écrivant le juge, sur les trois signaux existants qui servent de cas connus | à l'écriture de `score_signal.py` |
+| **La calibration sur Baltussen** — impossible tant que l'entrée 2 n'est pas fichée. C'est `G1` qui la débloque | après `G1` |
+| **Gao, entrée 1** — étalon désigné par `D06` et devenu inatteignable. `D06` n'est pas rouverte ici : si une copie libre réapparaît, la calibration se fera sur deux sujets au lieu d'un | si l'entrée 1 redevient atteignable |
+| **Que faire d'un signal qui passe les six conditions mais dont la fiche est creuse** — la question de la pertinence, renvoyée à la phase 09 comme `D16` l'a fait | phase 09 |
+| **Le budget d'itérations d'une boucle de génération** — combien d'essais, quel seuil ajusté à ce nombre, quelle règle d'arrêt. La présente décision juge UN signal ; elle ne dit rien d'une recherche automatique qui en produirait des milliers | avant toute boucle |
+
+## Journal des passages
+
+*Un passage par ligne, écrit après coup, jamais effacé.*
+
+| # | Date | Signal | S1–S6 | Verdict |
+|---|---|---|---|---|
+| — | 2026-09-23 | décision écrite, aucun codeur n'existe | — | seuil posé, juge à écrire |

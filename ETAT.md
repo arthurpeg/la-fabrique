@@ -1,7 +1,7 @@
 # ÉTAT
 
 **Phase courante :** 07 — triage et extraction sur 20 papiers connus
-**Date de dernière mise à jour :** 2026-09-22
+**Date de dernière mise à jour :** 2026-09-23
 **Dernière porte franchie :** **06**, le 2026-09-18 — les deux clauses.
 Clause 1 (dégénérescence) : `gate_06_controls.py`, 25 vérifications. Clause 2
 (réplication) : `scripts/measure_h04.py`, 19 vérifications, `H04` pré-enregistrée
@@ -15,6 +15,22 @@ calibration à la main (porte 03). `D13` § Pourquoi l'écrit sans détour, et a
 session ne doit lire cette porte comme davantage.
 
 **Décision la plus récente :**
+`decisions/DECISION-23-seuil-du-codeur-de-signal.md` — le seuil de la porte 08,
+**écrit avant que le codeur existe**. Six conditions à tolérance zéro, dont
+`S5` : **toute constante numérique du code se retrouve dans la fiche** — `F2`
+transposé au code. **Aucun IC n'est calculé pour franchir cette porte.** Les
+étalons de `D06` n'ayant pas de fiche, la corrélation à une implémentation
+humaine est une **calibration**, jamais un seuil.
+**Décision précédente :**
+`decisions/DECISION-22-le-texte-de-recherche-et-le-texte-qui-fait-foi.md` — la
+base vectorielle contient deux textes d'autorité différente, et
+`papers.text_source` le dit dans la donnée. Ficher un papier `harvest` exige de
+verser son texte sous `D18` d'abord.
+**Décision précédente :**
+`decisions/DECISION-21-les-axes-de-moissonnage.md` — la taxonomie de recherche
+est ouverte à l'ajout, **fermée à la retouche** : un axe qui a servi ne se
+réécrit pas.
+**Décision précédente :**
 `decisions/DECISION-20-le-moissonnage-du-corpus.md` — le moissonneur **ratisse
 et ne juge pas**. Requête écrite avant d'être lancée, six familles reprises des
 sections A–F d'`AMORCE.md`. Son produit alimente la **phase 09** et **n'entre
@@ -80,8 +96,8 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 |---|---|---|---|
 | 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07` |
 | 06 | Contrôles automatiques et réplication | Un signal dégénéré est rejeté avant le harnais ; la chaîne reproduit un fait publié sur nos données. La cible a changé deux fois : Mesfin (métrique incompatible, `D12`), Heston (motif absent, `H03`), puis Andersen & Bollerslev (`D13`). | **franchie 2026-09-18** — `gate_06_controls.py` (25) et `scripts/measure_h04.py` (19) |
-| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 32 vérifications), **son extracteur existe depuis le 2026-09-21** (`extract_fiche.py`) ; recensement `G4` fait — **19 atteignables sur 20**, 18 PDF, texte qui fait foi fixé par `D18` ; les 3 fiches de référence passent les cinq conditions ; **`G1` non tenu — 10 fiches produites, 5 vertes, 8 papiers restent à ficher** ; `G2` non tenu — 5 fiches cassent `D16`, **dont 2 par un faux rejet du garde** |
-| 08 | Le codeur de signal | Une fiche produit un signal exécutable qui passe la sandbox, sans retouche manuelle. | à faire |
+| 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **PHASE COURANTE, NON FRANCHIE** — moitié **triage** tenue au **passage 1** du 2026-09-20 (A/B/C/D = 1/0/2/0, deux conditions à leur maximum exact) ; moitié **extraction** : son juge existe (`D16`, `score_extraction.py`, 32 vérifications), **son extracteur existe depuis le 2026-09-21** (`extract_fiche.py`) ; recensement `G4` fait — **19 atteignables sur 20**, 18 PDF, texte qui fait foi fixé par `D18` ; les 3 fiches de référence passent les cinq conditions ; **`G1` non tenu — 10 fiches produites, 7 papiers restent à ficher** (entrées 2, 5, 8, 12, 18, 19, 20) ; **`G2` non tenu — 3 fiches cassent `D16`** : Andersen 2003, Corsi 2009, Lou 2019, toutes sur `F1` (schéma) et `F3` (valeur dans sa citation), **aucune sur `F2`** donc aucune citation inventée. Compté le 2026-09-23 en lançant les juges, non recopié |
+| 08 | Le codeur de signal | **Son seuil est écrit depuis le 2026-09-23 — `D23`.** Six conditions à tolérance zéro : contrat de `D07`, liste blanche, causalité, non-dégénérescence, **fidélité à la fiche** (`S5` : toute constante du code s'y retrouve) et **zéro retouche manuelle**. Aucun IC n'est calculé pour franchir cette porte. | **le juge est écrit, l'accusé n'existe pas** — `score_signal.py` et `code_signal.py` restent à construire |
 
 ## Acte III — Fermer la boucle une fois
 
