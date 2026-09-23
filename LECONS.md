@@ -733,3 +733,36 @@ qui rendrait un résultat plausible au lieu de lever serait restée invisible �
 c'est la différence entre `L21`, où un compte perdait un élément en silence, et
 celle-ci. Écrire du code qui casse fort est ce qui permet de ne pas l'avoir
 vérifié.
+
+---
+
+## L24 — Un compteur qui compte l'entrée ne dit rien de la sortie
+
+`corpus/merge_triage.py` a imprimé, le 2026-09-23, un compte de triage
+parfaitement exact — `oui` 10, `partiel` 29, `non` 80 — **et écrit un fichier où
+les 119 lignes portaient le même verdict**.
+
+La cause est banale : une variable de boucle fuitée. La ligne écrite était
+
+```python
+{"id": i, **{k: v[k] for ...}} for i in lus
+```
+
+où `v` n'était pas lié par cette compréhension mais restait celui de la boucle
+**précédente**. Chaque ligne a donc reçu le verdict du dernier papier traité.
+
+**Ce qui rend la faute instructive, c'est qu'elle n'a rien cassé.** Les comptes
+imprimés se calculaient sur `lus`, la structure d'entrée, qui était intacte. Le
+script n'a pas levé, n'a pas averti, et son propre garde `L21` — celui qui vérifie
+que la population est reconstituée — **portait aussi sur l'entrée**, donc il a
+passé. Un contrôle en amont d'une transformation ne dit rien de ce qui en sort.
+
+**La règle.** Quand un script transforme puis écrit, le contrôle doit porter sur
+**ce qui est écrit**, pas sur ce qui est lu. Ici : recompter les verdicts du
+fichier produit et exiger qu'ils égalent ceux de l'entrée, avant d'écrire. Trois
+lignes, et la faute devient impossible.
+
+C'est le complément de `L23` : là, un chemin non exercé cassait bruyamment à la
+première vraie utilisation ; ici, un chemin exercé produisait **un résultat
+plausible et faux**. Le second est plus dangereux — il n'y a pas d'exception pour
+le signaler, seulement quelqu'un qui pense à relire le fichier.

@@ -85,12 +85,30 @@ def main() -> int:
             print(f"  - {f}")
         return 1
 
-    SORTIE.write_text(json.dumps(
-        sorted(({"id": i, "title": attendus[i], **{k: v[k] for k in ("verdict", "raison", "lot")
-                                                   if k in v}} for i in lus),
-               key=lambda x: (x["verdict"], x["title"])),
-        ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"\nécrit : {SORTIE.relative_to(REPO)}")
+    # `for i in lus` avec `v[k]` a l'interieur : `v` venait de la boucle
+    # PRECEDENTE, et les 119 lignes ont ete ecrites avec le meme verdict.
+    # Les comptes imprimes restaient justes — ils se calculent sur `lus` — donc
+    # rien n'a cassé et le fichier était faux en silence. Nomme explicitement
+    # la variable de boucle, et vérifie la sortie plutôt que de l'espérer.
+    lignes = sorted(
+        ({"id": i, "title": attendus[i],
+          **{k: ligne[k] for k in ("verdict", "raison", "lot") if k in ligne}}
+         for i, ligne in lus.items()),
+        key=lambda x: (x["verdict"], x["title"]),
+    )
+
+    # LE GARDE QUI MANQUAIT : ce qu'on ECRIT doit recompter comme ce qu'on a LU.
+    ecrit = collections.Counter(x["verdict"] for x in lignes)
+    if ecrit != compte:
+        raise SystemExit(
+            f"le fichier écrit ne recompte pas comme les verdicts lus : "
+            f"{dict(ecrit)} contre {dict(compte)}. Rien n'est écrit."
+        )
+
+    SORTIE.write_text(json.dumps(lignes, ensure_ascii=False, indent=2) + "\n",
+                      encoding="utf-8")
+    print(f"\nécrit : {SORTIE.relative_to(REPO)}  "
+          f"(recompté : {dict(ecrit)})")
     print("\nCE TRIAGE N'EST PAS NOTÉ : aucun étalon humain n'existe pour ces")
     print("papiers. Ce qui fonde la confiance est le passage 1 du 2026-09-20 sur")
     print("les 20 d'AMORCE.md (A/B/C/D = 1/0/2/0), et rien d'autre.")
