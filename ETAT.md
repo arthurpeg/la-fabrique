@@ -49,6 +49,16 @@ puis mesurée — la forme en U de la volatilité intra-journalière est retrouv
 reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
 **Décision la plus récente :**
+`decisions/DECISION-25-budget-de-tests.md` — le budget de la phase 09.
+**Benjamini–Hochberg à `q` = 0,10**, test unilatéral au signe pré-enregistré,
+sur un lot de **50 signaux clos avant la première mesure**. Deux faits mesurés la
+fondent : `t` = IC × 146,8 sur nos données (vérifié contre `H01` au registre), et
+la cible économique de `D01` (IC 0,018–0,031) tombe **exactement** dans la
+fenêtre statistique (`t` 2,64–4,55). **Le budget n'est pas un plafond** : sous
+FDR, les vrais signaux trouvés croissent proportionnellement à `N` pendant que la
+proportion de faux reste plate à ~9 %. Ce qui coûte, c'est un corpus médiocre,
+pas un registre long.
+**Décision précédente :**
 `decisions/DECISION-24-atteignable-et-fichable.md` — *atteignable* et
 *fichable* sont deux choses. Le premier dit ce que le monde nous consent, le
 second ce que notre outillage sait traiter. **`G1` ne compte que les
@@ -187,21 +197,35 @@ script : trieur (`D15`), extracteur (`D16`, `D17`, `D24`), codeur (`D23`).
 **Ce que la phase 09 ajoute est le premier IC**, et c'est un changement de
 nature : jusqu'ici aucune porte n'a dépensé une ligne de registre.
 
-### Ce qu'il faut trancher AVANT de lancer quoi que ce soit
+### ~~Ce qu'il faut trancher avant de lancer quoi que ce soit~~ — **tranché le 2026-09-23 par `D25`**
 
-`D23` § Ce qui reste ouvert le nomme déjà, et c'est maintenant que ça mord :
+**Benjamini–Hochberg à `q` = 0,10**, unilatéral au signe pré-enregistré, lot de
+**50 clos avant la première mesure**. Le dénominateur de la phase 15 reste le
+registre **entier**, les 56 tests antérieurs compris.
 
-> **Le budget d'itérations d'une boucle de génération** — combien d'essais, quel
-> seuil ajusté à ce nombre, quelle règle d'arrêt. La présente décision juge UN
-> signal ; elle ne dit rien d'une recherche automatique qui en produirait des
-> milliers.
+Échelle concrète du lot :
 
-**Chaque signal mesuré consomme une ligne de registre, et le dénominateur de la
-phase 15 en dépend.** Trente à cinquante papiers, c'est trente à cinquante tests
-au moins — contre 56 comptés aujourd'hui. Lancer la boucle sans décision écrite
-sur le budget reviendrait à choisir ce nombre par accident.
+| Rang retenu | `t` requis | IC requis |
+|---|---|---|
+| le 1ᵉʳ | **2,88** | 0,0196 |
+| le 3ᵉ | 2,51 | 0,0171 |
+| le 5ᵉ | 2,33 | 0,0158 |
 
-Une décision écrite est donc le préalable, pas du code.
+*(Bonferroni aurait exigé 3,09 pour tous.)*
+
+### Ce qui bloque la phase 09, maintenant que le budget est fixé
+
+1. **Il manque 33 fiches.** `D25` engage un lot de 50 ; le corpus en porte **17**.
+   Soit on en produit 33 de plus — l'extracteur sait le faire, et la base
+   vectorielle porte 136 papiers moissonnés — soit on réduit `N` par un
+   amendement écrit à `D25`.
+2. **La matrice de corrélation des 50 signaux** doit être produite **avant**
+   d'appliquer `BH` : la procédure suppose une dépendance positive, et plusieurs
+   papiers d'intraday momentum donneront des signaux corrélés.
+   `scripts/calibrate_coder.py` sait déjà mesurer une corrélation entre deux
+   signaux.
+3. **`scripts/gate_09.py` n'existe pas.** Il appliquera `BH` et refusera de
+   rendre un verdict sur un lot non clos.
 
 ### Ce qui reste dû par ailleurs, et qui n'a pas bougé
 
