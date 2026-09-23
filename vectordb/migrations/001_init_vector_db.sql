@@ -5,7 +5,7 @@
 -- dynamique, et il n'existe aucune façon honnête de contourner cela. Pour une
 -- autre dimension, substituer AVANT de migrer :
 --
---     sed -i 's/vector(1536)/vector(3072)/g' 001_init_vector_db.sql
+--     sed -i 's/vector(768)/vector(1024)/g' 001_init_vector_db.sql
 --
 -- Changer après chargement impose une migration de table complète.
 --
@@ -69,7 +69,7 @@ create table chunks (
     -- réservé lui aussi. `ordinal` ne l'est pas.
     ordinal         int          not null check (ordinal >= 0),
 
-    embedding       vector(1536),
+    embedding       vector(768),
     embedding_model text,
 
     tsv tsvector generated always as (to_tsvector('english', content)) stored,
@@ -98,7 +98,7 @@ create table strategies (
     sharpe_ratio    double precision,
     limitations     text,
 
-    embedding       vector(1536),
+    embedding       vector(768),
     embedding_model text,
 
     constraint strategies_period_order check (
@@ -157,7 +157,7 @@ alter table strategies enable row level security;
 -- 1. Vectorielle pure. `<=>` est la distance cosinus ; la similarité vaut 1-d.
 -- ----------------------------------------------------------------------------
 create or replace function vector_search(
-    query_embedding vector(1536),
+    query_embedding vector(768),
     match_count     int          default 10,
     year_min        int          default null,
     year_max        int          default null,
@@ -201,7 +201,7 @@ $$;
 -- ----------------------------------------------------------------------------
 create or replace function hybrid_search(
     query_text      text,
-    query_embedding vector(1536),
+    query_embedding vector(768),
     match_count     int          default 10,
     year_min        int          default null,
     year_max        int          default null,
@@ -264,7 +264,7 @@ $$;
 -- 3. Stratégies.
 -- ----------------------------------------------------------------------------
 create or replace function strategy_search(
-    query_embedding vector(1536),
+    query_embedding vector(768),
     match_count     int              default 10,
     asset_filter    text             default null,
     type_filter     strategy_type    default null,

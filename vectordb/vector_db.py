@@ -37,7 +37,7 @@ from psycopg.rows import dict_row
 Section = Literal["intro", "methodology", "results", "conclusion", "other"]
 StrategyType = Literal["momentum", "carry", "mean_reversion", "other"]
 
-DEFAULT_DIM = 1536
+DEFAULT_DIM = 768
 
 
 class VectorDBError(RuntimeError):
