@@ -30,12 +30,18 @@ import sys
 import time
 from pathlib import Path
 
+import psycopg
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from vector_db import DEFAULT_DIM, VectorDB, VectorDBError, to_pgvector  # noqa: E402
 
 MODEL = "BAAI/bge-base-en-v1.5"
 MODEL_DIM = 768
 BATCH = 64
+
+# Au-dela, ce n'est plus une coupure passagere mais une panne : on s'arrete
+# au lieu de marteler un service qui ne repond plus.
+MAX_COUPURES = 40
 
 # `bge` attend ce préfixe sur les textes INDEXÉS d'un corpus de recherche —
 # c'est ainsi qu'il a été entraîné, et l'omettre dégrade la récupération sans
@@ -82,7 +88,8 @@ def main(argv: list[str]) -> int:
               f"rend {MODEL_DIM}. Aligner la migration et `DEFAULT_DIM`.")
         return 1
 
-    with VectorDB.from_env() as db:
+    db = VectorDB.from_env()
+    try:
         with db.conn.cursor() as cur:
             cur.execute("select count(*) from chunks where embedding is null")
             restants = cur.fetchone()["count"]
@@ -103,26 +110,51 @@ def main(argv: list[str]) -> int:
         model = load_model()
         depart = time.time()
         traites = 0
+        coupures = 0
 
         while traites < restants:
-            with db.conn.cursor() as cur:
-                cur.execute(
-                    "select id, content from chunks where embedding is null "
-                    "order by paper_id, ordinal limit %s",
-                    (min(BATCH, restants - traites),),
-                )
-                lot = cur.fetchall()
-            if not lot:
-                break
+            # LA CONNEXION TOMBE SUR UN TRAVAIL LONG, et il faut le prévoir :
+            # le pooler de Supabase a fermé la nôtre après ~20 min au premier
+            # essai (« server closed the connection unexpectedly »), à 16 % des
+            # 10 219 morceaux. Le calcul lui-même dure plus d'une heure, donc
+            # la coupure n'est pas un incident : c'est le régime normal.
+            #
+            # Rien n'est perdu : chaque lot est écrit avant le suivant, et la
+            # requête ne prend que les `embedding is null`. Se reconnecter et
+            # continuer suffit ; abandonner obligerait à relancer à la main
+            # toutes les vingt minutes.
+            try:
+                with db.conn.cursor() as cur:
+                    cur.execute(
+                        "select id, content from chunks where embedding is null "
+                        "order by paper_id, ordinal limit %s",
+                        (min(BATCH, restants - traites),),
+                    )
+                    lot = cur.fetchall()
+                if not lot:
+                    break
 
-            vecteurs = embed_texts(model, [r["content"] for r in lot])
-            with db.conn.transaction(), db.conn.cursor() as cur:
-                cur.executemany(
-                    "update chunks set embedding = %s::vector, embedding_model = %s "
-                    "where id = %s",
-                    [(to_pgvector(v, MODEL_DIM), MODEL, r["id"])
-                     for v, r in zip(vecteurs, lot, strict=True)],
-                )
+                vecteurs = embed_texts(model, [r["content"] for r in lot])
+                with db.conn.transaction(), db.conn.cursor() as cur:
+                    cur.executemany(
+                        "update chunks set embedding = %s::vector, "
+                        "embedding_model = %s where id = %s",
+                        [(to_pgvector(v, MODEL_DIM), MODEL, r["id"])
+                         for v, r in zip(vecteurs, lot, strict=True)],
+                    )
+            except psycopg.OperationalError as e:
+                coupures += 1
+                if coupures > MAX_COUPURES:
+                    print(f"\n{coupures} coupures : on s'arrête. {traites} "
+                          "morceaux sont écrits, relancer reprend là.")
+                    raise
+                print(f"  connexion perdue ({str(e).splitlines()[0][:52]}) — "
+                      f"reconnexion {coupures}/{MAX_COUPURES}", flush=True)
+                time.sleep(3)
+                db.close()
+                db = VectorDB.from_env()
+                continue
+
             traites += len(lot)
             ecoule = time.time() - depart
             reste = (restants - traites) * ecoule / max(traites, 1)
@@ -140,6 +172,8 @@ def main(argv: list[str]) -> int:
             manquants = cur.fetchone()["count"]
         if manquants:
             print(f"  {manquants} encore sans embedding — relancer reprend là.")
+    finally:
+        db.close()
     return 0
 
 
