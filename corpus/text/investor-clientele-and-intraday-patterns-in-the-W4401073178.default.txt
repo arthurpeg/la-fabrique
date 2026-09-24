@@ -1,0 +1,1733 @@
+Vol.:(0123456789)
+Review of Quantitative Finance and Accounting
+https://doi.org/10.1007/s11156-024-01319-8
+ORIGINAL RESEARCH
+Investor clientele and intraday patterns in the cross section 
+of stock returns
+Jian Chen1 · Ahmad Haboub2 · Ali Khan2 · Syed Mahmud3
+Accepted: 20 June 2024 
+© The Author(s) 2024
+Abstract
+This paper examines the existence of a well documented (Heston et  al. in J Finance 
+65:1369–1407) (hereafter HKS 2010) intraday momentum pattern in the cross section of 
+stock returns for three previously un-examined markets outside the US—UK, China and 
+Brazil. While the stocks in UK and Brazil exhibit the pattern, the evidence from China is 
+lacklustre. We utlitlize the presence of dual listed A-shares (dominated by domestic retail 
+investors) and their B- and H-share counterparts (dominated by foreign institutional inves-
+tors) of the same firms which provide a natural experiment setting to analyse the impact of 
+investor clientele on the proliferation of HKS (2010) pattern. Our findings indicate that pat-
+tern is much weaker in A-shares (owned mostly by domestic retail investors) as compared 
+to their B- and H-share counterparts. As a further robustness test we examine the impact of 
+an exogenous shock that leads to an increase in institutional ownership namely the partial 
+index inclusion of A-shares in the Morgan Stanley Capital International (MSCI) Emerging 
+Markets Index. Our findings indicate an increasing level of the manifestation of the intra-
+day pattern upon inclusion of A-shares to the MSCI.
+Keywords Intraday momentum · Emerging markets · Investor composition · Limits of 
+arbitrage
+JEL Classification G11 · G15
+ * Jian Chen 
+ Jian.Chen@nottingham.ac.uk
+ Ahmad Haboub 
+ Ahmad.Haboub@northampton.ac.uk
+ Ali Khan 
+ Ali.Khan@northampton.ac.uk
+ Syed Mahmud 
+ s.mahmud1@aston.ac.uk
+1 Department of Finance, Risk and Banking, Nottingham University Business School, Nottingham 
+University, C-23, South Building, Jubilee Campus, Nottingham, UK
+2 Accounting and Finance Division, Faculty of Business and Law, Northampton NN1 5PH, UK
+3 Finance and Entrepreneurship Division, Aston Business School, Economics, Aston St, 
+Birmingham B4 7ET, UK
+ J. Chen et al.
+“China is opening up faster than most people believe or think. We do not see any regres-
+sion of that. If anything, we see a speeding up.1”
+(Henry Fernandez, CEO, Morgan Stanley Capital International.)
+“The mainland China stock market is mostly owned by retail investors, so it is very 
+driven by sentiment. Those retail investors are really worried about trade wars, so this for -
+eign investment will help institutionalize the market and slowly make it more dominated by 
+professional investors.2”
+(Brendan Ahern, CEO, KraneShares MSCI China A Shares ETF.)
+1 Introduction
+The seminal study by Jegadeesh and Titman (1993) documents positive returns on momen-
+tum strategies in the US for the holding periods of 3- to 12-months. This form of conven-
+tional momentum has since been widely documented in various studies across the world 
+(see Rouwenhorst 1999; Jegadeesh and Titman 2001; Griffin et al. 2003). While momen-
+tum is pervasive across markets and several asset classes (Daniel and Moskowitz 2016) 
+and provides a large magnitude return of 12 % in the US and Europe (Chui et al. 2010) 
+there is still a noteworthy exception-China. The Chinese markets demonstrate poor per -
+formance of the conventional momentum strategy as demonstrated by studies such as Pan 
+et al. (2013) and Gao et al. (2021). Also, since the US and China are the two largest mar -
+kets in the world, this difference in their momentum patterns attracts a lot of interest from 
+global investors (Ma et al. 2024).
+Technological3 and structural 4 advancements in financial markets in a HFT trading 
+world have brought about a revolution (O’hara 2015) and have enabled investors to for -
+mulate high frequency momentum strategies ranging from few hours to few days. With 
+the increasing availability of intraday data, focus has turned to studying high frequency 
+momentum. Initially, we witnessed a flurry of intraday momentum studies focusing on the 
+US markets (see for example Renault 2017 and Gao et al. 2018) which soon led to studies 
+focusing on Chinese markets. The exponential rise of the Chinese economy5 and the eleva-
+tion of its status as the world’s second most valuable stock market 6 only behind the US in 
+terms of market capitalisation, but ahead of the US in terms of new initial public offerings 
+in recent times (Qian et al. 2024)it has been the focus of attention by international inves-
+tors (Carpenter et  al. 2021.Hence, there has been increased interest in studying intraday 
+momentum in Chinese markets.
+1 See Bloomberg article https:// www. bloom berg. com/ news/ artic les/ 2019- 02- 28/ msci- chief- ferna ndez- says- 
+china- openi ng- faster- than- some- think.
+2 See https:// www. cnbc. com/ 2018/ 08/ 31/ msci- adds- more- mainl and- china- stocks- a- shares- to- its- index es. 
+html.
+3 Riordan and Storkenmaier (2012) suggest that improvements in exchange technology have enabled trad-
+ers to receive feedback on their orders quicker, thereby reducing latency, increasing liquidity, and decreas-
+ing transaction costs.
+4 Brogaard et al. (2014) and references therein, suggest that high frequency trading (HFT) and Algorithmic 
+Trading (AT) have changed the landscape and enhanced price efficiency and market quality, with HFT and 
+AT acting as liquidity providers and enabling smoother, faster transactions at lower costs.
+5 Allen et al. (2024) reports that Chinese GDP in 1980 was 11% of the US GDP in constant dollars as per 
+IMF, but in 2018 China was 23% larger than the US economy in terms of the purchasing power parity.
+6 see for example Yao et al. (2022), Ma et al. (2024), Sehgal et al. (2024) and Chen et al. (2024) report 
+China as the second largest stock market.
+Investor clientele and intraday patterns in the cross section…
+Jin et al. (2020) find that the first half hour of returns predict the last half hour of returns 
+for four Chinese commodity markets namely—copper, steel, soyabean and soyabean meal 
+futures. Gao et al. (2019) find intraday momentum in stocks such that the first half hour 
+of returns positively predict the last half hour of daily returns. Limkriangkrai et al. (2023) 
+document intraday momentum effect for ETFs in China. Our study is linked to other stud-
+ies of high frequency momentum in China as we look for evidence of the existence of the 
+HKS (2010) in Chinese markets. We observe that the HKS (2010) pattern is much weaker 
+in China as compared to the other two markets that we study—UK and Brazil. We also test 
+for existence of the pattern in the UK (developed market) and Brazil (developing market) 
+to provide further out of sample evidence on the existence of the HKS (2010) intraday 
+momentum patterns. It is also to ensure that the non-existence of the pattern in China is not 
+merely due to factors such as academic attention which tends to weaken the proliferation of 
+existing effects and anomalies (Shanaev and Ghimire 2021).
+In contrast to the US markets, 7 the Chinese markets are dominated by individual retail 
+investors with an average age of 50 years and poor education and they exhibit speculative 
+trading (characterized by the highest turnover ratios in the world) and are subject to vari-
+ous regulatory constraints (Pan et al. 2015). Kong et al. (2017) provide further support to 
+the findings of Pan et al. (2015) and postulate that the unusually high turnover of around 
+500 percent alludes to the highly speculative or ’gambling’ nature of investors in China. 
+Furthermore, even the most sophisticated investors and analysts regard the Chinese stock 
+market as a “casino" who blame the “erratic and irrational" behaviour on the individual 
+retail investors.8
+China’s structural differences make it an ideal laboratory to study the HKS (2010) effect. 
+Chinese stock market’s unique share class structure which is split into A-, B- and H-shares 
+with the presence of dual listed shares provides us with an opportunity to delineate the role 
+that investor clientele plays in the effect’s proliferation. In this study, we examine the HKS 
+(2010) intraday momentum pattern in the cross-section of stock returns for the main Chi-
+nese share sub-classes namely the A-shares (available under QFII and RQFII quota restric-
+tions to foreign investors), B-shares (available to foreign investors without restrictions) and 
+H-shares(listed in Hong Kong but available to domestic investors through the stock connect 
+program).
+Figure 1 shows that the intraday momentum pattern in the cross-section of stock returns 
+is relatively weaker in the all A-shares sample compared to the UK (chosen due to its size) 
+and Brazil (chosen because it is an emerging market). We attribute these findings to the 
+retail investor dominated markets of China. This study offers a unique opportunity to study 
+the impact of investor composition on the proliferation of the intraday momentum pattern 
+in the cross-section of stock returns. Table 1 highlights the unique features of China’s vari-
+ous shares sub-classes.
+We exploit the dual listed A- and B-shares and the dual listed A- and H-shares as 
+these stocks have the same balance sheets and cash flows and only differ in terms of 
+ownership-individual versus foreign/institutional investors. Also, the dual-listed 
+A-shares are different from their H-share counterparts since the Hong Kong stock 
+7 According to Borochin and Yang (2017) institutional ownership in the United States has risen immensely 
+over the past 30 years and in the 2010s, on average every firm had 65 percent institutional ownership.
+8 This is according to an interview with Jing Ulrich, Vice Chairman for Asia Pacific with JP Morgan Chase 
+Bank. See: https:// www. cnbc. com/ 2016/ 01/ 08/ jpmor gan- heres- what- china- needs- to- stabi lize. html and an 
+article published in the Economist which suggests that the Chinese stock market is often referred to as a 
+casino See: https:// www. econo mist. com/ free- excha nge/ 2015/ 05/ 26/a- crazy- casino.
+ J. Chen et al.
+market doesn’t constitute the same level of limits of arbitrage in terms of price lim-
+its and day trading rules as do the Chinese markets (see Gu et al. 2018). The Chinese 
+A-shares are often exploited by researchers to unravel the impact that their idiosyncra-
+sies have on various momentum anomalies (Ouyang et al. 2024). Figures  2 and  3 show 
+the findings for dual-listed B-shares and H-shares respectively. These dual-listed B- and 
+H-shares show greater strength of the pattern than their A-share counterparts. The dif-
+ference in the strength of the momentum pattern is even higher for the H-shares and 
+their A-share counterparts because the H-shares provide lower limits of arbitrage which 
+are even more desirable for institutional investors. These findings are consistent with 
+studies in the past such as Kaniel et al. (2008). They find that individual investors have 
+a tendency to take a contrarian strategy as opposed to a momentum strategy typical of 
+institutions and mutual funds (Grinblatt et al. 1995). Our findings further support the 
+findings of Baltzer et  al. (2019) who study the entire German stock market and find 
+that foreign investors and financial institutions, particularly mutual funds investors are 
+momentum investors whereas, individual investors are contrarians.
+The reforms carried out by Chinese policymakers and regulators paved the way for a 
+landmark event. On June 1, 2018 Morgan Stanley Capital International(MSCI hereafter) 
+Fig. 1  Manifestation of the intraday pattern across various markets
+Investor clientele and intraday patterns in the cross section…
+initiated its first phase of including China’s A-shares into its Emerging Markets Index. This 
+was then followed by the second phase of inclusion on September 1, 2018 of what analysts 
+believe to be a multi-year plan to increase the weight of A-shares by MSCI in its Emerging 
+Markets Index. The index is followed by active and passive managers controlling assets 
+worth 1.6 trillion US Dollars and some analysts are forecasting a net inflow of upto 600 
+Table 1  Comparison of salient features of various share classes across China
+This table reports salient features of various share classes such as investor composition and trading regula-
+tions across them. It also outlines who are allowed to own the stocks as China places various restrictions on 
+different share classes
+Type Exchange Primary owners Domestic/For-
+eign
+Price limits Intraday trading Currency
+A-shares Shanghai/Shen-
+zen
+Individuals Domestic Yes Not allowed RMB
+B-shares Shanghai/Shen-
+zen
+Institutional Foreign Yes Not allowed USD/HKD
+H-shares Hong Kong Institutional Foreign No Allowed HKD
+Fig. 2  Relative strength of the intraday pattern in dual listed B-shares
+ J. Chen et al.
+billion US Dollars into the Chinese A-shares over the next five to ten years after one hun-
+dred percent inclusion is achieved.9
+While these reforms have led to the partial inclusion of A-shares in the Emerging 
+Markets Index by MSCI, there are investors who are optimistic and some are sceptic of 
+the impact of partial inclusion of A-shares into the MSCI Emerging Markets Index and 
+will not be influenced by it in terms of their stock picking 10. We shed more light on the 
+impact of index inclusion on the 233 A-shares and show that institutional ownership, 
+percentage of float held by institutions, number of institutions holding the stocks and 
+foreign ownership all four measures show an increase post inclusion. Other studies such 
+as Cortina et al. (2024) have also shown a rise in foreign ownership of Chinese A-shares 
+Fig. 3  Relative strength of the pattern in A-shares and their H-share counterparts
+9 The 600 billion USD figure has been estimated by Steven Sun, head of research at HSBC Qianhai, a 
+Shenzhen-based securities company. This article can be found at https:// www. ft. com/ conte nt/ 3ea51 148- 
+632f- 11e8- a39d- 4df18 8287ff  f
+10 Nicholas Yeo from Aberdeen Standard Investments sees no immediate effect of the inclusion on his 
+investment picks. Eric Brian from JP Morgan Asset Management views the move as largely symbolic and 
+sees no impact on the firm’s approach to stock picking and portfolio selection. See: https:// www. bloom berg. 
+com/ news/ artic les/ 2019- 03- 01/ msci-s- latest- china- call- posit ive- but- mostly- symbo lic- analy sts
+Investor clientele and intraday patterns in the cross section…
+post MSCI inclusion. The changes in key variables of institutional ownership are shown 
+in Table  11. Institutional holdings rise from 49 percent before inclusion to 55 percent 
+after inclusion. The percentage of float held by institutions rises from 18 percent to 29 
+percent. The institutional base in terms of the number of institutions owning or trading 
+the stocks has risen to 150 from a pre-inclusion level of 100. Also, domestic ownership 
+declined by 2 percent and made way for an increase in foreign ownership.
+We use the exogenous increase in institutional ownership as a result of MSCI Emerg-
+ing Markets index inclusion of 233 A-shares to further study its impact on the intra-
+day momentum pattern in the cross-section of stock returns. MSCI inclusion of Chinese 
+A-shares has attracted massive interest and studies like Li et al. (2024a) show that MSCI 
+inclusion has reduced implicit market barriers for foreign investors which has attracted 
+them to A-shares and led to greater market integration. The results of the impact of 
+inclusion in the index are depicted in Fig.  4. We observe that following the inclusion in 
+the MSCI Emerging Markets Index, the 233 A-shares exhibit the intraday momentum 
+with greater strength and point to the importance of institutional investors in explain-
+ing the intraday momentum in the cross-section of stock returns. This provides further 
+evidence as to the impact of institutionalization on prevalence of the pattern and also 
+further re-enforces our initial findings which differ between all A-shares and the UK 
+Fig. 4  The impact of index inclusion
+ J. Chen et al.
+and China as well as between A-shares and their dual listed B-share and H-share coun-
+terparts. These findings are consistent with Nofsinger and Sias (1999). They show that 
+herding and feed back trading by institutional investors is more effective in leading to 
+the momentum effect as compared to that by individual investors.
+Li and Wang (2010) show that institutional investors in China have a tendency to pick 
+large stocks and concentrate their daily trades in large market cap stocks. Therefore, we 
+turn our focus to the impact of size on the propensity with which the intraday momentum 
+pattern propagates. Figure 5 shows the dispersion of the intraday momentum pattern across 
+small, medium and large stocks. We classify the all A-shares sample into small, medium 
+and large stocks based on size terciles. Our regression results indicate that the pattern is 
+strongest in large stocks and weakest in small stocks. This confirms findings of Li and 
+Wang (2010) and further re-enforces the fact that the pattern is weaker in Chinese A-shares 
+due to a lower level of institutional holdings and more active participation by retail inves-
+tors.Furthermore, Campbell et al. (2009) lend support to our findings of relatively weaker 
+presence of the intraday momentum pattern in our study as they point to the highly persis-
+tent trading behaviour of institutions in daily trading which is a pre-requisite for the intra-
+day momentum effect that we are studying.
+Fig. 5  The impact of size on intraday momentum
+Investor clientele and intraday patterns in the cross section…
+This study goes further beyond just examining the existence of the HKS (2010) pat-
+tern in the Chinese stock market. We now focus on half-hour trading intervals which are 
+not exact half-hour multiples of a trading day, but are actually within the trading day and 
+extend this to all intervals for up to three trading days. This allows us to study the mar -
+kets for any patterns that may arise therein and that may shed more light on the Chinese 
+retail investor’s trading preferences. Our findings indicate the presence of a strong reversal 
+pattern during the first three half-hour intervals immediately after the passing of 24-hour 
+period or a whole trading day for up to two days in a row. These findings re-enforce the 
+contrarian nature of retail investors that has been previously documented in the literature 
+(Kaniel et al. 2008. It shows that retail investors place contrarian trades that are predictable 
+and their holding periods are just over 24-hour and point to the day trading rule as playing 
+a role in their behaviour. This is not the case for the UK markets which demonstrate no 
+such reversals just beyond the daily trading lag.
+In addition, when we run the regression for half-hour returns on intraday lags within the 
+trading day, we notice that short-term return reversals last for 0 to 30 minutes for Chinese 
+markets and they last for 0 to 30 minutes for the UK market as well. However, the regres-
+sion estimate and t-statistics are higher for the Chinese markets. This shows that Chinese 
+markets as a whole are somewhat less efficient than the UK markets. These findings are 
+consistent with Chordia et al. (2005) who find that it takes between 30 to 60 minutes for the 
+US markets to become efficient but their sample period ends in 2002.
+Gao et  al. (2018) discuss various reasons such as macroeconomic news releases and 
+high volumes of trading activity owing to portfolio adjustments that make the opening and 
+closing half-hour intervals particularly important. Our cross-sectional regression results 
+also indicate that the Heston et al. (2010) pattern is mainly concentrated in the first- and the 
+last half-hour of the trading day for Chinese markets. This is in contrast with the findings 
+of Heston et al. (2010) who document the presence of the pattern throughout the day. The 
+findings provide further support to the impact of index inclusion on the Chinese A-shares 
+as mostly indexers are most active during the opening and closing half-hour intervals of the 
+trading day (Gao et al. 2018).
+The remainder of this paper is organized as follows. In Sect.  2, we dicuss the related 
+literature. Section 3 discusses the data and methodology. Section  4 provides the empirical 
+findings and the discussion. Finally, Sect. 5 offers a conclusion to the paper.
+2  Literature review
+Our study is linked to two strands of literature. The first strand of literature is based on 
+studies which attempt to study evidence linked to momentum patterns documented in the 
+US and the non-US markets.The interest in momentum studies stems from the fact that 
+momentum strategy profits could be as high as 12% in the US and Europe as reported by 
+Chui et al. (2010). Heston and Sadka (2008) initially found that seasonality exists for indi-
+vidual stocks in the cross-section of returns for the same calendar month for a period of up 
+to twenty years. Heston and Sadka (2010) find that a stock that outperforms the broader 
+market in a particular month continues to outperform in that same particular month over 
+the next 5 years and provide international evidence of the pattern in Canada, Japan and 12 
+European markets. Li et al. (2018) study the Heston and Sadka (2008) seasonality pattern 
+for 42 advanced and emerging markets between 1995 to 2013 and conclude that return 
+ J. Chen et al.
+seasonality is economically significant primarily in advanced markets but not in emerging 
+markets.
+HKS (2010) was the first study to provide empirical evidence on the existence of intra-
+day patterns in the cross-section of stock returns. The pattern can be interpreted as an intra-
+day momentum phenomenon that leads to significant predictability in daily (24-h) multi-
+ples of each half-hour interval returns, during the trading day; for up to forty trading days 
+in a row. To put it into perspective, the returns on a stock today between 1:00 to 1:30 pm 
+exhibit momentum over the same interval for up to forty trading days in a row.
+Our study is related to several other studies that examine the momentum effect at rela-
+tively longer horizons (see Chui et  al. 2010, 2022) in Chinese markets and other inter -
+national markets beyond the United States. However, to our best knowledge, this is the 
+first study that examines the HKS (2010) intraday momentum in the cross-section of stock 
+returns beyond the US market. International evidence on any momentum pattern observed 
+in the US is significant as it provides out-of-sample evidence (Heston and Sadka 2010) and 
+also gives external validity to the existence of the anomaly solely observed in a particular 
+market (Cakici et  al. 2023). Hence, our study makes a major contribution by being the 
+first to test HKS (2010) beyond the US market in three markets-China (emerging market), 
+UK(developed market) and Brazil(emerging market).
+The second strand of literature that our study is linked to is the role that institutional 
+investors play in financial markets. Chui et al. (2022) go as far as calling the segmented 
+Chinese market with A- and B-shares as an /uni2032.varideal laboratory /uni2032.var for studying the vary -
+ing impacts of investor composition on the momentum effect. Institutional investors are 
+believed to have various desirable impacts on financial markets. For instance, institutional 
+investors reduce firm mis-valuation (Borochin and Yang 2017), increase innovation output 
+(Bena et  al. 2017), improve long-run performance (Appel et  al. 2016) and reduce infor -
+mation asymmetry (Boone and White 2015) among various others. More specifically, an 
+empirical study on the Chinese markets by Tian et al. (2018) finds that institutional inves-
+tors provide stability to the market by reducing the impact of extreme swings.
+Chui et al. (2022) highlight how dual listed A- and B-class shares of some Chinese firms 
+allow us to differentiate between their momentum patterns based on their unique clienteles 
+as both the share classes essentially have the same cash flows. Furthermore, Chui et  al. 
+(2022) elaborate and attribute clientele differences in dual listed A- and B-class shares to 
+three exogenous features in Chinese financial markets-currency regulations restrict domes-
+tic investors from participating in purchase of B-shares (settled in USD or HKD), foreign 
+institutions are restricted by regulatory quotas to invest in A-shares and the inability of 
+domestic institutions to be able to purchase B-shares making all B-shares institutional own-
+ership foreign.
+Luo et al. (2023) show that retail investors are mostly contrarian traders(who facilitate 
+return reversals rather than producing momentum) by utilizing trader specific data from a 
+large panel of US brokerage accounts. On the other hand, (Chui et al. 2022) postulate that 
+momentum arises due to the under-reaction of active investors to fundamental information. 
+The hypothesis that active investors under-react to fundamental information and therefore 
+drive momentum, is confirmed by the baseline momentum results for B-shares obtained 
+by (Chui et al. 2022) that are dominated by foreign institutional investors (who are active 
+investors) but not noise traders and hence under-react to fundamental information thereby 
+allowing a pattern of returns to continue and produce momentum. Furthermore, they also 
+provide evidence that the post-earnings drift is only found in B-shares further confirm-
+ing the conjecture that active foreign institutional investors under-react to fundamental 
+information. Foreign institutional investors are known to be more sophisticated than retail 
+Investor clientele and intraday patterns in the cross section…
+investors who are considered novice therefore, the clienteles of A-shares are dominated by 
+more noise traders than their dual listed B-share counterparts dominated by active investors 
+who under-react to fundamental information and refrain from undertaking contrarian strat-
+egies (Chui et al. 2022).
+Given the importance of institutional investors, Chinese policymakers and regulators 
+have been steadfast to make the necessary reforms to attract institutional investors. The 
+main reforms can be chronologically summarized as follows-capital mobility restrictions 
+were eased by relaxing rules on Qualified Foreign Institutional Investor (hereafter QFII) 
+repatriation (2013), launching of Shanghai connect 11 (2014), tremendous alleviation of 
+uncertainties regarding the capital gains tax (2014), tightening of rules on stock trading 
+suspensions(2016), QFII and Renminbi Qualified Foreign Institutional Investor (here-
+after RQFII) quotas linked to fund size (2016), beneficiary ownership rules made more 
+investor friendly and transparent(2016), Shenzen connect launched in 2016 and an eas-
+ing of requirements that previously restricted creation of index-linked investment prod-
+ucts(2017)12. These attempts to liberalize the stock markets and open them up to foreign 
+investors has led to significant increase in investment and capital inflows (Li et al. 2024b).
+HKS (2010) identify two potential reasons for this seasonality in return predictabil-
+ity namely—high auto-correlations in institutional fund flows and algorithmic trading. 
+Bogousslavsky (2021) further study the HKS (2010) pattern and find evidence that clien-
+tele effects drive the pattern. To study the impact of institutional fund flows and investors 
+on the HKS (2010) we further use an exogenous shock to insitutional fund flows that came 
+through the inclusion of some Chinese stocks in the MSCI index as evident in Table  11. 
+MSCI index inclusion has also been used to study the impact of increase in institutional 
+funds flows on price efficiency by Jiao et al. (2024). Therefore, this study uses MSCI index 
+inclusion (which led to a significant increase in institutional ownership) on the strength 
+of the HKS (2010) intraday momentum pattern. In doing so, this study contributes to the 
+existing literature and allows the policymakers to understand the impact of changes that 
+allowed the incorporation of Chinese stocks in MSCI index. The second major contribu-
+tion of this study is that it demonstrates the positive impact that MSCI index inclusion 
+has on the included shares that start to behave like developed market shares which have a 
+high percentage of institutional investors and exhibit a much stronger HKS (2010) intraday 
+momentum pattern.
+Various studies that have been conducted to examine the presence of the momentum 
+effect in China have also attempted to provide potential explanations for the absence of the 
+effect in China. For instance, Chui et al. (2010) demonstrate cultural differences explain 
+the weaker presence of momentum in Asian emerging markets including China. Yao et al. 
+(2022) demonstrate that individual investor preferences play a large role in the diminishing 
+of the momentum effect in China. We make an incremental contribution to the understand-
+ing of the factors hampering the momentum effect in China by controlling for price limits 
+and day trading rule which according to Gao et al. (2018) cause trading frictions and create 
+barriers to executing intraday trades particularly in short time windows of up to 24 h. This 
+provides further evidence on the role that limits of arbitrage (henceforth LOA) play in the 
+manifestation of intraday momentum effects in China.
+11 Stock connect programs facilitate traders between mainland China and Hong Kong stock exchanges to 
+trade seamlessly using local brokers.
+12 These reforms have been summarized in a report by Ching Ping Chia, MSCI Head of Research for Asia 
+Pacific which is the source of this information. See: https:// www. msci. com/ www/ blog- posts/ the- world- 
+comes- to- china/ 01002 067599.
+ J. Chen et al.
+This study intends to answer several unanswered questions not previously examined by 
+researchers. In doing so, we intend to make several important contributions to the exist-
+ing body of literature. First, we examine if the HKS (2010) momentum pattern found for 
+the US also exists in non-US markets. This question is particularly important as previous 
+studies such as Heston and Sadka (2010) and Chui et al. (2010) have explained that any 
+international evidence on the existence and profitability of a momentum effect serves as a 
+robustness check to the existence of the momentum pattern within the United States as well 
+as providing an opportunity to study the pattern in light of country-specific characteristics.
+The second major contribution we make is provide evidence on the impact of investor 
+clientele on intraday momentum patterns. Our study provides complementary evidence to 
+the findings by Chui et al. (2022) who demonstrate that B-shares of dual listed firms dem-
+onstrate stronger momentum patterns over the long horizon. However, our study uses the 
+HKS (2010) intraday momentum pattern to study the impact of investor clientele. Moreo-
+ver, we also use dual listed A- and H-shares and an exogenous shock to investor composi-
+tion stemming from inclusion of some A-shares in the MSCI index.
+The third contribution that comes to light is that we show that price limits and day trad-
+ing rule where are a form of LOA and unique to the highly regulated Chinese market play 
+a role in hampering the intraday momentum effect. This helps in demonstrating the various 
+impacts that price limits and other LOA have on Chinese markets. Also, not only do we 
+demonstrate weak presence of the HKS (2010) intraday momentum pattern in China, we 
+also highlight the potential channels hampering the prominence of the pattern in China. 
+This study provides additional evidence on the factors that explain the absence of the 
+momentum effect in China.
+3  Data and methodology
+Two distinct databases have been used to collect all the data required. The high-frequency 
+intraday trading data is collected from Bloomberg. We use Bloomberg to collect data for 
+China, the UK and Brazil in order to compare the Chinese market results with a well-devel-
+oped UK market and another developing BRIC country, the Brazilian market. The appro-
+priate Bloomberg data collection screening filter is used to screen out common stocks that 
+are traded in the domestic currency and are domiciled within the country. The exception 
+to this rule is the collection of data for B-shares which are traded in US Dollars and Hong 
+Kong Dollars and not in the domestic currency. Also, for the Chinese dual-listed H-shares 
+we consider the shares even though they are traded outside mainland China on the Hong 
+Kong stock exchange.
+For China, this data is then classified as A-shares, B-shares or dual-listed in Hong Kong 
+as H-shares and as B-shares in either Shanghai or Shenzen. This is done through the firm 
+classification data collected from The China Stock Market and Accounting Research data-
+base (CSMAR). CSMAR is widely used by researchers and there are no reports of dis-
+crepancies in share classifications i.e., A-, B-shares or dual-listed in Hong Kong and China 
+and also no classification errors are known to date. The final sample contains all firms for 
+which the data can be matched from CSMAR and to further avoid inclusion of exchange 
+traded funds, preference shares, bonds etcetera we manually check and verify the Interna-
+tional Securities Identification Number (ISIN) of each and every security to ensure only 
+equity listings are included in the dataset.
+Investor clientele and intraday patterns in the cross section…
+To study intraday patterns in the cross-section of stock returns, following the method-
+ology of Heston and Sadka (2010) all firms that can be matched on both Bloomberg and 
+CSMAR are considered. We follow Fong et al. (2017)’s methodology to apply specific fil-
+ters to match trades with quotes and leave out potentially spurious observations such as 
+those with negative spreads (where bids are higher than asks), zero or negative volume, and 
+those conducted outside regular market trading hours. This will ensure that our results are 
+not driven by spurious observations. Also, the data from Bloomberg is considered to have a 
+high correlation with the Thomson Reuters Tick History (TRTH) database. The correlation 
+is known to be as high as 99.19% (Fong et al. 2017). This should alleviate any concerns 
+about the accuracy of data obtained from Bloomberg.
+Our primary sample period for all Chinese, UK and Brazilian stocks starts on June 1, 
+2016 and ends on March 1, 2019. The sample period is divided into two periods before 
+June 1, 2018 and after June 1, 2018 for the 232 A-shares that were included in the Morgan 
+Stanley Capital International (MSCI) index for Emerging markets beginning from 1st June, 
+2018. This is done to study the impact of index inclusion on the intraday pattern exhibited 
+by the included stocks.
+We begin by providing summary statistics of the sample of stocks that we consider for 
+the UK, Brazil, and China. For China the sample is sub-divided into three parts A-shares 
+only, dual-listed A- and B-shares, and dual-listed A-shares and H-shares in Table  1. The 
+total number of firms considered for the UK and Brazil are 1457 and 365 respectively. For 
+China, there are 3238 firms listed as A-shares. The number of dual-listed A and B-shares 
+is 84 and the number of dual-listed A and H-shares is 87. Table  2 also provides summary 
+statistics of half-hour returns for the sample.
+3.1  Description of variables used throughout the paper
+1.R: These returns are calculated using the last trading price at the end of each half-hour 
+interval less the opening price at the beginning of the interval divided by the opening price 
+as calculated by HKS (2010).
+2. MPR( Midpoint Returns): These returns are calculated for the interval t using the 
+average of the bid-ask prices at the end of interval t − 1 and the average of the bid-ask 
+prices at the end of interval t. The difference between the two is divided by the average of 
+the bid-ask prices at the end of interval t − 1 to obtain the midpoint returns.
+3.2  Methodology
+Our aim in this study is to examine the existence of an intraday pattern in Chinese Markets 
+as observed by HKS (2010) and modelled by Bogousslavsky (2016). These two studies 
+examine and model a continuation pattern in the cross section of stock returns at 24-hour 
+multiples for each trading interval between 8:00 am to 4:30 pm on the NYSE considering 
+a sample of all NYSE firms. The pattern is studied using the cross sectional regression 
+approach following the footsteps of Jegadeesh (1990) and further checking the statistical 
+significance of the estimates by incorporating Fama and MacBeth (1973) t-statistics.
+While the cross-sectional regression approach is the first step in examining the existence 
+of the return continuation pattern at integer multiples of the trading day for each half-hour 
+interval, a second method is employed by HKS (2010) to study the economic significance 
+ J. Chen et al.
+of the pattern in line with Jegadeesh and Titman (1993). They sort the portfolios into top 
+(best) and bottom (worst) performing deciles sorted every half-hour. These top and bot-
+tom deciles are then composed into a portfolio where the top decile stocks are bought and 
+bottom decile stocks are shorted during the same half-hour interval for the next forty days. 
+The net return on the strategy turns out to be economically and statistically significant for 
+the next forty days as found by HKS (2010). They show that on the first day the strategy 
+earns a mean return of 3.01 basis points which is enough to offset the equity premium. In 
+our study, we employ the same techniques as employed by HKS (2010). We sort the stocks 
+based on their half-hour returns into top and bottom deciles with an equal number of stocks 
+in each decile. These stocks are then held on for the next forty days during the correspond-
+ing 24-hour multiple of the interval in question. The trading day is slightly shorter in the 
+Chinese markets and we end up with 8 half hour intervals from 9:30 to 11:30 am and then 
+1:00 pm to 3:00 pm post lunch break.
+Where t is the collection of all half-hour intervals for which the stock trades during the 
+sample period, for China this leads to 8 half-hour intervals from 9:30–11:30 am and from 
+1:00 to 3:00 pm; respectively. R i,t is the return on the stock of firm i in interval t and R i,t−k 
+is the return on the stock of firm i lagged by k intervals. k is multiple of 8 (which makes it 
+a lag equivalent to a whole trading day), it assumes values of 8, 16, 24, 32, 40,..., 312, and 
+320 for a daily lag of 1, 2, 3,4,..., 39 and 40 days.
+We first estimate mid-point returns based on the average of bid-ask prices for each half-
+hour interval of the trading day for each market. We don’t use trade price returns to avoid 
+any potential bid-ask bounce effects. Most recently Hasbrouck (2018) has highlighted that 
+for intervals of up to 1  h, the trade price change may simply be the artifact of the bid-
+ask bounce and also there is an issue with calculating the returns since the trades may 
+not necessarily be at precisely the beginning and the ending of a half-hour interval. Also, 
+as pointed out by HKS (2010), short-term return reversals that they find at lags less than 
+1 trading day are merely due to the bid-ask bounce. Since we intend to study short-term 
+(1)MPR i,t = /u1D6FCk,t + /u1D6FDk,tMPR i,t−k + /u1D716i,t
+Table 2  Summary statistics
+This table reports the number of stocks from each category which are included in our sample based on the 
+criteria of atleast 50 trades every year. It also reports the mean market capitalization for each category. IThe 
+mean returns for the thirty minute interval in basis points and their standard deviation in percentage is also 
+reported
+Country Type Number of Stocks Mean Market Cap Mean Returns Standard 
+Deviation(Billions) (Basis Points)
+China A-shares (All) 3238 17.25 0.008 0.007
+China A-shares (small) 1079 3.40 0.010 0.009
+China A-shares (medium) 1079 6.78 0.009 0.008
+China A-shares (large) 1080 40.32 0.007 0.006
+China B-shares (dual-listed) 84 10.25 0.006 0.006
+China H-shares (dual-listed) 87 15.12 0.007 0.008
+UK Common stock 1457 1.67 0.006 0.009
+Brazil Common stock 365 7.62 0.007 0.008
+Investor clientele and intraday patterns in the cross section…
+return reversals as well, it is prudent that we choose mid-point returns to rule out the influ-
+ence of the bid-ask bounce in our findings.
+We then run cross-sectional regressions of these half-hour interval returns on lagged 
+half-hour returns during the same daily interval for up to 40 days. The coefficients are then 
+averaged over time as per Fama and MacBeth (1973) approach. We further split the Chi-
+nese stocks into Chinese A-shares, dual-listed A-shares and their B-share counterparts, and 
+Chinese A-shares and their dual-listed H-share counterparts. The Chinese A-shares are 
+open for investment to only domestic investors, the B-shares are open to both domestic and 
+foreign investors, and the H-shares are listed in Hong Kong. This segmentation leads to 
+significant differences in investor composition. The Chinese A-shares are characterized by 
+retail investor ownership (Nartea et al. 2017). Whereas, the B-shares are primarily held by 
+foreign investors (Chui et al. 2022). The main advantage is that there are some shares that 
+are dual-listed as A and B-shares. A summary of the salient features of all share classes of 
+interest in the Chinese markets is provided in Table 1.
+We perform the regression analyses explained above on both A-shares and their B-share 
+counterparts. Segregating the sample into dual-listed A- and B-shares provides an insight 
+into the role of investor composition in explaining the intraday momentum pattern of HKS 
+(2010). We now turn to segregating the sample into dual-listed A and H-share counter -
+parts. This provides an avenue to study the impact of limits of arbitrage on the intraday 
+momentum pattern. We run cross-sectional regressions of current 30-minute (half-hour) 
+interval returns on returns during the same interval on previous days for up to 40 days and 
+then average the coefficients over time as per Fama and MacBeth (1973) approach. The 
+results indicate that the intraday momentum is much stronger in the H-shares as compared 
+to their A-share counterparts. This difference can be attributed to low limits of arbitrage in 
+the Hong Kong stock markets. They are not subject to limits of arbitrage such as price lim-
+its and the day trading rule as is applicable to the Chinese markets.
+Initially, we consider all A-shares listed in Chinese Markets. We then segregate our 
+sample into dual-listed A-shares and dual-listed B-shares following Chui et al. (2022).Chui 
+et al. (2022) find that the absence of momentum in the A-shares is due to differences in 
+investor composition as dual-listed B-shares with nearly the same features exhibit momen-
+tum in returns much more profoundly than their A-share counterparts. This motivates us to 
+exploit this unique feature of the Chinese markets to study the differential impact of inves-
+tor composition on intraday momentum. Furthermore, we split the sample into dual-listed 
+A-shares versus their H-listed counterparts. We find that the intraday momentum pattern is 
+far more profound in the H-shares market than in the corresponding A-shares market. We 
+can hence infer that investor composition as well as market regulations can play a major 
+role in explaining the differences in intraday momentum patterns as exhibited by these 
+‘twin’ shares.
+To investigate the impact of limits of arbitrage on the Chinese A-shares, we conduct 
+yet some more tests. We drop the stocks that traded in the top and bottom deciles for each 
+half-hour interval that are considered. This ensures that any stocks that hit the price limit 
+whether upper or lower or are likely to hit the higher or lower price limit are excluded. 
+When these stocks are removed, the strength of the intraday pattern in the Chinese A-shares 
+rises considerably based on the regression coefficients for the regression discussed above 
+in detail.
+Our analyses also involves analysing the intraday momentum pattern among the Chi-
+nese A-shares market based on cross-sectional differences in stocks. The entire sample is 
+split into large, medium, and small stocks based on market capitalisation. There is no sig-
+nificant difference in the pattern in terms of the regression coefficients obtained and size 
+ J. Chen et al.
+doesn’t explain the pattern. Furthermore, motivated by the recent study Gao et al. (2018) 
+who state that the first half hour and last half hour of trading are particularly important we 
+run another regressions as in HKS (2010) to check the concentration of the pattern in the 
+first and last half hours where the first and last half-hour intervals are dropped. The reason 
+cited by Gao et al. (2018) for the significance of the first and last hour of trading are that-
+important announcements are typically made during the first half hour of trading and insti-
+tutional investors, mutual funds etcetera rebalance their portfolios during the last half hour 
+prior to market close.
+To further determine the economic significance and statistical significance of this pat-
+tern for China, the UK, and Brazil we now turn to intraday momentum portfolio analyses 
+as conducted by HKS (2010). The performance for the portfolios formed on the basis of 
+each half-hour interval’s returns is tested. The stocks are sorted every half hour and port-
+folios are formed using the top and bottom deciles and their half-hour returns are observed 
+for the next forty days (during the same half-hour interval). The average return spreads(top 
+minus bottom decile) on portfolios formed on the basis of the performance during the rel-
+evant historical half-hour (with lags 1 to 40 days) interval are reported. The stocks are 
+grouped into ten portfolios with an equal number of stocks in each portfolio.
+We use alternative measures of returns such as trade, bid to bid, and ask to ask returns 
+as used by HKS (2010) and find that at the daily lag level, it doesn’t affect our results. The 
+only difference is that for lags close to k = 1 , the negative coefficients are observed beyond 
+one lag. This is in line with the findings of HKS (2010) who cite the bid-ask bounce as 
+the reason for finding negative coefficients using trade returns. Moreover, we use inter -
+vals of 5-minutes to 60-minutes to see if a similar intraday pattern is prevalent for any of 
+these intervals and we find no evidence to believe that any other pattern of return continua-
+tion beyond the half-hour interval exists. This alleviates concerns that our findings may be 
+driven by other effects that we may not have considered.
+4  Empirical findings and discussion
+4.1  Intraday return predictability based on previous day’s return in the same half 
+hour interval
+Our initial sample contains 3,238 A-shares listed on the Chinese stock exchanges from 
+June 1, 2016 to March 1, 2019. We report the regression results for the regression of each 
+trading interval from 9:30 to 11:30 am and from 1:00 to 3:00 pm (which makes a total of 8 
+daily trading intervals) on their lagged returns for lags of 8,16, 24,32,...,312 and 320 which 
+corresponds to daily lags of 1,2,3,4,..., 39 and 40. Like HKS (2010) we employ the cross 
+sectional regression approach applied by Jegadeesh (1990) and report the corresponding 
+Fama and MacBeth (1973) t-statistics. The results are reported in Table 3.
+We observe that in general, the pattern is less profound in terms of both the estimates 
+and the t-statistics for the Chinese A-shares. To provide a sense of the magnitude of this 
+difference, the pattern as reported for a daily lag of 1 day is most profound for the U.S. 
+market as reported by HKS (2010) in their Table I, the estimate has a co-efficient of 1.19 
+and a t-statistic of 18.22. Whereas, our estimate for a daily lag of 1 day has an estimate 
+with a co-efficient of 0.36 and a t-statistic of 2.94. This is a very striking contrast as when 
+we look and compare the estimates for other lags up to forty days, we observe that for 
+the U.S. markets the highest report estimate and t-statistic is that for the daily lag of 1 
+Investor clientele and intraday patterns in the cross section…
+Table 3  Cross sectional 
+regressions of each half hour 
+interval returns on lagged returns
+Lag Estimate t-Statistic Lag Estimate t-Statistic
+All Chinese A-shares
+1 Day 0.36 2.94 21 Days 0.42 3.16
+2 Days 0.56 4.25 22 Days 0.43 3.29
+3 Days 0.65 4.63 23 Days 0.44 3.35
+4 Days 0.61 4.43 24 Days 0.48 3.64
+5 Days 0.54 4.20 25 Days 0.48 3.62
+6 Days 0.59 4.34 26 Days 0.46 3.42
+7 Days 0.57 4.23 27 Days 0.47 3.47
+8 Days 0.59 4.32 28 Days 0.35 2.78
+9 Days 0.63 4.47 29 Days 0.37 2.90
+10 Days 0.64 4.49 30 Days 0.30 2.56
+11 Days 0.44 3.44 31 Days 0.33 2.69
+12 Days 0.61 4.38 32 Days 0.33 2.67
+13 Days 0.40 3.11 33 Days 0.31 2.57
+14 Days 0.51 3.93 34 Days 0.31 2.53
+15 Days 0.50 3.80 35 Days 0.30 2.47
+16 Days 0.36 2.84 36 Days 0.27 2.35
+17 Days 0.43 3.31 37 Days 0.25 2.28
+18 Days 0.46 3.50 38 Days 0.23 2.14
+19 Days 0.37 2.93 39 Days 0.26 2.31
+20 Days 0.47 3.54 40 Days 0.23 2.11
+The United Kingdom
+1 Day 1.82 10.18 21 Days 0.56 5.33
+2 Days 1.55 8.73 22 Days 0.51 5.01
+3 Days 1.23 8.07 23 Days 0.45 4.96
+4 Days 1.12 7.71 24 Days 0.50 5.25
+5 Days 1.05 7.32 25 Days 0.57 6.67
+6 Days 0.96 6.88 26 Days 0.56 5.39
+7 Days 0.89 6.42 27 Days 0.55 5.25
+8 Days 0.81 6.07 28 Days 0.48 4.56
+9 Days 0.75 5.87 29 Days 0.56 5.74
+10 Days 0.72 5.69 30 Days 0.54 5.45
+11 Days 0.68 5.59 31 Days 0.53 5.24
+12 Days 0.63 5.41 32 Days 0.41 4.85
+13 Days 0.60 4.89 33 Days 0.36 4.14
+14 Days 0.77 5.45 34 Days 0.37 3.78
+15 Days 0.61 5.22 35 Days 0.34 3.89
+16 Days 0.55 4.84 36 Days 0.40 4.38
+17 Days 0.51 4.78 37 Days 0.36 3.39
+18 Days 0.46 4.70 38 Days 0.44 3.51
+19 Days 0.47 4.43 39 Days 0.53 3.94
+20 Days 0.53 4.56 40 Days 0.48 3.23
+Brazil
+1 Day 1.12 7.22 21 Days 0.46 4.32
+2 Days 1.05 6.53 22 Days 0.44 4.25
+3 Days 0.98 6.12 23 Days 0.45 4.30
+ J. Chen et al.
+day. However, for the Chinese market it appears that the lowest estimate and corresponding 
+t-statistic is that for the lag of 1 day. The estimates for greater lags are somewhat compara-
+ble in terms of statistical significance i.e. the t-statistics, but relatively weaker in terms of 
+economic significance i.e., the actual regression co-efficients.
+To add to the validity of our analyses and to provide a robustness check, we also include 
+the UK market (which is a large market outside the US like China) and Brazil (which is 
+another emerging market like China). As can be seen in Table 3, the regression coefficients 
+and relevant t-statistics showing the results for China are visibly smaller than that of the 
+UK and Brazil which are 1.82 (1.12) and 10.18 (7.22) for a lag of one trading day for UK 
+(Brazil) respectively.
+This table reports the results for the simple cross-sectional regres-
+sion R i,t = /u1D6FCi,t + /u1D6FDi,tR i,t−k + /u1D716i,t , where t is the collection of all half-
+hour intervals for which the stock trades during the sample period 
+ranging from June 1, 2016 to March 1, 2019. R i,t is the return on the 
+stock of firm i in interval t and R i,t−k is the return on the stock of firm 
+i lagged by k intervals. The sample consists of all stocks trading on 
+all exhanges in China and the sample is obtained by matching stocks 
+common in both our Bloomberg data and CSMAR data. The final 
+sample contains 3238 firms.The trading day is divided in to non-over -
+lapping half-hour intervals, since the Chinese stock exchange operates 
+from 9:30 to 11:30 am and then from 1:00 to 3:00 pm, we have 8 half-
+hour trading intervals each day. The cross-sectional regressions are 
+estimated for all half-hour intervals in the time sample for lags k=8, 
+16, 34, 96 and so on until 320 lags. These lags correspond to daily 
+lags of 1,2,3,... 40 days.For the UK and Brazil, the trading day runs 
+from 8:00 am to 4:30 pm and from 10:00 am to 5:55 pm respectively. 
+The UK sample contains all 1457 firms and Brazil contains all 365 
+firms. A procedure similar to that applied to the Chinese firms is fol-
+lowed for the UK as well as Brazil. The time series averages of /u1D6FDi,t 
+are reported in percentages as in HKS (2010). Also, the corresponding 
+Fama and MacBeth (1973) t-statistics are reported along side
+Table 3  (continued) Lag Estimate t-Statistic Lag Estimate t-Statistic
+4 Days 0.91 5.97 24 Days 0.40 3.84
+5 Days 0.85 5.78 25 Days 0.41 3.92
+6 Days 0.81 5.64 26 Days 0.39 3.80
+7 Days 0.75 5.48 27 Days 0.37 3.62
+8 Days 0.77 5.65 28 Days 0.35 3.45
+9 Days 0.74 5.73 29 Days 0.40 3.83
+10 Days 0.72 5.62 30 Days 0.44 4.23
+11 Days 0.65 5.23 31 Days 0.43 4.17
+12 Days 0.55 5.12 32 Days 0.35 3.44
+13 Days 0.58 4.63 33 Days 0.33 3.40
+14 Days 0.64 5.20 34 Days 0.34 3.42
+15 Days 0.59 5.15 35 Days 0.30 3.23
+16 Days 0.52 4.61 36 Days 0.31 3.31
+17 Days 0.55 4.87 37 Days 0.34 3.40
+18 Days 0.48 4.44 38 Days 0.28 3.14
+19 Days 0.47 4.38 39 Days 0.29 3.20
+20 Days 0.45 4.29 40 Days 0.27 3.12
+Investor clientele and intraday patterns in the cross section…
+This finding can be simply interpreted as a very weak intraday momentum effect for a 
+daily lag of 1 day. However, contrary to the US, the UK, and Brazilian markets where the 
+effect is most profound for a daily lag of 1-day, it is the weakest for China. As the effect 
+tapers off with increasing lags of up to forty days, the effect in China seems to be more 
+stable beyond the first day. Unlike the US, the UK, and Brazil we see a peaking out of this 
+effect on the third trading day. This motivates us to study the factors that are essentially 
+curtailing this effect for a daily lag of 1-day.
+This finding contributes to the evidence provided by earlier studies such as Chui et al. 
+(2022) which find a weaker prevalence of the momentum effect in Chinese A-shares. Also, 
+Li et al. (2018) study the Heston and Sadka (2008) seasonality pattern for 42 advanced and 
+emerging markets from 1995 to 2013 and conclude that return seasonality is economically 
+significant primarily in advanced markets but not in emerging markets. Furthermore, Chui 
+et al. (2010) study the profitability of some long-term momentum strategies across inter -
+national markets and suggest that they generally underperform in Asian markets owing to 
+cultural differences in terms of the level of individualism.
+4.2  The existence of intraday momentum in A‑shares versus B‑shares
+The Chinese market offers a very unique opportunity to study the impact of investor com-
+position as explained in detail by Chui et al. (2022). Chui et al. (2022) argue that the dual 
+listed stocks which have both A and B-shares trading in the market have essentially the 
+same type of features in terms of voting rights and cash flow rights but differ in investor 
+composition. The Chinese A-shares are owned by domestic investors the majority of whom 
+are retail investors versus B-shares that are held mostly by foreign investors who are mainly 
+sophisticated institutional investors.
+We only consider the sample of A-shares which have a corresponding listing of B-share 
+and are dual-listed. We end up with a sample of 84 dual-listed A- and B-shares. The results 
+for the cross-sectional regressions to examine the intraday pattern observed by HKS (2010) 
+are reported in Table  4. We observe that the regression co-efficient for the dual-listed 
+A-shares is somewhat better than the aggregate A-share sample. The estimate has a co-
+efficient of 0.55 and a t-statistic of 2.85 for a daily lag of 1 day. Whereas, our dual-listed 
+B-share sample has an estimate with a co-efficient of 1.30 and a corresponding t-statistic 
+of 6.32. While both these estimates for the A-shares and B-shares have estimates that are 
+statistically much less significant than the U.S. estimate which had a t-statistic of 18.22 for 
+the first daily lag, it is evident that B-shares clearly demonstrate a higher alignment with 
+the US markets in terms of exhibiting this pattern.
+Interestingly, Chui et al. (2022) also find that the momentum effect for longer horizons 
+is more prevalent in B-shares compared to A-shares. They use this evidence to arrive at the 
+conclusion that since the only significant difference between dual-listed A- and B-shares is 
+investor composition, it is plausible to say that it is the difference in investor composition 
+that determines the existence of the momentum effect. Our findings, support and comple-
+ment their findings by providing evidence that even very short-term momentum effect at 
+the intraday level is much stronger in the B-shares as compared to A-shares and provides 
+further support for the argument that it is indeed investor composition that explains why 
+the momentum effect is not very strong in China as observed by Chui et al. (2010). Nof-
+singer and Sias (1999) further support our findings they show that herding and feed back 
+trading by institutional investors is more effective in leading to the momentum effect as 
+compared to that by individual investors. Our findings are also consistent with Akbas et al. 
+ J. Chen et al.
+Table 4  Cross sectional 
+regressions for dual listed A and 
+B-shares
+This table reports the results for the simple cross-sectional regres-
+sion R i,t = /u1D6FCi,t + /u1D6FDi,tR i,t−k + /u1D716i,t , where t is the collection of all half-
+hour intervals for which the stock trades during the sample period 
+ranging from June 1, 2016 to March 1, 2019. R i,t is the return on the 
+Lag Estimate t-Statistic Lag Estimate t-Statistic
+Dual Listed Chinese A-shares
+1 Day 0.55 2.85 21 Days 0.49 3.08
+2 Days 0.72 4.24 22 Days 0.51 3.19
+3 Days 0.85 4.64 23 Days 0.48 3.02
+4 Days 0.80 4.32 24 Days 0.47 2.95
+5 Days 0.70 4.04 25 Days 0.50 3.09
+6 Days 0.72 4.08 26 Days 0.46 2.87
+7 Days 0.71 4.06 27 Days 0.45 2.76
+8 Days 0.66 3.87 28 Days 0.42 2.54
+9 Days 0.65 3.78 29 Days 0.51 2.97
+10 Days 0.68 3.94 30 Days 0.40 2.36
+11 Days 0.60 3.54 31 Days 0.43 2.42
+12 Days 0.62 3.62 32 Days 0.45 2.45
+13 Days 0.58 3.41 33 Days 0.48 2.98
+14 Days 0.59 3.44 34 Days 0.46 2.77
+15 Days 0.65 3.69 35 Days 0.42 2.37
+16 Days 0.52 3.26 36 Days 0.45 2.40
+17 Days 0.55 3.31 37 Days 0.40 2.26
+18 Days 0.50 3.18 38 Days 0.44 2.33
+19 Days 0.52 3.22 39 Days 0.38 2.14
+20 Days 0.60 3.44 40 Days 0.32 2.03
+Dual Listed Chinese B-shares
+1 Day 1.30 6.32 21 Days 0.60 4.44
+2 Days 1.25 6.25 22 Days 0.56 4.32
+3 Days 1.22 6.18 23 Days 0.58 4.39
+4 Days 1.20 6.01 24 Days 0.55 3.63
+5 Days 1.18 5.92 25 Days 0.51 3.52
+6 Days 1.12 5.74 26 Days 0.50 3.47
+7 Days 1.05 5.66 27 Days 0.47 3.39
+8 Days 1.01 5.52 28 Days 0.45 3.27
+9 Days 0.95 5.43 29 Days 0.46 3.30
+10 Days 0.91 5.36 30 Days 0.44 3.19
+11 Days 0.89 5.26 31 Days 0.43 3.15
+12 Days 0.85 5.17 32 Days 0.41 2.91
+13 Days 0.84 5.09 33 Days 0.37 2.73
+14 Days 0.80 4.95 34 Days 0.41 2.88
+15 Days 0.77 4.89 35 Days 0.35 2.63
+16 Days 0.75 4.81 36 Days 0.36 2.65
+17 Days 0.71 4.72 37 Days 0.32 2.57
+18 Days 0.68 4.65 38 Days 0.30 2.48
+19 Days 0.66 4.58 39 Days 0.29 2.43
+20 Days 0.62 4.51 40 Days 0.27 2.36
+Investor clientele and intraday patterns in the cross section…
+(2015) who show that mutual funds have a tendency to invest in past holdings that were 
+winners and liquidating past losers, thereby exacerbating the momentum effect itself.
+4.3  The existence of intraday momentum in A‑shares versus H‑shares
+We now turn our attention to dual-listed A- and H-shares. In addition to the difference in 
+investor composition as discussed in section 3.3, the A- and H-shares differ in the fact that 
+Hong Kong is a developed market and has negligible trading constraints as compared to 
+China where there are price limits, short selling constraints, and day trading constraints 
+(see Gu et al. 2018; Chui et al. 2022). We have 87 firms in our sample that our dual-listed 
+with both A-share listings and H-share listings.
+We conduct the same regression analysis based on HKS (2010) as described in earlier 
+sections. The results for the dual-listed A-shares and their cross-listed H-share counterparts 
+are reported in Table 5. The comparison sheds light on a very substantial difference in the 
+existence of the intraday momentum pattern documented by HKS (2010) and modelled by 
+Bogousslavsky (2016) for U.S. markets among the A-shares and their cross-listed H-share 
+counterparts.
+The pattern appears to be quite subdued for the A-shares with the estimates for the 
+co-efficient and t-statistics corresponding to a daily lag of 1 day being most weak rela-
+tive to those of the H-shares at 0.50 and 2.69 respectively. Then on, the pattern seems to 
+manifest itself more strongly and is statistically significant for up to twenty days. This is 
+in sharp contrast to the manifestation of the pattern both in terms of the estimates for the 
+co-efficient and the corresponding t-statistics for the cross-listed H-shares in the Hong 
+Kong market which are the highest for a daily lag of 1 day with a regression estimate of 
+4.02 and a t-statistic of 10.45 respectively. For the H-shares, the effect seems to decay 
+from the first day as we move towards a lag of 40 days. However, the pattern is still 
+significant for forty days with the last t-statistic being higher than 3 for all but one day.
+This evidence is the first intraday evidence from outside the United States that docu-
+ments the existence of the pattern discovered in HKS (2010). It also sheds light on the 
+fact that while investor composition explains the momentum effect in part, as demon-
+strated by a stronger presence of the pattern in dual-listed B-shares as compared to their 
+A-share counterparts, the difference is even more substantial if the trading constraints 
+stock of firm i in interval t and R i,t−k is the return on the stock of firm 
+i lagged by k intervals. The sample consists of all stocks trading on 
+all exhanges in China and the sample is obtained by matching stocks 
+common in both our Bloomberg data and CSMAR data. The final 
+sample contains 3238 firms. Out of these we have 88 shares that are 
+dual listed as A and B-shares both.The trading day is divided in to 
+non-overlapping half-hour intervals, since the Chinese stock exchange 
+operates from 9:30 to 11:30 am and then from 1:00 to 3:00 pm, we 
+have 8 half-hour trading intervals each day. The cross-sectional regres-
+sions are estimated for all half-hour intervals in the time sample for 
+lags k=8, 16, 34, 96 and so on until 320 lags. These lags correspond 
+to daily lags of 1,2,3,... 40 days. The time series averages of /u1D6FDi,t are 
+reported in percentages as in HKS (2010). Also, the corresponding 
+Fama and MacBeth (1973) t-statistics are reported along side. The 
+table reports results for dual listed A and B-shares. There are a total of 
+84 of these in our sample
+Table 4  (continued)
+ J. Chen et al.
+Table 5  Cross sectional 
+regressions for dual listed A and 
+H-shares
+This table reports the results for the simple cross-sectional regres-
+sion R i,t = /u1D6FCi,t + /u1D6FDi,tR i,t−k + /u1D716i,t , where t is the collection of all half-
+hour intervals for which the stock trades during the sample period 
+ranging from June 1, 2016 to March 1, 2019. R i,t is the return on the 
+Lag Estimate t-Statistic Lag Estimate t-Statistic
+The Chinese A-shares
+1 Day 0.50 2.69 21 Days 0.48 2.76
+2 Days 0.68 4.13 22 Days 0.50 2.79
+3 Days 0.80 4.52 23 Days 0.48 2.70
+4 Days 0.75 4.44 24 Days 0.46 2.62
+5 Days 0.70 4.09 25 Days 0.51 2.80
+6 Days 0.72 4.22 26 Days 0.47 2.65
+7 Days 0.71 4.12 27 Days 0.50 2.72
+8 Days 0.68 3.92 28 Days 0.45 2.49
+9 Days 0.66 3.75 29 Days 0.44 2.42
+10 Days 0.68 3.88 30 Days 0.36 2.19
+11 Days 0.63 3.51 31 Days 0.40 2.28
+12 Days 0.60 3.35 32 Days 0.37 2.21
+13 Days 0.59 3.23 33 Days 0.40 2.23
+14 Days 0.57 3.14 34 Days 0.35 2.08
+15 Days 0.60 3.31 35 Days 0.34 2.01
+16 Days 0.55 3.02 36 Days 0.35 2.03
+17 Days 0.54 2.95 37 Days 0.36 2.09
+18 Days 0.57 3.08 38 Days 0.35 2.01
+19 Days 0.55 3.00 39 Days 0.38 2.22
+20 Days 0.52 2.85 40 Days 0.36 2.04
+The Chinese H-shares
+1 Day 4.02 10.45 21 Days 2.39 6.08
+2 Days 3.73 8.51 22 Days 2.12 5.30
+3 Days 3.49 8.78 23 Days 2.15 5.52
+4 Days 2.46 6.26 24 Days 2.33 5.80
+5 Days 2.73 7.05 25 Days 2.18 5.23
+6 Days 2.76 6.89 26 Days 1.47 3.59
+7 Days 2.65 6.71 27 Days 1.56 3.87
+8 Days 2.51 6.07 28 Days 1.29 3.25
+9 Days 3.21 8.51 29 Days 2.07 5.21
+10 Days 2.74 6.77 30 Days 1.63 3.90
+11 Days 2.85 7.03 31 Days 1.35 3.39
+12 Days 1.92 5.10 32 Days 1.75 3.97
+13 Days 2.60 6.83 33 Days 1.47 3.57
+14 Days 2.44 6.26 34 Days 1.54 3.58
+15 Days 2.43 6.14 35 Days 1.43 3.51
+16 Days 2.12 5.26 36 Days 1.23 2.69
+17 Days 1.54 4.06 37 Days 1.75 3.90
+18 Days 2.09 5.20 38 Days 1.59 3.69
+19 Days 2.03 4.90 39 Days 1.45 3.35
+20 Days 1.53 3.73 40 Days 1.51 3.37
+Investor clientele and intraday patterns in the cross section…
+are removed as in cross-listed H-shares. This provides further motivation to study the 
+impact of trading constraints on the intraday momentum effect.
+4.4  Controlling for size
+Li and Wang (2010) show that institutional investors in Chinese markets have the ten-
+dency to herd in large stocks. There may be various reasons for this phenomenon. Previ-
+ous studies have regarded large stocks as being more price efficient and liquid (Chordia 
+et al. 2005). Also, owing to the need to be able to liquidate securities urgently in the 
+event of poor performance, specifically open ended funds have to be sure that they will 
+be able to liquidate the securities at any cost(Coval and Stafford 2007). This is easier if 
+an institution invests in to large and generally more liquid stocks in an emerging market.
+We now therefore, conduct our analysis to examine the existence of the intraday pat-
+tern in the Chinese Markets by segregating our sample into small, medium, and large 
+firms by size (market capitalization) terciles. The results are reported in Table  6. We 
+find that the pattern manifests itself more strongly as we move from small to medium 
+and from medium to large firms.
+The weakest estimate for the lag of 1 day comes from the small firms, 0.28 with a 
+t-statistic of 2.82 and then there is a monotonous rise to 0.33 with a t-statistic of 2.96 for 
+the medium firms and the strongest estimate for a daily lag is shown by large firms with 
+an estimate of 0.46 and a t-statistic of 3.05. We do notice however that across small, 
+medium and large firms alike, the momentum pattern is strongest for the lag of 3 days. 
+This is also true for the all A-share sample discussed in Section 3.1 and presented in 
+Table 3.
+4.5  Controlling for time of day
+Gao et al. (2018) find evidence of the existence of an intraday momentum pattern where 
+the first half-hour returns on the S &P ETF predict the last half-hour of returns. In addition 
+to the S &P ETF, Gao et al. (2018) find similar evidence of the existence of an intraday 
+momentum pattern in ten other domestic and international ETFs that are actively traded. 
+stock of firm i in interval t and R i,t−k is the return on the stock of firm 
+i lagged by k intervals. The sample consists of all stocks trading on 
+all exhanges in China and the sample is obtained by matching stocks 
+common in both our Bloomberg data and CSMAR data. The final 
+sample contains 3238 firms. Out of these we pick the 87 stocks that 
+are also cross listed in Hong Kong and trade as H-shares.The trad-
+ing day is divided in to non-overlapping half-hour intervals, since 
+the Chinese stock exchange operates from 9:30 to 11:30 am and then 
+from 1:00 to 3:00 pm, we have 8 half-hour trading intervals each day.
+For the H-listed shares in Hong Kong the trading hours are 9:30 am 
+to 4:00 pm, corresponding to 13 half hour intervals every day. The 
+cross-sectional regressions are estimated for all half-hour intervals 
+in the time sample for lags k=8, 16, 34, 96 and so on until 320 lags. 
+These lags correspond to daily lags of 1,2,3,... 40 days. The time series 
+averages of /u1D6FDi,t are reported in percentages as in HKS (2010). Also, 
+the corresponding Fama and MacBeth (1973) t-statistics are reported 
+along side
+Table 5  (continued)
+ J. Chen et al.
+Table 6  Cross sectional 
+regressions controlling for size Lag Estimate t-Statistic Lag Estimate t-Statistic
+Small Cap Firms
+1 Day 0.28 2.82 21 Days 0.34 2.94
+2 Days 0.49 4.18 22 Days 0.35 3.15
+3 Days 0.58 4.56 23 Days 0.36 3.18
+4 Days 0.52 4.30 24 Days 0.42 3.60
+5 Days 0.44 4.04 25 Days 0.50 4.15
+6 Days 0.51 4.26 26 Days 0.41 3.50
+7 Days 0.49 4.11 27 Days 0.43 3.62
+8 Days 0.50 4.20 28 Days 0.20 2.42
+9 Days 0.56 4.39 29 Days 0.32 2.84
+10 Days 0.55 4.35 30 Days 0.18 2.36
+11 Days 0.35 3.17 31 Days 0.29 2.88
+12 Days 0.54 4.32 32 Days 0.30 2.91
+13 Days 0.33 2.90 33 Days 0.27 2.76
+14 Days 0.44 3.77 34 Days 0.25 2.52
+15 Days 0.43 3.66 35 Days 0.23 2.45
+16 Days 0.30 2.77 36 Days 0.20 2.35
+17 Days 0.34 3.16 37 Days 0.19 2.29
+18 Days 0.41 3.55 38 Days 0.18 2.02
+19 Days 0.31 2.80 39 Days 0.20 2.33
+20 Days 0.40 3.47 40 Days 0.19 2.09
+Medium Cap Firms
+1 Day 0.33 2.96 21 Days 0.38 3.28
+2 Days 0.50 4.14 22 Days 0.40 3.37
+3 Days 0.60 4.55 23 Days 0.41 3.40
+4 Days 0.55 4.30 24 Days 0.45 3.75
+5 Days 0.51 4.18 25 Days 0.32 2.78
+6 Days 0.55 4.28 26 Days 0.42 3.46
+7 Days 0.53 4.20 27 Days 0.36 3.02
+8 Days 0.55 4.24 28 Days 0.30 2.69
+9 Days 0.57 4.36 29 Days 0.31 2.72
+10 Days 0.61 4.43 30 Days 0.29 2.52
+11 Days 0.42 3.61 31 Days 0.27 2.41
+12 Days 0.58 4.40 32 Days 0.26 2.37
+13 Days 0.36 3.17 33 Days 0.25 2.31
+14 Days 0.45 3.81 34 Days 0.29 2.48
+15 Days 0.44 3.72 35 Days 0.24 2.25
+16 Days 0.32 2.81 36 Days 0.22 2.17
+17 Days 0.41 3.45 37 Days 0.21 2.09
+18 Days 0.42 3.58 38 Days 0.20 2.06
+19 Days 0.33 2.89 39 Days 0.24 2.22
+20 Days 0.42 3.50 40 Days 0.19 2.01
+The Large Cap Firms
+1 Day 0.46 3.05 21 Days 0.54 3.26
+2 Days 0.70 4.43 22 Days 0.55 3.35
+3 Days 0.77 4.79 23 Days 0.56 3.48
+Investor clientele and intraday patterns in the cross section…
+Bogousslavsky (2016) cite some anecdotal evidence that some investors are only active at 
+the beginning and the end of the day. However, they find that their pattern is not limited to 
+the opening and ending half-hour intervals. To examine this further, we exclude the first 
+and last half-hour from our sample and conduct the regression analysis once again to see if 
+it makes any difference. The results from this analysis are reported in Table  7. Our regres-
+sion is the same as done in previous sections following HKS (2010).
+We find that none out of the forty regression estimates have a t-statistic that is greater 
+than 3. The effect is almost non-existing as demonstrated by the weakness of the estimates 
+and their corresponding t-statistics. This provides some evidence that the existence of the 
+effect is strongly dependent on the time of the day for the Chinese A-share market. To 
+further clarify the findings in simple words, we can say that the first half-hour interval and 
+This table reports the results for our all A-share sample separated in to 
+small, medium and large stocks by market capitalization to study the 
+impact of size on the existence of the pattern. The results are reported 
+for the simple cross-sectional regression R i,t = /u1D6FCi,t + /u1D6FDi,tR i,t−k + /u1D716i,t , 
+where t is the collection of all half-hour intervals for which the stock 
+trades during the sample period ranging from June 1, 2016 to March 
+1, 2019. R i,t is the return on the stock of firm i in interval t and R i,t−k 
+is the return on the stock of firm i lagged by k intervals. The sample 
+consists of all stocks trading on all exchanges in China and the sample 
+is obtained by matching stocks common in both our Bloomberg data 
+and CSMAR data. The final sample contains 3278 firms. These are 
+then split in to 1093 stocks in the small and medium firm categories 
+and 1092 in the large cap category of firms. The trading day is divided 
+in to non-overlapping half-hour intervals, since the Chinese stock 
+exchange operates from 9:30 to 11:30 am and then from 1:00 to 3:00 
+pm, we have 8 half-hour trading intervals each day. The cross-sec-
+tional regressions are estimated for all half-hour intervals in the time 
+sample for lags k=8, 16, 34, 96 and so on until 320 lags. These lags 
+correspond to daily lags of 1,2,3,... 40 days. The time series averages 
+of /u1D6FDi,t are reported in percentages as in HKS (2010). Also, the corre-
+sponding Fama and MacBeth (1973) t-statistics are reported along side
+Table 6  (continued) Lag Estimate t-Statistic Lag Estimate t-Statistic
+4 Days 0.76 4.70 24 Days 0.58 3.57
+5 Days 0.68 4.37 25 Days 0.62 3.94
+6 Days 0.72 4.49 26 Days 0.55 3.31
+7 Days 0.69 4.39 27 Days 0.61 3.77
+8 Days 0.72 4.51 28 Days 0.54 3.22
+9 Days 0.76 4.65 29 Days 0.48 3.15
+10 Days 0.77 4.69 30 Days 0.45 2.82
+11 Days 0.56 3.54 31 Days 0.43 2.79
+12 Days 0.71 4.43 32 Days 0.43 2.72
+13 Days 0.51 3.26 33 Days 0.41 2.65
+14 Days 0.65 4.22 34 Days 0.40 2.60
+15 Days 0.63 4.02 35 Days 0.42 2.70
+16 Days 0.46 2.95 36 Days 0.38 2.52
+17 Days 0.54 3.31 37 Days 0.36 2.46
+18 Days 0.55 3.38 38 Days 0.31 2.33
+19 Days 0.47 3.09 39 Days 0.33 2.38
+20 Days 0.59 3.67 40 Days 0.31 2.28
+ J. Chen et al.
+last half-hour interval exhibit the bulk of the intraday momentum for the Chinese A-share 
+markets and the effect is not consistent HKS (2010) who find the pattern as being prevalent 
+across all half-hour intervals of the trading day and not just the first and last half-hour. 
+Our findings are more consistent with Khademalomoom and Narayan (2019) who study 
+the intraday patterns in currency markets and find the existence of a time of the day effect.
+Table 7  Cross sectional 
+regressions controlling for first 
+and last half hour
+This table reports the results for the simple cross-sectional regres-
+sion R i,t = /u1D6FCi,t + /u1D6FDi,tR i,t−k + /u1D716i,t , where t is the collection of all half-
+hour intervals for which the stock trades during the sample period 
+ranging from June 1, 2016 to March 1, 2019. R i,t is the return on 
+the stock of firm i in interval t and R i,t−k is the return on the stock of 
+firm i lagged by k intervals. The sample consists of all stocks trad-
+ing on all exhanges in China and the sample is obtained by matching 
+stocks common in both our Bloomberg data and CSMAR data. The 
+final sample contains 3238 firms. The first and the last intervals are 
+excluded for each trading day and the analyses is carried out.The trad-
+ing day is divided in to non-overlapping half-hour intervals, since 
+the Chinese stock exchange operates from 9:30 to 11:30 am and then 
+from 1:00 to 3:00 pm, we have 8 half-hour trading intervals each day. 
+However, dropping the first and last half hour leaves us with 6 half-
+hour intervals only. The cross-sectional regressions are estimated for 
+all half-hour intervals in the time sample for lags k=8, 16, 34, 96 and 
+so on until 320 lags. These lags correspond to daily lags of 1,2,3,... 
+40 days. The time series averages of /u1D6FDi,t are reported in percentages as 
+in HKS (2010). Also, the corresponding Fama and MacBeth (1973) 
+t-statistics are reported along side
+Lag Estimate t-Statistic Lag Estimate t-Statistic
+The Chinese A-shares
+1 0.13 1.20 21 0.25 1.93
+2 0.18 1.82 22 0.27 1.96
+3 0.37 2.58 23 0.25 1.87
+4 0.39 2.74 24 0.24 1.72
+5 0.30 2.25 25 0.23 1.65
+6 0.28 2.03 26 0.22 1.59
+7 0.29 2.11 27 0.21 1.49
+8 0.28 2.01 28 0.13 1.23
+9 0.30 2.19 29 0.11 1.08
+10 0.31 2.38 30 0.12 1.16
+11 0.17 1.33 31 0.25 1.81
+12 0.33 2.47 32 0.21 1.44
+13 0.17 1.31 33 0.19 1.31
+14 0.31 2.31 34 0.15 1.27
+15 0.24 1.91 35 0.10 0.84
+16 0.14 1.22 36 0.11 1.01
+17 0.23 1.82 37 0.11 0.95
+18 0.24 1.85 38 0.07 0.70
+19 0.13 1.15 39 0.05 0.63
+20 0.24 1.75 40 0.03 0.55
+Investor clientele and intraday patterns in the cross section…
+4.6  Controlling for price limits
+This section provides perhaps the most compelling evidence that the effect documented by 
+HKS (2010) is not observed in China and the presence of the intraday momentum pattern 
+is weakest for the daily lag of 1 day. Whereas, in the US it is strongest for a daily lag of 1 
+day. In other words, it is found in the US that the returns for instance between 10:00 and 
+10:30 today for a particular stock will predict its returns for the same interval tomorrow. 
+However, in China it is observed that this predictability is the lowest between today and the 
+next day. We explore major reasons for it and the existence of price limits is a good candi-
+date to explain this effect as stocks that are affected by price limits experience significant 
+trading frictions and the likelihood of execution of trades over the subsequent days also 
+becomes low (Gu et al. 2018).
+We do this by dropping out the top and bottom decile from our sample for every half-
+hour interval reported in our sample. This is done to avoid the market frictions that traders 
+face in the existence of price limits as explained in Gu et al. (2018) where the likelihood of 
+trade execution falls as the stock hits its price limits. As the top and bottom decile for each 
+half-hour exhibit the extremes in terms of price movements, it is plausible to remove them 
+from our analyses and determine whether it is the daily price limits which curtails the intra-
+day momentum pattern in Chinese markets.
+To filter out the effect of price limits, we adopt an innovative approach which is to sort 
+the stocks into deciles every half-hour, and remove the top and bottom decile from the 
+sample. Thereafter, we conduct similar regression analysis that we have conducted thus far 
+based on HKS (2010). The results from the analysis are reported in Table 8.
+The results highlight the impact of price limits which are mostly likely to affect top and 
+bottom decile of stocks sorted on returns at the end of each half-hour interval. We notice 
+that the regression estimates for the daily lag of 1 day are much better in this sample with 
+a co-efficient of 0.52 and a t-statistic of 4.92 versus a co-efficient of 0.36 and a t-statistic of 
+2.94 for the wider all A-share sample which doesn’t drop the top and bottom decile stocks. 
+This provides evidence that price limits hamper the intraday momentum effect that is the 
+subject of our analysis in this study.
+4.7  Day trading rule, return reversals and contrarian strategies
+HKS (2010) document that short-term return reversals last for 30–60 min in the US mar -
+kets. We document similar results for the UK where return reversals last for up to thirty 
+minutes. However, cross-sectional regression results indicate that for China return reversals 
+last for 30–60  min. This indicates that it takes longer for Chinese stocks to converge to 
+market efficiency. Also, the resolving of return reversals within 30 min by the UK market 
+as a whole indicates that markets have become more efficient since 2005 when HKS (2010) 
+period of study ends.
+In Table  9 we report the cross-sectional regression results for the regression of each 
+trading interval from 9:30 to 11:30 am and from 1:00 to 3:00 pm (which makes a total 
+of 8 daily trading intervals) on their lagged returns for lags of 1,2,3,...20 for China and 
+1,2,3,...51 for the UK since they have 17 half-hour intervals as they trade from 8:00 
+am to 4:30pm. Like HKS (2010) we employ the cross-sectional regression approach 
+applied by Jegadeesh (1990) and report the corresponding Fama and MacBeth (1973) 
+t-statistics.
+ J. Chen et al.
+The most striking feature is the return reversibility in China at intervals just beyond the 
+1 day lag. This suggests that due to the ban on day trading, a lot of traders rush to unwind 
+their positions and potentially book profits on trades from the previous day as suggested by 
+the negative sign of the co-efficient, and this effect is highly significant. Additionally, it can 
+be interpreted as investors taking a contrarian strategy. This eventually has implications for 
+Table 8  Cross sectional 
+regressions controlling for price 
+limits
+This table reports the results for the simple cross-sectional regres-
+sion R i,t = /u1D6FCi,t + /u1D6FDi,tR i,t−k + /u1D716i,t , where t is the collection of all half-
+hour intervals for which the stock trades during the sample period 
+ranging from June 1, 2016 to March 1, 2019. R i,t is the return on the 
+stock of firm i in interval t and R i,t−k is the return on the stock of firm 
+i lagged by k intervals. The sample consists of all stocks trading on 
+all exhanges in China and the sample is obtained by matching stocks 
+common in both our Bloomberg data and CSMAR data. The final 
+sample contains 3238 firms.The trading day is divided in to non-over -
+lapping half-hour intervals, since the Chinese stock exchange operates 
+from 9:30 to 11:30 am and then from 1:00 to 3:00 pm, we have 8 half-
+hour trading intervals each day. Stocks are sorted in to top and bot-
+tom deciles at the end of every half hour interval based on returns and 
+the top and bottom deciles are dropped. The cross-sectional regres-
+sions are estimated for all half-hour intervals in the time sample for 
+lags k=8, 16, 34, 96 and so on until 320 lags. These lags correspond 
+to daily lags of 1,2,3,... 40 days. The time series averages of /u1D6FDi,t are 
+reported in percentages as in HKS (2010). Also, the corresponding 
+Fama and MacBeth (1973) t-statistics are reported along side. This 
+table separates our all A-share sample in to small, medium and large 
+stocks by market capitalization to study the impact of size on the exist-
+ence of the pattern
+Lag Estimate t-Statistic Lag Estimate t-Statistic
+The Chinese A-shares
+1 Day 0.52 4.92 21 Days 0.34 3.22
+2 Days 0.51 4.86 22 Days 0.30 3.02
+3 Days 0.65 7.21 23 Days 0.28 2.88
+4 Days 0.51 4.41 24 Days 0.38 3.44
+5 Days 0.53 3.97 25 Days 0.33 3.18
+6 Days 0.55 4.65 26 Days 0.32 3.05
+7 Days 0.45 4.08 27 Days 0.30 2.95
+8 Days 0.43 3.99 28 Days 0.27 2.70
+9 Days 0.52 4.52 29 Days 0.26 2.62
+10 Days 0.50 4.32 30 Days 0.24 2.57
+11 Days 0.41 3.85 31 Days 0.25 2.60
+12 Days 0.49 4.23 32 Days 0.23 2.44
+13 Days 0.39 3.62 33 Days 0.22 2.37
+14 Days 0.49 4.18 34 Days 0.19 2.26
+15 Days 0.45 4.03 35 Days 0.18 2.19
+16 Days 0.32 3.13 36 Days 0.17 2.14
+17 Days 0.38 3.49 37 Days 0.15 2.09
+18 Days 0.45 5.00 38 Days 0.14 2.05
+19 Days 0.36 3.26 39 Days 0.15 2.07
+20 Days 0.39 3.57 40 Days 0.13 2.01
+Investor clientele and intraday patterns in the cross section…
+market efficiency as the ban on day trading leads to aggressive behaviour to reverse posi-
+tions as soon as the 24-hour period passes. The evidence is supportive of the findings of 
+Kaniel et al. (2008) and Baltzer et al. (2019) who find that domestic individual investors 
+are most likely to be contrarians and engage in contrarian strategies rather than momentum 
+strategies. Our findings are consistent with Li et al. (2019) who find that the day trading 
+rule or ‘T+1’ settlement rule which restricts intraday buying and then selling in Chinese 
+Table 9  Cross sectional regressions demonstrating the impact of the day trading rule
+This table reports the results for the simple cross-sectional regression R i,t = /u1D6FCi,t + /u1D6FDi,tR i,t−k + /u1D716i,t , where t is 
+the collection of all half-hour intervals for which the stock trades during the sample period ranging from 
+June 1, 2016 to March 1, 2019. R i,t is the return on the stock of firm i in interval t and R i,t−k is the return on 
+the stock of firm i lagged by k intervals. The sample consists of all stocks trading on all exhanges in China 
+and the sample is obtained by matching stocks common in both our Bloomberg data and CSMAR data. The 
+final sample contains 3238 firms.The trading day is divided in to non-overlapping half-hour intervals, since 
+the Chinese stock exchange operates from 9:30 to 11:30 am and then from 1:00 to 3:00 pm, we have 8 half-
+hour trading intervals each day. The cross-sectional regressions are estimated for all half-hour intervals in 
+the time sample for lags k=1, 2, 3, 4 and so on until 20 lags. For the UK there are 17 half hour intervals in 
+the trading day, so 51 intervals make up for 3 days. The time series averages of /u1D6FDi,t are reported in percent-
+ages as in HKS (2010). Also, the corresponding Fama and MacBeth (1973) t-statistics are reported along 
+side. First UK is reported, next China is reported
+Lag Estimate t-Statistic Lag Estimate t-Statistic Lag Estimate t-Statistic
+The United Kingdom
+1 − 0.23 − 1.54 18 0.08 1.78 35 0.02 1.27
+2 0.25 2.46 19 0.07 1.70 36 0.05 1.58
+3 0.24 2.42 20 0.12 2.02 37 0.01 1.19
+4 0.20 2.31 21 0.11 1.97 38 0.03 1.41
+5 0.18 2.26 22 0.13 2.06 39 0.03 1.38
+6 0.17 2.22 23 0.02 1.32 40 0.01 1.16
+7 0.15 2.17 24 0.10 1.93 41 0.02 1.25
+8 0.14 2.12 25 0.08 1.81 42 0.01 1.12
+9 0.15 2.14 26 0.18 2.23 43 0.01 1.09
+10 0.13 2.10 27 0.19 2.28 44 0.03 1.35
+11 0.12 2.05 28 0.17 2.20 45 0.04 1.47
+12 0.11 2.00 29 0.16 2.19 46 0.02 1.23
+13 0.10 1.95 30 0.14 2.13 47 0.01 1.02
+14 0.09 1.89 31 0.12 2.02 48 0.03 1.33
+15 0.08 1.84 32 0.13 2.08 49 0.02 1.21
+16 0.12 2.03 33 0.10 1.91 50 0.06 1.62
+17 1.80 10.18 34 1.55 8.73 51 1.23 8.07
+China
+1 − 0.29 − 2.09 9 − 0.58 − 7.14 17 − 0.45 − 4.36
+2 − 0.20 − 1.58 10 − 0.18 − 1.50 18 − 0.15 − 1.23
+3 0.16 1.42 11 0.10 0.62 19 0.09 0.55
+4 0.14 0.98 12 0.12 0.72 20 0.08 0.56
+5 0.20 1.99 13 0.14 0.93 21 0.12 0.60
+6 0.24 2.42 14 0.22 2.26 22 0.18 1.76
+7 0.43 3.31 15 0.26 2.65 23 0.25 2.49
+8 0.36 2.94 16 0.56 4.03 24 0.65 4.63
+ J. Chen et al.
+markets is also responsible for the weaker presence of herding phenomenon on the sell side 
+as compared to the buy side.
+4.8  Intraday momentum portfolio returns
+Following the methodology of HKS (2010) who follow the portfolio formation of 
+Jegadeesh and Titman (1993) we also conduct a similar analysis. Table  10 reports the per-
+formance of the portfolios formed on the basis of each half-hour interval’s returns. The 
+stocks are sorted every half-hour and portfolios are formed using the top and bottom 
+deciles and their half-hour returns are observed for the next forty days (during the same 
+half-hour interval). We ensure that all deciles have the same number of stocks as required 
+by HKS (2010) as it is critical to form equal-weighted portfolios. All intervals from 8:00 
+to 16:30 are taken and stocks are sorted every half-hour for the UK markets. The sam-
+ple includes all UK firms from 1 st January, 2017 to 31 st December, 2017. For the Chinese 
+A-share markets all intervals from 9:30 to 11:30 and then 1:00 to 3:00 pm are taken. The 
+average return spreads (top minus bottom decile) on portfolios formed on the basis on the 
+performance during the relevant historical half-hour (with lags 1 to 40 days) interval are 
+reported. The stocks are grouped into ten portfolios with an equal number of stocks in each 
+portfolio. The returns are reported in basis points to make more economic sense.
+We find that the pattern is quite strong in the UK markets and for a daily lag of 1 day, 
+the portfolio returns are nearly 4 basis points, which is higher than what has been reported 
+for the US and the t-statistics are highly significant with a value of 13.85. This evidence 
+is the first intraday evidence of the pattern documented by HKS (2010) outside the US in 
+terms of an equally weighted portfolio return. This is a striking finding since usually it is 
+seen that post-publication return predictability of variables declines (McLean and Pontiff  
+2016). We observe that for the UK, the effect yields significant and positive returns spe-
+cially during the first ten days.
+For Chinese A-shares, the picture is rather different. We observe that the spreads are 
+much narrower and the effect is not significant. Particularly for the strategy based on 1 
+daily lag and the lags beyond 10 days, it is insignificant. The high minus low portfolio 
+return on a strategy based on a 1-day lag for Chinese A-shares is 0.55 basis points and 
+has a t-statistic of 1.52. We find that the intraday momentum pattern is strongest for the 
+strategy based on the high minus low portfolio returns with a lag of 3 days.
+The Brazilian markets and the dual-listed B- and H-shares are much like the UK and 
+the US. We see a peaking of the intraday momentum pattern in terms of returns when 
+we use a 1-day lag strategy to form a portfolio based on high minus low stocks. The 
+profits are of the range of 2.36 basis points for B-shares, 3.54 basis points for H-shares, 
+and 3.09 basis points for Brazil for a portfolio formed based on a 1-day lag. These mar -
+kets are dominated by institutional investors and the intraday predictability in the cross-
+section of stock returns seems synonymous with them. Whereas, in the retail investors 
+dominated market of Chinese A-shares, the pattern is weakest for a 1-day lag. The day 
+trading rule, the price limit rule, and retail investor procrastination serve to explain the 
+different set of findings for the Chinese A-shares.
+Investor clientele and intraday patterns in the cross section…
+Table 10  High minus low portfolio returns
+Lag(days) Returns t-Statistic Lag Return t-Statistic Lag Return t-Statistic Lag Returns t-Statistic
+The United Kingdom
+2 3.11 10.53 12 0.67 2.29 22 0.70 2.37 32 0.30 1.01
+3 2.40 8.23 13 0.72 2.48 23 0.61 2.16 33 0.68 2.33
+4 2.01 7.25 14 0.39 1.35 24 0.69 2.40 34 0.26 0.88
+5 1.55 5.40 15 0.52 1.78 25 0.44 1.53 35 0.49 1.65
+6 1.26 4.36 16 0.75 2.57 26 0.47 1.61 36 0.26 0.85
+7 1.24 4.30 17 0.80 2.71 27 0.49 1.67 37 0.06 0.15
+8 1.18 4.15 18 0.69 2.45 28 0.07 0.24 38 0.46 1.55
+9 1.30 4.53 19 0.22 0.76 29 0.06 0.20 39 0.32 1.05
+10 0.70 2.50 20 0.65 2.23 30 0.84 2.82 40 0.52 1.71
+Brazil
+1 3.09 9.78 11 1.12 5.35 21 0.58 2.95 31 0.54 2.75
+2 2.21 7.53 12 0.98 4.85 22 0.65 3.18 32 0.45 2.50
+3 1.85 6.79 13 1.02 5.05 23 0.72 4.30 33 0.52 2.80
+4 1.65 6.27 14 0.89 4.53 24 0.59 3.02 34 0.42 2.35
+5 1.60 6.04 15 0.77 4.23 25 0.62 3.09 35 0.51 2.74
+6 1.46 5.86 16 0.80 4.37 26 0.57 2.93 36 0.46 2.61
+7 1.15 5.46 17 0.75 4.18 27 0.66 3.20 37 0.17 1.68
+8 1.20 5.57 18 0.70 4.26 28 0.60 3.05 38 0.39 2.28
+9 1.41 5.92 19 0.78 4.32 29 0.55 2.85 39 0.36 2.23
+10 1.30 5.71 20 0.61 3.14 30 0.62 3.08 40 0.48 2.74
+The Chinese A-shares
+1 0.55 1.52 11 0.80 2.33 21 0.69 1.43 31 0.48 0.92
+2 1.30 3.59 12 0.82 2.45 22 0.72 1.57 32 0.45 0.88
+3 1.40 4.02 13 0.84 2.59 23 0.68 1.40 33 0.43 0.83
+4 1.35 3.73 14 0.79 1.80 24 0.65 1.33 34 0.40 0.79
+ J. Chen et al.
+Table 10  (continued)
+Lag(days) Returns t-Statistic Lag Return t-Statistic Lag Return t-Statistic Lag Returns t-Statistic
+5 1.22 3.45 15 0.75 1.69 25 0.62 1.21 35 0.36 0.71
+6 1.32 3.67 16 0.77 1.74 26 0.58 1.17 36 0.31 0.63
+7 1.25 3.50 17 0.74 1.63 27 0.57 1.13 37 0.32 0.65
+8 1.21 3.38 18 0.73 1.60 28 0.55 1.09 38 0.25 0.49
+9 1.17 3.26 19 0.70 1.52 29 0.52 1.01 39 0.22 0.44
+10 1.18 3.30 20 0.71 1.56 30 0.50 0.95 40 0.18 0.40
+The Chinese B-shares
+1 2.36 7.12 11 1.11 3.20 21 1.09 3.11 31 0.85 2.86
+2 1.75 5.69 12 1.17 3.42 22 1.02 3.02 32 0.88 2.92
+3 1.65 5.14 13 0.94 3.05 23 1.11 3.20 33 0.98 3.23
+4 1.55 4.86 14 1.16 3.36 24 1.32 4.26 34 1.08 3.12
+5 1.46 4.78 15 1.29 3.64 25 1.08 3.14 35 1.03 3.09
+6 1.54 4.80 16 0.97 3.19 26 1.15 3.31 36 0.75 2.63
+7 1.58 4.90 17 1.13 3.34 27 0.95 3.12 37 0.80 2.76
+8 1.41 4.69 18 1.20 3.49 28 1.42 4.75 38 0.68 2.43
+9 1.44 4.73 19 1.15 3.36 29 1.21 3.52 39 0.74 2.55
+10 1.38 4.40 20 1.23 3.57 30 1.18 3.46 40 0.70 2.50
+The Chinese H-shares
+1 3.54 10.95 11 1.19 4.22 21 1.00 3.36 31 0.87 2.95
+2 2.29 7.81 12 1.15 4.16 22 0.99 3.26 32 0.85 2.89
+3 1.73 5.26 13 1.09 3.93 23 1.01 3.40 33 0.90 3.04
+4 1.55 5.04 14 1.11 4.00 24 0.96 3.24 34 0.86 2.93
+5 1.50 4.93 15 1.08 3.64 25 0.94 3.19 35 0.84 2.81
+6 1.43 4.77 16 1.02 3.51 26 0.92 3.11 36 0.79 2.61
+7 1.40 4.69 17 1.03 3.54 27 0.90 3.08 37 0.80 2.65
+Investor clientele and intraday patterns in the cross section…
+Table 10  (continued)
+Lag(days) Returns t-Statistic Lag Return t-Statistic Lag Return t-Statistic Lag Returns t-Statistic
+8 1.38 4.69 18 1.01 3.44 28 0.89 3.06 38 0.75 2.56
+9 1.34 4.73 19 0.95 3.21 29 0.91 3.09 39 0.74 2.49
+10 1.28 4.40 20 0.93 3.177 30 0.88 3.00 40 0.72 2.41
+This table reports the performance for the portfolios formed on the basis of each half-hour interval’s returns. The stocks are sorted every half hour and portfolios are formed 
+using the top and bottom deciles and their half hour returns are observed for the next forty days(during the same half hour interval). All intervals from 8:00 to 16:30 are taken 
+and stocks are sorted every half-hour. The sample period ranges from June 1, 2016 to March 1, 2019. The average return spreads(top minus bottom decile) on portfolios 
+formed on the basis on the performance during the relevant historical half hour (with lags 1 to 40 days) interval are reported. The stocks are grouped in to ten portfolios with 
+an equal number of stocks in each portfolio.The returns are reported in basis points
+ J. Chen et al.
+4.9  Inclusion of A‑shares in the MSCI emerging markets index
+We now consider 233 A-shares that were included in the Morgan Stanley Capital Inter -
+national (MSCI) Emerging Markets Index from June 1, 2018. It is believed that the 
+inclusion of these Chinese A shares in the MSCI index has significantly increased the 
+attractiveness of these shares as well as the Chinese stock market as a whole to interna-
+tional investors and thus their liquidity. Indeed Table  11 shows that since the inclusion, 
+these shares have had a substantial increase in institutional owners.
+We study these stocks from June 1, 2016 to May 31, 2018 (before inclusion in 
+the index) and from June 1, 2018 to March 1, 2019 (after inclusion in the index). In 
+Table  12, we report the regression comparison before and after the inclusion in the 
+MSCI index. We notice that the cross-sectional regression estimates experience a sig-
+nificant increase after the inclusion in the MSCI Emerging Markets Index. Also, the 
+statistical significance experiences an increase across the board ranging from 1 to 40 
+days post-inclusion. Of particular interest is the fact that post inclusion, the 1-day lag 
+co-efficient estimate is the biggest economically and most significant statistically. This 
+further signals behaviour similar to the US and UK. Therefore, it leads us to conclude 
+that inclusion has lead to a shift in behaviour of these stocks that now behave more in 
+line with stocks that have a greater institutional base of investors.
+Furthermore, as a robustness check to our regression estimates, as in Table  10, we con-
+struct a high minus low portfolio in which we go long on the top decile stocks and short 
+the bottom decile stocks based on each half-hour’s return performance during the day and 
+hold it until the same interval the following trading day (for up to 40 days). The results are 
+reported in Table  13. The average return spreads (top minus bottom decile) on portfolios 
+formed on the basis of the performance during the relevant historical half-hour (with lags 1 
+to 40 days) intervals are reported. The high minus low portfolio returns experience a signif-
+icant increase in the amount of returns generated. For instance, for a strategy that considers 
+a lag of 1 day the returns before inclusion in the index were 1.44 basis points, whereas, 
+after the inclusion these returns rise to 2.85 basis points.
+Table 11  Institutional holdings before and after inclusion in MSCI Emerging Markets Index
+This table reports the percentage of institutional holdings, percentage of float held by institutional investors, 
+number of financial institutions holding/trading the shares and the percentage held by domestic investors. 
+These measures are reported for the shares before the inclusion of 233 large cap A-shares in the MSCI 
+Emerging Markets Index as of May 31, 2018 (before inclusion) and as of 1st March, 2019 (after inclusion). 
+Numbers reported in parenthesis represent after the inclusion
+Type Number of Stocks Institutional Hold-
+ings (Percentage)
+Float held 
+(Percentage)
+Number of 
+Institutions
+Domestic Own-
+ership (Percent-
+age)
+A-shares 233 49 18 100 85
+(55) (29) (150) (83)
+Investor clientele and intraday patterns in the cross section…
+Table 12  Cross sectional 
+regressions to study the impact of 
+index inclusion
+This table reports the results for the simple cross-sectional regression 
+R i,t = /u1D6FCi,t + /u1D6FDi,tR i,t−k + /u1D716i,t , where t is the collection of all half-hour 
+intervals for which the stock trades during the sample period split in to 
+two parts-before and after the inclusion in the MSCI Emerging Mar -
+Lag Estimate t-Statistic Lag Estimate t-Statistic
+233 A-shares-Before Inclusion
+1 Day 0.76 4.89 21 Days 0.44 3.09
+2 Days 0.83 5.74 22 Days 0.43 3.05
+3 Days 0.86 5.93 23 Days 0.45 3.20
+4 Days 0.72 4.52 24 Days 0.49 3.34
+5 Days 0.70 4.23 25 Days 0.40 2.92
+6 Days 0.71 4.32 26 Days 0.44 3.01
+7 Days 0.65 4.12 27 Days 0.41 2.95
+8 Days 0.67 4.19 28 Days 0.48 3.25
+9 Days 0.63 4.08 29 Days 0.42 3.01
+10 Days 0.60 3.86 30 Days 0.35 2.78
+11 Days 0.63 4.01 31 Days 0.32 2.65
+12 Days 0.62 3.92 32 Days 0.33 2.69
+13 Days 0.60 3.79 33 Days 0.30 2.43
+14 Days 0.54 3.52 34 Days 0.29 2.37
+15 Days 0.55 3.56 35 Days 0.31 2.52
+16 Days 0.50 3.35 36 Days 0.30 2.41
+17 Days 0.57 3.65 37 Days 0.27 2.31
+18 Days 0.54 3.49 38 Days 0.28 2.34
+19 Days 0.52 3.43 39 Days 0.26 2.26
+20 Days 0.51 3.40 40 Days 0.24 2.19
+233 A-shares-After Inclusion
+1 Day 1.68 9.25 21 Days 1.22 3.45
+2 Days 1.51 6.87 22 Days 1.25 3.69
+3 Days 1.45 6.26 23 Days 1.23 3.55
+4 Days 1.40 5.22 24 Days 1.25 3.65
+5 Days 1.38 4.98 25 Days 1.26 3.80
+6 Days 1.35 4.72 26 Days 1.22 3.43
+7 Days 1.32 4.36 27 Days 1.28 4.02
+8 Days 1.33 4.44 28 Days 1.20 3.34
+9 Days 1.35 4.70 29 Days 1.21 3.39
+10 Days 1.31 4.29 30 Days 1.19 3.27
+11 Days 1.32 4.34 31 Days 1.22 3.39
+12 Days 1.29 4.06 32 Days 1.20 3.33
+13 Days 1.30 4.12 33 Days 1.18 3.20
+14 Days 1.31 4.27 34 Days 1.16 3.02
+15 Days 1.28 3.94 35 Days 1.17 3.11
+16 Days 1.30 4.08 36 Days 1.20 3.29
+17 Days 1.25 3.72 37 Days 1.24 3.57
+18 Days 1.26 3.81 38 Days 1.20 3.26
+19 Days 1.23 3.59 39 Days 1.23 3.79
+20 Days 1.25 3.68 40 Days 1.17 3.05
+ J. Chen et al.
+5  Conclusion
+This study is the first to provide empirical evidence on the existence of the intraday pat-
+tern documented in the literature by HKS (2010) and further modelled by Bogousslavsky 
+(2016) in markets outside the United States. The pattern is observed in the UK, Brazil, 
+B-shares, and Hong Kong listed Chinese H-shares and exhibits all similarities to the pat-
+tern observed by HKS (2010). It further proves that HKS (2010) intraday momentum pat-
+tern is not a product of data snooping etcetera as discussed by Heston and Sadka (2010) 
+when they find international evidence for the existence of return seasonality using longer 
+horizon data on International Markets. However, the evidence on the existence of the pat-
+tern in Chinese A-shares indicates that it manifests itself with a much weaker magnitude.
+We are able to explain the weakness of the pattern in Chinese A-shares and the prolif-
+eration of the pattern in Chinese B-shares by virtue of difference in investor composition. 
+The Chinese A-shares market is dominated by domestic individual investors (Nartea et al. 
+2017) while the Chinese B-shares market is dominated by foreign institutional investors 
+(Chui et al. 2022). Since the dual listed B-shares exhibit the pattern more strongly in terms 
+of cross-sectional regression coefficients we infer that the investor composition plays an 
+important role in the propagation of the pattern. This is in line with the studies like Kaniel 
+et al. (2008) and Baltzer et al. (2019) that claim that individual investors are contrarians 
+and institutional investors engage in momentum strategies.
+Furthermore, with regards to China, the pattern manifests itself as best as it can given 
+the level of trading restrictions. These trading restrictions have raised a lot of debate in 
+recent years as some studies like Gu et al. (2018) have argued that these restrictions actu-
+ally hurt markets and hamper market efficiency. We provide specific evidence with regards 
+to price limits and day trading restrictions. We show that if we remove the top and bottom 
+deciles from our sample, the remaining stocks are less prone to hitting price limits and the 
+sample behaves more like the US, and the UK, Brazil, and dual-listed B- and H-shares and 
+the HKS (2010) pattern that we are studying here is more profound. This provides some 
+evidence that limits of arbitrage act as a deterrent for smooth propagation of the momen-
+tum pattern.
+We provide evidence into the impact of the partial inclusion of A-shares into the 
+highly coveted MSCI Emerging Markets Index and show that it increases the level of 
+kets Index (ranging from June 1, 2016 to May 31, 2018 and from June 
+1, 2018 to March 1, 2019 respectively). This sub-sample contains the 
+233 A-shares that were included in the MSCI Emerging Markets Index 
+from June 1, 2018. R i,t is the return on the stock of firm i in interval 
+t and R i,t−k is the return on the stock of firm i lagged by k intervals. 
+The trading day is divided in to non-overlapping half-hour intervals, 
+since the Chinese stock exchange operates from 9:30 to 11:30 am and 
+then from 1:00 to 3:00 pm, we have 8 half-hour trading intervals each 
+day. Stocks are sorted in to top and bottom deciles at the end of every 
+half hour interval based on returns and the top and bottom deciles are 
+dropped. The cross-sectional regressions are estimated for all half-
+hour intervals in the time sample for lags k=8, 16, 34, 96 and so on 
+until 320 lags. These lags correspond to daily lags of 1,2,3,... 40 days. 
+The time series averages of /u1D6FDi,t are reported in percentages as in Hes-
+ton et al. (2010). Also, the corresponding Fama and MacBeth (1973) 
+t-statistics are reported along side. This table separates our all A-share 
+sample in to small, medium and large stocks by market capitalization 
+to study the impact of size on the existence of the pattern
+Table 12  (continued)
+Investor clientele and intraday patterns in the cross section…
+Table 13  High minus low 
+portfolio returns before and after 
+index inclusion
+This table reports the performance for the portfolios formed on the 
+basis of each half-hour interval’s returns. The stocks are sorted every 
+half hour and portfolios are formed using the top and bottom deciles 
+and their half hour returns are observed for the next forty days(during 
+Lag Returns t-Statistic Lag Returns t-Statistic
+233 A-shares-Before Inclusion
+1 Day 1.44 4.38 21 Days 0.93 3.19
+2 Days 1.52 4.46 22 Days 0.91 3.14
+3 Days 1.58 4.61 23 Days 0.88 3.09
+4 Days 1.30 4.24 24 Days 0.90 3.12
+5 Days 1.21 4.06 25 Days 0.85 2.92
+6 Days 1.16 3.98 26 Days 0.81 2.81
+7 Days 1.11 3.88 27 Days 0.82 2.85
+8 Days 1.09 3.74 28 Days 0.79 2.75
+9 Days 1.10 3.77 29 Days 0.80 2.77
+10 Days 1.05 3.61 30 Days 0.79 2.72
+11 Days 1.02 3.55 31 Days 0.75 2.65
+12 Days 1.04 3.56 32 Days 0.72 2.55
+13 Days 1.02 3.42 33 Days 0.70 2.50
+14 Days 1.01 3.34 34 Days 0.68 2.45
+15 Days 0.98 3.26 35 Days 0.65 2.38
+16 Days 0.95 3.19 36 Days 0.66 2.41
+17 Days 0.96 3.21 37 Days 0.62 2.33
+18 Days 0.93 3.12 38 Days 0.56 2.24
+19 Days 1.00 3.36 39 Days 0.60 2.30
+20 Days 1.04 3.51 40 Days 0.55 2.19
+233 A-shares-After Inclusion
+1 Day 2.85 8.85 21 Days 1.26 4.80
+2 Days 2.30 7.74 22 Days 1.29 4.87
+3 Days 2.15 7.51 23 Days 1.20 4.63
+4 Days 2.09 7.35 24 Days 1.22 4.69
+5 Days 2.01 7.05 25 Days 1.25 4.75
+6 Days 1.95 6.85 26 Days 1.17 4.52
+7 Days 2.00 6.92 27 Days 1.11 4.36
+8 Days 1.94 6.81 28 Days 1.13 4.42
+9 Days 1.90 6.69 29 Days 1.08 4.21
+10 Days 1.88 6.61 30 Days 1.11 4.30
+11 Days 1.75 6.22 31 Days 1.02 4.10
+12 Days 1.65 5.95 32 Days 1.04 4.12
+13 Days 1.60 5.84 33 Days 0.95 3.95
+14 Days 1.52 5.62 34 Days 0.91 3.74
+15 Days 1.45 5.47 35 Days 0.87 3.58
+16 Days 1.40 5.35 36 Days 0.74 3.33
+17 Days 1.36 5.23 37 Days 0.70 3.26
+18 Days 1.38 5.29 38 Days 0.62 3.15
+19 Days 1.35 5.12 39 Days 0.65 3.20
+20 Days 1.30 4.95 40 Days 0.60 3.04
+ J. Chen et al.
+institutional ownership, the number of participating institutions, the percentage float 
+held by institutions, and foreign ownership in the included stocks. We use this inclu-
+sion as an exogenous shock to the level of institutional ownership in the 233 A-shares 
+stocks. We show that after the inclusion in the index, the 233 A-shares demonstrate the 
+existence of the pattern that is closer to the US, the UK, Brazil, and the dual listed B- 
+and H-shares. This further confirms the role of institutional investors in explaining the 
+intraday momentum effect.
+We show that at intervals just beyond daily multiples of the trading day, we see 
+extreme evidence of return reversals. This shows that retail investors desperately wait 
+to reverse short-term positions and rush to reverse their positions as soon 24-hour 
+limit passes. It can actually lead to lots of selling pressure and market volatility. This 
+is once again in line with studies like Kaniel et al. (2008) and Baltzer et al. (2019) that 
+claim that individual investors are contrarians. Since, our A-shares investors are mostly 
+domestic individual investors (Nartea et  al. 2017) we can say that our results are in 
+line with the existing evidence. These findings also have implications from a regulatory 
+perspective.
+We find that the manifestation of the pattern is subject to the size of the firms. We 
+find that large market capitalization group exhibits the intraday momentum pattern 
+with the greatest strength owing to the tendency of institutional investors to herd in 
+large stocks (Li and Wang 2010). However, we find that the time of the day explains 
+the majority of the existence of the pattern. If we remove the first and last trading inter -
+vals, the pattern almost diminishes. Also, a portfolio analyses conducted in the spirit of 
+Jegadeesh and Titman (1993) reveals that the returns on top minus bottom decile portfo-
+lios sorted by past half-hour returns and held on for the next forty days have positive but 
+significant returns, but are mostly weaker than the US, UK, Brazil and dual listed B- and 
+H-share counterparts. Consistent with our findings, Chui et al. (2022) find that over the 
+longer horizon the momentum effect is more prevalent in Chinese B-shares than in their 
+A-share counterparts. Our evidence further supports the findings of Chui et al. (2022).
+Overall, our study also provides evidence that the tireless efforts of the Chinese 
+regulators and policy makers to institutionalize the Chinese A-shares market is bear -
+ing fruit. Indeed, the plan for inclusion of 168 mid-cap stocks has been fast tracked 
+and our results show that the dawn of a new era in Chinese stock markets has begun. In 
+this era, the market will mature and will continue to get institutionalized gradually and 
+move away from the ‘casino’ like features that it has come to be associated with. Future 
+research should focus on providing empirical evidence regarding all the positive ben-
+efits of institutional investors in the context of China.
+the same half hour interval). All intervals from 8:00 to 16:30 are 
+taken and stocks are sorted every half-hour. The sample contains 233 
+A-shares which were subject to inclusion in MSCI Emerging Markets 
+Index inclusion from the period ranging from June 1, 2016 to May 31, 
+2018 (before inclusion in MSCI Emerging Markets Index) and from 
+June 1, 2018 to March 1, 2019 (after inclusion in the MSCI Emerging 
+Markets Index). The average return spreads(top minus bottom decile) 
+on portfolios formed on the basis on the performance during the rel-
+evant historical half hour (with lags 1 to 40 days) interval are reported. 
+The stocks are grouped in to ten portfolios with an equal number of 
+stocks in each portfolio.The returns are reported in basis points
+Table 13  (continued)
+Investor clientele and intraday patterns in the cross section…
+Declarations 
+Conflict of interest The authors have no conflict of interest to declare that are relevant to the content of this 
+article.
+Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, 
+which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long 
+as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Com-
+mons licence, and indicate if changes were made. The images or other third party material in this article 
+are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the 
+material. If material is not included in the article’s Creative Commons licence and your intended use is not 
+permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly 
+from the copyright holder. To view a copy of this licence, visit http://creativecommons.org/licenses/by/4.0/.
+References
+Akbas F, Armstrong WJ, Sorescu S, Subrahmanyam A (2015) Smart money, dumb money, and capital 
+market anomalies. J Financ Econ 118:355–382
+Allen F, Qian J, Shan C, Zhu JL (2024) Dissecting the long-term performance of the Chinese stock mar -
+ket. J Finance 79:993–1054
+Appel IR, Gormley TA, Keim DB (2016) Passive investors, not passive owners. J Financ Econ 
+121:111–141
+Baltzer M, Jank S, Smajlbegovic E (2019) Who trades on momentum? J Financ Mark 42:56–74
+Bena J, Ferreira MA, Matos P, Pires P (2017) Are foreign investors locusts? The long-term effects of 
+foreign institutional ownership. J Financ Econ 126:122–146
+Bogousslavsky V (2016) Infrequent rebalancing, return autocorrelation, and seasonality. J Finance 
+71:2967–3006
+Bogousslavsky V (2021) The cross-section of intraday and overnight returns. J Financ Econ 141:172–194
+Boone AL, White JT (2015) The effect of institutional ownership on firm transparency and information 
+production. J Financ Econ 117:508–533
+Borochin P, Yang J (2017) The effects of institutional investor objectives on firm valuation and govern-
+ance. J Financ Econ 126:171–199
+Brogaard J, Hendershott T, Riordan R (2014) High-frequency trading and price discovery. Rev Financ 
+Stud 27:2267–2306
+Cakici N, Fieberg C, Metko D, Zaremba A (2023) Do anomalies really predict market returns? New data 
+and new evidence. Rev Finance 28:1–44
+Campbell JY, Ramadorai T, Schwartz A (2009) Caught on tape: institutional trading, stock returns, and 
+earnings announcements. J Financ Econ 92:66–91
+Carpenter JN, Lu F, Whitelaw RF (2021) The real value of China’s stock market. J Financ Econ 
+139:679–696
+Chen J, Haboub A, Khan A (2024) Limits of arbitrage and their impact on market efficiency: evidence 
+from China. Glob Financ J 59:100916
+Chordia T, Roll R, Subrahmanyam A (2005) Evidence on the speed of convergence to market efficiency. 
+J Financ Econ 76:271–292
+Chui ACW, Titman S, Wei KCJ (2010) Individualism and momentum around the world. J Finance 
+65:361–392
+Chui ACW, Subrahmanyam A, Titman S (2022) Momentum, reversals, and investor clientele. Rev 
+Finance 26:217–255
+Cortina JJ, Peria MSM, Schmukler SL, Xiao J (2024) The internationalization of China’s equity markets. 
+IMF Econ Rev 8:1–57
+Coval J, Stafford E (2007) Asset fire sales (and purchases) in equity markets. J Financ Econ 86:479–512
+Daniel K, Moskowitz TJ (2016) Momentum crashes. J Financ Econ 122:221–247
+Fama EF, MacBeth JD (1973) Risk, return, and equilibrium: empirical tests. J Polit Econ 81:607–636
+Fong KYL, Holden CW, Trzcinka CA (2017) What are the best liquidity proxies for global research? 
+Rev Finance 4:1355–1401
+Gao L, Han Y, Li SZ, Zhou G (2018) Market intraday momentum. J Financ Econ 129:394–414
+Gao Y, Han X, Li Y, Xiong X (2019) Overnight momentum, informational shocks, and late informed 
+trading in China. Int Rev Financ Anal 66:101394
+ J. Chen et al.
+Gao Y, Han X, Li Y, Xiong X (2021) Investor heterogeneity and momentum-based trading strategies in 
+China. Int Rev Financ Anal 74:101654
+Griffin JM, Ji X, Martin JS (2003) Momentum investing and business cycle risk: evidence from pole to 
+pole. J Finance 58:2515–2547
+Grinblatt M, Sheridan T, Russ W (1995) Momentum investment strategies, portfolio performance, and 
+herding: a study of mutual fund behavior. Am Econ Rev 8:1088–1105
+Gu M, Kang W, Xu B (2018) Limits of arbitrage and idiosyncratic volatility: evidence from China stock 
+market. J Bank Finance 86:240–258
+Hasbrouck J (2018) High-frequency quoting: short-term volatility in bids and offers. J Financ Quant 
+Anal 53:613–614
+Heston SL, Sadka R (2008) Seasonality in the cross-section of stock returns. J Financ Econ 87:418–445
+Heston SL, Korajczyk RA, Sadka R (2010) Intraday patterns in the cross-section of stock returns. J 
+Finance 65:1369–1407
+Heston SL, Sadka R (2010) Seasonality in the cross section of stock returns: the international evidence. J 
+Financ Quant Anal 45:1133–1160
+Jegadeesh N (1990) Evidence of predictable behavior of security returns. J Finance 45:881–898
+Jegadeesh N, Titman S (1993) Returns to buying winners and selling losers: implications for stock mar -
+ket efficiency. J Finance 48:65–91
+Jegadeesh N, Titman S (2001) Profitability of momentum strategies: an evaluation of alternative expla-
+nations. J Financ 56:699–720
+Jiao M, Xinping X, Antai L (2024) Msci index inclusion and price efficiency evidence from china. Int 
+Rev Financ Anal 20:103328
+Jin M, Kearney F, Li Y, Yang YC (2020) Intraday time-series momentum: evidence from China. J Futur 
+Mark 40:632–650
+Kaniel R, Saar G, Titman S (2008) Individual investor trading and stock returns. J Finance 63:273–310
+Khademalomoom S, Narayan PK (2019) Intraday effects of the currency market. J Int Finan Markets Inst 
+Money 58:65–77
+Kong D, Lin C, Liu S (2017) Does information acquisition alleviate market anomalies? Categorization 
+bias in stock splits. Rev Finance 23:245–277
+Li W, Wang SS (2010) Daily institutional trades and stock price volatility in a retail investor dominated 
+emerging market. J Financ Mark 13:448–474
+Li F, Zhang H, Zheng D (2018) Seasonality in the cross-section of stock returns: advanced markets ver -
+sus emerging markets. J Empir Financ 49:263–281
+Li J, Zhang Y, Xu F, An Y (2019) Which kind of investor causes comovement? J Int Finan Markets Inst 
+Money 61:1–15
+Li B, Sun Q, Wei Z (2024a) Implicit barriers, market integration and asset prices: evidence from the 
+inclusion of china a-shares in msci global indices. J Int Financ Mark Instd Money 93:101998
+Li Z, Liu C, Ni X, Pang J (2024b) Stock market liberalization and corporate investment revisited: evi-
+dence from china. J Bank Finance 158:107053
+Limkriangkrai M, Chai D, Zheng G (2023) Market intraday momentum: Apac evidence. Pac Basin 
+Financ J 80:102086
+Luo CP, Ravina E, Sammon M, Viceira LM (2023) Retail investors’ contrarian behavior around news, 
+attention, and the momentum effect. FRB of Chicago Working Paper WP 2023-34
+Ma T, Liao C, Jiang F (2024) Factor momentum in the Chinese stock market. J Empir Financ 75:101458
+McLean RD, Pontiff J (2016) Does academic research destroy stock return predictability? J Finance 
+71:5–32
+Nartea GV, Kong D, Wu J (2017) Do extreme returns matter in emerging markets? Evidence from the 
+Chinese stock market. J Bank Finance 71:189–197
+Nofsinger JR, Sias RW (1999) Herding and feedback trading by institutional and individual investors. J 
+Finance 54:2263–2295
+Ouyang R, Zhang K, Zhang X, Zhu D (2024) Can factor momentum beat momentum factor? Evidence 
+from china. Financ Res Lett 62:105021
+O’hara M (2015) High frequency market microstructure. J Financ Econ 116:257–270
+Pan L, Tang Y, Jianguo X (2013) Weekly momentum by return interval ranking. Pac Basin Financ J 
+21:1191–1208
+Pan L, Tang Y, Jianguo X (2015) Speculative trading and stock returns. Rev Finance 20:1835–1865
+Qian Y, Ritter JR, Shao X (2024) Initial public offerings Chinese style. J Financ Quant Anal 59:1–38
+Renault T (2017) Intraday online investor sentiment and return patterns in the us stock market. J Bank 
+Finance 84:25–40
+Riordan R, Storkenmaier A (2012) Latency, liquidity and price discovery. J Financ Mark 15:416–437
+Investor clientele and intraday patterns in the cross section…
+Rouwenhorst KG (1999) Local return factors and turnover in emerging stock markets. J Finance 
+54:1439–1464
+Sanjay S, Jain AT, Florent D (2024) The tale of two tails and stock returns for two major emerging mar -
+kets. Rev Quant Finance Account 6:1–27
+Shanaev S, Ghimire B (2021) Efficient scholars: academic attention and the disappearance of anomalies. 
+Eur J Financ 27:278–304
+Tian S, Wu E, Wu Q (2018) Who exacerbates the extreme swings in the Chinese stock market? Int Rev 
+Financ Anal 55:50–59
+Yao S, Qin Y, Cheng F, Wu JG, Goodell JW (2022) Missing momentum in China: considering indi-
+vidual investor preference. Financ Res Lett 49:103110
+Publisher’s Note Springer Nature remains neutral with regard to jurisdictional claims in published maps and 
+institutional affiliations.

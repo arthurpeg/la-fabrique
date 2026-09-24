@@ -1,0 +1,1536 @@
+Youssef et al. Financ Innov            (2021) 7:13                                                                                        Financial Innovation
+https://doi.org/10.1186/s40854‑021‑00227‑3
+
+
+  RESEARCH                                                                                                                                                       Open Access
+D ynamic connec tedness bet ween stock
+markets in the presence of the COVID ‑19
+pandemic: does economic polic  y uncer  taint y
+matter?
+
+ManelYoussef                                                                                             1, KhaledMok ni                                                                                                                           1,2*  andAhdiNoomenAjmi                                                                                                                                                                                                                                                                                                                                                                                                         3,4
+
+
+
+
+*Correspondence:                                  Abstract
+kmokni@gmail.com
+1 College ofBusiness
+Administration, Northern                          This study investigates the dynamic connectedness between stock indices and the
+Border University, Arar91431,                     effect of economic policy uncer tainty (EPU) in eight countries where COVID-19 was
+Saudi Arabia                                      most widespread (China, I taly, France, Germany, Spain, Russia, the US, and the UK ) by
+Full list of author information                   implementing the time -var ying VAR (  T  VP-VAR) model for daily data over the period
+is available at the end of the                    spanning from 01/01/2015 to 05/18/2020. Results showed that stock markets were
+article
+                                                  highly connected during the entire period, but the dynamic spillovers reached unprec-
+                                                  edented heights during the COVID-19 pandemic in the first quar ter of 2020. Moreover,
+                                                  we found that the European stock markets (except I taly) transmitted more spillovers
+                                                  to all other stock markets than they received, primarily during the COVID-19 outbreak.
+                                                  Fur ther analysis using a nonlinear framework showed that the dynamic connectedness
+                                                  was more pronounced for negative than for positive returns. Also, findings showed that
+                                                  the direction of the EPU effect on net connectedness changed during the pandemic
+                                                  onset, indicating that information spillovers from a given market may signal either
+                                                  good or bad news for other markets, depending on the prevailing economic situation.
+                                                  These results have impor tant implications for individual investors, por tfolio managers,
+                                                  policymakers, investment banks, and central banks.
+                                                  Keywords:                                                                      Stock markets, Dynamic connectedness, COVID-19 pandemic, Economic
+                                                  policy uncer tainty, T  VP-VAR model
+                                                  JEL Classification:                                                                                                        C22, I15, I18, D53
+
+                                                Introduction
+                                                Academics , polic ymakers , and investors have heated discussions over analyzing the con-
+                                                nectedness between financial markets , but this analysis was recently reinforced by math-
+                                                ematical and econometric tool development. These tools increased its importance by
+                                                providing a comprehensive picture of market risk , credit risk , and macroeconomic and
+                                                system risk evaluation (Gong et   al. 2019) to support better decision-making (Kou et   al.
+                                                2014). Furthermore, analyzing connectedness between financial assets , especially stocks ,
+
+
+
+
+
+
+                                                © The Author(s) 2021. Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits
+                                                use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original
+                                                author(s) and the source, provide a link to the Creative Commons licence, and indicate if changes were made. The images or other third
+                                                party material in this article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the mate-
+                                                rial. If material is not included in the article’s Creative Commons licence and your intended use is not permitted by statutory regulation or
+                                                exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this licence, visit http://
+                                                creat iveco mmons                                                                                       .org/licen ses/by/4.0/.
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                              Page 2 of 27
+
+
+
+
+                      is also essential for investors because it helps them to assess and make suitable decisions
+                      about international portfolio diversification opportunities .
+                         Accordingly, several studies investigating relationships between financial markets
+                      reported that the degree of connectedness between these markets is subject to financial
+                      stress and crises, such as the global financial crisis (GFC), the European debt crisis (  Jon-
+                      deau and Rockinger 2006; Mokni and Mansouri 2017) and the health crisis driven by the
+                      COVID-19 outbreak in 2020 (Azimli 2020; Cepoi 2020; Topcu 2020; Sharif et  al. 2020).
+                      The rapidly expanding pandemic has had enormous negative effects on financial markets
+                      worldwide, creating an unprecedented level of risk that caused investors to suffer signifi-
+                      cant losses over a ver y short period (Zhang et  al. 2020a                                                   ,  b,                        c). In fact, this crisis resulted
+                      in depreciated stock indices, especially in countries with high infection rates. Moreover,
+                      the degree of uncertainty increased following the news of China’s first case at the end of
+                      2019, especially after the World Health Organization declared the coronavirus outbreak
+                      a global pandemic on 11 March 2020.
+                         Given that stock markets worldwide are directly or indirectly linked to economic sys-
+                      tems and strong financial integration, they suffered enormous losses after precautionar y
+                      measures were implemented by most countries. Therefore, the implications regarding
+                      the pandemic’s effect on stock markets exposed serious questions about the market’s
+                      dynamics and connectedness.
+                         Azimli (2020) reported that the COVID-19 pandemic impacts the stock market
+                      through two channels. First, the high level of economic policy uncertainty stemming
+                      from the pandemic’s spreading patterns and the unknown future situation regarding
+                      COVID-19 lead to low cash flow expectations, resulting in stock market depreciation.
+                      Second, halting industrial, tourism, aviation, and other sectors directly affects the stock
+                      index by depreciating the related stocks. This degradation negatively impacts macroeco-
+                      nomics , such as investment and consumption patterns (Azimli 2020).
+                         In addition to crisis and stress conditions, the international stock markets’ degree of
+                      spillover coupled with economic policy uncertainty (EPU) influence the dynamics and
+                      even change the market’s direction. In this context, the EPU index, developed by Baker
+                      et al. (2016), influences stock market returns (Antonakakis et al. 2013; Arouri et al. 2016;
+                      Christou et  al. 2017; Guo et  al. 2018; Hu et  al. 2018; Phan et  al. 2018; Xiong et  al. 2018;
+                      He et  al. 2020) and volatility ( Yu et  al. 2018; Yu and Song 2018; Mei et  al. 2018; Balcilar
+                      et   al.   2019; Wang et   al. 2020). Therefore, a recent strand of literature focused on EPU’s
+                      effect on relationships between financial assets, including relationships between stock
+                      markets (Li and Peng 2017), bonds and stocks (Fang et    al. 2017; Li et    al. 2015), com                                                                                                                                                                                                                                                                                                                                                                                                                                                     -
+                      modity and stock markets (Fang et   al. 2018; Badshah et   al. 2019), and Bitcoin and con                                                                                                                                                                                                                                                                               -
+                      ventional assets (Matkovskyy et   al. 2020). Nearly all these studies reported evidence of
+                      a negative impact of EPU on the co-movement between these variables, and, in some
+                      cases, highlighted a significant portfolio implication related to EPU (Badshah et     al.
+                      2019).
+                         This study investigates the dynamic connectedness between stock indices in countries
+                      with widespread coronavirus infections. We also examined the effect of EPU on this
+                      connectedness before and during the COVID-19 pandemic crisis. Dynamic connected-
+                      ness was measured using Antonakakis and Gabauer’s (2017) method, which combines
+                      the time-varying VAR (TVP-VAR) model with Diebold and Yilmaz’s (2014) popular
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                   Page 3 of 27
+
+
+
+
+                    model. We chose the T VP-VAR model to extract the connectedness indices because it
+                    has some advantages over the rolling-window-based VAR . First, it overcomes the arbi-
+                    trary set of window size, which leads to very erratic or flattened parameters. Second,
+                    unlike the rolling-window-based VAR , the T VP-VAR model is estimated based on the
+                    Kalman filter procedure; therefore, valuable observations are not lost when estimating
+                    the model’s time-var ying parameters . Third, this model is not sensitive to outliers (Anto-
+                    nakakis and Gabauer 2017; Antonakakis et  al. 2018; Gabauer and Gupta 2018; Korobilis
+                    and Yilmaz 2018). Our use of the T VP-VAR model to extract the connectedness indices
+                    is consistent with Korobilis and Yilmaz’s (2018) similar approach, which used Bayesian
+                    VAR approaches to overcome the rolling-window-based VAR limitations .
+                       This study contributes to the existing literature by investigating the dynamic con-
+                    nectedness between several international stock markets in countries most affected by
+                    COVID-19 during a sample period that incorporated the health crisis in symmetric and
+                    asymmetric frameworks. Moreover, we investigated economic policy uncertainty ’s role
+                    in driving the dynamic connectedness between these markets before and during the
+                    COVID-19 pandemic crisis. This analysis controlled for potential changes in the effect
+                    during the COVID-19 period compared to the pre-outbreak period.
+                       The remainder of this paper is organized as follows. The second section presents the
+                    literature review. The third section presents the data and the methodology employed.
+                    Section             "Results and discussions     " presents the results and discussion. Finally, sec-
+                    tion "Conclusion and polic y implications                                                                                            " concludes the paper.
+
+                    Literature review
+                    During the last two decades, financial crises led to renewed interest in examining con-
+                    nectedness, contagion, and correlations between stock markets using different econo-
+                    metric techniques. Overall, financial crises have increased market connectedness across
+                    stock markets. For example, Madaleno and Pinho (2012) explored stock market conta                                                                                                                                                                                                                                                                                                                                                                                                              -
+                    gion using a continuous-time wavelet method (Coherence Morlet Wavelet) that consid-
+                    ered financial crisis episodes and found a significant time evolution, especially related
+                    to financial crises that occurred at different periods. Kim et  al. (2015) used multivariate
+                    GARCH models to investigate the impact of the US financial crisis on spillover effects
+                    between five emerging Asian countries and the US stock markets. They found clear evi-
+                    dence of financial contagion around the collapse of Lehman Brothers in September 2008.
+                    Li and Giles (2015) investigated both shock and volatility spillovers in long‐run and
+                    short‐run periods in the US, Japan, and six emerging stock markets (China, India, Indo                           -
+                    nesia, Malaysia, the Philippines, and Thailand) using the asymmetric BEEK-MGARCH
+                    model. They reported intensified integration between developed and emerging stock
+                    markets during financial crises .
+                       Also, Morana and Beltratti (2008) investigated co-movements in four international
+                    stock markets (US, UK, Germany, and Japan) over the period between 1973 and 2004.
+                    They showed that integrating these different stock markets induced rising co-movements
+                    in prices, returns, correlation, and volatility. Menezes and Dionísio (2011) used a VECM
+                    model under structural breaks to investigate the long-run co-movements and globaliza-
+                    tion in G7 stock markets and found a significant long-run causal relationship across the
+                    process of G7 market integration, driven in general by the US stock market. Tsai (2014)
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                   Page 4 of 27
+
+
+
+
+                    investigated the spillover effect in the main five stock markets (US, UK , Germany, Japan,
+                    and France) and found a net spillover effect in the US stock market during the subprime
+                    mortgage crisis and Lehman Brothers bankruptcy from 2007 to 2008. He also showed
+                    that the fear index was a driving force behind the increased correlation between mar-
+                    kets. Using the DCC-GARCH methodology, Ahmad et   al. (2014) investigated the con                                                                                                                                                      -
+                    tagion effects of US and GIPSI stock markets on seven Eurozone and six non-Eurozone
+                    stock markets. They reported that among the GIPSI markets, Italy, Ireland, Portugal,
+                    and Spain were the most contagious for Eurozone and non-Eurozone markets dur-
+                    ing the Eurozone crisis period. However, France, Belgium, Austria, and Germany were
+                    strongly affected by the financial contagion shocks in the Eurozone. Výrost et  al. (2015)
+                    used Granger causality networks to investigate the network between 20 developed stock
+                    markets. They found that preferential attachment between stock markets and the degree
+                    of connectedness positively affected spillover effects. Maghyereh et    al. (2015) applied
+                    Diebold and Yilmaz’s (2012) methodology to investigate equity returns and volatility co-
+                    movement between the MENA group and US stock markets before and after the global
+                    financial crisis. They reported that the relationship with the US stock market was ver y
+                    weak in the pre-crisis period but bounded to a high level after the global financial crisis.
+                    Baruník et al. (2016) extended Diebold and Yilmaz’s (2012) methodology by allowing for
+                    negative and positive changes to quantif y asymmetries in volatility spillover and found
+                    that connectedness across the US intra–market rose steeply during the financial crisis .
+                       More recently, Wang et    al. (2017) used multiscale correlation to examine contagion
+                    from the US to the BRIC and the G7 (except for Japan) during the global financial cri-
+                    sis. They reported that the stock markets’ contagion during the global financial crisis
+                    was dependent on both the recipient country and the time scale. Jiang et     al. (2017)
+                    applied the VAR model and Granger causality tests to explore the recent financial cri-
+                    sis’ impact on six major stock markets (US, Britain, Germany, Japan, China, and Hong
+                    Kong). Results showed that the financial crisis boosted the interdependence correlation
+                    of global stock markets. Mokni and Mansouri (2017) examined relationships between
+                    major international stock markets using a long memory GARCH-copula model and
+                    reported that the dependence structure rose during the European debt and global finan-
+                    cial crises. Manopimoke et   al. (2018) investigated the dynamic connectedness between
+                    Asian emerging markets and other international markets using a generalized vector
+                    autoregressive (VAR) model. They concluded that international stock markets were
+                    integrated, with a rising trend following the Asian financial crisis and a more important
+                    trend of increasing during the global financial crisis. Mensi et    al. (2018) applied Die                                                                                                                                                        -
+                    bold and Yilmaz’s (2012,                                                                                                                             2014) methodology by implementing static and rolling-window
+                    methods to examine the connectedness between regional, global, and GIPSI stock mar-
+                    kets and reported that the financial contagion effect increased during the crisis. Zhou
+                    et al. (2018) applied a CEEMDAN wavelet model to examine the contagion effect among
+                    stock markets (Asia, Europe, and America) and reported that shocks caused by irregular
+                    events and extreme events could be transmitted between different stock markets. Gong
+                    et  al. (2019) applied the transfer entropy method to investigate the network connected                                                                                                                                                    -
+                    ness of global stock markets, and suggested that total network connectedness rises dur-
+                    ing the crisis. Kang et    al. (2019) used a dynamic equi-correlation (DECO) model, and
+                    Diebold and Yilmaz’s (2012) spillover index to investigate the dynamic spillover effects
+Youssef et al. Financ Innov            (2021) 7:13                                                                                      Page 5 of 27
+
+
+
+
+                  between ASEAN and world stock markets. They reported directional spillovers for each
+                  of the markets and increased return and volatility spillovers during financial crises. Su
+                  (2020) examined the volatility spillover behaviors in G7 stock markets using a spectral
+                  representation of variance decomposition to distinguish between short, medium, and
+                  long-term volatility spillover components. He reported crisis sensitivity of the volatility
+                  spillovers across G7 stock markets.
+                     Many studies have investigated the impacts of the virus outbreak on stock market per-
+                  formance. Delisle (2003) proposed that the cost of the 2003 SARS outbreak resulted in
+                  losses as high as those resulting from Asia’s financial crisis, estimated as $3 trillion in
+                  GDP and $2 trillion in financial market equity. Nippani and Washer (2004) examined
+                  the effect of SARS on Canada, China, and the specific administrative regions of Hong
+                  Kong, Indonesia, Singapore, the Philippines, Vietnam, and Thailand. They concluded
+                  that SARS only affected China’s and Vietnam’s stock markets. In the same context, Lee
+                  and McKibbin (2004) evaluated the global economic impacts of severe acute respirator y
+                  syndrome (SARS). They state the effect of the SARS epidemic on global human society
+                  was severe, not only because the disease spread through countries rapidly from global
+                  travel, but also, with financial integration and globalization, any economic shock to one
+                  countr y spreads rapidly to others. Macciocchi et   al. (2016) studied the short-term eco                                                                                                                                                     -
+                  nomic impact of the Z ika virus outbreak on Brazil, Argentina, and Mexico, and showed
+                  that, except for Brazil, the market indices of these three Latin American and Caribbean
+                  Countries (LCR) did not show large negative returns the day after each shock . Marinc
+                  (2016) investigated whether the geographical proximity of information disseminated by
+                  the 2014 Ebola outbreak, coupled with widespread media coverage, affected US asset
+                  prices. Chen et    al. (2018) analyzed the impact of the SARS epidemic on China’s long-
+                  term relationship with four Asian stock markets. Their findings supported a time-var y-
+                  ing co-integration relationship in aggregate stock price indices. They also found that the
+                  SARS epidemic weakened China’s long-term relationship with the four markets .
+                     Since its appearance, COVID-19′s effects are frequently compared with the 2008
+                  global financial crisis. In recent studies, the effects of the COVID-19 pandemic on
+                  stock markets were exanimated using different approaches. For example, Salisu and Vo
+                  (2020) investigated the relevance of health news obtained through Google searches in
+                  predicting stock returns using data from the top-20 affected countries and the coun-
+                  tries reporting the most deaths. They found that including health-related information
+                  in stock valuation improved forecast accuracy. Forecast performance was also improved
+                  by adjusting for macroeconomic factors and accounting for the “asymmetry” effect of
+                  good and bad health news. Al-Awadhi et  al. (2020) examined COVID-19′s effect on the
+                  Chinese stock market by applying panel testing while controlling for firm-specific char-
+                  acteristics . They found significant negative effects on stock returns caused by COVID-19
+                  across all companies.
+                     Sharif et   al. (2020) used wavelet-based Granger causality and coherence wavelet tests
+                  to investigate the time–frequency relationship between oil price, COVID-19 outbreak ,
+                  economic uncertainty, geopolitical risk, and the US stock market. They showed that
+                  the effect of COVID-19 on geopolitical risk was substantially higher than the effect on
+                  US economic uncertainty. Using the DCC-GARCH methodology, Corbet et   al. (2020a)
+                  examined the effects of the term “corona” on stocks’ behavior during the COVID-19
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                     Page 6 of 27
+
+
+
+
+                    pandemic. They showed a negative effect for companies with names related to the coro-
+                    navirus pandemic.
+                       Azimli (2020) applied quantile regression to investigate the COVID-19 pandemic’s
+                    effect on the degree and structure of risk-return dependence in the US and found an
+                    increase in dependence among returns and market portfolios in the higher quantiles.
+                    Corbet et      al. (2020b) investigated contagion between Chinese stock markets dur                                                                                                                                                                                    -
+                    ing the COVID-19 pandemic and found that COVID-19 had a significant strong posi-
+                    tive impact on the volatility of the Shanghai and Shenzhen Stock Exchanges. They also
+                    reported a strong positive correlation between W TI and Chinese stock markets. In the
+                    same context, Ashraf (2020) investigated stock markets’ reaction to COVID-19. Using
+                    daily COVID-19 confirmed cases and deaths, he found that stock markets responded
+                    negatively to increases in COVID-19 confirmed cases. Liu et   al. (2020) and Khan et   al.
+                    (2020) used econometric models to evaluate the short-term impact of the coronavirus
+                    outbreak on major affected countries’ stock market indices. Results showed that stock
+                    markets fell quickly after the virus outbreak. Moreover, their findings supported the
+                    adverse effects of confirmed COVID-19 cases on abnormal returns through an effec-
+                    tive channel by identif ying investors’ pessimistic sentiment regarding future returns and
+                    fear of uncertainties. Similarly, Zhang et    al. (2020a                                                                     ,      b,                            c) investigated the general pat-
+                    tern of countr y-specific risks and system risks in the global financial markets under the
+                    COVID-19 pandemic. They also analyzed the potential consequences of polic y inter ven-
+                    tions, such us the US decision to implement a zero-percent interest rate and unlimited
+                    quantitative easing. They found evidence of increasing global market volatility because
+                    of the outbreak , and that global stock market linkage displayed different patterns before
+                    and after the pandemic announcement. Moreover, they found that polic y responses may
+                    have generated further uncertainties in the global financial markets .
+                       So et    al. (2020) studied the impact of the COVID-19 pandemic on the Hong Kong
+                    stock market connectedness. Using dynamic financial networks based on stock return
+                    correlations , they found that both network density and clustering were higher in the par-
+                    tial correlation networks during the COVID-19 pandemic, implying increased network
+                    connectedness in the financial networks and equally substantial increases in systemic
+                    risk during the outbreak .
+                       In addition to health disasters and financial crises, stock markets are also affected by
+                    economic polic y uncertainty (EPU). Several studies reported that EPU had a large impact
+                    on stock market dynamics relationships. For instance, Antonakakis et   al. (2013) exam                                                                                                                                                      -
+                    ined correlations between stock market returns, implied volatility, and policy uncer-
+                    tainty in a time-var ying framework and found that an increase in the volatility of policy
+                    uncertainty dampened stock market returns. Arouri et   al. (2016) studied the impact of
+                    EPU on the US stock market between 1900 and 2014 and reported a significant negative
+                    relationship between policy uncertainty and stock returns, where EPU’s effect on stock
+                    returns was stronger and more persistent during extreme volatility periods. Using a
+                    VAR panel model, Christou et  al. (2017) investigated the role of economic policy uncer                                                                                                                                                  -
+                    tainty (EPU) on stock market returns for six countries (Australia, Canada, China, Japan,
+                    Korea, and the US). The results suggested that increasing EPU levels affected stock mar-
+                    ket returns. More recently, Wang et    al. (2020) analyzed spillover effects between EPU
+                    and stock market realized volatility (RV ). Results showed that RV was a net receiver of
+Youssef et al. Financ Innov            (2021) 7:13                                                                                            Page 7 of 27
+
+
+
+
+                   uncertainty shocks, with higher effects from US EPU than from Chinese EPU. Balcilar
+                   et  al. (2019) investigated EPU’s role in predicting stock returns’ volatility in Hong Kong ,
+                   Malaysia, and South Korea. Based on the nonparametric Granger causality in quantiles
+                   model, results showed strong evidence of EPU causing stock return volatility in Malaysia
+                   and both returns and volatility in certain parts of South Korea’s conditional distributions .
+                      This large volume of literature supports the conclusion that stock market dynam-
+                   ics and relationships depend strongly on stress conditions, public health crises, and
+                   increased uncertainty. The current study examined stock market relationships amid the
+                   COVID-19 pandemic. We expected that relationships between markets changed during
+                   the COVID-19 period compared to the prior normal period. In addition, we anticipated
+                   that EPU effects on stock market connectedness were substantially changed during this
+                   health crisis period.
+
+                   Data and econometric framework
+                   Data
+                   The abnormal situation resulting from COVID-19 offered an opportunity to assess the
+                   pandemic’s impact on the most affected nations’ stock markets owing to this unfore-
+                   seen and feared disease. This study investigated the impact of the COVID-19 pandemic
+                   on the connectedness between the major affected nations’ stock markets as measured
+                   by their leading stock indices. We used data from daily stock indices in China (SSE),
+                   France (CAC40), Germany (DAX30), Italy (FTSE MIB), Russia (RTSI), Spain (IBEX), the
+                   UK (FTSE100), and the US (S&P500). The data span from 01/01/2015 to 05/18/2020,
+                   including the beginning of the COVID-19 pandemic in 2020. To investigate EPU’s role
+                   in driving the connectedness between the examined stock markets, we also considered
+                   the EPU news-based index developed by Baker et al. (2016).                                                                                                 1 The stock market data were
+                   sourced from Datastream, and the EPU index was obtained from the website https                                    ://
+                   www.polic  yunce rtain                   ty.com. We calculated the return series as the log-difference of the
+                   indices and the EPU index.
+                      Figure      1 depicts the daily spot prices of the examined countries’ stock market indi                    -
+                   ces. As shown, all the examined stock market indices exhibited a sudden and abnor-
+                   mal decline near the onset of the COVID-19 pandemic. The patterns show that the SSE
+                   index registered a weak decline from 3000 to around 2500 points. However, the Euro-
+                   pean stock markets and the American and Russian stock markets were the most affected
+                   by the spread of the new infectious shock and registered an unprecedented shutdown
+                   of their indices’ spot prices. In Italy, just before the pandemic outbreak , the index was
+                   over 27,000 points but fell to under 17,000 points with the pandemic onset. For the US,
+                   the index daily spot prices reached a peak above 3300 points before the COVID-19 pan-
+                   demic outbreak and fell to under 2300 points when the new pandemic was announced.
+                   These results highlight the rapid responses of worldwide stock markets to bad news
+                   related to the COVID-19 pandemic outbreak, which increased risk and uncertainty
+
+
+
+
+
+
+
+
+
+
+                   1               The economic policy uncertainty index used in our study is a daily news-based index. It is related to the search results
+                   from newspaper archives from Access World New ’s NewsBank service. For more details, please see Baker et al. (2016) or
+                   the website: https                             ://www.polic yunce rtain              ty.com
+Youssef et al. Financ Innov            (2021) 7:13                                                                                               Page 8 of 27
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      Fig.1                                                Daily spot prices of stock markets considered for the period running from 01/01/2015 to 05/18/2020.
+                      The shaded area indicates the period of the COVID-19 pandemic
+
+
+
+                    globally and affected investors’ sentiments and decisions, which in turn affected stock
+                    market prices .
+                      Table 1 reports descriptive statistics on the log-returns of the examined markets’ stock
+                    indices. China, Spain, and the UK presented the lowest return averages, while the US,
+                    France, Russia, and Italy exhibited the highest average returns; these countries exhib-
+                    ited close mean returns at around 0.03. Also, Russia had the riskiest stock market, as
+                    measured by the variance, followed by China and Italy. Whereas the British stock mar-
+                    ket presented the lowest risk average, followed by the US and France stock markets. All
+                    countries were skewed to the left, as indicated by the significant negative values of the
+                    skewness . Also, we obser ved that all returns series were characterized by excess kurtosis ,
+                    suggesting a leptokurtic distribution with fat tails. The null hypothesis of normality was
+                    rejected at the 1% level for all series , as indicated by the Jarque–Bera test.
+                      To test for the existence of unit root in the return series, we conducted the Elliot-
+                    Rothenberg-Stock (ERS), Augmented Dicky-Fuller (ADF), and Phillips-Perron (PP) tests ,
+                    which allow testing the null hypothesis of a unit root versus the alternative of no unit
+                    root in the stock returns series. Results presented in Table  1 show that the null hypoth                    -
+                    esis was rejected at the 1% significance level for all series and, therefore, integrated of
+                    order zero I(0). Moreover, the results suggested that all series (except Spain and Italy)
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Page 9 of 27
+
+
+
+
+
+                                                                                         Table1                                                                                                                                     Descriptive statistics and preliminary tests on the data
+
+                                                                                                                                                China                                                                                                                   France                                                                                                      Germany                                                                  Italy                                                                                                                                        Russia                                                                                                           Spain                                                                                                                     UK                                                                                                                                                              U.S
+
+                                                                                         Mean                                                                                                  0.002                                                                                                                         0.034                                                                                                                         0.029                                                                                                                         0.030                                                                                                                         0.032                                                                                                                         0.000                                                                                                                         0.010                                                                                                                         0.035
+                                                                                         Variance                                                              2.193                                                                                                                         1.546                                                                                                                         1.649                                                                                                                         2.082                                                                                                                         3.398                                                                                                                         1.739                                                                                                                         1.129                                                                                                                         1.375
+                                                                                         Skewness                              −1.139***                                                       −1.344***                                                       −0.871***                                                       −2.126***                                                       −0.849***                                                       −2.202***                                                       −0.988***                                                       −1.087***
+                                                                                         Kurtosis                                                                      7.036***                                                                                   15.402***                                                                    14.281***                                                                    26.074***                                                                    8.802***                                                                                   25.231***                                                                    17.225***                                                                    24.133***
+                                                                                         JB p value                                                                                               0.000                                                                                                                         0.000                                                                                                                         0.000                                                                                                                         0.000                                                                                                                         0.000                                                                                                                         0.000                                                                                                                         0.000                                                                                                                         0.000
+                                                                                         ERS                                                                                 −11.138***                                            −5.272***                                                       −10.716***                                            −8.481***                                                       −2.908***                                                       −3.252***                                                       −3.708***                                                       −3.031***
+                                                                                          ADF                                                                            −34.934***                                            −24.170***                                            −23.615***                                            −24.716***                                            −37.991***                                            −24.211***                                            −36.264***                                            −10.991***
+                                                                                          PP                                                                                          −34.937***                                            −36.582***                                            −36.375***                                            −39.106***                                            −38.052***                                            −37.805***                                            −36.263***                                            −43.869***
+                                                                                          Q(20)                                                                                                    22.303***                                                                    16.165*                                                                                             14.064                                                                                                         27.328***                                                                    13.041                                                                                                         21.215***                                                                    26.420***                                                                    116.391***
+                                                                                          Q2(20)                                                                                     101.408***                                                    20.766**                                                                                98.182***                                                                    1.716                                                                                                                         188.782***                                                    6.79                                                                                                                                        70.659***                                                                    301.223***
+                                                                                          LM(20)                                                                                   119.824***                                                    193.533***                                                    236.167***                                                    39.210***                                                                    208.550***                                                    89.173***                                                                    237.360***                                                    480.568***
+                                                                                          Correlation matrix
+                                                                                          China                                                                                                1
+                                                                                          France                                                                                     0.219                                                                                                                         1
+                                                                                          Germany                                                     0.207                                                                                                                         0.942                                                                                                                         1
+                                                                                          Italy                                                                                                                     0.15                                                                                                                                        0.866                                                                                                                         0.845                                                                                                                         1
+                                                                                          Russia                                                                                            0.183                                                                                                                         0.552                                                                                                                         0.515                                                                                                                         0.493                                                                                                                         1
+                                                                                          Spain                                                                                                   0.179                                                                                                                         0.889                                                                                                                         0.851                                                                                                                         0.888                                                                                                                         0.521                                                                                                                         1
+                                                                                          UK                                                                                                                                      0.223                                                                                                                         0.866                                                                                                                         0.829                                                                                                                         0.753                                                                                                                         0.583                                                                                                                         0.784                                                                                                                         1
+                                                                                          US                                                                                                                                       0.179                                                                                                                         0.605                                                                                                                         0.583                                                                                                                         0.551                                                                                                                         0.384                                                                                                                         0.581                                                                                                                         0.601                                                                                                                         1
+
+                                                                                         This table reports the descriptive statistics of the considered stock market returns. J.B. is the Jarque–Bera normality test
+                                                                                         statistics. ERP, ADF, and PP denote the Elliot‑Rothenberg‑Stock, Augmented Dicky                                      ‑Fuller, and Phillip          ‑Perron unit root test,
+                                                                                         respectively. Q(10) and Q2(10) are the Ljung‑Box tests for 20th order serial correlations for returns and squared returns,
+                                                                                         respectively. L.M. (20) is the L.M. heteroscedasticity test at order 20. (***), (**), and (*) indicate the statistical significance,
+                                                                                         respectively, at 1%, 5%, and 10% levels
+
+                                                                                         were autocorrelated and exhibited ARCH errors, supporting T VP-VAR model use with
+                                                                                         time-var ying covariances. All examined stock markets were correlated during the sam-
+                                                                                         ple period. The Chinese stock market exhibited the lowest correlation with all other
+                                                                                         stock markets, while all other stock markets were highly correlated. The strongest corre-
+                                                                                         lation was obser ved between the French and German stock markets by a value of 0.942,
+                                                                                         because of the strong integration of European markets ( Jondeau and Rockinger 2006;
+                                                                                         Mokni and Mansouri 2017).
+
+
+                                                                                         Methodology
+                                                                                         T VP‑VAR‑based dynamic connectedness approach
+                                                                                         To explore the time-var ying connectedness between international stock markets during
+                                                                                         a specified period, including the COVID-19 pandemic, we followed Antonakakis and
+                                                                                         Gabauer’s (2017) and Antonakakis et  al.’s (2019) methodology, which employs Koop and
+                                                                                         Korobilis’s (2014) T VP-VAR methodology, combined with Diebold and Yılmaz’s (2014)
+                                                                                         connectedness approach.
+                                                                                                     Let Y     t be a (N        ×        1) vector of N stock market returns. The T VP-VAR model can be rep   -
+                                                                                         resented by the following set of equations:
+
+                                                                                                                     Y t      =         �tY t−1                           +        ut;      ut\�                 t−1                             ∼          N          (0,  St)                                                                                                                                                                                                                                                                                                                                            (1)
+
+
+                                                                                                                      �t      =         �t−1                           +        vt;      vt\�                  t−1                             ∼          N          (0,  R  t)                                                                                                                                                                                                                                                                                                                                            (2)
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                                                                     Page 10 of 27
+
+
+
+
+                           where /Omega1t −1      denotes the set of information available at t       −        1.                               Y     t−1 is a (   Np     ×        1) lagged
+                           vector of the dependent variables . /Phi1t is an (                               N           ×      Np) matrix of coefficients , which is sup-
+                           posed to be time-varying. u     t and v   t are two (                                 N        ×        1) vectors of the error terms.                  S    t and
+                           R     t are ( N        ×     N      ) and ( Np     ×      Np) time-var ying variance–covariance matrices of the error
+                           terms u     t and v   t,                                             re sp   e   c tively.
+                               After estimating the time-varying parameters and variances using the TVP-VAR,
+                           this model estimates Diebold and Yılmaz’s (2014) generalized connectedness proce                                                                                                                                    -
+                           dure based on the generalized impulse response functions (GIRF) and the generalized
+                           forecast error variance decompositions (GFEVD) after transforming the VAR to its vec-
+                           tor moving average (Koop et  al. 1996; Pesaran and Shin 1998). Therefore Eq.  (1) can be
+                           transformed as follows:
+
+                                    Y  t     =      /Phi1tY  t−1                     +        ut     =          A    tut                                                                  (3)
+                           where          A    =    (   A       1,t              A       2,t,                                             ...         A      p,)′ is an (N        ×     N      ) matrix of parameters verif ying
+                                         ∑p  t                                          t
+                           A        i,t           =/Phi11,tA        i−k                              ,t      iﬁ    �=0,                                                                                                                                                     and IN otherwise. Therefore, the generalized impulse
+                                        k =1
+                           response functions (GIRF) define the responses of all variables following a shock in vari-
+                           able i.
+                               Antonakakis and Gabauer (2017) computed the differences between a J-step-ahead
+                           forecast once where variable i is shocked and once where variable                                                            i is not shocked. For    -
+                           mally, let J be the forecast horizon and δj,t be the selection vector equal to 1 on the jth
+                           position, and 0 other wise, the GIRF, denoted by �    gj,t(J   ), can be calculated by :
+                                    GIRF                (J,δ,�      )   =           E(Y   \u       =         δ,�        )  −         E(Y     \�         )
+                                                      j,t      t−1                  t+J       j,t        j,t      t−1                  t+J        t−1                                     (4)
+
+
+                                        g                   1
+                                    �j,t(J)      =            S  −jj,t2A          J,t        S  tu     j,t                                                                                (5)
+
+                               Also, the GFEVD for the horizon J, denoted by �gj,t(J), can be calculated by :
+                                                            ∑J−1            2,g
+                                    �g                 ∑N        t=∑J−1                              �ij,t                                                                                (6)
+                                        j,t       (J )      =           1
+                                                           j=1         t=1          �   2,gij,t
+
+                               �gj,t(J) can be interpreted as the variance share one variable has on others.2 The ∑N∑N
+                           GFEVD verifies                          j,t       (J)      =1 and            j,t        (J )      =              N.
+                                                          j=1          �N                    i,j=1          �N
+                               Using the GFEVD, we can construct different connectedness indices. The first index is
+                           related to the total connectedness, which shows how a shock in one variable spills over to
+                           other variables and is defined by :
+                                                      ∑N                    g
+                                    H   g                  i,j =1,                       i�=j    �ij,t       (J)×100                                                                      (7)
+                                        t       (J)      =          N
+
+
+
+
+
+
+
+
+
+
+
+
+                           2           These variance shares are normalized in the sense that each row sums to 1. This means that all variables together
+                           explain 100% of variable i ’s                                                                                                                                                                                                                                            forecast error variance (Antonakakis and Gabauer 2017).
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                                          Page 11 of 27
+
+
+
+
+                           Second, we calculated the directional connectedness that a variable i receives from
+                        variables j,                                             c alle   d          total directional connectedness from others, defined as:
+                                                    ∑N                 g
+                                H  g                   ∑Ni,j =1,                       i�=j    �ij,t       (J)100                                                (8)
+                                  i←j                                  ,t       (J)      =(J)                         ×
+                                                           j=1          �Nij,t
+
+                           Similarly, we computed the directional connectedness that a variable i transmits its
+                        shock to all other variables j,                                             c alle   d          total directional connectedness to others, defined by :
+                                                    ∑N                 g
+                                H  g                   ∑Ni,j =1,                       i�=j    �ji,t       (J)100                                                (9)
+                                  i→j                                  ,t       (J)      =(J)                         ×
+                                                           j=1                                �Nji,t
+
+                           Finally, we defined the so-called net total directional connectedness as the difference
+                        between the two later indices:
+                                H                      g(J )     =             Hg(J )    −           Hg(J)                                                     (10)
+                                  i,t             i→j  ,t            i←j  ,t
+
+                           This index examines the ’’power” of variable i, or its influence on the whole variables’
+                        network . If H                    gi,t(J)          >0, the variable i influences the network more than being influenced
+                        by it. If H                    gi,t(J)          <0, the variable i is driven by the network .
+
+
+                        EPU and dynamic connectedness between stock markets
+                        Several recent studies argued that the relationship between financial markets, especially
+                        stock markets, is affected by economic policy uncertainty (Li et    al. 2015; Li and Peng
+                        2017; Fang et    al. 2017,                                                                                                                                                                                                                                    2019; Badshah et    al. 2019; Matkovskyy et    al. 2020). Almost all
+                        these studies argue that EPU negatively impacts the correlations between these varia-
+                        bles. Therefore, one can argue that economic polic y uncertainty is a potential factor that
+                        drives the connectedness between the stock returns .
+                           After computing the different time-varying spillover indices based on the TVP-VAR
+                        model, we examined whether economic polic y uncertainty (EPU) drives this connected-
+                        ness between stock market returns. To this end, we estimated the following equation:
+
+                                H     t    =            θ0      +         θ1 EPU   t   +         εt                                                            (11)
+
+                        where H       t represents the total and net connectedness measures, as reported in Eqs. (7)
+                        and (10) between stock market returns.                          EPU        t refers to changes in the US economic pol        -
+                        ic y uncertainty index developed by Baker et al. (2016).
+
+
+                        Results and discussions
+                        Dynamic spillover results
+                        Table    2 summarizes the estimates of the average dynamic connectedness measures for
+                        each stock market examined, generated by the T VP-VAR model. We obser ved that own-
+                        country stock market spillovers explained the highest share of forecast error variance,
+                        because the diagonal elements received higher values compared to the off-diagonal ele-
+                        ments . Also, the total connectedness index (TCI) measured the average influence that all
+                        variables have on one variable’s forecast error variance throughout time. The TCI in all
+                        markets was 65.43%, as shown in Table    2. This result indicates that international stock
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                                                                                                                                                                                                                                                                                                                                                                   Page 12 of 27
+
+
+
+
+
+                                                                   Table2                                                                                                                                     Dynamic connectedness measures between stock returns
+
+                                                                                                                                                                      China                                   France                                       Germany                              Italy                                                                             Russia                              Spain                                                        UK                                                                                                      US                                                                                     From
+
+                                                                   China                                                                                                                                                                                                                                                                                                                                                     69.304                                              4.609                                                                4.442                                                                                               3.614                                                                2.936                                                   4.179                                                                4.797                                              6.118                             30.696
+                                                                   France                                                                                                                                                                                                                                                                                                                                                          1.106                             22.099                                              18.598                                                                              15.393                                                                4.371                                 15.944                                              14.243                                              8.247                             77.901
+                                                                   Germany                                                                                                                                                                                                                                                                                                                     1.101                             19.693                                              23.364                                                                              15.263                                                                3.749                                 15.359                                              13.306                                              8.165                             76.636
+                                                                   Italy                                                                                                                                                                                                                                                                                                                                                                                              0.858                             17.194                                              16.099                                                                              24.878                                                                3.976                                 18.076                                              11.794                                              7.124                             75.122
+                                                                   Russia                                                                                                                                                                                                                                                                                                                                                                 1.982                                              9.146                                                                7.421                                                                                               7.449                                              48.6                                                                                      7.613                                              10.332                                              7.457                             51.4
+                                                                   Spain                                                                                                                                                                                                                                                                                                                                                                          0.932                             17.463                                              15.878                                                                              17.761                                                                4.061                                 24.426                                              11.999                                              7.48                                              75.574
+                                                                   UK                                                                                                                                                                                                                                                                                                                                                                                                                  1.344                             16.886                                              14.854                                                                              12.518                                                                5.752                                 13.083                                              26.322                                              9.242                             73.678
+                                                                   USA                                                                                                                                                                                                                                                                                                                                                                                             1.512                             12.432                                              11.543                                                                              10.064                                                                5.046                                 10.305                                              10.858                             38.24                                              61.76
+                                                                   Contribution to others                                                                                                                     8.835                             97.423                                              88.835                                                                              82.063                                              29.892                                 84.559                                              77.327                             53.833                             522.767
+                                                                   Contribution including                                                                                 78.14                             119.522                             112.199                                                            106.941                                              78.491               108.985                             103.649                             92.074                             TCI
+                                                                          own
+                                                                   Net spillovers                                                                                                                                                                                                                           -21.86                                              19.522                                              12.199                                                                                               6.941                                   -21.50                                                                     8.985                                                                3.649                                   -7.926                             65.346
+
+                                                                   This table reports the variance decompositions for the estimated T VP‑VAR model addressing different stock market returns.
+                                                                   Variance decompositions are based on 10‑step                                            ‑ahead forecasts and a T VP         ‑VAR lag length of order 1. The terms “Contribution
+                                                                   to others” indicate the measure of the directional connectedness that a given variable i transmits its shock to all other
+                                                                   variables j, following Eq. (9). The term “From” indicates the measure of the directional connectedness that a given variable
+                                                                   i receives the shocks from all other variables j, following Eq. (8). “Net spillovers” means the difference between the two
+                                                                   directional connectedness following Eq. (10). TCI indicates the total connectedness following Eq. (7)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                          Fig.2                                              Total connectedness measure (the shaded blue area indicates the period of the COVID-19 pandemic)
+
+
+                                                                   markets were not independent of each other; the average influence of a stock market
+                                                                   was approximately 66%. This large value shows that the transmission of international
+                                                                   stock market spillovers is an important source of domestic stock market fluctuation.
+                                                                   Moreover, results showed that France contributed to the forecast error variance of all
+                                                                   other examined markets by transmitting the highest index of 97.48%, followed by Ger-
+                                                                   many 88.83%, Spain 84.55%, and Italy 82%. Further, these countries received the highest
+                                                                   spillovers from others: France 77.9%, Germany 76.63%, and Spain and Italy around 75%.
+                                                                   However, the contributions of China, Russia, the US, and the UK to others were the low-
+                                                                   est, with 8.83%, 29.89%, 53.83%, and 77.32, respectively. Additionally, China, Russia, and
+                                                                   the US received more spillovers than they transmitted, with 30.7%, 51.4%, and 61.76%,
+                                                                   respectively. The bottom line in Table  2 presents the net spillovers for each countr y and
+                                                                   shows that China, Russia, and the US were net receivers of spillover from all others. In
+                                                                   contrast, all other examined countries were net transmitters for all others.
+                                                                            To determine whether mean connectedness between stock markets varied through
+                                                                   time and how it was affected by the COVID-19 pandemic, we estimated the different
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                                Page 13 of 27
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         Fig.3                                                Dynamic spillover to the stock market in each countr y (the shaded blue area indicates the period of
+                         the COVID-19 pandemic)
+
+
+                      time-var ying connectedness measures. Figure   2 presents the time path for the dynamic
+                      total connectedness index (TCI). We obser ved large variations in this index during the
+                      full sample period. Moreover, the total connectedness index was relatively high during
+                      the entire period. In mid-2015 and the first quarter of 2018, the TCI reached its lowest
+                      level, with approximately 57% and 55%, respectively. However, the total connectedness
+                      reached unprecedented heights during the COVID-19 pandemic outbreak in the first
+                      quarter of 2020, with a level close to 80%. These results are supported by Zhang et   al.
+                      (2020a              ,       b,                             c) and Cepoi (2020), who found that dependencies between stock markets
+                      increased remarkably during the health crisis outbreak . This result was not surprising
+                      in the sense that it is well known that stock markets are interlinked and interdepend-
+                      ent (Morales and Andreosso 2012) and that crisis periods increase the global stock
+                      market’s interdependence ( Jondeau and Rockinger 2006; Mokni and Mansouri                                                                                    2017).
+                      This result may be explained by the coronavirus pandemic and its rapid global spread
+                      reducing economic trends and inducing negative changes in investors’ sentiments that
+                      strongly affected their investment decisions, and consequently led to stock market price
+                      depreciations. Similarly, Wen et   al. (2019) found that investor attention negatively pre                                                                                                                                                     -
+                      dicted future stock prices’ crash risk. Such external and unexpected shock worldwide
+                      leaves investors more pessimistic about future returns and they consequently tend to
+                      take fewer risks . According to Bai (2014) and Baker et al. (2020a), investors may feel pes                                                                                                                                                                                                                                                                                                                                      -
+                      simistic about investment prospects in a given market, selling off that market’s stocks
+                      under an infectious disease outbreak .
+                         This dynamic provides evidence that static TCI may mask specific periods (e.g ., finan-
+                      cial and economic events) that are likely to have different impacts on its interconnect-
+                      edness. Therefore, it is crucial to consider the time-varying behavior of connectedness
+                      measures when analyzing the mechanism of transmission spillovers between stock mar-
+                      kets to better understand the details of these spillovers , especially during critical periods .
+                      Therefore, we analyzed the total “to-directional” dynamic spillovers for each countr y and
+                      from all stock markets in each country, as shown in Figs.     3 and 4, respectively. These
+                      two figures show that the total dynamic spillovers from/to each series were bidirectional
+                      and ranged between 0.2 and 13%. Figure   3 depicts the amounts of spillover received by
+                      each countr y from all other countries. We obser ved that China, Russia, the UK , and the
+Youssef et al. Financ Innov            (2021) 7:13                                                                                    Page 14 of 27
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    Fig.4                                                Dynamic spillover from the stock market in each countr y (the shaded blue area indicates the period of
+                    the COVID-19 pandemic)
+
+
+                  US showed significant time-varying transmission patterns. For China and Russia, the
+                  transmission of spillovers to these countries’ stock markets from all others increased
+                  significantly during the first quarter of 2020, which coincided with the outbreak of the
+                  COVID-19 pandemic, reaching a peak of 3.2% and 8% in China and Russia, respectively.
+                  For the UK and the US, a weak dynamic transmission pattern was obser ved compared
+                  to China and Russia, which had high spillover levels ranging between 6 and 12% from all
+                  others to the UK and the US, but these spillovers were less dynamic.
+                     We found that Euro area zone countries’ stock markets were less affected by the
+                  transmission of spillovers from all others. For France, the transmission patterns were
+                  almost static during the spanning period, with no change in the transmission of spillo-
+                  vers to France’s stock market during the COVID-19 pandemic outbreak . For Germany,
+                  Italy, and Spain, the total dynamic spillovers to stock markets were significant and,
+                  to an extent, time-varying compared to France. However, similar to the French stock
+                  market, the total dynamic spillovers to Germany, Italy, and Spain stock markets from
+                  all others did not vary during the pandemic period. These results may have occurred
+                  because, following China, the pandemic broke out in Europe and dampened economic
+                  activity. Consequently, European countries experienced downturns after the pandemic’s
+                  announcement in the international media. Thus, stock markets were suffering a large
+                  decline and no longer reacted to bad news related to the recent health crisis or to differ-
+                  ent countries’ policies in response to the rapid spread of COVID-19.
+                     Figure 4 depicts the spillover levels transmitted by each countr y to all other stock mar                   -
+                  kets. China, Russia, France, Germany, and Spain transmitted the most to all other stock
+                  markets. In these countries, the dynamic transmission patterns were significantly time-
+                  varying, with increased transmission of spillovers to all others, especially during the
+                  COVID-19 pandemic outbreak . For China, the transmission of spillovers jumped from
+                  4% before the pandemic onset to nearly 9% during the pandemic outbreak . The dynamic
+                  transmission of spillovers from Russia to all other stock markets also increased during
+                  the pandemic period, jumping from 7% before the COVID-19 pandemic period to nearly
+                  10% during the pandemic period.
+                     The dynamic spillovers from France, Germany, and Spain behaved heterogene-
+                  ously over time and followed a transmission pattern similar to all other stock markets.
+Youssef et al. Financ Innov            (2021) 7:13                                                                                           Page 15 of 27
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     Fig.5                                                Net dynamic spillover of the stock market in each countr y (the shaded blue area indicates the period
+                     of the COVID-19 pandemic)
+
+
+
+                   Moreover, we registered increased dynamic spillovers from these countries during the
+                   COVID-19 pandemic period, which jumped from an average of 9.5% before the out-
+                   break to nearly 10.5% after the outbreak. The total directional spillovers from Italy to
+                   all stock markets were almost static and did not vary during the spanned period. The
+                   total directional spillovers from the UK and the US to all others were less dynamic and
+                   rather static over time, with weak variations during the sample period. Nevertheless, the
+                   dynamic spillovers from these countries increased slightly during the pandemic period
+                   and increased from 9% (7%) for the UK (US) before the pandemic outbreak to close to
+                   10% for both after the outbreak .
+                      Comparing the dynamic spillover results, we found that the European stock markets
+                   transmitted more spillovers to all other stock markets (except Italy) than they received.
+                   This role became more pronounced during the COVID-19 outbreak . A plausible expla-
+                   nation is that the worldwide announcement of the pandemic may have changed the way
+                   market participants perceived risk and they may have begun to expect higher levels of
+                   bad shock transmission. Therefore, markets under pressure tend to transmit risks more
+                   than in normal periods, leaving investors less confident about predicting risks, which in
+                   turn increases spillovers from bad news (shocks).
+                      A similar picture emerged in the net dynamic total directional connectedness , depicted
+                   in Fig.      5. China and Russia were mostly net receivers of spillovers during the sample
+                   period. The US acted as a net transmitter of spillovers during the first half 2018, but a
+                   net receiver of spillovers during the remaining periods. Finally, the UK acted as a net
+                   receiver of spillovers from other countries from 2017 to the first quarter of 2018, then
+                   became a transmitter during the remaining periods. These results may have stemmed
+                   from the US market being one of the main sources of a spillover effects on other mar-
+                   kets and regions (Bekaert et  al. 2011; Syriopoulos et  al. 2015). Whereas the rapid spread
+                   of the coronavirus to the US and the UK following China, South Korea, Iran, and Italy,
+                   remarkably increased the geopolitical risk index, and uncertainty about COVID-19′s
+                   short- and long-term consequences became the main concern of US polic ymakers (Sha-
+                   rif et   al. 2020), which turned the US market into a net receiver of spillovers from oth                                                                                                                                        -
+                   ers. Another explanation is the conduction mode of the COVID-19 shock and its causes.
+Youssef et al. Financ Innov            (2021) 7:13                                                                                               Page 16 of 27
+
+
+
+
+                    Unlike the GFC that began in the US and was caused by different structural problems
+                    in the US economy, COVID-19 had a single unique cause, the spread of the coronavirus
+                    following its discovery in China, and there were no other typical early warning signals
+                    of an impending financial crisis ( Yarovaya et al. 2020). Therefore, the spillover dynamics
+                    from and to other countries may differ from those of previous financial crises.
+                       The Euro area zone countries were net transmitters of spillovers to all other countries.
+                    These findings are in line with Zhang et  al.’s (2020a                                          ,   b,                         c), who found that the European
+                    stock markets were strongly connected during the pandemic outbreak and that France
+                    and Germany were in the core of the minimum spanning tree. Moreover, the authors
+                    showed that the US and mainland China stock markets were isolated from the system
+                    before the pandemic announcement. After the announcement, Asian stock markets,
+                    which were scattered before the announcement, formed a cluster, and became more
+                    integrated. Both before the pandemic announcement and after, the US stock market
+                    failed to take a leading role.
+                       Recently, the financial press highlighted that, compared to the GFC, the COVID-
+                    19 pandemic created an enormous uncertainty shock—larger than the shock associ-
+                    ated with the financial crisis of 2008–2009 and more similar in magnitude to the rise
+                    in uncertainty during the Great Depression of 1929–1933. In fact, the greatest impact
+                    of the 2008 global financial crisis—which had strong economic destructive power and
+                    caused a huge chain reaction, destroying the financial industr y—was that it allowed sys-
+                    temic risk to be regarded as a crucial factor in financial safety. Even today, the global
+                    economy has not fully recovered from the aftermath of these events that derived from
+                    the destructive effects of systemic financial risk (Kou et    al. 2019). Moreover, compar                                                                                                                                         -
+                    ing our results to findings on the GFC’s effects on stock market interconnectedness, it
+                    is clear that the two crises created similar effects. Our results are consistent with Gong
+                    et    al. (2019) and Zhang et    al. (2020a                                                                                                                                                                                                                          ,     b,                           c), who found that Lehman Brothers’ collapse
+                    drove the connectedness jump to its highest level. The liquidity crisis of August 2007
+                    plunged the European stock market into a panic, which resulted in large investment
+                    write-offs in US mortgage-backed assets. This strengthened the connection between
+                    the US and European stock markets. In the same context, our findings are consistent
+                    with BenSaida (2019), who found that the US did not play a leading role in volatility
+                    transmission from the traditional spillover measures. Still, its contribution of bad shocks
+                    substantially increased during the GFC, which was born in the US, repositioning it as a
+                    leading bad risk transmitter.
+                       Similarly, French and Italian contributions to the transmission of bad shocks increased
+                    during the European sovereign debt crisis that started in Greece at the end of 2009 and
+                    was soon followed by Italy in 2010. These results support our findings that, under pres-
+                    sure, the market tends to transmit high volatility spillovers. Similarly, our findings are
+                    in line with Liu et   al. (2017), who investigated the spillover networks between the G20
+                    countries’ stock markets. Their findings confirmed that obvious volatility spillovers exist
+                    and are changing over time, and that G20 markets are closely connected. They found
+                    that the US ranked second, after Korea, for sending volatility spillover to other countries
+                    during the subprime crisis period.
+                       Conversely, our findings contradict the research mentioned above regarding the
+                    US’s leading role in the economic system. We found that, during the recent COVID-19
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                    Page 17 of 27
+
+
+
+
+                    pandemic, the US acted as a recipient of spillovers from other countries. As explained
+                    earlier, some countries changed roles from net transmitters to net receivers of spillovers,
+                    which may have resulted from event-driven and time-var ying spillover effects and other
+                    factors. The main factor may be attributed to the crisis’ conduction mode, economy
+                    characteristics, and geographic proximity that may influence a countr y ’s role in absorb-
+                    ing risk or transmitting risk to other countries or regions . Zhang et al. (2020a                                                               , b,                      c) found
+                    that countries relying heavily on foreign direct investments were more likely to absorb
+                    risks during a subprime crisis, while countries and regions with high foreign portfolio
+                    holdings were more inclined to risk spillovers.
+
+
+                    Asymmetric connectedness results
+                    To provide more detailed information on dynamic connectedness, we extended our
+                    analysis to a nonlinear framework to control whether the connection differed across
+                    increases and decreases in stock indices. We separated the positive and negative varia-
+                    tions from the different returns series and re-estimated the dynamic spillovers between
+                    the examined stock markets. We then separated the dynamic connectedness of the posi-
+                    tive returns from the negative returns. Therefore, we defined the positive and negative
+                    returns as: R   +t     =          max              (R     t,0) and R   −t              =           min            (R     t,0),                                                                                                     ver if         y  ing R     t=R   +t+R   −t,                                                                                                     where R     t
+                    denotes the stock returns of a given countr y at time t.
+                       The average of the different connectedness indices based on the T VP-VAR(1) for the
+                    positive and negative stock return variations are reported in Table  3. The total connect                   -
+                    edness index (TCI) for the negative returns was higher than for the positive returns,
+                    indicating that negative spillover effects had more substantial magnitudes than posi-
+                    tive ones. In other words, the bad news in stock markets, expressed by negative returns,
+                    was transmitted more intensively than the good news expressed by positive returns, and
+                    had an asymmetric spillover transmission globally. Moreover, different stock markets
+                    retained the same character regarding the net receiver of spillovers transmitter effects
+                    for positive and negative returns. China, Russia, the UK , and the US stock markets were
+                    still net receivers of both good and bad news, while other markets were net transmitters .
+                       Providing a more detailed picture of the evolution of the different dynamic connected-
+                    ness, Figs.  6 and 7 depict the total and net connectedness indices, respectively. The evo                                                                                                                                -
+                    lution of the total connectedness index indicates that both positive and negative shocks
+                    were transmitted at different magnitudes that changed over time, reaching max values
+                    over the first quarter of 2020 in conjunction with the COVID-19 pandemic period.
+                    Moreover, comparisons of the positive and negative returns’ connectedness showed
+                    ample evidence of asymmetric connectedness, justified by a different pattern of negative
+                    and positive shocks transmission. The level of total connectedness for negative varia-
+                    tions was more intensive than for positive variations over most of the study period.
+                       Figure   7 plots the asymmetric net connectedness between stock markets for the case
+                    of positive and negative returns. The results showed that the Chinese and Russian stock
+                    markets were net receivers of spillover effects during most periods, while in the UK and
+                    US stock markets, the net spillovers index switched between positive and negative, indi-
+                    cating that these advanced markets had a changeable character regarding shock trans-
+                    mission. By contrast, the other European countries generally acted as net transmitters
+                    of both positive and negative shocks with French market dominance being remarkable.
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     Page 18 of 27
+
+
+
+
+
+                                                                                                                       Table3                                                                                                                                     Dynamic asymmetric connectedness table
+
+                                                                                                                                                                                                                                                                           China                                                                 France                                      Germany                              Italy                                                                             Russia                                                       Spain                                                       UK                                                                                                      US                                                                                                From
+
+                                                                                                                       Panel A: Positive returns
+                                                                                                                             China                                                                                                                                                                                                                                                                                73.790                                                                    3.765                                                                4.183                                                                                               2.931                                                                      2.865                                                                    2.777                                                                      3.991                                              5.697                                 26.210
+                                                                                                                             France                                                                                                                                                                                                                                                                                      0.984                                                  24.902                                              19.167                                                                             15.079                                                                      4.416                                                  15.267                                                    13.686                                              6.498                                 75.098
+                                                                                                                             Germany                                                                                                                                                                                                                                                 1.072                                                  20.275                                              26.374                                                                             14.917                                                                      3.770                                                  14.712                                                    12.118                                              6.761                                 73.626
+                                                                                                                             Italy                                                                                                                                                                                                                                                                                                                          0.793                                                  16.955                                              15.848                                                                             28.401                                                                      3.710                                                  17.779                                                    10.847                                              5.668                                 71.599
+                                                                                                                             Russia                                                                                                                                                                                                                                                                                             2.151                                                                    8.985                                                                7.417                                                                                               6.978                                                    51.670                                                                    7.247                                                                      8.735                                              6.817                                 48.330
+                                                                                                                             Spain                                                                                                                                                                                                                                                                                                      0.851                                                  16.932                                              15.415                                                                             17.474                                                                      3.787                                                  27.898                                                    11.592                                              6.052                                 72.102
+                                                                                                                             UK                                                                                                                                                                                                                                                                                                                                             1.462                                                  16.544                                              13.757                                                                             11.745                                                                      4.926                                                  12.714                                                    30.848                                              8.004                                 69.152
+                                                                                                                             US                                                                                                                                                                                                                                                                                                                                               2.012                                                  10.553                                              10.107                                                                                               8.539                                                                      4.778                                                                    8.840                                                    10.076                            45.096                                 54.904
+                                                                                                                             Contribution to                                                                                                                                                 9.325                                                  94.009                                              85.894                                                                             77.662                                                    28.253                                                  79.336                                                    71.046                            45.498                                 491.022
+                                                                                                                                            others
+                                                                                                                             Contribution includ-                                                                                                                                     83.115                                 118.911                            112.268                                                           106.062                                                    79.923                                 107.234                                   101.894                            90.594                                 TCI
+                                                                                                                                            ing own
+                                                                                                                             Net spillovers                                                                                          −16.885                                                                          18.911                                              12.268                                                                                               6.062                  −20.077                                                                                            7.234                                                                      1.894              −9.406                                                         61.378
+                                                                                                                       Panel B: Negative returns
+                                                                                                                             China                                                                                                                                                                                                                                                                                58.245                                                                    6.318                                                                5.665                                                                                               5.556                                                                      4.206                                                                    5.376                                                                      5.790                                              8.845                                 41.755
+                                                                                                                             France                                                                                                                                                                                                                                                                                      1.506                                                  22.247                                              18.597                                                                             15.025                                                                      3.924                                                  15.889                                                    13.499                                              9.313                                 77.753
+                                                                                                                             Germany                                                                                                                                                                                                                                                 1.561                                                  19.780                                              23.388                                                                             15.017                                                                      3.425                                                  14.997                                                    12.753                                              9.079                                 76.612
+                                                                                                                             Italy                                                                                                                                                                                                                                                                                                                          1.308                                                  16.978                                              16.032                                                                             24.932                                                                      3.664                                                  18.013                                                    10.738                                              8.335                                 75.068
+                                                                                                                             Russia                                                                                                                                                                                                                                                                                             2.576                                                                    8.487                                                                6.876                                                                                               7.115                                                    50.688                                                                    7.735                                                                      8.945                                              7.578                                 49.312
+                                                                                                                             Spain                                                                                                                                                                                                                                                                                                      1.130                                                  17.618                                              15.566                                                                             17.547                                                                      3.869                                                  24.649                                                    11.087                                              8.535                                 75.351
+                                                                                                                             UK                                                                                                                                                                                                                                                                                                                                             1.611                                                  16.898                                              15.053                                                                             12.005                                                                      5.138                                                  12.705                                                    26.266                            10.324                                 73.734
+                                                                                                                             US                                                                                                                                                                                                                                                                                                                                               2.048                                                  12.815                                              12.021                                                                             10.600                                                                      4.409                                                  10.657                                                                      9.992                            37.459                                 62.541
+                                                                                                                             Contribution to                                                                                                                                          11.740                                                  98.894                                              89.809                                                                             82.864                                                    28.634                                                  85.372                                                    72.805                            62.009                                 532.126
+                                                                                                                                            others
+                                                                                                                             Contribution includ-                                                                                                                                     69.985                                 121.141                            113.197                                                           107.796                                                    79.322                                 110.021                                                    99.071                            99.468                                 TCI
+                                                                                                                                            ing own
+                                                                                                                             Net spillovers                                                                                          −30.015                                                                          21.141                                              13.197                                                                                               7.796                  −20.678                                                                          10.021                           −0.929                                 −0.532                                                         66.516
+
+                                                                                                                       This table reports the variance decompositions for the estimated T VP‑VAR model addressing different stock market returns.
+                                                                                                                       Variance decompositions are based on 10‑step                                            ‑ahead forecasts and a T VP         ‑VAR lag length of order 1. The terms “Contribution
+                                                                                                                       to others” indicate the measure of the directional connectedness that a given variable i transmits its shock to all other
+                                                                                                                       variables j, following Eq. (9). The term “From” indicates the directional connectedness measure that a given variable i receives
+                                                                                                                       the shocks from all other variables j, following Eq. (8). “Net spillovers” means the difference between the two directional
+                                                                                                                       connectedness following Eq. (10). TCI indicates the total connectedness following Eq. (7)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                   Fig.6                                              Total dynamic spillover of positive (R                                  +) and negative (R-) stock returns (the shaded blue area indicates
+                                                                                                                                   the period of the COVID-19 pandemic)
+Youssef et al. Financ Innov            (2021) 7:13                                                                                         Page 19 of 27
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     Fig.7                                                Net dynamic spillover of positive (R                                  +) and negative (R-) stock returns (the shaded blue area indicates
+                     the period of the COVID-19 pandemic)
+
+
+                      By focusing on the COVID-19 pandemic period, similar results were obser ved in the
+                   symmetric spillover analysis shown in Fig . 2. We obser ved an exceptional increase in the
+                   total connectedness for both positive and negative returns, indicating that the different
+                   stock markets were more interconnected during the COVID-19 outbreak .
+
+
+                   Dynamic spillover and EPU
+                   The rapid spread of COVID-19 to countries worldwide caused unprecedented effects on
+                   global financial stock market risks and substantially increased geopolitical risks and eco-
+                   nomic polic y uncertainty (EPU). We investigated the effect of EPU on the connectedness
+                   between the eight examined stock markets . For comparison, we investigated the effect of
+                   the EPU during the entire period before and during the COVID-19 pandemic. The sam-
+                   ple period was divided into two sub-periods, with the first spanning from 01/01/2015
+                   to 12/23/2019 (pre-COVID-19 outbreak), and the second spanning from 12/24/2019 to
+                   05/18/2020, covering the COVID-19 outbreak period. We chose the second period start
+                   date because it coincided with the beginning of frequent news about the emerging pan-
+                   demic. During this period, the Wuhan Municipal Health Commission in China reported
+                   a cluster of cases of a novel unidentified coronavirus. Given that the financial markets
+                   are sensitive to this type of news (Baker et  al. 2020a                                                   ,  b; Ramelli and Wagner 2020; Phan
+                   and Narayan 2020; Azimli 2020), by starting with this date we covered the maximum
+                   period of the COVID-19 pandemic.
+                      Table     4 reports estimates of the EPU’s effect on total and net connectedness for the
+                   examined stock markets, as described in Eq.    (11). Panel (A) reports the effect of the
+                   EPU during the entire sample period. Results showed that the EPU’s effect on total con-
+                   nectedness was significantly positive. Also, EPU’s effect on net connectedness for each
+                   countr y was significant except for France and the US. Moreover, Chinese and Italian net
+                   connectedness were negatively affected by the EPU, while a positive connectedness was
+                   reported for all other markets .
+                      Panels (B) and (C) report the EPU effects on total and net connectedness before and
+                   during the COVID-19 pandemic onset. Results showed that the EPU’s effect on total
+                   connectedness was insignificant before the pandemic outbreak but became significantly
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                                                            Page 20 of 27
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Page 21 of 27
+
+
+
+
+
+                                                                           Table                                              5                  Total and    net dynamic connectedness averages based on    different TVP-VAR lag
+                                                                           orders
+
+                                                                                                                       Net spillovers                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    TC I
+
+                                                                                                                       China                                                                                                  France                                                               Germany                                                               Italy                                                                                           Russia                                                                                         Spain                                                                      UK                                                                                                                               US
+
+                                                                           Returns
+                                                                               k      =         1                      −21.86                                                                                                          19.522                                                                     12.199                                                                                                             6.941                                                   −21.509                                                                                        8.985                                                                              3.649                                                          −7.926                                                                                        65.346
+                                                                               k      =         2                      −22.16                                                                                                          19.457                                                                     11.983                                                                                                             7.568                                                   −21.682                                                                                        9.451                                                                              3.992                                                          −8.609                                                                                        65.747
+                                                                               k      =         3                      −24.241                                                                                        19.847                                                                     12.754                                                                                                             7.951                                                   −21.72                                                                                                          8.693                                                                              1.682                                                          −4.966                                                                                        66.033
+                                                                               k      =         4                      −24.888                                                                                        20.192                                                                     12.572                                                                                                             8.018                                                   −21.259                                                                                        8.779                                                                              2.696                                                          −6.111                                                                                        66.646
+                                                                               k        =         5                    −27.521                                                                                        20.388                                                                     13.076                                                                                                             8.267                                                   −20.806                                                                                        9.377                                                                              3.879                                                          −6.661                                                                                        67.491
+                                                                           Positive returns
+                                                                               k      =         1                      −16.885                                                                                        18.911                                                                     12.268                                                                                                             6.062                                                   −20.077                                                                                        7.234                                                                              1.894                                                          −9.406                                                                                        61.378
+                                                                               k      =         2                      −18.905                                                                                        19.165                                                                     11.719                                                                                                             6.899                                                   −20.444                                                                                        7.741                                                                              3.573                                                          −9.748                                                                                        62.452
+                                                                               k      =         3                      −13.386                                                                                        18.667                                                                     10.69                                                                                                                               4.896                                                   −19.964                                                                                        7.244                                                                              0.301                                                          −8.447                                                                                        59.999
+                                                                               k      =         4                      −16.58                                                                                                          18.404                                                                     10.899                                                                                                             5.715                                                   −19.541                                                                                        7.83                                                                                               0.561                                                          −7.288                                                                                        60.907
+                                                                               k      =         5                      −17.39                                                                                                          18.053                                                                     10.441                                                                                                             6.335                                                   −20.001                                                                                        8.289                                                                              0.754                                                          −6.481                                                                                        61.869
+                                                                           Negative returns
+                                                                               k      =         1                      −30.015                                                                                        21.141                                                                     13.197                                                                                                             7.796                                                   −20.678                                                                                        10.021                                       −0.929                                                          −0.532                                                                                        66.516
+                                                                               k      =         2                      −27.667                                                                                        20.847                                                                     13.23                                                                                                                               8.035                                                   −21.479                                                                                        9.496                                                                              0.121                                                          −2.582                                                                                        66.565
+                                                                               k        =         3                    −28.208                                                                                        19.29                                                                                       10.69                                                                                                                               9.633                                                   −16.894                                                                                        9.068                                                   −2.017                                                          −1.561                                                                                        63.988
+                                                                               k      =         4                      −27.422                                                                                        18.559                                                                     11.209                                                                                                             10.035                                       −17.457                                                                                        9.475                                                   −1.783                                                          −2.616                                                                                        64.428
+                                                                               k      =         5                      −29.064                                                                                        18.888                                                                     11.153                                                                                                             10.673                                       −18.446                                                                                        9.631                                                   −0.651                                                          −2.185                                                                                        65.341
+
+                                                                           This table contains the averages of the dynamic total and net spillover indices based on the T VP‑VAR model with lag order
+                                                                           between 1 and 5
+
+
+                                                                           positive following the pandemic announcement. This result indicates that global stock
+                                                                           markets tend to collectively move in the same direction during periods of pressure and
+                                                                           high economic uncertainty. Thus, what is good for one market is also good for all other
+                                                                           markets and vice versa.
+                                                                                     The EPU had a significant effect on all stock markets except China and the US before
+                                                                           the COVID-19 pandemic onset. EPU positively affected net connectedness for the
+                                                                           France and Germany stock markets while negatively affecting the Italy, Spain, Russia,
+                                                                           and UK stock markets. Within the COVID-19 pandemic outbreak , results were slightly
+                                                                           different. Except for the US, all examined stock markets affected by EPU showed signifi-
+                                                                           cant net connectedness resulting from the pandemic outbreak . In addition, the direction
+                                                                           of the EPU’s effect changed before and during the outbreak . The EPU’s effect on the net
+                                                                           connectedness of the France and Germany stock markets turned significantly negative,
+                                                                           but the effect was significantly positive for Russia, Spain, and the UK . However, the Ital-
+                                                                           ian stock market’s net connectedness was significantly negative before and during the
+                                                                           COVID-19 pandemic onset. These results underscore the strong link between economic
+                                                                           polic y uncertainty and stock market net connectedness in countries worldwide.
+                                                                                     The direction change in the EPU’s effect on net connectedness before and during the
+                                                                           pandemic onset indicate that information spillovers from a given market may manifest
+                                                                           as either good or bad news for other markets, given the prevailing economic situation.
+                                                                           For example, under the normal economic situation (before the COVID-19 outbreak), net
+                                                                           connectedness from China’s stock markets did not respond to economic uncertainty. In
+                                                                           contrast, with the onset of the pandemic (a high economic uncertainty state), the bad
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                     Page 22 of 27
+
+
+
+
+                     news spillovers from these stock markets to other markets were significantly affected by
+                     the prevailing high economic uncertainty. The direction change of the EPU effects indi-
+                     cate that dynamic transmission of spillovers from a given market depend on whether the
+                     economic state is normal (low levels of uncertainty) or under pressure (high uncertainty
+                     level). Thus, bad news from China during the COVID-19 pandemic outbreak and the
+                     policies adopted by Chinese authorities in reaction to the new pandemic could be either
+                     bad or good news to other countries around the world.
+                       Conversely, Europe was the second center of coronavirus spread, especially Italy, fol-
+                     lowed by Spain, France, and Germany. In this short period, European countries had little
+                     experience with reacting to pandemic spread and did not yet have plans and policies
+                     they could implement to protect their economies and stock markets. Therefore, bad
+                     news coming from China was bad news for European stock markets. While other coun-
+                     tries that were affected later, such as the US, the UK, and Russia, were better informed
+                     about the pandemic spread risk . Consequently, these countries profited from the time
+                     lag and other countries’ experiences in mitigating the risk .
+
+
+                     Robustness analysis
+                     To verify our results, we conducted a robustness analysis by changing the VAR lag
+                     orders,k      , from one to five days.3 Table  5 presents the estimates of the total and net con                    -
+                     nectedness means measured based on the different lag orders k.4
+                       With the T VP-VAR(1) results as a benchmark , as shown in Tables  2 and 3, the means
+                     of the different connectedness indices were similar to those resulting from the TVP-
+                     VAR(1) model for all examined markets. The total connectedness index varied between
+                     65 and 67% for all returns, between 59 and 61% for the positive returns, and between 63
+                     and 66% for the negative returns. Similar results were obtained for the net connected-
+                     ness index.
+
+                     Conclusion and policy implications
+                     The effects of a public health emergency can be transmitted to the economy because
+                     stock markets serve as a barometer of investors’ expectations and faith in economic
+                     prospects (Bai 2014; Baker et      al. 2012). The COVID-19 pandemic spread intensi                                                                                                                                                                                                                                                                                         -
+                     fied uncertainties worldwide, increasing stock investors’ fear, and creating pessimistic
+                     sentiments regarding future returns. This study analyzed the dynamic connectedness
+                     between the major stock markets affected by the coronavirus pandemic. Moreover, we
+                     analyzed the effect of economic policy uncertainty on the dynamic directional connect-
+                     edness between stock markets before and during the COVID-19 pandemic onset by
+                     applying the TVP-VAR model recently proposed by Antonakakis and Gabauer (2017).
+                     This methodology substantially improves on Diebold and Yilmaz’s (2014) connectedness
+                     approach. It also overcomes the limitations of the often arbitrarily chosen rolling-win-
+                     dow-size, which could lead to ver y erratic or flattened parameters as well as loss of valu-
+                     able obser vations .
+
+
+                     3              In addition to the lag order, we also established a robustness analysis based on several values of the variance forecast-
+                     ing horizon. We found very similar spillover measures and no significant differences were detected. Given space limita-
+                     tions, the results are available upon request.
+                     4     To gauge the robustness of the results, we also plotted the different dynamic spillover indices to compare the evolu-
+                     tion of each one with those of the original model in Figs.  2,                 3,                 4,                 5,                 6,                 7. These figures, which are available upon request
+                     because of space limitations, show clear similarities with those found based on the original model.
+Youssef et al. Financ Innov            (2021) 7:13                                                                                Page 23 of 27
+
+
+
+
+                    Analyzing the eight stock markets’ daily data, the results revealed an unprecedented
+                  sensitivity of stock market connectedness to the rapid spread of the COVID-19 pan-
+                  demic. Results also showed that total connectedness between stock markets and net
+                  connectedness within each stock market varied over time, depending on the economic
+                  uncertainty state.
+                    Our findings reveal different regularities. First, the total dynamic connectedness
+                  between the examined stock markets substantially increased and reached unprec-
+                  edented levels during the COVID-19 pandemic outbreak. This result confirms previ-
+                  ous findings suggesting that stock market links become more pronounced during crisis
+                  periods. According to Gormsen and Koijen (2020), such dramatic movement can occur
+                  because, under long-term expectations, it is almost certain that sentimental factors
+                  play an important role. Broadstock and Zhang (2019) showed that market sentiment in
+                  response to the outbreak is quickly amplified through social media, which then stimu-
+                  lates trade activities and causes extreme price movements .
+                    Second, results showed that China and Russia acted as net receivers of dynamic spillo-
+                  vers during the entire sample period. The US stock market acted as a net receiver for
+                  most of the period. The European stock markets were net transmitters of spillovers for
+                  all other markets, and the US stock market acted mostly as a transmitter. Furthermore,
+                  we found that, during the coronavirus pandemic outbreak, European stock markets,
+                  except Italy and the UK , transmitted spillovers more than they received them. This sug-
+                  gests that, in crisis periods, stock markets are more likely to transmit risks (bad volatil-
+                  ity). Negative spillovers suggest that uninformed traders dominate the system, and bad
+                  spillover tends to transmit at a larger magnitude (BenSaida 2019).
+                    Third, our study was extended to a nonlinear framework by separating positive
+                  returns from negative return to control for possible differences in good and bad news
+                  dynamic spillovers. The results showed an asymmetric dynamic spillover between
+                  stock markets, highlighted by more pronounced spillover effects for negative than for
+                  positive returns. Moreover, the results suggest that the dynamic spillovers were inten                                  -
+                  sified during the COVID-19 pandemic, indicating that the pandemic caused a high
+                  level of dynamic spillovers for both positive and negative returns.
+                    Fourth, we analyzed the effect of economic policy uncertainty (EPU) on the total
+                  directional connectedness and the net connectedness for each stock market. Results
+                  showed a significant positive effect of EPU on the total dynamic spillover during the
+                  entire sample period and during the coronavirus outbreak . Results showed different
+                  regularities regarding net connectedness for each stock market. First, over the full
+                  period, EPU significantly impacted net connectedness for all examined stock markets
+                  except France and the US. To further analyze the EPU’s effect on net connectedness
+                  during the COVID-19 outbreak , we divided the sample period into two sub-periods
+                  covering before and during the pandemic outbreak . Comparing the results for each
+                  sub-period, we found that: (i) before the pandemic outbreak, each stock market’s
+                  net connectedness was significantly affected by EPU for all countries except China
+                  and the US; during the pandemic outbreak , all stock markets’ net connectedness was
+                  significantly affected by EPU. (ii) The EPU’s effect on net connectedness, before and
+                  during the COVID-19 outbreak , switched between negative and positive. Thus, what
+                  was good for a given market may be either bad or good for other markets. (iii) The
+Youssef et al. Financ Innov            (2021) 7:13                                                                                            Page 24 of 27
+
+
+
+
+                   changing direction of the EPU’s effect on net connectedness, before and during the
+                   onset of COVID-19 suggests that stock markets’ response to news coming from a
+                   given market depends on the economic uncertainty state. Thus, during the COVID-
+                   19 outbreak , bad news from China was bad news for some countries that were rapidly
+                   affected by the new virus (Italy, Spain, and France). However, some other countries
+                   formerly affected by the new coronavirus were less sensitive to bad news coming from
+                   other countries, because authorities had already implemented new policies to allevi                               -
+                   ate the impact on their economies and stock markets of bad news related to coronavi                             -
+                   rus spread.
+                      These findings have policy implications. The rapid spread of the new COVID-19
+                   pandemic caused a high level of dynamic connectedness between international stock
+                   markets, an unprecedented shutdown of stock market returns, and increasing eco                         -
+                   nomic uncertainty worldwide. Therefore authorities, central banks, and investment
+                   banks must implement efficient economic strategies and policies to manage the
+                   COVID-19 crisis without triggering uncertainty. Similarly, government inter ventions
+                   should focus on alleviating the financial stock markets’ panic mode and increasing
+                   investors’ confidence in future revenues and market recovery. In addition, given the
+                   continuous spread of COVID-19 worldwide, market participants and investors should
+                   learn to manage stock market risk and panic.
+                      Further, our findings provide insight for risk regulators, who should improve risk
+                   early warning systems by establishing a daily monitoring mechanism for the inter                         -
+                   national transmission of financial risks. They should implement management sys                                 -
+                   tems that manifest the use of advantages, prudent prevention, and risk control. Also,
+                   countries should establish a comprehensive evaluation index system with rapid data
+                   updating and high transparency, covering various markets and industries (Zhang
+                   et al.    2020a   ,  b,  c).
+                      Finally, it is important to strengthen international cooperation among financial regula-
+                   tors worldwide. In the context of economic globalization, stock markets are a complex
+                   economic ecosystem, so it is necessary to reinforce international sharing of manage-
+                   ment information related to financial risk contagion. Given that preventing international
+                   financial risk contagion is a long-term process, it is ver y important to implement a long-
+                   term risk governance system combined with global forces to manage early risk warning
+                   and recover y (Zhang et al. 2020a                                                                         , b, c                                                           ).
+                      As with all studies, our research has some limitations. Because of the short event
+                   period and the virus’s evolving nature, we could only study the immediate and short-
+                   term effects of the COVID-19 outbreak on the dynamic connectedness between the
+                   major affected countries’ stock markets. Future research should consider the pandem-
+                   ic’s long-term effects on stock markets’ connectedness, investor confidence inside and
+                   between foreign stock markets , and investor sentiment and uncertainty.
+
+                   Acknowledgements
+                   There are no acknowledgements to declare.
+
+                   Authors’ contributions
+                   The work is solely the contribution of authors. All authors contribute equally to the realization of the manuscript. All
+                   authors read and approved the final manuscript.
+
+                   Funding
+                   There is no funding for this work.
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                                                                                  Page 25 of 27
+
+
+
+
+
+
+                             Availability of data and materials
+                             Data will be made available upon request.
+
+                             Ethics approval and consent to participate
+                             Not applicable.
+
+                             Consent for publication
+                             Not applicable.
+
+                             Competing interests
+                             The authors declare that they have no competing interests.
+
+                             Author details
+                             1 College ofBusiness Administration, Northern Border University, Arar91431, Saudi Arabia.                                                                                                                                                                                                                    2 Institut Supérieur de
+                             Gestion de Gabès, Gabès University, 6002Gabès, Tunisia.                                                                                        3 Department ofBusiness Administration, College ofScience
+                             andHumanities inSlayel, Prince Sattam Bin Abdulaziz University, Al-Kharj, Saudi Arabia.                                                                                                                                                                                                                                                                                                                    4 ESC de Tunis, Manouba Univer       -
+                             sity,  Manouba, Tunisia.
+
+                             Received: 6 August 2020   Accepted: 15 February 2021
+
+
+
+
+
+                             References
+                             Ahmad W, Bhanumurthy NR, Sehgal S (2014) The Eurozone crisis and its contagion effects on the European stock mar-
+                                    kets. Stud Econ Finance
+                             Al-Awadhi AM, Alsaifi K, Al-Awadhi A, Alhammadi S (2020) Death and contagious infectious diseases: Impact of the
+                                    COVID-19 virus on stock market returns. J Behav Exp Finance 27:100326
+                             Antonakakis N, Chatziantoniou I, Filis G (2013) Dynamic co-movements of stock market returns, implied volatility and
+                                    policy uncertainty. Econ Lett 120(1):87–92
+                             Antonakakis N, Cunado J, Filis G, Gabauer D, Perez de Gracia F (2018) Oil volatility, oil and gas firms and portfolio diversifi-
+                                    cation. Energy Econ 70:499–515
+                             Antonakakis N, Gabauer D (2017) Refined Measures of Dynamic Connectedness based on T VP-VAR. MPRA Paper No.
+                                    78282
+                             Antonakakis N, Gabauer D, Gupta R (2019) International monetar y policy spillovers: evidence from a time-var ying param-
+                                    eter vector autoregression. Int Rev Financ Anal 65:10138
+                             Arouri M, Estay C, Rault C, Roubaud D (2016) Economic policy uncertainty and stock markets: Long-run evidence from
+                                    the U.S. Finance Res Lett 18:136–141
+                             Ashraf BN (2020) Stock markets’ reaction to COVID-19: cases or fatalities? Res Int Bus Finance. https ://doi.org/10.1016/j.
+                                    ribaf .2020.10124 9
+                             Azimli A (2020) The impact of COVID-19 on the degree of dependence and structure of risk-return relationship: a quan-
+                                    tile regression approach. Finance Res Lett. 101648, https://doi.org/https ://doi.org/10.1016/j.frl.2020.10164 8
+                             Badshah I, Demirer R, Suleman MT (2019) The effect of economic policy uncertainty on stock-commodity correlations
+                                    and its implications on optimal hedging. Energy Econ 84:104553
+                             Bai Y (2014) Cross-border sentiment: an empirical analysis on E.U. stock markets. Appl Financ Econ 24:259–290
+                             Baker M, Wurgler J, Yuan Y (2012) Global, local, and contagious investor sentiment. J Financ Econ 104:272–287
+                             Baker SR, Bloom N, Davis SJ (2016) Measuring economic policy uncertainty. Q J Econ 131(4):1593–1636
+                             Baker SR, Bloom N, Davis SJ, Terr y SJ (2020a) COVID-induced economic uncertainty. paper available on the link http://
+                                    www.polic yunce rtain ty.com/media /COVID                                                                                                                                                                                                                                                                                                              -Induc ed%20.pdf
+                             Baker SR, Bloom N, Davis SJ, Kost K, Sammon M, Viratyosin T (2020b) The unprecedented stock market reaction to COVID-
+                                    19. Rev Asset Pricing Stud. https ://doi.org/10.1093/rapst u/raaa0 08
+                             Balcilar M, Gupta R, Kim WJ, Kyei C (2019) The role of economic policy uncertainties in predicting stock returns and their
+                                    volatility for Hong Kong, Malaysia and South Korea. Int Rev Econ Finance 59:150–163
+                             Baruník J, Kočenda E, Vácha L (2016) Asymmetric connectedness on the US stock market: bad and good volatility spillo-
+                                    vers. J Financ Mark 27:55–78
+                             Bekaert G, Ehrmann M, Fratzscher M, Mehl A (2011). Global crises and equity market contagion. Working Paper Series
+                                    1381, European Central Bank
+                             BenSaida A (2019) Good and bad volatility spillovers: an asymmetric connectedness. J Financ Markets 43(2019):78–95
+                             Broadstock DC, Zhang D (2019) Social-media and intraday stock returns: the pricing power of sentiment. Finance Res Lett
+                                    30:116–123
+                             Cepoi C-O (2020) Asymmetric dependence between stock market returns and news during COVID19 financial turmoil.
+                                    Finance Res Lett 36:101658
+                             Chen M-P, Lee C-C, Lin Y-H, Chen W-Y (2018) Did the S.A.R.S. epidemic weaken the integration of Asian stock markets?
+                                    Evidence from smooth time-var ying cointegration analysis. Econ Res Ekonomska Istraživanja 31:908–926
+                             Christou C, Cunado J, Gupta R, Hassapis C (2017) Economic policy uncertainty and stock market returns in Pacific-Rim
+                                    Countries: evidence based on a Bayesian Panel VAR Model. J Multinational Financial Manag 40:92–102
+                             Corbet S, Hou Y, Hu Y, Lucey B, Oxley L (2020a) Aye Corona! The contagion effects of being named Corona during the
+                                    COVID-19 pandemic. In press, Finance Research Letters, 101591
+                             Corbet S, Larkin C, Lucey B (2020) The contagion effects of the COVID-19 pandemic: evidence from gold and cr yptocur-
+                                    rencies. Finance Res Lett 35:101554
+                             Delisle J (2003) SARS, Greater China, and the Pathologies of Globalization and Transition. Orbis 47:587–604
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                                                  Page 26 of 27
+
+
+
+
+
+
+                         Diebold FX, Yilmaz K (2012) Better to give than to receive: Predictive directional measurement of volatility spillovers. Int J
+                               Forecast 28(1):57–66
+                         Diebold FX, Yılmaz K (2014) On the network topology of variance decompositions: measuring the connectedness of
+                               financial firms. J Econom 182(1) (2014)
+                         Fang L, Yu H, Li L (2017) The effect of economic policy uncertainty on the long-term correlation between U.S. Stock and
+                               bond markets. Econ Model 66:139–145
+                         Fang L, Chen B, Yu H, Xiong C (2018) The effect of economic policy uncertainty on the long-run correlation between
+                               crude oil and the U.S. Stock markets. Finance Res Lett 24:56–63
+                         Fang L, Bouri E, Gupta R, Roubaud D (2019) Does global economic uncertainty matter for the volatility and hedging
+                               effectiveness of Bitcoin? Int Rev Financ Anal 61:29–36
+                         Gabauer D, Gupta R (2018) On the transmission mechanism of countr y-specific and international economic uncertainty
+                               spillovers: evidence from a T VP-VAR connectedness decomposition approach. Econ Lett 171:63–71
+                         Gong C, Tang P, Wang Y (2019) Measuring the network connectedness of global stock markets. Physica A 535/122351
+                         Gormsen NJ, Koijen RS (2020) Coronavirus: impact on stock prices and growth expectations. University of Chicago,
+                               Becker Friedman Institute for Economics Working Paper, (2020–22)
+                         Guo P, Zhu H, You W (2018) Asymmetric dependence between economic policy uncertainty and stock market returns in
+                               G7 and BRIC: a quantile regression approach. Finance Res Lett 25:251–258
+                         He F, Wang Z, Yin L (2020) Asymmetric volatility spillovers between international economic policy uncertainty and the US
+                               stock market. N Am J Econ Finance 51:101084
+                         Hu Z, Kutan AM, Sun PW (2018) Is U.S. economic policy uncertainty priced in China’s A-shares market? Evidence from
+                               market, industr y, and individual stocks. Int Rev Financ Anal 57:207–220
+                         Jiang Y, Yu M, Hashmi SM (2017) The financial crisis and co-movement of global stock markets—a case of six major
+                               economies. Sustainability 9(2):260
+                         Jondeau E, Rockinger M (2006) The Copula-GARCH model of conditional dependencies: an international stock market
+                               application. J Int Money Finance 25:827–853
+                         Kang SH, Uddin GS, Troster V, Yoon SM (2019) Directional spillover effects between ASEAN and world stock markets. J
+                               Multinatl Financ Manag 52:100592
+                         Khan K, Zhang H, Shah MH, Jahanger A (2020) The Impact of COVID-19 pandemic on stock markets: an empirical analysis
+                               of World major stock indices. J Asian Finance Econ Bus 7(7):463–474
+                         Kim BH, Kim H, Lee BS (2015) Spillover effects of the US financial crisis on financial markets in emerging Asian countries.
+                               Int Rev Econ Finance 39:192–210
+                         Koop G, Korobilis D (2014) A new index of financial conditions. Eur Econ Rev 71:101–116
+                         Koop G, Pesaran MH, Potter SM (1996) Impulse response analysis in nonlinear multivariate models. J Econom
+                               74(1):119–147
+                         Korobilis D, Yilmaz K (2018) Measuring dynamic connectedness with large Bayesian VAR models. Available at SSRN
+                               3099725
+                         Kou G, Chao X, Peng Y, Alsaadi FE, Herrara-Viedma E (2019) Machine learning methods for systemic risk analysis in finan-
+                               cial sectors. Technol Econ Dev Econ 25(5): 716–742
+                         Kou G, Peng Y, Wang G (2014) Evaluation of clustering algorithms for financial risk analysis using MCDM methods. Inf Sci
+                               275:1–12
+                         Lee J-W, McKibbin WJ (2004) Globalization and disease: the case of SARS*. Asian Econ Pap 3:113–131
+                         Li X, Peng L (2017) U.S. economic policy uncertainty and co-movements between Chinese and U.S. stock markets. Econ
+                               Model 61:27–39
+                         Li XM, Zhang B, Gao R (2015) Economic policy uncertainty shocks and stock-bond correlations: evidence from the U.S.
+                               market. Econ Lett 132:91–96
+                         Liu X, An H, Li H, Chen Z, Feng S, Wen S (2017) Features of spillover networks in international financial markets: evidence
+                               from the G20 countries. Phys A Stat Mech Appl 479:265–278
+                         Liu H, Manzoor A, Wang CY, Zhang L, Manzoor Z (2020) The COVID-19 outbreak and affected countries stock markets
+                               response. Int J Environ Res Public Health 17: 2800. doi:https ://doi.org/10.3390/ijerp h1708 2800
+                         Macciocchi D, Lanini S, Vairo F, Zumla A, Figueiredo LTM, Lauria FN, Strada G, Brouqui P, Puro V, Krishna S (2016) Short-
+                               term economic impact of the Zika virus outbreak. New Microbiol 39:287–289
+                         Madaleno M, Pinho C (2012) International stock market indices comovements: a new look. Int J Finance Econ
+                               17(1):89–102
+                         Maghyereh AI, Awartani B, Al Hilu K (2015) Dynamic transmissions between the US and equity markets in the MENA
+                               countries: new evidence from pre-and post-global financial crisis. Quart Rev Econ Finance 56:123–138
+                         Manopimoke P, Prukumpai S, Sethapramote Y (2018) Dynamic connectedness in emerging Asian equity markets. In:
+                               Banking and finance issues in emerging markets. Emerald Publishing Limited
+                         Marinc RIM (2016) Geographic proximity of information to financial markets and impact on stock prices: evidence from
+                               the Ebola Outbreak. In: Proceedings of the 2016 UBT International Conference, Durrës, Albania, pp 28–30
+                         Matkovskyy R, Jalan A, Dowling M (2020) Effects of economic policy uncertainty shocks on the interdependence
+                               between Bitcoin and traditional financial markets. Quart Rev Econ Finance 77:150–155
+                         Mei D, Zeng Q, Zhang Y, Hou W (2018) Does U.S. Economic Policy Uncertainty matter for European stock markets volatil-
+                               ity? Physica A 512:215–221
+                         Menezes R, Dionísio A (2011) Globalization and long-run co-movements in the stock market for the G7: an application of
+                               VECM under structural breaks. Chin Sci Bull 56(34):3707–3716
+                         Mensi W, Boubaker FZ, Al-Yahyaee KH, Kang SH (2018) Dynamic volatility spillovers and connectedness between global,
+                               regional, and GIPSI stock markets. Finance Res Lett 25:230–238
+                         Mokni K, Mansouri F (2017) Conditional dependence between international stock markets: a long-memor y GARCH-
+                               copula model approach. J Multinational Financ Manag 42–43:116–131
+                         Morales L, Andreosso-O’Callaghan B (2012) The current global financial crisis: Do Asian stock markets show contagion or
+                               interdependence effects? J Asian Econ 23(6):616–626
+Youssef et al. Financ Innov            (2021) 7:13                                                                                                                                    Page 27 of 27
+
+
+
+
+
+
+                         Morana C, Beltratti A (2008) Comovements in international stock markets. J Int Financ Mark Inst Money 18(1):31–45
+                         Nippani S, Washer KM (2004) SARS: a non-event for affected countries’ stock markets? Appl Financ Econ 14:1105–1110
+                         Pesaran HH, Shin Y (1998) Generalized impulse response analysis in linear multivariate models. Econ Lett 58(1):17–29
+                         Phan DHB, Sharma SS, Tran V T (2018) Can economic policy uncertainty predict stock returns? Global evidence. J Int
+                               Financ Markets Inst Money 55:134–150
+                         Phan DHB, Narayan PK (2020) Countr y Responses and the reaction of the stock market to COVID-19—a preliminar y
+                               exposition. Emerg Markets Finance Trade 56(10):2138–2150
+                         Ramelli S, Wagner AF (2020) Feverish stock price reactions to Covid-19. CEPR Discussion Paper No. DP14511, Available at
+                               SSRN: https ://ssrn.com/abstr act=35603 19
+                         Salisu XA, Vo XV (2020) Predicting stock returns in the presence of COVID-19 pandemic: the role of health news. In press.
+                               Int Rev Financ Anal 101546
+                         Sharif A, Aloui C, Yarovaya L (2020) COVID-19 pandemic, oil prices, stock market, geopolitical risk and policy uncertainty
+                               nexus in the U.S. economy : Fresh evidence from the wavelet-based approach. International Review of Financial
+                               Analysis, 70, 101496.
+                         So MKP, Chu AMY, Chan T WC (2020) Impacts of the COVID-19 pandemic on financial market connectedness. Finance Res
+                               Lett. https ://doi.org/10.1016/j.frl.2020.10186 4
+                         Su X (2020) Dynamic behaviors and contributing factors of volatility spillovers across G7 stock markets. N Am J Econ
+                               Finance 53:101218
+                         Syriopoulos T, Makram B, Boubaker A (2015) Stock market volatility spillovers and portfolio hedging: BRICS and the finan-
+                               cial crisis. Int Rev Financ Anal 39:7–18
+                         Topcu M, Gulal OS (2020) The impact of COVID-19 on emerging stock markets. Finance Res Lett 101691
+                         Tsai IC (2014) Spillover of fear: evidence from the stock markets of five developed countries. Int Rev Financ Anal
+                               33:281–288
+                         Výrost T, Lyócsa Š, Baumöhl E (2015) Granger causality stock market networks: temporal proximity and preferential
+                               attachment. Phys A Stat Mech Appl 427:262–276
+                         Wang GJ, Xie C, Lin M, Stanley HE (2017) Stock market contagion during the global financial crisis: a multiscale approach.
+                               Finance Res Lett 22:163–168
+                         Wang Z, Li Y, He F (2020) Asymmetric volatility spillovers between economic policy uncertainty and stock markets:
+                               evidence from China. Res Int Bus Finance 53:101233
+                         Wen F, Xu L, Ouyang G, Kou G (2019). Retail investor attention and stock price crash risk: evidence from China. Int Rev
+                               Financ Anal 65: 101376
+                         Xiong X, Bian Y, Shen D (2018) The time-var ying correlation between policy uncertainty and stock returns: evidence from
+                               China. Physica A 499:413–419
+                         Yarovaya L, Brzeszcz ynski J, Goodell JW, Lucey BM, Lau CK (2020) Rethinking financial contagion: information transmis-
+                               sion during the COVID-19 pandemic. Available at SSRN https ://ssrn.com/abstr act=36029 73
+                         Yu H, Fang L, Sun W (2018) Forecasting per formance of global economic policy uncertainty for volatility of Chinese stock
+                               market. Physica A 505:931–940
+                         Yu M, Song J (2018) Volatility forecasting: Global economic policy uncertainty and regime switching. Physica A
+                               511:316–323
+                         Zhang D, Hu M, Ji Q (2020) Financial markets under the global pandemic of COVID-19. Finance Res Lett 101528. doi:https
+                               ://doi.org/10.1016/j.frl.2020.10152 8.
+                         Zhang D, Hu M, Ji Q (2020) Financial markets under the global pandemic of COVID-19. Finance Res Lett 36/101528.
+                               https://doi.org/https ://doi.org/10.1016/j.frl.2020.10152 8.
+                         Zhang Y, Chen R Ma D (2020) A weighted and directed perspective of global stock market connectedness: a variance
+                               decomposition and GERGM framework. Sustainability, 12/4605.
+                         Zhou Z, Lin L, Li S (2018) International stock market contagion: a CEEMDAN wavelet analysis. Econ Model 72:333–352
+
+                         Publisher’s Note
+                         Springer Nature remains neutral with regard to jurisdictional claims in published maps and institutional affiliations.

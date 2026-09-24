@@ -1,0 +1,2213 @@
+   Forecasting oil price realized volatility using information
+                        channels from other asset classes
+
+                                                  1,2                     1,3,
+                         Stavros Degiannakis          and George Filis       *
+
+
+1Department of Economics and Regional Development, Panteion University of Social
+
+  2            and Political Sciences, 136 Syggrou Avenue, 17671, Greece.
+   Postgraduate Department of Business Administration, Hellenic Open University,
+3                               Aristotelous 18, 26 335, Greece.
+  Department of Accounting, Finance and Economics, Bournemouth University, BH8
+                                      8EB, United Kingdom.
+
+                 *Corresponding author: email: gfilis@bournemouth.ac.uk
+
+
+                                              Abstract
+         Motivated  from  Ross  (1989)  who  maintains  that  asset  volatilities  are
+synonymous   to   the   information   flow,   we   claim   that   cross-market   volatility
+transmission   effects   are   synonymous   to   cross-market   information   flows   or
+“information channels” from one market to another. Based on this assertion we assess
+whether cross-market volatility flows contain important information that can improve
+the accuracy    of oil price realized volatility forecasting. We concentrate on                realized
+volatilities derived from the intra-day prices of the Brent crude oil and four different
+asset classes (Stocks, Forex, Commodities and Macro), which represent the different
+“information channels” by which oil price volatility is impacted from. We                    employ a
+HAR    framework      and   estimate   forecasts for 1-day      to  66-days ahead.      Our findings
+provide strong evidence that the use of the different “information channels” enhances
+the predictive accuracy of        oil price   realized    volatility  at all forecasting horizons.
+Numerous forecasting evaluation tests and alternative model specifications                     confirm
+the robustness of our results.
+
+Keywords:       Volatility   forecasting,      realized   volatility,    crude   oil   futures,   risk
+management, HAR, asset classes.
+
+JEL: C22, C53, G13, Q47.
+
+
+
+                                                                                                       1
+
+1. Introduction
+         Crude oil price movements are of major importance                       for the global economy.
+Elder and Serletis (2010) opine that oil price uncertainty exercises significant impact
+on the economy. It is no coincidence that since the second half of 2015 the plunge of
+oil prices and its economic effects have monopolised media attention from the most
+widely circulated financial          press. Even more, this          fall in oil prices has resulted in
+increased oil price volatility, which is an essential input in many macroeconomic
+models, as well as, in option pricing and value at risk.
+         Furthermore, oil price volatility forecasts are particularly important nowadays
+due to the fact that the increased participation of hedge funds in the oil market over
+the last decade or so has resulted            in the financialisation of the market (Le Pen and
+Sévi,  2013;  Fattouh        et  al.,  2013;    Buyuksahin  and  Robe,  2014).              In  addition,  we
+observe  that  financial  institutions  now              consider     the  oil  market  as  a  profitable
+alternative  investment  for  their  portfolios,  which               renders  the  oil  price  volatility
+forecasting important        (see, for example, Silvennoinen and Thorp,                   2013).    Lastly, oil
+price  volatility  forecasting  is          also   essential  for  oil  risk  management  and  the
+management of oil contingent claims as noted by Giot and Laurent (2003), Cabedo
+and Moya (2003) and Sévi (2014).
+         Thus, accurate forecasts of oil price volatility are both timely and essential for
+policy  makers,  oil  traders,        and    researchers.     However,       it  is  interesting  to  note      a
+paradox  in  the  field  of  oil  price         volatility  forecasting.      Despite  the  fact  that  the
+importance  of  oil  price  fluctuations  and  volatility  on  the  economy  and  financial
+markets have long been established1                and researchers        have   forecasted     asset market
+volatility since the 80’s2, the earliest           study in the field of oil volatility forecasting
+dates from as recently as 2006 by Sadorsky3.
+
+         Even more, the majority of the existing papers use daily oil prices and forecast
+the conditional oil price volatility; yet, ultra-high frequency data, which are used for
+the construction of the realized volatility, can produce more accurate                        forecasts (see,
+
+
+1 See, for instance, Hamilton, 1983; Jones and Kaul (1996), Kilian and Park (2009), Filis (2010),
+Arouri  et al.  (2011),  Filis et al.  (2011),  Degiannakis    et al.  (2013), Rahman and  Serletis (2011),
+Baumeister and Peersman (2013), Filis and Chatziantoniou (2014).
+2 See, Bollerslev et al. (1992), Andersen et al. (2003, 2005), Degiannakis (2004), Hansen and Lunde
+(2005), Angelidis and Degiannakis (2008), Fuertes et al. (2009), Frijns et al. (2010) among others.
+3 This is in contrast to the literature on oil price forecasting, which has attracted the attention of the
+research community since the 1990s. See, for example, Abramson and                Finizza (1991), Huntington
+(1994), Alquist et al. (2013), Baumeister and Kilian (2102, 2014, 2015).
+                                                                                                                2
+
+for instance, Hansen and Lunde, 2005; Engle and Sun, 2007; Tay                      et al., 2009).    To
+date, there are only five studies that concentrate their attention on forecasting oil price
+realized volatility (i.e., Haugom        et al., 2014; Sévi, 2014; Prokopczuk            et al., 2015;
+Phan et al., 2015; Wen et al., 2016).
+         Hence,  we      add  to  the  scarce      literature   of   oil  price  realized  volatility
+forecasting using the      current state-of-the-art      Heterogeneous AutoRegressive model
+for Realized Volatility (HAR-RV),            which we extend in a number of ways. (i) We
+consider 14 exogenous variables (using HAR-RV-X models), which                        are categorized
+into  four different asset classes       (Stocks,   Forex,    Commodities      and   Macro) and we
+investigate whether their realized volatilities improve the             oil volatility forecasts. (ii)
+We provide a method that         handles exogenous variables in a HAR model in order to
+proceed with the forecasts. (iii) We assess the forecasting accuracy of the HAR-RV-X
+models based on each individual asset and asset class, their combined forecasts, as
+well as the forecast-averaging. (iv) We assess the forecasting accuracy of our models
+during economic turbulent periods, such as the Global Financial Crisis                       (GFC)    of
+2007-08.    (v) We use the newly developed Model Confidence Set, the Direction-of-
+Change  (DoC)       and  trading  games        to  evaluate    the  forecasting  accuracy  of  the
+competing models. (vi) We use forecasting horizons ranging                   from 1-day to 66-days
+ahead, given that different stakeholders have different predictive needs.
+         In short, we report the following regularities. (i) The              exogenous volatilities
+improve the forecasting accuracy of the simple HAR-RV at all forecasting horizons.
+(ii) The HAR-RV-X models that combine asset volatilities from all asset classes are
+the best performing models, since they capture the different “information channels”
+that impact on     oil price  volatility at different times. (iii)      The DoC suggests that all
+HAR models are highly accurate in predicting the movements of oil price volatility.
+Thus, we maintain that HAR-RV-X models should be used from stakeholders who are
+interested  in  the  accuracy  of  the  forecasts,  whereas  those  interested  only  in  the
+movement of oil price volatility can          be limited to HAR-RV. (iv) The trading games
+confirm    that  the   HAR-RV-X  models  which  combine  multiple  asset  volatilities
+generate higher positive returns compared to both the Random Walk and the HAR-
+RV model.     (v)  The findings are robust even when we concentrate only on                   turbulent
+economic periods.
+         The rest of the paper is structured as follows.           Section 2 reviews the existing
+literature. Section 3 provides a detailed description of the data. Section 4 explains the
+                                                                                                       3
+
+construction of the realized volatility, whereas Section            5  describes the econometric
+approach  employed  in  this  paper.  Section          6  explains  the  forecasting  evaluation
+techniques. Section     7  analyses the findings of the study and Section            8  includes the
+robustness checks. Section 9 concludes the study.
+
+2. Review of the literature
+        The earliest study on oil price volatility forecasting is this by Sadorsky (2006).
+Sadorsky    forecasts   the squared daily returns of oil futures prices (as  a proxy of
+volatility) using GARCH, TGARCH and Exponential Smoothing, VAR and BEKK
+models.  The  VAR  and  BEKK  models              also  include  the  squared  returns  of  other
+petroleum futures (such as        heating oil, gasoline and natural gas). He finds that the
+GARCH-family models are able to outperform the random walk model, which is used
+as  the  benchmark.  Sadorsky  and  McKenzie  (2008)  second  Sadorsky’s  (2006)
+findings, showing that the GARCH-type models produce more accurate forecasts than
+any other competing model, although only in the longer-horizons. They claim that in
+shorter-horizons, it is the power autoregressive model that produces the best forecasts
+of oil price volatility.
+        Following Sadorsky (2006) and Sadorsky and McKenzie (2008), an increasing
+number of authors have        turned their attention to oil price volatility forecasting.          For
+example, Kang et al. (2009) use daily oil spot prices in order to forecast the 1-day, 5-
+days and 20-days ahead conditional volatilities by means of CGARCH, FIGRACH
+and  IGARCH models.  Their findings  suggest  that  the CGARCH and  FIGARCH
+models are more useful in modelling and forecasting the volatility in the crude oil
+prices.
+        More recently, Nomikos and Pouliasis (2011) and Kang and Yoon (2013)
+consider oil futures prices to estimate and forecast             oil price conditional volatility.
+Nomikos  and  Pouliasis  (2011)  use  Mix-GARCH  and  MRS-GARCH  models  to
+forecast the 1-day-ahead oil price volatility and find that both models are able to
+outperform the forecasts of the simple GARCH model. Kang and Yoon (2013), on the
+other hand, combine ARFIMA models with GARCH models to produce 1-day, 5-days
+and 20-days ahead forecasts. They claim that while ARFIMA-FIGARCH models are
+better in modelling oil price conditional volatility, no model consistently outperforms
+all other competing ones.
+
+
+                                                                                                     4
+
+         Similarly, several other authors model the conditional volatility of oil prices
+and  forecast  these  volatilities,  using  univariate  models  such  as  the  FIAPARCH,
+HYGARCH, EGARCH, FIGARCH, APARCH, as well as multivariate models such
+as the BEKK, VAR and Risk Metrics (see, Agnolucci, 2009; Wei et al., 2010; Arouri
+et al., 2012; Hou and Suardi, 2012; Chkili et al., 2014). For the multivariate models,
+they consider conditional volatilities of other energy commodities, similar to those of
+Sadorsky (2006). The general consensus is that the univariate GARCH-type models
+are able to produce more accurate forecasts than any other competing models.                        It is
+worth noting that the majority of these papers              evaluate   the forecasting accuracy of
+their models in 1-day, 5-days and 20-days ahead horizons.
+         A study that is quite distinct is this of Efimova and Serletis (2014), as it is the
+first paper to consider the inclusion of an additional asset class in their models in
+order  to  assess  if  this  yields  better      forecasts  for  the  oil  price  volatility.      More
+specifically, all previous papers, which have estimated multivariate models, have
+considered prices only from other energy markets (e.g. heating oil, gasoline, etc.). By
+contrast,  Efimova  and  Serletis  (2014)  include  the  S&P500  daily  returns  to  their
+models,  as  well  as,     oil  spot  prices  to  model  and  forecast  the  1-day  ahead  oil
+conditional volatility using univariate GARCH-type models and multivariate models
+such as BEKK, DCC and VARMA-GARCH. Their findings, though,                                 corroborate
+these of previous literature, suggesting that the univariate models are able to produce
+more accurate forecasts       and that the     inclusion of the S&P500         daily returns     did not
+produce better forecasts.
+         All aforementioned papers use daily oil prices and forecast the conditional oil
+price  volatility.  Nevertheless,        empirical  evidence  (primarily  from  the  finance
+literature)  has  long  suggested  that  intraday  (ultra-high  frequency)  data  are  more
+information-rich and thus they can produce more accurate estimates  of the daily
+volatility (see, inter alia, Andersen et al., 2001, 2003, 2010; McAleer and Medeiros,
+2008). More specifically, Andersen and Bollerslev (1998) introduce an alternative
+measure of daily volatility which considers intraday data,                  the Realized Volatility
+(RV).  Realized volatility is based on the idea of using the sum of squared intraday
+returns to generate more accurate daily volatility measures.
+         Numerous      studies have     shown that intraday data are able to produce better
+forecasts, compared to daily data (see, for instance, Hansen and Lunde, 2005; Engle
+and Sun, 2007; Tay et al., 2009).
+                                                                                                        5
+
+         However, until very recently the use of ultra-high frequency data for volatility
+forecasting has concentrated only on stock market and exchange rate volatilities (see,
+among others, Bollerslev          et al., 1992; West and Cho, 1995; Andersen                   et al., 2003,
+2005; Hansen and Lunde, 2005; Angelidis and Degiannakis, 2008).
+         Studies    on   oil  price  volatility     forecasting     using  ultra-high  frequency  data
+started in  2014. One of the early studies  is  this  by Haugom                       et  al.  (2014),    who
+construct the realized volatility for the WTI crude oil futures and assess whether the
+CBOE Crude Oil Volatility Index (OVX) and variables such as volume, open interest,
+daily  returns, bid-ask spread and the slope of the futures curve can improve the
+forecasts of the WTI realized volatility. The authors use data from the WTI crude oil
+futures from May, 2007 to May, 2012, considering the front-month futures contracts
+only. They use the HAR model of Corsi (2009) to forecast the realized oil volatility,
+given its superiority in forecasting this volatility measure (see, inter alia, Andersen et
+al., 2007; Corsi, 2009; Busch et al., 2011; Fernandes et al., 2014)4, and find that the
+
+exogenous variables improve the forecasting accuracy of WTI realized volatility.
+         Sévi (2014) also forecasts the realized volatility of oil futures prices for the
+front-month     futures contracts. More specifically, the author considers 5min intraday
+oil  price  returns  to  construct  the  daily  realized  volatility.  He  then  uses  several
+extensions  of  the  HAR  model  in  order  to  consider  the  jump  component,                          semi
+variances, leverage effects          and   asymmetries       in these components.          The   data range
+from January,      1987 to December,          2010. Despite the fact that Sévi (2014) considers
+nine different HAR models in total, he concludes that none of these models is able to
+outperform the forecasting accuracy of the simple HAR model, which is based only
+on the oil realized volatility (HAR-RV), in any forecasting horizon (i.e. 1-day to 66-
+days ahead).
+         More recently, Prokopczuk              et al.  (2015) use intraday data            to forecast the
+realized volatility of crude oil prices, gasoline, heating oil and natural gas for three
+forecasting horizons, namely 1-day, 5-days and 22-days ahead. Their data span from
+January 2007 to June 2012. In order to construct their realized volatilities for the three
+
+
+4 The HAR model considers information of the previous day’s, week’s and month’s volatility and thus,
+it is able to accommodate the heterogeneous beliefs of traders in the oil market. Bollerslev and Wright
+(2001) maintain that any     volatility series exhibits   long-memory behaviour and        so a model which
+considers this stylized fact (such as the HAR model) is able to produce better forecasts. Andersen et al.
+(2007), Corsi (2009), Busch et al. (2011) and Fernandes et al. (2014) also argue that HAR models are
+more successful in forecasting asset price volatility as they are parsimonious and they capture the long-
+memory that is observed in asset price volatility.
+                                                                                                              6
+
+time-series, the authors choose a sampling frequency of 15min. As in Haugom et al.
+(2014) and     Sévi (2014), Prokopczuk          et al.  (2015) also use a HAR model              for their
+forecasting exercise. Similarly with Sévi (2014), they also consider several extensions
+of the HAR-RV model in order to capture whether the jump detection produces better
+forecasts. Their findings corroborate those of Sévi (2014), showing that the modelling
+of jumps does not improve the forecast accuracy of the simple HAR-RV model.
+         Phan et al. (2015), on the other hand, examine whether the S&P500 volatility
+improves the oil price realized volatility forecasts. The authors consider 5min intraday
+data   to   construct   the   realized   volatility   measure;   nevertheless,   they   use              an
+EGARCH(1,1) model rather than a HAR-RV one. They report that the cross-market
+volatility  interaction  improves  the  forecasts  for  the  oil  price  volatility.  Finally,
+Chatrath et al. (2015) also forecast the oil price volatility, using a sampling frequency
+of 5min to construct their realized volatility measure. The authors employ similar
+regressions to those by Christensen and Prabhala (1998) and Jiang and Tian (2005)
+and  find  that  the  incorporation  of  the  crude  oil  implied  volatility  improves  the
+forecasting of realized volatility.
+         Our paper      directly extends      the  previous    contributions     on oil price realized
+volatility forecasting, using ultra-high frequency data.
+
+3. Data Description
+         In this study we use        tick by tick transaction       data of the front-month futures
+contracts for the following series: Brent Crude Oil (ICE Futures Europe), GBP/USD
+(CME Group), CAD/USD (CME Group), EUR/USD (CME Group), FTSE100                                        (ICE
+Futures Europe), S&P500 (CME Group), Hang Seng (Hong Kong Stock Exchange),
+Euro Stoxx 50        (Eurex), Gold      (CME Group), Copper             (CME Group), Natural Gas
+(CME Group), Palladium (CME Group), Silver (CME Group) and the US 10yr T-bills
+(CME Group). All  data           are obtained from        Tick Data. We use          an additional      US
+macroeconomic volatility indicator which is available in daily frequency, namely the
+Economic Policy Uncertainty (EPU)5 Index by Baker et al. (2013). The period of our
+
+
+
+
+5 As indicated by Baker et al.   (2013), EPU index is constructed based on three types of underlying
+components.  The   first  component  quantifies  newspaper  coverage  of  policy-related  economic
+uncertainty. The second component reflects the number of federal tax code provisions set to expire in
+future years. The third component uses disagreement among economic forecasters as a proxy for
+uncertainty. For more information the reader is directed to http://www.policyuncertainty.com/.
+                                                                                                           7
+
+study spans from August 1, 2003 to August 5, 2015 and is dictated by the availability
+of intraday data for the Brent Crude oil futures contracts.
+         The choice of variables is justified by the fact that there is a growing literature
+that confirms the cross-market transmission effects (either of returns or volatilities)
+between  oil     and  four  main  asset  classes  (i.e.,          Stocks,    Forex,    Commodities        and
+Macro)6.    Given these interactions, we posit that the volatilities of these four asset
+
+classes   contain    important      information  for  the  future  movements  of  the  oil  price
+volatility.  This  is  related  to  Ross  (1989)  who  maintains  that  volatilities  are
+synonymous to the information             flow and thus the cross-market transmission effects
+are synonymous to cross-market information flows or “information channels”.
+         We consider some specific variables among the four asset classes, largely
+because they are some of the most tradable futures contracts globally7, but also due to
+
+the following reasons.
+         Specifically,     for the stock market indices we choose the key US, EU and
+Asian indices as (i) their combined trading spans across a full day (24-hours) and (ii)
+they  represent  the  stock  market  indices  of  the  largest  economies  in  the  world.
+However, we also include the FTSE100 index futures,                        given that we forecast the
+Brent crude oil volatility.
+         As far as the foreign exchange variables are concerned, we maintain that the
+EUR/USD is the main currency that exercises an impact on oil fluctuations, while the
+use of the GBP/USD futures is incontestable, given that it is related to the Brent crude
+oil. Finally,   the choice of       the CAD/USD is motivated              by   Chen    et al.  (2010)    who
+maintain that currencies of commodity exporters contain important information for
+the future movements of commodity prices.
+         Lastly, as macroeconomic indicators we use the US 10yr T-bill futures and the
+US EPU, as recent studies have shown that oil price volatility is responsive to change
+in the economic conditions (see, for instance, Antonakakis et al., 2014). We treat both
+the US 10yr T-bill and the US EPU as variables that approximate global economic
+developments, given the importance of the US in the global economy.
+
+
+6 See, inter alia, Aloui and Jammazi (2009), Sari et al. (2010), Arouri et al. (2011), Aloui et al. (2013),
+Souček and Todorova (2013, 2014), Mensi et al. (2014), Antonakakis et al. (2014), Sadorsky (2014),
+Phan et al. (2015), IEA (2015), Ferraro et al. (2015).
+7 Although, this is not the case for the Hang Seng index, given that the most traded Chinese index
+futures is the CSI 300. Nevertheless, intraday data for the CSI 300 index futures are available after
+2008 and thus we had to replace this index with Hang Seng, which is among the most traded index
+futures in the Asian region.
+                                                                                                             8
+
+         Important milestones for the construction of the intra-day time series are the
+following:
+(i) Trading day: In our paper we define as trading day the period between 21:01 GMT
+the night  before until  21:00  GMT that evening.  This                  particular definition of the
+trading day is motivated by Andersen et al. (2001, 2003, 2007).
+(ii) Holidays: We exclude several fixed and moving holidays from our series, such as
+Christmas, Martin Luther King day, Washington’s                     Birthday, Good Friday, Easter
+Monday, Memorial day, July 4th, Labour day and Thanksgiving and the day after.
+
+(iii) Non-trading hours: We remove any trading that takes place between Friday 21:01
+GMT until Sunday 21:00 GMT.
+(iv) Brent Crude Oil 2-hours Sunday trading session: We use two approaches for the
+additional  2-hour  trading  session  that  occurs  in  the  Brent  Crude  Oil  futures  on
+Sundays. The first approach is to disregard these observations, whereas the second
+approach is to incorporate these observations to the Monday’s trading day. The results
+of our forecasting exercise are not affected by the choice of the approach. Given the
+indifference in the results, we         have decided to follow the second approach as it is
+more  instructive  to  consider  all  available  information  in  the  construction  of  the
+realized volatility measure.
+(v) Calendar or business-time sampling: We choose the calendar sampling as it is
+most commonly used in the literature and thus, allows for comparability of the results.
+Furthermore,  as      Sévi   (2014)  explains,  the  use  of  business-time  sampling  is  not
+recommended as its asymptotic properties are less well-known.
+(vi) Common sample: Finally, to arrive to a common sample across all series, we have
+considered the trading days when the Brent Crude Oil is traded8.
+
+         After the    aforementioned considerations, our final sample consists of
+     trading days.
+
+4. Realized volatility
+         According to Andersen and Bollerslev (1998)                  the  daily  realized volatility is
+estimated to be the sum of squared intra-day returns, as shown in eq.1:
+
+                                                                                                        (1)
+                                      √∑       (                     )    ,
+
+
+8 If on any given day we have an oil observation when it is not a trading day for one of the other
+variables, we use the value that this variable had the day before.
+                                                                                                           9
+
+where     are the observed prices of the asset at trading day t, and τ are the equidistant
+
+intraday time intervals.
+         The realized volatility converges to the integrated volatility as the sampling
+frequency (m) goes to zero and the number of time intervals (τ) approaches infinity.
+Nevertheless,     more noise is  added to  the estimated volatility when the                  sampling
+frequency converges on zero, due to microstructure frictions. Thus, there is a trade-off
+between the bias that is inserted in the realized volatility measure and its accuracy.
+Andersen     et al.  (2006) suggested the construction of the volatility signature plot,
+which depicts the average realized volatility against the sampling frequency. Based on
+the volatility signature plot, the optimal sampling frequency is the one where the
+autocovariance bias       is minimum. In order to identify the point where the realized
+volatility   appears  to  stabilise,  we  decompose  the            inter-day  variance
+
+
+              into the intra-day variance        (         )    and  the  intra-day autocovariance
+
+(∑      ∑      (                       ) (                           )), as in eq.2:
+
+
+
+                                                       (         )
+                                                                                                     (2)
+              ∑      ∑      (                        ) (                           ).
+
+
+The   intra-day  autocovariance        represents    the  bias  that  is  inserted  in  the  realized
+
+volatility  measure,  with          ((                    )   (                         ))        ,   for
+
+      .  Thus,  the  optimal  sampling  frequency            (m)   is  the  highest  frequency  that
+minimises the autocovariance bias. Table 1 shows the optimal sampling frequencies
+for our series.
+                                         [TABLE 1 HERE]
+         Furthermore, it is     well established that when markets are closed, i.e. during
+night-time    periods,  holidays,     and  weekends       information  still  flows.  The  existing
+literature has proposed      different approaches to dealing with this issue.            For instance,
+authors such as Andersen et         al. (2001), Thomakos and Wang (2003) or Wu (2011),
+opine that night-time periods and weekends could be ignored from the construction of
+the realized volatility. By contrast,        Hansen and Lunde (2005) maintain that a good
+proxy of the true volatility should accommodate the fact that information flows when
+
+                                                                                                      10
+
+markets are closed and thus, they propose             to adjust the intra-day volatility with the
+close-to-open inter-day volatility, as shown in eq.3:
+
+
+                    √     (                        )         ∑    (                       )           (3)
+
+
+
+where the weights             and        are such that minimise the difference between the
+realized  volatility  and  the  integrated  volatility,  i.e.  minimise  the  variance  of  the
+realized  volatility,           (            ). In this paper we are in line with Hansen and
+
+Lunde (2005).      Table 2 presents the descriptive statistics of our             annualised     realized
+volatility series            :
+
+                                            √                                                         (4)
+
+for all variables and Figure 1 portrays their plots over the sample period.
+                                         [TABLE 2 HERE]
+                                         [FIGURE 1 HERE]
+         From Table 2 we notice that EPU has the highest average value and that it is
+very volatile, given its maximum, minimum and standard deviation values. From the
+realized  volatilities,  it  is  the   natural  gas  (NG)  that  exhibits  the  highest  average
+volatility, followed by palladium (PA), silver (SV) and oil (CO). On the contrary, the
+lowest average volatilities are observed in T-bills (TY) and the three exchange rate
+volatilities  (BP,  CD      and  EC).    It  is  also  evident  that  none  of  the  series  under
+consideration are normally distributed,           as  they exhibit excess kurtosis and positive
+skewness. Another interesting point is the average number of 1min observations that
+each series has, with the Eurostoxx 50 (XX), FTSE100 (FT) and Hang Seng (HI)
+showing    the lowest figures, due to the shorter trading sessions that these markets
+have.   The  unit  root  test  results  support  the  hypothesis  of  stationary  realized
+volatilities.
+         Furthermore, as it is apparent from             Figure 1, volatility      clustering of high
+values is observed for all series during the GFC of 2007-08, although additional
+clusters of high volatility are evident in different periods for each series. Focusing on
+the Brent Crude Oil volatility, a second cluster of high volatility appears in the late
+2014   –  early 2015 period, mainly due to the plunge of the oil prices.                    Finally, we
+should  mention  that  all  autocorrelations  (not  shown  here  for  brevity)  decrease
+monotonically, suggesting long-memory processes for our series.
+                                                                                                       11
+
+5. Econometric specifications
+5.1. Naïve models
+         We consider two naïve models, namely a simple Random Walk (RW) without
+a drift and an Autoregressive model of order 1, or AR(1), as shown in eqs. 5 and 6,
+respectively:
+                         (               )          (                 )                                (5)
+
+            (              )         (           )                (                 )                  (6)
+
+where                  is the annualised realized volatility of the Brent crude oil at time t,
+
+    ,      are coefficients to be estimated and              is a white noise.
+
+
+5.2. HAR-RV model
+         We employ the HAR model by Corsi (2009), which is recently implemented
+in Haugom et al. (2014), Sévi (2014) and Prokopczuk et al. (2015)9. Eq. 7 presents
+
+the HAR-RV model:
+                                        (                )
+
+                      (                  )           (      ∑           (                 ))           (7)
+
+                            (       ∑            (                 ))
+
+where                                are parameters to be estimated.            The HAR-RV          model
+
+relates the current trading day’s realized volatility of the Brent crude oil to the daily,
+weekly and monthly realized volatilities of the same asset.
+
+5.3. HAR-RV-X model
+         We augment the simple HAR-RV model to                    embody     exogenous variables, as
+discussed in Section 2. The HAR-RV-X model is shown in the following equation:
+                                          (              )
+
+                       (                 )          (      ∑           (                  ))           (8)
+
+           (        ∑           (                  ))                 (                  )
+
+
+
+
+9 We do not consider the jump components in this study, given that the existing literature provides
+evidence that their inclusion does not produce better forecasts.
+                                                                                                        12
+
+                              (      ∑           (                 ))
+
+                            (       ∑           (                 ))
+
+ where           denotes    each  of    the   fourteen  (14)     alternative    exogenous  realized
+volatilities that are used in this paper.
+
+5.4. HAR-RV-Asset Class, HAR-RV-Combined and HAR-RV-Average models
+         In order to reveal the predictive information from               all the   asset volatilities
+within  an  asset class without imposing selection and look-ahead biases, we                   employ
+the  Principal  Component  Analysis  (PCA).              In   general  the  techniques  for  data
+dimensionality    reduction    have    been    successfully    applied    in    now-casting
+macroeconomic variables (see, for instance, Giannone et al., 2008; Stock and Watson,
+2002, among others).       PCA enables us to reduce           the dimensionality of       the existing
+dataset so that we can reveal the predictive information of asset volatilities, within a
+single asset class, without losing important information. Hence, most of the available
+information per asset class in exploited, without imposing selection and look-ahead
+biases.
+         More specifically, we construct the HAR-RV-STOCKS, HAR-RV-FOREX,
+HAR-RV-COMMODITIES and HAR-RV-MACRO models. For each asset class, we
+use the volatilities that belong to this asset class. E.g. for the HAR-RV-STOCKS we
+use  the  volatilities  of  the  four  stock  market  indices  to  estimate  the  principal
+components.     For   g  denoting the number of          asset volatilities   within the    class,  the
+HAR-RV-Asset Class model is illustrated in the following framework:
+
+
+                     [               ]          [               ]                                   (9)
+
+
+
+
+                                         (              )
+
+                      (                 )          (     ∑           (                 ))
+                                                                                                   (10)
+          (        ∑          (                 ))                 (                   )
+
+                              (     ∑           (                   ))
+
+
+
+
+                                                                                                     13
+
+                           (       ∑           (                   ))
+
+
+
+where          is the matrix of factor loadings,         [                ]  is the vector with the
+
+
+common factors, and               is the vector of the idiosyncratic component. The
+
+denotes the    common factors that are        incorporated     in the HAR model        for each asset
+class.  The    HAR  model  can  be  extended  to  accommodate  up  to                     g   principal
+components.
+         Similarly, we construct the HAR-RV-COMBINED model, which includes the
+principal components from all 14 asset volatilities, so to capture simultaneously the
+various “information channels” that could enhance the oil price volatility predictions.
+         Finally,  we  also  consider  the  HAR-RV-AVERAGE,  which  produces  the
+average forecasts from the four HAR-RV-Asset Class models.
+
+5.5. Forecasting realized volatility
+         Equations    7  -  10   are  estimated    in  the  natural  logarithms  of  the  realized
+volatilities. However, we are interested in forecasting the realized volatility, which is
+the variable of interest for traders, portfolio managers and policy makers. Thus, in our
+forecasts  we  concentrate  on  the           estimator    of   the                 ,  which    is  the
+
+     (     (              )     ⁄     ̂ ). The HAR-RV 1-day-ahead forecast is as follows:
+
+
+                                           ( ̂         ̂      (                )
+
+
+
+                      ̂   (      ∑       (                     ))                                  (11)
+
+
+
+                      ̂   (        ∑       (                     ))      ⁄    ̂ )
+
+
+The one-day-ahead forecast of the HAR-RV-X models is shown in eq.12:
+
+
+
+
+
+
+
+
+
+                                                                                                     14
+
+                                          ( ̂        ̂        (              )
+
+
+
+                     ̂    (     ∑         (                   ))
+
+
+
+                     ̂    (       ∑        (                    ))
+
+                                                                                                (12)
+                     ̂          (              )
+
+
+
+                     ̂     (      ∑        (                    ))
+
+
+
+                     ̂     (        ∑        (                    ))      ⁄   ̂ )
+
+
+The  s-days-ahead forecasts       (                  )     are estimated in a similar fashion.
+More  specifically,  the    s-days-ahead  forecast      of  the  HAR-RV  model,  for        horizon
+        :
+
+
+                          ( ̂        ̂        (                     )
+
+                       ̂    (     ∑          (                     )
+
+                                                                                                (13)
+                                  ∑         (                ))
+
+                       ̂    (     ∑          (                     )
+
+                              ∑         (                    ))     ⁄    ̂ )
+
+
+Finally, the s-days-ahead forecast of the HAR-RV-X models, for horizon                         :
+
+
+                          ( ̂        ̂        (                     )
+
+                       ̂    (     ∑          (                     )                            (14)
+
+                                  ∑         (                    ))
+
+                       ̂    (     ∑          (                     )
+
+
+
+
+                                                                                                  15
+
+                ∑         (                      ))     ̂          (                       )
+
+                       ̂     (      ∑           (                      )
+
+                                   ∑           (                     ))
+
+                       ̂     (      ∑           (                      )
+
+                               ∑           (                    ))      ⁄    ̂ )
+
+
+Equivalently, for the HAR-RV-ASSET CLASS and HAR-RV-COMBINED models,
+in eqs. (12) and (14) we replace                     with                .
+
+         It is important, though, to explain here how we proceed with the out-of-sample
+forecasts of 1-day ahead        to 66-days ahead,      as far as the    HAR-RV and        HAR-RV-X
+models are concerned. For the 1-day ahead forecast of the Brent Crude oil, the models
+use data that belong to the information set at time t and thus, they are known to the
+forecaster at the time of the forecasting exercise. Nevertheless, from the 2-days ahead
+forecasts onwards (i.e.                        ), the forecasts of the HAR-RV-X models                 of
+eq. (8), as well as, the HAR-RV-ASSET CLASS and HAR-RV-COMBINED models
+of eq. (10), require the use of future data that do not belong to the information set at
+time t. For example, for the             forecast we need to know the                volatility values
+of all  variables.   As far as the Brent Crude oil volatility is concerned, there is no
+problem    as the model uses the 1-day ahead forecast, i.e. at                      . Turning to the
+exogenous variables, there are three possible choices to overcome the issue of using
+future data that do not belong to the information set at time t.
+         The  first  choice  is  to  assume  a  zero  value  from                   onwards  for  the
+volatilities of the exogenous variable(s), since the information is not available                 at the
+time of the forecast.
+         The second choice is to assume that at time                  onwards the volatility of the
+exogenous  variable  remains  constant,  i.e.              (                  )                   .  The
+
+concept that the best forecast of the next days' volatility value is today's value (plus a
+random component) is referred to as the random walk and it is based on the Efficient
+Market Hypothesis.
+         The third choice is to forecast volatilities of the exogenous variables. Thus, the
+exogenous volatilities data that are required for the estimation of the
+                                                                                                      16
+
+forecasts of the Brent crude oil volatility (which are not available at time t), are taken
+from the forecasted values of these exogenous volatilities.
+         Between the first two alternatives, the latter is clearly preferred on the grounds
+that  it is closely related to the finance literature             and it is    easy to implement. To
+proceed with the second choice, though, we would need to confirm that the RW
+generates the most accurate forecasts for the exogenous variables and thus to confirm
+the Efficient Market Hypothesis. To do so, we forecast each of exogenous variables
+using both a RW model and the HAR-RV model of eq. (7). Our results (not shown
+here for brevity but they are available upon request) reveal that the HAR-RV model is
+able to outperform the RW for each of the exogenous variables. Thus, we reject the
+second choice and we proceed with the Brent Crude oil forecasts based on the third
+choice. The third choice is shown in eq. (14), where we denote the information of the
+previous      week’s      and      previous      month’s      exogenous                   variables        as
+(     ∑            (                       )                  ∑           (                     ))       and
+
+(     ∑            (                       )                   ∑            (                     )),
+
+respectively. The first term represents the information from the forecasted exogenous
+variables,  while     the  second  term  indicates  the  information  from                the  constructed
+exogenous variables10.
+
+         This is an important innovation in our approach. The existing literature either
+ignores this particular procedure (hence, the stated forecasting accuracies can be put
+into question) or fails to explain it.
+
+6. Forecast evaluation
+         The  initial  sample  period  is          ̃             days  and  we  use  the  remaining
+ ̆         for our out-of-sample forecasting period. The  ̃                         is justified by the
+
+fact that (i) we require a large sample size for the estimation of the models and (ii) we
+need our initial sample to stop before the GFC of 2007-08. This allows us to include
+the recession period in our out-of-sample period. For the first out-of-sample forecasts
+for 1-day    to  66-days     ahead, we use the        initial sample period         ̃             For each
+
+
+10 We do not explicitly consider a multivariate HAR model. The idea of a multivariate HAR model is to
+capture bidirectional effects between variables. We capture these effects in our model as we consider
+the predicted  values of the exogenous variables, where needed, which allows us the estimation of a
+quasi-multivariate HAR model. Thus, we remove part of the complexity of the model, without losing
+any significant information.
+                                                                                                           17
+
+subsequent forecast, we use a rolling window approach with fixed length of 1000
+days. Engle et al. (1993) and Angelidis et al. (2004) maintain that the use of restricted
+samples is capable of capturing changes in the market activity more accurately.
+
+6.1 Evaluation functions
+         The forecasting accuracy of the models                   illustrated   in Section     5  is  initially
+evaluated using two well established evaluation functions, namely the Mean Squared
+Predicted Error (MSE) and the Mean Absolute Predicted Error (MAE):
+
+                                   ∑      (                                      )     ,                   (15)
+
+and
+                                     ∑      |                                        |,                    (16)
+
+where                         is  the   s-days-ahead      oil  realized  volatility  forecast,  whereas
+
+                  is the Brent Crude oil realized volatility at time t+s.
+
+
+6.2 Model Confidence Set
+         We     further   employ  the  newly  established  Model  Confidence  Set  (MCS)
+procedure by Hansen et al. (2011), which identifies the set of the best models, as these
+are  defined in terms        of a    specific loss function, without an             a priori     choice of a
+benchmark model11. In our case, the two loss functions are the MSE and MAE12.
+         The MCS        explores the predictive ability of an initial set of                  models and
+
+investigates, at a predefined level of significance, which group of models survive an
+elimination algorithm. Let us define as      the evaluation function of model   at day
+t,  and                                  as   the   evaluation  differential  for                     .  For
+
+example,  the  evaluation  function  may  be  the                  Mean     Squared      Error,  so
+
+
+(                                     )      ,  where                          is  the    s-days-ahead  oil
+
+realized volatility forecast. The hypotheses that are being tested are:
+
+
+11 Most papers compare the forecasts from a variety of models against a benchmark model, utilising the
+Diebold-Mariano test (Diebold and Mariano, 1995), for a pairwise comparison, the Equal Predictive
+Accuracy test (Clark and West, 2007) for nested models, or the Reality Check for Data Snooping
+(White, 2000) and the Superior Predictive Ability test (Hansen, 2005) for multiple comparisons. We
+depart from this standard setup as in our case we have a number of forecasting models that need to be
+evaluated simultaneously and not against a benchmark model.
+12 For brevity, we report only the results from the MAE. The results from the MSE loss function are
+qualitatively similar and available upon request.
+                                                                                                             18
+
+                                          (       )         ,                                         (17)
+for                     ,                         against       the       alternative        hypothesis
+       (       )        ,  for some                .   The   elimination algorithm,        based on an
+
+equivalence   test   and   an       elimination   rule,     employs   the      equivalence   test   for
+investigating the      for                     and the elimination rule to identify the model
+
+to be removed from           in the case that            is rejected.
+
+
+6.3 Direction-of-Change
+         We also consider the Direction-of-Change (DoC) as an additional forecasting
+evaluation technique. The DoC is particularly important for market timing, which is
+essential for asset allocation and trading strategies. The DoC reports the proportion of
+forecasts that have correctly predicted the direction               (up or down)       of the volatility
+movement. Let us denote as       a dummy variable that takes the value of 1 for each
+
+trading day    i that model        correctly predicts the direction of volatility movement                s
+trading days ahead, and zero otherwise, i.e.:
+
+
+
+         {                                                                                                (18)
+
+
+Then, the proportion of forecasted values that have correctly predicted the direction of
+the volatility movement (                 ) is shown in eq. 19:
+
+                                             ∑ ̌
+                                                                                                      (19)
+                                                   ̌
+where   ̌ is the number of out-of-sample forecasted values. The statistical significance
+
+of the directional accuracy is gauged by the              Pesaran and Timmermann (2009) test,
+under the null hypothesis of no directional accuracy.
+
+7. Empirical results
+7.1. MAE and MSE
+         We evaluate the forecasting accuracy of our models                    for 1-day     to  66-days
+ahead, although we report six different horizons, namely 1-day, 5-days, 10-days, 22-
+day, 44-days and 66-days ahead. The results for the MAE and MSE are shown in
+
+
+                                                                                                        19
+
+Tables 3a, 3b and 4. In the first column we report the value of the loss functions for
+the RW model, whereas in the remaining columns we report the loss functions’ ratios,
+relative to the RW model. A score below 1 denotes that the forecasts of the HAR-RV
+models outperform these of the RW.
+                                       [TABLE 3a HERE]
+                                       [TABLE 3b HERE]
+                                       [TABLE 4 HERE]
+        Primarily, it is evident in Tables       3a, 3b and 4     that all HAR-RV models are
+able to significantly outperform the RW forecasts. In more detail, focusing on Tables
+3a and 3b, we show that almost all HAR-RV-X models with a single exogenous
+volatility are able to generate superior forecasts even when compared to the HAR-RV.
+This is particularly evident for the HAR-RV-X models with the foreign exchange
+volatilities and the US T-bill volatility and to a lesser extend for the commodities and
+stock markets. The only exceptions are the EPU and the Natural Gas volatility, which
+yield comparable results with the simple HAR-RV model.
+        More interesting findings, though, are reported in Table 4, which shows the
+forecasting performance of the HAR-RV-Asset Class models, as well as, the HAR-
+RV-COMBINED and HAR-RV-AVERAGE models. In particular, we find that the
+HAR-RV-COMBINED model is able to generate significantly improved forecasts not
+only relatively to the RW, but also to the simple HAR-RV model. This holds true for
+all  forecasting  horizons.  Even  more,  the  predictive  gains  from  the  HAR-RV-
+COMBINED model relatively to the RW and the simple HAR-RV are higher as the
+forecasting horizon increases. In greater detail, the HAR-RV-COMBINED is able to
+reduce the forecasting error, in terms of MAE, by more than 50% (compared to the
+RW) in short-run horizons and more than 23% in long-run horizons. Equivalently, the
+HAR-RV-COMBINED model reduces the forecasting error by more than 10% in the
+long-run horizons, compared to the single HAR-RV.                A plausible explanation as to
+why the HAR-RV-COMBINED is the best performing model lies to the fact that oil
+price volatility is not influenced by a single asset class throughout the sample period,
+but rather it  is impacted by     different asset classes     and,  thus,  different “information
+channels”. Interestingly enough, the HAR-RV-AVERAGE model does not manage to
+improve further the forecasting accuracy of the HAR-RV-COMBINED.
+        This  finding  is  of  particular  importance        as  the  existing  literature  on  the
+forecast of the oil realized volatility suggests that the HAR-RV generates the most
+                                                                                                  20
+
+accurate  forecasts.  In  this  paper  we  provide           evidence  that  the  incorporation  of
+different  asset  classes’  volatilities       is   capable  of  generating        superior  forecasts
+compared  to  the  HAR-RV  model,  since  they  accommodate                     for  the  fact  that  oil
+volatility is impacted by different “information channels”.
+
+7.2. Model Confidence Set (MCS) procedure
+         Next, we     discuss the results from       the MCS procedure,         reported in Table       5.
+Even though the       results from Tables 3a, 3b and 4           suggest that the     inclusion of the
+exogenous     volatilities  significantly  improves         the  forecasting  performance  of  the
+HAR-RV model, it is vital to assess whether the                simple    HAR-RV       can be included
+among the best performing models.
+                                         [TABLE 5 HERE]
+         From Table 5 we can make the following observations. First and foremost, the
+two naïve models and the HAR-RV are never among the best performing models and
+the same holds for the HAR-RV-X models with the single asset volatility13. We also
+
+note that the highest probability is assigned to the HAR-RV-COMBINED                              model,
+which is the HAR-RV models that is augmented with the use of multiple exogenous
+volatility “information channels”. This holds across all horizons. Another interesting
+finding from Table 5 is the fact that only in the 1-day ahead forecasting horizon, the
+HAR-RV-STOCKS, HAR-RV-FOREX and HAR-RV-AVERAGE are also included
+in the set of the best performing models. Overall, the findings presented in Table 5
+strengthen  the  conclusion  that  the  predictive  accuracy  of  the  oil  price  realized
+volatility  increases  when  we  include  the  exogenous  volatilities  of  multiple  asset
+classes.
+
+7.3. Direction-of-Change results
+         The  DoC  results  are  shown  in  Table           6,  which    reports  the  proportion       of
+forecasted values that have correctly predicted the direction of volatility movement, as
+well as the DoC performance of each HAR-RV model against the RW.
+                                         [TABLE 6 HERE]
+         Table    6  shows     that  all  HAR-RV        models     exhibit   statistically   significant
+directional   accuracy     of  the  oil  volatility  movements.  Interestingly  enough,  even
+
+
+13 The only exception is the HAR-RV-SP at the 1-day ahead forecast.
+
+                                                                                                       21
+
+though  the    simple    HAR-RV  model  is  not  included  among  the  best  models  (as
+suggested by the MCS test) its ability to predict the direction of change is comparable
+to that of all  HAR-RV-X models. From Table 6 we further notice                     that all HAR-RV
+models are able to predict the direction of change at a much higher rate compared to
+the RW model in all forecasting horizons.
+
+7.4. Summary of findings
+         Overall,  evidence  suggests  that  the  use  of  the  exogenous               volatilities  of
+different asset classes results in substantial improvement in the forecasting accuracy
+of Brent Crude oil volatility. More importantly though, we highlight that as we move
+towards longer-run forecasting horizons, where accurate forecasts are more difficult
+to make,    the predictive gains from the         HAR-RV-COMBINED                are becoming more
+prevalent. On the other hand, focusing on the DoC, we maintain that all models are
+highly accurate     in predicting the direction of          oil volatility movements.        Thus, the
+combination of the MCS and the DoC results reveals a very important finding which
+has not been previously discussed in this strand of the literature.
+         These findings reveal that the simple HAR-RV model would be adequate for
+the   stakeholders   interested   in   the   future   movement   of   oil   price   volatility.
+Nevertheless, stakeholders who put more emphasis on the accuracy of the forecasts
+should use the HAR-RV-X models and more specifically, the HAR-RV-COMBINED
+model. Finally, the fact that the HAR-RV-COMBINED outperforms all other models
+provides support to our claim that different asset classes provide different information
+to oil price volatility and thus, their combination improves the forecasting accuracy.
+
+8. Robustness and further tests
+8.1 Distribution of forecast errors
+         The first robustness check is related to the          distribution of the forecast errors.
+More specifically, the squared difference and the absolute difference between the oil
+realized    volatility    forecast       (                  )     and    the    realized    volatility
+
+(                )   is  highly  asymmetric.  This  suggests         that  the   use  of  the   median
+
+deviation may report a more accurate picture of the forecasting errors, not in terms of
+which the best model is, but regarding the magnitude of the forecasting errors. Thus,
+for example,     even though the HAR-RV-COMBINED model undoubtedly exhibits
+
+                                                                                                      22
+
+higher  forecasting  accuracy,  the       actual   deviation    between  the  model’s  predicted
+volatilities and the actual values may be lower than the reported ones from MSE and
+MAE. To illustrate this, we first present the distribution of the absolute and squared
+deviations between the forecasted values from HAR-RV-COMBINED and the actual
+oil realized volatility (see Figure 2).
+                                       [FIGURE 2 HERE]
+        As evident from Figure 2, the distribution of the deviations is highly skewed,
+which provides support to our claim that it is instructive to use the median deviations
+(i.e. the Median Absolute Error –         MeAE or the Median Squared Error              - MeSE), as
+they may assess the magnitude of the prediction error more accurately.
+        From     Table   7  and  Figure    3,  we  observe     that  as  the  forecasting  horizon
+increases, the magnitude of the prediction errors differs greatly between the mean and
+the median    deviation. For example, the MAE (MSE) for the 1-day ahead forecast is
+reported to be 5.3457 (69.3662), whereas the MeAE (MeSE) is estimated                      at 3.6661
+(13.4401). Equivalently, for the 66-days ahead, even though the MAE (MSE) reports
+values of the magnitude of 9.2670           (221.7807), the MeAE (MeSE) are             only   5.7089
+(32.5920).
+                                        [TABLE 7 HERE]
+                                       [FIGURE 3 HERE]
+
+8.2 Predictive accuracy during crisis periods
+        As a further robustness check we assess the validity of our findings in extreme
+economic conditions, such as the         GFC of 2007-08. We follow the same               forecasting
+evaluation   procedure  and  we       evaluate  our  forecasts  only  for  the  period       between
+August, 2007 and June, 2009. For brevity, we only present the results from the MCS
+procedure    and  we  concentrate  only  on  the  HAR-RV-ASSET  CLASS,  HAR-RV-
+COMBINED and HAR-RV-AVERAGE models (see, Table 8).
+                                        [TABLE 8 HERE]
+        Table    8  suggests that the     inclusion of exogenous asset classes’ volatilities
+improves the forecasting ability of the simple HAR-RV model, even during turbulent
+times.  More  specifically,  the  HAR-RV  is  not  included  in  the  set  of  the  best
+performing models at any forecasting horizon. Furthermore, it is evident that in crisis
+period, the HAR-RV-COMBINED is not the only best model but the HAR-RV-
+FOREX  is  also  always  included  in  the  set  of  the               best  performing      models.
+                                                                                                    23
+
+Furthermore, we observe that in the short-run horizons, the HAR-RV-MACRO and
+HAR-RV-AVERAGE models are also among the models with the best predictive
+accuracy. Overall, the MCS results shown in Table              8 corroborate the findings from
+Table 5, and it also highlights the fact that during turbulent times, the Forex can also
+provide important predictive information at all horizons. Overall, we maintain that the
+evidence provided by the robustness check validates the proposed forecasting strategy
+plan, as it is effective even under extreme economic conditions.
+
+8.3 Incremental value of the HAR-RV-X models
+        We shall remind the reader that the MCS test, shown in Section 7.2, provides
+convincing evidence that the HAR-RV-COMBINED model is always included in the
+set of the best performing models, whereas the simple HAR-RV model is never
+included  in  this  set.  It  is,  thus,  important  to  show    the  incremental  value  of  the
+incorporation of exogenous volatilities in the         HAR-RV model, over time. To do so,
+we compare      the HAR-RV-COMBINED with                 the HAR-RV model, given that the
+former is our best performing model, whereas the latter is the best model based on the
+existing literature.
+        The cumulative incremental value is estimated by deducting the MAE score of
+the HAR-RV model from the MAE score of the HAR-RV-COMBINED for the whole
+out-of-sample forecasting period. Thus, an upward movement of the line suggests that
+the HAR-RV-COMBINED is              having a positive incremental value          compared to the
+HAR-RV. The reverse holds true when the line              is moving downwards. For brevity,
+Figure 4 shows the cumulative incremental value for the 1-day ahead forecasts, based
+on the MAE loss function.
+                                       [FIGURE 4 HERE]
+        Overall, we find that the incremental value of the use of exogenous asset
+volatilities is substantial over the forecasting period. More importantly though, we
+observe that during turbulent periods (such as the GFC of 2007-08 and the oil price
+collapse in 2014-15) the incremental value of the HAR-RV-COMBINED model is
+sizeable, as indicated by the steep upward movement of the line.
+
+8.4 Forecast evaluation based on a trading strategy
+        Furthermore,     we    compare  the  forecasting  performance  of  the  HAR-RV-
+COMBINED model against the RW and the HAR-RV models based on a naïve day-
+                                                                                                  24
+
+trading strategy.    Indicatively, for the 1-day ahead forecasts, we assume that a trader
+assumes a long position in an asset that resembles the performance of the oil realized
+volatility when the           forecasted oil price volatility of model            is higher compared
+to the actual volatility at time       . By contrast, if the          forecasted volatility of model
+   is lower compared to the actual volatility at time             , then the trader assumes a short
+position. The trading game is constructed in  a similar fashion for the remaining
+forecasting horizons.      Volatility   portfolio   returns are then computed as the average
+daily returns over the investment horizon, which equals our out-of-sample forecasting
+period of   ̌=2028 days.
+
+         The results of the trading strategy are reported in Table 9. It is evident that the
+HAR-RV-COMBINED provides greater positive returns compared to both the RW
+and the HAR-RV models. As expected, the cumulative difference in returns is greater
+between     the   HAR-RV-COMBINED   and   RW   as   opposed   to   the   HAR-RV-
+COMBINED and HAR-RV. Nevertheless, the difference in returns is sizeable in both
+cases. This holds true even for the crisis periods, such as the GFC of 2007-08 and the
+oil collapse in 2014-15. Overall, these findings confirm superiority of the HAR-RV-
+COMBINED model.
+                                         [TABLE 9 HERE]
+
+8.5 Forecast evaluation based on option straddles trading profitability metrics
+         Based on     Andrada-Felix       et al.  (2016), Angelidis and Degiannakis (2008),
+Engle et al. (1993) and Xekalaki and Degiannakis (2005), we additionally employ an
+options straddle     trading strategy    as an additional economic criterion to evaluate the
+volatility forecasts of different models. In particular, we allow investors to go long
+(short) in a straddle when the forecasted volatility at time t+s is higher (lower) than
+the oil realized volatility at the present time t.
+         The volatility forecasts are  evaluated  according to  the Black and Scholes
+(1973) formula that is widely accepted and straightforwardly computed. The straddle
+trading, which is the purchase (or sale) of both a call and a put option with the same
+maturity day, is used as it is a delta neutral option trading strategy. Thus, the straddle
+holder’s rate of return is indifferent to any change in the underlying asset price and is
+affected only from changes in volatility.
+
+
+
+
+                                                                                                       25
+
+         The expected price of a straddle on a $1 share of the Brent crude oil at the next
+trading day with   days to maturity and $1 exercise price is computed as:
+
+                              √         ̅̅̅̅     √                      √        ̅̅̅̅     √
+                         (  ̅̅̅̅                )                 (  ̅̅̅̅                 )
+                                                                                                      (20)
+                                                     ,
+
+where              denotes      the      cumulative      normal      distribution      function,
+
+
+  ̅̅̅̅            ∑     (                  ) is the average volatility forecast during the life of
+                               √
+
+the option,    and       is the    risk-free interest rate. The daily profit from holding the
+straddle  is:                                                        ,  for         denoting     the   Brent
+
+crude oil daily log-returns.
+         We assume the existence of three investors who trade their volatility forecasts.
+Each investor   prices the straddles,                 , every trading day according to one of the
+
+three volatility forecasting models; i.e. RW, HAR-RV and HAR-RV-COMBINED. A
+trade between two investors,   and             , is executed at the average of their forecasting
+prices, yielding to investor   a profit of:
+                                         (                   )
+
+                             {                                                           .                 (21)
+                                (                  )
+
+As an economic evaluation criterion, we define the cumulative returns computed as
+       ∑ ̌    ∑            . Table 10     presents the cumulative returns, for             ̌ trading days,
+
+of investors who pricing their straddles according the RW, HAR-RV and HAR-RV-
+COMBINED volatility forecasts. The results show that the HAR-RV-COMBINED is
+once again superior compared to the other models14.
+
+                                          [TABLE 10 HERE]
+
+8.6 HAR-RV-X models using time-varying correlations
+         Finally, we repeat the same forecasting strategy replacing the exogenous asset
+volatilities in the HAR-RV-X models with the time-varying correlations between the
+volatilities of the Brent crude oil and the 14 remaining assets. We do this in order to
+
+
+
+14 For robustness purposes, the straddles trading game has been repeated for i) the exercise price being
+equal to the exponent of the risk free rate of return and ii) various levels of exercise prices; i.e.       .
+However, the results remain qualitatively similar.
+                                                                                                           26
+
+assess whether we can enhance the predictive accuracy of oil price volatility using a
+different measure to extract information from the four aforementioned asset classes.
+         For the estimation of the time-varying correlations we use the multivariate
+DCC model of Engle (2002). We denote the vector that comprises the log-realized
+                                                                                    (               )
+                                                                                    (               )
+volatilities of the oil price and the other 14 assets as                                               . The
+
+                                                                                   (                 )
+                                                                             [                        ]
+DCC model is estimated in the form:
+                                                                                                         (22)
+
+
+where    is a vector of constants and                           . The variance-covariance matrix is
+decomposed as:
+                                                                                                         (23)
+                                                             .
+ The           is a diagonal matrix with the conditional standard deviations along the
+
+diagonal        defined        as        GARCH(1,1)        processes,        whereas        the
+
+
+                                                                      is the conditional correlations'
+
+
+       [                                                            ]
+matrix15.
+
+         Then, we employ eqs. 8, 10, 12                and 14     to forecast the oil price realized
+volatility using the alternative HAR-RV-X models. More specifically, the HAR-RV-
+X model is modified in the following form:
+                                           (               )
+
+                       (                  )           (      ∑           (                  ))
+
+                                                                                                         (24)
+                 (        ∑           (                  ))
+
+           (      ∑                        )          (        ∑                        )
+
+ where      denotes each of the alternative exogenous variables.
+
+15  The  matrix  of  conditional  correlations  is  estimated  as                           ,  where
+
+             ̅                          , for  ̅ being the unconditional covariance of the standardized
+residuals and        denoting the diagonal matrix composed of the square roots of the inverse of the
+
+diagonal elements of   .
+                                                                                                           27
+
+         We further repeat the same forecasting strategy using the log-returns’ time-
+
+
+varying correlations; i.e. the DCC model is estimated for                    [        ], where
+
+
+denotes the log-returns of the       asset. Hence, the conditional correlations' matrix
+    contains  the     conditional  correlations  between  oil         log-returns    and    exogenous
+variables’ log-returns. For brevity, we only present the ratio of the MAE and MSE
+between the HAR-RV-X models based on the asset volatilities and the time-varying
+correlations. The results are shown in Table 11.
+                                        [TABLE 11 HERE]
+         All ratios are below one, which suggests that the HAR-RV-X models based on
+the asset volatilities are able to provide superior predictive accuracy compared to the
+alternative HAR-RV-X models, which are based on the time-varying correlations of
+either volatilities or returns. Indicatively, the 0.8395 MAE ratio, in the 66-days ahead
+horizon under the HAR-RV-COMBINED  column,                        suggests that the time-varying
+return correlations provide        about 16% lower predictive accuracy compared to the
+asset volatilities.
+
+9. Conclusion
+         The aim of this paper is to contribute to the limited but growing literature on
+oil price realized volatility forecasting. To do so we use tick by tick data of the front-
+month futures contracts for         14 asset prices.     The period of our study spans from
+August   1, 2003    to  August    5, 2015,   which    provides us with a total of 3028          trading
+days.   Our  forecasting  horizons  range  from  1-day  to  66-days               ahead,  given  that
+different stakeholders have different predictive needs.
+         The   current   consensus        provides   evidence        that   the   HAR-RV   model
+outperforms all other competing forecasting models (see, Haugom et al., 2014; Sévi,
+2014; Prokopczuk et al.,       2015).   Our paper     builds upon these      previous contributions
+and extends them in multiple ways.
+         In short, our    out-of-sample results       suggest that     the HAR-RV        models with
+exogenous volatilities      from different asset classes       (i.e. HAR-RV-X) outperform the
+forecasting accuracy of the HAR-RV at all forecasting horizons.                     In particular, we
+show   that the HAR-RV-X model that combines                  multiple asset classes’       volatilities
+
+
+                                                                                                      28
+
+(HAR-RV-COMBINED)               is the best performing models. Interestingly enough,                the
+Direction of Change suggests that all HAR models are highly accurate in predicting
+the movements of oil price volatility.          Thus,    we maintain that HAR-RV-X models
+should be used by       stakeholders who are interested in the accuracy of the forecasts,
+whereas those interested only in the movement of oil price volatility could be limited
+to HAR-RV.       It  is  important  to  note that our       findings  are robust     even when we
+concentrate only on turbulent economic periods, such as the Global Financial Crisis of
+2007-08.    Finally,  the  trading  games  confirm         that  the  HAR-RV  model  which            is
+augmented with the       use  of  exogenous volatilities from multiple asset classes offers
+higher returns compared to both the RW and the simple HAR-RV.
+         More  importantly,      the  fact  that   HAR-RV-COMBINED               model    is  the  best
+performing model       provides    strong support to our argument that           there are different
+“information channels” through which different asset classes could impact oil price
+volatility and thus, their combination enhances the predictive accuracy of the simple
+HAR-RV model.
+         An  interesting     direction    for  further  research      would    be  the    use  of  our
+forecasting strategy for the prediction of other assets’ volatilities.             Finally, it would
+also  be  research-worthy      to  investigate  whether  the  predictive  added-value  of  the
+“information channels” featured in this paper would remain qualitatively comparable
+if we considered alternative measures of volatility, such as the bi-power variation, the
+median realized variance and the realized semi-variance.
+
+                                       Acknowledgements
+         The  authors  would  like  to  thank  Prof.  Kees  Koedijk                (Editor)  and  the
+anonymous reviewer for their helpful comments on a previous version of this paper.
+The authors acknowledge the support of the European Union's Horizon 2020 research
+and innovation     programme, which has funded             them    under the Marie      Sklodowska-
+Curie grant agreement No 658494. We                also   thank   Lutz Kilian,    Simos Meintanis,
+Stephen  Millard,      Nikos  Nomikos,  Perry  Sadorsky,  Apostolos  Serletis,  Lorenzo
+Trapani   and   Benoît   Sévi   for their valuable comments          on  an earlier version of the
+paper.   Finally,   we  would  also  like  to  thank  the  participants  of  the  ISEFI  2016
+conference, as well as, the participants of the research seminars at the Bank of Greece,
+Athens University of Economics and Business, Panteion University                       of Social and
+Political Sciences and University of Athens.
+                                                                                                     29
+
+                                             References
+Abramson, B., & Finizza, A. (1991). Using belief networks to forecast oil prices.
+       International Journal of Forecasting, 7(3), 299-315.
+Agnolucci, P. (2009). Volatility in crude oil futures: a comparison of the predictive
+       ability of GARCH and implied volatility models.                 Energy Economics,        31(2),
+       316-321.
+Aiolfi, M., & Favero, C. A. (2005).             Model uncertainty, thick modelling and the
+       predictability of stock returns. Journal of Forecasting, 24(4), 233-254.
+Aloui, C., & Jammazi, R. (2009). The effects of crude oil shocks on stock market
+       shifts behaviour: a regime switching approach. Energy Economics, 31(5), 789-
+       799.
+Aloui,  R.,  Aïssa,  M.  S.  B.,  &  Nguyen,  D.  K.  (2013).             Conditional  dependence
+       structure between oil prices and exchange rates: a copula-GARCH approach.
+       Journal of International Money and Finance, 32, 719-738.
+Alquist, R., Kilian, L., & Vigfusson, R. J. (2013).                 Forecasting the price of oil.
+       Handbook of Economic Forecasting, 2, 427-507.
+Andersen, T. G., & Bollerslev, T. (1998).               Answering the skeptics: Yes, standard
+       volatility models do provide accurate forecasts. International Economic Review,
+       885-905.
+Andersen,  T.  G.,  Bollerslev,  T.,  Diebold,  F.  X.,  &               Labys,  P.  (2001).       The
+       distribution  of  realized  exchange  rate  volatility.         Journal  of  the  American
+       Statistical Association, 96(453), 42-55.
+Andersen, T. G., Bollerslev, T., Diebold, F. X., & Labys, P. (2003). Modeling and
+       forecasting realized volatility. Econometrica, 71, 579–625.
+Andersen, T. G., Bollerslev, T., & Meddahi,  N. (2005).                     Correcting  the errors:
+       Volatility forecast evaluation using high‐frequency data and realized volatilities.
+       Econometrica, 73(1), 279-296.
+Andersen, T. G., Bollerslev, T., Christoffersen, P. F., & Diebold, F. X. (2006).
+       Volatility and correlation forecasting.        Handbook of Economic Forecasting,               1,
+       777-878.
+Andersen, T. G., Bollerslev, T., & Diebold, F. X. (2007). Roughing it up: Including
+       jump  components  in  the  measurement,  modeling,               and  forecasting  of  return
+       volatility. The Review of Economics and Statistics, 89(4), 701-720.
+
+
+                                                                                                     30
+
+Andersen, T. G., Bollerslev, T., Frederiksen, P., & Ørregaard Nielsen, M. (2010).
+       Continuous‐time   models,   realized   volatilities,   and   testable   distributional
+       implications for daily stock returns.         Journal of Applied Econometrics,           25(2),
+       233-261.
+Andrada-Felix,   J.,   Fernandez-Rodriguez,   F.   and   Fuertes,   A.M.   (2016).
+       Combining  nearest  neighbor  predictions  and  model-based  predictions  of
+       realized variance: Does it pay? International Journal of Forecasting, 32, 695–
+       715.
+Angelidis, T., Benos, A., & Degiannakis, S. (2004). The use of GARCH models in
+       VaR estimation. Statistical Methodology, 1(1), 105-128.
+Angelidis, T., & Degiannakis, S. (2008).               Volatility forecasting:  Intra-day versus
+       inter-day models. Journal of International Financial Markets, Institutions and
+       Money, 18(5), 449-465.
+Antonakakis, N., Chatziantoniou, I., & Filis, G. (2014). Dynamic spillovers of oil
+       price shocks and economic policy uncertainty. Energy Economics, 44, 433-447.
+Arouri, M. E. H., Jouini, J., & Nguyen, D. K. (2011). Volatility spillovers between
+       oil  prices  and  stock  sector  returns:  implications  for  portfolio  management.
+       Journal of International Money and Finance, 30(7), 1387-1405.
+Arouri, M. E. H., Lahiani, A., Lévy, A., & Nguyen, D. K. (2012). Forecasting the
+       conditional volatility of oil spot and futures prices with structural breaks and
+       long memory models. Energy Economics, 34(1), 283-293.
+Baker,  S.  R.,  Bloom,  N.,  &         Davis,  S.  J.  (2013).     Measuring  economic  policy
+       uncertainty. Chicago Booth research paper, (13-02).
+Baumeister, C., & Kilian, L. (2012).             Real-time forecasts of the real price of oil.
+       Journal of Business & Economic Statistics, 30(2), 326-336.
+Baumeister, C., & Kilian, L. (2014).              What central bankers need to know about
+       forecasting oil prices. International Economic Review, 55(3), 869-889.
+Baumeister, C., & Kilian, L. (2015). Forecasting the Real Price of Oil in a Changing
+       World: A Forecast Combination            Approach.     Journal of Business & Economic
+       Statistics, 33(3), 338-351.
+Baumeister,  C.,  &  Peersman,  G.  (2013).             Time-Varying  Effects  of  Oil  Supply
+       Shocks on the US Economy.            American Economic Journal: Macroeconomics,
+       5(4), 1-28.
+
+
+                                                                                                    31
+
+Black, F. and Scholes, M. (1973).           The pricing of options and corporate liabilities.
+       Journal of Political Economy, 81(3), 637-654.
+Bollerslev, T., Chou, R. Y., & Kroner, K. F. (1992). ARCH modeling in finance: A
+       review of the theory and empirical evidence. Journal of Econometrics, 52(1), 5-
+       59.
+Bollerslev, T., & Wright, J. H. (2001).              High-frequency data, frequency domain
+       inference, and volatility forecasting. Review of Economics and Statistics, 83(4),
+       596-602.
+Busch, T., Christensen, B. J., and Nielsen, M. Ø. (2011).                    The role of implied
+       volatility in forecasting future realized volatility and jumps in foreign exchange,
+       stock, and bond markets. Journal of Econometrics, 160, 48–57.
+Buyuksahin, B., & Robe, M. A. (2014). Speculators, commodities and cross-market
+       linkages. Journal of International Money and Finance, 42, 38-70.
+Cabedo, J. D., & Moya, I. (2003).             Estimating oil price ‘value at risk’ using the
+       historical simulation approach. Energy Economics, 25, 239–253.
+Chatrath, A., Miao, H., Ramchander, S., & Wang, T. (2015).                        The Forecasting
+       Efficacy  of  Risk‐Neutral  Moments  for  Crude  Oil  Volatility.                 Journal  of
+       Forecasting, 34(3), 177-190.
+Chen,  Y-C.,  Rogoff,  S.K.,  &  Rossi,  B.  (2010).              Can  exchange  rates  forecast
+       commodity prices?. The Quarterly Journal of Economics, 125(3), 1145-1194.
+Chkili, W., Hammoudeh, S., & Nguyen, D. K. (2014).                     Volatility forecasting and
+       risk management for commodity markets in the presence of asymmetry and long
+       memory. Energy Economics, 41, 1-18.
+Christensen, B. J., & Prabhala, N. R. (1998).               The   relation between implied and
+       realized volatility. Journal of Financial Economics, 50(2), 125-150.
+Clark, T.E. and West, K.D. (2007). Approximately normal tests for equal predictive
+       accuracy in nested models, Journal of Econometrics, 138, 291–311.
+Corsi, F. (2009).     A simple approximate long-memory model of realized volatility.
+       Journal of Financial Econometrics, 7, 174–196.
+Degiannakis, S. (2004). Volatility forecasting: evidence from a fractional integrated
+       asymmetric  power  ARCH  skewed-t  model.                Applied    Financial  Economics,
+       14(18), 1333-1342.
+
+
+
+
+                                                                                                   32
+
+Degiannakis, S., Filis, G., & Floros, C. (2013). Oil and stock returns: Evidence from
+       European industrial sector indices in a time-varying environment.                   Journal of
+       International Financial Markets, Institutions and Money, 26, 175-191.
+Diebold, F. X., & Mariano, R. S. (1995). Comparing predictive accuracy. Journal of
+       Business & Economic Statistics, 13, 253-263.
+Efimova,  O.,  &  Serletis,  A.  (2014).         Energy  markets  volatility  modelling  using
+       GARCH. Energy Economics, 43, 264-273.
+Elder, J., & Serletis, A. (2010). Oil price uncertainty. Journal of Money, Credit and
+       Banking, 42(6), 1137-1159.
+Engle, R.F., Hong, C.H., Kane, A. and Noh, J. (1993).                      Arbitrage Valuation of
+       Variance Forecasts with Simulated Options, Advances in Futures and Options
+       Research, 6, 393-415.
+Engle, F. R. (2002). Dynamic conditional correlation: a simple class of multivariate
+       GARCH models. Journal of Business and Economic Statistics, 20, 339−350.
+Engle, E., & Sun, Z. (2007).         When is noise not noise–a microstructure estimate of
+       realized volatility.
+Fattouh, B., Kilian, L., & Mahadeva, L. (2013).                 The Role of Speculation in Oil
+       Markets: What Have We Learned So Far?. The Energy Journal, 34(3).
+Fernandes, M., Medeiros, M. C., & Scharth, M. (2014). Modeling and predicting
+       the CBOE market volatility index. Journal of Banking & Finance, 40, 1-10.
+Ferraro, D., Rogoff, K., & Rossi, B. (2015). Can oil prices forecast exchange rates?
+       An  empirical  analysis  of  the  relationship  between  commodity  prices  and
+       exchange rates. Journal of International Money and Finance, 54, 116-141.
+Filis,  G.  (2010).    Macro  economy,  stock  market  and  oil  prices:  Do  meaningful
+       relationships exist among their cyclical fluctuations?. Energy Economics, 32(4),
+       877-886.
+Filis, G., Degiannakis, S., & Floros, C. (2011). Dynamic correlation between stock
+       market and oil prices: The case of oil-importing and oil-exporting countries.
+       International Review of Financial Analysis, 20(3), 152-164.
+Filis, G., & Chatziantoniou, I. (2014). Financial and monetary policy responses to
+       oil  price  shocks:  evidence  from  oil-importing  and  oil-exporting  countries.
+       Review of Quantitative Finance and Accounting, 42(4), 709-729.
+
+
+
+
+                                                                                                     33
+
+Frijns,  B.,  Tallau,  C.,  &  Tourani‐Rad,  A.  (2010).            The  information  content  of
+       implied volatility: evidence from Australia. Journal of Futures Markets, 30(2),
+       134-155.
+Fuertes, A. M., Izzeldin, M., & Kalotychou, E. (2009). On forecasting daily stock
+       volatility: The role of intraday information and market conditions. International
+       Journal of Forecasting, 25(2), 259-281.
+Giannone,  D.,  L.  Reichlin  and  D.  Small  (2008).              Nowcasting:  The  real-        time
+       informational content of macroeconomic data. Journal of Monetary Economics,
+       55(4), 665–676.
+Giot, P., & Laurent, S. (2003). Market risk in commodity markets: A VaR approach.
+       Energy Economics, 25, 435–457.
+Hamilton, J. D. (1983). Oil and the macroeconomy since World War II. The Journal
+       of Political Economy, 228-248.
+Hansen, P.R. (2005). A Test for Superior Predictive Ability. Journal of Business and
+       Economic Statistics, 23, 365-380.
+Hansen, P. R., & Lunde, A. (2005). A forecast comparison of volatility models: does
+       anything beat a GARCH (1, 1)?. Journal of Applied Econometrics, 20(7), 873-
+       889.
+Hansen, P. R., Lunde, A., & Nason, J. M. (2011).                     The model confidence set.
+       Econometrica, 79(2), 453-497.
+Haugom, E., Langeland, H., Molnár, P., & Westgaard, S. (2014).                           Forecasting
+       volatility of the US oil market. Journal of Banking & Finance, 47, 1-14.
+Hou, A., & Suardi, S. (2012). A nonparametric GARCH model of crude oil price
+       return volatility. Energy Economics, 34(2), 618-626.
+Huntington, H. G. (1994). Oil price forecasting in the 1980s: what went wrong?. The
+       Energy Journal, 1-22.
+IEA (2015). What drives crude oil prices? US International Energy Administration,
+       July 07. https://www.eia.gov/finance/markets/spot_prices.cfm
+Jiang,  G.  J.,  &  Tian,  Y.  S.  (2005).        The  model-free  implied  volatility  and  its
+       information content. Review of Financial Studies, 18(4), 1305-1342.
+Jones, C. M., & Kaul, G. (1996). Oil and the stock markets. The Journal of Finance,
+       51(2), 463-491.
+Kang, S. H., Kang, S. M., & Yoon, S. M. (2009). Forecasting volatility of crude oil
+       markets. Energy Economics, 31(1), 119-125.
+                                                                                                    34
+
+Kang, S.-H., & Yoon, S.-M. (2013).               Modelling and forecasting the volatility of
+       petroleum futures prices. Energy Economics, 36, 354–362.
+Kilian, L., & Park, C. (2009).           The impact of oil price shocks on the US stock
+       market. International Economic Review, 50(4), 1267-1287.
+Le  Pen,  Y.,  &  Sévi,  B.  (2013).       Futures  trading  and  the  excess  comovement  of
+       commodity prices. Available at SSRN 2191659.
+McAleer, M., & Medeiros, M. C. (2008). Realized volatility: A review. Econometric
+       Reviews, 27(1-3), 10-45.
+Mensi, W., Hammoudeh, S., Nguyen, D. K., & Yoon, S. M. (2014).                              Dynamic
+       spillovers   among   major   energy   and   cereal   commodity   prices.               Energy
+       Economics, 43, 225-243.
+Nomikos, N. K., & Pouliasis, P. K. (2011).              Forecasting petroleum futures markets
+       volatility: The role of regimes and market conditions. Energy Economics, 33(2),
+       321-337.
+Pesaran, M. H., & Timmermann, A. (2009).                   Testing dependence among serially
+       correlated   multicategory   variables.        Journal   of   the   American   Statistical
+       Association, 104(485), 325-337.
+Phan,  D.  H.  B.,     Sharma,  S.  S.,  &  Narayan,  P.  K.  (2015).           Intraday  volatility
+       interaction between the crude oil and equity markets.             Journal of International
+       Financial Markets, Institutions and Money, forthcoming.
+Prokopczuk, M., Symeonidis, L., & Wese Simen, C. (2015). Do Jumps Matter for
+       Volatility  Forecasting?  Evidence  from  Energy  Markets.              Journal  of  Futures
+       Markets, 1-35.
+Rahman, S., & Serletis, A. (2011).             The asymmetric effects of oil price shocks.
+       Macroeconomic Dynamics, 15(S3), 437-471.
+Ross, S. A. (1989). Information and volatility: The no‐arbitrage martingale approach
+       to timing and resolution irrelevancy. The Journal of Finance, 44(1), 1-17.
+Sadorsky, P. (2006).       Modeling and forecasting petroleum futures volatility. Energy
+       Economics, 28, 467–488.
+Sadorsky, P. (2014). Modelling volatility and correlations between emerging market
+       stock prices and the prices of copper, oil and wheat. Energy Economics, 43, 72-
+       8.
+Sadorsky,  P.,  &  McKenzie,  M.  D.  (2008).              Power  transformation  models  and
+       volatility forecasting. Journal of Forecasting, 27, 587–606.
+                                                                                                    35
+
+Samuels, J. D., & Sekkel, R. M. (2013).               Forecasting with many models: Model
+      confidence  sets  and  forecast  combination           (No.  2013-11).  Bank  of  Canada
+      Working Paper.
+Sari, R., Hammoudeh, S., & Soytas, U. (2010).                 Dynamics of oil price, precious
+      metal prices, and exchange rate. Energy Economics, 32(2), 351-362.
+Sévi, B. (2014).     Forecasting the volatility of crude oil futures using intraday data.
+      European Journal of Operational Research, 235(3), 643-659.
+Silvennoinen,  A.,  &  Thorp,  S.  (2013).           Financialization,  crisis  and  commodity
+      correlation dynamics.       Journal of International Financial Markets, Institutions
+      and Money, 24, 42-65.
+Souček, M., & Todorova, N. (2013). Realized volatility transmission between crude
+      oil  and    equity  futures  markets:  A  multivariate  HAR  approach.                 Energy
+      Economics, 40, 586-597.
+Souček, M., & Todorova, N. (2014). Realized volatility transmission: The role of
+      jumps and leverage effects. Economics Letters, 122(2), 111-115.
+Stock, J. H. and M. W.          Watson (2002).       Forecasting using principal components
+      from  a  large  number  of  predictors.          Journal  of  the  American  Statistical
+      Association, 97(460), 1167–1179.
+Tay, A., Ting, C., Tse, Y. K., & Warachka, M. (2009).                      Using high-frequency
+      transaction data to  estimate the probability  of informed trading.                Journal  of
+      Financial Econometrics, 7(3), 288-311.
+Thomakos, D. D., & Wang, T. (2003).                Realized volatility in the futures markets.
+      Journal of Empirical Finance, 10(3), 321-353.
+Timmermann,   A.   (2006).            Forecast   combinations.        Handbook   of   economic
+      forecasting, 1, 135-196.
+Wei, Y., Wang, Y., & Huang, D. (2010).                Forecasting crude oil market volatility:
+      Further evidence using GARCH-class models.                 Energy Economics, 32, 1477–
+      1484.
+Wen, F., Gong, X., & Cai, S. (2016). Forecasting the volatility of crude oil futures
+      using HAR-type models with structural breaks. Energy Economics, 59, 400-413.
+West, K. D., & Cho, D. (1995). The predictive ability of several models of exchange
+      rate volatility. Journal of Econometrics, 69(2), 367-391.
+White, H. (2000).       A Reality Check for Data Snooping.             Econometrica, 68, 1097–
+      1126.
+                                                                                                   36
+
+Wu, L. (2011). Variance dynamics: Joint evidence from options and high-frequency
+       returns. Journal of Econometrics, 160(1), 280-287.
+Xekalaki, E. and       Degiannakis, S. (2005).         Evaluating volatility forecasts in option
+       pricing in the context of a simulated options market.               Computational Statistics
+       and Data Analysis, 49, 611–629.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                      37
+
+    Table 1: Optimal Sampling frequencies for the realized volatility construction.
+    Variable                Futures ticker                   Market                        m
+    Brent Crude Oil              CO                   ICE Futures Europe                   23
+    GBP/USD                       BP                      CME Group                        30
+    CAD/USD                      CD                       CME Group                        25
+    EUR/USD                      EC                       CME Group                        16
+    FTSE100                       FT                  ICE Futures Europe                   1
+    S&P500                        SP                      CME Group                        6
+    Hang Seng                     HI              Hong Kong Stock Exchange                 60
+    Euro Stoxx 50                XX                           Eurex                        3
+    Gold                         GC                       CME Group                        15
+    Copper                       HG                       CME Group                        20
+    Natural Gas                  NG                       CME Group                        10
+    Palladium                    PA                       CME Group                        90
+    Silver                       SV                       CME Group                        28
+    US T-bill 10yr               TY                       CME Group                        15
+    Note: m denotes the optimal sampling frequency.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                    38
+
+              Table 2: Descriptive statistics of the series under investigation. The sample runs from 1st August 2003 to 5th August 2015.
+                                                    OIL                             FOREX                                             STOCK MARKETS
+                                                     CO                 BP            CD             EC                 SP                XX              FT             HI
+               Mean                                 28.670               8.841         9.558          9.402             15.826            20.849         16.595         18.807
+               Maximum                             164.219             49.515         47.253         35.554           147.168            150.027       143.174        158.970
+               Minimum                                5.075              2.187         2.396          2.258              4.435              6.324          4.302         2.295
+               Std. Dev.                            14.911               4.352         4.313          3.914             11.383            11.585         11.192         13.899
+               Skewness                               2.447              2.509         1.982          1.675              3.850              3.231          3.485         3.202
+               Kurtosis                             13.119             13.146         10.641          8.200             26.030            20.522         22.222         19.995
+              Average 1min obs/day                     1308              1362           1362           1364               1332                752            663            453
+              Daily obs                                3028              3028           3028           3028               3028              3028           3028           3028
+                                                                              COMMODITIES                                                      MACRO
+                                                     GC                HG             NG             PA                 SV                TY            EPU
+               Mean                                 17.782             27.337         46.720         32.653             31.118              5.937      100.953
+               Maximum                              98.135            144.822       424.579        141.978            200.658             48.187       626.028
+               Minimum                                4.247              7.133        14.861          4.470              8.418              1.874          7.396
+               Std. Dev.                              8.606            14.178         21.813         18.956             15.995              2.957        68.328
+               Skewness                               2.616              2.355         4.301          1.902              2.946              3.075          1.780
+               Kurtosis                             15.390             11.903         53.480          8.278             19.073            25.931           8.343
+              Average 1min obs/day                     1211              1210           1229           1205               1207              1219
+              Daily obs                                3028              3028           3028           3028               3028              3028           3028
+              Note: The values here are based on the annualised realized volatilities that have been scaled according to Hansen and Lunde’s (2005) approach.
+              CO=Brent Crude oil, BP=GBP/USD, CD=CAD/USD, EC=EUR/USD, SP=S&P500, XX=Euro Stoxx                                50, FT=FTSE100, HI=Hang Seng, GC=Gold,
+              HG=Copper, NG=Natural gas, PA=Palladium, SV=Silver, TY=US 10yr T                 -Bills, EPU=Economic Policy Uncertainty.
+              All series are stationary according to the ADF and PP unit root tests. The Jarque       -Bera test suggests that none   of the series are normally distributed.
+
+
+
+
+                                                                                                                                                                                           39
+
+Table 3a: MAE Ratios of AR(1), HAR-RV and HAR-RV-X single asset models to the RW model.
+Days ahead            RW                 AR(1)             HAR-RV           HAR-RV-FT           HAR-RV-SP          HAR-RV-XX           HAR-RV-HI           HAR-RV-BP           HAR-RV-CD
+
+     1                  11.3344          0.5988             0.4797             0.4780              0.4741              0.4782              0.4789              0.4778              0.4789
+     5                  11.3832          0.8722             0.5408             0.5363              0.5327              0.5379              0.5371              0.5362              0.5383
+     10                 11.4482          0.9635             0.5821             0.5747              0.5677              0.5771              0.5741              0.5758              0.5772
+     22                 11.5643          0.9969             0.6588             0.6479              0.6337              0.6505              0.6428              0.6462              0.6446
+     44                 11.7839          0.9987             0.7752             0.7546              0.7423              0.7628              0.7438              0.7506              0.7385
+     66                 12.0567          0.9987             0.8552             0.8321              0.8227              0.8409              0.8164              0.8245              0.8012
+Days ahead                           HAR-RV-EC          HAR-RV-GC          HAR-RV-HG           HAR-RV-NG           HAR-RV-PA           HAR-RV-SV           HAR-RV-TY          HAR-RV-EPU
+     1                                   0.4790             0.4779             0.4777              0.4800              0.4801              0.4778              0.4771              0.4798
+     5                                   0.5388             0.5365             0.5370              0.5406              0.5412              0.5377              0.5363              0.5407
+     10                                  0.5784             0.5736             0.5730              0.5809              0.5814              0.5732              0.5695              0.5815
+     22                                  0.6471             0.6438             0.6431              0.6566              0.6550              0.6397              0.6340              0.6643
+     44                                  0.7426             0.7430             0.7442              0.7777              0.7689              0.7393              0.7219              0.8081
+     66                                  0.8030             0.8129             0.8113              0.8628              0.8458              0.8147              0.7810              0.9068
+Note: BP=GBP/USD, CD=CAD/USD, EC=EUR/USD, SP=S&P500, XX=Euro Stoxx                          50, FT=FTSE100, HI=Hang Seng, GC=Gold, HG=Copper, NG=Natural gas, PA=Palladium,
+SV=Silver, TY=US 10yr T-Bills, EPU=Economic Policy Uncertainty.
+Values represent ratios of HAR-RV-X models to RW model. A ratio          below 1 suggests that the MAE of the HAR      -RV-X models outperform those of the RW model. The actual MAE
+values are reported for the RW model.
+
+
+
+
+
+
+
+
+
+                                                                                                                                                                                      40
+
+Table 3b: MSE Ratios of AR(1), HAR-RV and HAR-RV-X single asset models to the RW model.
+Days ahead            RW                 AR(1)             HAR-RV           HAR-RV-FT           HAR-RV-SP          HAR-RV-XX            HAR-RV-HI           HAR-RV-BP           HAR-RV-CD
+     1                289.4508           0.4148             0.2442              0.2417              0.2401             0.2406              0.2440               0.2407              0.2429
+     5                290.9137           0.8444             0.3100              0.3037              0.2984             0.3042              0.3070               0.3004              0.3052
+     10               292.9822           0.9598             0.3574              0.3451              0.3358             0.3460              0.3480               0.3396              0.3473
+     22               296.8560           0.9963             0.4716              0.4438              0.4212             0.4437              0.4453               0.4230              0.4404
+     44               303.9693           0.9984             0.6668              0.6266              0.5954             0.6291              0.6163               0.5788              0.5992
+     66               312.2399           0.9986             0.8478              0.8071              0.7691             0.8119              0.7874               0.7476              0.7554
+Days ahead                           HAR-RV-EC           HAR-RV-GC          HAR-RV-HG           HAR-RV-NG           HAR-RV-PA          HAR-RV-SV            HAR-RV-TY          HAR-RV-EPU
+     1                                   0.2429             0.2431              0.2424              0.2436             0.2438              0.2411               0.2410              0.2425
+     5                                   0.3044             0.3062              0.3084              0.3091             0.3082              0.3026               0.3010              0.3051
+     10                                  0.3452             0.3482              0.3537              0.3543             0.3536              0.3419               0.3385              0.3487
+     22                                  0.4299             0.4484              0.4644              0.4665             0.4627              0.4341               0.4237              0.4584
+     44                                  0.5693             0.6254              0.6604              0.6659             0.6544              0.5939               0.5653              0.6643
+     66                                  0.7063             0.7986              0.8383              0.8638             0.8348              0.7577               0.6988              0.8696
+Note: BP=GBP/USD, CD=CAD/USD, EC=EUR/USD, SP=S&P500, XX=Euro Stoxx                          50, FT=FTSE100, HI=Hang Seng, GC=Gold, HG=Copper, NG=Natural gas, PA=Palladium,
+SV=Silver, TY=US 10yr T-Bills, EPU=Economic Policy Uncertainty.
+Values represent ratios of HAR-RV-X models to RW model. A ratio below 1 suggests that the MSE of the HAR           -RV-X models outperform those of the RW model. The actual MSE values
+are reported for the RW model.
+
+
+
+
+
+
+
+
+                                                                                                                                                                                      41
+
+    Table 4: MAE and MSE ratios of HAR-RV and HAR-RV-X asset class models, HAR-RV-COMBINED and HAR-RV-AVERAGE to the
+    RW model.
+                                                                                 MAE results
+    Days ahead           RW           HAR-RV           HAR-RV-             HAR-RV-              HAR-RV-              HAR-RV-              HAR-RV-              HAR-RV-
+                                                       STOCKS               FOREX           COMMODITIES               MACRO              COMBINED             AVERAGE
+          1            11.3344         0.4797            0.4745              0.4743               0.4765               0.4769               0.4716               0.4732
+          5            11.3832         0.5408            0.5323              0.5297               0.5335               0.5365               0.5257               0.5299
+         10            11.4482         0.5821            0.5683              0.5652               0.5677               0.5733               0.5565               0.5647
+         22            11.5643         0.6588            0.6354              0.6284               0.6310               0.6460               0.6141               0.6280
+         44            11.7839         0.7752            0.7398              0.7177               0.7229               0.7687               0.7012               0.7265
+         66            12.0567         0.8552            0.8169              0.7833               0.7904               0.8484               0.7686               0.7974
+                                                                                 MSE results
+    Days ahead           RW           HAR-RV           HAR-RV-             HAR-RV-              HAR-RV-              HAR-RV-              HAR-RV-              HAR-RV-
+                                                       STOCKS               FOREX           COMMODITIES               MACRO              COMBINED             AVERAGE
+          1           289.4508         0.2442            0.2413              0.2384               0.2439               0.2397               0.2396               0.2391
+          5           290.9137         0.3100            0.3028              0.2952               0.3048               0.2992               0.2954               0.2982
+         10           292.9822         0.3574            0.3418              0.3315               0.3440               0.3381               0.3280               0.3352
+         22           296.8560         0.4716            0.4337              0.4076               0.4399               0.4322               0.4043               0.4217
+         44           303.9693         0.6668            0.6086              0.5408               0.6064               0.6025               0.5488               0.5778
+         66           312.2399         0.8478            0.7845              0.6930               0.7759               0.7717               0.7103               0.7404
+    Note: HAR-RV-STOCKS includes the principal component of the four stock market volatilities (         SP=S&P500, XX=Euro Stoxx 50, FT=FTSE100, HI=Hang Seng              ).
+    HAR-RV-FOREX        includes  the  principal  component  of  the  three  foreign  exchange  volatilities  (BP=GBP/USD,  CD=CAD/USD,  EC=EUR/USD).              HAR-RV-
+    COMMODITIES includes the principal component of the five commodity volatilities (GC=Gold, HG=Copper, NG=Natural gas, PA=Palladium, SV=Silver). HAR-
+    RV-MACRO       includes the principal component of the two macroeconomic volatilities (       TY=US 10yr T-Bills, EPU=Economic Policy Uncertainty).            HAR-RV-
+    COMBINED includes the principal components of the 14 volatility series. HAR         -RV-AVERAGE is the average of the forecasts of HAR         -RV-STOCKS HAR-RV-
+    FOREX, HAR-RV-COMMODITIES and HAR-RV-MACRO models.
+    Values represent ratios of HAR-RV-X models to RW model. A ratio         below 1 suggests that the MSE of the HAR-RV-X models outperform those of the RW model.
+    The actual MSE values are reported for the RW model.
+
+
+
+                                                                                                                                                                               42
+
+ Table 5: MCS p-values for 1-day to 66-days ahead.
+ Loss function: MAE                                          Forecasting Horizon
+                                       1-day     5-days     10-days      22-days     44-days     66-days
+                                                            p-values are reported
+ RW                                   0.0000     0.0000       0.0000      0.0000      0.0000       0.0000
+ AR(1)                                0.0000     0.0000       0.0000      0.0000      0.0000       0.0000
+ HAR-RV                               0.0023     0.0000       0.0000      0.0000      0.0000       0.0000
+ HAR-RV-FT                            0.0407     0.0002       0.0000      0.0000      0.0000       0.0000
+ HAR-RV-SP                            0.4677     0.0023       0.0001      0.0000      0.0000       0.0000
+ HAR-RV-XX                            0.0318     0.0000       0.0000      0.0000      0.0000       0.0000
+ HAR-RV-HI                            0.0023     0.0000       0.0000      0.0000      0.0000       0.0000
+ HAR-RV-BP                            0.0466     0.0002       0.0000      0.0000      0.0000       0.0000
+ HAR-RV-CD                            0.0019     0.0000       0.0000      0.0000      0.0000       0.0000
+ HAR-RV-EC                            0.0043     0.0000       0.0000      0.0000      0.0000       0.0000
+ HAR-RV-GC                            0.0334     0.0002       0.0000      0.0000      0.0000       0.0000
+ HAR-RV-HG                            0.0888     0.0002       0.0001      0.0000      0.0000       0.0000
+ HAR-RV-NG                            0.0060     0.0000       0.0000      0.0000      0.0000       0.0000
+ HAR-RV-PA                            0.0015     0.0000       0.0000      0.0000      0.0000       0.0000
+ HAR-RV-SV                            0.0781     0.0002       0.0001      0.0000      0.0000       0.0000
+ HAR-RV-TY                            0.0888     0.0002       0.0001      0.0000      0.0000       0.0356
+ HAR-RV-EPU                           0.0012     0.0000       0.0000      0.0000      0.0000       0.0000
+ HAR-RV-STOCKS                        0.2745     0.0016       0.0001      0.0000      0.0000       0.0000
+ HAR-RV-FOREX                         0.4677     0.0767       0.0025      0.0006      0.0018       0.0356
+ HAR-RV-COMMODITIES                   0.0781     0.0016       0.0001      0.0000      0.0000       0.0000
+ HAR-RV-MACRO                         0.0407     0.0001       0.0000      0.0000      0.0000       0.0000
+ HAR-RV-COMBINED                      1.0000     1.0000       1.0000      1.0000      1.0000       1.0000
+ HAR-RV-AVERAGE                       0.4677     0.0016       0.0001      0.0000      0.0000       0.0000
+ Note: Figures in bold denote that the model belongs to the confidence set of the best performing
+ models. The interpretation of the MCS p-value is analogous to that of a classical p-value; a
+ confidence interval that contains the ‘true’ parameter with a probability of no less than          .
+ BP=GBP/USD, CD=CAD/USD, EC=EUR/USD, SP=S&P500, XX=Euro Stoxx 50, FT=FTSE100,
+ HI=Hang Seng, GC=Gold, HG=Copper, NG=Natural gas, PA=Palladium, SV=Silver, TY=US 10yr
+ T-Bills, EPU=Economic Policy Uncertainty. HAR-RV-STOCKS includes the principal component
+ of the four stock market volatilities (SP=S&P500, XX=Euro Stoxx 50, FT=FTSE100, HI=Hang
+ Seng). HAR-RV-FOREX includes the principal component of the three foreign exchange volatilities
+ (BP=GBP/USD,   CD=CAD/USD,   EC=EUR/USD).                   HAR-RV-COMMODITIES             includes   the
+ principal component of the five commodity volatilities (     GC=Gold, HG=Copper, NG=Natural gas,
+ PA=Palladium,  SV=Silver).      HAR-RV-MACRO          includes  the  principal  component  of  the  two
+ macroeconomic volatilities (TY=US 10yr T-Bills, EPU=Economic Policy Uncertainty).              HAR-RV-
+ COMBINED includes the principal components of the 14 volatility series. HAR          -RV-AVERAGE is
+ the average of the forecasts of   HAR-RV-STOCKS HAR-RV-FOREX, HAR-RV-COMMODITIES
+ and HAR-RV-MACRO models.
+
+
+
+
+
+
+
+
+                                                                                                         43
+
+     Table 6: Direction-of-Change results.
+
+     Days ahead       HAR-RV            HAR-RV-              HAR-RV-                  HAR-RV-                   HAR-RV-                 HAR-RV-                  HAR-RV-
+                                        STOCKS                FOREX               COMMODITIES                   MACRO                 COMBINED                  AVERAGE
+
+           1           0.6838*         0.6874***              0.6869**                0.6930***                 0.6889***              0.6889***                 0.6884***
+           5          0.6700**          0.6741**              0.6792**                0.6711***                 0.6716**                0.6823**                 0.6762**
+           10          0.6655*           0.6685*              0.6655*                  0.6690**                 0.6645**                0.6731**                 0.6721**
+           22          0.6496*           0.6451*              0.6486*                  0.6451*                  0.6425**                 0.6466*                  0.6486*
+           44         0.6160**         0.6191***             0.6201***                0.6308***                 0.6150***              0.6293***                 0.6267***
+           66          0.6012            0.5987*              0.6073**                 0.6186*                  0.5936**                0.6145**                 0.6037**
+     Days ahead
+
+
+           1           1.1600             1.1661               1.1652                   1.1756                    1.1687                  1.1687                   1.1678
+           5           1.1375             1.1446               1.1532                   1.1394                    1.1403                  1.1584                   1.1481
+           10          1.1299             1.1351               1.1299                   1.1359                    1.1281                  1.1429                   1.1437
+           22          1.1040             1.0962               1.1023                   1.0962                    1.0919                  1.0988                   1.1014
+           44          1.0504             1.0547               1.0565                   1.0747                    1.0478                  1.0721                   1.0643
+           66          1.0297             1.0253               1.0402                   1.0594                    1.0166                  1.0524                   1.0306
+     Note: HAR-RV-STOCKS includes the principal component of the four stock market volatilities (          SP=S&P500, XX=Euro Stoxx 50, FT=FTSE100, HI=Hang Seng                ).
+     HAR-RV-FOREX         includes the principal component of the three foreign exchange volatilities (        BP=GBP/USD, CD=CAD/USD, EC=EUR/USD).                   HAR-RV-
+     COMMODITIES includes the principal component of the five commodity volatilities (               GC=Gold, HG=Copper, NG=Natural gas, PA=Palladium, SV=                Silver).
+     HAR-RV-MACRO          includes the principal component of the two macroeconomic volatilities (       TY=US 10yr T-Bills, EPU=Economic Policy Uncertainty). HAR-
+     RV-COMBINED includes the principal components of the 14 volatility series. HAR            -RV-AVERAGE is the average of the forecasts of HAR-RV-STOCKS HAR-
+     RV-FOREX, HAR-RV-COMMODITIES and HAR-RV-MACRO models.
+     A ratio above 1 suggests that the DoC values of the HAR-RV-X models outperform those of the RW model. The statistical significance of the directional accuracy
+     is tested based on the Pesaran and Timmermann (2009) under the null hypothesis of no directional accuracy. ***,**,* denotes significance at 10%, 5% and 1%
+     level, respectively.
+
+
+
+
+                                                                                                                                                                                    44
+
+       Table 7: Comparison between MAE (MSE) and MeAE (MeSE).
+                  1-day         5-days        10-days       22-days         44-days         66-days
+       MAE           5.3457        5.9838        6.3710          7.1022          8.2624         9.2670
+       MeAE          3.6661        4.0515        4.2615          4.6663          5.4378         5.7089
+       MSE         69.3662       85.9406       96.1096        120.0241        166.8111       221.7807
+       MeSE        13.4401       16.4149       18.1607         21.7741         29.5694         32.5920
+       Note:  These  values   correspond  to  the  HAR-RV-COMBINED  model.              The  HAR-RV-
+       COMBINED includes the principal components of the 14 volatility series          .
+
+
+
+
+ Table 8: MCS p-values for 1-day to 66-days ahead: During crisis period.
+ Loss function: MAE                                            Forecasting Horizon
+                                        1-day      5-days     10-days      22-days      44-days      66-days
+                                                               p-values are reported
+ RW                                     0.0000     0.0000       0.0000       0.0000       0.0000      0.0000
+ AR(1)                                  0.0000     0.0000       0.0000       0.0000       0.0000      0.0012
+ HAR-RV                                 0.0076     0.0000       0.0000       0.0000       0.0000      0.0000
+ HAR-RV-STOCKS                          0.0663     0.0011       0.0000       0.0000       0.0000      0.0000
+ HAR-RV-FOREX                           1.0000     1.0000       1.0000       1.0000       1.0000      1.0000
+ HAR-RV-COMMODITIES                     0.0264     0.0031       0.0008       0.0000       0.0000      0.0000
+ HAR-RV-MACRO                           0.7125     0.1808       0.2278       0.0103       0.0002      0.6177
+ HAR-RV-COMBINED                        0.9278     0.4731       0.4781       0.5657       0.2129      0.6177
+ HAR-RV-AVERAGE                         0.7125     0.1808       0.0202       0.0001       0.0000      0.0000
+ Note: Figures in bold denote that the model belongs to the confidence set of the best performing
+ models. The interpretation of the MCS p      -value is analogous to that of a classical p  -value; a
+ confidence interval that contains the ‘true’ parameter with a pro    bability of no less than         .
+ HAR-RV-STOCKS  includes  the  principal  component  of  the  four  stock  market  volatilities
+ (SP=S&P500, XX=Euro Stoxx 50, FT=FTSE100, HI=Hang Seng                   ). HAR-RV-FOREX includes the
+ principal component of the three foreign exchange volati          lities (BP=GBP/USD, CD=CAD/USD,
+ EC=EUR/USD).        HAR-RV-COMMODITIES   includes   the   principal   component   of   the   five
+ commodity  volatilities  (GC=Gold,  HG=Copper,  NG=Natural  gas,  PA=Palladium,  SV=Silver).
+ HAR-RV-MACRO  includes  the  principal  component  of  the  two                macroeconomic  volatilities
+ (TY=US 10yr T-Bills, EPU=Economic Policy Uncertainty              ). HAR-RV-COMBINED includes the
+ principal components of the 14 volatility series. HAR-RV-AVERAGE is the average of the forecasts
+ of  HAR-RV-STOCKS  HAR-RV-FOREX,  HAR-RV-COMMODITIES  and  HAR-RV-MACRO
+ models.
+ We  exclude  the  HAR-RV  models  based  on  single  exogenous  asset  volatility  given  that  their
+ forecasting performances are inferior to the HAR     -RV-ASSET CLASSES. Results are available upon
+ request.
+
+
+
+
+
+
+
+
+
+
+                                                                                                             45
+
+Table 9: Cumulative         difference in trading returns between HAR-RV-COMBINED,
+HAR-RV and RW.
+                                          Full Sample Period
+   Days
+   ahead          HAR-RV-COMBINED vs RW                       HAR-RV-COMBINED vs HAR-RV
+      1                         109.7344                                         3.0103
+      5                         125.5096                                         0.6620
+     10                         140.9243                                        19.4403
+     22                          95.8202                                        26.9962
+     44                         115.0214                                        54.0649
+     66                         101.1175                                        92.7130
+                                   Global Financial Crisis 2007      -08
+   Days
+   ahead          HAR-RV-COMBINED vs RW                       HAR-RV-COMBINED vs HAR-RV
+      1                          34.9137                                         4.5681
+      5                          37.7158                                        -0.9249
+     10                          45.0679                                         8.7431
+     22                          19.0589                                         3.3751
+     44                          20.1203                                        17.7008
+     66                          6.9904                                         22.5461
+                                      2014-15 Oil Price Collapse
+   Days
+   ahead          HAR-RV-COMBINED vs RW                       HAR-RV-COMBINED vs HAR-RV
+      1                          22.1712                                        -1.4895
+      5                          31.7253                                        -0.2619
+     10                          38.1548                                         4.9162
+     22                          25.6630                                         2.9230
+     44                          7.8582                                          1.6065
+     66                          1.7541                                         24.4823
+Note:  HAR-RV    -COMBINED       includes  the  principal  components  of  the  14  volatility  series .  The
+figures refer to percentages. Positive values suggest that the HAR-RV-COMBINED model generates
+higher trading returns.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                         46
+
+  Table    10: Cumulative difference in trading              straddle options between HAR-RV-
+  COMBINED, HAR-RV and RW
+                                            Full Sample Period
+  Days ahead                RW                      HAR-RV                     HAR-RV-COMBINED
+          1               -9.7230                    0.3611                              9.3619
+          5              -24.0335                    -0.3757                            24.4092
+         10              -34.9487                    4.7603                             30.1885
+         22              -53.0814                   10.0182                             43.0632
+         44              -80.0632                   14.8515                             65.2117
+         66              -102.7904                  17.4487                             85.3417
+  Note: HAR-RV-COMBINED             includes the principal components of the 14 volatility series      . The
+  numbers    refer to  cumulative returns.    Positive  values suggest that the HAR      -RV-COMBINED
+  model generates higher trading returns.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                             47
+
+Table 11: MAE and MSE ratios of the HAR-RV-X models based on the asset volatilities and
+the time-varying correlations.
+Days ahead       HAR-RV-         HAR-RV-             HAR-RV-              HAR-RV-           HAR-RV-           HAR-RV-
+                  STOCKS          FOREX          COMMODITIES              MACRO           COMBINED           AVERAGE
+                                  MAE ratio: Volatilities vs. Return correlations
+      1            0.9765          0.9790              0.9918               0.9941            0.9684            0.9897
+      5            0.9580          0.9729              0.9811               0.9927            0.9552            0.9809
+     10            0.9388          0.9543              0.9696               0.9774            0.9338            0.9663
+     22            0.9136          0.9324              0.9429               0.9648            0.9071            0.9431
+     44            0.9154          0.8840              0.9026               0.9645            0.8637            0.9216
+     66            0.9147          0.8489              0.8930               0.9578            0.8395            0.9139
+                                MAE ratio: Volatilities vs. Volatility correlations
+      1            0.9819          0.9887              0.9936               0.9965            0.9840            0.9881
+      5            0.9698          0.9774              0.9860               0.9960            0.9708            0.9804
+     10            0.9588          0.9682              0.9813               0.9964            0.9612            0.9747
+     22            0.9374          0.9455              0.9775               0.9958            0.9442            0.9621
+     44            0.9082          0.8819              0.9642               1.0000            0.8996            0.9315
+     66            0.8946          0.8549              0.9630               0.9915            0.8867            0.9193
+                                  MSE ratio: Volatilities vs. Return correlations
+      1            0.9676          0.9702              0.9949               0.9912            0.9743            0.9924
+      5            0.9285          0.9644              0.9880               0.9869            0.9557            0.9793
+     10            0.8725          0.9423              0.9671               0.9463            0.9185            0.9445
+     22            0.7860          0.8744              0.9332               0.8924            0.8518            0.8832
+     44            0.7595          0.7898              0.9030               0.8389            0.7819            0.8382
+     66            0.8000          0.7561              0.9177               0.8306            0.7677            0.8439
+                                MSE ratio: Volatilities vs. Volatility correlations
+      1            0.9874          0.9865              0.9929               0.9962            0.9901            0.9886
+      5            0.9735          0.9658              0.9777               0.9956            0.9666            0.9748
+     10            0.9576          0.9465              0.9687               0.9982            0.9467            0.9626
+     22            0.9269          0.8933              0.9629               0.9943            0.9127            0.9385
+     44            0.9044          0.8111              0.9598               0.9998            0.8742            0.9085
+     66            0.8946          0.7973              0.9719               0.9957            0.8774            0.9047
+Note: “Return correlations” denotes the time-varying correlations between the log-returns of the 14 assets and
+Brent crude oil. “Volatility correlations” denotes the time-varying correlations between the realized        volatilities of
+the 14 assets and Brent crude oil. The nominator for all ratios is the HAR            -RV-X model based on the asset
+volatilities, in all cases.
+A ratio below 1 suggests that the HAR-RV-X models based on volatilities outperform those of the HAR                 -RV-X
+models based on correlations.
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                   48
+
+                        Figure 1: Realized volatility plots.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        Note: From the top left to the bottom right the variables are as follows: CO=Brent Crude oil, BP=GBP/USD, CD=CAD/USD,
+                        EC=EUR/USD, FT=FTSE100, SP=S&P500, XX=Euro                       Stoxx 50, HI=Hang Seng, GC=Gold, HG=Copper, NG=Natural gas,
+                        PA=Palladium,  SV=Silver,  TY=US  10yr  T-Bills,  EPU=Economic  Policy  Uncertainty.  All  value  in  the  y-axis  refers  to
+                        percentages.
+
+
+
+
+                                                                                                                                                                                               49
+
+Figure 2: Distribution of the absolute and squared deviations between the actual oil
+realized volatility and the predicted values.
+                                             Absolute Deviations
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                             Squared Deviations
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Note: These figures correspond to the HAR-RV-COMBINED model.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                               50
+
+                  Figure 3: Mean and median values of the squared difference and the absolute difference between the oil realized
+                  volatility forecast (                        ) and the realized volatility (                         ) across the forecasting horizons (1-day
+
+                  to 66-days ahead).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  Note: The values presented in this figure correspond to the HAR-RV -COMBINED model.
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                                                                          51
+
+  Figure 4: Cumulative incremental value of the HAR-RV-COMBINED model vs.
+  the HAR-RV for the 1-day ahead, based on the MAE.
+
+    200
+    180
+    160
+    140
+    120
+    100
+     80
+     60
+     40
+     20
+      0
+
+
+
+
+
+  Note: Upward (downward) movements denote that HAR-RV-COMBINED (HAR-RV) is closer to
+  the actual RV. The first shaded-area denotes the period of the Global Financial Crisis 2007-08,
+  whereas the second shaded-area denotes the 2014-15 oil price collapse.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                           52

@@ -1,0 +1,1441 @@
+Bitcoin is not the New Gold – A comparison of volatility, correlation,
+and portfolio performance
+
+Klein, T., Thu, H. P., & Walther, T. (2018). Bitcoin is not the New Gold – A comparison of volatility, correlation,
+and portfolio performance.                                          International Review of Financial Analysis, 59, 105-116.
+https://doi.org/10.1016/j.irfa.2018.07.010
+
+
+Published in:
+International Review of Financial Analysis
+
+
+
+Document Version:
+Peer reviewed version
+
+
+
+Queen's University Belfast - Research Portal:
+Link to publication record in Queen's University Belfast Research Portal
+
+
+
+Publisher rights
+Copyright 2018 Elsevier.This manuscript is distributed under a Creative Commons Attribution-NonCommercial-NoDerivs License(https://creativecommons.org/licenses/by-nc-nd/4.0/), which permits distribution and reproduction for non-commercial purposes, provided theauthor and source are cited
+
+
+
+
+General rights
+Copyright for the publications made accessible via the Queen's University Belfast Research Portal is retained by the author(s) and / or other
+copyright owners and it is a condition of accessing these publications that users recognise and abide by the legal requirements associated
+with these rights.
+
+
+Take down policy
+The Research Portal is Queen's institutional repository that provides access to Queen's research output. Every effort has been made to
+ensure that content in the Research Portal does not infringe any person's rights, or applicable UK laws. If you discover content in the
+Research Portal that you believe breaches copyright or violates any law, please contact openaccess@qub.ac.uk.
+
+
+Open Access
+This research has been made openly available by Queen's academics and its Open Research team.  We would love to hear how access to
+this research benefits you. – Share your feedback with us: http://go.qub.ac.uk/oa-feedback
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Download date:24. Sept. 2026
+      Bitcoin is not the New Gold – A Comparison of Volatility,
+                    Correlation, and Portfolio Performance$
+
+                     Tony Kleina,b,∗, Hien Pham Thuc, Thomas Walthera,d
+
+            aFaculty of Business and Economics, Technische Universit¨at Dresden, Germany
+                     bQueen’s Management School, Queen’s University Belfast, UK
+             cSchool of Business and Economics, Humboldt-Universit¨at zu Berlin, Germany
+ dInstitute for Operations Research and Computational Finance, University of St. Gallen, Switzerland
+
+
+
+
+Abstract
+
+Cryptocurrencies such as Bitcoin are establishing themselves as an investment asset and
+are often named the New Gold.  This study, however, shows that the two assets could
+barely be more diﬀerent.  Firstly, we analyze and compare conditional variance proper-
+ties of Bitcoin and Gold as well as other assets and ﬁnd diﬀerences in their structure.
+Secondly, we implement a BEKK-GARCH model to estimate time-varying conditional
+correlations.  Gold plays an important role in ﬁnancial markets with ﬂight-to-quality in
+times of market distress.  Our results show that Bitcoin behaves as the exact opposite
+and it positively correlates with downward markets. Lastly, we analyze the properties of
+Bitcoin as portfolio component and ﬁnd no evidence for stable hedging capabilities. We
+conclude that Bitcoin and Gold feature fundamentally diﬀerent properties as assets and
+linkagestoequitymarkets. OurresultsholdforthebroadcryptocurrencyindexCRIX.As
+of now, Bitcoin does not reﬂect any distinctive properties of Gold other than asymmetric
+response in variance.
+Keywords:   Bitcoin, Correlation, Cryptocurrencies, Gold, Asymmetry
+JEL classiﬁcation: C10; C58; G11
+
+
+1. Introduction
+
+    The popularity of cryptocurrencies has risen signiﬁcantly since Nakamoto (2008) in-
+troduced the concept of Bitcoin. Cryptocurrencies embody innovative technology, high-
+security architecture, prosperity in functionalities, and investment opportunity as an as-
+set whats makes them attractive for computer scientists, venture capitalists as well as
+investors. However, the decentralization and unregulated markets add an additional layer
+of uncertainty to its pricing and projection of application.  Examples are the closures
+
+
+
+  $We thank Wolfgang H¨ardle and Hermann Locarek-Junge and two anonymous reviewers for their
+helpfulremarks. Wearealsothankfultotheparticipantsofthe“CryptocurrenciesinaDigitalEconomy”
+workshop (HU Berlin), in particular Simon Trimborn, for their valuable suggestions and comments.
+   ∗Corresponding Author, Mail: t.klein@qub.ac.uk.
+
+
+
+                       Working Paper Version 2 - May 21, 2018 - Page 1
+of exchanges in China based on changing legal situation which causes worldwide price
+reactions of large magnitude. Especially in the last years, large shocks and a bubble-like
+price movement are observable. The market capitalization of cryptocurrencies reached its
+peak at USD 831bn in January 7, 2018 which is comparable to the market valuation of
+the biggest companies in the world, like Apple or Alphabet. The market with currently
+1622 cryptocurrencies (as of May 2018) is dominated by Bitcoin, Ethereum, and Ripple
+which capture around 63 percent of the total market capitalization.1 What started as an
+experiment by decentralized governance enthusiasts is becoming an investment vehicle for
+investors and a core business model for companies as a new and innovative way of pay-
+ment. The general idea of this distributed ledger technology is transferred to many other
+ﬁelds in ﬁnance.  For a detailed introduction into the key concepts of cryptocurrencies
+and Bitcoin, we refer to Bariviera et al. (2017), Chuen (2015), Dwyer (2015), Elendner
+et al. (2018), and H¨ardle et al. (2018).
+    Cryptocurrencies, in particular Bitcoin, have been labeled the New Gold by some me-
+dia, banks, and also data providers throughout the last years.2  While this view might
+be motivated by fast and high returns in a gold rush like environment, we compare Gold
+and Bitcoin from an econometric perspective and focus on the economic aspects of cryp-
+tocurrencies as an investment asset.  We address the question how cryptocurrencies can
+be classiﬁed based on volatility behavior and how they are correlated with already es-
+tablished asset classes.  Thus, we do not explore the cryptocurrency market itself as in
+Brandvold et al. (2015) or Ciaian et al. (2017), but the relationship with other asset
+classes. Cryptocurrencies are not directly linked to any monetary policy instruments or
+fundamentals.  Therefore, analysis of common factors between these virtual currencies
+and other ﬁnancial asset classes is challenging.  On the regulatory side, the Commodity
+Futures Trading Commission (CFTC) has oﬃcially declared virtual money a commodity,
+just like crude oil or Gold. The Commission states that Bitcoin as a virtual currency is a
+digital representation of value that functions as a medium of exchange, a unit of account,
+and/or a store of value, but does not have legal tender status in any jurisdiction. Bitcoin
+and other cryptocurrencies are distinctly diﬀerent from ﬁat currencies, which are the coin
+andpapermoneythataredesignatedaslegaltender, circulated, andarecustomarilyused
+and accepted as a medium of exchange.
+    The analysis in this paper is divided into three parts.   Firstly, we investigate the
+volatility behavior of cryptocurrencies in comparison to stock indices and commodities.
+According to Blau (2017), the high volatility of Bitcoin until 2014 is not related to specu-
+lative trading. This is in contradiction to Cheah & Fry (2015) and Cheung et al. (2015),
+whoﬁndBitcointobuildspeculativebubblesinthesametimeframe. Inthepresentstudy,
+
+
+
+   1The calculations are based on data from www.coinmarketcap.com retrieved May 16, 2018.
+   2See for example articles on Bloomberg, Forbes, and CNN.
+
+
+
+                                                     2
+we aim to classify cryptocurrencies within the conventional asset classes by analyzing the
+volatility.  Conrad et al. (2018), Catania & Grassi (2017), Dyhrberg (2016), Katsiampa
+(2017), and Chu et al. (2017) use univariate volatility models to analyze the volatility
+structure of Bitcoin and other cryptocurrencies. Conrad et al. (2018) examine the drivers
+of long-term volatility of Bitcoin and compare them to other assets class, e.g. Gold. The
+authors ﬁnd that Bitcoin volatility is distinct compared to other asset classes. Here, we
+focus especially on the stylized facts long memory and asymmetry. The property of long
+memory of a ﬁnancial time series is also referred to as persistence and describes long last-
+ing, i.e. slowly decaying autocorrelation eﬀects in conditional returns or volatility (Baillie,
+1996). Many types of ﬁnancial time series are reported to attribute long memory in their
+variance; e.g. individual stocks, stock indices, commodities, and foreign exchange rates
+(i.a. Baillie, 1996, Bollerslev & Mikkelsen, 1996, Chkili et al., 2014, Walther et al., 2017).
+The property of asymmetric volatility is explained by the empirical phenomenon when
+negative (positive) returns are associated with upward (downward) revision of the condi-
+tional volatility (Engle & Ng, 1993, Zakoian, 1994). In the stock market, this asymmetry
+eﬀect results from the leverage eﬀect (Black, 1976, Christie, 1982) and the volatility feed-
+back eﬀect (Campbell & Hentschel, 1992). Regarding cryptocurrencies, Dyhrberg (2016)
+reports an insigniﬁcant leverage eﬀect of Bitcoin.   Catania & Grassi (2017), however,
+ﬁnd an inverse leverage eﬀect as well as signiﬁcant long memory in the most prominent
+cryptocurrencies.
+    Secondly, this research explores the hedge and safe haven capabilities of cryptocur-
+rencies in comparison to Gold by means of a dynamic correlation analysis. We apply the
+deﬁnition of hedge, diversiﬁer, and safe haven given in Baur & Lucey (2010).  An asset
+which is uncorrelated or negatively correlated with another asset is deﬁned as a hedge
+whereas a safe haven asset is uncorrelated or negatively correlated with other assets in
+distressed markets only.  Assets which are a diversiﬁer are positively (on average), but
+not perfectly correlated to other assets. As diversiﬁcation opportunities are diminishing
+in market turmoil, investors seek to ﬁnd assets which are uncorrelated or negatively cor-
+related with their portfolio’s assets. There is a wide range of literature investigating Gold
+as hedge and safe haven against assets such as stocks, bonds, and US Dollar (i.a. Baur
+& Lucey, 2010, Baur & McDermott, 2010, 2016, Capie et al., 2005).  However, on more
+recent data, the safe haven property seems to be dissipating (Klein, 2017).  Meanwhile,
+research on cryptocurrencies’ purpose for investment is growing. For example, Dyhrberg
+(2016) compares the hedging capabilities of Bitcoin and Gold against stocks and US Dol-
+lar.  Bouri et al. (2017b) conclude that Bitcoin may only be used as a diversiﬁer, but
+not as a hedge. However, Bouri et al. (2017a) and Demir et al. (2018) note that Bitcoin
+can be used as short-term hedge in extreme market situations.  The results of Corbet
+et al. (2018) suggest that cryptocurrencies are not connected to conventional markets and
+may oﬀer short-term diversiﬁcation beneﬁts.  Guesmi et al. (2018) ﬁnds short positions
+
+
+                                                      3
+in Bitcoin to have hedging potential. We discuss short positions at a later point. In our
+analysis, weassessthepotentialofcryptocurrenciesashedgeandsafehaven. Weexamine
+the correlation of Bitcoin with Gold, Silver, the oil price WTI, and the three equity in-
+dices S&P 500, MSCI World, and MSCI Emerging Markets 50. The diversiﬁcation eﬀects
+provided by cryptocurrencies are investigated in the context of time-varying correlation.
+Lastly, we apply a portfolio analysis which emphasizes the behavior of Gold and Bitcoin
+in times of distress.
+    Our ﬁndings indicate that Bitcoin is not the new Gold. Its volatility dynamics share
+some aspects with Gold and Silver, however, from a portfolio perspective, Bitcoin does
+not serve as a safe-haven which is a prominent feature of Gold.
+    Thestructureofthispaperisorganizedasfollows. Section2presentsthemethodology
+of the study in which we outline the comparison based on univariate volatility modeling,
+multivariate variance-covariance modeling, and from a portfolio perspective.  The data
+sets and preliminary tests are introduced in Section 3. Section 4 presents the ﬁndings of
+the comparison and discusses them. The paper concludes in Section 5.
+
+
+2. Methodology
+
+2.1.  Properties of Conditional Variance
+    In order to characterize the volatility structure of assets, we employ (Generalized)
+Autoregressive Conditional Heteroskedasticity ((G)ARCH, Engle, 1982, Bollerslev, 1986)
+models. Here, we focus especially on two stylized facts: the leverage eﬀect and long mem-
+ory. Thus, for our volatility regression we use two models which are able to depict these
+two properties.  Namely, we use the Asymmetric Power ARCH (APARCH, Ding et al.,
+1993) and the Fractionally Integrated APARCH (FIAPARCH, Tse, 1998) model.  For-
+mally, we run a ﬁrst order autoregressive model on the asset’s returns,rt, with Student’s
+t distributed errors of zero mean with conditional varianceht which then reads
+
+                                        rt =θ0+θ1rt−1+εt,
+                                        εt =√htηt,
+
+withηt∼ St-tν(0,1) i.i.d. for allt = 1,...,n. Table 1 summarizes the deﬁnitions ofht for
+both models. The non-negative constraintsω,β≥ 0 have to hold. Further, FIAPARCH
+requires 0≤β≤φ+d and 0≤d≤ 1−2φ. The leverage parameterγ∈ (−1,1) measures
+the impact of asymmetric behavior of the residuals on the conditional volatility.  The
+power parameterδ determines whether it is appropriate to model the variance (δ = 2),
+the standard deviation (δ = 1), or any other, real-valued degree. Ding et al. (1993) show
+that autocorrelation of|rt|δ of a time seriesrt withδ close to 1 is larger and longer than
+other values forδ and thus indicate the behavior of long memory in volatility.  Another
+possibility to measure long memory is given by fractionally integrated models such as
+
+                                                    4
+                                         Table 1: Overview of univariate conditional variance models.
+
+
+
+
+
+
+                FIAPARCH. The long memory parameterd∈ (0,1) reﬂects the persistence of shocks,
+                which rises whend approaches zero (Davidson, 2004).3
+
+                2.2.  Dynamic Correlation Modeling
+                     Analogously to the univariate modeling, we compare the properties of Bitcoin and
+                Gold from a multivariate perspective in terms of their relationship to other markets and
+                assets. LetRt be ak-dimensional vector of observations at timet, denoted as
+
+                                                                   Rt =µt+εt
+
+                whereµt is ak-dimensional conditional mean structure. For thek-dimensional vectorεt,
+                we assumeεt|Ft−1∼N(0,Ht). We model conditional heteroskedasticity with
+
+                                                                    εt =H1/2t ζt,                                                       (1)
+
+                where Ht denotes the (k×k)-sized conditional variance matrix andζt refers to ak-
+                dimensional vector of standard normally distributed and i.i.d. random variables with zero
+                                       ′
+                mean and E[ζt,ζt] =Ik. In Eq. (1), the matrix process Ht can be determined in several
+                ways; directly, with the Vector Error Correction model as suggested in (Bollerslev et al.,
+                1988) or with the Baba-Engle-Kraft-Kroner (BEKK-GARCH) model (Engle & Kroner,
+                1995), which is outlined subsequently.4  We apply the diagonal BEKK model which is a
+                suﬃcient compromise between parameter dimensionality and sample size. In the BEKK
+                model, the conditional variance-covariance matrix Ht is deﬁned as
+
+                   Ht =C⊤C+A⊤1εt−1ε⊤t−1A+G⊤Ht−1G                                                                     (2)[][][]
+                       =    c11    0      c11 c12      +diag[a11,a22]⊤            ε21,t−1   ε1,t−1ε2,t−1       diag[a11,a22]
+                            c12 c22        0 c22                               ε1,t−1ε2,t−1   ε22,t−1                              (3)
+                                   +diag[g11,g22]⊤Ht−1diag[g11,g22],
+
+
+
+                    3Note that we use the approach of Klein & Walther (2017) to estimate the parameter of fractionally
+                integrated variance models. We implement an ARCH(∞) truncation lag of 1000.
+                    4Furthermore, the conditional covariance matrix can be modeled by decomposingHt into conditional
+                standard deviations and correlations, presented in Engle (2002) and referred to as the Dynamic Condi-
+                tional Correlation (DCC) model.  As we observe relatively extreme returns and variances in cryptocur-
+                rencies (in comparison to other conventional assets), our DCC implementations are prone to instabilities
+                and convergence issues.
+
+
+                                                                           5
+
+
+Model                         Deﬁnition                                                                                         Asymmetry     Long memory
+
+APARCH(1,1)     hδ/2t    =ω+α(|εt−1|−γεt−1)δ +βhδ/2t−1                                               Yes               Indirectly
+FIAPARCH(1,d,1)  hδ/2t    =ω+(1−βL−(1−φL)(1−L)d)(|εt|−γεt)δ +βhδ/2t−1            Yes                    Yes
+whereA,G,andCarek×k parametermatricesandCislowertriangular. Inthediagonal
+version of the BEKK deﬁned in Eq. (3), matrices A and G are diagonal matrices. Non-
+negativity,orpositive-deﬁnitenessofHt isachievedwithrelativelyweakconditions(Engle
+& Kroner, 1995).
+    Focusing on the most important linkages to other markets, we calculate the pairwise
+correlationbetweenGoldandBitcointootherassetsbysettingk = 2andapplytheBEKK
+to centralized residuals.  In Section 4, correlation plots are smoothed with a Savitzky-
+Golay ﬁlter (Savitzky & Golay, 1964).
+
+2.3.  Portfolio-Based Comparison
+    In order to further investigate the hedging capabilities of Bitcoin and Gold, we imple-
+ment a ex-post portfolio-based comparison with three steps:
+
+   1.We calculate the time-varying weights wt of a two component minimum-variance
+      portfolio of an asset with an market index, e.g. Bitcoin with S&P 500. The weights
+      are optimized for each point in time of our sample by
+
+
+
+                                                          ′
+                                                minwt  wtHtwt
+
+
+                                                        ′
+                                                s.t. wt1k = 1
+
+      where the covariance matrix Ht is obtained from the BEKK framework in Sec-
+      tion 4.2.
+   2.We calculate the historical Value-of-Risk of the S&P 500 or MSCI World over the
+      whole sample period, denoted by VaRq, i.e. we take the empirical quantileq at 1%,
+      5%, and 10% of the returnsrt of that index. To obtain the VaR0.01 of an index, for
+      example, we sort all returns of that index in an ascending order. If the index hasT
+      returns, the Value-at-Risk is the⌈T×0.01⌉-th return in that list.  Henceforth, we
+      deﬁne all points in time
+                                             t∗ :={t|rt< VaRq}
+
+      as times where the index is in distress.
+   3.Finally, we evaluate the two-component portfolio, consisting of an index and Gold
+      or Bitcoin, with returnsrPFt    calculated from the dynamic weightswt from step 1.
+      With a special focus on distressed timest∗, we calculate the mean of the portfolio
+      returns during these times as
+                                              ˜rD =  1    ∑
+                                                     |t∗|m∈t∗rPFm
+
+      which can be seen as a kind of Expected Shortfall or Conditional Value-at-Risk.
+
+
+
+                                                    6
+Figure 1: Prices of Gold and Bitcoin(in logarithmic scale) from July 2011 to December 2017, n = 1695.
+
+    This approach allows us to scrutinize whether the asset can serve as (temporary)
+hedge, i.e. hedge the equity index during times of turmoil and thus, lower the impact of
+distressed times on the index on average.
+
+
+3. Data and Preliminary Analysis
+
+    In our analysis, we include a data set of six times series: the cryptocurrency Bitcoin,
+Gold and Silver prices in USD per oz, crude oil prices for the West Texas Intermediate
+(WTI), the S&P 500 index, MSCI World and the MSCI Emerging Markets 50 index. The
+time series cover the period from 2011-07-01 to 2017-12-31 and are synchronized.5 From
+daily closing prices, we calculate returns as the natural logarithmic price diﬀerences,
+rt  = 100× log(Pt/Pt−1).   For conventional assets, we take the closing price or index
+points of each trading day.  Data for these assets are obtained from Datastream with
+GMT timestamp.  For Bitcoin, we retrieve the data from coindesk.com, also with GMT
+timestamp, and process the price at the end of the day since cryptocurrencies are traded
+continuously. Since Bitcoin is also traded on weekends, we only consider the prices during
+the week to synchronize our dataset.6 Hence, we obtain 1695 returns for each time series.
+Prices for Gold and Bitcoin are plotted in Fig. 1.  This ﬁgure puts the extreme price
+increases of Bitcoin in 2017 into perspective of its price history. In order to visualize this
+dramatic increase, prices are plotted on a logarithmic scale.
+    Tab. 2 summarizes the descriptive statistics and some ﬁrst time series tests for the
+six assets.  Here, Bitcoin returns have the highest mean and standard deviation by far.
+
+
+
+   5We choose this time window to avoid most of the zero-return trading days in the beginning of Bitcoin
+trading.
+   6Note that we also tested weekend price interpolation for the conventional assets.   However, this
+introduced some bias to the model estimation by low or virtually zero returns over the weekend.
+
+
+                                                       7
+Table 2: Descriptive statistics for Bitcoin and ﬁnancial daily return time series for Jul 2, 2011 to Dec 31,
+2017, n = 1695 observations.
+
+                       Bitcoin                Gold                 Silver                WTI              S&P 500        MSCI World     MSCI EM50
+ Mean                   0.4037   −0.0079   −0.0407   −0.0267             0.0489               0.0363               0.0245
+ Std. Dev.              5.7577               1.0499               1.7633               2.1369               0.8859               0.8069               0.9444
+ Min.                 −44.3784   −9.5962   −12.9970  −10.7263   −6.8801   −5.2465   −5.1962
+ Max.                  49.9663              4.8387               7.5760              11.6213              4.6344               4.1164               3.9169
+ Skewness              −0.3406   −0.6239   −0.7120             0.0956   −0.5306   −0.6622   −0.2586
+ Kurtosis              14.2658             10.1569              8.5263               6.3419               9.0885               8.8237               5.1929
+ Jarque Bera        8996.3259∗∗∗     3727.4769∗∗∗     2300.1225∗∗∗     791.3631∗∗∗     2697.5676∗∗∗     2519.1784∗∗∗     358.5180∗∗∗
+ Ljung Box (25)      60.4956∗∗∗         37.9578∗∗          38.4509∗∗          38.9043∗∗         68.2019∗∗∗        66.5574∗∗∗       109.0498∗∗∗
+ ARCH (25)           264.1286∗∗∗        52.2211∗∗∗        148.6979∗∗∗      263.3804∗∗∗      497.2257∗∗∗       379.9198∗∗∗      248.6839∗∗∗
+
+ ADF                −40.0953∗∗∗ −41.9713∗∗∗ −42.6236∗∗∗ −45.2808∗∗∗ −43.5181∗∗∗ −36.4768∗∗∗ −33.6676∗∗∗
+
+Note: Std. Dev. is the standard deviation, Min. and Max. are minimum and maximum of the time series. ARCH(25) is the
+test for autoregressive conditional heteroskedasticity by Engle (1982) at the 25th lag. ADF is the Augmented Dickey-Fuller
+test for unit root.
+
+
+Moreover, the three commodities, Gold, Silver, and WTI, have negative mean returns
+between−0.04% and−0.008%.  The three equity indices, S&P 500, MSCI World, and
+MSCI EM50, have slightly positive mean returns. However, among the ﬁve conventional
+assets, the WTI has the highest daily standard deviation with 2.14%. Bitcoin has a daily
+standard deviation of 5.76% which is more than two times of the risk of WTI. Skewness,
+Kurtosis, and subsequently the Jarque Bera test result in the conclusion that none of
+the six time series are Normally distributed. The Ljung-Box and the ARCH test suggest
+autocorrelation in the returns and their volatility.  Lastly, the Augmented Dickey-Fuller
+test rejects the hypothesis of a unit root in the data and we assume all time series to be
+stationary.
+    We illustrate the descriptive statistics of Bitcoin and Gold in Fig. 2.  The left panel
+compares the return series of both assets and elucidates the diﬀerences in volatility level.
+The right panelcapturesthehighkurtosisofbothseriesinahistogram. Itisobviousthat
+Bitcoin’s tails are much more pronounced than the tails of the density of Gold returns.
+    Since literature suggests bubble behavior in prices of Bitcoin, we brieﬂy analyze the
+time series as outlined in Kruse et al. (2018) and estimate
+
+                                          log(Pt) =a+blog(Pt−1)+εt
+
+on a rolling 30-day window.7  Explosive behavior, indicated by                             b> 1 for the respective
+30-day window, is detected on isolated occasions which are spread throughout the history
+of the Bitcoin price series.  We note that not only the price increase of November and
+December 2017 is detected as explosive behavior but also other signiﬁcant—yet smaller
+scale—price jumps, e.g.  during the beginning of 2013.  These jumps might explain the
+
+
+
+   7Foradiscussiononbias-reductionwithindirectinferenceofthisestimationmethodforshorterrolling
+windows, we refer to Kruse et al. (2018).
+
+
+                                                             8
+Figure 2: Plots of the daily return series of Gold and Bitcoin (left) and resulting histogram (right). For
+readability, the ordinate of the return plot is limited to [−40,40] and the abscissa of the histogram is
+limited to [−20,20]. A small number of returns of Bitcoin is exceeding these limits.
+
+
+Table 3: Unconditional pairwise Pearson correlation matrix for the sample period Jul 2, 2011 to Dec 31,
+2017.
+                             Bitcoin      Gold      Silver      WTI      S&P 500     MSCI World     MSCI EM50
+
+             Bitcoin         1.0000     0.0459     0.0071     0.0158       0.0491            0.0457              0.0042
+             Gold                      1.0000     0.6877     0.0655 −0.0366          0.0591              0.0840
+             Silver                             1.0000     0.1954       0.0775            0.2028              0.2181
+             WTI                                          1.0000       0.3481            0.3800              0.2705
+             S&P 500                                                1.0000            0.9148              0.5041
+             MSCI World                                                           1.0000              0.6706
+             MSCI EM50                                                                            1.0000
+
+
+high volatility of Bitcoin as well as the high mean return.
+    As a ﬁrst indication for the correlation between the six assets, Tab. 3 presents the
+unconditional pairwise Pearson correlations.  We ﬁnd that Bitcoin has only a slightly
+positive correlation with the other assets, from which Gold, S&P 500 and MSCI World
+have the highest correlation with Bitcoin between 0.045 and 0.049.  The MSCI EM50
+index has the lowest correlation with Bitcoin. Interestingly, Gold has a slightly negative
+correlation with S&P 500, but a positive correlation of 0.059 with MSCI World, which
+is similar to the correlation of Bitcoin to MSCI World.  However, since this is only the
+average correlation over the whole sample, we derive the time-varying speciﬁcs from the
+BEKK model in Section 4.2.
+
+4. Results
+
+4.1.  Comparison of Conditional Variance Dynamics
+    In a ﬁrst step, we analyze and compare the univariate volatility structure of the six
+assets and apply the APARCH and FIAPARCH model. These ARCH models can depict
+long memory and asymmetric eﬀects. We estimate the parameters of an AR(1)-APARCH
+and -FIAPARCH model with Student’st distributed errors withν degrees-of-freedom.
+
+                                                           9
+Table 4: Estimation results from APARCH model with n = 1695 observations. Statistically signiﬁcant
+parameters are indicated with asterisk *, **, *** for 10%, 5%, and 1% level of signiﬁcance.
+
+                        Bitcoin                 Gold                  Silver                WTI             S&P 500       MSCI World     MSCI EM50
+ θ0                    0.3521∗∗∗   −0.0051   −0.0009   −0.0150         0.0582∗∗∗         0.0399∗∗∗            0.0205
+ θ1                    −0.0364    −0.0164   −0.0607∗∗∗ −0.0696∗∗∗ −0.0670∗∗∗        0.0812∗∗∗          0.1777∗∗∗
+ ω                      0.8581                 0.0054                0.0362             0.0089∗∗         0.0287∗∗∗          0.0206∗∗           0.0197∗∗
+ α                     0.1694∗∗∗              0.0135                0.0027            0.0336∗∗∗        0.1094∗∗∗         0.0932∗∗∗           0.0250∗
+ β                     0.8306∗∗∗            0.9721∗∗∗           0.9847∗∗∗         0.9663∗∗∗        0.8906∗∗∗         0.9061∗∗∗          0.9210∗∗∗
+ γ                    −0.1972∗∗∗   −0.0368   −0.1748∗          0.9995∗∗∗        0.9995∗∗∗         0.9929∗∗∗          0.9982∗∗∗
+ δ                     2.3065∗∗∗             2.7788∗∗            4.0000∗∗∗         1.1554∗∗∗        0.9004∗∗∗         0.9007∗∗∗          2.0480∗∗∗
+
+ ν                     2.7895∗∗∗            4.0728∗∗∗           3.0291∗∗∗         7.4318∗∗∗        4.9035∗∗∗         5.6001∗∗∗         12.9275∗∗∗
+ LL                    −4757.74   −2276.95   −3144.77  −3387.27  −1806.08  −1641.80  −2123.75
+ BIC                    9574.96               4613.39              6349.02            6834.02           3671.64            3343.09             4306.99
+ Jarque Bera        14297.2533∗∗∗     18806.0706∗∗∗     2814.1535∗∗∗     151.5134∗∗∗     465.5090∗∗∗     1091.3124∗∗∗      29.4072∗∗∗
+ Ljung Box (25)       55.2186∗∗∗            36.6557∗            38.1835∗∗           18.0121           22.9455            24.1004             21.6948
+ ARCH (25)            83.4615∗∗∗              4.8511             42.1987∗∗           21.5143         57.9416∗∗∗          28.3117             26.3618
+
+
+    Analyzing the APARCH parameter in Tab. 4, we ﬁnd Bitcoin to be more similar to
+Gold and Silver than to WTI, S&P 500, MSCI World or MSCI EM50 at ﬁrst glance.
+Even though Gold does not have a signiﬁcant leverage parameterγ, the two metals and
+Bitcoin share the same sign. All three assets tend to have higher volatility, if the former
+day’s residual was positive, which is known as an inverse leverage eﬀect—a prominent
+feature of Gold and Silver.  This is in contradiction to the ﬁndings of Dyhrberg (2016),
+who does not ﬁnd a signiﬁcant asymmetric eﬀect.  Our own calculations suggest that
+this is due to the fact that we use the Student’st-distribution to account for heavy tails
+present in the distribution of returns.8 The sensitivity of results regarding the underlying
+distribution is also discussed in Baur et al. (2017) whose ﬁndings are in line with those
+presented above. Thus, we conjecture that using a better suited distribution reveals the
+property of asymmetric eﬀects for Bitcoin as shown by Catania & Grassi (2017). On the
+contrary, the other four assets have a high positiveγ indicating that volatility rises if last
+day’s return is negative. Similarly, the power parameterδ for WTI, S&P 500, and MSCI
+World is around 1, i.e. modeling the standard deviation appears better rather than the
+variance. The estimatedδ for Gold and Bitcoin on the other hand, is in a range between
+2.3 and 2.78. The ARCH test reveals that APARCH seems unable to diminish the whole
+autocorrelation structure in the volatility of Bitcoin.
+    The estimated parameters for the FIAPARCH are shown in Tab. 5.  All time series
+reveal some degree of long memory, which is most pronounced in Gold and Silver.  The
+Bitcoindoeshaveasigniﬁcantlongmemoryeﬀect,butisnotaspersistentasthetwometal
+commodities.  We ﬁnd an asymmetric eﬀect for Bitcoin’s volatility which is comparable
+to the ones of Gold and Silver as shown before for APARCH. Again, the power parameter
+δ is of similar size for Bitcoin, Gold, and Silver.  While it is between 2 and 3 for the
+
+
+
+   8When repeating the regression with normally distributed errors, we can conﬁrm and replicate the
+ﬁndings of Dyhrberg (2016).
+
+                                                             10
+Table 5: Estimation results from FIAPARCH model withn = 1695 observations. Statistically signiﬁcant
+parameters are indicated with asterisk *, **, *** for 10%, 5%, and 1% level of signiﬁcance.
+
+                        Bitcoin                Gold                 Silver                WTI             S&P 500       MSCI World     MSCI EM50
+ θ0                    0.3105∗∗∗   −0.0041   −0.0008   −0.0091         0.0588∗∗∗         0.0463∗∗∗            0.0148
+ θ1                     −0.0012   −0.0176  −0.0564∗∗∗ −0.0680∗∗∗ −0.0632∗∗∗        0.0793∗∗∗          0.1778∗∗∗
+ ω                       0.8022                0.0890               0.6805            0.3037∗∗∗         0.1492∗∗             0.0941             0.1112∗∗
+ α                       0.1081              0.3198∗∗∗           0.4418∗∗             0.0000            0.1452∗∗             0.0749               0.0981
+ d                     0.7838∗∗∗           0.3046∗∗∗            0.1163∗           0.9855∗∗∗        0.5390∗∗∗         0.4580∗∗∗          0.2836∗∗∗
+ β                     0.6024∗∗            0.6207∗∗∗           0.5178∗∗          0.9468∗∗∗        0.5510∗∗∗         0.4670∗∗∗           0.3397∗
+ γ                     −0.1360∗∗   −0.1522   −0.1961∗          0.4547∗∗∗        0.9198∗∗∗         0.7219∗∗∗          0.5129∗∗∗
+ δ                     2.6932∗∗∗           2.1678∗∗∗          3.0000∗∗∗         1.4318∗∗∗        1.1730∗∗∗         1.2801∗∗∗          1.6842∗∗∗
+ ν                     2.8546∗∗∗           3.9589∗∗∗          3.0201∗∗∗         7.2083∗∗∗        5.3033∗∗∗         6.1160∗∗∗         12.0667∗∗∗
+
+ LL                    −4719.27   −2279.77   −3146.65  −3391.91  −1783.92  −1634.84  −2125.46
+ BIC                    9505.46              4626.46             6360.21            6850.73           3634.75            3336.61             4317.85
+
+ Jarque Bera         10471.5744∗∗∗     9792.5785∗∗∗     1204.6351∗∗∗     199.7367∗∗∗     560.8414∗∗∗     1370.1336∗∗∗      36.4122∗∗∗
+ Ljung Box (25)       66.7220∗∗∗           36.8645∗            35.6686∗            17.2492           19.7676            21.1447             21.2311
+ ARCH (25)              19.2901               5.7398              26.6395            18.5606           19.1779            11.6784             26.5850
+
+
+cryptocurrency and the two metals, the other three assets have estimated parameters
+between 1 and 1.5.  The last parameter we want to focus on is the degree-of-freedom of
+the underlying Student’st distribution.  Here, the smallν for Bitcoin, Gold, and Silver
+(between 2.85 and 3.95) correspond to the high kurtosis of these assets shown in Tab. 2.
+Moreover, we conclude that the FIAPARCH model seems appropriate for all seven assets,
+since it is able to diminish the autocorrelation in the volatility, i.e. the ARCH test is not
+rejected.
+    Finally, when comparing the BIC of APARCH and FIAPARCH as a model choice
+criteria for our sample, we conclude that the three commodities—Gold, Silver, WTI—
+and the emerging market index MSCI EM50 are better modeled with APARCH which
+purelymodelsasymmetry,whiletheremainingthreeassets—Bitcoin,S&P500,andMSCI
+World—haveabetterin-sampleperformancewithFIAPARCHwhichadditionallymodels
+long memory.
+    Hence, from the perspective of the volatility structure, Bitcoin shows evidence that
+it has a similar asymmetric response observed in Gold and Silver.  The long memory
+parameter indicates a diﬀerent persistence or long memory, which might be due to the
+short and volatile history of Bitcoin and cryptocurrencies in general.
+
+4.2.  Correlation of Bitcoin to Financial Markets
+    Based on the BEKK-GARCH framework, we estimate dynamic correlations between
+theconsideredassets.9 WebeginouranalysisbyreportingtheﬁndingsforGold. Inviewof
+the ﬂight-to-quality phenomenon(Hammoudehetal.,2010)andsafehavencategorization
+(Baur&Lucey,2010),timeofmarketturmoilordistressisofparticularinterest. However,
+our sample from July 2011 to December 2017 is characterized by relatively stable growth
+
+
+
+   9Parameter estimates for all BEKK combinations in this section are available upon request.
+
+
+                                                             11
+rates of ﬁnancial markets, proxied in this study by the S&P 500 and the MSCI World
+index.   For the S&P 500, we identify only two short periods of market distress and
+signiﬁcant, shock-like declines during the stock sell-oﬀ in August 2015 and again late
+2015/early 2016 which is connected to crude oil prices dropping below $30 per barrel.
+Fig. 3 plots the dynamic correlations of Gold and S&P 500 returns.  The shaded area
+in blue marks signiﬁcant market downturns. Several conclusions can be drawn from the
+estimates. Most importantly, we see that the correlations drop to negative values during
+market distress.  In the ﬁrst downturn, we observe a change from positive to negative
+correlation and a turnaround in the subsequent market recovery. The drop in correlation
+during the second market distress situation (end of 2015, beginning of 2016) is quite
+signiﬁcant as (non-smoothed) correlations drop from 0.3 to−0.4 within a few trading
+days.  This behavior is expected if the safe haven property holds true and is clearly in
+favor of the ﬂight-to-quality hypothesis. Given that our sample does not include a major
+and prolonged market downturn (such as the Financial Crisis), these two smaller shocks
+suggest that the the ﬂight-to-quality is still intact.  More surprisingly, the plot might
+also reveal that Gold has not been a safe haven according to the deﬁnition of Baur &
+Lucey (2010) relative to the S&P 500 in recent years. From 2014 on, we mainly observe
+negative correlations in times of stable upward movements of the S&P 500.  According
+to the deﬁnitions of Baur & Lucey (2010), Gold then acts more like a hedge than a safe
+haven in recent years.
+    For the MSCI World index, the picture is somewhat diﬀerent; we observe the same
+turn to negative correlations in times of market downturn.  However, the correlation is
+mainly positive, in particular between 2012 and 2014, when Gold was very volatile.10
+    Turning to time-varying correlations of Bitcoin and the S&P 500, plotted in Fig. 4, we
+ﬁrstly observe that the BEKK-GARCH correlation is extremely volatile and alternating
+between positive and negative values. A possible reason for this jump-like behavior might
+bethediﬀerentabsolutelevelofvarianceofthetimeseries, whereBitcoinischaracterized
+byveryhighanderraticreturns,seeFig.2. Inthebeginningofoursample,approximately
+until the end of 2013, the correlations are unstable and the alternating character becomes
+apparent when comparing the smoothing algorithm to actual correlation values.   The
+erratic path makes an application infeasible during these times. This could be caused by
+the BEKK model itself or by the low prices of Bitcoin and a higher-than-usual volatility
+cluster which can also be observed in Fig. 2.  However, we also note that correlations
+become slightly less alternating and erratic from 2014 on. Henceforth, the correlation is
+negativeingeneralwithafewpositivespikesinthesmoothedpath. Non-smoothedvalues
+peak up to 0.5 and get as low as−0.4.
+    What makes the Bitcoin – S&P 500 correlation fundamentally diﬀerent from the cor-
+
+
+
+  10Additional plots are available in the Appendix.
+
+
+                                                    12
+Figure 3: Dynamic correlations of Gold and S&P 500 returns obtained with the BEKK-GARCH between
+July 2, 2011 and December 31, 2017, n = 1695.  Unﬁltered correlations are plotted in gray, Savitzky-
+Golay-smoothing is plotted in red. Times of market distress is highlighted in blue.
+
+relations of Gold and the index is the behavior during market distress.  Interestingly,
+correlations are steeply increasing from negative to a positive relationship while the index
+is in a downward movement.  This indicates that Bitcoin follows the downturn, which
+is observable in the raw as well as smoothed correlations in Fig. 4.  The same behav-
+ior holds for the Bitcoin – MSCI World correlations.  While Gold prices increase in the
+ﬂight-to-quality, Bitcoin prices are decreasing with the markets.
+    To further highlight the diﬀerences, Fig. 5 visualizes the smoothed correlations of
+Gold and Bitcoin with the S&P 500. Interestingly, the movements in correlations appear
+to be mirrored from 2015 on, while being negative on average.  This falls into the time
+where Bitcoin is becoming more popular and price increases begin to accelerate.  From
+the joint plot, it becomes clear that Bitcoin, viewed as an asset, behaves diﬀerently than
+Gold.  Comparing the correlations of Gold and Bitcoin with the MSCI World, plotted
+in the Appendix, the mirrored movements are more emphasized and span over diﬀerent
+signs. It appears that as soon as correlations of Gold and the MSCI World turn positive,
+Bitcoin correlations become negative and vice versa.  Similar behavior is observable for
+the linkages to Silver, while the Gold – Silver correlation is naturally very high, and other
+commodities such as the WTI.11 For correlations of the MSCI EM50 index, we observe
+similar correlations of Gold and Bitcoin with this index from the second half of 2015 to
+approximately the third quarter of 2016.  During these times, Bitcoin quickly turned to
+negative correlations during distress in the markets of this index.  As we have an intact
+ﬂight-to-quality for Gold, we hence observe a temporal hedging situation.  Before 2015
+and from 2016:Q4 we observe the same mirroring of correlations as for the S&P 500 and
+
+
+
+  11The pots of the correlation of Bitcoin with MSCI World, MSCI EM50, and WTI can be found in the
+Appendix.
+
+                                                     13
+Figure 4:  Dynamic correlations of Bitcoin and S&P 500 returns obtained with the BEKK-GARCH
+between July 2, 2011 and December 31, 2017, n = 1695.  Unﬁltered correlations are plotted in gray,
+Savitzky-Golay-smoothing is plotted in red. Times of market distress is highlighted in blue.
+
+the MSCI World index.
+    Rounding up the analysis, Fig. 6 plots the dynamic correlations of Bitcoin and Gold
+prices. Interestingly, we observe a coupling eﬀect in 2013 during the price decay of Gold.
+In 2014, we see some decoupling in the ﬁrst half and positive correlations in the second
+half. End of 2013, Bitcoin spikes for the ﬁrst time at around 1150 US Dollar and is in a
+declineduring2014,accompaniedbysomeminorpricerecoveries. ForGold,pricesrecover
+from 1200 USD/oz to almost 1400 USD/oz in the ﬁrst quarter while being generally
+decreasingthroughouttheyear. ThisvolatileperiodofGoldpricescontinuesin2015while
+Bitcoinhasrelativelysmallpricemovements(relativetoitsownpricehistoryandvolatility
+clustering). Hence we observe lower correlations which are somewhat stable. Focusing on
+2017 with the Bitcoin price explosion beginning in the second quarter, Bitcoin and Gold
+are uncorrelated on average in the second and third quarter. In the fourth quarter, they
+couple again as we ﬁrst observe strong price increases and shortly after price drops in
+Bitcoin that correlate with upward Gold price movements. We conclude that Bitcoin and
+Gold feature no stable correlation. Their return relationship is characterized by positive
+and negative spikes with no general tendency.   One would assume this correlation to
+be positive and stable if Bitcoin is believed to be similar to Gold.  If we compare Gold
+with Silver, another precious metal utilized as investment, we observe high and stable
+correlations.
+    Concluding our correlation analysis, we ﬁnd Gold to be a hedge rather than a safe
+haveninrecentyears. Bitcoin, ontheotherhand, behavescompletelydiﬀerent, especially
+from 2015 on.  The cryptocurrency couples with markets during bearish environments,
+with correlations rapidly turning to positive values in these times.  This holds true for
+both the S&P 500 and the MSCI World index. During the last two years, we also observe
+
+
+                                                    14
+Figure 5: Smoothed correlations of Bitcoin and Gold returns with S&P 500 returns obtained with the
+BEKK-GARCH between July 2, 2011 and December 31, 2017, n = 1695.  Times of market distress is
+highlighted in blue.
+
+inverse movements of correlations of Gold and Bitcoin with these two indices.  While
+correlations increase for Gold, Bitcoin correlations decrease to the same market and vice
+versa.  This is a clear indication that Bitcoin and Gold have diﬀerent connectedness to
+markets.  However, we observe a temporal similarity of Bitcoin and Gold correlations
+with the MSCI EM50 index from mid-2015 to mid-2016.  This eﬀect is short-lived and
+dissipates after to mirrored correlations as in other markets. This eﬀect could be due to
+the high acceptance of cryptocurrencies in the countries comprising the emerging markets
+index e.g. China. Applying the categorizations of Baur & Lucey (2010), we ﬁnd Bitcoin
+to ﬁt neither of them as we observe phases of positive and negative correlations, quickly
+alternating, as well as a positive correlation in market turmoil which argues against safe
+haven and hedging properties.  This supports ﬁndings of Bouri et al. (2017b) based on
+data up to December 2015, that identify no safe haven or hedging properties against the
+assets in the present study.
+
+4.3.  Portfolio-based Test of Hedging Property
+    Inthispart,weanalyzethehedgingpropertyofBitcoinandGold. Theportfoliosunder
+examination are:  Bitcoin/S&P 500, Gold/S&P 500, Bitcoin/MSCI World, Gold/MSCI
+World, Bitcoin/MSCI EM50, and Gold/MSCI EM50.  In the following, we proceed as
+outlined in Section 2.3.
+    Firstly, we calculate the time-varying portfolio weights of the two component portfo-
+lios. The weights for the four portfolios are presented in Panel A of Tab. 6. Additionally,
+we illustrate the weights for the two portfolios with the S&P 500 index in Fig. 7. It can
+be seen that the Gold proportion has a high variation within the portfolios with the two
+equity indices. This results in extreme cases where Gold tends to have almost 90% of the
+portfolio or is even short sold. The average Gold weight is 36.98% for S&P 500, 30.88%
+
+                                                     15
+Figure 6: Dynamic correlations of Bitcoin and Gold returns obtained with the BEKK-GARCH between
+July 2, 2011 and December 31, 2017, n = 1695.  Unﬁltered correlations are plotted in gray, Savitzky-
+Golay-smoothing is plotted in red.
+
+for MSCI World, and 42.70% for MSCI EM50, respectively.  Conﬁrming the results of
+Guesmi et al. (2018), we ﬁnd that Bitcoin only has a small proportion of a joint portfo-
+lio with the three stock indices and averages between 2.92% and 4.78%, while having a
+standard deviation of about the same size. Obviously, this behavior stems from the high
+volatility of Bitcoin returns. For some periods for Gold and for Bitcoin, we obtain short
+positions, which can be seen by the minimum weights and in Fig. 7.  The possibility to
+short Bitcoin is only a very recent development, gaining popularity with the introduction
+of Bitcoin futures on the CBOE and CME in December 2017. Until then, short-selling in
+the portfolio composition should be restricted.  However, this also eliminates previously
+mentioned hedging possibilities by shorting Bitcoin investments.   Given a functioning
+and liquid futures exchange, negative weights in Bitcoin investments should be seen as a
+possible investment opportunity in the future in view of portfolio variance reduction.
+    Secondly, the historical Value-at-Risk measures are determined and given in Panel B
+of Tab. 6. We ﬁnd that the values for the S&P 500 are slightly lower than for the MSCI
+World.   The MSCI EM50 index has the lowest 5% and 10% Value-at-Risk measures.
+However, the extreme case of 1% is still above the Value-at-Risk of the S&P 500.
+    Lastly, we use the calculated Value-at-Risk values to determine times of distress for
+the two equity markets and evaluate how a portfolio including Bitcoin or Gold reacts in
+these times of turmoil. The Panel C in Tab. 6 reports the average return, the volatility,
+and the average return of the portfolios for the times when the index is below the Value-
+at-Risk of that index.  More speciﬁcally, we report a 100% investment in the portfolio
+compared with the minimum-variance portfolios.  From the results in Panel C, we can
+draw the following two conclusions:
+
+   1)Over the whole sample, the minimum-variance combination of the indices with
+
+
+                                                     16
+Table 6: Statistics for the minimum-variance portfolios for Bitcoin between Jul 2, 2011 and Dec 31, 2017.
+
+                                     Panel A: Descriptive statistics of the portfolio weights
+                               S&P 500                           MSCI World                             MSCI EM50
+                    Bitcoin                 Gold       Bitcoin                    Gold       Bitcoin                    Gold
+ Mean                0.0369                 0.3698     0.0292                    0.3088      0.0478                    0.4270
+ Std. Dev.           0.0403                 0.1368     0.0334                    0.1451      0.0439                    0.1157
+ Min.               −0.0850    −0.0554                −0.0487    −0.0429                    −0.0486    −0.1208
+ Max.                0.2203                 0.8896     0.1585                    0.7883      0.1929                    0.7363
+                                                Panel B: Value-at-Risk measures
+
+                               S&P 500                           MSCI World                             MSCI EM50
+ VaR0.01                       −2.5438                              −2.3171                               −2.5096
+ VaR0.05                       −1.4159                              −1.2454                               −1.5707
+ VaR0.10                       −0.9019                              −0.8031                               −1.1353
+
+                                                  Panel C: Hedging Properties
+                    S&P 500     Bitcoin        Gold   MSCI World     Bitcoin        Gold    MSCI EM50     Bitcoin        Gold
+ Return              0.0489        0.0547       0.0251   0.0363           0.0399       0.0239  0.0245           0.0370       0.0118
+ Volatility          0.8859        0.9044       0.6483   0.8069           0.8174       0.6434  0.9444           0.9361       0.7265
+ Return|VaR0.01     −3.5755 −3.6577 −1.0105             −3.4736  −3.4840 −1.1856               −3.2653  −3.0775 −1.0866
+ Return|VaR0.05     −2.1881 −2.2189 −1.0195             −2.0255  −2.0267 −1.1387               −2.1592  −2.0828 −1.1383
+ Return|VaR0.10     −1.6597 −1.6619 −0.8616             −1.5264  −1.5147 −0.8835               −1.7452  −1.6628 −1.0018
+
+
+       Bitcoin slightly increases the average return as well as the volatility of the re-
+       turns.   Only for the combination with the MSCI EM50 index, the volatility of
+       the minimum-variance portfolio remains almost unchanged.  On the contrary, the
+       minimum-variance portfolios of Gold and the indices decrease both, average return
+       and volatility.
+
+   2)During the time where the equity indices are under distress, i.e. where the return
+       of the index is smaller than the Value-at-Risk calculated in Panel B of Tab. 6,
+       Bitcoin does not provide any kind of hedge.  For the S&P 500 and MSCI World,
+       the minimum-variance combinations of the equity indices with Bitcoin lead to even
+       loweraveragereturnscomparedtoasoleinvestmentintheindex,exceptforthe10%
+       Value-at-Risk of MSCI World.  Only the combination with the MSCI EM50 index
+       leads to a slightly higher returns.  On the other hand, Gold provides that hedge,
+       which conﬁrms the ﬁndings of the previous section.  Gold may not fully protect
+       from market drawdowns, but the hedging properties are clearly pronounced.  The
+       minimum-variance portfolios of Gold and the indices have a higher average return
+       during times under distress.
+
+    Hence,weconcludefromourex-postportfolioexercisethatincontrasttoGold,Bitcoin
+does not provide a hedge for equity investments.
+
+4.4.  Robustness Check with Cryptocurrency Index
+    Inordertotestwhetherourresultsholdforothercryptocurrencies,werepeatouranal-
+ysis with the broad, market-weighted cryptocurrency index CRIX (Trimborn & H¨ardle,
+2016). We retrieve the index from July 31, 2014 to December 31, 2017 from the website
+
+                                                          17
+Figure 7: Time-varying weights of minimum-variance portfolios for Gold–S&P 500 and Bitcoin–S&P 500
+based on BEKK correlations.
+
+crix.hu-berlin.de.  We synchronize the index series in the same fashion (e.g. excluding
+weekends) as before for the Bitcoin prices.  Hence, we calculate 891 returns beginning
+August 1, 2014.
+    The descriptive statistics and the correlation matrix for CRIX are given in the Ap-
+pendix in Tab. A.8 and Tab. A.9. The former are similar to those we present for Bitcoin.
+For the unconditional correlation, we ﬁnd slight changes in comparison with Tab. 3.
+Firstly, the pairwise correlation of Gold and the two MSCI indices is negative. Secondly,
+CRIX has a small negative correlation with the S&P500 and MSCI EM50 returns. How-
+ever, this only stems from the shorter sample period and might not be related to the
+choice of CRIX.
+    As Bitcoin has the largest share in CRIX, we obtain similar results for CRIX. We ﬁnd
+signiﬁcant asymmetries with APARCH in Tab. A.10.  Interestingly, the estimations for
+FIAPARCH presented in Tab. A.11 might reveal spurious long memory (Walther et al.,
+2017). However, it is out of the scope of this paper to further address this issue.
+    The correlation of CRIX and global markets is almost identical than the reported
+relationship of Bitcoin.  Despite a varying weight of Bitcoin in CRIX, with other cryp-
+tocurrencies such as Ethereum taking signiﬁcant shares in the recent months, it appears
+that during times of market distress cryptocurrencies follow market movements.  From
+the results for CRIX, we also conjecture that cryptocurrencies are highly correlated with
+each other, in particular when facing a general downward movement of equity markets.
+    Finally, we repeat our portfolio analysis with the cryptocurrency index CRIX. The
+resultsaregiveninTab.7. ThecorrespondingportfolioweightsforCRIXandtheS&P500
+are plotted in Fig. A.8. In contrast to Bitcoin, the CRIX seems to have marginal hedging
+eﬀects for the three equity indices. During times of distress, portfolio returns are slightly
+better. However, comparing it with the hedging performance of Gold during that period,
+
+
+                                                    18
+CRIXstillfailstobeconsideredaneﬀectivehedge. However,wehighlightthatincontrast
+toBitcoin,CRIXoﬀerssomepotentialinviewofportfoliovolatilityreduction. Comparing
+Panel C of Tab. 6 and Tab. 7, we ﬁnd that CRIX reduces the portfolio’s volatility and
+slightly increases the overall return. Bitcoin also increases the portfolio return at the cost
+of an increased volatility.  Although, it is important to note that Tab. 6 and Tab. 7 are
+based on a diﬀerent time frame.
+
+
+Table 7: Statistics for the minimum-variance portfolios for CRIX between Aug 1, 2014 and Dec 31, 2017.
+
+                                      Panel A: Descriptive statistics of the portfolio weights
+
+                                S&P 500                            MSCI World                             MSCI EM50
+                     CRIX                  Gold         CRIX                     Gold          CRIX                     Gold
+
+ Mean                0.0530                 0.4039      0.0421                    0.3425       0.0724                    0.5053
+ Std. Dev.           0.0509                 0.1275      0.0466                    0.1332       0.0615                    0.0956
+ Min.               −0.0951               0.1287       −0.1175                   0.1070       −0.1012                  0.3078
+ Max.                0.2594                 0.8131      0.2421                    0.7813       0.2455                    0.7847
+
+                                                 Panel B: Value-at-Risk measures
+                                S&P 500                            MSCI World                             MSCI EM50
+ VaR0.01                        −2.1599                              −2.0520                                −2.6449
+ VaR0.05                        −1.3051                              −1.0624                                −1.4866
+ VaR0.10                        −0.8162                              −0.7026                                −1.0590
+
+                                                   Panel C: Hedging Properties
+                    S&P 500      CRIX         Gold     MSCI World      CRIX         Gold      MSCI EM50      CRIX         Gold
+
+ Return               0.0446        0.0507       0.0221    0.0324           0.0368       0.0203  0.0363           0.0530       0.0163
+ Volatility           0.7637        0.7601       0.5053    0.6835           0.6810       0.4920  0.9009           0.8694       0.5914
+ Return|VaR0.01      −2.8932 −3.0436 −0.8847              −2.7980  −2.6341 −0.8606               −3.1531  −2.7419 −0.4558
+ Return|VaR0.05      −1.8702 −1.8388 −0.6936              −1.6892  −1.6474 −0.6314               −2.0633  −1.8402 −0.7102
+ Return|VaR0.10      −1.4450 −1.4140 −0.6137              −1.2906  −1.2344 −0.6150               −1.6555  −1.4821 −0.6961
+
+
+
+5. Conclusion
+
+    Based on recent data up to December 2017, we revisit the conditional volatility mod-
+eling of Bitcoin returns and update the results of previous applications of GARCH-class
+models on cryptocurrency prices. Our results indicate that the proper choice of the un-
+derlying distribution in these models is very important regarding the interpretation of
+identiﬁed stylized facts. In contrast to other studies, we ﬁnd FIAPARCH to be the best
+ﬁttingmodelintermsoflog-likelihoodandinformationcriteria. ThisimpliesthatBitcoin
+returns have an asymmetric response to market shocks, which is of the same direction
+than precious metals.  Price increases lead to an increase in volatility.  Considering the
+extreme price increases observed for Bitcoin, this ﬁnding is not surprising. The high per-
+sistence of variance shocks, however, is the more dominating property and indicates that
+volatility declines slowly after an increase. In Bitcoin markets, we observed a tremendous
+rally in 2017 ending up with a major setback. These periods of elevated volatility lead to
+a higher persistence.
+    Fromaperspectiveofmarketlinkages,ourcorrelationmodelingprovidesevidencethat
+Bitcoin behaves completely diﬀerent from Gold, in particular in market distress.  While
+
+                                                            19
+theﬂight-to-qualitypropertyofGoldisconﬁrmed,Bitcoinshowsapositivecouplingeﬀect
+and declines when markets are declining in shock-like situations.  This is aﬃrmed in a
+portfolio application which suggests that Bitcoin is no hedge against equity investments.
+However, our sample size is limited and we only observe a very small number of these
+downturns.  Given the relatively young markets, this statement should be tested again
+in matured cryptocurrency markets. For now, Bitcoin as an asset does not resemble any
+other conventional asset from an econometric perspective.   Our results hold for other
+cryptocurrencies and a short time period.
+    We believe that cryptocurrencies will remain highly volatile and continue to exhibit
+strong movements to both directions as future development stays highly unclear. Signif-
+icant price movement of cryptocurrencies are dependent on several factors.  First, cryp-
+tocurrencies will continue to experience large drops in price as investors will continue to
+take proﬁt at the peak of price movement. Second, regulatory decisions will have a strong
+impact on investors’ behavior. Currently, regulatory agencies are still weighing on a legal
+frame for cryptocurrencies. Third, in the face of recurring cyber attacks, such as on Mt-
+Gox, Instawallet, or Bithump, the cryptocurrency ecosystem will have to strengthen its
+security standards to become accepted by traditional investors.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                    20
+References
+
+Baillie, R. T. (1996). Long memory processes and fractional integration in econometrics.
+  Journal of Econometrics, 73, 5–59. doi:10.1016/0304-4076(95)01732-1.
+
+Bariviera,A.F.,Basgall,M.J.,Hasperu´e,W.,&Naiouf,M.(2017). Somestylizedfactsof
+  the Bitcoin market. Physica A: Statistical Mechanics and its Applications, 484, 82–90.
+  doi:10.1016/j.physa.2017.04.159.
+
+Baur,D.G.,Dimpﬂ,T.,&Kuck,K.(2017).Bitcoin,goldandtheUSdollar–Areplication
+  and extension. Finance Research Letters, forthcoming, . doi:10.1016/j.frl.2017.10.
+  012.
+
+Baur, D. G., & Lucey, B. M. (2010). Is Gold a Hedge or a Safe Haven? An Analysis of
+  Stocks, Bonds and Gold. Financial Review, 45, 217–229. doi:10.1111/j.1540-6288.
+  2010.00244.x.
+
+Baur, D. G., & McDermott, T. K. (2010). Is gold a safe haven? International evidence.
+  Journal of Banking & Finance, 34, 1886–1898. doi:10.1016/j.jbankfin.2009.12.
+  008.
+
+Baur,D.G.,&McDermott,T.K.(2016). Whyisgoldasafehaven? Journal of Behavioral
+  and Experimental Finance, 10, 63–71. doi:10.1016/j.jbef.2016.03.002.
+
+Black,F.(1976). StudiesofStockPriceVolatilityChanges. In Proceedings of the Business
+  and Economics Section of the American Statistical Association (p. 177–181).
+
+Blau, B. M. (2017).   Price dynamics and speculative trading in bitcoin.   Research in
+  International Business and Finance, 41,493–499.doi:10.1016/j.ribaf.2017.05.010.
+
+Bollerslev, T. (1986). Generalized autoregressive conditional heteroskedasticity.  Journal
+  of Econometrics, 31, 307–327. doi:10.1016/0304-4076(86)90063-1.
+
+Bollerslev, T., Engle, R. F., & Wooldridge, J. M. (1988). A Capital Asset Pricing Model
+  with Time-varying Covariances. Journal of Political Economy, 96, 116–131.
+
+Bollerslev, T., & Mikkelsen, H. O. (1996).  Modeling and pricing long memory in stock
+  market volatility. Journal of Econometrics, 73, 151–184. doi:10.1016/0304-4076(95)
+  01736-4.
+
+Bouri, E., Gupta, R., Tiwari, A. K., & Roubaud, D. (2017a). Does Bitcoin hedge global
+  uncertainty?  Evidence from wavelet-based quantile-in-quantile regressions.   Finance
+  Research Letters, 23, 87–95. doi:10.1016/j.frl.2017.02.009.
+
+Bouri, E., Moln´ar, P., Azzi, G., Roubaud, D., & Hagfors, L. I. (2017b). On the hedge and
+  safe haven properties of Bitcoin: Is it really more than a diversiﬁer?  Finance Research
+  Letters, 20, 192–198. doi:10.1016/j.frl.2016.09.025.
+
+Brandvold,M.,Moln´ar,P.,Vagstad,K.,&AndreasValstad,O.C.(2015). Pricediscovery
+  on Bitcoin exchanges.   Journal of International Financial Markets, Institutions and
+  Money, 36, 18–35. doi:10.1016/j.intfin.2015.02.010.
+
+
+
+
+                                                  21
+Campbell, J. Y., & Hentschel, L. (1992).  No news is good news. An asymmetric model
+  of changing volatility in stock returns.  Journal of Financial Economics, 31, 281–318.
+  doi:10.1016/0304-405X(92)90037-X.
+
+Capie, F., Mills, T.C., &Wood, G.(2005). Goldasahedgeagainstthedollar. Journal of
+  International Financial Markets, Institutions and Money, 15, 343–352. doi:10.1016/
+  j.intfin.2004.07.002.
+
+Catania, L., & Grassi, S. (2017).  Modelling Crypto-Currencies Financial Time-Series.
+  URL: https://www.ssrn.com/abstract=3028486. doi:10.2139/ssrn.3028486.
+
+Cheah, E. T., & Fry, J. (2015).  Speculative bubbles in Bitcoin markets?  An empirical
+  investigation into the fundamental value of Bitcoin.  Economics Letters, 130, 32–36.
+  doi:10.1016/j.econlet.2015.02.029.
+
+Cheung, A. W.-K., Roca, E., & Su, J.-J. (2015).  Crypto-currency bubbles: an applica-
+  tion of the Phillips–Shi–Yu (2013) methodology on Mt. Gox bitcoin prices.  Applied
+  Economics, 47, 2348–2358. doi:10.1080/00036846.2015.1005827.
+
+Chkili, W., Hammoudeh, S., & Nguyen, D. K. (2014).  Volatility forecasting and risk
+  management for commodity markets in the presence of asymmetry and long memory.
+  Energy Economics, 41, 1–18. doi:10.1016/j.eneco.2013.10.011.
+
+Christie,A.A.(1982). Thestochasticbehaviorofcommonstockvariances.Value,leverage
+  and interest rate eﬀects.  Journal of Financial Economics, 10, 407–432. doi:10.1016/
+  0304-405X(82)90018-6.
+
+Chu,  J.,  Chan,  S.,  Nadarajah,  S.,  & Osterrieder,  J. (2017).   GARCH Modelling of
+  Cryptocurrencies.  Journal of Risk and Financial Management, 10, 17. doi:10.3390/
+  jrfm10040017.
+
+Chuen, D. L. K. (Ed.) (2015).  Handbook of Digital Currency:  Bitcoin, Innovation, Fi-
+  nancial Instruments, and Big Data. London: Academic Press.
+
+Ciaian, P., Rajcaniova, M., & Kancs, D. (2017). Virtual relationships: Short- and long-
+  run evidence from BitCoin and altcoin markets.   Journal of International Financial
+  Markets, Institutions and Money, 6, 467–486. doi:10.1016/j.intfin.2017.11.001.
+
+Conrad, C., Custovic, A., & Ghysels, E. (2018).  Long-and Short-Term Cryptocurrency
+  Volatility Components:  A GARCH-MIDAS Analysis.  Journal of Risk and Financial
+  Management, 11, 1–12. doi:10.3390/jrfm11020023.
+
+Corbet, S., Meegan, A., Larkin, C., Lucey, B., & Yarovaya, L. (2018). Exploring the Dy-
+  namic Relationships between Cryptocurrencies and Other Financial Assets. Economics
+  Letters, 165, 28–34. doi:10.1016/j.econlet.2018.01.004.
+
+Davidson,J.(2004). MomentandMemoryPropertiesofLinearConditionalHeteroscedas-
+  ticityModels,andaNewModel. Journal of Business & Economic Statistics, 22,16–29.
+  doi:10.1198/073500103288619359.
+
+Demir, E., Gozgor, G., Lau, C. K. M., & Vigne, S. A. (2018).  Does economic policy
+  uncertainty predict the Bitcoin returns? An empirical investigation. Finance Research
+  Letters, . doi:10.1016/j.frl.2018.01.005.
+
+                                                  22
+Ding, Z., Granger, C. W. J., & Engle, R. F. (1993).  A long memory property of stock
+  market returns and a new model.  Journal of Empirical Finance, 1, 83–106. doi:10.
+  1016/0927-5398(93)90006-D.
+
+Dwyer, G. P. (2015).  The economics of Bitcoin and similar private digital currencies.
+  Journal of Financial Stability, 17, 81–91. doi:10.1016/j.jfs.2014.11.006.
+
+Dyhrberg, A. H. (2016).  Bitcoin, gold and the dollar – A GARCH volatility analysis.
+  Finance Research Letters, 16, 85–92. doi:10.1016/j.frl.2015.10.008.
+
+Elendner, H., Trimborn, S., Ong, B., & Lee, T. M. (2018). The Cross-Section of Crypto-
+  Currencies as Financial Assets, Volume 1. In Handbook of Blockchain, Digital Finance,
+  and Inclusion (pp.145–173). Elseviervolume649. doi:10.1016/B978-0-12-810441-5.
+  00007-5.
+
+Engle, R. F. (1982).  Autoregressive Conditional Heteroscedasticity with Estimates of
+  the Variance of United Kingdom Inﬂation. Econometrica, 50, 987–1007. doi:10.2307/
+  1912773.
+
+Engle, R. F. (2002).  Dynamic Conditional Correlation.  A Simple Class of Multivariate
+  Generalized Autoregressive Conditional Heteroskedasticity Models, 20,339–350.doi:10.
+  1198/073500102288618487.
+
+Engle, R. F., & Kroner, K. F. . (1995).  Multivariate Simultaneous Generalized Arch.
+  Econometric Theory, 11, 122–150. doi:10.1017/S0266466600009063.
+
+Engle,R.F.,&Ng,V.K.(1993). MeasuringandTestingtheImpactofNewsonVolatility.
+  The Journal of Finance, 48, 1749–1778. doi:10.2307/2329066.
+
+Guesmi, K., Saadi, S., Abid, I., & Ftiti, Z. (2018). Portfolio diversiﬁcation with virtual
+  currency: Evidence from bitcoin. International Review of Financial Analysis, . doi:10.
+  1016/j.irfa.2018.03.004.
+
+Hammoudeh,S.M.,Yuan,Y.,McAleer,M.,&Thompson,M.A.(2010). Preciousmetals-
+  exchange rate volatility transmissions and hedging strategies.  International Review of
+  Economics & Finance, 19, 633–647. doi:10.1016/j.iref.2010.02.003.
+
+H¨ardle,W.K.,Harvey,C.R.,&Reule,R.C.G.(2018). UnderstandingCryptocurrencies?
+
+Katsiampa,P.(2017). VolatilityestimationforBitcoin: AcomparisonofGARCHmodels.
+  Economics Letters, 158, 3–6. doi:10.1016/j.econlet.2017.06.023.
+
+Klein, T. (2017).  Dynamic Correlation of Precious Metals and Flight-to-Quality in De-
+  veloped Markets.  Finance Research Letters, 23, 283–290. doi:10.1016/j.frl.2017.
+  05.002.
+
+Klein, T., & Walther, T. (2017). Fast fractional diﬀerencing in modeling long memory of
+  conditional variance for high-frequency data. Finance Research Letters, 22C, 274–279.
+  doi:10.1016/j.frl.2016.12.020.
+
+Kruse,R.,Kaufmann,H.,&Wegener,C.(2018). Bias-correctedestimationforspeculative
+  bubbles in stock prices.  Economic Modelling, forthc., 1–11. doi:10.1016/j.econmod.
+  2018.04.014.
+
+                                                  23
+Nakamoto, S. (2008).  Bitcoin:  A Peer-to-Peer Electronic Cash System.  URL: https:
+  //bitcoin.org/bitcoin.pdf.
+
+Savitzky, A., & Golay, M. J. E. (1964). Smoothing and Diﬀerentiation of Data by Sim-
+  pliﬁed Least Squares Procedures.  Analytical Chemistry, 36, 1627–1639. doi:10.1021/
+  ac60214a047.
+
+Trimborn, S., & H¨ardle, W. K. (2016). CRIX an Index for blockchain based Currencies.
+  URL: http://crix.hu-berlin.de/data/CRIXpaper.pdf.
+
+Tse, Y. K. (1998).  The conditional heteroscedasticity of the yen-dollar exchange rate.
+  Journal of Applied Econometrics, 13, 49–55. doi:10.1002/(SICI)1099-1255(199801/
+  02)13:1<49::AID-JAE459>3.0.CO;2-O.
+
+Walther, T., Klein, T., Pham Thu, H., & Piontek, K. (2017).  True or spurious long
+  memory in European Non-EMU currencies.  Research in International Business and
+  Finance, 40C, 217–230. doi:10.1016/j.ribaf.2017.01.003.
+
+Zakoian, J.M.(1994). Thresholdheteroskedasticmodels. Journal of Economic Dynamics
+  and Control, 18, 931–955. doi:10.1016/0165-1889(94)90039-6.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                 24
+Appendix A. Additional Figures and Tables for the Analysis of CRIX
+
+     To be made available in the supplementary material.
+
+
+Table A.8: Descriptive statistics for CRIX and ﬁnancial daily return time series for Aug 1, 2014 to Dec
+31, 2017, n = 891 observations.
+
+                            CRIX                Gold                Silver                WTI              S&P 500        MSCI World     MSCI EM50
+ Mean                       0.4346               0.0010   −0.0210   −0.0545             0.0446               0.0324               0.0363
+ Std. Dev.                  4.2001               0.8682              1.5136              2.5811              0.7637               0.6835               0.9009
+ Min.                     −23.8364   −3.1910   −7.7286   −10.7263   −4.0182   −5.0273   −4.4552
+ Max.                      19.8541              4.1964              5.4035             11.6213             3.8369               2.5681               3.4746
+ Skewness                  −0.3455             0.2366   −0.3274             0.1405   −0.3599   −0.8015   −0.3213
+ Kurtosis                   9.0743               5.2371              5.9894              5.0188              6.4371               8.6975               4.5726
+
+ Jarque Bera            1387.5104∗∗∗     194.1075∗∗∗      347.6768∗∗∗      154.2378∗∗∗      457.8316∗∗∗     1300.5326∗∗∗     107.1454∗∗∗
+ Ljung Box (25)           40.2952∗∗         49.3313∗∗∗        49.8255∗∗∗          28.6566            25.4508          53.6869∗∗∗        46.8096∗∗∗
+ ARCH (25)               94.8775∗∗∗        64.4326∗∗∗        40.2444∗∗        114.1034∗∗∗      169.5419∗∗∗      100.7778∗∗∗      111.2621∗∗∗
+ ADF                    −28.9508∗∗∗ −30.3975∗∗∗ −31.0810∗∗∗ −33.2704∗∗∗ −30.0854∗∗∗ −25.5438∗∗∗ −24.8281∗∗∗
+
+Note: Std. Dev. is the standard deviation, Min. and Max. are minimum and maximum of the time series. ARCH(25) is the
+test for autoregressive conditional heteroskedasticity by Engle (1982) at the 25th lag. ADF is the Augmented Dickey-Fuller
+test for unit root.
+
+
+
+
+Table A.9: Unconditional pairwise Pearson correlation matrix for the sample period Aug 1, 2014 to Dec
+31, 2017.
+
+                                    CRIX      Gold      Silver      WTI      S&P 500     MSCI World     MSCI EM50
+
+                CRIX                1.0000     0.0438     0.0044     0.0272 −0.0028          0.0046   −0.0139
+                Gold                           1.0000     0.6644     0.0150 −0.1612  −0.1107   −0.0922
+                Silver                                     1.0000     0.1606       0.0092            0.1023              0.1014
+                WTI                                                   1.0000       0.3013            0.3296              0.2064
+                S&P 500                                                            1.0000            0.9087              0.4599
+                MSCI World                                                                          1.0000              0.6235
+                MSCI EM50                                                                                              1.0000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                        25
+Table A.10: Estimation results from APARCH model with n = 891 observations (Aug 1, 2014-Dec 31,
+2017).  Statistically signiﬁcant parameters are indicated with asterisk *, **, *** for 10%, 5%, and 1%
+level of signiﬁcance.
+
+                              CRIX                Gold               Silver               WTI            S&P 500       MSCI World     MSCI EM50
+  θ0                        0.4094∗∗∗   −0.0101            0.0182  −0.0863∗∗∗       0.0544∗∗          0.0332∗∗∗            0.0247
+  θ1                      −0.0386∗∗∗  −0.0050   −0.0279  −0.1186∗∗∗ −0.0903∗∗          0.0661∗∗           0.2099∗∗∗
+  ω                         0.0967∗∗∗            0.0030             0.0000          0.0139∗∗∗        0.0379∗∗∗          0.0231∗∗            0.0716∗
+  α                         0.2004∗∗∗            0.0277             0.0017          0.0240∗∗∗        0.1358∗∗∗         0.1057∗∗∗           0.0986∗
+  β                         0.7996∗∗∗         0.9709∗∗∗        0.9941∗∗∗        0.9760∗∗∗        0.8641∗∗∗         0.8943∗∗∗          0.7891∗∗∗
+  γ                         −0.1614             0.0796   −0.9995         0.9995∗∗∗        0.9995∗∗∗         0.9995∗∗∗           0.5615∗∗
+  δ                         0.4354∗∗∗         1.9657∗∗∗        2.7273∗∗∗        0.3106∗∗∗        0.7967∗∗∗         0.8513∗∗∗          1.8599∗∗∗
+
+  ν                         3.0187∗∗∗         4.2659∗∗∗        2.8387∗∗∗       10.6260∗∗∗       4.6021∗∗∗         5.5958∗∗∗          15.4109∗∗
+  LL                        −2289.63  −1084.49  −1552.74  −1993.37  −835.36   −742.49   −1092.35
+  BIC                        4633.60            2223.31           3159.82           4041.08           1725.05            1539.32             2239.04
+  Jarque Bera            4102.8546∗∗∗     141.7671∗∗∗     287.3423∗∗∗     23.7308∗∗∗     569.9882∗∗∗     1308.3212∗∗∗      19.8160∗∗∗
+  Ljung Box (25)           48.0789∗∗∗        52.0254∗∗∗       46.0625∗∗∗         12.0729           27.0364            23.9060             17.7446
+  ARCH (25)                51.4380∗∗∗          26.1708           34.5267∗          18.9056         48.9345∗∗∗          33.5821             21.4819
+
+
+Table A.11: Estimation results from FIAPARCH model with n = 891 observations (Aug 1, 2014-Dec 31,
+2017).  Statistically signiﬁcant parameters are indicated with asterisk *, **, *** for 10%, 5%, and 1%
+level of signiﬁcance.
+
+                              CRIX                Gold               Silver               WTI            S&P 500       MSCI World     MSCI EM50
+  θ0                        0.3638∗∗∗   −0.0103            0.0048  −0.1275∗∗∗       0.0523∗∗∗           0.0297∗              0.0196
+  θ1                      −0.0268∗∗∗  −0.0065   −0.0312  −0.1087∗∗∗ −0.0996∗∗∗         0.0662∗∗           0.1996∗∗∗
+  ω                         0.3807∗∗             0.1658             1.0860            0.4569∗          0.2518∗∗∗         0.1464∗∗∗          0.2278∗∗∗
+  α                           0.0193              0.2635             0.4377             0.0778          0.0011∗∗∗            0.0383               0.0000
+  d                         0.7712∗∗∗            0.2651             0.1245           0.8380∗∗         0.9776∗∗∗         0.5146∗∗∗          0.3114∗∗∗
+  β                         0.7042∗∗∗            0.5286             0.5278          0.9154∗∗∗        0.8296∗∗∗          0.4738∗∗           0.2914∗∗∗
+  γ                         −0.2504∗   −0.1291   −0.2770         0.9125∗∗∗        0.9701∗∗∗         0.8704∗∗∗          0.5702∗∗∗
+  δ                         0.2467∗∗            2.0700∗            3.0000             0.3692          0.8543∗∗∗         1.1052∗∗∗          1.2969∗∗∗
+
+  ν                         2.3793∗∗∗         4.3169∗∗∗        2.9682∗∗∗          14.6145          5.1972∗∗∗         6.1522∗∗∗           16.4508∗
+  LL                        −2282.66  −1086.49  −1552.76  −1997.29  −826.14   −740.58   −1092.82
+  BIC                        4626.45            2234.10           3166.65           4055.71           1713.41            1542.29             2246.77
+  Jarque Bera            2807.9919∗∗∗     135.6287∗∗∗     364.5237∗∗∗     44.1969∗∗∗     532.0118∗∗∗     2397.7887∗∗∗      15.3015∗∗∗
+  Ljung Box (25)            42.4010∗∗        50.3412∗∗∗       43.1643∗∗         11.9732           25.6216            21.7947             17.0946
+  ARCH (25)                62.3583∗∗∗          19.9310           29.2771           22.3528           13.4596             9.2813              27.0943
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FigureA.8: Time-varyingweightsofminimum-varianceportfoliosforGold–S&P500andCRIX–S&P500
+based on BEKK correlations.
+
+                                                                            26
+Appendix B. Additional Figures
+
+    To be made available online.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure B.9: Dynamic correlations of Gold and MSCI World returns obtained with the BEKK-GARCH
+between July 2, 2011 and December 31, 2017, n = 1695.  Unﬁltered correlations are plotted in gray,
+Savitzky-Golay-smoothing is plotted in red. Times of market distress is highlighted in blue.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FigureB.10: DynamiccorrelationsofBitcoinandMSCIWorldreturnsobtainedwiththeBEKK-GARCH
+between July 2, 2011 and December 31, 2017, n = 1695.  Unﬁltered correlations are plotted in gray,
+Savitzky-Golay-smoothing is plotted in red. Times of market distress is highlighted in blue.
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                         27
+Figure B.11: Smoothed correlations of Bitcoin and Gold returns with MSCI World returns obtained with
+the BEKK-GARCH between July 2, 2011 and December 31, 2017, n = 1695. Times of market distress
+is highlighted in blue.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure B.12: Smoothed correlations of Bitcoin and Gold returns with MSCI EM50 returns obtained with
+the BEKK-GARCH between July 2, 2011 and December 31, 2017, n = 1695. Times of market distress
+is highlighted in blue.
+
+
+
+
+
+                                                           28
+Figure B.13:  Smoothed correlations of Bitcoin and Gold returns with WTI returns obtained with the
+BEKK-GARCH between July 2, 2011 and December 31, 2017, n = 1695.  Times of market distress is
+highlighted in blue.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          29

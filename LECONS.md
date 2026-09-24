@@ -766,3 +766,23 @@ C'est le complément de `L23` : là, un chemin non exercé cassait bruyamment à
 première vraie utilisation ; ici, un chemin exercé produisait **un résultat
 plausible et faux**. Le second est plus dangereux — il n'y a pas d'exception pour
 le signaler, seulement quelqu'un qui pense à relire le fichier.
+
+## L25 — « Ce garde n'écrit rien » est une affirmation, pas une propriété
+
+Le 2026-09-24, pour vérifier que le dépôt des multiplicateurs ne cassait rien,
+`gate_03_harness.py` et `gate_04_registry.py` ont été relancés parce qu'`ETAT.md`
+disait : *« Les autres gardes n'écrivent rien »* — seul `gate_06` étant signalé
+comme écrivant au registre. **C'était faux.** `gate_03` évalue trois signaux de
+calibration par le chemin officiel, et `gate_04` exerce le chemin légitime une
+fois : quatre lignes ajoutées à `registry/tests.jsonl`, irremplaçables, et
+constatées seulement après coup, par `git status`.
+
+Aucun dommage statistique — ce sont des calibrations, `counted_tests` reste 56 —
+mais le registre est append-only, et une ligne qu'on n'a pas voulu écrire ne se
+retire pas.
+
+**La règle.** Avant de relancer un garde « pour vérifier », regarder s'il
+appelle `evaluate(` ou `registry.append` — `grep` d'une seconde — plutôt que se
+fier à une phrase d'`ETAT.md`. C'est `L21` appliquée au texte qui décrit les
+scripts : relancer plutôt que recopier vaut aussi pour les affirmations sur le
+comportement d'un script, qui se vérifient en le lisant, pas en le croyant.

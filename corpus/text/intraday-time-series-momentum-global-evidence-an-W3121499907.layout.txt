@@ -1,0 +1,2322 @@
+Intraday time series momentum: global
+evidence and links to market
+characteristics
+
+Article
+
+Accepted Version
+
+Creative Commons: Attribution-Noncommercial-No Derivative Works 4.0
+
+
+Li, Z., Sakkas, A. and Urquhart, A. ORCID:
+https://orcid.org/0000-0001-8834-4243 (2022) Intraday time
+series momentum: global evidence and links to market
+characteristics. Journal of Financial Markets, 57. 100619.
+ISSN 1386-4181 doi: 10.1016/j.finmar.2021.100619 Available
+at https://centaur.reading.ac.uk/95566/
+
+
+
+
+
+It is advisable to refer to the publisher’s version if you intend to cite from the
+work.  See Guidance on citing  .
+
+To link to this article DOI: http://dx.doi.org/10.1016/j.finmar.2021.100619
+
+Publisher: Elsevier
+
+
+
+All outputs in CentAUR are protected by Intellectual Property Rights law,
+including copyright law. Copyright and IPR is retained by the creators or other
+copyright holders. Terms and conditions for use of this material are defined in
+the End User Agreement  .
+www.reading.ac.uk/centaur
+CentAUR
+Central Archive at the University of Reading
+Reading’s research outputs online
+        Intraday Time Series Momentum: International Evidence
+
+                       Zeming Lia,∗, Athanasios Sakkasb, Andrew Urquhartc
+
+               aSouthampton Business School, University of Southampton, Southampton, UK
+                                        email: zeming.li@soton.ac.uk
+           bNottingham University Business School, University of Nottingham, Nottingham, UK
+                                 email: athanasios.sakkas@nottingham.ac.uk
+               cICMA Centre, Henley Business School, University of Reading, Reading, UK
+                                    email: a.j.urquhart@icmacentre.ac.uk
+
+
+
+Abstract
+
+This paper provides the ﬁrst study of intraday time-series momentum (ITSM) in a global
+setting.  By studying 16 developed markets, we show that ITSM is both economically and
+statistically signiﬁcant around the world.  Although global commonality across individual
+markets is limited, stronger regional commonality is observed.  We also ﬁnd that the US
+ﬁrst half-hour return exhibits cross-country intraday predictability which is economically
+exploitable.  A global equally-weighted ITSM portfolio generates signiﬁcant alphas against
+global equity factors and a time-varying factor manifests as a major contributor.  Finally,
+market micro-characteristics like liquidity provision and information continuity are shown to
+be associated with ITSM.
+Keywords:   High frequency trading, Intraday, International markets, Momentum
+JEL classiﬁcation: G11, G14, G15, G17
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   ∗Corresponding author.
+
+                                                       1
+1. Introduction
+
+    In the asset return predictability literature, momentum is a well-known phenomenon
+in ﬁnancial markets and suggests that assets that perform well in the past continue to
+perform well in the future.  Since the seminal work byJegadeesh and Titman(1993), the
+eﬀect has been well established and attracted signiﬁcant interest from both academics and
+practitioners.   For example,Chan et al.(1996),Hong and Stein(1999),Moskowitz and
+Grinblatt(1999),Jegadeesh and Titman(2001),George and Hwang(2004),Barroso and
+Santa-Clara(2015), andDaniel and Moskowitz(2016) examine momentum in the cross-
+section of US stock returns both empirically and theoretically, whileGriﬃn et al.(2003),
+Liu et al.(2011),Menkhoﬀ et al.(2012),Fama and French(2012), andAsness et al.(2013)
+provide international evidence in a broader collection of asset classes. Moreover,Moskowitz
+et al.(2012) reveal a momentum eﬀect in the time-series of asset returns, that has also been
+extensively studied in a variety of asset classes and factors both in- and outside of the US
+(Georgopoulou and Wang(2016),Goyal and Wahal(2015),Gupta and Kelly(2019),Ham
+et al.(2019),He and Li(2015),Huang et al.(2019),Hurst et al.(2017),Kim et al.(2016),
+Lim et al.(2018), andMoskowitz et al.(2012)).
+    While most forms of momentum are studied at monthly, weakly, or daily frequency
+settings, the rise of technology has led to a substantial increase in high-frequency trading
+(HFT). As noted byMalceniece et al.(2019), the scale of HFT activity varies depending on
+the market and how broadly HFT is deﬁned, but there is no doubt that HFT accounts for a
+large share of trading volume in most developed markets. The impact of HFT has changed
+thewaytraderstrade, the way markets arestructured, andhowliquidityandprice discovery
+arise (O’Hara(2015)). Therefore HFT has had a fundamental impact on markets which has
+led many academic studies to start examining the trading behavior of ﬁnancial markets at
+a much higher frequency (Brogaard et al.(2014),Chaboud et al.(2014), andHendershott
+and Riordan(2013)).
+    In this paper, we provide the ﬁrst cross-country study on intraday momentum based
+on the work ofGao et al.(2018).Gao et al.(2018), analyzing US ETFs, provide strong
+evidence of intraday time-series momentum (ITSM) that the ﬁrst half-hour return of the
+trading day signiﬁcantly predicts the last half-hour return.   We show that this ITSM is
+
+                                                       2
+economically and statistically signiﬁcant in the international stock markets.  However, we
+ﬁnd that the pervasiveness of the eﬀect does not necessarily translate into a strong global
+common risk factor, leaving space for constructing global intraday time-series momentum
+(GITSM) portfolios that provide economic gains on top of individual country ITSM portfo-
+lios. Moreover, we ﬁnd that the US ﬁrst half-hour return possesses strong predictability on
+the last half-hour returns of international markets and that this cross-country predictability
+is economically exploitable. In addition, we identify a time varying component that largely
+explains the proﬁtability of the GITSM. We also ﬁnd that ITSM is strongly associated with
+certain market micro-characteristics such as liquidity provision and information absorption.
+    Our research contributes to the existing literature in ﬁve ways.   Firstly, we conﬁrm
+both the economic and statistical signiﬁcance of the intraday momentum eﬀect across global
+markets.  Speciﬁcally, we follow the standard predictive regression approach inGao et al.
+(2018)andregressthelasthalf-hourreturnagainsttheﬁrsthalf-hourreturnoneachofthe16
+developedmarketsinoursample, respectively. Ourresultsrevealsigniﬁcantpredictabilityof
+the ﬁrst half-hour return to the last half-hour return in 12 out of 16 markets. This intraday
+predictability is also conﬁrmed in various market conditions.  We also perform a thorough
+out-of-sample(OOS)evaluation,ofwhichtheresultsimplysigniﬁcantOOSforecastingpower
+(of the ﬁrst half-hour return on the last half-hour return) in most countries.
+    To further assess the economic signiﬁcance of the strong predictability shown in the
+statistical analysis, we followGao et al.(2018) and compare the performance of a simple
+market timing ITSM strategy with that of two passive investment strategies:  always-long
+thatrepeatedlytakeslongpositioninthelasthalf-houreverydayand buy-and-hold thatholds
+a long position throughout the whole sample period.  Individual country ITSM strategies
+generate signiﬁcant alphas ranging between 2.66% and 7.45% (2.60% and 7.28%) per year
+when regressed against the always-long (buy-and-hold) strategies. Collectively, our evidence
+conﬁrms the eﬀect of intraday time-series momentum in the international setting and is
+consistent with the US evidence found inGao et al.(2018).
+    Secondly, we document a modest comovement of ITSM across equity markets that is
+slightly stronger among countries that are geographically clustered. Following the method-
+ology from the liquidity commonality literature (Brockman et al.(2009) andChordia et al.
+
+
+                                                      3
+(2000)) along with a principal component analysis, we ﬁnd a modest comovement of ITSM
+across equity markets suggesting the existence of a common global factor that can only ex-
+plain a small proportion of the variation in global ITSM. On the other hand, repeating the
+principal component analysis with geographically grouped data implies relatively stronger
+regional commonality.
+    Thirdly, we show that the US ﬁrst half-hour return exhibits cross-country intraday pre-
+dictability.Rapach et al.(2013) document the leading predictive role of the US market on
+its international counterparts at monthly frequency. It is then natural to examine whether
+this cross-country predictability of the US market holds at intraday level.  We tackle this
+issue by regressing the last half-hour return of the international markets against the US
+ﬁrst half-hour return.  With the local ﬁrst half-hour return included as a control variable,
+the US ﬁrst half-hour return manifests statistically strong predictability in more than half
+of the markets; and the predictiveR2 (adjusted) increases in all but one of the countries
+after the inclusion of the US returns. Our analysis therefore implies that the cross-country
+predictability of the US market inRapach et al.(2013) exists even at intraday level.
+    Fourthly, we ﬁnd that investing in ITSM globally produces signiﬁcant economic gains
+than investing individually. We propose three types of GITSM portfolios that are based on
+individual ITSM, regional equally-weighted ITSM, and the US ﬁrst half-hour return signal.
+For each type of GITSM, we adopt six portfolio weighting schemes: equally-weighted, value-
+weighted,inversevariance(KirbyandOstdiek(2012)),maximum-diversiﬁcation(Choueifaty
+and Coignard(2008)), mean-variance, and minimum-variance, resulting in total 18 global
+portfolios.  Eleven out of the 18 portfolios yield a Sharpe ratio that is greater than one,
+ranging from 1.01 to 1.77. Most strategies yield remarkable positive spanning alphas when
+regressed against individual ITSM strategies, implying that the global intraday momentum
+strategies subsume the country individual ones and provide considerable economic gains.
+In contrast, when we regress individual ITSM against the global portfolios, only Norway
+persistently exhibits positive and signiﬁcant alphas. It is worth noting that among the three
+types of GITSM proposed, the one based on the US intraday ﬁrst half hour return signal is
+the strongest.
+    We further ﬁnd that the global ITSM portfolio returns cannot be explained by global
+
+
+                                                       4
+equity factors, generating signiﬁcant alphas of nearly 3%. But where do these alphas come
+from?Goyal and Jegadeesh(2018) show that the time-series momentum ofMoskowitz et al.
+(2012) incorporates a time-varying market factor that is responsible for the out-performance
+oftheformerwithrespecttothecross-sectionalmomentumofJegadeeshandTitman(1993).
+Consistent withGoyal and Jegadeesh(2018), we identify a time-varying global investment
+factor which constitutes a signiﬁcant source of the strategy proﬁtability.   We show that
+this time-varying factor explains around 73% of the variation of the global portfolio return
+and emanates from market timing rather than stock index picking ability, attributed to the
+positive autocorrelation between the ﬁrst and the last hour returns in the global market.
+    Finally, we show that ITSM is closely related to certain market micro-characteristics
+such as liquidity provision and information digestion process.Gao et al.(2018) assert that
+the ITSM eﬀect is originated from the overnight information accumulation and suggest two
+possible explanations. The ﬁrst explanation is the infrequent trading behavior of investors
+thathasbeendocumentedbothempiricallyandtheoreticallyintheliterature(Bogousslavsky
+(2016),Duﬃe(2010),Heston et al.(2010), andRakowski and Wang(2009)).  The model
+byBogousslavsky(2016) suggests that the infrequent traders who absorb a liquidity shock
+by taking sub-optimal position will have the intention to unload the sub-optimal position at
+the next active period, causing another liquidity shock that is in the same direction as the
+original one. Based on this model, we hypothesize that ITSM has association with market
+liquidityprovision. Therationaleisthatwhenthemarketisilliquid(liquid),boththeoriginal
+and the second liquidity shocks should have larger market impact causing stronger (weaker)
+pricemovementsinthesamedirection. WetestthishypothesisbygroupingindividualITSM
+basedontheCorwinandSchultz(2012)liquiditymeasurecomputedfromtheﬁrsthalfhour,
+and evaluate equally-weighted ITSM across groups.  The second explanation given byGao
+et al.(2018) is the existence of traders who are slow in receiving or processing information.
+We relate this suggested justiﬁcation to the ‘frog-in-the-pan’ hypothesis ofDa et al.(2014),
+wherein investor under-react to the information that is slowly incorporated into the price
+and over-react to the information that comes as a surprise. Therefore, our second hypothesis
+is that ITSM is stronger when the overnight information is digested smoothly and weaker
+when the market reacts swiftly with strong emotion. Similar to testing the ﬁrst hypothesis,
+
+
+                                                       5
+we group individual ITSM by ‘information discreteness’ (ID) that is introduced byDa et al.
+(2014), and evaluate the equally-weighted portfolios across groups.  Our empirical analysis
+supports both hypotheses.
+    Our paper is also related to recent academic studies addressing intraday return pre-
+dictability and ﬁnancial market microstructure from a cross-sectional perspective.  For ex-
+ample,Lou et al.(2019) relate ﬁrm-level intraday momentum and overnight reversal to
+investor heterogeneity. Xu(2017) uses intraday predictability for long-term portfolio con-
+struction whileFishe et al.(2019) study the relationship between anticipatory traders and
+high-frequency momentum trading. While these studies mainly focus on the cross-sectional
+predictability of US stocks or commodity future market returns, our work adds to the liter-
+ature on the time-series of international stock return intraday predictability.
+    The rest of the paper is organized as follows.  Section2describes the data.  Section
+3examines the pervasiveness of intraday time-series momentum around the world both
+statistically and economically.   Section4investigates the commonality among individual
+ITSM portfolios and explores the cross-country predictability of the US market.  Section5
+evaluates the economic meaningfulness of investing ITSM globally. Section ?? proposes two
+hypotheses and studies ITSM with two market micro-characteristics. Section7concludes.
+
+
+2. Data and Intraday Returns
+
+2.1.  Data
+
+    We collect 1-minutely quote data from the Thomson Reuters Tick History (TRTH)
+database of stock market indices1 and restrict our analysis to developed markets classiﬁed
+by the MSCI.2,3 We restrict our analysis to developed markets since intraday data are very
+illiquid in emerging and frontier markets. The dataset provides information on stock market
+indices based on the local currency, and consists of information on trading time, open price,
+
+
+
+    1Country-speciﬁc ETFs are available; however they lack liquidity and a long enough history to provide
+
+a robust study.
+    2For a detailed description of this database please refer toFong et al.(2017).
+
+    3We classify the developed countries following the MSCI market classiﬁcation guide https://www.msci.
+
+com/market-cap-weighted-indexes.
+
+
+                                                        6
+high price, low price and last price for every trading minute.
+    In order to process the high-frequency dataset, we broadly follow the data-cleaning steps
+outlined inBarndorﬀ-Nielson et al.(2009) andHollstein et al.(2019), with a few additions.
+First, we exclude Belgium, Denmark, Finland, Israel and Italy since TRTH does not provide
+liquid data for these countries for a long enough period for our study.4 Second, we use only
+data with a time-stamp during the exchange trading hours for that market.  For instance,
+we use data for the US market between 9:30AM and 4:00PM Eastern Standard Time and in
+Table1we report all market trading hours for each market studied.           5 Third, we remove all
+non-trading days and recording errors. To be more speciﬁc, we ﬁlter out extreme prices that
+are higher (lower) than 1.2 (0.8) of the highest (lowest) daily price over the sample period,
+recorded on Thomson Reuters Datastream.
+    Finally, in order to study the economic signiﬁcance of ITSM in a portfolio setting, we
+take the perspective of US dollar investor, and hence we convert all local currency data into
+US dollars.6  Speciﬁcally, we convert index prices based on the contemporaneous 1-minute
+exchange rate.  We exclude Hong Kong and Singapore from our sample due to the lack of
+1-minutelyforeignexchangedata. Ofthe16remainingMSCIdevelopedcountries, datafrom
+Sweden starts 4th October 2005 and therefore we take that as our start date for all countries
+and the end date is 29th December 2017, thereby capturing over 12 years’ worth of data.
+Table1tabulates the list of the 16 developed stock market indices employed in this study
+along with their RICs and trading hours.
+
+                                             [Table 1 about here.]
+
+
+
+    4For these countries, there are many missing values throughout the sample and even aggregating to the
+
+30-minute frequency still leaves many missing values.
+    5For some countries, the trading records do not correspond to the trading hours, and exceed market
+
+closing time with observations that remain unchanged. This is mostly pronounced over the early period of
+our sample.  To address this issue we use the timestamp of the ﬁrst observation on a day as opening time
+and the timestamp of the last actively changed observation as closing time.
+    6Though some scholars argue that using US dollar as the common numeraire might generate misleading
+
+conclusionsonreturnpredictability(Jordanetal.(2015)), ourapproachisconsistentwithLawrenzandZorn
+(2017) and the evidence reported in TableB.1andB.2ofAppendix  Bshows stronger intraday time-series
+momentum eﬀect when using local currency.
+
+                                                          7
+2.2.  Calculation of the ﬁrst and last half-hour returns
+
+    FollowingHeston et al.(2010),Komarov(2017) andGao et al.(2018) among others, we
+divide each trading day into 30-minute non-overlapping intervals.Gao et al.(2018) show
+that the length of the intervals does not signiﬁcantly aﬀect intraday time-series momentum
+since most news and announcements are released overnight; hence, investors need a short
+time period to digest the information after (before) the markets open (close). In this study,
+we focus only on the ﬁrst and the last half-hour returns due to the heterogeneity of the
+market setting across countries.7 The ﬁrst and last half-hour returns are deﬁned as follows:
+
+                               rFt  =pfirst30,tpclose,t−1−1,   rLt  =pclose,tplast30,t−1,                                   (1)
+
+whererFt  denotes the ﬁrst half-hour return on dayt,pfirst30,t stands for the last price in the
+ﬁrst 30 minutes after market open on dayt,pclose,t−1 is the closing price on dayt−1,rLt
+is the last half-hour return on dayt,plast30,t is the ﬁrst price in the last 30 minutes before
+market close on dayt, andpclose,t is the closing price on dayt. Note that for the calculation
+of the ﬁrst half-hour return we also take the overnight information into account.
+
+                                            [Table 2 about here.]
+
+    Table2presents summary statistics of the annualized ﬁrst and last half-hour returns and
+reports the number of days, mean, standard deviation, skewness, and kurtosis.  Excluding
+SpainandSweden,themeanreturnforallmarketsintheﬁrsthalfhourissubstantiallyhigher
+and more volatile than in the last half hour. The high return during the ﬁrst half hour may
+reﬂect the incorporation of overnight information in stock returns, while the high variability
+of the ﬁrst half-hour returns may reﬂect the discrepancy in understanding this overnight
+information. The low variability in the last half-hour returns indicates less disagreement on
+the pricing of stocks.  This is consistent with the hypothesis that traders who trade in the
+morning are more informative and have stronger information processing power while those
+who trade in the last half hour are followers who have less access to the information and are
+
+
+
+    7Forinstance, NewYorkStockExchangeoperatescontinuouslyfrom09:30to16:00whereasTokyoStock
+
+Exchange trades from 09:00 to 15:00 with one hour lunch break from 11:30 to 12:30.
+
+
+                                                        8
+less informative as a result (Barclay and Hendershott(2003) andGao et al.(2018)). Most of
+the returns have a slightly negative skewness with a kurtosis around 3, indicating that these
+intraday returns are not as non-normal as found with daily returns.
+
+
+3. Intraday Return Predictability Around the World
+
+3.1.  Estimating the relation between ﬁrst and last half-hour returns
+
+    We start our analysis by investigating the in–sample predictability of the ﬁrst half hour
+on the last half-hour return in the 16 individual equity market indices respectively.  To do
+so, we followGao et al.(2018) and run the following predictive regression for each market :
+
+                                   rLt  =α+βFrFt  +ϵt, t = 1,···,T,                                       (2)
+
+whererLt  andrFt  stand for the last and the ﬁrst half-hour returns at timet, respectively and
+T is the total number of trading days in the sample.
+    Table3tabulates the in–sample estimation results of the predictive regression shown in
+Equation (2) for each equity market, over the full sample period (Panel A) and over a set of
+diﬀerent periods such as the ﬁnancial crisis (Panel B), non-crisis period (Panel C), recession
+(Panel D), and expansion (Panel E).8 The last row in Panels A, B and C of Table3shows
+the results from a pooled regression where we run a panel model with country dummies,
+clustering the standard errors by country.  This model allows for the observations of same
+country at diﬀerent time points to be correlated, and to control for the heteroskedastisity
+and autocorrelation We also adjust the standard errors using theNewey and West(1987)
+correction modiﬁed for a panel framework.
+    Over the 2005–2017 period (Panel A) our empirical evidence suggests that 12 out of 16
+countriesexhibitastatisticallysigniﬁcantin–samplepredictabilityoftheﬁrsthalfhouronthe
+
+
+
+    8We followGao et al.(2018) and set the ﬁnancial crisis period from 2                 nd  Dec 2007 to 30th  June
+
+2009 while the OECD recession and expansion indicators are sourced from FRED St.   Louis:   https:
+//fred.stlouisfed.org/.  Note that the methodology for computing OECD expansion/recession indica-
+tors diﬀerentiates from the methodology by NBER eﬀective from January 2009. Full-sample analysis results
+based on local currency are reported in TableB.1ofAppendix  B.
+
+
+
+                                                         9
+lasthalf-hourreturn.9 Amongthem, ninemarketshavestatisticallysigniﬁcantpositiveslope
+coeﬃcientsatthe1%level. Whenall16marketsarepooledweﬁndapositiveandstatistically
+signiﬁcantrelationbetweentheﬁrstandthelasthalf-hourreturns. Thecoeﬃcientoftheﬁrst
+half-hour return is 2.86 and statistically signiﬁcantly diﬀerent from zero (t-statistic 7.53).
+    Collectively,weprovidestrongevidencethattheﬁrsthalf-hourreturnpositivelyforecasts
+the last half-hour return. This relationship is pervasive across countries and it is consistent
+with the evidence found in the US stock market (Gao et al.(2018)).
+
+                                           [Table 3 about here.]
+
+3.2.  Intraday time-series momentum under various conditions
+
+    Wenowinvestigatetherelationbetweentheﬁrstandlasthalf-hourreturnsundervarious
+market conditions, i.e. during the ﬁnancial and non-ﬁnancial crisis periods and the business
+cycle. PanelsBandCofTable3showthatthepredictabilityoftheﬁrsthalfhouronthelast
+half-hour return is economically stronger during the ﬁnancial crisis compared to the non–
+crisisperiod;12outof16marketsexhibitlargerslopecoeﬃcientsduringﬁnancialcrisis,while
+the magnitude of adjustedR2s is much larger compared to the one in the non-crisis period.
+Amongst the 16 markets, the predictive power of the ﬁrst half hour is more pronounced in
+the US stock market which has a (scaled) coeﬃcient of the ﬁrst half hour equal to 18.28
+during the ﬁnancial crisis, four times larger than the corresponding one observed when we
+exclude the ﬁnancial crisis period from our full sample period (the coeﬃcient is equal to
+4.28). In the pooled regression we ﬁnd a stronger positive relation between the ﬁrst and the
+last half-hour returns during the ﬁnancial crisis period relative to the non-crisis period; the
+coeﬃcients of the ﬁrst half-hour returns are 3.71 and 2.09, for the ﬁnancial and non-ﬁnancial
+crisis periods, respectively. Note that both coeﬃcients are statistically distinguishable from
+zero. Similarly, the adjustedR2 is equal to 1.18% during ﬁnancial crisis; this is almost two
+
+
+
+    9Gao et al.(2018) document an     R2 equal to 1.6% and argue that the level is considered impressive and
+
+relatively large compared to other predictors, especially at this data frequency.  In our empirical analysis,
+4 out 12 equity markets exhibit an adjustedR2 above 1.6%. The large proportion of the markets showing
+strong positive signiﬁcance is rather striking and may imply intraday time-series momentum exists not only
+on the US market but across the world.
+
+                                                       10
+times larger than the one observed in the non-crisis period (i.e.  0.63%).  Panels D and E
+show that the predictive ability of the ﬁrst half hour on the last half-hour return is stronger
+during recessions compared to expansions, with an average slope and adjustedR2 equal to
+4.05 (2.52) and 1.72% (0.81%) for the recession (expansion) periods.10  The ITSM exhibits
+larger slope coeﬃcients in 12 out of 16 markets during recession compared to expansion
+periods.
+    Collectively, Table3provides strong evidence that the positive relation between the ﬁrst
+half hour and the last half-hour return is more pronounced during the ﬁnancial crisis and
+recession periods. Our ﬁndings extend the evidence shown inGao et al.(2018) for the US
+stock market to a comprehensive set of countries around the world.
+
+3.3.  Out–of–sample predictability
+
+    Up to this point, we have examined the in-sample predictability of the ﬁrst on the last
+half-hour return, which was based on the entire sample period. In this section, we formally
+examine the out-of-sample (OOS) predictive power of the ﬁrst half-hour return on the last
+half-hour return for each individual stock market index.  This enables us to assess the pa-
+rameter instability over time in the predictive regressions (Ashley et al.(1980) andWelch
+and Goyal(2008)).
+    Based on an expanding window approach, we use the ﬁrst ﬁve years (2005-2010) of our
+sample as the initial estimation period and recursively regress Equation2on each market by
+adding one day at a time. Then we evaluate the OOS performance of our predictive model
+by comparing it with that of a simple historical mean model via four statistics.11
+    The ﬁrst statistic is theCampbell and Thompson(2008) out-of-sample             R2 calculated as
+
+
+
+   10Note that since the recession and expansion periods are country-speciﬁc, we restrict our empirical
+
+analysis to individual predictive regressions and do not run a pooled regression.
+   11Goyal and Welch(2003) andWelch and Goyal(2008) show it is diﬃcult for a predictive model to
+
+outperform the historical mean model in an out-of-sample setting.
+
+
+
+
+
+
+
+
+                                                        11
+follows:12                                               ∑T
+                                        R2OOS = 1−       ∑Tt=1(rLt−ˆrLt )2
+
+                                                            t=1(rLt−¯rLt )2,                                            (3)
+whereT is the number of observations in the out-of-sample period,rLt  is the realized value
+of the last half-hour return at timet, ¯rLt  is the value estimated by using historical mean
+of the last half-hour return with data until timet−1, and ˆrLt  is the estimated value from
+the predictive regression using information available up to timet−1.  A positive value of
+theR2OOS implies that the predictive model (equation2) outperforms the historical mean
+model.13
+    WhiletheR2OOS iscommonlyusedintheliterature(FerreiraandSanta-Clara(2011),Gao
+et al.(2018),Neely et al.(2014), andRapach et al.(2010)),Campbell and Thompson(2008)
+arguethatperverseestimatesintherecursiveregressionscanbeeasilygeneratedduetoshort
+estimation period and thus add no value in practice. In our case, a negative slope estimation
+would not help someone make an out-of-sample investment decision if they believe that the
+theoretical relation between the ﬁrst and the last half-hour returns is positive. In addition,
+one would not follow the trading signal generated by the predictive regression if the forecast
+returninthelasthalfhournextdayisnegative. ToexaminetheOOSpredictabilityinamore
+realistic setting, we followCampbell and Thompson(2008) and compute the constrained            R2
+as our second statistic, denoted asRst.R2OOS. TheRst.R2OOS imposes two restrictions on the
+R2OOS.  In particular, we ﬁrst set the slope coeﬃcient to zero whenever its estimated value
+is negative, then set ˆrLt  to zero if it is negative. Similar to its unconstrained counterpart, a
+positive value ofRst.R2OOS indicates superior OOS performance of the predictive model over
+
+
+
+   12This statistic essentially compares the Mean Squared Prediction Error (MSPE) of our predictive model
+
+with that of the historical mean model.Welch and Goyal(2008) employ a similar statistic with adjustment
+for degree-of-freedom.  Since we have only one predictor and a relatively large sample size with high data
+frequency, the eﬀect of degree-of-freedom adjustment would be trivial.
+   13In a ﬁnite sample and under the null that the predictor does not help prediction,Clark and West
+
+(2006) state that the predictive model should have larger MSPE due to the noise caused by estimating
+extra parameters, resulting in a negativeR2OOS. In contrast, a positiveR2OOS implies smaller MSPE of the
+predictive model compared to that of the historical mean model, thus indicating out-of-sample predictability
+of the predictor.
+
+
+
+                                                         12
+that of the historical mean model.
+    We then test the null hypothesis that the MSPE of the historical mean model is equal or
+less than that of the predictive model (equivalent toH0:R2OOS≤ 0 againstH1:R2OOS> 0).
+In order to do so, we use theClark and West(2007)        MSPE−adjusted.14 To calculate the
+statistic, we ﬁrst compute a time series of  ˆft as follows:
+
+                                ˆft = (rLt−¯rLt )2−[(rLt−ˆrLt )2−(¯rLt−ˆrLt )2],                                 (4)
+
+
+and then regress  ˆft against a constant.  TheClark and West(2007)        MSPE−adjusted is
+the one-sided (upper-tail) student-t statistic of the constant term. We also apply theNewey
+and West(1987) corrections to this      t-statistic.
+    Furthermore, we investigate whether the historical mean model forecasts encompass the
+predictivemodelforecasts. Thisgivesusasenseofwhetherthelatterprovidesusefulinforma-
+tion in prediction relative to the former.15 To this end, we conduct an forecast encompassing
+test that is valid for nested models, usingENCNEW  proposed byClark and McCracken
+(2001).           16 The null hypothesis is that the forecasts of the historical mean model encompass
+those of the predictive model; the one-sided (upper-tail) alternative hypothesis is that the
+forecasts of the historical mean model do not encompass those of the predictive model:
+                                           ∑T
+                         ENCNEW =             t=1[(rLt−¯rLt )2−(rLt−ˆrLt )(rLt−¯rLt )]
+                                                       T−1∑Tt=1(rLt−ˆrLt )2      .                          (5)
+
+    Table4tabulates the four OOS statistics along with the average recursive regression
+coeﬃcients for each country. As shown in the table, the average slope coeﬃcient is positive
+
+
+
+   14TheMSPE−adjusted is an adjusted version of theDiebold and Mariano(2002) andWest(1996)
+
+statistic that is used to test the MSPE hypothesis in a non-nested setting.Clark and McCracken(2001)
+andMcCracken(2007) point out that theDiebold and Mariano(2002) andWest(1996) statistic has a
+nonstandard distribution when used for nested models, like in our case.Clark and West(2007) show the
+MSPE−adjusted has an approximately standard normal asymptotic distribution when used for comparing
+nested models, leading to valid inferences.
+   15For a textbook discussion of forecast encompassing, seeClements and Hendry(1998).
+
+   16ThisstatisticisalsoemployedbyBarrosoandMaio(2019)andRapachandWohar(2006)amongothers.
+
+Since its asymptotic distribution is nonstandard, we use the critical values given byClark and McCracken
+(2001). That is, we use 1.280 and 2.085 for 5% and 10% conﬁdence levels, respectively.
+
+
+                                                          13
+for all countries.  Five out of 16 countries exhibit positiveR2OOS, while 10 show positive
+Rst.R2OOS.17  Although only ﬁve markets give positiveR2OOS, theClark and West(2007)
+MSPE−adjustedrejectsthenull(R2OOS≤ 0)in10markets. Thisinterestingresultsuggests
+that a negativeR2OOS (or/andRst.R2OOS) does not necessarily imply complete denial of the
+OOS predictability of the ﬁrst half-hour return.  If we take the example of the Japanese
+market, bothR2OOS andRst.R2OOS are shown negative, yet this gives a signiﬁcantMSPE−
+adjusted at the 1% conﬁdence level, indicating that the MSPEs for the predictive model are
+signiﬁcantly less than that of the historical mean model in this market.18  The last column
+of Table4reports results of the forecast encompassing test.  The null (the historical mean
+forecasts encompass the predictive forecasts) is rejected in 14 out of 16 countries, implying
+that the ﬁrst half-hour return does provide additional predictive information relative to a
+simple historical mean of the last half-hour return in thoes markets.   Overall, our OOS
+analysis furnishes strong evidence of OOS predictability of the ﬁrst half-hour return on the
+last hour-hour return in most countries.
+
+                                              [Table 4 about here.]
+
+3.4.  Economic signiﬁcance
+
+    The statistical performance demonstrated in the previous subsection does not necessarily
+translate into economic beneﬁts from an investment perspective.19 Kandel and Stambaugh
+(1996) show that variables with relatively weak statistical predictive power can still produce
+
+
+
+   17Most estimated slope coeﬃcients steadily remained positive in the recursive regressions, making the
+
+eﬀect of the sign restriction trivial. It is the forecast restriction that contributes most to the improvement
+in theRst.R2OOS performance.
+   18In a study of technical indicator predictability,Neely et al.(2014) ﬁnd similar results and argue, in
+
+Footnote 21, that this is plausible when comparing nested models.  For further discussions, seeClark and
+West(2007) andMcCracken(2007).
+   19Cenesizoglu and Timmermann(2012) compare the economic and statistical performance of 60 return
+
+prediction models and ﬁnd weak evidence of a close relationship between economic and statistical perfor-
+mances. They argue that this is due to the fact that statistical measures generally focus on the accuracy of
+mean prediction whereas the focal point of economic measures is whether the model can predict movements
+of the whole return distribution associated with the weights given by the utility function.
+
+
+                                                          14
+signiﬁcant economic beneﬁts in a portfolio context. We now examine the economic value of
+the ITSM in each of the 16 stock markets and compare the proﬁtability of the country ITSM
+strategy with two passive country strategies – namely the Always-long and Buy-and-hold –
+as inGao et al.(2018).
+    For the ITSM strategy we consider the sign of the ﬁrst half-hour return as the trad-
+ing/timing signal – i.e. if the ﬁrst half-hour yields a positive return, we take a long position
+in the last half-hour on the same day; if the ﬁrst half-hour yields a negative return, we take a
+short position in the last half-hour on the same day. We close all the positions at the market
+close everyday. The market timing strategy can be summarized as follows:
+                                                 
+                                         rI,t =     rLt,      ifrFt > 0;                                       (6)
+                                                 −rLt,   ifrFt≤ 0,
+
+
+whererI,t is the market timing return of ITSM on dayt and,rFt  andrLt  are the ﬁrst and last
+half-hour return at time t, respectively.
+    The Always-long strategy takes an always-long position at the beginning of the last half-
+hour and a closing position at the market close.  The Buy-and-hold strategy is a passive
+strategy which takes a long position of the equity index at the beginning of the sample
+period, and holds the index until the end of the period.
+
+                                            [Table 5 about here.]
+
+    Table5tabulates the mean, standard deviation (SD), skewness, kurtosis and the Sharpe
+ratio of the intraday time-series momentum (i.e. ITSM) and the two benchmark strategies,
+Always-long and Buy-and-hold, for each of the 16 equity markets as well as the correlation
+(ρ) between the ITSM and the benchmark strategies returns.20 The alpha (α) and Appraisal
+Ratio (ARatio) are based on the following regression:
+
+                                        rI,t =α+βrbenchmark,t+ϵt,                                             (7)
+
+
+
+   20We conduct the same analysis using data based on local currencies and report the results in TableB.2
+
+ofAppendix  B.
+
+
+
+                                                        15
+whererI,t andrbenchmark,t stand for the returns from ITSM and benchmark strategies, re-
+spectively.  The appraisal ratio is calculated asα/σϵ whereσϵ is the standard error of the
+regression. Standard errors are adjusted using theNewey and West(1987) correction. We
+test the hypothesis that the Sharpe ratios of the ITSM and the Always-long or Buy-and-
+hold strategies are equal following the HAC inference method proposed byLedoit and Wolf
+(2008).           21
+    Table5shows that ITSM exhibits positive return over the 2005-2017 period across mar-
+kets.  The volatility of the ITSM strategy is lower compared to the Always-long and Buy-
+and-hold strategies in seven and 16 out of 16 markets, respectively.  ITSM has a positive
+skewness in 10 out of 16 markets suggesting low crash risk while the ITSM and the passive
+strategies appear to be unrelated (i.e.  the correlation between ITSM and the benchmark
+strategy returns is close to 0).  Finally, the ITSM strategy possesses higher Sharpe ratios
+compared to Always-long and Buy-and-hold strategies in eight and 14 out of 16 markets,
+respectively, albeit not statistically signiﬁcant in all cases.  ITSM has positive statistically
+signiﬁcant (at the 1% level in most cases) alphas in 10 out of 16 countries, ranging be-
+tween 2.66% (for the UK) and 7.45% (for Norway) per annum when regressed against the
+Always-long strategy, and between 2.60% (for the UK) and 7.28% (for Norway) per annum
+when regressed against Buy-and-hold strategy. Similarly, among countries giving signiﬁcant
+alphas, the annualized appraisal ratios range between 0.52 (for UK) and 0.99 (for Norway)
+when regressed against the Always-long strategy and between 0.51 (for the UK) and 0.97
+(for Norway) when regressed against the Buy-and-hold strategy.
+
+
+4. Cross-country Relationship of Intraday Time-series Momentum
+
+4.1.  Global and regional commonality
+
+    Given the pervasiveness of ITSM portfolio proﬁtability shown in the previous sections,
+the question that arises is whether these portfolios are global, regional, or country-speciﬁc.
+Iftheseportfoliosaremainlydrivenbycommonglobalfactors, therewouldnotbeanydiﬀer-
+
+
+
+  21The R code used in this study is available on Wolf’s website: \https://www.econ.uzh.ch/en/people/
+
+faculty/wolf/publications.html#9.
+
+
+                                                      16
+enceforaUSinvestortoinvestintheUSITSMstrategyorinaglobalstrategythatcombines
+the country ITSM portfolios. Accordingly, a global ITSM momentum diversiﬁcation strat-
+egy should also perform similarly to a local ITSM strategy, which involves an investment
+in the individual country ITSM strategies. In contrast, if the local ITSM portfolios contain
+sizable country-speciﬁc or regional components, these country ITSM strategies would allow
+the investor to expand their investment opportunity set signiﬁcantly beyond what can be
+achieved by the country ITSM portfolios alone. Using the methodology inBrockman et al.
+(2009) and the principal component analysis (PCA), we address this question both globally
+and regionally.
+    We compute the correlation coeﬃcients between country momentum portfolios. Table6
+shows that the correlation coeﬃcients between most countries are close to zero.  However,
+we observe larger correlations between countries that are geographically closer, compared to
+the coeﬃcients between countries across regions. For example, the coeﬃcients between the
+UK and most European countries are signiﬁcantly larger than those between the UK and
+other countries.  We discuss in more detail this regional relationship in ITSM later in this
+subsection.
+
+                                          [Table 6 about here.]
+
+    To investigate the commonality in ITSM, we ﬁrst test for potential common variation
+across the country individual ITSM portfolios.   We follow the methodology adopted by
+Chordia et al.(2000) andBrockman et al.(2009) in their studies on commonality in market
+liquidity, and run the following time series regression:
+
+                        rI,i,t =αi+βtrI,g,t+βt+1rI,g,t+1+βt−1rI,g,t−1+ϵi,t,                           (8)
+
+whererI,i,t is the ITSM return in countryi at timet,rI,g,t is the contemporaneous equally-
+weightedITSMreturnbasedonthecountryITSMsexcludingcountryi,rI,g,t+1istheequally-
+weightedITSMreturnbasedonthecountryITSMsexcludingcountryiatt+1,andrI,g,t−1 is
+theequally-weightedITSMreturnbasedonthecountryITSMsexcludingcountryiatt−1.22
+The inclusion of the control variablesrI,g,t+1 andrI,g,t−1 eliminates the lag eﬀect induced
+
+
+
+  22Both studies ofChordia et al.(2000) andBrockman et al.(2009) employ the percentage change of the
+
+                                                     17
+by the time diﬀerence issue.  A positive and signiﬁcant contemporaneous slope coeﬃcient
+βt indicates inﬂuence of the globe-level ITSM returns onrI,i,t, while the magnitude of the
+adjustedR2 of Equation (8) measures the strength of such inﬂuence.
+    PanelAofTable7showsthatthecountryITSMsareinﬂuencedbytheglobe-levelITSM.
+Theβts are statistically signiﬁcant in 12 out of 16 markets and the average coeﬃcient has a
+magnitude of 73.79 (scaled by 100) (see the last row of Table7). However, the adjusted    R2s
+show the strength of such inﬂuence varies from country to country. Apart from Switzerland,
+the adjustedR2s for most European countries are relatively large ranging from 12.39%
+(Austria) to 52% (France), whereas that of the rest countries are fairly low ranging from
+0.43% (US market) to 2.62% (Austria). The signiﬁcant contemporaneous slope coeﬃcients
+together with the disagreement in the adjustedR2s imply that only part of the expected
+return in each country intraday momentum is captured by a common global component and
+stronger regional commonality may exist, consistent with the previous correlation analysis.
+
+                                            [Table 7 about here.]
+
+    Asness et al.(2013) employ the principal component analysis (PCA) to the returns of
+value and momentum portfolios across asset classes and ﬁnd a global commonality in value
+and momentum strategies.  We carry out a PCA in the individual ITSM market timing
+return series, which are normalized and standardized to eliminate the eﬀect of idiosyncratic
+characteristics in each market. Panel A of Figure1depicts the variance explained by each
+component. The ﬁrst principal component (PC1) accounts only for 27.7% of the covariance
+matrix of the ITSM returns.23 Panels B to D in Figure1plot the front view, top view, and
+
+
+liquidity measures to study the co-movement of liquidity and to avoid econometric issues, e.g., nonstationar-
+ity. In our case, we are interested more in commonality in the ITSM across countries than the co-movement
+of the returns. In addition, as we are analyzing strategy returns, it is less likely to encounter the potential
+econometric issues faced in their studies.
+   23Oneconcernwithourapproachisthe16marketsarenon-synchronized,i.e. theyhavediﬀerentoperating
+
+periods, leading to possible underestimation of commonality.  In order to account for this issue, we repeat
+our principal component analysis with monthly aggregated ITSM returns and the conclusion remains largely
+unchanged. Results can be found inAppendix  C. In the following regional commonality analysis, we also
+group countries based on the geographical location, further alleviate the non-synchronized issue.
+
+                                                        18
+end view of the rotated data plotted in a 3-D space of which the axes are the ﬁrst, second,
+and third principal components (PC1, PC2, and PC3), respectively.  These plots visualize
+the relation between the variance of returns of ITSM in each market and the ﬁrst three PCs.
+Speciﬁcally, we plot the rotated data using the scores on PC1, PC2, and PC3. Then we use
+arrowstoindicate therelationshipbetweenthe varianceof ITSMreturnsin each market and
+thePCs. Thearrowsareobtainedbyprojectingthereturndataintotheprincipalcomponent
+space.24 ThelengthandangleofthearrowsshowhowheavilyandspeedilytheITSMreturns
+in each market respond each of the ﬁrst three principal components. The ITSM returns are
+concentrated in mainly three directions that are roughly orthogonal.  Firstly, all European
+markets, apart from Switzerland, point to the same direction as does the PC1.  Secondly,
+Switzerland, the two Scandinavian countries, and all Paciﬁc countries in the sample point
+roughly to the same direction that is perpendicular to the PC1.  Finally, the two North
+American countries point to a direction that is roughly perpendicular to the ﬁrst two PCs.
+Again, consistent with both the correlation analysis and the commonality regressions shown
+above,weﬁndweakevidenceofglobalcommonalitybutseeminglystrongevidenceofregional
+commonality.
+
+                                         [Figure 1 about here.]
+
+    We further conﬁrm regional commonality in ITSM by applying PCA analysis to three
+geographicalsub-samples,namely,Americancountries,Asia-Paciﬁccountries,andEuropean
+countries. Figure2plots the ﬁrst principal components obtained from each group. Splitting
+thesamplegeographicallyleadstoPC1sthatexplainarelativelylargeproportionofvariance
+ineachregion. TheﬁrstprincipalcomponentfromtheAmericancountriesexplains63.1%of
+the ITSM return variance while that from the Asia-Paciﬁc and European countries explains
+41.5% and 40.3% respectively.
+
+                                         [Figure 2 about here.]
+
+
+
+  24The rotated data are obtain by multiplying return data matrix and the component loading matrix
+
+(rotation matrix).
+
+
+
+                                                    19
+    Our empirical evidence suggests that the country ITSM strategies share a universal risk
+factor. However, thisfactorexplainsonlypartoftheirvariationwhereascountriesgeograph-
+ically close exhibit stronger regional risk factors, suggesting potential diversiﬁcation beneﬁts
+from investing in a combined portfolio of country ITSM strategies globally.
+
+4.2.  What is the role of US?
+
+    It is known that US market may possess cross-market predictability on returns of inter-
+national markets. At monthly frequency,Campbell and Hamao(1992) present evidence that
+the US macroeconomic variables such as the dividend-price ratio and the short interest rate
+canhelppredictJapanesestockreturns.Rapachetal.(2013)showthattheUSstockreturns
+Granger cause stock returns in 11international markets. At a higher frequency,Becker et al.
+(1990) state the daily open-to-close US stock return can predict that of the Japanese stock
+market on the next day.
+    It is therefore natural to investigate the predictive role of US ﬁrst half-hour returns in
+a cross-market setting. In particular, we regress the local last half-hour return of a country
+(apartfromUS)againsttheimmediatelypreviousUSﬁrsthalf-hourreturnavailableandthe
+local ﬁrst half-hour return as a control variable of local ITSM. That is, for non-Asia-Paciﬁc
+countries, we ﬁt the following model:
+
+                                rLlocal,t =α+βUSrFUS,t+βlocalrFlocal,t+ϵt                                    (9)
+
+WhererFlocal,t is the ﬁrst half-hour return of the local country on dayt,rFUS,t is the ﬁrst
+half-hour return from the US market on dayt, andrLlocal,t is the last half-hour return of the
+local country on dayt. For Australia, Japan, and New Zealand, whose markets close before
+the US market open on the same calendar day, we use the US ﬁrst half-hour return from the
+previous day:
+                               rLlocal,t =α+βUSrFUS,t−1+βlocalrFlocal,t+ϵt                                 (10)
+
+SigniﬁcantβUS of Equation (9) and Equation (10) imply predictability of the US ﬁrst half-
+hour return on the local last half-hour return.
+    Panel B of Table7reports the results.  The US ﬁrst half-hour return is found to be
+associated with a positive slope coeﬃcient in 12 out of 15 international countries, while 8 of
+
+                                                       20
+the coeﬃcients are signiﬁcant. In the last column, we report the increase in the adjustedR2
+by including the US ﬁrst half-hour return as an additional predictive variable, which is the
+diﬀerence between the adjustedR2 of Model (9) or (10) and that of Model (2):
+
+                                      ∆Adj.R2 =Adj.R2cross−Adj.R2local                                        (11)
+
+WhereAdj.R2local is the adjustedR2 of Model (2), and Adj.R2cross is the adjustedR2 of Model
+(9) or (10), depending on the local country.
+    Using wild bootstrapped data, we also test the null hypothesis of no US ﬁrst half-hour
+return predictability (H0 :βUS = 0 vsH1 :βUS> 0 orβUS< 0).  In particular, we take
+Equation (9) and Equation (10) as benchmark predictive regressions and, given the research
+on intraday return persistence (Heston et al.(2010) andLou et al.(2019)), we assume that
+the US ﬁrst half-hour return follows a ﬁrst order autoregressive process:
+
+                                            rFUS,t =δ+θrFUS,t−1+vt                                              (12)
+
+wherevt is a white noise. We therefore simulate alternative data under the null hypothesis:
+
+
+                                       ∗rLlocal,t = ˆα+ ˆβlocalrFlocal,t+ˆϵtwt                                         (13)
+
+
+                                         ∗rFUS,t = ˆδ+ ˆθ∗rFUS,t−1+ˆvtwt                                           (14)
+
+
+where ˆα, ˆβlocal,andˆϵt areestimatedfromthebenchmarkequations; ˆδ, ˆθ,and ˆvt areestimated
+from Equation (12);  wt is randomly generated from the standard normal distribution;∗rFUS,0
+is set to be equal torFUS,0.  We multiply both residual terms with the same random scalar
+to preserve the contemporaneous correlation between the local ﬁrst half-hour return and the
+US ﬁrst-half hour return and to maintain the conditional heteroskedastisity structure in the
+error terms (Rapach et al.(2013)).
+    We then collect theNewey and West(1987) t-statistic of        βUS from the benchmark equa-
+tions (either one of them depending on the local country) with the bootstrapped data:
+
+
+                                 ∗rLlocal,t =α+βUS∗rFUS,t+βlocalrFlocal,t+ϵt                                 (15)
+
+
+                               ∗rLlocal,t =α+βUS∗rFUS,t−1+βlocalrFlocal,t+ϵt                                (16)
+
+
+
+
+                                                          21
+    Repeating the above process 2000 times leads to 2000 t-statistics, from which the p-value
+is computed as the proportion of the bootstrapped t-statistics that have a larger absolute
+value than the t-statistic obtained from the benchmark equations.
+    As shown in Panel B of Table7, we reject the null of no US cross-market predictability
+at 10% level in 10 out of 16 markets, implying a strong leading role of the US market at
+intraday frequency.
+
+
+5. Investing In Intraday Time-series Momentum Globally
+
+5.1.  Beneﬁts from diversiﬁcation
+
+    To exploit the potential diversiﬁcation beneﬁts in ITSM discussed in the previous sub-
+section, we study three types of global intraday time-series momentum strategies (GITSM).
+We consider a (1) GITSM based on individual ITSM, (2) GITSM based on regional ITSM,
+(3) GITSM using the signal from US ﬁrst half hour return.  For each type of GITSM, we
+employ six portfolio construction techniques using equal, value, inverse-variance (Kirby and
+Ostdiek(2012)), maximum-diversiﬁcation (Choueifaty and Coignard(2008)), mean-variance
+and minimum-variance weights.
+    For Type (1) GITSM, we ﬁrst obtain individual ITSM return series by simply go long
+in the last half hour of a country equity index if the ﬁrst half-hour return on that index is
+positive and go short if negative. Then, we calculate the realized GITSM returns based on
+the above mentioned techniques.25
+
+
+
+   25Although our sample consists of major stock indices across the globe and each stock market opens
+
+at diﬀerent time, we do not suﬀer from the time diﬀerence issue when constructing the global portfolios.
+Geographically, the market that opens the earliest in our sample is the New Zealand market (GMT+12)
+while the US market is the latest (GMT-4).  The time diﬀerence between Wellington and New York is 16
+hours; that is, when the US market closes at New York time 4pm, the local time for the New Zealand market
+is 8am next day, which is two hours prior to the New Zealand market open. In practice, at the US market
+close on dayt, a fund manager will have the last half-hour return for all the countries in sample on day t and
+be able to make decisions on the weights for dayt+1. At this time, the local time for the earliest-opened
+market, New Zealand market, is 8am on dayt+1, which is several hours prior to its last half hour on day
+t+1. Therefore, a daily global portfolio is realistic in practice without suﬀering from time diﬀerence issues.
+
+
+
+                                                         22
+    ForType(2)GITSM,thebaseassetsareregionalITSMinsteadofindividualITSM.That
+is, we average ITSM returns across American countries, Asia-Paciﬁc countries, and Europe
+countries to get three regional ITSM return series before we construct GITSM portfolios
+accordingly.
+    For Type (3) GITSM, the base return series are generated by trading in the last half
+hour of each market guided by the signal from the US ﬁrst-half return. If the US ﬁrst-hour
+return is positive (rFUS> 0) on dayt, we go long in the last half hour on each market and
+vice versa ifrFUS< 0.
+    We use the ﬁrst ﬁve years in the sample as the initial estimation period for the construc-
+tion of the inverse-variance, maximum-diversiﬁcation, mean-variance and minimum-variance
+portfolios. More speciﬁcally, we compute the weights based on information from the period
+4th October 2005 to 1st October 2010, and invest from 4th October 2010 until the end of
+the sample period.26  We compute the weights recursively by adding one day a time in the
+light of estimation stability of such expanding window approach.27  Finally, we impose the
+constraints that assure the sum of weights is equally to one and short sales are not allowed.
+    Table8evaluates the three types of GITSM. Panel A reports the mean, standard devia-
+tion (SD), skewness, kurtosis, and Sharpe ratio of the global intraday time-series momentum
+under the diﬀerent weighting schemes for each type.  Panel B tabulates the alphas from
+the spanning regressions of global intraday momentum on country (individual) intraday
+momentum, while Panel C presents the alphas from the spanning regressions of country
+(individual) intraday momentum portfolios on global intraday momentum;Newey and West
+(1987) t-statistics are shown in parenthesis.
+    Over the 2005-2017 period, the annualized returns of the value-weighted GITSM (VW-
+GITSM)aregenerallyhigherthanthatoftheequally-weightedGITSM(EW-GITSM)(4.75%
+vs3.06%, 2.71%vs2.78%, and5.71%vs5.17%). However, theVW-GITSMalsohasahigher
+volatility (3.22%, 2.41%, and 3.51%) for all types of GITSM compared to the volatility of
+the EW-GITSM (2.43%, 2.01% and 2.93%).  The Sharpe ratio of the EW-GITSM is lower
+
+
+
+  261st October 2010 is a Friday and 4th October is the following Monday.
+
+  27Indeed, we also present results based on a rolling window approach in TableB.3ofAppendix  B, the
+
+results do not change radically.
+
+                                                     23
+than that of the VW-GITSM for Type (1) GTISM while higher for both Type (2) and (3).
+   The spanning alphas of the EW- and VW-GITSM on the country individual ITSM are
+considerably large and positive and are statistically signiﬁcant at 1% level in all cases but
+for Type (2) VW-GITSM against US-ITSM. The signiﬁcant alphas range from 1.40% to
+4.76% and 1.58% to 5.58% per annum for the EW- and VW-GITSM, respectively (Panel
+B). In the reverse regression on the country ITSM portfolios on the global EW and VW
+intraday momentum, we document no statistically signiﬁcant alphas or even negative and
+statistically signiﬁcant alphas for most countries with Norway being the only country that
+consistently gives positive and signiﬁcant alphas.  Our evidence suggests that the global
+portfolios subsume the individual country ITSM portfolios.
+   TheremainingGITSMportfoliosperforminconsistentlyacrossthethreetypesofGITSM.
+Theinverse-varianceGITSM(IV-GITSM)yeildsloweraveragereturnsthantheEW-GITSM
+and VW-GITSM do, yet gives positive and signiﬁcant spanning alphas when against all in-
+dividual ITSM for Type (2) and most of ITSM for Type (3). The maximum-diversiﬁcation
+GITSM (MD-GITSM) gives larger returns than does the IV-GITSM in Type (1) and (3)
+GITSM, and exhibits positive and signiﬁcant spanning alphas in when against most indi-
+vidual ITSM. Despite of the relatively weak economic signiﬁcance of mean-variance GITSM
+(MV-GITSM) in Type (1) and (2) GITSM, the MV-GITSM of Type (3) GITSM manifests
+itself as the strongest strategy in our evaluation, with an annualized return of 6.75% and
+remarkable spanning alphas ranging from 5.63% to 7.19%.
+   Finally, the minimum-variance GITSM (MinV-GITSM) exhibits signiﬁcant spanning al-
+phas in only Type (2) GITSM. We also document that the GITSM portfolios exhibit higher
+Sharpe Ratios compared to country individual ones. Over the 2005-2017 period the annual-
+ized Sharpe ratios of the EW-GITSM are 1.26, 1.38, and 1.77 for all types and that of the
+VW-GITSM are 1.48, 1.12 and 1.63.  In contrast, the Sharpe ratios of the country ITSM
+range between -0.40 and 1.12 over the same period.
+   Overall, our analysis shows investing ITSM globally produces signiﬁcant economic gain
+and the global intraday momentum subsumes the country intraday momentum, but not the
+opposite.
+
+                                         [Table 8 about here.]
+
+                                                   24
+5.2.  Factor exposure of GITSM and the source of its proﬁtability
+
+    Taking the equally-weighted GITSM of Type (1) as an example, we further study the
+factor exposure of GITSM.28 In particular, we deﬁne the global intraday momentum return
+as the equally-weighted 16 country ITSM portfolio return in excess of the 1-month T-bill
+rate, and regress it against the global market factor (CAPM), global Fama-French 3-factor
+model(FF3),globalFama-French3-factormodelplusthe(cross-sectional)momentumfactor
+(FF3+MOM), global Fama-French 5-factor model (FF5), and global Fama-French 5-factor
+model plus the momentum factor (FF5+MOM).29
+    Panel A of Table9tabulates the results from these regressions.  The results show that
+the loadings of the GITSM on the global equity factors are insigniﬁcant, while we docu-
+ment statistically signiﬁcant and positive alphas varying between 2.90% (FF3) and 2.97%
+(FF5) across the models, highlighting that the proﬁtability of the global intraday time-series
+momentum strategy is not captured by global equity factors.
+
+                                           [Table 9 about here.]
+
+    So where does the proﬁtability of GTISM come from?Goyal and Jegadeesh(2018) com-
+pare the performance of time-series momentum (Moskowitz et al.(2012)) and cross-sectional
+momentum (Jegadeesh and Titman(1993)), and conclude that the out-performance of the
+time-series momentum is largely due to a time-varying factor that is implicitly incorporated
+into the strategy. More speciﬁcally, they claim that the dollar value invested in the long leg
+and the short leg in the time-series momentum is not identical and varies over time, while
+cross-sectional momentum is a purely zero-cost strategy. This emanates from the fact that
+the time-series momentum holds long position in assets with buy signal and short position
+in assets with sell signal, while the number of assets with buy and sell signals varies over
+time.
+
+
+
+   28From now, we use words ‘Type (1) EW-GITSM’ and ‘GITSM’ interchangeably.
+
+   29The global factors are sourced from French Library, i.e.   http://mba.tuck.dartmouth.edu/pages/
+
+faculty/ken.french/data_library.html. The global factors are constructed from developed markets and
+represent the global stock market.
+
+
+
+                                                      25
+    While our GITSM based on the intraday time-series momentum introduced byGao et al.
+(2018) diﬀers from the time-series momentum byMoskowitz et al.(2012), it does possess
+similarconstructionfeatures. Forinstance,supposeonagivendaytthat10ofthe16country
+equity indices in our sample generate positive trading signals and the remaining six generate
+negative trading signals.  In this case, the wealth we invest on dayt in the long leg is by
+construction higher than that in the short leg.  The reason is we are equally weighting all
+the 16 indices across the long and short legs rather than weighting within the long and short
+portfolios separately. As a result, our global intraday time-series momentum incorporates a
+time-varying net position, which is the diﬀerence in the wealth invested in each leg.30
+    Therefore, we examine the contribution of this time-varying factor to the proﬁtability of
+GITSM.TodosoweﬁrstcomputethisfactorfollowingtheapproachinGoyalandJegadeesh
+(2018). To be speciﬁc, we invest, in total, two dollar value into the GITSM and invest the
+net position into the global market.  Considering the previous example where we had 10
+indices exhibiting positive signal and six indices exhibiting negative signal, the dollar value
+we invest in the long leg in this case is  1016×$2 = $1.25, and the dollar value we invest in the
+short leg is  616×$2 = $0.75, hence we end up with a net long position of $1.25−$0.75 = $0.5
+in the countries that possess positive trading signals. Because the unconditional probability
+of an asset return being positive/negative is 0.5, the net position between the long and short
+legs on average invests on the whole market, which is the equally-weighted ITSM across the
+16 indices employed in our study.  Therefore, the time-varying global factor is deﬁned as
+follows:
+                                        TVCt =EWMt×NPMt,                                            (17)
+
+whereEWMt is the equally-weighted last half-hour return across the 16 country indices –
+i.e. EWMt =   116×∑16i=1rLi,t, whererLi,t stands for the last half hour of countryi at time
+t, andNPMt denotes the net position in the global market at time t – i.e. NPMt  =
+(Nlongt −Nshortt     )×2.Nlongt     (Nshortt     ) is the number of indices in the long (short) leg.  It is
+worth noting that whileEWMt andNPMt are on the same day, our construction ofTVCt
+
+
+
+   30Technically, this time-varying net position can be either net long or net short depending on the number
+
+of stock indices in the long and short legs.
+
+
+                                                       26
+is ex-ante.  This is becauseNPMt is computed from the ﬁrst half hour of dayt whereas
+EWMt is the equally-weighted global market in the last half hour of dayt.
+    Next, we regressGITSM×2 against Fama-French factors with TVC included on the
+right hand side as follows:
+
+                               GITSMt×2 =α+β′Ft+TVCt+ϵt,                                  (18)
+
+whereβ is a vector of slope coeﬃcients and Ft is a vector of Fama-French pricing factors at
+timet. Multiplying GITSM by two ensures that the total value invested in the strategy is $2
+and will not aﬀect the signiﬁcance of coeﬃcients. Panel B in Table9reports the regression
+results. Consistent with Panel A, GITSM does not show signiﬁcant exposures to the Fama-
+French factors. However, the inclusion of the time-varying factor eliminates the signiﬁcant
+and positive alpha as shown in Panel A and the slope coeﬃcients ofTVC are signiﬁcant
+at the 1% conﬁdence level in all cases.  Moreover, the adjustedR2s increase from 0.4% to
+around 73%. Our results suggest that the time-varying factor is a signiﬁcant source of the
+GITSM proﬁtability and can explain around 73% of the variation of the global time-series
+momentum.
+    TofurtherunderstandthesourcesofTVCreturns, wefollowGoyalandJegadeesh(2018)
+and decompose the time-varying factor into two terms as follows:
+
+                         TVCt =     NPMt×      EWMt+cov(NPMt,EWMt)                           (19)
+
+where the ﬁrst term     NPMt×      EWMt is the expected return of the average net position, and
+isreferredtoastheriskpremiumfactorinGoyalandJegadeesh(2018); andthesecondterm
+is the covariance between the net position in market determined by the information from the
+ﬁrst half hour and the equally-weighted global market in the last half hour, and is referred
+to as the market timing component. SinceNPMt tend to be positive (negative) when more
+markets perform strongly (poorly) in the ﬁrst half hour (e.g., an unexpected good news of
+global economy might result in an uplift in many markets during the ﬁrst half hour), the
+second term will add to the strategy performance when there is a positive autocorrelation
+between the ﬁrst and the last half-hour return in the global market.
+    Over our sample period, the average net position (NPMt) is 14.05% and the average
+TVC (TVCt) is 5.40% per annum. The decomposition of TVC reveals that the return from
+
+                                                     27
+the risk premium term is 0.53% while that of the market timing component is 4.88%. The
+market timing component accounts for 90.37% of the return on TVC, highlighting that the
+proﬁtability of the time-varying factor is largely due to the market timing and not asset
+picking ability.
+
+
+6. What Drives Intraday Time-series Momentum?
+
+6.1.  Liquidity provision and market impact
+
+    Building on the slow moving capital model ofDuﬃe(2010),Bogousslavsky(2016) de-
+velops a theoretical framework in which there are two types of traders trade in the market:
+frequent traders who trade constantly and infrequent traders who need to be inactive for a
+period after each trade due to the costs of being always attentive.  When liquidity trading
+is transient,Bogousslavsky(2016) shows formally in his model that return autocorrelations
+can switch sign, from negative to positive, as a result of the presence of infrequent traders.
+Intuitively, this is due to that the infrequent traders absorb a liquidity shock by taking sub-
+optimal position at timet and then unload the excess position at timet+k, causing another
+liquidity shock at the same direction.31
+    In the intraday context, the overnight information accumulation causes naturally tran-
+sient liquidity shocks at market open. Infrequent traders, who supply liquidity with a price
+concession at the open might have the intention to unload their sub-optimal positions at
+a later time.  Given the well-known U shape of the intraday trading volume and volatility
+(Jain and Joh(1988)), the optimal timing of this unloading may be the trading period im-
+mediately prior to the market close, during which the market is the deepest and most liquid
+(together with the market open).32 This unloading is therefore in the same direction as the
+initial shock and causes the intraday momentum.Gao et al.(2018) conjecture this process
+as a possible explanation for the ITSM.
+    If this explanation holds, we argue that the level of liquidity plays a vital role.   In
+particular, when the liquidity is low, there should be a relatively large market impact for
+
+
+
+   31k is the length of inactive period.
+
+   32Another motivation of rebalancing at the close is to avoid overnight risk (Gao et al.(2018)).
+
+
+
+                                                       28
+both the initial liquidity shock and the infrequent rebalancing at the close, so a stronger
+intraday momentum would be expected. Conversely, when the liquidity is high, the market
+impact of both the initial liquidity shock and the infrequent rebalancing at the close is
+expected to be smaller, resulting in a weaker intraday momentum.
+    Hence,wehypothesizethatthemoreilliquidthemarketis,thestrongerreturnseasonality
+should be observed.  To test this, we sort at the end of the ﬁrst half hour of each day the
+16 indices based on their estimated liquidity and then calculate the equally-weighted ITSM
+return of the top, medium, and bottom 30 percents of the indices.
+    Due to the lack of information on intraday quotes and volume in most countries, ap-
+propriately estimating the liquidity at the frequency of our data is rather challenging. The
+simplest-to-compute option that does not require information on trading volume is perhaps
+themeasurebyRoll(1984): 2     √−cov(rt,rt−1). However,maybeduetothattheinformational
+eﬃcient market assuption is hardly hold at intraday level, the autocovariance of minutely
+returns are positive in nearly half of the days in our sample, making the adjustment for pos-
+itive autocovariance informatioanlly costly. Therefore, we adopt the percent-cost High-Low
+liquidity measure byCorwin and Schultz(2012) that uses only the high and low prices of
+two consecutive time periods to estimate the spread.  The High-Low liquidity is computed
+as follows:
+
+                          S = 2(eα−1)1+eα
+                                √2β−√β           √      γ
+                          α =     3−2√2−            3−2√2                                                (20)
+
+                                 1∑ [   (Ht+j    )]2           [   (Ht,t+1   )]2
+                          β =         ln   Lt+j       , γ =      ln   Lt,t+1      ,
+                                j=0
+whereS stands for the High-Low liquidity measure,Ht andLt are the high price and low
+price at timet,Ht,t+1 andLt,t+1 are the high price and the low price over two consecutive
+time periodst andt+1.
+    For each country, we generally follow the procedure in a note by Corwin and estimate
+the spread in the ﬁrst half hour by averaging the estimates across overlapping ﬁve-minute
+intervals.33 Speciﬁcally, we calculate the High-Low liquidity measure over every two consec-
+
+
+
+  33The note is given by one of the authors ofCorwin and Schultz(2012), illustrating the use of the
+
+                                                     29
+utive ﬁve-minute intervals and then take the average across the overlapping intervals within
+the ﬁrst half hour.34
+    The ﬁrst three columns of Table10report the results.  Panel A tabulates the equally-
+weighted ITSM strategy returns (multiplied by 2) and Sharpe ratio in the low, medium and
+high liquidity groups.35  As shown in the table, we document a monotonic increase in the
+EW-ITSM portfolio returns from high to low liquidity groups.  Speciﬁcally, the strategy
+yields almost doubled raw returns in the low liquidity group compared to the high liquidity
+group. A similar pattern can also be observed in the Sharpe ratios. This is consistent with
+our hypothesis discussed above.
+    Sinceweargueintheprevioussectionthatthetime-varyingcomponentmightbeamajor
+contributor of the equally-weighted ITSM strategy return, we next investigate the behavior
+ofthetime-varyingcomponentacrossthegroups. TheﬁrstthreecolumnsofPanelBofTable
+10tabulates the time-varying factor (TVC) within each group as well as its components, i.e.
+the risk premium and market timing.  We do not observe a clear trend in the TVC return
+across liquidity groups, leading us to investigate the factor exposure for each group. Panel
+C of Table10tabulates the results from the regression of EW-ITSM on the Fama-French
+factorswithineachgroup. Forsimplicity, wereportonlythealphasandtheslopecoeﬃcients
+ofTVCwithrespecttoﬁveFama-Frenchfactorsandthecross-sectionalmomentumfactor.36
+As in the previous analysis, we compare the alphas before and after the inclusion of TVC.
+The signiﬁcant alphas in the regression that do not include TVC suggest the EW-ITSM
+
+
+High-Low estimateintheintradaysetting(http://sites.nd.edu/scorwin/files/2019/11/Application_
+Intraday_Analysis.pdf).
+   34Whilewehavethehighandlowpricesformostmarketsatminutelylevel,wedonothavethisinformation
+
+for some countries in certain periods, e.g., Ireland data gives exactly the same number for high, low, and last
+prices for each minute in the early phase of our sample period. By aggregating the data up to ﬁve-minute
+intervals, we mitigate this problem. Straightforwardly, we pick up the highest and the lowest price from the
+high, low, and last prices collectively in a ﬁve-minute interval, regardless if we have adequate high/low price
+information.
+   35Due to the inclusion of TVC in the Fama-French regressions later, we multiply the EW-ITSM excess
+
+return by 2. To get the actual excess return, one just needs to divide the ﬁgures in Table10by 2.
+   36For more detailed results, including the analysis with respect to other regression models, see TableB.4
+
+andB.5inAppendix  B.
+
+                                                        30
+return in each group cannot be fully explained by Fama-French factors. However, a rather
+striking result shown in the table is that the alpha in the low liquidity group survives even
+with the inclusion of TVC. This infers that the EW-ITSM portfolio return in the bottom
+illiquid group is not fully captured by the time-varying factor.
+
+                                          [Table 10 about here.]
+
+6.2.  Information discreteness and inattentive ‘frogs’
+
+    A second explanation for the intraday time-series momentum proposed byGao et al.
+(2018) is that some traders are simply slower than others causing under-reaction to the
+overnight information.Da et al.(2014) propose the ‘frog-in-the-pan’ (FIP) hypothesis in
+which investors are inclined to be inattentive and under-react to gently arrived information.
+This under-reaction can be adjusted later in time causing momentum. In their paper, they
+documentthatthecross-sectionalmomentumisstrongerwhentheinformationintheforma-
+tion period is continuously arrived. A recent study byLim et al.(2018) tests this hypothesis
+on the time-series momentum ofMoskowitz et al.(2012) by grouping individual US stocks
+based on the information discreteness (ID), which is the measure of information arrival pro-
+cessproposedbyDaetal.(2014). Theauthorsﬁndthatthetime-seriesmomentumperforms
+better in the group of stocks in which the information arrives gently and continuously in the
+formation period.
+    Therefore, in our second hypothesis we expect to observe stronger intraday momentum
+in markets where information arrives continuously. FollowingDa et al.(2014) andLim et al.
+(2018) among others we deﬁne information discreteness (ID) as follows:
+
+                                  IDt =sign(rFt )×(%negt−%post),                                     (21)
+
+whererFt  istheﬁrsthalf-hourreturnondayt,%negt and%post arethepercentageofminutes
+associated with a negative and positive return within the ﬁrst 30 minutes, respectively, on
+dayt.
+    To see how ID measures information incorporation process, consider the ﬁrst half-hour
+returns from two days on same market,rFk  andrFs , triggered by equally eﬀective overnight
+
+
+
+                                                      31
+information,φOk  andφOs, which lead to an upward price movement.37  Now supposeφOk  is
+smoothlyincorporatedintothepricewhileφOs isabsorbedbyafewsuddenpricemovements.
+ThiscanbetranslatedintothatrFk hasahigherproportionofpositiveminutelyreturnsthan
+doesrFs . Collectively:
+
+                                              φOk =φOs
+                                              rFk =rFs> 0                                                  (22)
+
+                                              0≤ps<pk≤ 1,
+
+wherepk andps are the proportion of positive minutely returns inrFk  andrFs .  Assuming
+there is no zero-return minutes, we have:38
+
+                                    1−2pk =IDk<IDs = 1−2ps,                                        (23)
+
+    Therefore, a small ID implies that information is relatively gently absorbed while a large
+ID is a sign of high degree of information discreteness.
+    Similar to the previous subsection, we divide the 16 indices into three groups, at the end
+of the ﬁrst half hour of each day, based on the information discreteness, and then calculate
+the equally-weighted last half hour ITSM returns within each group.
+    The last three columns of Table10report the results.  As in the liquidity groups, we
+observe a monotonic increase in the EW-ITSM portfolio returns from large to small ID
+groups.  The results imply that the hypothesis ofDa et al.(2014) is empirically related to
+our intraday time-series momentum. Panel B of Table10shows an increasing pattern in the
+TVC that is consistent with that of the EW-ITSM across ID groups.  The market timing
+component takes advantage of the intraday autocorrelation between the ﬁrst and the last
+half-hour returns.  Thus, its increase might imply that markets in which the information
+arrives continuously tend to have stronger autocorrelation between the ﬁrst and last half-
+hour returns which is consistent with the FIP hypothesis byDa et al.(2014) as well as other
+
+
+
+   37In fact, so long as bothφOk  andφOs  are positive, it is not necessary to assume equality. But we keep it
+
+for simplicity.
+   38sign(rFk) =sign(rFs ) = 1,%negk−%posk = (1−pk)−pk = 1−2pk,and%negs−%poss = (1−ps)−ps =
+
+1−2ps.
+
+                                                      32
+studies on the relation between investor attention and information arrival process in which
+investors tend to underreact when information arrives gently (Byun et al.(2016) andHou
+etal.(2009)). Finally, PanelCofTable10showsthatthesigniﬁcantalphasintheregression
+that do not include TVC become insigniﬁcant once the TVC is included.
+
+
+7. Conclusion
+
+    With the rise of high-frequency trading, a growing number of academic studies are docu-
+mentingintradayanomaliesinassetprices. TherecentpaperbyGaoetal.(2018)introduces
+intraday time-series momentum (ITSM) in which the ﬁrst half-hour return signiﬁcantly pre-
+dicts the ﬁnal half-hour return in US ETFs. The current paper studies ITSM in a broader
+space of 16 international stock markets, with particular attention to their cross-country
+relationship, investing potential, and the association of ITSM with market characteristics.
+    Speciﬁcally, we ﬁrst show that the phenomenon is both statistically and economically
+pervasive around the world. Twelve out of 16 developed markets in our sample exhibit sta-
+tisticalevidenceofintradaytime-seriesmomentum. Thewidelyobservedin-sampleevidence
+of the intraday return predictability is also conﬁrmed in a thorough out-of-sample analysis
+in the majority of countries. We examine a simple market timing strategy based on ITSM
+and we document signiﬁcant economic beneﬁts of country ITSM with respect to passive
+strategies where er ﬁnd signiﬁcant and positive alphas in most countries in the spanning
+regressions of the ITSM against passive strategies.  Overall, our international evidence is
+largely consistent with that ofGao et al.(2018) in the US market indicating that ITSM is
+not a US-only eﬀect.
+    Having conﬁrmed ITSM globally, we then study the cross-country relationship of the
+eﬀect.  Particularly, we examine the existence and extent of the global and regional com-
+monalityacrossindividualITSM.OurevidenceindicatesthattheITSMstrategysharesome
+commonality across countries, but the explanatory power of the global factor is weak while
+relatively stronger regional factors are observed. We further investigate the leading predic-
+tive role of the US ﬁrst half-hour return and ﬁnd signiﬁcant evidence in 9 out of 16 markets.
+Naturally, this leads to the possibility of constructing global portfolios.
+    Byapplyingsixcommonlyusedportfolioconstructiontechniquesonthreetypesofglobal
+
+                                                     33
+intradaytime-seriesmomentum(GITSM),wedocumentremarkableeconomicgainsofinvest-
+ing ITSM globally than individually. We show that the proﬁtability of an equally-weighted
+GITSM portfolio cannot be explained by global equity factors and further decomposition
+shows that a time varying factor is largely responsible for its proﬁtability.
+    Finally, we explore the association of ITSM with two market characteristics, liquidity
+provision and information discreteness, that are closely related to the possible explanations
+of the phenomenon as proposed inGao et al.(2018).  The evidence implies that the eﬀect
+of ITSM tends to be stronger when the liquidity provision is limited and when there is
+information continuity, which is consistent with our expectations based on the infrequent
+rebalancing model ofBogousslavsky(2016) and the ‘frog-in-the-pan’ model ofDa et al.
+(2014).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                     34
+References
+
+Ashley, R.; C. W. J. Granger; and R. Schmalensee. “Advertising and Aggregate Consump-
+  tion: An Analysis of Causality.” Econometrica, 48 (1980), 1149–1167.
+
+Asness, C. S.; T. J. Moskowitz; and L. H. Pedersen. “Value and Momentum Everywhere.”
+  Journal of Finance, 68 (2013), 929–985.
+
+Barclay, M. J., and T. Hendershott. “Price Discovery and Trading After Hours.” Review of
+  Financial Studies, 16 (2003), 1041–1073.
+
+Barndorﬀ-Nielson, O. E.; P. R. Hansen; A. Lunde; and N. Shephard. “Realized Kernels in
+  Pratice: Trade and Quotes.” Econometrics Journal, 12 (2009), 1–32.
+
+Barroso,  P.,  and  P.  F.  Maio.     “The  Risk-Return  Tradeoﬀ  Among  Equity  Factors.”
+  Working paper,  available at  https://papers.ssrn.com/sol3/papers.cfm?abstract_
+  id=2909085 (2019).
+
+Barroso, P., and P. Santa-Clara.  “Momentum Has Its Moments.”   Journal of Financial
+  Economics, 116 (2015), 111 – 120.
+
+Becker, K. G.; J. E. Finnerty; and M. Gupta.  “The Intertemporal Relation Between the
+  U.S. and Japanese Stock Markets.” Journal of Finance, 45 (1990), 1297–1306.
+
+Bogousslavsky,V. “InfrequentRebalancing,ReturnAutocorrelation,andSeasonality.” Jour-
+  nal of Finance, 71 (2016), 2967–3006.
+
+Brockman, P.; D. Y. Chung; and C. P´erignon. “Commonality in Liquidity: A Global Per-
+  spective.” Journal of Financial and Quantitative Analysis, 44 (2009), 851–882.
+
+Brogaard, J.; T. Hendershott; and R. Riordan. “High-Frequency Trading and Price Discov-
+  ery.” Review of Financial Studies, 27 (2014), 2267–2306.
+
+Byun, S. J.; S. S. Lim; and S. H. Yun.  “Continuing Overreaction and Stock Return Pre-
+  dictability.” Journal of Financial and Quantitative Analysis, 51 (2016), 2015–2046.
+
+
+
+                                                    35
+Campbell,J.Y.,andY.Hamao. “PredictableStockReturnsintheUnitedStatesandJapan:
+  AStudyofLong-TermCapitalMarketIntegration.” Journal of Finance, 47(1992), 43–69.
+
+Campbell, J. Y., and S. B. Thompson.  “Predicting Excess Stock Returns Out of Sample:
+  Can Anything Beat the Historical Average?”    Review of Financial Studies, 21 (2008),
+  1509–1531.
+
+Cenesizoglu,  T.,  and A. Timmermann.   “Do Return Prediction Models Add Economic
+  Value?”  Journal of Banking & Finance, 36 (2012), 2974–2987.
+
+Chaboud, A. P.; B. Chiquoine; E. Hjalmarsson; and C. Vega.  “Rise of the Machines:  Al-
+  gorithmic Trading in the Foreign Exchange Market.”   Journal of Finance, 69 (2014),
+  2045–2084.
+
+Chan, L. K. C.; N. Jegadeesh; and J. Lakonishok.  “Momentum Strategies.”   Journal of
+  Finance, 51 (1996), 1681–1713.
+
+Chordia, T.; R. Roll; and A. Subrahmanyam.   “Commonality in Liquidity.”   Journal of
+  Financial Economics, 56 (2000), 3–28.
+
+Choueifaty, Y., and Y. Coignard. “Toward Maximum Diversiﬁcation.” Journal of Portfolio
+  Management, 35 (2008), 40–51.
+
+Clark, T. E., and M. W. McCracken. “Tests of Equal Forecast Accuracy and Encompassing
+  for Nested Models.” Journal of Econometrics, 105 (2001), 85–110.
+
+Clark,T.E.,andK.D.West. “UsingOut-of-sampleMeanSquaredPredictionErrorstoTest
+  the Martingale Diﬀerence Hypothesis.” Journal of Econometrics, 135 (2006), 155–186.
+
+Clark, T. E., and K. D. West. “Approximately Normal Tests for Equal Predictive Accuracy
+  in Nested Models.” Journal of Econometrics, 138 (2007), 291–311.
+
+Clements, M., and D. Hendry.  Forecasting Economic Time Series.  Cambridge University
+  Press, Cambridge, UK (1998).
+
+Corwin, S. A., and P. Schultz.  “A Simple Way to Estimate Bid-Ask Spreads from Daily
+  High and Low Prices.” Journal of Finance, 67 (2012), 719–760.
+
+                                                   36
+Cumming, D.; L. Helge Haß; and D. Schweizer. “Strategic Asset Allocation and the Role of
+  Alternative Investments.” European Financial Management, 20 (2014), 521–547.
+
+Da, Z.; U. G. Gurun; and M. Warachka.  “Frog in the Pan:  Continuous Information and
+  Momentum.” Review of Financial Studies, 27 (2014), 2171–2218.
+
+Daniel, K., and T. J. Moskowitz. “Momentum Crashes.”  Journal of Financial Economics,
+  122 (2016), 221–247.
+
+Diebold, F. X., and R. S. Mariano. “Comparing Predictive Accuracy.” Journal of Business
+  & Economic Statistics, 20 (2002), 134–144.
+
+Duﬃe,D. “PresidentialAddress: AssetPriceDynamicswithSlow-MovingCapital.” Journal
+  of Finance, 65 (2010), 1237–1267.
+
+Fama,E.F.,andK.R.French.“Size,Value,andMomentuminInternationalStockReturns.”
+  Journal of Financial Economics, 105 (2012), 457–472.
+
+Ferreira, M. A., and P. Santa-Clara.  “Forecasting Stock Market Returns: The Sum of the
+  Parts is More Than the Whole.” Journal of Financial Economics, 100 (2011), 514–537.
+
+Fishe,R.P.H.;R.Haynes;andE.Onur. “AnticipatoryTradersandTradingSpeed.” Journal
+  of Financial and Quantitative Analysis, 54 (2019), 729–758.
+
+Fong, K. Y. L.; C. A. Trzcinka; and C. W. Holden. “What Are the Best Liquidity Proxies
+  for Global Research?”  Review of Finance, 21 (2017), 1355–1401.
+
+Gao,L.; Y.Han; S.Z.Li; andG.Zhou. “MarketIntradayMomentum.” Journal of Financial
+  Economics, 129 (2018), 394–414.
+
+George, T. J., and C.-Y. Hwang.  “The 52-week High and Momentum Investing.”  Journal
+  of Finance, 59 (2004), 2145–2176.
+
+Georgopoulou, A., and J. G. Wang.  “The Trend Is Your Friend:  Time-Series Momentum
+  Strategies across Equity and Commodity Markets.” Review of Finance, 21 (2016), 1557–
+  1592.
+
+
+                                                   37
+Goyal, A., and N. Jegadeesh. “Cross-Sectional and Time-Series Tests of Return Predictabil-
+  ity: What Is the Diﬀerence?”  Review of Financial Studies, 31 (2018), 1784–1824.
+
+Goyal, A., and S. Wahal. “Is Momentum an Echo?”  Journal of Financial and Quantitative
+  Analysis, 50 (2015), 1237–1267.
+
+Goyal, A., and I. Welch. “Predicting the Equity Premium with Dividend Ratios.” Manage-
+  ment Science, 49 (2003), 639–654.
+
+Griﬃn, J. M.; X. Ji; and J. S. Martin.  “Momentum Investing and Business Cycle Risk:
+  Evidence from Pole to Pole.” Journal of Finance, 58 (2003), 2515–2547.
+
+Gupta, T., and B. Kelly.  “Factor Momentum Everywhere.”  Journal of Portfolio Manage-
+  ment, 45 (2019), 13–36.
+
+Ham, H.; H. Cho; H. Kim; and D. Ryu.  “Time-series Momentum in China’s Commodity
+  Futures Market.” Journal of Futures Markets, 39 (2019), 1515–1528.
+
+He, X.-Z., and K. Li.  “Proﬁtability of Time Series Momentum.”   Journal of Banking &
+  Finance, 53 (2015), 140 – 157.
+
+Hendershott, T., and R. Riordan.  “Algorithmic Trading and the Market for Liquidity.”
+  Journal of Financial and Quantitative Analysis, 48 (2013), 1001–1024.
+
+Heston, S. L.; R. A. Korajczyk; and R. Sadka.  “Intraday Patterns in the Cross-section of
+  Stock Returns.” Journal of Finance, 65 (2010), 1369–1407.
+
+Hollstein, F.; M. Prokopczuk; and C. W. Simen. “The Conditional CAPM Revisited: Evi-
+  dence from High-Frequency Betas.” Management Science, Forthcoming.
+
+Hong, H., and J. C. Stein.  “A Uniﬁed Theory of Underreaction, Momentum Trading, and
+  Overreaction in Asset Markets.” Journal of Finance, 54 (1999), 2143–2184.
+
+Hou, K.; W. Xiong; and L. Peng. “A Tale of Two Anomalies: The Implications of Investor
+  Attention for Price and Earnings Momentum.”  Working paper, available at https://
+  papers.ssrn.com/sol3/papers.cfm?abstract_id=976394 (2009).
+
+
+                                                    38
+Huang, D.; J. Li; L. Wang; and G. Zhou. “Time Series Momentum: Is It There?”  Journal
+  of Financial Economics, Forthcoming.
+
+Hurst, B.; Y. H. Ooi; and L. H. Pedersen.  “A Century of Evidence on Trend-Following
+  Investing.” Journal of Portfolio Management, 44 (2017), 15–29.
+
+Jain, P. C., and G.-H. Joh. “The Dependence between Hourly Prices and Trading Volume.”
+  Journal of Financial and Quantitative Analysis, 23 (1988), 269–283.
+
+Jegadeesh, N., andS.Titman. “ReturnstoBuyingWinnersandSellingLosers: Implications
+  for Stock Market Eﬃciency.” Journal of Finance, 48 (1993), 65–91.
+
+Jegadeesh, N., and S. Titman.  “Proﬁtability of Momentum Strategies:  An Evaluation of
+  Alternative Explanations.” Journal of Finance, 56 (2001), 699–720.
+
+Jordan, S. J.; A. Vivian; and M. E. Wohar. “Location, Location, Location: Currency Eﬀects
+  and Return Predictability?”  Applied Economics, 47 (2015), 1883–1898.
+
+Kandel, S., and R. F. Stambaugh.  “On the Predictability of Stock Returns:  An Asset-
+  Allocation Perspective.” Journal of Finance, 51 (1996), 385–424.
+
+Kim, A. Y.; Y. Tse; and J. K. Wald.  “Time Series Momentum and Volatility Scaling.”
+  Journal of Financial Markets, 30 (2016), 103–124.
+
+Kirby, C., and B. Ostdiek. “It’s All in the Timing: Simple Active Portfolio Strategies that
+  Outperform Na¨ıve Diversiﬁcation.”  Journal of Financial and Quantitative Analysis, 47
+  (2012), 437–467.
+
+Komarov, O. “Intra-day Momentum.” Working paper, available at https://papers.ssrn.
+  com/sol3/papers.cfm?abstract_id=2905713 (2017).
+
+Lawrenz, J., and J. Zorn. “Predicting International Stock Returns with Conditional Price-
+  to-fundamental Ratios.” Journal of Empirical Finance, 43 (2017), 159 – 184.
+
+Ledoit, O., and M. Wolf. “Robust Performance Hypothesis Testing With the Sharpe Ratio.”
+  Journal of Empirical Finance, 15 (2008), 850–859.
+
+
+                                                    39
+Lim, B. Y.; J. Wang; and Y. Yao.  “Time-series Momentum in Nearly 100 Years of Stock
+  Returns.” Journal of Banking & Finance, 97 (2018), 283–296.
+
+Liu, M.; Q. Liu; and T. Ma. “The 52-week High Momentum Strategy in International Stock
+  Markets.” Journal of International Money and Finance, 30 (2011), 180–204.
+
+Lou, D.; C. Polk; and S. Skouras.  “A Tug of War:  Overnight Versus Intraday Expected
+  Returns.” Journal of Financial Economics, 134 (2019), 192 – 213.
+
+Malceniece,L.;K.Malcenieks;andT.J.Putni¸nˇs.“HighFrequencyTradingandComovement
+  in Financial Markets.” Journal of Financial Economics, Forthcoming.
+
+McCracken, M. W. “Asymptotics for Out of Sample Tests of Granger Causality.”  Journal
+  of Econometrics, 140 (2007), 719–752.
+
+Menkhoﬀ, L., L. Sarno; M. Schmeling; and A. Schrimpf. “Currency Momentum Strategies.”
+  Journal of Financial Economics, 106 (2012), 660–684.
+
+Moskowitz, T. J., and M. Grinblatt.  “Do Industries Explain Momentum?”    Journal of
+  Finance, 54 (1999), 1249–1290.
+
+Moskowitz, T. J.; Y. H. Ooi; and L. H. Pedersen.  “Time Series Momentum.”  Journal of
+  Financial Economics, 104 (2012), 228–250.
+
+Neely, C. J.; D. E. Rapach; J. Tu; and G. Zhou.  “Forecasting the Equity Risk Premium:
+  The Role of Technical Indicators.” Management Science, 60 (2014), 1772–1791.
+
+Newey, W. K., and K. D. West. “A Simple, Positive Semi-Deﬁnite, Heteroskedasticity and
+  Autocorrelation Consistent Covariance Matrix.” Econometrica, 55 (1987), 703–708.
+
+O’Hara, M. “High Frequency Market Microstructure.” Journal of Financial Economics, 116
+  (2015), 257–270.
+
+Rakowski, D., and X. Wang.  “The Dynamics of Short-term Mutual Fund Flows and Re-
+  turns: A Time-series and Cross-sectional Investigation.”  Journal of Banking & Finance,
+  33 (2009), 2102 – 2109.
+
+
+                                                    40
+Rapach, D. E.; J. K. Strauss; and G. Zhou.  “Out-of-Sample Equity Premium Prediction:
+  Combination Forecasts and Links to the Real Economy.” Review of Financial Studies, 23
+  (2010), 821–862.
+
+Rapach, D. E.; J. K. Strauss; and G. Zhou.  “International Stock Return Predictability:
+  What Is the Role of the United States?”  Journal of Finance, 68 (2013), 1633–1662.
+
+Rapach, D. E., and M. E. Wohar.   “In-sample vs. Out-of-sample Tests of Stock Return
+  Predictability in the Context of Data Mining.” Journal of Empirical Finance, 13 (2006),
+  231–247.
+
+Roll,R. “ASimpleImplicitMeasureoftheEﬀectiveBid-AskSpreadinanEﬃcientMarket.”
+  The Journal of Finance, 39 (1984), 1127–1139.
+
+Welch, I., and A. Goyal. “A Comprehensive Look at The Empirical Performance of Equity
+  Premium Prediction.” Review of Financial Studies, 21 (2008), 1455–1508.
+
+West, K. D.  “Asymptotic Inference about Predictive Ability.”  Econometrica, 64 (1996),
+  1067–1084.
+
+Xu, H. “Reversal, Momentum and Intraday Returns.” Working paper, available at https:
+  //papers.ssrn.com/sol3/papers.cfm?abstract_id=2991183 (2017).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                   41
+Appendix  A. Annualizing Moments
+
+   We use the rescaling technique similar to Appendix B inCumming et al.(2014) to
+annualize daily mean, standard deviation, skewness and kurtosis.  Supposeri is the daily
+returnondayiandR istheannualreturn. Undertheassumptionthatthereare252trading
+days in a year and theris are independently and identically distributed (i.i.d.), it is clear
+that the annualized mean ¯R = ¯r·252 and the annualized standard deviationσR =σr·√252.
+Therefore, the annualized SkewnessSkew(R) is:
+
+                    Skew(R) =E(R− ¯R)3σ3R
+
+                                =E(∑252i=1ri−252¯r)3
+                                       252√252σ3r
+                                =E[∑252i=1(ri−¯r)]3
+                                   ∑252252√∑252252σ3r∑252
+                                =    i=1    j=1    k=1E[(ri−¯r)(rj−¯r)(rk−¯r)]
+                                   ∑252              252√252σ3r
+                                =    i=1Skew(ri)σ3r
+                                      252√252σ3r
+
+                                =Skew(ri)√252 ,
+
+where
+
+                                              E[(ri−¯r)(rj−¯r)(rk−¯r)]
+
+                          =    E[(ri−¯r)3] =Skew(ri)σ3r,   ifi =j =k;
+                             0                                           otherwise.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                   42
+and the annualized KurtosisKurt(R) is:
+
+              Kurt(R) =E(R− ¯R)4σ4R
+
+                         =E(∑252i=1ri−252¯r)4
+                                     2522σ4r
+                         =E[∑252i=1(ri−¯r)]4
+                             ∑2522522σ4r∑252∑252  ∑252
+                         =      i=1    j=1    k=1    l=1E[(ri−¯r)(rj−¯r)(rk−¯r)(rl−¯r)]
+                             ∑252                          2522σ4r
+                         =      i=1Kurt(ri)σ4r + 252·2512 · 4·32σ4r
+                                            2522σ4r
+
+                         =Kurt(ri)252     + 25184,
+
+where
+
+                                                   E[(ri−¯r)(rj−¯r)(rk−¯r)(rl−¯r)]
+
+                  E[(ri−¯r)4] =Kurt(ri)σ4r,   ifi =j =k =l;
+
+             =  E[(ri−¯r)2(rj−¯r)2] =σ4r,    if respective two ofi,j,k,l are equal;
+
+                  0                                           otherwise.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                       43
+Appendix  B. Additional Tables
+
+                                     [Table B.1 about here.]
+
+                                     [Table B.2 about here.]
+
+                                     [Table B.3 about here.]
+
+                                     [Table B.4 about here.]
+
+                                     [Table B.5 about here.]
+
+
+Appendix  C. Principal Component Analysis With Monthly Aggregated ITSM
+                  Returns
+
+                                     [Figure C.1 about here.]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                 44
+Figures
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                Panel A: Variance Explained                      Panel B: Front View
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                       Panel C: Top View                               Panel D: End View
+
+                                Figure 1: Global Principal Component Analysis
+
+Plotted are the results of global principal component analysis. Panel A depicts the proportional eigenvalues
+associated with each eigenvector.  It shows how much variance is explained by each principal component.
+The proportional values (in percentage) are stated above the bars.  Panel B to D are the front view, top
+view, and end view of the rotated data plotted in a 3-D space of which the axes are the PC1, PC2, and PC3
+respectively. Each point represents a rotated observation whereas the arrows are the projection of original
+return series onto the new principal component space, implying the relation of the series and the PCs. Data
+are normalized and standardized and the sample period spans from 04 October 2005 to 29 December 2017.
+
+
+
+
+
+
+
+
+                                                              45
+                               Figure 2: Regional First Principal Components
+
+Plotted are the ﬁrst principal components obtained from the regional principal component analysis which is
+appliedtothreegeographicalsub-samples,namely,Americancountries(Amer),Asia-Paciﬁccountries(A-P),
+and European countries (EU). Data are normalized and standardized and the sample period spans from 04
+October 2005 to 29 December 2017.
+
+
+
+
+
+
+
+
+
+
+
+                                                            46
+      Figure C.1: Principal Component Analysis With Monthly Aggregated ITSM Returns
+
+Plotted are the proportional eigenvalues associated with each eigenvector obtained from the principal com-
+ponent analysis on monthly aggregated ITSM returns.  It shows how much variance is explained by each
+principalcomponent. Theproportionalvalues(inpercentage)arestatedabovethebars. Dataarenormalized
+and standardized and the sample period spans from 04 October 2005 to 29 December 2017.
+
+
+
+
+
+
+
+
+
+
+
+                                                           47
+Tables
+
+
+                                                           Table 1: Indices
+
+                             Index                                        RIC          Trading Hours (local time)
+ Australia               S&P ASX 200                                 .AXJO                      10:00 - 16:00
+ Austria                  Austrian Traded Index                   .ATX                         09:00 - 17:30
+ Canada                  S&P/TSX Composite Index           .GSPTSE                  09:30 - 16:00
+ France                   CAC 40 Stock Market Index          .FCHI                        09:00 - 17:30
+ Germany               DAX PERFORMANCE-INDEX    .GDAXI                    09:00 - 17:30
+ Ireland                   ISEQ Overall Index                        .ISEQ                        08:00 - 16:30
+ Japan                    Nikkei Stock Average 225               .N225                        09:00 - 15:00
+ Netherlands           AEX Amsterdam Index                  .AEX                         09:00 - 17:30
+ New Zealand         NZX 50 Index Gross                       .NZ50                        10:00 - 18:00
+ Norway                  Oslo Exchange All-share Index       .OSEAX                    09:00 - 16:30
+ Portugal                PSI 20 INDEX                                .PSI20                       08:00 - 16:30
+ Spain                     Ibex 35 Index                                  .IBEX                       09:00 - 17:30
+ Sweden                  OMX Stockholm All-share Index   .OMXSPI                  09:00 - 17:30
+ Switzerland           SMI Index                                       .SSMI                        09:00 - 17:30
+ United Kingdom   FTSE 100                                       .FTSE                       08:00 - 16:30
+ United States        S&P500                                           .SPX                         09:30 - 16:00
+This table presents the 16 developed markets based on the MSCI classiﬁcation list along with their
+corresponding stock market indices. RIC stands for the Reuters Instrument Code.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                    48
+             Table 2: Summary Statistics of the First and Last Half-hour Returns
+
+                                  No.Days   Mean (%)   SD (%)   Skewness   Kurtosis
+  Australia        First        3104             7.826           22.508         -0.009           3.028
+                       Last        3104             5.105            5.866          -0.042           3.068
+  Austria           First        3050            22.191          19.346          0.007            3.067
+                       Last        3050            15.379           6.714           0.108            3.093
+  Canada           First        3073             8.538           11.345          0.029            3.067
+                       Last        3073             4.185            4.586          -0.007           3.135
+  France            First        3136             8.995           16.940         -0.023           3.053
+                       Last        3136             3.363            5.821          -0.006           3.023
+  Germany        First        3110            12.817          16.504         -0.036           3.042
+                       Last        3110             3.357            5.457           0.016            3.047
+  Ireland            First        3102            21.124          18.074          0.113            3.236
+                       Last        3102             6.557            6.646           0.027            3.070
+  Japan             First        3003            18.465          25.601         -0.011           3.021
+                       Last        3003             1.838            6.093           0.041            3.120
+  Netherlands    First        3134            12.490          15.879         -0.020           3.048
+                       Last        3134             2.459            5.363          -0.023           3.028
+  Norway           First        3075            20.800          12.765         -0.023           3.025
+                       Last        3075             4.453            7.491          -0.013           3.046
+  NZ                  First        3078             3.153           16.875         -0.005           3.045
+                       Last        3078             1.289            1.549           0.038            3.034
+  Portugal         First        3134            16.246          15.676         -0.029           3.060
+                       Last        3134             8.974            5.177          -0.026           3.019
+  Spain              First        3124             5.731           17.656         -0.023           3.067
+                       Last        3124            11.022           5.651          -0.011           3.019
+  Sweden           First        3076             0.342           11.977         -0.014           3.020
+                       Last        3076             7.634            4.391          -0.016           3.021
+  Switzerland    First        3079            11.001          12.806          0.020            3.045
+                       Last        3079            -2.272           5.276          -0.019           3.035
+  UK                 First        3102             9.201           15.108         -0.061           3.087
+                       Last        3102             1.733            5.211           0.020            3.024
+  US                  First        3082             2.867           11.343         -0.022           3.023
+                       Last        3082             0.697            5.850          -0.013           3.094
+This table reports the summary statistics for the ﬁrst and last half-hour returns of the
+16 developed equity market indices.  The ﬁrst and last half-hour returns are deﬁned
+in equation1.  The table reports the number of days (i.e.  No.Days), mean, standard
+deviation (i.e. SD), skewness, and kurtosis for each equity market index. The sample
+period spans from 04 October 2005 to 29 December 2017.  Note that the number of
+available trading days varies from country to country due to diﬀerent holiday systems
+and data availability limitations. The mean, standard deviation, skewness and kurtosis
+are annualized.  For the calculation of the annualized third and fourth moments see
+Appendix  A.
+
+
+
+                                                             49
+50
+                                          Table 4: Out-of-sample Analysis
+
+                     Ave.Intercept Ave.βF  R2OOS Rst.R2OOS MSPE−adj. ENCNEW
+     Australia   5.36***              4.49***     1.23     1.10            3.38***              46.14**
+       Austria   16.02***            1.19          0.14     0.12            1.60*                 2.56**
+       Canada   6.12***              0.00          -0.14    -0.25           -0.84                  -1.09
+        France   3.88                   5.97***     -0.35    0.22            2.34***              27.81**
+     Germany   2.79                   3.62***     -0.64    0.11            1.02                   7.32**
+        Ireland   5.73**               1.42          0.18     0.15            1.70**                3.01**
+         Japan   3.78*                 5.04***     -0.20    -1.32           2.41***              47.25**
+ Netherlands   2.52                   5.35***     -2.39    -0.79           0.60                   6.08**
+       Norway   1.85                   5.92***     0.92     1.08            3.10***              19.84**
+             NZ   1.41**               0.12          -0.03    -0.02           -0.25                  -0.16
+      Portugal   7.91***              3.14***     -0.25    -0.03           1.01                   7.97**
+          Spain   12.63***            4.60***     -0.28    0.19            1.72**                22.19**
+       Sweden   9.57***              2.17          1.18     0.90            3.36***              16.23**
+  Switzerland   -3.23                  3.84**       -0.01    0.05            1.56*                 8.69**
+             UK   2.25                   4.96***     -1.25    -0.58           1.00                   10.82**
+             US   0.99                   11.67***   -3.10    0.25            2.07**                68.57**
+This table reports the individual out-of-sample analysis.  Using the ﬁrst ﬁve years (2005-
+2010) as the initial estimation period, we recursively estimate the predictive regression in
+each market by adding one day at a time. The intercept and slope coeﬃcients are averaged
+from individual regressions.  The stars next to them are assigned based on averageNewey
+and West(1987) t-statistics (unreported).   The last four columns reportCampbell and
+Thompson(2008)           R2OOS,Rst.R2OOS,Clark and West(2007)      MSPE−adjusted, andClark
+andMcCracken(2001)     ENCNEW respectively. WeapplyNeweyandWest(1987)corrections
+in computing theClark and West(2007)        MSPE−adjusted. ForENCNEW, we use critical
+values of 1.280 and 2.085 for 5% and 10% conﬁdence levels, given byClark and McCracken
+(2001).  The slope coeﬃcients are scaled by 100.  The sample period spans from 04 Oct
+2005 to 29 Dec 2017. *, **, and *** represent the signiﬁcance levels of 10%, 5%, and 1%,
+respectively.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                           51
+Table 5: Economic Signiﬁcance of Individual Intraday Time Series Momentum
+
+
+                          StrategyMean (%)SD (%)SkewnessKurtosis  Sharpe  ρ  α (%)   ARatio
+
+           Australia     ITSM      2.971      5.823     0.047      3.075     0.510
+                             AL        4.152      5.820     -0.084     3.077     0.713   -0.099   3.384     0.584
+                             BH        3.594     25.612    -0.026     3.019     0.140    0.019    2.956     0.508
+
+            Austria      ITSM      2.209      6.807     -0.112     3.107     0.324
+                             AL       15.198     6.740     0.113      3.107   2.255***-0.071   3.293     0.485
+                             BH        3.242     29.034    -0.001     3.020     0.112    0.077    2.150     0.317
+            Canada      ITSM     -1.668     4.227     -0.019     3.045     -0.395
+                             AL        4.275      4.220     0.084      3.045   1.013***-0.047  -1.466   -0.347
+                             BH        4.979     15.985    0.004      3.040     0.311    0.064   -1.751   -0.415
+
+             France       ITSM      5.149      5.920     0.008      3.018     0.870
+                             AL        2.810      5.926     -0.009     3.018     0.474   -0.0535.298***  0.896
+                             BH        4.836     25.805    0.012      3.023     0.187    0.048 5.095***  0.862
+           Germany     ITSM      4.105      5.591     0.053      3.051     0.734
+                             AL        3.764      5.592     0.027      3.051     0.673   -0.031 4.222**   0.756
+                             BH        7.253     24.763    -0.005     3.017     0.293    0.053  4.019**   0.720
+
+            Ireland      ITSM      3.297      6.421     0.014      3.031     0.513
+                             AL        4.435      6.418     -0.055     3.032     0.691   -0.036  3.455*    0.538
+                             BH        3.980     25.516    -0.033     3.031     0.156   -0.027   3.324     0.518
+
+             Japan       ITSM      4.416      6.142     -0.014     3.117     0.719
+                             AL        3.279      6.145     0.113      3.116     0.534   -0.052 4.586**   0.748
+                             BH       12.865    31.756    -0.010     3.028     0.405   -0.027 4.483**   0.730
+         Netherlands   ITSM      2.378      5.412     0.016      3.025     0.439
+                             AL        1.824      5.413     -0.027     3.025     0.337   -0.095   2.552     0.474
+                             BH        1.090     23.888    -0.007     3.030     0.046   -0.037   2.387     0.441
+            Norway      ITSM      7.328      7.529     0.008      3.053     0.973
+                             AL        4.193      7.539     -0.036     3.053     0.556   -0.0287.446***  0.990
+                             BH        5.724     21.902    -0.026     3.022     0.261*   0.024 7.280***  0.967
+
+               NZ         ITSM      0.495      1.513     0.036      3.022     0.327
+                             AL        1.618      1.510     0.013      3.022     1.071    0.030    0.445     0.295
+                             BH        9.980     19.145    -0.021     3.028     0.521    0.071    0.439     0.291
+
+           Portugal     ITSM      3.133      5.305     -0.004     3.018     0.591
+                             AL        8.792      5.280     -0.026     3.019    1.665** -0.009  3.213*    0.606
+                             BH       -1.277    23.890    0.010      3.020     -0.053   0.067   3.152*    0.596
+
+             Spain       ITSM      3.323      5.784     0.008      3.016     0.575
+                             AL       11.157     5.745     -0.006     3.017   1.942*** 0.015   3.159*    0.546
+                             BH        9.208     27.886    0.026      3.026     0.330    0.123   3.088*    0.538
+
+            Sweden      ITSM      2.531      4.391     -0.016     3.017     0.576
+                             AL        7.483      4.368     -0.008     3.018    1.713** -0.057  2.958*    0.675
+                             BH        3.762     19.740    -0.003     3.009     0.191    0.009    2.523     0.575
+
+         Switzerland   ITSM      0.326      5.262     -0.037     3.038     0.062
+                             AL        -1.503     5.261     -0.002     3.038     -0.286  -0.020   0.296     0.056
+                             BH       -1.716    22.534    -0.065     3.111     -0.076   0.087    0.361     0.069
+
+               UK         ITSM      2.605      5.134     0.014      3.018     0.507
+                             AL        1.077      5.136     0.009      3.018     0.210   -0.047  2.656*    0.518
+                             BH        0.841     22.144    0.008      3.036     0.038    0.038   2.598*    0.506
+
+               US         ITSM      6.567      5.892     0.086      3.099     1.115
+                             AL        0.033      5.907     -0.028     3.099    0.006** -0.106 6.570**   1.122
+                             BH        7.465     19.411    -0.032     3.045     0.385   -0.045 6.669**   1.133
+          This table presents the performance of intraday time-series momentum (i.e.  ITSM) along
+         with two benchmark strategies, Always-long (i.e.AL) and Buy-and-hold (i.e.BH), for each of
+         the 16 equity markets. ITSM opens a long (short) position at the beginning of the last half
+         hourifthereturnduringtheﬁrsthalfhouronthesametradingdayispositive(negative),and
+         closesthepositionsatthemarketclose. TheAlways-long strategytakesalwaysalongposition
+         in the last half hour every trading day and the Buy-and-hold strategy holds the asset from
+         the beginning until the end of the sample period. We report the Mean, Standard Deviation
+         (SD), Skewness, Kurtosis and the Sharpe ratio for each strategy and market. The table also
+         presents the correlation (ρ) between the ITSM and the benchmark strategies returns. Theα
+         and appraisal ratio (ARatio) are based on the regression:rI,t =α+βrbenchmark,t +ϵt,
+         whererI,t andrbenchmark,t arereturnsfromITSMandbenchmarkstrategies, respectively.
+         The appraisal ratio is computed asα/σϵ whereσϵ is the standard error of the regression.
+         Standard errors are adjusted usingNewey and West(1987).We test the hypothesis that the
+         Sharpe ratios of the ITSM and the AL or BH strategies are equal followingLedoit and Wolf
+         (2008). We use Newey-West (1987) standard errors for the statistical signiﬁcance of alpha.
+         Mean, Standard Deviation (SD), Skewness, Kurtosis, Sharpe ratio, andα’s are annualized.
+         *, **, and *** denote signiﬁcance at 10%, 5%, and 1% conﬁdence levels, respectively. The
+         sample period spans from 04 October 2005 to 29 December 2017.
+
+
+
+
+
+
+
+
+
+
+                                                                   52
+53
+54
+55
+56
+    Table 10: Cross-sectional Sorting Analysis of Intraday Time-series Momentum
+
+                       Small      Medium   Large          Small      Medium   Large
+                                Panel A: Spread                        Panel B: Volatility
+AVE(%)           2.67***   3.33***     3.23***       2.57***   3.02***     3.61***
+                       (3.24)      (3.47)       (3.07)          (3.10)      (3.11)       (2.97)
+SD                    2.61         3.07          3.54             2.67         3.05          3.64
+Sharpe Ratio   1.02         1.09          0.91             0.96         0.99          0.99
+Skewness          0.01         0.00          -0.01            0.05         0.02          -0.01
+Kurtosis           3.02         3.02          3.03             3.04         3.02          3.01
+
+                                   Panel C: ID                        Panel D: Individualism
+AVE(%)           4.21***   3.75***     1.15             3.44***   3.19***     2.57***
+                       (4.27)      (3.90)       (1.17)          (3.01)      (3.83)       (2.69)
+SD                    3.07         3.03          3.15             3.63         2.67          2.80
+Sharpe Ratio   1.37         1.24          0.37             0.95         1.19          0.92
+Skewness          0.01         0.03          0.02             0.02         -0.02         0.05
+Kurtosis           3.02         3.01          3.05             3.01         3.02          3.03
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        57
+                              Table B.1: Individual ITSM in Local Currency
+
+                                        Intercept      βF         Adj.R2 (%)
+           Australia               3.15***                  4.76***               3.92
+                                        (3.27)                     (5.59)
+              Austria               13.84***                0.61                    -0.01
+                                        (6.21)                     (0.38)
+             Canada               4.87***                  2.00                    0.24
+                                        (3.54)                     (1.10)
+               France               0.67                       5.93***               2.68
+                                        (0.41)                     (5.01)
+           Germany               1.26                       3.98***               1.22
+                                        (0.82)                     (3.45)
+              Ireland               3.10*                      1.63*                  0.17
+                                        (1.67)                     (1.84)
+                Japan               0.65                       5.60***               3.70
+                                        (0.49)                     (4.28)
+       Netherlands               -0.10                      5.37***               2.32
+                                        (-0.07)                   ( 3.73)
+             Norway               1.10                       7.05***               1.70
+                                        (0.48)                     (4.24)
+                    NZ               0.09**                    -0.01                   -0.03
+                                        ( 2.39)                   (-0.75)
+            Portugal               5.63***                  3.33***               0.99
+                                        (4.06)                     (3.99)
+                Spain               9.24***                  4.24***               1.43
+                                        (5.54)                     (3.53)
+              Sweden               7.62***                  5.46***               3.20
+                                        (5.75)                     (6.58)
+       Switzerland               1.24                       4.17***               1.45
+                                        (0.92)                     (2.89)
+                    UK               -0.54                      6.96***               3.26
+                                        (-0.37)                   ( 4.99)
+                    US               0.14                       9.57***               3.41
+                                        (0.09)                     (3.45)
+In this table, we replicate the in-sample statistical analysis conducted in Panel
+A Table3but using data in local currency.   Returns are annualized and in
+percentage. TheNewey and West(1987)        t-statistics are reported in parentheses.
+The sample period spans from 04 October 2005 to 29 December 2017. *, **, and
+*** represent the signiﬁcance levels of 10%, 5%, and 1%, respectively.
+
+
+
+
+
+
+                                                           58
+Table B.2: Economic Signiﬁcance of Individual Intraday Time Series Momentum
+
+
+                           StrategyMean (%)SD (%)SkewnessKurtosis  Sharpe  ρ   α (%)   ARatio
+
+            Australia     ITSM      4.686      3.306     0.028      3.023     1.418
+                              AL        2.857      3.314     0.012      3.023     0.862    0.010  4.657***   1.409
+                              BH        3.330     16.838    -0.028     3.016   0.198*** 0.016  4.675***   1.415
+
+             Austria      ITSM      0.839      6.368     -0.135     3.134     0.132
+                              BH        1.496     25.026    -0.008     3.020     0.060    0.078     0.809     0.128AL       14.014     6.307     0.151      3.134   2.222***-0.096    2.197     0.347
+
+             Canada      ITSM      0.070      4.420     0.013      3.083     0.016
+                              AL        5.046      4.408     0.112      3.082    1.145** -0.070    0.425     0.096
+                              BH        4.508     17.814    -0.024     3.048     0.253    0.050     0.015     0.003
+              France       ITSM      2.827      5.036     -0.002     3.024     0.561
+                              AL        0.756      5.039     0.000      3.024     0.150   -0.070   2.879*     0.573
+                              BH        2.977     22.175    0.007      3.019     0.134    0.043    2.798*     0.556
+            Germany     ITSM      2.677      4.931     0.059      3.067     0.543
+                              AL        2.306      4.932     0.042      3.068     0.468   -0.036   2.759*     0.560
+                              BH        5.422     21.353    -0.003     3.018     0.254    0.049    2.615*     0.531
+
+              Ireland      ITSM      4.374      5.489     0.024      3.042     0.797
+                              AL        1.262      5.496     -0.059     3.043     0.230   -0.060  4.450**    0.812
+                              BH        2.446     23.008    -0.033     3.032     0.106   -0.069  4.414**    0.806
+
+              Japan       ITSM      5.347      5.384     0.030      3.080     0.993
+                              AL        2.437      5.392     0.070      3.079     0.452   -0.020 5.396***   1.003
+                              BH       10.366    24.526    -0.015     3.034     0.423   -0.021 5.395***   1.003
+
+          Netherlands   ITSM      1.118      4.514     0.036      3.030      0.248AL        -0.075     4.516     -0.029     3.030     -0.017  -0.083    1.112     0.247
+                              BH       -0.670    20.473    -0.017     3.027     -0.033  -0.011    1.117     0.247
+             Norway      ITSM     11.330     7.599     0.011      3.075     1.491
+                              AL        2.813      7.633     -0.073     3.074   0.369***-0.07711.546***  1.524
+                              BH        2.665     22.868    -0.044     3.024   0.117***-0.02111.349***  1.494
+                NZ         ITSM      -0.007     0.148     0.475      5.152     -0.051
+                              AL        0.112      0.148     1.188      5.147    0.760**  0.163    -0.026    -0.177
+                              BH       10.997    10.709    -0.017     3.024    1.027**  0.032    -0.012    -0.083
+
+             Portugal     ITSM      3.241      4.300     0.006      3.024     0.754
+                              AL        6.132      4.288     -0.019     3.025     1.430    0.019   3.125**    0.727
+                              BH       -2.541    20.258    0.007      3.019   -0.125** 0.063   3.275**    0.763
+
+               Spain       ITSM      2.863      5.166     0.003      3.014     0.554
+                              AL        9.877      5.131     0.001      3.015   1.925***-0.029   3.148*     0.610
+                              BH        7.044     23.982    0.024      3.024     0.294    0.110    2.696*     0.525
+
+             Sweden      ITSM      7.619      3.803     0.016      3.013     2.003
+                              AL        7.183      3.808     -0.006     3.014     1.886   -0.066 8.091***   2.133
+                              BH        1.065     20.444    -0.012     3.017   0.052*** 0.037  7.611***   2.003
+           Switzerland   ITSM      1.478      3.756     0.014      3.028     0.394
+                              AL        2.301      3.754     0.012      3.028     0.613   -0.033    1.555     0.414
+                              BH        1.539     17.389    -0.026     3.024     0.088    0.042     1.464     0.390
+                UK         ITSM      2.412      4.372     0.010      3.018     0.552
+                              AL        0.206      4.375     0.016      3.018     0.047   -0.078    2.428     0.557
+                              BH        0.548     18.214    -0.003     3.024     0.030    0.009     2.411     0.552
+                US         ITSM      6.611      5.897     0.086      3.099     1.121
+                              AL        0.060      5.912     -0.028     3.099    0.010** -0.107  6.617**    1.129
+                              BH        7.618     19.425    -0.032     3.045     0.392   -0.045  6.716**    1.140
+
+           Thistablepresentstheperformanceofintradaytime-seriesmomentum(i.e. ITSM)alongwith
+          two benchmark strategies, Always-long (i.e.AL) and Buy-and-hold (i.e.BH), for each of the 16
+          equity markets using data based on local currencies.  ITSM opens a long (short) position
+          at the beginning of the last half hour if the return during the ﬁrst half hour on the same
+          trading day is positive (negative), and closes the positions at the market close. The Always-
+          long strategy takes always a long position in the last half hour every trading day and the
+          Buy-and-hold strategy holds the asset from the beginning until the end of the sample period.
+          The Table reports the Mean, Standard Deviation (SD), Skewness, Kurtosis and the Sharpe
+          ratio for each strategy and market.  The table also presents the correlation (ρ) between the
+          ITSM and the benchmark strategies returns.  Theα and appraisal ratio (ARatio) are based
+          on the regression:rI,t =α+βrbenchmark,t +ϵt, whererI,t andrbenchmark,t are returns
+          from ITSM and benchmark strategies, respectively. The appraisal ratio is computed asα/σϵ
+          whereσϵ is the standard error of the regression.  Standard errors are adjusted usingNewey
+          andWest(1987).WetestthehypothesisthattheSharperatiosoftheITSMandtheALorBH
+          strategies are equal followingLedoit and Wolf(2008).  We use Newey-West (1987) standard
+          errors for the statistical signiﬁcance of alpha.  Mean, Standard Deviation (SD), Skewness,
+          Kurtosis, Sharpe ratio, andα’s are annualized. *, **, and *** denote signiﬁcance at 10%, 5%,
+          and 1% conﬁdence levels, respectively. The sample period spans from 04 October 2005 to 29
+          December 2017.
+
+
+
+
+
+
+
+
+
+
+                                                                    59
+60
+61
+62
