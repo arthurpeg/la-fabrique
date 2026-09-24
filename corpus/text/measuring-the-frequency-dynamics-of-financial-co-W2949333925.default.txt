@@ -1,0 +1,1837 @@
+Measuring the frequency dynamics of ﬁnancial connectedness
+and systemic risk∗†
+Jozef Barun´ıka,b‡, and Tom´ aˇ sKˇrehl´ıka,b
+a Institute of Economic Studies, Charles University,
+Opletalova 26, 110 00, Prague, Czech Republic
+b Department of Econometrics, IITA, The Czech Academy of Sciences,
+Pod Vodarenskou Vezi 4, 182 00, Prague, Czech Republic
+December 20, 2017
+Abstract
+We propose a new framework for measuring connectedness among ﬁnancial variables that
+arises due to heterogeneous frequency responses to shocks. To estimate connectedness in
+short-, medium-, and long-term ﬁnancial cycles, we introduce a framework based on the spec-
+tral representation of variance decompositions. In an empirical application, we document
+the rich time-frequency dynamics of volatility connectedness in US ﬁnancial institutions.
+Economically, periods in which connectedness is created at high frequencies are periods
+when stock markets seem to process information rapidly and calmly, and a shock to one
+asset in the system will have an impact mainly in the short term. When the connectedness
+is created at lower frequencies, it suggests that shocks are persistent and are being trans-
+mitted for longer periods.
+Keywords: Connectedness, frequency, spectral analysis, systemic risk
+JEL: C18; C58; G10
+1 Introduction
+The connectedness of ﬁnancial markets is central to many areas of research, including risk
+management, portfolio allocation, and business cycle analysis. Being painfully aware of the
+unsuitability of standard correlation-based measures, academics have concentrated on develop-
+ing more general frameworks. An abundant body of literature, however, still overlooks several
+fundamental properties of connectedness and hence possible sources of systemic risk. In our
+∗We thank the editor George Tauchen, an associate editor, two anonymous referees, and participants at
+various seminars and conferences for their comments, which have greatly improved the paper. Support from the
+Czech Science Foundation under the GA16-14179S project is gratefully acknowledged.
+†For estimating the frequency-dependent connectedness measures introduced by this paper, we provide the
+package frequencyConnectedness in R software. The package is available on CRAN or https://github.com/
+tomaskrehlik/frequencyConnectedness. Note that the term connectedness is used widely in the literature
+studying how the variables in a system are connected (Diebold and Yilmaz, 2014). In focusing on sources of
+systemic risk, we focus in particular on sources of system-wide connectedness.
+‡Corresponding author, Tel. +420(776)259273, Email address: barunik@fsv.cuni.cz
+1
+arXiv:1507.01729v4  [stat.ME]  19 Dec 2017
+work, we argue that to understand the sources of connectedness in an economic system, it
+is crucial to understand the frequency dynamics of the connectedness, as shocks to economic
+activity impact variables at various frequencies with various strengths. To consider the long-,
+medium-, and short-term frequency responses to shocks, we propose a general framework that
+will allow us to measure the ﬁnancial connectedness at a desired frequency band.
+The main reason why we should believe that agents operate on diﬀerent investment hori-
+zons represented by frequencies lies in the formation of their preferences. Ortu et al. (2013)
+disaggregate consumption growth into cyclical components classiﬁed by their level of persis-
+tence, and they develop an asset pricing model in which consumption responds to shocks
+due to heterogeneous preference choices. The authors hence extend the growing literature
+on consumption-based asset pricing models that price long-run risk in consumption growth
+(Bansal and Yaron, 2004). In an earlier contribution, Cogley (2001) decomposes the approx-
+imation errors in stochastic discount factor models by frequency and applies the frequency
+decomposition to a number of consumption-based discount factor models. Bandi and Tamoni
+(2016) further argue that consumption growth should be separated into a variety of cyclical
+components because investors may not focus on very high-frequency components of consump-
+tion representing short-term noise; instead, they may focus on lower-frequency components of
+consumption growth with heterogeneous periodicities. In a ﬁnancial system, asset prices driven
+by consumption growth with diﬀerent cyclical components will naturally generate shocks with
+heterogeneous frequency responses, and thus, various sources of connectedness will create short-
+term, medium-term, and long-term systemic risk. In turn, when studying connectedness, we
+should focus on linkages with various degrees of persistence underlying systemic risk.
+The importance of the distinction between the short-term and the long-term parts of the
+system became evident even earlier with the dawn of co-integration (Engle and Granger, 1987).
+Subsequent literature builds a preliminary notion of disentangling short-term from long-term
+movements in connectedness (Gonzalo and Ng, 2001; Blanchard and Quah, 1989; Quah, 1992).
+Given the decomposition to the long-term common stochastic trend and deviations from the
+trend, one can move the projection in such a way that an error to one series will be a shock to
+the long-term trend, an error to another will be a shock to the deviation from the trend. A shock
+with a strong long-term eﬀect will have high power at low frequencies, and in case it transmits to
+other variables, it points to long-term connectedness. For example, in the case of stock markets,
+long-term connectedness may be attributed to permanent changes in expectations about future
+dividends (Balke and Wohar, 2002). To capture the frequency dynamics of connectedness,
+we propose a general framework for decomposing the connectedness to any frequency band of
+interest. Similar to Dew-Becker and Giglio (2016), who set asset pricing into the frequency
+domain, we view the frequency domain as a natural place for measuring the connectedness.
+Focusing on shocks of an individual ﬁnancial institution that have an impact on the wider
+system, our research contributes to the large body of literature measuring systemic risk both
+theoretically and empirically. As noted by Benoit et al. (2017), system-wide connectedness, or
+systemic risk, is often considered a “hard-to-deﬁne-but-you-know-it-when-you-see-it” concept.
+Generally, the literature views systemic risk as the risk that many market participants are simul-
+taneously aﬀected by severe losses, which then spread through the system. 1 The ﬁnancial crisis
+of 2007-2009 has reminded us that liquidity shocks, insolvency, and losses can quickly propa-
+gate and aﬀect institutions, even in diﬀerent markets. Consequently, there has been a growing
+demand for the design of ﬁnancial regulations that are aimed to control individual institutions.
+From the perspective of market supervision, securing ourselves against this type of risk requires
+1For a comprehensive review of the systemic risk literature, see Benoit et al. (2017).
+2
+a sound quantiﬁcation of systemic risk. Whereas measures speciﬁc to a particular risk channel
+are useful for calibrating regulatory tools, global measures aiming to quantify the contribution
+of ﬁnancial institutions to total systemic risk are necessary to identify systematically important
+institutions. In cases where the contribution of institutions is persistent–instead of aﬀecting the
+system solely in the short term–the systemically important ﬁnancial institutions (SIFIs) may
+then be subject to higher capital requirements or a systemic risk tax. Because systemic risk
+threatens the stability of the entire ﬁnancial sector, knowing the frequency-speciﬁc source of
+the instability is key for policymakers who are looking for tools to monitor the accumulation of
+risk.
+Individuals who are interested in the frequency sources of connectedness in variables may
+consider using diﬀerent forecast horizons of variance decomposition. 2 Staying in the time do-
+main, heterogeneous frequency responses to shocks are simply aggregated through frequencies.
+To see this, let us consider two examples of a system of a bivariate autoregressive (AR) process
+with opposite signs of coeﬃcients. The positive coeﬃcients in the ﬁrst example will create
+large connectedness driven by low frequencies of the cross-spectral density. With the increas-
+ing forecast horizon of variance decompositions, one will measure higher connectedness in the
+process. In the second example, the negative coeﬃcients of the same magnitude will create
+equal connectedness as in the ﬁrst case at all forecasting horizons, although connections come
+solely from the high frequencies due to the anti-persistent nature of the process. Hence, simply
+assessing connectedness at diﬀerent horizons to capture the heterogeneous frequency responses
+due to diﬀering expectations of investors is not suﬃcient.
+Instead of assessing the overall error variation in a variable a due to shock arising in a
+variable b, we are interested in assessing shares of forecast error variation in a variable a due
+to shock to a variable b at a speciﬁc frequency band. This is a natural step to take, as it will
+show the long-term, medium-term, and short-term impacts of a shock, which can conveniently
+be summed to a total aggregate eﬀect, if needed. For the purpose of frequency-dependent
+measurement, we deﬁne the spectral representation of generalized forecast error variance de-
+composition. To achieve this, we work with the Fourier transforms of the impulse response
+functions, i.e., frequency responses. In the frequency domain, we are simply interested in the
+portion of forecast error variance at a given frequency band that is attributed to shocks in
+another variable. Our work is inspired by the previous research of Geweke (1982, 1984, 1986)
+and Stiassny (1996), who use related measures in more restrictive environments.
+In addition to introducing frequency dynamics into the measurement of connectedness, we
+study how cross-sectional correlations impact the connectedness. A higher contemporaneous
+correlation does not necessarily indicate connectedness in the sense that the literature tries to
+measure it. A good example is the recent crisis of 2007-2008, when stock markets recorded strong
+cross-sectional correlations that biased the contagion eﬀects estimated by many researchers
+(Forbes and Rigobon, 2002; Bekaert et al., 2005).
+The paper starts with a theoretical discussion. This is followed by a relevant application
+on ﬁnancial data that show the usefulness of the framework and guide users in applying the
+introduced methods appropriately. Concretely, we study an important problem of connectedness
+in ﬁnancial systems with a special focus on the frequency-speciﬁc measurement of systemic
+risk. We use the spectral representations of variance decompositions locally to recover the
+time-frequency dynamics of the connectedness of the main US ﬁnancial institutions, and we
+2As noted by Diebold and Yilmaz (2009, 2012), and later Diebold and Yilmaz (2014), variance decompositions
+from approximating models are a convenient framework for empirical measurements of connectedness. More
+precisely, Diebold and Yilmaz (2009) deﬁne the measures based on assessing shares of forecast error variation in
+one variable due to a shock arising in another variable in the system.
+3
+document rich dynamics in the frequency responses of shocks in volatilities. We ﬁnd that
+the dynamics of connectedness are not exclusively driven by one band of frequencies; diﬀerent
+frequency bands play varying roles at diﬀerent times. The dynamic corresponds intuitively to
+the events that occurred in the global ﬁnancial markets.
+2 Measuring connectedness in frequency domain
+System connectedness can be characterized through variance decompositions from a vector auto-
+regression approximating model (Diebold and Yilmaz, 2012, 2009). Variance decompositions
+provide useful information about how much of the future uncertainty of variable i is due to
+shocks in variable j. One can measure how the system is interconnected using aggregation of
+the information in variance decompositions for many variables. Diebold and Yilmaz (2014)
+further argue that variance decompositions are closely linked to modern network theory as
+well as recently proposed measures of various types of systemic risk, such as expected shortfall
+(Acharya et al., 2017) and CoVaR (Adrian and Brunnermeier, 2016).
+A natural way to describe the frequency dynamics (the long-term, medium-term, or short-
+term) of the connectedness is to consider the spectral representation of variance decompositions
+based on frequency responses to shocks. Stiassny (1996) introduced a ﬁrst notion of spectral
+representation for variance decompositions, albeit in a restrictive setting. In our work, we deﬁne
+the general spectral representation of variance decompositions, and we show how we can use it
+to deﬁne the frequency-dependent connectedness measures.
+The spectral representations of variance decompositions can also be viewed as a more general
+way of measuring causality in the frequency domain. Geweke (1982) proposes a frequency
+domain decomposition of the usual likelihood ratio test statistic for Granger causality, and
+Dufour and Renault (1998); Breitung and Candelon (2006); Yamada and Yanfeng (2014) provide
+a formal framework for testing causality on various frequencies. Geweke (1984); Granger (1969)
+develop a multivariate extensions; however, all the analysis is done using partial cross-spectra
+and is therefore silent on the indirect causality chains. Hence, we are also motivated by this
+part of the econometrics literature to propose a more general framework.
+Before deﬁning the connectedness measures in the frequency domain, we brieﬂy discuss the
+method of measuring connectedness introduced by Diebold and Yilmaz (2012) using generalized
+forecast error variance decompositions (GFEVD), as we build on these ideas in the frequency
+domain later in the text.
+2.1 Measuring connectedness with variance decompositions
+The connectedness measures are built from the variance decomposition matrix of a vector
+autoregressive (VAR) approximating model. In particular, consider a covariance stationary
+N-variate process xt = (x1,t,...,x N,t)′ at t = 1,...,T described by the VAR model of order p
+as
+xt = Φ1xt−1 + Φ2xt−2 +... + Φpxt−p +ϵt,
+with Φ1,..., Φp coeﬃcient matrices, and ϵt being white noise with (possibly non-diagonal)
+covariance matrix Σ. In this model, each variable is regressed on its own p lags as well as the
+p lags of each of the other variables in the system; hence, matrices of the coeﬃcients contain
+complete information about the connections between variables. It is useful to work with (N×N)
+matrix lag-polynomial Φ(L) = [IN− Φ1L−... − ΦpLp] withIN identity matrix, as the model
+can be written concisely as Φ(L)xt =ϵt. Assuming that the roots of |Φ(z)| lie outside the unit
+4
+circle, the VAR process has the following vector moving average (i.e., MA(∞)) representation
+xt = Ψ(L)ϵt,
+where Ψ(L) matrix of inﬁnite lag polynomials can be calculated recursively from Φ(L) =
+[Ψ(L)]−1 and is key to understanding dynamics. Since Ψ(L) contains an inﬁnite number
+of lags, it needs to be approximated with the moving average coeﬃcients Ψh calculated at
+h = 1,...,H horizons. The connectedness measures rely on variance decompositions, which
+are transformations of the Ψh and allow the measurement of the contribution of shocks to the
+system.
+Since a shock to a variable in the model does not necessarily appear alone, i.e., orthogonally
+to shocks to other variables, an identiﬁcation scheme is crucial step in the calculation of variance
+decompositions. Standard approaches relying on Cholesky factorization depend on the ordering
+of the variables and complicate the measures. Generalized identiﬁcation proposed by Pesaran
+and Shin (1998) produces variance decompositions invariant to ordering.
+Generalized variance decompositions can be written in the form 3 (for a detailed derivation
+of the formula, see Appendix A.1)
+(θH)j,k = σ−1
+kk
+∑H
+h=0 ((ΨhΣ)j,k)2
+∑H
+h=0(ΨhΣΨ′
+h)j,j
+, (1)
+where Ψh is a ( N×N) matrix of moving average coeﬃcients at lag h deﬁned above, and
+σkk = ( Σ)k,k. The ( θH)j,k denotes the contribution of the kth variable to the variance of
+forecast error of the element j, at horizon h. As the rows of the variance decomposition matrix
+θH do not necessarily sum to one, each entry is normalized by the row sum as
+(
+˜θH
+)
+j,k
+= (θH)j,k/
+N∑
+k=1
+(θH)j,k.
+Now the∑N
+j=1
+(
+˜θH
+)
+j,k
+= 1 and the sum of all elements in ˜θH is equal to N, by construction.
+Note that
+(
+˜θH
+)
+j,k
+provides a measure of pairwise connectedness from j to i at horizon H.
+This information can be aggregated to measure the total connectedness of the system. The
+connectedness measure is then deﬁned as the share of variance in the forecasts contributed by
+errors other than own errors or as the ratio of the sum of the oﬀ-diagonal elements to the sum
+of the entire matrix (Diebold and Yilmaz, 2012)
+CH = 100·
+∑
+j̸=k
+(
+˜θH
+)
+j,k
+∑˜θH
+= 100·
+
+1−
+Tr
+{
+˜θH
+}
+∑˜θH
+
+, (2)
+where Tr{·} is the trace operator, and the denominator signiﬁes the sum of all elements of the
+˜θH matrix. Hence, the connectedness is the relative contribution to the forecast variances from
+the other variables in the system.
+3Note to notation: ( A)j,k denotes the jth row and kth column of matrix A denoted in bold. ( A)j,· denotes
+the full jth row; this is similar for the columns. A ∑ A, where A is a matrix that denotes the sum of all elements
+of the matrix A.
+5
+2.2 Spectral representation for variance decompositions and connectedness
+measures
+A natural way to describe the frequency dynamics (the long-term, medium-term, or short-term)
+of the connectedness is to consider the spectral representation of variance decompositions based
+on frequency responses to shocks instead of impulse responses to shocks. As a building block of
+the presented theory, we consider a frequency response function,Ψ(e−iω) =∑
+he−iωhΨh, which
+can be obtained as a Fourier transform of the coeﬃcients Ψh, with i =√−1. The spectral
+density of xt at frequencyω can then be conveniently deﬁned as a Fourier transform of MA(∞)
+ﬁltered series as
+Sx(ω) =
+∞∑
+h=−∞
+E(xtx′
+t−h)e−iωh = Ψ(e−iω)ΣΨ′(e+iω)
+The power spectrum Sx(ω) is a key quantity for understanding frequency dynamics, since it
+describes how the variance of the xt is distributed over the frequency components ω. Using
+the spectral representation for covariance, i.e., E(xtx′
+t−h) =
+∫π
+−πSx(ω)eiωhdω, the following
+deﬁnition naturally introduces the frequency domain counterparts of variance decomposition.
+Deﬁnition 2.1. The generalized causation spectrum over frequencies ω∈ (−π,π ) is deﬁned as
+(f(ω))j,k≡
+σ−1
+kk
+⏐⏐⏐
+(
+Ψ
+(
+e−iω)
+Σ
+)
+j,k
+⏐⏐⏐
+2
+(Ψ(e−iω)ΣΨ′(e+iω))j,j
+,
+where Ψ(e−iω) =∑
+he−iωhΨh is the Fourier transform of the impulse response Ψh.
+It is important to note that ( f(ω))j,k represents the portion of the spectrum of the jth
+variable at a given frequencyω due to shocks in thekth variable. We can interpret the quantity
+as within-frequency causation, as the denominator holds the spectrum of the jth variable (on-
+diagonal element of cross-spectral density of xt) at a given frequency ω. To obtain a natural
+decomposition of variance decompositions to frequencies, we can weight the ( f(ω))j,k by the
+frequency share of the variance of the jth variable. The weighting function can be deﬁned as
+Γj(ω) =
+(
+Ψ(e−iω)ΣΨ′(e+iω)
+)
+j,j
+1
+2π
+∫π
+−π (Ψ(e−iλ)ΣΨ′(e+iλ))j,jdλ,
+and it represents the power of the jth variable at a given frequency, which sums through
+frequencies to a constant value of 2 π. Note that while the Fourier transform of the impulse
+response is generally a complex valued quantity, the generalized causation spectrum is the
+squared modulus of the weighted complex numbers, thus producing a real quantity.
+The following proposition establishes spectral representation of the variance decomposition,
+and it is central to the development of the connectedness measures in the frequency domain.
+Proposition 2.1. Suppose xt is wide-sense stationary with σ−1
+kk
+∑∞
+h=0|(ΨhΣ)j,k|< +∞,∀j,k.
+Then,
+(θ∞)j,k = 1
+2π
+∫ π
+−π
+Γj(ω) (f(ω))j,kdω.
+Proof. See Appendix A.2.
+6
+Using the result in Proposition 2.1, ( θH)j,k at H → ∞can be viewed as the weighted
+average of the generalized causation spectrum ( f(ω))j,k, which gives us the strength of the
+relationship on given frequency weighted by the power of the series on that frequency. The
+integral over admissible frequencies perfectly reconstructs the theoretical value of the original
+(θ∞)j,k. The proposition not only is an important theoretical result but also reminds us that
+when measuring connectedness with (θH)j,k at H→∞ in the time domain, we are looking at
+information aggregated through frequencies and ignoring heterogeneous frequency responses to
+shocks. It is also important to note that eﬀects over the entire range of frequencies inﬂuence
+(θ∞)j,k.
+In economic applications, we are usually interested in assessing short-, medium-, or long-
+term connectedness rather than connectedness at a single given frequency. Hence, to better
+follow the economic intuition, it is more convenient to work with frequency bands that we
+deﬁne as the amount of forecast error variance created on a convex set of frequencies. The
+quantity is then given by integrating only over the desired frequencies ω∈ (a,b ).
+Formally, let us have a frequency band d = (a,b ) : a,b ∈ (−π,π ),a < b.The generalized
+variance decompositions on frequency band d are deﬁned as
+(θd)j,k = 1
+2π
+∫
+d
+Γj(ω) (f(ω))j,kdω. (3)
+Because the introduced relationship is an identity and the integral is a linear operator, sum-
+ming over disjoint intervals covering the entire range (−π,π ) will recover the original variance
+decomposition. The following remark formalizes this fact.
+Remark 2.1. Denote by ds an interval on the real line from the set of intervals D that form
+a partition of the interval (−π,π ), such that ∩ds∈Dds =∅, and∪ds∈Dds = (−π,π ). Due to the
+linearity of integral and the construction of ds, we have
+(θ∞)j,k =
+∑
+ds∈D
+(θds)j,k.
+Using the spectral representation of generalized variance decomposition, it is straightforward
+to deﬁne connectedness measures on a given frequency band.
+Deﬁnition 2.2. Let us deﬁne scaled generalized variance decomposition on the frequency band
+d = (a,b ) :a,b∈ (−π,π ),a<b as
+(
+˜θd
+)
+j,k
+= (θd)j,k/
+∑
+k
+(θ∞)j,k,
+whereθd andθ∞ are deﬁned as by Equation (3) and Proposition 2.1
+• The within connectedness on the frequency band d is then deﬁned as
+CW
+d = 100·
+
+1−
+Tr
+{
+˜θd
+}
+∑˜θd
+
+.
+• The frequency connectedness on the frequency band d is then deﬁned as
+CF
+d = 100·
+
+
+∑˜θd
+∑˜θ∞
+−
+Tr
+{
+˜θd
+}
+∑˜θ∞
+
+ =CW
+d ·
+∑˜θd
+∑˜θ∞
+,
+7
+where Tr{·} is the trace operator, and the ∑˜θd signiﬁes the sum of all elements of the ˜θd
+matrix.
+The Deﬁnition 2.2 works with two notions: the frequency connectedness and the within
+connectedness. The within connectedness gives us the connectedness eﬀect that occurs within
+the frequency band and is weighted by the power of the series on the given frequency band
+exclusively. However, the frequency connectedness decomposes the overall connectedness de-
+ﬁned in Equation (2) into distinct parts that, when summed, give the original connectedness
+measureC∞. The following proposition formalizes the notion of reconstruction of the overall
+connectedness.
+Proposition 2.2 (Reconstruction of frequency connectedness) . Denote by ds an interval on
+the real line from the set of intervals D that form a partition of the interval (−π,π ), such that
+∩ds∈Dds =∅, and∪ds∈Dds = (−π,π ). We then have that
+C∞ =
+∑
+ds∈D
+CF
+ds, (4)
+whereC∞ is deﬁned in Equation (2) with H→∞ .
+Proof. See Appendix A.2.
+To illustrate the diﬀerence between frequency and within connectedness, recall that the
+typical spectral shape of economic variables has the most power concentrated on low frequencies
+(long-term movements or trend). Hence, we could decompose the connectedness into two parts:
+one that covers long-term movements and another that covers short-term movements. Suppose
+that 90% of the spectral density is concentrated in long-term movements, and hence, 10% is
+in short-term movements. Now, suppose that the connectedness in short-term movements is
+high, say 80%, and low on long-term movements, say 25%. The 80% and 25% connectedness
+numbers represent the within connectedness. The total connectedness will be much closer
+to 25% because the short-term connectedness of 80% will be down-weighted by the very low
+amount (10%) of spectral density on the short-term frequencies. Stated otherwise, although the
+short-term activities are very connected because of the small share of variance on the short-term
+frequencies, this connection becomes negligible in the aggregate system connectedness. This
+can be clearly observed in the simulations in the following section.
+We conclude the theoretical section with the remark showing that the two concepts–the
+within and the frequency connectedness–coincide when the entire frequency band d = (−π,π )
+is considered.
+Proposition 2.3. Let us have d = (−π,π ). We then have
+CF
+d =CW
+d =C∞. (5)
+Proof. See Appendix A.2.
+2.3 Estimation of connectedness in the frequency domain
+The estimation of the previously deﬁned connectedness measures relies heavily on the precise
+estimation of coeﬃcients from the VAR approximating model. While standard VAR estimators
+work well in many cases, advanced techniques that include shrinkage or Bayesian approaches
+8
+can help in situations of large dimensional data, deviations from distributional assumptions,
+etc.4
+Variance decomposition of forecast errors is computed directly from moving average coef-
+ﬁcients. Because the computation of these theoretical quantities is based on an inﬁnite pro-
+cess, we make it feasible with a ﬁnite horizon H approximation, as used in the deﬁnitions
+above, noting that the error from approximation disappears as H grows (L¨ utkepohl (2007)).
+The ˆΨh coeﬃcients are then computed through standard recursive scheme ˆΨ0 = I,ˆΨh =∑max{h,p}
+j=1 Φ(j)ˆΨh−1, where p is the order of VAR and h∈{ 1,...,H }. Here, we note that by
+studying the quantities in the frequency domain, H serves only as an approximation factor,
+and it has no interpretation as in the time domain. In the applications, we advise setting the
+H suﬃciently high to obtain a better approximation, particularly when lower frequencies are
+of interest.
+The spectral quantities are estimated using standard discrete Fourier transforms. The
+following deﬁnition accurately speciﬁes the used estimates of the quantities.
+Deﬁnition 2.3. The cross-spectral density on the interval d = (a,b ) :a,b∈ (−π,π ),a<b
+∫
+d
+Ψ(e−iω)ΣΨ′(e+iω)dω
+is estimated as ∑
+ω
+ˆΨ(ω)ˆΣˆΨ′(ω),
+for ω∈
+{⌊aH
+2π
+⌋
+,...,
+⌊bH
+2π
+⌋}
+where
+ˆΨ(ω) =
+H−1∑
+h=0
+ˆΨhe−2iπω/H,
+and ˆΣ =ˆϵ′ˆϵ/(T−z), where z is a correction for a loss of degrees of freedom, and it depends
+on the VAR speciﬁcation.
+The decomposition of the impulse response function at the given frequency band is then es-
+timated as ˆΨ(d) =∑
+ω ˆΨ(ω). The deﬁnition 2.3 ﬁnally allows the estimation of the generalized
+variance decompositions at a desired frequency band as
+(
+ˆθd
+)
+j,k
+=
+∑
+ω
+ˆΓj(ω)
+(
+ˆf(ω)
+)
+j,k
+,
+where
+(
+ˆf(ω)
+)
+j,k
+≡
+ˆσ−1
+kk
+((
+ˆΨ(ω)ˆΣ
+)
+j,k
+)2
+(
+ˆΨ(ω)ˆΣˆΨ′(ω)
+)
+j,j
+is estimated generalized causation spectrum, and
+ˆΓj(ω) =
+(
+ˆΨ(ω)ˆΣˆΨ′(ω)
+)
+j,j
+(Ω)j,j
+,
+4Using precisely formulated time-varying parameter models could potentially allow the forecasting of con-
+nectedness measures.
+9
+is estimate of the weighting function, where Ω = ∑
+ω ˆΨ(ω)ˆΣˆΨ′(ω).
+Then, the connectedness measures ˆCW and ˆCF at a given frequency band of interest can be
+readily derived by plugging the
+(
+ˆθd
+)
+j,k
+estimate into the Deﬁnition 2.2. 5
+3 Simulation study
+To motivate the usefulness of the proposed measures, we study the processes that generate
+frequency-dependent connectedness by simulations. We look at connectedness that is induced
+through cross-sectional correlations or interactions between bivariate AR processes. The emer-
+gence of connectedness and its spectral footprints is then illustrated through a change in the
+coeﬃcients in the bivariate VAR(1) case. Suppose the data have been generated from the
+following equations:
+x1,t =β1x1,t−1 +sx2,t−1 +ϵ1,t
+x2,t =sx1,t−1 +β2x2,t−1 +ϵ2,t, (6)
+where (ϵ1,t,ϵ 2,t)∼N(0, Σ) with Σ =
+(1 ρ
+ρ 1
+)
+.
+By altering the true coeﬃcients that generate the data, we study several cases with known
+values of theoretical connectedness estimates. We start with a symmetric process of β =β1 =
+β2, with three important cases generating distinctly connected variables x1,t and x2,t. The
+ﬁrst case is the β = β1 = β2 = 0, when we have two independent processes that have zero
+connectedness at all frequencies. Second, we study the connectedness of two symmetrically
+connected AR processes with the parameter β = β1 = β2 = 0.9 and s = 0.09 or β = β1 =
+β2 =−0.9 and s =−0.09 generating equal total connectedness with diﬀerent sources from low
+and high frequencies of cross-spectral densities for positive and negative values of coeﬃcients,
+respectively.
+In addition to motivating the importance of the frequency dynamics of connectedness, we
+show the importance of cross-sectional correlations, which translates to all frequencies and
+may bias the connectedness measures. Hence, for all cases, we consider two extremes of cross-
+sectional dependence: no correlation ρ = 0 and a correlation of ρ = 0.9. To show how the
+cross-sectional correlations aﬀect the connectedness measures, we compute the measures with
+an additional step in the estimation, considering only the diagonals of the covariance matrix of
+residuals and removing the cross-sectional dependence. In this way, we disentangle the inﬂuence
+of correlations from the true dynamics. In the text, we always present only the estimates on
+the simulated data and save the true values of measures in the Table 4 in the appendix B.2.
+Table 1 shows the results. We can observe that the system’s connectedness of two uncon-
+nected and uncorrelated processes is practically zero in both the total and all spectral parts.
+In case of correlated noises, the total connectedness with the estimated correlation matrix is
+estimated at approximately 45, with an equal footprint on all scales. Considering only diagonal
+elements from the estimated covariance matrix of the residuals and removing the cross-sectional
+dependence correctly estimates no connectedness at all frequencies.
+For an AR coeﬃcient equal to 0.9, the uncorrelated case shows that the connection between
+the processes is on the long-term part (as expected, due to the spectral density of the underlying
+process). However, introducing correlation increases the total connectedness and most of all
+5The entire estimation is done using the package frequencyConnectedness in R software. The package is
+available on CRAN or on https://github.com/tomaskrehlik/frequencyConnectedness.
+10
+Connectedness Connectedness without correlation
+β s ρ Total ( π/2,π ) ( π/4,π/ 2) (0 ,π/ 4) Total ( π/2,π ) ( π/4,π/ 2) (0 ,π/ 4)
+0.00 0.00 0.00 0.18 0.19 0.19 0.19 0.09 0.10 0.10 0.10
+(0.16) (0.20) (0.18) (0.21) (0.10) (0.11) (0.11) (0.11)
+0.00 0.00 0.90 44.68 44.75 44.74 44.72 0.47 0.41 0.41 0.41
+(0.30) (0.36) (0.36) (0.42) (0.55) (0.51) (0.51) (0.50)
+0.90 0.09 0.00 37.65 0.69 1.26 37.77 37.24 0.64 1.22 37.84
+(4.55) (0.76) (0.76) (4.36) (4.64) (0.93) (0.92) (4.81)
+0.90 0.09 0.90 49.24 43.97 44.15 49.36 35.31 0.37 0.79 35.07
+(0.33) (0.64) (0.62) (0.27) (6.27) (0.45) (0.53) (5.10)
+-0.90 -0.09 0.00 39.33 38.91 0.96 0.87 38.97 38.68 0.81 0.71
+(3.90) (4.24) (1.19) (1.20) (4.31) (4.21) (0.88) (0.89)
+-0.90 -0.09 0.90 49.40 49.43 43.81 43.77 35.10 35.74 0.44 0.37
+(0.32) (0.23) (0.62) (0.63) (6.28) (4.95) (0.30) (0.29)
+Table 1: Simulation results. The ﬁrst three columns describe the parameters for the simulation as
+described in Equation (6). We set β = β1 = β2. The results are based on 100 simulations of VAR.
+The speciﬁed parameters have a length of 1000 and a burnout period of 100. The estimate is computed
+averaging over the 100 simulations, and the standard error is the sample standard deviation.
+Connectedness Connectedness without correlation
+β1 β2 s ρ Connectedness ( π/2,π ) ( π/4,π/ 2) (0 ,π/ 4) Connectedness ( π/2,π ) ( π/4,π/ 2) (0 ,π/ 4)
+0.90 0.90 0.09 0.00 36.75 0.74 1.35 38.57 37.06 0.56 1.14 38.03
+(4.79) (1.32) (1.27) (3.94) (4.64) (0.45) (0.49) (4.24)
+0.90 0.90 0.09 0.90 49.23 43.99 44.17 49.35 33.30 0.43 0.86 36.03
+(0.32) (0.51) (0.49) (0.24) (5.90) (0.46) (0.53) (4.80)
+0.90 0.40 0.09 0.00 5.62 0.43 0.95 7.50 5.69 0.29 0.82 7.36
+(1.52) (0.31) (0.32) (2.19) (1.48) (0.07) (0.19) (1.94)
+0.90 0.40 0.09 0.90 46.11 44.10 44.35 46.53 5.40 0.30 0.82 7.38
+(0.36) (0.57) (0.53) (0.30) (1.62) (0.06) (0.17) (2.17)
+0.90 0.00 0.09 0.00 2.70 0.42 0.93 4.21 2.54 0.31 0.78 3.95
+(0.91) (0.38) (0.35) (1.16) (0.68) (0.08) (0.21) (1.23)
+0.90 0.00 0.09 0.90 45.37 44.37 44.61 45.87 2.66 0.29 0.74 3.77
+(0.36) (0.42) (0.39) (0.37) (0.78) (0.06) (0.16) (1.20)
+0.90 -0.90 0.09 0.00 0.53 0.59 0.54 0.53 0.49 0.47 0.45 0.45
+(0.15) (0.38) (0.20) (0.31) (0.10) (0.12) (0.10) (0.11)
+0.90 -0.90 0.09 0.90 44.78 44.61 44.76 44.82 0.46 0.46 0.46 0.47
+(0.30) (0.36) (0.35) (0.35) (0.09) (0.06) (0.11) (0.15)
+Table 2: Simulation results. The ﬁrst three columns describe the parameters for the simulation,
+as described in Equation (6). The results are based on 100 simulations of VAR with the speciﬁed
+parameters of length 1000 and a burnout period of 100. The estimate is computed by averaging over
+the 100 simulations, and the standard error is the simple sample standard deviation.
+obfuscates the source of the dynamics. Considering only the diagonals of the covariance matrix
+of the estimated residuals, we can see that the correlation in the estimated covariance matrix
+correctly exposes the underlying dynamics. The remaining case with the coeﬃcient equal to
+-0.9 is very similar to the previous case, except the spectral mass is concentrated on the short
+frequencies. Otherwise, the qualitative results remain the same.
+It is important to note that whereas coeﬃcients with opposite signs of 0.9 and -0.9 generate
+the time series with equal connectedness, the source is from diﬀerent parts of the spectra. This
+example motivates the usefulness of our measures, which are able to precisely locate the part
+of cross-spectra generating the connectedness.
+Next, we move to the case where the two processes are not symmetric. With the simulation,
+we want to illustrate two important cases of how the connectedness arises. First, let us keep the
+parameter s that governs the connection of the two processes through the lagged observation
+constant and change the spectral structure of the processes through the coeﬃcient β2.
+The Table 2 shows that in this case, the connectedness is arising due to the increase in
+the spectral similarity of the processes in question. This is an important example, as it shows
+that even a relatively small interaction at some frequency band can create strong connectedness
+among variables. Keeping the structure of the processes constant and increasing the parameter
+of interconnection increases the connectedness, as is documented by Table 3 in the appendix
+11
+B.2.
+The simulation exercise suggests possible sources of connectedness and motivates the use-
+fulness of our measures. The role of covariance among the processes can be studied through the
+exclusion of the covariance terms, and the role of similarity can be examined through individ-
+ual spectral densities; however, as mentioned, most of the economic series have similar spectral
+densities (Granger, 1966). Our measures estimate the rich dynamics precisely.
+4 Systemic risk in the US ﬁnancial sector
+In the past few decades, the literature has extensively studied the question of how ﬁnancial
+ﬁrms are interconnected. Focusing on studying causality eﬀects, co-movement, spillovers, con-
+nectedness, and systemic risk, researchers primarily try to answer the question using methods
+measuring the aggregate eﬀects. Our interest is to measure frequency sources of volatility con-
+nectedness; hence, sources of systemic risk, as shocks to volatility, will impact future uncertainty
+diﬀerently. For example, fundamental changes in investors’ expectations will have an impact
+on the market in the long term. These expectations are then transmitted to surrounding assets
+in portfolios diﬀerently than shocks with a short-term impact.
+The early literature measuring the connectedness of markets in general was predominantly
+interested in contagion eﬀects in market prices during crises. In a seminal paper, Forbes and
+Rigobon (2002) show that if we account for volatilities of the price processes, the contagion
+eﬀects disappear. This led to a rather strong statement of no-contagion, and interdependence
+among the markets remained the main eﬀect of interest. However, as Ross (1989) shows in
+his famous paper, volatility is the carrier of information in standard martingale price models.
+Hence, most of the later literature concentrates on the connectedness of volatilities. Tse and
+Tsui (2002) concentrate on investigating the connection in the multivariate GARCH framework.
+They report high cross-correlations on the Forex market, national stock market, and Hang
+Seng sectoral indices. Bae et al. (2003) investigate the co-incidence of the extreme returns
+across markets and connect this measure by extreme value theory. They evaluate the contagion
+eﬀects among various parts of the world, ﬁnding a high co-incidence of negative returns across
+markets. Engle et al. (2012) provide an exhaustive review of the empirical literature on volatility
+spillovers.
+A broader picture concerning spillovers was later provided by Diebold and Yilmaz (2009),
+who explicitly investigated volatilities and returns separately and uncovered contagion eﬀects
+in volatilities. In the same paper, the authors side-stepped the controversial topic of contagion,
+which had already been tied predominantly to ﬁnancial crises and introduced the concept
+of spillovers, which refer to varying interdependency between the markets. Borrowing from
+both the contagion and interdependence notions, Diebold and Yilmaz (2009) deﬁne a rigorous
+framework for measuring spillovers of returns and volatility across markets. These authors coin
+the term connectedness in their subsequent work (Diebold and Yilmaz, 2014), in which they
+measure systemic risk in the US ﬁnancial sector. Over the course of a few years, hundreds of
+studies in the literature successfully used this methodology to measure connectedness eﬀects.
+However, the literature is still silent about the origins of the connectedness on business-cycle
+levels.
+4.1 Data
+Considering volatility connectedness, we investigate the question of how market risk is con-
+nected at diﬀerent frequencies. We study the intra-market connectedness of the US ﬁnancial
+12
+sector. We concentrate on the eleven major ﬁnancial ﬁrms representing the ﬁnancial sector of
+the US economy: Wells Fargo Co. (WFC), US Bancorp (USB), Morgan Stanley (MS), J.P.
+Morgan (JPM), Goldman Sachs (GS), Citibank (C), Bank of New York Mellon (BK), Bank
+of America (BAC), American Express (AXP), American International Group (AIG), and PNC
+Group (PNC). The dataset spans the years 2000 to 2016. We also investigate the connectedness
+of the system by adding Fannie Mae (FNM) and Freddie Mac (FRE) for the period ending in
+2010. Because FNM and FRE went on the OTC market after 2010, the data are not publicly
+available, and the analysis cannot be performed on a longer time-span, although we argue that
+qualitative results for the overall connectedness are the same for smaller and larger systems.
+The complementary discussion is available in appendix B.1.
+For the computation of volatility, we restrict the analysis to daily logarithmic realized volatil-
+ity, which is computed using 5-minute returns6 during the business hours of the New York Stock
+Exchange, from 9:30 a.m. to 4:00 p.m. The data are time-synchronized by the same timestamps.
+We further eliminate transactions executed on Saturdays and Sundays, US federal holidays, De-
+cember 24 to 26, and December 31 to January 2 because of the low activity on these days, which
+could lead to estimation bias. The data span the years 2000 to 2016, providing a sample of
+4216 trading days. The period under study is informative in terms of market development,
+sentiment, and expectations, as we cover the 2007-2008 ﬁnancial crisis and its aftermath years.
+The original raw data were obtained from TICK Data and www.price-data.com.
+The descriptive statistics of the data can be found in the Table 5 in the appendix B.2.
+4.2 Time-frequency decomposition of US systemic risk
+One of the issues that has recently gained importance in volatility modeling is giving up the
+assumption of global stationarity of the data (St˘ aric˘ a and Granger, 2005; Engle and Rangel,
+2008) and focusing on local stationarity instead. When studying the connectedness of market
+risk using variance decompositions, it is important to face the nonstationarity of realized volatil-
+ities as zero frequency may dominate the rest of the frequencies when we study unconditional
+connectedness. The discussion gains importance when studying frequency dynamics because
+applying our measures blindly to the nonstationary data would result in false inferences.
+Giving up the assumption of global stationarity of the data, we assume that the dynamics
+come from shifts in the unconditional variance of returns. This leads us to a convenient approx-
+imation of nonstationary data locally by stationary models. In essence, our approach is closely
+related to the one adopted by St˘ aric˘ a and Granger (2005), although we study a multivariate
+system with quite diﬀerent tools. We use the spectral representations of variance decomposi-
+tions to recover the time-frequency dynamics of connectedness with a moving window of 300
+trading days, where we conﬁrm the stationarity of volatility.
+As our ﬁnal model speciﬁcation, we use a vector auto-regression with two lags, including a
+constant on the logarithm of volatilities to capture the dynamics in the window. We have exper-
+imented with diﬀerent lag lengths with no material changes in the results. This only conﬁrms
+the appropriateness of the approach because large changes in time-frequency dynamics due to
+diﬀerent lags in the approximating VAR model would point to nonstationarities within win-
+dows, where a larger number of lags would approximate the information in the low frequencies.7
+In large systems, a small-sample bias can occur; hence, we use a parametric bootstrap to ob-
+tain unbiased estimates of the connectedness measures, as suggested in (Engsted and Pedersen,
+2014).
+6Realized volatility for a given day is computed as the sum of squared intra-day returns.
+7In some sense, this analysis serves as a robustness check. We can make these results available upon request.
+13
+2001200220032004200520062007200820092010201120122013201420152016
+60
+65
+70
+75
+80
+85
+(a) Total connectedness
+2001200220032004200520062007200820092010201120122013201420152016
+0
+10
+20
+30
+40
+50
+(b) Frequency decomposition
+Figure 1: Dynamic frequency connectedness of the US ﬁnancial sector. Plot (a) represents the total connect-
+edness C, computed on a moving window with a length of one year (300 days). Plot (b) represents the frequency
+connectedness CF
+ds with d1 ∈ [1, 5] days in black bold, d2 ∈ (5, 20] black, and d3 ∈ (20, 300] gray bold. Note that
+all lines through the frequency bands ds sum to the total connectedness C.
+Focusing on the locally stationary structure of the data, we study the time-frequency dy-
+namics of connectedness. Figure 1 (a) reports the rich time dynamics of the total connectedness
+of system, as measured by time domain variance decompositions. Figure 1 (b) presents the de-
+composition of the total connectedness into frequency bands up to one week, one week to one
+month, and one month to 300 days, computed asCF
+ds on the bands corresponding to short-term
+(d1∈ [1, 5]), medium-term (d2∈ (5, 20]), and long-term (d3∈ (20, 300]). Note that the lowest
+frequency is bound at each time point by the window length.
+Focusing ﬁrst on the overall connectedness in Figure 1 (a), we can see that it ranges between
+55% and 85%, with a substantial variation over the course of 16 years. Such a variation is
+expected because the studied period includes both calm and turbulent times in which shocks
+transmit across the system with diﬀerent strengths. The overall connectedness bottoms during
+the calm times of 2005 and 2006, when shocks to uncertainty were transmitting less across the
+studied banks, thereby creating a less connected system. Connectedness peaks during the 2008
+US ﬁnancial crisis, when shocks created a large portion of future uncertainty and hence strong
+connectedness in the system. We also attribute the peak in connectedness to high uncertainty
+due to an insecure economic situation, in which banks were accused to be the main source of
+the economic instability. In this situation, shocks in the system created further uncertainty,
+which then transmitted across the system. As a result, banks were connected more strongly
+during the period following the crisis, including the beginning of 2012, when the European debt
+crisis peaked. Finally, connectedness starts declining after the “ Whatever it takes ” speech by
+the ECB president Mario Draghi. 8
+Total connectedness is a useful measure that reveals how systemic risk changed over the
+studied period. It provides aggregate information over various economic cycles, and our main
+interest is to study the frequency sources of connectedness. In other words, Figure 1 (a) reveals
+that the total connectedness peaks during ﬁnancial crises due to high uncertainty transmission,
+but it does not reveal whether shocks that create large connectivity in the system impact the
+system in the short term or in the long term. Since agents operate on diﬀerent investment
+horizons, they may focus on diﬀerent components of their consumption and in turn value assets
+8Our analysis of total connectedness suggests a picture that is qualitatively the same as Diebold and Yilmaz
+(2014).
+14
+10
+20
+30
+40
+50
+2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+Day-week
+Week-month
+Month-Longer
+Figure 2: Time-frequency dynamics of the connectedness of the US ﬁnancial sector. Frequency connectedness
+CF
+ds for d1 ∈ [1, 5], d2 ∈ (5, 20], and d3 ∈ (20, 300] days representing day to week, week to month, and month to
+half a year are depicted on the vertical axis, and the horizontal axis shows time.
+through the expected utility from consumption with diﬀerent persistence levels.9 Hence, cyclical
+components will naturally generate shocks with heterogenous responses and thus various sources
+of connectedness, creating short-term, medium-term, and long-term systemic risk.
+Periods in which connectedness is created at high frequencies are periods when ﬁnancial
+markets seem to process information rapidly, and a shock to one asset in the system mainly
+aﬀects short-term cyclical behaviour (with responses at high frequencies). If the connectedness
+comes from the opposite part of the cross-spectral density, lower frequencies, it suggests that
+shocks are being transmitted for longer periods (with responses mainly at low frequencies). This
+behaviour may be attributed to fundamental changes in investors’ expectations, which aﬀect
+systemic risk in the longer term. These expectations are then transmitted to surrounding assets
+in portfolios. In a ﬁnancial system where asset prices are driven by consumption growth with
+diﬀerent cyclical components, shocks with heterogeneous responses create linkages with various
+degree of persistence and hence various sources of system-wide connectedness and systemic risk.
+Figure 1 (b) 10 reveals the frequency decomposition of connectedness, which supports our
+discussion as it shows rich time-frequency dynamics of connectedness. The ﬁrst striking ob-
+servation from the decomposition is that the periods of high total connectedness discussed
+above are driven mostly by low-frequency components (d3 movements longer than one month).
+Hence, shocks creating uncertainty in the long term drive connectedness during the 2001 to
+mid-2003, mid-2007 to mid-2010, and 2012 periods. The intuition behind this is the overall
+high uncertainty about the ﬁnancial system during these periods coupled with high uncertainty
+about the economic situation. This situation is accompanied by declining stock market prices
+with increasing volatility. The increasing uncertainty then translates into more persistent re-
+sponses of investors to shocks. The observation of high connectedness of the system driven
+by low-frequency responses to shocks is then translated into the long-term uncertainty driving
+increasing systemic risk in these periods.
+The structure of systemic risk dramatically changes during the rest of the sample period.
+We observe rich dynamics with short-term and medium-term components driving the connect-
+edness. After the turbulent periods of high uncertainty, markets start to stabilize, and investors
+start to show less fear. The decreasing uncertainty in stable, growing markets translates into the
+fact that shocks creating future uncertainty in the system will transmit much faster, and their
+impact on the system will diminish after a few days, hence creating short-term connectedness.
+9Asset pricing implications at diﬀerent frequencies have been discussed in the literature by Bandi and Tamoni
+(2016); Dew-Becker and Giglio (2016).
+10Complementary Figure 6 (a) in the appendix B.2 shows individual components with bootstrapped conﬁdence
+bands .
+15
+Figure 1 (b) documents the behaviour by increased short-term components after the consolida-
+tion from mid-2003. In addition, we document the rebound of short-term connectedness during
+2010 before the European debt crisis peaks. The 2013-2014 period shows a strong inﬂuence
+of short-term components. This indicates that stock market participants were expecting that
+shocks to future uncertainty would have a short-term impact; hence, they were more certain
+about the long-term stability of the system. The overall systemic risk in this period was driven
+more by shocks with short-term responses.
+Interestingly, since the total connectedness increases from the beginning of 2015 until the
+end of the studied period, the increase is driven by all of the components. Hence, market
+participants process the shock responses homogeneously during this period.
+Figure 2 contains the same information as Figure 1 (b) but shows the time-frequency dy-
+namics from a diﬀerent point of view, which serves as a helpful complementary visualization.
+In this ﬁgure, frequency bands form coloured ribbons, where the colour shows the strength of
+the connection, whereas the horizontal axis still holds time. One can view this representation
+as the three-dimensional space of connectedness at the time and frequency domains from the
+top, where the third axis showing the strength of connectedness at each time-frequency point is
+highlighted by colour. The heat map representation is useful because it more clearly visualizes
+the decomposition of the connectedness into time-frequency space. The interpretation is the
+same as Figure 1 (b) described in the previous paragraph. In addition, Figure 6 in the appendix
+B.2 shows a larger format picture with a (5% , 95%) conﬁdence band of the decomposition es-
+timated by the bootstrap. The conﬁdence band is suﬃciently tight around the estimate to be
+informative. The conﬁdence bands for other decompositions are also contained therein and are
+not described.
+Our results indicate that when evaluating the systemic risk of a ﬁnancial system, we should
+pay attention to short-, medium- and long-term linkages because they all play important roles in
+the system and tell us a diﬀerent story of what is occurring. Before making further conclusions
+about the nature of the connectedness in US ﬁnancial markets, we look deeper into its sources.
+While the decomposition of the connectedness to frequency bands that always sums to total
+connectedness is the main interest, within connectedness serves as additional insight into the
+dynamics. Within connectedness shows how shocks transmit within frequency bands, and it is
+not weighted by the variance share at a given band. Ignoring information outside the considered
+band, connectedness within frequency bands can be understood as pure unweighted connect-
+edness. Figure 3 (a) shows the within sectoral connectedness of the market. All frequencies
+share very similar time dynamics; hence, the rich time-frequency decomposition found in the
+previous part is mainly driven by the power of frequency responses, as should be expected.
+The main reason why we look at the pure within connectedness is to study the eﬀect of cross-
+sectional dependence on the connectedness. When using variance decompositions, we are mainly
+interested in ﬁnding causal eﬀects, but these can be biased due to strong contemporaneous
+relationships. To determine whether there is a bias in the connectedness that we measure, we
+adjust the correlation matrix of VAR residuals by the cross-sectional correlations.
+Figure 3 (b) shows within connectedness adjusted for this correlation eﬀect. Strikingly,
+the structure changes dramatically, indicating that the high-frequency connectedness is mainly
+driven by cross-sectional correlations but that connectedness at lower frequencies is not aﬀected
+as heavily, mainly during the crisis. One can infer that the increase in system connectedness
+during the crisis is mainly created by an increase in contemporaneous short-term correlations
+and causal longer-term connectedness. Hence, increased systemic risk has two main drivers.
+The ﬁrst is an increase in contemporaneous correlations, and the second is an increase in the
+persistence of the shocks creating and transmitting long-term uncertainty.
+16
+2001200220032004200520062007200820092010201120122013201420152016
+50
+60
+70
+80
+(a) Within scale
+2001200220032004200520062007200820092010201120122013201420152016
+0
+20
+40
+60
+80
+(b) Within scale no correlation
+Figure 3: Dynamic within the connectedness of the US ﬁnancial sector on frequency bands. Plot (a) presents
+the relative connectedness within the frequency band, CW
+ds with d1 ∈ [1, 5] days in black bold, d2 ∈ (5, 20] black,
+and d3 ∈ (20, 300] gray bold lines. Plot (b) presents the relative connectedness within the frequency band without
+the eﬀect of cross-sectional correlations.
+4.2.1 Event study of evolution of frequency connectedness
+One of the main strengths of the connectedness framework of (Diebold and Yilmaz, 2014) is the
+possibility to time the events , which means that important events usually track the evolution
+of connectedness. To manifest the strengths of our frequency decomposition, we focus on the
+event study of the two main periods with rich time-frequency dynamics: the global ﬁnancial
+crisis of 2008-2010 and the European debt crisis of 2009-2016. The evolution of the frequency
+decomposition and timed events are shown in Figure 4.
+Let us start with the global ﬁnancial crisis depicted by Figure 4 (a). The decomposition is
+dominated by the long-term component of connectedness that steadily increases until mid-2009,
+whereas the medium- and short-term connectedness steadily decrease.
+At the beginning of the period, short-term and medium-term connectedness were at the
+highest levels during the “ FOMC lowering the rates ” or “announcement of TAF ” events. The
+market participants were interpreting that the shocks due to the two events would have a short-
+term impact. Hence, the shocks at the beginning of the ﬁnancial crisis were viewed to have a
+short response and to create short-term connectedness.
+The following surge in the long-term connectedness and the decline in short-term and
+medium-term connectedness can be attributed to changes in investors’ beliefs about the sta-
+bility of the system. More precisely, increasing uncertainty and the belief that the economic
+situation had deeper, systemic roots led to the period in which the shocks were transmitting
+with increasing persistence through the system. Surprisingly, the crash of “ IndyMac Bank ”
+levelled oﬀ the development of connectedness for a while, changing investors’ beliefs after the
+following crash of Lehman Brothers.
+From the downfall of Lehman Brothers until mid-2009, when it was already clear that the
+global economy was in its worst shape since the Second World War (as evidenced by the an-
+nouncement by the World Bank in mid-2009 that global production would decline for the ﬁrst
+time since that war), the evolution of frequency connectedness suggests the decreased impor-
+tance of short-term connectedness and the increased importance of long-term connectedness.
+During this time, the shocks were impacting the system with increasing persistence, creating
+and transmitting uncertainty in the longer term. Hence, we document increasing uncertainty
+and insecurity about the studied system during this period. Overall, the global ﬁnancial crisis
+17
+0
+5
+10
+15
+20
+(a) Global financial crisis   
+i)
+20
+22
+24
+26
+28
+30
+32
+ii)
+2008 2009 2010
+0
+10
+20
+30
+40
+50
+ 
+iii)
+0
+5
+10
+15
+20
+25
+30
+35
+(b) European (greek )  debt-crissis
+i)
+18
+20
+22
+24
+26
+28
+30
+ 
+ii)
+2010 2012 2014 2016
+0
+10
+20
+30
+40
+50
+iii)
+Figure 4: Decomposition of the inﬂuence of the main economic events in (a) the global ﬁnancial crisis and (b)
+the European debt crisis on the connectedness measure. The individual lines represent connectedness measures at
+a given frequency band–more concretely: i) connectedness from one day to one week, ii) connectedness from one
+week to one month, and iii) connectedness from one month to 300 days. The events in the European debt crisis,
+from left to right, are “Papandreou reveals deﬁcits”, “Greece Activates 45bn EU/IMF Rescue Loans”, “Irish
+bail-out”, “Portuguese bail-out”, “First debt write-down”, “Second Greek bail-out”, “Second debt write-down”,
+“Spanish bank bail-out”, “Whatever it takes”, “Cypriot bail-out”, “Start of ECB QE”, and “Greek bail-out
+expires”. The events in the global ﬁnancial crisis are “FOMC lowered the Fed funds rate”, “FED announces
+Term Auction Facility”, “Bear Sterns buy-out, lowering FOMC rates”, “IndyMac Bank Fails”, “Lehman Brothers
+go bankrupt, next day FED buys AIG”, “US General Election”, and “World Bank projected that the global
+production for 2009 would fall by 2.9%, the ﬁrst decline since the second world war”.
+appears to have been a continuously evolving crisis with no major surprises in that they were
+not reﬂected in the uncertainty and its transmission.
+However, looking at Figure 4 (b), we see a story that is rather diﬀerent from the global
+ﬁnancial crisis. Starting with Greek PM Papandreou revealing deﬁcits, the event has substan-
+tially moved the ﬁnancial markets, instantly increasing the short-term connectedness by more
+than 5% and the medium-term connectedness likewise. Considering that the short-term con-
+nectedness ranges from 10% to 35% throughout the sample, a 5% jump is signiﬁcant. Hence,
+investors were still considering that the shock would create short-term uncertainty.
+18
+The second Greek bail-out has changed the expectations on the markets, as the long-term
+connectedness has jumped by 15%. The ﬁgure also provides evidence of the great success of
+Mario Draghi’s speech in which he stated that the European Central Bank would do “Whatever
+it took ” to help Greece.
+After the speech, both long- and medium-term connectedness decreased to unprecedented
+levels, showing the increased conﬁdence of investors accompanied by decreasing uncertainty.
+After the event, investors were more certain that shocks would have a less persistent impact on
+the system creating short-run connectedness.
+5 Conclusion
+In this work, we contribute to the understanding of connectedness between economic vari-
+ables by proposing to measure its frequency dynamics. Based on the spectral representations
+of variance decompositions and connectedness measures, we provide a general framework for
+disentangling the sources of connectedness between economic variables. Because shocks to eco-
+nomic activity have an impact on variables at diﬀerent frequencies with diﬀerent strengths,
+we view the frequency domain as a natural place for measuring the connectedness between
+economic variables.
+As noted by Diebold and Yilmaz (2009, 2012, 2014), variance decompositions from approx-
+imating models are a convenient framework for empirical measurement of connectedness. A
+natural measure can be deﬁned based on assessing shares of future uncertainty in one variable
+due to a shock arising in another variable in the system. Focusing on the frequency responses
+to shocks instead, we are interested in assessing shares of uncertainty in one variable due to
+shocks with diﬀerent persistence levels. Moreover, we elaborate on the role of the correlation
+of the residuals in the magnitude of the connectedness.
+In the empirical part, we investigate the connectedness of ﬁnancial ﬁrms in the US, a
+powerful measure of systemic risk of the ﬁnancial sector. We approximate the data locally
+and obtain rich time-frequency dynamics of connectedness. Economically, periods in which
+connectedness is created at high frequencies are periods when stock markets seem to process
+information rapidly and calmly, and a shock to one asset in the system will have an impact
+mainly in the short term. When the connectedness is created at lower frequencies, it suggests
+that shocks are persistent and are being transmitted for longer periods. The behaviour may be
+attributed to changes in investors’ expectations, which impact the market in the longer term.
+The expectations are then transmitted to surrounding assets in portfolios. The two event
+studies of the global ﬁnancial crisis during 2008 and the European debt crisis that followed
+in 2011 support our hypotheses. The results underline the importance of properly measuring
+the dynamics across time and frequencies and emphasize the important role of cross-sectional
+correlation in the connectedness origins.
+The frequency-based approach opens fascinating new routes in understanding the connect-
+edness of economic variables with important implications for the measurement of systemic risk.
+Further research applying our measures to wider areas of interest and diﬀerent empirical mod-
+elling strategies will be important in uncovering the connectedness of assets within a market or
+industry and the connectedness across asset classes and international markets. It will also be
+important in providing grounds for further research in risk management, portfolio allocation,
+or business cycle analysis, where understanding the origins of connectedness is essential.
+19
+References
+Acharya, V. V., L. H. Pedersen, T. Philippon, and M. Richardson (2017). Measuring systemic risk. The Review
+of Financial Studies 30 (1), 2–47.
+Adrian, T. and M. K. Brunnermeier (2016). Covar. The American Economic Review 106 (7), 1705–1741.
+Bae, K.-H., G. A. Karolyi, and R. M. Stulz (2003). A new approach to measuring ﬁnancial contagion. Review
+of Financial Studies 16 (3), 717–763.
+Balke, N. S. and M. E. Wohar (2002). Low-frequency movements in stock prices: A state-space decomposition.
+Review of Economics and Statistics 84 (4), 649–667.
+Bandi, F. M. and A. Tamoni (2016). Business-cycle consumption risk and asset prices. Available at SSRN
+2337973.
+Bansal, R. and A. Yaron (2004). Risks for the long run: A potential resolution of asset pricing puzzles. The
+Journal of Finance 59 (4), 1481–1509.
+Bekaert, G., C. R. Harvey, and A. Ng (2005). Market integration and contagion. Journal of Business 78 (1).
+Benoit, S., J.-E. Colliard, C. Hurlin, and C. P´ erignon (2017). Where the risks lie: A survey on systemic risk.
+Review of Finance 21 (1), 109–152.
+Blanchard, O. J. and D. Quah (1989). The dynamic eﬀects of aggregate demand and supply disturbances. The
+American Economic Review 79 (4), 655–673.
+Breitung, J. and B. Candelon (2006). Testing for short-and long-run causality: A frequency-domain approach.
+Journal of Econometrics 132 (2), 363–378.
+Cogley, T. (2001). A frequency decomposition of approximation errors in stochastic discount factor models.
+International Economic Review 42 (2), 473–503.
+Dees, S., S. Holly, M. H. Pesaran, and L. V. Smith (2007). Long run macroeconomic relations in the global
+economy. Technical report, CESifo working paper.
+Dew-Becker, I. and S. Giglio (2016). Asset pricing in the frequency domain: theory and empirics. Review of
+Financial Studies 29 (8), 2029–2068.
+Diebold, F. X. and K. Yilmaz (2009). Measuring ﬁnancial asset return and volatility spillovers, with application
+to global equity markets. The Economic Journal 119 (534), 158–171.
+Diebold, F. X. and K. Yilmaz (2012). Better to give than to receive: Predictive directional measurement of
+volatility spillovers. International Journal of Forecasting 28 (1), 57–66.
+Diebold, F. X. and K. Yilmaz (2014). On the network topology of variance decompositions: Measuring the
+connectedness of ﬁnancial ﬁrms. Journal of Econometrics 182 (1), 119–134.
+Dufour, J.-M. and E. Renault (1998). Short run and long run causality in time series: theory. Econometrica,
+1099–1125.
+Engle, R. F., G. M. Gallo, and M. Velucchi (2012). Volatility spillovers in east asian ﬁnancial markets: a
+mem-based approach. Review of Economics and Statistics 94 (1), 222–223.
+Engle, R. F. and C. W. Granger (1987). Co-integration and error correction: representation, estimation, and
+testing. Econometrica: journal of the Econometric Society , 251–276.
+Engle, R. F. and J. G. Rangel (2008). The spline-garch model for low-frequency volatility and its global macroe-
+conomic causes. The Review of Financial Studies 21 (3), 1187–1222.
+Engsted, T. and T. Q. Pedersen (2014). Bias-correction in vector autoregressive models: A simulation study.
+Econometrics 2 (1), 45–71.
+Forbes, K. J. and R. Rigobon (2002). No contagion, only interdependence: measuring stock market comovements.
+The Journal of Finance 57 (5), 2223–2261.
+Geweke, J. (1982). Measurement of linear dependence and feedback between multiple time series. Journal of the
+American Statistical Association 77 (378), 304–313.
+Geweke, J. (1986). The superneutrality of money in the united states: An interpretation of the evidence.
+Econometrica: Journal of the Econometric Society , 1–21.
+Geweke, J. F. (1984). Measures of conditional linear dependence and feedback between time series. Journal of
+the American Statistical Association 79 (388), 907–915.
+Gonzalo, J. and S. Ng (2001). A systematic framework for analyzing the dynamic eﬀects of permanent and
+transitory shocks. Journal of Economic Dynamics and Control 25 (10), 1527–1546.
+20
+Granger, C. W. (1966). The typical spectral shape of an economic variable. Econometrica: Journal of the
+Econometric Society , 150–161.
+Granger, C. W. (1969). Investigating causal relations by econometric models and cross-spectral methods. Econo-
+metrica: Journal of the Econometric Society , 424–438.
+L¨ utkepohl, H. (2007).New introduction to multiple time series analysis . Springer.
+Ortu, F., A. Tamoni, and C. Tebaldi (2013). Long-run risk and the persistence of consumption shocks. Review
+of Financial Studies 26 (11), 2876–2915.
+Pesaran, H. H. and Y. Shin (1998). Generalized impulse response analysis in linear multivariate models. Eco-
+nomics letters 58 (1), 17–29.
+Quah, D. (1992). The relative importance of permanent and transitory components: identiﬁcation and some
+theoretical bounds. Econometrica: Journal of the Econometric Society , 107–118.
+Ross, S. A. (1989). Information and volatility: The no-arbitrage martingale approach to timing and resolution
+irrelevancy. The Journal of Finance 44 (1), 1–17.
+St˘ aric˘ a, C. and C. Granger (2005). Nonstationarities in stock returns.Review of economics and statistics 87 (3),
+503–522.
+Stiassny, A. (1996). A spectral decomposition for structural var models. Empirical Economics 21 (4), 535–555.
+Tse, Y. K. and A. K. C. Tsui (2002). A multivariate generalized autoregressive conditional heteroscedasticity
+model with time-varying correlations. Journal of Business & Economic Statistics 20 (3), 351–362.
+Yamada, H. and W. Yanfeng (2014). Some theoretical and simulation results on the frequency domain causality
+test. Econometric Reviews 33 (8), 936–947.
+21
+A Technical Appendix
+A.1 Derivation of the GFEVD
+Let us have the MA(∞) representation of the generalized VAR model (details in (Pesaran and
+Shin, 1998; Dees et al., 2007)) given as
+xt = Ψ(L)ϵt, (7)
+with the covariance matrix of the errors Σ. Because the errors are assumed to be serially
+uncorrelated, the total covariance matrix of the forecast error conditional at the information in
+t− 1 is
+ΩH =
+H∑
+h=0
+ΨhΣΨ′
+h. (8)
+Next, we deﬁne the covariance matrix of the forecast error conditional on knowledge of today’s
+shock and future expected shocks to j-th equation. Starting from the conditional forecasting
+error,
+γk
+t (H) =
+H∑
+h=0
+Ψh [ϵt+H−h−E(ϵt+H−h|ϵk,t+H−h)], (9)
+assuming normal distribution, we have
+γk
+t (H) =
+H∑
+h=0
+Ψh
+[
+ϵt+H−h−σ−1
+kk (Σ)·kϵk,t+H−h
+]
+. (10)
+Finally, the covariance matrix is
+Ωk
+H =
+H∑
+h=0
+ΨhΣΨ′
+h−σ−1
+kk
+H∑
+h=0
+Ψh (Σ)·k (Σ)′
+·k Ψ′
+h. (11)
+Then,
+∆(j)kH = (ΩH− Ωk
+H)j,j =σ−1
+kk
+H∑
+h=0
+((ΨhΣ)j,k)2 (12)
+is the unscaled H-step ahead forecast error variance of the j-th component with respect to the
+innovation in the k-th component. Scaling the equation yields the desired
+(θH)j,k = σ−1
+kk
+∑H
+h=0 ((ΨhΣ)j,k)2
+∑H
+h=0(ΨhΣΨ′
+h)j,j
+(13)
+22
+A.2 Proofs
+Proposition 2.1. To prove the equality we need the following:
+1
+2π
+∫ π
+−π
+Γj(ω) (f(ω))j,kdω = 1
+2π
+∫ π
+−π
+(
+Ψ(e−iω)ΣΨ′(e+iω)
+)
+j,j
+1
+2π
+∫π
+−π (Ψ(e−iλ)ΣΨ′(e+iλ))j,jdλ
+σ−1
+kk
+⏐⏐⏐
+(
+Ψ
+(
+e−iω)
+Σ
+)
+j,k
+⏐⏐⏐
+2
+(Ψ(e−iω)ΣΨ′(e+iω))j,j
+dω
+= 1
+2π
+∫ π
+−π
+σ−1
+kk
+⏐⏐⏐
+(
+Ψ
+(
+e−iω)
+Σ
+)
+j,k
+⏐⏐⏐
+2
+1
+2π
+∫π
+−π (Ψ(e−iλ)ΣΨ′(e+iλ))j,jdλdω
+=
+1
+2π
+∫π
+−πσ−1
+kk
+⏐⏐⏐
+(
+Ψ
+(
+e−iω)
+Σ
+)
+j,k
+⏐⏐⏐
+2
+dω
+1
+2π
+∫π
+−π (Ψ(e−iλ)ΣΨ′(e+iλ))j,jdλ
+=
+σ−1
+kk
+∑∞
+h=0
+(
+(ΨhΣ)j,k
+)2
+(∑∞
+h=0
+(
+ΨhΣΨ′
+h
+))
+k,k
+= (θ∞)j,k
+(14)
+Hence, the proof essentially simpliﬁes to proving two equalities
+1
+2π
+∫ π
+−π
+σ−1
+kk
+⏐⏐⏐
+(
+Ψ
+(
+e−iω)
+Σ
+)
+j,k
+⏐⏐⏐
+2
+dω =σ−1
+kk
+∞∑
+h=0
+(
+(ΨhΣ)j,k
+)2
+(15)
+1
+2π
+∫ π
+−π
+(
+Ψ(e−iλ)ΣΨ′(e+iλ)
+)
+j,j
+dλ =
+(∞∑
+h=0
+(
+ΨhΣΨ′
+h
+)
+)
+k,k
+(16)
+For the following steps we will leverage the standard integral
+1
+2π
+∫ π
+−π
+eiω(u−v)dω =
+{
+1 for u =v
+0 for u̸=v. (17)
+This integral is mostly useful in cases when we have series ∑∞
+h=0φhψh and we want to
+arrive to spectral representation. Note that ∑∞
+h=0φhψh = 1
+2π
+∫π
+−π
+∑∞
+v=0
+∑∞
+u=0φuψveiω(u−v)dω.
+Levering this knowledge we prove the Equation (15)
+23
+σ−1
+kk
+∞∑
+h=0
+(
+(ΨhΣ)j,k
+)2
+=σ−1
+kk
+∞∑
+h=0
+( n∑
+z=1
+(Ψh)j,z (Σ)z,k
+)2
+=σ−1
+kk
+1
+2π
+∫ π
+−π
+∞∑
+u=0
+∞∑
+v=0
+( n∑
+x=1
+(Ψu)j,x (Σ)x,k
+)
+
+n∑
+y=1
+(Ψv)j,y (Σ)y,k
+
+eiω(u−v)dω
+=σ−1
+kk
+1
+2π
+∫ π
+−π
+∞∑
+u=0
+∞∑
+v=0
+( n∑
+x=1
+(
+Ψueiωu)
+j,x (Σ)x,k
+)
+
+n∑
+y=1
+(
+Ψve−iωv)
+j,y (Σ)y,k
+
+dω
+=σ−1
+kk
+1
+2π
+∫ π
+−π
+(∞∑
+u=0
+n∑
+x=1
+(
+Ψueiωu)
+j,x (Σ)x,k
+)
+
+∞∑
+v=0
+n∑
+y=1
+(
+Ψve−iωv)
+j,y (Σ)y,k
+
+dω
+=σ−1
+kk
+1
+2π
+∫ π
+−π
+( n∑
+x=1
+(
+Ψ
+(
+eiω))
+j,x (Σ)x,k
+)
+
+n∑
+y=1
+(
+Ψ
+(
+e−iω))
+j,y (Σ)y,k
+
+dω
+=σ−1
+kk
+1
+2π
+∫ π
+−π
+((
+Ψ
+(
+e−iω)
+Σ
+)
+j,k
+)((
+Ψ
+(
+eiω)
+Σ
+)
+j,k
+)
+dω
+=σ−1
+kk
+1
+2π
+∫ π
+−π
+⏐⏐⏐
+(
+Ψ
+(
+e−iω)
+Σ
+)
+j,k
+⏐⏐⏐
+2
+dω
+(18)
+We use the switch to the spectral representation of the MA coeﬃcients in the second step.
+The rest is a manipulation with the last step invoking the deﬁnition of modulus squared of a
+complex number to be deﬁned as |z|2 =zz∗. Note that we can use this simpliﬁcation without
+loss of generality, because the MA(∞) representation that is described by the coeﬃcients Ψh
+has a spectrum that is always symmetric.
+Next, we concentrate on the Equation (16) levering similar steps and the positive semideﬁ-
+niteness of the matrix Σ that ascertains that there exists P such that Σ =PP′.
+∞∑
+h=0
+(
+ΨhΣΨ′
+h
+)
+=
+∞∑
+h=0
+(ΨhP ) (ΨhP )′
+= 1
+2π
+∫ π
+−π
+∞∑
+u=0
+∞∑
+v=0
+(
+ΨueiωuP
+)(
+Ψve−iωvP
+)′
+dω
+= 1
+2π
+∫ π
+−π
+∞∑
+u=0
+(
+ΨueiωuP
+) ∞∑
+v=0
+(
+Ψve−iωvP
+)′
+dω
+= 1
+2π
+∫ π
+−π
+(
+Ψ
+(
+eiω)
+P
+)(
+Ψ
+(
+e−iω)
+P
+)′
+dω
+= 1
+2π
+∫ π
+−π
+(
+Ψ
+(
+eiω)
+ΣΨ′(
+e−iω))
+dω
+(19)
+This completes the proof.
+24
+Proposition 2.2. Using the Remark 2.1 and appropriate substitutions, we have:
+∑
+dz∈D
+CF
+dz =
+∑
+dz∈D
+
+
+∑˜θdz
+∑˜θ∞
+−
+Tr
+{
+˜θdz
+}
+∑˜θ∞
+
+ = 1−
+∑
+dz∈D Tr
+{
+˜θdz
+}
+∑˜θ∞
+=
+1−
+Tr
+{∑
+dz∈D˜θdz
+}
+∑˜θ∞
+=C∞,
+(20)
+where the next to last equality follows from the linearity of the trace operator.
+Proposition 2.3. Using the deﬁnition of the connectedness, we have
+CW
+(−π,π) =C∞ (21)
+CF
+(−π,π) =
+(
+˜θ(−π,π)
+)
+j,k
+n −
+Tr
+{
+˜θ∞
+}
+∑˜θ∞
+= n
+n−
+Tr
+{
+˜θ∞
+}
+∑˜θ∞
+= 1−
+Tr
+{
+˜θ∞
+}
+∑˜θ∞
+=C∞ (22)
+25
+B Supplementary Tables and Figures
+B.1 Including Fannie Mae (FNM) and Freddie Mac (FRE)
+As suggested in the data section, FRE and FNM were, for a substantial portion of the period,
+part of the US ﬁnancial system. Hence, as a robustness measure, we compute the overall
+connectedness with the same speciﬁcation over the shorter dataset when both FRE and FNM
+are publicly traded and compare the overall connectedness of the two systems to see how the
+results change. The result is shown in Figure 5. We can see that most of the time, the system
+that includes the FRE and FNM was more connected than was the restricted system. The
+diﬀerence peaks at approximately 6% in mid-2006, which is a relatively high number due to the
+nature of the connectedness, which is a mean of shares of variances created by shocks to other
+variables. Hence, including FRE and FNM in the system increases the systemic risk although
+the dynamics do not substantially diﬀer from the analysis that omits FRE and FNM.
+55 
+60
+65
+70
+75
+80
+85
+Difference between total connectedness
+2002 2003 2004 2005 2006 2007 2008 2009 2010
+0
+2
+4
+6
+Figure 5: Time dynamics of connectedness of the US ﬁnancial sector for system with and without FNM and
+FRE. The top part shows the level of connectedness and the bottom part shows the diﬀerence. The horizontal
+axis shows time. A positive diﬀerence indicates that the system including FNM and FRE is more connected
+than the system without those two stocks.
+26
+B.2 Supplementary Tables and Figures
+Connectedness as by DY12 Connectedness as by DY12, nulliﬁed correlation
+β1 β2 s ρ Connectedness ( π/2,π ) ( π/4,π/ 2) (0 ,π/ 4) Connectedness ( π/2,π ) ( π/4,π/ 2) (0 ,π/ 4)
+0.40 -0.40 0.00 0.00 0.15 0.20 0.20 0.19 0.08 0.07 0.07 0.07
+(0.12) (0.21) (0.19) (0.21) (0.08) (0.07) (0.07) (0.07)
+0.40 -0.40 0.00 0.90 44.76 44.78 44.78 44.79 0.11 0.13 0.13 0.12
+(0.35) (0.35) (0.35) (0.36) (0.11) (0.18) (0.17) (0.17)
+0.40 -0.40 0.20 0.00 3.37 3.49 3.30 3.20 3.48 3.44 3.47 3.49
+(0.60) (0.99) (0.78) (1.08) (0.64) (0.67) (0.68) (0.69)
+0.40 -0.40 0.20 0.90 45.03 43.88 45.49 45.98 3.53 3.55 3.55 3.55
+(0.34) (0.48) (0.32) (0.31) (0.60) (0.54) (0.62) (0.67)
+0.40 -0.40 0.59 0.00 23.11 23.07 22.86 22.75 23.14 22.93 22.93 22.97
+(0.93) (1.55) (1.17) (1.90) (0.96) (1.18) (1.00) (1.27)
+0.40 -0.40 0.59 0.90 46.86 41.53 47.75 48.43 24.38 23.00 22.80 22.74
+(0.29) (0.70) (0.17) (0.16) (0.97) (0.90) (1.14) (1.45)
+0.40 -0.40 -0.20 0.00 3.48 3.55 3.49 3.46 3.42 3.38 3.35 3.34
+(0.64) (0.89) (0.80) (1.05) (0.65) (0.69) (0.67) (0.68)
+0.40 -0.40 -0.20 0.90 45.03 45.84 44.45 43.45 3.56 3.43 3.41 3.40
+(0.31) (0.28) (0.37) (0.46) (0.61) (0.65) (0.57) (0.54)
+0.40 -0.40 -0.59 0.00 23.07 23.25 22.98 22.83 23.16 23.23 23.15 23.16
+(0.94) (1.49) (1.08) (1.68) (1.04) (1.30) (0.95) (1.25)
+0.40 -0.40 -0.59 0.90 46.88 48.31 45.31 39.56 24.70 23.07 23.09 23.13
+(0.29) (0.17) (0.34) (0.78) (0.92) (1.56) (0.86) (0.85)
+Table 3: Simulation results. The ﬁrst three columns describe parameters for the simulation as described
+in Equation (6). The results are based on 100 simulations of VAR with the speciﬁed parameters of length
+1000 and a burnout period of 100. The estimate is computed by average over the 100 simulation, and
+the standard error is the simple sample standard deviation. The numbers are multiplied by hundred.
+27
+β1 β2 s ρ Connectedness ( π/2,π ) ( π/4,π/ 2) (0 ,π/ 4)
+0.0 0.0 0.00 0.0 0.00 0.00 0.00 0.00
+0.0 0.0 0.00 0.9 44.75 44.75 44.75 44.75
+0.9 0.9 0.09 0.0 40.50 0.30 0.90 41.15
+0.9 0.9 0.09 0.9 49.47 44.25 44.41 49.51
+-0.9 -0.9 0.09 0.0 40.50 40.77 0.34 0.24
+-0.9 -0.9 0.09 0.9 41.28 41.01 45.22 45.22
+0.9 0.4 0.09 0.0 5.66 0.32 0.88 7.48
+0.9 0.4 0.09 0.9 46.09 44.25 44.48 46.56
+0.9 0.0 0.09 0.0 2.59 0.32 0.80 3.97
+0.9 0.0 0.09 0.9 45.40 44.25 44.51 45.98
+0.9 -0.9 0.09 0.0 0.45 0.45 0.45 0.45
+0.9 -0.9 0.09 0.9 44.76 44.26 44.97 45.26
+0.4 -0.4 0.00 0.0 0.00 0.00 0.00 0.00
+0.4 -0.4 0.00 0.9 44.75 44.75 44.75 44.75
+0.4 -0.4 0.20 0.0 3.33 3.33 3.33 3.33
+0.4 -0.4 0.20 0.9 45.01 43.52 45.62 46.28
+0.4 -0.4 0.59 0.0 23.08 23.08 23.08 23.08
+0.4 -0.4 0.59 0.9 46.87 40.94 47.86 48.64
+0.4 -0.4 -0.20 0.0 3.33 3.33 3.33 3.33
+0.4 -0.4 -0.20 0.9 45.01 46.05 44.27 43.00
+0.4 -0.4 -0.59 0.0 23.08 23.08 23.08 23.08
+0.4 -0.4 -0.59 0.9 46.87 48.51 45.13 38.84
+Table 4: The true values for connectedness in the VAR settings
+Institution Ticker No. of obs. Mean Median St. dev. Skewness Kurtosis Start date End date
+AIG AIG 4216 2.14 1.46 2.82 10.17 202.03 2000-01-03 2016-11-30
+American Express AXP 4216 1.63 1.30 1.15 2.88 18.52 2000-01-03 2016-11-30
+Bank of America BAC 4216 1.76 1.36 1.84 14.12 448.59 2000-01-03 2016-11-30
+Bank of New York Mellon BK 4216 1.72 1.34 1.41 6.53 88.15 2000-01-03 2016-11-30
+Citigroup C 4216 2.11 1.47 12.85 62.32 3985.03 2000-01-03 2016-11-30
+Fannie Mae FNM 2617 3.11 1.52 4.19 4.82 40.03 2000-01-03 2010-07-07
+Freddie Mac FRE 2617 3.16 1.47 4.58 5.55 55.22 2000-01-03 2010-07-07
+Goldman Sachs GS 4216 1.70 1.36 1.13 4.26 38.42 2000-01-03 2016-11-30
+J.P. Morgan JPM 4216 1.74 1.41 1.21 3.19 20.82 2000-01-03 2016-11-30
+Morgan Stanley MS 4216 2.18 1.76 1.80 7.39 104.67 2000-01-03 2016-11-30
+PNC Group PNC 4216 1.58 1.19 1.32 4.21 33.57 2000-01-03 2016-11-30
+US Bancorp USB 4216 1.62 1.23 1.25 3.32 22.18 2000-01-03 2016-11-30
+Wells Fargo WFC 4216 1.62 1.25 1.67 17.55 653.86 2000-01-03 2016-11-30
+Table 5: The descriptive statistics of the volatility data
+28
+10
+15
+20
+25
+30
+35
+40
+(a) Frequency connectedness
+ 
+ 
+ 
+i)
+15
+20
+25
+30
+35
+ii)
+2005 2010 2015
+10
+20
+30
+40
+50
+60
+ 
+ 
+iii)
+50
+60
+70
+80
+(b) Within-frequency connectedness
+i)
+55
+60
+65
+70
+75
+80
+85
+ii)
+2005 2010 2015
+60
+65
+70
+75
+80
+85
+iii)
+Figure 6: The decomposition of connectedness with cross-sectional dependence. The individual lines
+represent connectedness measures at a given frequency band, more concretely: i) connectedness from
+one day to one week, ii) connectedness from one week to one month, and iii) connectedness from one
+month to 300 days. The shaded area represents the space between the 5% and 95% quantiles of the
+bootstrapped measure.
+29
+4
+6
+8
+10
+12
+14
+16
+18
+(a) Frequency con. withou t correlation
+i)
+5
+10
+15
+20
+25
+ii)
+2005 2010 2015
+10
+20
+30
+40
+50
+iii)
+15
+20
+25
+30
+35
+(b) Within-frequency con. without correlation
+ 
+i
+)
+20
+30
+40
+50
+60
+70
+ 
+ii)
+2005 2010 2015
+20
+30
+40
+50
+60
+70
+80
+iii)
+Figure 7: The decomposition of connectedness without cross-sectional dependence. The individual
+lines represent connectedness measures at a given frequency band, more concretely: i) connectedness
+from one day to one week, ii) connectedness from one week to one month, and iii) connectedness from
+one month to 300 days. The shaded area represents the space between the 5% and 95% quantiles of the
+bootstrapped measure.
+30

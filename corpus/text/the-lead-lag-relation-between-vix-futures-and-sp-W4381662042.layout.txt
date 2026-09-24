@@ -1,0 +1,1976 @@
+                                                          Contents lists available at ScienceDirect
+
+                                                    JournalofFinancialMarkets
+
+
+                                                journal homepage: www.elsevier.com/locate/finmar
+
+
+Thelead–lagrelationbetweenVIXfuturesandSPXfutures✩
+ChristineBangsgaarda,ThomasKokholma,b,∗
+
+aAarhus BSS, Aarhus University, Department of Economics and Business Economics, Denmark
+
+bDanish Finance Institute, Denmark
+
+
+A R T I C L E   I N F O                                 A B S T R A C T
+
+JELclassification:                                      We analyze the lead–lag relation between VIX futures and SPX futures. The two futures markets
+G11                                                     are weakly connected when market volatility is low. By contrast, when volatility is high, their
+G12                                                     prices are highly negatively correlated, with VIX futures leading SPX futures. However, the
+G13                                                     tightness of the lead–lag relation prevents the formation of profitable trading strategies in a
+G14                                                     setup that includes transaction costs. An analysis of the time variation in the lead–lag relation
+G23                                                     finds that an improvement in the relative liquidity of one market strengthens the lead of that
+Keywords:                                               market. Moreover, the hedging activities of market makers influence the lead–lag relation.
+Lead–lagrelation
+High-frequencydata
+Cross-correlation
+Pricediscovery
+VIXfutureshedging
+Cross-marketactivity
+
+
+
+1. Introduction
+
+    In a market without frictions, the prices of different financial instruments should move contemporaneously, and past price
+changes should not carry information relevant for predicting future price changes. However, in practice, all available information
+is not properly reflected in all prices at all times, and the price change of a given financial instrument might contain information
+about another instrument’s future price movements. The lead–lag relation between two instruments quantifies the ability of the
+leading instrument to predict future price changes in the lagging instrument. As such, the identification of lead–lag patterns has
+useful implications for understanding the price discovery process, as well as practical value for both speculation and hedging.
+    We study the lead–lag relation between VIX futures and E-mini SPX futures (referred to as SPX futures hereafter) on a sample of
+transactions time-stamped down to the millisecond and collected from January 2013 to September 2020. We quantify the lead–lag
+relation based on the cross-correlation function from which two different measures are extracted; the lead–lag ratio (𝐿𝐿𝑅) based
+on the whole cross-correlation function (Huth and Abergel, 2014), and the lead–lag time (𝐿𝐿𝑇) defined as the point where the
+absolute value of the cross-correlation function is maximized (Hoffmann et al., 2013). We find that the two futures markets exhibit
+little connection under low levels of volatility, while their prices are characterized by a stronger negative correlation under high
+volatility. Moreover, when market volatility is high, the𝐿𝐿𝑅 measure signals that the VIX futures lead the SPX futures. Hence, the
+natureofthelead–lagrelationishighlydependentonthevolatilityregime.Whilethetwolead–lagmeasuresconcuronthedirection
+
+
+
+ ✩  This research was conducted with support from the Independent Research Fund Denmark (Grant: DFF 0133-00151B). We thank Bart Frijns, Anders Merrild
+Posselt, Sang Seo, Carsten Tanggaard, Rasmus Tangsgaard Varneskov, and two anonymous reviewers for their useful comments. The paper has been presented
+at the SIAM Conference on Financial Mathematics 2021, the Derivative Markets Conference 2021, and the 2021 FMA Conference on Derivatives and Volatility.
+  ∗  Corresponding author at: Aarhus BSS, Aarhus University, Department of Economics and Business Economics, Denmark.
+     E-mail addresses:  chba@econ.au.dk (C. Bangsgaard), thko@econ.au.dk (T. Kokholm).
+
+https://doi.org/10.1016/j.finmar.2023.100851
+Received 12 May 2022; Received in revised form 6 June 2023; Accepted 6 June 2023
+C. Bangsgaard and T. Kokholm
+
+of the lead in the majority of the sample, the COVID-19 period is characterized by some misalignment of the two measures. For this
+period,𝐿𝐿𝑅 points to a clear VIX futures lead, while𝐿𝐿𝑇 indicates a tight SPX futures lead. By contrast, on pre-COVID-19 days of
+high volatility, the𝐿𝐿𝑇 measure points to a tight VIX futures lead.
+    Once a lead–lag relation between two securities is identified, it can be relevant to study if a trading strategy exploiting the
+relation can be formed. We consider two simple strategies where the futures in one market is traded following a change in the
+futures price in the other market. The strategies generate positive average returns when we assume that trades can be executed at
+midquotes. However, if we more realistically assume that trades are executed at prevailing bid and ask prices, the profit is eaten up
+by transaction costs. Taken together with the finding that the lead–lag relation is tight, we conclude that the two markets are too
+synchronized for the relation to be systematically monetized by investors.
+    Althoughnolead–lagprofitappearstobepresentunderthemorerealisticassumptionofthetradingstrategy,theresultsillustrate
+the close connection between the two futures markets. It suggests that price movements of both markets are informative about the
+future price movements in the other market. In particular, conditioned on the VIX index being at a high level, the VIX futures price
+changes provide a stronger signal (in the form of higher average returns) about future SPX futures price movements relative to the
+full sample. By contrast, the SPX futures price changes provide the strongest signal about VIX futures changes during the COVID-19
+pandemic. The finding is in line with our conclusion drawn from the analysis on the lead–lag relation. Even if the documented
+lead–lag relation cannot be traded with a profit, quantifying a lead–lag relation still has relevance for trading purposes, such as the
+optimal execution of trades or for market makers setting bid–ask quotes.
+    Traditionally, changes to the price of a given equity index and its volatility are considered to be connected via two channels
+(Bekaert and Wu,2000;Bollerslev et al.,2006). First, if volatility is priced, an increase in the level of volatility impacts the price of
+the index negatively as investors require a lower price to be compensated for the higher level of risk. This channel is traditionally
+labeled the volatility feedback effect. Second, a drop in the value of the index leads to higher volatility due to the so-called leverage
+effect. Hence, speculation in the level of volatility of the SPX index or the price of the SPX index can be performed both with VIX
+futures and SPX futures, respectively. This implies that the relative liquidity of the two markets potentially plays a role in which
+market first reflects new information. Consistent with a price discovery channel, we find that an increase in the liquidity of VIX
+futures relative to the liquidity of SPX futures results in a strengthening of the VIX futures lead and vice versa.
+    Moreover, we compute a measure of cross-market activity between the VIX futures and SPX futures, using the methodology
+introduced inDobrev and Schaumburg(2018), and find that higher levels of cross-market trading are linked with a stronger VIX
+futures lead. Overall, we interpret cross-market activity as a combined measure of the activity of two types of agents. The first type
+consists of high-frequency traders executing orders in one futures market as a reaction to price changes in the other market. Hence,
+in high volatility scenarios where VIX futures tend to lead SPX futures, and the markets are more tightly connected, high-frequency
+traders can exploit this link and trade in SPX futures as a reaction to changes in the VIX futures price. As these high-frequency
+traders will trade in the same direction as the anticipated price change in SPX futures, they have the potential to increase the
+magnitude of the cross-correlations. With an existing VIX futures lead, this will be reflected in a stronger VIX futures lead and vice
+versa. The second type of agents consists of VIX futures dealers setting up their hedge in response to a change in their VIX futures
+netposition.In orderto hedgetheir positionsin volatility,dealers canemploy variousoptions-basedhedging strategies,or theycan
+set up a more approximate hedge utilizing the strong negative correlation between VIX futures and SPX futures (Bangsgaard and
+Kokholm,2023). Since these strategies entail trading the underlying in the form of the SPX futures, VIX futures trading would lead
+to subsequent hedging activities in the SPX futures. These transactions would influence the lead–lag relation in the direction of a
+VIX futures leadership.
+    In addition, we consider how the aggregate net gamma position of SPX option dealers can impact the lead–lag relation. If new
+information is first incorporated into the VIX futures market, the SPX futures market will subsequently adjust to reflect the new
+information by moving in the opposite direction of the VIX futures price. The SPX futures price change typically induces option
+dealers with a negative gamma position to rebalance their hedge positions by trading in the same direction as the price change (Ni
+et al.,2021). A negative aggregate gamma position of dealers could therefore result in an even stronger VIX futures leadership as
+the initial VIX futures price movement continues to have an impact on the SPX futures over a longer time frame. In line with this
+reasoning, and conditioned on the gamma position being negative, we find that a change in the gamma imbalance towards a more
+negative position is associated with a strengthening of the VIX futures lead.
+    Our findings of VIX futures and SPX futures prices not being entirely synchronized may appear at odds with what we would
+expect for two large and liquid markets. However, other studies show that even for markets that are considered large and actively
+traded,onemarketcanleadthepricechangesofanothermarket(Chenetal.,2016;Daoetal.,2018).Furthermore,theevidenceon
+theleadershipoftheVIXfuturesmaybesomewhatsurprisinginlightofthelargerSPXfuturesmarket.Nevertheless,ourfindingsare
+consistentwithotherresearchshowingthatVIXfuturesplayadominantroleinrelationtootherSPX-relatedmarkets.Inparticular,
+severalstudiesshowthattheVIXfuturesleadtheVIXindex(ShuandZhang,2012;Frijnsetal.,2016;Bollenetal.,2017;Chenand
+Tsai,2017). By construction of the VIX index, this translates into VIX futures leading SPX options.Park(2020) shows that relative
+to SPX options, the VIX futures and option prices contain different information about future expected variance and play a greater
+role in variance discovery. In addition to leading SPX options,Bollen et al.(2017) show that VIX futures lead VIX options.
+    The VIX futures and SPX futures markets are natural candidates to assess the lead–lag relation between volatility markets and
+equity markets. Among the different traded volatility products, the market for VIX futures is the biggest exchange-traded venue for
+volatilityandallowsfor’’pure’’volatilityspeculationwithouthavingtodelta-hedge,asopposedtovolatilityspeculationviaoptions.
+Moreover, and as mentioned above, other studies find that VIX futures lead other volatility-sensitive products, such as SPX options
+andVIXoptions.TheVIXfuturesmarketisalsomoreliquidthanVIXoptions(Hilaletal.,2011).SincetheVIXfuturespricecontains
+C. Bangsgaard and T. Kokholm
+
+information on the expected future volatility of the SPX index, we should use a traded equity product closely connected to the SPX
+index.Hasbrouck(2003) shows that across the E-mini SPX futures, the floor-traded SPX futures, and ETFs tracking the SPX index,
+the E-mini SPX futures contribute the most to price discovery. Using more recent data,Buckle et al.(2018) show that the largest
+contribution to price discovery comes from ETFs tracking the SPX index, not from the SPX futures. Similarly,Chen et al.(2016)
+find that more price discovery occurs in SPY than in SPX futures but with the roles reversed during periods of high volatility. In
+particular,weareinterestedinthelead–lagrelationinhighvolatilityscenariosasthisiswherewefindthattheVIXfuturesandSPX
+futurespricesaremoretightlylinked.Moreover,weconnectthelead–lagrelationtothehedgingactivitiesofdealers.Incomparison
+to index funds, futures are more natural to use as hedging instruments, partly because of their unfunded nature and partly because
+of possible short-selling restrictions on ETFs. Hence, we favor relying on the SPX futures.
+    Theremainderofthepaperisstructuredasfollows.First,wedevoteSection2togiveanoverviewofrelatedliterature.Next,we
+introducethemethodologytoquantifythelead–lagrelationinSection3.Section4presentsthedataandtheresultsoftheempirical
+analysis. Finally, we conclude in Section5.
+
+2. Related literature
+
+    A large number of studies on lead–lag relations among the SPX and its derivatives already exist. The findings ofFrijns et al.
+(2016) reveal that VIX futures have some predictive power for the SPX index, whileHasbrouck(2003) shows that SPX futures lead
+the SPX index. These findings leave it unclear as to what extent VIX futures lead or lag SPX futures. As mentioned above, there is
+also evidence that VIX futures lead the VIX index, which is equivalent to leading SPX options. Moreover,Chen et al.(2016) show
+that SPX futures contribute more to price discovery than SPX options. Thus, both VIX futures and SPX futures lead SPX options,
+but again the VIX futures and SPX futures lead–lag relation cannot be inferred from these studies. WhileLee et al.(2017) show
+that the VIX futures basis (the difference between VIX futures and the VIX index) has some predictive power for the SPX futures
+returns, the information contained in the VIX futures price and VIX futures basis may be distinct. We, therefore, contribute to the
+literature by providing the first evidence on the lead–lag relation between the VIX futures and the SPX futures market. Contrary
+toLee et al.(2017), who use daily data, we analyze the lead–lag relation from high-frequency data, which allows for examining its
+time variation.
+    Thepaperisalsorelatedtotheliteratureontherelationbetweenlaggedequitymarketreturnsandvolatility.CarrandWu(2006)
+study the cross-correlation function for SPX index returns and VIX index changes at a daily frequency and find marginal evidence
+of SPX returns having some predictive power for VIX index changes. Similarly,Bollerslev et al.(2006) find a significant negative
+correlation between the absolute value of SPX returns (volatility proxy) and lagged SPX returns, both sampled at a five-minute
+frequency. At the same time, correlations between returns and lagged absolute returns are close to zero. The same pattern is found
+byBollerslev et al.(2012) using the squared VIX index as the volatility measure.Dufour et al.(2012) use the same data frequency
+butforthefloor-tradedSPXfuturesandestimatethevolatilitybycomputingthreemeasuresofvolatility:thetwobackward-looking
+measures, realized volatility and bipower variation, and a forward-looking measure based on implied volatilities. Results based on
+thebackward-lookingvolatilitymeasuresshowthatthevolatilityfeedbackeffectisalmostabsent,whileitbecomesmoreimportant
+for the forward-looking measure. We use a forward-looking measure in the form of VIX futures prices and find, using data at the
+millisecond frequency and a maximum lag of up to one minute, that the volatility feedback effect appears to be more important
+than the leverage effect. Though the correlation between lagged SPX futures returns and contemporaneous VIX futures returns is
+non-zero for the smaller lags, the cross-correlation function’s decay towards zero is even slower for the part showing the relation
+between lagged VIX futures returns and contemporaneous SPX futures returns.
+    Time-varying cross-market correlations have been documented for a number of other markets.Bollen et al.(2017) analyze
+how lead–lag relations among volatility instruments and volatility indices evolve over time.Buccheri et al.(2021) show that
+lead–lag relations across stocks heavily depend on the level of volatility. Previous studies also indicate that the contemporaneous
+correlation of equity and bond markets is mostly positive but tends to be negative when the VIX is high or increases (Connolly
+et al.,2005;Underwood,2009). Part of the negative stock-bond correlation in times of high volatility has been attributed to the
+shift of investments from stock to bond markets (flight-to-quality) as investors attempt to reduce risk exposure (Fleming et al.,
+1998;Connolly et al.,2005;Underwood,2009). Along the same lines, the stronger negative correlation between VIX futures and
+SPX futures under high volatility regimes could be driven by investors moving funds between the SPX futures and the VIX futures
+market. Similar to the way that bonds are considered safe-haven assets under stock market turmoil, volatility-sensitive derivatives
+such as VIX futures provide an alternative asset class to manage risks and gain additional diversification at times of heightened
+volatility. In fact, it appears to be during high volatility periods that the two futures markets exhibit the strongest correlation.
+Hence, diversification benefits seem to be present, especially during periods of high volatility.
+    Several papers document market frictions across the different SPX derivatives markets.Park(2020) finds that measures of
+expected future variance from SPX options and VIX derivatives differ during the financial crisis and connects part of the deviations
+to funding and market illiquidity.Van Tassel(2020) documents static arbitrage opportunities between VIX futures and SPX options
+as VIX futures violate their lower and upper bounds implied by SPX options.Barras and Malkhozov(2016) find deviations in the
+variance risk premium (VRP) derived from equity prices and SPX option prices, respectively, and attribute the divergence to the
+financial standing of option intermediaries. Furthermore, the equity-based VRP provides a better projection of future economic
+outlook compared to the option-based VRP.
+    Cheng(2019)showsthattheVIXpremium,definedasthedifferencebetweenaVIXfuturespriceandthephysicalexpectationof
+theVIX,decreasesand,insomecases,turnsnegativeduringperiodsofmarketturmoil.Inafollow-upstudy,Cheng(2020)documents
+C. Bangsgaard and T. Kokholm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      Fig. 1.  Illustration of the timestamp adjustment for the cross-correlation functions.
+
+
+
+that during the early stages of the COVID-19 pandemic, the increase in the physical expectation of future VIX values exceeded the
+increase in VIX futures prices with the implication that the VIX premium became negative and remained in the negative domain for
+an extended period.Lochstoer and Muir(2022) andYang(2022) propose alternative models that can explain the dynamics of the
+VIX premium. BothCheng(2019) andCheng(2020) attribute the falling VIX premium when the stock market crashes to changes
+in hedging demand by VIX futures dealers. Our paper is related, as we find that the cross-market activity measure is a strong driver
+of the lead–lag relation, as well as the increased negative correlation between the VIX futures and the SPX futures markets when
+market volatility is high.
+
+
+3. Lead–lag methodology
+
+    Many studies on lead–lag relations are concerned with financial instruments that are closely linked by no-arbitrage relations
+such that a cointegrating relation of the prices can be assumed. In those settings, the information share (Hasbrouck,1995) or the
+common factor component weight approach (Gonzalo and Granger,1995) are often applied. However, it is inappropriate to impose
+the assumption of cointegration when describing the relation between VIX futures and SPX futures prices. Instead, we analyze the
+lead–lagrelationthroughthecross-correlationfunction.InSection3.1,wedescribehowtoobtainthecross-correlationfunctionusing
+thetechniquesofHayashiandYoshida(2005)andHoffmannetal.(2013).InSection3.2,wepresentthreedifferentquantifications
+of the lead–lag relation based on the cross-correlation function.
+
+
+3.1. Estimation of the cross-correlation function
+
+    Based onHayashi and Yoshida(2005) andHoffmann et al.(2013), we estimate the cross-correlation for two instruments,                   𝐴 and
+𝐵, as:
+                     ∑𝑛𝐴   ∑𝑛𝐵                                              }
+                       𝑖=1   𝑗=1𝛥𝑡𝐴𝑖𝑋𝐴𝛥𝑡𝐵𝑗𝑋𝐵1{(𝑡𝐴𝑖−1,𝑡𝐴𝑖 ]∩(𝑡𝐵𝑗−1−𝜗,𝑡𝐵𝑗 −𝜗]≠∅
+        ̂𝜌𝐻𝑌 (𝜗) =         √         (                     (
+                              ∑𝑛𝐴     𝛥𝑡𝐴𝑖𝑋𝐴)2√∑𝑛𝐵          𝛥𝑡𝐵𝑗𝑋𝐵)2   ,                                                                                                 (1)
+                                 𝑖=1                   𝑗=1
+
+where𝛥𝑡𝑘𝑖𝑋𝑘 =𝑋𝑘𝑡𝑘𝑖 −𝑋𝑘𝑡𝑘
+                            𝑖−1 is the log-return of instrument𝑘 with𝑘 =𝐴,𝐵,𝑖 = 1,…,𝑛𝑘, and𝑛𝑘 is the number of trades of instrument
+𝑘 on the given day. Hence, the returns entering in Eq.(1)are computed between every single tick,    𝑡𝑘𝑖. The product of two returns
+is included in the sum whenever the time intervals, over which the returns are realized, overlap. Inspired byDao et al.(2018), we
+illustrate this inFig.1. By focusing on the first two line segments, we ignore the possibility of shifting the timestamps so     𝜗 = 0.
+For instance, consider the three intervals of instrument𝐵,𝐽1,𝐽2, and𝐽3.𝐽1 intersects with𝐼2,𝐽2 intersects with𝐼2, while𝐽3
+intersects with𝐼2,𝐼3, and𝐼4. Thus, the contribution to the sum based on each of the three intervals is𝛥𝑡𝐴
+                                                                                                                                 2𝑋𝐴𝛥𝑡𝐵1𝑋𝐵,𝛥𝑡𝐴2𝑋𝐴𝛥𝑡𝐵2𝑋𝐵,
+and(𝛥𝑡𝐴
+        2𝑋𝐴+𝛥𝑡𝐴3𝑋𝐴+𝛥𝑡𝐴4𝑋𝐴)𝛥𝑡𝐵3𝑋𝐵,respectively.Hence,itispossiblethatthesamereturncancontributetothesummorethanonce
+as it will enter every time the interval intersects with one of the intervals of the other instrument. Note that when implementing
+Eq.(1), the return over    𝐼1 will not influence the correlation as the indicator function equals zero for intervals that do not intersect
+with any of the intervals of the other instrument.
+    Repeatedlyadjustingthetimestampsofthesecondinstrumentbydifferentvaluesof𝜗allowsustocomputethecross-correlation
+function.Theshiftofthetimestampsisillustratedforinstrument𝐵 inthelowerpartofFig.1.Notethatonlythetimestampsofone
+of the two instruments are shifted while the timestamps of the other remain fixed. The returns,𝛥𝑡𝑘𝑖𝑋𝑘, are invariant to the shift of
+the timestamps, meaning that only the indicator function changes as we vary the value of𝜗. Thus, it is the same returns that enter
+Eq.(1)for each    𝜗, but they are multiplied and summed in different ways.
+C. Bangsgaard and T. Kokholm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                       Fig. 2.  Illustration of cross-correlation functions.
+
+
+
+3.2. Lead–lag time, lead–lag correlation, and lead–lag ratio
+
+    To measure the lead–lag relation between two instruments,Hoffmann et al.(2013) define the lead–lag time as the value of            𝜗
+thatmaximizestheabsolutevalueofthecross-correlationfunction,|̂𝜌𝐻𝑌 (𝜗)|,acrossall𝜗onsomegrid.Iftheabsolutecorrelationis
+maximizedatapoint𝜗≠ 0,thenoneinstrumentisleadingtheother.Undercertainassumptions,thepointisaconsistentestimatorof
+thetrue𝐿𝐿𝑇 (Hoffmannetal.,2013).While      𝐿𝐿𝑇 measurestheamountoftimebywhichaninstrumentleadstheother,knowledge
+of the value of the cross-correlation function at the point corresponding to𝐿𝐿𝑇 is also informative about the nature of the lead–lag
+relation. The value of the cross-correlation at this point is referred to as the lead–lag correlation (𝐿𝐿𝐶).
+    Both𝐿𝐿𝑇 and𝐿𝐿𝐶 focus on a single point of the cross-correlation function. However, the rest of the cross-correlation function
+also contains relevant information about the direction and strength of the lead–lag relation. The lead–lag ratio ofHuth and Abergel
+(2014) accounts exactly for this by compressing the entire cross-correlation function into a single measure of the lead–lag relation.
+Considering all the positive timestamp adjustments,𝜗1,…,𝜗𝑝,𝐿𝐿𝑅 is defined as
+                   ∑𝑝          (𝜗𝑖)
+        𝐿𝐿𝑅 =     ∑𝑝𝑖=1̂𝜌2𝐻𝑌(−𝜗𝑗).                                                                                                                                                   (2)
+
+                    𝑗=1̂𝜌2𝐻𝑌
+The ratio captures the relative forecasting ability of one instrument over the other. When𝐿𝐿𝑅> 1, it means that the correlations at
+positive lags are overall larger than the correlations at negative lags. Thus, the instrument for which the timestamps are kept fixed
+willleadtheinstrumentforwhichthetimestampsareadjusted(instrument𝐴willleadinstrument𝐵 inFig.1).Theconclusionofthe
+leadershipistheoppositeif𝐿𝐿𝑅< 1,wheretheinstrumentwithfixedtimestampslagstheother(instrument𝐵 leadsinstrument𝐴).
+Comparedto𝐿𝐿𝑇,the𝐿𝐿𝑅measuretakesintoaccounttheoverallpredictivepowerofthereturnsofoneinstrumentonthereturns
+of the other instrument by summing the squared correlations. The conclusion on the lead–lag relation drawn from𝐿𝐿𝑇 is generally
+more sensitive to the shape of the cross-correlation function, as small variations in its shape could shift𝐿𝐿𝑇 from a positive to
+a negative value and vice versa.𝐿𝐿𝑇 may also have a limited ability to capture differences in the strength of the leadership that
+may exist even when two𝐿𝐿𝑇s are close to each other. For instance, consider the two cases illustrated inFig.2, where     𝐿𝐿𝑇 and
+𝐿𝐿𝐶 are identical, but the behavior of the cross-correlation function to the right of𝐿𝐿𝑇 is very different. In the plot to the left,
+the cross-correlation function goes to zero very quickly, while in the plot to the right, the cross-correlation slowly decays to zero
+for values of𝜗 higher than𝐿𝐿𝑇. Hence, the lead–lag relation depicted in the plot to the left is much stronger than the one to the
+right. Still,𝐿𝐿𝑇 and𝐿𝐿𝐶 will be identical, and only𝐿𝐿𝑅 will capture this difference in the strength of the lead–lag relation. In
+fact,𝐿𝐿𝑅 could lead to a different conclusion on the lead–lag relation than𝐿𝐿𝑇. We compute both measures as they complement
+each other well. The𝐿𝐿𝑅 measure is a more robust measure of the lead–lag relation since it uses the entire cross-correlation curve
+as input, but it does not tell us anything about the length of the lead–lag relation. By contrast, since𝐿𝐿𝑇 is a time measurement,
+it is a natural candidate for assessing the tightness of the lead–lag relation.
+
+3.3. Statistical significance of the lead–lag relation
+
+    In order to assess the statistical significance of the lead–lag relation, we construct confidence intervals of the lead–lag measures
+𝐿𝐿𝑅 and𝐿𝐿𝑇. Since there are no readily available solutions for computing these, we followBollen et al.(2017) and construct
+confidence intervals specific to each sample date by applying a simple block bootstrap. With this approach, the data are resampled
+in blocks. Analyzing dependencies across time is the objective of a lead–lag analysis, and resampling in blocks helps to preserve
+dependence structures in the data. The choice of block size involves a trade-off. Smaller blocks would result in some dependencies
+being lost, while longer blocks reduce the variation among the resampled blocks resulting in a less smooth empirical distribution
+of𝐿𝐿𝑅 and𝐿𝐿𝑇. Here we split the regular trading hours into 27 non-overlapping intervals of 15 min. For each day, we resample
+C. Bangsgaard and T. Kokholm
+
+with replacement from these 27 intervals and junction them in the order they were resampled. The result is a series of trades that
+together make up 6 h and 45 min of trading, mimicking the length of the regular trading session. The HY estimator is then applied
+to the series. This procedure is repeated 2,000 times to get a set of lead–lag measures that form the empirical distribution of the
+given measure. If the value of the lead–lag measure under the null (𝐿𝐿𝑅 = 1 and𝐿𝐿𝑇  = 0) is located sufficiently far out in the
+tails of the empirical distribution, we conclude that one market is leading the other. The direction of the leadership is determined
+by which tail of the empirical distribution the value under the null belongs to.
+
+4. Empirical analysis
+
+    Inthissection,wepresenttheempiricalanalysis.First,inSection4.1,wedescribethedata.Next,Section4.2presentstheresults
+on the overall lead–lag relation between VIX futures and SPX futures. In Section4.3, we repeat the analysis to trades outside the
+regular trading hours. In Section4.4, we propose two simple trading strategies and study their ability to monetize the lead–lag
+relation. Finally, we analyze potential drivers of the lead–lag relation in Section4.5.
+
+4.1. Data
+
+    Tick-by-tick trade and quote data on SPX futures (ES) and VIX futures (VX) are obtained from Tick Data and cover the period
+fromJanuary2013toSeptember2020.Thetimestampsofthetradesareavailablewithmillisecondprecision.Foreachsampledate,
+the VIX futures contract used for the analysis is the one closest to an expiry of 30 days, and the SPX futures contract used is the
+one closest to expiry except when the time to expiry is less than six days, in which case we shift to the next contract. For the main
+analysis, we focus on trades during the regular trading hours of VIX futures, 9:30-16:15 EST. Any date where the exchanges closed
+earlier is removed from the sample. Trades with a negative price are removed. For the quotes, we keep only those with a positive
+bid and ask price and bid–ask spread. For the purpose of computing the cross-correlation function of Section3, trades sharing the
+same timestamp are replaced by a single trade with a price equal to the median price of the trades.
+    Fig.3depicts the annual trading volume and number of trades for the chosen SPX futures and VIX futures across the sample.
+ThetradingvolumeinSPXfuturesisrelativelysteadythroughoutthesampleincomparisontothevolumeinVIXfutures,wherethe
+volume increases up to 2018, followed by a decline for the last two years of the sample. However, despite the decrease in volume
+on VIX futures towards the end of the sample, we see that the number of trades in VIX futures stays at a high level after 2018,
+pointing to the observation that the decrease in volume stems from a decrease in average trade size. For the SPX futures market,
+2017 stands out as there are a low number of trades and a relatively low trading volume. Note that 2017 was characterized by a
+very low level of SPX volatility, which generally slows down the speed of trading.
+    TimeseriesoftheVIXindexandVIXfuturesclosingpricesarecollectedfromtheCboehomepage.Dailydataontheopeninterest
+and prices of SPX options, as well as the SPX index are provided by OptionMetrics. Days of scheduled release of information on the
+U.S. Consumer Price Index (CPI), Producer Price Index (PPI), Employment Situation, or Gross Domestic Product (GDP) are obtained
+from Archival Federal Reserve Economic Data (ALFRED). We also collect the dates of scheduled FOMC announcements from the
+Federal Reserve Board.
+
+4.2. The lead–lag relation
+
+    In this subsection, we present the overall results on the lead–lag relation based on the methodology detailed in Section3. For
+the computation of cross-correlations, we keep the timestamp of the SPX futures trades fixed and shift the timestamps of the VIX
+futures trades. To estimate the cross-correlation function, the grid of𝜗 is chosen so that it is finer around zero and less dense as we
+move away from zero. We do this to capture variations in the correlation at higher detail around zero since we expect the lead–lag
+time to be in this range. Hence, the grid is chosen as
+
+
+        −60,−59.9,…,−1.1,−1,−0.99,…,−0.11,−0.1,−0.099,…,−0.001,0,0.001,…,0.099,0.1,0.11,…,0.99,1,1.1,…,59.9,60,
+
+where the numbers are in seconds and the largest value (±60 seconds) reflects the maximum allowed lead–lag. When the grid is
+most narrow, the length between two grid points is one millisecond, which corresponds to the precision at which the trades are
+measured.
+    Fig.4depicts the median of the cross-correlation across the sample. From Panel (a), we see that the peak of the function is
+around a lag of zero, and the cross-correlation function is close to zero for lags greater than approximately 20 s in absolute value.
+Zooming in on the timeshifts up to one second in Panel (b), we observe a skewed shape of the cross-correlation function with more
+weight on the left part of the curve. The asymmetry translates into an𝐿𝐿𝑅 measure that is less than one. Hence, on average,𝐿𝐿𝑅
+indicates that the VIX futures lead the SPX futures.
+    Fig.5shows the time series of the three lead–lag measures presented in Section3.2, together with the time series of the VIX
+index and the SPX index. The shaded areas of the chart represent the days with a VIX level belonging to the 60% upper quantile
+corresponding to values above 15.35. Inspection of the upper panel ofFig.5confirms whatFig.4indicates, namely that on most
+days, the VIX futures lead the SPX futures (𝐿𝐿𝑅< 1). We also notice some interesting features of the lead–lag measures on days of
+high volatility. First,𝐿𝐿𝑅 seems to be more stable and around a level of approximately 0.8. Second,𝐿𝐿𝑇 is erratic when volatility
+C. Bangsgaard and T. Kokholm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 3.  Trading activity in SPX futures and VIX futures. Yearly average of daily trading volume (Panel (a)) and number of trades (Panel (b)). Numbers are in
+thousands. For each sample date, the VIX futures contract used is the one with an expiry closest to 30 days. The SPX futures contract is the one closest to
+expiration, except when this is less than six days. The variables are measured over regular trading hours.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 4.  Median cross-correlation function over the sample period. If the absolute cross-correlation is maximized at a positive (negative) lag, it means that the
+SPX futures (VIX futures) lead.
+C. Bangsgaard and T. Kokholm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 5.  The lead–lag measures and the VIX and the SPX over the sample period. The shaded areas correspond to days where the VIX index belongs to its 60%
+upper quantile.
+C. Bangsgaard and T. Kokholm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  Fig. 6.  Stylized cross-correlation functions in states with low volatility and high volatility.
+
+
+
+islowwhiledisplayingatightlead–lagwithvaluesclosetozeroinhighvolatilityregimes.Third,𝐿𝐿𝐶 getsmorepronouncedwhen
+volatility is high.
+    In order to understand the very erratic nature of the𝐿𝐿𝑇 measure,Fig.6depicts stylized cross-correlation curves in a state
+with a low and high level of market volatility, respectively. The figure illustrates that when volatility is low, the overall level of
+the cross-correlation curve is close to zero, and the position of𝐿𝐿𝑇 suffers from instability. There is a risk that the markets are not
+close enough connected during low volatility regimes for𝐿𝐿𝑇 to properly reflect the time it takes before the lagging return series
+has incorporated the same information as the leading series. This means that under low volatility, one should be careful to read too
+much meaning into𝐿𝐿𝑇 and𝐿𝐿𝑅 about the direction of the lead–lag relation. On the other hand, when the volatility is high, the
+curve gets more peaked, with𝐿𝐿𝑇 positioned close to zero. For this reason, it is more reasonable to rely on the values of𝐿𝐿𝑇 and
+𝐿𝐿𝑅 as describing the lead–lag relation in high volatility regimes.
+    Panel A ofTable1reports descriptive statistics on the three lead–lag measures. In addition to using the full sample, we also
+split the sample into the period before and the period after the beginning of the COVID-19 crisis using February 20, 2020 as the
+cut-off date. Based on the observations connected toFig.5, we compute the statistics conditioned on the volatility being in the
+upper quartile while excluding the period after the COVID-19 outbreak, which is characterized by a high level of VIX. Panel A
+confirms our observations of the relation between𝐿𝐿𝐶 and volatility. In the two subsamples where the VIX index is at elevated
+levels, the VIX belonging to the upper quartile excluding the COVID-19 period and the COVID-19 period itself,𝐿𝐿𝐶 is negative for
+all days, and generally, its values are larger in magnitude. In terms of the mean and median values,𝐿𝐿𝑅 is relatively stable across
+all three samples, and the values below one indicate that VIX futures lead SPX futures. However, the variability in𝐿𝐿𝑅 is much
+lower, conditioned on the volatility being high. Considering𝐿𝐿𝑇, the picture is more extreme. On the full sample,𝐿𝐿𝑇 roughly
+varies in the interval [−60 s,60 s]. In comparison, for the high volatility sample,𝐿𝐿𝑇 is much more concentrated around zero with
+a minimum value of −2.900 s and a maximum value equal to 0.660 s. In this subsample, the distribution of𝐿𝐿𝑇 is not only more
+narrow around zero but also has more weight on the negative values with a mean and median of −0.022 and −0.003, respectively.
+Since a negative value of𝐿𝐿𝑇 indicates a VIX futures leadership, the high volatility subsample is characterized by a VIX futures
+lead both in terms of𝐿𝐿𝑅 and𝐿𝐿𝑇. With respect to𝐿𝐿𝑇, the COVID-19 period differs from the sample conditioned on a high
+volatility level, where the measure based on the former sample is, on average, slightly positive while slightly negative in the latter.
+    In addition, Panel B shows the proportion of the sample dates where𝐿𝐿𝑅 and𝐿𝐿𝑇 indicate either a VIX futures or SPX futures
+leadership. We observe that on most sample dates,𝐿𝐿𝑅 is below one, meaning that VIX futures lead. Especially, we notice that
+the proportion of days where VIX futures lead in terms of𝐿𝐿𝑅 is equal to or close to 100% for the two subsamples characterized
+by high volatility. For the same two subsamples,𝐿𝐿𝑇 behaves quite differently. While 57% of the days in the VIX upper quartile
+subsample reveal a VIX futures lead, this is only 17% during the COVID-19 period. Hence, in that period, there appears to be more
+disagreement between𝐿𝐿𝑅 and𝐿𝐿𝑇 on whether VIX futures lead or lag SPX futures. The construction of the lead–lag measures
+can explain part of the misalignment. As the location of the maximum of the absolute cross-correlation is more sensitive compared
+to the𝐿𝐿𝑅 measure,𝐿𝐿𝑅 is a more stable measure of the direction of the lead–lag relation.
+    Panel C ofTable1reports the results from the bootstrap method detailed in Section3.3. At a significance level of 5%,             𝐿𝐿𝑅
+showsthattheVIXfuturesisleadingonthevastmajorityofdaysinthetwosubsamplescharacterizedbyhighvolatility,while𝐿𝐿𝑅
+is almost never significantly greater than 1, indicating that SPX futures essentially never leads. By contrast,𝐿𝐿𝑇 reveals a less clear
+picture of the direction of the lead–lag relation. On the pre-COVID-19 high-VIX subsample, the measure points to a significant VIX
+futures lead on 27% of the days, compared to a SPX futures lead on 11% of the days. Hence, in this subsample, the two lead–lag
+measures are aligned, although𝐿𝐿𝑅 shows a more stable VIX futures leadership. If we focus on the COVID-19 period, the𝐿𝐿𝑇
+measure leads to a different conclusion than𝐿𝐿𝑅. Here𝐿𝐿𝑇 is significantly greater than zero on 51% of the days, pointing to an
+SPX futures lead. However, the number of days where we detect a significant SPX futures lead according to𝐿𝐿𝑇 is far below the
+number of days where𝐿𝐿𝑅 shows a significant VIX futures leadership.
+C. Bangsgaard and T. Kokholm
+
+                   Table 1
+                   Descriptive statistics of the lead–lag measures.
+                                                            Full sample                                  VIX upper quartile                 COVID-19 period
+                                                                                                    (pre-COVID-19)
+                    Panel A: Descriptive statistics
+                                                            𝐿𝐿𝑅    𝐿𝐿𝑇    𝐿𝐿𝐶    𝐿𝐿𝑅    𝐿𝐿𝑇    𝐿𝐿𝐶    𝐿𝐿𝑅    𝐿𝐿𝑇    𝐿𝐿𝐶
+                    Mean                                           0.840       −0.532     −0.089         0.785     −0.022      −0.139         0.823       0.008     −0.278
+                    Std. dev.                                      0.205       10.265       0.083         0.121       0.212        0.062         0.076       0.054       0.099
+                    Min                                              0.266     −59.700     −0.501         0.480     −2.900      −0.339         0.567     −0.590     −0.501
+                    Lower quartile                             0.715       −0.263     −0.112         0.704     −0.020      −0.176         0.781       0.005     −0.342
+                    Median                                        0.805       −0.010     −0.062         0.762     −0.003      −0.126         0.830       0.016     −0.281
+                    Upper quartile                             0.918         0.018     −0.035         0.852       0.009      −0.092         0.878       0.026     −0.200
+                    Max                                             2.274       58.700       0.029         1.471       0.660       −0.023         0.974       0.038     −0.052
+
+                    Panel B: Proportion above/below thresholds
+                    𝐿𝐿𝑅< 1 (VX lead)                      84.8%                                          94.4%                                          100.0%
+                    𝐿𝐿𝑇< 0 (VX lead)                      59.1%                                          56.9%                                          17.4%
+                    𝐿𝐿𝑇< 0 &𝐿𝐿𝑅< 1 (VX lead)    55.8%                                          56.0%                                          17.4%
+                    𝐿𝐿𝑇> 0 &𝐿𝐿𝑅> 1 (ES lead)     11.8%                                          4.7%                                            0%
+                    𝐿𝐿𝑇> 0&𝐿𝐿𝑅< 1                           28.0%                                          35.2%                                          82.6%
+                    (disagreement)
+
+                    Panel C: Statistical significance
+                    𝑞𝐿𝐿𝑅0.95 < 1 (VX lead)                      48.5%                                          78.8%                                          92.9%
+                    𝑞𝐿𝐿𝑇0.95< 0 (VX lead)                       12.7%                                          26.6%                                          7.7%
+                    𝑞𝐿𝐿𝑅0.05 > 1 (ES lead)                       1.4%                                            1.1%                                            0%
+                    𝑞𝐿𝐿𝑇0.05> 0 (ES lead)                       7.5%                                            10.6%                                          51.0%
+
+                  Panel A shows summary statistics of the lead–lag measures. Panel B shows the proportion of days where the lead–lag measures
+                  are above or below the thresholds given by the values of the measures under the null. Panel C contains measures of the statistical
+                  significance of the lead–lag relation obtained by the bootstrap procedure. It shows the proportion of days where the 5th (95th)
+                  percentile of the empirical distribution is above (below) the values of the lead–lag measures under the null. All numbers are
+                  shown for the full sample, a subsample of high VIX days excluding the COVID-19 pandemic, and a subsample containing all days
+                  after the outbreak of the COVID-19 pandemic (sample days after February 20, 2020). The pre-COVID-19 high VIX subsample
+                  first excludes all days after the COVID-19 cutoff date and then includes only the days where the level of the VIX index is above
+                  its upper quartile.𝐿𝐿𝑇 is measured in seconds.
+
+
+
+    Overall, we conclude that the behavior of the lead–lag measures strongly depends on the volatility regime. In periods of high
+volatility,𝐿𝐿𝐶 is characterized by larger negative values and the lead–lag relation is short-lived, as indicated by𝐿𝐿𝑇, but with
+a tendency for VIX futures to lead both when measured in terms of𝐿𝐿𝑅 and𝐿𝐿𝑇. A similar dependence on volatility is found
+inBuccheri et al.(2021), where the lead–lag correlation among stocks strengthens when volatilities are high while being more
+erratic in low volatility regimes. Other studies find that the correlation between the VIX index and the SPX index increases when
+market movements are large (Todorov and Tauchen,2011;Cont and Kokholm,2013).
+
+4.3. Overnight lead–lag relation
+
+    The results presented so far are based on data sampled during regular trading hours from 9:30 to 16:15 EST. During the period
+of our sample, the trading hours of VIX futures expanded on several occasions, and trading is now possible around important
+events or news arriving outside the regular trading hours of the market. The release of macroeconomics news in the U.S. is an
+important example of this. Over the sample period, there are also events with a potentially large market impact taking place
+overnight,suchastheU.K.-widereferendumtowithdrawfromtheEuropeanUnionin2016.Hence,itisimportanttounderstandthe
+functioning of financial markets during after-hours. For individual stocks,Barclay and Hendershott(2003) find that price discovery
+does occur during after-hours but that this part of the day is characterized by less efficient prices and price discovery relative
+to the regular trading session. Distinguishing between pre-open and post-close, they find that this is even less for post-close. Other
+studiespointtowardssignificantovernightuncertaintyresolution.Huetal.(2022)showthatovernightSPXfuturesreturnsarelarge
+before U.S. macro announcements and their model predicts such return patterns based on the resolution of uncertainty prior to the
+announcement. The findings ofBondarenko and Muravyev(2023) also reveal how price discovery takes place during after-hours.
+They document that a specific four-hour period outside the regular hours of SPX futures is associated with positive futures return.
+The pattern is connected to reductions in uncertainty as information is processed at the opening of the European financial markets.
+    Throughout the sample period, SPX futures trade almost 24 h a day. On the other hand, the trading hours of VIX futures have
+been extended multiple times during the same period, as reported inTable2. Since the change to VIX futures trading hours in June
+C. Bangsgaard and T. Kokholm
+
+                                  Table 2
+                                  Evolution of VIX futures trading hours (EST).
+                                   Date of change                         Pre-open                    Regular hours                      Post-close
+                                                                       –                              9:30–16:15                               –
+                                   December 10, 2010                8:20–9:30                      9:30–16:15                               –
+                                   September 26, 2011               8:00–9:30                      9:30–16:15                               –
+                                   October 28, 2013                   8:00–9:30                      9:30–16:15                      16:30–17:15
+                                   November 4, 2013                  3:00–9:30                      9:30–16:15                      16:30–17:15
+                                   June 22, 2014                      18:00–9:30                      9:30–16:15                      16:30–17:00
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 7.  Share of trading volume during extended trading hours in VIX futures and SPX futures. Six months moving average of trading volume relative to the
+total volume across all available trading hours. Regular trading hours span from 9:30-16:15 EST, and overnight trading is any trading outside this interval.
+
+
+
+2014, it has been possible to trade both VIX futures and SPX futures at almost all times of the day. Fig. 7 shows the evolution
+in after-hours daily trading volume relative to the total daily volume over regular and after-hours. The extension of VIX futures
+trading to almost 24 h a day in mid-2014 could explain some of the increase we observe in the second half of 2014. Until this
+change, after-hours trading made up less than 7% of the total trading. Over our sample period, this has increased to approximately
+15%. For the SPX futures, the averaged series of overnight volume fraction is mostly within the range of 15% to 20%.
+    These observations raise the question of whether the relation between SPX and VIX futures during extended trading hours is
+similar to the one prevailing during regular trading hours. To explore this, we compute the lead–lag measure using only trading
+during after-hours. For most of the sample period (since June 22, 2014), VIX futures and SPX futures have the same extended
+trading hours. Due to the 15 minutes of no trading after 16:15 and again at the end of the post-close session, we define after-hours
+as beginning with the start of the pre-open trading session. For instance, since June 2014, after-hours start at 18:00 on day𝑡−1
+and end at 9:30 on day𝑡. This interval creates a sequence of trading with no interruptions.
+    Fig. A.1 in the Appendix reveals that the lead–lag measures are more erratic during the first part of the sample, where extended
+hours span over fewer hours. Ignoring the high-VIX days that fall within this part of the sample, the overnight relation between the
+lead–lag measures and the level of the VIX is qualitatively the same as for the regular trading hours. Namely, for high levels of the
+VIX, there is a stronger negative correlation, a value of𝐿𝐿𝑇 very close to zero, and𝐿𝐿𝑅 is fairly stable at a level below one.
+    Table A.1 shows descriptive statistics of the overnight lead–lag measures. All measures exhibit a greater variation around their
+mean levels compared to the results for regular hours shown in Table 1. As might be expected from the less frequent trading,
+𝐿𝐿𝑇  takes on more extreme values even in the highly volatile environment of the pandemic. The statistics for the other high-
+VIX subsample should be interpreted with caution, as the subsample includes days where the measures display erratic behavior.
+Therefore, we focus on the median in the following discussion. For this subsample,𝐿𝐿𝑅 and𝐿𝐿𝑇 still agree on the leadership of
+theVIXfutures,whiletheCOVID-19periodagainprovidesmixedresultswitha𝐿𝐿𝑅belowoneandapositive𝐿𝐿𝑇.Incomparison
+to the sample comprised of the regular trading hours,𝐿𝐿𝐶 is stronger in magnitude and takes on larger negative values during
+the high volatility subsamples. We ascribe this observation to the lower trading frequency in the after-hours sample (Epps, 1979;
+Bonanno et al., 2001).
+
+4.4. Trading strategies based on the lead–lag relation
+
+    WeconsidertwoseparatetradingstrategiesthatinvolvetradingexclusivelyineitherVIXfuturesorSPXfuturesbasedonobserved
+price changes of the other futures contract. The first strategy is based on a VIX futures leadership and uses movements in the VIX
+futures trade price as a signal of future SPX futures price changes. Based on the negative correlation, price increases in VIX futures
+are expected to signal a decrease in the SPX futures and vice versa. Observing an increase (decrease) in the traded price of the VIX
+C. Bangsgaard and T. Kokholm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 8.  Average return of the trading strategy in SPX futures for each sample date. The strategy takes long (short) SPX futures position after each decrease
+(increase) in the VIX futures trading price. Trading is assumed to take place at bid or ask prices (solid line) and midquotes (dashed line) the millisecond following
+the VIX futures price change. The holding period varies across the plots at values of five milliseconds, one second, one minute, and five minutes. The shaded
+areas correspond to days where the VIX index belongs to its 60% upper quantile.
+
+
+
+futures for a given millisecond, a short (long) SPX futures position is entered at the following millisecond. The position is closed
+after a specified amount of time. A new SPX futures position is opened every time the VIX futures price moves. This means that
+multipleSPXfuturespositionsmaybeopenatagivenpointintimeandmayoffset eachotherincasetheVIXfuturespricebounces
+back and forth during the holding period. Trades that do not move the VIX futures price will not induce any further trading.
+    Thesecondstrategymirrorsthefirststrategy,exceptthatitisbasedontheSPXfuturesbeingtheleader.Hence,apositivereturn
+in the traded SPX futures price acts as a signal to sell VIX futures and vice versa.
+    Whenevaluatingthetradingstrategies,weconsiderthecasewherealltradescanbeexecutedatmidquotes,andamorerealistic
+setting where all trades are executed at the prevailing bid and ask. We only consider the outcome of the trading strategy when
+implemented during regular trading hours, and we let the holding period of each position in the futures contract vary from five
+milliseconds to five minutes.
+    For each day, Fig. 8 depicts the average return across all positions held during that day for the strategy that trades SPX futures
+based on the observed VIX futures price changes. Each plot shows the results for different holding periods. The returns associated
+with the trading at midquotes assumption are shown by the dashed line, and we note that the strategy generates a positive average
+daily return on most days. We also note that for the very short horizon, although being small, the average daily returns stay above
+zero for the majority of the dates. When the holding period is increased, the variability increases with the consequence that the
+strategyyieldsnegativeaveragereturnsonmoredays.Thesolidlinein Fig.8depictstheperformanceofthesamestrategybasedon
+the assumption that transactions are executed at the prevailing bid and ask prices. Overall, this strategy generates negative returns
+irrespective of the holding period. Due to the tightness of the lead–lag relation, the position in the SPX futures is held for very short
+horizons and the cost from trading at the bid and ask prices outweighs the SPX futures price change signaled by the realized VIX
+futures return.
+    Next, in the left plot in Fig. 9, we depict the average return per transaction across the full sample, along with two subsamples as
+afunctionoftheholdingperiodoftheSPXfuturescontract.Theplotshowstheresultsbasedonthemidquoteexecutionassumption.
+In general, the returns of the strategy are higher in the sample conditioned on the pre-COVID-19 period, with the VIX index being
+in the upper quartile. This connects well with the finding that the connection between the two futures prices is stronger when the
+VIX index is at elevated levels. The returns for the COVID-19 period, where the VIX is also at a high level, are less pronounced,
+although still above the returns based on the full sample for holding periods greater than 100 ms. Possibly, this has to do with the
+finding of Section 4.2 that the VIX futures lead is not as evident during the COVID-19 period.
+    The outcome of the strategy, where the VIX futures is traded as a reaction to price changes in the SPX futures, is shown in
+Fig. A.2 in the Appendix. The results are similar to those of Fig. 8 in the sense that price changes in SPX futures predict changes
+to the VIX futures price, as illustrated by the many days with a positive average return. However, when trading at the bid or the
+C. Bangsgaard and T. Kokholm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 9.  Average return of the trading strategy as a function of the holding period. The average is taken across sample days for all returns realized for a given
+holding period, which ranges from one millisecond to five minutes. The plot to the left is based on a strategy that takes long (short) SPX futures position after
+each decrease (increase) in the VIX futures trading price. The plot to the right is based on a similar strategy but trades VIX futures after each SPX futures price
+change. All trades are assumed to take place at midquotes. The average return is shown for the full sample, a subsample of high VIX days excluding the COVID-19
+pandemic, and a subsample containing all days after the outbreak of the COVID-19 pandemic (sample days after February 20, 2020). The pre-COVID-19 high VIX
+subsample first excludes all days after the COVID-19 cutoff date and then includes only the days where the level of the VIX index is above its upper quartile.
+
+
+
+ask, this strategy also results in negative average returns across the entire sample period. More interestingly, we see from the plot
+to the right in Fig. 9 that the average performance of the strategy is best when it is restricted to the COVID-19 period, while the
+difference is negligible for the curves based on the full sample and the sample conditioned on the VIX being in its upper quartile.
+Both observations fit well with the findings that in the pre-COVID-19 period, the VIX futures leads the SPX futures in high volatility
+states while the COVID-19 period is characterized by a more ambiguous lead–lag relation (VIX futures lead SPX futures according
+to𝐿𝐿𝑅 while𝐿𝐿𝑇 indicates the opposite).
+
+4.5. Determinants of the lead–lag relation
+
+    We next analyze the potential drivers of the lead–lag relation by running a set of regressions with each of the three measures
+of the lead–lag relation,𝐿𝐿𝑅,𝐿𝐿𝑇, and𝐿𝐿𝐶, as the dependent variable. In Section 4.5.1, we analyze the impact of the relative
+liquidityacrossthetwomarkets,whileinSections4.5.2and4.5.3,weconsidertheinfluenceofdealers’hedgingactivitiesinrelation
+to VIX futures hedging and SPX option rebalancing, respectively. In each subsection, the main explanatory variables are described
+in further detail.
+    Since Fig. 5 and Table 1 of Section 4.2 indicate that the behavior of the lead–lag measures differ strongly across volatility
+regimes, we perform the regressions only for the subsample of days where the VIX index is above its 60% percentile. Hence, we
+leave out the parts of the sample where the measures are erratic and indicate a weak link between the two markets. Along with
+our main explanatory variables described below, we also include a set of control variables. In order to control more broadly for
+market conditions, we include the level of the VIX index,𝑉𝐼𝑋𝑡, and the SPX index return,𝑆𝑃𝑋𝑡. Other lead–lag studies show that
+the level of volatility and SPX returns could influence the lead–lag relation. Chen et al. (2016) show a dependence on volatility
+as the relative informativeness of SPX futures and SPY is reversed under high volatility, while Ren et al. (2019) suggest that the
+lead–lag relation between equity index options and the index is reversed when the index is not stable or up-trending. We also
+control for the time to expiry of the specific VIX futures and SPX futures contracts used to compute the lead–lag measures. These
+are denoted by𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋𝑡    and𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡   , respectively. Moreover, we include a macroeconomic news announcement dummy,𝑑𝑛𝑒𝑤𝑠𝑡     ,
+equal to one for the days of the announcements since other studies show that lead–lag relations might differ on those days. For
+instance, Frino et al. (2000) show that the leadership of equity index futures relative to the equity index is strengthened around
+the time of macroeconomic announcements, while Chen and Tsai (2017) find that VIX futures lead the VIX index more on the days
+of the release. Analyzing high-frequency price dynamics, Andersen et al. (2007) find that the SPX futures returns can be extreme
+around U.S. macroeconomic news. The announcement days we use to construct the dummy variable are the days of the scheduled
+release of information on the CPI, PPI, Employment Situation, or GDP. These announcements are grouped into a single dummy
+variable, and all occur outside regular trading hours. On the other hand, the FOMC statements are released within regular trading
+hours. To account for this difference, we include a dummy variable that exclusively contains the FOMC announcement dates,𝑑𝑓𝑜𝑚𝑐𝑡     .
+    Theresultsoftheregressionfor𝐿𝐿𝑅,𝐿𝐿𝑇,and𝐿𝐿𝐶 areshowninTables3,4,and5,respectively.Theregressionfor𝐿𝐿𝐶 only
+uses one of our three main explanatory variables since only this variable potentially influences the strength of the correlation at the
+peakofthecross-correlationcurve.Comparedtotheotherregressions,theresultsfor𝐿𝐿𝑇 inTable4arelessappealingtointerpret.
+A quick glance at Fig. 5 reveals that𝐿𝐿𝑇 fluctuates wildly around zero during low volatility periods. When volatility is high,𝐿𝐿𝑇
+isclosetozerobutstillfluctuatesaroundzero,asindicatedin Table1.ThiscanexplainwhytheR-squaredisclosetozeroacrossall
+the𝐿𝐿𝑇 regressions. Hence, the results support our statements in Section 3.2. Namely, that𝐿𝐿𝑇 is highly unstable, and𝐿𝐿𝑅 is a
+C. Bangsgaard and T. Kokholm
+
+
+                     Table 3
+                     The determinants of𝐿𝐿𝑅.
+                       𝐿𝐿𝑅𝑡                  (1)               (2)                  (3)               (4)                  (5)                  (6)                  (7)                (8)
+                       𝐿𝑄𝑅𝐴𝑀𝐻𝑡               −0.132         −0.222∗∗
+                                             (−1.59)        (−2.10)
+                       𝐿𝑄𝑅𝑉𝑜𝑙𝑡                                                    −0.029         −0.075
+                                                                                  (−0.63)        (−1.35)
+
+                       𝑃𝐶𝑀𝐴𝑡                                                                                                             −0.296∗∗∗         −0.403∗∗∗(−4.33)           (−5.45)
+
+
+                       𝑁𝐺𝑃+𝑡                                                                                                                                                      0.053            0.063(0.89)           (1.03)
+
+                       𝑁𝐺𝑃−𝑡                                                                                                                                 0.194∗∗∗        0.199∗∗∗
+                                                                                                                                                             (4.20)           (4.15)
+
+                       𝑉𝐼𝑋𝑡                                      0.104∗                                    −0.078                                   0.161∗∗∗                                  −0.017(1.72)                                 (−1.34)                                  (3.74)                                  (−0.38)
+
+
+                       𝑆𝑃𝑋𝑡                                      0.000                                     −0.009                                      −0.007                                    −0.049(0.00)                                 (−0.27)                                  (−0.22)                                (−1.39)
+
+                       𝑑𝑛𝑒𝑤𝑠𝑡                                 −0.001                               0.000                                         −0.001                                    −0.003
+                                                              (−0.04)                               (0.01)                                     (−0.05)                                (−0.09)
+
+                       𝑑𝑓𝑜𝑚𝑐𝑡                                                −0.069∗∗                                −0.070∗∗                                   −0.047                                    −0.071∗∗(−2.10)                               (−2.11)                                  (−1.60)                                (−2.31)
+
+                       𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋𝑡                              −0.148∗∗∗                              −0.156∗∗∗                                  −0.181∗∗∗                                −0.143∗∗∗
+                                                              (−3.26)                               (−3.21)                                  (−4.14)                                (−3.12)
+                       𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡                              0.018                                  0.002                                         −0.058                                 0.011
+                                                              (0.33)                                 (0.05)                                     (−1.12)                                (0.20)
+
+                       Adj.𝑅2 (%)        1.61             3.89                 −0.05          2.21                8.61                13.06              4.80              6.70
+                       No. of Obs.        773              773                 773              773                 773                 773                 773               773
+
+                    The table shows the results from regressing daily values of𝐿𝐿𝑅 on a set of explanatory variables for the subsample of days
+                    where the VIX index is above its 60% percentile. The explanatory variables are the relative liquidity of VIX futures and to SPX
+                    futures measured using the Amihud measure,𝐿𝑄𝑅𝐴𝑀𝐻𝑡      , and relative trading volume,𝐿𝑄𝑅𝑉𝑜𝑙𝑡   , the peak cross-market trading
+                    between VIX futures and SPX futures,𝑃𝐶𝑀𝐴𝑡, and the aggregate SPX option net gamma position of dealers for days where
+                    it is positive,𝑁𝐺𝑃+𝑡 , and for days where it is negative,𝑁𝐺𝑃−𝑡 .𝑉𝐼𝑋𝑡 is the level of the VIX index, and𝑆𝑃𝑋𝑡 is the return
+                    of the SPX index on day𝑡.𝑑𝑛𝑒𝑤𝑠𝑡      and𝑑𝑓𝑜𝑚𝑐𝑡      are dummy variables equal to one on days with U.S. macroeconomic news and
+                    FOMC announcements, respectively.𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋𝑡    (𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡   ) denotes the number of days to expiry of the VIX futures (SPX futures)
+                    contract. All variables have been standardized by subtracting the mean and dividing by the standard deviation. Newey–West
+                    𝑡-statistics are in parentheses.  ∗∗∗,  ∗∗,  ∗ indicates 1%, 5%, and 10% significance levels, respectively.
+
+
+
+more robust measure of the lead–lag relation. For this reason, we proceed with the analysis of how our main explanatory variables
+relate to the lead–lag relation relying mostly on𝐿𝐿𝑅.1
+
+4.5.1. Relative liquidity
+     Although the VIX futures and SPX futures prices are not linked by a no-arbitrage relation, the two futures contracts can still
+be used to achieve similar objectives. Since both the VIX futures and SPX futures prices are expected to adjust in response to the
+arrivalofnewmarket-wideinformation,investorscantradeineitherfuturescontractstoexpresstheirviewsonthenewfairvalues.
+Similarly, both contracts can be used to obtain protection against downside risk. A short SPX futures position provides a hedge
+against stock market crashes, and given the negative correlation between the VIX futures and SPX futures prices, so does a long VIX
+futures position (Szado,2009;Hilal et al.,2011). Hence, the relative liquidity potentially plays a role for which market investors
+prefer to trade in and can therefore influence which market first reflects new information. Traditionally, price discovery tends to
+occurinthemarketwiththehighestliquidity.Thisissupportedtheoretically(Kyle,1985)aswellasempirically(Greenetal.,2010;
+Huth and Abergel,2014;Chen et al.,2016;Frijns et al.,2018).
+     To test the role of liquidity, we define the relative liquidity of the two markets as the Amihud illiquidity measure (Amihud,
+2002) computed for the SPX futures market relative to the same measure computed for the VIX futures market,    𝐿𝑄𝑅𝐴𝑀𝐻𝑡         =
+𝐴𝑀𝐻𝐸𝑆𝑡   ∕𝐴𝑀𝐻𝑉𝑋𝑡   . For each of the two markets, the Amihud measure equals:
+
+                                𝑁∑   ||𝑟𝑖,𝑡||
+          𝐴𝑀𝐻𝑡 =  1𝑁                𝑉𝑜𝑙$     ,                                                                                                                                                       (3)
+                               𝑖=1        𝑖,𝑡
+
+
+
+
+
+   1  For the sake of completeness, we have included the regressions based on the full sample of observations inTablesA.2,A.3, andA.4in theAppendix. The
+results are qualitatively the same as those reported for the subsample inTables3,4, and5. The main difference is in the level of the R-squared. When the days
+of low volatility are included in the sample, the explanatory power drops.
+C. Bangsgaard and T. Kokholm
+
+                   Table 4
+                   The determinants of𝐿𝐿𝑇.
+                     𝐿𝐿𝑇𝑡                    (1)               (2)                  (3)                 (4)                  (5)               (6)                 (7)                   (8)
+                     𝐿𝑄𝑅𝐴𝑀𝐻𝑡                0.038          0.025
+                                            (1.41)          (0.68)
+                     𝐿𝑄𝑅𝑉𝑜𝑙𝑡                                                  −0.044           −0.027∗
+                                                                              (−1.61)          (−1.84)
+
+                     𝑃𝐶𝑀𝐴𝑡                                                                                                       0.085          0.073(1.53)          (1.33)
+
+
+                     𝑁𝐺𝑃+𝑡                                                                                                                                                                  −0.081∗∗           −0.082∗∗(−2.53)            (−2.23)
+
+                     𝑁𝐺𝑃−𝑡                                                                                                                         −0.003              −0.005
+                                                                                                                                                   (−0.15)            (−0.21)
+
+                     𝑉𝐼𝑋𝑡                                        0.034∗∗∗                                0.045∗                                0.013∗                                   0.034∗(2.79)                                   (1.66)                                (1.81)                                    (1.75)
+
+
+                     𝑆𝑃𝑋𝑡                                       0.001                                       −0.005                               0.002                                     0.010(0.05)                                   (−0.50)                              (0.20)                                    (0.61)
+
+                     𝑑𝑛𝑒𝑤𝑠𝑡                                 −0.076                                    −0.075                                  −0.076                                      −0.077
+                                                            (−1.04)                                 (−1.03)                              (−1.04)                                  (−1.06)
+
+                     𝑑𝑓𝑜𝑚𝑐𝑡                                             0.022∗                                  0.022∗                                0.018                                     0.022∗(1.70)                                   (1.67)                                (1.63)                                    (1.70)
+
+                     𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋𝑡                              −0.009                                    −0.015                                  −0.003                                      −0.006
+                                                            (−0.66)                                 (−1.12)                              (−0.17)                                  (−0.39)
+                     𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡                              −0.068                                    −0.061                                  −0.056                                      −0.073
+                                                            (−1.09)                                 (−1.06)                              (−1.07)                                  (−1.17)
+
+                     Adj.𝑅2 (%)          0.01            0.38                0.07               0.41                0.59            0.72               0.41                 0.88
+                     No. of Obs.          773             773                 773                773                773             773                773                  773
+
+                   The table shows the results from regressing daily values of𝐿𝐿𝑇  on a set of explanatory variables for the subsample of days
+                   where the VIX index is above its 60% percentile. The explanatory variables are the relative liquidity of VIX futures and SPX
+                   futures measured using the Amihud measure,𝐿𝑄𝑅𝐴𝑀𝐻𝑡      , and relative trading volume,𝐿𝑄𝑅𝑉𝑜𝑙𝑡   , the peak cross-market trading
+                   between VIX futures and SPX futures,𝑃𝐶𝑀𝐴𝑡, and the aggregate SPX option net gamma position of dealers for days where
+                   it is positive,𝑁𝐺𝑃+𝑡 , and for days where it is negative,𝑁𝐺𝑃−𝑡 .𝑉𝐼𝑋𝑡 is the level of the VIX index, and𝑆𝑃𝑋𝑡 is the return
+                   of the SPX index on day𝑡.𝑑𝑛𝑒𝑤𝑠𝑡      and𝑑𝑓𝑜𝑚𝑐𝑡      are dummy variables equal to one on days with U.S. macroeconomic news and
+                   FOMC announcements, respectively.𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋𝑡    (𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡   ) denotes the number of days to expiry of the VIX futures (SPX futures)
+                   contract. All variables have been standardized by subtracting the mean and dividing by the standard deviation. Newey–West
+                   𝑡-statistics are in parentheses.  ∗∗∗,  ∗∗,  ∗ indicates 1%, 5%, and 10% significance levels, respectively.
+
+
+
+with𝑁 being the number of 5-minute intervals during the trading day, and𝑟𝑖,𝑡 and𝑉𝑜𝑙$𝑖,𝑡 denote the return and dollar volume,
+respectively, over the𝑖th interval on day𝑡.Fig.10shows the relative liquidity variable,     𝐿𝑄𝑅𝐴𝑀𝐻𝑡      , across the sample period. Since
+the Amihud measure is inversely related to the level of liquidity, we expect that an increase (decrease) in𝐿𝑄𝑅𝐴𝑀𝐻𝑡       leads to a
+stronger (weaker) VIX futures lead.
+     We also consider a simpler measure of daily relative liquidity, defined as the fraction between the daily trading volume in the
+VIX futures markets relative to the daily volume in the SPX futures market,𝐿𝑄𝑅𝑉𝑜𝑙𝑡     =𝑉𝑜𝑙𝑉𝑋𝑡    ∕𝑉𝑜𝑙𝐸𝑆𝑡   .Fig.A.3in theAppendix
+depicts the resulting time series. The interpretation of this measure is similar to that of𝐿𝑄𝑅𝐴𝑀𝐻𝑡      , with an increase suggesting
+improvements in the relative VIX futures liquidity.
+     TheresultsfromtherelativeAmihudmeasureincolumns(1)–(2)ofTable3ismixed.Bothcoefficientsarenegativebutonlythe
+specification in column (2) is significant at the 5% level. This provides some indication that when the relative liquidity improves
+in favor of the VIX futures market, the VIX futures lead is strengthened and vice versa. However, there is little support for this
+conclusion from the volume ratio as its coefficient in columns (3)–(4) is not statistically significant.
+     Inspection ofFigs.10andA.3in theAppendixreveals that                    𝐴𝑀𝐻𝐸𝑆𝑡  ≪𝐴𝑀𝐻𝑉𝑋𝑡     and𝑉𝑜𝑙𝑉𝑋𝑡  ≪𝑉𝑜𝑙𝐸𝑆𝑡    on all sample days.
+Hence, it could potentially make a difference which market’s measure we normalize with when we define the𝐿𝑄𝑅𝑡 measures. As
+a robustness check, we perform the regression against the inverse of the two liquidity ratio measures.TablesA.5andA.6in the
+Appendixreport the results. Still focusing on      𝐿𝐿𝑅, we see that for both the high-VIX subsample and the full sample, the results for
+the inverse Amihud ratio are stronger with a significance at the 1% level. The coefficient on the inverse of the volume ratio is also
+more significant. The results point in the same direction as before and indicate that when the relative liquidity is improved in favor
+of the VIX futures, the lead of the VIX futures is strengthened.
+     Theregressionresultssuggestthatvariationsinrelativeliquiditycouldplayaroleinpricediscovery,butitisalsoclearfromthe
+leveloftherelativeliquidityinFigs.10andA.3thattheVIXfuturesarealwayslessliquid.Inarelatedstudy,Park(2020)showsthat
+VIX futures and options together have dominated SPX options in variance discovery even in the period before the financial crisis.
+Since trading volume in VIX futures and options is lower during the early life of these markets, the finding is somewhat surprising
+given the role of liquidity in price discovery. Instead, the smaller margin requirements of the VIX futures relative to SPX options
+appear to influence where new information is first reflected in prices. For the case of SPX futures and VIX futures, differences in
+C. Bangsgaard and T. Kokholm
+
+                                                 Table 5
+                                                 The determinants of𝐿𝐿𝐶.
+                                                   𝐿𝐿𝐶𝑡                                              (1)                                              (2)
+
+                                                   𝑃𝐶𝑀𝐴𝑡                                              −0.754∗∗∗                                       −0.483∗∗∗(−16.31)                                     (−12.15)
+
+
+                                                   𝑉𝐼𝑋𝑡                                                                                                         −0.520∗∗∗(−5.80)
+
+
+                                                   𝑆𝑃𝑋𝑡                                                                                                         −0.044(−1.18)
+
+                                                   𝑑𝑛𝑒𝑤𝑠𝑡                                                                            −0.012
+                                                                                                                                     (−0.70)
+
+                                                   𝑑𝑓𝑜𝑚𝑐𝑡                                                                                                               −0.006(−0.54)
+
+                                                   𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋𝑡                                                                         0.011
+                                                                                                                                     (0.44)
+                                                   𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡                                                                         −0.031
+                                                                                                                                     (−0.96)
+
+                                                   Adj.𝑅2 (%)                                   56.84                                          76.43
+                                                   No. of Obs.                                    773                                            773
+
+                                                The table shows the results from regressing daily values of𝐿𝐿𝐶  on a set of
+                                                explanatory variables for the subsample of days where the VIX index is above
+                                                its 60% percentile.𝑃𝐶𝑀𝐴𝑡 denotes the peak cross-market trading between VIX
+                                                futures  and  SPX  futures.𝑉𝐼𝑋𝑡  is  the  level  of  the  VIX  index,  and𝑆𝑃𝑋𝑡  is
+                                                the return of the SPX index on day𝑡.𝑑𝑛𝑒𝑤𝑠𝑡      and𝑑𝑓𝑜𝑚𝑐𝑡       are dummy variables
+                                                equal to one on days with U.S. macroeconomic news and FOMC announcements,
+                                                respectively.𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋𝑡    (𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡   ) denotes the number of days to expiry of the
+                                                VIX  futures  (SPX  futures)  contract.  All  variables  have  been  standardized  by
+                                                subtracting the mean and dividing by the standard deviation. Newey–West𝑡-
+                                                statistics are in parentheses.  ∗∗∗,  ∗∗,  ∗ indicates 1%, 5%, and 10% significance
+                                                levels, respectively.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 10.  The liquidity of VIX futures relative to the liquidity of SPX futures. The relative liquidity is computed as the Amihud illiquidity of SPX futures relative
+to the Amihud illiquidity of VIX futures. The shaded areas correspond to days where the VIX index belongs to its 60% upper quantile.
+
+
+
+both liquidity and margin requirements would still work in favor of an SPX futures leadership. However, the return characteristics
+of the two futures contracts are very different. In general, the absolute returns of the SPX futures are much smaller in magnitude
+than the VIX futures returns. An investor anticipating a future stock market decline could prefer to express this in the VIX futures
+market due to the expected extreme reaction of the VIX futures price. In this sense, a position in a VIX futures has similarities to a
+geared position in an SPX futures.
+
+
+4.5.2. VIX futures hedging
+     While the discussion in Section 4.5.1 relates to the price discovery process, this section and Section 4.5.3 are not necessarily
+concerned with factors determining where new information is first incorporated into prices. Instead, the focus is on hedging
+transactions that can change the way that VIX futures and SPX futures are connected. We next look at how VIX futures hedging
+by dealers creates a potential link between the two futures markets, as VIX futures dealers can hedge by trading SPX futures. The
+observation that hedging activities can impact the lead–lag relation between two markets if market makers in one market trade in
+C. Bangsgaard and T. Kokholm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                     Fig. 11.  Illustration of cross-market activity function.
+
+
+
+the other market to hedge is not new. Option dealers setting up delta hedges is an important example of thisEasley et al.(1998),
+Chan et al.(2002),Schlag and Stoll(2005),Hu(2014).
+    WhenmarketparticipantswanttotradeVIXfutures,typically,majordealersinfinancialmarketstaketheothersideofthetrade.
+Marketmakersanddealersaresubjecttostrictriskrequirementsandprofitfromtheirflowoftransactionsandnotfromrisk-taking.
+Inordertohedgetheirpositionsinvolatility,dealerscanutilizethestrongnegativecorrelationbetweenVIXfuturesandSPXfutures
+prices. In this case, a short (long) VIX futures position of the dealer is hedged by selling (buying) SPX futures.
+    The hedging activities imply that once VIX futures dealers experience a change in their net position, they then trade in the SPX
+futures market to set up the hedge. Hence, the hedging transactions have the potential to impact the lead–lag relation between VIX
+futures and SPX futures. Since the hedging strategy implies that a VIX futures trade is followed by SPX futures trading, it works in
+favor of a VIX futures leadership. Therefore, we expect that greater levels of hedging activity would strengthen the lead of the VIX
+futuresasmeasuredbylowerlevelsof𝐿𝐿𝑅and𝐿𝐿𝑇.However,thegreateralignmentofVIXfuturesandSPXfuturespricesinduced
+by the hedging activities will push𝐿𝐿𝑇 towards zero from below. In addition, the price impact from the trades will contribute to
+thenegativecorrelationbetweenVIXfuturesandSPXfuturesprices.Thismeansthatgreaterhedgingactivitycouldeventuallycause
+a larger negative correlation between the two futures prices, pushing down the value of𝐿𝐿𝐶.
+    In order to analyze how VIX futures hedging activities influence the lead–lag relation, we want to measure the extent of such
+activities.Generally,cross-markettradingbetweentwomarketsemergesfromsituationswheretradinginonemarketwouldgenerate
+trading in the other market. This makes the VIX futures hedging activity a potential source for cross-market trading between VIX
+futures and SPX futures. To proxy the part of the trading activity related to cross-market trading, we use the cross-market activity
+measure introduced byDobrev and Schaumburg(2018). Based on high-frequency data, the idea behind the measure is to identify
+allso-calledactivetimestamps.Atimestampisactiveifthespecifiedactivitytakesplaceatthattimestamp.Inourcase,therelevant
+activity is trading. The total number of timestamps with simultaneous activity is then summed over the trading day and shows how
+often both markets are active at the same time. Assuming that𝜗 = 0, this number can be obtained as:
+
+                  𝑁−|𝜗|∑
+        𝑋𝑟𝑎𝑤𝜗    =      1{market𝐴 active in period𝑖}∩{market𝐵 active in period𝑖−𝜗},                                                                                      (4)
+                 𝑖=|𝜗|+1
+where𝑁 is the total number of timestamps. With data at millisecond frequency,𝑁 is the total number of milliseconds over the
+tradingday.Thenumberofcross-activetimestampscanbescaledbythetotalnumberofactivetimestampsintheleastactivemarket
+to measure cross-market activity as a proportion of the total activity
+
+        𝑋𝑟𝑒𝑙         {∑𝑁−|𝜗|                                 𝜗                                            }.                                                          (5)
+          𝜗   =                        𝑋𝑟𝑎𝑤
+                min       𝑖=|𝜗|+11{market𝐴 active in period𝑖},∑𝑁−|𝜗|𝑖=|𝜗|+11{market𝐵 active in period𝑖−𝜗}
+
+In order to only capture the activity with a cross-market dimension, a further adjustment is implemented to account for the
+simultaneous activity that would occur simply by randomness. This gives the cross-market activity in excess of what would be
+expected by coincidence, given that activity in the two markets is independent of each other. It is defined as:
+
+        𝑋𝜗 =𝑋𝑟𝑒𝑙𝜗   −𝑋𝑟𝑒𝑙∞,                                                                                                                                                               (6)
+wheretheadjustmenttermisgivenby𝑋𝑟𝑒𝑙∞  = 1∕(2(𝑇2 −𝑇1))∑𝑇2
+                                                                            |𝜗|=𝑇1+1𝑋𝑟𝑒𝑙𝜗  forsufficientlylarge𝑇2>𝑇1.Inadditiontosimultaneous
+activity where𝜗 = 0, timestamps are shifted forward and backward in time when considering non-zero values of𝜗. For a set of
+differentvaluesof𝜗,afullcurvefortheproportionofcross-marketactivitycanbeobtained.WeillustratethisinFig.11,anddenote
+the value of the timestamp shift,𝜗, corresponding to the maximum of the curve by the cross-market activity time (𝐶𝑀𝐴𝑇), while
+the peak cross-market activity (𝑃𝐶𝑀𝐴) is the value of the cross-market activity,𝑋𝜗, at the point.
+    Foreachsampledate,ourmeasureofcross-markettradingis𝑃𝐶𝑀𝐴.Fortheimplementationofthemeasure,weuseatime-shift,
+𝜗, within [−1000,1000] milliseconds where increments are of one millisecond and with𝑇1 = 500 and𝑇2 = 1000, as inDobrev and
+C. Bangsgaard and T. Kokholm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. 12.  Peak cross-market trading for VIX futures and SPX futures. The shaded areas correspond to days where the VIX index belongs to its 60% upper quantile.
+
+
+
+Schaumburg (2018). In Fig. 12, we plot the peak cross-market trading variable,𝑃𝐶𝑀𝐴𝑡, over the sample period. We see a clear
+connection between the proportion of trading related to cross-market activity and the level of the VIX index as𝑃𝐶𝑀𝐴 increases
+during periods of high VIX, as indicated by the shaded areas.𝑃𝐶𝑀𝐴 reaches its highest level at the beginning of the COVID-19
+pandemic.
+    Table 3 shows the regression results from regressing𝐿𝐿𝑅 on𝑃𝐶𝑀𝐴. Since cross-market trading can arise from hedging by VIX
+futures dealers, the strong significance of the cross-market trading coefficient in columns (5)–(6) suggests that VIX futures hedging
+influences the lead–lag relation and pushes the markets in the direction of a VIX futures leadership.2 The relation between cross-
+market trading and𝐿𝐿𝐶 is shown in Table 5. We see that when cross-market trading increases, the negative correlation between
+VIX futures and SPX futures returns gets more pronounced. With investors buying (selling) VIX futures and VIX futures dealers
+hedging in response to this by selling (buying) SPX futures, the hedging mechanism can create a greater negative correlation. To
+the extent that hedging activities are reflected in cross-market trading, this can explain why a greater proportion of cross-market
+trading pushes down the value of𝐿𝐿𝐶.
+    It is uncertain to which extent cross-market activity is driven by VIX futures hedging activities. Alternatively, it could arise
+from high-frequency traders exploiting the relation between equity markets and volatility. Once the SPX futures price moves, these
+tradersmayhavestrategiesinplaceforhowtotradeintheVIXfuturesmarketandviceversa.Inparticular,thesetypesofstrategies
+could be used in the high-VIX periods where the two futures markets are more negatively correlated, as documented in Section 4.2.
+In line with this, Zhang (2010), Dobrev and Schaumburg (2018), and Buccheri et al. (2021) argue that the relation between high-
+volatilityandlead–lagrelationcanbeascribedtohigh-frequencytradersexploitingstatisticaldependenciesacrossmarketsappearing
+when volatility is high. Other studies show that profitable trading opportunities tend to occur more often under high volatility. For
+instance, Marshall et al. (2013) and Budish et al. (2015) show that arbitrage opportunities between the two ETFs, IVV and SPY,
+and between SPX futures and SPY, respectively, are more frequent under high volatility. Although the VIX futures and SPX futures
+are not characterized by the same no-arbitrage relation, mislocations of prices and short-lived correlations, which create profitable
+trading opportunities for high-frequency traders, are expected to be more frequent as volatility increases. Based on this reasoning,
+the proportion of cross-market trading during high-VIX periods would be higher due to an increased presence of high-frequency
+traders exploiting the stronger connection between the two futures prices. This also fits with the pattern in Fig. 12, as days with
+the VIX index belonging to the upper 60% quantile seem to be characterized by a high level of𝑃𝐶𝑀𝐴. Empirically, the correlation
+between𝑃𝐶𝑀𝐴 and VIX equals 0.67.
+    Even if cross-market activity captures high-frequency trading activity rather than VIX futures hedging activity, it can still help
+explain the negative relation between𝐿𝐿𝐶 and𝑃𝐶𝑀𝐴 shown in Table 5. This is the case under a feedback effect from the high-
+frequency trading. Besides attracting high-frequency traders, the negative correlation between the VIX futures and SPX futures
+prices could be further strengthened by the increased activity of high-frequency traders. Specifically, if their trading strategies
+are built to exploit the negative correlation between the two futures prices, their trading could push down the correlation even
+more. The presence of high-frequency trading then amplifies the magnitude of𝐿𝐿𝐶 and thereby also influences𝐿𝐿𝑅, resulting
+in a strengthening of an existing leadership. Since our results indicate that high VIX periods are characterized by a VIX futures
+leadership, this means that the negative correlation between𝐿𝐿𝑅 and cross-market trading observed in Table 3 could arise from
+the more active high-frequency traders in those periods.
+
+
+
+
+
+  2  In principle, the activity related to the hedging of VIX futures is only consistent with the part of the cross-market trading where the VIX futures trades
+lead the SPX futures trades. However, as noted by Dobrev and Schaumburg (2018), the estimation of the location of the peak cross-market trading is often
+unreliable, while the proportion of cross-market trading is much easier to estimate reliably. Thus, we do not make any distinction in whether the cross-market
+trading on a given day occurs at an offset where VIX futures trades lead SPX futures trades or the reverse.
+C. Bangsgaard and T. Kokholm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        Fig. 13.  SPX option dealer net gamma position. The shaded areas correspond to days where the VIX index belongs to its 60% upper quantile.
+
+
+
+4.5.3. Option rebalancing
+    Option dealers typically hedge their exposure by trading the underlying of the option. Whenever the price of the underlying
+changes, proper risk management implies that the hedge positions are updated. In general, option dealers with a negative gamma
+positionrebalancetheirdeltahedgeinthedirectionofthemarketmovementsoftheunderlying,whileapositivenetgammaposition
+involves trading against the market movements (Ni et al., 2021). This means that when the aggregate net gamma position of option
+dealers is negative, there is a risk of amplifying market movements in the underlying. Such amplification has been documented
+empirically for various markets on which options are written, including the SPX futures (Baltussen et al., 2021).
+    We now detail how SPX option dealers’ updating delta hedges can impact the lead–lag relation between VIX futures and SPX
+futures.Asisthecasefortheaveragesampledate,weassumethatnewinformationisfirstincorporatedintotheVIXfuturesmarket.
+Consider the situation where the new information results in a positive VIX futures return. Under the negative correlation and VIX
+futures leadership, this predicts a subsequent negative SPX futures return. Option dealers with a negative gamma position then
+rebalance in response to the negative SPX futures price movement by selling SPX futures, resulting in further downward pressure
+on the SPX futures price. As long as the net gamma position is negative, the same holds but with opposite signs if the initial VIX
+futures return is negative. Thus, the negative net gamma position is an amplifier of the SPX futures price movement. Days where
+theaggregatenetgammapositionamongdealersisnegativecouldthereforeresultinanevenstrongerVIXfuturesleadershipasthe
+initial VIX futures price movement continues to impact the SPX futures over a longer time due to the option rebalancing. In terms
+of the cross-correlation function, this would produce a stronger asymmetry as we would have a slower decay of the curve for the
+negative timeshifts. Based on this, we expect that the value of𝐿𝐿𝑅 would be reduced as a result of dealers updating their delta
+hedges under a negative gamma position. The more negative the net gamma position, the stronger this effect should be, as a more
+negative net gamma position requires dealers to trade more in the SPX futures market for a given change in the SPX futures price.
+Whileweexpectthatthehedgingactivitiesimpact𝐿𝐿𝑅,thevalueof𝐿𝐿𝑇 shouldnotbeinfluencedasthelocationofthepeakofthe
+cross-correlation function should be unaffected. On days where dealers hold a positive net gamma position, the option rebalancing
+should not induce the same long-lasting impact of a given VIX futures price change as dealers trade in the opposite direction of the
+SPX futures price movement. Given that the average/median sample date is characterized by a VIX futures leadership in terms of
+𝐿𝐿𝑇, we therefore expect that a negative net gamma position could amplify the VIX futures leadership as measured by𝐿𝐿𝑅.
+    Inordertoanalyzetheimpactofthenetgammaposition,weestimatethedailyaggregatenetgammapositionofoptiondealers.
+This is done using SPX options data from OptionMetrics and making some assumptions. We first assume that end-user demand is
+long in put options and short in call options. This claim is empirically justified by Garleanu et al. (2008) and Goyenko and Zhang
+(2019). Second, we assume that the dealer is the counterparty in all option trades, and finally, that the dealers delta hedge their
+entire exposure. Similar to Baltussen et al. (2021), we use these assumptions to construct our proxy for the net gamma position at
+time𝑡 as:
+
+                  𝑁𝐶𝑡∑                      𝑁𝑃𝑡∑
+        𝑁𝐺𝑃𝑡 =        𝛤𝐵𝑆𝑡   (𝐶𝑖)𝑂𝐼𝑡(𝐶𝑖)−       𝛤𝐵𝑆𝑡   (𝑃𝑖)𝑂𝐼𝑡(𝑃𝑖),                                                                                                              (7)
+                  𝑖=1                       𝑖=1
+where𝑁𝐶𝑡  is the number of call options traded at time𝑡 with an open interest greater than zero.𝛤𝐵𝑆𝑡   (𝐶𝑖) denotes the Black–Scholes
+gamma of call option𝑖, and𝑂𝐼𝑡(𝐶𝑖) is the option’s open interest. Similar notation holds for put options.
+    Fig. 13 depicts the estimated net gamma position throughout our sample period. The gamma of the option position fluctuates
+around zero. However, when markets are in turmoil, as measured by a high level of the VIX index, the position is mostly negative
+and can move rapidly from positive to negative when market volatility increases.
+    Due to the different expectations about the impact of a positive and negative net gamma position, we decompose the series into},collectingallthedayswherethepositionispositive,and𝑁𝐺𝑃−𝑡  = min{0,𝑁𝐺𝑃𝑡},composed
+twovariables:𝑁𝐺𝑃+𝑡  = max{0,𝑁𝐺𝑃𝑡
+of all the days where the net gamma position is negative. The relation between𝐿𝐿𝑅 and these two variables is shown in columns
+(7) and (8) of Table 3. As expected, we see that a decrease in the gamma position when it is already negative (the𝑁𝐺𝑃−𝑡  variable)
+C. Bangsgaard and T. Kokholm
+
+is associated with a decrease in𝐿𝐿𝑅. This is equivalent to a strengthening of the VIX futures lead. The more negative the gamma
+position, the more heavily option dealers will need to trade in the direction of a given SPX futures price change. This could create
+a prolonged impact of any SPX futures price change originating from movements in the VIX futures price. Hence, our regression
+results are consistent with option rebalancing generating a slower decay of the left tail of the cross-correlation function, which will
+work to reduce𝐿𝐿𝑅.Table3further shows that changes in the gamma position when it is positive (the     𝑁𝐺𝑃+𝑡  variable) do not
+significantlyinfluence𝐿𝐿𝑅.However,thisconclusionisnotrobusttotheregressionbeingrunonthefullsample(TableA.2).Inthe
+lattercase,the𝑁𝐺𝑃+𝑡  variablehasapositiveimpacton𝐿𝐿𝑅.Whenwefocuson𝐿𝐿𝑇,Table4revealsthattheestimatedcoefficient
+for𝑁𝐺𝑃+𝑡  is negative and statistically significant at a 5% level in both the regressions involving this variable, such that a positive
+change to an already positive net gamma position has a negative impact on𝐿𝐿𝑇. However, this effect considerably weakens when
+the regression is run on the full sample (TableA.3). Hence, the overall evidence related to the       𝑁𝐺𝑃+𝑡  variable is mixed and more
+difficult to interpret as related to option rebalancing activity.
+
+5. Conclusion
+
+    We study the lead–lag relation between VIX futures and SPX futures using high-frequency trade data from January 2013 to
+September2020.Foreachday,weestimatethecross-correlationfunctionandextractvariousmeasuresofthelead–lagrelation.The
+analysis reveals a large time variation in the lead–lag relation. Under low volatility, the lead–lag measures should be interpreted
+with caution as the two markets are not strongly connected. During periods of high volatility, returns exhibit a stronger negative
+correlation and a short-lived lead–lag with a tendency for VIX futures to lead SPX futures. The VIX futures leadership confirms the
+important role played by the VIX futures across the various SPX-related markets.
+    In order to analyze the economic significance of the lead–lag relation, we consider two simple strategies that trade either VIX
+futures or SPX futures after observing a price change in the other market. For the majority of the sample, the average daily returns
+of both trading strategies are positive when trades are assumed to take place at midquotes. However, under a more realistic setup
+where trades are executed at bid and ask prices, the lead–lag relation can no longer be monetized. Hence, the two markets are too
+synchronized for the lead–lag relation to be traded with a profit.
+    An analysis of the potential determinants of the lead–lag relation indicates that an improvement in the relative liquidity of one
+market strengthens the lead of that market. Since investors can express their view on future market movements or buy protection
+against downside risk using both VIX futures and SPX futures, we interpret the results as support of our conjecture that the relative
+liquidity influences the price discovery process. Moreover, we find that an increase in the proportion of cross-market trading is
+associatedwithastrengthenedVIXfutureslead.SinceVIXfuturesdealerscanhedgetheirVIXfuturespositionthroughapositionin
+SPX futures, their hedging strategy would involve trading SPX futures after providing liquidity in the VIX futures market. Thereby,
+thehedgingactivitiescouldcontributetothelevelofcross-marketactivity.Hence,itispossiblethathedgingactivitiesofVIXfutures
+dealers are driving a part of the VIX futures lead over SPX futures. Finally, our analysis suggests that when market makers in SPX
+options are in an aggregate negative gamma position, a further increase in the imbalance of the gamma position could lead to a
+stronger VIX futures lead in terms of𝐿𝐿𝑅.
+
+Appendix. Supplementary figures and tables
+
+    SeeTablesA.1–A.6andFigs.A.1–A.3.
+C. Bangsgaard and T. Kokholm
+
+
+
+
+
+                       Table A.1
+                       Descriptive statistics of the overnight lead–lag measures.
+                                                      Full sample                                          VIX upper quartile                                          COVID-19 period
+                                                                                                               (pre-COVID-19)
+                                                      𝐿𝐿𝑅     𝐿𝐿𝑇     𝐿𝐿𝐶      𝐿𝐿𝑅     𝐿𝐿𝑇     𝐿𝐿𝐶      𝐿𝐿𝑅     𝐿𝐿𝑇    𝐿𝐿𝐶
+                         Mean                      0.901         −1.268       −0.165              0.856           0.133       −0.236              0.781       −0.000       −0.403
+                         Std. dev.                 0.515         16.427         0.115              0.402           7.775         0.096              0.123         0.113         0.103
+                         Min                         0.151       −60.000       −0.632              0.504       −56.400       −0.502              0.547       −0.920       −0.632
+                         Lower quartile        0.669         −1.200       −0.222              0.692         −0.056       −0.304              0.705         0.003       −0.478
+                         Median                   0.783         −0.006       −0.130              0.771         −0.002       −0.232              0.767         0.019       −0.403
+                         Upper quartile        0.971           0.035       −0.083              0.901           0.022       −0.168              0.835         0.030       −0.333
+                         Max                        7.801         60.000         0.120              6.410         59.900       −0.051              1.688         0.180       −0.106
+
+                      Overnight always ends at 9:30 EST on day𝑡 and, depending on the sample date, begins at either 8:00 or 3:00 on day𝑡, or 18:00
+                      on day𝑡−1. All numbers are shown for the full sample, a subsample of high VIX days excluding the COVID-19 pandemic, and
+                      a subsample containing all days after the outbreak of the pandemic. The COVID-19 period covers all sample days after February
+                      20, 2020. The pre-COVID-19 high VIX subsample first excludes all days after the COVID-19 cutoff date and then includes only
+                      the days where the level of the VIX index is above its upper quartile.𝐿𝐿𝑇 is measured in seconds.
+
+
+
+
+
+
+
+
+
+                       Table A.2
+                       The determinants of𝐿𝐿𝑅 (full sample).
+                         𝐿𝐿𝑅𝑡                  (1)                 (2)                  (3)               (4)                  (5)                  (6)                  (7)                (8)
+                         𝐿𝑄𝑅𝐴𝑀𝐻                   −0.137∗∗        −0.103
+                                𝑡                 (−2.43)          (−1.54)
+
+                         𝐿𝑄𝑅𝑉𝑜𝑙𝑡                                                           −0.034         −0.071∗
+                                                                                           (−0.98)       (−1.96)
+
+                         𝑃𝐶𝑀𝐴𝑡                                                                                                              −0.291∗∗∗        −0.386∗∗∗(−9.01)           (−10.00)
+
+
+                         𝑁𝐺𝑃+𝑡                                                                                                                                                      0.164∗∗∗        0.162∗∗∗(4.49)           (4.18)
+
+                         𝑁𝐺𝑃−                                                                                                                                                0.084∗∗∗        0.089∗∗∗
+                                𝑡                                                                                                                                            (4.10)           (4.30)
+
+                         𝑉𝐼𝑋𝑡                                           −0.043                                  −0.143∗∗∗                               0.133∗∗∗                                 −0.014(−1.18)                              (−3.52)                                  (5.25)                                  (−0.65)
+
+
+                         𝑆𝑃𝑋𝑡                                           −0.003                                  −0.010                                      −0.017                                   −0.034∗∗(−0.23)                              (−0.69)                                  (−1.10)                               (−2.01)
+
+                         𝑑𝑛𝑒𝑤𝑠𝑡                                       0.022                                 0.019                                     0.021                                  0.016
+                                                                      (0.97)                                 (0.88)                                    (0.99)                                  (0.72)
+
+                         𝑑𝑓𝑜𝑚𝑐𝑡                                                 −0.054∗∗∗                              −0.055∗∗∗                                 −0.027∗                                  −0.058∗∗∗(−3.14)                              (−3.20)                                  (−1.65)                               (−3.45)
+
+                         𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋𝑡                                    −0.013                                  −0.024                                      −0.043∗                                  −0.018
+                                                                      (−0.53)                              (−0.96)                                  (−1.84)                               (−0.73)
+                         𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡                                    0.000                                    −0.000                                      −0.032                                   −0.002
+                                                                      (0.01)                                 (−0.01)                                  (−1.20)                               (−0.06)
+
+                         Adj.𝑅2 (%)       1.82              1.90                0.06            1.96                8.42                9.49                4.74             4.94
+                         No. of Obs.        1933             1933               1933           1933               1933               1933               1933            1933
+                      The table shows the results from regressing daily values of𝐿𝐿𝑅 on a set of explanatory variables for the full sample of
+                      observations. The explanatory variables are the relative liquidity of VIX futures and SPX futures measured using the Amihud
+                      measure,𝐿𝑄𝑅𝐴𝑀𝐻𝑡      , and relative trading volume,𝐿𝑄𝑅𝑉𝑜𝑙𝑡   , the peak cross-market trading between VIX futures and SPX futures,
+                      𝑃𝐶𝑀𝐴𝑡, and the aggregate SPX option net gamma position of dealers for days where it is positive,𝑁𝐺𝑃+𝑡 , and for days where
+                      it is negative,𝑁𝐺𝑃−𝑡 .𝑉𝐼𝑋𝑡 is the level of the VIX index, and𝑆𝑃𝑋𝑡 is the return of the SPX index on day𝑡.𝑑𝑛𝑒𝑤𝑠𝑡      and𝑑𝑓𝑜𝑚𝑐𝑡
+                      are dummy variables equal to one on days with U.S. macroeconomic news and FOMC announcements, respectively.𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋𝑡
+                      (𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡   ) denotes the number of days to expiry of the VIX futures (SPX futures) contract. All variables have been standardized
+                      by subtracting the mean and dividing by the standard deviation. Newey–West𝑡-statistics are in parentheses.  ∗∗∗,  ∗∗,  ∗ indicates
+                      1%, 5%, and 10% significance levels, respectively.
+C. Bangsgaard and T. Kokholm
+
+
+                        Table A.3
+                        The determinants of𝐿𝐿𝑇 (full sample).
+                          𝐿𝐿𝑇𝑡                     (1)                (2)                 (3)                 (4)                 (5)                (6)                 (7)                  (8)
+                          𝐿𝑄𝑅𝐴𝑀𝐻𝑡                     0.033∗          0.005
+                                                      (1.75)           (0.21)
+                          𝐿𝑄𝑅𝑉𝑜𝑙                                                                −0.028            −0.019
+                                 𝑡                                                              (−0.96)          (−0.61)
+
+                          𝑃𝐶𝑀𝐴𝑡                                                                                                        0.042∗          0.031(1.78)           (1.21)
+
+
+                          𝑁𝐺𝑃+𝑡                                                                                                                                                                     −0.068∗           −0.065(−1.74)           (−1.62)
+
+                          𝑁𝐺𝑃−𝑡                                                                                                                                                      0.008              0.013
+                                                                                                                                                                                     (0.65)             (1.13)
+
+                          𝑉𝐼𝑋𝑡                                         0.034                                   0.033∗                                 0.017                                    0.012(1.60)                                   (1.86)                                 (1.12)                                    (1.12)
+
+
+                          𝑆𝑃𝑋𝑡                                             −0.007                                    −0.009                                   −0.006                                     −0.004(−0.74)                                (−0.91)                               (−0.63)                                 (−0.39)
+
+                          𝑑𝑛𝑒𝑤𝑠𝑡                                          0.011                                   0.011                                  0.011                                    0.013
+                                                                          (0.52)                                   (0.49)                                 (0.52)                                    (0.59)
+
+                          𝑑𝑓𝑜𝑚𝑐𝑡                                               0.020                                   0.020                                  0.018                                    0.021(1.56)                                   (1.55)                                 (1.40)                                    (1.59)
+
+                          𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋𝑡                                       0.028                                   0.026                                  0.030                                    0.030
+                                                                          (1.43)                                   (1.22)                                 (1.54)                                    (1.53)
+                          𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡                                       0.009                                   0.012                                  0.011                                    0.008
+                                                                          (0.34)                                   (0.46)                                 (0.43)                                    (0.30)
+
+                          Adj.𝑅2 (%)          0.06               −0.07             0.03                 −0.03             0.12               −0.01             0.30                0.17
+                          No. of Obs.           1933             1933              1933              1933              1933             1933              1933               1933
+                       The table shows the results from regressing daily values of𝐿𝐿𝑇  on a set of explanatory variables for the full sample of
+                       observations. The explanatory variables are the relative liquidity of VIX futures and SPX futures measured using the Amihud
+                       measure,𝐿𝑄𝑅𝐴𝑀𝐻𝑡      , and relative trading volume,𝐿𝑄𝑅𝑉𝑜𝑙𝑡   , the peak cross-market trading between VIX futures and SPX futures,
+                       𝑃𝐶𝑀𝐴𝑡, and the aggregate SPX option net gamma position of dealers for days where it is positive,𝑁𝐺𝑃+𝑡 , and for days where
+                       it is negative,𝑁𝐺𝑃−𝑡 .𝑉𝐼𝑋𝑡 is the level of the VIX index, and𝑆𝑃𝑋𝑡 is the return of the SPX index on day𝑡.𝑑𝑛𝑒𝑤𝑠𝑡      and𝑑𝑓𝑜𝑚𝑐𝑡
+                       are dummy variables equal to one on days with U.S. macroeconomic news and FOMC announcements, respectively.𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋𝑡
+                       (𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡   ) denotes the number of days to expiry of the VIX futures (SPX futures) contract. All variables have been standardized
+                       by subtracting the mean and dividing by the standard deviation. Newey–West𝑡-statistics are in parentheses.  ∗∗∗,  ∗∗,  ∗ indicates
+                       1%, 5%, and 10% significance levels, respectively.
+
+
+                                                Table A.4
+                                                The determinants of𝐿𝐿𝐶 (full sample).
+                                                  𝐿𝐿𝐶𝑡                                                          (1)                                                          (2)
+
+                                                  𝑃𝐶𝑀𝐴𝑡                                                           −0.838∗∗∗                                                    −0.492∗∗∗(−21.51)                                                 (−11.94)
+
+
+                                                  𝑉𝐼𝑋𝑡                                                                                                                                     −0.520∗∗∗(−6.76)
+
+
+                                                  𝑆𝑃𝑋𝑡                                                                                                                                    −0.022(−0.75)
+
+                                                  𝑑𝑛𝑒𝑤𝑠                                                                                                                         −0.003
+                                                    𝑡                                                                                                                           (−0.30)
+
+                                                  𝑑𝑓𝑜𝑚𝑐𝑡                                                                                                                                           −0.013∗∗(−1.98)
+
+                                                  𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋                                                                                                                      0.005
+                                                            𝑡                                                                                                                   (0.40)
+
+                                                  𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡                                                                                                                     −0.013
+                                                                                                                                                                                (−0.79)
+
+                                                  Adj.𝑅2 (%)                                                70.25                                                      85.01
+                                                  No. of Obs.                                                1933                                                       1933
+
+                                               The table shows the results from regressing daily values of𝐿𝐿𝐶 on a set of explanatory variables
+                                               for the full sample of observations.𝑃𝐶𝑀𝐴𝑡  denotes the peak cross-market trading between
+                                               VIX futures and SPX futures.𝑉𝐼𝑋𝑡  is the level of the VIX index, and𝑆𝑃𝑋𝑡  is the return of
+                                               the SPX index on day𝑡.𝑑𝑛𝑒𝑤𝑠𝑡      and𝑑𝑓𝑜𝑚𝑐𝑡      are dummy variables equal to one on days with U.S.
+                                               macroeconomic news and FOMC announcements, respectively.𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋𝑡    (𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡   ) denotes the
+                                               number of days to expiry of the VIX futures (SPX futures) contract. All variables have been
+                                               standardized  by  subtracting  the  mean  and  dividing  by  the  standard  deviation.  Newey–West
+                                               𝑡-statistics are in parentheses. ∗∗∗, ∗∗, ∗ indicates 1%, 5%, and 10% significance levels, respectively.
+C. Bangsgaard and T. Kokholm
+
+
+
+
+
+
+                          Table A.5
+                          The inverse of the liquidity ratio (high VIX subsample).
+                                                           𝐿𝐿𝑅𝑡                                      𝐿𝐿𝑇𝑡
+                                                           (1)                (2)                   (3)             (4)                           (5)                (6)               (7)             (8)
+                            (𝐿𝑄𝑅𝐴𝑀𝐻𝑡         )−1        0.212∗∗∗        0.244∗∗∗                                                                  −0.058∗         −0.064
+                                                           (3.55)           (3.62)                                                                (−1.65)         (−1.32)
+                            (𝐿𝑄𝑅𝑉𝑜𝑙𝑡      )−1                                                        0.047         0.122∗∗                                                              0.042         0.025
+                                                                                                         (1.10)        (2.20)                                                                (1.50)        (1.64)
+
+                            𝑉𝐼𝑋𝑡                                          0.039                                   −0.101                                          0.028∗∗                          0.043∗(0.80)                                (−1.64)                                         (1.96)                            (1.70)
+
+
+                            𝑆𝑃𝑋𝑡                                              −0.002                                 −0.018                                          0.002                                −0.005(−0.06)                             (−0.57)                                         (0.16)                            (−0.48)
+
+                            𝑑𝑛𝑒𝑤𝑠𝑡                                               0.005                                0.002                                                −0.078                             −0.075
+                                                                                 (0.16)                                (0.07)                                           (−1.05)                          (−1.03)
+
+                            𝑑𝑓𝑜𝑚𝑐𝑡                                                    −0.069∗∗                              −0.069∗∗                                       0.022∗                            0.022∗(−2.24)                             (−2.09)                                         (1.72)                            (1.69)
+
+                            𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋𝑡                                            −0.153∗∗∗                             −0.172∗∗∗                                          −0.007                             −0.016
+                                                                                 (−3.47)                             (−3.48)                                         (−0.47)                          (−1.18)
+                            𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡                                            0.032                                0.007                                                −0.076                             −0.062
+                                                                                 (0.60)                                (0.12)                                           (−1.15)                          (−1.08)
+
+                            Adj.𝑅2 (%)          4.37              6.55                0.09           2.89                         0.21              0.68             0.04           0.40
+                            No. of Obs.           773               773                 773            773                          773               773              773            773
+
+                          The table shows the regression results for𝐿𝐿𝑅 and𝐿𝐿𝑇 using the liquidity of SPX futures relative to the liquidity of VIX futures
+                          as explanatory variable for the subsample of days where the VIX index is above its 60% percentile. Relative to Tables3and4,
+                          the inverse of𝐿𝑄𝑅𝐴𝑀𝐻𝑡       and𝐿𝑄𝑅𝑉𝑜𝑙𝑡    are applied here.
+
+
+
+
+
+
+
+
+
+
+
+                          Table A.6
+                          The inverse liquidity ratio (full sample).
+                                                           𝐿𝐿𝑅𝑡                                       𝐿𝐿𝑇𝑡
+                                                           (1)                (2)                  (3)               (4)                           (5)               (6)               (7)             (8)
+                            (𝐿𝑄𝑅𝐴𝑀𝐻𝑡         )−1        0.144∗∗∗        0.113∗∗∗                                                                    −0.043         −0.031
+                                                           (4.49)           (3.43)                                                                 (−1.42)        (−0.98)
+                            (𝐿𝑄𝑅𝑉𝑜𝑙𝑡      )−1                                                        0.077∗∗        0.129∗∗∗                                                           0.034         0.023
+                                                                                                         (2.06)          (3.25)                                                              (1.38)        (0.86)
+
+                            𝑉𝐼𝑋𝑡                                              −0.082∗∗                                −0.163∗∗∗                                     0.026                             0.031∗(−2.52)                               (−3.76)                                        (1.53)                            (1.68)
+
+
+                            𝑆𝑃𝑋𝑡                                             −0.003                                   −0.018                                            −0.007                             −0.010(−0.20)                               (−1.20)                                        (−0.73)                          (−1.02)
+
+                            𝑑𝑛𝑒𝑤𝑠                                                0.019                                  0.019                                           0.012                             0.011
+                              𝑡                                                  (0.86)                                 (0.88)                                          (0.55)                            (0.50)
+
+                            𝑑𝑓𝑜𝑚𝑐𝑡                                                    −0.054∗∗∗                               −0.052∗∗∗                                     0.020                             0.021(−3.25)                               (−3.05)                                        (1.56)                            (1.59)
+
+                            𝐸𝑥𝑝𝑖𝑟𝑦𝑉𝑋                                             −0.005                                   −0.041∗                                       0.025                             0.023
+                                       𝑡                                         (−0.18)                               (−1.67)                                        (1.31)                            (1.06)
+
+                            𝐸𝑥𝑝𝑖𝑟𝑦𝐸𝑆𝑡                                            −0.004                                0.008                                           0.008                             0.012
+                                                                                 (−0.15)                               (0.27)                                          (0.32)                            (0.50)
+
+                            Adj.𝑅2 (%)          2.01              2.59                0.54             2.93                         0.14             0.02             0.06            −0.02
+                            No. of Obs.           1933             1933               1933            1933                        1933            1933            1933          1933
+
+                         The table shows the regression results for𝐿𝐿𝑅 and𝐿𝐿𝑇 using the liquidity of SPX futures relative to the liquidity of VIX futures
+                         as explanatory variable for the full sample of observations. Relative to Tables3and4, the inverse of         𝐿𝑄𝑅𝐴𝑀𝐻𝑡       and𝐿𝑄𝑅𝑉𝑜𝑙𝑡    are
+                         applied here.
+C. Bangsgaard and T. Kokholm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. A.1.  The overnight lead–lag measures and the VIX and the SPX over the sample period. Overnight always ends at 9:30 EST on day𝑡 and depending on
+the sample date begins at either 8:00 or 3:00 on day𝑡, or 18:00 on day𝑡−1. The shaded areas correspond to days where the VIX index belongs to its 60%
+upper quantile.
+C. Bangsgaard and T. Kokholm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. A.2.  Average return of the trading strategy in VIX futures for each sample date. The strategy takes long (short) VIX futures position after each decrease
+(increase) in the SPX futures trading price. Trading is assumed to take place at bid or ask prices (solid line, left scale) and midquotes (dashed line, right scale)
+the millisecond following the VIX futures price change. The holding period varies across the plots at values of five milliseconds, one second, one minute, and
+five minutes. The shaded areas correspond to days where the VIX index belongs to its 60% upper quantile.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig. A.3.  Relative liquidity of VIX futures and SPX futures measured by trading volume. The shaded areas correspond to days where the VIX index belongs to
+its 60% upper quantile.
+C. Bangsgaard and T. Kokholm
+
+
+
+
+References
+
+Amihud, Y., 2002. Illiquidity and stock returns: cross-section and time-series effects. J. Financial Markets 5 (1), 31–56.
+Andersen, T.G., Bollerslev, T., Diebold, F.X., Vega, C., 2007. Real-time price discovery in global stock, bond and foreign exchange markets. J. Int. Econ. 73 (2),
+     251–277.
+Baltussen, G., Da, Z., Lammers, S., Martens, M., 2021. Hedging demand and market intraday momentum. J. Financial Econ. 142 (1), 377–403.
+Bangsgaard, C., Kokholm, T., 2023. The stock market impact of volatility hedging: Evidence from end-of-day trading by VIX ETPs. Available at SSRN 4470636.
+Barclay, M.J., Hendershott, T., 2003. Price discovery and trading after hours. Rev. Financial Stud. 16 (4), 1041–1073.
+Barras, L., Malkhozov, A., 2016. Does variance risk have two prices? Evidence from the equity and option markets. J. Financial Econ. 121 (1), 79–92.
+Bekaert, G., Wu, G., 2000. Asymmetric volatility and risk in equity markets. Rev. Financial Stud. 13 (1), 1–42.
+Bollen, N.P., O’Neill, M.J., Whaley, R.E., 2017. Tail wags dog: Intraday price discovery in VIX markets. J. Futures Markets 37 (5), 431–451.
+Bollerslev, T., Litvinova, J., Tauchen, G., 2006. Leverage and volatility feedback effects in high-frequency data. J. Financial Econ. 4 (3), 353–384.
+Bollerslev, T., Sizova, N., Tauchen, G., 2012. Volatility in equilibrium: Asymmetries and dynamic dependencies. Rev. Finance 16 (1), 31–80.
+Bonanno, G., Lillo, F., Mantegna, R., 2001. High-frequency cross-correlation in a set of stocks. Quant. Finance 1 (1), 96–104.
+Bondarenko, O., Muravyev, D., 2023. Market return around the clock: A puzzle. J. Financial and Quant. Anal. 58 (3), 939–967.
+Buccheri, G., Corsi, F., Peluso, S., 2021. High-frequency lead–lag effects and cross-asset linkages: A multi-asset lagged adjustment model. J. Bus. Econom. Statist.
+     39 (3), 605–621.
+Buckle, M., Chen, J., Guo, Q., Tong, C., 2018. Do ETFs lead the price moves? Evidence from the major US markets. Int. Rev. Financial Anal. 58, 91–103.
+Budish, E., Cramton, P., Shim, J., 2015. The high-frequency trading arms race: Frequent batch auctions as a market design response. Quart. J. Econ. 130 (4),
+     1547–1621.
+Carr, P., Wu, L., 2006. A tale of two indices. J Derivat. 13 (3), 13–29.
+Chan, K., Chung, Y.P., Fong, W.-M., 2002. The informational role of stock and option volume. Rev. Financial Studi. 15 (4), 1049–1075.
+Chen, W.-P., Chung, H., Lien, D., 2016. Price discovery in the S&P 500 index derivatives markets. Int. Rev. Econ. Finance 45, 438–452.
+Chen, Y.-L., Tsai, W.-C., 2017. Determinants of price discovery in the VIX futures market. J. Empirical Finance 43, 59–73.
+Cheng, I.-H., 2019. The VIX premium. Rev.F Financial Stud. 32 (1), 180–227.
+Cheng, I.-H, 2020. Volatility markets underreacted to the early stages of the COVID-19 pandemic. Rev. Asset Pricing Stud. 10 (4), 635–668.
+Connolly, R., Stivers, C., Sun, L., 2005. Stock market uncertainty and the stock-bond return relation. J. Financial Quantitative Anal. 40 (1), 161–194.
+Cont, R., Kokholm, T., 2013. A consistent pricing model for index options and volatility derivatives. Math. Finance 23 (2), 248–274.
+Dao, T.M., McGroarty, F., Urquhart, A., 2018. Ultra-high-frequency lead–lag relationship and information arrival. Quant. Finance 18 (5), 725–735.
+Dobrev, D., Schaumburg, E., 2018. High-Frequency Cross-Market Trading: Model Free Measurement and Applications. Working paper, Federal Reserve Board of
+     Governors, Washington, DC.
+Dufour, J.-M., Garcia, R., Taamouti, A., 2012. Measuring high-frequency causality between returns, realized volatility, and implied volatility. J. Financial Econ.
+     10 (1), 124–163.
+Easley, D., O’Hara, M., Srinivas, P.S., 1998. Option volume and stock prices: Evidence on where informed traders trade. J. Finance 53 (2), 431–465.
+Epps, T.W., 74, 1979. Comovements in stock prices in the very short run. J. Amer. Statist. Assoc. (366a), 291–298.
+Fleming, J., Kirby, C., Ostdiek, B., 1998. Information and volatility linkages in the stock, bond, and money markets. J. Financial Econ. 49 (1), 111–137.
+Frijns, B., Indriawan, I., Tourani-Rad, A., 2018. The interactions between price discovery, liquidity and algorithmic trading for US-Canadian cross-listed shares.
+     Int. Rev. Financial Anal. 56, 136–152.
+Frijns, B., Tourani-Rad, A., Webb, R.I., 2016. On the intraday relation between the VIX and its futures. J. Futures Markets 36 (9), 870–886.
+Frino, A., Walter, T., West, A., 2000. The lead–lag relationship between equities and stock index futures markets around information releases. J. Futures Markets
+     20 (5), 467–487.
+Garleanu, N., Pedersen, L.H., Poteshman, A.M., 2008. Demand-based option pricing. Rev. Financial Stud. 22 (10), 4259–4299.
+Gonzalo, J., Granger, C., 1995. Estimation of common long-memory components in cointegrated systems. J. Bus. Econ. Statist. 13 (1), 27–35.
+Goyenko, R., Zhang, C., 2019. Demand pressures and option returns. Available at SSRN 3489347.
+Green, R.C., Li, D., Schürhoff, N., 2010. Price discovery in illiquid markets: Do financial asset prices rise faster than they fall? J. Finance 65 (5), 1669–1702.
+Hasbrouck, J., 1995. One security, many markets: Determining the contributions to price discovery. J. Finance 50 (4), 1175–1199.
+Hasbrouck, J., 2003. Intraday price formation in US equity index markets. J. Finance 58 (6), 2375–2400.
+Hayashi, T., Yoshida, N., 2005. On covariance estimation of non-synchronously observed diffusion processes. Bernoulli 11 (2), 359–379.
+Hilal, S., Poon, S.-H., Tawn, J., 2011. Hedging the black swan: Conditional heteroskedasticity and tail dependence in S&P 500 and VIX. J. Banking Finance 35
+     (9), 2374–2387.
+Hoffmann, M., Rosenbaum, M., Yoshida, N., 2013. Estimation of the lead–lag parameter from non-synchronous data. Bernoulli 19 (2), 426–461.
+Hu, J., 2014. Does option trading convey stock price information? J. Financial Econ. 111 (3), 625–645.
+Hu, G.X., Pan, J., Wang, J., Zhu, H., 2022. Premium for heightened uncertainty: Explaining pre-announcement market returns. J. Financial Econ. 145 (3),
+     909–936.
+Huth, N., Abergel, F., 2014. High frequency lead/lag relationships-empirical facts. J. Empirical Finance 26, 41–58.
+Kyle, A.S., 1985. Continuous auctions and insider trading. Econometrica 53 (6), 1315–1335.
+Lee, H.-C., Liao, T.-H., Tung, P.-Y., 2017. Investors’ heterogeneity in beliefs, the VIX futures basis, and S&P 500 index futures returns. J. Futures Markets 37
+     (9), 939–960.
+Lochstoer, L.A., Muir, T., 2022. Volatility expectations and returns. J. Finance 77 (2), 1055–1096.
+Marshall, B.R., Nguyen, N.H., Visaltanachoti, N., 2013. ETF arbitrage: Intraday evidence. J. Bank. Financ. 37 (9), 3486–3498.
+Ni, S.X., Pearson, N.D., Poteshman, A.M., White, J., 2021. Does option trading have a pervasive impact on underlying stock prices? Rev. Financial Stud. 34 (4),
+     1952–1986.
+Park, Y.-H., 2020. Variance disparity and market frictions. J. Econ. 214 (2), 326–348.
+Ren, F., Ji, S.-D., Cai, M.-L., Li, S.-P., Jiang, X.-F., 2019. Dynamic lead–lag relationship between stock indices and their derivatives: A comparative study between
+     Chinese mainland, Hong Kong and US stock markets. Physica A 513, 709–723.
+Schlag, C., Stoll, H., 2005. Price impacts of options volume. J. Financial Markets 8 (1), 69–87.
+Shu, J., Zhang, J.E., 2012. Causality in the VIX futures market. J. Futures Markets 32 (1), 24–46.
+Szado, E., 2009. VIX futures and options: A case study of portfolio diversification during the 2008 financial crisis. J. Alternative Invest. 12 (2), 68–85.
+Todorov, V., Tauchen, G., 2011. Volatility jumps. J. Bus. Econ. Statist. 29 (3), 356–371.
+Underwood, S., 2009. The cross-market information content of stock and bond order flow. J. Financial Markets 12 (2), 268–289.
+Van Tassel, P., 2020. The Law of One Price in Equity Volatility Markets. Federal Reserve Bank of New York Staff Report, no. 953.
+Yang, A., 2022. Understanding negative risk-return trade-offs. Available at SSRN 4116731.
+Zhang, F., 2010. High-frequency trading, stock volatility, and price discovery. Available at SSRN 1691679.
