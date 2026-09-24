@@ -244,6 +244,55 @@ python corpus/bench_local_extractor.py --report
 **Référence à battre, mesurée et non recopiée** : **1,33 essai par fiche**,
 6 fiches vertes sur 6, par un modèle de frontière (`corpus/PRODUCED_harvest.json`).
 
+### Deuxième poste mesuré — le 2026-09-24, et il est sous le seuil lui aussi
+
+`python corpus/bench_local_extractor.py --machine` sur le poste **mathis** :
+
+```
+GPU     NVIDIA GeForce RTX 4050 Laptop GPU
+VRAM    6.0 Go        RAM 15.3 Go        disque libre 55.5 Go
+VERDICT SOUS LE SEUIL : 6.0 Go ne tient pas les 5,2 Go de poids du 8B.
+```
+
+**Deux postes sur deux sont sous le seuil**, donc la mesure que cette section
+demandait — `qwen3:8b` — **n'a pu être faite sur aucun des deux**. Ce n'est pas
+un échec de protocole : c'est le fait que le matériel devait trancher, et il a
+tranché.
+
+**Ce qui a été mesuré à la place : `qwen3:4b`**, le maximum réaliste ici et le
+défaut de `bench_local_extractor.py`. Un papier, la même consigne, le même juge.
+
+| | |
+|---|---|
+| chargement | 5,7 Go, réparti **27 % CPU / 73 % GPU** — même un 4B déborde à `num_ctx` 18 432 |
+| essai 1 | **1 853,8 s — 30,9 minutes.** Invite 13 355 tokens, sortie 5 577 |
+| verdict essai 1 | **`prose, accolades illisibles`** — `Extra data: line 9 column 1` |
+| essai 2 | **tué à 50 minutes cumulées**, sans avoir rendu |
+
+**Le modèle n'a pas échoué sur `F2` : il a échoué AVANT.** La consigne demande
+*« un seul objet JSON, rien avant, rien après »* ; il a rendu de la prose autour.
+La citation mot pour mot n'a jamais été atteinte, donc **cette mesure ne dit rien
+de la capacité du 4B à citer** — elle dit qu'il ne suit pas le format de sortie.
+
+**La table de décision de cette section n'a pas de ligne pour ce cas**, et c'est
+honnête de l'écrire plutôt que de le ranger de force dans « `F2` cassé ». Ce qui
+est acquis :
+
+- **30,9 min par essai** contre **5 à 6,6 min** pour le modèle de frontière
+  (durées relevées des sessions du lot du 2026-09-24). À 1,33 essai par fiche,
+  les 29 candidats restants coûteraient **~20 heures** en local contre
+  **~40 minutes** — et en série, le parallélisme étant exclu puisque le modèle
+  sature déjà la carte seul.
+- **Le banc n'a rien inscrit** : tué pendant l'essai 2, `corpus/bench_local/`
+  et `results.json` sont vides. Les chiffres ci-dessus viennent de sa sortie
+  console, et **une relance de 31 minutes par essai est le prix à payer** pour
+  les réinscrire proprement.
+
+**Ce qui resterait à mesurer, si quelqu'un veut trancher pour de bon** : un
+modèle local de taille comparable **avec sortie JSON contrainte** (`format:
+json` d'ollama, ou un modèle entraîné à l'appel d'outil). L'essai ci-dessus ne
+l'avait pas, et c'est peut-être tout ce qui manquait.
+
 ### Ce que la phase 09 demande
 
 > La chaîne tourne de bout en bout ; le registre compte tous les tests ; un
