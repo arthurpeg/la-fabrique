@@ -65,13 +65,34 @@ RESULTS = BENCH / "results.json"
 JUGE = REPO / "corpus" / "score_extraction.py"
 
 OLLAMA = "http://localhost:11434"
-DEFAULT_MODEL = "qwen3:8b"
+# Qwen3-8B a ete essaye et RETIRE le 2026-09-24 : 5,2 Go de poids pour 4 Go de
+# VRAM, donc inference entierement sur processeur, a une vitesse deja
+# redhibitoire chez le 4B. Le meilleur modele que CE poste peut tenir est un 4B.
+DEFAULT_MODEL = "qwen3:4b"
 
-# Le contexte doit tenir la consigne ENTIERE. Les consignes du lot vont de 10K a
-# 38K tokens ; 40960 les couvre toutes. Sur 4 Go de VRAM le cache KV deborde en
-# RAM et c'est lent — lent est acceptable, tronque ne l'est pas.
-NUM_CTX = 40960
+# Le contexte doit tenir la consigne ENTIERE, et PAS PLUS. Un `num_ctx` plat a
+# 40960 a ete essaye le 2026-09-24 : le cache KV de Qwen3-4B pese ~144 ko par
+# token, soit ~5,9 Go a 40960 — au-dela des 4 Go de VRAM ET de ce que 16 Go de
+# RAM absorbent sans que Windows gonfle son fichier d'echange. Mesure : le
+# disque est passe de 12 Go a 1,4 Go libres, et un seul appel sur le PLUS PETIT
+# papier n'avait pas rendu la main apres 25 minutes.
+#
+# Le contexte est donc calcule PAR PAPIER. Trop grand coute de la memoire pour
+# rien ; trop petit TRONQUE EN SILENCE, ce qui ferait echouer `F2` pour une
+# raison qui n'est pas celle du modele. Le garde de troncature reste la parade.
+NUM_CTX_MAX = 40960
+NUM_CTX_MIN = 8192
+CHARS_PAR_TOKEN = 3.5  # mesure basse, donc prudente : elle surestime le besoin
+MARGE_SORTIE = 6144  # la fiche elle-meme, ecrite dans le meme contexte
 MAX_ESSAIS = 3
+
+
+def contexte_pour(chars: int) -> int:
+    """Le `num_ctx` juste suffisant pour cette consigne, arrondi au multiple de 2048."""
+    besoin = int(chars / CHARS_PAR_TOKEN) + MARGE_SORTIE
+    arrondi = ((besoin + 2047) // 2048) * 2048
+    return max(NUM_CTX_MIN, min(NUM_CTX_MAX, arrondi))
+
 
 # La reprise donne au modele le verdict du juge, exactement comme une session de
 # frontiere le recoit. Rien de plus : ni la bonne reponse, ni un exemple.
@@ -94,18 +115,21 @@ def ollama_disponible() -> bool:
         return False
 
 
-def appel(model: str, messages: list[dict], num_ctx: int = NUM_CTX) -> dict:
+def appel(model: str, messages: list[dict], num_ctx: int = NUM_CTX_MIN) -> dict:
     """Un appel a ollama. `think: false` — le raisonnement visible brulerait le
     contexte sans rien ajouter a une tache de recopie fidele."""
-    body = json.dumps({
-        "model": model,
-        "messages": messages,
-        "stream": False,
-        "think": False,
-        "options": {"num_ctx": num_ctx, "temperature": 0},
-    }).encode("utf-8")
+    body = json.dumps(
+        {
+            "model": model,
+            "messages": messages,
+            "stream": False,
+            "think": False,
+            "options": {"num_ctx": num_ctx, "temperature": 0},
+        }
+    ).encode("utf-8")
     req = urllib.request.Request(
-        f"{OLLAMA}/api/chat", data=body,
+        f"{OLLAMA}/api/chat",
+        data=body,
         headers={"Content-Type": "application/json"},
     )
     debut = time.time()
@@ -139,7 +163,7 @@ def extraire_json(texte: str) -> tuple[dict | None, str]:
     debut, fin = brut.find("{"), brut.rfind("}")
     if debut >= 0 and fin > debut:
         try:
-            return json.loads(brut[debut:fin + 1]), "accolades extraites de la prose"
+            return json.loads(brut[debut : fin + 1]), "accolades extraites de la prose"
         except json.JSONDecodeError as e:
             return None, f"prose, accolades illisibles : {e}"
     return None, "aucun objet JSON trouve"
@@ -148,7 +172,10 @@ def extraire_json(texte: str) -> tuple[dict | None, str]:
 def juger(path: Path) -> tuple[bool, str]:
     r = subprocess.run(
         [sys.executable, str(JUGE), str(path)],
-        capture_output=True, text=True, encoding="utf-8", errors="replace",
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
     )
     return r.returncode == 0, (r.stdout or r.stderr or "").strip()
 
@@ -176,8 +203,10 @@ def do_list() -> int:
     print(f"{len(consignes)} consigne(s) disponibles :\n")
     for c in consignes:
         ko = c.stat().st_size / 1000
-        print(f"  {ko:>6.0f} ko  ~{ko / 4:>3.0f}K tokens  {c.stem}")
-    print(f"\nnum_ctx du banc : {NUM_CTX} tokens")
+        print(
+            f"  {ko:>6.0f} ko  ~{ko / 4:>3.0f}K tokens  "
+            f"num_ctx {contexte_pour(c.stat().st_size):>6}  {c.stem}"
+        )
     return 0
 
 
@@ -193,24 +222,25 @@ def do_run(fiche_id: str, model: str) -> int:
     cible = sortie_dir / f"{fiche_id}.json"
 
     texte_consigne = consigne.read_text(encoding="utf-8")
+    num_ctx = contexte_pour(len(texte_consigne))
     messages = [{"role": "user", "content": texte_consigne}]
 
     resultats = charger_resultats()
     trace = {
         "model": model,
-        "num_ctx": NUM_CTX,
+        "num_ctx": num_ctx,
         "consigne_chars": len(texte_consigne),
         "essais": [],
         "verdict": None,
     }
 
     print(f"=== {fiche_id}")
-    print(f"    modele {model}, consigne {len(texte_consigne) / 1000:.0f} ko, num_ctx {NUM_CTX}")
+    print(f"    modele {model}, consigne {len(texte_consigne) / 1000:.0f} ko, num_ctx {num_ctx}")
 
     for essai in range(1, MAX_ESSAIS + 1):
         print(f"    essai {essai} — appel en cours…", flush=True)
         try:
-            rep = appel(model, messages)
+            rep = appel(model, messages, num_ctx)
         except urllib.error.URLError as e:
             print(f"    ECHEC reseau : {e}")
             trace["verdict"] = "ollama_injoignable"
@@ -228,12 +258,14 @@ def do_run(fiche_id: str, model: str) -> int:
 
         # LA TRONCATURE SILENCIEUSE, avant tout jugement. Une invite rabotee
         # ferait echouer F2 pour une raison qui n'est pas celle du modele.
-        if prompt_tokens >= NUM_CTX - 64:
+        if prompt_tokens >= num_ctx - 64:
             ligne["issue"] = "contexte_depasse"
             trace["essais"].append(ligne)
             trace["verdict"] = "contexte_depasse"
-            print(f"    CONTEXTE DEPASSE — {prompt_tokens} tokens d'invite pour "
-                  f"num_ctx={NUM_CTX}. Non juge : l'invite a ete tronquee.")
+            print(
+                f"    CONTEXTE DEPASSE — {prompt_tokens} tokens d'invite pour "
+                f"num_ctx={num_ctx}. Non juge : l'invite a ete tronquee."
+            )
             break
 
         objet, note = extraire_json(contenu)
@@ -245,13 +277,16 @@ def do_run(fiche_id: str, model: str) -> int:
             trace["essais"].append(ligne)
             messages += [
                 {"role": "assistant", "content": contenu[:2000]},
-                {"role": "user", "content": REPRISE.format(
-                    verdict=f"Ta sortie n'est pas un objet JSON lisible : {note}")},
+                {
+                    "role": "user",
+                    "content": REPRISE.format(
+                        verdict=f"Ta sortie n'est pas un objet JSON lisible : {note}"
+                    ),
+                },
             ]
             continue
 
-        cible.write_text(json.dumps(objet, ensure_ascii=False, indent=2) + "\n",
-                         encoding="utf-8")
+        cible.write_text(json.dumps(objet, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         vert, verdict = juger(cible)
         ligne["conditions_cassees"] = conditions_cassees(verdict)
         ligne["vert"] = vert
@@ -292,18 +327,21 @@ def do_report() -> int:
         print(f"=== {model}")
         print(f"  {len(verts)} verte(s) sur {len(fiches)} papier(s) tentes")
         if verts:
-            print(f"  {essais_verts / len(verts):.2f} essai par fiche VERTE "
-                  f"(reference : 1,33)")
-        print(f"  {secondes / 60:.1f} minutes de calcul au total, "
-              f"{secondes / max(1, len(fiches)) / 60:.1f} min par papier\n")
+            print(f"  {essais_verts / len(verts):.2f} essai par fiche VERTE (reference : 1,33)")
+        print(
+            f"  {secondes / 60:.1f} minutes de calcul au total, "
+            f"{secondes / max(1, len(fiches)) / 60:.1f} min par papier\n"
+        )
         for fiche_id, t in sorted(fiches.items()):
-            marque = {"vert": "VERT  ", "epuise": "EPUISE",
-                      "contexte_depasse": "CTX   "}.get(t["verdict"], "?     ")
-            casses = sorted({c for e in t["essais"]
-                             for c in e.get("conditions_cassees", [])})
+            marque = {"vert": "VERT  ", "epuise": "EPUISE", "contexte_depasse": "CTX   "}.get(
+                t["verdict"], "?     "
+            )
+            casses = sorted({c for e in t["essais"] for c in e.get("conditions_cassees", [])})
             detail = f"  cassees : {', '.join(casses)}" if casses else ""
-            print(f"  {marque} {len(t['essais'])} essai(s)  "
-                  f"{t['consigne_chars'] / 1000:>4.0f} ko  {fiche_id[:44]}{detail}")
+            print(
+                f"  {marque} {len(t['essais'])} essai(s)  "
+                f"{t['consigne_chars'] / 1000:>4.0f} ko  {fiche_id[:44]}{detail}"
+            )
         print()
 
     print("CE QUE CE BANC NE DIT PAS : que la fiche soit BONNE. Il dit qu'elle")
