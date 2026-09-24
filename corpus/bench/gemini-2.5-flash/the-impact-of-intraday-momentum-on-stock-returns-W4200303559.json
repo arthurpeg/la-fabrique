@@ -1,0 +1,567 @@
+{
+  "fiche_id": "the-impact-of-intraday-momentum-on-stock-returns-W4200303559",
+  "written": "2026-09-24",
+  "written_by": "La Fabrique",
+  "source": {
+    "authors": "Saddam Hossain, Beáta Gavurová, Xianghui Yuan, Morshadul Hasan, Judit Oláh",
+    "title": "THE IMPACT OF INTRADAY MOMENTUM ON STOCK RETURNS: EVIDENCE FROM S&P500 AND CSI300",
+    "year": 2021,
+    "source_url": "https://doi.org/10.15240/tul/001/2021-4-008",
+    "pdf": "corpus/pdf/the-impact-of-intraday-momentum-on-stock-returns-W4200303559.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "amorce_entry": null,
+    "reason": "The paper does not provide an amorce entry number."
+  },
+  "claim": "This paper provides evidence of the existence of intraday momentum strategies, specifically that the first half-hour return can predict the last half-hour return for S&P500 and CSI300 indices, especially during the COVID-19 pandemic, and that these patterns are more robust on days with high volatility and volume.",
+  "universe": "The study investigates intraday momentum for the S&P500 index (USA market) and the CSI300 index (China market). Data is from January 1, 2020, to September 11, 2020, a period affected by COVID-19.",
+  "horizon": {
+    "value": "intraday",
+    "note": "The paper focuses on predicting the last half-hour return of a trading day based on earlier half-hour returns (first or second-to-last) within the same day."
+  },
+  "signal_construction": {
+    "value": "The signal is constructed using Ordinary Least Squares (OLS) regression models to predict the last half-hour return (IMreturn13 for S&P500, IMreturn8 for CSI300) based on the first half-hour return (IMreturn1) and/or the second-to-last half-hour return (IMreturn12 for S&P500, IMreturn7 for CSI300). Returns are calculated as the price at the current half-hour divided by the previous half-hour price. Trading strategies involve taking a long position if the first half-hour signal (IMreturn1) is positive, otherwise closing the market each trading day. When using both IMreturn1 and IMreturn12 (or IMreturn7 for CSI300), if all returns are positive, a long position is taken, otherwise a short position. The paper also mentions 'Always long strategies' and 'Buy-and-hold strategies' as general approaches."
+  },
+  "reported_results": [
+    {
+      "name": "S&P500_IMreturn1_predicts_IMreturn13_beta",
+      "value": 0.102,
+      "quoted": "0.102*",
+      "quoted_source": "0.102*",
+      "quoted_repair": "table",
+      "spelled_out": "0.102*"
+    },
+    {
+      "name": "S&P500_IMreturn1_predicts_IMreturn13_R2",
+      "value": 0.048,
+      "quoted": "0.048",
+      "quoted_source": "0.048",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_IMreturn12_predicts_IMreturn13_beta",
+      "value": -0.0384,
+      "quoted": "−0.0384",
+      "quoted_source": "−0.0384",
+      "quoted_repair": "table",
+      "spelled_out": "−0.0384"
+    },
+    {
+      "name": "S&P500_IMreturn12_predicts_IMreturn13_R2",
+      "value": 0.0,
+      "quoted": "0.000",
+      "quoted_source": "0.000",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_IMreturn1_and_IMreturn12_predicts_IMreturn13_beta_IMreturn1",
+      "value": 0.119,
+      "quoted": "0.119**",
+      "quoted_source": "0.119**",
+      "quoted_repair": "table",
+      "spelled_out": "0.119**"
+    },
+    {
+      "name": "S&P500_IMreturn1_and_IMreturn12_predicts_IMreturn13_R2",
+      "value": 0.057,
+      "quoted": "0.057",
+      "quoted_source": "0.057",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_IMreturn1_predicts_IMreturn8_beta",
+      "value": 0.0207,
+      "quoted": "0.0207",
+      "quoted_source": "0.0207",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_IMreturn1_predicts_IMreturn8_R2",
+      "value": 0.005,
+      "quoted": "In formula (8), this study reports that the positive slop of βIMreturn1 in the first half-hour of CSI300 index positive slope too low and statistically significant with ℛ2 is 0.005.",
+      "quoted_source": "In formula (8), this study reports that the positive slop of βIMreturn1 in the first half-hour of CSI300 index positive slope too low and statistically significant with ℛ2 is 0.005.",
+      "quoted_repair": "ocr"
+    },
+    {
+      "name": "CSI300_IMreturn7_predicts_IMreturn8_beta",
+      "value": 0.118,
+      "quoted": "0.118",
+      "quoted_source": "0.118",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_IMreturn7_predicts_IMreturn8_R2",
+      "value": 0.017,
+      "quoted": "In contrast, in formula (9), the first half-hour is too low and not significant, and the last half-hour βIMreturn12 is also a negative slope, not statistically significant, ℛ2 is 0.017.",
+      "quoted_source": "In contrast, in formula (9), the first half-hour is too low and not significant, and the last half-hour βIMreturn12 is also a negative slope, not statistically significant, ℛ2 is 0.017."
+    },
+    {
+      "name": "CSI300_IMreturn1_and_IMreturn7_predicts_IMreturn8_beta_IMreturn1",
+      "value": 0.0203,
+      "quoted": "0.0203",
+      "quoted_source": "0.0203",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_IMreturn1_and_IMreturn7_predicts_IMreturn8_R2",
+      "value": 0.022,
+      "quoted": "0.022",
+      "quoted_source": "0.022",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_IMreturn1_positive_IMreturn1_predicts_IMreturn13_beta",
+      "value": 0.219,
+      "quoted": "0.219**",
+      "quoted_source": "0.219**",
+      "quoted_repair": "table",
+      "spelled_out": "0.219**"
+    },
+    {
+      "name": "S&P500_IMreturn1_positive_IMreturn1_predicts_IMreturn13_R2",
+      "value": 0.106,
+      "quoted": "0.106",
+      "quoted_source": "0.106",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_IMreturn1_positive_IMreturn12_predicts_IMreturn13_beta",
+      "value": 0.368,
+      "quoted": "0.368",
+      "quoted_source": "0.368",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_IMreturn1_positive_IMreturn12_predicts_IMreturn13_R2",
+      "value": 0.029,
+      "quoted": "0.029",
+      "quoted_source": "0.029",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_IMreturn1_positive_IMreturn1_and_IMreturn12_predicts_IMreturn13_beta_IMreturn1",
+      "value": 0.205,
+      "quoted": "0.205**",
+      "quoted_source": "0.205**",
+      "quoted_repair": "table",
+      "spelled_out": "0.205**"
+    },
+    {
+      "name": "S&P500_IMreturn1_positive_IMreturn1_and_IMreturn12_predicts_IMreturn13_R2",
+      "value": 0.119,
+      "quoted": "0.119",
+      "quoted_source": "0.119",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_IMreturn1_negative_IMreturn1_predicts_IMreturn13_beta",
+      "value": 0.102,
+      "quoted": "0.102",
+      "quoted_source": "0.102",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_IMreturn1_negative_IMreturn1_predicts_IMreturn13_R2",
+      "value": 0.034,
+      "quoted": "0.034",
+      "quoted_source": "0.034",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_IMreturn1_negative_IMreturn12_predicts_IMreturn13_beta",
+      "value": -0.358,
+      "quoted": "–0.358",
+      "quoted_source": "–0.358",
+      "quoted_repair": "table",
+      "spelled_out": "–0.358"
+    },
+    {
+      "name": "S&P500_IMreturn1_negative_IMreturn12_predicts_IMreturn13_R2",
+      "value": 0.029,
+      "quoted": "0.029",
+      "quoted_source": "0.029",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_IMreturn1_negative_IMreturn1_and_IMreturn12_predicts_IMreturn13_beta_IMreturn1",
+      "value": 0.169,
+      "quoted": "0.169",
+      "quoted_source": "0.169",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_IMreturn1_negative_IMreturn1_and_IMreturn12_predicts_IMreturn13_R2",
+      "value": 0.108,
+      "quoted": "0.108",
+      "quoted_source": "0.108",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_IMreturn1_positive_IMreturn1_predicts_IMreturn8_beta",
+      "value": 0.00723,
+      "quoted": "0.00723",
+      "quoted_source": "0.00723",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_IMreturn1_positive_IMreturn1_predicts_IMreturn8_R2",
+      "value": 0.0,
+      "quoted": "0.000",
+      "quoted_source": "0.000",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_IMreturn1_positive_IMreturn7_predicts_IMreturn8_beta",
+      "value": 0.192,
+      "quoted": "0.192*",
+      "quoted_source": "0.192*",
+      "quoted_repair": "table",
+      "spelled_out": "0.192*"
+    },
+    {
+      "name": "CSI300_IMreturn1_positive_IMreturn7_predicts_IMreturn8_R2",
+      "value": 0.047,
+      "quoted": "0.047",
+      "quoted_source": "0.047",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_IMreturn1_positive_IMreturn1_and_IMreturn7_predicts_IMreturn8_beta_IMreturn1",
+      "value": 0.0244,
+      "quoted": "0.0244",
+      "quoted_source": "0.0244",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_IMreturn1_positive_IMreturn1_and_IMreturn7_predicts_IMreturn8_R2",
+      "value": 0.048,
+      "quoted": "0.048",
+      "quoted_source": "0.048",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_IMreturn1_negative_IMreturn1_predicts_IMreturn8_beta",
+      "value": -0.0158,
+      "quoted": "−0.0158",
+      "quoted_source": "−0.0158",
+      "quoted_repair": "table",
+      "spelled_out": "−0.0158"
+    },
+    {
+      "name": "CSI300_IMreturn1_negative_IMreturn1_predicts_IMreturn8_R2",
+      "value": 0.005,
+      "quoted": "0.005",
+      "quoted_source": "0.005",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_IMreturn1_negative_IMreturn7_predicts_IMreturn8_beta",
+      "value": 0.0501,
+      "quoted": "0.0501",
+      "quoted_source": "0.0501",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_IMreturn1_negative_IMreturn7_predicts_IMreturn8_R2",
+      "value": 0.003,
+      "quoted": "0.003",
+      "quoted_source": "0.003",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_IMreturn1_negative_IMreturn1_and_IMreturn7_predicts_IMreturn8_beta_IMreturn1",
+      "value": 0.0227,
+      "quoted": "0.0227",
+      "quoted_source": "0.0227",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_IMreturn1_negative_IMreturn1_and_IMreturn7_predicts_IMreturn8_R2",
+      "value": 0.007,
+      "quoted": "0.007",
+      "quoted_source": "0.007",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_HighVolatility_IMreturn1_predicts_IMreturn13_beta_IMreturn1",
+      "value": 0.155,
+      "quoted": "0.155*",
+      "quoted_source": "0.155*",
+      "quoted_repair": "table",
+      "spelled_out": "0.155*"
+    },
+    {
+      "name": "S&P500_HighVolatility_IMreturn1_predicts_IMreturn13_R2",
+      "value": 0.179,
+      "quoted": "0.179",
+      "quoted_source": "0.179",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_MediumVolatility_IMreturn1_predicts_IMreturn13_beta_IMreturn1",
+      "value": 0.314,
+      "quoted": "0.314",
+      "quoted_source": "0.314",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_MediumVolatility_IMreturn1_predicts_IMreturn13_R2",
+      "value": 0.2,
+      "quoted": "0.200",
+      "quoted_source": "0.200",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_LowVolatility_IMreturn1_predicts_IMreturn13_beta_IMreturn1",
+      "value": -0.17,
+      "quoted": "−0.170",
+      "quoted_source": "−0.170",
+      "quoted_repair": "table",
+      "spelled_out": "−0.170"
+    },
+    {
+      "name": "S&P500_LowVolatility_IMreturn1_predicts_IMreturn13_R2",
+      "value": 0.07,
+      "quoted": "0.070",
+      "quoted_source": "0.070",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_HighVolume_IMreturn1_predicts_IMreturn13_beta_IMreturn1",
+      "value": 0.171,
+      "quoted": "0.171**",
+      "quoted_source": "0.171**",
+      "quoted_repair": "table",
+      "spelled_out": "0.171**"
+    },
+    {
+      "name": "S&P500_HighVolume_IMreturn1_predicts_IMreturn13_R2",
+      "value": 0.109,
+      "quoted": "0.109",
+      "quoted_source": "0.109",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_MediumVolume_IMreturn1_predicts_IMreturn13_beta_IMreturn1",
+      "value": 0.0658,
+      "quoted": "0.0658",
+      "quoted_source": "0.0658",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_MediumVolume_IMreturn1_predicts_IMreturn13_R2",
+      "value": 0.136,
+      "quoted": "0.136",
+      "quoted_source": "0.136",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_LowVolume_IMreturn1_predicts_IMreturn13_beta_IMreturn1",
+      "value": -0.119,
+      "quoted": "−0.119**",
+      "quoted_source": "−0.119**",
+      "quoted_repair": "table",
+      "spelled_out": "−0.119**"
+    },
+    {
+      "name": "S&P500_LowVolume_IMreturn1_predicts_IMreturn13_R2",
+      "value": 0.111,
+      "quoted": "0.111",
+      "quoted_source": "0.111",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_HighVolatility_IMreturn1_predicts_IMreturn8_beta_IMreturn1",
+      "value": 0.0274,
+      "quoted": "0.0274",
+      "quoted_source": "0.0274",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_HighVolatility_IMreturn1_predicts_IMreturn8_R2",
+      "value": 0.034,
+      "quoted": "0.034",
+      "quoted_source": "0.034",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_MediumVolatility_IMreturn1_predicts_IMreturn8_beta_IMreturn1",
+      "value": 0.0287,
+      "quoted": "0.0287",
+      "quoted_source": "0.0287",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_MediumVolatility_IMreturn1_predicts_IMreturn8_R2",
+      "value": 0.027,
+      "quoted": "0.027",
+      "quoted_source": "0.027",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_LowVolatility_IMreturn1_predicts_IMreturn8_beta_IMreturn1",
+      "value": -0.00548,
+      "quoted": "−0.00548",
+      "quoted_source": "−0.00548",
+      "quoted_repair": "table",
+      "spelled_out": "−0.00548"
+    },
+    {
+      "name": "CSI300_LowVolatility_IMreturn1_predicts_IMreturn8_R2",
+      "value": 0.01,
+      "quoted": "0.010",
+      "quoted_source": "0.010",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_HighVolume_IMreturn1_predicts_IMreturn8_beta_IMreturn1",
+      "value": 0.0897,
+      "quoted": "0.0897",
+      "quoted_source": "0.0897",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_HighVolume_IMreturn1_predicts_IMreturn8_R2",
+      "value": 0.097,
+      "quoted": "0.097",
+      "quoted_source": "0.097",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_MediumVolume_IMreturn1_predicts_IMreturn8_beta_IMreturn1",
+      "value": -0.0134,
+      "quoted": "−0.0134",
+      "quoted_source": "−0.0134",
+      "quoted_repair": "table",
+      "spelled_out": "−0.0134"
+    },
+    {
+      "name": "CSI300_MediumVolume_IMreturn1_predicts_IMreturn8_R2",
+      "value": 0.004,
+      "quoted": "0.004",
+      "quoted_source": "0.004",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_LowVolume_IMreturn1_predicts_IMreturn8_beta_IMreturn1",
+      "value": 0.0166,
+      "quoted": "0.0166",
+      "quoted_source": "0.0166",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_LowVolume_IMreturn1_predicts_IMreturn8_R2",
+      "value": 0.005,
+      "quoted": "0.005",
+      "quoted_source": "0.005",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_MondayMorning_IMreturn1_predicts_IMreturn13_beta",
+      "value": 0.193,
+      "quoted": "0.193***",
+      "quoted_source": "0.193***",
+      "quoted_repair": "table",
+      "spelled_out": "0.193***"
+    },
+    {
+      "name": "S&P500_MondayMorning_IMreturn1_predicts_IMreturn13_R2",
+      "value": 0.415,
+      "quoted": "0.415",
+      "quoted_source": "0.415",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_MondayMorning_IMreturn12_predicts_IMreturn13_beta",
+      "value": 0.867,
+      "quoted": "0.867*",
+      "quoted_source": "0.867*",
+      "quoted_repair": "table",
+      "spelled_out": "0.867*"
+    },
+    {
+      "name": "S&P500_MondayMorning_IMreturn12_predicts_IMreturn13_R2",
+      "value": 0.317,
+      "quoted": "0.317",
+      "quoted_source": "0.317",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "S&P500_MondayMorning_IMreturn1_and_IMreturn12_predicts_IMreturn13_beta_IMreturn1",
+      "value": 0.144,
+      "quoted": "0.144***",
+      "quoted_source": "0.144***",
+      "quoted_repair": "table",
+      "spelled_out": "0.144***"
+    },
+    {
+      "name": "S&P500_MondayMorning_IMreturn1_and_IMreturn12_predicts_IMreturn13_R2",
+      "value": 0.478,
+      "quoted": "0.478",
+      "quoted_source": "0.478",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_MondayMorning_IMreturn1_predicts_IMreturn8_beta",
+      "value": 0.0427,
+      "quoted": "0.0427",
+      "quoted_source": "0.0427",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_MondayMorning_IMreturn1_predicts_IMreturn8_R2",
+      "value": 0.038,
+      "quoted": "0.038",
+      "quoted_source": "0.038",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_MondayMorning_IMreturn7_predicts_IMreturn8_beta",
+      "value": -0.0681,
+      "quoted": "−0.0681",
+      "quoted_source": "−0.0681",
+      "quoted_repair": "table",
+      "spelled_out": "−0.0681"
+    },
+    {
+      "name": "CSI300_MondayMorning_IMreturn7_predicts_IMreturn8_R2",
+      "value": 0.004,
+      "quoted": "0.004",
+      "quoted_source": "0.004",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_MondayMorning_IMreturn1_and_IMreturn7_predicts_IMreturn8_beta_IMreturn1",
+      "value": 0.0434,
+      "quoted": "0.0434",
+      "quoted_source": "0.0434",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "CSI300_MondayMorning_IMreturn1_and_IMreturn7_predicts_IMreturn8_R2",
+      "value": 0.043,
+      "quoted": "0.043",
+      "quoted_source": "0.043",
+      "quoted_repair": "table"
+    }
+  ],
+  "what_is_missing": [
+    "The paper does not provide details on transaction costs, which are crucial for evaluating the profitability of intraday strategies.",
+    "The study focuses on index returns (S&P500, CSI300) rather than individual stock returns, which might have different momentum characteristics.",
+    "The paper does not specify the exact methodology for calculating 'half-hour returns' beyond 'price at sth half hour, and ps – 1,t is the previous half-hour price'. It's unclear if it's log returns or simple returns, and how the first half-hour is defined relative to the previous close or open.",
+    "The paper's sample period is limited to January 1, 2020, to September 11, 2020, which is a specific period heavily influenced by COVID-19. The generalizability of findings to other market conditions is not explored.",
+    "The paper mentions 'market timing strategy analysis is a significant factor in the stock market because it shows the perfect trading time, decides investment opportunities and which stocks will perform well on this day' but does not provide concrete details or results for such a strategy beyond the regression coefficients.",
+    "The paper does not provide details on the specific data sources (e.g., tick data, 1-minute data) or how half-hour prices are determined (e.g., last price of the half-hour, average price). It only mentions '1 minute' data in the introduction as a contribution, but not in the data section."
+  ],
+  "transposability": {
+    "what_transfers": "The general concept of intraday momentum, where early-day returns can predict late-day returns, is a transferable idea. The finding that momentum patterns are stronger on high volatility and volume days could be relevant for futures markets. The Monday morning effect for S&P500 could also be explored.",
+    "what_does_not_transfer": [
+      "The study is based on stock indices (S&P500, CSI300) rather than individual futures contracts, which are our focus. Futures have different liquidity and trading mechanisms.",
+      "The specific half-hour intervals and trading hours for S&P500 (9:30 to 16:00 Eastern Time, 13 half-hours) and CSI300 (9:30 to 11:30 and 13:00 to 15:00 Beijing Time, 8 half-hours) do not directly align with the continuous trading of intraday futures.",
+      "The results are heavily influenced by the COVID-19 pandemic period, which might not be representative of normal market conditions for our futures universe.",
+      "The paper does not account for transaction costs in its reported results, which are critical for the profitability of high-frequency intraday strategies in futures markets.",
+      "The 'U-shape' pattern of trading volume and volatility, while generally observed, might manifest differently or have different implications in futures markets compared to stock markets."
+    ],
+    "what_aligns_well": "The focus on intraday predictability and the use of half-hour intervals align with our interest in high-frequency trading strategies. The investigation into the impact of volatility and volume on momentum is also highly relevant for futures markets. The idea of 'first half-hour' predicting 'last half-hour' is a direct pattern we could test."
+  }
+}

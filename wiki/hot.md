@@ -54,7 +54,7 @@ modèle local et gratuit ?** Elle ne se tranche pas en lisant, elle se mesure, e
 discussion :
 
 ```
-python corpus/bench_local_extractor.py --machine
+python corpus/bench_extractor.py --machine
 ```
 
 Elle relève GPU, VRAM, RAM et disque de **cette** machine-ci, les compare au
@@ -87,8 +87,8 @@ papier, le même juge, la même consigne :
 
 ```
 ollama pull qwen3:8b
-python corpus/bench_local_extractor.py --run performance-of-time-series-momentum-strategy-us-W4388535504 --model qwen3:8b
-python corpus/bench_local_extractor.py --report
+python corpus/bench_extractor.py --run performance-of-time-series-momentum-strategy-us-W4388535504 --model qwen3:8b
+python corpus/bench_extractor.py --report
 ```
 
 **La règle de décision est écrite AVANT la mesure**, comme le veut l'invariant IV :

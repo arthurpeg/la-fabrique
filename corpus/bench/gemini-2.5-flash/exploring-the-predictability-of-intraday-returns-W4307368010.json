@@ -1,0 +1,229 @@
+{
+  "fiche_id": "exploring-the-predictability-of-intraday-returns-W4307368010",
+  "written": "2026-09-24",
+  "written_by": "session_name",
+  "source": {
+    "authors": "Yanbing Xu",
+    "title": "Exploring the predictability of intraday returns in China's stock market",
+    "year": 2022,
+    "source_url": "https://bcpublication.org/index.php/BM/article/download/2524/2497",
+    "pdf": "corpus/pdf/exploring-the-predictability-of-intraday-returns-W4307368010.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "amorce_entry": null
+  },
+  "claim": "This article explores whether there is momentum effect and reversal effect in China’s stock market by studying the correlation and predictability between half-hour returns.",
+  "universe": "Intraday data of the Shanghai Composite Index, the Shenzhen Stock Exchange Component Index, and the CSI 300 Index from January 2, 2019 to September 1, 2021, covering a total of 650 working days.",
+  "horizon": {
+    "value": "intraday",
+    "reason": "The paper studies predictability between half-hour returns within a day and between early intraday returns and full-day returns."
+  },
+  "signal_construction": {
+    "value": "The signal is constructed using univariate linear regression models to explore correlations between half-hour returns, full-day returns, and half-day returns. A refined model incorporates previous day's returns, overnight returns, and dummy variables for Monday or Friday to predict half-hour and full-day returns."
+  },
+  "reported_results": [
+    {
+      "name": "sample_period_working_days_total",
+      "value": 650,
+      "unit": "days",
+      "quoted": "The total sample is from January 2, 2019 to September 1, 2021, a total of 650 working days",
+      "note": "Total working days in the sample period."
+    },
+    {
+      "name": "in_sample_period_working_days",
+      "value": 487,
+      "unit": "days",
+      "quoted": "of which the data in the sample is from January 2, 2019 to December 31, 2020, a total of 487 working days.",
+      "note": "Working days used for in-sample analysis."
+    },
+    {
+      "name": "shanghai_composite_index_rwhole_mean",
+      "value": 0.000754,
+      "unit": "log return",
+      "quoted": "rwhole 0.000754",
+      "quoted_source": "rwhole 0.000754",
+      "quoted_repair": "table",
+      "note": "Mean daily return for Shanghai Composite Index."
+    },
+    {
+      "name": "shanghai_composite_index_r1_mean",
+      "value": 0.000336,
+      "unit": "log return",
+      "quoted": "𝑟1 0.000336",
+      "quoted_source": "𝑟1 0.000336",
+      "quoted_repair": "table",
+      "note": "Mean first half-hour return for Shanghai Composite Index."
+    },
+    {
+      "name": "shanghai_composite_index_r5_mean",
+      "value": -9.6e-05,
+      "unit": "log return",
+      "quoted": "r5 -0.000096",
+      "quoted_source": "r5 -0.000096",
+      "quoted_repair": "table",
+      "note": "Mean fifth half-hour return for Shanghai Composite Index."
+    },
+    {
+      "name": "intraday_momentum_rhalf1_rhalf2_shanghai_composite_index_coefficient",
+      "value": 0.1294,
+      "unit": "coefficient",
+      "quoted": "0.1294***",
+      "quoted_source": "0.1294***",
+      "quoted_repair": "table",
+      "note": "Regression coefficient for the first half-day return predicting the second half-day return for the Shanghai Composite Index, significant at 1% level."
+    },
+    {
+      "name": "intraday_reversal_rwhole_t_minus_1_rhalf2_t_shanghai_composite_index_coefficient",
+      "value": -0.0534,
+      "unit": "coefficient",
+      "quoted": "-0.0534**",
+      "quoted_source": "-0.0534**",
+      "quoted_repair": "table",
+      "note": "Regression coefficient for the previous day's full-day return predicting the next day's second half-day return for the Shanghai Composite Index, significant at 5% level."
+    },
+    {
+      "name": "intraday_momentum_r1_r5_shanghai_composite_index_coefficient",
+      "value": 0.1011,
+      "unit": "coefficient",
+      "quoted": "0.1011***",
+      "quoted_source": "0.1011***",
+      "quoted_repair": "table",
+      "note": "Regression coefficient for the first half-hour return predicting the fifth half-hour return for the Shanghai Composite Index, significant at 1% level."
+    },
+    {
+      "name": "intraday_momentum_r1_r5_out_of_sample_significance",
+      "value": false,
+      "quoted": "Although the correlation regression results between the first half-hour return and the fifth half-hour return are significant in-sample, but out-of-sample is not significant, so future returns cannot be predicted recursively.",
+      "note": "Out-of-sample OSR2 for the correlation between the first half-hour return and the fifth half-hour return is not significant."
+    },
+    {
+      "name": "refined_model_r1_rwhole_csi300_coefficient",
+      "value": 1.103641,
+      "unit": "coefficient",
+      "quoted": "1.103641***",
+      "quoted_source": "1.103641***",
+      "quoted_repair": "table",
+      "note": "Regression coefficient for the first half-hour return predicting the full-day return for CSI 300 in the refined model, significant at 1% level."
+    },
+    {
+      "name": "refined_model_r1_r2_shanghai_composite_index_coefficient",
+      "value": -0.1357,
+      "unit": "coefficient",
+      "quoted": "-0.1357***",
+      "quoted_source": "-0.1357***",
+      "quoted_repair": "table",
+      "note": "Regression coefficient for the first half-hour return predicting the second half-hour return for Shanghai Composite Index in the refined model, significant at 1% level. Indicates a reversal effect."
+    },
+    {
+      "name": "refined_model_rwhole_out_of_sample_p_value",
+      "value": 2.14e-08,
+      "unit": "p-value",
+      "quoted": "0.0000000214",
+      "quoted_source": "0.0000000214",
+      "quoted_repair": "table",
+      "note": "Out-of-sample p-value for the refined model when the dependent variable is integer daily returns."
+    },
+    {
+      "name": "mr_strategy_average_annual_return",
+      "value": 16.51,
+      "unit": "%",
+      "quoted": "Average 16.51%",
+      "quoted_source": "Average 16.51%",
+      "quoted_repair": "table",
+      "note": "Average annual return for MR-Strategy."
+    },
+    {
+      "name": "mr_strategy_average_annual_trades",
+      "value": 115,
+      "unit": "trades",
+      "quoted": "average of 115",
+      "quoted_source": "average of 115",
+      "quoted_repair": "table",
+      "note": "Average annual trades for MR-Strategy."
+    },
+    {
+      "name": "m_strategy_average_annual_return",
+      "value": 15.43,
+      "unit": "%",
+      "quoted": "Average yield of M-Strategy is 15.43%",
+      "quoted_source": "Average yield of M-Strategy is 15.43%",
+      "quoted_repair": "table",
+      "note": "Average annual return for M-Strategy."
+    },
+    {
+      "name": "m_strategy_average_annual_trades",
+      "value": 114,
+      "unit": "trades",
+      "quoted": "114",
+      "quoted_source": "114",
+      "quoted_repair": "table",
+      "note": "Average annual trades for M-Strategy."
+    },
+    {
+      "name": "bh_strategy_average_annual_return",
+      "value": 12.22,
+      "unit": "%",
+      "quoted": "Average 12.22%",
+      "quoted_source": "Average 12.22%",
+      "quoted_repair": "table",
+      "note": "Average annual return for Buy-and-Hold Strategy."
+    },
+    {
+      "name": "transaction_commission_rate",
+      "value": 0.03,
+      "unit": "%",
+      "quoted": "the transaction commission is about 0.03%",
+      "note": "Transaction commission rate, levied bilaterally."
+    },
+    {
+      "name": "stamp_duty_rate",
+      "value": 0.1,
+      "unit": "%",
+      "quoted": "Stamp duty is 0.1%",
+      "note": "Stamp duty rate, levied unilaterally by the seller."
+    },
+    {
+      "name": "total_transaction_cost_per_round_trip",
+      "value": 0.16,
+      "unit": "%",
+      "quoted": "the total cost of a buy and sell transaction is about 0.16%.",
+      "note": "Total cost for a buy and sell transaction (round trip)."
+    },
+    {
+      "name": "average_annual_cost_mr_m_strategy",
+      "value": 9.6,
+      "unit": "%",
+      "quoted": "The average annual cost of MR-Strategy and M-strategy is 9.6%",
+      "note": "Average annual cost for MR-Strategy and M-Strategy, considering transaction costs."
+    },
+    {
+      "name": "excess_returns_after_costs",
+      "value": false,
+      "quoted": "This means that MR-Strategy and M-strategy will not deliver excess returns after including transaction costs.",
+      "note": "MR-Strategy and M-Strategy do not generate excess returns after accounting for transaction costs."
+    }
+  ],
+  "what_is_missing": [
+    "Detailed methodology for constructing the investment strategies (MR-Strategy, M-Strategy) beyond general descriptions.",
+    "Specific t-statistics or p-values for all regression coefficients, especially for the refined model, are not explicitly stated in the text for all variables, only significance levels (e.g., *** for 1%).",
+    "The exact definition of 'half-day yield' (rhalf1, rhalf2) is not explicitly stated, only that it represents first and second half-day returns.",
+    "The paper does not provide details on how the 'investment strategy' was implemented (e.g., portfolio construction, rebalancing frequency, specific assets traded beyond index data).",
+    "The specific values of OSR2 for all regressions are not provided, only for the full-day returns in the refined model."
+  ],
+  "transposability": {
+    "what_transfers": "The general concept of intraday momentum and reversal effects, and the idea that transaction costs can erode potential profits from such strategies. The methodology of using half-hour returns and considering overnight returns and day-of-week effects could be adapted.",
+    "what_does_not_transfer": [
+      "The specific trading hours and lunch break structure of the Chinese stock market are different from the 9 futures intraday market.",
+      "The study focuses on stock market indices (Shanghai Composite, Shenzhen Component, CSI 300), not futures contracts.",
+      "The transaction cost structure (commission and stamp duty) is specific to the Chinese A-share market and would differ for futures.",
+      "The 'half-hour' return intervals might not directly map to optimal intervals for futures trading, which often have higher frequency data and different liquidity patterns.",
+      "The 'full-day return' and 'half-day return' concepts are less relevant for continuous futures trading compared to stock market hours."
+    ],
+    "what_aligns_well": [
+      "The focus on high-frequency intraday data and predictability.",
+      "The exploration of momentum and reversal effects within short timeframes.",
+      "The emphasis on the economic significance of strategies and the critical role of transaction costs in determining profitability.",
+      "The use of out-of-sample testing to validate predictability, which is crucial for real-world application."
+    ]
+  }
+}

@@ -1,11 +1,16 @@
-"""Le banc d'essai de l'extracteur LOCAL — la question posée le 2026-09-24.
+"""Le banc d'essai des extracteurs de rechange — la question posée le 2026-09-24.
 
 Le projet fait tourner **un seul modèle en local** : `BAAI/bge-base-en-v1.5`
 via `fastembed`, pour les embeddings (`vectordb/embed.py`). Les trois étapes de
 raisonnement — trieur (`D15`), extracteur (`D16`), codeur (`D23`) — ont toujours
 été des sessions d'un modèle de frontière, et personne ne l'avait écrit ni
-chiffré. Ce banc chiffre ce qu'un modèle **local et gratuit** ferait à la place
-de l'extracteur.
+chiffré. Ce banc chiffre ce qu'un **autre** extracteur ferait à leur place.
+
+**Deux backends, une seule boucle.** `ollama` en local, et l'API Gemini. Le
+choix se lit dans le nom du modèle (`gemini-…` bascule l'un, tout le reste
+l'autre) ; la boucle de reprise, le juge et le registre sont **identiques**.
+Deux implémentations d'une même règle divergent toujours — c'est ce qui est
+arrivé à `value_in_quote`, tenue en double jusqu'au 2026-09-22.
 
 **Ce qui rend la question légitime, et ce n'est pas l'économie.** L'invariant I
 dit « le LLM propose, le code déterministe tranche » — il ne dit pas *lequel*.
@@ -27,7 +32,7 @@ frontière — 8 essais, 6 fiches, 6 vertes. En phase 07, sur une autre populati
 1,29.
 
 **Le banc n'écrit JAMAIS dans `corpus/fiches_harvest/`.** Ses sorties vont dans
-`corpus/bench_local/<modele>/`. Une fiche d'essai dans la population réelle la
+`corpus/bench/<modele>/`. Une fiche d'essai dans la population réelle la
 polluerait, et c'est la même faute que celle évitée entre `corpus/fiches/` et
 `corpus/fiches_harvest/` : la séparation vit dans le stockage, pas dans la prose.
 
@@ -39,10 +44,11 @@ pas la sienne, et on conclurait faux. Le banc fixe `num_ctx`, mesure
 tronquée** — le cas est inscrit `contexte_depasse`, jamais confondu avec un échec
 de fidélité.
 
-    python corpus/bench_local_extractor.py --machine   # CETTE machine vs la reference
-    python corpus/bench_local_extractor.py --list
-    python corpus/bench_local_extractor.py --run <fiche_id> [--model qwen3:8b]
-    python corpus/bench_local_extractor.py --report
+    python corpus/bench_extractor.py --machine   # CETTE machine vs la reference
+    python corpus/bench_extractor.py --modeles   # les modeles Gemini de ta cle
+    python corpus/bench_extractor.py --list
+    python corpus/bench_extractor.py --run <fiche_id> [--model gemini-2.5-flash]
+    python corpus/bench_extractor.py --report
 
 Code de sortie 1 si `ollama` ne répond pas, ou si aucun essai n'aboutit.
 """
@@ -51,6 +57,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -61,7 +68,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 CONSIGNES = REPO / "corpus" / "consignes_harvest"
-BENCH = REPO / "corpus" / "bench_local"
+BENCH = REPO / "corpus" / "bench"
 RESULTS = BENCH / "results.json"
 JUGE = REPO / "corpus" / "score_extraction.py"
 
@@ -94,6 +101,20 @@ MAX_ESSAIS = 3
 # ce qui ne finira pas.
 TIMEOUT_APPEL_S = 2700
 
+# LE CONFONDANT DU PASSAGE DU 2026-09-24, ET IL EST INSCRIT PLUTOT QUE TU.
+# Qwen3-4B a ete declare en echec « sur la FORME » : aucun de ses trois essais
+# n'a rendu un objet JSON lisible. Mais il n'avait PAS recu `format: "json"`,
+# que `ollama` offre et qui contraint la sortie — alors que le backend Gemini
+# recoit `responseMimeType: application/json`. Comparer les deux ainsi
+# mesurerait la PILE autant que le modele.
+#
+# La capacite est donc ajoutee ici, et le drapeau est inscrit dans chaque trace.
+# Tant que le passage `ollama` n'a pas ete rejoue avec, la conclusion de `F56`
+# tient sur ce poste — le modele n'a jamais fini un papier sur cinq — mais son
+# ATTRIBUTION a la forme reste a verifier. C'est `L18` : chercher si la cause
+# n'est pas ailleurs avant de nommer le coupable.
+FORMAT_JSON_OLLAMA = True
+
 
 def contexte_pour(chars: int) -> int:
     """Le `num_ctx` juste suffisant pour cette consigne, arrondi au multiple de 2048."""
@@ -115,6 +136,132 @@ identique. Rends de nouveau UN SEUL OBJET JSON, rien avant, rien apres.
 """
 
 
+def charger_env() -> None:
+    """Lit `.env` sans ecraser ce que l'environnement porte deja.
+
+    Ecrit ici plutot qu'importe de `vectordb/vector_db.py` : ce module tire
+    `psycopg` a l'import, et ce banc n'a aucune raison d'exiger une base.
+    """
+    fichier = REPO / ".env"
+    if not fichier.is_file():
+        return
+    for ligne in fichier.read_text(encoding="utf-8").splitlines():
+        ligne = ligne.strip()
+        if not ligne or ligne.startswith("#") or "=" not in ligne:
+            continue
+        cle, _, valeur = ligne.partition("=")
+        os.environ.setdefault(cle.strip(), valeur.strip())
+
+
+def cle_gemini() -> str | None:
+    charger_env()
+    for nom in ("GEMINI_API_KEY", "GOOGLE_API_KEY"):
+        if os.environ.get(nom, "").strip():
+            return os.environ[nom].strip()
+    return None
+
+
+def appel_gemini(model: str, messages: list[dict], num_ctx: int) -> dict:
+    """Un appel a l'API Gemini, normalise dans la forme que rend `appel()`.
+
+    **La cle voyage dans un EN-TETE, jamais dans l'URL.** Une cle en parametre
+    de requete se retrouve dans les journaux de serveur, les historiques et les
+    traces d'erreur ; c'est une fuite gratuite.
+
+    `num_ctx` est ignore — l'API n'en prend pas — mais il reste dans la trace
+    pour que les deux backends se lisent dans la meme colonne.
+    """
+    cle = cle_gemini()
+    if cle is None:
+        raise SystemExit(
+            "GEMINI_API_KEY absente. La deposer dans `.env` (jamais dans le code, "
+            "jamais dans une URL) : voir `.env.example`."
+        )
+
+    contents = [
+        {"role": "model" if m["role"] == "assistant" else "user", "parts": [{"text": m["content"]}]}
+        for m in messages
+    ]
+    body = json.dumps(
+        {
+            "contents": contents,
+            "generationConfig": {
+                "temperature": 0,
+                # Le JSON force est la configuration SAINE en production. Elle
+                # introduit en revanche un CONFONDANT avec le passage `ollama` du
+                # 2026-09-24, qui ne l'avait pas : voir `FORMAT_JSON_OLLAMA`.
+                "responseMimeType": "application/json",
+            },
+        }
+    ).encode("utf-8")
+
+    req = urllib.request.Request(
+        f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+        data=body,
+        headers={"Content-Type": "application/json", "x-goog-api-key": cle},
+    )
+    debut = time.time()
+    with urllib.request.urlopen(req, timeout=TIMEOUT_APPEL_S) as r:
+        payload = json.loads(r.read().decode("utf-8"))
+
+    candidats = payload.get("candidates") or []
+    parts = candidats[0].get("content", {}).get("parts", []) if candidats else []
+    texte = "".join(p.get("text", "") for p in parts)
+    usage = payload.get("usageMetadata") or {}
+    return {
+        "message": {"content": texte},
+        "prompt_eval_count": usage.get("promptTokenCount", 0),
+        "eval_count": usage.get("candidatesTokenCount", 0),
+        "_wall_s": round(time.time() - debut, 1),
+        "_finish_reason": candidats[0].get("finishReason") if candidats else None,
+    }
+
+
+def est_gemini(model: str) -> bool:
+    return model.startswith("gemini")
+
+
+def do_modeles() -> int:
+    """Liste les modeles que CETTE cle peut reellement appeler.
+
+    Ecrit parce qu'un nom de modele se DEMANDE a l'API, il ne se devine pas :
+    les identifiants du palier gratuit changent et se deprecient sur calendrier.
+    Un nom recopie de memoire est un nom qui sera faux un jour.
+    """
+    cle = cle_gemini()
+    if cle is None:
+        print("GEMINI_API_KEY absente — ajouter la ligne suivante dans `.env` :")
+        print("\n    GEMINI_API_KEY=AIza...\n")
+        print("Sans guillemets, sans espace autour du `=`. Voir `.env.example`.")
+        return 1
+
+    req = urllib.request.Request(
+        "https://generativelanguage.googleapis.com/v1beta/models",
+        headers={"x-goog-api-key": cle},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            payload = json.loads(r.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        print(f"l'API refuse : HTTP {e.code} — {e.read().decode('utf-8', 'replace')[:300]}")
+        return 1
+
+    modeles = [
+        m
+        for m in payload.get("models", [])
+        if "generateContent" in (m.get("supportedGenerationMethods") or [])
+    ]
+    print(f"{len(modeles)} modele(s) appelables par cette cle :\n")
+    for m in sorted(modeles, key=lambda x: x["name"]):
+        nom = m["name"].removeprefix("models/")
+        entree = m.get("inputTokenLimit", 0)
+        marque = "  <-- tient nos consignes" if entree >= 45000 else ""
+        print(f"  {nom:<44} entree {entree:>9,} tok{marque}".replace(",", " "))
+    print("\nLa plus grosse consigne du lot fait ~39K tokens : tout modele au-dessus")
+    print("de 45 000 la tient sans troncature.")
+    return 0
+
+
 def ollama_disponible() -> bool:
     try:
         with urllib.request.urlopen(f"{OLLAMA}/api/tags", timeout=5) as r:
@@ -132,6 +279,7 @@ def appel(model: str, messages: list[dict], num_ctx: int = NUM_CTX_MIN) -> dict:
             "messages": messages,
             "stream": False,
             "think": False,
+            "format": "json" if FORMAT_JSON_OLLAMA else None,
             "options": {"num_ctx": num_ctx, "temperature": 0},
         }
     ).encode("utf-8")
@@ -242,7 +390,9 @@ def sonder_machine() -> dict:
     try:
         r = subprocess.run(
             ["nvidia-smi", "--query-gpu=name,memory.total", "--format=csv,noheader,nounits"],
-            capture_output=True, text=True, timeout=20,
+            capture_output=True,
+            text=True,
+            timeout=20,
         )
         if r.returncode == 0 and r.stdout.strip():
             nom, mib = (x.strip() for x in r.stdout.strip().splitlines()[0].split(","))
@@ -260,9 +410,15 @@ def sonder_machine() -> dict:
                     break
         else:
             r = subprocess.run(
-                ["powershell", "-NoProfile", "-Command",
-                 "(Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory"],
-                capture_output=True, text=True, timeout=30,
+                [
+                    "powershell",
+                    "-NoProfile",
+                    "-Command",
+                    "(Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory",
+                ],
+                capture_output=True,
+                text=True,
+                timeout=30,
             )
             if r.returncode == 0 and r.stdout.strip().isdigit():
                 profil["ram_go"] = round(int(r.stdout.strip()) / 1024**3, 1)
@@ -306,8 +462,7 @@ def do_machine() -> int:
         return 1
 
     ecart = vram / REFERENCE["vram_go"]
-    print(f"  VRAM : {_go(vram)} contre {_go(REFERENCE['vram_go'])} — "
-          f"{ecart:.1f}x la reference")
+    print(f"  VRAM : {_go(vram)} contre {_go(REFERENCE['vram_go'])} — {ecart:.1f}x la reference")
     if vram >= VRAM_TOUT_LE_CORPUS:
         print(f"  AU-DESSUS DU SEUIL ({_go(VRAM_TOUT_LE_CORPUS)}) : Qwen3-8B tient en VRAM")
         print("  pour TOUS les papiers du lot, y compris les 40 960 tokens de contexte.")
@@ -346,7 +501,12 @@ def do_run(fiche_id: str, model: str) -> int:
     consigne = CONSIGNES / f"{fiche_id}.md"
     if not consigne.is_file():
         raise SystemExit(f"consigne absente : {consigne}")
-    if not ollama_disponible():
+    if est_gemini(model):
+        if cle_gemini() is None:
+            raise SystemExit(
+                "GEMINI_API_KEY absente de l'environnement et de `.env` — voir `.env.example`."
+            )
+    elif not ollama_disponible():
         raise SystemExit("ollama ne repond pas sur localhost:11434")
 
     sortie_dir = BENCH / model.replace(":", "_")
@@ -360,6 +520,8 @@ def do_run(fiche_id: str, model: str) -> int:
     resultats = charger_resultats()
     trace = {
         "model": model,
+        "backend": "gemini" if est_gemini(model) else "ollama",
+        "format_json_force": True if est_gemini(model) else FORMAT_JSON_OLLAMA,
         "num_ctx": num_ctx,
         "consigne_chars": len(texte_consigne),
         "essais": [],
@@ -378,7 +540,7 @@ def do_run(fiche_id: str, model: str) -> int:
         # est un echec qui n'a pas eu lieu, et c'est `L23` — un chemin de code
         # qu'aucun essai n'emprunte n'est pas un chemin verifie.
         try:
-            rep = appel(model, messages, num_ctx)
+            rep = (appel_gemini if est_gemini(model) else appel)(model, messages, num_ctx)
         except (urllib.error.URLError, TimeoutError, OSError) as e:
             ligne = {
                 "essai": essai,
@@ -388,8 +550,10 @@ def do_run(fiche_id: str, model: str) -> int:
             }
             trace["essais"].append(ligne)
             trace["verdict"] = ligne["issue"]
-            print(f"    {ligne['issue'].upper()} — {type(e).__name__} apres "
-                  f"{TIMEOUT_APPEL_S}s. INSCRIT, pas perdu.")
+            print(
+                f"    {ligne['issue'].upper()} — {type(e).__name__} apres "
+                f"{TIMEOUT_APPEL_S}s. INSCRIT, pas perdu."
+            )
             break
 
         contenu = (rep.get("message") or {}).get("content", "")
@@ -404,14 +568,28 @@ def do_run(fiche_id: str, model: str) -> int:
 
         # LA TRONCATURE SILENCIEUSE, avant tout jugement. Une invite rabotee
         # ferait echouer F2 pour une raison qui n'est pas celle du modele.
-        if prompt_tokens >= num_ctx - 64:
+        #
+        # ELLE N'A PAS LE MEME VISAGE SELON LE BACKEND, et les confondre fait
+        # crier le garde pour une non-raison — ce qui est pire qu'un garde
+        # absent (`L12`). Mesure du 2026-09-24 : applique a Gemini, ce test a
+        # refuse de juger une reponse JAMAIS tronquee, `num_ctx` n'etant qu'une
+        # notion d'`ollama` quand l'API porte un contexte d'un million.
+        #
+        #   ollama : l'invite au-dela de `num_ctx` est rabotee EN SILENCE ;
+        #   Gemini : l'invite passe, mais la SORTIE peut etre coupee, et l'API
+        #            le dit — `finishReason == "MAX_TOKENS"`.
+        if est_gemini(model):
+            tronque = rep.get("_finish_reason") == "MAX_TOKENS"
+            motif = "la sortie a ete coupee (finishReason=MAX_TOKENS)"
+        else:
+            tronque = prompt_tokens >= num_ctx - 64
+            motif = f"l'invite a ete tronquee a num_ctx={num_ctx}"
+        if tronque:
             ligne["issue"] = "contexte_depasse"
             trace["essais"].append(ligne)
             trace["verdict"] = "contexte_depasse"
-            print(
-                f"    CONTEXTE DEPASSE — {prompt_tokens} tokens d'invite pour "
-                f"num_ctx={num_ctx}. Non juge : l'invite a ete tronquee."
-            )
+            print(f"    CONTEXTE DEPASSE — {prompt_tokens} tokens d'invite. "
+                  f"Non juge : {motif}.")
             break
 
         objet, note = extraire_json(contenu)
@@ -462,14 +640,14 @@ def do_report() -> int:
     if not res:
         raise SystemExit("aucun resultat — lancer `--run` d'abord")
 
-    print("BANC D'ESSAI DE L'EXTRACTEUR LOCAL\n")
+    print("BANC D'ESSAI DES EXTRACTEURS DE RECHANGE\n")
     print("Reference mesuree (modele de frontiere, corpus/PRODUCED_harvest.json) :")
     print("  6 fiches, 8 essais, 1,33 essai par fiche, 6 vertes sur 6\n")
 
     for model, fiches in sorted(res.items()):
         verts = [f for f, t in fiches.items() if t["verdict"] == "vert"]
         essais_verts = sum(len(fiches[f]["essais"]) for f in verts)
-        secondes = sum(e["wall_s"] for t in fiches.values() for e in t["essais"])
+        secondes = sum(e.get("wall_s", 0) for t in fiches.values() for e in t["essais"])
         print(f"=== {model}")
         print(f"  {len(verts)} verte(s) sur {len(fiches)} papier(s) tentes")
         if verts:
@@ -500,11 +678,16 @@ def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description="Banc d'essai — extracteur local")
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--machine", action="store_true")
+    ap.add_argument(
+        "--modeles", action="store_true", help="les modeles Gemini appelables par la cle de .env"
+    )
     ap.add_argument("--run", metavar="FICHE_ID")
     ap.add_argument("--report", action="store_true")
     ap.add_argument("--model", default=DEFAULT_MODEL)
     a = ap.parse_args(argv)
 
+    if a.modeles:
+        return do_modeles()
     if a.machine:
         return do_machine()
     if a.list:
