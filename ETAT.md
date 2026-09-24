@@ -1,8 +1,8 @@
 # ÉTAT
 
 **Phase courante :** 09 — premier passage complet sur 30 à 50 papiers
-**Date de dernière mise à jour :** 2026-09-23 (17:34 UTC — `scripts/gate_09.py`
-écrit, voir § Prochaine action)
+**Date de dernière mise à jour :** 2026-09-24 (08:30 UTC — 35 papiers moissonnés
+promus au texte D18, voir § Prochaine action)
 **Dernière porte franchie :** **08**, le 2026-09-23 — `scripts/gate_08.py`. Un
 signal produit par une session de codage séparée tient les **six conditions de
 `D23` au premier essai**, et aucun signal produit n'a été retouché à la main.
@@ -217,9 +217,20 @@ registre **entier**, les 56 tests antérieurs compris.
 ### Ce qui bloque la phase 09, maintenant que le budget est fixé
 
 1. **Il manque 33 fiches.** `D25` engage un lot de 50 ; le corpus en porte **17**.
-   Soit on en produit 33 de plus — l'extracteur sait le faire, et la base
-   vectorielle porte 136 papiers moissonnés — soit on réduit `N` par un
-   amendement écrit à `D25`.
+   **La matière existe désormais** : le triage du 2026-09-23 a retenu 39
+   papiers moissonnés sur 119 (10 `oui`, 29 `partiel`,
+   `corpus/triage_harvest_verdicts.json`), et `corpus/promote_harvest.py`
+   (2026-09-24) les a fait passer par `D18` — **35 ont leur texte qui fait foi**
+   (default+layout) dans `corpus/text/`, `text_source` basculé à
+   `authoritative` pour 34 d'entre eux dans la base (`D22` § Journal, passage
+   2). Un exclu (bug `pypdf` reproductible sur un PDF précis, non contourné),
+   un doublon du `gao-2018` déjà connu (`L20`). **Ce que ça ne fait toujours
+   pas** : ficher. `G1`-`G4` sont inchangés (`F47` : le moissonné n'y entre
+   jamais) — il manque encore l'outil de préparation/jugement pour ces
+   35 papiers (l'équivalent de `extract_fiche.py --prepare`, mais hors
+   `corpus/acquisition.json`) et **33 sessions séparées**, une par papier,
+   n'ayant vu que leur consigne (`D16` § Qui peut être l'extracteur) — un
+   agent seul ne peut pas se simuler lui-même non contaminé 33 fois.
 2. **La matrice de corrélation des 50 signaux** doit être produite **avant**
    d'appliquer `BH` : la procédure suppose une dépendance positive, et plusieurs
    papiers d'intraday momentum donneront des signaux corrélés.
