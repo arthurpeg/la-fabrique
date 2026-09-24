@@ -87,6 +87,13 @@ CHARS_PAR_TOKEN = 3.5  # mesure basse, donc prudente : elle surestime le besoin
 MARGE_SORTIE = 6144  # la fiche elle-meme, ecrite dans le meme contexte
 MAX_ESSAIS = 3
 
+# Mesure du 2026-09-24 : un essai a tenu 2301 s (38 min) sur ce poste, et quatre
+# papiers ont expire a 3600 s sans rien rendre. Un plafond d'une heure par appel
+# fait donc perdre une heure par papier pour apprendre la meme chose. 2700 s
+# laisse passer l'essai le plus long observe, avec de la marge, et coupe plus tot
+# ce qui ne finira pas.
+TIMEOUT_APPEL_S = 2700
+
 
 def contexte_pour(chars: int) -> int:
     """Le `num_ctx` juste suffisant pour cette consigne, arrondi au multiple de 2048."""
@@ -134,7 +141,7 @@ def appel(model: str, messages: list[dict], num_ctx: int = NUM_CTX_MIN) -> dict:
         headers={"Content-Type": "application/json"},
     )
     debut = time.time()
-    with urllib.request.urlopen(req, timeout=3600) as r:
+    with urllib.request.urlopen(req, timeout=TIMEOUT_APPEL_S) as r:
         payload = json.loads(r.read().decode("utf-8"))
     payload["_wall_s"] = round(time.time() - debut, 1)
     return payload
@@ -364,11 +371,25 @@ def do_run(fiche_id: str, model: str) -> int:
 
     for essai in range(1, MAX_ESSAIS + 1):
         print(f"    essai {essai} — appel en cours…", flush=True)
+        # `TimeoutError` N'EST PAS un `URLError`, et ne l'attraper que par ce
+        # dernier a coute quatre heures de preuve le 2026-09-24 : les quatre
+        # premiers papiers ont expire a une heure chacun, et l'exception est
+        # remontee en traceback au lieu d'etre INSCRITE. Un echec non enregistre
+        # est un echec qui n'a pas eu lieu, et c'est `L23` — un chemin de code
+        # qu'aucun essai n'emprunte n'est pas un chemin verifie.
         try:
             rep = appel(model, messages, num_ctx)
-        except urllib.error.URLError as e:
-            print(f"    ECHEC reseau : {e}")
-            trace["verdict"] = "ollama_injoignable"
+        except (urllib.error.URLError, TimeoutError, OSError) as e:
+            ligne = {
+                "essai": essai,
+                "issue": "expire" if isinstance(e, TimeoutError) else "reseau",
+                "detail": f"{type(e).__name__}: {e}",
+                "timeout_s": TIMEOUT_APPEL_S,
+            }
+            trace["essais"].append(ligne)
+            trace["verdict"] = ligne["issue"]
+            print(f"    {ligne['issue'].upper()} — {type(e).__name__} apres "
+                  f"{TIMEOUT_APPEL_S}s. INSCRIT, pas perdu.")
             break
 
         contenu = (rep.get("message") or {}).get("content", "")

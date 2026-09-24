@@ -220,8 +220,16 @@ Qwen3-8B (5,2 Go) et son cache KV (~144 ko/token) :
 **Le poste de référence est sous le seuil** : GTX 1650, 4 Go de VRAM. Qwen3-8B y
 a été téléchargé, constaté inutilisable et **retiré** ; un `num_ctx` plat à
 40 960 y a fait tomber le disque de 12 Go à **1,4 Go** (Windows gonfle son
-fichier d'échange), et un seul essai sur le plus petit papier a dépassé
-**25 minutes** sans rendre la main.
+fichier d'échange).
+
+**Et le banc a tourné, sur 5 papiers — voir `F56`.** Résultat mesuré le
+2026-09-24 avec Qwen3-4B, le maximum que ce poste tienne : **5 h 21 de calcul,
+ZÉRO fiche produite.** Quatre papiers sur cinq **expirent à une heure** sans
+rien rendre ; le cinquième épuise ses trois essais en **80,5 minutes** et
+**aucun ne rend un objet JSON lisible**. L'échec n'est donc **même pas `F2`** :
+le modèle n'atteint jamais la citation mot pour mot, il échoue à la **forme**.
+Sur ce poste, la question est close ; sur une autre machine, elle se rouvre par
+la mesure ci-dessus.
 
 Si ta machine est au-dessus du seuil, la mesure qui manque est celle-ci — un
 papier, le même juge, la même consigne :
