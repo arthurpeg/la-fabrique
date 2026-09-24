@@ -1,0 +1,238 @@
+{
+  "fiche_id": "performance-of-time-series-momentum-strategy-us-W4388535504",
+  "written": "2026-09-24",
+  "written_by": "session-extraction-harvest-2026-09-24",
+
+  "source": {
+    "authors": "Siyao Duan",
+    "title": "Performance of Time-series Momentum Strategy: US Evidence",
+    "year": 2023,
+    "source_url": "https://www.ewadirect.com/proceedings/aemps/article/view/5936/pdf",
+    "pdf": "corpus/pdf/performance-of-time-series-momentum-strategy-us-W4388535504.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": false,
+    "peer_reviewed_note": "Acte du « Proceedings of the 7th International Conference on Economic Management and Green Development » (DOI 10.54254/2754-1169/35/20231722), publication en libre accès d'un auteur étudiant unique. Le texte ne porte aucune trace d'arbitrage par comité de lecture ; en l'absence de preuve, le champ vaut false plutôt qu'une valeur plausible.",
+    "venue": "Proceedings of the 7th International Conference on Economic Management and Green Development"
+  },
+
+  "claim": "La stratégie de momentum en série temporelle appliquée aux actions du S&P500 (2000-2022) produit des rendements excédentaires positifs à faible risque, avec des poids de portefeuille construits à partir d'une régression du rendement futur sur des moyennes mobiles (MA) ou moyennes mobiles exponentielles (EMA) des rendements passés ; mais cette performance s'effondre hors échantillon et surtout dès que les coûts de transaction sont pris en compte — le classement des variantes de moyennes mobiles s'inverse selon le niveau de coût, les variantes rapides (MA 1, MA 5) dominant à coût nul et se faisant dépasser par le portefeuille équipondéré et la MA 100 dès un taux de 0,001.",
+
+  "universe": {
+    "description": "Actions constituantes de l'indice S&P500 (marché actions américain), cours de clôture quotidiens.",
+    "period": "2000-01-01 → 2022-12-31",
+    "frequency": "quotidienne",
+    "n_instruments": null,
+    "n_instruments_reason": "Le papier ne donne jamais le nombre de titres réellement retenus, ni le traitement de l'entrée/sortie de l'indice (biais du survivant).",
+    "quoted": "The data set used in this study was from the S&P500 index, which includes daily closing prices of its",
+    "quoted_period": "The data is organized into time series, with each observation corresponding to a trading day from"
+  },
+
+  "horizon": {
+    "value": "1 période en avant (rendement R_{t+1} sur données quotidiennes), avec une fenêtre de rétrospection N = 24",
+    "lookback": 24,
+    "note": "La régression prédit le rendement excédentaire de la période suivante à partir de facteurs de moyennes mobiles ; N = 24 est fixé pour le modèle de régression, tandis que la section d'évaluation de portefeuille balaie séparément des longueurs de 1 à 100. L'unité de N (jours de bourse) n'est jamais explicitée.",
+    "reason": null
+  },
+
+  "signal_construction": {
+    "value": "Trois étapes. (1) Facteurs : pour chaque titre, moyenne mobile simple MA_t^N = (1/N) Σ_{s=t-N}^{t} R_s^e des rendements excédentaires passés, ou moyenne mobile exponentielle EMA_t^N = (1/N) Σ_{s=t-N}^{t} (1-δ)^{t-s} R_s^e avec facteur de décroissance. (2) Régression linéaire R_{t+1}^e = α + Σ_{i=1}^{M} β_i f_t^i + ε_{t+1}, estimée par MCO (ou MCG), fournissant α, β et la variance du bruit σ². (3) Poids de portefeuille = (moving average * β + α) / σ², soit un signal prédit normalisé par la variance. Les rendements du portefeuille sont ensuite recalculés pour plusieurs taux de coût de transaction (0 ; 0,001 ; 0,005 ; 0,01) et comparés à un portefeuille équipondéré.",
+    "reason": null,
+    "note": "Le texte extrait rend mal les formules (indices et sommes mis à plat) ; la reconstruction ci-dessus suit les équations (1) à (4) du papier. Aucune normalisation transversale, aucune contrainte de levier, aucun plafond de poids n'est mentionné — ce qui explique vraisemblablement des drawdowns maximaux à quatre chiffres."
+  },
+
+  "reported_results": [
+    {
+      "name": "sharpe_ratio_train_no_cost",
+      "value": 2.403,
+      "unit": "ratio",
+      "quoted": "Sharpe Ratio 2.403 (Training Set) / 0.439 (Test Set), modèle sans coût de transaction, Table 1",
+      "quoted_source": "2.403 0.439",
+      "quoted_repair": "table",
+      "note": "Table 1 « Numerical result of the model without transaction cost », colonnes Training Set puis Test Set. Aucune convention d'annualisation n'est donnée."
+    },
+    {
+      "name": "sharpe_ratio_test_no_cost",
+      "value": 0.439,
+      "unit": "ratio",
+      "quoted": "Sharpe Ratio 2.403 (Training Set) / 0.439 (Test Set), modèle sans coût de transaction, Table 1",
+      "quoted_source": "2.403 0.439",
+      "quoted_repair": "table",
+      "note": "Chute d'un facteur ~5,5 entre entraînement (avant 2010) et test (après 2010), sans coût."
+    },
+    {
+      "name": "max_drawdown_train_no_cost",
+      "value": 14.403,
+      "unit": "non précisée",
+      "quoted": "Max Drawdown 14.403 (Training Set) / 3.304 (Test Set), modèle sans coût de transaction, Table 1",
+      "quoted_source": "14.403 3.304",
+      "quoted_repair": "table",
+      "note": "L'unité n'est jamais donnée (pourcentage ? multiple ?). Ailleurs dans le papier, des drawdowns dépassent 7000, ce qui exclut une lecture en pourcentage d'un capital non levé."
+    },
+    {
+      "name": "max_drawdown_test_no_cost",
+      "value": 3.304,
+      "unit": "non précisée",
+      "quoted": "Max Drawdown 14.403 (Training Set) / 3.304 (Test Set), modèle sans coût de transaction, Table 1",
+      "quoted_source": "14.403 3.304",
+      "quoted_repair": "table",
+      "note": "Le texte du papier se contredit à ce sujet : la section 3.1 lit ce drawdown de test plus faible comme un indice de surapprentissage, la section 4 invoque au contraire un drawdown élevé sur l'entraînement."
+    },
+    {
+      "name": "sharpe_ratio_train_cost_0p01",
+      "value": 1.141,
+      "unit": "ratio",
+      "quoted": "Transaction Cost Rate 0.01 : Sharpe Ratio 1.141, Max Drawdown 2049.468, Skewness 1.702, Kurtosis 22.856 (données d'entraînement, Table 2)",
+      "quoted_source": "1.141 2049.468 1.702 22.856",
+      "quoted_repair": "table",
+      "note": "Table 2, ligne du taux de coût 0,01 sur les données d'entraînement."
+    },
+    {
+      "name": "max_drawdown_train_cost_0p01",
+      "value": 2049.468,
+      "unit": "non précisée",
+      "quoted": "Transaction Cost Rate 0.01 : Sharpe Ratio 1.141, Max Drawdown 2049.468, Skewness 1.702, Kurtosis 22.856 (données d'entraînement, Table 2)",
+      "quoted_source": "1.141 2049.468 1.702 22.856",
+      "quoted_repair": "table",
+      "note": "Valeur incompatible avec un drawdown exprimé en pourcentage — signe d'un portefeuille non normalisé en levier."
+    },
+    {
+      "name": "sharpe_ratio_test_cost_0p01",
+      "value": -0.25,
+      "unit": "ratio",
+      "quoted": "Transaction Cost Rate 0.01 : Sharpe Ratio -0.250, Max Drawdown 7511.158, Skewness -54.090, Kurtosis 3043.681 (données de test, Table 3)",
+      "quoted_source": "-0.250 7511.158 -54.090 3043.681",
+      "quoted_repair": "table",
+      "spelled_out": "-0.250",
+      "note": "La citation écrit la valeur avec un zéro final (-0.250) ; la `value` JSON vaut -0.25, strictement le même nombre. `spelled_out` nomme ce rapprochement plutôt que de le cacher."
+    },
+    {
+      "name": "max_drawdown_test_cost_0p01",
+      "value": 7511.158,
+      "unit": "non précisée",
+      "quoted": "Transaction Cost Rate 0.01 : Sharpe Ratio -0.250, Max Drawdown 7511.158, Skewness -54.090, Kurtosis 3043.681 (données de test, Table 3)",
+      "quoted_source": "-0.250 7511.158 -54.090 3043.681",
+      "quoted_repair": "table",
+      "note": "Confirmé en prose par la phrase sur un drawdown « over 7000 » au taux 0,01."
+    },
+    {
+      "name": "max_drawdown_test_cost_0p01_prose",
+      "value": 7000,
+      "unit": "non précisée (seuil énoncé en prose)",
+      "quoted": "returns straightforward. The maximum drawdown also turned to over 7000 when the rate was 0.01",
+      "note": "Énoncé en prose, borne inférieure. C'est le seul endroit où l'auteur commente l'ordre de grandeur de ses drawdowns sans jamais en donner l'unité."
+    },
+    {
+      "name": "sharpe_ratio_test_cost_0p001",
+      "value": 0.254,
+      "unit": "ratio",
+      "quoted": "Transaction Cost Rate 0.001 : Sharpe Ratio 0.254, Max Drawdown 4.392, Skewness -0.113, Kurtosis 48.099 (données de test, Table 3)",
+      "quoted_source": "0.254 4.392 -0.113 48.099",
+      "quoted_repair": "table",
+      "note": "Même modèle qu'en 3.1 (Sharpe de test 0,439 sans coût) : un coût de 10 pb par transaction en retire ~42 %."
+    },
+    {
+      "name": "ma1_sharpe_train_no_cost",
+      "value": 3.148,
+      "unit": "ratio",
+      "quoted": "MA 1 3.148 0.482 151.827 0.794 5.103 29.066",
+      "quoted_source": "MA 1 3.148 0.482 151.827 0.794 5.103 29.066",
+      "quoted_repair": "table",
+      "note": "Table 4, taux de coût = 0. Colonnes : SR(tr), MD(tr), K(tr), SR(te), MD(te), K(te). MA 1 est la meilleure des 19 variantes classées."
+    },
+    {
+      "name": "ma1_sharpe_test_no_cost",
+      "value": 0.794,
+      "unit": "ratio",
+      "quoted": "MA 1 3.148 0.482 151.827 0.794 5.103 29.066",
+      "quoted_source": "MA 1 3.148 0.482 151.827 0.794 5.103 29.066",
+      "quoted_repair": "table",
+      "note": "Meilleur Sharpe de test à coût nul, obtenu par la moyenne mobile la plus courte — donc la plus gourmande en rotation."
+    },
+    {
+      "name": "ma1_sharpe_test_cost_0p01",
+      "value": 0.265,
+      "unit": "ratio",
+      "quoted": "MA 1 0.067 5.125 392.233 0.265 0.000 1230.082",
+      "quoted_source": "MA 1 0.067 5.125 392.233 0.265 0.000 1230.082",
+      "quoted_repair": "table",
+      "note": "Table 7, taux de coût = 0,01. La même variante MA 1 passe de 0,794 à 0,265 en Sharpe de test, et de 3,148 à 0,067 en Sharpe d'entraînement."
+    },
+    {
+      "name": "equal_weight_sharpe_test_no_cost",
+      "value": 0.652,
+      "unit": "ratio",
+      "quoted": "Equal Weight 0.244 3.978 10.197 0.652 4.027 35.601",
+      "quoted_source": "Equal Weight 0.244 3.978 10.197 0.652 4.027 35.601",
+      "quoted_repair": "table",
+      "note": "Table 4 (coût nul) : le portefeuille équipondéré, dépourvu de signal, atteint déjà 0,652 en test — troisième sur 19. C'est la référence à battre, et elle est presque atteinte par le signal."
+    },
+    {
+      "name": "equal_weight_sharpe_test_cost_0p01",
+      "value": 0.601,
+      "unit": "ratio",
+      "quoted": "Equal Weight 0.155 9.026 16.972 0.601 4.219 36.248",
+      "quoted_source": "Equal Weight 0.155 9.026 16.972 0.601 4.219 36.248",
+      "quoted_repair": "table",
+      "note": "Table 7 (coût 0,01) : l'équipondéré perd à peine (0,652 → 0,601) et devient premier du classement, devant toutes les variantes de momentum. C'est le résultat le plus lourd de conséquences du papier, et l'auteur ne le formule jamais ainsi."
+    },
+    {
+      "name": "transaction_cost_rates_tested",
+      "value": null,
+      "unit": null,
+      "quoted": "In this model, three different transaction cost rates were considered, 0.001, 0.005, and 0.01. The",
+      "note": "Trois taux, appliqués comme coefficients proportionnels. Le papier ne dit jamais si le taux s'applique au notionnel échangé, à la variation de poids, ni s'il inclut le spread."
+    },
+    {
+      "name": "cost_negative_sharpe_threshold",
+      "value": 0.01,
+      "unit": "taux de coût proportionnel",
+      "quoted": "negative Sharpe Ratio at the 0.01 transaction cost rate shows that it is too high to generate positive",
+      "note": "Seuil de destruction de la stratégie hors échantillon : à 1 % de coût, le Sharpe de test du modèle de régression devient négatif."
+    },
+    {
+      "name": "regression_lookback_N",
+      "value": 24,
+      "unit": "périodes",
+      "quoted": "24 was set for this model.",
+      "note": "Unique paramètre de rétrospection du modèle de régression de la section 2.2 ; son unité (jours de bourse) n'est pas écrite. À ne pas confondre avec la grille 1–100 de la section 3.3."
+    },
+    {
+      "name": "train_test_split",
+      "value": 2010,
+      "unit": "année",
+      "quoted": "The training set is set before January 1, 2010, and the test set afterwards.",
+      "note": "Découpe unique, non glissante : ~10 ans d'entraînement, ~13 ans de test. Aucune purge, aucun embargo, aucun walk-forward."
+    }
+  ],
+
+  "what_is_missing": [
+    "Aucun IC, aucune t-statistique, aucun écart-type, aucun intervalle de confiance : pas un seul chiffre du papier n'est accompagné d'une mesure d'incertitude.",
+    "Aucune convention d'annualisation du Sharpe ratio, ni de taux sans risque : « Sharpe Ratio 2.403 » n'est pas interprétable.",
+    "Unité du Max Drawdown jamais donnée — des valeurs comme 2049.468, 7511.158 ou 15830.950 excluent une lecture en pourcentage ; le levier implicite des poids (signal/σ², non borné, non normalisé) n'est jamais discuté.",
+    "Nombre de titres, traitement des entrées/sorties de l'indice et du biais du survivant : absents.",
+    "Modèle de coût : le taux est un coefficient sans définition (assiette, spread, impact), et aucun chiffre de rotation n'est publié alors que l'argument central du papier repose sur la rotation.",
+    "Le facteur de décroissance δ de l'EMA n'est jamais chiffré ; le texte le confond même avec ε (« a decay factor ε applied »).",
+    "M, le nombre de facteurs de la régression, n'est jamais fixé.",
+    "Contradictions internes non résolues : la section 3.1 affirme que « The skewness and kurtosis values in the result indicate positive for both datasets » alors que la Table 1 donne une skewness de -0.355 sur les deux tranches ; la section 3.1 lit le surapprentissage dans un drawdown de test plus faible, la section 4 dans un drawdown d'entraînement élevé.",
+    "Datation d'événements fautive (crise financière « in 2009 », COVID « in 2021 », reprise « in 2008 and 2010 ») : la discussion des régimes n'est pas fiable.",
+    "Aucun compte du nombre de configurations testées : au minimum 19 variantes × 4 niveaux de coût = 76 évaluations, présentées classées par Sharpe hors échantillon, sans aucune correction de multiplicité.",
+    "Les figures 1 à 4 ne portent aucun chiffre lisible dans le texte extrait ; toutes les affirmations sur les trajectoires cumulées sont invérifiables.",
+    "Aucun code, aucune donnée, aucun détail de mise en œuvre permettant une réplication."
+  ],
+
+  "transposability": {
+    "what_transfers": "Le motif, pas les chiffres. (1) La forme du signal — lisser les rendements passés par une MA ou une EMA sur une fenêtre N, puis mettre le résultat à l'échelle par la volatilité — est directement codable sur nos neuf futures intraday, sans accès au futur. (2) La structure de l'étude est reproductible chez nous : balayer une grille de fenêtres (1, 2, 5, 10, 20, 40, 60, 80, 100) et lire la stabilité du résultat le long de cette grille plutôt qu'un seul point. (3) L'enseignement méthodologique central — le classement des variantes s'inverse selon le niveau de coût, et la variante gagnante brute est la plus rapide donc la plus fragile — est un avertissement qui vaut pour tout signal rapide, y compris intraday, où la rotation est structurellement plus élevée. (4) La référence naïve (portefeuille équipondéré, sans signal) comme point de comparaison obligatoire.",
+    "what_does_not_transfer": [
+      "L'univers : actions constituantes du S&P500 en données quotidiennes, contre neuf futures en intraday. Le momentum transversal entre centaines de titres n'a aucun équivalent sur neuf instruments.",
+      "La métrique : tout le papier est jugé en Sharpe ratio et max drawdown de portefeuille ; notre harnais produit un IC. Aucun chiffre du papier n'est comparable à un rapport d'IC, et aucun ne peut servir de cible de réplication.",
+      "La fréquence : N = 24 périodes quotidiennes et des fenêtres jusqu'à 100 jours n'ont pas de traduction évidente en barres intraday ; transposer la fenêtre en nombre de barres change la nature du phénomène.",
+      "Le modèle de coût : des taux proportionnels de 0,1 % à 1 % sur des actions n'ont aucun rapport avec le coût réel d'un future (tick, commission par contrat, spread d'un tick) ; les chiffres nets du papier sont donc inutilisables tels quels chez nous.",
+      "Le protocole de validation : une découpe unique entraînement/test au 1er janvier 2010, sans purge ni embargo, contre notre walk-forward purgé sur le pool 2016-2023. Le papier sélectionne de plus ses meilleures variantes en lisant le classement hors échantillon, ce que nos invariants IV et V interdisent.",
+      "Les poids non bornés : la formule (signal·β + α)/σ² sans contrainte de levier produit des drawdowns à quatre ou cinq chiffres ; appliquée telle quelle sur des futures à effet de levier intégré, elle est inexploitable.",
+      "La période 2000-2022 : elle recouvre des régimes actions (bulle internet, 2008, ZIRP) absents ou différents de notre pool 2016-2023, et le papier ne fournit aucune décomposition par régime utilisable.",
+      "La crédibilité de la source : acte de conférence d'un auteur unique, sans t-statistiques, avec des contradictions internes non corrigées — les valeurs annoncées ne peuvent pas servir de référence externe au sens de D09."
+    ],
+    "what_aligns_well": "Trois points tombent juste pour nous. (1) Le papier mesure ses résultats à plusieurs niveaux de coût plutôt qu'à un seul, et montre que la conclusion dépend du niveau retenu : c'est exactement la discipline que nous voulons imposer avant toute sélection de signal. (2) Il exhibe, sans le dire, qu'un portefeuille sans signal (Equal Weight, Sharpe de test 0,601 à 1 % de coût) bat toutes les variantes de momentum dès que le coût monte — une référence naïve qui, chez nous, doit précéder tout signal candidat. (3) La chute du Sharpe d'entraînement à test (2,403 → 0,439 hors coûts) illustre l'ampleur ordinaire de la dégradation hors échantillon d'un signal ajusté, et donne un ordre de grandeur utile à garder en tête avant d'ouvrir le holdout.",
+    "recommendation": "Ne pas retenir comme cible de réplication : aucune métrique comparable à un IC, aucune incertitude publiée, source non arbitrée et contradictoire. Conserver uniquement comme référence de motif pour un signal MA/EMA à grille de fenêtres, et comme argument documenté en faveur d'une évaluation sous coûts multiples."
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "fiche_id": "the-day-of-the-week-effect-on-stock-market-volat-W2110141348",
+  "written": "2026-09-24",
+  "written_by": "session d'extraction isolee (claude-opus-5)",
+  "source": {
+    "authors": "Halil Kiymaz, Hakan Berument",
+    "title": "The day of the week effect on stock market volatility and volume: International evidence",
+    "year": 2003,
+    "source_url": "https://repository.bilkent.edu.tr/bitstreams/9b0ce1da-b9b9-4305-8bb4-48b96c4ee6a0/download",
+    "pdf": "corpus/pdf/the-day-of-the-week-effect-on-stock-market-volat-W2110141348.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "journal": "Review of Financial Economics 12 (2003) 363-380"
+  },
+  "claim": "Le jour de la semaine est une variable conditionnante significative non seulement pour le rendement moyen mais pour la VOLATILITE conditionnelle des indices boursiers. Estime par un GARCH(1,1) modifie ou les muets de jour entrent dans l'equation de variance, l'effet est present dans les cinq marches developpes etudies, mais le jour porteur DIFFERE par marche : volatilite maximale le lundi pour l'Allemagne et le Japon, le vendredi pour le Canada et les Etats-Unis, le jeudi pour le Royaume-Uni. Second volet : les jours de plus forte volatilite coincident le plus souvent avec les plus faibles volumes, ce que les auteurs lisent comme un appui au modele de Foster et Viswanathan (1990) - les traders de liquidite s'abstiennent quand l'information privee est intense - contre celui d'Admati et Pfleiderer (1988), qui predit volume et volatilite eleves ensemble.",
+  "universe": "Cinq indices boursiers de marches developpes, en donnees quotidiennes et en devise locale : TSE-Composite (Canada), DAX (Allemagne), Nikkei-225 (Japon), FT-100 (Royaume-Uni), NYSE-Composite (Etats-Unis), du 1er janvier 1988 au 28 juin 2002. Le volet volume est restreint a trois marches (Canada, Royaume-Uni, Etats-Unis) : les auteurs ecrivent n'avoir pu obtenir de donnees de volume pour l'Allemagne et le Japon.",
+  "horizon": {
+    "value": "1 jour",
+    "note": "Le rendement est la premiere difference du log de l'indice entre deux cloture quotidiennes ; l'objet predit est la variance conditionnelle h_t^2 de ce rendement quotidien. Aucun horizon multi-jours n'est estime, aucune prevision hors echantillon n'est produite."
+  },
+  "signal_construction": {
+    "value": "Deux specifications. (1) GARCH(1,1) standard avec muets de jour dans la seule equation de rendement : R_t = a0 + aM*Mt + aT*Tt + aH*Ht + aF*Ft + somme(ai*R_{t-i}) + k*h_t + e_t, variance h_t^2 = c + a*e_{t-1}^2 + b*h_{t-1}^2. (2) GARCH(1,1) modifie : les memes quatre muets de jour entrent AUSSI dans l'equation de variance, h_t^2 = c + cM*Mt + cT*Tt + cH*Ht + cF*Ft + a*e_{t-1}^2 + b*h_{t-1}^2. Le mercredi est exclu pour eviter le piege des muets ; le coefficient de chaque jour se lit donc comme un ecart au mercredi. L'ordre n des retards de rendement est choisi par le critere FPEC (n=1 sauf Japon, n=0). Estimation par quasi-maximum de vraisemblance (Bollerslev et Wooldridge, 1992). Le terme k*h_t dans l'equation de rendement mesure une prime de risque. Le volume est modele separement : log du volume en processus autoregressif avec tendance et muets de jour, variance conditionnelle GARCH(1,1).",
+    "note": "Aucune regle de position, aucun signal directionnel : le papier estime des parametres, il ne construit pas de score par instrument et par date."
+  },
+  "reported_results": [
+    {
+      "name": "sample_start_year",
+      "value": 1988,
+      "unit": "annee",
+      "quoted": "for the period of 1988 through 2002."
+    },
+    {
+      "name": "sample_end_year",
+      "value": 2002,
+      "unit": "annee",
+      "quoted": "for the period of 1988 through 2002.",
+      "note": "Le corps du papier precise 1er janvier 1988 - 28 juin 2002."
+    },
+    {
+      "name": "highest_volatility_day_by_market",
+      "value": null,
+      "quoted": "Mondays for Germany and Japan, on Fridays for Canada and the United States, and on Thursdays for",
+      "note": "Resultat qualitatif central : le jour porteur n'est pas le meme d'un marche a l'autre. C'est ce qui interdit de transporter 'le vendredi' comme une constante universelle."
+    },
+    {
+      "name": "lowest_volatility_day_by_market",
+      "value": null,
+      "quoted": "The lowest volatility of returns occurs on Mondays for Canada and Tuesdays for",
+      "note": "Suite de la phrase (conclusion) : Germany, Japan, the United Kingdom, and the United States. Le mardi est donc le jour de plus basse volatilite pour quatre des cinq marches."
+    },
+    {
+      "name": "variance_dummy_friday_canada",
+      "value": 0.2720,
+      "unit": "coefficient de muet dans l'equation de variance conditionnelle, ecart au mercredi",
+      "quoted": "Canada (0.2720) and the United States (0.0905), on Mondays for Germany (0.9100) and",
+      "note": "Table 3, modele GARCH modifie. Significatif a 1% selon le tableau."
+    },
+    {
+      "name": "variance_dummy_friday_us",
+      "value": 0.0905,
+      "unit": "coefficient de muet dans l'equation de variance conditionnelle, ecart au mercredi",
+      "quoted": "Canada (0.2720) and the United States (0.0905), on Mondays for Germany (0.9100) and",
+      "note": "Table 3. Ordre de grandeur trois fois plus petit que le Canada : l'effet 'vendredi' n'est pas d'une meme intensite selon le marche."
+    },
+    {
+      "name": "variance_dummy_monday_germany",
+      "value": 0.9100,
+      "unit": "coefficient de muet dans l'equation de variance conditionnelle, ecart au mercredi",
+      "quoted": "Canada (0.2720) and the United States (0.0905), on Mondays for Germany (0.9100) and",
+      "note": "Table 3. Le plus gros coefficient de jour du papier."
+    },
+    {
+      "name": "variance_dummy_monday_japan",
+      "value": 0.7610,
+      "unit": "coefficient de muet dans l'equation de variance conditionnelle, ecart au mercredi",
+      "quoted": "Japan (0.7610), and on Thursdays for the United Kingdom (0.0077). With the exception of",
+      "note": "Table 3."
+    },
+    {
+      "name": "variance_dummy_thursday_uk",
+      "value": 0.0077,
+      "unit": "coefficient de muet dans l'equation de variance conditionnelle, ecart au mercredi",
+      "quoted": "Japan (0.7610), and on Thursdays for the United Kingdom (0.0077). With the exception of",
+      "note": "C'est l'exception annoncee juste apres : le jour de volatilite maximale du Royaume-Uni n'est PAS statistiquement significatif. Le resume du papier l'annonce pourtant sans reserve."
+    },
+    {
+      "name": "risk_premium_coef_canada_modified_garch",
+      "value": 0.1584,
+      "unit": "coefficient k de l'ecart-type conditionnel dans l'equation de rendement",
+      "quoted": "the return equation (risk) are positive and statistically significant for Canada (0.1584),",
+      "note": "Table 3. Dans cette specification, les cinq k sont positifs et significatifs."
+    },
+    {
+      "name": "risk_premium_coef_germany_modified_garch",
+      "value": 0.2429,
+      "unit": "coefficient k de l'ecart-type conditionnel dans l'equation de rendement",
+      "quoted": "Germany (0.2429), Japan (0.1864), the United Kingdom (0.1949), and the United States",
+      "note": "Table 3. Meme citation pour Japon 0.1864 et Royaume-Uni 0.1949."
+    },
+    {
+      "name": "risk_premium_coef_canada_plain_garch",
+      "value": 0.0522,
+      "unit": "coefficient k de l'ecart-type conditionnel dans l'equation de rendement",
+      "quoted": "for Canada (0.0522), Germany (0.1167), the United Kingdom (0.0702), and the United States",
+      "note": "Table 2, sans muets de jour dans la variance. A comparer a 0.1584 en Table 3 : la prime de risque estimee TRIPLE selon qu'on met ou non les muets de jour dans l'equation de variance, et elle n'est significative que pour deux marches en Table 2 contre cinq en Table 3. Fragilite de specification a retenir."
+    },
+    {
+      "name": "lowest_volume_day",
+      "value": null,
+      "quoted": "trading occurs on Mondays for all markets.",
+      "note": "Table 4, volet volume (Canada, Etats-Unis, Royaume-Uni seulement)."
+    },
+    {
+      "name": "highest_volume_day",
+      "value": null,
+      "quoted": "The highest volumes occur on Tuesdays.",
+      "note": "Mardi = volume le plus haut ET volatilite la plus basse pour quatre marches sur cinq : c'est la coincidence qui porte tout l'argument Foster-Viswanathan du papier."
+    },
+    {
+      "name": "volume_dummy_tuesday_canada",
+      "value": 0.0854,
+      "unit": "coefficient de muet sur le log du volume, ecart au mercredi",
+      "quoted": "estimated coefficients are 0.0854 for Canada, 0.0322 for the United States, and 0.0738 for",
+      "note": "Table 4. Tous significatifs a 1%."
+    },
+    {
+      "name": "volume_dummy_tuesday_us",
+      "value": 0.0322,
+      "unit": "coefficient de muet sur le log du volume, ecart au mercredi",
+      "quoted": "estimated coefficients are 0.0854 for Canada, 0.0322 for the United States, and 0.0738 for"
+    },
+    {
+      "name": "volume_dummy_tuesday_uk",
+      "value": 0.0738,
+      "unit": "coefficient de muet sur le log du volume, ecart au mercredi",
+      "quoted": "estimated coefficients are 0.0854 for Canada, 0.0322 for the United States, and 0.0738 for"
+    },
+    {
+      "name": "mean_daily_return_canada",
+      "value": 0.00036,
+      "unit": "pourcentage quotidien moyen (echelle du tableau 1)",
+      "quoted": "daily returns are positive for Canada (0.00036), Germany (0.00015), the United Kingdom",
+      "note": "Statistique descriptive, Table 1. L'echelle des rendements du Table 1 (ecarts-types autour de 0.6) indique des rendements exprimes en pourcentage, pas en fraction."
+    },
+    {
+      "name": "volatility_volume_inverse_relation",
+      "value": null,
+      "quoted": "For most of the markets, the days with the highest volatility also coincide with",
+      "note": "Suite : that market's lowest trading volume. C'est la conclusion economique du papier, et elle est qualitative : aucun test formel d'appariement volatilite/volume n'est rapporte, seulement la lecture croisee de deux tableaux estimes separement."
+    },
+    {
+      "name": "arch_lm_residual_diagnostic_modified_garch",
+      "value": null,
+      "quoted": "ARCH-LM test statistics can reject the null hypothesis of no ARCH effect for all countries",
+      "note": "Suite : except Germany in the standardized residuals. Aveu important : dans le modele avec muets de jour dans la variance (Table 3), les residus standardises restent heteroscedastiques pour quatre pays sur cinq, et l'autocorrelation Q est significative pour le Canada. Le modele ne capture donc pas toute la structure, ce que le texte du meme paragraphe dit pourtant d'abord en sens inverse ('Both tests indicate that there is no autocorrelation')."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun test hors echantillon : tous les coefficients sont estimes sur l'integralite de 1988-2002. Un praticien qui s'en servirait exploiterait un parametre ajuste sur son propre futur.",
+    "Aucune correction de tests multiples : cinq marches x cinq jours x deux equations x plusieurs specifications GARCH, et des seuils lus a 5% et 1% comme s'ils etaient uniques.",
+    "Aucune strategie, aucun rendement net, aucun cout de transaction : le papier evoque en conclusion que ces motifs 'might enable investors to design trading strategies' mais n'en teste aucune.",
+    "Aucune stabilite temporelle : pas de sous-periodes, pas de fenetre glissante, alors que quatorze ans couvrent plusieurs regimes (dont la bulle et l'eclatement de 2000-2002).",
+    "Le volume n'est defini nulle part precisement (titres echanges ? valeur ?) et manque pour l'Allemagne et le Japon.",
+    "L'echelle des coefficients de variance n'est pas explicitee : Table 2 donne des constantes de variance autour de 0.006-0.06 et Table 3 autour de 0.035-2.87, sans que le changement d'echelle soit commente.",
+    "Aucun traitement des jours feries, des semaines tronquees, ni des decalages de fuseaux entre les cinq marches, alors que le Japon cloture avant l'ouverture americaine du meme jour calendaire.",
+    "Aucune donnee ni discussion intraday, alors que la litterature citee (Foster et Viswanathan 1993, Admati et Pfleiderer 1988) est intraday par nature.",
+    "Les resultats T-GARCH, GARCH(1,2) et GARCH(2,1) annonces comme robustes en note 8 ne sont pas tabules ('these findings are not tabulated and reported') : leur robustesse est invérifiable.",
+    "Le test du rapport de vraisemblance sur la nullite jointe des muets est dit rejete mais 'not reported'."
+  ],
+  "transposability": {
+    "what_transfers": [
+      "Le principe du conditionnement par jour de semaine : c'est une variable point-in-time parfaite, connue a l'avance, de cout de donnees nul, et structurellement incapable de fuite vers le futur (invariant II satisfait par construction).",
+      "L'idee que le jour de semaine agit sur la VARIANCE et pas seulement sur la moyenne : chez nous, cela se traduit en candidat de regime (etape 05) plutot qu'en signal directionnel.",
+      "Le couple volatilite/volume comme variable de conditionnement conjointe : nos neuf futures ont un volume par contrat, et l'hypothese 'haute volatilite = bas volume' est testable telle quelle.",
+      "L'avertissement empirique le plus utile : le jour porteur DIFFERE d'un marche a l'autre. Transposee, cette lecon dit qu'un jour de semaine trouve sur un future ne doit pas etre applique aux huit autres."
+    ],
+    "what_does_not_transfer": [
+      "L'objet mesure. Le papier produit des coefficients de muets dans une equation de variance ; notre harnais produit un IC de score contre rendement futur. Un coefficient de variance significatif ne se convertit pas en IC, et ne peut donc pas etre compare a nos seuils.",
+      "L'univers. Cinq indices cash de marches nationaux differents, en cinq devises, contre neuf futures intraday d'un meme ensemble. La dispersion entre leurs resultats vient largement de differences institutionnelles (heures, reglement, structure des investisseurs locaux) qui n'existent pas entre nos instruments.",
+      "La frequence. Tout le papier est en cloture-a-cloture quotidienne ; notre chaine travaille intraday. Le 'lundi' du papier inclut le week-end entier (effet week-end), objet qu'une barre intraday ne contient pas.",
+      "La periode. 1988-2002 ne recouvre pas notre pool 2016-2023. Les effets de calendrier sont precisement la classe d'anomalies la plus documentee comme ayant decru ou disparu apres publication ; un effet de 1988 n'est pas une prediction pour 2016.",
+      "Le volume. Ici c'est un volume d'echange d'indice cash agrege ; chez nous c'est le volume d'un contrat future, soumis aux roulements de contrat, qui creent leur propre saisonnalite de volume sans rapport avec le jour de semaine.",
+      "La methode d'estimation. Un GARCH ajuste en une passe sur tout l'echantillon n'est pas utilisable tel quel chez nous : il faudrait le re-estimer en walk-forward purge, et rien dans le papier ne dit comment ses coefficients se comportent hors de la fenetre d'ajustement.",
+      "La prime de risque k. Sa valeur triple selon la specification retenue (0.0522 contre 0.1584 pour le Canada) : ce parametre n'est pas assez stable pour etre repris comme un fait.",
+      "Le cadre theorique Foster-Viswanathan contre Admati-Pfleiderer est teste ici 'indirectement', par coincidence de deux tableaux. Nous ne pouvons pas reprendre cette inference : chez nous un lien volatilite/volume doit etre teste directement ou pas du tout.",
+      "Le mercredi comme reference implicite. Tous les coefficients sont des ecarts au mercredi ; leur signe et leur taille n'ont aucun sens en dehors de ce choix de base, et ne sont pas des niveaux de volatilite."
+    ],
+    "what_aligns_well": "Le jour de semaine est le type de variable que notre architecture aime : deterministe, connue avant l'ouverture, nulle en cout de donnees, impossible a contaminer par le futur. Si elle survit chez nous, ce sera comme REGIME (etape 05) conditionnant un signal existant, et non comme signal autonome - ce qui est exactement le role que le papier lui donne, puisqu'il la met dans l'equation de variance et non dans un score. Le papier fournit par ailleurs une hypothese pre-formulee et directionnelle ('haute volatilite = bas volume'), ce qui est le bon format pour l'invariant IV : elle peut etre ecrite et horodatee avant mesure. Enfin, le fait que le jour porteur varie par marche donne d'avance le bon compteur de tests : neuf instruments x cinq jours, et non un seul test."
+  },
+  "implementability_notes": "Cout d'implementation quasi nul (un champ calendaire). Risque principal : la surface de test. Cinq jours x neuf instruments x deux signes fait 90 comparaisons possibles, dont le registre devra porter chacune. A specifier AVANT mesure, sous peine d'avoir un compteur faux au sens de l'invariant III."
+}

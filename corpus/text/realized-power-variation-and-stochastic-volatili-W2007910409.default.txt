@@ -1,0 +1,1208 @@
+Realized power variation and stochastic
+volatility models
+OLE E. BARNDORFF-NIELSEN 1 and NEIL SHEPHARD 2
+1Centre for Mathematical Physics and Stochastics (MaPhySto), University of Aarhus, Ny
+Munkegade, DK-8000 Aarhus C, Denmark. E-mail: oebn@mi.aau.dk
+2Nufﬁeld College, Oxford OX1 1NF , UK. E-mail: neil.shephard@nuf.ox.ac.uk
+Limit distribution results on realized power variation, that is, sums of absolute powers of increments
+of a process, are derived for certain types of semimartingale with continuous local martingale
+component, in particular for a class of ﬂexible stochastic volatility models. The theory covers, for
+example, the cases of realized volatility and realized absolute variation. Such results should be helpful
+in, for example, the analysis of volatility models using high-frequency information.
+Keywords: absolute returns; mixed asymptotic normality; p-variation; quadratic variation; realized
+volatility; semimartingale
+1. Introduction
+Stochastic volatility processes play an important role in ﬁnancial economics, generalizing
+Brownian motion to allow the scale of the increments (or returns in economics) to change
+with time in a stochastic manner. We show that such intermittency can be coherently
+measured using sums of absolute powers of increments, which we call realized power
+variation. This paper derives limit theorems for these measures, over a ﬁxed interval of
+time, as the number of high-frequency increments goes to in ﬁnity.
+A referee has drawn our attention to an unpublished thesis by E ´ tienne Becker (1998) that
+develops a number of results that are closely related to those of the present paper. We
+outline the relation to Becker ’s work in the concluding section of this paper.
+In Section 2 we establish our notion of realized power variation and de ﬁne the regularity
+assumptions we need to derive our limit theorems. Section 3 contains our main results, the
+proofs of which are given in Section 4. Section 5 gives some examples of the processes
+covered by our theory, while a Monte Carlo experiment to assess the accuracy of our limit
+theory approximations is conducted in Section 6. The concluding remarks in Section 7
+include a discussion of the use of these ideas in other areas of study, for instance turbulence
+and image analysis.
+Bernoulli 9(2), 2003, 243 –265
+1350–7265 # 2003 ISI/BS
+2. Models, notation and regularity conditions
+We ﬁrst introduce some notation for realized power variation quantities of an arbitrary
+semimartingale x. Let /C228be positive real and, for any t > 0, deﬁne
+x/C228(t) ¼ x(bt=/C228c/C228),
+where bac, for any real number a, denotes the largest integer less than or equal to a. The
+process x/C228(t) is a discrete approximation to x(t). Further, for r positive real we de ﬁne the
+realized power variation of order r or realized r-tic variation of x/C228(t)a s
+[x/C228][r](t) ¼
+XM
+j¼1
+jx/C228( j/C228) /C0x/C228(( j /C01)/C228)jr
+¼
+XM
+j¼1
+jx( j/C228) /C0x(( j /C01)/C228)jr, (1)
+where M ¼ M(t) ¼b t=/C228c.1 In particular, for M !1 , we have that the realized quadratic
+variation
+[x/C228][2](t)/C0!
+p
+[x](t),
+where [ x] is the quadratic variation process of the semimartingale x. Note also that
+[x/C228][2] ¼ [x/C228]:
+Henceforth, for simplicity of exposition, we consider only a ﬁxed t and take /C228so that
+M ¼b t=/C228c is an integer (and then /C228M ¼ t). However, our results can undoubtedly be
+generalized to provide functional limit statements, and we hope to discuss that elsewhere.
+Our detailed results will be established for the stochastic volatility model where basic
+Brownian motion is generalized to allow the volatility term to vary over time and there to
+be a rather general drift. Then the process y/C3follows
+y/C3(t) ¼ Æ/C3(t) þ
+ð
+t
+0
+/C243(s)dw(s), t > 0, (2)
+where /C243. 0 and Æ/C3are assumed to be stochastically independent of the standard Brownian
+motion w. Throughout this paper we will assume that the processes /C244¼ /C2432 and Æ/C3are
+predictable and pathwise locally Riemann integrable (hence, in particular, pathwise locally
+1The similarly named p-variation, 0 , p , 1, of a real-valued function f on [ a, b]i sd e ﬁned as
+sup
+k
+X
+j f (xi) /C0f (xi/C01)j p,
+where the supremum is taken over all subdivisions k of [ a, b]. If this function is ﬁnite then f is said to have
+bounded p-variation on [ a, b]. The case of p ¼ 1 gives the usual de ﬁnition of bounded variation. This concept has
+been studied recently in the probability literature. See the work of, for example, Lyons (1994) and Mikosch and
+Norvais˘a (2000).
+244 O.E. Barndorff-Nielsen and N. Shephard
+bounded). Thus y/C3is a semimartingale – more precisely, a Brownian semimartingale. We
+call /C243the spot volatility process and Æ/C3the mean or risk premium process. (For some general
+information on processes y/C3of this type from the viewpoint of ﬁnancial econometrics, see,
+for example, Ghysels et al . 1996; Barndorff-Nielsen and Shephard 2001.) By allowing the
+spot volatility to be random and serially dependent, this model will imply that its increments
+exhibit volatility clustering and have unconditional distributions which are fat-tailed. This
+allows it to be used in ﬁnance and econometrics as a model for log-prices. In turn, this
+provides the basis for option pricing models which overcome some of the major failings in
+the Black –Scholes option pricing approach. Leading references in this regard include Hull
+and White (1987), Heston (1993) and Renault (1997). See also the recent work of Nicolato
+and Venardos (2002).
+For the price process (2) the realized power variation of order r of y/C3is, at time t and
+discretization /C228,[ y/C3
+/C228][r](t). Letting
+yj(t) ¼ y/C3( j/C228) /C0y/C3(( j /C01)/C228),
+we have that
+[y/C3
+/C228][r](t) ¼
+XM
+j¼1
+jyj(t)jr:
+We use the notation /C244(t) ¼ /C2432(t) and
+/C244/C3(t) ¼
+ð t
+0
+/C244(s)ds
+and, more generally, we consider the integrated power volatility of order r ,
+/C244r/C3(t) ¼
+ðt
+0
+/C244r(s)ds:
+Throughout the following, r denotes a positive number. Moreover, we shall refer to the
+following conditions on the volatility and mean processes:
+Condition 1. The volatility process /C244¼ /C2432 is (pathwise) locally bounded away from 0 and
+has, moreover, the property
+lim
+/C228# 0
+/C2281=2XM
+j¼1
+j/C244r(/C231j) /C0/C244r(/C238j)j¼ 0 (3)
+for some r . 0 (equivalently, for all r . 0)2 and for any /C238j ¼ /C238j(/C228) and /C231j ¼ /C231j(/C228) such that
+2The equivalence follows on noting that, for each j, there exists an øj with
+inf
+( j/C01)/C228<s< j/C228
+/C244(s) < øj < sup
+( j/C01)/C228<s< j/C228
+/C244(s)
+such that
+j/C244r(/C231j) /C0/C244r(/C238j)j¼ rør/C01
+j j/C244(/C231j) /C0/C244(/C238j)j,
+and then using the fact that /C244is pathwise bounded away from 0 and 1.
+Realized power variation and stochastic volatility models 245
+0 < /C2381 < /C2311 < /C228< /C2382 < /C2312 < 2/C228< ... < /C238m < /C231m < M/C228¼ t:
+Condition 2. The mean process Æ/C3satisﬁes (pathwise) 3
+lim
+/C228# 0
+max
+1< j<M
+/C228/C01jÆ/C3( j/C228) /C0Æ/C3(( j /C01)/C228)j , 1: (4)
+These regularity conditions are quite mild. 4 Of some special interest are cases where Æ/C3is of
+the form
+Æ/C3(t) ¼
+ðt
+0
+g(/C243(s))ds,
+for g a smooth function. Then regularity of /C244will imply regularity of Æ/C3. Note that the
+assumptions allow the spot volatility to have, for example, deterministic diurnal effects,
+jumps, long memory, no unconditional mean or to be non-stationary.
+On the other hand, models for /C244like the Cox –Ingersoll–Ross process, or more generally
+the constant elasticity of variance process, do not satisfy Condition 1.
+3. Results
+Our main theoretical result is the following:
+Theorem 1. For /C228# 0 and r > 1
+2, under Conditions 1 and 2,
+/C236/C01
+r /C2281/C0r=2[y/C3
+/C228][r](t)/C0!
+p
+/C244r=2/C3(t), (5)
+and
+/C236/C01
+r /C2281/C0r=2[y/C3
+/C228][r](t) /C0/C244r=2/C3(t)
+/C236/C01
+r /C2281/C0r=2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+/C236/C01
+2r vr[y/C3
+/C228][2r](t)
+q /C0!
+L
+N(0, 1), (6)
+where /C236r ¼ Efjujrg and vr ¼ varfjujrg, with u /C24N(0, 1).
+This theorem tells us that, for /C228# 0, scaled realized power variation converges in probability
+to integrated power volatility and follows asymptotically a normal variance mixture
+distribution with variance distributed as
+/C228/C236/C02
+r vr/C244r/C3(t),
+which is consistently estimated by the square of the denominator in (6). Hence the limit
+theory is statistically feasible and does not depend upon knowledge of Æ/C3or /C2432.
+3This condition is implied by Lipschitz continuity and itself implies continuity of a/C3.
+4Condition 1 is satis ﬁed in particular if /C244is of Ornstein –Uhlenbeck (OU) type, and Condition 2 is valid if, for
+instance, a/C3is an intOU (integrated OU) process plus drift.
+246 O.E. Barndorff-Nielsen and N. Shephard
+Leading cases are realized quadratic variation , which in the ﬁnance and econometrics
+literature is usually called realized volatility,
+[y/C3
+/C228][2](t) ¼
+XM
+j¼1
+y2
+j (t),
+in which case
+XM
+j¼1
+y2
+j (t) /C0/C244/C3(t)
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+2
+3
+XM
+j¼1
+y4
+j (t)
+vuu
+t
+/C0!
+L
+N(0, 1), (7)
+and realized absolute variation
+[y/C3
+/C228][1](t) ¼
+XM
+j¼1
+jyj(t)j,
+when
+ﬃﬃﬃﬃﬃﬃﬃﬃ
+/C240=2
+p ﬃﬃﬃ
+/C228
+p XM
+j¼1
+jyj(t)j/C0/C243/C3(t)
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+(/C240=2 /C01)/C228
+XM
+j¼1
+y2
+j (t)
+vuut
+/C0!
+L
+N(0, 1): (8)
+In the case of r ¼ 2 the result considerably strengthens the well-known quadratic
+variation result that realized quadratic variation converges in probability to integrated
+volatility
+Ð
+t
+0 /C2432(s)ds – which was highlighted in concurrent and independent work by
+Andersen and Bollerslev (1998a) and Barndorff-Nielsen and Shephard (2001). The
+asymptotic distribution of realized quadratic variation was discussed by Barndorff-Nielsen
+and Shephard (2002) in the special case where Æ/C3(t) ¼ /C236t þ /C226Ð
+t
+0 /C2432(s)ds. To our knowledge
+the probability limit of (normalized) realized absolute variation has not previously been
+derived, let alone its asymptotic distribution.
+If on the left-hand side of the main result (6) we standardized by /C228
+(1/C0r=2) rather than by
+/C236/C01
+r /C2281/C0r=2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+/C236/C01
+2r vr[y/C3
+/C228][2r](t)
+q
+we would obtain a normal variance mixture as the limit law, as
+follows from (5). Similar normal mixture results are known for standardized functions of
+the increments of diffusion processes; see Delattre and Jacod (1997) and Florens-Zmirou
+(1993). We also wish to point out that inspection of the proof of Proposition 1 in Section 4
+below shows that the joint distribution of
+Realized power variation and stochastic volatility models 247
+/C236/C01
+r /C2281/C0r=2[y/C3
+/C228][r](t) /C0/C244r=2/C3(t)
+/C236/C01
+r /C2281/C0r=2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+/C236/C01
+2r vr[y/C3
+/C228][2r](t)
+q , /C236/C01
+2r /C2281/C0r[y/C3
+/C228][2r](t)
+converges to the product of N(0, 1) and the law of an independent random variable
+distributed as /C244/C3(t).
+Taking sums of squares of increments of log-prices has a very long tradition in ﬁnancial
+economics – see, for example, Poterba and Summers (1986), Schwert (1989), Taylor and
+Xu (1997), Christensen and Prabhala (1998), Dacorogna et al . (1998) and Andersen et al .
+(2001a; 2001b). However, for a long time there was no known theory for the behaviour of
+such sums outside the Brownian motion case. Since the link to quadratic variation was
+made there has been remarkably rapid development in this ﬁeld. Contributions include Corsi
+et al . (2001), Andersen et al . (2001a; 2001b), Barndorff-Nielsen and Shephard (2002),
+Andreou and Ghysels (2002), Bai et al . (2000), Maheu and McCurdy (2002), Areal and
+Taylor (2002), Galbraith and Zinde-Walsh (2000), Bollerslev and Zhou (2002) and
+Bollerslev and Forsberg (2002).
+Andersen and Bollerslev (1997; 1998b) studied empirically the properties of P
+M
+j¼1jyj(t)j
+computed using sums of absolute values of intra-day returns on speculative assets (many
+authors in ﬁnance have based their empirical analysis on absolute values of returns – see,
+for example, Taylor (1986, Chapter 2), Cao and Tsay (1992), Ding et al . (1993), West and
+Cho (1995), Granger and Ding (1995), Jorion (1995), Shiryaev (1999, Chapter IV) and
+Granger and Sin (2002). This was empirically attractive, for using absolute values is less
+sensitive to possible large movements in high-frequency data. There is evidence that if
+returns do not possess fourth moments then using absolute values rather than squares would
+be more reliable – see, for example, the work on the distributional behaviour of the
+correlogram of squared returns by Davis and Mikosch (1998) and Mikosch and Starica
+(2000). However, the approach was abandoned in their subsequent work reported in
+Andersen and Bollerslev (1998a) and Andersen et al . (2001a; 2001b) due to the lack of
+appropriate theory for the sum of absolute returns as /C228# 0, although recently Andreou and
+Ghysels (2002) have performed some interesting Monte Carlo studies in this context, while
+Shiryaev (1999, pp. 349 –350) and Maheswaran and Sims (1993) mention interests in the
+limit of sums of absolute returns. Our work provides, in particular, a theory for the use of
+sums of absolute returns.
+4. Proofs
+Since the mean and volatility processes Æ/C3and /C244are jointly independent of the Brownian
+motion w, we need only argue conditionally on ( Æ/C3, /C244). De ﬁne Æj, /C244j and /C243j by
+Æj ¼ Æ/C3( j/C228) /C0Æ/C3(( j /C01)/C228),
+/C244j ¼ /C244/C3( j/C228) /C0/C244/C3(( j /C01)/C228)
+and
+248 O.E. Barndorff-Nielsen and N. Shephard
+/C243j ¼ ﬃﬃﬃﬃ/C244j
+p :
+As a preliminary step we prove the following result:
+Lemma 1. For /C228! 0,
+/C2281/C0r[/C244/C3
+/C228][r](t) ! /C244r/C3(t) (9)
+pathwise.
+Proof. By the boundedness of /C244(t) we have that, for every j ¼ 1, ... , M, there exists a
+constant Łj such that
+inf
+( j/C01)/C228<s< j/C228
+/C244(s) < Łj < sup
+( j/C01)/C228<s< j/C228
+/C244(s)
+and
+/C244j ¼ Łj/C228, (10)
+and, using this and the Riemann integrability of /C244r(t), we obtain
+/C2281/C0r[/C244/C3
+/C228][r] ¼ /C2281/C0rXM
+j¼1
+/C244r
+j ¼
+XM
+j¼1
+(/C244j=/C228)r/C228¼
+XM
+j¼1
+Łr
+j /C228
+!
+ð t
+0
+/C244r(s)ds ¼ /C244r/C3(t):
+h
+It is now convenient to write y/C3(t)a s
+y/C3(t) ¼ Æ/C3(t) þ y/C3
+0 (t),
+where
+y/C3
+0 (t) ¼
+ðt
+0
+/C243(s)dw(s),
+and to introduce
+y0 j ¼ y/C3
+0 ( j/C228) /C0y/C3
+0 (( j /C01)/C228):
+The joint law of y01, ... , y0M is equal to that of v1, ... , vM , where
+vj ¼ /C243j uj
+and u1, ... , uM are independently and identically standard normal and independent of the
+process /C243. It follows that
+[y/C3
+0/C228][r](t)¼
+L XM
+j¼1
+/C244r=2
+j jujjr: (11)
+Realized power variation and stochastic volatility models 249
+The conditional mean and variance of [ y/C3
+0/C228][r](t) are then
+Ef[y/C3
+0/C228][r](t)j/C244g¼ /C236r
+XM
+j¼1
+/C244r=2
+j ¼ /C236r[/C244/C3
+/C228][r=2](t) (12)
+and
+varf[y/C3
+0/C228][r](t)j/C244g¼ vr
+XM
+j¼1
+/C244r
+j ¼ vr[/C244/C3
+/C228][r](t): (13)
+Hence, letting
+D0 ¼ /C236/C01
+r [y/C3
+0/C228][r](t) /C0[/C244/C3
+/C228][r=2](t),
+we have
+EfD0j/C244g¼ 0, and var fD0j/C244g¼ /C236/C02
+r vr[/C244/C3
+/C228][r](t):
+By Lemma 1, as /C228! 0,
+/C2281/C0rvarfD0j/C244g! /C236/C02
+r vr/C244r/C3(t),
+indicating the validity of the following proposition:
+Proposition 1. For /C228! 0,
+/C228(1/C0r)=2 /C236/C01
+r [y/C3
+0/C228][r](t) /C0[/C244/C3
+/C228][r=2](t)ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+/C236/C02
+r vr/C244r/C3(t)
+p /C0!
+L
+N(0, 1): (14)
+Proof. To establish this proposition, we recall Taylor ’s formula with remainder term
+f (x) ¼ f (0) þ f 9(0)x þ x2
+ð1
+0
+(1 /C0s) f 0(sx)ds: (15)
+By (11) and (12) we ﬁnd, using (15), that the conditional cumulant transform of D0 is of
+the form
+log Efexp(i/C230D0)j/C244g¼ /C2302XM
+j¼1
+/C244r
+j
+ð1
+0
+(1 /C0s)k 0r(/C244r=2
+j /C230s)ds
+¼ /C2302/C228rXM
+j¼1
+Łr
+j
+ð1
+0
+(1 /C0s)k 0r(/C228r=2Łr=2
+j /C230s)ds,
+where Łj is given by (10) and kr denotes the cumulant transform of /C236/C01
+r jujr for u a standard
+normal random variable. Consequently,
+log Efexp(i/C230/C228(1/C0r)=2 D0)j/C244g¼ 1
+2/C2302/C228R,
+where
+250 O.E. Barndorff-Nielsen and N. Shephard
+R ¼ 2
+XM
+j¼1
+Łr
+j
+ð1
+0
+(1 /C0s)k 0r(/C2281=2Łr=2
+j /C230s)ds:
+The boundedness of /C244on [0, t] implies
+lim
+/C228# 0
+/C2281=2 max
+j
+Łr=2
+j ¼ 0
+and hence, for /C228# 0,
+/C228R ! 2
+ð1
+0
+(1 /C0s)dsk 0r(0)lim
+/C228# 0
+XM
+j¼1
+Łr
+j /C228
+¼ k 0r(0)/C244r/C3(t) ¼/C0/C236/C02
+r vr/C244r/C3(t):
+Therefore
+log Efexp(i/C230/C228(1/C0r)=2 D0)j/C244g¼/C01
+2/C2302 /C236/C02
+r vr/C244r/C3(t) þ o(1) (16)
+and Proposition 1 follows. h
+Lemma 1 uses only the local boundedness and Riemann integrability of /C244. Invoking
+Condition 1 we may strengthen (9) as follows:
+Lemma 2. Under Condition 1 we have
+/C2281/C0r[/C244/C3
+/C228][r](t) /C0/C244r/C3(t) ¼ o p(/C2281=2):
+Proof. For each j there exists a number łj such that
+inf
+( j/C01)/C228<s< j/C228
+/C244(s) < łj < sup
+( j/C01)/C228<s< j/C228
+/C244(s)
+and
+ð j/C228
+( j/C01/C228)
+/C244r(s)ds ¼ łr
+j /C228: (17)
+Using this and (10), we ﬁnd
+/C2281/C0r[/C244/C3
+/C228][r](t) /C0/C244r/C3(t) ¼ /C2281/C0rXM
+j¼1
+/C244r
+j /C0
+ð t
+0
+/C244r(s)ds
+¼ /C228
+XM
+j¼1
+(Łr
+j /C0łr
+j ), (18)
+and the conclusion now follows from Condition 1. h
+Proposition 2. Under Condition 1, for /C228! 0,
+Realized power variation and stochastic volatility models 251
+/C2281/C0r=2 /C236/C01
+r [y/C3
+0/C228][r](t) /C0/C244r=2/C3(t)
+/C2281=2 ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+/C236/C02
+r vr/C244r/C3(t)
+p /C0!
+L
+N(0, 1): (19)
+Proof. We may rewrite the left-hand side of (14) as
+/C2281/C0r=2 /C236/C01
+r [y/C3
+0/C228][r](t) /C0/C2281/C0r=2[/C244/C3
+/C228][r=2](t)
+/C2281=2 ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+/C236/C02
+r vr/C244r/C3(t)
+p
+¼ /C2281/C0r=2 /C236/C01
+r [y/C3
+0/C228][r](t) /C0/C244r=2/C3(t)
+/C2281=2 ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+/C236/C02
+r vr/C244r/C3(t)
+p þ /C2281/C0r=2[/C244/C3
+/C228][r=2](t) /C0/C244r=2/C3(t)
+/C2281=2 ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+/C236/C02
+r vr/C244r/C3(t)
+p
+and Lemma 2 then implies the result. h
+As an immediate consequence of Proposition 2 we have:
+Corollary 1. Under Condition 1, for /C228! 0,
+/C2281/C0r /C236/C01
+2r [y/C3
+0/C228][2r](t)/C0!
+p
+/C244r/C3(t):
+In other words, when normalized, [ y/C3
+0/C228][2r](t) provides a consistent estimate of /C244r/C3(t).
+Combining this with (19) yields the conclusion of Theorem 1 for the special case where the
+mean process Æ/C3is identically 0.
+The remaining task is to show that, to the order concerned, Æ/C3does not affect the
+asymptotic limit behaviour, provided Conditions 1 and 2 hold. For this it suf ﬁces to show
+that, under Conditions 1 and 2,
+/C228(1/C0r)=2f[y/C3
+/C228][r](t) /C0[y/C3
+0/C228][r](t)g¼ o p(1);
+cf. Proposition 1.
+We shall in fact prove the following stronger result.
+Proposition 3. Under Conditions 1 and 2,
+/C228/C0r=2f[y/C3
+/C228][r](t) /C0[y/C3
+0/C228][r](t)g¼ Op(1):
+Proof. Let
+/C244¼ inf
+0<s<t
+/C244(s), /C244¼ sup
+0<s<t
+/C244(s)
+and
+ªj ¼ /C228/C01Æj,
+and note that (pathwise for ( Æ/C3, /C244)), by assumption,
+0 , /C244< /C244, 1,
+implying
+252 O.E. Barndorff-Nielsen and N. Shephard
+0 , min
+j
+Łj < max
+j
+Łj , 1,
+while, due to Condition 2, there exists a constant c for which
+max
+j
+jªjj < c,
+whatever the value of M.
+We have
+[y/C3
+/C228][r](t) /C0[y/C3
+0/C228][r](t) ¼
+XM
+j¼1
+(jÆj þ y0 jjr /C0jy0 jjr)
+¼
+XM
+j¼1
+(j/C228ªj þ /C2281=2Ł1=2
+j ujjr /C0j/C2281=2Ł1=2
+j ujjr)
+¼ /C228r=2XM
+j¼1
+Łr=2
+j fj(ªj=Ł1=2
+j )/C2281=2 þ ujjr /C0jujjrg,
+and hence
+/C228/C0r=2f[y/C3
+/C228][r](t) /C0[y/C3
+0/C228][r](t)g¼
+L XM
+j¼1
+Łr=2
+j hr(uj; ªj=Ł1=2
+j ),
+where
+hr(u; r) ¼j r/C2281=2 þ ujr /C0jujr:
+The conclusion of Proposition 3 now follows from Lemma 3 below. h
+Lemma 3. For r > 1
+2 , u a standard normal random variable and r constant,
+Efhr(u; r)g¼ O(/C228) and varfhr(u; r)g¼ O(/C228):
+Proof. With j denoting the standard normal density, we obtain
+Efjr/C2281=2 þ ujrg¼
+ð1
+/C01
+jr/C2281=2 þ xjrj(x)dx
+¼
+ð1
+/C01
+jxjrj(x)er/C2281=2 xdxe/C0r2 /C228=2
+¼
+ð1
+/C01
+jxjrj(x)er/C2281=2 xdx þ O(/C228)
+¼ Efjujrgþ
+ð1
+/C01
+jxjrj(x)(er/C2281=2 x /C01)dx þ O(/C228),
+that is,
+Realized power variation and stochastic volatility models 253
+Efhr(u; r)g¼ /C2281=2
+ð1
+/C01
+xjxjrj(x) er/C2281=2 x /C01
+/C2281=2 x dx þ O(/C228)
+¼ /C2281=2
+ð1
+/C01
+xjxjrj(x) er/C2281=2 x /C01 /C0r/C2281=2 x
+/C2281=2 x dx þ r/C2281=2
+ð1
+/C01
+xjxjrj(x)dx þ O(/C228)
+¼ O(/C228):
+Furthermore,
+Efhr(u; r)2g¼ Efh2r(u; r)gþ 2Efjujr(jujr /C0jr/C2281=2 þ ujr)g
+¼ O(/C228) þ 2Efjujr(jujr /C0jr/C2281=2 þ ujr)g (20)
+by the previous result. Here
+Efjujrjr/C2281=2 þ ujrg¼
+ð1
+/C01
+jxjrjr/C2281=2 þ xjrj(x)dx
+¼
+ð1
+/C01
+#Cno#Cno#Cno#Cnox2 /C01
+4 r2/C228
+#Cno#Cno#Cno#Cno
+r
+j(x)er/C2281=2 x=2dxe/C0r2 /C228=8
+¼
+ð1
+/C01
+#Cno#Cno#Cno
+#Cnox
+2 /C01
+4 r2/C228
+#Cno#Cno#Cno
+#Cno
+r
+j(x)er/C2281=2 x=2dx þ O(/C228)
+¼
+ð1
+/C01
+jxj2rj(x)er/C2281=2 x=2dx þ O(/C228)
+þ
+ð1
+/C01
+#Cno#Cno
+#Cno#Cnox
+2 /C01
+4 r2/C228
+#Cno#Cno
+#Cno#Cno
+r
+/C0jx2jr
+ !
+j(x)er/C2281=2 x=2dx: (21)
+Now, for non-negative numbers a and b, we have the inequality
+jbr /C0jb /C0ajrj < ar, for 0 < b < a,
+rbr/C01 a, for b . a:
+#Coi
+(22)
+Using this and r > 1
+2,w e ﬁnd that
+#Cno#Cno
+#Cno#Cno
+ð
+1
+/C01
+#Cno#Cno
+#Cno#Cnox
+2 /C01
+4 r2/C228
+#Cno#Cno
+#Cno#Cno
+r
+/C0jx2jr
+ !
+j(x)er/C2281=2 x=2dx
+#Cno#Cno
+#Cno#Cno
+<
+r
+4 r2/C228
+#Cnþ#Cn9rð
+jxj<r/C2281=2 =2
+j(x)er/C2281=2 x=2dx þ r
+4 r2/C228
+ð1
+/C01
+jxj2(r/C01)j(x)er/C2281=2 x=2dx (23)
+¼ O(/C228): (24)
+Thus, combining (20), (21) and (24), we have
+254 O.E. Barndorff-Nielsen and N. Shephard
+Efhr(u; r)2g¼ 2
+ð1
+/C01
+jxj2rj(x)dx /C0
+ð1
+/C01
+jxj2rj(x)er/C2281=2 x=2dx
+#Coi#Co>
+þ O(/C228)
+¼ 2
+ð1
+/C01
+jxj2rj(x)1 /C0er/C2281=2 x=2
+#CQ#Cn
+dx þ O(/C228)
+¼ 2/C2281=2
+ð1
+/C01
+xjxj2rj(x) 1 /C0er/C2281=2 x=2
+/C2281=2 x dx þ O(/C228)
+¼ O(/C228),
+as was to be shown. h
+5. Examples
+The following two examples show that Conditions 1 and 2 are satis ﬁed for OU models used
+by Barndorff-Nielsen and Shephard (2001) in the context of stochastic volatility models.
+Example 1 V olatility process /C244of OU type . Without loss of generality, we suppose that /C244
+satisﬁes the equation
+/C244(t) ¼ e/C0ºt/C244(0) þ
+ðt
+0
+e/C0º(t/C0s)dz(ºs),
+where z is a subordinator, that is, a positive Le ´vy process, which is referred to as the
+background driving Le´vy process.
+The number of jumps of the background driving Le ´vy process z on the interval [0, t]i s
+at most countable. Let z1 > z2 > ... denote the jump sizes given in decreasing order, and
+let u1, u2, ... be the corresponding jump times. Then, for any s 2 [0, t],
+/C244(s) ¼ /C244(0)e/C0ºs þ
+X1
+n¼1
+zn e(s; un),
+where
+e(s; u) ¼ e/C0º(s/C0u)1[u,t](s)
+and we have
+XM
+j¼0
+je( j/C228; u) /C0e(( j /C01)/C228; u)j < 2:
+Hence
+XM
+j¼0
+j/C244( j/C228) /C0/C244(( j /C01)/C228)j < 2 /C244(0) þ
+X1
+n¼1
+zn
+()
+¼ 2f/C244(0) þ z(ºt)g,
+showing that Condition 1 is amply satis ﬁed.
+Realized power variation and stochastic volatility models 255
+Example 2 OU volatility and intOU risk premium . In this particular case the volatility
+process /C244is as in the previous example and the mean process is of the form
+Æ/C3(t) ¼ /C236/C228þ /C226/C244/C3(t),
+where /C236and /C226are arbitrary real parameters. We then have
+Æj ¼ /C228f/C236þ /C226Łjg,
+implying
+max
+1< j<M
+/C228/C01jÆ/C3( j/C228) /C0Æ/C3(( j /C01)/C228)j < j/C236jþj /C226j/C244, 1,
+so that Condition 2 is indeed satis ﬁed.
+6. A Monte Carlo experiment
+6.1. Multiple realized power variations
+We have stated the de ﬁnition and results for realized power variation for a single ﬁxed t.I t
+is clear that the theory can also be applied repeatedly on non-overlapping increments to the
+process. Let us write ˜ . 0 as a time interval and focus on the nth such interval. Then
+deﬁne the intra- ˜ increments as
+y
+j,n ¼ y/C3(n /C01)˜ þ ˜j
+M
+#Cnþ#Cn9
+/C0y/C3(n /C01)˜ þ ˜( j /C01)
+M
+#Cnþ#Cn9
+, /C228¼ ˜M/C01,
+which allows us to construct the nth realized power variation
+[y/C3
+/C228][r]
+n ¼
+XM
+j¼1
+jyj,njr:
+The implication is that
+[/C236/C01
+r (˜M/C01)1/C0r=2[y/C3
+/C228][r]
+n ] /C0
+ð n˜
+(n/C01)˜
+/C243r(s)ds
+/C236/C01
+r (˜M/C01)1/C0r=2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+(vr=/C2362r)[y/C3
+/C228][2r]
+n
+q /C0!
+L
+N(0, 1):
+An important observation is that the realized power variation errors
+f/C236/C01
+r (˜M/C01)1/C0r=2[y/C3
+/C228][r]
+n g/C0/C243[r]
+n , (25)
+where /C243[r]
+n , the actual power volatility ,i sd e ﬁned as
+/C243[r]
+n ¼ /C243r/C3(n˜) /C0/C243r/C3((n /C01)˜), /C243r/C3(t) ¼
+ðt
+0
+/C243r(s)ds,
+will be asymptotically uncorrelated through n, although they will not be independent.
+256 O.E. Barndorff-Nielsen and N. Shephard
+6.2. Simulated example
+6.2.1. Realized power variation and actual power volatility
+The above distribution theory says, in particular, that realized power variation error will
+converge in probability to zero as /C228# 0. To examine the magnitude of this error we have
+carried out a simulation. This will allow us to see how accurate our asymptotic analysis is
+in practice. Throughout we have set the mean process Æ/C3(t) to zero. Our experiments could
+have been based on the familiar constant elasticity of variance process which is the solution
+to the stochastic differential equation
+d/C243
+2(t) ¼/C0ºf/C2432(t) /C0/C238gdt þ ø/C243(t)/C231db(ºt), /C2312 [1, 2],
+where b is standard Brownian motion uncorrelated with w. Of course the special case of
+/C231¼ 1 delivers the square root process, while when /C231¼ 2 we have Nelson ’s GARCH
+diffusion. These models have been heavily favoured by Meddahi and Renault (2002) in the
+context of stochastic volatility models. Instead of this we will work with the non-Gaussian
+Ornstein–Uhlenbeck process, or OU process for short, which is the solution to the stochastic
+differential equation
+d/C243
+2(t) ¼/C0º/C2432(t)dt þ dz(ºt), (26)
+where z is a subordinator (cf. Examples 1 and 2 above). These models have been developed
+in this context by Barndorff-Nielsen and Shephard (2001). On the left in Figure 1 we have
+drawn curves to represent a simulated sample path of /C243
+[2]
+n from an OU process where z(t) has
+a ˆ(t4, 8) marginal distribution, º ¼/C0log(0:99) and ˜ ¼ 1, along with the associated
+realized quadratic variation (depicted using crosses) computed using a variety of values of M.
+It is helpful to keep in mind that
+E(/C2432(t)) ¼ E(z(1)) ¼ 1
+2 and var( /C2432(t)) ¼ 1
+2 var(z(1)) ¼ 1
+32 :
+The corresponding results for /C243[1]
+n and realized absolute variation are given on the right in
+Figure 1. We see that as M increases the precision of realized power variation increases,
+while Figure 1 shows that the variance of the realized power variation increases with the level
+of volatility. This is line with the prediction from the asymptotic theory, for the denominator
+increases with the level of volatility.
+6.2.2. Quantile–quantile plots
+To assess the ﬁnite-sample performance of the asymptotic distributions of the realized
+quadratic and absolute variation we have constructed some quantile –quantile (QQ) plots
+based upon the standardized errors (7) and (8). Our main focus will be on the absolute
+variation case, leaving the quadratic case to be covered in detail in a follow up paper by
+Barndorff-Nielsen and Shephard (2003). However, to start off with we give both cases, in
+order to enable an easy comparison.
+Figure 2 gives QQ plots based on the simulation experiment reported in the previous
+subsection, with a sample size of 10 000. Again we vary M over 12, 48 and 144. The left-
+Realized power variation and stochastic volatility models 257
+hand graphs give the realized quadratic variation errors [ y/C3
+/C228][2]
+n /C0/C243[2]
+n as well as plus and
+minus twice the asymptotic standard errors. The plot is based on the ﬁrst 600 simulations.
+This graph shows how much the standard errors change with time.
+The graphs in the middle column of Figure 2 give the corresponding realized absolute
+variation errors
+ﬃﬃﬃﬃﬃﬃ
+/C240/C228
+2
+r XM
+j¼1
+jyj,nj/C0/C243[1]
+n ,
+together with twice standard error bounds. The conditional standard errors are more stable
+through time, especially when M is small. The unconditional variance of the errors is
+approximately
+/C228(/C236/C02
+1 /C01)˜Ef/C2432(t)g:
+Figure 1. Simulation from an OU ˆ(4, 8) process. /C243[2]
+n and /C243[1]
+n are plotted against time, together with
+their associated realized power variation estimators; M ¼ 12, 48 and 144
+258 O.E. Barndorff-Nielsen and N. Shephard
+The right-hand side of Figure 2 gives the associated QQ plots for the standardized
+residuals from the realized quadratic and absolute variation measures. These use all 10 000
+observations. The results are clear: in comparison with the asymptotic limit laws both
+random variables are too fat-tailed in small samples, with this problem reducing as M
+increases. The realized absolute variation version of the statistic has much better ﬁnite-
+sample behaviour, while the realized quadratic variation is quite poorly behaved.
+6.2.3. Logarithmic transformation
+The realized power variation [ y/C3
+/C228][r](t) is the sum of non-negative items and so is non-
+negative. It would seem sensible to transform this variable to the real line in order to
+improve its ﬁnite-sample performance. Hence we use the standard logarithmic transforma-
+tion, that is, for a consistent estimator ^ŁŁ of Ł we approximate log( ^ŁŁ) by log( Ł) þ ( ^ŁŁ /C0Ł)=Ł,
+Figure 2. Plots of the realized quadratic variation error and the realized absolute variation error plus
+twice their asymptotic standard errors; M ¼ 12, 48 and 144. Corresponding QQ plots are on the right,
+based on the standardized realized quadratic variations and the realized absolute variations
+Realized power variation and stochastic volatility models 259
+hence the asymptotic distribution of ^ŁŁ /C0Ł can be used to deduce the asymptotic
+distribution of log( ^ŁŁ) /C0log(Ł). For the general realized power variation this implies
+log[/C236/C01
+r /C2281/C0r=2[y/C3
+/C228][r](t)] /C0log
+ð t
+0
+/C243r(s)ds
+/C236/C01
+r /C2281/C0r=2
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+(vr=/C2362r)([y/C3
+/C228][2r](t)=[/C236/C01
+r /C2281/C0r=2[y/C3
+/C228][r](t)]2)
+q /C0!
+L
+N(0, 1): (27)
+Referring to the denominator, we should note that
+/C236/C01
+2r /C2281/C0r[y/C3
+/C228][2r](t)
+[/C236/C01
+r /C2281/C0r=2[y/C3
+/C228][r](t)]2 /C0!
+L
+ð t
+0
+/C2432r(s)ds
+ðt
+0
+/C243r(s)ds
+#Coi#Co>2 > 1,
+by Jensen ’s inequality. In the realized absolute variation case, (27) simpli ﬁes to
+logf
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+(/C240/C228=2)
+p XM
+j¼1
+jyj(t)jg /C0log
+ðt
+0
+/C243(s)ds
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+/C228(/C240=2 /C01)(
+XM
+j¼1
+y2
+j (t))=f
+ﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+/C240/C228=2
+p XM
+j¼1
+jyj(t)jg2
+vuut
+/C0!
+L
+N(0, 1): (28)
+Using the same simulation set-up as employed in the previous subsection, we plot in
+Figure 3 the log version of the realized absolute variation error
+log
+ﬃﬃﬃﬃﬃﬃ
+/C240/C228
+2
+r XM
+j¼1
+jyj,nj
+8
+<
+:
+9
+=
+; /C0log /C243[1]
+n ,
+plus and minus twice the corresponding standard errors using (28). The standard errors have
+now stabilized, almost not moving with n. This is not surprising for t times
+t/C01
+ðt
+0
+/C2432(s)ds
+t/C01
+ð t
+0
+/C243(s)ds
+#Coi#Co>2
+is empirically very close to one for small values of t, while for large t it converges to
+Ef/C2432(t)g
+[Ef/C243(t)g]2 ,
+so long as the volatility process is ergodic and the moments exist.
+The corresponding QQ plots in Figure 3 have also improved, with the normality
+approximation being accurate even for moderate values of M. This result carries over to
+wider simulations we have conducted.
+260 O.E. Barndorff-Nielsen and N. Shephard
+Barndorff-Nielsen and Shephard (2003) have studied the effect of taking log transforms
+in the case of r ¼ 2. That paper used simulation and some theory to show the bene ﬁcial
+effect of taking a log and comparing its effectiveness with other transformations.
+7. Conclusions
+This paper has introduced the idea of realized power variation, which generalizes the
+concept of realized volatility. The asymptotic analysis we provide, for /C228# 0, represents a
+signiﬁcant extension of the usual quadratic variation result. Further, we provide a limiting
+distribution theory which considerably strengthens the consistency result and allows us to
+understand the variability of the difference between the realized power variation and the
+actual power volatility.
+Figure 3. Plots of the log transform of the realized absolute variation. Left-hand plots are the errors
+plus and minus twice their asymptotic standard errors. Corresponding QQ plots are on the right, based
+on the standardized log realized absolute variations
+Realized power variation and stochastic volatility models 261
+We have seen that when we take a log transformation of the realized power variation, the
+ﬁnite-sample performance of the asymptotic approximation to the distribution of this
+estimator improves and seems to be accurate even for moderate values of M.
+Our motivation for the study reported in this paper came originally from mathematical
+ﬁnance and ﬁnancial econometrics, where volatility is a key object of study. However,
+stochastic models in the form of a ‘signal’ Æ/C3plus a noise term e, where e is
+(conditionally) Gaussian with a variance that varies from ‘site’ to ‘site’, are ubiquitous in
+the natural and technical sciences, and we believe that results similar to those discussed
+here will be of interest for applications in a variety of other ﬁelds, for instance in
+turbulence and in spatial statistics (in this connection, see Guyon and Leon 1989).
+Finally, the thesis of Becker (1998) consists of a comprehensive study of the limit
+behaviour as M !1 of processes of the type
+yM (t) ¼
+X[Mt]
+j¼1
+f j /C01
+M , 1ﬃﬃﬃﬃﬃ
+M
+p x j
+M
+#Cnþ#Cn9
+/C0x j /C01
+M
+#Cnþ#Cn9()"#
+,
+where f is function of two variables and x denotes a Brownian semimartingale (of a certain
+kind; see below). The diffusion case is especially important. Extensions to general continuous
+or purely discontinuous semimartingales and even combination of the two are presented. The
+thesis is partly based on an earlier report by Jacod (1993; see also Delattre and Jacod (1997)
+and Florens-Zmirou (1993). Both x and f may be multidimensional, and generalizations to
+cases where not only the increment of x over the jth interval but also the whole trajectory
+over that interval occurs in the second argument of f are also considered.
+We shall not attempt to indicate here the precise results and the accompanying regularity
+conditions of Becker ’s thesis in any detail, but we wish to underline that the setting of his
+study is extremely general. Of immediate interest in connection with the present paper are
+his results when x is a Brownian semimartingale. More speci ﬁcally, Becker considers the
+case x where of the form
+x(t) ¼
+ð
+t
+0
+c(s)ds þ
+ðt
+0
+/C243(s)dw(s),
+where w is Brownian motion and c and /C243are predictible and subject to restrictions on their
+variational behaviour. He shows, in particular, that yM (t) converges, after suitable centring, to a
+stochastic process which is representable as a certain type of stochastic integral where the
+integration is with respect to a ‘martingale-measure tangential to x’. A key point of our present
+work is that for the kind of functions f we consider (absolute powers), we are able to identify the
+limit behaviour as mixed Gaussian and, crucially for statistical applicability, from this to
+establish standard normal limit statements using random rescaling by observable scale factors.
+Acknowledgements
+This paper represents a revision of the paper ‘Higher order variation and stochastic
+volatility models ’, which ﬁrst appeared on 4 July 2001. It had the result that (25) converges
+262 O.E. Barndorff-Nielsen and N. Shephard
+to zero when r ¼ 2, 4, 6, ... . The general asymptotic distribution result contained in (6)
+was ﬁrst discussed in public on 11 August 2001 at the Market Microstructure Conference,
+Centre for Analytical Finance, Denmark. Comments by Tim Bollerslev, Svend Erik
+Graversen, Matthias Winkel and the referees have been very helpful.
+Ole E. Barndorff-Nielsen ’s work is supported by the Centre for Analytical Finance
+(www.caf.dk), which is funded by the Danish Social Science Research Council, and by the
+Centre for Mathematical Physics and Stochastics (www.maphysto.dk), which is funded by
+the Danish National Research Foundation. Neil Shephard ’s research is supported by the UK
+Economic and Social Research Council through the grant ‘Econometrics of trade-by-trade
+price dynamics ’, which is coded R00023839.
+References
+Andersen, T.G. and Bollerslev, T. (1997) Intraday periodicity and volatility persistence in ﬁnancial
+markets. J. Empir. Finance , 4, 115 –158.
+Andersen, T.G. and Bollerslev, T. (1998a) Answering the skeptics: yes, standard volatility models do
+provide accurate forecasts. Internat. Econom. Rev. , 39, 885 –905.
+Andersen, T.G. and Bollerslev, T. (1998b) Deutsche mark –dollar volatility: intraday activity patterns,
+macroeconomic announcements, and longer run dependencies. J. Finance, 53, 219 –265.
+Andersen, T.G., Bollerslev, T., Diebold, F .X. and Ebens, H. (2001a) The distribution of realized stock
+return volatility. J. Financial Econom. , 61,4 3 –76.
+Andersen, T.G., Bollerslev, T., Diebold, F .X. and Labys, P . (2001b) The distribution of exchange rate
+volatility. J. Amer. Statist. Assoc. , 96,4 2 –55.
+Andreou, E. and Ghysels, E. (2002) Rolling-sampling volatility estimators: some new theoretical,
+simulation and empirical results. J. Business Econom. Statist. , 20, 363 –376.
+Areal, N.M.P .C. and Taylor, S.J. (2002) The realized volatility of FTSE-100 futures prices. J. Futures
+Markets, 22, 627 –648.
+Bai, X., Russell, J.R. and Tiao, G.C. (2000) Beyond Merton ’s utopia: effects of non-normality and
+dependence on the precision of variance estimates using high-frequency ﬁnancial data.
+Unpublished paper, Graduate School of Business, University of Chicago.
+Barndorff-Nielsen, O.E. and Shephard, N. (2001) Non-Gaussian Ornstein –Uhlenbeck-based models
+and some of their uses in ﬁnancial economics (with discussion). J. Roy. Statist. Soc. Ser. B , 63,
+167–241.
+Barndorff-Nielsen, O.E. and Shephard, N. (2002) Econometric analysis of realized volatility and its
+use in estimating stochastic volatility models. J. Roy. Statist. Soc. Ser. B , 64, 253 –280.
+Barndorff-Nielsen, O.E. and Shephard, N. (2003) How accurate is the asymptotic approximation to the
+distribution of realized volatility? In D. Andrews, J. Powell, P .A. Ruud, and J.H. Stock (eds),
+Identiﬁcation and Inference for Econometric Models. A Festschrift in Honour of Thomas J.
+Rothenberg, Econometric Society Monograph Series. Cambridge: Cambridge University Press.
+Forthcoming.
+Becker, E. (1998) The ´ore`mes limites pour des processus discre ´tise´s. Doctoral thesis, Universite ´
+Paris 6.
+Bollerslev, T. and Forsberg, L. (2002) Bridging the gap between the distribution of realized ECU
+volatility and ARCH modelling of the Euro: The GARCH normal inverse Gaussian model. J.
+Appl. Econometrics , 17, 535 –548.
+Realized power variation and stochastic volatility models 263
+Bollerslev, T. and Zhou H. (2002) Estimating stochastic volatility diffusion using conditional moments
+of integrated volatility. J. Econometrics , 109,3 3 –65.
+Cao, C.Q. and Tsay, R.S. (1992) Nonlinear time-series analysis of stock volatilities. J. Appl.
+Econometrics, 7, S165 –S185.
+Christensen, B.J. and Prabhala, N.R. (1998) The relation between implied and realized volatility. J.
+Financial Econom. , 37, 125 –150.
+Corsi, F ., Zumbach, G., Mu¨ller, U. and Dacorogna, M. (2001) Consistent high-precision volatility from
+high-frequency data. Unpublished paper, Olsen and Associates, Zurich.
+Dacorogna, M.M., Mu¨ller, U.A., Olsen, R.B. and Pictet, O.V . (1998) Modelling short term volatility
+with GARCH and HARCH. In C. Dunis and B. Zhou (eds), Nonlinear Modelling of High
+Frequency Financial Time Series . Chichester: Wiley.
+Davis, R.A. and Mikosch, T. (1998) The limit theory for the sample ACF of stationary process with
+heavy tails with applications to ARCH. Annals of Statistics , 26, 2049 –2080.
+Delattre, S. and Jacod, J. (1997) A central limit theorem for normalized functions of the increments of
+a diffusion process, in the presence of round-off errors. Bernoulli, 3,1 –28.
+Ding, Z., Granger, C.W .J. and Engle, R.F . (1993) A long memory property of stock market returns and
+a new model. J. Empir. Finance , 1,8 3 –106.
+Florens-Zmirou, D. (1993) On estimating the diffusion coef ﬁcient from discrete observations. J. Appl.
+Probab., 30, 790 –804.
+Galbraith, J.W . and Zinde-Walsh, V . (2000) Properties of estimates of daily GARCH parameters based
+on intra-day observations. Unpublished paper, Economics Department, McGill University.
+Ghysels, E., Harvey, A.C. and Renault, E. (1996) Stochastic volatility. In C.R. Rao and G.S. Maddala
+(eds), Statistical Methods in Finance , pp. 119 –191. Amsterdam: North-Holland.
+Granger, C.W .J. and Ding, Z. (1995) Some properties of absolute returns, an alternative measure of
+risk. Ann. E´ conom. Statist. , 40,6 7 –91.
+Granger, C.W .J. and Sin, C.-Y . (2002) Modelling the absolute returns of different stock indices:
+exploring the forecastability of an alternative measure of risk. J. Forecasting. Forthcoming.
+Guyon, X. and Leon, J. (1989) Convergence en loi des H-variations d ’un processus gaussien
+stationnaire sur R. Ann. Inst. H. Poincare´ Probab. Statist., 25, 265 –282.
+Heston, S.L. (1993) A closed-form solution for options with stochastic volatility, with applications to
+bond and currency options. Rev. Financial Stud. , 6, 327 –343.
+Hull, J. and White, A. (1987) The pricing of options on assets with stochastic volatilities. J. Finance,
+42, 281 –300.
+Jacod, J. (1993) Limit of random measures associated with the increments of a Brownian
+semimartingale. Preprint, Paris 6.
+Jorion, P . (1995) Predicting volatility in the foreign exchange market. J. Finance, 50, 507 –528.
+Lyons, T. (1994) Differential equations driven by rough signals. I. An extension of an inequality by
+L.C. Y oung. Math. Res. Lett. , 1, 451 –464.
+Maheswaran, S. and Sims, C.A. (1993) Empirical implications of arbitrage-free asset markets. In
+P .C.B. Phillips (ed.), Models, Methods and Applications of Econometrics . Cambridge, MA: Basil
+Blackwell.
+Maheu, J.M. and McCurdy, T.H. (2002) Nonlinear features of realised FX volatility. Rev. Econom.
+Statist., 84, 668 –681.
+Meddahi, N. and Renault, E. (2002) Temporal aggregation of volatility models. J. Econometrics .
+Forthcoming.
+Mikosch, T. and Norvais ˇa, R. (2000) Stochastic integral equations without probability. Bernoulli, 6,
+401–434.
+264 O.E. Barndorff-Nielsen and N. Shephard
+Mikosch, T. and Starica, C. (2000) Limit theory for the sample autocorrelations and extremes of a
+GARCH(1, 1) process. Ann. Statist ., 28, 1427 –1451.
+Nicolato, E. and Venardos, E. (2002) Option pricing in stochastic volatility models of the Ornstein –
+Uhlenbeck type. Math. Finance . Forthcoming.
+Poterba, J. and Summers, L. (1986) The persistence of volatility and stock market ﬂuctuations. Amer.
+Econom. Rev., 76, 1124 –1141.
+Renault, E. (1997) Econometric models of option pricing errors. In D.M. Kreps and K.F . Wallis (eds),
+Advances in Economics and Econometrics: Theory and Applications , pp. 223 –78. Cambridge:
+Cambridge University Press.
+Schwert, G.W . (1989) Why does stock market volatility change over time? J. Finance, 44, 1115 –1153.
+Shiryaev, A.N. (1999) Essentials of Stochastic Finance: Facts, Models and Theory . Singapore: World
+Scientiﬁc.
+Taylor, S.J. (1986) Modelling Financial Time Series . Chichester: Wiley.
+Taylor, S.J. and Xu, X. (1997) The incremental volatility information in one million foreign exchange
+quotations. J. Empir. Finance , 4, 317 –340.
+West, K.D. and Cho, D. (1995) The predictive ability of several models for exchange rate volatility. J.
+Econometrics, 69, 367 –391.
+Received October 2001 and revised July 2002
+Realized power variation and stochastic volatility models 265

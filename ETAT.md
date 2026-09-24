@@ -1,8 +1,8 @@
 # ÉTAT
 
 **Phase courante :** 09 — premier passage complet sur 30 à 50 papiers
-**Date de dernière mise à jour :** 2026-09-23 (17:34 UTC — `scripts/gate_09.py`
-écrit, voir § Prochaine action)
+**Date de dernière mise à jour :** 2026-09-24 (08:30 UTC — 35 papiers moissonnés
+promus au texte D18, voir § Prochaine action)
 **Dernière porte franchie :** **08**, le 2026-09-23 — `scripts/gate_08.py`. Un
 signal produit par une session de codage séparée tient les **six conditions de
 `D23` au premier essai**, et aucun signal produit n'a été retouché à la main.
@@ -50,6 +50,13 @@ puis mesurée — la forme en U de la volatilité intra-journalière est retrouv
 reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
 **Décision la plus récente :**
+`decisions/DECISION-26-encadrement-des-frais.md` — les frais par contrat sont
+**encadrés, pas devinés** : borne basse = barème Lucid seul, borne haute = Lucid +
+CME non-membre + NFA ; toute lecture nette qui conditionne un choix se fait à la
+**borne haute**. `fee_per_contract_usd` **reste `null` exprès** — rempli, il
+effacerait `fee_bp` des manques de `harness/costs.py` sans l'ajouter au coût.
+Les frais CME changent le **2026-10-01** : à relever de nouveau.
+**Décision précédente :**
 `decisions/DECISION-25-budget-de-tests.md` — le budget de la phase 09.
 **Benjamini–Hochberg à `q` = 0,10**, test unilatéral au signe pré-enregistré,
 sur un lot de **50 signaux clos avant la première mesure**. Deux faits mesurés la
@@ -174,7 +181,7 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 | Attendu | De qui | Bloque |
 |---|---|---|
 | Moteur de backtest | tiers | phase 10 |
-| Frais CME / EUREX, multiplicateurs de contrat | **nous** — barèmes publics, à dépouiller | la complétude du coût : tant qu'ils sont `null`, `harness/costs.py` ne rend qu'un **plancher** étiqueté, donc tout IC net est un **majorant de performance** (phase 10, et toute lecture nette d'ici là) |
+| Frais par contrat — **encadrés par `D26`**, champ laissé `null` jusqu'à ce que le harnais sache les lire ; multiplicateur FDAX | **nous** — les **neuf multiplicateurs CME sont déposés** depuis le 2026-09-24 (`catalogue.yaml` § provenance) ; les frais restent `null` | la complétude du coût : tant qu'ils sont `null`, `harness/costs.py` ne rend qu'un **plancher** étiqueté, donc tout IC net est un **majorant de performance** (phase 10, et toute lecture nette d'ici là) |
 
 ## Prochaine action
 
@@ -187,6 +194,55 @@ Relancer plutôt que recopier (`L21`) :
 python scripts/gate_07.py      # G1 = G2 = G3 = G4 = 0
 python scripts/gate_08.py      # 1 signal, 6/6, aucune retouche
 ```
+
+### SI TU ARRIVES SUR UNE AUTRE MACHINE — à lancer en premier
+
+Une question ouverte depuis le 2026-09-24 : **l'extraction peut-elle passer à un
+modèle local et gratuit ?** Elle ne se tranche pas en lisant, elle se mesure, et
+**le matériel décide avant le modèle**. Première commande, avant toute
+discussion :
+
+```
+python corpus/bench_local_extractor.py --machine
+```
+
+Elle relève GPU, VRAM, RAM et disque de **cette** machine-ci, les compare au
+poste de référence (mesuré, daté, nommé — c'est un fait d'un poste, jamais un
+fait du dépôt) et rend un verdict. Les seuils, calculés depuis le poids de
+Qwen3-8B (5,2 Go) et son cache KV (~144 ko/token) :
+
+| VRAM | Ce que ça permet |
+|---|---|
+| **≥ 12 Go** | Qwen3-8B tient pour **tout** le lot, `num_ctx` 40 960 compris |
+| **8 à 12 Go** | les **petits** papiers seulement ; les gros s'inscrivent `contexte_depasse` |
+| **< 8 Go** | comme la référence — un **4B** est le maximum réaliste |
+
+**Le poste de référence est sous le seuil** : GTX 1650, 4 Go de VRAM. Qwen3-8B y
+a été téléchargé, constaté inutilisable et **retiré** ; un `num_ctx` plat à
+40 960 y a fait tomber le disque de 12 Go à **1,4 Go** (Windows gonfle son
+fichier d'échange), et un seul essai sur le plus petit papier a dépassé
+**25 minutes** sans rendre la main.
+
+Si ta machine est au-dessus du seuil, la mesure qui manque est celle-ci — un
+papier, le même juge, la même consigne :
+
+```
+ollama pull qwen3:8b
+python corpus/bench_local_extractor.py --run performance-of-time-series-momentum-strategy-us-W4388535504 --model qwen3:8b
+python corpus/bench_local_extractor.py --report
+```
+
+**La règle de décision est écrite AVANT la mesure**, comme le veut l'invariant IV :
+
+| Résultat | Conclusion |
+|---|---|
+| vert en ≤ 2 essais | le local gagne — l'extraction bascule, ~3 M de tokens économisés |
+| vert en 3 essais | utilisable pour dégrossir, à re-juger |
+| `F2` cassé à chaque essai | la citation mot pour mot ne passe pas à cette taille — c'est non |
+| `contexte_depasse` | la VRAM ne suffit pas pour ce papier |
+
+**Référence à battre, mesurée et non recopiée** : **1,33 essai par fiche**,
+6 fiches vertes sur 6, par un modèle de frontière (`corpus/PRODUCED_harvest.json`).
 
 ### Ce que la phase 09 demande
 
@@ -216,33 +272,51 @@ registre **entier**, les 56 tests antérieurs compris.
 
 ### Ce qui bloque la phase 09, maintenant que le budget est fixé
 
-**Le triage des 119 moissonnés est fait — le 2026-09-23.** Quatre sessions
-séparées, lots de 30, échelle de `D15`. Relancer par
-`python corpus/merge_triage.py`, ne pas recopier (`L21`) :
+1. **Il manque 33 fiches.** `D25` engage un lot de 50 ; le corpus en porte **17**.
+   **La matière existe désormais** : le triage du 2026-09-23 a retenu 39
+   papiers moissonnés sur 119 (10 `oui`, 29 `partiel`,
+   `corpus/triage_harvest_verdicts.json`), et `corpus/promote_harvest.py`
+   (2026-09-24) les a fait passer par `D18` — **35 ont leur texte qui fait foi**
+   (default+layout) dans `corpus/text/`, `text_source` basculé à
+   `authoritative` pour 34 d'entre eux dans la base (`D22` § Journal, passage
+   2). Un exclu (bug `pypdf` reproductible sur un PDF précis, non contourné),
+   un doublon du `gao-2018` déjà connu (`L20`). **L'outil de préparation/jugement
+   existe** — `corpus/extract_fiche_harvest.py`, sœur d'`extract_fiche.py` mais
+   avec un **stockage séparé** (`corpus/fiches_harvest/`,
+   `corpus/PRODUCED_harvest.json`) : `gate_07.py` juge G2/G3 sur TOUT
+   `corpus/fiches/*.json` et TOUT `corpus/PRODUCED.json` sans filtrer par
+   population, donc une fiche moissonnée écrite au mauvais endroit aurait pu
+   repasser la porte 07 à NON FRANCHIE sans qu'aucune décision ne l'ait voulu.
+   **Circuit validé de bout en bout, le 2026-09-24, sur un vrai papier** :
+   session isolée (Agent, lisant UNIQUEMENT la consigne) → fiche → `--record`
+   → `--judge` → refus sur 2 citations (espace inséré au milieu d'un chiffre
+   par l'extraction PDF, `"2. 564"`) → renvoyé à la MÊME session (pas une
+   retouche manuelle) → **les cinq conditions de `D16` tiennent, essai 2**.
+   Même schéma que Patton & Sheppard en phase 07 (2 itérations).
+   **Premier lot de 5 produit le 2026-09-24** : 5 sessions isolées en
+   parallèle, **4 vertes au premier essai**, la cinquième refusée sur
+   `signal_construction.value absent` — **cinquième occurrence indépendante de
+   la même faute**, ce qui renforce le point 9 de la liste ci-dessous (c'est un
+   défaut du schéma ou de la consigne, pas cinq erreurs) — puis verte après
+   repassage. **6 fiches sur 35 candidats, 29 restantes.**
+   **`L26` est sortie de ce lot** : l'isolement de l'extracteur a un plafond que
+   personne n'avait écrit — `CLAUDE.md` est injecté dans toute session de ce
+   dossier, et une fiche a cité `D01` §5 qui n'est ni dans sa consigne ni dans
+   `corpus/SCHEMA.md`. Les 17 fiches de la phase 07 ont été produites dans la
+   même condition. Aucune fuite de verdict ni de fiche ; le cadre, oui.
+   **Un candidat est bloqué** : `market-intraday-momentum-apac-evidence` n'a pas
+   de texte `D18` **sous son propre nom** — son PDF est le doublon d'octets de
+   `gao-2018-market-intraday-momentum.pdf`, donc son texte qui fait foi existe
+   sous le nom d'un AUTRE papier (`L20` qui resurgit). L'outil refuse plutôt que
+   de deviner. À trancher à part : renommer touche des artefacts liés à
+   l'entrée 1, donc à la population `G1`-`G4`.
 
-| Verdict | Nombre |
-|---|---|
-| `oui` — calculable entièrement sur nos 9 futures | **10** |
-| `partiel` — l'idée transfère, il manque quelque chose | **29** |
-| `non` | **80** |
-
-**39 retenus.** Avec les 17 fiches existantes, le gisement est de **56** pour un
-lot de 50 : jouable, mais sans marge. Les `partiel` sont 29 sur 39, et une part
-tombera à l'écriture de la fiche ou au codage. **Si on descend sous 50, `D25`
-s'amende par écrit** — on n'ajuste pas en silence.
-
-**Réserve honnête sur ce triage :** le lot 1 a rendu **0 `oui`** quand le lot 3
-en a rendu **4**. Les lots sont ordonnés par titre, donc l'écart peut venir du
-contenu autant que de la sévérité du trieur. **Non tranché**, et il ne faut pas
-le supposer.
-
-1. **Il manque 33 fiches, et le gisement est identifié.** `D25` engage un lot de
-   50 ; le corpus en porte **17**. Le triage des 119 moissonnés (2026-09-23) en
-   retient **39** — soit **56 au total**, donc jouable **sans marge**. Il reste
-   à **geler leur texte** (`python corpus/extract_text.py` ; ils sont `harvest`,
-   donc `F2` ne peut pas s'en servir — `D22`) puis à les ficher. **Si le compte
-   final descend sous 50, `D25` s'amende par écrit** ; on n'ajuste pas `N` en
-   silence.
+   **Réserve non tranchée sur ce triage, et elle n'est écrite qu'ici.** Le
+   lot 1 a rendu **0 `oui`** quand le lot 3 en a rendu **4**. Les lots sont
+   ordonnés par titre, donc l'écart peut venir du contenu autant que de la
+   sévérité du trieur. **Personne ne l'a départagé**, et il ne faut pas le
+   supposer : si le rendement en fiches vertes diffère nettement d'un lot à
+   l'autre, c'est là qu'il faudra regarder.
 2. **La matrice de corrélation des 50 signaux** doit être produite **avant**
    d'appliquer `BH` : la procédure suppose une dépendance positive, et plusieurs
    papiers d'intraday momentum donneront des signaux corrélés.
@@ -269,10 +343,10 @@ le supposer.
 
 | Point | Pourquoi ça compte |
 |---|---|
-| **Frais CME / EUREX, multiplicateurs** — tous `null` | tant qu'ils le sont, `harness/costs.py` ne rend qu'un **plancher étiqueté**, donc tout IC net est un **majorant de performance**. La phase 09 produit justement des IC |
+| **Frais par contrat** — `null` sur les dix, **encadrés par `D26`** (relevé CME à refaire après le 2026-10-01 ; l'intégration au harnais, avec `slippage_bp`, sera UNE décision qui périme les 56 tests une seule fois). *Multiplicateurs : déposés le 2026-09-24 pour les neuf CME, avec provenance `D09` ; FDAX reste `null` (unité en EUR, hors univers)* | tant que les frais le sont, `harness/costs.py` ne rend qu'un **plancher étiqueté**, donc tout IC net est un **majorant de performance**. La phase 09 produit justement des IC |
 | **`slippage_bp` à déclarer** | même famille |
 | **`ruff format harness/`** reformaterait 4 fichiers | le harnais est **figé et versionné** ; le reformater changerait son empreinte et **périmerait les 56 tests comptés**. Ne pas lancer |
-| **`scripts/gate_06_controls.py` ÉCRIT au registre** | une ligne de calibration par passage. Légitime (`counted_tests` ne bouge pas) mais **pas gratuit** — le passer dans une revue de gardes coûte une ligne irremplaçable. Les autres gardes n'écrivent rien |
+| **`scripts/gate_06_controls.py` ÉCRIT au registre** | une ligne de calibration par passage. Légitime (`counted_tests` ne bouge pas) mais **pas gratuit** — le passer dans une revue de gardes coûte une ligne irremplaçable. **Correction du 2026-09-24 : `gate_03_harness.py` (3 lignes de calibration) et `gate_04_registry.py` (1 ligne, `porte-04-chemin-legitime`) écrivent AUSSI** — relancés ce jour sur la foi de la phrase précédente, ils ont ajouté 4 lignes non comptées (`counted_tests` reste 56). Voir `L25` |
 | **Le texte qui fait foi pour le HTML** | `D24` § Ce qui reste ouvert. Si `D18` s'étend au HTML, l'entrée 9 redevient fichable, `G1` repasse à 1, et la porte 07 est réputée non franchie |
 
 ---

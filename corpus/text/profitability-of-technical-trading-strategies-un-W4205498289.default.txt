@@ -1,0 +1,413 @@
+Profitability of technical trading strategies 
+under market manipulation
+Alfred Ma1,2*  
+Introduction
+The closing price is important in finance. It is the most commonly used financial data in 
+both academia and industry. Given its importance, it is also exposed to market manipu -
+lation which is defined as stock prices being artificially influenced (Allen and Gale 1992). 
+However, most quantitative trading strategies use the official closing price as their input. 
+This study examines the profitability impact of closing price market manipulation on 
+technical trading strategies.
+Putniņš (2012) and Thoppan and Punniyamoorthy (2013) provide comprehensive sur -
+veys on market manipulation. Allen and Gale (1992) are early pioneers to start studies 
+on market manipulation and formalize the study. They also introduce the concept of 
+trade-based and information-based manipulation to classify cases of market manipula -
+tion. Aggarwal and Wu (2006) investigate cases of stock market manipulation and con -
+clude that market manipulation alters stock returns as a result.
+Market manipulation is not a problem only specific to some particular stocks. Closing 
+prices of all stocks are also subject to manipulation especially on some particular dates. 
+Ni et  al. (2005) and Agarwalla and Pandey (2013) study the expiration-day effect; Rit -
+ter (1988) studies the end-of-year effect; Ariel (1987) studies the monthly effect; Cross 
+(1973), Keim and Stambaugh (1984), Harris (1986), French (1980), Admati and Pflei -
+derer (1989), and Kamara (1997) study the weekday effect. Closing price manipulation 
+occurs regardless of the specialty of the day.
+Evidence of closing price manipulation in different financial markets has been stud -
+ied in the literature. Cheung (1995) studies Hong Kong stock market; Felixson and Pelli 
+(1999) study Finland stock market; Harris (1989), Chang et al. (1995), and Cushing and 
+Madhavan (2000) studies the United States stock market; Hillion and Suominen (2004), 
+Abstract 
+Most technical trading strategies use the official closing price for analysis. But what is 
+the effect when the official closing price is subject to market manipulation? This paper 
+answers this question by testing the difference of profitabilities between using the 
+official closing price and the last tick price. The results show a significant improvement 
+of profitability by using the last tick price over the official closing price based on a data 
+set in Hong Kong from 2011 to 2018.
+Open Access
+© The Author(s), 2022. Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which permits 
+use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original 
+author(s) and the source, provide a link to the Creative Commons licence, and indicate if changes were made. The images or other third 
+party material in this article are included in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the mate-
+rial. If material is not included in the article’s Creative Commons licence and your intended use is not permitted by statutory regulation or 
+exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this licence, visit http:// 
+creat iveco mmons. org/ licen ses/ by/4. 0/.
+RESEARCH
+Ma  Financial Innovation             (2022) 8:5  
+https://doi.org/10.1186/s40854-021-00304-7 Financial Innovation
+*Correspondence:   
+kachunma@cityu.edu.hk 
+1 City University of Hong 
+Kong, Kowloon, Hong Kong, 
+China
+Full list of author information 
+is available at the end of the 
+article
+Page 2 of 9Ma  Financial Innovation             (2022) 8:5 
+Michayluk and Sanger (2006), and Kandel et al. (2012) study the France stock market; 
+Kucukkocaoglu (2008) studies the Istanbul stock market; McInish and Wood (1990) 
+study the Canada stock market; Hsieh (2015) studies the Taiwan stock market; Kandel 
+et al. (2012) study the Italy stock market; Hagströmer and Nordén (2014) study the Swe -
+den stock market. The day-end effect on the closing price is far from an area-specific 
+problem.
+The evidence of closing price manipulation is the systematic price movement near 
+the market close. This anomaly potentially affects everything that relies on the closing 
+price, including return calculation and valuation. Stock exchanges over the world seek 
+a solution to prevent closing price manipulation. Many exchanges introduce closing call 
+auctions to determine the closing price to decrease the chance of manipulation. Com -
+erton-Forde and Rydge (2006) investigate various algorithm designs for call auctions. 
+They find that some algorithm designs of call auction systems can prevent manipulation. 
+Empirically, Comerton-Forde et al. (2007), Pinfold and He (2012), Hagströmer and Nor -
+dén (2014), Huang and Chan (2014), and Kadıoğlu et al. (2015) study the implementa -
+tion of closing call auction in different regions. The results mainly show that closing call 
+auction reduces manipulation. Most major exchanges adopt closing auction methodol -
+ogy to determine the closing price.
+Additionally, Hillion and Suominen (2004) and Comerton-Forde and Putniņš (2011b) 
+use theoretical model to study real stock manipulation cases to seek explanation for 
+manipulation. Both models suggest strong incentives for market manipulation. With the 
+rise of high-frequency trading possibly to exploit the opportunity, Aitken et  al. (2015) 
+find increases of manipulation in both frequency and severity. Comerton-Forde and 
+Putniņš (2011a) and Comerton-Forde and Putniņš (2013) formulate frameworks for the 
+measurement of manipulation in terms of frequency and severity. Bogousslavsky and 
+Muravyev (2020) study order imbalances at the close and find that order imbalances 
+potentially can distort closing prices.
+The main goal of this study is to investigate the impact of closing price manipula -
+tion from a practical point of view. As an illustration, there is no manipulation, and the 
+closing price is “clean” in a perfect world. In an imperfect world, there is manipulation, 
+and the closing price is “dirty” . Between the two worlds lies the real world, where clos -
+ing price methodology is designed to find the official closing price as shown in Fig.  1. 
+Whereas the official closing price is the default choice for most financial purposes, there 
+are flexible applications. In technical analysis, the closing price is an essential input. If 
+the official closing price is still subject to market manipulation after the closing auction 
+methodology, what is the impact on profitability?
+Methodology
+Brock et  al. (1992) present a seminal empirical work on the profitability of technical 
+analysis. The methodology adopted in this study is based on an extension of their work 
+[see for example Chan et al. (2016)] where the objective is to show the impact on profit -
+ability in different situations.
+In this study, a collection of technical trading strategies is selected from the literature. 
+They are characterized by different parameters, but all strategies need to have the clos -
+ing price as their input to compute the trading signals. Based on the trading signals, the 
+Page 3 of 9
+Ma  Financial Innovation             (2022) 8:5 
+ 
+profitability of each technical trading strategy can then be computed. Instead of using 
+the closing price, the same numerical experiment is repeated with its substitute. The dif -
+ference between the two computed profitabilities is then tested statistically.
+For this study to make sense, the substitute of the official closing price should be cho -
+sen to reflect the stock’s true value near the market close. Otherwise, feeding random 
+prices to quantitative trading strategies definitely can significantly change profitability, 
+but the conclusion is meaningless. In this study, the traded price of the very last tick 
+recorded in the continuous trading session is used to substitute the official closing price 
+to generate trading signals. There are two reasons. First, regardless of the closing price 
+methodology, the official closing price is still subject to manipulation and thus may not 
+reflect the true value. Second, the last tick price is not as widely used as the official clos -
+ing price. It should not be subject to the same pressure of potential manipulation. More-
+over, it is the traded price nearest market close. Summarily, the last tick price is another 
+proxy of “clean” closing price in Fig. 1.
+Following Chan et  al. (2016), profitabilities of various representative technical trad -
+ing strategies using the official closing price versus the last tick price is compared. The 
+strategies include Variable Length Moving Average (VMA), Fixed Length Moving Aver -
+age (FMA), Trading Range Break (TRB), Relative Strength Index (RSI), and Intraday and 
+Interday Momentum (IIM) with their full description in “ Appendix” . There are 75 dis-
+tinct strategies in total. The differences in profitabilities are then tested using Analysis of 
+Variance (ANOVA) models with blocking.
+Fig. 1 Different types of closing price
+Page 4 of 9Ma  Financial Innovation             (2022) 8:5 
+Data description
+The dataset covers the Hang Seng Index (HSI) constituents from 2011 to 2018 inclu -
+sively. The stock list excludes all infrequently traded stocks and captures high market 
+capitalization. The official closing prices are collected from Bloomberg. The intraday 
+data are collected from Hong Kong Exchanges and Clearing Limited (HKEx). There are 
+37 stocks with complete data, and their details are listed in Table 1.
+HKEx has changed the trading hours of the stock market twice throughout the period. 
+On March 7, 2011, they changed the lunch hour’s break from 2 h to 1.5 h. On March 
+5, 2012, they further changed to 1 h. In addition to the lunch break, HKEx introduced 
+Table 1 List of Hong Kong stocks with market capitalization on December 31, 2018
+Stock codes Name Industry Market Cap
+(Billion HKD)
+2 CLP HOLDINGS Electricity Supply 224
+3 HK & CHINA G Gas Supply 249
+5 HSBC HOLDING Banks 1298
+11 HANG SENG BA Banks 336
+12 HENDERSON LA Property Development 172
+16 SHK PPT Property Investment 323
+27 GALAXY ENT Gamble 215
+66 MTR CORPORAT Public Transport 253
+83 SINO LAND Property Development 91
+101 HANG LUNG PP Property Investment 67
+151 WANT CH Diversified Food & Beverage 68
+175 GEELY AUTO Automobiles & Components 124
+267 CITIC Conglomerates 357
+386 SINOPEC CORP Petroleum & Gases 692
+388 HKEX Other Financials 283
+762 CHINA UNICOM Telecomm. Services 256
+823 LINK REIT REIT 167
+836 CHINA RES PO Electricity Supply 72
+857 PETROCHINA Petroleum & Gases 1432
+883 CNOOC Petroleum & Gases 540
+939 CCB Banks 1623
+941 CHINA MOBILE Telecomm. Services 1543
+1038 CKI HOLDINGS Conglomerates 157
+1088 CHINA SHENHU Coal 395
+1093 CSPC PHARMA Medicine 70
+1177 SINO BIOPHAR Medicine 65
+1299 AIA Insurance 785
+1398 ICBC Banks 2109
+1928 SANDS CHINA Gamble 277
+2018 AAC TECH IT Hardware 55
+2313 SHENZHOU INT Apparel 133
+2318 PING AN Insurance 1207
+2319 MENGNIU DAIR Dairy Products 96
+2382 SUNNY OPTICA Industrial Goods 76
+2388 BOC HONG KONG Banks 308
+2628 CHINA LIFE Insurance 607
+3988 BANK OF CHINA Banks 1149
+Page 5 of 9
+Ma  Financial Innovation             (2022) 8:5 
+ 
+Closing Auction Session in the Hong Kong stock market on July 25, 2016. The Closing 
+Auction Session is a trading mechanism that allows trades to be executed at the clos -
+ing price. Before introducing the auction mechanism, the closing price is the 15-second 
+average price in the last minute of the trading day. The statistical tests include these two 
+blocking factors.
+Statistical results
+The following one-way ANOVA model decomposes the differences in daily returns.
+All blocks are specified in capital letters, and αi denotes the variables concerned: using 
+the official closing price or the last tick price. Table 2 describes all the other blocking fac-
+tors in the ANOVA. The observed variable is the daily return of the trading strategy on a 
+particular trading day.
+The function aov in R gives the results in Table 3. Table 4 shows that using the last tick 
+price increases profitability by 76 basis points a year ( 3.059300e−05 × 250  ) compared 
+with the use of the official closing price as inputs for technical trading strategies to com -
+pute trading signals. The difference is both statistically and economically significant. The 
+result is also consistent across different blocking factors including the lunch hours, clos -
+ing price methodologies, calendar month/year, trading strategies, and stocks. In other 
+words, while deciding on strategies, stocks, and time to apply technical analysis makes 
+(1)
+ri,j,k,l,m,n,h=µ + αi + LUNCH j + CLOSINGk ,+MONTH l + YEARm
++ STRATEGY n + STOCK h + ǫi,j,k,l,m ,n,h .
+Table 2 Blocking factors for ANOVA model (1)
+Variable Description
+LUNCH Three types of lunch gaps: 2 h, 1.5 h, and 1 h
+CLOSING Two types without or with Closing Auction Session
+MONTH Calendar month effects
+YEAR Calendar year effects
+STRATEGY Five classes of strategies with different param-
+eters totaling 75 distinct strategies described in “ 
+Appendix”
+STOCK Thirty seven stocks as listed in Table 1
+Table 3 Results for the ANOVA model (1)
+Df Sum Sq Mean Sq F value Pr(>F)
+αi 1 0.0 0.00247 20.140 7.20e−06
+CLOSINGk 1 0.0 0.00466 38.085 6.77e−10
+LUNCHj 2 0.0 0.01114 91.002 < 2e−16
+MONTHl 11 0.4 0.03959 323.412 < 2e−16
+YEARm 7 0.1 0.00977 79.792 < 2e−16
+STRATEGYn 74 0.0 0.00067 5.482 < 2e−16
+STOCKh 36 0.5 0.01268 103.577 < 2e−16
+Residuals 10536595 1289.8 0.00012
+Page 6 of 9Ma  Financial Innovation             (2022) 8:5 
+significant differences in performance, using last tick price to compute trading signals 
+robustly improve the performance.
+Discussion
+The implications of the result are two-fold—both practical and theoretical. From a prac -
+tical point of view, it suggests that the use of official closing price as inputs for quan -
+titative trading strategies may not be optimal. Particularly, using the last tick price for 
+technical analysis improves profitability. Nevertheless, the result suggests that the last 
+tick price is the best proxy for the “clean” closing price.
+From a theoretical point of view, quantitative analysis of financial data should yield 
+useful results. Under the garbage-in-garbage-out principle, better inputs for the analysis 
+should yield better results. When results are measured by profitability, the input show -
+ing higher profitability should be a better proxy to the “clean” closing price. In other 
+words, this study also supports the argument that the last tick price is better than the 
+official closing price to reflect the true market condition, possibly owing to closing price 
+market manipulation. This result is surprising because literature generally suggests that 
+closing price methodology such as closing call auction effectively reduces market manip-
+ulation. However, market manipulation is an adaptive process. As long as the official 
+Table 4 Results for the ANOVA model (1)
+Baseline refers to the estimates for i = k = j = l = m = n = h = 1 . The coefficients for stocks and strategies are 
+excluded
+Coefficient estimate
+Baseline 4.946672e−04
+With Closing Auction Session −6.292007e−05
+Last price 3.059300e −05
+Lunch gap of 1.5 h − 5.073916e−04
+Lunch gap of 1 h −5.484064e −04
+February − 3.221425e−04
+March − 5.466455e −05
+April 7.037117e−05
+May − 1.671546e−04
+June − 3.076000e−04
+July − 7.139136e−05
+August 2.225742e−04
+September − 4.773866e−05
+October − 4.669616e−04
+November − 4.488223e−04
+December − 6.344385e−05
+2012 1.231936e−04
+2013 2.232818e−04
+2014 6.404570e−05
+2015 2.850625e−04
+2016 8.499750e−05
+2017 2.674325e−04
+2018 1.191710e−04
+Page 7 of 9
+Ma  Financial Innovation             (2022) 8:5 
+ 
+closing price is still the default choice for all important financial functions such as return 
+calculation and valuation, there will always be strong temptation and force to game the 
+existing closing price methodology. Complete removal of market manipulation is diffi -
+cult, if not impossible.
+Conclusion
+This study investigates the sensitivity of profitability by altering the choice of input for 
+trading strategies based on technical analysis. Statistical results show that using the last 
+tick price increases the profitability significantly compared to the use of the official clos -
+ing price in the Hong Kong stock market. Market manipulation may affect quantitative 
+trading strategies, and it is worthwhile to search for better inputs for quantitative trading 
+strategies.
+Directions for future studies include a similar analysis on other markets, other periods, 
+and other stocks, including less frequently traded stocks, to draw a broader conclusion. 
+Finally, analytical models for this area are also important to address closing price manip-
+ulation and other economic issues.
+Appendix: Trading strategies
+Variable length moving average (VMA)
+The VMA rule generates a signal by comparing the short moving average (SMA) and 
+long-moving average (LMA). Given a band as a requirement, if the SMA is higher 
+(lower) than the LMA more than the band, it generates a buy (sell) signal. Following 
+Chan et al. (2016), this study includes 1-50, 1-150, 5-150, 1-200, 2-200 (period of SMA-
+period of LMA) in our study.
+Fixed length moving average (FMA)
+The FMA strategy has a buy (sell) signal when the SMA crosses the LMA as follows: 
+(above). Similarly, with the band as a requirement, the difference between LMA and 
+SMA should be larger than the band to secure a signal. The holding period will be fixed 
+as ten days according to Bessembinder and Chan (1998).
+Trading range break (TRB)
+The TRB strategy generates a signal if the stock price rises above the resistance (buy) or 
+below the support level (sell). The resistance level is defined as follows: local maximum 
+over n trading days where the support level is the minimum over n trading days. Similar 
+to the FMA strategy, the holding period will be fixed as ten days according to Brock et al. 
+(1992).
+Relative strength index (RSI)
+The RSI strategy using “50 crossover” trading rule is proposed by Wong et  al. (2003). 
+Let C t as the daily closing price at time t. First Step, we define U i = max (C i− C i−1,0) 
+and D i = max (C i−1 − C i,0) . Next, we compute U N (t) = 1
+N
+∑t
+i=t−N +1 U i and 
+D N (t) = 1
+N
+∑t
+i=t−N +1 D i . Finally, the RSI at time t is defined as as follows.
+Page 8 of 9Ma  Financial Innovation             (2022) 8:5 
+Accordingly, we follow the “50 crossover” method to generate the signal. When the RIS 
+is higher than 50, it is a buy signal, and vice versa. This study includes the four rules 
+tested, namely N equals to 5, 10, 20, 30 respectively in our study.
+Intraday and interday momentum (IIM)
+IIM strategies include two classes to strategies, namely intraday momentum, and inter -
+day momentum. They are based on the measurements Average Intraday Momentum 
+(AIM) and Average Interday Momentum (AOM) are defined as follows.
+This study includes 5 trading rules from Lam et al. (2007).
+Acknowledgements
+He thanks the referees for their helpful suggestions. He also thanks Ted Yu from CASH Algo Finance Group for his techni-
+cal support at the beginning of the project.
+Authors’ contributions
+The author read and approved the final manuscript.
+Authors’ information
+Alfred Ma is an Adjunct Professor at City University of Hong Kong and Hang Seng University of Hong Kong. He is a CFA 
+charter holder and has been working in algorithmic trading and FinTech industry. He holds a PhD in Operations Research 
+from Columbia University.
+Declarations
+Competing interests
+The authors declare that they have no competing interests.
+Author details
+1 City University of Hong Kong, Kowloon, Hong Kong, China. 2 Hang Seng University of Hong Kong, Sha Tin, Hong Kong, 
+China. 
+Received: 23 May 2020   Accepted: 14 November 2021
+References
+Admati AR, Pfleiderer P (1989) Divide and conquer: a theory of intraday and day-of-the-week mean effects. Rev Financ 
+Stud 2(2):189–223
+Agarwalla SK, Pandey A (2013) Expiration-day effects and the impact of short trading breaks on intraday volatility: evi-
+dence from the Indian market. J Futur Mark 33(11):1046–1070
+Aggarwal RK, Wu G (2006) Stock market manipulations. J Bus 79(4):1915–1953
+Aitken M, Cumming D, Zhan F (2015) High frequency trading and end-of-day price dislocation. J Bank Finance 
+59:330–349
+Allen F, Gale D (1992) Stock-price manipulation. Rev Financ Stud 5(3):503–529
+Ariel RA (1987) A monthly effect in stock returns. J Financ Econ 18(1):161–174
+Bessembinder H, Chan K (1998) Market efficiency and the returns to technical analysis. Financ Manag 27:5–17
+Bogousslavsky V, Muravyev D (2020) Who trades at the close? Implications for price discovery, liquidity, and disagree-
+ment. SSRN.
+Brock W, Lakonishok J, LeBaron B (1992) Simple technical trading rules and the stochastic properties of stock returns. J 
+Finance 47(5):1731–1764
+Chan R, Pan H, Ma A (2016) EMD-Candlestick: methodology and applications. J Tech Anal 69:21–38
+RSI N (t) = 100 − 100
+1 + U n(t)
+D N (t)
+.
+AIMN (t) =
+∑t
+i=t−N +1 |Ci − O i|
+N
+AOM N (t) =
+∑t
+i=t−N +1 |Ci − C i−1|
+N
+Page 9 of 9
+Ma  Financial Innovation             (2022) 8:5 
+ 
+Chang EC, Jain PC, Locke PR (1995). Standard & Poor’s 500 index futures volatility and price changes around the New York 
+Stock Exchange close. J Bus 68:61–84
+Cheung Y-L (1995) Intraday returns and the day-end effect: evidence from the Hong Kong equity market. J Bus Financ 
+Account 22(7):1023–1034
+Comerton-Forde C, Lau ST, McInish T (2007) Opening and closing behavior following the introduction of call auctions in 
+Singapore. Pac Basin Financ J 15(1):18–35
+Comerton-Forde C, Putniņš TJ (2011) Measuring closing price manipulation. J Financ Intermed 20(2):135–158
+Comerton-Forde C, Putniņš TJ (2011) Pricing accuracy, liquidity and trader behavior with closing price manipulation. Exp 
+Econ 14(1):110–131
+Comerton-Forde C, Putniņš TJ (2013) Stock price manipulation: prevalence and determinants. Rev Finance 18(1):23–66
+Comerton-Forde C, Rydge J (2006) Call auction algorithm design and market manipulation. J Multinatl Financ Manag 
+16(2):184–198
+Cross F (1973) The behavior of stock prices on Fridays and Mondays. Financ Anal J 29(6):67–69
+Cushing D, Madhavan A (2000) Stock returns and trading at the close. J Financ Mark 3(1):45–67
+Felixson K, Pelli A (1999) Day end returns—stock price manipulation. J Multinatl Financ Manag 9(2):95–127
+French KR (1980) Stock returns and the weekend effect. J Financ Econ 8(1):55–69
+Hagströmer B, Nordén L (2014) Closing call auctions at the index futures market. J Futur Mark 34(4):299–319
+Harris L (1986) A transaction data study of weekly and intradaily patterns in stock returns. J Financ Econ 16(1):99–117
+Harris L (1989) A day-end transaction price anomaly. J Financ Quant Anal 24(1):29–45
+Hillion P , Suominen M (2004) The manipulation of closing prices. J Financ Mark 7(4):351–375
+Hsieh T-Y (2015) Information disclosure and price manipulation during the pre-closing session: evidence from an order-
+driven market. Appl Econ 47(43):4670–4684
+Huang YC, Chan SH (2014) The trading behavior of attention securities with different closing mechanisms: evidence from 
+Taiwan. Rev Pac Basin Financ Mark Policies 17(04):1450026
+Kadıoğlu E, Küçükkocaoğlu G, Kılıç S (2015) Closing price manipulation in Borsa Istanbul and the impact of call auction 
+sessions. Borsa Istanbul Rev 15(3):213–221
+Kamara A (1997) New evidence on the Monday seasonal in stock returns. J Bus 70:63–84
+Kandel E, Rindi B, Bosetti L (2012) The effect of a closing call auction on market quality and trading strategies. J Financ 
+Intermed 21(1):23–49
+Keim DB, Stambaugh RF (1984) A further investigation of the weekend effect in stock returns. J Finance 39(3):819–835
+Kucukkocaoglu G (2008) Intra-day stock returns and close-end price manipulation in the Istanbul stock exchange. Front 
+Finance Econ 5(1):46–84
+Lam VW-S, Chong TT-L, Wong W-K (2007) Profitability of intraday and interday momentum strategies. Appl Econ Lett 
+14(15):1103–1108
+McInish TH, Wood RA (1990) An analysis of transactions data for the Toronto stock exchange: Return patterns and end-of-
+the-day effect. J Bank Finance 14(2–3):441–458
+Michayluk D, Sanger GC (2006) Day-end effect on the Paris Bourse. J Financ Res 29(1):131–146
+Ni SX, Pearson ND, Poteshman AM (2005) Stock price clustering on option expiration dates. J Financ Econ 78(1):49–87
+Pinfold JF, He D (2012) The impact of introducing a pre-close on the New Zealand share market. J Financ Regul Compli-
+ance 20(1):99–110
+Putniņš TJ (2012) Market manipulation: a survey. J Econ Surv 26(5):952–967
+Ritter JR (1988) The buying and selling behavior of individual investors at the turn of the year. J Financ 43(3):701–717
+Thoppan JJ, Punniyamoorthy M (2013) Market manipulation and surveillance-a survey of literature and some practical 
+implications. Int J Value Chain Manag 7(1):55–75
+Wong W-K, Manzur M, Chew B-K (2003) How rewarding is technical analysis? Evidence from Singapore stock market. 
+Appl Financ Econ 13(7):543–551
+Publisher’s Note
+Springer Nature remains neutral with regard to jurisdictional claims in published maps and institutional affiliations.

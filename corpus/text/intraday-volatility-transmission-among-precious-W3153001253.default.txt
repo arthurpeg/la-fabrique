@@ -1,0 +1,1295 @@
+RaY
+Research at the University of York St John
+For more information please contact RaY at
+ray@yorksj.ac.uk
+Farid, Saqib, Mujtaba, Ghulam, Abubakr Naeem, Muhammad and 
+Jawad Hussain Shahzad, Syed (2021) Intraday volatility 
+transmission among precious metals, energy and stocks during the 
+COVID-19 pandemic. Resources Policy, 72 (102101).  
+Downloaded from: https://ray.yorksj.ac.uk/id/eprint/10039/
+The version presented here may differ from the published version or version of record. If 
+you intend to cite from the work you are advised to consult the publisher's version:
+http://dx.doi.org/10.1016/j.resourpol.2021.102101
+Research at York St John (RaY) is an institutional repository. It supports the principles of 
+open access by making the research outputs of the University available in digital form. 
+Copyright of the items stored in RaY reside with the authors and/or other copyright 
+owners. Users may access full text items free of charge, and may download a copy for 
+private study or non-commercial research. For further reuse terms, see licence terms 
+governing individual outputs.  Institutional Repositories Policy Statement
+
+Resources Policy 72 (2021) 102101
+Available online 19 April 2021
+0301-4207/© 2021 The Authors. Published by Elsevier Ltd. This is an open access article under the CC BY license ( http://creativecommons.org/licenses/by/4.0/).
+Intraday volatility transmission among precious metals, energy and stocks 
+during the COVID-19 pandemic 
+Saqib Farid
+a
+, Ghulam Mujtaba Kayani
+b , c
+, Muhammad Abubakr Naeem
+d , *
+, Syed Jawad 
+Hussain Shahzad
+e , f 
+a
+School of Business and Economics, University of Management and Technology, Pakistan 
+b
+School of Finance, Hubei University of Economics, Wuhan, PR China 
+c
+Management Science Department, COMSATS University Islamabad, Islamabad, Pakistan 
+d
+UCD College of Business, University College Dublin, Ireland 
+e
+Montpellier Business School, University of Montpellier, Montpellier Research in Management, Montpellier, France 
+f
+South Ural State University, Chelyabinsk, Russian Federation   
+ARTICLE INFO  
+Keywords: 
+COVID-19 
+Financial markets 
+High frequency 
+Volatility spillovers 
+Connectedness network 
+ABSTRACT  
+In this study, we present the evidence of dramatic changes in the structure and time-varying patterns of volatility 
+connectedness across equities and major commodities (oil, gold, silver and natural gas) in the US economy before 
+and during the COVID-19 outbreak. We utilize high frequency 5-min trading data of most actively traded US ETFs 
+to construct the volatility connectedness network. We compute the intraday volatility estimates using MCS- 
+GARCH model and then employ Diebold and Yilmaz (2012) spillover index approach to approximate vola -
+tility spillovers between the financial markets. Our main findings showcase significant impact of COVID-19 
+pandemic on the volatility linkages of financial markets as the volatility connectedness among the different 
+assets peaked during the outbreak. Other findings and implications of the study are further discussed.   
+Funding 
+Muhammad Abubakr Naeem gratefully acknowledges the support of 
+Science Foundation Ireland under grant number 16/SPP/3347. 
+1. Introduction 
+The coronavirus outbreak began in December 2019 in Wuhan 
+(China), afterwards the virus spread across the world. So far, the virus 
+has infected a large number of people in almost 200 countries ( Remuzzi 
+and Remuzzi, 2020 ) and, still, remains a challenging task for global 
+public health community. Aside the tragedies of death and disease, the 
+COVID-19 pandemic has emerged as a global threat to world economies. 
+Resultantly, various reports attribute the sluggish growth in world 
+economies since 2019 to COVID-19 outbreak. Similarly, in the awake of 
+the pandemic, the volatilities in financial markets significantly soared, 
+which led to enormous losses for market participants. For instance, 
+within one week equity worth $5 trillion was wiped out of global 
+financial markets due to the outbreak. In the same way, commodities 
+prices also experienced great fluctuations such as significant fall in oil 
+prices (e.g., the negative price of West Texas Intermediate (WTI) crude 
+oil futures) due to drop in the demand, and gold prices hit all-time high 
+in the anticipation of weak economic recovery after the pandemic ( Le 
+et al., 2021 ). Given the extreme price movements in all of the major 
+financial markets, investors and policy makers are left with many 
+questions related to asset allocation and portfolio diversification. 
+Due to globalization, securitization, deregulation and the increasing 
+development of information technology the integration among world 
+major financial markets is generally on the rise, which significantly 
+contributed to intensifying the previous episodes of financial crises such 
+as Global Financial crisis 200-7-08 and European debt crisis 2012 ( Jo, 
+2014; 
+¨
+Oztek and 
+¨
+Ocal, 2017 ; Bai et al., 2019 ). In addition, during the 
+periods of financial meltdown, policy makers and investors take keen 
+interest in understanding the magnitude and direction of spillovers be -
+tween different asset classes to restore financial stability and enhance 
+portfolio decisions ( Bouriet al., 2020 ). This is also applicable to disas -
+trous events such as COVID-19 pandemic as in periods of economic 
+turmoil contagion increases the co-movement among the asset classes, 
+* Corresponding author. UCD College of Business, University College Dublin, Ireland. 
+E-mail addresses: saqib.farid@umt.edu.pk (S. Farid), mujtaba.kayani786@gmail.com (G.M. Kayani), muhammad.naeem@ucd.ie (M.A. Naeem), j.syed@ 
+montpellier-bs.com (S.J.H. Shahzad).  
+Contents lists available at ScienceDirect 
+Resources Policy 
+journal homepage: http://www. elsevier.co m/locate/reso urpol 
+https://doi.org/10.1016/j.resourpol.2021.102101 
+Received 30 December 2020; Received in revised form 12 March 2021; Accepted 2 April 2021   
+Resources Policy 72 (2021) 102101
+2
+which further enhances the importance of the safe-haven asset ( Baur and 
+Lucey, 2010 ). Resultantly, there is growing interest in understanding the 
+volatility connectedness network across different asset classes during 
+the COVID-19 outbreak. And to examine whether spillover connected -
+ness network across assets exhibit shift over the time due to the outbreak 
+effects? Also, to investigate which asset class emerged as a superior 
+hedge or safe-haven against the catastrophic shocks of the COVID-19? 
+Explorations of these questions hold important implications related to 
+risk management and portfolio diversification as once again the need for 
+safe-haven assets during such exceptional times has resurfaced. In view 
+of this, specifically in this paper we examine the effects of COVID-19 on 
+connectedness network of equities and major commodities in the US 
+economy. Pertinent to our objectives of the study we consider a network 
+of five interrelated assets such as stocks, oil, gold, natural gas and silver, 
+and then evaluate intra-day volatility transmission between the under -
+lying markets before and during the pandemic. In this way our study 
+contributes to the literature that uses connectedness measures to 
+examine the risk-return spillovers between the assets during periods of 
+economic downturn ( Gebka and Serwa, 2006 ; Kang and Yoon, 2019 ; 
+Antonakakis et al., 2019 ; Tiwari et al., 2020 ; Corbet et al., 2020 , 2021 ). 
+The search for alternative investments in the face of trade integration 
+and market risks has triggered higher connectedness among asset clas -
+ses. Particularly, in the last two decades commodity markets have 
+attracted a large influx of investors, which contributed to rapid growth 
+of liquidity in commodity markets ( Mensiet al., 2013 ; Balli et al., 2019 ; 
+Naeem et al., 2020 ). Nowadays, investors consider commodities as pure 
+alternative investments assets rather than as a channel to reinforce real 
+economic activity via hedging of risks ( Vivian and Wohar, 2012 ). Also, 
+in view of the prevailing fragility and unfavourable shocks in conven -
+tional financial markets (especially stock markets), investors see com -
+modities as an essential component of investment portfolios. In light of 
+this, a large thread of academic literature has documented the causal 
+relationship between commodities and financial markets, where often 
+opportunities and associated risks are spilling from one to other (e.g., 
+Roy and Roy, 2017 ; Yoon et al., 2019 ; Adekoya and Oliyide, 2020 ). In 
+addition, the previous literature has also identified various channels 
+driving the connectedness between commodity and financial markets. 
+Ever-increasing technological development and rise of algorithmic 
+trading in the recent times have significantly contributed to growing the 
+interactions between financial markets ( Kirilenkoet al., 2017 ). In 
+particular, portfolio managers pay keen interest to understand the speed 
+of information flows and volatility spillovers originating from high fre -
+quency trading among financial markets to safeguard against contagion 
+risk and adjust their asset allocation. In fact, precise knowledge of 
+risk-return spillovers between financial markets during the crisis periods 
+(marked with high contagion) provides even more valuable insights for 
+portfolio diversification and hedging. In the same way, investor senti -
+ments, algorithmic trading and rapid transmission of information 
+through social media are cited among the major reasons for driving the 
+financial contagion across financial markets during the COVID-19 
+outbreak (e.g., Corbet et al., 2020 ; Zhang et al., 2020 ). Keeping this in 
+view, in this study we use high frequency data as oppose to daily and 
+monthly data to provide more detailed understanding of the volatility 
+spillover network between major commodities and equities during the 
+pandemic. More importantly, the volatility estimations based on high 
+frequency data portray more precise image of market risk, since they 
+track much smaller intraday price movements. Hence, this offers port -
+folio managers and policy makers a great deal of important economic 
+information for portfolio management and policy initiatives to stabilize 
+financial markets. 
+The unsatisfactory performance of conventional GARCH models in 
+modelling the intraday returns is well documented ( Drost and Nijman, 
+1993 ; Andersen & Bollerslev, 1997 , 1998 ). Moreover, the poor perfor -
+mance of these models is attributed to pronounced patterns of intraday 
+volatility and trading activity. Keeping this in view, in this study we use 
+multiplicative component GARCH (MCS-GARCH) model proposed by 
+Engle and Sokalska (2012) . The model decomposes the volatility of high 
+frequency asset returns into multiplicative components, which are easy 
+to estimate and interpret. The MCS-GARCH model expresses the con -
+ditional variance of intraday returns as a product of three components 
+which include daily variance component, diurnal variance pattern and 
+stochastic intraday volatility component. Thereby, the volatility esti -
+mates based on MCS-GARCH model are more stable and outperform 
+conventional GARHC models. More importantly, the authors also sug -
+gest that the intraday volatility estimates from the model are particu -
+larly useful for devising optimal portfolio strategies. Accordingly, the 
+study employs multiplicative component GARCH model to estimate 
+intraday volatilities of network of five interrelated assets. Further, we 
+use Diebold and Yilmaz (2012) spillover index approach to examine the 
+volatility connectedness network among the underlying assets. 
+Table 1 
+Descriptive statistics and correlations .   
+SPY USO UNG GLD SLV 
+Mean 0.947 0.955 1.002 0.925 0.968 
+Median 0.851 0.866 0.942 0.812 0.895 
+Maximum 4.260 6.359 2.652 4.489 4.265 
+Minimum 0.375 0.483 0.593 0.475 0.572 
+Std. Dev. 0.401 0.380 0.244 0.396 0.290 
+Skewness 2.248 4.833 1.675 3.200 3.569 
+Kurtosis 11.382 42.926 7.193 17.607 23.083 
+Jarque-Bera 104127.8*** 1942267.0*** 33147.7*** 292733.8*** 522833.3*** 
+Probability [0.000] [0.000] [0.000] [0.000] [0.000] 
+ADF   19.467***   20.788***   22.864***   23.736***   23.286*** 
+PP   19.437***   18.564***   21.600***   21.225***   21.135*** 
+KPSS 0.577 0.531 2.773 2.890 0.886 
+No. of Observations 27623 27623 27623 27623 27623 
+SPY 1.000     
+USO 0.202*** 1.000     
+(34.276)     
+UNG 0.079*** 0.132*** 1.000    
+(13.207) (22.157)    
+GLD 0.414*** 0.218*** 0.165*** 1.000   
+(75.606) (37.139) (27.781)   
+SLV 0.312*** 0.167*** 0.106*** 0.794*** 1.000  
+(54.649) (28.227) (17.707) (217.117)  
+Notes: ADF, PP and KPSS are the empirical statistics of the Augmented Dickey-Fuller ( 1979 ), and the Phillips-Perron ( 1988 ) unit root tests, and the Kwiatkowski et al. 
+(1992) stationarity test, respectively. The asterisk (***) denotes the rejection of the null hypotheses of normality, unit root and significance of correlation at the 1% 
+significance level. Values in parenthesis are t-statistics. 
+S. Farid et al.                                                                                                                                                                                                                                    
+Resources Policy 72 (2021) 102101
+3
+The findings of the study show disastrous impact of COVID-19 on the 
+financial markets. The global transmission of the virus led to soaring 
+volatilities in the US financial markets. The empirical findings indicate 
+significant effects of COVID-19 pandemic on the volatility linkages of 
+financial markets as the volatility connectedness among the different 
+assets peaked during the outbreak. The findings also exhibit that US 
+stock market is the largest transmitter of volatility shocks in the system 
+before and during the spread of virus. Additionally, our pair-wise 
+spillover analysis exhibits various instances where volatility receivers 
+switched to volatility transmitters during the outbreak. Finally, our 
+findings also suggest that natural gas natural gas is least connected to 
+other assets in terms of volatility spillovers, which reveal potential 
+hedging and safe-haven function of natural gas against stocks and major 
+commodities. 
+The rest of the paper is organized as follows. Section 2 provides brief 
+literature review. Section 3 describes the methodology. The data 
+description and preliminary analysis is presented in section 4 . Section 5 
+presents empirical findings of the study. The last section concludes the 
+paper. 
+2. Literature review 
+Extant literature has extensively covered the linkages among finan -
+cial markets. More specifically, a large thread of literature has docu -
+mented the risk and return spillovers between stocks and commodities, 
+and across commodity classes. First, a strand of literature focuses on the 
+linkages between commodities and financial markets. Wherein, the 
+existing literature suggests various channels through which financial 
+markets relate to commodities. These channels include inflation chan -
+nel, interest rate channel and macro-economic factors based channel (e. 
+g., Jain and Biswal, 2016 ; Ahmadi et al., 2016 ; Adekoya and Adebiyi, 
+2020 ; Akbar et al., 2019 ; Adekoya and Oliyide, 2020 ). Accordingly, 
+numerous studies using variety of econometric methods present the 
+evidence of spillovers among prices, returns and volatilities of com -
+modities and stock markets. The related literature is summarized in 
+Table 1 . 
+Table A1 
+A summary of previous research on the relationship between commodities and stock markets.  
+Authors Sample Methodology Variables Main findings 
+Creti et al. 
+(2013) 
+2001 – 11 
+Daily 
+DCC-GARCH Stocks and 25 commodities (precious 
+metals, energy, food, agriculture and 
+livestock) 
+The findings suggest highly volatile and time varying 
+correlations among commodity returns and stock markets. In 
+particular during the crisis period of 2007 – 08. 
+Sadorsky 
+(2014) 
+2000 – 12 
+Daily 
+ARMA-AGARCH and DCC- 
+AGARCH 
+Stock, oil, copper and wheat The findings indicate that strong volatility spillovers between 
+commodities and stock returns in emerging markets post GFC 
+2007 – 08. In addition, oil is found to serve as a least expensive 
+hedge for stock prices. 
+Mensi et al. 
+(2017) 
+2000 – 16 
+Daily 
+Diebold and Yilmaz spillover 
+index (2009, 2012) and DECO- 
+FIGARCH 
+Stocks, gold, silver, platinum and palladium The findings reveal strong volatility spillovers between 
+commodities and stock markets, where stock markets serve as 
+a source of volatility spillovers and precious metals are net 
+receivers, especially during GFC and European Sovereign Debt 
+Crisis. 
+Zhang (2017) 2000 – 16 
+Daily 
+Diebold and Yilmaz spillover 
+index (2009, 2012, 2014) and 
+DECO-GARCH 
+Stocks and oil The findings indicate weak contribution of oil shocks to stock 
+markets. However, large shocks matter for stock-oil 
+connectedness. 
+Zhang et al. 
+(2017) 
+1999 – 2015 
+Daily 
+VT-DCC and Block-DCC- 
+GARCH 
+stock VIX, oil and gas The findings show that US Henry Hub gas is significantly 
+associated with stock market implied volatility indexes. 
+Junttila et al. 
+(2018) 
+1989 – 2016 
+Daily 
+DCC-GARCH Stocks, oil and gold The findings suggest that the correlations between oil and 
+equities increase during the periods of economic downturn, 
+whereas the correlations of gold become negative. The 
+findings advocate the hedge and safe-haven role of gold. 
+Mensi et al. 
+(2018) 
+1997 – 2016 
+Daily 
+Wavelet decomposition method Stocks, oil and gold The findings show that stock returns in BRICS countries co- 
+move with oil prices in lower frequencies. In particular strong 
+price connectedness is observed post GFC. 
+Al-Yahyaee 
+et al. (2019) 
+2005 – 16 
+Daily 
+Diebold and Yilmaz spillover 
+index (2014) and DECO- 
+FIAPARCH 
+Stocks, precious metals (gold, silver, 
+palladium and platinum) and energy 
+commodities (crude oil, heating oil and 
+gasoline) 
+The findings show significant volatility spillovers between 
+commodities and stock markets in GCC region. 
+Kumar et al. 
+(2019) 
+2006 – 15 
+Daily 
+VARMA-DCC-GARCH Stocks, oil and natural gas The study found lack of long-term correlation between three 
+markets in the Indian economy. 
+Wang and Wang 
+(2019) 
+2000 – 18 
+Daily 
+Diebold and Yilmaz ( 2012 ) and  
+Baruník and K ˇrehlík (2018) 
+Stocks and Oil The findings suggest that volatility spillovers between the two 
+markets are mainly driven by short-term volatility. Also, 
+heterogeneous results are found for net pairwise (frequency) 
+spillovers between the oil sector and stock indexes in Chinese 
+economy. 
+Boako et al. 
+(2020) 
+1996 – 2018 
+Daily 
+Morlet 
+Wavelet method 
+Stocks and commodities including energy, 
+precious metals, agricultural and beverages 
+The findings show that stock returns and commodities co- 
+move across multiple scales and establish a long-term 
+integration in African countries. 
+Morema and 
+Bonga ( 2020 ) 
+2006 – 20 
+Daily 
+VARMA-ADCC-GARCH Stocks, oil and gold The findings confirm strong volatility spillovers among three 
+asset markets. Also, the linkages between commodities and 
+stock market are crucial for portfolio management. 
+Uddin et al. 
+(2020) 
+1996 – 2016 
+Daily 
+ARMA-GJR-GARCH and Copula 
+approach 
+Stocks, oil, gold, silver, and platinum The findings show that oil and gold co-move with US stock 
+market under normal and extreme circumstances. 
+Additionally, asymmetric tail dependence of silver and 
+platinum is found with US stock market, in particular during 
+economic slowdown periods. 
+Ali et al. 
+(2020) <
+2001 – 18 
+Daily 
+Cross-quantilogram Stocks, energy, precious metals, industrial 
+materials and agricultural 
+The findings unveil valuable hedging and safe-haven 
+properties of precious and industrial metals against 
+international stock markets  
+S. Farid et al.                                                                                                                                                                                                                                    
+Resources Policy 72 (2021) 102101
+4
+Second, another strand in literature focuses on the volatility spill -
+overs between individual commodities and across commodity classes. In 
+particular, financialization of commodity market after GFC 2007-08 has 
+also led to high integration among different commodity classes ( Caporin 
+et al., 2020 ). In this regard, energy commodities are leading other 
+commodity groups in terms of financialization ( Zhang, 2018 ). Resul -
+tantly, Diebold et al. (2017) suggest that energy commodities often 
+transmit shocks to other commodity groups, indicating strong connect -
+edness with other commodity classes. In view of this, many authors have 
+explored volatility interconnections and spillovers between various 
+commodity classes including energy, precious metals, agricultural and 
+industrial metals ( Kang et al., 2017 ; Shahzad et al., 2019 , among others). 
+Especially, an overwhelming focus has been given to document the 
+inter- and intra-group volatility spillovers between energy commodities 
+and precious metals (e.g., Sensoy, 2013 ; Batten et al., 2015 ). For 
+example, Uddin et al. (2019) investigate the risk-return spillovers 
+among precious metals. The authors discover asymmetric spillovers 
+among the precious metals, which are more noticeable during the crisis 
+period. Silver and gold are found to be net-transmitter of spillovers to 
+other precious metals. Kang et al. (2017) use DECO-GARCH model and 
+spillover index to estimate the spillovers between the oil futures and 
+other five other commodity futures including gold and silver. The 
+findings reveal strong bi-directional spillovers between the underlying 
+commodities and the level of spillovers increased after GFC. In the same 
+way, Al-Yahyaee et al. (2019) examine the risk and return spillovers 
+among energy and precious metals futures. The findings of the study 
+unveil significant risk-return spillovers between the two commodity 
+classes in GCC region. The results also show that oil and precious metals 
+excluding silver are net-transmitter of volatility in GCC markets. Using 
+causality in variance tests, Yıldırım et al. (2020) examine the volatility 
+spillovers between energy commodities and precious metals. The find -
+ings confirm volatility spillovers effects from oil to other commodities, 
+which are pronounced during the crisis period. The authors also suggest 
+that magnitude of spillovers decreases the benefits portfolio diversifi -
+cation in periods of economic slowdown. Similarly, Mensi et al. (2020) 
+use spillover index and bivariate and multivariate wavelet coherence 
+approaches to study volatility spillovers among energy commodities and 
+precious metals. The findings disclose that volatility spillovers are dy -
+namic and intensify during energy and financial crisis. In addition, with 
+increase interest in exploring the volatility spillover network among and 
+between energy commodities and precious metals, some studies also 
+employ realized volatility measures based on high frequency data. For 
+instance, Wang et al. (2020) use dynamic model averaging model to 
+predict realized volatility spillovers among precious metals in Chinese 
+market. Also, Hu et al. ( 2020 ) document the impact of macro factors on 
+volatility spillovers network of energy commodities and precious metals. 
+Third, the study is also related to strand of literature that investigates 
+the risk-return spillovers among alternative assets classes, in particular 
+during the periods of financial meltdown. Thus, once again due to the 
+catastrophic effects of COVID-19 outbreak on economic and financial 
+variables, a steam of studies have attempted to shed light on the impact 
+of outbreak on the connectedness network of different asset classes. For 
+example, using TVP-VAR connectedness approach Bouri et al. (2020) 
+show increased network connectedness among five assets including 
+crude oil, gold, stocks, currencies, and bonds during the pandemic. Le 
+et al. (2021) explore the tail dependency network of assets during the 
+outbreak. The results show that tail dependency in both lower and upper 
+joint distributions of asset returns increased during the COVID-19 
+outbreak. Amar et al. (2021) use spillover index approach of Diebold 
+and Yilmaz (2012) and continuous time-frequency of Torrence and 
+Webster (1999) to showcase the relationship between commodities and 
+stock market in the major oil-producing and consuming economies 
+during the COVID-19 outbreak. The findings suggest strong interde -
+pendence among the underlying market, which peaked during the 
+pandemic. Adekoya and Oliyide ( 2020 ) investigate volatility spillovers 
+among commodities and other financial markets. The results showcase 
+strong volatility spillovers among commodities and financial markets. 
+Also, the findings highlight significant impact of COVID-19 measures on 
+driving connectedness between the underlying markets. Similarly, Cui 
+et al. (2021) examine the risk connectedness among oil and stock mar -
+kets for major oil-importing and oil-exporting economies. The findings 
+indicate the risk connectedness among the market reached its peak 
+during the GFC and COVID-19 crises. In addition, in order to search for 
+safe-haven assets during the outbreak period of high financial contagion, 
+some authors also re-examine the hedging and safe-haven properties of 
+different assets including energy commodities and precious metals 
+during the global pandemic (e.g., Ji et al., 2020 ; Conlon and McGee, 
+2020 ; Conlon et al., 2020 ; Sherif, 2020 ; Salisu et al., 2020 ). 
+3. Methodologies 
+3.1. MCS GARCH 
+The study uses MCS GARCH model that helps to capture the condi -
+tional variance for the high frequency (intraday) financial returns. 
+Previously various authors have employed the method to accurately 
+estimate volatility dynamics in the financial markets (e, g., Raza et al., 
+2018 , 2019 ; Banerjee and Paul, 2020 ). Consider the financial data 
+intraday returns γ
+l , m 
+, where j (1,2,3 … … ,J) represents the day and q the 
+equal period of interval at which intraday returns are estimated. The 
+model specifies the conditional variance is the multiplicative product of 
+diurnal, daily and stochastic (high frequency/intraday) volatility, so 
+that intraday financial returns process may be described as: 
+γ
+l , m
+= μ
+l , m
++ ε
+l , m  
+ε
+l , m
+= β
+l , m
+v
+l , m
+(1)  
+v
+l , m
+= w
+l , m
+σ
+l
+p
+m  
+where w
+l , m 
+is the stochastic (high frequency/intraday) volatility, σ
+l 
+is a 
+daily extrinsically measured forecast volatility, p
+m 
+the diurnal volatility 
+in the equal period of interval, w
+l , m 
+finally represent the standardized 
+innovation which follow a specific distribution. 
+The symmetric/asymmetric forecast volatility σ
+l 
+results are derived 
+through the multifactor risk model exogenously, but the results can also 
+be obtained through simple daily GRACH (forecast) model. The GRACH 
+model is given bellow: 
+γ
+l
+= μ
+l
++ σ
+l
+p
+l  
+μ
+l
+= ϕγ
+( l   1 )
+(2)  
+ln ( σ
+2
+l
+) = ω
+o
++ α
+1
+| p
+l   1
+| + γ
+1
+p
+l   1
++ ( β
+1
+σ
+2
+l   1
+)
+where σ
+l 
+and μ
+l 
+are conditional volatility and mean of financial data 
+returns γ
+l
+, p
+l 
+should be between zero and one due to the properties of 
+standard innovation γ
+l 
+and here σ
+2
+measures the sign effect and magni -
+tude effect. 
+The process of seasonal (diurnal) part of is given below: 
+s
+m
+=
+1
+L
+∑
+L
+l = 1
+( ε
+2
+l , m
+/
+σ
+2
+l
+( (3) 
+Then residuals of the diurnal is divided by daily volatility and ob -
+tained the e normalized residuals: 
+̂ε
+l , m
+= ε
+l , m
+/
+( σ
+l
+s
+m
+) = w
+l , m
+v
+l , m
+(4) 
+They help generate the stochastic component of volatility w
+l , m 
+by 
+using GARCH model. 
+S. Farid et al.                                                                                                                                                                                                                                    
+Resources Policy 72 (2021) 102101
+5
+Fig. 1. Intraday volatilities without seasonal component.  
+S. Farid et al.                                                                                                                                                                                                                                    
+Resources Policy 72 (2021) 102101
+6
+3.2. Diebold and Yilmaz (2012) 
+The Diebold-Yilmaz spillover method is based upon forecast error 
+variance decomposition (VAR process). Hence, let the VAR model with p 
+variables and m lags, which can be written as: 
+Y
+l
+= θ ( Q ) Y
+l
++ ε
+l
+(5)  
+where Y
+l 
+indicate a p × 1 vector of problem variables θ ( Q ) =
+∑
+f
+θ
+f
+K
+f 
+is a 
+p × p m -th order lag (polynomial matrix) of coefficients, L is the lag 
+operator, ε
+l 
+, Σ denotes white noise and covariance matrix. 
+The moving average process in VAR is represented by 
+Y
+l
+= Ψ ( Q ) ε
+l   i
+(6)  
+where Ψ (Q) is a p × p matrix (infinite lag polynomials) can be measured 
+recursively. The generalized forecast error variance decomposition 
+(FEVD) can be estimated as: 
+ϕ
+i , g
+( F ) =
+∑
+  1
+gg
+∑
+F
+f = 0
+Ψ
+f
+Σ )( Ψ
+f
+Σ )( Ψ
+f
+Σ )
+i , g
+]
+2
+∑
+F
+f = 0
+( Ψ
+g
+ΣΨ
+′
+g
+)
+ii
+(7)  
+where Ψ
+f 
+depict p × p matrix for calculating the coefficients of moving 
+average having f lags, ​ Σ gg is the g th diagonal element, F denotes the 
+selected forecast and ϕ
+i , g 
+is the variance of forecast error of concerned 
+variable. 
+In the generalized form of VAR framework is the combination of 
+cross-and own-variable variance, i.e. 
+∑
+F
+f = 1
+ϕ
+i , g
+( F )∕ = 1. (Not necessarily to 
+equal one). Hence, the sum of columns does not add up by definition in 
+the variance decomposition matrix and the process is given below: 
+ϕ ̃
+i , g
+( F ) =
+ϕ
+i , g
+( F )
+∑
+p
+f = 1
+ϕ
+i , g
+( F )
+(8) 
+The pair wise connectedness is measured through ϕ
+i , g
+( F ) from g to i at 
+horizon F in the different time domain. Moreover, normalized variance 
+matrixes reflect the level of connectedness among different studied 
+variable can be easily introduced. 
+4. Data and preliminary analysis 
+We use five actively traded US exchange traded funds (ETFs) to 
+represent the US financial markets. First, the SPDR S & P 500 trust ETF 
+(SPY) tracks down the performance of S & P 500 stock index. The index is 
+considered as one of the main benchmarks for tracking the performance 
+of the US stock market. The index is made up of 500 large- and mid-cap 
+U.S. stocks which are selected based on industry, market capitalization 
+and liquidity. Second, the US oil fund ETF (USO) tracks the prices of WTI 
+crude oil. The fund was first launched by US commodity fund on April 
+10, 2006. The fund primarily invests its assets in crude-oil futures and 
+other oil related future contracts. The fund tracks the performance of 
+Fig. 2. Autocorrelation functions of absolute intraday returns .  
+S. Farid et al.                                                                                                                                                                                                                                    
+Resources Policy 72 (2021) 102101
+7
+crude oil market by tracking the daily percentage changes of the spot 
+price of WTI crude oil. Third, the US natural gas fund ETF (UNG) tracks 
+the prices of natural gas. It is the largest natural gas ETF fund with shares 
+listed on NYSE Arca. The fund enables the investors to invest in natural 
+gas without investing in futures market. Fourth, SPDR gold shares trust 
+ETF (GLD) traces the performance of the gold market by tracking the 
+price of gold bullion in the over-the-counter (OTC) market. The fund is 
+considered to provide easy and cost-efficient way to gain exposure to 
+gold market. Finally, iShares silver trust ETF (SLV) illustrates the per -
+formance of the silver prices. All the indices are denominated in USD. 
+We employ high-frequency-5 min data of the mentioned ETFs from 02, 
+January 2019 to 29, May 2020 for the empirical analysis. We choose 5 
+min high-frequency price data as it strikes a logical balance between 
+microstructure noise and accurate estimations ( Degiannakis, 2008 ; 
+Andersen and Todorov, 2010 ; Luo and Ji, 2018 ). Also, the sample 
+duration enables us to effectively model the spillover connectedness 
+network among the underlying markets before and during the COVID-19 
+pandemic. 
+For the empirical analysis continuously compounded returns are 
+calculated by converting the price series into log first difference. Table 1 
+displays the descriptive statistics of the five US ETFs representing the 
+five alternative financial assets. As shown in Table 1 , UNG has the 
+highest mean return during the sample period, followed by SLV and 
+USO. Not surprisingly, the statistics also show that among all the ETFs 
+highest standard deviation is noted for SPY, which reflects the unprec -
+edented volatility experienced in US stock market during the outbreak. 
+On the contrary, among all the financial markets the lowest volatility is 
+reported for natural gas. In addition, the results of skewness, kurtosis, 
+and Jarque Bera tests clearly show that all the series are not normal with 
+positive skewness. The results of Augmented Dickey-Fuller ( 1979 ), and 
+the Phillips-Perron ( 1988 ) unit root tests, and the Kwiatkowski et al. 
+(1992) stationarity test suggest that all return series are stationary. 
+Finally, the results of historical correlations analysis among the financial 
+markets show positive moderate correlations between US equities and 
+other financial assets excluding natural gas. The results also manifest 
+high positive correlation between two precious metals in US during the 
+sample period. Additionally, the results also show that natural gas is 
+least correlated with other assets in our sample duration, which once 
+again highlight the superior performance of UNG over other ETFs. 
+Next, Fig. 1 illustrates intraday volatility patterns of US financial 
+markets during the sample period. It is evident from the graphs that 
+volatility in the US financial markets soared after the COVID-19 virus 
+was declared as a global pandemic. A large volatility jump is noted for 
+all markets post World Health Organization (WHO) ’ s announcement. 
+Here, our findings distinctly second the evidence that suggests the 
+widespread panic caused quick sell-outs and havoc in financial markets 
+around the globe ( Zhang et al., 2020 ; Akhtaruzzaman et al., 2020 ). 
+Resultantly, investor ’ s beared major losses and financial markets 
+tumbled due to great uncertainty linked with the pandemic. Further, it 
+can be seen from the graphs that high-rise in the volatility of financial 
+markets persists till the end of April 2020 and then markets seem to 
+recover and rebound quickly. Consequently, volatilities declined across 
+the US financial markets. Additionally, apart from the COVID-19 
+pandemic crash we also note recurrent episodes of high volatility in 
+US natural gas market, which correspond to low natural gas prices in 
+2019 due to oversupply problem in US natural gas industry. 
+Further, as the MCS GARCH model is effective in capturing the 
+intraday seasonality pattern, thus in this study we directly fit the MCS 
+GARCH on the original return series of US ETFs. Fig. 2 displays the 
+absolute autocorrelation functions (ACF) of original return series. ACF of 
+absolute original return series of all ETFs excluding UNG show the U- 
+shaped seasonality pattern of asset return volatilities. Furthermore, 
+Table 2 presents the obtained parameters from the model fit. The results 
+show that most of the parameters of the mean model (ARCH) and the 
+volatility model (GARCH) are significant across all the ETFs. Also, the 
+high values of β 1 for all the assets suggest significant high impact of 
+previous period volatility on the current volatility. We also note signif -
+icant positive value of the asymmetry parameter ( γ
+1
+) for majority of the 
+Table 2 
+Estimation results from ARMA (1,1)-mcsGARCH(1,1) model on intraday returns .   
+SPY USO UNG GLD SLV 
+φ
+0  
+0.0000 0.0000 0.0000 0.0000 0.0000  
+(0.0000) (0.0000) (0.0000) (0.0000) (0.0000) 
+ψ
+1  
+0.7278*** 0.2281** 0.6071*** 0.6763*** 0.0655  
+(0.1046) (0.1063) (0.0737) (0.1001) (0.0482) 
+ψ
+2  
+  0.7528***   0.2939***   0.6387***   0.7080***   0.2019***  
+(0.1002) (0.1041) (0.0705) (0.0956) (0.0471) 
+ω  0.0149*** 0.0244*** 0.0343*** 0.0270*** 0.0306***  
+(0.0018) (0.0079) (0.0085) (0.0030) (0.0047) 
+α
+1  
+0.0995*** 0.0871*** 0.0716*** 0.1089*** 0.0821***  
+(0.0053) (0.0129) (0.0106) (0.0074) (0.0073) 
+β
+1  
+0.8895*** 0.8903*** 0.8953*** 0.8623*** 0.8857***  
+(0.0057) (0.0198) (0.0183) (0.0090) (0.0109) 
+Asymmetry   0.0889***   0.0354***   0.0068   0.0403***   0.0623***  
+(0.0151) (0.0127) (0.0129) (0.0131) (0.0117) 
+Tail 1.7482*** 1.1576*** 1.2598*** 1.1280*** 1.5112***  
+(0.1124) (0.0694) (0.0646) (0.0589) (0.1155) 
+Diagnostic tests 
+LL 162074.6 135986.2 137461.6 169912.7 153485.2 
+AIC   11.734   9.8453   9.9521   12.302   11.112 
+Q(20) [0.5385] [0.1522] [0.8632] [0.5990] [0.4605] 
+Q
+2
+(20) [0.0143] [0.1236] [0.8106] [0.2461] [0.9937] 
+K – S [0.2468] [0.1355] [0.5643] [0.2435] [0.9594] 
+LiMcLeod [0.8282] [0.2654] [0.1294] [0.2733] [0.1613] 
+Hosking [0.8446] [0.7200] [0.1710] [0.1745] [0.1932] 
+Notes: We report the maximum likelihood (ML) estimates and the z statistics (in parentheses) for the parameters of the volatility models. The lags p, q, r and m are 
+selected using the log likelihood (LL) for different combinations of values ranging from 0 to 2. Q(k) and Q
+2
+(k) are the Ljung-Box statistics for serial correlation in the 
+model residuals and squared residuals, respectively, computed with k lags. ARCH(k) is the Engle LM test for the ARCH effect in the residuals up to the k th order. K – S 
+denotes the Kolmogorov-Smirnov test (for which the p-values are reported), representing the adequacy of the Student-t distribution model. Hosking (1981) and Li and 
+McLeod (1981) are the autocorrelation tests until lag 20. The p-values [in the square brackets] below 0.05 indicate the rejection of the null hypothesis. The asterisks 
+(***), (**) and (*) represent significance at the 1%, 5% and 10% levels, respectively. 
+S. Farid et al.                                                                                                                                                                                                                                    
+Resources Policy 72 (2021) 102101
+8
+US ETFs, which indicates stronger reaction of financial markets to bad 
+news in comparison to good news. Finally, the tail coefficients are also 
+significant across all the financial markets. 
+5. Main results and findings 
+5.1. Static analysis 
+In order to study the volatility spillovers among US financial markets 
+before and during the COVID-19 pandemic, we construct state-of-art 
+volatility connectedness network of five interrelated assets namely 
+stocks, oil, natural gas, gold and silver using Diebold and Yilmaz (2012) 
+spillover index approach. Fig. 3 illustrates the spillover network of 
+complete sample period. The analysis highlights important insights 
+about the volatility linkages among US financial markets. 
+First, the empirical results reveal strong bi-directional volatility 
+spillovers between precious metals in US over the full sample period. 
+The findings match the earlier obtained evidence in the preliminary 
+analysis that suggested strong positive co-movement between gold and 
+silver. The findings are also validated by a strand of literature that ar -
+gues strong volatility dependence across precious metals, in particular 
+gold and silver ( Reboredo and Ugolini, 2015 ; Dutta, 2018 ; Mensi et al., 
+2019 ). Second, the results also unveil moderate bi-directional volatility 
+spillovers between US stocks and oil prices. The findings are similar to 
+studies of Arouri et al. (2011) and Ewing and Malik (2016) that found 
+bi-directional volatility transmission between oil prices and stock mar -
+ket in the US economy. Further, we also find some volatility linkages 
+between stocks and gold prices. The findings are some way different 
+from Husain et al. (2019) who suggest lack of significant volatility 
+spillovers between US stock index and precious metals. Instead, our 
+findings oppose the popular notion of weak volatility linkages between 
+stocks and gold and rather suggest safe-haven property of gold against 
+US stocks is not stable. Furthermore, we find unilateral volatility 
+transmission from crude oil to natural gas market. Overall, the findings 
+indicate that the gold market and stocks are the largest transmitters of 
+volatility spillovers to volatility connectedness network. 
+Next, in order to understand the effects of COVID-19 outbreak on the 
+volatility connectedness of US financial markets, we present the spill -
+over network for the COVID19 sub-sample starting from 01 January 
+2020 until 29 May 2020. Once again the results in Fig. 2 display US 
+stocks as the largest transmitter of volatility during the virus spread. The 
+findings are explained by the fact that investors view US stock market as 
+a barometer of the economic and financial conditions of the US ( Das 
+et al., 2019 ). Hence, turbulences in the US equity market often translate 
+into significant variations in asset prices and augmented volatility in 
+other financial markets. The findings are further validated by Adekoya 
+and Oliyide ( 2020 ), who also argue that stock market acts as a 
+net-transmitter of volatility to other asset classes during the COVID-19 
+outbreak. Also, the findings reveal strong volatility transmission from 
+US stocks to oil and gold markets, which once more exhibit that financial 
+contagion during the COVID-19 outbreak originated in the stock market 
+and then spread to other financial markets. In addition, similar to our 
+static analysis we find strong bi-directional volatility spillovers between 
+precious metals such as gold and silver. Finally, our findings advocate 
+the potential safe-haven function of natural gas to hedge the volatility in 
+other financial markets during the pandemic. Since, natural gas market 
+Fig. 3. Diebold-Yilmaz ( 2012 ) spillover network for the full sample.  
+S. Farid et al.                                                                                                                                                                                                                                    
+Resources Policy 72 (2021) 102101
+9
+Fig. 4. Spillover network for the COVID19 sub-sample from 01 January 2020 until 29 May 2020.  
+Fig. 5. Rolling window DY total spillover index.  
+S. Farid et al.                                                                                                                                                                                                                                    
+Resources Policy 72 (2021) 102101
+10
+in the US is least connected to other major financial markets during the 
+sample period. 
+5.2. Dynamic analysis 
+In order to establish whether spillover connectedness network across 
+assets exhibit shift over the time due to the outbreak effects, we present 
+time-varying total volatility spillover index among the five variables 
+computed using the approach of Diebold and Yilmaz (2012) . Fig. 4 
+clearly manifest the significant impact of COVID-19 pandemic in driving 
+volatility connectedness among the US financial markets as the volatility 
+spillovers among the markets peaked in the month of March 2020. The 
+findings indicate that contagion effects driven by market sentiment of 
+fear quickly transmitted across US financial markets. In consequences, 
+financial markets became highly volatile leading to severe economic 
+losses. It can also be inferred from the findings that high volatility 
+connectedness among US financial markets during the outbreak mirrors 
+reduced portfolio diversification opportunities for investors across 
+alternative assets classes. The findings are somewhat in line with Amar 
+et al. (2021) , who also showcase higher interdependence among stock 
+and commodity markets during the outbreak period for a set of coun -
+tries. Additionally, our findings are also corroborated by recent growing 
+evidence that suggests volatility connectedness among different asset 
+classes spiked during the COVID-19 outbreak (e.g., Bouri et al., 2020 ; Le 
+et al., 2021 ; Naeem et al., 2021 ). 
+Fig. 5 exhibits time-varying total volatility spillovers from each asset 
+class to other major financial assets in the US. The results of full sample 
+period show that equities and gold are the net-transmitter of volatility to 
+other assets. However, during the COVID-19 pandemic, stock, gold and 
+oil emerge as the largest contributor of the volatility shocks in the sys -
+tem. In addition, natural gas transmits least volatility spillovers to other 
+financial markets. In the same way, Fig. 5 also shows that natural gas 
+receives least volatility spillovers from other assets before and during 
+COVID-19 outbreak. On the contrary, rest of the financial markets 
+receive augmented level of volatility shocks during the period of virus 
+spread. Finally, the results of net spillovers are also presented in Fig. 5 . 
+Interestingly, the findings unveil that silver emerges as the largest 
+contributor of net volatility spillovers to other asset categories during 
+the outbreak. The finding reinforce the notion that financialization of 
+commodity market has attracted investors to view different commod -
+ities as a mainstream financial assets and essential component of in -
+vestment portfolios. 
+In the end, we present the bi-lateral net volatility spillovers among 
+the financial markets in Fig. 6 . Once again the results show that US stock 
+market is net transmitter of volatility spillovers to other financial mar -
+kets before and during the pandemic. Wang et al. (2020) also display 
+that US stock market acts as a net-transmitter of volatility shocks to 
+other financial markets. In this regard, we observe high volatility 
+connectedness between the stocks, oil and gold. However, natural gas 
+has the lowest level of volatility connectedness with stocks, which 
+highlights the potential use of natural gas to hedge stock market risk in 
+the US economy (see Fig. 7 ). 
+Now, regarding oil and natural gas we note that before the outbreak 
+natural gas is the net transmitter of volatility to oil market as this period 
+corresponds to turbulent times in US natural gas industry (prices hit the 
+lowest in the three years). In opposite, during the COVID-19 pandemic 
+crude oil switches from net receiver to net transmitter of volatility be -
+tween the two underlying markets. In the same way, gold is the trans -
+mitter of volatility to oil market before the COVID-19 outbreak, but 
+during the pandemic crude oil shifts from net receiver to net transmitter 
+of volatility to gold market. The findings are similar to the earlier evi -
+dence that indicates bi-directional contagion effects between the two 
+underlying markets before and during the pandemic period ( Gharib 
+et al., 2021 ). In addition, silver is found to be a net-transmitter of 
+volatility shocks to crude oil market during the full sample period. 
+Furthermore, the results also show that natural gas is the net receiver 
+of volatility spillovers from gold and silver during the virus outbreak 
+period. Wherein, low volatility connectedness exists between the natural 
+gas and silver. The findings once again show the potential use of natural 
+gas to hedge price fluctuations in precious metals like silver. Finally, we 
+note that gold is net transmitter of volatility shocks to silver before the 
+outbreak, however silver emerges as the net-transmitter in the pandemic 
+times. Overall, our pair-wise results exhibit various instances where 
+volatility receivers switched to volatility transmitters and vice versa 
+during the outbreak. Bouri et al. (2020) also display various such cases 
+while documenting the return connectedness among financial markets 
+during COVID-19 outbreak. 
+Fig. 6. Rolling window spillover indices .  
+S. Farid et al.                                                                                                                                                                                                                                    
+Resources Policy 72 (2021) 102101
+11
+6. Conclusions 
+The COVID-19 pandemic has caused great disruptions in the finan -
+cial markets around the world. In fact, increased stress in financial 
+markets has led to growing contagion among financial markets, which 
+has prompted policy makers around the globe to take wide range of 
+monetary and financial easing measures. Taking this into consideration 
+in this study we investigate the volatility transmission among major 
+financial markets in the US economy before and during the pandemic. 
+In particular, the study examines the volatility connectedness 
+network of equities and major commodities including gold, oil, silver 
+and natural gas by utilizing 5-min trading data of US ETFs. We compute 
+the intraday volatility estimates using MCS-GARCH model, which is well 
+recognized to produce superior and stable diurnal volatility estimates. 
+Further, we construct the volatility connectedness network of assets 
+using Diebold and Yilmaz (2012) spillover index approach. Addition -
+ally, we also document the time-varying dynamics of volatility spillovers 
+among the underlying assets before and during the virus spread, which 
+unveils the outbreak effects on US financial markets. 
+Our empirical findings are as follows: First, our full sample network 
+analysis shows that stocks and gold are two largest contributors of 
+volatility shocks to the volatility connectedness network. Second, our 
+sab-sample analysis of COVID-19 outbreak period also reveals that US 
+stock market continues to act as the largest transmitter of volatility 
+spillovers to major commodity markets in the US. The findings stress the 
+fact that investors consider US equity market as the leading indicator of 
+the economic and financial conditions of the US economy. Third, our 
+dynamic analysis confirms the significant impact of the COVID-19 
+Fig. 7. Pair-wise net spillovers .  
+S. Farid et al.                                                                                                                                                                                                                                    
+Resources Policy 72 (2021) 102101
+12
+pandemic on volatility spillovers among assets; since we note volatility 
+connectedness among US financial markets peaked during the virus 
+spread period. The findings showcase reduced portfolio diversification 
+and hedging opportunities for investors across alternative asset classes. 
+Fourth, our findings from static and dynamic analysis exhibit that nat -
+ural gas is least connected to other assets in terms of volatility spillovers, 
+which reveal potential hedging and safe-haven function of natural gas 
+against stocks and major commodities. Moreover, the results showcase 
+that natural gas emerges a superior hedging and safe-haven option for 
+investors in the financial markets during the pandemic crisis. Accord -
+ingly, investors and portfolio managers seeking portfolio diversification 
+and hedging opportunities in environment of high risk such as COVID-19 
+pandemic can consider natural gas market for investment. Finally, our 
+findings from pair-wise spillover analysis illustrate various cases of net 
+receivers switching to net transmitter of volatility spillovers and vice 
+versa during the outbreak. 
+The findings of the study hold important implications for policy and 
+financial markets. Our findings advocate that policy makers should pay 
+careful attention to volatility connectedness network among assets to 
+restore financial stability and safeguard investments. In fact, lack of 
+understanding of volatility spillovers linkages among different asset 
+classes fuels systematic financial contagion. Therefore, policy makers 
+should continuously monitor informational spillovers among different 
+financial markets to design timely policy interventions to eliminate the 
+contagion risk arising from inter-connectedness of financial markets. 
+Also, investors can utilize the information regarding the net shocks 
+transmitter or receiver nature of the different asset classes to optimize 
+their portfolio investment strategies. 
+Note: This network graph illustrates the degree of total connected -
+ness in a system that consists of the US stock market, oil, natural gas, 
+gold and silver volatilities over the full sample period. Total connect -
+edness is measured using the Diebold-Yilmaz framework. The size of the 
+node shows the magnitude of contribution of each variable to system 
+connectedness, while the color indicates the origin of connectedness. In 
+particular, the red color implies contribution from the variable under 
+consideration to the other variables of the system and the green color 
+means contribution from the other variables to the variable under 
+analysis. The color and shape of the arrows refer to the strength of 
+connectedness. The red colour and full line arrows represent spillovers 
+more than 20% while green and blue colour arrows show spillover be -
+tween 10% and 20% and less than 10%, respectively. 
+Note: This figure displays the time-varying behavior of the total 
+volatility spillover index among the five variables considered computed 
+using the approach of Diebold and Yilmaz (2012) . These dynamic total 
+spillover indices are calculated from the forecast error variance de -
+compositions using a rolling window size of 10 days (7800 intraday 
+volatility observations) and a forecast horizon of H = 2 days. 
+Note: These figures displays the time-varying behavior of To others, 
+From others and pairwise net volatility spillover for the five variables 
+considered computed using the approach of Diebold and Yilmaz (2012) . 
+These dynamic spillover indices are calculated from the forecast error 
+variance decompositions using a rolling window size of 10 days (7800 
+intraday volatility observations) and a forecast horizon of H = 2 days. 
+CRediT authorship contribution statement 
+Saqib Farid: Conceptualization, Writing – original draft, Method -
+ology, Writing – review & editing. Ghulam Mujtaba Kayani: Concep -
+tualization, Writing – original draft, Writing – review & editing. 
+Muhammad Abubakr Naeem: Conceptualization, Methodology, Soft -
+ware, Formal analysis, Writing – original draft. Syed Jawad Hussain 
+Shahzad: Supervision, Methodology, Software, Formal analysis, 
+Writing – review & editing. 
+References 
+Adekoya, O.B., Adebiyi, A.N., 2020. Oil price-inflation pass-through in OECD countries: 
+the role of asymmetries, impact of global financial crisis and forecast evaluation. Int. 
+J. Energy Sect. Manag. 14 (1), 126 – 147 . 
+Ahmadi, M., Behmiri, N.B., Manera, M., 2016. How is volatility in commodity markets 
+linked to oil price shocks? Energy Econ. 59, 11 – 23 . 
+Akbar, M., Iqbal, F., Noor, F., 2019. Bayesian analysis of dynamic linkages among gold 
+price, stock prices, exchange rate and interest rate in Pakistan. Resour. Pol. 62, 
+154 – 164 . 
+Akhtaruzzaman, M., Sensoy, A., Corbet, S., 2020. The influence of bitcoin on portfolio 
+diversification and design. Finance Res. Lett. 37, 101344 .  
+Al-Yahyaee, K.H., Mensi, W., Sensoy, A., Kang, S.H., 2019. Energy, precious metals, and 
+GCC stock markets: is there any risk spillover? Pac. Basin Finance J. 56, 45 – 70 . 
+Ali, S., Bouri, E., Czudaj, R.L., Shahzad, S.J.H., 2020. Revisiting the valuable roles of 
+commodities for international stock markets. Resour. Pol. 66, 101603-101603 .  
+Amar, A.B., Belaid, F., Youssef, A.B., Chiao, B., Guesmi, K., 2021. The unprecedented 
+reaction of equity and commodity markets to COVID-19. Finance Res. Lett. 38, 
+101853 .  
+Andersen, T.G., Bollerslev, T., 1997. Intraday periodicity and volatility persistence in 
+financial markets. J. Empir. Finance 4 (2 – 3), 115 – 158 . 
+Andersen, T.G., Bollerslev, T., 1998. Deutsche mark – dollar volatility: intraday activity 
+patterns, macroeconomic announcements, and longer run dependencies. J. Finance 
+53 (1), 219 – 265 . 
+Andersen, T.G., Todorov, V., 2010. Realized Volatility and Multipower Variation. 
+Encyclopedia of Quantitative Finance . 
+Antonakakis, N., Chatziantoniou, I., Gabauer, D., 2019. Cryptocurrency market 
+contagion: market uncertainty, market complexity, and dynamic portfolios. J. Int. 
+Financ. Mark. Inst. Money 61, 37 – 51 . 
+Arouri, M.E.H., Jouini, J., Nguyen, D.K., 2011. Volatility spillovers between oil prices 
+and stock sector returns: implications for portfolio management. J. Int. Money 
+Finance 30 (7), 1387 – 1405 . 
+Bai, L., Zhang, X., Liu, Y., Wang, Q., 2019. Economic risk contagion among major 
+economies: new evidence from EPU spillover analysis in time and frequency 
+domains. Phys. Stat. Mech. Appl. 535, 122431 .  
+Balli, F., Naeem, M.A., Shahzad, S.J.H., de Bruin, A., 2019. Spillover network of 
+commodity uncertainties. Energy Econ. 81, 914 – 927 . 
+Banerjee, A., Paul, S., 2020. Idiosyncrasies of intraday risk in emerging and developed 
+markets: efficacy of the MCS-GARCH model and extreme value theory. Global Bus. 
+Rev. 0972150920927357 .  
+Baruník, J., K ˇrehlík, T., 2018. Measuring the frequency dynamics of financial 
+connectedness and systemic risk. J. Financ. Econom. 16 (2), 271 – 296 . 
+Batten, J.A., Ciner, C., Lucey, B.M., 2015. Which precious metals spill over on which, 
+when and why? Some evidence. Appl. Econ. Lett. 22 (6), 466 – 473 . 
+Baur, D.G., Lucey, B.M., 2010. Is gold a hedge or a safe haven? An analysis of stocks, 
+bonds and gold. Financ. Rev. 45 (2), 217 – 229 . 
+Boako, G., Alagidede, I.P., Sjo, B., Uddin, G.S., 2020. Commodities price cycles and their 
+interdependence with equity markets. Energy Econ. 91, 104884 .  
+Bouri, E., Cepni, O., Gabauer, D., Gupta, R., 2020. Return Connectedness Across Asset 
+Classes Around the COVID-19 Outbreak (No. 202047) . 
+Caporin, M., Naeem, M. A., Arif, M., Hasan, M., Vo, X. V., & Shahzad, S. J. H. Asymmetric 
+and time-frequency spillovers among commodities using high-frequency data. 
+Resour. Pol., 70, 101958. 
+Conlon, T., McGee, R., 2020. Safe haven or risky hazard? Bitcoin during the COVID-19 
+bear market. Finance Res. Lett. 35, 101607 .  
+Conlon, T., Corbet, S., McGee, R.J., 2020. Are Cryptocurrencies a Safe Haven for Equity 
+Markets? an International Perspective from the COVID-19 Pandemic. Research in 
+International Business and Finance, 101248 .  
+Corbet, S., Hou, Y., Hu, Y., Lucey, B., Oxley, L., 2021. Aye Corona! the contagion effects 
+of being named Corona during the COVID-19 pandemic.  Finance Res. Lett. 38, 
+101591 .  
+Corbet, S., Larkin, C., Lucey, B., 2020. The contagion effects of the covid-19 pandemic: 
+evidence from gold and cryptocurrencies. Finance Res. Lett. 35, 101554 .  
+Creti, A., Jo ¨ets, M., Mignon, V., 2013. On the links between stock and commodity 
+markets ’ volatility. Energy Econ. 37, 16 – 28 . 
+Cui, J., Goh, M., Li, B., Zou, H., 2021. Dynamic dependence and risk connectedness 
+among oil and stock markets: new evidence from time-frequency domain 
+perspectives. Energy 216, 119302 .  
+Das, D., Kannadhasan, M., Bhattacharyya, M., 2019. Do the emerging stock markets react 
+to international economic policy uncertainty, geopolitical risk and financial stress 
+alike? N. Am. J. Econ. Finance 48, 1 – 19 . 
+Degiannakis, S., 2008. ARFIMAX and ARFIMAX-TARCH realized volatility modeling. 
+J. Appl. Stat. 35 (10), 1169 – 1180 . 
+Dickey, D.A., Fuller, W.A., 1979. Distribution of the estimators for autoregressive time 
+series with a unit root. J. Am. Stat. Assoc. 74 (366a), 427 – 431 . 
+Diebold, F.X., Yilmaz, K., 2012. Better to give than to receive: predictive directional 
+measurement of volatility spillovers. Int. J. Forecast. 28 (1), 57 – 66 . 
+Diebold, F.X., Liu, L., Yilmaz, K., 2017. Commodity Connectedness (No. W23685). National 
+Bureau of Economic Research . 
+Drost, F.C., Nijman, T.E., 1993. Temporal aggregation of GARCH processes. 
+Econometrica 61, 909 – 927 . 
+Dutta, A., 2018. Impacts of oil volatility shocks on metal markets: a research note. 
+Resour. Pol. 55, 9 – 19 . 
+Engle, R.F., Sokalska, M.E., 2012. Forecasting intraday volatility in the us equity market. 
+multiplicative component garch. J. Financ. Econom. 10 (1), 54 – 83 . 
+S. Farid et al.                                                                                                                                                                                                                                    
+Resources Policy 72 (2021) 102101
+13
+Ewing, B.T., Malik, F., 2016. Volatility spillovers between oil prices and the stock market 
+under structural breaks. Global Finance J. 29, 12 – 23 . 
+G ę bka, B., Serwa, D., 2006. Are financial spillovers stable across regimes?: evidence from 
+the 1997 Asian crisis. J. Int. Financ. Mark. Inst. Money 16 (4), 301 – 317 . 
+Gharib, C., Mefteh-Wali, S., Jabeur, S.B., 2021. The bubble contagion effect of COVID-19 
+outbreak: evidence from crude oil and gold markets. Finance Res. Lett. 38, 101703 .  
+Hosking, J.R.M., 1981. Equivalent forms of the multivariate portmanteau statistic. 
+J. Roy. Stat. Soc. B 43 (2), 261 – 262 . 
+Hu, M., Zhang, D., Ji, Q., Wei, L., 2020. Macro factors and the realized volatility of 
+commodities: a dynamic network analysis. Resour. Pol. 68, 101813 .  
+Husain, S., Tiwari, A.K., Sohag, K., Shahbaz, M., 2019. Connectedness among crude oil 
+prices, stock index and metal prices: an application of network approach in the USA. 
+Resour. Pol. 62, 57 – 65 . 
+Jain, A., Biswal, P.C., 2016. Dynamic linkages among oil price, gold price, exchange rate, 
+and stock market in India. Resour. Pol. 49, 179 – 185 . 
+Ji, Q., Zhang, D., Zhao, Y., 2020. Searching for safe-haven assets during the COVID-19 
+pandemic. Int. Rev. Financ. Anal. 71, 101526 .  
+Jo, S., 2014. The effects of oil price uncertainty on global real economic activity. 
+J. Money Credit Bank. 46 (6), 1113 – 1135 . 
+Junttila, J., Pesonen, J., Raatikainen, J., 2018. Commodity market based hedging against 
+stock market risk in times of financial crisis: the case of crude oil and gold. J. Int. 
+Financ. Mark. Inst. Money 56, 255 – 280 . 
+Kang, S.H., Yoon, S.M., 2019. Financial crises and dynamic spillovers among Chinese 
+stock and commodity futures markets. Phys. Stat. Mech. Appl. 531, 121776 .  
+Kang, S.H., McIver, R., Yoon, S.M., 2017. Dynamic spillover effects among crude oil, 
+precious metal, and agricultural commodity futures markets. Energy Econ. 62, 
+19 – 32 . 
+Kirilenko, A., Kyle, A.S., Samadi, M., Tuzun, T., 2017. The flash crash: high-frequency 
+trading in an electronic market. J. Finance 72 (3), 967 – 998 . 
+Kumar, S., Pradhan, A.K., Tiwari, A.K., Kang, S.H., 2019. Correlations and volatility 
+spillovers between oil, natural gas, and stock prices in India. Resour. Pol. 62, 
+282 – 291 . 
+Kwiatkowski, D., Phillips, P.C., Schmidt, P., Shin, Y., 1992. Testing the null hypothesis of 
+stationarity against the alternative of a unit root. J. Econom. 54 (1 – 3), 159 – 178 . 
+Le, T.H., Do, H.X., Nguyen, D.K., Sensoy, A., 2021. Covid-19 pandemic and tail- 
+dependency networks of financial assets. Finance Res. Lett. 38, 101800 .  
+Li, W.K., McLeod, A.I., 1981. Distribution of the residual autocorrelations in multivariate 
+ARMA time series models. J. Roy. Stat. Soc. B 43 (2), 231 – 239 . 
+Luo, J., Ji, Q., 2018. High-frequency volatility connectedness between the US crude oil 
+market and China ’ s agricultural commodity markets. Energy Econ. 76, 424 – 438 . 
+Mensi, W., Beljid, M., Boubaker, A., Managi, S., 2013. Correlations and volatility 
+spillovers across commodity and stock markets: linking energies, food, and gold. 
+Econ. Modell. 32, 15 – 22 . 
+Mensi, W., Al-Yahyaee, K.H., Kang, S.H., 2017. Time-varying volatility spillovers 
+between stock and precious metal markets with portfolio implications. Resour. Pol. 
+53, 88 – 102 . 
+Mensi, W., Hkiri, B., Al-Yahyaee, K.H., Kang, S.H., 2018. Analyzing time – frequency co- 
+movements across gold and oil prices with BRICS stock markets: a VaR based on 
+wavelet approach. Int. Rev. Econ. Finance 54, 74 – 102 . 
+Mensi, W., Sensoy, A., Aslan, A., Kang, S.H., 2019. High-frequency asymmetric volatility 
+connectedness between Bitcoin and major precious metals markets. N. Am. J. Econ. 
+Finance 50, 101031 .  
+Mensi, W., Rehman, M.U., Vo, X.V., 2020. Spillovers and co-movements between 
+precious metals and energy markets: implications on portfolio management. Resour. 
+Pol. 69, 101836 .  
+Morema, K., Bonga-Bonga, L., 2020. The impact of oil and gold price fluctuations on the 
+South African equity market: volatility spillovers and financial policy implications. 
+Resour. Pol. 68, 101740 .  
+Naeem, M.A., Farid, S., Balli, F., Hussain Shahzad, S.J., 2020. Hedging the downside risk 
+of commodities through cryptocurrencies. Appl. Econ. Lett. 1 – 8 . 
+Naeem, M.A., Sehrish, S., Costa, M.D., 2021. COVID-19 Pandemic and Connectedness 
+across Financial Markets. Pacific Accounting Review . 
+¨
+Oztek, M.F., 
+¨
+Ocal, N., 2017. Financial crises and the nature of correlation between 
+commodity and stock markets. Int. Rev. Econ. Finance 48, 56 – 68 . 
+Perron, P., 1988. Trends and random walks in macroeconomic time series: further 
+evidence from a new approach. J. Econ. Dynam. Contr. 12 (2 – 3), 297 – 332 . 
+Raza, N., Ali, S., Shahzad, S.J.H., Raza, S.A., 2018. Do commodities effectively hedge real 
+estate risk? A multi-scale asymmetric DCC approach. Resour. Pol. 57, 10 – 29 . 
+Raza, N., Ali, S., Shahzad, S.J.H., Rehman, M.U., Salman, A., 2019. Can alternative 
+hedging assets add value to Islamic-conventional portfolio mix: evidence from 
+MGARCH models. Resour. Pol. 61, 210 – 230 . 
+Reboredo, J.C., Ugolini, A., 2015. Downside/upside price spillovers between precious 
+metals: a vine copula approach. N. Am. J. Econ. Finance 34, 84 – 102 . 
+Remuzzi, A., Remuzzi, G., 2020. COVID-19 and Italy: what next? Lancet 395, 
+1225 – 1228, 10231 .  
+Roy, R.P., Roy, S.S., 2017. Financial contagion and volatility spillover: an exploration 
+into Indian commodity derivative market. Econ. Modell. 67, 368 – 380 . 
+Sadorsky, P., 2014. Modeling volatility and correlations between emerging market stock 
+prices and the prices of copper, oil and wheat. Energy Econ. 43, 72 – 81 . 
+Salisu, A.A., Vo, X.V., Lawal, A., 2020. Hedging Oil Price Risk with Gold during COVID- 
+19 Pandemic. Resources Policy, 101897 .  
+Sensoy, A., 2013. Dynamic relationship between precious metals. Resour. Pol. 38 (4), 
+504 – 511 . 
+Shahzad, S.J.H., Rehman, M.U., Jammazi, R., 2019. Spillovers from oil to precious 
+metals: quantile approaches. Resour. Pol. 61, 508 – 521 . 
+Sherif, M., 2020. The impact of Coronavirus (COVID-19) outbreak on faith-based 
+investments: an original analysis. Journal of Behavioral and Experimental Finance 
+28, 100403 .  
+Tiwari, A.K., Trabelsi, N., Alqahtani, F., Raheem, I.D., 2020. Systemic risk spillovers 
+between crude oil and stock index returns of G7 economies: conditional value-at-risk 
+and marginal expected shortfall approaches. Energy Econ. 86, 104646 .  
+Uddin, G.S., Shahzad, S.J.H., Boako, G., Hernandez, J.A., Lucey, B.M., 2019. 
+Heterogeneous interconnections between precious metals: evidence from 
+asymmetric and frequency-domain spillover analysis. Resour. Pol. 64, 101509 .  
+Uddin, G.S., Hernandez, J.A., Shahzad, S.J.H., Kang, S.H., 2020. Characteristics of 
+spillovers between the US stock market and precious metals and oil. Resour. Pol. 66, 
+101601 .  
+Vivian, A., Wohar, M.E., 2012. Commodity volatility breaks. J. Int. Financ. Mark. Inst. 
+Money 22 (2), 395 – 422 . 
+Wang, D., Li, P., Huang, L., 2020. Volatility Spillovers between Major International 
+Financial Markets during the COVID-19 Pandemic. Available at SSRN 3645946 .  
+Wang, X., Wang, Y., 2019. Volatility spillovers between crude oil and Chinese sectoral 
+equity markets: evidence from a frequency dynamics perspective. Energy Econ. 80, 
+995 – 1009 . 
+Wang, D., Xin, Y., Chang, X., Su, X., 2020a. Realized volatility forecasting and volatility 
+spillovers: evidence from Chinese non-ferrous metals futures. Int. J. Finance Econ. 
+Yoon, S.M., Al Mamun, M., Uddin, G.S., Kang, S.H., 2019. Network connectedness and 
+net spillover between financial and commodity markets. N. Am. J. Econ. Finance 48, 
+801 – 818 . 
+Yildirim, D.C., Cevik, E.I., Esen, O., 2020. Time-varying volatility spillovers between oil 
+prices and precious metal prices. Resour. Pol. 68, 101783 .  
+Zhang, D., 2017. Oil shocks and stock markets revisited: measuring connectedness from a 
+global perspective. Energy Econ. 62, 323 – 333 . 
+Zhang, D., 2018. Energy finance: background, concept, and recent developments. Emerg. 
+Mark. Finance Trade 54 (8), 1687 – 1692. https://doi.org/10.1080/ 
+1540496X.2018.1466524 . 
+Zhang, Y.J., Chevallier, J., Guesmi, K., 2017. “ De-financialization ” of commodities? 
+Evidence from stock, crude oil and natural gas markets. Energy Econ. 68, 228 – 239 . 
+Zhang, D., Hu, M., Ji, Q., 2020. Financial Markets under the Global Pandemic of COVID- 
+19. Finance Research Letters, 101528 .  
+S. Farid et al.                                                                                                                                                                                                                                    

@@ -1,0 +1,597 @@
+Return connectedness across asset classes
+around the COVID-19 outbreak
+Elie Bouri †, Oguzhan Cepni ‡, David Gabauer §, and Rangan Gupta Λ
+†Holy Spirit University of Kaslik (USEK), USEK Business School, Jounieh, Lebanon.
+‡Central Bank of the Republic of Turkey, Ankara, Turkey.
+§Software Competence Center Hagenberg, Data Analysis Systems, Softwarepark 21, 4232 Hagenberg, Austria.
+Λ Department of Economics, University of Pretoria, Pretoria, 0002, South Africa.
+∗Corresponding Author.
+Abstract
+In this paper, we show evidence of a dramatic change in the structure and time-varying patterns
+of return connectedness across various assets (gold, crude oil, world equities, currencies, and bonds)
+around the COVID-19 outbreak. Using the TVP-VAR connectedness approach, the results show
+that the dynamic total connectedness across the ﬁve assets was moderate and quite stable until early
+2020. After that, the total connectedness spikes and the structure of the network of connectedness
+alters, which concurs with the COVID-19 outbreak. The equity and USD indices are the primary
+transmitters of shocks before the outbreak, whereas the bond index becomes the main transmitters
+of shocks during the COVID-19 outbreak. However, the USD index is a net receiver of shocks to
+other assets during the outbreak period. Furthermore, using a recently developed newspaper-based
+index of uncertainty in ﬁnancial markets due to infectious diseases to capture the recent impact of
+Covid-19, we ﬁnd that connectedness is positively related to this index, and increases at higher levels
+(conditional quantiles) of connectedness. Overall, our results reﬂect the speedy disturbing eﬀects of
+the COVID-19 outbreak, which matters to the formulations of policies seeking to achieve ﬁnancial
+stability. The results also indicate a possibility to threaten investors’ portfolios and fade the beneﬁts
+of diversiﬁcation.
+Keywords: COVID-19 outbreak; ﬁnancial markets contagion; return connectedness; TVP-VAR;
+JEL codes: C32; C5; F3; G15.
+1 Introduction
+During crisis and turbulent periods, various economic agents, including investors and policymakers, can
+make use of the size and direction of the net spillovers for enhancing portfolio decisions and the for-
+mulations of policy to restore and safeguard ﬁnancial stability. This is especially relevant in times of
+catastrophic events, such as the COVID-19 outbreak, during which global economic activities freeze, un-
+employment rate balloons, economic and ﬁnancial uncertainties spike, and energy and ﬁnancial markets
+plunge, which has led to international ﬁnancial chaos that disturbed asset allocations and risk man-
+agement models and importantly ﬁnancial stability. In fact, the COVID-19 has triggered an economic
+recession coupled with an intensiﬁed uncertainty about its severity and length. It has adversely aﬀected
+the global ﬁnancial system, jeopardizing global ﬁnancial stability. Accordingly, the risk factors of the
+COVID-19 have induced renewed interest in systemic risk that is often applied to shocks to various as-
+sets, which makes the empirical focus on the structural dynamics of the network of returns of various
+assets very important to understanding how the ﬁnancial system responds to return shocks, and how
+the dynamics of the systemic risk materializes. Examining these issues have implications for a wide set
+of issues related to risk management, asset allocation, and regulatory formulation. For example, dur-
+ing economic and ﬁnancial crisis periods, investors re-balance their portfolios by switching from risky
+assets to safe-haven assets in order to reduce the portfolio’s risk, which results into a "ﬂight-to-quality"
+or "ﬂight-to-safety" phenomenon that tends to decrease (increase) the price of risky (safe haven) assets
+(Choudhry et al., 2015; Troster et al., 2019).
+In this paper, we contribute to the academic literature by examining for the ﬁrst time how the net-
+work of various asset returns reacts to the unprecedented catastrophic shocks of the COVID-19 that is,
+by capturing its time-varying structure and evolution. More speciﬁcally, we capture how the COVID-19
+has made an asset to become more or less systemically important than another in the network of connect-
+edness. Therefore, we are interested in answering the following questions: What role has the COVID-19
+played in shaping the patterns of return connectedness across various assets? Does the structure of the
+assets returns exhibit any patterns of the main shift over time?
+To answer these questions, we consider a ﬁnancial system to be a network of ﬁve interconnected
+assets covering gold, crude oil, equities, currencies, and bonds and then apply a dynamic connectedness
+approach based on time-varying parameter vector auto-regressions (TVP-VAR) in line with Antonakakis
+et al. (2020).
+Our paper is related to the literature employing connectedness measures to describe the size and
+direction of the return spillovers among assets and markets during crisis periods (e.g., Corbet et al.,
+2020a,b; Gębka and Serwa, 2006; Kang and Yoon, 2019; Tiwari et al., 2020; Antonakakis et al., 2019).
+Notably, our paper evaluates the response of ﬁnancial systems to the catastrophic event related to the
+COVID-19 outbreak, which is an unprecedented research topic. This would add to recent studies that
+focus on the role played by the COVID-19 on economic and ﬁnancial variables (Baker et al., 2020;
+2
+Haddad et al., 2020; Baig et al., 2020; Sharif et al., 2020). In addition to this academic contribution,
+we oﬀer other contributions by extending previous studies that consider the transmission across markets
+and assets using methods such as conditional correlation, Granger-causality, conditional value-at-risk,
+or the approach of Diebold and Yılmaz (2012, 2014). Notably, our reliance on the TVP-VAR approach
+overcomes the pitfalls of the measures of connectedness based on variance decomposition from standard
+VAR models such as outlier sensitivity induced by the underlying Kalman ﬁlter, sensitivity of results due
+to the arbitrary choice of the rolling window size, and the loss of observations due to the rolling window
+analysis. It also allows for capturing the dynamics of the overall connectedness measure as well as the
+cross-asset connectedness structures.
+The central ﬁnding of our analysis is that the COVID-19 has altered the network of connectedness
+across the ﬁve assets under study, by generating sudden increases in both the system overall connectedness
+and the cross-asset connectedness of various cases. These ﬁndings are intuitive and suggest that the
+network of the global ﬁnancial system is unstable and experiences an abrupt spike in its risk build-up due
+to the COVID-19 outbreak, which is somewhat diﬀerent from the longer-lasting build-up of the global
+systematic risk in the wake of the global ﬁnancial crisis of 2008 (Barrell and Davis, 2008).
+The remainder of this paper is organised as follows. In Section 2 we present the relevant literature
+review and hypotheses that emerge. In Section 3, we describe the data and set out the empirical methods
+employed in the study. In Section 4, we illustrate the ﬁndings of the study and discuss the relevant
+arguments. Finally, Section 5 summarises the key elements, provides a framework for policy implications,
+and concludes the study.
+2 Literature Review
+The consecutive ﬁnancial and economic crises over the last three decades provided a suitable laboratory
+to capture and understand the changes in market interdependencies and returns spillovers during stress
+periods (Mensi et al., 2016). A large strand of academic literature examines the eﬀect of the Global
+Financial Crisis (hereafter GFC) of 2008 on the relationship across various asset classes (Choudhry et al.,
+2015; Mensi et al., 2016; Zhang and Broadstock, 2018; Kang and Yoon, 2019, e.g.,), showing how the
+GFC has intensiﬁed market linkages and aﬀected asset allocation and hedging strategies. In fact, changes
+in the interdependence across ﬁnancial markets is a major concern for investors seeking the beneﬁts of
+diversiﬁcation (Brière et al., 2012).
+Some studies consider the transmission across assets using various methods such as conditional corre-
+lation (Dua and Tuteja, 2016; Öztek and Öcal, 2017), Granger-causality (e.g., Billio et al., 2012; Zhang
+and Broadstock, 2018), copulas (Philippas and Siriopoulos, 2013; Ji et al., 2018), or conditional value-at-
+risk (Ji et al., 2018). However, following the inﬂuential studies of Diebold and Yılmaz (2009, 2012, 2014),
+a growing literature highlights the importance of uncovering spillovers of shocks in a predetermined net-
+work via the connectedness approach (e.g., Zhang, 2017; Hussain Shahzad et al., 2019). Notably, higher
+3
+inter-connectedness of the network, which is an indication of higher market risk, conveys both beneﬁts
+and risks. First, it can improve risk-sharing within the network through the various degree of absorption
+of individual asset shocks that can be asset-speciﬁc, which beneﬁts risk diversiﬁcation in a portfolio of
+weakly connected assets. Secondly, it can lead to ﬁnancial contagion given that shocks can propagate
+through the network, which is an indication of instability in the ﬁnancial system.
+However, the existing literature on the return spillovers among a large set of asset classes such as
+commodities, equities, currencies, and bonds is rare. For example, Wang and Chueh (2013) focus on the
+linkages between oil prices, gold prices, interest rates, and currency market. They report evidence of price
+transmission relationship between most of the pairs of market under study and a feedback eﬀects in the
+relationship between strategic commodities (gold and crude oil) and interest rates. Kang et al. (2017)
+also focus on the price transmission but consider precious metals, crude oil and agricultural commodities.
+They show evidence of stronger returns spillovers during the GFC, which can have portfolio and hedging
+implications.
+Notably, the extended version of the Diebold and Yılmaz (2014)’s measures of connectedness has
+been used by Gabauer and Gupta (2018) and Antonakakis et al. (2018), which allows for reﬁning the
+measurement of global uncertainty indices in a genuine time-varying setting. This is important as market
+networks can reveal a lot about models of panic during stress crises and the factors aﬀecting market
+freezes and the structure of the ﬁnancial environment and the level of systemic risk. At high levels of
+connectedness, the information gathering process becomes costly and less eﬃcient. Furthermore, investors
+move away from risky assets like equities, towards gold and Bond markets (Choudhry et al., 2015; Brocato
+and Smith, 2012).
+Our analysis extends the above lines of research by providing ﬁrst empirical evidence on how the
+COVID-19 outbreak, an unprecedented and sudden global public health emergency, shaped the dynamics
+of return spillovers across various assets. As such, we analyze the net shocks transmitter or receiver within
+the system of the ﬁve various assets and extend our limited understanding of the nature and extent of
+the transmission of return shocks in light of the catastrophic event of the COVID-19 outbreak.
+3 Data & Methodology
+3.1 Summary Statistics
+We employ daily data covering various assets like gold, crude oil, equities, currencies, and bonds. We
+consider the spot price index of S&P GSCI gold, S&P GSCI crude oil, MSCI World, USD index, and
+PIMCO Investment Grade Corporate bond index Exchange-Traded Fund, extracted fromDatastream.
+The sample period is May 12, 2011 - May 12, 2020, yielding 2349 daily observations as dictated by data
+availability, and notably includes the COVID-19 outbreak period from early 2020 till the end of the
+sample period. The raw series are presented in Figure 1.
+4
+[Insert Figure 1 around here]
+As the raw series are non-stationary according to the ERS (Elliott et al., 1996) unit-root test, we
+decide to take the ﬁrst log-diﬀerences that can be interpreted as the daily percentage changes. The
+resulting series are illustrated in Figure 2. The summary statistics of the return series (Table 1) indicate
+that crude oil has the highest standard deviation, which is not surprising given the severe adverse impact
+of the COVID-19 on energy prices (Dutta et al., 2020).
+[Insert Figure 2 around here]
+The ﬁndings indicate that the series are signiﬁcantly non-normally distributed (D’Agostino, 1970;
+Anscombe and Glynn, 1983; Jarque and Bera, 1980) and stationary at 1% signiﬁcance level. Notably,
+we ﬁnd pronounced autocorrelation in both, the series and the squared series (Fisher and Gallagher,
+2012) implying that the mean and the variance of each series vary over time. Thus, employing a TVP-
+VAR model with a time-varying variance-covariance structure seems to be an appropriate econometric
+framework capturing all those factors.
+Further results from Table 1 show the unconditional correlation matrix across the return series over
+the full sample period. The USD index is negatively correlated with all other assets under study, whereas
+the strongest positive correlation is between crude oil and equities.
+[Insert Table 1 around here]
+3.2 TVP-V AR-Based Dynamic Connectedness Approach
+A widely used framework to trace and evaluate spillovers in a predetermined network is the connectedness
+approach proposed by Diebold and Yılmaz (2009, 2012, 2014). The constantly increasing attention of
+the framework is mainly caused by the fact that it provides researchers and practitioners both with a
+static and a dynamic method of time series network analysis. The static approach is employing a vector
+autoregressive model (VAR, see Sims, 1980) on the full dataset whereas the dynamics are estimated
+via a rolling-window VAR approach. The setting of this framework is discussed intensively in Anton-
+akakis et al. (2020) who propose a dynamic connectedness approach based on time-varying parameter
+vector autoregressions (TVP-VAR) with the result that dynamics are not inﬂuenced by the size of the
+rolling window. Additional advantages of the TVP-VAR based connectedness approach are (i) the out-
+lier insensitivity caused by the underlying Kalman ﬁlter, (ii) that there is no need to arbitrarily choose
+the rolling-window size, (iii) that there is no loss of observations and (iv) that it can be employed also
+for low frequency datasets. This study applies the same methodology as in Antonakakis et al. (2018)
+and Gabauer and Gupta (2018)1. In particular, we are estimating a TVP-VAR(1) as suggested by the
+1Since the detailed algorithm of the TVP-VAR model with heteroscedastic variance-covariances is beyond the scope of
+this study interested readers are referred to Koop and Korobilis (2013) and Koop and Korobilis (2014).
+5
+Bayesian information criterion (BIC) which can be outlined as:
+zt =Btzt−1 +ut ut ∼N (0,St) (1)
+vec(Bt) =vec(Bt−1) +vt vt ∼N (0,Rt) (2)
+wherezt,zt−1 andut arek ×1 dimensional vector andBt andSt arek ×k dimensional matrices.vec(Bt)
+andvt are k2 × 1 dimensional vectors whereasRt is ak2 ×k2 dimensional matrix.
+Subsequently, we are calculating theH-step ahead (scaled) generalized forecast error variance decom-
+position (GFEVD) introduced by Koop et al. (1996) and Pesaran and Shin (1998).
+Notably, the GFEVD is completely invariant of the variable ordering opposed to the orthorgonalized
+forecast error variance decomposition (see, Diebold and Yılmaz, 2009). Please keep in mind that the
+structural representations of shocks - as it is often used in applied macroeconomics - should only be used
+if it underlies an economic theory which is - to the best of our knowledge - not available when it comes to
+the series under consideration2. For this reason, we stick to the GFEVD spillover framework. Since this
+concept is built upon the Wold representation theorem we transform the estimated TVP-VAR model into
+a TVP-VMA process by making use of the following equality:zt = ∑p
+i=1Bitzt−i +ut = ∑∞
+j=0Ajtut−j.
+The (scaled) GFEVD normalizes the (unscaled) GFEVD,φg
+ij,t(H), in order that each row sums up to
+unity. Hence, ˜φg
+ij,t(H) represents the inﬂuence variablej has on variablei in terms of its forecast error
+variance share which is deﬁned as thepairwise directional connectedness fromj to i. This indicator is
+computed by,
+φg
+ij,t(H) =
+S−1
+ii,t
+∑H−1
+t=1 (ι′
+iAtStιj)2
+∑k
+j=1
+∑H−1
+t=1 (ιiAtStA′
+tιi)
+˜φg
+ij,t(H) =
+φg
+ij,t(H)
+∑k
+j=1φg
+ij,t(H)
+with ∑k
+j=1
+˜φg
+ij,t(H) = 1, ∑k
+i,j=1
+˜φg
+ij,t(H) = k, andιi corresponds to a selection vector with unity on the
+ith position and zero otherwise.
+Based upon the GFEVD, Diebold and Yılmaz (2012, 2014) derived their connectedness measures as
+2Furthermore, we want to stress out that even though we are talking about the spillovers of shocks we are well aware
+that those interpretation diﬀers from the macroeconomic literature, however, with this interpretation we are just following
+the interpretations Diebold and Yılmaz (2009, 2012, 2014) to be in-line with the connectedness literature.
+6
+follows:
+TO jt =
+k∑
+i=1,i̸=j
+˜φg
+ij,t(H) (3)
+FROM jt =
+k∑
+i=1,i̸=j
+˜φg
+ji,t(H) (4)
+NET jt =TO jt −FROM jt (5)
+TCI t =k−1
+k∑
+j=1
+TO jt ≡k−1
+k∑
+j=1
+FROM jt. (6)
+NPDC ij,t = ˜φij,t(H) − ˜φji,t(H) (7)
+As mentioned previously˜φg
+ij,t(H) illustrates the impact a shock in variablej has on variablei. Hence,
+Equation (3) represents the aggregated impact a shock in variablej has on allother variables which is
+deﬁned as thetotal directional connectedness to otherswhereas Equation (4) illustrates the aggregated
+inﬂuence allother variables have on variablej that is deﬁned as thetotal directional connectedness from
+others.
+Equation (5): Subtracting the impact variablej has on others by the inﬂuenceothers have on variable
+j results in thenet total directional connectednesswhich provides us with information whether a variable
+is a net transmitter or a net receiver of shocks. Variablej is a net transmitter (receiver) of shocks - and
+hence driving (drivenby ) the network - when the impact variablej has on others is larger (smaller) than
+the inﬂuence all others have on variablej, NET jt > 0 (NET jt < 0). Another essential measure is given
+by Equation (6) thetotal connectedness index (TCI t) which represents the average impact one variable
+has on allothers. If this measure is relatively high it implies that the interconnectedness of the network
+and hence the market risk is high since a shock in one variable will inﬂuence others whereas a low value
+shows that most variables are rather independent from each other which in turn means that a shock in
+one variable will not cause other variables to adjust resulting in low market risk.
+Since all aforementioned measures oﬀer information on an aggregated basis, Equation (7) tells us
+more about the bilateral relationship between variablej and i. The so-called net pairwise directional
+connectedness (NPDC ij,t) exhibits whether variable j is driving variablei or vice versa. Therefore,
+we subtract the impact variablej has on variablei by the inﬂuence variablei has on variablej. If
+NPDC ij,t > 0 (NPDC ij,t < 0), it means that variablej is dominating (dominated by) variablei.
+4 Empirical Results and Discussion
+4.1 A verage and Dynamic Total Connectedness Measures
+Table 2 presents the averaged connectedness measures. While the main diagonal of Table 2 shows own-
+variance shares of shocks, oﬀ-diagonal elements reﬂect the interaction across ﬁnancial assets. In order
+7
+to examine how the average connectedness of ﬁnancial markets change after the onset of the COVID-19
+pandemic, wedivideoursampleintotwoparts. 3 AscanbeseeninTable2, severalinterestingobservations
+arise when considering the periods both before and after the start of the COVID-19 pandemic. Firstly,
+there is evidence of increased connectedness between ﬁnancial assets. The TCI value that is included
+in Table 2 indicates that co-movements of the ﬁnancial asset are rather moderate in the post-Corona
+period, as they constitute 27.2% of the total forecast error variance of the network. Put diﬀerently, on
+average, 27.2% of the forecast error variance in one ﬁnancial asset can be attributed to the innovations
+in all others.
+In particular, MSCI World and USD index appear to be the primary transmitters of shocks before the
+outbreak; whereas bond index, MSCI World (with an increase in magnitude), and crude oil become the
+main transmitters of shocks within the network after the beginning of the global COVID-19 pandemic.
+This evidence implies that the elevated spillover eﬀects from bond markets to other markets may result in
+recent expansionary monetary policy measures and Central Bank’s liquidity injections through massive
+bond purchases. On the other hand, since the crude oil market has been hit by the twin shock of the
+COVID-19 pandemic and the unraveling of the OPEC+ production agreement, we observe that crude oil
+has turned a net transmitter of shocks during the Corona-outbreak periods.
+[Insert Table 2 around here]
+However, results presented in Table 2 are aggregate results that consider the period of study in its
+entirety; that is, without focusing the periods that may have lead to considerable deviations from the
+average TCI value which is reported above. In this regard, to identify speciﬁc episodes that aﬀected
+connectedness across ﬁnancial variables over time, we continue with the dynamic approach. As can
+be seen from Figure 3, the dynamic connectedness of our network ﬂuctuates considerably over time,
+especially after the outbreak, which is suggestive of the fact that connectedness across ﬁnancial markets
+is time-dependent. A closer look at Figure 3 reveals that pronounced connectedness is evident around the
+mid-March, matching with the onset of the new infectious disease all over the globe and sparking fears
+of the possible second wave of infections. In particular, after the onset of the outbreak, ﬁnancial markets
+spillovers reached a higher point than the unprecedented heights during mid-2013, a period characterized
+by ’FED Tapering’.
+[Insert Figure 3 around here]
+4.2 Net Total Connectedness
+In turn, we focus on the net total connectedness of the system which is presented in Figure 4. Net
+total connectedness practically indicates the diﬀerence between the transmitting and the receiving shocks
+of each ﬁnancial asset considering the entire network. Note that positive values of the shaded area
+3We choose January 13, 2020, as outbreak date of the coronavirus since the ﬁrst cross-border transmission of infection
+was reported by Thai authorities on that date.
+8
+correspond to periods when a particular ﬁnancial asset assumes a net-transmitting role, while negative
+values show the periods when the ﬁnancial assets receive, on net terms, from others.
+An inspection of Figure 4 leads to a number of clear-cut conclusions. Firstly, while the bond index
+is persistently receiving shocks from others with perhaps one or two short-lived exceptions, it seems to
+assume a persistent net-receiving role mainly after the global pandemic. The reason is that spread of
+U.S. investment-grade bonds has widened sharply since the onset of the coronavirus outbreak indicating
+the threat posed to companies’ balance sheets by the coronavirus crisis. Secondly, the gold market shows
+a signiﬁcant time-varying transmission pattern. In particular, we see that the transmission of spillovers
+from others to the gold market increased during the global pandemic. As suggested by Baur and Lucey
+(2010), Bredin et al. (2015), and Bouri et al. (2020) gold can be used as both a hedge and safe heaven
+by global investors during the uncertain times.
+Similarly, we observe that the USD index has been a net receiver throughout the coronavirus outbreak
+period. The reason is that the meltdown in global markets due to the fears of the global recession has led
+to investors liquidate their positions resulting in huge demand for cash. Moreover, ﬁrms without ample
+cash at hand have tried to ﬁnd cash to continue their operations during the global pandemic (Didier et al.,
+2020). Finally, Figure 4 also indicates that the MSCI World index is a net transmitter of shocks and
+hence driving the network after the onset of the coronavirus. This result in line with the ﬁndings of Baig
+et al. (2020) who suggest that reported number of conﬁrmed coronavirus cases, general negative sentiment
+reported by media, reduced mobility, and government measures to restrict movement and business have
+a strong association with volatility in the stock market returns.
+[Insert Figure 4 around here]
+4.3 Net Pairwise Connectedness
+While the net total approach can be informative, it also has its challenges, provided that total numbers
+invariably conceal interesting stories between speciﬁc variables of the system. Whereas net total ﬁgures
+explicitly display the clear picture of the network variables over time, they do not concentrate on pairs of
+variables to describe the associated dynamics. In this regard, in this section, we present bilateral results
+and investigate the speciﬁc links between the ﬁnancial asset class of interest.
+In Figure 5, we focus on the net pairwise directional connectedness measures of spillovers - i.e.
+spillovers across pairs of ﬁnancial variables. We observe the following empirical regularities. First,
+spillovers are of greater magnitude after the onset of the global pandemic. For instance, net spillovers
+from the bond index to gold and USD index are particularly high during the outbreak periods and reach
+up to 15%. This ﬁnding reﬂects that the bond market became a sender of stress during the post-corona
+periods. The reason is that a sudden drop in the liquidity of the bond market pointed out to uncertainty
+in creditworthiness - particularly in the investment- grade market which in turn leads to an exacer-
+9
+bation in demand for liquidity.4 Hence, it seems that the demand for cash balances and safe heaven
+assets is sparked. The reason may be that the COVID-19 forced shutdowns would hurt revenue ﬂows
+of the corporate ﬁrms which leads to a sharp increase in the average implied default probabilities of the
+investment-grade bond basket (De Vito and Gómez, 2020).
+Second, while the spillover from the MSCI Word index to bond index switch its behaviour between
+being a net transmitter or net receiver multiple times before the outbreak, the MSCI World index is
+driven by the bond index after the onset of the pandemic. Although bonds are generally considered safer
+than stocks, the unexpected movement of bond markets might trigger the stocks sell-oﬀ further (Haddad
+et al., 2020).
+Another interesting element in our analysis that deserves further attention relates to recent periods
+where the spillover from MSCI World to USD index rises sharply. This evidence shows that investors tried
+to sell more liquid securities like stock indices to raise cash since other ﬁnancial assets such as investment-
+grade corporate and municipal bond ETFs are traded a large discount to their net asset values during
+the crisis periods.
+Finally, the spillovers from crude oil to USD and Bond indices seem to be low most of the sample
+period. Closely observing the pairwise spillovers let us realize that the oil market dominates the USD and
+Bond indices after the oil futures plunge to negative territory feeding the market panic. Furthermore,
+the reduction in mobility and the lack of industrial activity due to the outbreak signiﬁcantly decreased
+the demand for oil, causing its price to fall with a fear of global recession.
+[Insert Figure 5 around here]
+4.4 Cointegration and quantile regressions between TCI and EVM
+To analyze the eﬀect of the outbreak of the COVID-19 virus on the connectedness of the asset class, we use
+the recently developed newspaper-based index of Baker et al. (2020), which tracks equity market volatility
+(EMV), in particular the movements in the Chicago Board Options Exchange (CBOE)’s Volatility Index
+(VIX), due to infectious diseases. This index is developed by Baker et al. (2020), with index being
+newspaper-based infectious disease EMV tracker, available at the daily frequency from January, 1985
+till recent days.5 To construct the EMV-ID, Baker et al. (2020) speciﬁes four sets of terms namely, E:
+economic, economy, ﬁnancial; M: "stock market", equity, equities, "Standard and Poors"; V: volatility,
+volatile, uncertain, uncertainty, risk, risky; ID: epidemic, pandemic, virus, ﬂu, disease, coronavirus, mers,
+sars, ebola, H5N1, H1N1, and then obtain daily counts of newspaper articles that contain at least one
+term in each of E, M, V, and ID across approximately 3,000 US newspapers. After this, the raw EMV-ID
+counts is scaled by the count of all articles in the same day, and ﬁnally, the authors multiplicatively
+rescale the resulting series to match the level of the VIX, by using the overall EMV index, and then
+scaling the EMV-ID index to reﬂect the ratio of the EMV-ID articles to total EMV articles.
+4See, for example, https://www.msci.com/www/blog-posts/credit-in-the-COVID-crisis/01795274729
+5Data is available from:http : //policyuncertainty.com/inf ectiousE M V.html.
+10
+Figure 6 shows the eﬀect the EVM has on TCI over diﬀerent quantiles (Koenker and Bassett Jr,
+1978). Data has been taken after the ﬁrst COVID-19 infected has appeared on the screen of the US on
+the January 13, 2020 as all EVM data prior to this point is only covering the economic policy uncertainty
+without COVID-19 aﬀecting it. Notably, all slope coeﬃcient estimation results are positive indicating
+that the higher EVM is the higher is TCI especially on the upper end. In detail, this means that the
+increased COVID-19 economic policy uncertainty in the US has increased the market risk across gold,
+crude oil, MSCI World, USD index and bond index.
+[Insert Figure 6 around here]
+5 Concluding Remarks
+The coronavirus shock has led to large disruptions to the global ﬁnancial markets. The very signiﬁcant
+deterioration of the global growth backdrop and the sharp reduction in global risk appetite have led to
+growing contagion in ﬁnancial markets, prompting major central banks and governments to deploy a wide
+range of monetary and ﬁnancial easing measures.
+In this study, we focus on diﬀerent ﬁnancial markets to highlight the eﬀect of the global pandemic
+on the increased levels of stress in international ﬁnancial markets. To accomplish the objectives of our
+study, we consider diﬀerent asset classes, which include gold, crude oil, USD index, bond index, and MSCI
+World index covering the periods before and after the corona-outbreak. In this regard, we further employ
+a TVP-VAR empirical approach to measure connectedness across the diﬀerent asset classes included in
+our study. The key advantage of the TVP-VAR model is that it practically constitutes an extension of
+the standard Diebold and Yılmaz (2009, 2012) approach as it does not suﬀer from the deﬁciencies of
+the typical rolling-windows method and thus provides reﬁned measurements of connectedness. Moreover,
+using a recently developed newspaper-based index of uncertainty in ﬁnancial markets due to infectious
+diseases to capture the recent impact of Covid-19, we ﬁnd that connectedness is positively related to this
+index, and increases at higher levels (conditional quantiles) of connectedness.
+Our ﬁndings provide clear evidence for strong spillover eﬀects in ﬁnancial markets. Financial con-
+nectedness is particularly high during elevated stress episodes after the onset of the global pandemic. In
+particular, we show that MSCI World and USD index appear to be the primary transmitters of shocks
+before the outbreak; whereas bond index becomes the main transmitters of shocks within the network
+after the beginning of the global COVID-19 pandemic. Hence, policymakers have announced a vast ar-
+ray of stimulus measures, including large ﬁscal packages, adjustments to labor laws, and public sector
+backstops to private businesses in order to mitigate the contagion eﬀects of the bond market to other
+ﬁnancial variables.
+However, we observe that the USD index has been a net receiver of shocks throughout the coronavirus
+outbreak period. This result validates the recent Central Banks’ actions to ensure that there is adequate
+11
+liquidity to avoid ﬁnancial stress or the interruption of the ﬂow of capital including the massive rate cuts
+and broad re-launch of quantitative easing programs.
+Furthermore, our ﬁndings can also be read from a policy-making perspective. Empirical results
+indicate that policymakers should pay attention to overall ﬁnancial connectedness by analyzing the net
+shocks transmitter or receiver nature of the diﬀerent asset classes. The main reason for this is that
+systemic ﬁnancial contagion can increase swiftly to serious levels due to high spillover eﬀects between
+ﬁnancial asset classes. Thus, policy-making in the sense of not only monitoring total connectedness but
+also evaluating net directional spillovers between ﬁnancial variables with a systemic perspective is vital.
+Therefore, if an eﬃcient coordination mechanism is in place and spillover information across ﬁnancial
+variables is continuously monitored, then policy-makers can design timely policy interventions to alleviate
+the contagion risk from inter-connectedness and ﬁnancial networks.
+As part of future research, it would be interesting to extend our analysis into stock, bond, and foreign
+currency markets of diﬀerent countries. This will ensure us with the understanding of whether our results
+carry over to cross-country ﬁnancial markets as well, which might provide insights for global investors to
+develop better portfolio diversiﬁcation beneﬁts.
+12
+References
+Anscombe, F. J. and Glynn, W. J. (1983). Distribution of the kurtosis statistic b 2 for normal samples.
+Biometrika, 70(1):227–234.
+Antonakakis, N., Chatziantoniou, I., and Gabauer, D. (2019). Cryptocurrency market contagion: Market
+uncertainty, market complexity, and dynamic portfolios.Journal of International Financial Markets,
+Institutions and Money, 61:37–51.
+Antonakakis, N., Chatziantoniou, I., and Gabauer, D. (2020). Reﬁned measures of dynamic connectedness
+based on tvp-var. Technical report.
+Antonakakis, N., Gabauer, D., Gupta, R., and Plakandaras, V. (2018). Dynamic Connectedness Of
+Uncertainty Across Developed Economies: A Time-Varying Approach.Economics Letters, 166:63–75.
+Baig, A., Butt, H. A., Haroon, O., and Rizvi, S. A. R. (2020). Deaths, panic, lockdowns and us equity
+markets: The case of covid-19 pandemic.Available at SSRN 3584947.
+Baker, S. R., Bloom, N., Davis, S. J., Kost, K. J., Sammon, M. C., and Viratyosin, T. (2020). The
+unprecedented stock market impact of covid-19. Technical report, National Bureau of Economic Re-
+search.
+Barrell, R. and Davis, E. P. (2008). The evolution of the ﬁnancial crisis of 2007—8.National Institute
+Economic Review, 206(1):5–14.
+Baur, D. G. and Lucey, B. M. (2010). Is gold a hedge or a safe haven? an analysis of stocks, bonds and
+gold. Financial Review, 45(2):217–229.
+Billio, M., Getmansky, M., Lo, A. W., and Pelizzon, L. (2012). Econometric measures of connectedness
+and systemic risk in the ﬁnance and insurance sectors.Journal of ﬁnancial economics, 104(3):535–559.
+Bouri, E., Shahzad, S. J. H., Roubaud, D., Kristoufek, L., and Lucey, B. (2020). Bitcoin, gold, and
+commodities as safe havens for stocks: New insight through wavelet analysis.The Quarterly Review of
+Economics and Finance.
+Bredin, D., Conlon, T., and Potì, V. (2015). Does gold glitter in the long-run? gold as a hedge and safe
+haven across time and investment horizon.International Review of Financial Analysis, 41:320–328.
+Brière, M., Chapelle, A., and Szafarz, A. (2012). No contagion, only globalization and ﬂight to quality.
+Journal of international Money and Finance, 31(6):1729–1744.
+Brocato, J. and Smith, K. L. (2012). Sudden equity price declines and the ﬂight-to-safety phenomenon:
+additional evidence using daily data.Journal of Economics and Finance, 36(3):712–727.
+Choudhry, T., Hassan, S. S., and Shabi, S. (2015). Relationship between gold and stock markets during
+the global ﬁnancial crisis: Evidence from nonlinear causality tests.International Review of Financial
+Analysis, 41:247–256.
+Corbet, S., Hu, Y., Lucey, B. M., and Oxley, L. (2020a). Aye corona! the contagion eﬀects of being
+named corona during the covid-19 pandemic.The Contagion Eﬀects of Being Named Corona during
+the COVID-19 Pandemic (March 26, 2020).
+Corbet, S., Larkin, C., and Lucey, B. (2020b). The contagion eﬀects of the covid-19 pandemic: Evidence
+from gold and cryptocurrencies.Finance Research Letters, page 101554.
+D’Agostino, R. B. (1970). Transformation to normality of the null distribution of g1.Biometrika, pages
+679–681.
+De Vito, A. and Gómez, J.-P. (2020). Estimating the covid-19 cash crunch: Global evidence and policy.
+Journal of Accounting and Public Policy, page 106741.
+Didier, T., Huneeus, F., Larrain, M., and Schmukler, S. L. (2020). Financing ﬁrms in hibernation during
+the covid-19 pandemic.
+Diebold, F. X. and Yılmaz, K. (2009). Measuring Financial Asset Return And Volatility Spillovers, With
+Application To Global Equity Markets.Economic Journal, 119(534):158–171.
+Diebold, F. X. and Yılmaz, K. (2012). Better To Give Than To Receive: Predictive Directional Measure-
+ment Of Volatility Spillovers.International Journal of Forecasting, 28(1):57–66.
+Diebold, F.X.andYılmaz, K.(2014). OnTheNetworkTopologyOfVarianceDecompositions: Measuring
+The Connectedness Of Financial Firms.Journal of Econometrics, 182(1):119–134.
+Dua, P. and Tuteja, D. (2016). Financial crises and dynamic linkages across international stock and
+currency markets. Economic Modelling, 59:249–261.
+Dutta, A., Bouri, E., Uddin, G. S., and Yahya, M. (2020). Impact of covid-19 on global energy markets.
+13
+Elliott, G., Rothenberg, T. J., and Stock, J. H. (1996). Eﬃcient Tests For An Autoregressive Unit Root.
+Econometrica, 64(4):813–836.
+Fisher, T. J. and Gallagher, C. M. (2012). New Weighted Portmanteau Statistics For Time Series
+Goodness Of Fit Testing.Journal of the American Statistical Association, 107(498):777–787.
+Gabauer, D. and Gupta, R. (2018). On The Transmission Mechanism Of Country-Speciﬁc And Interna-
+tional Economic Uncertainty Spillovers: Evidence From A TVP-VAR Connectedness Decomposition
+Approach. Economics Letters, 171:63–71.
+Gębka, B. and Serwa, D. (2006). Are ﬁnancial spillovers stable across regimes?: Evidence from the 1997
+asian crisis. Journal of International Financial Markets, Institutions and Money, 16(4):301–317.
+Haddad, V., Moreira, A., and Muir, T. (2020). When selling becomes viral: Disruptions in debt markets
+in the covid-19 crisis and the fed’s response.Available at SSRN 3590819.
+Hussain Shahzad, S. J., Bouri, E., Arreola-Hernandez, J., Roubaud, D., and Bekiros, S. (2019). Spillover
+across eurozone credit market sectors and determinants.Applied Economics, 51(59):6333–6349.
+Jarque, C. M. and Bera, A. K. (1980). Eﬃcient Tests For Normality, Homoscedasticity And Serial
+Independence Of Regression Residuals.Economics Letters, 6(3):255–259.
+Ji, Q., Bouri, E., Roubaud, D., and Shahzad, S. J. H. (2018). Risk spillover between energy and agricul-
+tural commodity markets: A dependence-switching covar-copula model.Energy Economics, 75:14–27.
+Kang, S. H., McIver, R., and Yoon, S.-M. (2017). Dynamic spillover eﬀects among crude oil, precious
+metal, and agricultural commodity futures markets.Energy Economics, 62:19–32.
+Kang, S. H. and Yoon, S.-M. (2019). Financial crises and dynamic spillovers among chinese stock and
+commodity futures markets.Physica A: Statistical Mechanics and its Applications, 531:121776.
+Koenker, R. and Bassett Jr, G. (1978). Regression quantiles.Econometrica: journal of the Econometric
+Society, pages 33–50.
+Koop, G. and Korobilis, D. (2013). Large Time-Varying Parameter VARs.Journal of Econometrics,
+177(2):185–198.
+Koop, G. and Korobilis, D. (2014). A New Index Of Financial Conditions.European Economic Review,
+71:101–116.
+Koop, G., Pesaran, M. H., and Potter, S. M. (1996). Impulse Response Analysis In Nonlinear Multivariate
+Models. Journal of Econometrics, 74(1):119–147.
+Mensi, W., Hammoudeh, S., Nguyen, D. K., and Kang, S. H. (2016). Global ﬁnancial crisis and spillover
+eﬀects among the us and brics stock markets.International Review of Economics & Finance, 42:257–
+276.
+Öztek, M. F. and Öcal, N. (2017). Financial crises and the nature of correlation between commodity and
+stock markets. International Review of Economics & Finance, 48:56–68.
+Pesaran, H. H. and Shin, Y. (1998). Generalized Impulse Response Analysis In Linear Multivariate
+Models. Economics Letters, 58(1):17–29.
+Philippas, D. and Siriopoulos, C. (2013). Putting the “c” into crisis: Contagion, correlations and copulas
+onemubondmarkets. Journal of International Financial Markets, Institutions and Money, 27:161–176.
+Sharif, A., Aloui, C., and Yarovaya, L. (2020). Covid-19 pandemic, oil prices, stock market and policy
+uncertainty nexus in the us economy: Fresh evidence from the wavelet-based approach.Oil Prices,
+Stock Market and Policy Uncertainty Nexus in the US Economy: Fresh Evidence from the Wavelet-
+Based Approach (April 13, 2020).
+Sims, C. (1980). Macroeconomics And Reality.Econometrica, 48(1):1–48.
+Tiwari, A. K., Trabelsi, N., Alqahtani, F., and Raheem, I. D. (2020). Systemic risk spillovers between
+crude oil and stock index returns of g7 economies: Conditional value-at-risk and marginal expected
+shortfall approaches. Energy Economics, page 104646.
+Troster, V., Bouri, E., and Roubaud, D. (2019). A quantile regression analysis of ﬂights-to-safety with
+implied volatilities. Resources Policy, 62:482–495.
+Wang, Y. S. and Chueh, Y. L. (2013). Dynamic transmission eﬀects between the interest rate, the us
+dollar, and gold and crude oil prices.Economic Modelling, 30:792–798.
+Zhang, D. (2017). Oil shocks and stock markets revisited: Measuring connectedness from a global
+perspective. Energy Economics, 62:323–333.
+Zhang, D. and Broadstock, D. C. (2018). Global ﬁnancial crisis and rising connectedness in the interna-
+tional commodity markets.International Review of Financial Analysis.
+14
+Table 1: Summary Statistics
+Gold Crude oil MSCI World USD index Bond index
+Mean 0.003 -0.107 0.017 0.012 0.003
+Variance 1.035 7.99 0.893 0.186 0.16
+Skewness -0.573 ∗∗∗ -4.139∗∗∗ -1.233∗∗∗ 0.047 -0.460 ∗∗∗
+(0.000) (0.000) (0.000) (0.352) (0.000)
+Kurtosis 7.926 ∗∗∗ 86.682∗∗∗ 19.805∗∗∗ 1.989∗∗∗ 72.451∗∗∗
+(0.000) (0.000) (0.000) (0.000) (0.000)
+JB 6274.303 ∗∗∗ 741795.582∗∗∗ 38967.826∗∗∗ 387.760∗∗∗ 513622.889∗∗∗
+(0.000) (0.000) (0.000) (0.000) (0.000)
+ERS -9.342 ∗∗∗ -16.768∗∗∗ -12.303∗∗∗ -5.707∗∗∗ -8.414∗∗∗
+(0.000) (0.000) (0.000) (0.000) (0.000)
+Q(20) 47.120∗∗∗ 249.873∗∗∗ 262.373∗∗∗ 30.855∗ 470.316∗∗∗
+(0.001) (0.000) (0.000) (0.057) (0.000)
+Q2(20) 195.290∗∗∗ 468.296∗∗∗ 2889.681∗∗∗ 275.205∗∗∗ 2277.177∗∗∗
+(0.000) (0.000) (0.000) (0.000) (0.000)
+Unconditional Correlations
+Gold 1.000 0 .121 0 .086 −0.355 0 .235
+Crude oil 0.121 1 .000 0 .353 −0.097 0 .001
+MSCI World 0.086 0 .353 1 .000 −0.203 0 .080
+USD index −0.355 −0.097 −0.203 1 .000 −0.139
+Bond index 0.235 0 .001 0 .080 −0.139 1 .000
+Notes: ***,**,* denote signiﬁcance level at 1%, 5% and 10%; Skewness: D’Agostino (1970) test; Kurtosis: Anscombe and Glynn (1983) test; JB: Jarque
+and Bera (1980) normality test; ERS: Elliott et al. (1996) unit-root test;Q(20) and Q2(20): Fisher and Gallagher (2012) weighted portmanteau test.
+Table 2: Average Connectedness Table
+Pre-Corona Outbreak (2011/08/19 - 2020/01/13)
+Gold Crude oil MSCI World USD index Bond index FROM
+Gold 75.3 3.0 2.6 13.0 6.1 24.7
+Crude oil 2.7 80.3 11.9 3.8 1.2 19.7
+MSCI World 2.5 11.1 77.8 7.0 1.5 22.2
+USD index 12.8 3.7 7.2 73.3 3.0 26.7
+Bond index 6.7 1.6 1.9 3.5 86.4 13.6
+Contribution TO others 24.7 19.5 23.6 27.3 11.9 106.9
+NET directional connectedness 0.0 -0.2 1.4 0.6 -1.7 TCI
+NPDC transmitter 1.0 2.0 4.0 3.0 0.0 21.4
+Post-Corona Outbreak (2020/01/13 - 2020/05/12)
+Gold Crude oil MSCI World USD index Bond index FROM
+Gold 64.7 4.7 9.0 4.7 16.9 35.3
+Crude oil 3.3 80.5 13.0 2.6 0.6 19.5
+MSCI World 6.8 10.6 72.8 2.2 7.6 27.2
+USD index 6.3 3.9 6.5 67.7 15.5 32.3
+Bond index 9.8 2.5 4.8 4.9 78.0 22.0
+Contribution TO others 26.1 21.7 33.4 14.4 40.6 136.2
+NET directional connectedness -9.2 2.2 6.2 -17.9 18.6 TCI
+NPDC transmitter 1.0 3.0 3.0 0.0 3.0 27.2
+Notes: Results are based on a TVP-VAR model with lag length of order one (BIC) and a 20-step-ahead generalized forecast error variance decomposition.
+15
+Figure 1: Raw Series
+Figure 2: Daily Percentage Changes
+16
+Figure 3: Dynamic Total Connectedness
+Notes: Results are based on a TVP-VAR model with lag length of order one (BIC) and a 20-step-ahead generalized forecast error variance decomposition.
+Figure 4: Net Total Directional Connectedness
+Notes: Results are based on a TVP-VAR model with lag length of order one (BIC) and a 20-step-ahead generalized forecast error variance decomposition.
+17
+Figure 5: Net Pairwise Directional Connectedness
+Notes: Results are based on a TVP-VAR model with lag length of order one (BIC) and a 20-step-ahead generalized forecast error variance decomposition.
+18
+Figure 6: Quantile Regression Results
+Notes: Slope estimation results with 95% conﬁdence intervals using quantile regression approach of Koenker and Bassett Jr (1978).
+19

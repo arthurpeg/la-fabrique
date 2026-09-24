@@ -74,7 +74,7 @@ instruments:
       splice_minute_utc: "00:00"
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 0.25
-    multiplier: null  # todo multipliers
+    multiplier: 20  # provenance cme-nq-contract-unit (D09)
     fee_per_contract_usd: null  # todo fees
     cells:
       ASIA:
@@ -118,7 +118,7 @@ instruments:
       splice_minute_utc: "00:00"
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 0.25
-    multiplier: null  # todo multipliers
+    multiplier: 50  # provenance cme-es-contract-unit (D09)
     fee_per_contract_usd: null  # todo fees
     cells:
       ASIA:
@@ -162,7 +162,7 @@ instruments:
       splice_minute_utc: "00:00"
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 1.0
-    multiplier: null  # todo multipliers
+    multiplier: 5  # provenance cme-ym-contract-unit (D09)
     fee_per_contract_usd: null  # todo fees
     cells:
       ASIA:
@@ -209,7 +209,7 @@ instruments:
       splice_minute_utc: "00:00"
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 0.1  # mesuré 0.0999999999994543 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
-    multiplier: null  # todo multipliers
+    multiplier: 100  # provenance cme-gc-contract-unit (D09)
     fee_per_contract_usd: null  # todo fees
     cells:
       ASIA:
@@ -253,7 +253,7 @@ instruments:
       splice_minute_utc: "00:00"
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 0.01  # mesuré 0.009999999999990905 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
-    multiplier: null  # todo multipliers
+    multiplier: 1000  # provenance cme-cl-contract-unit (D09)
     fee_per_contract_usd: null  # todo fees
     cells:
       ASIA:
@@ -297,7 +297,7 @@ instruments:
       splice_minute_utc: "00:00"
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 5.0e-05  # mesuré 4.999999999988347e-05 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
-    multiplier: null  # todo multipliers
+    multiplier: 125000  # provenance cme-6e-contract-unit (D09)
     fee_per_contract_usd: null  # todo fees
     cells:
       ASIA:
@@ -341,7 +341,7 @@ instruments:
       splice_minute_utc: "00:00"
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 0.0001  # mesuré 9.999999999998899e-05 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
-    multiplier: null  # todo multipliers
+    multiplier: 62500  # provenance cme-6b-contract-unit (D09)
     fee_per_contract_usd: null  # todo fees
     cells:
       ASIA:
@@ -385,7 +385,7 @@ instruments:
       splice_minute_utc: "00:00"
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 5.0e-07  # mesuré 4.999999999987653e-07 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
-    multiplier: null  # todo multipliers
+    multiplier: 12500000  # provenance cme-6j-contract-unit (D09)
     fee_per_contract_usd: null  # todo fees
     cells:
       ASIA:
@@ -429,7 +429,7 @@ instruments:
       splice_minute_utc: "00:00"
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 5.0e-05  # mesuré 4.999999999999449e-05 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
-    multiplier: null  # todo multipliers
+    multiplier: 100000  # provenance cme-6a-contract-unit (D09)
     fee_per_contract_usd: null  # todo fees
     cells:
       ASIA:
@@ -489,7 +489,10 @@ todos:
   - id: multipliers
     field: instruments[*].multiplier
     blocks: la complétude du coût -- sans eux le coût reste un plancher étiqueté (harness/costs.py)
-    owed_by: fiches contrat CME
+    owed_by: >-
+      fiche contrat EUREX, pour FDAX seul -- les neuf instruments CME sont
+      déposés depuis le 2026-09-24 (voir provenance). FDAX exige aussi une
+      conversion EUR -> USD avant que multiplier x prix soit un notionnel USD.
   - id: fees
     field: instruments[*].fee_per_contract_usd
     blocks: la complétude du coût -- sans eux le coût reste un plancher étiqueté (harness/costs.py)
@@ -501,6 +504,31 @@ todos:
       (0,80 sur MGC). NON DÉPOSÉ ici : la page ne dit pas si ces montants sont
       all-in ou si exchange/clearing/NFA s'ajoutent, et la conversion en bp
       exige d'abord les multiplicateurs.
+    searched_2026-09-24: >-
+      Barème relu, inchangé (même URL). Centre d'aide (recherches commission,
+      fees, exchange fees, all-in, round turn), FAQ lucidtrading.com/general-faq
+      et un blog tiers (proptradingvibes.com) : AUCUNE source ne dit si le
+      montant est all-in. Le « exchange fees separate » d'un résumé de
+      recherche était une confusion avec les abonnements de données. Faits
+      établis au passage : (1) PAS DE MICRO DEVISES au barème -- 6E, 6B, 6J, 6A
+      ne se traitent qu'en plein format, à 2,40 ; (2) les comptes d'évaluation
+      et sim-funded sont SIMULÉS : aucun exchange n'y facture rien, le montant
+      débité est celui que Lucid configure ; le live (LucidLive) passe par
+      Tradovate ou Rithmic et son barème n'est pas publié ; (3) clôture forcée
+      16:45 ET (16:15 sur Rithmic Live), microscalping = plus de 50 % des
+      profits sur des trades de 5 s ou moins -- sans effet sur un horizon de
+      30 min. Pas de relevé d'exécution possible : l'opérateur n'a pas encore
+      de compte Lucid (dit le 2026-09-24). Voies restantes : réponse écrite du
+      support Lucid, ou encadrement déclaré par décision (barème seul / barème
+      + frais CME exchange, clearing, NFA).
+    decided_2026-09-24: >-
+      D26 ENCADRE les frais : borne basse = barème Lucid, borne haute = Lucid +
+      CME non-membre + NFA 0,02/side ; toute lecture nette qui conditionne un
+      choix se fait à la borne haute. Montants et sources dans D26 et
+      scripts/fee_bracket.py. Ce champ RESTE null exprès : rempli, il ferait
+      disparaître fee_bp des composantes manquantes de harness/costs.py sans
+      l'ajouter au coût (D26 option 2). Il ne se remplit qu'avec la décision
+      qui fera lire les frais au harnais.
     note: >-
       jamais deviné ; la part fixe pèse dix fois plus lourd en micro (D01 §7), et
       les contrats effectivement tradés seront des MICROS quand les séries
@@ -527,11 +555,70 @@ todos:
 # `notionnel_usd = multiplier x prix` — vrai pour les neuf, quels que soient les
 # mots du CME (« $20 x index », « 100 troy ounces », « 125,000 euro ») (D09).
 #
-# VIDE aujourd'hui, et ce n'est pas un oubli : les deux seuls champs externes du
-# catalogue -- multiplier et fee_per_contract_usd -- sont encore `null` sur les
-# dix instruments, et leurs todos les doivent. La convention est écrite AVANT
-# les valeurs.
-provenance: []
+# Multiplicateurs relevés le 2026-09-24 sur les fiches contrat du CME, par le
+# navigateur (cmegroup.com refuse les clients HTTP nus, cf. D09 § Ce qui reste
+# ouvert). Le code CME Globex affiché sur chaque page a été vérifié égal à la
+# racine. Pour les devises, la cotation CME est « U.S. dollars ... per <devise> »,
+# identique à nos séries (tick 5e-07 sur 6J) : multiplier x prix est bien en USD.
+# FDAX reste null : son unité est en EUR (« EUR 25 per index point »), donc
+# multiplier x prix n'est pas un notionnel en USD et la définition de D09 ne
+# s'applique pas sans conversion -- et il est hors univers.
+# fee_per_contract_usd reste null sur les dix : todo fees.
+provenance:
+  - id: cme-nq-contract-unit
+    source: CME Group -- fiche contrat E-mini Nasdaq-100 Futures, ligne « Contract Unit »
+    source_url: https://www.cmegroup.com/markets/equities/nasdaq/e-mini-nasdaq-100.contractSpecs.html
+    retrieved: 2026-09-24
+    quoted: "$20 x Nasdaq-100 Index"
+    applies_to: [instruments.NQ.multiplier]
+  - id: cme-es-contract-unit
+    source: CME Group -- fiche contrat E-mini S&P 500 Futures, ligne « Contract Unit »
+    source_url: https://www.cmegroup.com/markets/equities/sp/e-mini-sandp500.contractSpecs.html
+    retrieved: 2026-09-24
+    quoted: "$50 x S&P 500 Index"
+    applies_to: [instruments.ES.multiplier]
+  - id: cme-ym-contract-unit
+    source: CME Group -- fiche contrat E-mini Dow Jones Industrial Average Index Futures, ligne « Contract Unit »
+    source_url: https://www.cmegroup.com/markets/equities/dow-jones/e-mini-dow.contractSpecs.html
+    retrieved: 2026-09-24
+    quoted: "$5 x Dow Jones Industrial Average index"
+    applies_to: [instruments.YM.multiplier]
+  - id: cme-gc-contract-unit
+    source: CME Group -- fiche contrat Gold Futures, ligne « Contract Unit »
+    source_url: https://www.cmegroup.com/markets/metals/precious/gold.contractSpecs.html
+    retrieved: 2026-09-24
+    quoted: "100 troy ounces"
+    applies_to: [instruments.GC.multiplier]
+  - id: cme-cl-contract-unit
+    source: CME Group -- fiche contrat Crude Oil Futures, ligne « Contract Unit »
+    source_url: https://www.cmegroup.com/markets/energy/crude-oil/light-sweet-crude.contractSpecs.html
+    retrieved: 2026-09-24
+    quoted: "1,000 barrels"
+    applies_to: [instruments.CL.multiplier]
+  - id: cme-6e-contract-unit
+    source: CME Group -- fiche contrat Euro FX Futures, ligne « Contract Unit »
+    source_url: https://www.cmegroup.com/markets/fx/g10/euro-fx.contractSpecs.html
+    retrieved: 2026-09-24
+    quoted: "125,000 Euro"
+    applies_to: [instruments.6E.multiplier]
+  - id: cme-6b-contract-unit
+    source: CME Group -- fiche contrat British Pound Futures, ligne « Contract Unit »
+    source_url: https://www.cmegroup.com/markets/fx/g10/british-pound.contractSpecs.html
+    retrieved: 2026-09-24
+    quoted: "62,500 British pounds"
+    applies_to: [instruments.6B.multiplier]
+  - id: cme-6j-contract-unit
+    source: CME Group -- fiche contrat Japanese Yen Futures, ligne « Contract Unit »
+    source_url: https://www.cmegroup.com/markets/fx/g10/japanese-yen.contractSpecs.html
+    retrieved: 2026-09-24
+    quoted: "12,500,000 Japanese yen"
+    applies_to: [instruments.6J.multiplier]
+  - id: cme-6a-contract-unit
+    source: CME Group -- fiche contrat Australian Dollar Futures, ligne « Contract Unit »
+    source_url: https://www.cmegroup.com/markets/fx/g10/australian-dollar.contractSpecs.html
+    retrieved: 2026-09-24
+    quoted: "100,000 Australian dollars"
+    applies_to: [instruments.6A.multiplier]
 
 sources:
   manifest: $RSL_DATA_DIR/manifeste.json

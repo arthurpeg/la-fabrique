@@ -1,0 +1,1416 @@
+                           Kent Academic Repository
+
+
+
+Izzeldin, Marwan, Murado□lu, Gülnur, Pappas, Vasileios and Sivaprasad,
+Sheeja (2021) The impact of Covid-19 on G7 stock markets volatility: Evidence
+from a ST-HAR model.  International Review of Financial Analysis, 74 .
+ISSN 1057-5219.
+
+
+
+
+Downloaded from
+https://kar.kent.ac.uk/85238/ The University of Kent's Academic Repository KAR
+
+The version of record is available from
+https://doi.org/10.1016/j.irfa.2021.101671
+
+This document version
+Author's Accepted Manuscript
+
+DOI for this version
+
+
+Licence for this version
+CC BY-NC-ND (Attribution-NonCommercial-NoDerivatives)
+
+Additional information
+
+
+
+Versions of research works
+
+
+Versions of Record
+If this version is the version of record, it is the same as the published version available on the publisher's web site.
+Cite as the published version.
+Author Accepted Manuscripts
+If this document is identified as the Author Accepted Manuscript it is the version after peer review but before type
+setting, copy editing or publisher branding. Cite as Surname, Initial. (Year) 'Title of article'. To be published in Title
+of Journal , Volume and issue numbers [peer-reviewed accepted version]. Available at: DOI or URL (Accessed: date).
+Enquiries
+If you have questions about this document contact ResearchSupport@kent.ac.uk. Please include the URL of the record
+in KAR. If you believe that your, or a third party's rights have been compromised through this document please see
+our Take Down policy (available from https://www.kent.ac.uk/guides/kar-the-kent-academic-repository#policies).
+     The impact of Covid-19 on G7 stock markets volatility: Evidence from a ST-HAR model
+
+
+                                                   Marwan Izzeldin
+                                 Lancaster University, Lancaster, LA1 4YW, UK
+                                         Email: m.izzeldin@lancaster.ac.uk
+
+                                                  Gulnur Muradoglu
+                                 Queen Mary University of London, E1 4NS, UK
+                                         Email: y.g.muradoglu@qmul.ac.uk
+
+                                                   Vasileios Pappas1
+                                     University of Kent, Kent, ME4 4TE, UK
+                                             Email: v.pappas@kent.ac.uk
+
+                                                  Sheeja Sivaprasad
+                               University of Westminster, London, NW1 5LS, UK
+                                      Email: s.sivaprasad@westminster.ac.uk
+
+                                                      October 2020
+
+                                                         Abstract
+
+We investigate the impact of Covid-19 on stock markets across G7 countries and their business sectors.
+We highlight the synchronicity and severity of this unprecedented crisis. We find strong transition
+evidence to a crisis regime in all countries and sectors, yet crisis intensity and timings vary. The Health
+Care and Consumer services sectors were the most severely affected; a reflection of the Covid-19 drug-
+race and international travel restrictions. The Technology sector was hit the latest and least severely, as
+imposed lockdown measures forced people to explore various web-based entertainment and distraction
+options. Country-wise the UK and the US were the most affected with the highest heterogeneity in their
+business sectors’ response; a possible reflection of the ambiguity in the initial response and adoption of
+lockdown measures. Financial markets’ response to Covid-19 is akin to response in previous financial
+crisis rather than previous pandemics. A series of robustness checks confirms our findings.
+
+
+
+Keywords: Covid-19, financial markets, HAR model, smooth transition, business sectors
+
+JEL classification: G15, C24
+
+Declarations of interest: None
+
+
+
+
+
+
+
+
+1 Corresponding author: email: v.pappas@kent.ac.uk
+We thank Gerry Steele for useful comments and suggestions. Vasileios Pappas acknowledges research support from the
+GulfOne Lab for Computational and Economic Research (GOLCER), Lancaster University.
+                                                              1
+
+1. Introduction
+
+Financial markets periodically reflect major events retrospectively categorized as either endogenous or
+exogenous shocks. The most recent of these are the 2008 Global Financial Crisis (GFC) and the Covid-
+19 pandemic. The GFC was an             “endogenous shock”; a banking liquidity crisis that followed as the
+inevitable consequence of a credit       -led housing boom. As financial markets reacted to falling economic
+activity,  monetary  and  fiscal  adjustments  attempted  to  counteract  recession.  More  recently,  the
+“exogenous shock” of an unforeseeable coronavirus prompts fiscal and monetary adjustments to counter
+rising hardships.     As some degree of control began to emerge post                  -lockdown, long-term financial
+implications are expected to take years to unfold with recent forecas                   ts suggesting initial economic
+contraction between 3% and 6%           (IMF, 2020). The pandemic was noted early in Decem                ber 2019 and by
+the end of February 2020 its impact was widely manifest across financial markets. Thereafter, a variety
+of lock-down measures impeded economic activity with consequential effects upon financial markets.
+In little over a month, the Dow Jones         and the S&P 500 fell by 35%, where stock market volatility was
+comparable to that of the 1929 Great Crash 1929, the 1987 Black Monday and the 2008 Global Financial
+Crisis (Baker, Bloom, Davis, Kost, et al., 2020)          .
+
+This paper is an early attempt to highlight the impact of Covid                  -19 on financial markets i        n the G7
+economies,  which       produce  about  forty  percent  of        the   world  GDP  and  have  the  highest  market
+capitalisations and trading volumes worldwide.              We focus on the 10 business sectors of the Industrial
+Classification Benchmark (ICB) classification and invest              igate the volatility shift from a calm to a crisis
+regime, as Covid-19 unfolds and governments respond                   with unprecedented measures to mitigate the
+adverse economic effects.         We   apply   a  novel   heterogenous autoregressive model (ST-HAR)                  which
+allows a    smooth transition       switch in volatility regimes, so allowing inferences on the                    intensity,
+timeliness and homogeneity.
+
+Our results verify the transition to a crisis regime for all countries and sectors, with varying intensity
+and timing. The Health Care and the Consumer Services were the most severely affected, reflecting
+both the Covid-19 “drug-race” and international travel restrictions. That Technology was the last and
+least adversely affected sector may reflect a rise in web-based entertainment and other distractions
+(Forbes, 2020). Shutdowns and the vaccine race are possible causes of sectoral diversity. The UK and
+the US were      the most affected, where         the heterogeneity      among business sectors         may reflect early
+variations in the adoption of lockdown measures upon the financial markets. Countries that engaged
+sooner and more thoroughly in containment measures against Covid-19 weathered the financial crisis
+better. A series of robustness checks confirms our results. Our analysis permits important and timely
+lessons with respect to the resilience of business sectors in this exogenous shock. Hence, implications
+for market participants, regulators and policy makers ahead of a follow-up wave of Covid-19 cases are
+warranted.
+
+Our paper offers two main contributions to the literature. First, we examine the impact of Covid-19
+upon stock market volatility at both aggregate and sectorial levels. Second, we use a new approach to
+identify the transition between distinctive volatility regimes. Thus, our econometric approach extends
+the  heterogenous     autoregressive (HAR) model to allow for a                 smooth transition between regimes,
+thereby  allowing  for  diverse  responses,  as  indicated  by  metrics               for  intensity  and  timeliness  at
+country/sectorial    levels.
+
+
+
+
+                                                              2
+
+The rest of the paper is organised as follows. The next section presents a synopsis of the relevant
+literature. Section 3 presents the data and the methodology. Section 4 presents the empirical findings.
+A comparison to other major events is offered in Section 5. Robustness checks are presented in section
+6. A final section concludes.
+
+
+2. Literature Review
+
+2.1 Volatility in financial markets
+Although instrumental to the measurement of financial risk, the non-observability of market volatility
+is  traditionally proxied  by       non-parametric  measures          such as squared returns, and  by parametric
+measures that draw support from GARCH models (Bollerslev, 1986; Engle, 1982; Nelson, 1991), and
+stochastic volatility     (SV)    models    (Ghysels et al., 1996; S. J. Taylor, 1994)               . Owing to      volatility
+importance, the search for superior predictors and models has always been of great importance.                             One
+important advancement has been the introduction of realised measures of volatility estimated using high
+frequency data. Realised volatility (RV)            that is defined as the sum of squared intraday returns, is an
+efficient estimator of volatility      and improves volatility forecasting,          which typically relies on effective
+modelling of the persistence inherent in volatility processes                   (Andersen et al., 2001; Andersen &
+Bollerslev, 2003;      Barndorff-Nielsen & Shephard, 2002; Corsi, 2009).                   Moreover, the use of RV in
+conjunction with HAR models circumvents the computational burden and complexity of the earlier
+ARCH/ARFIMA/SV approaches.
+
+Non-linearities and regime changes are common within financial time series. Several models                             capture
+these phenomena, such as the Markov-switching models (Hamilton, 1994), the (SE-)TAR (Tong, 2005)
+and the STAR models (Teräsvirta, 1994) among others. Where Markov and (SE-)TAR models assume
+an instantaneous transition between the regimes, at an estimated breakpoint date, STAR models allow
+a gradual transition between regimes, with an estimated parameter to gauge the intensity of the
+transition. Although two regimes (e.g., calm/crisis) are commonly used, all models can accommodate
+multiple, subject to data limitations. Contrarily to Markov models where the switching process is
+endogenously determined, the TAR/STAR models can accommodate exogenous factors t                               hat may drive
+the regime change.2       Such non-linear models          may be     embedded within         other  models to allow non-
+linearities and/or regime changes. Pappas et al. (2016) combine a Markov-switching model with the
+multivariate DCC-GARCH models, to incorporate the delay and intensity to a crisis regime following
+the 2008 Global Financial Crisis. Papanicolaou and Sircar (2014) combine a Markov-switching model
+with the Heston stochastic volatility model to capture the option strikes that lie in the tail of the
+distribution of the volatility process.
+
+Although the HAR model is simple to estimate                  and captures the      persistence of volatility,3 it fails to
+indicate any transition between regimes.            As a remedy Y. Wang et al. (2017) introduce a time‐varying
+parameter (TVP) specification into the HAR model. Although this                      TVP-HAR can portray the impact
+of financial crises on volatility,        it provides no indication of the timing and/or the intensity of the
+transition. To accommodate the diversity of volatility across financial markets, that is likely at the onset
+
+2 For empirical applications on these models we direct yo     u to (Caggiano et al., 2017; Chkili, 2017; Elliott et al., 2016;
+Ghoshray, 2010; Moore & Wang, 2007; Nademi & Nademi, 2018; Umer et al., 2018)
+3 For studies using the HAR model across different asset classes we direct you to   Santos and Ziegelmann (2014) for Spanish
+equity index data, Y. Wang et al. (2017) for US equity index data, Buncic and Gisler (2016) for global equity index data;  Čech
+and Baruník (2017) and Audrino et al. (2020) for empirical applications using individual firm data;   Mazzeu et al. (2019) and
+Li et al. (2020) for commodities.
+                                                               3
+
+of an unfamiliar pandemic, we introduce a specification based around the HAR model to capture regime
+change. This specification, which we refer to as ST-HAR, is a combination of a smooth transition model
+and   the  heterogenous  autoregressive  model.            4  The  smooth  transition  allows  for  a  continuum  of
+intermediate states between the two ex           treme volatility regimes. Not only does this specification model
+non-linear dynamics5 that are inherent in the volatility process              , it provides estimates of the intensity and
+the timeliness of the transition      .
+
+2.2 Volatility applications and pandemics
+The empirical literature on volatility modelling is extensive; focusing upon                       commodities including,
+silver (Li et al., 2020), gold (Chkili, 2017; Lucey & O’Connor, 2013)                   , electricity (Ciarreta et al., 2020)
+and oil (Nademi & Nademi, 2018)            ; and upon financial instruments, namely options              Elliott et al. (2016),
+bonds (Tamakoshi & Hamori, 20            14), futures (N. Taylor, 2019) and equity indices (Pappas et al., 2016).
+Other studies focus upon         key political events, economic uncertainty, macroeconomic ann                     ouncements
+and financial crises upon volatility        (Moore & Wang, 2007; Tiwari et al., 2020)               . Watugala (2019) finds
+that periods of economic uncertainty have significant predictive power for the volatility of commodity
+future returns. Omrane and Savaşer (2017)              document a varying impact of macroeconomic news upon
+the volatility of major exchange rates for the duration of the                  2008 GFC. Using high frequency data
+Chuliá et al. (2010) find that only unexpected changes in the Federal Open Market Committee (FOMC)
+announcements affect the volatility of the federal fund rate.
+A host of factors are relevant to financial market volatility. Extant research relates to                      pandemics and
+financial crisis   (Baker, Bloom, Davis, Kost, et al., 2020; Correia et al., 2020; Eichenbaum et al., 2020;
+Ma et al., 2020); terrorist attacks (Llussá & Tavares, 2011); natural disasters (Toya & Skidmore, 2007);
+plane crashes (Ho et al., 2013);           the  foot and mouth disease          (Blake et al., 2003);       the   severe acute
+respiratory syndrome (SARS) (Chen et al., 2007); the bird flu (H5N1) (Kuo et al., 2009); the swine flu
+(H1N1) (Page et al., 2012) and the H1N1, Ebola and Zika epidemics (Hoffman & Silverberg, 2018).
+Also relevant are networks, big data, and social media in attempting to understand the spread of the
+contagion diseases (Pastor-Satorras et al., 2015), and the relevance of globalisation to the spread of
+infectious diseases (Saker et al., 2004).
+
+A quickly emerging literature investigates the impact of the Covid-19 upon financial fraud (Karpoff,
+2020), financial     stability (Gortsos et al., 2020), fiscal and monetary policies               (Benmelech & Tzur-Ilan,
+2020) as well as financial markets. Stock market returns are affected by health related news                         Salisu and
+Vo (2020) and Covid-19 confirmed cases (Ashraf, 2020; W. Wang & Enilov, 2020)                            . Across a multitud    e
+of assets, only gold and soybean            have retained the safe-haven          status  (Ji et al., 2020). Stock market
+volatility, geopolitical risk indicators and economic policy uncertainty indices                     are greatly affected by
+policymakers’ actions and developments at the Covid-19 front (Baker, Bloom, Davis, & Terry, 2020;
+Baker, Bloom, Davis, Kost, et al., 2020; Sharif et al., 2020)             . Barro et al. (2020) conclude that the impact
+of the Spanish flu in the 1920s provide           guidance on how the Covid-19 pandemic may impact mortality
+and economic contraction.
+
+Despite the thin literature on this front, some similarities and differences to earlier crises                  , most notably
+the 2008 GFC, are expected insofar as multiple countries/business sec                     tors are affected with a certain
+
+
+
+
+4 Cheikh et al. (2020) use a smooth transition GARCH specification for the conditional variance of cryptocurrencies.
+5 We are aware that over long time pe  riods the linearity of a HAR model may not be rejected    (Lahaye & Shaw, 2014)    .
+
+                                                                4
+
+lead/lag.6 In particular, the 2008 GFC spread from the US, starting with a disruption to the real estate
+and financial markets, with other countries and business sectors followed after a certain time lag. The
+US committed two large economic stimulus packages, totalling around $1.5 trillion, targeting first the
+heavily hit financial sector (TARP program) and then the economy (Recovery Act). By contrast, during
+the Covid-19 financial crisis multiple countries were hit simultaneously, while                             the  impact on      the
+economy was more direct. This may be largely attributed to the                    exogenous nature of the shock            and the
+measures  taken,  such  as  school  and  business  closures,  employee  furloughs  and  layoffs,  travel
+restrictions and lockdowns, that prioritised the control of the virus infection rate. However, these
+measures  distorted  economic  activity  in  manufacturing  and  service  sectors,  while  also  limi                          ting
+productivity. To boost the economy extraordinary economic stimulus packages included direct transfers
+to affected households and businesses, funds for the healthcare system, extended outreach of the social
+safety net, and even prohibiting of layoffs i           n certain jurisdictions. The Covid          -19 stimulus packages in
+the US stands at $3 trillion according to the latest figures             (IMF, 2020). Financial institutions were more
+capitalised and with better liquidity compared to previous crises; an array of regul                       atory measures was
+taken to avoid procyclical effects, such as            a relief in capitalisation requirements and a flexibility to the
+classification of defaulted loans due to the Covid               -19 (BIS, 2020; ECB, 2020)           . Therefore, we expect
+business sectors such as Health Care, Consumer Goods/S                        ervices and Technology to be under the
+spotlight of attention      – a striking difference to the Financials           sector during     the 2008 GFC. Hence, we
+argue that in order to properly assess the impact of the Covid                    -19 crisis it is essential to undertake a
+sectoral analysis.7 Our study addresses this research gap and i                   nvestigates the sectoral impact of the
+Covid-19 financial crisis.
+
+3. Data and Methodology
+
+The data     comprises daily prices of          the  aggregate and sector equity indices for                the G7 economies
+(Canada, France, Germany, Italy, Japan, UK and US).                       All indices are value       -weighted and exclude
+dividends. The sectors are the following: Consumer Goods, Consumer Services, Financials, Healthcare,
+Industrials, Materials, Oil & Gas, Technology, Telecommunications and Utilities.                            The data source is
+Datastream and cover the period from 24/4/2018                      –  24/4/2020.     For every index, we compute the
+continuously compounded percentage return                as 𝑟𝑡  =   log(𝑝𝑡⁄𝑝𝑡−1)      ×  100, where 𝑝𝑡 is the closing price
+at day 𝑡. Covid-19 data on identified cases are retrieved from the Johns Hopkins University Coronavirus
+Research Centre at the daily level for each country.8 Although cases are observed from 1/1/2020, the
+data during the month of January are very thin, hence we start the analysis from 1/2/2020 and aggregate
+the number of observed Covid-19 cases worldwide. Figure 1, panel A plots the annualised time-varying
+volatility of the aggregate equity indices, while panel B plots the daily number of Covid-19 cases on a
+log scale. Table 1 presents mean percentage return and annualized volatility for the equity indices under
+investigation over the period of study (panel A). The statistics show the large increase in the volatility
+across all sectors and economies.
+                                                   [Figure 1 around here]
+
+
+
+6 In this paper we treat the Covid-19 as a financial crisis rather than an epidemic event due to the magnitude of the shutdowns
+and response in the stock markets. We are aware of other classifications of Covid-19 as a black swan event (Yarovaya et al.,
+2020).
+7 Examining the sectorial impact of a crisis can give important insights on how the crisis has spread across the economy.
+Efthyvoulou (2012) study the impact of financial stress in the production and market services sectors and find that although
+both sectors are affected, the channels of the impact differ. Rioja et al. (2017) provide evidence that recession accompanied
+by banking crises have a profound negative effect across all business sectors.
+8 Data may be accessed here: https://coronavirus.jhu.edu/
+
+                                                                 5
+
+                                                  [Table 1 around here]
+
+To outline our research design, consider a 𝑇          ×  1 vector of demeaned asset returns 𝑟𝑡, where the variance
+is estimated as a GARCH(1,1) process:
+                                                    𝑟  |ℱ     ~𝑁(0,ℎ2)                                              (1)
+                                                      𝑡   𝑡−1           𝑡
+
+                                                ℎ2  =  𝜔  +   𝑎𝑢2     +  𝑏𝑟2                                        (2)
+                                                  𝑡              𝑡−𝑖        𝑡−𝑗
+
+Subsequent modelling of the conditional variance relies on the heterogeneous autoregressive model
+(HAR). This exploits         the  property that the summation of short-memory models can generate the
+hyperbolic decay patterns typical of the autocorrelation function of volatility estimates (Corsi, 2009).
+The  superior  performance  of  the  HAR  in  modelling  and  forecasting  realised  volatility  is                       well-
+established   (Andersen et al., 2007, 2011; Bollerslev et al., 2016)              . Compared to ARFIMA,            estimation
+and forecasting is more easily obtained from HAR models.                   Following Corsi (2009) the HAR model               is
+defined as:
+
+                             ℎ𝑡  =   𝑐 +  𝛽(𝑑)ℎ𝑡−1    +  𝛽(𝑤)ℎ(𝑤)    +  𝛽(𝑚)ℎ(𝑚)     +  𝑒𝑡                         (3)
+                                                                 𝑡              𝑡
+
+where 𝑒𝑡~𝑖𝑖𝑑(0,      𝜎2) with ℎ(𝑤) and ℎ(𝑚) defined as follows:
+                                   𝑡          𝑡
+
+                                  ℎ(𝑤)   =  1 (ℎ      +  ℎ      +  ℎ      +  ℎ     +  ℎ     )                       (4)
+                                    𝑡       5    𝑡−1       𝑡−2       𝑡−3      𝑡−4       𝑡−5
+                                  ℎ(𝑚)  =    1  (ℎ      +  ℎ     +  ⋯  +   ℎ      +  ℎ       )                      (5)
+                                   𝑡        22     𝑡−1      𝑡−2             𝑡−21       𝑡−22
+
+
+To allow for non-linear dynamics in the volatility process we use the family of smooth transition
+models.9    These    allow observed variables to affect the transition between the regimes, subject to
+unobservable thresholds. In addition, they allow for a more realistic, analogue transition between the
+regimes.10 A two-regime smooth transition model is defined as:
+
+
+                           𝑦𝑡  =  𝑋𝑡𝑎   +  𝐺(𝑠𝑡;  𝛾, 𝜓)𝑍′𝑡𝛽    +  (1  −  𝐺(𝑠𝑡;  𝛾,𝜓))𝑍′𝑡𝛿      +  𝜀𝑡                (6)
+
+
+where 𝐺 denotes a continuous transition function that returns values (i.e., threshold weights) between 0
+and 1; 𝑠𝑡 is an observable threshold variable with unknown threshold (ψ) and slope (γ) values; 𝑍𝑡 is a
+vector containing regime dependent variables (i.e., slope coefficients that vary across regimes); 𝑋𝑡 is a
+vector containing regime invariant variables; 𝜀𝑡 is the stochastic error term.
+We model the 𝐺 transition function using the exponential function11 given as:
+
+                                     𝐺(𝑠𝑡;𝛾,𝜓)      =  1 −  exp⁡(−𝛾/𝜎𝑠2(𝑠𝑡       −  𝜓)2)                            (7)
+                                                                            𝑡
+
+
+9 See Teräsvirta (1994) for more details.
+10 Smooth transition models have been used in financial and economic context (Bradley & Jansen, 2004; Caggiano et al., 2017;
+Ghoshray, 2010; Huang & Hu, 2012; Tse, 2001; Zhang, 2013).
+11 We compare a logistic transition function (LSTAR) to an exponential (ESTAR) using the (Escribano & Jorda, 1999) test,
+which confirms the appropriateness of the exponential case.
+                                                               6
+
+In our specification we use an ST-HAR model that allows for a smooth transition between two regimes
+governed by an ESTAR function. To allow for more realistic dynamics during the turmoil period, we
+assume HAR        parameters related to the weekly and monthly volatility are regime invariant. The
+following equation is estimated via nonlinear least square techniques and Newey-West robust standard
+errors:
+               ℎ𝑡  =  𝛽0  +  𝛽1ℎ𝑡−1   +  𝛼1ℎ(𝑤)    +  𝛼2ℎ(𝑚)                                                     (8)
+                                              𝑡            𝑡
+                                   +  (𝛿0  +  𝛿1ℎ𝑡−1)    ×  (1 −  exp(−𝛾/𝜎𝑠2      (𝑠𝑡 −  𝜓)2))    + 𝑒𝑡
+                                                                                 𝑡
+
+4. Empirical results
+
+Table 2 presents the sector wise estimation results of the ST-HAR model, where median values across
+the G7 economies are reported as well as standard goodness-of-fit statistics. In particular, the linearity
+test shows the appropriateness of a non-linear HAR specification over the linear equivalent.                    In addition,
+the statistical significance of the two regime parameters           (𝛽0, 𝛽1 and 𝛿0,   𝛿1) respectively indicate marked
+changes in the level and first-lag autocorrelation dynamics of volatility. Parameters measuring the
+dependence of current volatility on weekly and monthly factors are only important for a subset of
+sectors.
+
+                                                 [Table 2 around here]
+
+Figure 2    presents    estimated threshold smoothing weights against threshold variables for selected
+sectors. In the top row Health          Care and Materials respectively show the              highest and lowest crisis
+intensity (estimated slope coefficients (γ)). By analogous metrics, in the bottom row Oil & Gas and
+Technology were respectively affected first and last (estimated slope thresholds (ψ)). Also note that the
+Oil & Gas sector shows a homogenous response to the crisis (see also Table 3). Of particular relevance
+are the estimated slope       (γ) and threshold (ψ)       coefficients. These are highly statistically          significant,
+further corroborating the non-linear smooth transition between the volatility regimes. High values of
+the slope coefficient indicate an abrupt transition between volatility regimes. By contrast, lower values
+indicate a smoother transition. The threshold coefficient indicates the degree of tolerance until the
+volatility shifts to another regime. Low values indicate sectors that are among the first to be affected as
+Covid-19 cases increase. Due to the importance of these parameters in understanding the evolution of
+the crisis, we now elaborate further upon them.
+
+                                            [Figures 2 and 3 around here]
+
+Table 3 presents key location and dispersion statistics relating to the slope and threshold of the transition
+function. These characterise the intensity and timeliness of Covid-19 across sectors and countries. As
+indicated by the mean and median values of slope coefficients, the intensity of the transition is highest
+in the Health Care sector, then followed by Utilities and Consumer Services. The uniformity of intensity
+varies across the sectors with the Health Care and the Consumer Goods being the least and most uniform
+respectively according to the quartile coefficient of variation (QCV) measure. In terms of timeliness of
+the transition we find that the Oil & Gas and Telecommunications sectors were the first to be affected
+as evidenced by the low mean threshold values. The lower QCV in the Oil & Gas case compared to the
+Telecommunications shows the homogenous impact of the former sector from the Covid-19 crisis.
+
+
+                                                              7
+
+Technology sectors were the last to be affected as the Covid-19 lockdown measures have accelerated
+the adoption of remote working platforms, while people sought distraction and entertainment elsewhere
+online. The US and the UK exhibit the highest crisis transition intensity. It is interesting that these are
+the markets with the highest heterogeneity in the Covid-19 response, as indicated by the high values in
+the QCV metric. This may be a reflection upon the financial markets of the initial indecisiveness and
+ambiguity of the political response to the pandemic crisis as far as lockdown measures are concerned.
+Both the US and the UK were among the slowest countries in a                      dopting containment        measures,    and
+which were often met with civilian unrest.          At the other end of the spectrum lay Germany and Japan that
+exhibit the lowest intensity and lowest timelines respectively.
+
+                                                 [Table 3 around here]
+
+Country-wise the US has the lowest mean threshold, suggesting that the financial markets there were
+affected the earliest. This may have been catalytic to a faster and mightier when compared to the 2008
+GFC policy response in the US. For instance, the Fed             cut interest rates and announced       economic support
+packages, including the $1200 rebate checks, the $600 per week supplement to unemployment benefits,
+and the Paycheck Protection Program             (Humphries et al., 2020)      . The unprecedented in terms of scale,
+scope and speed response have partially aided the speedy recovery of the financial markets.                         The UK
+also followed a similar strategy by providing funds directly to the business sectors. B                          y contrast,
+Germany and Japan were among the least affected economies by the Covid                        -19 financial crisis   , which
+may have partially affected the nature of the economic packages that were offered. Contrary to a                      “going
+direct/whatever-it-takes” strategy of the Fed and the Bank of England, the financial stimuli offered by
+the ECB and the Bank of Japan focused on the commercial banking sector, which would in turn
+incentivise bank lending to the business sectors hit by Covid-19. But weathering the Covid-19 financial
+crisis has not only been affected by the economic stimuli. Policy responses regarding containment and
+closure of businesses, movement restrictions, testing and tracing are also important.                  We use the Oxford
+COVID-19  Government  Response  Tracker  (                OxCGRT)        that  tracks   government  responses          across
+countries and over time. Policy responses with regards to an extended array of parameters including the
+aforementioned ones are aggregated into four indicators, of which the Government Response Index and
+the  Containment and Health Index are the most comprehensive.                        For   more information about the
+construction of these indices       see (Hale et al., 2020).
+
+Table 4 presents the mean values of the Government Response Index and the Containment and Health
+Index for the G7 countries over the 1/2/2020 – 24/4/2020, to maintain comparability with the estimation
+period of our model as well as the crisis intensity estimate for each country (see also Table 3). The
+negative relationship between each of the policy response indices to the crisis intensity, evidenced by
+the negative correlation coefficient, suggests that countries that engaged sooner and more thoroughly
+in across the scale containment measures against Covid-19 weathered the financial crisis better.
+
+                                                 [Table 4 around here]
+
+5. Stock markets, Covid-19 and other major events
+
+The Covid-19 has given rise to an unprecedented crisis. In figure 4 we compare the impact of the Covid-
+19 to that of other major events during the last century on the financial markets. Using the S&P 500
+index due to the long timespan of data availability that extends as far back as 1927, we calculate two
+volatility proxies, namely the realised volatility as the sum of squared returns over the past 22 trading
+days, and the conditional volatility estimated from a GARCH(1,1) model. In addition, we use the CBOE
+
+                                                              8
+
+Volatility Index (VIX) that is a well-known proxy for the expectation of volatility based on S&P 500
+index options. We also plot the Economic Policy Uncertainty (EPU) that is a news-based indicator of
+economic uncertainty.12
+
+                                                      [Figure 4 around here]
+
+Stock market volatility is a key indicator to assess the magnitude of financial/economic crisis (Baker,
+Bloom, Davis, Kost, et al., 2020). A first inspection of Figure 5 suggests that the Covid-19 pandemic
+has unleashed an extensive and massive uncertainty to financial markets. Compared against                               other
+epidemic/pandemic outbreaks such as Ebola, SARS, H1N1, the impact on volatility of Covid-19 is
+considerably larger. A similar conclusion is reached when comparing against notable terrorist attacks,
+such as the 9/11 and the Paris bombings of Bataclan. A comparison against other financial crises is
+more revealing about the         true  magnitude of the Covid-19 impact on financial markets.                     Compared
+against the 2008 GFC at the time of the Lehman Brothers collapse, the Covid-19 financial crisis has
+posed  a  larger  uncertainty.       Hence,  the  impact  of  the  Covid-19  financial  crisis            may  be    directly
+comparable to the 1929 Great Crash and the 1987 Black Monday event.
+
+6. Robustness checks
+
+As a first robustness check we substitute the GARCH conditional volatility, used in the main part of the
+analysis, with realised measures. In          particular, we use the realised variance (RV) and the robust to
+microstructure noise realised kernel variation (RKV).13 Realised variance (RV) is calculated as the sum
+of squared intraday returns (Andersen et al., 2001; Andersen & Bollerslev, 2003; Barndorff-Nielsen &
+Shephard, 2002) as:
+                                                                𝑀                                                 (9)
+                                                       𝑅𝑉𝑡  =  ∑    𝑟𝑡2,𝑗
+
+                                                               𝑗=1
+where j subscripts each of the M equally-spaced 5-minute subintervals in each day.
+The realised kernel variance is given as:
+                                                           𝐻           ℎ                                          (10)
+                                              𝑅𝐾𝑉𝑡    =   ∑     𝑘 (𝐻   +  1) 𝛾ℎ
+                                                         ℎ=−𝐻
+where
+                                                           𝐻                                                      (11)
+                                                 𝛾ℎ  =    ∑      𝑟𝑗,𝑡𝑟𝑗−|ℎ|,𝑡
+                                                        𝑗=|ℎ|+1
+
+Using the RV and the RKV, Table 5 shows estimated slope (γ) and threshold (ψ) coefficients for the
+G7 countries. The main results - where the GARCH conditional volatility is used - are reported for
+comparison purposes and labelled accordingly. Although we do not report other estimated coefficients
+pertaining to Equation 8, these are in line with those when GARCH volatility is used.
+                                                  [Table 5 around here]
+
+
+12 Due to data limitations VIX data are available from 1990 onwards, and EPU data from 1985 onwards.
+13 The  realised  measures  are  obtained  from  the  Oxford  Man  Institute  of  Quantitative  Finance  database  here:
+https://www.oxford-man.ox.ac.uk/our-research/realized-library/
+                                                              9
+
+A first inspection of Table 4 shows that both the slope and the threshold estimates obtained from the
+realised measures are highly aligned to those pertaining to the main results of the paper. The last row
+of table 5 reports a Spearman correlation coefficient between the estimated coefficients that verifies the
+high alignment. In particular, the Covid-19 has hit the US markets with the highest intensity. As such,
+the use of alternative volatility proxies does not change the conclusions reached in the main part of the
+paper.
+
+As a second robustness check we apply a time varying parameter (TVP) HAR model with the period
+24/4/2018 – 24/4/2019 as our initial estimation window, which we roll over by one day. We direct you
+to Todorova (2017) and Y. Wang et al. (2017) for similar approaches. The key attribute of this approach
+is the intuitive way it can capture the dynamics of the Covid-19 crisis unfolding, while the limitations
+of this technique in comparison to the ST-HAR model are presented in the main part of the paper.
+The following equation is estimated via least squares and Newey-West robust standard errors:
+                             ℎ𝑡  =  𝑐𝑖 +  𝛽(𝑑)ℎ𝑡−1    +  𝛽(𝑤)ℎ(𝑤)    +  𝛽(𝑚)ℎ(𝑚)     +  𝑒𝑡                         (12)
+                                            𝑖              𝑖     𝑡        𝑖     𝑡
+where 𝑖 denotes the time varying coefficients.
+Figure 5 reports the estimated coefficients of the TVP-HAR model for the G7 countries and the ten
+business sectors under consideration. The grey shaded area represents the Covid-19 financial crisis and
+is assumed to span from 1/2/2020 onwards to maintain comparability with the main paper results. A
+cursory inspection reveals that during the Covid-19 financial crisis the coefficients of the TVP-HAR
+are found to be highly variable. The goodness of fit markedly deteriorates, thus indicating the inability
+of a linear model to capture the volatility transition effect. In addition, while it is not possible to
+accurately reflect on the intensity and/or           timeliness of the Covid-19 impact upon countries/sectors
+volatilities, we can clearly infer a certain heterogeneity in the countries’ and sectors’ responses to the
+crisis. As such and in the broadest of strokes the results of the TVP-HAR model are similar to those of
+the ST-HAR.
+                                                 [Figure 5 around here]
+
+7. Discussion and Conclusions
+
+Our investigation is based upon data from stock markets and business sectors of the G7 economies. To
+capture the impact of Covid-19 and the associated market reactions, we apply a novel smooth transition
+heterogenous autoregressive model (ST-HAR) to identify transition between regimes. Thereby, our
+analysis brings early insights to the intensity, the timeliness and the homogeneity of volatility shifts as
+well as the rankings of countries and business sectors. Our results are robust to the use o                     f alternative
+realised measures of volatility and dynamic models.
+
+Our results show a non-linear transition to a crisis regime for all countries and sectors. Our findings are
+that  the  Healthcare  and  Consumer  Services  sectors  were  the  most  severely  affected,  with
+Telecommunications and Technology the least.               The Healthcare sector is under immense scrutiny in its
+attempts to develop an effective vaccine. Consumer services were directly targeted by shut down
+measures to limit the contagion by inhibiting travel and avoiding restaurants and hotels. Households
+generally were forced to rely upon online entertainment and novel services to cope with the disruptions.
+
+Financial markets in the UK and the US took the largest hits, yet with high response heterogeneity
+across business sectors. This may be an early reflection upon the financial markets of the indecisiveness
+and ambiguity of the initial political response to the pandemic crisis             , mainly revolving around lockdown
+
+                                                              10
+
+measures. Yet, it may have cemented in what culminated to be an unprecedented economic response in
+terms of scale, scope and speed.
+
+Beyond immediate short-term reactions to the crisis, the world economy faces a host of uncertainties.
+Furlough schemes only delay the transition to a post Covid-19 world. In the short term, provisions to
+ameliorate immediate needs may protect essentially ‘zombie’ companies whose demise is inevitable.
+Eventually the initiative must pass to employers and employees in directing capital investments to long-
+term viable activities. More work will be needed as the Covid-19 crisis unfolds.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                             11
+
+References
+
+Andersen, T. G., & Bollerslev, T. (2003). Modeling and Forecasting Realized Volatility.
+      Econometrica, 71, 579–625.
+Andersen, T. G., Bollerslev, T., & Diebold, F. X. (2007). Roughing It Up: Including Jump
+      Components in the Measurement, Modeling, and Forecasting of Return Volatility. Review of
+      Economics and Statistics, 89(November), 701–720. https://doi.org/10.1162/rest.                      89.4.701
+Andersen, T. G., Bollerslev, T., Diebold, F. X., & Ebens, H. (2001). The distribution of realized stock
+      return volatility. In    Journal of Financial Economics           (Vol. 61, Issue 1).
+      https://doi.org/10.1016/S0304         -405X(01)00055-1
+Andersen, T. G., Bollerslev, T., & Huang, X. (2011). A reduced form framework for modeling
+      volatility of speculative prices based on realized variation measures.                Journal of Econometrics,
+      160(1), 176–189. https://doi.org/10.1016/j.jeconom.2010.03.029
+Ashraf, B. N. (2020). Economic impact of government interventions during the COVID                           -19 pandemic:
+      International evidence from financial markets.             Journal of Behavioral and Experimental Finance               ,
+      27, 100371.
+Audrino, F., Sigrist, F., & Ballinari, D. (2020). The impact of sentiment and attention measures on
+      stock market volatility.      International Journal of Forecasting          , 36(2), 334–357.
+Baker, S. R., Bloom, N., Davis, S. J., Kost, K., Sammon, M., & Viratyosin, T. (2020)                      . The
+      unprecedented stock market reaction to COVID                -19. The Review of Asset Pricing Studies          .
+Baker, S. R., Bloom, N., Davis, S. J., & Terry, S. J. (2020).             Covid-induced economic uncertainty            .
+Barndorff-Nielsen, O. E., & Shephard, N. (2002). Econometric analy                   sis of realized volatility and its
+      use in estimating stochastic volatility models.           Journal of the Royal Statistical Society: Series B
+      (Statistical Methodology)       , 64(2), 253–280.
+Barro, R. J., Ursúa, J. F., & Weng, J. (2020).          The coronavirus and the great influenza pandemic:
+      Lessons from the “spanish flu” for the coronavirus’s potential effects on mortality and economic
+      activity.
+Benmelech, E., & Tzur       -Ilan, N. (2020). The determinants of fiscal and monetary policies during the
+      COVID-19 crisis.
+BIS. (2020). Measures to reflect the impact of Covid-19.
+Blake, A., Sinclair, M. T., & Sugiyarto, G. (2003). Quantifying the impact of foot and mouth disease
+      on tourism and the UK economy.            Tourism Economics, 9(4), 449–465.
+Bollerslev, T. (1986). Generalized autoregressiv           e conditional heteroskedasticity.        Journal of
+      Econometrics, 31(3), 307–327.
+Bollerslev, T., Patton, A. J., & Quaedvlieg, R. (2016). Exploiting the errors: A simple approach for
+      improved volatility forecasting.        Journal of Econometrics, 192(1), 1–18.
+      https://doi.org/10.1016/j.jeconom.2015.10.007
+Bradley, M. D., & Jansen, D. W. (2004). Forecasting with a nonlinear dynamic model of stock returns
+      and industrial production.       International Journal of Forecasting          , 20(2), 321–342.
+Buncic, D., & Gisler, K. I. M. (2016). Global equity market volatility spillovers: A broader role for
+      the United States. International Journal of Forecasting              , 32(4), 1317–1339.
+Caggiano, G., Castelnuovo, E., & Figueres, J. M. (2017). Economic policy uncertainty and
+      unemployment in the United           States: A nonlinear approach.        Economics Letters, 151, 31–34.
+Čech, F., & Baruník, J. (2017). On the modelling and forecasting of multivariate realized volatility:
+      Generalized heterogeneous autoregressive (GHAR) model.                    Journal of Forecasting       , 36(2), 181–
+      206.
+Cheikh, N. Ben, Zaied, Y. Ben, & Chevallier, J. (2020). Asymmetric volatility in cryptocurrency
+      markets: New evidence from smooth transition GARCH models.                        Finance Research Letters       , 35,
+      101293.
+Chen, M.-H., Jang, S. S., & Kim, W. G. (2007). The imp                act of the SARS outbreak on Taiwanese hotel
+      stock performance: an event        -study approach. International Journal of Hospitality Management                   ,
+      26(1), 200–212.
+Chkili, W. (2017). Is gold a hedge or safe haven for Islamic stock market movements? A Markov
+      switching approach. Journal of Multinational Financial Management                      , 42, 152–163.
+Chuliá, H., Martens, M., & van Dijk, D. (2010). Asymmetric effects of federal funds target rate
+
+                                                              12
+
+      changes on S&P100 stock returns, volatilities and correlations. Journal of Banking & Finance,
+      34(4), 834–839.
+Ciarreta, A., Pizarro   -Irizar, C., & Zarraga, A. (2020). Renewable energy regulation and structural
+      breaks: An empirical analysis of Spanish electricity price volatility.              Energy Economics, 104749.
+Correia, S., Luck, S., & Verner, E. (2020). Pandemics depres               s the economy, public health
+      interventions do not: Evidence from the 1918 flu.             Public Health Interventions Do Not: Evidence
+      from The.
+Corsi, F. (2009). A simple approximate long           -memory model of realized volatility.          Journal of
+      Financial Econometrics        , 7(2), 174–196. https://doi.org/10.1093/jjfinec/nbp001
+ECB. (2020). ECB Banking Supervision provides temporary capital and operational relief in reaction
+      to coronavirus.
+Efthyvoulou, G. (2012). The impact of financial stress on sectoral productivity.                  Economics Letters,
+      116(2), 240–243.
+Eichenbaum, M. S., Rebelo, S., & Trabandt, M. (2020).                The macroeconomics of epidemics           .
+Elliott, R. J., Nishide, K., & Osakwe, C.        -J. U. (2016). Heston-Type Stochastic Volatility with a
+      Markov Switching Regime.           Journal of Futures Markets, 36(9), 902–919.
+Engle, R. F. (1982). Autoregressive conditional heteroscedasticity with estimates of the variance of
+      United Kingdom inflation.         Econometrica: Journal of the Econometric Society              , 987–1007.
+Escribano, A., & Jorda, O. (1999). Improved test            ing and specification of smooth transition regression
+      models. In Nonlinear time series analysis of economic and financial data                   (pp. 289–319).
+      Springer.
+Forbes. (2020). Netflix: Coronavirus cements the company as untouchable.                     April 25.
+      https://www.forbes.com/sites/bethkindig/2020/04/25/netflix                -coronavirus-cements-the-company-
+      as-untouchable/
+Ghoshray, A. (2010). Smooth transition effects in price transmission: The case of international wheat
+      export prices. Economics Letters, 106(3), 169–171.
+Ghysels, E., Harvey, A. C., & Renault, E. (1996). 5 Stochastic volatility. Handbook of Statistics, 14,
+      119–191.
+Gortsos, C., Ringe, W.-G., Busch, D., Wymeersch, E., Clarke, B. J., Lehmann, M., Hadjiemmanuil,
+      C., Lamandini, M., Ramos Muñoz, D., Morais, L. S., & others. (2020). Pandemic Crisis and
+      Financial Stability.
+Hale, T., Angrist, N., Cameron-Blake, E., Hallas, L., Kira, B., Majumar, S., Petherik, A., Phillips, T.,
+      Tatlow, H., & Webster, S. (2020). Variation in government responses to Covid-19.
+Hamilton, D. (1994). Time series analysis. Princeton: Princeton University Press.
+Ho, J. C., Qiu, M., & Tang, X. (2013). Do airlines always suffer from crashes? Economics Letters,
+      118(1), 113–117.
+Hoffman, S. J., & Silverberg, S. L. (2018). Delays in global disease outbreak responses: lessons from
+      H1N1, Ebola, and Zika. American Journal of Public Health, 108(3), 329–333.
+Huang, A. Y., & Hu, W.-C. (2012). Regime switching dynamics in credit default swaps: Evidence
+      from smooth transition autoregressive model. Physica A: Statistical Mechanics and Its
+      Applications, 391(4), 1497–1508.
+Humphries, J. E., Neilson, C. A., & Ulyssea, G. (2020). Information frictions and access to the
+      Paycheck Protection Program. Journal of Public Economics, 190.
+IMF. (2020). World Economic Outlook Update, June 2020.
+      https://www.imf.org/en/Publications/WEO/Issues/2020/06/24/WEOUpdateJune2020
+Ji, Q., Zhang, D., & Zhao, Y. (2020). Searching for safe-haven assets during the COVID-19
+      pandemic. International Review of Financial Analysis, 101526.
+Karpoff, J. M. (2020). The future of financial fraud. Journal of Corporate Finance, 101694.
+Kuo, H.-I., Chang, C.-L., Huang, B.-W., Chen, C.-C., & McAleer, M. (2009). Estimating the impact
+      of avian flu on international tourism demand using panel data. Tourism Economics, 15(3), 501–
+      511.
+Lahaye, J., & Shaw, P. (2014). Can we reject linearity in an HAR-RV model for the S&P 500?
+      Insights from a nonparametric HAR-RV. Economics Letters, 125(1), 43–46.
+      https://doi.org/10.1016/j.econlet.2014.07.003
+Li, W., Cheng, Y., & Fang, Q. (2020). Forecast on silver futures linked with structural breaks and
+
+                                                             13
+
+      day-of-the-week effect. The North American Journal of Economics and Finance, 101192.
+Llussá, F., & Tavares, J. (2011). Which terror at which cost? On the economic consequences of
+      terrorist attacks. Economics Letters, 110(1), 52–55.
+Lucey, B. M., & O’Connor, F. A. (2013). Do bubbles occur in the gold price? An investigation of
+      gold lease rates and Markov Switching models. Borsa Istanbul Review, 13(3), 53–63.
+Ma, C., Rogers, J. H., & Zhou, S. (2020). Global economic and financial effects of 21st century
+      pandemics and epidemics. Available at SSRN.
+Mazzeu, J. H. G., Veiga, H., & Mariti, M. B. (2019). Modeling and forecasting the oil volatility index.
+      Journal of Forecasting, 38(8), 773–787.
+Moore, T., & Wang, P. (2007). Volatility in stock returns for new EU member states: Markov regime
+      switching model. International Review of Financial Analysis, 16(3), 282–292.
+Nademi, A., & Nademi, Y. (2018). Forecasting crude oil prices by a semiparametric Markov
+      switching model: OPEC, WTI, and Brent cases. Energy Economics, 74, 757–766.
+Nelson, D. B. (1991). Conditional heteroskedasticity in asset returns: A new approach. Econometrica:
+      Journal of the Econometric Society, 347–370.
+Omrane, W. Ben, & Savaşer, T. (2017). Exchange rate volatility response to macroeconomic news
+      during the global financial crisis. International Review of Financial Analysis, 52, 130–143.
+Page, S., Song, H., & Wu, D. C. (2012). Assessing the impacts of the global economic crisis and
+      swine flu on inbound tourism demand in the United Kingdom. Journal of Travel Research,
+      51(2), 142–153.
+Papanicolaou, A., & Sircar, R. (2014). A regime-switching Heston model for VIX and S&P 500
+      implied volatilities. Quantitative Finance, 14(10), 1811–1827.
+Pappas, V., Ingham, H., Izzeldin, M., & Steele, G. (2016). Will the crisis “tear us apart”? Evidence
+      from the EU. International Review of Financial Analysis, 46, 346–360.
+      https://doi.org/10.1016/j.irfa.2015.09.010
+Pastor-Satorras, R., Castellano, C., Van Mieghem, P., & Vespignani, A. (2015). Epidemic processes
+      in complex networks. Reviews of Modern Physics, 87(3), 925.
+Rioja, F., Rios-Avila, F., & Valev, N. (2017). Productivity during recessions with banking crises:
+      Inter-Industry evidence. Economics Letters, 152, 50–53.
+Saker, L., Lee, K., Cannito, B., Gilmore, A., Campbell-Lendrum, D. H., & others. (2004).
+      Globalization and infectious diseases: a review of the linkages.
+Salisu, A. A., & Vo, X. V. (2020). Predicting stock returns in the presence of COVID-19 pandemic:
+      The role of health news. International Review of Financial Analysis, 71, 101546.
+Santos, D. G., & Ziegelmann, F. A. (2014). Volatility Forecasting via MIDAS , HAR and their
+      Combination : An Empirical Comparative Study for IBOVESPA. 299(March), 284–299.
+Sharif, A., Aloui, C., & Yarovaya, L. (2020). COVID-19 pandemic, oil prices, stock market,
+      geopolitical risk and policy uncertainty nexus in the US economy: Fresh evidence from the
+      wavelet-based approach. International Review of Financial Analysis, 101496.
+Tamakoshi, G., & Hamori, S. (2014). Greek sovereign bond index, volatility, and structural breaks. In
+      Journal of Economics and Finance (Vol. 38). https://doi.org/10.1007/s12197-013-9253-3
+Taylor, N. (2019). Forecasting returns in the VIX futures market. International Journal of
+      Forecasting, 35(4), 1193–1210.
+Taylor, S. J. (1994). Modeling stochastic volatility: A review and comparative study. Mathematical
+      Finance, 4(2), 183–204.
+Teräsvirta, T. (1994). Specification, Estimation, and Evaluation of Smooth Transition Autoregressive
+      Models. Journal of the American Statistical Association, 89(425), 208–218.
+      https://doi.org/10.1080/01621459.1994.10476462
+Tiwari, A. K., Aye, G. C., Gupta, R., & Gkillas, K. (2020). Gold-oil dependence dynamics and the
+      role of geopolitical risks: Evidence from a Markov-switching time-varying copula model.
+      Energy Economics, 104748.
+Todorova, N. (2017). The asymmetric volatility in the gold market revisited. Economics Letters, 150,
+      138–141.
+Tong, H. (2005). Nonlinear time series analysis. Encyclopedia of Biostatistics, 5.
+Toya, H., & Skidmore, M. (2007). Economic development and the impacts of natural disasters.
+      Economics Letters, 94(1), 20–25.
+
+                                                             14
+
+Tse, Y. (2001). Index arbitrage with heterogeneous investors: A smooth transition error correction
+      analysis. Journal of Banking & Finance, 25(10), 1829–1855.
+Umer, U. M., Sevil, T., & Sevil, G. (2018). Forecasting performance of smooth transition
+      autoregressive (STAR) model on travel and leisure stock index. The Journal of Finance and
+      Data Science, 4(2), 90–100.
+Wang, W., & Enilov, M. (2020). The Global Impact of COVID-19 on Financial Markets. Available at
+      SSRN 3588021.
+Wang, Y., Pan, Z., & Wu, C. (2017). Time-varying parameter realized volatility models. Journal of
+      Forecasting, 36(5), 566–580.
+Watugala, S. W. (2019). Economic uncertainty, trading activity, and commodity futures volatility.
+      Journal of Futures Markets, 39(8), 921–945.
+Yarovaya, L., Brzeszczynski, J., Goodell, J. W., Lucey, B. M., & Lau, C. K. (2020). Rethinking
+      Financial Contagion: Information Transmission Mechanism During the COVID-19 Pandemic.
+      Available at SSRN 3602973.
+Zhang, L. (2013). Revisiting the empirics of inflation in China: A smooth transition error correction
+      approach. Economics Letters, 119(1), 68–71.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                            15
+
+ Figure 1. Time evolution of volatilities and Covid-19 cases
+                          Panel A: Time varying annualized volatilities (G7 economies)
+         120
+
+
+         100
+
+
+          80
+
+
+          60
+
+
+          40
+
+
+          20
+
+
+            0
+           03/02/20      13/02/20      23/02/20      04/03/20      14/03/20     24/03/20      03/04/20      13/04/20      23/04/20
+
+                     US          UK            Canada           France          Germany            Italy          Japan
+                                 Panel B: Covid-19 Cumulative cases (Worldwide)
+
+         10000000
+
+
+          1000000
+
+
+            100000
+
+
+             10000
+
+
+              1000
+
+
+                100
+
+
+                 10
+
+
+                  1
+                  03/02/20    13/02/20     23/02/20    04/03/20     14/03/20    24/03/20     03/04/20    13/04/20     23/04/20
+
+ Source: Datastream and Johns Hopkins University Coronavirus Resource Centre.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                16
+
+ Figure 2. Threshold weights for selected sectors
+                                                Health Care                                                                                                          Materials
+         1.00                                                                                                              1.00
+         0.90                                                                                                              0.90
+         0.80                                                                                                              0.80
+         0.70                                                                                                              0.70
+         0.60                                                                                                              0.60
+         0.50                                                                                                              0.50
+         0.40                                                                                                              0.40
+         0.30                                                                                                              0.30
+         0.20                                                                                                              0.20
+         0.10                                                                                                              0.10
+         0.00                                                                                                              0.00
+                8          9         10         11         12         13         14         15         16                        8           9          10          11          12         13          14          15          16
+                                        Covid-19 Cumulative Cases (log)                                                                                      Covid-19 Cumulative Cases (log)
+
+              US         UK         Canada          France         Germany          Italy        Japan                           US         UK           Canada          France         Germany            Italy        Japan
+                                                 Oil & Gas                                                                                                          Technology
+
+
+         1.00                                                                                                              1.00
+         0.90                                                                                                              0.90
+         0.80                                                                                                              0.80
+         0.70                                                                                                              0.70
+         0.60                                                                                                              0.60
+         0.50                                                                                                              0.50
+         0.40                                                                                                              0.40
+         0.30                                                                                                              0.30
+         0.20                                                                                                              0.20
+         0.10                                                                                                              0.10
+         0.00                                                                                                              0.00
+                8          9         10         11         12         13         14        15         16                         8           9          10          11         12          13          14          15          16
+                                        Covid-19 Cumulative Cases (log)                                                                                      Covid-19 Cumulative Cases (log)
+
+              US         UK         Canada          France         Germany          Italy        Japan                           US         UK          Canada           France         Germany            Italy        Japan
+
+ Notes: The figure depicts the threshold smoothing weights from the ST-HAR model of equation 11 ploted against the Covid-19 Cumulative worldwide cases (log scaled). Across all sectors,
+ the ones reported here exhibit the highest and lowest crisis intensity (top left, top right respectively), and the earliest and latest affected (bottom right, bottom left respectively).
+                                                                                                                 17
+
+ Figure 3. Threshold weights for selected countries
+                                                       UK                                                                                                                Germany
+         1.00                                                                                                                1.00
+         0.90                                                                                                                0.90
+         0.80                                                                                                                0.80
+         0.70                                                                                                                0.70
+         0.60                                                                                                                0.60
+         0.50                                                                                                                0.50
+         0.40                                                                                                                0.40
+         0.30                                                                                                                0.30
+         0.20                                                                                                                0.20
+         0.10                                                                                                                0.10
+         0.00                                                                                                                0.00
+                8          9          10          11         12          13         14         15          16                       8          9          10          11          12         13          14          15         16
+                                          Covid-19 Cumulative Cases (log)                                                                                     Covid-19 Cumulative Cases (log)
+                   Aggregate                     Oil & Gas                      Materials                                               Aggregate                     Oil & Gas                     Materials
+                   Industrials                   Consumer Goods                 Health Care                                             Industrials                   Consumer Goods                Health Care
+                   Consumer Services             Telecommunications             Utilities                                               Consumer Services             Telecommunications            Utilities
+                   Financials                    Technology                                                                             Financials                    Technology
+                                                       US                                                                                                                  Japan
+
+
+         1.00                                                                                                                1.00
+
+         0.80                                                                                                                0.80
+
+         0.60                                                                                                                0.60
+
+         0.40                                                                                                                0.40
+
+         0.20                                                                                                                0.20
+
+         0.00                                                                                                                0.00
+                8          9          10          11         12          13         14         15          16                       8          9          10          11          12         13          14          15         16
+                                          Covid-19 Cumulative Cases (log)                                                                                     Covid-19 Cumulative Cases (log)
+                   Aggregate                     Oil & Gas                      Materials                                               Aggregate                     Oil & Gas                     Materials
+                   Industrials                   Consumer Goods                 Health Care                                             Industrials                   Consumer Goods                Health Care
+                   Consumer Services             Telecommunications             Utilities                                               Consumer Services             Telecommunications            Utilities
+                   Financials                    Technology                                                                             Financials                    Technology
+
+ Notes: The figure depicts the threshold smoothing weights from the ST                  -HAR model of equation 11 ploted against the Covid               -19 Cumulative worldwide cases (log scaled). Across all
+ countries, the ones reported here exhibit the highest and lowest crisis intensity                (top left, top right respectively), and the earliest and latest affected (bottom right, bottom left respectively)                 .
+
+                                                                                                                    18
+
+ Figure 4. Volatility across time and major events
+          600                                                                                                                                                                                                                      90
+
+
+
+                                                                                                                                                                                                                                   80
+
+          500                                                                                                                                                                                                      Covid-19
+
+                                                                                                                                                                                                                                   70
+
+
+                       Great Crash                                                                                                                                                Lehman collapse
+          400                                                                                                                                                                                                                      60
+
+
+
+                                                                                                                                                         Black Monday                                                              50
+
+          300                                                                                                                                                                                             H1N1 pandemic
+                               Great Depression                                                                                                                                    9/11                                            40
+                                                                                                                                                               LTCM Crisis
+
+                                                                                                                                                                                          Dotcom
+          200                                                Post-WWII recession                                                                                Gulf War                   SARS epidemic                           30
+
+                                                                                                                                                                                                            Euro crisis
+                                                                                                '62 Flash Crash                                                                                                         Paris attacks
+                                                                                                                           Stock Market Crash                                                                           Ebola      20
+          100                                                                                                             First Oil Crisis                                                                             epidemic
+
+
+                                                                                                                                                                                                                                   10
+
+
+
+            0                                                                                                                                                                                                                      0
+              1928        1933        1938        1944        1949        1955        1960         1965        1971        1976        1982        1987        1993        1998         2003        2009        2014        2020
+
+                                                                              EPU                Realised Volatility               GARCH Volatility                   VIX
+
+ Notes: We use the S&P 500 returns to calculate the realised volatility, as the sum of squared returns over the past 22 trading days, and the GARCH Volatility. VIX is a proxy for the expectation
+ of volatility based on S&P 500 index options and is available from 1990 onwards. The Economic Policy Uncertainty (EPU) is a news-based indicator of economic uncertainty and is available
+ from 1985 onwards.
+
+
+
+                                                                                                                       19
+
+ Figure 5. Time varying parameter HAR estimation results
+                                                                 Countries                                                                                                                          Sectors
+               2.00                                                                                       1                                   2.00                                                                                 1
+
+                                                                                                          0.9                                                                                                                      0.9
+
+               1.00                                                                                       0.8                                 1.00                                                                                 0.8            Covid-19
+                                                                                                          0.7             Covid-19                                                                                                 0.7            Oil & Gas
+                                                                                                                          US                                                                                                                      Materials
+               0.00                                                                                       0.6             UK                  0.00                                                                                 0.6            Industrials
+                                                                                                          0.5             Canada                                                                                                   0.5            Consumer Goods
+                                                                                                                          France                                                                                                                  Health Care
+              -1.00                                                                                       0.4                                -1.00                                                                                 0.4            Consumer Services
+                                                                                                                          Germany
+                                                                                                                                                                                                                                                  Telecommunications
+                                                                                                          0.3             Italy                                                                                                    0.3
+                                                                                                                                                                                                                                                  Utilities
+              -2.00                                                                                       0.2             Japan              -2.00                                                                                 0.2            Financials
+
+                                                                                                                                                                                                                                                  Technology
+                                                                                                          0.1                                                                                                                      0.1
+
+              -3.00                                                                                       0                                  -3.00                                                                                 0
+                  Apr-19        Jun-19      Aug-19       Oct-19       Dec-19       Feb-20       Apr-20                                            Apr-19            Jul-19           Oct-19            Jan-20           Apr-20
+
+               2.00                                                                                        1                                 4.00                                                                                  1
+                                                                                                           0.9                                                                                                                     0.9
+               1.50                                                                                        0.8                                                                                                                     0.8             Covid-19
+
+                                                                                                                          Covid-19           3.00                                                                                                  Oil & Gas
+               1.00                                                                                        0.7                                                                                                                     0.7             Materials
+                                                                                                                          US
+                                                                                                           0.6            UK                                                                                                       0.6             Industrials
+               0.50                                                                                        0.5            Canada             2.00                                                                                  0.5             Consumer Goods
+
+                                                                                                                          France                                                                                                                   Health Care
+                                                                                                           0.4                                                                                                                     0.4             Consumer Services
+               0.00                                                                                                       Germany
+                                                                                                           0.3            Italy                                                                                                    0.3             Telecommunications
+                                                                                                           0.2            Japan              1.00                                                                                                  Utilities
+              -0.50                                                                                                                                                                                                                0.2             Financials
+                                                                                                           0.1                                                                                                                     0.1             Technology
+              -1.00                                                                                        0                                 0.00                                                                                  0
+                  Apr-19        Jun-19      Aug-19       Oct-19       Dec-19       Feb-20       Apr-20                                           Apr-19            Jul-19            Oct-19            Jan-20            Apr-20
+
+
+
+
+                                                                                                                                     20
+
+ Figure 5. (continued)
+              4.00                                                                                            1                                 2.50                                                                                   1
+              3.50                                                                                            0.9                               2.00                                                                                   0.9             Covid-19
+              3.00                                                                                            0.8            Covid-19                                                                                                  0.8             Oil & Gas
+              2.50                                                                                                                              1.50                                                                                                   Materials
+                                                                                                              0.7            US                 1.00                                                                                   0.7
+              2.00                                                                                            0.6            UK                                                                                                        0.6             Industrials
+              1.50                                                                                            0.5            Canada             0.50                                                                                   0.5             Consumer Goods
+              1.00                                                                                            0.4            France             0.00                                                                                   0.4             Health Care
+              0.50                                                                                            0.3            Germany           -0.50                                                                                                   Consumer Services
+              0.00                                                                                                                                                                                                                     0.3             Telecommunications
+             -0.50                                                                                            0.2            Italy             -1.00                                                                                   0.2
+                                                                                                                             Japan                                                                                                                     Utilities
+             -1.00                                                                                            0.1                              -1.50                                                                                   0.1             Financials
+             -1.50                                                                                            0                                -2.00                                                                                   0               Technology
+                  Apr-19       Jun-19       Aug-19        Oct-19       Dec-19        Feb-20        Apr-20                                           Apr-19             Jul-19           Oct-19             Jan-20           Apr-20
+
+              12.00                                                                                           1                                 4.50                                                                                    1
+                                                                                                              0.9                                                                                                                       0.9             Covid-19
+               8.00                                                                                           0.8                                                                                                                       0.8             Oil & Gas
+                                                                                                                             Covid-19
+                                                                                                              0.7            US                 3.00                                                                                    0.7             Materials
+               4.00                                                                                                                                                                                                                                     Industrials
+                                                                                                              0.6            UK                                                                                                         0.6
+                                                                                                                                                                                                                                                        Consumer Goods
+               0.00                                                                                           0.5            Canada             1.50                                                                                    0.5
+                                                                                                                                                                                                                                                        Health Care
+                                                                                                              0.4            France                                                                                                     0.4
+              -4.00                                                                                                                                                                                                                                     Consumer Services
+                                                                                                              0.3            Germany                                                                                                    0.3
+                                                                                                                                                0.00                                                                                                    Telecommunications
+                                                                                                              0.2            Italy                                                                                                      0.2
+              -8.00                                                                                                                                                                                                                                     Utilities
+                                                                                                              0.1            Japan                                                                                                      0.1
+                                                                                                                                                                                                                                                        Financials
+             -12.00                                                                                           0                                -1.50                                                                                    0               Technology
+                   Apr-19        Jun-19      Aug-19        Oct-19       Dec-19        Feb-20       Apr-20                                           Apr-19             Jul-19            Oct-19            Jan-20            Apr-20
+
+              8.00                                                                                          1               Covid-19            8.00                                                                                    1               Covid-19
+                                                                                                            0.8             US                  6.00                                                                                    0.8             Oil & Gas
+              4.00                                                                                          0.6             UK                                                                                                                          Materials
+                                                                                                                            Canada              4.00                                                                                    0.6             Industrials
+              0.00                                                                                          0.4             France              2.00                                                                                    0.4             Consumer Goods
+                                                                                                            0.2             Germany                                                                                                                     Health Care
+                                                                                                                            Italy               0.00                                                                                    0.2             Consumer Services
+             -4.00                                                                                          0                                                                                                                                           Telecommunications
+                  Apr-19       Jun-19       Aug-19       Oct-19       Dec-19        Feb-20       Apr-20                     Japan              -2.00                                                                                    0
+                                                                                                                                                    Apr-19             Jul-19            Oct-19            Jan-20            Apr-20                     Utilities
+
+ Notes: The graphs depict estimated coefficients from the time varying parameter HAR model in eq11.
+
+                                                                                                                                       21
+
+ Table 1. Descriptive statistics
+                                                               Panel A: Covid (01/02/2020-24/4/2020)                                                             Panel B: pre-Covid (24/4/2018-31/1/2020)
+                                                      US           UK        Canada        France      Germany            Italy        Japan            US         UK      Canada      France      Germany          Italy     Japan
+ Aggregate                      Return             0.014        -0.049        -0.014       -0.041         -0.037        -0.068        -0.028         0.044      -0.002       0.024       0.014         0.007     -0.007       0.009
+                                Volatility        17.845       15.095        13.511        17.401         18.401        21.289        17.835        13.398     12.144        8.768     14.093        15.297      17.689     15.897
+ Oil & Gas                      Return            -0.136        -0.117        -0.094       -0.104         -0.245        -0.095        -0.128        -0.061      -0.048      -0.005      -0.043        -0.143     -0.025      -0.085
+                                Volatility        27.966       27.202        26.984        25.736         42.653        23.318        30.604        21.578     21.487       20.300     20.371        39.145      18.360     29.988
+ Materials                      Return            -0.036        -0.053         0.049        0.013         -0.082        -0.186        -0.079        -0.011      -0.015       0.026       0.043        -0.039     -0.111      -0.039
+                                Volatility        22.178       28.015        21.686        19.560         23.493        34.927        21.255        18.138     24.547       18.703     17.045        20.888      32.930     19.703
+ Industrials                    Return            -0.010        -0.030         0.042       -0.044         -0.058        -0.089        -0.049         0.036       0.021       0.080       0.043        -0.001     -0.026      -0.007
+                                Volatility        20.307       19.229        21.265        20.827         21.686        27.558        20.002        15.931     16.058       18.075     16.184        18.497      23.641     18.347
+ Consumer Goods                 Return             0.010        -0.013        -0.088       -0.008         -0.086        -0.038        -0.043         0.039       0.016      -0.029       0.021        -0.031      0.003      -0.017
+                                Volatility        15.270       15.829        25.948        18.404         22.197        24.950        16.684        11.846     14.123       22.698     16.097        18.410      22.161     15.146
+ Health Care                    Return             0.043         0.055        -0.100        0.042         -0.056         0.078         0.025         0.044       0.060      -0.027       0.052        -0.034      0.078       0.042
+                                Volatility        17.777       18.281        43.023        16.872         22.696        23.320        19.545        14.376     16.774       40.812     15.300        21.270      20.934     18.166
+ Consumer Services              Return             0.031        -0.041         0.014       -0.038         -0.063        -0.107        -0.026         0.048       0.012       0.046       0.014        -0.037     -0.068       0.001
+                                Volatility        18.072       15.705        15.783        19.137         21.548        30.567        15.665        14.646     12.939       12.149     16.470        19.433      27.923     14.051
+ Telecommunications             Return             0.000        -0.128        -0.018       -0.041         -0.031        -0.141         0.013         0.025      -0.076       0.020      -0.023        -0.004     -0.106       0.022
+                                Volatility        19.319       24.155        17.379        18.088         17.596        31.122        22.507        17.091     21.944       13.526     16.227        15.209      28.769     20.863
+ Utilities                      Return             0.027         0.004         0.027       -0.062          0.013         0.023        -0.035         0.067       0.035       0.063       0.027         0.056      0.083      -0.041
+                                Volatility        17.998       20.411        15.471        19.361         18.351        21.350        19.577        13.704     18.188       10.941     16.252        16.127      18.319     18.631
+ Financials                     Return            -0.024        -0.099        -0.061       -0.135         -0.031        -0.128        -0.084         0.034      -0.028       0.010      -0.033         0.021     -0.049      -0.034
+                                Volatility        19.213       19.802        17.018        21.640         16.935        27.458        16.811        14.097     16.423       11.686     17.311        13.575      24.065     15.001
+ Technology                     Return             0.061        -0.039         0.085        0.002          0.016         0.052        -0.006         0.082       0.027       0.071       0.039         0.041      0.082       0.026
+                                Volatility        24.147       27.551        22.595        26.702         25.472        40.441        18.844        19.896     25.365       19.124     23.486        23.856      37.270     16.945
+ Notes: The table shows average percentage daily returns and annualised volatility for the equity indices in the respective countries and sectors.
+
+
+
+
+
+
+
+
+
+                                                                                                                 22
+
+         Table 2. Estimation results
+
+
+
+
+
+
+
+
+
+
+         β0                       6.066**           -5.527         16.376**           -2.407         15.737**         50.920***        20.833**           -2.485         10.583***          -2.990         23.345***
+                                  (1.651)          (2.110)          (1.043)          (-1.904)         (1.149)          (2.037)          (3.218)          (2.172)          (0.263)          (-4.344)         (1.005)
+         β1                        0.426*          0.888**           0.109            0.650*           0.088           -1.199*           -0.032           -0.029           0.028            0.517*           -0.322
+                                  (0.304)          (1.369)          (2.213)          (0.304)          (1.619)          (-0.228)         (-1.576)         (-0.131)         (0.109)          (0.106)          (-1.271)
+         δ0                       -6.388**        38.440**         -17.203**        10.915**         -16.039**       -50.959***        -22.062**          1.988         -17.780***         11.621         -21.505***
+                                  (-1.622)         (2.174)          (-1.874)         (2.212)          (-1.748)         (-1.988)         (-3.009)         (2.171)          (-0.215)         (4.369)          (-1.039)
+         δ1                       0.933**           -0.551          0.998***          0.437           1.118***         1.870***          1.138            0.927*          1.413***          0.677           1.299***
+                                  (1.835)          (-1.633)         (0.946)          (2.684)          (1.161)          (2.432)          (3.418)          (1.016)          (1.438)          (2.698)          (0.526)
+         α1                        0.341*          0.488**           0.309           0.403**           -0.177           -0.027           0.075            0.577           -0.060**          0.015            0.248
+                                  (0.825)          (1.334)          (1.741)          (0.825)          (-2.091)         (-0.736)         (0.171)          (0.621)          (-1.100)         (1.722)          (0.058)
+         α2                       -0.462**         -0.511**         -0.584**         -0.337*          -0.483*           -0.070           0.011           -0.434**          0.005           -0.219*          -0.811**
+                                  (-1.455)         (-1.766)         (-1.667)         (-1.962)         (-1.384)         (-1.395)         (1.186)          (-0.171)         (1.941)          (-0.375)         (-1.259)
+         γ                        3.914***         3.277**          2.950***         3.368**          3.487***        35.775***         4.354***         3.057**          5.851***         4.242**          1.884***
+                                  (2.998)          (2.998)          (1.754)          (3.828)          (2.226)          (4.123)          (4.257)          (3.950)          (1.934)          (4.831)          (2.277)
+         ψ                        5.555***         4.734***         5.977***         5.373***         5.968***         5.670***         5.382***         5.910***         5.684***         5.539***         6.159***
+                                 (100.891)        (103.877)        (120.973)        (47.227)         (93.006)         (81.434)         (307.775)       (116.207)         (95.155)         (89.256)         (93.965)
+         Adj-R2                    0.833            0.785            0.901            0.844            0.849            0.949            0.900            0.810            0.885            0.843            0.880
+         BIC                       6.167            8.542            5.305            6.561            5.825            4.472            5.184            5.422            3.481            6.545            5.940
+         Q(8)                     11.759           10.197           11.119           12.142           12.870            8.274           15.346*          14.212*         17.607**          10.115           12.876
+         Linearity Test            2.410*          2.583**          2.739**          3.072**          3.033**           2.248*          3.083**          3.067**          2.486**          2.603**          4.276***
+         EJ Test                   3.027*          3.688**           2.462*          3.176**          3.666**          3.774**          3.390**          3.738**           3.247*          3.467**          3.241**
+         Notes: The table reports median estimated coefficients and t-statistics in parenthesis from equation 8. BIC is the Schwarz information criterion. Q(8) is the Ljung-Box test for
+         serial correlation up to lag 8. Linearity Test is the F-statistic where the null hypothesis of linearity is tested against the alternative of a non              -linear model. EJ Test is the Escribano-
+         Jorda test for the appropriateness of an exponential transition function in the non-linear specification. ***, **, * denote statistical significance at the 1, 5 and 10% levels.
+
+                                                                                                               23
+
+                   Table 3. Slope and threshold by sectors and countries
+                                                                               Slope coefficient (γ)                                         Threshold coefficient (ψ)
+                                                             Mean                  Median               QCV                   Mean                  Median                QCV
+                                                                                      Panel A: Business Sectors
+                   Aggregate                                 4.794 [7]             3.910 [5]            2.871 [7]             5.413 [3]             5.550 [5]             1.157 [7]
+                   Oil & Gas                                 3.581 [10]            3.280 [8]            1.598 [10]            4.737 [1]             4.730 [1]             0.021 [1]
+                   Materials                                 3.033 [11]            2.950 [10]           1.993 [8]             5.757 [9]             5.980 [10]            1.199 [9]
+                   Industrials                               9.303 [4]             3.370 [7]            5.078 [6]             5.477 [4]             5.370 [2]             1.311 [11]
+                   Consumer Goods                            4.626 [8]             3.490 [6]            1.572 [11]            6.023 [10]            5.970 [9]             0.258 [2]
+                   Health Care                               147.7 [1]             35.78 [1]            9.382 [1]             5.644 [6]             5.670 [6]             0.469 [4]
+                   Consumer Services                         126.9 [3]             4.350 [3]            9.236 [2]             5.711 [8]             5.380 [3]             1.132 [6]
+                   Telecommunications                        5.063 [6]             3.060 [9]            6.184 [4]             5.710 [7]             5.910 [8]             1.276 [10
+                   Utilities                                 141.4 [2]             5.850 [2]            6.699 [3]             5.580 [5]             5.680 [7]             0.444 [3]
+                   Financials                                5.927 [5]             4.240 [4]            1.667 [9]             5.399 [2]             5.540 [4]             1.103 [5]
+                   Technology                                4.361 [9]             1.880 [11]           5.574 [5]             6.221 [11]            6.160 [11]            1.187 [8]
+                                                                                           Panel B: Countries
+                   Canada                                    13.73 [4]             4.080 [2]            3.402 [6]             5.446 [2]             5.370 [1]             1.252 [6]
+                   France                                    8.600 [6]             3.800 [4]            5.758 [3]             5.464 [4]             5.650 [4]             1.103 [3]
+                   Germany                                   5.644 [7]             3.490 [6]            5.077 [4]             5.666 [6]             5.680 [5]             1.300 [7]
+                   Italy                                     88.08 [2]             2.870 [7]            3.507 [5]             5.456 [3]             5.860 [6]             1.167 [4]
+                   Japan                                     30.39 [3]             3.610 [5]            3.053 [7]             6.166 [7]             6.170 [7]             0.381 [1]
+                   UK                                        132.1 [1]             3.910 [3]            6.324 [2]             5.653 [5]             5.530 [2]             1.224 [5]
+                   US                                        12.10 [5]             4.210 [1]            7.090 [1]             5.395 [1]             5.540 [3]             0.743 [2]
+                   Notes: The table reports the mean, the median and the quartile coefficient of dispersion of the slope and threshold estimates         related to equation 11, per sector
+                   and country. The number in square brackets is the relative rank ranging from 1      -11 and reflecting from the lowest to highest intensity    (slope) of transition, and
+                   from the lowest to highest timeliness (threshold) of transition. A rank of 1 (10) in the QCV measures indicate a homogenous (heterogenous) intensity and
+                   timeliness.
+
+
+
+
+
+
+
+
+                                                                                                      24
+
+ Table 4. Crisis intensity and policy response
+ Country                            Government Response Index                   Containment and health index                        Crisis intensity
+ Canada                             39.54                                       40.24                                               4.080
+ France                             50.67                                       51.22                                               3.800
+ Germany                            42.45                                       45.62                                               3.490
+ Italy                              62.92                                       70.41                                               2.870
+ Japan                              35.19                                       36.77                                               3.610
+ UK                                 40.61                                       40.15                                               3.910
+ US                                 39.13                                       42.32                                               4.210
+ ρ                                  -0.742*                                     -0.787**                                            —
+
+ Notes: The Government Response Index and the Containment and Health Index track government responses in regard to COVID                              -19 and are
+ obtained from the Oxford COVID-19 Government Response Tracker (OxCGRT) website. Crisis intensity is the median slope coefficient from th                         e
+ ST-HAR model across all business sectors in each country. ρ denotes the correlation coefficient between the each of the Government Response
+ Index and the Containment and health index to the crisis intensity respectively. ***, **, * denote statistical significance at the 1, 5 and 10% levels.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                         25
+
+ Table    5. ST-HAR with realised measures
+                                              Slope coefficient (γ)                                       Threshold coefficient (ψ)
+                   GARCH                    RV                  RKV                 GARCH              RV                   RKV
+ Canada            4.080**                  3.316**             4.746***            4.754***           4.593***             4.642***
+                   (1.833)                  (2.302)             (3.353)             (84.706)           (42.427)             (78.136)
+ France            2.129***                 2.518***            4.287***            5.932***           6.278***             4.711***
+                   (2.998)                  (3.103)             (4.013)             (66.601)           (114.599)            (80.587)
+ Germany           3.999                    2.316***            3.882***            4.739***           5.939***             4.720***
+                   (1.940)                  (4.942)             (2.946)             (117.727)          (101.668)            (52.670)
+ Italy             2.261***                 2.787***            2.176               5.977***           6.243***             5.139***
+                   (4.979)                  (6.432)             (2.128)             (103.877)          (154.393)            (46.646)
+ Japan             2.807***                 2.921***            1.922***            6.240***           6.332***             5.809***
+                   (4.842)                  (3.979)             (3.848)             (102.444)          (104.598)            (102.922)
+ UK                3.914*                   6.100*              3.967***            4.695***           4.681***             4.636***
+                   (1.510)                  (1.619)             (3.178)             (109.450)          (103.267)            (46.218)
+ US                14.374***                20.649***           7.248**             5.555***           5.321***             4.685***
+                   (3.194)                  (2.824)             (1.995)             (193.381)          (120.638)            (103.777)
+ ρ                 —                        0.979               0.845               —                  0.778                0.708
+ Notes: The table reports estimated slope (γ) and threshold (ψ) coefficients and t-statistics in parenthesis from equation 8 using realised
+ measures. ρ denotes the Spearman rank correlation coefficient between the GARCH estimated slope and threshold coefficients and
+ each of the three realised measures respectively.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                     26
+
+Highlights
+     •    Investigate the Covid-19 financial crisis on G7 countries and 10 sectors
+     •    A smooth transition HAR model estimates intensity and timeliness of the crisis
+     •    Health Care and Consumer Services were hit the hardest
+     •    Technology was the last and least adversely affected sector
+     •    Countries that engaged sooner have initially weathered the financial crisis better
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                              27

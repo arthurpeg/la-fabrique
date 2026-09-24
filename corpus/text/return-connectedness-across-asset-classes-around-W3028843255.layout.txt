@@ -1,0 +1,1068 @@
+                   Return connectedness across asset classes
+                            around the COVID-19 outbreak
+
+
+            Elie Bouri†, Oguzhan Cepni‡, David Gabauer§, and Rangan GuptaΛ
+
+            †Holy Spirit University of Kaslik (USEK), USEK Business School, Jounieh, Lebanon.
+
+                           ‡Central Bank of the Republic of Turkey, Ankara, Turkey.
+
+§Software Competence Center Hagenberg, Data Analysis Systems, Softwarepark 21, 4232 Hagenberg, Austria.
+
+              Λ Department of Economics, University of Pretoria, Pretoria, 0002, South Africa.
+
+                                            ∗Corresponding Author.
+
+
+
+
+
+                                                    Abstract
+
+        Inthispaper,weshowevidenceofadramaticchangeinthestructureandtime-varyingpatterns
+     ofreturnconnectednessacrossvariousassets(gold,crudeoil,worldequities,currencies,andbonds)
+     aroundtheCOVID-19outbreak. UsingtheTVP-VARconnectednessapproach,theresultsshow
+     thatthedynamictotalconnectednessacrosstheﬁveassetswasmoderateandquitestableuntilearly
+     2020. Afterthat,thetotalconnectednessspikesandthestructureofthenetworkofconnectedness
+     alters,whichconcurswiththeCOVID-19outbreak. TheequityandUSDindicesaretheprimary
+     transmittersofshocksbeforetheoutbreak,whereasthebondindexbecomesthemaintransmitters
+     ofshocksduringtheCOVID-19outbreak. However,theUSDindexisanetreceiverofshocksto
+     otherassetsduringtheoutbreakperiod. Furthermore,usingarecentlydevelopednewspaper-based
+     indexofuncertaintyinﬁnancialmarketsduetoinfectiousdiseasestocapturetherecentimpactof
+     Covid-19,weﬁndthatconnectednessispositivelyrelatedtothisindex,andincreasesathigherlevels
+     (conditionalquantiles)ofconnectedness. Overall,ourresultsreﬂectthespeedydisturbingeﬀectsof
+     theCOVID-19outbreak,whichmatterstotheformulationsofpoliciesseekingtoachieveﬁnancial
+     stability.Theresultsalsoindicateapossibilitytothreateninvestors’portfoliosandfadethebeneﬁts
+     ofdiversiﬁcation.
+        Keywords:COVID-19outbreak;ﬁnancialmarketscontagion;returnconnectedness;TVP-VAR;
+        JEL codes:C32;C5;F3;G15.
+1   Introduction
+
+Duringcrisisandturbulentperiods,variouseconomicagents,includinginvestorsandpolicymakers,can
+makeuseofthesizeanddirectionofthenetspilloversforenhancingportfoliodecisionsandthefor-
+mulationsofpolicytorestoreandsafeguardﬁnancialstability. Thisisespeciallyrelevantintimesof
+catastrophicevents,suchastheCOVID-19outbreak,duringwhichglobaleconomicactivitiesfreeze,un-
+employmentrateballoons,economicandﬁnancialuncertaintiesspike,andenergyandﬁnancialmarkets
+plunge,whichhasledtointernationalﬁnancialchaosthatdisturbedassetallocationsandriskman-
+agementmodelsandimportantlyﬁnancialstability. Infact,theCOVID-19hastriggeredaneconomic
+recessioncoupledwithanintensiﬁeduncertaintyaboutitsseverityandlength.Ithasadverselyaﬀected
+theglobalﬁnancialsystem,jeopardizingglobalﬁnancialstability. Accordingly,theriskfactorsofthe
+COVID-19haveinducedrenewedinterestinsystemicriskthatisoftenappliedtoshockstovariousas-
+sets,whichmakestheempiricalfocusonthestructuraldynamicsofthenetworkofreturnsofvarious
+assetsveryimportanttounderstandinghowtheﬁnancialsystemrespondstoreturnshocks,andhow
+thedynamicsofthesystemicriskmaterializes. Examiningtheseissueshaveimplicationsforawideset
+ofissuesrelatedtoriskmanagement,assetallocation,andregulatoryformulation. Forexample,dur-
+ingeconomicandﬁnancialcrisisperiods,investorsre-balancetheirportfoliosbyswitchingfromrisky
+assetstosafe-havenassetsinordertoreducetheportfolio’srisk,whichresultsintoa"ﬂight-to-quality"
+or"ﬂight-to-safety"phenomenonthattendstodecrease(increase)thepriceofrisky(safehaven)assets
+(Choudhryetal.,2015;Trosteretal.,2019).
+   Inthispaper,wecontributetotheacademicliteraturebyexaminingfortheﬁrsttimehowthenet-
+workofvariousassetreturnsreactstotheunprecedentedcatastrophicshocksoftheCOVID-19thatis,
+bycapturingitstime-varyingstructureandevolution.Morespeciﬁcally,wecapturehowtheCOVID-19
+hasmadeanassettobecomemoreorlesssystemicallyimportantthananotherinthenetworkofconnect-
+edness.Therefore,weareinterestedinansweringthefollowingquestions:WhatrolehastheCOVID-19
+playedinshapingthepatternsofreturnconnectednessacrossvariousassets? Doesthestructureofthe
+assetsreturnsexhibitanypatternsofthemainshiftovertime?
+   Toanswerthesequestions,weconsideraﬁnancialsystemtobeanetworkofﬁveinterconnected
+assetscoveringgold,crudeoil,equities,currencies,andbondsandthenapplyadynamicconnectedness
+approachbasedontime-varyingparametervectorauto-regressions(TVP-VAR)inlinewithAntonakakis
+etal.(2020).
+   Ourpaperisrelatedtotheliteratureemployingconnectednessmeasurestodescribethesizeand
+directionofthereturnspilloversamongassetsandmarketsduringcrisisperiods(e.g.,Corbetetal.,
+2020a,b;GębkaandSerwa,2006;KangandYoon,2019;Tiwarietal.,2020;Antonakakisetal.,2019).
+Notably,ourpaperevaluatestheresponseofﬁnancialsystemstothecatastrophiceventrelatedtothe
+COVID-19outbreak,whichisanunprecedentedresearchtopic. Thiswouldaddtorecentstudiesthat
+focusontheroleplayedbytheCOVID-19oneconomicandﬁnancialvariables(Bakeretal.,2020;
+
+
+
+                                                      2
+Haddadetal.,2020;Baigetal.,2020;Sharifetal.,2020). Inadditiontothisacademiccontribution,
+weoﬀerothercontributionsbyextendingpreviousstudiesthatconsiderthetransmissionacrossmarkets
+andassetsusingmethodssuchasconditionalcorrelation,Granger-causality,conditionalvalue-at-risk,
+ortheapproachofDieboldandYılmaz(2012,2014). Notably,ourrelianceontheTVP-VARapproach
+overcomesthepitfallsofthemeasuresofconnectednessbasedonvariancedecompositionfromstandard
+VARmodelssuchasoutliersensitivityinducedbytheunderlyingKalmanﬁlter,sensitivityofresultsdue
+tothearbitrarychoiceoftherollingwindowsize,andthelossofobservationsduetotherollingwindow
+analysis. Italsoallowsforcapturingthedynamicsoftheoverallconnectednessmeasureaswellasthe
+cross-assetconnectednessstructures.
+   ThecentralﬁndingofouranalysisisthattheCOVID-19hasalteredthenetworkofconnectedness
+acrosstheﬁveassetsunderstudy,bygeneratingsuddenincreasesinboththesystemoverallconnectedness
+andthecross-assetconnectednessofvariouscases. Theseﬁndingsareintuitiveandsuggestthatthe
+networkoftheglobalﬁnancialsystemisunstableandexperiencesanabruptspikeinitsriskbuild-updue
+totheCOVID-19outbreak,whichissomewhatdiﬀerentfromthelonger-lastingbuild-upoftheglobal
+systematicriskinthewakeoftheglobalﬁnancialcrisisof2008(BarrellandDavis,2008).
+   Theremainderofthispaperisorganisedasfollows. InSection2wepresenttherelevantliterature
+reviewandhypothesesthatemerge.InSection3,wedescribethedataandsetouttheempiricalmethods
+employedinthestudy. InSection4,weillustratetheﬁndingsofthestudyanddiscusstherelevant
+arguments.Finally,Section5summarisesthekeyelements,providesaframeworkforpolicyimplications,
+andconcludesthestudy.
+
+2   Literature Review
+
+Theconsecutiveﬁnancialandeconomiccrisesoverthelastthreedecadesprovidedasuitablelaboratory
+tocaptureandunderstandthechangesinmarketinterdependenciesandreturnsspilloversduringstress
+periods(Mensietal.,2016). AlargestrandofacademicliteratureexaminestheeﬀectoftheGlobal
+FinancialCrisis(hereafterGFC)of2008ontherelationshipacrossvariousassetclasses(Choudhryetal.,
+2015;Mensietal.,2016;ZhangandBroadstock,2018;KangandYoon,2019,e.g.,),showinghowthe
+GFChasintensiﬁedmarketlinkagesandaﬀectedassetallocationandhedgingstrategies.Infact,changes
+intheinterdependenceacrossﬁnancialmarketsisamajorconcernforinvestorsseekingthebeneﬁtsof
+diversiﬁcation(Brièreetal.,2012).
+   Somestudiesconsiderthetransmissionacrossassetsusingvariousmethodssuchasconditionalcorre-
+lation(DuaandTuteja,2016;ÖztekandÖcal,2017),Granger-causality(e.g.,Billioetal.,2012;Zhang
+andBroadstock,2018),copulas(PhilippasandSiriopoulos,2013;Jietal.,2018),orconditionalvalue-at-
+risk(Jietal.,2018).However,followingtheinﬂuentialstudiesofDieboldandYılmaz(2009,2012,2014),
+agrowingliteraturehighlightstheimportanceofuncoveringspilloversofshocksinapredeterminednet-
+workviatheconnectednessapproach(e.g.,Zhang,2017;HussainShahzadetal.,2019).Notably,higher
+
+
+                                                         3
+inter-connectednessofthenetwork,whichisanindicationofhighermarketrisk,conveysbothbeneﬁts
+andrisks.First,itcanimproverisk-sharingwithinthenetworkthroughthevariousdegreeofabsorption
+ofindividualassetshocksthatcanbeasset-speciﬁc,whichbeneﬁtsriskdiversiﬁcationinaportfolioof
+weaklyconnectedassets. Secondly,itcanleadtoﬁnancialcontagiongiventhatshockscanpropagate
+throughthenetwork,whichisanindicationofinstabilityintheﬁnancialsystem.
+   However,theexistingliteratureonthereturnspilloversamongalargesetofassetclassessuchas
+commodities,equities,currencies,andbondsisrare.Forexample,WangandChueh(2013)focusonthe
+linkagesbetweenoilprices,goldprices,interestrates,andcurrencymarket.Theyreportevidenceofprice
+transmissionrelationshipbetweenmostofthepairsofmarketunderstudyandafeedbackeﬀectsinthe
+relationshipbetweenstrategiccommodities(goldandcrudeoil)andinterestrates.Kangetal.(2017)
+alsofocusonthepricetransmissionbutconsiderpreciousmetals,crudeoilandagriculturalcommodities.
+TheyshowevidenceofstrongerreturnsspilloversduringtheGFC,whichcanhaveportfolioandhedging
+implications.
+   Notably,theextendedversionoftheDieboldandYılmaz(2014)’smeasuresofconnectednesshas
+beenusedbyGabauerandGupta(2018)andAntonakakisetal.(2018),whichallowsforreﬁningthe
+measurementofglobaluncertaintyindicesinagenuinetime-varyingsetting.Thisisimportantasmarket
+networkscanrevealalotaboutmodelsofpanicduringstresscrisesandthefactorsaﬀectingmarket
+freezesandthestructureoftheﬁnancialenvironmentandthelevelofsystemicrisk. Athighlevelsof
+connectedness,theinformationgatheringprocessbecomescostlyandlesseﬃcient.Furthermore,investors
+moveawayfromriskyassetslikeequities,towardsgoldandBondmarkets(Choudhryetal.,2015;Brocato
+andSmith,2012).
+   Ouranalysisextendstheabovelinesofresearchbyprovidingﬁrstempiricalevidenceonhowthe
+COVID-19outbreak,anunprecedentedandsuddenglobalpublichealthemergency,shapedthedynamics
+ofreturnspilloversacrossvariousassets.Assuch,weanalyzethenetshockstransmitterorreceiverwithin
+thesystemoftheﬁvevariousassetsandextendourlimitedunderstandingofthenatureandextentof
+thetransmissionofreturnshocksinlightofthecatastrophiceventoftheCOVID-19outbreak.
+
+3   Data & Methodology
+
+3.1   Summary Statistics
+
+Weemploydailydatacoveringvariousassetslikegold,crudeoil,equities,currencies,andbonds. We
+considerthespotpriceindexofS&PGSCIgold,S&PGSCIcrudeoil,MSCIWorld,USDindex,and
+PIMCOInvestmentGradeCorporatebondindexExchange-TradedFund,extractedfromDatastream.
+ThesampleperiodisMay12,2011-May12,2020,yielding2349dailyobservationsasdictatedbydata
+availability,andnotablyincludestheCOVID-19outbreakperiodfromearly2020tilltheendofthe
+sampleperiod.TherawseriesarepresentedinFigure1.
+
+
+
+                                                      4
+                                         [InsertFigure1aroundhere]
+
+   Astherawseriesarenon-stationaryaccordingtotheERS(Elliottetal.,1996)unit-roottest,we
+decidetotaketheﬁrstlog-diﬀerencesthatcanbeinterpretedasthedailypercentagechanges. The
+resultingseriesareillustratedinFigure2.Thesummarystatisticsofthereturnseries(Table1)indicate
+thatcrudeoilhasthehigheststandarddeviation,whichisnotsurprisinggiventhesevereadverseimpact
+oftheCOVID-19onenergyprices(Duttaetal.,2020).
+
+                                         [InsertFigure2aroundhere]
+
+   Theﬁndingsindicatethattheseriesaresigniﬁcantlynon-normallydistributed(D’Agostino,1970;
+AnscombeandGlynn,1983;JarqueandBera,1980)andstationaryat1%signiﬁcancelevel. Notably,
+weﬁndpronouncedautocorrelationinboth,theseriesandthesquaredseries(FisherandGallagher,
+2012)implyingthatthemeanandthevarianceofeachseriesvaryovertime. Thus,employingaTVP-
+VARmodelwithatime-varyingvariance-covariancestructureseemstobeanappropriateeconometric
+frameworkcapturingallthosefactors.
+   FurtherresultsfromTable1showtheunconditionalcorrelationmatrixacrossthereturnseriesover
+thefullsampleperiod.TheUSDindexisnegativelycorrelatedwithallotherassetsunderstudy,whereas
+thestrongestpositivecorrelationisbetweencrudeoilandequities.
+
+                                         [InsertTable1aroundhere]
+
+3.2   TVP-VAR-Based Dynamic Connectedness Approach
+
+Awidelyusedframeworktotraceandevaluatespilloversinapredeterminednetworkistheconnectedness
+approachproposedbyDieboldandYılmaz(2009,2012,2014). Theconstantlyincreasingattentionof
+theframeworkismainlycausedbythefactthatitprovidesresearchersandpractitionersbothwitha
+staticandadynamicmethodoftimeseriesnetworkanalysis.Thestaticapproachisemployingavector
+autoregressivemodel(VAR,seeSims,1980)onthefulldatasetwhereasthedynamicsareestimated
+viaarolling-windowVARapproach. ThesettingofthisframeworkisdiscussedintensivelyinAnton-
+akakisetal.(2020)whoproposeadynamicconnectednessapproachbasedontime-varyingparameter
+vectorautoregressions(TVP-VAR)withtheresultthatdynamicsarenotinﬂuencedbythesizeofthe
+rollingwindow. AdditionaladvantagesoftheTVP-VARbasedconnectednessapproachare(i)theout-
+lierinsensitivitycausedbytheunderlyingKalmanﬁlter,(ii)thatthereisnoneedtoarbitrarilychoose
+therolling-windowsize,(iii)thatthereisnolossofobservationsand(iv)thatitcanbeemployedalso
+forlowfrequencydatasets. ThisstudyappliesthesamemethodologyasinAntonakakisetal.(2018)
+andGabauerandGupta(2018)                 1. Inparticular,weareestimatingaTVP-VAR(1)assuggestedbythe
+
+  1SincethedetailedalgorithmoftheTVP-VARmodelwithheteroscedasticvariance-covariancesisbeyondthescopeof
+thisstudyinterestedreadersarereferredtoKoopandKorobilis(2013)andKoopandKorobilis(2014).
+
+
+
+
+                                                        5
+Bayesianinformationcriterion(BIC)whichcanbeoutlinedas:
+
+
+                            zt =Btzt−1+ut               ut∼N(0,St)               (1)
+
+                      vec(Bt) =vec(Bt−1)+vt             vt∼N(0,Rt)               (2)
+
+
+wherezt,zt−1andutarek×1dimensionalvectorandBtandStarek×kdimensionalmatrices.vec(Bt)
+andvtarek2×1dimensionalvectorswhereasRtisak2×k2dimensionalmatrix.
+   Subsequently,wearecalculatingtheH-stepahead(scaled)generalizedforecasterrorvariancedecom-
+position(GFEVD)introducedbyKoopetal.(1996)andPesaranandShin(1998).
+   Notably,theGFEVDiscompletelyinvariantofthevariableorderingopposedtotheorthorgonalized
+forecasterrorvariancedecomposition(see,DieboldandYılmaz,2009). Pleasekeepinmindthatthe
+structuralrepresentationsofshocks-asitisoftenusedinappliedmacroeconomics-shouldonlybeused
+ifitunderliesaneconomictheorywhichis-tothebestofourknowledge-notavailablewhenitcomesto
+theseriesunderconsideration2.Forthisreason,westicktotheGFEVDspilloverframework.Sincethis
+conceptisbuiltupontheWoldrepresentationtheoremwetransformtheestimatedTVP-VARmodelinto
+aTVP-VMAprocessbymakinguseofthefollowingequality:zt =∑pi=1Bitzt−i+ut =∑∞j=0Ajtut−j.
+   The(scaled)GFEVDnormalizesthe(unscaled)GFEVD,φgij,t(H),inorderthateachrowsumsupto
+unity. Hence, ˜φgij,t(H)representstheinﬂuencevariablejhasonvariableiintermsofitsforecasterror
+variancesharewhichisdeﬁnedasthepairwisedirectionalconnectednessfromjtoi. Thisindicatoris
+computedby,
+
+                                      ∑H−1
+                   φg           ∑kii,t∑H−1t=1  (ι′iAtStιj)2       ˜φg         ∑k  ij,t(H)
+                     ij,t(H) = S−1                                 ij,t(H) =  φg
+                                  j=1    t=1  (ιiAtStA′tιi)                     j=1φgij,t(H)
+
+with∑kj=1 ˜φgij,t(H) = 1,∑ki,j=1 ˜φgij,t(H) =k,andιicorrespondstoaselectionvectorwithunityonthe
+ithpositionandzerootherwise.
+   BasedupontheGFEVD,DieboldandYılmaz(2012,2014)derivedtheirconnectednessmeasuresas
+
+  2Furthermore,wewanttostressoutthateventhoughwearetalkingaboutthespilloversofshockswearewellaware
+thatthoseinterpretationdiﬀersfromthemacroeconomicliterature,however,withthisinterpretationwearejustfollowing
+theinterpretationsDieboldandYılmaz(2009,2012,2014)tobein-linewiththeconnectednessliterature.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        6
+follows:
+
+
+                                               k∑
+                                   TOjt =          ˜φgij,t(H)                                      (3)
+
+                                            i=1,i̸=j
+                                               k∑
+                               FROMjt =            ˜φgji,t(H)                                      (4)
+
+                                            i=1,i̸=j
+                                 NETjt =TOjt−FROMjt                                     (5)
+
+                                                 k∑               k∑
+                                   TCIt =k−1       TOjt≡k−1         FROMjt.                      (6)
+                                                j=1             j=1
+                              NPDCij,t =˜φij,t(H)− ˜φji,t(H)                                   (7)
+
+
+   Asmentionedpreviously ˜φgij,t(H)illustratestheimpactashockinvariablejhasonvariablei.Hence,
+Equation(3)representstheaggregatedimpactashockinvariable jhasonallothervariableswhichis
+deﬁnedasthetotaldirectionalconnectednesstootherswhereasEquation(4)illustratestheaggregated
+inﬂuenceallothervariableshaveonvariablejthatisdeﬁnedasthetotaldirectionalconnectednessfrom
+others.
+   Equation(5):Subtractingtheimpactvariable jhasonothersbytheinﬂuenceothershaveonvariable
+jresultsinthenettotaldirectionalconnectednesswhichprovidesuswithinformationwhetheravariable
+isanettransmitteroranetreceiverofshocks.Variablejisanettransmitter(receiver)ofshocks-and
+hencedriving(drivenby)thenetwork-whentheimpactvariablejhasonothersislarger(smaller)than
+theinﬂuenceallothershaveonvariablej,NETjt> 0(NETjt< 0).Anotheressentialmeasureisgiven
+byEquation(6)the  totalconnectednessindex(TCIt)whichrepresentstheaverageimpactonevariable
+hasonallothers.Ifthismeasureisrelativelyhighitimpliesthattheinterconnectednessofthenetwork
+andhencethemarketriskishighsinceashockinonevariablewillinﬂuenceotherswhereasalowvalue
+showsthatmostvariablesareratherindependentfromeachotherwhichinturnmeansthatashockin
+onevariablewillnotcauseothervariablestoadjustresultinginlowmarketrisk.
+   Sinceallaforementionedmeasuresoﬀerinformationonanaggregatedbasis,Equation(7)tellsus
+moreaboutthebilateralrelationshipbetweenvariablejandi. Theso-callednetpairwisedirectional
+connectedness(NPDCij,t)exhibitswhethervariablej isdrivingvariableiorviceversa. Therefore,
+wesubtracttheimpactvariablej hasonvariableibytheinﬂuencevariableihasonvariablej. If
+NPDCij,t> 0(NPDCij,t< 0),itmeansthatvariablejisdominating(dominatedby)variablei.
+
+4   Empirical Results and Discussion
+
+4.1   Average and Dynamic Total Connectedness Measures
+
+Table2presentstheaveragedconnectednessmeasures.WhilethemaindiagonalofTable2showsown-
+variancesharesofshocks,oﬀ-diagonalelementsreﬂecttheinteractionacrossﬁnancialassets. Inorder
+
+
+                                                      7
+toexaminehowtheaverageconnectednessofﬁnancialmarketschangeaftertheonsetoftheCOVID-19
+pandemic,wedivideoursampleintotwoparts.3AscanbeseeninTable2,severalinterestingobservations
+arisewhenconsideringtheperiodsbothbeforeandafterthestartoftheCOVID-19pandemic. Firstly,
+thereisevidenceofincreasedconnectednessbetweenﬁnancialassets. TheTCIvaluethatisincluded
+inTable2indicatesthatco-movementsoftheﬁnancialassetarerathermoderateinthepost-Corona
+period,astheyconstitute27.2%ofthetotalforecasterrorvarianceofthenetwork. Putdiﬀerently,on
+average,27.2%oftheforecasterrorvarianceinoneﬁnancialassetcanbeattributedtotheinnovations
+inallothers.
+   Inparticular,MSCIWorldandUSDindexappeartobetheprimarytransmittersofshocksbeforethe
+outbreak;whereasbondindex,MSCIWorld(withanincreaseinmagnitude),andcrudeoilbecomethe
+maintransmittersofshockswithinthenetworkafterthebeginningoftheglobalCOVID-19pandemic.
+Thisevidenceimpliesthattheelevatedspillovereﬀectsfrombondmarketstoothermarketsmayresultin
+recentexpansionarymonetarypolicymeasuresandCentralBank’sliquidityinjectionsthroughmassive
+bondpurchases. Ontheotherhand,sincethecrudeoilmarkethasbeenhitbythetwinshockofthe
+COVID-19pandemicandtheunravelingoftheOPEC+productionagreement,weobservethatcrudeoil
+hasturnedanettransmitterofshocksduringtheCorona-outbreakperiods.
+
+                                        [InsertTable2aroundhere]
+
+   However,resultspresentedinTable2areaggregateresultsthatconsidertheperiodofstudyinits
+entirety;thatis,withoutfocusingtheperiodsthatmayhaveleadtoconsiderabledeviationsfromthe
+averageTCIvaluewhichisreportedabove. Inthisregard,toidentifyspeciﬁcepisodesthataﬀected
+connectednessacrossﬁnancialvariablesovertime, wecontinuewiththedynamicapproach. Ascan
+beseenfromFigure3,thedynamicconnectednessofournetworkﬂuctuatesconsiderablyovertime,
+especiallyaftertheoutbreak,whichissuggestiveofthefactthatconnectednessacrossﬁnancialmarkets
+istime-dependent.AcloserlookatFigure3revealsthatpronouncedconnectednessisevidentaroundthe
+mid-March,matchingwiththeonsetofthenewinfectiousdiseaseallovertheglobeandsparkingfears
+ofthepossiblesecondwaveofinfections.Inparticular,aftertheonsetoftheoutbreak,ﬁnancialmarkets
+spilloversreachedahigherpointthantheunprecedentedheightsduringmid-2013,aperiodcharacterized
+by’FEDTapering’.
+
+                                       [InsertFigure3aroundhere]
+
+4.2   Net Total Connectedness
+
+Inturn,wefocusonthenettotalconnectednessofthesystemwhichispresentedinFigure4. Net
+totalconnectednesspracticallyindicatesthediﬀerencebetweenthetransmittingandthereceivingshocks
+ofeachﬁnancialassetconsideringtheentirenetwork. Notethatpositivevaluesoftheshadedarea
+
+  3WechooseJanuary13,2020,asoutbreakdateofthecoronavirussincetheﬁrstcross-bordertransmissionofinfection
+wasreportedbyThaiauthoritiesonthatdate.
+
+
+                                                      8
+correspondtoperiodswhenaparticularﬁnancialassetassumesanet-transmittingrole,whilenegative
+valuesshowtheperiodswhentheﬁnancialassetsreceive,onnetterms,fromothers.
+   AninspectionofFigure4leadstoanumberofclear-cutconclusions. Firstly,whilethebondindex
+ispersistentlyreceivingshocksfromotherswithperhapsoneortwoshort-livedexceptions,itseemsto
+assumeapersistentnet-receivingrolemainlyaftertheglobalpandemic. Thereasonisthatspreadof
+U.S.investment-gradebondshaswidenedsharplysincetheonsetofthecoronavirusoutbreakindicating
+thethreatposedtocompanies’balancesheetsbythecoronaviruscrisis.Secondly,thegoldmarketshows
+asigniﬁcanttime-varyingtransmissionpattern. Inparticular,weseethatthetransmissionofspillovers
+fromotherstothegoldmarketincreasedduringtheglobalpandemic.AssuggestedbyBaurandLucey
+(2010),Bredinetal.(2015),andBourietal.(2020)goldcanbeusedasbothahedgeandsafeheaven
+byglobalinvestorsduringtheuncertaintimes.
+   Similarly,weobservethattheUSDindexhasbeenanetreceiverthroughoutthecoronavirusoutbreak
+period.Thereasonisthatthemeltdowninglobalmarketsduetothefearsoftheglobalrecessionhasled
+toinvestorsliquidatetheirpositionsresultinginhugedemandforcash. Moreover,ﬁrmswithoutample
+cashathandhavetriedtoﬁndcashtocontinuetheiroperationsduringtheglobalpandemic(Didieretal.,
+2020). Finally,Figure4alsoindicatesthattheMSCIWorldindexisanettransmitterofshocksand
+hencedrivingthenetworkaftertheonsetofthecoronavirus.ThisresultinlinewiththeﬁndingsofBaig
+etal.(2020)whosuggestthatreportednumberofconﬁrmedcoronaviruscases,generalnegativesentiment
+reportedbymedia,reducedmobility,andgovernmentmeasurestorestrictmovementandbusinesshave
+astrongassociationwithvolatilityinthestockmarketreturns.
+
+                                        [InsertFigure4aroundhere]
+
+4.3   Net Pairwise Connectedness
+
+Whilethenettotalapproachcanbeinformative,italsohasitschallenges,providedthattotalnumbers
+invariablyconcealinterestingstoriesbetweenspeciﬁcvariablesofthesystem.Whereasnettotalﬁgures
+explicitlydisplaytheclearpictureofthenetworkvariablesovertime,theydonotconcentrateonpairsof
+variablestodescribetheassociateddynamics.Inthisregard,inthissection,wepresentbilateralresults
+andinvestigatethespeciﬁclinksbetweentheﬁnancialassetclassofinterest.
+   In Figure5, we focus on the net pairwise directional connectedness measures of spillovers - i.e.
+spilloversacrosspairsofﬁnancialvariables. Weobservethefollowingempiricalregularities. First,
+spilloversareofgreatermagnitudeaftertheonsetoftheglobalpandemic. Forinstance,netspillovers
+fromthebondindextogoldandUSDindexareparticularlyhighduringtheoutbreakperiodsandreach
+upto15%.Thisﬁndingreﬂectsthatthebondmarketbecameasenderofstressduringthepost-corona
+periods.Thereasonisthatasuddendropintheliquidityofthebondmarketpointedouttouncertainty
+increditworthiness-particularlyintheinvestment-grademarketwhichinturnleadstoanexacer-
+
+
+
+
+                                                       9
+bationindemandforliquidity.4 Hence,itseemsthatthedemandforcashbalancesandsafeheaven
+assetsissparked. ThereasonmaybethattheCOVID-19forcedshutdownswouldhurtrevenueﬂows
+ofthecorporateﬁrmswhichleadstoasharpincreaseintheaverageimplieddefaultprobabilitiesofthe
+investment-gradebondbasket(DeVitoandGómez,2020).
+   Second,whilethespilloverfromtheMSCIWordindextobondindexswitchitsbehaviourbetween
+beinganettransmitterornetreceivermultipletimesbeforetheoutbreak,theMSCIWorldindexis
+drivenbythebondindexaftertheonsetofthepandemic.Althoughbondsaregenerallyconsideredsafer
+thanstocks,theunexpectedmovementofbondmarketsmighttriggerthestockssell-oﬀfurther(Haddad
+etal.,2020).
+   Anotherinterestingelementinouranalysisthatdeservesfurtherattentionrelatestorecentperiods
+wherethespilloverfromMSCIWorldtoUSDindexrisessharply.Thisevidenceshowsthatinvestorstried
+tosellmoreliquidsecuritieslikestockindicestoraisecashsinceotherﬁnancialassetssuchasinvestment-
+gradecorporateandmunicipalbondETFsaretradedalargediscounttotheirnetassetvaluesduring
+thecrisisperiods.
+   Finally,thespilloversfromcrudeoiltoUSDandBondindicesseemtobelowmostofthesample
+period.CloselyobservingthepairwisespilloversletusrealizethattheoilmarketdominatestheUSDand
+Bondindicesaftertheoilfuturesplungetonegativeterritoryfeedingthemarketpanic. Furthermore,
+thereductioninmobilityandthelackofindustrialactivityduetotheoutbreaksigniﬁcantlydecreased
+thedemandforoil,causingitspricetofallwithafearofglobalrecession.
+
+                                       [InsertFigure5aroundhere]
+
+4.4   Cointegration and quantile regressions between TCI and EVM
+
+ToanalyzetheeﬀectoftheoutbreakoftheCOVID-19virusontheconnectednessoftheassetclass,weuse
+therecentlydevelopednewspaper-basedindexofBakeretal.(2020),whichtracksequitymarketvolatility
+(EMV),inparticularthemovementsintheChicagoBoardOptionsExchange(CBOE)’sVolatilityIndex
+(VIX),duetoinfectiousdiseases. ThisindexisdevelopedbyBakeretal.(2020),withindexbeing
+newspaper-basedinfectiousdiseaseEMVtracker,availableatthedailyfrequencyfromJanuary,1985
+tillrecentdays.5 ToconstructtheEMV-ID,Bakeretal.(2020)speciﬁesfoursetsoftermsnamely,E:
+economic,economy,ﬁnancial;M:"stockmarket",equity,equities,"StandardandPoors";V:volatility,
+volatile,uncertain,uncertainty,risk,risky;ID:epidemic,pandemic,virus,ﬂu,disease,coronavirus,mers,
+sars,ebola,H5N1,H1N1,andthenobtaindailycountsofnewspaperarticlesthatcontainatleastone
+termineachofE,M,V,andIDacrossapproximately3,000USnewspapers.Afterthis,therawEMV-ID
+countsisscaledbythecountofallarticlesinthesameday,andﬁnally,theauthorsmultiplicatively
+rescaletheresultingseriestomatchtheleveloftheVIX,byusingtheoverallEMVindex,andthen
+scalingtheEMV-IDindextoreﬂecttheratiooftheEMV-IDarticlestototalEMVarticles.
+
+  4See,forexample,https://www.msci.com/www/blog-posts/credit-in-the-COVID-crisis/01795274729
+  5Dataisavailablefrom: http ://policyuncertainty.com/infectiousEMV.html.
+
+
+                                                      10
+   Figure6showstheeﬀecttheEVMhasonTCIoverdiﬀerentquantiles(KoenkerandBassettJr,
+1978). DatahasbeentakenaftertheﬁrstCOVID-19infectedhasappearedonthescreenoftheUSon
+theJanuary13,2020asallEVMdatapriortothispointisonlycoveringtheeconomicpolicyuncertainty
+withoutCOVID-19aﬀectingit. Notably,allslopecoeﬃcientestimationresultsarepositiveindicating
+thatthehigherEVMisthehigherisTCIespeciallyontheupperend. Indetail,thismeansthatthe
+increasedCOVID-19economicpolicyuncertaintyintheUShasincreasedthemarketriskacrossgold,
+crudeoil,MSCIWorld,USDindexandbondindex.
+
+                                       [InsertFigure6aroundhere]
+
+5   Concluding Remarks
+
+Thecoronavirusshockhasledtolargedisruptionstotheglobalﬁnancialmarkets. Theverysigniﬁcant
+deteriorationoftheglobalgrowthbackdropandthesharpreductioninglobalriskappetitehaveledto
+growingcontagioninﬁnancialmarkets,promptingmajorcentralbanksandgovernmentstodeployawide
+rangeofmonetaryandﬁnancialeasingmeasures.
+   Inthisstudy,wefocusondiﬀerentﬁnancialmarketstohighlighttheeﬀectoftheglobalpandemic
+ontheincreasedlevelsofstressininternationalﬁnancialmarkets. Toaccomplishtheobjectivesofour
+study,weconsiderdiﬀerentassetclasses,whichincludegold,crudeoil,USDindex,bondindex,andMSCI
+Worldindexcoveringtheperiodsbeforeandafterthecorona-outbreak.Inthisregard,wefurtheremploy
+aTVP-VARempiricalapproachtomeasureconnectednessacrossthediﬀerentassetclassesincludedin
+ourstudy. ThekeyadvantageoftheTVP-VARmodelisthatitpracticallyconstitutesanextensionof
+thestandardDieboldandYılmaz(2009,2012)approachasitdoesnotsuﬀerfromthedeﬁcienciesof
+thetypicalrolling-windowsmethodandthusprovidesreﬁnedmeasurementsofconnectedness.Moreover,
+usingarecentlydevelopednewspaper-basedindexofuncertaintyinﬁnancialmarketsduetoinfectious
+diseasestocapturetherecentimpactofCovid-19,weﬁndthatconnectednessispositivelyrelatedtothis
+index,andincreasesathigherlevels(conditionalquantiles)ofconnectedness.
+   Ourﬁndingsprovideclearevidenceforstrongspillovereﬀectsinﬁnancialmarkets. Financialcon-
+nectednessisparticularlyhighduringelevatedstressepisodesaftertheonsetoftheglobalpandemic.In
+particular,weshowthatMSCIWorldandUSDindexappeartobetheprimarytransmittersofshocks
+beforetheoutbreak;whereasbondindexbecomesthemaintransmittersofshockswithinthenetwork
+afterthebeginningoftheglobalCOVID-19pandemic. Hence,policymakershaveannouncedavastar-
+rayofstimulusmeasures,includinglargeﬁscalpackages,adjustmentstolaborlaws,andpublicsector
+backstopstoprivatebusinessesinordertomitigatethecontagioneﬀectsofthebondmarkettoother
+ﬁnancialvariables.
+   However,weobservethattheUSDindexhasbeenanetreceiverofshocksthroughoutthecoronavirus
+outbreakperiod.ThisresultvalidatestherecentCentralBanks’actionstoensurethatthereisadequate
+
+
+
+                                                    11
+liquiditytoavoidﬁnancialstressortheinterruptionoftheﬂowofcapitalincludingthemassiveratecuts
+andbroadre-launchofquantitativeeasingprograms.
+   Furthermore, ourﬁndingscanalsobereadfromapolicy-makingperspective. Empiricalresults
+indicatethatpolicymakersshouldpayattentiontooverallﬁnancialconnectednessbyanalyzingthenet
+shockstransmitterorreceivernatureofthediﬀerentassetclasses. Themainreasonforthisisthat
+systemicﬁnancialcontagioncanincreaseswiftlytoseriouslevelsduetohighspillovereﬀectsbetween
+ﬁnancialassetclasses.Thus,policy-makinginthesenseofnotonlymonitoringtotalconnectednessbut
+alsoevaluatingnetdirectionalspilloversbetweenﬁnancialvariableswithasystemicperspectiveisvital.
+Therefore,ifaneﬃcientcoordinationmechanismisinplaceandspilloverinformationacrossﬁnancial
+variablesiscontinuouslymonitored,thenpolicy-makerscandesigntimelypolicyinterventionstoalleviate
+thecontagionriskfrominter-connectednessandﬁnancialnetworks.
+   Aspartoffutureresearch,itwouldbeinterestingtoextendouranalysisintostock,bond,andforeign
+currencymarketsofdiﬀerentcountries.Thiswillensureuswiththeunderstandingofwhetherourresults
+carryovertocross-countryﬁnancialmarketsaswell,whichmightprovideinsightsforglobalinvestorsto
+developbetterportfoliodiversiﬁcationbeneﬁts.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                      12
+References
+
+Anscombe,F.J.andGlynn,W.J.(1983).Distributionofthekurtosisstatisticb2fornormalsamples.
+  Biometrika,70(1):227–234.
+Antonakakis,N.,Chatziantoniou,I.,andGabauer,D.(2019).Cryptocurrencymarketcontagion:Market
+  uncertainty,marketcomplexity,anddynamicportfolios. JournalofInternationalFinancialMarkets,
+  InstitutionsandMoney,61:37–51.
+Antonakakis,N.,Chatziantoniou,I.,andGabauer,D.(2020).Reﬁnedmeasuresofdynamicconnectedness
+  basedontvp-var.Technicalreport.
+Antonakakis,N.,Gabauer,D.,Gupta, R.,andPlakandaras,V.(2018). DynamicConnectednessOf
+  UncertaintyAcrossDevelopedEconomies:ATime-VaryingApproach.EconomicsLetters,166:63–75.
+Baig,A.,Butt,H.A.,Haroon,O.,andRizvi,S.A.R.(2020). Deaths,panic,lockdownsandusequity
+  markets:Thecaseofcovid-19pandemic.AvailableatSSRN3584947.
+Baker,S.R.,Bloom,N.,Davis,S.J.,Kost,K.J.,Sammon,M.C.,andViratyosin,T.(2020). The
+  unprecedentedstockmarketimpactofcovid-19. Technicalreport,NationalBureauofEconomicRe-
+  search.
+Barrell,R.andDavis,E.P.(2008). Theevolutionoftheﬁnancialcrisisof2007—8.NationalInstitute
+  EconomicReview,206(1):5–14.
+Baur,D.G.andLucey,B.M.(2010).Isgoldahedgeorasafehaven?ananalysisofstocks,bondsand
+  gold.FinancialReview,45(2):217–229.
+Billio,M.,Getmansky,M.,Lo,A.W.,andPelizzon,L.(2012).Econometricmeasuresofconnectedness
+  andsystemicriskintheﬁnanceandinsurancesectors.Journalofﬁnancialeconomics,104(3):535–559.
+Bouri,E.,Shahzad,S.J.H.,Roubaud,D.,Kristoufek,L.,andLucey,B.(2020). Bitcoin,gold,and
+  commoditiesassafehavensforstocks:Newinsightthroughwaveletanalysis.TheQuarterlyReviewof
+  EconomicsandFinance.
+Bredin,D.,Conlon,T.,andPotì,V.(2015).Doesgoldglitterinthelong-run?goldasahedgeandsafe
+  havenacrosstimeandinvestmenthorizon.InternationalReviewofFinancialAnalysis,41:320–328.
+Brière,M.,Chapelle,A.,andSzafarz,A.(2012). Nocontagion,onlyglobalizationandﬂighttoquality.
+  JournalofinternationalMoneyandFinance,31(6):1729–1744.
+Brocato,J.andSmith,K.L.(2012).Suddenequitypricedeclinesandtheﬂight-to-safetyphenomenon:
+  additionalevidenceusingdailydata.JournalofEconomicsandFinance,36(3):712–727.
+Choudhry,T.,Hassan,S.S.,andShabi,S.(2015).Relationshipbetweengoldandstockmarketsduring
+  theglobalﬁnancialcrisis:Evidencefromnonlinearcausalitytests.InternationalReviewofFinancial
+  Analysis,41:247–256.
+Corbet,S.,Hu,Y.,Lucey,B.M.,andOxley,L.(2020a). Ayecorona! thecontagioneﬀectsofbeing
+  namedcoronaduringthecovid-19pandemic. TheContagionEﬀectsofBeingNamedCoronaduring
+  theCOVID-19Pandemic(March26,2020).
+Corbet,S.,Larkin,C.,andLucey,B.(2020b).Thecontagioneﬀectsofthecovid-19pandemic:Evidence
+  fromgoldandcryptocurrencies.FinanceResearchLetters,page101554.
+D’Agostino,R.B.(1970).Transformationtonormalityofthenulldistributionofg1.Biometrika,pages
+  679–681.
+DeVito,A.andGómez,J.-P.(2020).Estimatingthecovid-19cashcrunch:Globalevidenceandpolicy.
+  JournalofAccountingandPublicPolicy,page106741.
+Didier,T.,Huneeus,F.,Larrain,M.,andSchmukler,S.L.(2020).Financingﬁrmsinhibernationduring
+  thecovid-19pandemic.
+Diebold,F.X.andYılmaz,K.(2009).MeasuringFinancialAssetReturnAndVolatilitySpillovers,With
+  ApplicationToGlobalEquityMarkets.EconomicJournal,119(534):158–171.
+Diebold,F.X.andYılmaz,K.(2012).BetterToGiveThanToReceive:PredictiveDirectionalMeasure-
+  mentOfVolatilitySpillovers.InternationalJournalofForecasting,28(1):57–66.
+Diebold,F.X.andYılmaz,K.(2014).OnTheNetworkTopologyOfVarianceDecompositions:Measuring
+  TheConnectednessOfFinancialFirms.JournalofEconometrics,182(1):119–134.
+Dua,P.andTuteja,D.(2016). Financialcrisesanddynamiclinkagesacrossinternationalstockand
+  currencymarkets.EconomicModelling,59:249–261.
+Dutta,A.,Bouri,E.,Uddin,G.S.,andYahya,M.(2020).Impactofcovid-19onglobalenergymarkets.
+
+
+                                                    13
+Elliott,G.,Rothenberg,T.J.,andStock,J.H.(1996).EﬃcientTestsForAnAutoregressiveUnitRoot.
+  Econometrica,64(4):813–836.
+Fisher, T.J.andGallagher, C.M.(2012). NewWeightedPortmanteauStatisticsForTimeSeries
+  GoodnessOfFitTesting.JournaloftheAmericanStatisticalAssociation,107(498):777–787.
+Gabauer,D.andGupta,R.(2018).OnTheTransmissionMechanismOfCountry-SpeciﬁcAndInterna-
+  tionalEconomicUncertaintySpillovers: EvidenceFromATVP-VARConnectednessDecomposition
+  Approach.EconomicsLetters,171:63–71.
+Gębka,B.andSerwa,D.(2006).Areﬁnancialspilloversstableacrossregimes?:Evidencefromthe1997
+  asiancrisis.JournalofInternationalFinancialMarkets,InstitutionsandMoney,16(4):301–317.
+Haddad,V.,Moreira,A.,andMuir,T.(2020).Whensellingbecomesviral:Disruptionsindebtmarkets
+  inthecovid-19crisisandthefed’sresponse.AvailableatSSRN3590819.
+HussainShahzad,S.J.,Bouri,E.,Arreola-Hernandez,J.,Roubaud,D.,andBekiros,S.(2019).Spillover
+  acrosseurozonecreditmarketsectorsanddeterminants.AppliedEconomics,51(59):6333–6349.
+Jarque, C.M.andBera, A.K.(1980). EﬃcientTestsForNormality, HomoscedasticityAndSerial
+  IndependenceOfRegressionResiduals.EconomicsLetters,6(3):255–259.
+Ji,Q.,Bouri,E.,Roubaud,D.,andShahzad,S.J.H.(2018).Riskspilloverbetweenenergyandagricul-
+  turalcommoditymarkets:Adependence-switchingcovar-copulamodel.EnergyEconomics,75:14–27.
+Kang,S.H.,McIver,R.,andYoon,S.-M.(2017). Dynamicspillovereﬀectsamongcrudeoil,precious
+  metal,andagriculturalcommodityfuturesmarkets.EnergyEconomics,62:19–32.
+Kang,S.H.andYoon,S.-M.(2019). Financialcrisesanddynamicspilloversamongchinesestockand
+  commodityfuturesmarkets.PhysicaA:StatisticalMechanicsanditsApplications,531:121776.
+Koenker,R.andBassettJr,G.(1978).Regressionquantiles.Econometrica:journaloftheEconometric
+  Society,pages33–50.
+Koop,G.andKorobilis,D.(2013). LargeTime-VaryingParameterVARs. JournalofEconometrics,
+  177(2):185–198.
+Koop,G.andKorobilis,D.(2014).ANewIndexOfFinancialConditions.EuropeanEconomicReview,
+  71:101–116.
+Koop,G.,Pesaran,M.H.,andPotter,S.M.(1996).ImpulseResponseAnalysisInNonlinearMultivariate
+  Models.JournalofEconometrics,74(1):119–147.
+Mensi,W.,Hammoudeh,S.,Nguyen,D.K.,andKang,S.H.(2016).Globalﬁnancialcrisisandspillover
+  eﬀectsamongtheusandbricsstockmarkets.InternationalReviewofEconomics&Finance,42:257–
+  276.
+Öztek,M.F.andÖcal,N.(2017).Financialcrisesandthenatureofcorrelationbetweencommodityand
+  stockmarkets.InternationalReviewofEconomics&Finance,48:56–68.
+Pesaran,H.H.andShin,Y.(1998). GeneralizedImpulseResponseAnalysisInLinearMultivariate
+  Models.EconomicsLetters,58(1):17–29.
+Philippas,D.andSiriopoulos,C.(2013).Puttingthe“c”intocrisis:Contagion,correlationsandcopulas
+  onemubondmarkets.JournalofInternationalFinancialMarkets,InstitutionsandMoney,27:161–176.
+Sharif,A.,Aloui,C.,andYarovaya,L.(2020). Covid-19pandemic,oilprices,stockmarketandpolicy
+  uncertaintynexusintheuseconomy: Freshevidencefromthewavelet-basedapproach. OilPrices,
+  StockMarketandPolicyUncertaintyNexusintheUSEconomy: FreshEvidencefromtheWavelet-
+  BasedApproach(April13,2020).
+Sims,C.(1980).MacroeconomicsAndReality.Econometrica,48(1):1–48.
+Tiwari,A.K.,Trabelsi,N.,Alqahtani,F.,andRaheem,I.D.(2020). Systemicriskspilloversbetween
+  crudeoilandstockindexreturnsofg7economies: Conditionalvalue-at-riskandmarginalexpected
+  shortfallapproaches.EnergyEconomics,page104646.
+Troster,V.,Bouri,E.,andRoubaud,D.(2019). Aquantileregressionanalysisofﬂights-to-safetywith
+  impliedvolatilities.ResourcesPolicy,62:482–495.
+Wang,Y.S.andChueh,Y.L.(2013). Dynamictransmissioneﬀectsbetweentheinterestrate,theus
+  dollar,andgoldandcrudeoilprices.EconomicModelling,30:792–798.
+Zhang, D.(2017). Oilshocksandstockmarketsrevisited: Measuringconnectednessfromaglobal
+  perspective.EnergyEconomics,62:323–333.
+Zhang,D.andBroadstock,D.C.(2018).Globalﬁnancialcrisisandrisingconnectednessintheinterna-
+  tionalcommoditymarkets.InternationalReviewofFinancialAnalysis.
+
+
+                                                     14
+                                                       Table1:SummaryStatistics
+
+                                      Gold        Crudeoil     MSCIWorld   USDindex    Bondindex
+              Mean            0.003          -0.107          0.017         0.012         0.003
+              Variance         1.035          7.99           0.893         0.186          0.16
+              Skewness       -0.573∗∗∗      -4.139∗∗∗       -1.233∗∗∗       0.047        -0.460∗∗∗
+                                    (0.000)        (0.000)         (0.000)       (0.352)        (0.000)
+              Kurtosis        7.926∗∗∗      86.682∗∗∗      19.805∗∗∗     1.989∗∗∗      72.451∗∗∗
+                                    (0.000)        (0.000)         (0.000)       (0.000)        (0.000)
+              JB            6274.303∗∗∗   741795.582∗∗∗   38967.826∗∗∗   387.760∗∗∗   513622.889∗∗∗
+                                    (0.000)        (0.000)         (0.000)       (0.000)        (0.000)
+              ERS           -9.342∗∗∗      -16.768∗∗∗      -12.303∗∗∗     -5.707∗∗∗      -8.414∗∗∗
+                                    (0.000)        (0.000)         (0.000)       (0.000)        (0.000)
+              Q(20)          47.120∗∗∗     249.873∗∗∗     262.373∗∗∗     30.855∗      470.316∗∗∗
+                                    (0.001)        (0.000)         (0.000)       (0.057)        (0.000)
+              Q2(20)         195.290∗∗∗     468.296∗∗∗     2889.681∗∗∗   275.205∗∗∗    2277.177∗∗∗
+                                    (0.000)        (0.000)         (0.000)       (0.000)        (0.000)
+                                                                UnconditionalCorrelations
+              Gold                        1.000                  0.121                   0.086           −0.355                0.235
+              Crudeoil                 0.121                  1.000                   0.353           −0.097                0.001
+              MSCIWorld           0.086                  0.353                   1.000           −0.203                0.080
+              USDindex          −0.355            −0.097            −0.203               1.000            −0.139
+              Bondindex             0.235                  0.001                   0.080           −0.139                1.000
+
+Notes:***,**,*denotesigniﬁcancelevelat1%,5%and10%;Skewness:D’Agostino(1970)test;Kurtosis:AnscombeandGlynn(1983)test;JB:Jarque
+  andBera(1980)normalitytest;ERS:Elliottetal.(1996)unit-roottest;                                  Q(20)and Q2(20):FisherandGallagher(2012)weightedportmanteautest.
+
+
+
+                                                 Table2:AverageConnectednessTable
+
+                                                              Pre-CoronaOutbreak(2011/08/19-2020/01/13)
+                                               Gold   Crudeoil   MSCIWorld   USDindex   Bondindex   FROM
+      Gold                          75.3      3.0          2.6          13.0          6.1        24.7
+      Crudeoil                       2.7      80.3         11.9          3.8          1.2        19.7
+      MSCIWorld                    2.5      11.1         77.8          7.0          1.5        22.2
+      USDindex                     12.8      3.7          7.2          73.3          3.0        26.7
+      Bondindex                     6.7       1.6          1.9           3.5          86.4       13.6
+      ContributionTOothers         24.7      19.5         23.6          27.3         11.9       106.9
+      NETdirectionalconnectedness    0.0      -0.2          1.4           0.6          -1.7        TCI
+      NPDCtransmitter              1.0       2.0          4.0           3.0          0.0        21.4
+                                                             Post-CoronaOutbreak(2020/01/13-2020/05/12)
+                                               Gold   Crudeoil   MSCIWorld   USDindex   Bondindex   FROM
+      Gold                          64.7      4.7          9.0           4.7          16.9       35.3
+      Crudeoil                       3.3      80.5         13.0          2.6          0.6        19.5
+      MSCIWorld                    6.8      10.6         72.8          2.2          7.6        27.2
+      USDindex                     6.3       3.9          6.5          67.7         15.5       32.3
+      Bondindex                     9.8       2.5          4.8           4.9          78.0       22.0
+      ContributionTOothers         26.1      21.7         33.4          14.4         40.6       136.2
+      NETdirectionalconnectedness   -9.2      2.2          6.2          -17.9         18.6       TCI
+      NPDCtransmitter              1.0       3.0          3.0           0.0          3.0        27.2
+
+Notes:ResultsarebasedonaTVP-VARmodelwithlaglengthoforderone(BIC)anda20-step-aheadgeneralizedforecasterrorvariancedecomposition.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                      15
+       Figure1:RawSeries
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure2:DailyPercentageChanges
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 16
+                                                  Figure3:DynamicTotalConnectedness
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Notes:ResultsarebasedonaTVP-VARmodelwithlaglengthoforderone(BIC)anda20-step-aheadgeneralizedforecasterrorvariancedecomposition.
+
+
+
+
+                                              Figure4:NetTotalDirectionalConnectedness
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Notes:ResultsarebasedonaTVP-VARmodelwithlaglengthoforderone(BIC)anda20-step-aheadgeneralizedforecasterrorvariancedecomposition.
+
+
+
+                                                                          17
+                                             Figure5:NetPairwiseDirectionalConnectedness
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Notes:ResultsarebasedonaTVP-VARmodelwithlaglengthoforderone(BIC)anda20-step-aheadgeneralizedforecasterrorvariancedecomposition.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                          18
+                                            Figure6:QuantileRegressionResults
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Notes:Slopeestimationresultswith95%conﬁdenceintervalsusingquantileregressionapproachofKoenkerandBassettJr(1978).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                    19

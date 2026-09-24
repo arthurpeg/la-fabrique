@@ -1,0 +1,1257 @@
+ 
+ 
+This is a self -archived – parallel published version of this article in the 
+publication archive of the University of Vaasa. It might differ from the original. 
+Crude oil prices and clean energy stock indices: 
+Lagged and asymmetric effects with quantile 
+regression 
+Author(s): Dawar, Ishaan; Dutta, Anupam; Bouri, Elie; Saeed, Tareq 
+Title: Crude oil prices and clean energy stock indices: Lagged and asymmetric 
+effects with quantile regression 
+Year: 2021 
+Version: Accepted manuscript 
+Copyright ©2021 Elsevier. This manuscript version is made available under the 
+Creative Commons Attribution–NonCommercial–NoDerivatives 4.0 
+International (CC BY–NC–ND 4.0) license, 
+https://creativecommons.org/licenses/by-nc-nd/4.0/ 
+Please cite the original version: 
+ Dawar, I., Dutta, A., Bouri, E. & Saeed, T. (2021). Crude oil prices and 
+clean energy stock indices: Lagged and asymmetric effects with 
+quantile regression. Renewable Energy 163, 288-299. 
+https://doi.org/10.1016/j.renene.2020.08.162 
+ 
+ 
+
+1 
+ 
+Crude oil prices and clean energy stock indices: lagged and asymmetric effects 1 
+with quantile regression 2 
+ 3 
+ 4 
+ 5 
+ 6 
+ 7 
+ 8 
+ 9 
+Abstract 10 
+ 11 
+Unlike previous studies examining the association between crude oil and renewable energy stock 12 
+prices under average conditions, we employ a quantile -based regression approach offering a 13 
+more comprehensive dependence structure under diverse market condition s. Using weekly data 14 
+covering crude oil prices (WTI market) and three clean energy stock indices (the Wilderhill 15 
+Energy Index, MAC Global Solar Energy Index, and S&P Global Clean Energy Index), quantile 16 
+regression analyses provide solid evidence of the dec reasing dependence of clean energy stock 17 
+returns on crude oil returns. The lagged effect of WTI oil returns on clean energy stock returns is 18 
+generally significant, which indicates that clean energy stock returns react differently to new 19 
+information on oil returns under different market conditions. We further check for asymmetrical 20 
+effects of oil returns on clean energy stock returns in various market conditions and find a strong 21 
+effect of negative oil returns during bearish periods and an insignificant effe ct during bullish 22 
+episodes.   23 
+Keywords: crude oil; clean energy stock indices; quantile regression; lagged and asymmetric 24 
+effects 25 
+ 26 
+ 27 
+ 28 
+2 
+ 
+1. Introduction 29 
+ 30 
+Crude oil has been one of the most important fuels for energy creation over the past decades. 31 
+However, due to concerns regarding deteriorating global climatic conditions, there is a drastic 32 
+switch to renewable or clean energy sources (such as solar, wind etc.) [1 -2]. Based on the latest 33 
+report from the International Energy Agency (IEA), there will be a substan tial fall in crude oil 34 
+demand by the end of 2024 and, consequently, an upward shift in renewable energy usage.  35 
+Luqman et al. [3] find evidence of asymmetric impacts of renewable energy on economic growth 36 
+in Pakistan. Razmi et al. [4] examine the associatio n of renewable energy consumption with 37 
+stock market value and reveal evidence that stock market value influences renewable energies in 38 
+the long term. Rahman and Velayutham [5] explore the association between renewable and non -39 
+renewable energy consumption a nd economic growth and show evidence of a one -way Granger 40 
+causality flowing from economic growth to renewable energy consumption. 41 
+Recently, companies functioning in clean energy sectors have received considerable attention 42 
+from investors not only because t heir stocks offer higher returns than general stocks but also 43 
+because investments in clean energy companies have positive environmental and socio-economic 44 
+impacts that potentially help ensure a certain degree of sustainability.  Kumar et al. [6] argue that 45 
+investments in renewable energy sectors increase due to concerns about climate change and oil 46 
+price volatility. Reboredo [7] contends that uncertainty in oil market encourages investors to 47 
+capitalize in renewable energy stocks.  48 
+Given the importance of the  association between the crude oil and clean energy sectors, a major 49 
+line of literature studies the correlations between these two assets. Sadorsky [8] finds that an 50 
+upsurge in oil prices increases the risk associated with clean energy equities. Kumar et al. [6] 51 
+document how stock prices of renewable energy firms are sensitive to oil price shocks. 52 
+Employing a copula approach, Reboredo [7] shows that the dependence between oil and clean 53 
+energy stock prices evolve over time. Bondia et al. [9] indicate a short-term linkage between oil 54 
+and renewable energy equity markets and, more importantly, show that the Granger -causality 55 
+runs from commodity to stock markets. Using wavelets, Reboredo et al. [10] demonstrate that, 56 
+although the short -run connection be tween energy and clean energy stock prices appears to be 57 
+weak, such a relationship seems strong in the long run. Ahmad [11] finds that oil prices and 58 
+renewable energy stock returns move in tandem, implying that an upturn in energy prices leads 59 
+to an increa se in the stock prices of alternative energy firms. More recently, Ferrer et al. [12] 60 
+3 
+ 
+examine spillover measures between US clean energy stock returns and crude oil returns, and 61 
+show that spillovers are significant in the short term and vary with time. Koc aarslan and Soytas 62 
+[13] apply a nonlinear auto -regressive distributed lag (NARDL) model and report evidence of a 63 
+nonlinear relationship and asymmetric effects between crude oil prices and clean energy stock 64 
+prices. Xia et al. [14] examine the extreme conne ctedness between energy price and renewable 65 
+energy stock indices, indicating evidence of a substitution relationship between dirty energy 66 
+resources and renewable energy. Bouri et al. [1] show that crude oil acts as safe -haven asset for 67 
+clean energy stocks during episodes of extreme market movement1. However, most of the above-68 
+mentioned studies overlook the possibility that the effect of crude oil prices on clean energy 69 
+indices can vary across the various quantiles of the return distribution.  70 
+In this paper we examine the relationship between crude oil prices and clean energy stock 71 
+indices, considering three aspects. First, we adopt  a quantile regression model to examine how 72 
+variations in crude oil prices impact clean energy stock returns under diverse market  conditions. 73 
+Second, we explore the lagged effect of the oil market on the stock index at various quantiles. 74 
+Third, we investigate the nonlinear association between oil prices and clean energy stock indices. 75 
+We contribute in two major ways. Firstly, unlike  previous researchers who use the ordinary least 76 
+squares (OLS) method to examine the relationship between crude oil and stock indexes under 77 
+average conditions, we apply a quantile regression (QR), proposed by  Koenker and Bassett [15], 78 
+to reveal a more comprehensive picture of the relationship under diverse market conditions.  79 
+Given that investors‟ heterogeneity is important to clean energy stock pricing, a heterogeneity -80 
+consistent approach such as the QR needs to be estimated 2. This is based on the ratio nale that 81 
+dependent variables across the return distribution  might react differently to similar shocks given 82 
+investors‟ heterogeneity in the market. Since the application of OLS regression, which focuses 83 
+on variations in means only, would produce biased es timates, QR has recently been employed in 84 
+several studies [9, 16-20]. Secondly, this is the first study to investigate whether the impacts of 85 
+crude oil returns on clean energy stock indexes are persistent (i.e. have lags), which allows us to 86 
+                                                 
+1 Another line of literature uses the information content of crude oil volatility index (OVX) to explore whether 
+energy market uncertainty has any impact on clean energy stock indices. Dutta [21] finds a positive association 
+between the levels of oil price volatility and the realized volatility of renewable energy stocks. Ahmad et al. [22] 
+show that OVX and clean energy equities are negatively correlated, suggesting that the inclusion of OVX in a 
+portfolio of clean energy equities reduces the risk associated with the alternative energy markets.  
+2 As Badshah [17] notes: “Investors‟ heterogeneity leads to a multimodal and fat -tailed distribution of stock market 
+returns”. 
+4 
+ 
+make inferences regarding the gradual information diffusion  hypothesis developed by Hong and 87 
+Stein [23] and Hong et al. [24]. Motivated by this hypothesis, some studies document significant 88 
+lagged effects of energy prices on conventional stock markets [25 -26]. As Xiao et al. [26] 89 
+claims: „Investors in the stock market find it difficult to evaluate information from the oil market 90 
+that they do not specialize in or that the responses of investors to information in the oil market 91 
+appear at different points in time. Hence, i nvestors in the stock market underreact to new 92 
+information in the oil market.‟ Nevertheless, previous literature focusing on the association 93 
+between oil and clean energy stock prices has ignored such lagged impacts. This paper aims to 94 
+address this gap in the literature.   95 
+The main findings provide solid evidence for the decreasing dependence of clean energy stocks 96 
+on oil price movements. Moreover, the results of the asymmetric test indicate strong effects of 97 
+negative oil returns during bearish periods and an insignificant association throughout bullish 98 
+episodes. The outcomes provide a base for future risk management decisions and policy 99 
+implications. Our proposed analyses could be useful for developing future investment options 100 
+under varied market conditions.  101 
+For the rest of the paper, Section 2 defines the dataset, Section 3 outlines the quantile regression, 102 
+Section 4 discusses the results, and Section 5 concludes. 103 
+2. Data 104 
+We use the WTI crude oil index as the international benchmark for oil prices and three different 105 
+indexes to track the equity prices of alternative energy firms: (1) the S&P Global Clean Energy 106 
+Index (SPGCE); (2) the MAC Global Solar Energy Index (MAC); and  (3) the WilderHill Clean 107 
+Energy Index (ECO). These stock indexes measure the performance of the largest companies in 108 
+global renewable energy industries. Our sample period spans 31 March 2005 to 21 June 2019, 109 
+providing 743 weekly observations. We choose we ekly data to the detriment of daily data to 110 
+avoid possible biases due to overlapping trading hours. All the data series are sourced from the 111 
+Bloomberg terminal. Figure 1 depicts the weekly prices of all three renewable energy stock 112 
+indices and the WTI oil prices. It is evident from this graph that, during the 2008 financial crisis 113 
+period, the SPGCE index exhibits the highest prices followed by the MAC index. The ECO 114 
+index is uniformly consistent with the oil prices over the stress period.  115 
+5 
+ 
+0
+1,000
+2,000
+3,000
+4,000
+05 06 07 08 09 10 11 12 13 14 15 16 17 18 19
+ECO MAC WTI SPGCE
+ 116 
+Figure 1. Plot of level series from 31/03/2005 to 21/06/2019 117 
+ 118 
+ 119 
+Table 1: Summary Statistics and stationary tests for the return series 120 
+Variables ECO SPGCE MAC WTI 
+Mean -0.0012 -0.0008 -0.0006 0.0000 
+ 
+Std. Dev. 0.0453 0.0450 0.0643 0.0504 
+ 
+Median 0.0024 0.0019 0.0023 0.0019 
+ 
+Skewness -0.5719 -1.2823 -0.4994 -0.2580 
+ 
+Kurtosis 6.9771 15.6250 7.2911 9.9309 
+ 
+Jarque-Bera 529.48*** 5131.25*** 600.14*** 1493.41*** 
+ 
+ADF -26.59*** 
+ 
+-27.59*** 
+ 
+-26.03401*** 
+ 
+-28.01*** 
+ 
+PP -26.58*** 
+ 
+-27.70*** 
+ 
+-26.19*** 
+ 
+-28.14*** 
+ 
+Note. * Logarithmic returns are used for all the indexes. ***, ** and * indicate statistical significance at 1%, 5% and 10% levels, 121 
+respectively. 122 
+ 123 
+ 124 
+6 
+ 
+Table 1 displays the descriptive statistics for all the weekly returns series. MAC is the most 125 
+volatile. Each return series is negatively skewed and exhibits a leptokurtic distribution. The 126 
+Jarque-Bera test confirms the violation of normality assumption. T he outcomes of augmented 127 
+Dickey-Fuller (ADF) and Phillips-Pearson (PP) tests suggest that the return series are stationary.   128 
+ 129 
+3. Quantile regression  130 
+To examine the dependence relationship between crude oil price changes and clean energy stock 131 
+returns, we use the quantile regression approach. This model has been used extensively in the 132 
+finance and economics literature, given its ability to uncover the a symmetric relationship 133 
+between financial and economic variables and to model the quantiles of a random variable as 134 
+functions of observed variables [16-17, 19]. Due to the fact that the estimates of QR process are 135 
+robust to outliers, heteroskedasticity, and  skewness on the dependent variables, this approach 136 
+receives significant attention in previous studies [26]. 137 
+The traditional regression equation is: 138 
+                                                                                                                   (1) 139 
+where,    is the return of the clean energy stock index at time t, α is the constant, β is the 140 
+coefficient of         and         refers to the return for the WTI index at time t, and θ is 141 
+the coefficient of the lagged value of   . This relationship directly explains the dependence of 142 
+clean energy stock index return on WTI oil prices.  143 
+To test for the gradual information diffusion hypothesis, the following regression model is 144 
+estimated: 145 
+                    ∑   
+ 
+                                                                                 (2) 146 
+ 147 
+where    is the return of the clean energy stock index at time t, α is the constant, β is the 148 
+coefficient of           and           refers to the lagged returns for the WTI index at time 149 
+t-i with i= 0, 1, 2, ….8, and θ is the coefficient of the lagged value of   . 150 
+7 
+ 
+The above equation explains the lagged impact of crude oil on clean energy stock indices as 151 
+proposed by Driesprong et al. [27] and Narayan and Narayan [28]. The lag length is 8, optimally 152 
+chosen based on information criterion.  153 
+To investigate whether crude  oil prices have any asymmetric effect on the clean energy stock 154 
+indices, we estimate the following model: 155 
+                           
+           
+                                                              (3)          156 
+where,        
+                   indicates positive oil returns and         
+  157 
+                stands for negative oil returns. 158 
+Unlike the OLS regression, the QR method estimates the rates of change in all parts of the 159 
+distribution of a depe ndent variable. Since one of our purposes is to examine the return linkage 160 
+between oil prices and clean energy stock indexes under diverse market conditions, we apply the 161 
+QR model. 162 
+For a given   , the quantile regression for a variable    can be stated as: 163 
+     |          
+                                                                                                                (4) 164 
+ 165 
+Following Koenkar and Bassett [15],      |   signifies the   conditional quantile of   . The 166 
+value of   lies between 0 and 1. Furthermore,      accounts for the unobserved effect in the 167 
+quantile model, x includes all the independent variables that are responsible for changes in y, and 168 
+     is estimated as: 169 
+ ̂              ∑   
+ 
+   (     
+          )                                                                    (5)        170 
+For        the check function is defined as                   , and the indicator function 171 
+I(∙) is given as          
+           . 172 
+To investigate the association between crude oil and clean energy stock indexes, the following 173 
+quantile regression is proposed: 174 
+                       |                                                                                       (6) 175 
+8 
+ 
+To check for the lagged effect, the following quantile regression is proposed: 176 
+    |         ∑       
+                                                                                   (7)                   177 
+To test for asymmetry, the relationship between the two variables is modelled as:  178 
+    |                      
+              
+                                                  (8)                 179 
+A positive and statistically significant      ) indicates that an increase in crude oil prices leads to 180 
+an upturn in the prices of clean energy stocks. However, if    ) is negative, there is an inverse 181 
+relationship between the two assets.  182 
+We consider seven quantiles,   = (0.05, 0.10, 0.25, 0.50, 0 .75, 0.90, 0.95). The median (0.50) 183 
+quantile reflects the normal market condition. Lower quantiles (i.e. 0.05, 0.10, 0.25) reflect 184 
+bearish market states, whereas, higher quantiles (i.e. 0.70, 0.90, 0.95) reveal bullish market 185 
+conditions. 186 
+Note that as stock  markets tend to behave differently under diverse market conditions (bearish, 187 
+normal and bullish), it is essential for market participants to understand how their investments 188 
+react to oil price shocks under such conditions. To this end, the quantile regres sion approach is 189 
+an effective tool for taking precise risk management decisions given that it allows us to 190 
+investigate the effects of independent variables on the different distributions of dependent 191 
+variables [29-30]. 192 
+4. Empirical results3 193 
+4.1. Impacts of crude oil returns on clean energy stock returns 194 
+Table 2 Panel A presents the results of the relationship between WTI and ECO. The results of the 195 
+OLS show that the average relationship is positive. However, the QR results show that the effec t 196 
+of WTI tends to decrease as quantiles decrease. The same goes for the adjusted R -squared values 197 
+of the model. In fact, in lower quantiles the model fits much better, indicating that the impact of 198 
+                                                 
+3 The models are estimated wit h EViews 10. However, we have run the regression using SPSS (as the reviewer 
+suggests) and the results remain the same. The re -estimated results will be available from the authors upon 
+request. 
+9 
+ 
+crude oil on the WilderHill Clean Energy Index is stronger  in bearish market conditions but 199 
+weaker in bullish market conditions. Figure 2 depicts this graphically.  200 
+Similar results are reported for the cases of the MAC and SPGCE indices in Panel B and Panel 201 
+C, respectively. The impact of WTI is positive at the mean, as shown in the OLS results, whereas 202 
+it diminishes during bullish states (   =0.75, 0.90, 0.95). The adjusted R -squared values also 203 
+suggest that the model fitness decreases in the upper quantiles. However, the impact of WTI on 204 
+the MAC and SPGCE indices  is significant in normal and bearish market conditions. Figures 3 205 
+and 4 demonstrate the quantile relationships inferred above. 206 
+ 207 
+ 208 
+ 209 
+ 210 
+ 211 
+ 212 
+ 213 
+ 214 
+Table 2. Impacts of WTI oil prices on clean energy stocks 215 
+Quantile   0.05 0.1 0.25 0.5 0.75 0.9 0.95 OLS 
+Panel A ECO index               
+Constant -0.0729*** -0.0524*** -0.0231*** 0.0014 0.0230*** 0.0445*** 0.0617*** -0.0012 
+WTIRET 0.3558*** 0.3804*** 0.2732*** 0.2723*** 0.2492*** 0.2584 0.1455*** 0.3297*** 
+Lagged ECO 0.2844*** 0.2782*** 0.0607 -0.0477 -0.0617 -0.105** -0.1579*** 0.0241 
+Adjusted R2 15.61% 10.95% 6.37% 5.06% 4.79% 3.87% 3.70% 13.27% 
+Panel B MAC index               
+Constant -0.0981*** -0.074*** -0.0331*** 0.0027 0.0322*** 0.0665*** 0.0879*** -0.0007 
+WTIRET 0.6107*** 0.5371*** 0.4308*** 0.3449*** 0.3553*** 0.4096*** 0.2930 0.4395*** 
+Lagged MAC 0.3125*** 0.2313*** 0.0754 0.0346 -0.0158 -0.0694* -0.1266*** 0.0548 
+Adjusted R2  16.82% 10.26% 5.74% 4.67% 4.67% 4.18% 3.73% 11.79% 
+Panel C SPGCE index             
+Constant -0.0652 -0.046 -0.0196 0.0010 0.0215 0.0410 0.0559 -0.0008 
+WTIRET 0.5000*** 0.3829*** 0.3126*** 0.2487*** 0.2648*** 0.2101 0.2395*** 0.3336*** 
+Lagged SPGCE 0.3709*** 0.2238*** 0.0785 0.0311 -0.042 -0.1777*** -0.1872*** 0.0063 
+Adjusted R2  14.19% 9.69% 6.39% 4.94% 5.25% 8.64% 10.48% 13.67% 
+10 
+ 
+Note. This table presents the estimates of equation 6. OLS stands for the ordinary least squares regression. WTIRET refers to the 216 
+return for the WTI index. Logarithmic returns are used for all the indexes. ***, ** and * indicate statistical significance at 1%, 217 
+5% and 10% levels, respectively. 218 
+ 219 
+ 220 
+ 221 
+Figure 2. Quantile regression based on WTI and ECO indices 222 
+Notes: We plot the contemporaneous impacts of WTI on ECO across 10 quantiles . The blue line represents the point 223 
+estimates whereas the two orange lines represent the 95 percent confidence bands.  224 
+ 225 
+ 226 
+Figure 3. Quantile regression based on WTI and MAC indices 227 
+Notes: We plot the contemporaneous impacts of WTI on MAC across 10 quantile s. The blue line represents the 228 
+point estimates whereas the two orange lines represent the 95 percent confidence bands.  229 
+ 230 
+
+11 
+ 
+ 231 
+Figure 4. Quantile regression based on WTI and SPGCE indices 232 
+Notes: We plot the contemporaneous impacts of WTI on SPGCE across 10 quantiles. The blue line represents the 233 
+point estimates whereas the two orange lines represent the 95 percent confidence bands.  234 
+ 235 
+It follows that the QR approach gives a solid dependence structure for the clean energy stock 236 
+indices on crude oil prices. Prev ious results reveal a positive relationship between clean energy 237 
+stock returns and oil returns. Furthermore, Henriques and Sardosky [31] document that oil 238 
+returns are not as significant as technological stocks in explaining the movement of clean energy 239 
+stock indices. Our results generally concord with previous findings as indicated by the average of 240 
+13% for R squared levels in our models.   241 
+Our above QR analysis complements previous studies [1, 6, 9, 11, 13, 21, 26 ]. These papers 242 
+show that all clean energy stock indices under study have a positive impact under the mean -243 
+based regression, and the R -squared values are in line with the results from previous papers. 244 
+However, using the quantile regression, we reveal the structure of the investment pattern of clean 245 
+energy traders under different market conditions. In the upper quantiles, i.e., during upward 246 
+market conditions, the dependency of clean energy stocks on crude oil prices decreases. This 247 
+shows that when investor sentiment is highly positive, oil returns do not affect clean energy stock 248 
+returns. However, during downturns market conditions, clean energy stock returns have high 249 
+dependency on crude oil returns, suggesting that investors should develop an investment decision 250 
+to invest in clean energy stocks in bearish market conditions. During the Global Financial Crisis 251 
+of 2007-2008, the movements of crude oil price were very low but positive, and the movement of 252 
+clean energy stock indices rose significantly. Our analy sis helps break down the price change 253 
+
+12 
+ 
+structure between crude oil and clean energy stock indices, as the rising oil price in the bearish 254 
+period is one significant reason for the peaks in the clean energy stock indices.  255 
+ 256 
+4.2. Lagged impact of crude oil returns on clean energy stock returns 257 
+ 258 
+The gradual information diffusion hypothesis is accepted under two conditions: first, if the 259 
+lagged effect of crude oil returns on clean energy stock returns has a similar or a larger 260 
+magnitude than the contemporaneous e ffect of crude oil returns; and second, if the lagged effect 261 
+peaks then declines as the lag length increases. Earlier studies [26-27, 32] have applied those two 262 
+conditions for testing the gradual information diffusion hypothesis. We first consider the ECO 263 
+index and the results of Equation (7) are shown in Table 3. The OLS results show that the effect 264 
+of lag 1 is positive. The gradual information diffusion hypothesis is rejected given that the lagged 265 
+effect (i.e. β1) is lower than the contemporaneous effect (i.e. β0). Furthermore, the effect of lag 5 266 
+is higher than the effect of lag 1. This suggests that investors have a delayed reaction to 267 
+information about oil returns.  268 
+ 269 
+Furthermore, we notice that the estimated results for the QR are quite similar to the O LS results 270 
+in extreme quantiles (τ =0.05, 0.1, 0.9, 0.95). The lagged effects are highly positive, specifically 271 
+in bullish or bearish markets. Whereas, there is an inverse relationship between the first lag of 272 
+WTI and ECO during normal market conditions (i n the middle quantile). Checking for the 273 
+diffusion hypothesis, the first condition is rejected. The second condition does not comply with 274 
+our quantile regression model, given evidence that in lower quantiles the model fits perfectly to 275 
+the condition that t he first lag has the highest effect on ECO prices. At the median quantiles, 276 
+however, the fifth and sixth lags have the highest effect, indicating that during normal market 277 
+conditions investors take five to six weeks to react to changes in oil prices. There fore, as the 278 
+market conditions shift from bearish to bullish, the information diffusion shifts from t -1 to t -6 279 
+indicating that investors in ECO react late to WTI prices. Figure 5 shows the quantile lagged 280 
+impacts of oil returns on ECO returns. These results are comparable to those reported in previous 281 
+studies [26-27, 32]. 282 
+ 283 
+ 284 
+ 285 
+ 286 
+13 
+ 
+Table 3. Regression results for lagged effect between WTI and ECO  287 
+Note. This table presents the estimates of equation 7 for the ECO index . OLS stands for the ordinary least squares regression. 288 
+WTIRET refers to the return for the WTI index. Logarithmic returns are used for all the indexes. ***, ** and * indicate statistical 289 
+significance at 1%, 5% and 10% levels, respectively. 290 
+ 291 
+ 292 
+ 293 
+ 294 
+ 295 
+ 296 
+ 297 
+ 298 
+ 299 
+ 300 
+ 301 
+ 302 
+ 303 
+ 304 
+Quantile   0.05 0.1 0.25 0.5 0.75 0.9 0.95 OLS 
+Constant -0.0773*** -0.0544*** -0.0244*** 0.0012 0.0228*** 0.0460*** 0.0631*** -0.0012 
+        0.3773*** 0.3737*** 0.2925*** 0.2933*** 0.2646*** 0.3091*** 0.2069** 0.3402*** 
+          0.2245** 0.0505 -0.0194 -0.0337 -0.0038 0.0197 0.0307 0.0053 
+          0.1213*** 0.0494 -0.0183 -0.0338 -0.0198 -0.0294 -0.0682 -0.0279 
+          0.1517* -0.0795 -0.0295 -0.0348 -0.0031 -0.0023 0.0317 -0.0155 
+          0.0326 0.0534 0.0677 0.0287 0.0056 -0.0113 0.0455 0.0406 
+          0.1815*** 0.0977 0.0738 0.0460 -0.0002 0.0994* 0.1454* 0.0636** 
+          0.0140 0.0457 0.0312 -0.0197 -0.0031 0.03045 0.0700 0.0083 
+          0.0095 0.0166 0.0476 -0.0046 0.0284 -0.0084 -0.0300 0.0323 
+          -0.0946* -0.0622 -0.0417 -0.0614 -0.0663* -0.0695 -0.1592 -0.0706** 
+Lagged ECO 0.2550*** 0.2343*** 0.0876 -0.0145 -0.0619 -0.1543* -0.1953* 0.0178 
+          1.1468** 2.7675*** 4.4503*** 5.1846*** 5.0505*** 2.4749** 1.7105* 7.3209*** 
+Adjusted R2
+ 19.354% 11.272% 6.304% 4.328% 4.571% 4.035% 6.259% 13.634% 
+14 
+ 
+-.08
+-.04
+.00
+.04
+.08
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+C
+Quantile
+C
+.1
+.2
+.3
+.4
+.5
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI
+Quantile
+WTI
+-.2
+-.1
+.0
+.1
+.2
+.3
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG1)
+Quantile
+WTI(LAG1)
+-.2
+-.1
+.0
+.1
+.2
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG2)
+Quantile
+WTI(LAG2)
+-.3
+-.2
+-.1
+.0
+.1
+.2
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG3)
+Quantile
+WTI(LAG3)
+-.2
+-.1
+.0
+.1
+.2
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG4)
+Quantile
+WTI(LAG4)
+-.1
+.0
+.1
+.2
+.3
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG5)
+Quantile
+WTI(LAG5)
+-.2
+-.1
+.0
+.1
+.2
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG6)
+Quantile
+WTI(LAG6)
+-.2
+-.1
+.0
+.1
+.2
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG7)
+Quantile
+WTI(LAG7)
+-.3
+-.2
+-.1
+.0
+.1
+.2
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG8)
+Quantile
+WTI(LAG8)
+-.4
+-.2
+.0
+.2
+.4
+.6
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+DECO(LAG1)
+Quantile
+DECO(LAG1)
+Quantile Process Estimates Quantile Process Estimates 
+305 
+ Figure 5. Quantile regression showing the lagged impact of WTI on ECO 306 
+Notes: The blue line represents the point estimates whereas the two orange lines represent the 95 percent confidence bands.  307 
+15 
+ 
+The results for MAC are shown in Table 4. The OLS results indicate that the first lag effect of oil 308 
+returns has a positive effect on MAC returns; however, it is significantly lower than the 309 
+contemporaneous effect of oil returns. This result indicates that the first condition of the 310 
+diffusion hypothesis is unsatisfied b y the MAC index. For the second condition, the fifth lag of 311 
+oil prices has the highest effect on MAC returns, inferring that the information diffusion takes 312 
+place in the fifth lag and investors use the information to invest accordingly. 313 
+In low quantiles ( τ=0.05, 0.1, 0.25), the first lagged has a positive relationship with MAC 314 
+returns. In the median quantile ( τ=0.5) and higher quantiles ( τ =0.9, 0.95), the first lagged effect 315 
+has a negative relation with MAC returns. We observe that during bearish and normal market 316 
+conditions the information diffuses at the fifth lag, whereas in bullish market conditions, 317 
+investors in MAC react at the third lag to the crude oil returns. Detailed results are shown in 318 
+Figure 6.  319 
+ 320 
+Table 4. Regression results for lagged effect between WTI and MAC 321 
+Quantile    0.05 0.1 0.25 0.5 0.75 0.9 0.95 OLS 
+Constant -0.1047*** -0.0752*** -0.0357*** 0.0017 0.0334*** 0.0668*** 0.0916*** -0.0005 
+        0.5366*** 0.6103*** 0.4193*** 0.3527*** 0.3769*** 0.33087*** 0.2239* 0.4566*** 
+          0.1880 0.1335 0.0204 -0.0416 0.0041 -0.0124 -0.0533 0.0325 
+          0.1052 -0.0306 -0.1346** -0.0283 -0.0451 -0.0735 -0.1682* -0.0869* 
+          0.1710* 0.0691 0.0308 0.0395 0.0211 0.12330** 0.1747** 0.0315 
+          0.0213 0.0335 0.0470 0.0092 -0.004 0.01160 -0.0199 0.0250 
+          0.2834*** 0.2762*** 0.1388* 0.0519 -0.0437 0.04737 0.0788 0.0959** 
+          0.0635 0.1037 0.0702 -0.0456 -0.0376 0.08843 0.0455 0.0205 
+          0.0541 0.1983** 0.0022 0.0261 0.1334** 0.01308 0.0386 0.0574 
+          -0.0569 -0.1539** -0.0869 -0.0637 -0.0583 -0.1226 -0.2454* -0.1090** 
+Lagged MAC 0.3024*** 0.2039*** 0.0607 0.0377 -0.0053 -0.0961 -0.0895 0.0514 
+          1.9655** 2.5545** 5.0867*** 5.2838*** 4.6217*** 2.6972*** 2.0730** 6.5150*** 
+Adjusted R2 20.58% 12.28% 6.31% 4.63% 4.72% 4.90% 7.58% 13.06% 
+Note. This table presents the estimates of equation 7 for the MAC index . OLS stands for the ordinary least squares regression. 322 
+WTIRET refers to the return for the WTI index. Logarithmic returns are used for all the indexes. ***, ** and * indicate statistical 323 
+significance at 1%, 5% and 10% levels, respectively. 324 
+ 325 
+16 
+ 
+-.12
+-.08
+-.04
+.00
+.04
+.08
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+C
+.0
+.2
+.4
+.6
+.8
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI
+-.2
+.0
+.2
+.4
+.6
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG1)
+-.3
+-.2
+-.1
+.0
+.1
+.2
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG2)
+-.2
+-.1
+.0
+.1
+.2
+.3
+.4
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG3)
+-.2
+-.1
+.0
+.1
+.2
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG4)
+-.2
+.0
+.2
+.4
+.6
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG5)
+-.2
+-.1
+.0
+.1
+.2
+.3
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG6)
+-.2
+-.1
+.0
+.1
+.2
+.3
+.4
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG7)
+-.4
+-.3
+-.2
+-.1
+.0
+.1
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG8)
+-.4
+-.2
+.0
+.2
+.4
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+MAC(LAG1)
+Quantile Process Estimates 
+ 326 
+Figure 6. Quantile regression showing the lagged impact of WTI on MAC 327 
+Notes: The blue line represents the point estimates whereas the two orange lines represent the 95 percent confidence bands.328 
+17 
+ 
+For the SPGCE, the OLS regression displays a positive effect of the first lag of WTI returns. 329 
+Testing for the gradual information diffusion hypothesis, the contemporaneous effect of crude oil 330 
+is about 9 times the effect of the first lag, which defies the first condition. After incorporating all 331 
+8 lags of oil returns, we note that the highest effect is at lag 5, which indicates a reject ion of the 332 
+second condition. Thus, based on the OLS model, the gradual information diffusion hypothesis is 333 
+rejected. Table 5 shows the results for the first lag effect of WTI returns in each quantile to be 334 
+highly scattered with both negative and positive c orrelation with SPGCE returns. As the 335 
+contemporaneous effect is very high compared to the first lagged effect of oil returns, the first 336 
+condition is rejected. The second condition is also rejected. Figure 7  shows the quantile 337 
+regression for each of the eight lags taken into account for the SPGCE.  338 
+ 339 
+Table 5. Regression results for lagged effect between WTI and SPGCE 340 
+Quantile   0.05 0.1 0.25 0.5 0.75 0.9 0.95 OLS 
+Constant -0.0730*** -0.0467*** -0.0203** 0.0022 0.0209** 0.0408** 0.0565*** -0.0008 
+        0.5088*** 0.3619*** 0.3178*** 0.2715*** 0.2772*** 0.2101*** 0.2048*** 0.3511*** 
+          0.0873 -0.0073 0.0033 -0.0155 0.0110 0.0267 -0.0054 0.0406 
+          0.0548 -0.0347 -0.0684 -0.0445 -0.0311 -0.0465 -0.1325* -0.0534 
+          0.1078 0.0288 -0.0015 0.0486 0.0090 0.0259 0.0679 0.0087 
+          0.1225* 0.0833 -0.0184 -0.0075 -0.0192 0.0037 0.0270 0.0143 
+          0.2114*** 0.14678* 0.0879 0.0334 -0.0008 0.0290 0.0437 0.0634 
+          0.0050 0.0526 0.0210 -0.0527 -0.0040 0.0509 0.0353 0.0042 
+          0.1069* 0.08157 -0.0178 0.0531 0.0749 0.0337 0.0273 0.0523 
+          -0.1324** -0.0388 -0.0680 -0.0404 -0.0749 -0.0389 -0.1381** -0.1002 
+Lagged SPGCE 0.3205*** 0.2918*** 0.0486 0.0591 -0.0281 -0.1887 -0.1690** -0.0051 
+          2.4352** 2.8333*** 6.7964*** 5.9895*** 4.8884*** 4.1476*** 2.4425** 6.7781*** 
+ 
+Adjusted R2 18.12% 10.43% 6.31% 4.63% 5.74% 9.33% 13.32% 15.31% 
+Note. This table presents the estimates of equation 7 for the SPGCE index. OLS stands for the ordinary least squares regression. 341 
+WTIRET refers to the return for the WTI index. Logarithmic returns are used for all the indexes. ***, ** and * indicate statistical 342 
+significance at 1%, 5% and 10% levels, respectively. 343 
+ 344 
+ 345 
+ 346 
+ 347 
+18 
+ 
+-.06
+-.04
+-.02
+.00
+.02
+.04
+.06
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+C
+.1
+.2
+.3
+.4
+.5
+.6
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI
+-.2
+-.1
+.0
+.1
+.2
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG1)
+-.15
+-.10
+-.05
+.00
+.05
+.10
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG2)
+-.3
+-.2
+-.1
+.0
+.1
+.2
+.3
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG3)
+-.2
+-.1
+.0
+.1
+.2
+.3
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG4)
+-.1
+.0
+.1
+.2
+.3
+.4
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG5)
+-.2
+-.1
+.0
+.1
+.2
+.3
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG6)
+-.2
+-.1
+.0
+.1
+.2
+.3
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG7)
+-.2
+-.1
+.0
+.1
+.2
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(LAG8)
+-.4
+-.2
+.0
+.2
+.4
+.6
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+SPGCE(LAG1)
+Quantile Process Estimates 
+ 348 
+Figure 7. Quantile regression showing the lagged impact of WTI on SPGCE 349 
+Notes: The blue line represents the point estimates whereas the two orange lines represent the 95 percent confidence bands.  350 
+19 
+ 
+To summarize, the various clean energy stock returns react differently to the lagged effects of 351 
+crude oil returns. The contemporaneous effects are always larger for WTI returns than the first 352 
+lagged effect, which rejects the gradual information diffusion h ypothesis. For the three stock 353 
+indices, the major lagged effect takes place at either the third or fifth lag, depending on the 354 
+market condition. The effect is statistically significant and thus influences investing decisions. 355 
+These results agree with the e arlier finding of Peng and Ng [33] that the return effects transmit 356 
+slowly. Thus, when the market is bullish or bearish, the major reason for slower lag effect is not 357 
+justified by the diffusion hypothesis. The analysis also confirms the findings of Driespr ong et al. 358 
+[27] that because these lagged effects occur at different times there is a lagged response of clean 359 
+energy stock returns to oil returns. The effect of new information continues for a long time in the 360 
+case of oil markets returns [29] which would compel clean energy stock returns to react 361 
+differently to new information in oil returns under different market conditions.  362 
+ 363 
+4.3. Asymmetric impacts of crude oil returns on clean energy stock returns 364 
+ 365 
+We examine the asymmetric impacts of positive and nega tive WTI returns on clean energy stock 366 
+returns using QR, given that the OLS regression is unable to do the same. The results are 367 
+reported in Tables 6-8, based on Equation (8).         
+  368 
+ 369 
+Table 6. Regression results for asymmetric impacts between WTI and ECO 370 
+Quantile   0.05 0.1 0.25 0.5 0.75 0.9 0.95 OLS 
+Constant -0.0524*** -0.0331*** -0.0151*** 0.0061*** 0.0230*** 0.0422*** 0.0522*** 0.0049** 
+        
+  -0.0065 -0.1017* 0.0158 0.0930** 0.2484** 0.3724*** 0.5259*** 0.1435** 
+        
+  0.8628*** 0.9134*** 0.6656*** 0.3796*** 0.2494*** 0.2113** 0.0216 0.4888*** 
+Lagged ECO 0.2067*** 0.1541*** 0.0490 -0.0224 -0.0611 -0.1524** -0.1102** 0.01917 
+          -5.7963*** -5.9276*** -2.6694*** -2.9397*** -0.0068 0.8753 2.7023*** -3.9413*** 
+Adjusted R2 23.03% 17.36% 8.42% 5.75% 4.66% 3.90% 5.95% 14.94% 
+Note. This table presents the estimates of equation 8 for the ECO index . OLS stands for the ordinary least squares regression. 371 
+WTIRET refers to the return for the WTI index. Logarithmic returns are used for all the indexes. ***, ** and * indicate statistical 372 
+significance at 1%, 5% and 10% levels, respectively. 373 
+ 374 
+20 
+ 
+Table 7. Regression results for asymmetric impacts between WTI and MAC 375 
+Quantile   0.05 0.1 0.25 0.5 0.75 0.9 0.95 OLS 
+Constant -0.0715*** -0.0502*** -0.0178*** 0.0066* 0.0331*** 0.0653*** 0.0761*** 0.0063** 
+        
+  -0.0536 0.0143 -0.0773 0.1992 0.3470*** 0.4297* 0.6118** 0.2263*** 
+        
+  1.2970*** 1.2869*** 0.9951*** 0.4522*** 0.4137*** 0.3855*** -0.1104** 0.6213*** 
+Lagged MAC 0.1999*** 0.1928*** 0.1132*** 0.0342 0.0014 -0.0786* -0.0873** 0.0515 
+          -4.7523*** -3.7271*** -4.0139*** -1.2899 -0.6371 0.1376 2.3879 -3.1375*** 
+Adjusted R2 23.66% 15.36% 7.32% 4.78% 4.61% 4.05% 4.68% 12.84% 
+Note. This table presents the estimates of equation 8 for the MAC index . OLS stands for the ordinary least squares regression. 376 
+WTIRET refers to the return for the WTI index. Logarithmic returns are used for all the indexes. ***, ** and * indicate statistical 377 
+significance at 1%, 5% and 10% levels, respectively. 378 
+ 379 
+Table 8. Regression results for asymmetric impacts between WTI and SPGCE 380 
+Quantile   0.05 0.1 0.25 0.5 0.75 0.9 0.95 OLS 
+Constant -0.0406*** -0.0257** -0.0093 0.0052 0.0207* 0.0361** 0.0437** 0.0042* 
+        
+  -0.1518 -0.1115 -0.0111 0.1569*** 0.3092*** 0.3650*** 0.6335*** 0.1807*** 
+        
+  1.2979*** 1.0111*** 0.6493*** 0.3572** 0.2352** 0.1166** 0.0105 0.4641*** 
+Lagged SPGCE 0.1492*** 0.1756*** 0.0837* 0.0632 -0.0683 -0.1714*** -0.1400*** 0.0043 
+          -3.7105*** -4.3476*** -3.3371*** -1.5493 0.8953 1.0565 2.3047*** -3.2499*** 
+Adjusted R2 23.27% 16.33% 8.43% 5.13% 5.23% 9.20% 12.59% 14.77% 
+Note. This table presents the estimates of equation 8 for the SPGCE index . OLS stands for the ordinary least squares regression. 381 
+WTIRET refers to the return for the WTI index. Logarithmic returns are used for all the indexes. ***, ** and * indicate statistical 382 
+significance at 1%, 5% and 10% levels, respectively. 383 
+ 384 
+Starting with the results reported in Table 6, which involves the ECO index. The OLS regression 385 
+results show that both positive and negative WTI returns have a positive effect on ECO, although 386 
+negative WTI returns have a stronger effect. However, the QR re sults show that in the lower 387 
+quantiles, positive WTI returns have an inverse relationship with ECO returns. As we move 388 
+towards the median and upper quantiles, positive WTI returns have a high positive effect. 389 
+Negative WTI returns have a positive effect acr oss all quantiles, but the effect is much higher in 390 
+21 
+ 
+lower quantiles. These results are useful for decisions regarding investment strategies in various 391 
+market conditions. Positive WTI returns affect investment decisions more in bullish periods, 392 
+whereas in b earish markets, negative WTI returns are more important for making investment 393 
+decisions in ECO. The results of the Wald test for asymmetry show that the null hypothesis of 394 
+asymmetry is rejected under the OLS model. However, the same test under quantile reg ression is 395 
+not rejected in bearish market conditions only. Asymmetry seems to exist in the model in both 396 
+bearish and normal market conditions. 397 
+Moving to the results of MAC and SPGCE, reported in Table 7 and Table 8, respectively. The 398 
+OLS regression results show that both positive and negative WTI returns have a positive effect. 399 
+However, the effect of negative WTI returns is much stronger and the asymmetric effect is 400 
+insignificant. The QR results show that positive WTI returns have a negative effect in lower  401 
+quantiles and are highly positive in upper quantiles. In contrast, negative WTI returns are 402 
+positively significant in lower quantiles and negatively significant in upper quantiles. This 403 
+suggests that positive WTI returns have a positive explanatory power for the returns of MAC and 404 
+SPGCE in bullish market conditions, whereas in extreme bearish market conditions the 405 
+explanatory power of positive WTI returns is negative. Furthermore, negative WTI returns 406 
+positively affect the returns of MAC and SPGCE in upper  quantiles, whereas negative WTI 407 
+returns have a negative effect in extreme upper quantiles. The Wald test rejects the null 408 
+hypothesis of asymmetry under the OLS model. However, the quantile regression results show 409 
+that the Wald test rejects the null hypoth esis in the median quantile and extreme high quantiles 410 
+for MAC, and in median and high quantiles for SPGCE. Figures 8 -10 show the quantile 411 
+regression for investigating the asymmetric impact of WTI on the clean energy stock indices.  412 
+ 413 
+ 414 
+ 415 
+ 416 
+ 417 
+ 418 
+ 419 
+ 420 
+ 421 
+22 
+ 
+-.06
+-.04
+-.02
+.00
+.02
+.04
+.06
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+C
+-.4
+-.2
+.0
+.2
+.4
+.6
+.8
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(POSITIVE) 
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+1.2
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(NEGATIVE)
+-.3
+-.2
+-.1
+.0
+.1
+.2
+.3
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+ECO(LAG1)
+Quantile Process Estimates 
+ 422 
+Figure 8. Quantile regression investigating the asymmetric impact of WTI on ECO 423 
+ Notes: The blue line represents the point estimates whereas the two orange lines represent the 95 percent confidence bands.  424 
+23 
+ 
+-.08
+-.04
+.00
+.04
+.08
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+C
+-0.4
+-0.2
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(POSITIVE)
+0.0
+0.4
+0.8
+1.2
+1.6
+2.0
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(NEGATIVE)
+-.2
+-.1
+.0
+.1
+.2
+.3
+.4
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+MAC(LAG1)
+Quantile Process Estimates 
+ 425 
+Figure 9. Quantile regression investigating the asymmetric impact of WTI on MAC 426 
+ Notes: The blue line represents the point estimates whereas the two orange lines represent the 95 percent confidence bands.  427 
+ 428 
+ 429 
+24 
+ 
+-.015
+-.010
+-.005
+.000
+.005
+.010
+.015
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+C
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1.0
+1.1
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(POSITIVE)
+0.5
+0.6
+0.7
+0.8
+0.9
+1.0
+1.1
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+WTI(NEGATIVE)
+-.02
+.00
+.02
+.04
+.06
+.08
+.10
+0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+Quantile
+SPGCE(LAG1)
+Quantile Process Estimates 
+  430 
+Figure 10. Quantile regression investigating the asymmetric impact of WTI on SPGCE 431 
+ Notes: The blue line represents the point estimates whereas the two orange lines represent the 95 percent confidence bands.  432 
+25 
+ 
+The a bove analysis gives a solid proof of our results in section 4.1 that in periods of lower 433 
+returns, oil movements have a better explaining power for clean energy stock movements. The 434 
+asymmetrical tests show that negative oil movements are more useful than po sitive movements 435 
+in periods of high market distress. The lower explaining power in bullish or median periods, 436 
+shown in section 4.1, is due to the asymmetry exhibited by positive and negative oil returns.  437 
+ 438 
+4.4. Implications of the results 439 
+ 440 
+We have revealed that oil price shocks have a strong positive impact on clean energy stock 441 
+indices at lower quantiles, which complements previous findings [1, 9, 12 -14, 31]. Furthermore, 442 
+the impact tends to decrease  at upper quantiles, which suggests a str ong association between oil 443 
+prices and clean energy stock indices during bearish market periods. Economically speaking, the 444 
+implication of this result matters to the investors operating in clean energy markets who should 445 
+be highly concerned about variation s in the global oil price index when the market is bearish. 446 
+Given that bearish market conditions refer to periods of low or negative returns, shifting towards 447 
+clean energy investment in response to oil price movements appears to be common for hedging 448 
+purposes.   449 
+To further explain the reason behind such high dependency of clean energy stock movements on 450 
+oil prices during bearish periods, we examine the asymmetric relationship to check the nonlinear 451 
+association between clean energy stock indices and crude oi l prices and show evidence of high 452 
+asymmetries in the lower quantiles and insignificant asymmetries in the upper quantiles. 453 
+Accordingly, there is evidence of high dependence on negative oil movements in bearish periods 454 
+for each of the clean energy indices whereas there is a high dependency on positive oil 455 
+movements during bullish periods. Economically speaking, a potential explanation for these 456 
+results is that the high negative oil returns in bearish market conditions seem to decrease the 457 
+investment in crude oil and thus investors choose better assets to hedge market risk. As negative 458 
+market movement has a high impact on clean energy sources, investors put more money into 459 
+clean energy sources to hedge their portfolios. However, during bullish market conditio ns, rising 460 
+oil prices move symmetrically with clean energy stocks implying the importance of alternative 461 
+energy as a superior source of energy.  462 
+ 463 
+26 
+ 
+The results of this empirical research have significant implications to investors, financial 464 
+managers, and portfolio managers who intend to estimate portfolio risk during the episodes of oil 465 
+price shocks. Our results are also important for detecting hedging and arbitrage opportunities in 466 
+alternative energy firms. To this end, investors holding assets in crude oil and clean energy 467 
+markets could use those findings when constructing minimum risk portfolios. Policymakers 468 
+could also make use of our outcomes while formulating effective strategies to moderate the 469 
+impact of oil price shocks on clean energy stocks. One such  policy could be encouraging 470 
+industries to improve efficiency in the usage of crude oil and to employ alternative sources to 471 
+evade oscillations in clean energy stock prices. In sum, active measures should be taken into 472 
+account for avoiding the contagion risk originating from the unstable crude oil market. 473 
+ 474 
+5. Conclusions and implications for sustainability  475 
+Unlike previous researchers who mostly apply mean -based models, we examine the dependence 476 
+structure between WTI prices and renewable energy equity indexe s using quantile regression to 477 
+offer a more comprehensive dependence structure under diverse market conditions. Our 478 
+empirical analyses provide solid evidence for the decreasing dependence of clean energy stocks 479 
+on oil price movements. Additionally, the lag ged effect of WTI prices on clean energy equity 480 
+returns is generally significant, which indicates that clean energy stock returns react differently 481 
+to new information on oil returns under different market conditions. Further analyses involving 482 
+the presence of asymmetry in the relationship between crude oil returns on the returns of clean 483 
+energy stock indices in various market conditions show strong effects of negative oil returns 484 
+during bearish periods and an insignificant effect during bullish periods.   485 
+Understanding the connectedness between renewable energy stocks and traditional energy prices 486 
+is of paramount importance to ethical investors, as this information is essential for gaining 487 
+superior risk -adjusted returns through proper allocation of clean ene rgy assets to a portfolio. 488 
+Such knowledge further helps to identify whether and to what extent these stocks are sensitive to 489 
+shocks emanating from other allied markets.  It is worth mentioning that although ethical 490 
+investors aim at decarbonizing their portf olios, they still attempt to receive healthy returns from 491 
+their investments. If decarbonizing portfolios does not provide incentives for switching over to 492 
+renewable energy sources, investors would be reluctant to green their portfolios which will 493 
+27 
+ 
+hamper the migration towards a low -carbon economy. Our findings will be of particular interest 494 
+to those participants who want to invest in eco -friendly firms. Overall, these results could be 495 
+useful in outlining sustainable business strategies and designing optimal portfolios. 496 
+Given earlier evidence from the academic literature that investments in clean energy stocks have 497 
+positive environmental and socio -economic impacts that potentially help ensure a certain degree 498 
+of sustainability, it is thus important to consider the application of modern portfolio theory with a 499 
+view to gaining proper knowledge of stock market strategies. Accordingly, our current empirical 500 
+analysis is of interest to institutional investors who aim at detecting the clean energy market risk  501 
+via proper financial modelling. Furthermore, and g iven the growing interest in both alternative 502 
+fuel sources and alternative investments, understanding the relationship between oil and clean 503 
+energy stock markets is always crucial for making investment and risk management decisions.  504 
+For future research, it would be interesting to examine the impact of crude oil implied volatility 505 
+on the return behaviour of renewable energy stocks under diverse market conditions. Other 506 
+extensions could involve  the potential  association between critical metals and the markets of 507 
+clean energy technologies [34] or the application of the approach of Kazemilari et al. [2] on the 508 
+oil-clean energy nexus.  509 
+ 510 
+References 511 
+1. Bouri E., Jalkh N., Dutta A., Uddin, G.S. (2019). Gold and cru de oil as safe -haven assets for clean 512 
+energy stock indices: blended copulas approach. Energy, 178, 544-53. 513 
+2. Kazemilari, M., Mardani, A., Streimikiene, D., & Zavadskas, E. K. (2017). An overview of renewable 514 
+energy companies in stock exchange: Evidence from minimal spanning tree approach. Renewable energy, 515 
+102, 107-117. 516 
+3. Luqman, M., Ahmad, N., & Bakhsh, K. (2019). Nuclear energy, renewable energy and economic 517 
+growth in Pakistan: Evid ence from non -linear autoregressive distributed lag model. Renewable energy, 518 
+139, 1299-1309.  519 
+28 
+ 
+4. Razmi, S. F., Bajgiran, B. R., Behname, M., Salari, T. E., & Razmi, S. M. J. (2020). The relationship of 520 
+renewable energy consumption to stock market developme nt and economic growth in Iran. Renewable 521 
+Energy, 145, 2019-2024. 522 
+5. Rahman, M. M., & Velayutham, E. (2020). Renewable and non -renewable energy consumption -523 
+economic growth nexus: New evidence from South Asia. Renewable Energy, 147, 399-408.  524 
+6. Kumar, S., Managi, S., Matsuda, A. (2012). Stock prices of clean energy firms, oil and carbon markets: 525 
+A vector autoregressive analysis. Energy Economics, 34(1), 215-226. 526 
+7. Reboredo, J.C. (2015). Is there dependence and systemic risk between oil and renewable energy  stock 527 
+prices? Energy Economics, 48, 32-45. 528 
+8. Sadorsky, P. (2012). Correlations and volatility spillovers between oil prices and the stock prices of 529 
+clean energy and technology companies. Energy Economics, 34(1), 248-255. 530 
+9. Bondia, R., Ghosh, S., Kanjila l, K. (2016). International crude oil prices and the stock prices of clean 531 
+energy and technology companies: Evidence from non -linear cointegration tests with unknown structural 532 
+breaks. Energy, 101, 558-565. 533 
+10. Reboredo, J.C., Rivera -Castro, M.A., Ugolini,  A. (2017). Wavelet -based test of co -movement and 534 
+causality between oil and renewable energy stock prices. Energy Economics, 61, 241-252. 535 
+11. Ahmad, W. (2017). On the dynamic dependence and investment performance of crude oil and clean 536 
+energy stocks. Research in International Business and Finance, 42, 376-389. 537 
+12. Ferrer, R., Shahzad, S. J. H., López, R., & Jareño, F. (2018). Time and frequency dynamics of 538 
+connectedness between renewable energy stocks and crude oil prices. Energy Economics, 76, 1-20. 539 
+13. Ko caarslan, B., & Soytas, U. (2019). Asymmetric pass -through between oil prices and the stock 540 
+prices of clean energy firms: New evidence from a nonlinear analysis. Energy Reports, 5, 117-125. 541 
+14. Xia, T., Ji, Q., Zhang, D., & Han, J. (2019). Asymmetric and e xtreme influence of energy price 542 
+changes on renewable energy stock performance. Journal of Cleaner Production, 241, 118338. 543 
+15. Koenker, R., Bassett, G., (1978). Regression quantiles. Econometrika: journal of the Econometric 544 
+Society, 46, 33–50.  545 
+29 
+ 
+16. Anguyo, F. L., Gupta, R., & Kotzé, K. (2019). Inflation dynamics in Uganda: a quantile regression 546 
+approach. Macroeconomics and Finance in Emerging Market Economies, 1-27.  547 
+17. Badshah, I.U. (2012). Quantile regression analysis of the asymmetric return-volatility relation. Journal 548 
+of Futures Markets, 33(3), 235-265. 549 
+18. Bouri E., Jalkh N., Roubaud D. (2017). Commodity volatility shocks and BRIC sovereign risk: A 550 
+GARCH-quantile approach. Resources Policy, 61, 385-392. 551 
+19. Gupta, R., Jooste, C., & Ranjbar, O. (2017). South Africa‟s inflation persistence: a quantile regression 552 
+framework. Economic Change and Restructuring, 50(4), 367-386. 553 
+20. Zhu, H., Guo, Y., You, W., Xu, Y. (2016). The heterogeneity dependence between crude oil price 554 
+changes and industry stock market  returns in China: Evidence from a quantile regression 555 
+approach. Energy Economics, 55, 30-41. 556 
+21. Dutta, A. (2017). Oil Price Uncertainty and Clean Energy Stock Returns: New Evidence from Crude 557 
+Oil Volatility Index. Journal of Cleaner Production, 164: 1157-1166. 558 
+22. Ahmad, W., Sadorsky, P., Sharma, A. (2018). Optimal hedge ratios for clean energy equities. 559 
+Economic Modelling, 72, 278-295. 560 
+23. Hong, H., Stein, J.C. (1999). A unified theory of underreaction, momentum trading, and overreaction 561 
+in asset markets. Journal of Finance, 54(6), 2143-2184.  562 
+24. Hong, H., Torous, W., Valkanov, R. (2007). Do industries lead stock markets? Journal of Financial 563 
+Economics, 83(2), 367-396. 564 
+25. Narayan, P.K., Sharma, S.S. (2011). New evidence on oil price and firm returns.  Journal of Banking 565 
+& Finance, 35(12), 3253-3262. 566 
+26. Xiao, J., Hu, C., Ouyang, G., Wen, F. (2019). Impacts of oil implied volatility shocks on stock 567 
+implied volatility in china: Empirical evidence from a quantile regression approach.  Energy 568 
+Economics, 80, 297-309. 569 
+27. Driesprong, G., Jacobsen, B. Maat, B. (2008). Striking oil: another puzzle?.  Journal of financial 570 
+economics, 89(2), 307-327. 571 
+30 
+ 
+28. Narayan, P.K., Narayan, S. (2010). Modelling the impact of oil prices on Vietnam‟s stock 572 
+prices. Applied energy, 87(1), 356-361. 573 
+29. Xiao, J., Zhou, M., Wen, F., Wen, F. (2018). Asymmetric impacts of oil price uncertainty on Chinese 574 
+stock returns under different market conditions: Evidence from oil volatility index.  Energy 575 
+Economics, 74, 777-786. 576 
+30. Batten, J. A., C iner, C., Kosedag, A., & Lucey, B. M. (2017). Is the price of gold to gold mining 577 
+stocks asymmetric?. Economic Modelling, 60, 402-407. 578 
+31. Henriques, I., Sadorsky, P. (2008). Oil prices and the stock prices of alternative energy 579 
+companies. Energy Economics, 30(3), 998-1010. 580 
+32. Lu, H., Jacobsen, B. (2016). Cross -asset return predictability: Carry trades, stocks and 581 
+commodities. Journal of International Money and Finance, 64, 62-87. 582 
+33. Peng, Y., Ng, W.L. (2012). Analysing financial contagion and asymmetric market dependence with 583 
+volatility indices via copulas. Annals of Finance, 8(1), 49-74. 584 
+34. Grandell, L., Lehtilä, A., Kivinen, M., Koljonen, T., Kihlman, S., & Lauri, L. S. (2016). Role of 585 
+critical metals in the future markets of clean energy technologies. Renewable Energy, 95, 53-62.  586 
+ 587 

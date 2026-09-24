@@ -1,0 +1,1442 @@
+         Measuring  volatility with  the  realized range∗
+
+                    Martin Martens†                                      Dick van  Dijk‡
+                   Econometric  Institute                              Econometric  Institute
+             Erasmus  University Rotterdam                       Erasmus  University Rotterdam
+
+
+
+                Econometric  Institute Report EI  2006-10
+                                               February 2006
+
+
+
+
+
+
+
+                                                     Abstract
+        Realized   variance,   being  the   summation   of   squared   intra-day   returns,   has
+        quickly gained popularity as a measure of daily volatility.  Following Parkinson
+        (1980)  we  replace  each  squared  intra-day  return  by  the  high-low  range  for
+        that  period  to  create  a  novel  and  more  eﬃcient  estimator  call  ed  the  realized
+        range.   In  addition  we  suggest  a  bias-correction  procedure  to  account  for  the
+        eﬀects  of  microstructure  frictions  based  upon  scaling  the  r ealized  range  with
+        the  average   level   of  the  daily  range.     Simulation   experiments  demonstrate
+        that for  plausible levels  of  non-trading and  bid-ask bounce the realized  range
+        has a  lower  mean  squared error  than  the realized  variance,  including variants
+        thereof  that  are  robust  to  microstructure  noise.     Empirical  analysis  of  the
+        S&P500  index-futures  and  the  S&P100  constituents  conﬁrm  th e  potential  of
+        the realized  range.
+
+        Keywords:  Realized  volatility;  high-low  range;  high-frequency  data;  market
+        microstructure noise,  bias-correction.
+        JEL Classiﬁcation :  C14,  C15,  C53.
+
+
+
+   ∗We  thank  Peter  Hansen,  participants  at  the  International  Conference  on  Finance  in  Copen-
+hagen  (September  2-4,  2005),  the  special  issue  guest  editors  Herman  van  Dijk  and  Philip  Hans
+Franses,  and  two  anonymous  referees  for  useful  comments  and  suggestions.  Any  remaining  errors
+are ours.
+   †Econometric  Institute,   Erasmus  University  Rotterdam,   P.O.  Box  1738,   NL-3000  DR   Rot-
+terdam,     The    Netherlands,    Phone:       +31    10    408    1285,    Fax:       +31    10    408    9162,    E-mail:
+mmartens@few.eur.nl
+   ‡Econometric  Institute,   Erasmus  University  Rotterdam,   P.O.  Box  1738,   NL-3000  DR   Rot-
+terdam,     The    Netherlands,    Phone:       +31    10    408    1263,    Fax:       +31    10    408    9162,    E-mail:
+djvandijk@few.eur.nl (corresponding author)
+1      Introduction
+
+Measuring and forecasting volatility of ﬁnancial asset ret urns is important for portfo-
+lio management,  risk management  and option pricing.  By now it is well established
+that  volatility  is  both  time-varying  and,  to  a  certain  extent,  predictable.    An  im-
+portant  issue  is  how  to  measure  ex-post  volatility,   which  is  necessary  for  proper
+evaluation  of  competing  volatility  forecasts,  among  other  purposes.   Recently  much
+research  has  been  devoted  to  the  use  of  high-frequency  data  for  measuring  volatil-
+ity.   In  particular,  the  sum  of  squared  intra-day  returns,  called  realized  variance,  is
+rapidly gaining popularity for estimating daily volatility.  In theory, the realized vari-
+ance  is  an  unbiased  and  highly  eﬃcient  estimator,  as  illustr  ated  in  Andersen  et  al.
+(2001b),  and  converges  to  the  true  underlying  integrated  variance  when  the  length
+of  the  intra-day  intervals  goes  to  zero,  see  Barndorﬀ-Niels en  and  Shephard  (2002).
+In  practice,  market  microstructure  eﬀects  such  as  bid-ask  b ounce  pose  limitations
+to  the  choice  of  sampling  frequency.   Returns  at  very  high  frequencies  are  distorted
+such that the realized variance becomes biased and inconsistent, see Bandi and Rus-
+sell  (2005a,b),  A¨ıt-Sahalia  et  al.  (2005),  and  Hansen  and  Lunde  (2006b).   Popular
+choices  in empirical applications are the ﬁve-  and thirty-m inute  intervals, which  are
+believed  to  strike  a  balance  between  the  increasing  accuracy  of  higher  frequencies
+and  the  adverse  eﬀects  of  market  microstructure  frictions,    see  e.g.    Andersen  and
+Bollerslev  (1998),  Andersen  et  al.  (2001a),  Andersen  et  al.  (2003),  and  Fleming  et
+al. (2003).
+    An alternative way of measuring volatility is based on the diﬀerence between the
+maximum  and  minimum  prices  observed  during  a  certain  period.  Parkinson  (1980)
+shows  that  the  daily  (log)  high-low  range,  properly  scaled,  not  only  is  an  unbiased
+estimator  of  daily  volatility  but  is  ﬁve  times  more  eﬃcient  t    han  the  squared  daily
+close-to-close  return.   Correspondingly,  Andersen  and  Bollerslev  (1998)  and  Brandt
+and  Diebold  (2006)  ﬁnd  that  the  eﬃciency  of  the  daily  high-lo    w  range  is  between
+that of the  realized  variance  computed  using  3-hour and  6-hour returns.
+    This paper starts from the crucial observation that Parkinson’s result concerning
+
+
+                                                        1
+the  relative  eﬃciency  of  the  high-low  range  applies  to  any  in  terval,  in  particular
+also to the intra-day intervals employed by the realized variance.  That is, in theory,
+for each intra-day interval  the high-low range is a more eﬃci  ent  volatility  estimator
+than  the  squared  return  over  that  interval.   We  therefore  suggest  to  measure  daily
+volatility  by  the  sum  of  high-low  ranges  for  intra-day  intervals.    The  resulting  es-
+timator,  which  we  dub  ‘realized  range’,  should  be  more  eﬃcie  nt  than  the  realized
+variance  based  on  the  same  sampling  frequency.  Indeed,  in  concurrent  independent
+work, Christensen  and Podolskij (2005) derive the theoretical properties of the real-
+ized  range,  similar  to  Barndorﬀ-Nielsen  and  Shephard  (2002 )  for  realized  variance.
+In an ideal world (continuous  trading, no market  frictions) the realized range is ﬁve
+times  more  eﬃcient  than  the  corresponding  realized  varianc  e,  and  converges  to  the
+integrated variance at the same rate.  At the same time, in such an ideal world there
+seems  to  be  no  need  to  consider  the  realized  range,  as  the  true  daily  volatility  can
+be approximated arbitrarily closely by the realized variance using higher and higher
+frequencies.  However, it is often claimed that the daily range is more robust against
+the  eﬀects  of  market  microstructure  noise  than  the  realized   variance,  see  Alizadeh
+et al. (2002) and Brandt and Diebold (2006), among others.  Obviously,  the realized
+range will be aﬀected  more heavily  by microstructure  noise  a s each of the intra-day
+ranges  is  contaminated.   Nevertheless,  in  realistic  settings  it  is  an  open  question  as
+to whether the realized variance or the realized range renders  a superior measure  of
+daily  volatility.  In  this  paper  we  attempt  to shed  light  on this  question.
+    Our  approach  is  based  upon  Monte  Carlo  simulation  and  an  empirical  analysis
+for  S&P500  index-futures   and  the  individual   stocks  in   the  S&P100  index.     The
+simulation  experiments  reveal  that  both  realized  range  and  realized  variance  are
+upward  biased  in  the  presence  of  bid-ask  bounce.   We  ﬁnd  that  i n  fact  the  realized
+range  is  aﬀected  more  than  the  realized  variance  at  the  same  s ampling  frequency.
+Infrequent  trading  induces  a  downward  bias  in  the  realized  range,  while  it  does  not
+aﬀect  the  realized  variance.  In  case  the  price  path  is  not  obs erved  continuously  the
+observed  minimum  and maximum  price over-  and underestimate the true minimum
+and  maximum,  respectively,  such  that  the  observed  range  underestimates  the  true
+
+                                                        2
+range.
+    We consider a bias-adjustment procedure for the realized range estimator, which
+involves  scaling  the  realized  range  with  the  ratio  of  the  average  level  of  the  daily
+range and the average level of the realized range.  This is based upon the idea that the
+daily range is (almost) not contaminated by microstructure noise and thus provides
+a  good  indication   of  the  true  level   of  volatility.     In   the  simulation   experiments,
+we  ﬁnd  that  the  scaled  realized  range  is  more  eﬃcient  than  the      (scaled)  realized
+variance  estimator  based   on   returns  sampled   at  considerably   higher   frequencies.
+Comparing the scaled realized range with popular corrections of the realized variance
+for  microstructure  noise,   we  ﬁnd  that  it  outperforms  kernel -based  estimators,   as
+considered by Barndorﬀ-Nielsen et al. (2004) and Hansen and   Lunde (2005, 2006b),
+and  is  competitive  to the  two  time-scales  estimator  of Zhang et  al. (2005).
+    The empirical analysis conﬁrms that for both measuring and f orecasting volatility
+the (scaled) realized range can compete with and often improves upon realized vari-
+ance estimators at popular sampling frequencies,  including the versions that correct
+for microstructure  noise.  This  is  slightly  more  so  for more  actively  traded  stocks.
+    The remainder of this paper is organized as follows.  Section 2 deﬁnes the realized
+range,  including  the  suggested  bias-adjustment  procedure  to  counter  the  adverse
+eﬀects  of market  microstructure  noise.  Section 3 describes   the  design  and results  of
+the simulation experiments  that illustrate the properties of the realized range in the
+presence of market microstructure frictions.  Section 4 presents  the empirical results
+for the S&P500 index-futures, both concerning basic properties of the realized range
+and  a  comparison  between  realized  range  and  realized  variance.   Section  5  extends
+the comparison to the constituents of the S&P100 index.  Finally Section 6 concludes.
+
+2      The realized range estimator
+
+Let  the  security  price  Pt  at time t  follow  the  geometric  Brownian  motion
+
+                                        dPt = µP  tdt + σP  tdBt,                                                                         (1)
+
+
+
+                                                       3
+where  µ   denotes  the  drift  term,  σ   is  the  constant  volatility  parameter  and  Bt  is  a
+standard  Brownian  motion.   By  Ito’s  lemma,  the  log  price  process  log Pt  follows  a
+Brownian motion with drift µ ∗ = µ − σ  2/   2 and volatility σ .  For ease of notation we
+normalize  the  daily  interval  to  unity.  Then  for  the  i-th  interval  of  length  ∆  on  day
+t,  for  i = 1,  2, . . ., I          with  I  = 1/   ∆  assumed  to  be  integer,  we  observe  the  last  price
+in  that  interval  Ct,i  =  Pt−1+i∆  ,  the  high  price  Ht,i  =  sup(i−1)∆   <j<i∆   Pt−1+j  and  the
+low  price  Lt,i  =  inf(i−1)∆   <j<i∆   Pt−1+j.   If  the  drift  µ ∗ is  equal  to  zero,  an  unbiased
+estimator  of the  variance  during  interval i, σ  2∆,  is  the  squared  return,
+
+                                       r2t−1+i∆   ,∆    = (log Ct,i−  log Ct,i−1)2,                                                           (2)
+
+which  has  variance  equal  to  2σ  4∆    2.   Parkinson  (1980)  proposes  the  scaled  high-low
+range estimator  for the  variance,
+                                                  (log Ht,i−  log Lt,i)2
+                                                            4 log 2                 ,                                                                            (3)
+which  is  also  unbiased  if  µ ∗ =  0,  but  has  variance  (9ξ(3)/   ((4 log2)2)−  1)σ  4∆    2 ≈
+0. 407σ  4∆    2, where ξ(3) = ∑  ∞k=1 1/k    3  is Riemann’s zeta function.  Hence the variance
+(and  the  mean  squared  error)  of  the  squared  return  (2)  is  about  ﬁve  times  larger
+than that  of the  high-low  estimator  (3).
+     If  we  are  interested  in  estimating  the  daily  variance,  we  can  aggregate  either
+squared intra-day returns to obtain the so-called realized variance RV ∆t     or high-low
+ranges  for intra-day  intervals  to obtain the  realized  range RR∆t  :
+                                                ∑ I
+                                   RV ∆t     =        r2t−1+i∆   ,∆  ,                                                                                                 (4)
+                                                 i=1
+                                                           ∑ I
+                                   RR∆t    =        14 log 2     (log Ht,i−  log Lt,i)2.                                                     (5)
+                                                            i=1
+If  prices  follow  the  continuous  geometric  Brownian  motion  with  drift µ   = σ  2/   2 and
+constant  volatility  σ    as  speciﬁed   in  (1),   it  is  straightforward  to  show  that  both
+RR∆t     and  RV ∆t      are  unbiased  and  consistent  estimators  of  the  daily  variance  σ  2.
+In  addition,  the  relative  eﬃciency  result  stated  before  for     the  squared  daily  return
+versus  the  daily  high-low  range  continues  to  hold  for  RV ∆t     and  RR∆t  :  the  variance
+of the  realized  variance  is  2σ  4∆  vis-`a-vis  0    . 407σ  4∆  for the  realized  range.
+
+                                                                 4
+    A  few  remarks  concerning  the  (realized)  range  estimators  are  in  order.    First,
+Garman and Klass (1980) suggest to further improve eﬃciency    by utilizing the open
+and close prices in addition to the high and low prices.  Assuming that the ﬁrst price
+in the i-th interval, Ot,i, is identical to the last price in the (i− 1)-st interval, Ct,i−1,
+their minimum variance unbiased estimator for the volatility during the i-th interval
+of day t  is  given  by
+
+
+  0. 511(log Ht,i−  log Lt,i)2−  0. 383(log Ct,i−  log Ct,i−1)2
+
+                −  0. 019[(log Ct,i−  log Ct,i−1)(log Ht,i + log Lt,i−  2 log Ct,i−1)
+
+                                              −  2(log Ht,i−  log Ct,i−1)(log Lt,i−  log Ct,i−1)],      (6)
+
+which  is  theoretically  7.4  times  more  eﬃcient  than  the  squar  ed  return  in  (2).  They
+also  propose  a  “practical”  estimator  achieving  virtually  t he  same  eﬃciency,  which
+is  simply  a  linear  combination  of  the  high-low  range  and  the  squared  close-to-close
+return:
+                 0. 5(log Ht,i−  log Lt,i)2−  (2 log 2−  1)(log Ct,i−  log Ct,i−1)2.                          (7)
+
+In  the  context  of  the  daily  range,  Brown  (1990)  and  Alizadeh  et  al.  (2002)  argue
+against  the  use  of  open  and  close  prices,  based  on  the  fact  that  these  are  heavily
+contaminated  by  market  microstructure  eﬀects.   This  argume nt  applies  only  to  the
+open  and  close  prices  of  a  trading  day,  and  as  such  it  does  not  carry  over  to  the
+context  of the  realized  range,  where  open and  close  prices  of the  intra-day  intervals
+are ‘regular’ prices observed throughout the day.  Indeed, we included realized range
+estimators based on (6) and (7) in the simulation experiments  discussed  in the next
+section, and found that they further improve the eﬃciency re  lative to RR∆t   deﬁned in
+(5).  Detailed results are not reported here for space considerations, but are available
+upon request.
+    Second,  the  assumption  of  zero  drift,  µ ∗ =  µ −  σ  2/   2  =  0  in  (1),  is  crucial  for
+the  unbiasedness  and  consistency  of  the  high-low  range  in  (3).  Rogers  and  Satchell
+
+
+
+
+
+
+                                                         5
+(1991) were  the  ﬁrst  to  relax  this  assumption  and  suggested  t he  estimator
+
+
+  (log Ht,i−  log Ct,i−1)(log Ht,i−  log Ct,i)
+
+                                                     + (log Lt,i−  log Ct,i−1)(log Lt,i−  log Ct,i),      (8)
+
+which is independent of the drift µ   and is only slightly less eﬃcient than the Garman-
+Klass  estimator  in  (6)  in  case  µ   = σ  2/   2.  Subsequently,  Kunitomo  (1992)  and  Yang
+and  Zhang  (2000)  put  forward  alternative  estimators  that  allow  for  non-zero  drift,
+essentially  by  considering  a  transformed  price  process  to eliminate  the  drift.1
+    Finally,  and most important for our purposes,  Christensen  and Podolskij  (2005)
+establish  consistency  of  the  realized  range  estimator  RR∆t    as  deﬁned  in  (5)  for  the
+integrated  variance  under  the  assumption  that  the  log  price  follows  a  continuous
+sample  path martingale,  that is
+                                          ∫      t       ∫      t
+                 log Pt  = log P0 +
+                                            0   µ  sds +   0   σ s−dBs,              for 0≤  t <∞  ,
+where  the  instantaneous  mean µ   ={µ  t}t∈[0,∞ )  is  a locally  bounded  predictable  pro-
+cess,  the  spot  volatility  σ   = {σ t}t∈[0,∞ )  is  a  c`adl`ag  process,    Bs  again  is  a  standard
+Brownian  motion,  and  σ s−   =  limt↑s σ t.    Under  the  additional  assumptions  that  µ
+is  continuous  and  σ    is  everywhere  invertible,  the  asymptotic  distribution  of  RR∆t
+is  shown  to  be  mixed  normal,  with  σ   governing  the  mixture.   This  result  is  impor-
+tant  for  two  reasons.   First,  it  allows  for  general  speciﬁcat ions  of  the  drift  µ ,  which
+is  possible  thanks  to  the  fact  that  the  mean  component  vanishes  suﬃciently  fast  as
+∆  →   0.  Second, the range estimator traditionally has been analyzed under the strict
+assumption  that  volatility  is  constant  (at  least  within  a  trading  day).   The  results
+of  Christensen  and  Podolskij  (2005)  demonstrate  that  the  realized  range  estimator
+remains  consistent  in  the  presence  of  stochastic  volatility.   The  conditions  on  σ   are
+in  fact  rather  weak,  and  allow  for  models  with  leverage,  long-memory,  jumps  and
+diurnal  eﬀects.
+
+
+   1Bali  and  Weinbaum  (2005)  provide  a  thorough  comparison  of  all  the  diﬀerent  daily  range
+estimators mentioned  here.
+
+
+
+                                                           6
+2.1      Bias-correcting  the realized  range
+
+The eﬀects of microstructure noise such as bid-ask bounce on   realized variance esti-
+mators  has  been  studied  intensively,  see  Barndorﬀ-Nielsen   et  al.  (2004),  Bandi  and
+Russell  (2005a,b), Zhang et al. (2005), and Hansen and Lunde (2006b), among oth-
+ers.   As  mentioned  before,  the  realized  range  may  also  be  expected  to  suﬀer  from
+market  microstructure  eﬀects.    In  case  prices  are  observed  c ontinuously,  the  high
+price  is  likely  to  be  an  ask  while  the  low  price  is  likely  to  be  a  bid  such  that  the
+observed  range  overestimates  the  true  range  by  exactly  the  spread.   As  this  will  be
+the case for each intra-day interval, this may cause a substantial upward bias in the
+realized  range  for  high  sampling  frequencies.   One  may  attempt  to  correct  for  this
+bias  by  subtracting  the  spread  from  each  intra-day  range,  as  suggested  by  Brandt
+and Diebold (2006) in the context of the daily high-low range estimator.  However, in
+practice  prices  are not  observed  continuously  such  that the high price  may  actually
+be a bid with a certain probability that depends on the trading intensity, complicat-
+ing  this  bias-adjustment.   In  addition,  as  mentioned  before  infrequent  trading  itself
+induces a downward bias in the realized range, as the observed minimum and maxi-
+mum  price  over-  and  underestimate  the  true  minimum  and maximum,  respectively.
+    Two  procedures  have  been  suggested  for  correcting  the  downward  bias  in  the
+range due to infrequent trading.  First, Rogers and Satchell (1991) derive expressions
+for the  expected  diﬀerence  between  the observed  high and low   prices  and their true
+but  unobserved  counterparts.    For  the  i-th  interval  during  day  t,  the  (log  of  the)
+observed  high  and  low  price,  Ht,i  and Lt,i  are  equal  to
+
+                 log Ht,i = log H∗t,i−  δH            and            log Lt,i = log L∗t,i + δL,
+
+where H∗t,i and L∗t,i are the true maximum and minimum prices, respectively.  Under
+the assumption  of equidistant  prices,  Rogers and Satchell  (1991) show  that E[δH] =
+E[δL]   =   aσ/  √  Ni   with  a   = √    2π (14 −  (√   2 −  1)/   6],   and  E[δ 2H]   =   E[δ 2L]   =   bσ  2/N    i
+with b = (1 + (3π/    4))/   12, where Ni  is the number of prices observed during the i-th
+interval.  Using this result, it is straightforward to derive that a bias-corrected version
+
+
+                                                       7
+of the  high-low  range estimator  given  in  (3) is  the  positive  root of the  equation
+
+              ˆσ  2 =   (b + a2)2Ni log 2ˆσ  2 + a(log Ht,i−  log Lt,i)√Ni log 2              ˆσ  + (log Ht,i−  log Lt,i)24 log 2                 .                   (9)
+
+    Second,  Christensen  and  Podolskij  (2005)  argue  that  the  downward  bias  in  the
+(realized)  range  is  caused  by  the  fact  that  the  scaling  factor  4 log 2  in  (3)  is  not
+appropriate in  the  presence  of infrequent  trading.  This  factor derived  by  Parkinson
+(1980)  is  equal  to  the  second  moment  of  the  range  of  a  standard  Brownian  motion
+Bt, that  is E[s2B] = 4 log 2, where
+
+                                            sB  =     sup
+                                                    0≤s,t≤1(Bt−  Bs).                                                                       (10)
+
+Christensen and Podolskij (2005) suggest to replace this factor by the expected value
+of  the  squared  range  of  a  Brownian  motion  that  is  observed  Ni  times,  the  number
+of  observations  during  the  i-th  intra-day  interval.   In  case  of  equidistant  prices,  for
+example,  this  boils  down  to
+                                          [                                  ]
+                                       E      max                              .
+                                           1≤k,l≤Ni(Bl/N i−  Bk/N i)2
+
+    Unreported results from the simulation experiments in the next section show that
+both bias-correction procedures work adequately, in that they remove the downward
+bias in the realized range estimators due to infrequent trading to a large extent, even
+for the highest frequencies.  The Christensen-Podolskij  procedure achieves  a slightly
+lower  RMSE  than  the  Rogers-Satchell  procedure.    A  limitation  of  both  correction
+procedures is, however, that they cannot cope with the upward bias induced by bid-
+ask  bounce.   Hence,  we  suggest  an  alternative  bias-correction  procedure  by  scaling
+the  realized  range  with  the  ratio  of  the  average  level  of  the  daily  range  and  the
+average  level  of  the  realized  range  over  the  q  previous  trading  days.    That  is,  the
+scaled  realized  range  is  deﬁned  as
+                                                  (     ∑      q      )
+                                      RR∆S,t =       ∑      ql=1 RRt−l   RR∆t  ,                                                            (11)
+
+                                                         l=1 RR∆t−l
+where  RRt ≡   RR1t   denotes  the  daily  range.   This  is  based  upon  the  idea  that  the
+daily range is (almost) not contaminated by microstructure noise and thus provides
+
+                                                           8
+a  good  indication  of  the  true  level  of  volatility.    An  important  choice  to  be  made
+when  implementing  this  bias-adjustment  is  of  course  the  number  of  trading  days  q
+used  to  compute  the  scaling  factor.   If  the  trading  intensity  and  the  spread  do  not
+change  for  the  asset  under  consideration,  q  may  be  set  as  large  as  possible  in  order
+to gain accuracy.  Of course, in practice both features tend to vary over  time, which
+suggests  that  only  the  recent  price  history  should  be  used  and  q  should  not  be  set
+too large.  We  return  to this  issue  below.
+    We  close  this  section  by  discussing  several  alternatives  for  bias-correcting  the
+RV ∆t     estimator that have been put forward recently and that will be included in the
+subsequent  analysis.    First,  the  scaling  procedure  suggested  for  the  realized  range
+also  can  be  applied  to  the  realized  variance  estimator.   That  is,  the  scaled  realized
+variance,  RV ∆S,t,  may  be  obtained  from  (11) by  replacing  RR  with  RV .  See  Hansen
+and  Lunde  (2005) for a  theoretical  justiﬁcation  of  this  scal ing  estimator.
+    Second,  the eﬀect of bid-ask bounce (and presumably  other ty pes of microstruc-
+ture  noise)  can  be  removed  by  adding  autocovariances  to  the  realized  variance.   In
+particular,   we  consider  the  RV ∆AC1,t  estimator,   which   incorporates  the  ﬁrst-order
+autocovariance,
+                                    ∑I                     ∑ I
+                     RV ∆AC1,t =         r2t−1+i∆   ,∆   + 2     rt−1+i∆   ,∆  rt−1+(i−1)∆   ,∆  .                              (12)
+                                    i=1                     i=2
+We refer to Barndorﬀ-Nielsen et al. (2004) and Hansen and Lun de (2005, 2006b) for
+an in-depth  analysis  of  the  properties  of this  realized  variance  estimator.
+    Third, Zhang et al. (2005) develop the so-called two time-scales (TTS) estimator,
+which  combines  realized  variance  estimators  obtained  from  returns  sampled  at  two
+diﬀerent  frequencies.   In  particular,  the  realized  varianc e  estimator  obtained  using
+a  certain  (low)  frequency  is  corrected  for  bias  due  to  microstructure  noise  using
+the  realized  variance  obtained  with  the  highest  available  sampling  frequency.   The
+essential  argument  is  that  the  low-frequency  estimator  renders  a  biased  estimate  of
+the true integrated variance with the bias being a function of the variance of the noise
+in  the  return  processes.   The  realized  variance  estimator  using  the  highest  possible
+frequency  consistently  estimates  this  noise  variance  and  can  therefore  be  used  to
+
+                                                         9
+reduce  and  potentially  even  eliminate  the  bias  of  the  low-frequency  estimator.   In
+addition,  subsampling  is  used  to  reduce  the  variance  of  the  low-frequency  realized
+variance  estimator  as  follows.    Assume  that  we  observe  N  + 1  equidistant  prices
+during the trading day, where N  is an integer multiple of I, the number of intra-day
+intervals corresponding  to a particular sampling frequency.  In that case,  the grid of
+intervals  of  length  ∆ = 1  /I     can  be  laid  over  the  trading  day  in  N/I     diﬀerent  ways.
+For  example,  in  case  prices  observed  once  every  minute,  for  the  realized  variance
+based  on  the  ﬁve-minute  sampling  frequency  rather  than  star ting  with  the  interval
+9:30-9:35  one  could  also  start  with  9:31-9:35,  9:32-9:37,  9:33-9:38  or  9:34-9:39.   In
+this  way  ﬁve  ‘subsamples’  are  created  and  each  of  these  can  be   used  to  compute
+the  realized  variance.    The  ﬁnal  realized  variance  is  then  ta ken  to  be  the  average
+across  subsamples.     A  practical  problem  with  this  procedure  is  how  to  treat  the
+loose  ends  at  the  start  and  the  end  of  the  trading  session.   Here  we  omit  these  and
+proportionally inﬂate  the  realized  variances  for the  missi ng  part of the  trading  day.
+Based  on  the  above,  the  two  time-scales  estimator RV ∆TTS,t  is  obtained  as
+                                                      (                 I             )
+                            RV ∆TTS,t =       NN − I    RV ∆Subs,t−     N RVMax,t        ,                                           (13)
+
+where RV ∆Subs,t is the subsampling estimator using returns over intervals of length ∆
+with   I  =  (I−  1) + I/N     being  the  average  number  of  intraday  return  observations
+used by each of the realized variance estimators used in the subsampling process, and
+RVMax,t  is  the  realized  variance  based  on  the  highest  possible  sampling  frequency
+using  all N  return  observations.
+
+3      Simulation
+
+We  simulate  prices  for  24-hour  days,  assuming  that  trading  can  occur  round  the
+clock.   For  each  day  t,  the  initial  price  is  set  equal  to  1,  and  subsequent  log  prices
+are simulated  using
+
+                     log Pt+j/J   = log Pt+(j−1)/J  + ε t+j/J ,            j   = 1,  2, . . ., J,                                     (14)
+
+
+
+                                                          10
+where  J  is  the  number  of  prices  per  day.   To  approximate  the  ideal  situation  with
+continuous  trading  and  no  market  frictions  we  simulate  100 prices  per  second,  such
+that J  = 8,  640,  000 as there are 86,400 seconds  in a 24-hour day.  The shocks ε t+j/J
+are  independent  and  normally  distributed  with  mean  zero  and variance  σ  2/   (D·J),
+where  total  annualized  standard  deviation  σ   of  the  log  price  process  is  set  equal  to
+0.21  (21%),  and  D  is  the  number  of  trading  days  in  a  year,  which  we  set  equal  to
+250.  We  simulate  prices  for 5000 trading  days  in  all  experiments  reported  below.
+    To  illustrate  the  promise  of  realized  range  as  a  measure  of  (daily)  volatility  we
+compute  both  the  realized  range  and  the  realized  variance  for  the  prices  simulated
+in  the  ideal  world  as  described  above.   To  do  so  we  divide  the  trading  day  into  x-
+minute  intervals,  which  is  called  the  x-minute  frequency.   For  example  when  x  =  1
+we  divide  the  24-hour  day  into  1440  1-minute  intervals.   For  the  realized  variance
+the  squared  1-minute  returns  are  summed  to  obtain  the  realized  variance  at  that
+frequency.     For  the  realized   range  the  high  and  low  are  computed   per  1-minute
+interval  and  the resulting  1-minute  ranges  are summed  to obtain the  realized  range
+for  the  day.     We  also  consider  the  scaled  versions  of  the  realized  range  and  the
+realized variance computed according to (11).  In subsequent  experiments  with non-
+trading and bid-ask  bounce, the  characteristics  of these  microstructure  frictions  are
+identical for all trading days, such that we can use a large number of trading days q
+to compute  the scaling factor.  We therefore  set we set q = 5000 to fully explore  the
+possibilities  of  the  scaling  bias-adjustment  procedure.  The  sensitivity  of  the  results
+with respect to the value of q  is discussed  in more detail below.  Finally, the RV ∆AC1,t
+kernel-based  estimator  and  the  two  time-scales  estimator RV ∆TTS,t  are included.  For
+the latter we  use all observed  prices to compute the realized variance at the highest
+possible  frequency  to  obtain  an  accurate  estimate  of  variance  of  the  measurement
+noise,  and  implement  the  subsampling  estimator  by  shifting  the  intra-day  intervals
+ten  seconds  at a  time.  For each  selected  frequency  we  compute  the  mean  and  Root
+Mean  Squared  Error  (RMSE)  for  the  various  volatility  estimators,  taken  over  5000
+simulated  trading  days.  The  results  are presented  in  Table  1.
+
+                                   -  insert  Table  1 about  here -
+
+                                                        11
+    For  x   =   1440  minutes  (the  ﬁnal  row  in  the  table)  the  realized  range  e quals
+the  daily  high-low  range  and  the  realized  variance  equals  the  daily  squared  return.
+As  expected  the  RMSE  of  the  range  is  substantially  lower  at  2.564  than  that  for
+the  daily  squared  return  at  5.664,  reﬂecting  the  fact  that  th e  daily  range  is  ﬁve
+times more eﬃcient than the daily squared return.  Akin to the    ﬁndings of Andersen
+and Bollerslev  (1998) and Brandt and Diebold (2006) the realized  variance requires
+the  4-hour  (240  minutes)  frequency  to  achieve  a  similar  RMSE  as  the  daily  range.
+Obviously  in this case  the RMSE  of the  realized  range is always  substantially  lower
+than  that  of  the  realized  variance  at  the  same  frequency.   We  also  observe  that  the
+RMSE  of  the  TTS  estimator  is  lower  than  the  RMSE  of the  corresponding  realized
+variance  estimator,  because  of  the  reduction  in  variance  due  to  the  subsampling
+used.    This  is  not  suﬃcient  though  to  achieve  the  same  eﬃcienc     y  as  the  realized
+range  estimator.   Finally,  in  the  absence  of  microstructure  noise,  the  RMSE  of  the
+RV ∆AC1,t  estimator  is  about  1.7  times  the  RMSE  of  the  standard  realized  variance,
+cf.  the  theoretical  results  of Hansen  and Lunde  (2005, 2006b).
+    From  Table  1  it  appears  that  the  realized  range  is  slightly  downward  biased  for
+the  highest  frequencies  (the  true  variance is  4.41).  This  is inherent  to the  nature  of
+the high-low range:  In case the price  path is  not observed  continuously  (in our case
+we  observe  ‘only’  6000  prices  per  minute)  the  observed  minimum  and  maximum
+over-  and  underestimate  the  true  high  and  low  prices,  respectively,  such  that  the
+observed  range  underestimates  the  true  range.  To  investigate  this  problem  in  more
+detail Table 2 shows  the results  when infrequent  trading occurs, such that the price
+is observed on average only every τ  = 10 seconds.  That is, given the simulated paths
+underlying  Table  1,  the  probability  to observe  the  price  is  equal  to π   = 1/   (100τ ).
+
+                                  -  insert  Table  2 about  here -
+
+    The  results  for  the  realized  range  show  that  the  RMSE  ﬁrst  dec lines  when  in-
+creasing  the  sampling  frequency  up  to  the  30-minute  frequency.   Then  it  increases
+again for higher frequencies because the increase in the bias due to non-trading (and
+hence  underestimating  the range for each  intra-day interval)  then  outweighs  the  re-
+
+                                                       12
+duction  in  the  standard  deviation  of  the  estimates.   The  diﬀe rent  realized  variance
+estimators  are  not aﬀected  by  infrequent  trading, except  fo r a slight  increase  in  the
+(standard  deviation  and  thus  in)  RMSE.  As  a  result  at  the  30-minute  frequency,
+for  example,  the  realized  range  still  is  a  more  accurate  volatility  measure  than  the
+corresponding realized variance, but at the 5-minute frequency the realized variance
+has  a  substantially  lower  RMSE  than  the  realized  range.   Of  course  the  exact  fre-
+quency  at  which  one  estimator  improves  over  the  other  will  depend  on  the  trading
+intensity.  For example  when  observing  a price  on  average  every  second  the  realized
+range improves over the realized variance up to the 5-minute frequency.  Unreported
+results using the bias-correction procedures of Rogers and Satchell (1991) and Chris-
+tensen and Podolskij (2005), which are explicitly designed for handling the eﬀects of
+infrequent trading, shows that both procedures work satisfactorily, in the sense that
+they  largely  remove  the  bias  in  the  realized  range  estimators,  even  for  the  highest
+frequencies.  The  results  for RR∆S,t  in  Table  2 demonstrates  that scaling  the realized
+range does not eliminate the bias completely, which is due to the fact that the daily
+range also is  somewhat  biased downward  due to the infrequent  trading.  In terms  of
+RMSE,  the  scaling  procedure  is  slightly  better  than  the  Rogers-Satchell  procedure,
+and  only  slightly  worse  than  the  Christensen-Podolskij  procedure.   For  example,  at
+the  5-minute  frequency  the  RMSE  of  RR∆S,t  is  equal  to  0.205,  compared  to  0.229
+and  0.187 for  the  bias-corrected  realized  range  estimators  based  upon  (9)  and  (10),
+respectively.
+    As noted in the previous  section,  the number  of trading days q  used to compute
+the  scaling  factor  for  RR∆S,t  is  a  crucial  choice  to  be  made.   If  the  trading  intensity
+and the spread are constant over time, q  may be set large in order to gain accuracy.
+On  the  other  hand,   when  the  magnitude  of  these  microstructure  frictions  varies
+over  time,  only  the  recent  price  history  should  be  used  and  q  should  be  set  fairly
+small.  Figure 1 shows the RMSE of the scaled realized range for the experiment with
+infrequent  trading  as  a function  of q,  with  the  rightmost  point  of  each  line  showing
+the  RMSE  for  q  = 5000  as  given  in  Table  2.   The  RMSE  monotonically  declines  as
+q  increases,  but  the  largest  gains  occur  up  to  q  =  500,  beyond  which  the  RMSE
+
+                                                       13
+more or less stabilizes.  Also note that the reduction in RMSE due to increasing q  is
+largest  for higher  sampling  frequencies.
+
+                                 -  insert  Figure  1 about  here  -
+
+    Next, we consider the eﬀects of bid-ask bounce.  For this purp ose we assume that
+transactions take place either at the ask price or at the bid price, which are equal to
+the  true  price  plus  and  minus  half  the  spread,  respectively.   Hence,  if  a  transaction
+occurs at t+j/J   , the actually observed price P∗t+j/J   is equal to Pt+j/J  +s/   2 (ask) or
+Pt+j/J − s/   2 (bid), where s is the bid-ask spread and Pt+j/J   is the true price obtained
+from  (14).   As  in  Brandt  and  Diebold  (2006),  we  set  s  =  0. 0005  (or  0.05%  of  the
+starting  price  of 1) and  assume  that bid  and  ask  prices  occur  equally  likely.
+    The  results  in  Table  3  show  that  as  expected  both  realized  range  and  realized
+variance  suﬀer  upward  bias,  which  gets  worse  as  the  sampling   frequency  increases.
+The  bias  in  the  realized  range  is  caused  by  the  fact  that  in  the  limit  the  observed
+range will overestimate  the true range by exactly the spread, as the maximum price
+will be an ask and the  minimum  price  will be a bid.  The  realized  variance is  biased
+upwards  because  half of the times  (when  the  return is  computed  from bid to ask  or
+from ask to bid) the squared bid-ask spread is included.  The realized range is aﬀected
+more  by  the  bid-ask  bounce  than  the  realized  variance,  when  comparing  them  at
+the same sampling frequency.  In this particular parameter setting the realized range
+outperforms the realized variance up to the 1-hour (60-minute) frequency.  For higher
+sampling frequencies the RMSE of the realized variance is lower.  Scaling the realized
+range  works  remarkably  well,  in  the  sense  that  the  bias  is  removed  completely  and
+the  RMSE  values  are  brought  back  to  the  original  level  observed  for  RR∆t    in  the
+ideal  case  without  bid-ask  bounce  shown  in  Table  1,  or  even  slightly  below.    The
+unreported  results  for  the  bias-correction  procedures  of  Rogers  and  Satchell  (1991)
+and  Christensen  and  Podolskij  (2005)  show  that  logically  they  completely  fail  to
+correct  for  the  bid-ask  bounce  eﬀects.   Scaling  the  realized   variance  also  removes  a
+large  part  of  the  bias,  but  at  frequencies  higher  than  60  minutes,  say,  the  RSME
+remains substantially higher than the RMSE of RV ∆t     in Table 1.  As expected,  both
+
+                                                       14
+RV ∆TTS,t  and  RV ∆AC1,t  are  robust  to  the  presence  of  bid-ask  bounce.   Note  that  the
+scaled realized range outperforms the TTS estimator (and therefore the kernel-based
+estimator  as  well)  at  all frequencies  considered.
+
+                                  -  insert  Table  3 about  here -
+
+    Finally,  we  consider  the  realistic  situation  where  both  bid-ask  bounce  and  in-
+frequent  trading  are  present,  combining  the  speciﬁcations   for  these  two  frictions  as
+discussed  before.    Results  of  this  experiment  are  shown  in  Table  4.    The  realized
+range  still  suﬀers  from  an  upward  bias,  but  of  a  considerably    smaller  magnitude
+than in the  case  of bid-ask  bounce  only due  to the oﬀ-setting n egative  bias  induced
+by  infrequent  trading.   As  a  result,  the  realized  range  now  has  a  lower  RMSE  than
+the  realized  variance  up  to  the  30-minute  frequency,  as  well  as  at  the  1-minute  fre-
+quency.  In addition the overall minimum RMSE is obtained at 0.749 for the realized
+range  at  the  45-minute  frequency.   For  the  realized  variance  the  optimal  frequency
+is the 10-minute frequency for which the RMSE is 0.717, hence only slightly smaller
+than that for the optimal realized  range.  Also here we  ﬁnd tha t scaling the realized
+range  works  adequately  in  removing  the  bias  and  bringing  the  RMSE  of  the  RR∆S,t
+estimator down to the levels originally observed in the case of no market microstruc-
+ture  frictions.  Finally,  again  we  observe  that  the  two  time-scales  estimator  and  the
+kernel-based  estimator  remain  unbiased,  but  their  RMSEs  are  higher  than  those  of
+the  scaled  realized  range.
+
+                                  -  insert  Table  4 about  here -
+
+    Concluding,  the  simulation  experiments  quite  convincingly  demonstrate  the  po-
+tential of the realized range as a measure of volatility.  In case of continuous  trading
+and no market frictions it always improves upon the popular realized variance when
+using the same sampling frequency.  In reality trading is discontinuous and observed
+prices are bid and ask prices.  In that case scaling the realized range with the average
+(relative) level of the daily range is an eﬀective procedure   to remove the induced bias
+and restore  the eﬃciency  of the realized range.  Of course  the  se  results  are obtained
+
+                                                      15
+assuming  a speciﬁc  price  process  that may  aﬀect the results.     In  particular, we  have
+assumed  that  the  microstructure  noise  is  temporally  independent  and  independent
+from  the  true  price  process.    As  discussed  in  Hansen  and  Lunde  (2006b),  there  is
+substantial empirical evidence against both these assumptions at ultra-high frequen-
+cies.   Further  investigation  of  the  properties  of  the  realized  range  estimator  under
+more  general  speciﬁcations  of  the  noise  process  is  therefor e  warranted.   As  such  it
+will also be interesting to look at its performance for actual market data in Sections
+4 and  5 below.
+
+4      S&P500 index futures
+
+The  S&P500  index-futures   contract  is  the  largest   equity  futures  contract  in  the
+world.    It  is  trading  virtually  round  the  clock,  with  ﬂoor  tra ding  on  the  Chicago
+Mercantile Exchange (CME) from 9:30 to 16:15 Eastern Standard Time (EST), and
+electronic  trading  on  GLOBEX  almost  24  hours  a  day  apart  from  Friday  evening
+to  Sunday  evening.  Our  sample  contains  transaction  prices  and  bid  and  ask  quotes
+running  from  4  January  1999  to  23  February  2004.   The  S&P500  futures  contract
+has  maturities  in  March,  June,  September  and  December.   We  always  use  the  most
+liquid contract (usually until 1 week before the maturity of that contract) and make
+sure  that  when  changing  from  one  contract  to  the  next,  we  never  compute  returns
+based on prices from two diﬀerent contracts.  For the 1289 day s in the sample period
+this  results  in  on  average  3,223  transaction  prices  during  ﬂ oor  trading  from  9:30  to
+16:15 EST and 1,802 transactions during the remainder of the day with a substantial
+number  taking place in the run-up to the opening of the New York Stock Exchange
+(NYSE) at 9:30 EST. The spread is relatively small but varies considerably over time.
+For example, for the September 2001 contract the average spread (based on bid and
+ask quotes with the same time stamp to the nearest second) is 0.443 index-points on
+an average futures price of 1190 (0.037%), whereas for the December 2003 contract it
+is 0.220 on an average price of 1039 (0.018%).  Hence such a liquid contract does not
+exactly  reﬂect  the  ideal  situation  with  continuous  trading   and  no  market  frictions,
+
+
+
+                                                     16
+but it is not far oﬀ either.  In Section 5 we will repeat some of t he analysis below for
+the  S&P100  index  constituents  that  provide  much  more  noisy  data.   The  variation
+in  the  average  spread  implies  that  the  ratio  of  the  average  level  of  the  daily  range
+relative to the average level  of the realized  range changes  over time.  For this reason
+we  compute  the  scaling  factor  for  RR∆S,t  in  (11)  using  the  previous  q  =  66  trading
+days  or approximately  three  months.
+
+4.1      Characteristics  of  realized  range
+
+Initially   we   follow   Andersen,   Bollerslev,   Diebold   and   Ebens   (2001)   (henceforth
+ABDE) by documenting the characteristics of the realized range deﬁned in (5) mea-
+sured using ﬁve-minute  intervals  from 9:30-16:15 EST (as in   ABDE) and 15-minute
+intervals from 16:15 to 9:30 EST. For comparison we also include the properties of a
+number of other estimators.  Table 5 shows selected sample statistics for the squared
+daily returns, r2t , the realized range (RR∆t  ), the realized variance (RV ∆t   ), the scaled
+realized range and realized variance (RR∆S,t and RV ∆S,t), the two time-scales estimator
+(RV ∆TTS,t)  and  the  kernel-based  estimator  (RV ∆AC1,t).
+
+                                 -  insert  Table  5 about  here -
+
+    The  mean  daily  squared  (close-to-close)  return  is  1.792  implying  an  annualized
+standard deviation for the S&P500 index  of around 21.4%.  The mean realized vari-
+ance  is  close  to  this  (1.818),  whereas  as  expected  the  realized  range  has  a  lower
+average at 1.533.  Hence it seems that bid-ask bounce is not a crucial issue at the se-
+lected sampling frequency, whereas not observing a continuous path of prices causes
+a  downward  bias  in  the  realized  range.    This  problem  will  obviously  increase  for
+higher frequencies.  We return to this point below when considering results for other
+sampling frequencies.  Here we  note that scaling the realized  range with the ratio of
+the average level of the daily range for the previous q = 66 days, as in (11), increases
+the  average  to  1.750, more  in  line  with  the  realized  variance.
+    Both the realized variance and the realized range are right-skewed  and leptokur-
+tic,  although  less  so  for the  realized  range  than  for the  realized  variance.  The  stan-
+
+                                                      17
+dard  deviation  of  the  daily  squared  returns  is  3.263,  substantially  higher  than  the
+standard  deviation  of  the  realized  variance  at  1.879.  This  is  in  line  with  the  notion
+that  both  measures  are  unbiased  but  realized  volatility  is  less  noisy.   The  standard
+deviation  of  the  TTS  estimator  is  only  slightly  lower  at  1.840,  while  that  of  the
+kernel-based RV ∆AC1,t estimator is higher at 1.942.  This also suggests that the eﬀe cts
+of  microstructure  noise  are  limited  for  the  S&P500  index-futures  contract.   Finally,
+we  observe  that  the  realized  range  is  even  less  noisy  with  a  standard  deviation  of
+1.408.  Even  after  adjusting  for  the  bias  the  standard  deviation  remains  below  that
+of  the  realized  variance  at  1.678,   underlining  the  potential  of  the  realized  range
+estimator.
+    ABDE  report  that  daily  returns  standardized  with  the  realized  standard  devia-
+tions  are  approximately  Gaussian  for the  30  Dow Jones  stocks.  Table  6  reports  the
+corresponding  results  for  the  realized  range.  The  results  in  the  ﬁrst  column  for  the
+daily returns show that normality is rejected at conventional  signiﬁcance levels.  For
+the  daily  returns  standardized  with  the  square  root  of  the  (scaled)  realized  range,
+however,  the  sample  kurtosis  is  reduced  to  2.814  (2.800)  from  4.310  for  the  raw  re-
+turns.   Note  that  the  Jarque-Bera  test  statistic  is  asymptotically  χ  2(2),  with  a  5%
+critical  value  of  5.99  (1%:  9.21).  Hence  for  the  daily  returns  standardized  with  the
+(square  root of  the)  (scaled)  realized  range  the  null  hypothesis  of  normality  cannot
+be rejected.  In contrast, for the daily S&P500 returns standardized with the (scaled)
+realized  standard  deviation  the  null  of  normality  is  rejected  at  the  5%  signiﬁcance
+level.
+
+                                   -  insert  Table  6 about  here -
+
+    We examine the eﬀect of the sampling frequency on the propert ies of the realized
+range by varying the length of the intra-day intervals.  For the ﬂoor trading period be-
+tween 9:30 and 16:15 EST (405 minutes) we consider x∈{1,  2. 5,  5,  15,  27,  33. 75,  45,  81,  405}
+minutes, and for the electronic trading period from 16:15 to 9:30 EST (1035 minutes)
+we consider x∈{5,  15,  45,  115,  207,  1035}minutes.  All 54 combinations are tracked.
+For a selection  of  these  combinations,  Table  7  reports  the  mean  and  standard  devi-
+
+                                                        18
+ation of the realized range and the realized variance and the scaled versions thereof,
+as  well  as  the  two  time-scales  estimator  and  the  ﬁrst-order k ernel-based  estimator.
+
+                                  -  insert  Table  7 about  here -
+
+    For both the realized range and the realized variance the standard deviation de-
+creases  for  higher  sampling  frequencies,  as  expected.   At  the  same  time,  the  mean
+of  the  realized  range  decreases,  suggesting  that  the  downward  bias  induced  by  in-
+frequent trading dominates the upward bias due to bid-ask bounce.  For the realized
+variance  the  mean  actually  increases  for  the  highest  sampling  frequencies.   This  is
+also  expected  because  bid-ask  bounce  will  play  a  relatively  more  important  role  at
+those  frequencies,  while  realized  variance  is  not  aﬀected  b y  infrequent  trading.   We
+also observe a considerable (and unexpected) increase in the mean for the two time-
+scale  estimator  as  the  sampling  frequency  increases.   Scaling  (again  using  q  =  66)
+stabilizes  the  mean  of  both  realized  range  and  realized  variance  across  frequencies,
+but comes at the cost of an increased  standard deviation.  Note though that at high
+sampling frequencies the standard deviation of the realized range remains below that
+of all realized  variance  estimators,  including  the  two  time-scales  estimator.
+
+4.2      Measuring  and  forecasting:   realized  range  vis-`a-vis  r  e-
+         alized  variance
+
+The ultimate objective is to ﬁnd the most accurate way of meas uring and forecasting
+volatility.   How  to  decide,  however,  on  the  best  volatility  measure  if  we  need  that
+measure to evaluate the candidates?  To avoid biasing the results one way or another
+when   comparing  realized   variance  and   realized   range,   we   follow  Beckers’   (1983)
+ideas.   Beckers  (1983)  compares  the  predictive  ability  of  the  squared  daily  close-to-
+close  return  and  the  daily  high-low range  estimator,  testing  each  one  as  a predictor
+of  itself  and  of  the  alternative  volatility  measure.   The  comparison  is  implemented
+by  regressing  each  of  the  variance  estimators  on  either  its  own  lagged  value  or  its
+competitor’s.  If one volatility measure dominates the other, one would expect to see
+a higher  R2  for that  approach  regardless  of  the  choice  of  the  left-hand-side  variable
+
+
+                                                      19
+in the regression.  Similarly an encompassing  regression can be used.  Here the same
+procedure  will  be  applied,  but  now  for  comparing  the  (scaled)  realized  range  with
+the  (scaled)  realized  variance  and  with  the  TTS  estimator.   Since  potential  biases
+are not captured by the regression R2, in addition we also inspect the Mean Squared
+Error  (MSE)  and  the  Mean  Absolute  Error  (MAE).  To  test  the  signiﬁcance  of  the
+diﬀerences  between  realized  variance  and  realized  range  th e  Diebold  and  Mariano
+(1995) test statistic  is used.  Let yt  be the  realized  variance or the  realized  range on
+day t, and let  ˆyit  and  ˆyjt  denote the forecasts (one is lagged realized  variance or the
+lagged TTS  estimator,  the  other  lagged realized  range).  The  test  statistic  is
+
+                                     DM =       √      d           d→   N (0,  1),                                                           (15)
+                                                    ˆV  (dt)/T
+
+where    d  is  the  sample  mean  loss  diﬀerential              d  =    1 ∑      T
+                                                                         T      t=1 dt,  and  where   ˆV (dt)  is  a
+consistent  estimate  of  the  asymptotic  variance  of  dt.   Given  that  we  only  consider
+one-step  ahead  forecasts,   we  use   ˆV (d)   =     1          ∑      T(  dt−   d)   2.     The  loss  diﬀerential
+                                                               T     t=1
+series  dt  depends  on  the  evaluation criterion  for the  forecast  errors.  In  particular:
+
+                         R2 :           dt =  (yt−  ˆα  i−   ˆβ iˆyit)2−  (yt−  ˆα  j−   ˆβ jˆyjt)21∑      Ty)2                           ,
+                                                            T     t−1(yt−
+                     MSE :           dt = (yt−  ˆyit)2−  (yt−  ˆyjt)2,
+
+                     MAE :           dt =|yt−  ˆyit|−|yt−  ˆyjt|.
+
+In  these  three  cases  rejecting  the  null  hypothesis  that                d = 0  implies  that  there  is  a
+signiﬁcant diﬀerence between forecast    i and forecast j.  Harvey et al. (1998) propose
+a similar  test  for encompassing  regressions  based  on,
+
+                                  ENC :             dt = (ˆyjt−  ˆyit)(yt−  ˆyit).
+
+Here  rejecting  the  null  hypothesis  indicates  forecast  j  has  useful  information  not
+already  impounded  in  forecast i.
+    Beckers  (1983) basically uses the lagged (raw) variance measures as forecasts for
+the  current  variance.  In  addition the  analysis  will  be  repeated  following  Fleming et
+al. (2003) in adjusting the conditional variances and producing rolling forecasts based
+
+                                                          20
+on  exponentially  declining  weights,  building  upon  the  work  by  Foster  and  Nelson
+(1996)  and  Andreou  and  Ghysels  (2002)  on  rolling  volatility  estimators.   Consider
+the  following  model  for close-to-close  returns,
+
+                                                   rt  = σ tzt,
+
+with zt ∼  iid(0,  1) and
+
+                                 σ  2t  = exp(−α )σ  2t−1 + α  exp(−α )Vt−1,                                                     (16)
+
+where  Vt  is  the  measure  of  volatility  for  day  t  used  to  update  the  conditional  vari-
+ances.  In our case that could be the squared close-to-close return, the daily high-low
+range,  the  (scaled)  realized  range,  the  (scaled)  realized  variance  or  the  two  time-
+scales  estimator.    Following  Fleming  et  al.  (2003),  we  adjust  the  conditional  vari-
+ances  in  (16)  obtained  using  the  ‘raw’  realized  range  and  realized  variance  for  bias
+by scaling with the conditional variances based on the daily counterparts, as in (11),
+i.e.  the daily  squared  returns  for the  realized  variance  and the  daily  high-low  range
+for  the  realized  range.   We  set  the  number  of  trading  days  q  used  to  estimate  the
+bias adjustment coeﬃcient to 66 as before.  The decay paramet  er α   and the bias ad-
+justments  (which  are  functions  of  α )  are  estimated  simultaneously  using  maximum
+likelihood  for  the  full  sample.   To  load  the  conditional  variances  in  (16)  we  use  the
+ﬁrst  100  realized  ranges  (variances),  and  we  also  drop  those   100  observations  from
+the  analysis  to preserve  the  same  ‘forecast’  period.
+    To  compare  the  realized  range  and  realized  variance  estimators  with  the  proce-
+dure  outlined  above  several  variants  are  tested.    First,  three  sampling  frequencies
+are considered:  1/5 (one-minute intervals from 9:30-16:15 EST, ﬁve-minute intervals
+from 16:15-9:30 EST), 5/15, and 27/45 minutes.  Second, the issue of market closure
+is addressed by not only looking at the close-to-close 24-hour day, but also only at the
+open-to-close period (9:30-16:15 EST for the S&P500 index-futures,  9:30-16:00 EST
+for the  individual  stocks  in  Section  5).  Third,  closely  related  to this  is  the  presence
+of large outliers in especially  the realized  variance series  of the individual  stocks  for
+the  close-to-close  period,  often  caused  by  a  large  overnight  return.   Therefore  next
+
+                                                        21
+to  the  unadjusted  series  results  are  also  reported  when  all  variance  measures  are
+truncated  at the  median  plus  or  minus  four times  the  median  absolute  deviation.2
+    The  results  for  the  S&P500  index-futures  are  reported  in  Tables  8  to  13.    Re-
+gardless  of  the  sampling  frequency,  the  outlier  adjustments,  or  close-to-close  versus
+open-to-close,  the  unadjusted  realized  range  performs  signiﬁcantly  better  than  the
+realized  variance  with  only  a  few  exceptions,  as  shown  in  Table  8.    The  main  ex-
+ceptions  are  at  the  one-minute  frequency  with  realized  variance  as  the  forecasting
+target  yt  and  the  MSE  or  MAE  as  performance  measures.    This  can  be  explained
+by  the  fact  that  the  realized  range  is  severely  downward  biased  at  the  one-minute
+frequency as shown in Table 7.  The logical next step is therefore to look at the scaled
+versions  of  the  realized  variance  and  the  realized  range  in  Table  9.   Here  we  do  see
+an  improved  performance  of  the  realized  range  at  the  one-minute  frequency.    The
+overall picture remains that the (scaled) realized range is superior.  The encompass-
+ing  regressions  even  suggest  the  (scaled)  realized  variance  contains  no  incremental
+information beyond  that already  captured  by  the  (scaled)  realized  range.
+
+                                -  insert  Tables  8-10  about  here  -
+
+    In  the  simulation  experiments  in  Section  3  we  found  that  the  TTS  estimator
+came  closest   to  the  performance  of  the  scaled   realized   range  in  the  presence   of
+market  microstructure  noise.     Table  10  reports  the  corresponding  results  for  the
+S&P500,  showing  that  also  for  this  empirical  application  the  TTS  estimator  does  a
+better job than the (scaled) realized variance.  Still the number of signiﬁcant results
+in  Table  10  is  61-4  in  favour  of  the  scaled  realized  range.    This  is  perhaps  a  bit
+surprising  in light of the simulation results.  In our opinion, it mainly illustrates  the
+robustness  of  scaling  as  a  bias-adjustment  procedure  compared  to  a  bias-corrected
+estimator  based  on  speciﬁc  model  assumptions.     The  data  gene rating  process  in
+our  simulation   experiment   exactly  satisﬁes   the  conditions    under   which   the  TTS
+estimator  was  derived,  but  the  actual  data  probably  do  not  completely  adhere  to
+
+
+   2See Hansen and Lunde (2006a) and Patton (2005) for extensive discussion of pitfalls in forecast
+evaluation for volatility models,  when  a proxy is  substituted  for the  unobserved volatility.
+
+                                                        22
+those  conditions.
+    So  far  we  considered  random  walk  forecasts.    Tables  11  to  13  provide  the  cor-
+responding  results  for  the  rolling  forecasts  following  the  procedure  of  Fleming  et
+al.  (2003).   Here  the  improved  forecast  performance  of  the  (scaled)  realized  range
+relative  to the  (scaled)  realized  variance and  the TTS  estimator  are even  more pro-
+nounced  than  before.   Counting  the  number  of  signiﬁcant  resu lts  across  the  entire
+table we now  get 74-5 in Table 11 (was  77-6 in Table 8), 92-0 in Table 12 (was  80-1
+in Table 9), and 82-0 in Table 13 (was 61-4 in Table 10), all in favour of the realized
+range.
+
+                              -  insert  Tables  11-13  about  here  -
+
+5      S&P100 constituents
+
+Obviously  the  analysis  in  the  previous  section   only  considers  1  particular  asset,
+the  S&P500  index-futures,  which  is  an  extremely  liquid  asset  with  a  small  bid-ask
+spread.  With  the  main  issue  at  stake  being  whether  the  realized  range  better  deals
+with  market  microstructure  than  the  realized  variance  this  could  provide  a  biased
+picture.  For that reason we also consider the individual stocks in the S&P100 index
+(constituents  in  June  2004),  where  the  data  consists  of  open,  high,  low  and  close
+transaction  prices  at  the  one-minute  frequency.   For  most  stocks  the  sample  period
+runs from April 9, 1997, to June 18, 2004 (1808 daily observations).  Table 14 reports
+some  sample  statistics  on  the  distribution  of  the  100  (scaled)  realized  ranges  based
+on the ﬁve-minute frequency from 9:30 to 16:00 EST, in additi on to the close-to-open
+squared  return.  This  table  is  similar  in  nature  to the  one  in  ABDE  for  the  realized
+variance  of the  30 Dow  Jones  stocks.
+
+                                 -  insert  Table  14 about  here -
+
+    The  average  realized  range  at  4.798  and  the  average  standard  deviation  of  the
+range  at  3.637  are  both  larger  for  the  individual  stocks  compared  to  that  for  the
+S&P500 index-futures.  The  large skewness  and  kurtosis  is  partly  the  result  of large
+
+                                                       23
+overnight returns after disappointing ﬁrm-speciﬁc news an  nouncements.  The general
+features  are  similar  for  the  scaled  realized  range.    Obviously  for  stocks  where  the
+infrequent  trading  bias  dominates  the  mean  is  scaled  upwards  (e.g.    in  the  lowest
+percentile),  and  for  stocks  where  the  bid-ask  bounce  bias  dominates  the  mean  is
+scaled  downwards  (e.g.  in  the  highest  percentile).
+    Again  we  compare  the  realized  range  and  realized  variance,  along  the  lines  de-
+scribed  in  Section  4.   We  do  not  consider  the  two  time-scale  estimator  here  as  the
+highest  available  sampling  frequency  only  is  one  minute.   The  results  are  presented
+in  Table  15  to  17,  where  we  record  a  DM  test  either  as  a  win  for  realized  variance
+(1-0), a win for realized range (0-1), or undecided (0-0) using a 5% signiﬁcance level
+in a one-sided test.  Note that for the encompassing test it is possible that both score
+a win  (1-1).  The  results  in Table 15 indicate that in particular for the popular ﬁve-
+and  30-minute  frequencies  the  realized  range  performs  signiﬁcantly  better  than  the
+realized variance.  Only for the one-minute  frequency  the realized  variance performs
+signiﬁcantly  better  than  the  realized  range  when  realized  variance  is  used  to  evalu-
+ate both, whereas the realized range outperforms the realized variance when realized
+range is used to evaluate both.  Of all signiﬁcant diﬀerences    80% are in favour of the
+realized  range.
+
+                               -  insert  Tables  15-16  about  here  -
+
+    Table  16  shows  the  results  for  the  scaled  versions  of  the  realized  variance  and
+the  realized  range.   The  results  are  similar  to  the  ones  in  15  in  the  sense  that  still
+about  80%  of  the  signiﬁcant  diﬀerences  are  in  favour  of  the  sc  aled  realized  range.
+There  are,  however,  a  few  notable  diﬀerences.   Most  of  these  o ccur  when  using  the
+MSE and MAE,  where the volatility measure  that is not used as the forecast target
+is  now  more  often  winning.    A  logical  explanation  for  this  is  that  these  measures
+increase  for  large  diﬀerences  in  the  levels  of  the  actual  vol atility  and  the  forecast.
+As  we  already  have  seen  in  the  simulation  experiments  at  the  highest  frequencies
+we  consider  here  the  realized  range  has  a  higher  average  than  the  realized  variance
+in the  presence  of both non-trading and bid-ask  bounce.  This diﬀerence  is  removed
+
+                                                        24
+when  using  the  scaled  versions.
+    Producing   rolling   forecasts   following   Fleming   et   al.   (2003),   Table   17   clearly
+favours  the  realized  range.    Now  88%  of  all  signiﬁcant  result s  favour  the  realized
+range.   The  additional  gains  come  especially  for  the  R-squared  and  the  encompass-
+ing regression  measures.
+
+                                 -  insert  Table  17 about  here -
+
+    To  further  analyse  the  eﬀect  of  non-trading  on  the  realized  r ange,  we  look  at
+the relation between trading activity in a stock and the win-loss ratio.  In particular
+we  construct  a  variable  that  counts  per  stock  the  number  of  wins  for  the  realized
+variance  minus  the  number  of  wins  for  the  realized  range,  taken  over  all  instances
+covered  by  Tables  15  to  17  (so  open-to-close,  with  and  without  outliers,  etc.).   We
+measure trading activity by the average number of minutes per day without a trade.
+When  regressing  the  win-loss  diﬀerence  on  this  (non-)tradi ng  activity  variable  we
+ﬁnd a statistically signiﬁcant negative relationship.  Hen  ce, the realized range is more
+likely to win if a stock is more actively traded.  Obviously in this case we move closer
+to the S&P500 example where results were strongly in favour for the realized range.
+
+6      Concluding remarks
+
+In this paper we studied the properties and merits of the ‘realized range’, a measure
+of daily  volatility  computed  by  summing  high-low  ranges  for intra-day  intervals.  In
+theory the high-low range is a more eﬃcient estimator of vola  tility than the squared
+return.    Hence,  just  like  the  daily  high-low  range  improves  over  the  daily  squared
+return,  the  ‘realized  range’  should  improve  over  the  ‘realized  variance’  obtained  by
+summing squared returns for intra-day intervals.  Theoretically that is.  In practice we
+need to account for market frictions  such  as bid-ask bounce  and infrequent  trading.
+For  this  purpose,  we  proposed  a  bias-adjustment  procedure  for  the  realized  range
+estimator,  which  involves  scaling  the  realized  range  with  the  ratio  of  the  average
+level  of the  daily  range  and  the  average  level  of the  realized  range.
+
+
+                                                      25
+    A simulation experiment ﬁrst conﬁrms that in theory indeed t  he realized range is
+a better volatility measure than the realized variance when using the same sampling
+frequency.  This  no longer is true  for the highest  sampling  frequencies  in the  case  of
+infrequent  trading  as  this  leads  to  a  downward  bias  in  the  realized  range  and  does
+not  aﬀect  the  realized  variance.    When  allowing  for  bid-ask  b ounce  both  realized
+range  and  realized  variance  are  upward  biased,  but  the  realized  range  suﬀers  more
+as the minimum (maximum) is often half a spread below (above) the true minimum
+(maximum).    In  the  presence  of  these  market  microstructure  frictions,  scaling  the
+realized range with the average (relative) level of the daily range turns out to be an
+eﬀective procedure to remove the induced bias and restore th e eﬃciency  of the real-
+ized  range.  In  particular,  the  scaled  realized  range  outperforms  popular corrections
+of  the  realized  variance  for  microstructure  noise,  including  the  two  time-scales  esti-
+mator of Zhang et al. (2005) and the kernel-based  estimators considered  by Hansen
+and  Lunde  (2006b).
+    For the S&P500 index-futures we come closest in practice to the ideal situation of
+continuous  trading  and  no  market  frictions.  As  expected  the  simulation  results  are
+conﬁrmed in that the (scaled) realized range improves signi ﬁcantly over the (scaled)
+realized  variance  as  well  as  the  two  time-scales  estimator  as  a  measure  for  daily
+volatility.  For the constituents of the S&P100 index all ingredients of market frictions
+are present, with bid-ask bounce, discontinuous trading and large (overnight) jumps.
+The results  are more mixed  here,  but realized  range still  signiﬁcantly  improves  over
+realized  variance  for the  popular sampling  frequencies  of ﬁ ve  and 30 minutes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                      26
+References
+
+A¨ıt-Sahalia, Y., P.A. Mykland and L. Zhang, 2005, How often  to sample a continuous-time
+   process in the presence of market microstructure noise.  Review of Financial Studies 18,
+   351–416.
+Alizadeh,  S.,  1998,  Essays  in  Financial  Econometrics.  Department  of  Economics,  Univer-
+   sity  of  Pennsylvania,  Ph.D. Dissertation.
+Alizadeh,  S., M.W.  Brandt and  F.X. Diebold,  2002,  Range-based  estimation  of  stochastic
+   volatility  models.  Journal of  Finance  47,  1047–1092.
+Andersen,  T.G.  and  T.  Bollerslev,  1998,  Answering  the  skeptics:   Yes,  standard  volatility
+   models do provide  accurate  forecasts.  International  Economic  Review  39,  885–905.
+Andersen,  T.G.,  T.  Bollerslev,  F.X.  Diebold  and  H.  Ebens,  2001a,   The  distribution  of
+   realized  stock  return volatility.  Journal of  Financial  Economics  61,  43–76.
+Andersen,  T.G.,  T.  Bollerslev,  F.X.  Diebold  and  P.  Labys,  2001b.    The  distribution  of
+   realized  exchange  rate  volatility.    Journal  of  the  American  Statistical  Association  96,
+   42–55.
+Andersen, T.G., T. Bollerslev, F.X. Diebold and P. Labys, 2003, Modeling and forecasting
+   realized  volatility.  Econometrica  71,  579–625.
+Andreou,  E.  and  E.  Ghysels,  2002,  Rolling-sample  volatility  estimators:   some  new  theo-
+   retical,  simulation  and  empirical  results.   Journal  of  Business  and  Economic  Statistics
+   20,  363–376.
+Bali,   T.G.  and  D.  Weinbaum,  2005,   A  comparative  study  of  alternative  extreme-value
+   volatility  estimators.  Journal of  Futures Markets  25,  873–892.
+Bandi, F.M. and J.R. Russell, 2005a,  Microstructure noise, realized  variance, and optimal
+   sampling.  Graduate  School of  Business, University  of  Chicago,  working  paper.
+Bandi, F.M. and J.R. Russell, 2005b, Separating microstructure noise from volatility.  Jour-
+   nal of  Financial  Economics,  to  appear.
+Barndorﬀ-Nielsen, O.E. and N. Shephard, 2002, Econometric   analysis of realised volatility
+   and  its  use  in  estimating  stochastic  volatility  models.   Journal  of  the  Royal  Statistical
+   Society  Series B  64,  253–280.
+Barndorﬀ-Nielsen,   O.E.,   P.R.  Hansen,   A.  Lunde  and  N.  Shepha rd,  2004,   Regular  and
+   modiﬁed kernel-based estimators of integrated variance:  T he case of independent noise.
+   Oxford Financial  Research  Centre  Economics  Series  2004-FE-20.
+Beckers, S., 1983, Variances of security price returns based on high, low, and closing prices.
+   Journal of  Business 56,  97–112.
+Brandt, M.W. and F.X. Diebold, 2006, A no-arbitrage approach to range-based estimation
+   of  return covariances  and  correlations.  Journal of  Business 79,  61–74.
+Brown,  S.,  1990,  Estimating  volatility,  in:  S.  Figlewski,  W.  Silber  and  M.  Subramanyam,
+   (Eds.), Financial options:  From theory to practice, Business One Irwin, Homewood IL.,
+   pp.  516–537.
+
+
+                                                         27
+Christensen,  K.  and  M.  Podolskij,  2005,   Realized  range-based  estimation  of  integrated
+    variance.  Aarhus School of  Business, manuscript.
+Diebold, F.X. and R.S. Mariano, 1995, Comparing predictive accuracy.  Journal of Business
+    and  Economic  Statistics  13,  253–263.
+Fleming, J., C. Kirby and B. Ostdiek, 2003,  The economic value of volatility  timing using
+    ‘realized’  volatility.  Journal of  Financial  Economics  67, 473–509.
+Foster,   D.P.  and  D.B.  Nelson,   1996,   Continuous  record  asymptotics  for  rolling  sample
+    variance  estimators.  Econometrica  64,  139–174.
+Garman,  M.B.  and  M.J.  Klass,  1980,  On  the  estimation  of  security  price  volatilities  from
+    historical  data.  Journal of  Business 53,  67–78.
+Hansen,  P.R.  and  A.  Lunde,  2005,  A  realized  variance  for  the  whole  day  based  on  inter-
+    mittent  high-frequency data.  Journal of  Financial  Econometrics  3,  525–554.
+Hansen,  P.R.  and  A.  Lunde,  2006a,  Consistent  ranking  of  volatility  models.    Journal  of
+    Econometrics,  to  appear.
+Hansen,  P.R.  and  A.  Lunde,  2006b,  Realized  variance  and  market  microstructure  noise.
+    Journal of  Business and  Economic  Statistics,  to  appear.
+Harvey,   D.I.,   S.J.  Leybourne  and   P.  Newbold,   1998,   Tests   for  forecast   encompassing.
+    Journal of  Business and  Economic  Statistics  16,  254–259.
+Kunitomo, N., 1992, Improving the Parkinson method of estimating security price volatilites.
+    Journal of  Business 65,  295–302.
+Parkinson, M., 1980,  The extreme value method for estimating  the variance of  the rate of
+    return.  Journal of  Business 53,  61–65.
+Patton,  A.,  2005,  Volatility  forecast  evaluation  and  comparison  using  imperfect  volatility
+    proxies.  London  School  of  Economics,  manuscript.
+Rogers,  L.C.G.  and  S.E.  Satchell,  1991,  Estimating  variance  from  high,  low  and  closing
+    prices.  Annals of  Applied  Probability  1,  504–512.
+Yang,  Z.  and  Q.  Zhang,  2000,  Drift-independent volatility  estimation  based  on  high,  low,
+    open, and  close  prices.  Journal of  Business 73,  477–491.
+Zhang, L., P.A. Mykland and Y. A¨ıt-Sahalia, 2005, A tale of two time scales:  Determining
+    integrated volatility with noisy high-frequency data.  Journal of the American Statistical
+    Association  100,  1394–1411.
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          28
+29
+30
+31
+32
+                           Table  5:  Unconditional  daily  S&P500 volatility  distributions
+
+
+                                      r2t                  RR∆t               RR∆S,t            RV ∆t                RV ∆S,t           RV ∆TTS,t          RV ∆AC1,t
+Mean                                   1. 792             1. 533             1. 750             1. 818             1. 824                1. 784                  1. 673
+StDev                                 3. 263             1. 408             1. 678             1. 879             1. 967                1. 840                  1. 942
+Skewness                          4. 622             4. 251             4. 159             4. 967             4. 658                5. 244                  5. 594
+Kurtosis                        36. 14             32. 10             29. 99             41. 32             35. 71                45. 34                  49. 87
+Maximum                    41. 15             16. 20             19. 24             24. 17             21. 56                23. 51                  24. 74
+Minimum                        0. 00                0. 122             0. 118             0. 108             0. 081                0. 110                  0. 073
+  Note:    The  table  shows  sample  statistics  of  the   daily  squared  return,   the  realized  range  (RR∆t  ),   the
+  scaled  realized  range  (RR∆S,t  obtained  from  (11)  with  q  =  66),  the  realized  variance  (RV ∆t   ),  the  scaled
+  realized  variance  (RV ∆S,t  obtained  from  (11)  with  q  =  66  and  RR  replaced  by  RV ),  the  two  time-scales
+  estimator  (RV ∆TTS,t)  and  the  ﬁrst-order  kernel-based  estimator  ( RV ∆AC1,t)  for  the  S&P500  index-futures
+  from  4  January  1999  to  23  February  2004  (1289  trading  days).   The  sampling  frequency  is  ﬁve  minutes
+  from 9:30-16:15 EST  and 15 minutes  from 16:15-9:30 EST.
+
+
+
+
+
+
+
+
+                          Table  6:  Unconditional  daily  S&P500 return  distributions
+
+                                                                                              √                                                        √
+                                            rt                  rt/  √  RR∆t            rt/        RR∆S,t          rt/  √       RV ∆t             rt/      RV ∆S,t
+
+Mean                   −0. 0163                    0. 0185                     0. 0184                    0. 0199                    0. 0226
+StDev                                        1. 339                       1. 091                         1. 034                       1. 011                       1. 035
+Skewness                                 0. 0723                    0. 1384                     0. 1305                    0. 1408                    0. 1442
+Kurtosis                                   4. 310                       2. 814                         2. 800                       2. 748                       2. 756
+Jarque-Bera                      93. 31                          5. 966                         5. 807                       7. 677                       7. 670
+Maximum                              5. 737                       3. 500                         3. 175                       3. 043                       3. 077
+Minimum             −6. 415         −3. 121          −3. 063         −2. 739         −2. 867
+  Note:   The  table  shows  sample  statistics  of  the  daily  return,  and  the  daily  return  standardized  with
+  the square root of the realized range (RR∆t  ), the scaled realized range (RR∆S,t obtained from (11) with
+  q  = 66),  the  realized variance (RV ∆t   ),  or  the  scaled  realized  variance (RV ∆S,t  obtained  from  (11)  with
+  q  = 66  and  RR  replaced  by  RV )  for  the  S&P500 index-futures  from  4  January  1999  to  23  February
+  2004 (1289 observations).  The sampling frequency is ﬁve min utes from 9:30-16:15 EST and 15 minutes
+  from 16:15-9:30 EST.
+
+
+
+
+
+                                                                          33
+      Table  7:  Mean  and  standard  deviation  S&P500 realized  range  and variance
+Day/night
+Frequency              RR∆t                  RR∆S,t                RV ∆t                    RV ∆S,t              RV ∆TTS,t            RV ∆AC1,t
+            1/5              1.288                1.751                1.945                1.832                 1.870                   1.897
+                           (1.183)            (1.710)            (1.911)            (1.926)             (1.773)              (1.971)
+          5/15              1.533                1.750                1.818                1.824                 1.784                   1.673
+                           (1.408)            (1.678)            (1.879)            (1.967)             (1.840)              (1.942)
+        15/15              1.591                1.746                1.703                1.827                 1.667                   1.686
+                           (1.518)            (1.717)            (1.868)            (2.104)             (1.744)              (2.068)
+        27/45              1.662                1.745                1.707                1.825                 1.566                   1.710
+                           (1.674)            (1.796)            (2.007)            (2.275)             (1.704)              (2.032)
+      45/115              1.691                1.743                1.725                1.830                 1.403                   1.705
+                           (1.743)            (1.830)            (2.208)            (2.489)             (1.611)              (2.296)
+  405/1035              1.733                1.730                1.807                1.801                 1.808                   1.808
+                           (2.079)            (2.041)            (3.210)            (3.148)             (3.213)              (3.213)
+         Daily              1.731                                               1.792
+                           (2.190)                                          (3.263)
+    Note:   Mean  and  standard  deviation  (in  parentheses)  for  the  realized  range  (RR∆t  ),  the  scaled
+    realized  range  (RR∆S,t  obtained  from  (11)  with  q  =  66),  the  realized  variance  (RV ∆t      obtained
+    from  (11)  with  q   =   66  and  RR  replaced  by  RV ),   the  scaled  realized  variance  (RV ∆S,t),   the
+    two time-scales estimator (RV ∆TTS,t) and the ﬁrst-order kernel-based estimator ( RV ∆AC1,t) for the
+    S&P500 index-futures for diﬀerent sampling frequencies.  T he sample period runs from 4 January
+    1999 to  23  February  2004 (1289 observations).  Sampling  frequencies  are  denoted  by  the  length
+    of  the  sampling  intervals  in  minutes  from  9:30-16:15  EST  (ﬁr st  number)  and  16:15-9:30  EST
+    (second  number).   For  example,  1/5  implies  the  one-minute  frequency  is  used  during  the  ‘day’
+    and the ﬁve-minute frequency during the ‘night’.  Under ‘Daily’ Parkinson’s daily high-low range
+    is  reported for realized range, and the  daily squared return for the  realized variance.
+
+
+
+
+
+
+
+
+
+
+
+                                                                        34
+ Table  8:  Forecasting  S&P  500 index-futures  volatility:  realized  range  vs.  realized  variance
+             Outlier       Freq                                           yt = RV ∆t                                                                           yt = RR∆t
+Var               corr.        (min)              R2         MSE     MAE             ENC                      R2         MSE     MAE             ENC
+                     No           1/5           0. 995     0. 814     0. 000     0.018-0.056           0. 997     0. 998     1. 000     0.000-0.970
+                               5/15           0. 961     0. 985     1. 000     0.002-0.695           0. 977     0. 999     1. 000     0.001-0.988
+Close-                             27/45           0. 994     0. 992     1. 000     0.005-0.981           0. 989     0. 992     1. 000     0.005-0.980
+  to-
+ close                 Yes           1/5           0. 698     0. 000     0. 000     0.000-0.000           0. 697     1. 000     1. 000     0.000-1.000
+                               5/15           0. 947     0. 987     0. 634     0.000-0.000           0. 993     1. 000     1. 000     0.000-0.978
+                             27/45           1. 000     1. 000     1. 000     0.000-0.968           1. 000     1. 000     1. 000     0.000-0.940
+
+
+                     No           1/5           0. 998     0. 871     0. 000     0.020-0.183           0. 998     0. 997     1. 000     0.001-0.979
+                               5/15           0. 960     0. 986     1. 000     0.005-0.908           0. 971     0. 997     1. 000     0.002-0.993
+Open-                             27/45           0. 993     0. 987     1. 000     0.009-0.978           0. 986     0. 987     1. 000     0.009-0.977
+  to-
+ close                 Yes           1/5           0. 320     0. 000     0. 000     0.000-0.000           0. 843     1. 000     1. 000     0.000-1.000
+                               5/15           0. 993     1. 000     0. 929     0.000-0.000           1. 000     1. 000     1. 000     0.000-1.000
+                             27/45           1. 000     1. 000     1. 000     0.000-1.000           1. 000     1. 000     1. 000     0.000-1.000
+    Note:   The  table  summarizes  the  relative  forecasting  performance  of  the  realized  range  (RR∆t  )  and  the
+    realized  variance  (RV ∆t   ).   The  table  reports  p-values  of  the  MDM  test  of  equal  predictive  accuracy  and
+    forecast encompassing.  p-values below q  (above 1− q) indicate that the null hypothesis of equal R2  (MSE
+    or  MAE)  can  be  rejected  in  favor  of  the  lagged  realized  variance  (realized  range)  as  a  predictor  having
+    a  higher  R2  (or  smaller  MSE  or  MAE)  than  the  lagged  realized  range  (realized  variance)  at  the  100q%
+    signiﬁcance level.  For example, the ﬁrst number in the table    (1-minute daytime frequency, 5-minute night
+    frequency; R2 criterion; realized variance the target), i.e.  0.991, indicates that the lagged realized range has
+    a signiﬁcantly higher  R2 than the lagged realized variance at the 0.9% (1 - 0.991) signiﬁcance level.  For the
+    encompassing regression test (ENC) there are two numbers.  The ﬁrst (second) reﬂects whether the lagged
+    realized variance (range) has a signiﬁcant contribution af ter the lagged realized range (variance) is already
+    included.   Here  a  high  p-value  rejects  the  null  that  the  second  forecast  has  no  incremental  information  so
+    for both  we  look for high  p-values to reject  the  null.
+
+
+
+
+
+
+
+
+
+
+
+                                                                       35
+Table 9:  Forecasting S&P 500 index-futures volatility:  scaled realized range vs. scaled realized
+variance
+                Outlier       Freq                                          yt = RV ∆S,t                                                                      yt = RR∆S,t
+ Var               corr.        (min)              R2         MSE     MAE             ENC                      R2         MSE     MAE             ENC
+                        No           1/5           0. 972     0. 968     0. 975     0.011-0.886           0. 993     0. 984     1. 000     0.006-0.945
+                                   5/15           0. 948     0. 993     1. 000     0.002-0.883           0. 989     0. 998     1. 000     0.001-0.978
+ Close-                             27/45           0. 987     0. 986     1. 000     0.010-0.971           0. 986     0. 988     1. 000     0.009-0.977
+    to-
+   close                 Yes           1/5           0. 194     0. 789     0. 417     0.000-0.012           0. 849     1. 000     1. 000     0.000-0.280
+                                   5/15           0. 666     0. 992     0. 875     0.000-0.010           0. 999     1. 000     1. 000     0.000-0.328
+                                 27/45           1. 000     1. 000     1. 000     0.000-0.860           1. 000     1. 000     1. 000     0.000-0.983
+
+
+                        No           1/5           0. 968     0. 971     0. 999     0.011-0.907           0. 994     0. 994     1. 000     0.003-0.982
+                                   5/15           0. 913     0. 987     1. 000     0.006-0.919           0. 960     0. 996     1. 000     0.003-0.986
+ Open-                             27/45           0. 980     0. 993     1. 000     0.004-0.978           0. 986     0. 995     1. 000     0.003-0.987
+    to-
+   close                 Yes           1/5           0. 001     0. 436     0. 178     0.000-0.000           0. 662     1. 000     1. 000     0.000-1.000
+                                   5/15           0. 731     1. 000     0. 988     0.000-0.052           1. 000     1. 000     1. 000     0.000-1.000
+                                 27/45           1. 000     1. 000     1. 000     0.000-0.998           1. 000     1. 000     1. 000     0.000-1.000
+      Note:  The table summarizes the relative forecasting performance of the scaled realized range (RR∆S,t) and
+      the  scaled realized variance (RV ∆S,t)  obtained from (11)  with  q = 66.  See  Table 8  for further details.
+
+Table  10:   Forecasting  S&P  500  index-futures  volatility:   scaled  realized  range  vs.  two  time-
+scales  estimator
+                Outlier       Freq                                       yt = RV ∆TTS,t                                                                   yt = RR∆S,t
+ Var               corr.        (min)              R2         MSE     MAE             ENC                      R2         MSE     MAE             ENC
+                        No           1/5           0. 993     0. 933     0. 363     0.022-0.794           0. 998     0. 971     1. 000     0.010-0.907
+                                   5/15           0. 991     0. 973     0. 995     0.014-0.935           0. 996     0. 978     1. 000     0.011-0.947
+ Close-                             27/45           0. 965     0. 688     0. 820     0.035-0.250           0. 943     0. 778     0. 993     0.013-0.305
+    to-
+   close                 Yes           1/5           0. 520     0. 237     0. 005     0.000-0.000           0. 985     1. 000     1. 000     0.000-0.228
+                                   5/15           0. 927     0. 819     0. 651     0.000-0.002           1. 000     0. 998     1. 000     0.000-0.119
+                                 27/45           1. 000     0. 016     0. 052     0.000-0.000           1. 000     0. 990     1. 000     0.000-0.000
+
+
+                        No           1/5           0. 983     0. 839     0. 305     0.117-0.763           0. 991     0. 892     1. 000     0.080-0.845
+                                   5/15           0. 990     0. 963     0. 992     0.025-0.937           0. 997     0. 972     1. 000     0.020-0.953
+ Open-                             27/45           0. 982     0. 733     0. 833     0.039-0.309           0. 970     0. 862     1. 000     0.012-0.428
+    to-
+   close                 Yes           1/5           0. 841     0. 666     0. 079     0.000-0.000           1. 000     1. 000     1. 000     0.000-0.914
+                                   5/15           0. 944     0. 959     0. 943     0.000-0.016           1. 000     1. 000     1. 000     0.000-0.786
+                                 27/45           1. 000     0. 201     0. 535     0.000-0.000           1. 000     1. 000     1. 000     0.000-0.000
+      Note:    The  table  summarizes  the  relative  forecasting  performance  of  the  scaled  realized  range  (RR∆S,t)
+      obtained  from  (11)  with  q  =  66  and  the  two  time-scales  estimator  (RV ∆TTS,t).    See  Table  8  for  further
+      details.
+
+                                                                             36
+Table  11:   Forecasting  S&P  500  index-futures  volatility:   rolling  forecasts  from  realized  range
+vs.  realized  variance
+                Outlier       Freq                                           yt = RV ∆t                                                                           yt = RR∆t
+ Var               corr.        (min)              R2         MSE     MAE             ENC                      R2         MSE     MAE             ENC
+                        No           1/5           0. 997     0. 763     0. 918     0.011-0.015           0. 997     0. 999     1. 000     0.000-0.993
+                                   5/15           0. 961     0. 772     1. 000     0.000-0.027           0. 988     1. 000     1. 000     0.000-0.902
+ Close-                             27/45           0. 996     0. 999     1. 000     0.000-0.979           0. 989     0. 999     1. 000     0.000-0.979
+    to-
+   close                 Yes           1/5           1. 000     1. 000     1. 000     0.000-1.000           1. 000     0. 000     0. 000     0.004-0.000
+                                   5/15           1. 000     1. 000     1. 000     0.000-1.000           1. 000     1. 000     0. 988     0.000-0.009
+                                 27/45           1. 000     1. 000     0. 998     0.000-0.985           1. 000     1. 000     1. 000     0.000-0.997
+
+
+                        No           1/5           0. 981     0. 982     0. 997     0.004-0.600           0. 986     0. 132     0. 383     0.035-0.008
+                                   5/15           0. 874     0. 944     0. 959     0.009-0.347           0. 938     0. 789     0. 953     0.007-0.006
+ Open-                             27/45           0. 992     0. 978     0. 933     0.003-0.364           0. 992     0. 976     0. 979     0.004-0.401
+    to-
+   close                 Yes           1/5           0. 999     1. 000     1. 000     0.000-1.000           1. 000     0. 000     0. 000     0.437-0.000
+                                   5/15           0. 995     1. 000     1. 000     0.000-0.999           1. 000     0. 998     0. 951     0.000-0.000
+                                 27/45           1. 000     1. 000     0. 955     0.000-0.731           1. 000     1. 000     0. 995     0.000-0.891
+      Note:   The  table  summarizes  the  relative  forecasting  performance  of  the  bias  adjusted  rolling  forecasts
+      obtained from the realized range (RR∆t  ) and the realized variance (RV ∆t   ).  See Table 8 for further details.
+
+Table  12:  Forecasting  S&P  500  index-futures  volatility:   rolling  forecasts  from  scaled  realized
+range vs.  scaled  realized  variance
+                Outlier       Freq                                          yt = RV ∆S,t                                                                      yt = RR∆S,t
+ Var               corr.        (min)              R2         MSE     MAE             ENC                      R2         MSE     MAE             ENC
+                        No           1/5           0. 991     0. 961     0. 994     0.001-0.102           0. 998     0. 999     1. 000     0.000-0.903
+                                   5/15           0. 900     0. 689     0. 997     0.012-0.066           0. 990     0. 991     1. 000     0.000-0.484
+ Close-                             27/45           0. 985     0. 976     1. 000     0.004-0.810           0. 987     0. 992     1. 000     0.002-0.937
+    to-
+   close                 Yes           1/5           1. 000     1. 000     1. 000     0.000-1.000           1. 000     1. 000     1. 000     0.000-1.000
+                                   5/15           1. 000     1. 000     1. 000     0.000-1.000           1. 000     1. 000     1. 000     0.000-1.000
+                                 27/45           1. 000     1. 000     1. 000     0.000-1.000           1. 000     1. 000     1. 000     0.000-1.000
+
+
+                        No           1/5           0. 947     0. 976     0. 999     0.007-0.828           0. 975     0. 974     1. 000     0.005-0.611
+                                   5/15           0. 928     0. 966     0. 994     0.010-0.805           0. 967     0. 973     0. 999     0.006-0.620
+ Open-                             27/45           0. 973     0. 975     0. 977     0.007-0.850           0. 992     0. 983     0. 997     0.004-0.763
+    to-
+   close                 Yes           1/5           1. 000     1. 000     1. 000     0.000-1.000           1. 000     1. 000     1. 000     0.000-1.000
+                                   5/15           0. 994     1. 000     1. 000     0.000-1.000           1. 000     1. 000     1. 000     0.000-0.999
+                                 27/45           0. 996     1. 000     0. 998     0.000-0.999           1. 000     1. 000     1. 000     0.000-0.998
+      Note:   The  table  summarizes  the  relative  forecasting  performance  of  the  bias  adjusted  rolling  forecasts
+      obtained from the scaled realized range RR∆S,t  and the scaled realized variance (RV ∆S,t) obtained from (11)
+      with  q = 66.  See  Table 8 for further  details.
+
+
+                                                                             37
+Table  13:  Forecasting  S&P  500  index-futures  volatility:   rolling  forecasts  from  scaled  realized
+range vs.  two  time-scales  estimator
+                Outlier       Freq                                       yt = RV ∆TTS,t                                                                   yt = RR∆S,t
+ Var               corr.        (min)              R2         MSE     MAE             ENC                      R2         MSE     MAE             ENC
+                        No           1/5           0. 968     0. 339     0. 753     0.007-0.000           0. 999     0. 986     1. 000     0.000-0.043
+                                   5/15           0. 993     0. 914     0. 999     0.000-0.003           1. 000     0. 999     1. 000     0.000-0.039
+ Close-                             27/45           0. 997     1. 000     1. 000     0.000-0.957           0. 992     0. 987     1. 000     0.000-0.518
+    to-
+   close                 Yes           1/5           0. 996     1. 000     1. 000     0.000-1.000           1. 000     1. 000     1. 000     0.000-1.000
+                                   5/15           0. 999     1. 000     1. 000     0.000-1.000           1. 000     1. 000     1. 000     0.000-1.000
+                                 27/45           0. 998     1. 000     0. 849     0.000-0.009           0. 999     1. 000     1. 000     0.000-1.000
+
+
+                        No           1/5           0. 963     0. 967     0. 996     0.004-0.305           0. 988     0. 994     1. 000     0.001-0.872
+                                   5/15           0. 892     0. 952     0. 968     0.009-0.355           0. 962     0. 984     0. 998     0.005-0.772
+ Open-                             27/45           0. 971     0. 876     0. 821     0.006-0.055           0. 956     0. 982     0. 983     0.004-0.733
+    to-
+   close                 Yes           1/5           0. 990     1. 000     1. 000     0.000-1.000           1. 000     1. 000     1. 000     0.000-1.000
+                                   5/15           0. 989     1. 000     0. 999     0.000-0.986           0. 999     1. 000     1. 000     0.000-0.999
+                                 27/45           0. 996     0. 958     0. 414     0.000-0.000           0. 997     1. 000     0. 999     0.000-0.997
+      Note:   The  table  summarizes  the  relative  forecasting  performance  of  the  bias  adjusted  rolling  forecasts
+      obtained  from  the  scaled  realized  range  RR∆S,t  obtained  from  (11)  with  q  =  66  and  the  two  time-scales
+      estimator (RV ∆TTS,t).  See  Table 8 for further  details.
+
+
+
+
+ Table  14:  S&P  100 stocks:  unconditional  daily  volatility  distributions  (realized  range)
+                                                     RRt                                                                                         RRS,t
+                        Mean       StDev       Skew.           Kurt.                 Mean       StDev       Skew.           Kurt.
+  Min                    1. 254         1. 438         2. 164               9. 508               1. 368         1. 395         2. 122            10. 24
+  0.10                    2. 192         2. 039         2. 989            16. 71                  2. 175         2. 064         3. 185            19. 38
+  0.25                    2. 589         2. 593         3. 471            23. 23                  2. 750         2. 660         3. 772            25. 93
+  0.50                    3. 553         3. 611         4. 415            38. 75                  3. 430         3. 765         4. 598            41. 07
+  0.75                    5. 037         6. 393         7. 400            93. 66                  5. 483         7. 097         7. 355            94. 04
+  0.90                    9. 770      11. 56         12. 58            242. 4                     8. 888      10. 85         12. 16            244. 18
+  Max.               20. 66         54. 61         36. 23         1454                      17. 76         56. 82         36. 02         1423. 8
+
+  Mean                4. 798         6. 372         6. 711         120. 1                     4. 625         6. 429         6. 768         116. 22
+  StDev               3. 637         7. 960         6. 226         243. 8                     3. 210         8. 061         5. 994         231. 99
+      Note:   The  table  summarizes  the  distributions  of  the  daily  volatilities  of  the  100  S&P100  index
+      constituents.   The  realized  range  (RRt)  is  calculated  based  on  ﬁve-minute  intervals  and  the  close-
+      to-open squared return.  The  scaled realized range (RRS,t)  is obtained  using  (11) with  q = 66.
+
+
+
+                                                                               38
+      Table  15:  Forecasting  S&P  100 stock  volatility:  realized  range  vs.  realized  variance
+             Outlier     Freq                                           yt = RV ∆t                                                                           yt = RR∆t
+Var              corr.       (min)               R2              MSE          MAE          ENC                  R2            MSE       MAE         ENC
+                     No                1        61−5          44−1          90−0          48−26           54−10       5−66       0−92       29−89
+                                     5        50−3             4−33          8−55       28−73           46−6          0−71       0−98       23−96
+Close-                                    30           8−13          0−60          0−99       24−99              5−20       0−68       0−100    21−100
+  to-
+ close                Yes                1        74−6          82−3          94−1             5−1              38−26       0−97       0−100       0−90
+                                     5        35−15       30−43       37−30          3−15              9−42       0−98       0−100       0−93
+                                   30           0−94          0−99          1−99          0−88              0−99       0−100    0−100       0−98
+
+
+                     No                1        37−6          50−0          90−0          34−10              2−38       2−78       0−93       18−91
+                                     5           2−51          4−47          9−63       17−58              1−75       0−83       0−100    11−97
+Open-                                    30           0−79          0−82          0−98       12−100           0−90       0−86       0−99          8−100
+  to-
+ close                Yes                1        47−7          90−1          97−1             5−0                 2−82       0−100    0−100       0−91
+                                     5           1−56       36−37       37−33          0−9                 0−97       0−100    0−100       0−95
+                                   30           0−99          0−98          1−97          0−86              0−100    0−100    0−100       0−99
+     Note:   The  table  summarizes  the  relative  forecasting  performance  of  the  realized  range  (RRt)  and  the
+     realized  variance  (RVt).   The  entries  show  the  number  of  times  realized  variance  wins  and  the  number
+     of  times  realized  range  wins  (out  of  a  possible  100,  signiﬁca nt  diﬀerences  based  on  Diebold-Mariano
+     statistic at the 5% signiﬁcance level).  For example, the ent ry 61-5 (left uppercorner) indicates that with
+     the  realized  variance  (at  1-minute  frequency)  as  the  target,  the  lagged  realized  variance  as  a  predictor
+     has  a  signiﬁcantly  larger  (smaller)   R2  than  the  lagged  realized  range  for  61  (5)  stocks.   See  Table  8  for
+     further  details.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                           39
+Table 16:  Forecasting S&P 100 stock volatility:  scaled realized range vs. scaled realized variance
+               Outlier     Freq                                          yt = RV ∆S,t                                                                         yt = RR∆S,t
+ Var              corr.       (min)               R2              MSE          MAE          ENC                  R2              MSE          MAE          ENC
+                       No                1        38−5          20−10       10−60       60−60           35−5          38−7          50−31       75−47
+                                       5        24−6          25−8             5−58       65−43           25−6          40−3          41−31       79−33
+ Close-                                    30           5−19       24−6          11−31       68−38              5−25       33−3          13−34       75−29
+    to-
+  close                Yes                1        17−23          0−94          0−97          0−73           16−28       44−46       41−49       17−28
+                                       5           1−62          0−99          0−100       0−63              3−61       26−56       20−63          3−19
+                                     30           0−93          0−99          0−99          0−19              0−96          3−86          0−91          0−9
+
+
+                       No                1           9−36          1−75          0−97          6−86              4−45       29−40       35−52       29−48
+                                       5           1−73          0−82          0−98          8−89              2−81       19−49       17−69       20−46
+ Open-                                    30           0−82          0−74          0−94       10−84              0−89          3−60          0−92       10−64
+    to-
+  close                Yes                1           5−63          0−100       0−100       0−96              5−63       38−55       34−56       16−44
+                                       5           0−92          0−100       0−100       0−96              0−93       20−67       18−77          2−42
+                                     30           0−98          0−100       0−100       0−62              0−99          1−95          0−98          0−40
+      Note:  The  table  summarizes the  relative forecasting performance of the  scaled realized range (RR∆S,t)  and
+      the scaled realized variance (RV ∆S,t) obtained from (11) with q = 66.  See Tables 8 and 15 for further details.
+
+
+Table  17:    Forecasting  S&P  100  stock  volatility:    rolling  forecasts  from  realized   range  vs.
+realized  variance
+               Outlier     Freq                                           yt = RVt                                                                            yt = RRt
+ Var              corr.       (min)               R2            MSE         MAE          ENC                  R2              MSE          MAE          ENC
+                       No                1        14−12       9−16       11−29       54−65           11−15          9−16       10−50       58−70
+                                       5           7−25       2−22          0−58       43−83              5−25          3−21          3−66       43−81
+ Close-                                    30           3−25       0−34          0−59       35−86              3−36          1−44          2−69       32−84
+    to-
+  close                Yes                1           2−67       0−98          0−93          0−98              0−75       36−56       42−44       27−48
+                                       5           0−89       0−99          0−93          0−97              0−92       21−63       31−49       12−47
+                                     30           0−92       0−99          2−72          0−94              0−95          0−87          8−62          0−67
+
+
+                       No                1           3−37       9−20       13−35       43−59              2−50          5−28          6−65       28−76
+                                       5           0−59       0−48          0−82       12−83              1−67          0−69          0−88       11−89
+ Open-                                    30           0−63       0−69          0−90       10−95              0−77          0−81          0−95          9−96
+    to-
+  close                Yes                1           3−59       0−99          0−98          0−99              2−73       37−53       40−51       34−48
+                                       5           0−81       0−100       0−98          0−100           0−90       25−63       28−55       15−53
+                                     30           0−94       0−100       0−75          0−95              0−99          1−88          7−72          0−71
+      Note:   The  table  summarizes  the  relative  forecasting  performance  of  the  bias  adjusted  rolling  forecasts
+      obtained from the realized range (RR∆t  ) and the realized variance (RV ∆t   ).  See Tables 8 and 15 for further
+      details.
+
+
+                                                                               40
+Figure 1:  RMSE of the scaled realized range RR∆S,t obtained from (11) as a function
+of q, for sampling frequencies  as listed  in the  ﬁrst column  of Tab le  2.  The  sampling
+frequency  increases  from the  top  line  to the  bottom.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                      41

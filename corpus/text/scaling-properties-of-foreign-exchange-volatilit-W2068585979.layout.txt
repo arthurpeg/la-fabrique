@@ -1,0 +1,931 @@
+                                                 Physica    A    289    (2001)    249{266
+                                                                                                                        www.elsevier.com/locate/physa
+
+
+   Scaling         properties         of         foreign         exchange         volatility
+                Ramazan      Gen cay a;b ;  ,      Faruk      Sel cukb  ,      Brandon      Whitcher c
+    aDepartment    of    Economics,    University    of    Windsor,    Windsor,    401,    Sunset    ONT    Canada,    N9B    3P4
+                    bDepartment    of    Economics,    Bilkent    University,    Bilkent    06533,    Ankara,    Turkey
+                           cEURANDOM,    P.O.    Box    513,    5600    MB    Eindhoven,    The    Netherlands
+
+                                                                  Received    14    June    2000
+
+
+Abstract
+
+    In    this    paper,    we    investigate    the    scaling    properties    of    foreign    exchange    volatility.    Our    method-
+ology     is     based     on     a     wavelet     multi-scaling     approach     which     decomposes     the     variance     of     a     time
+series     and     the     covariance     between     two     time     series     on     a     scale     by     scale     basis     through     the     appli-
+cation     of     a     discrete     wavelet     transformation.     It     is     shown     that     foreign     exchange     rate     volatilities
+follow   dierent   scaling   laws   at   dierent   horizons.   Particularly,   there   is   a   smaller   degree   of   persis-
+tence    in    intra-day    volatility    as    compared    to    volatility    at    one    day    and    higher    scales.    Therefore,    a
+common    practice    in    the    risk    management    industry    to    convert    risk    measures    calculated    at    shorter
+horizons     into     longer     horizons     through     a     global     scaling     parameter     may     not     be     appropriate.     This
+paper    also    demonstrates    that    correlation    between    the    foreign    exchange    volatilities    is    the    lowest    at
+the    intra-day    scales    but    exhibits    a    gradual    increase    up    to    a    daily    scale.    The    correlation    coe cient
+stabilizes     at     scales     one     day     and     higher.     Therefore,     the     benet     of     currency     diversication     is     the
+greatest     at     the     intra-day     scales     and     diminishes     gradually     at     higher     scales     (lower     frequencies).
+The    wavelet    cross-correlation    analysis    also    indicates    that    the    association    between    two    volatilities
+is    stronger    at    lower    frequencies.             c⃝    2001    Elsevier    Science    B.V.    All    rights    reserved.
+
+PACS:    05.20;    02.50;    05.40
+
+Keywords:    Foreign    exchange    volatility;    Scaling;    Wavelets;    Multi-scaling
+
+
+
+1.      Introduction
+
+    In     nancial     risk     management,     risk     is     assessed     at     dierent     horizons     which     vary     from
+intervals     as     small     as     a     few     minutes     to     longer     horizons     such     as     days     or     even     months.
+A     common     practice     in     the     risk     management     industry     is     that     risk     measures     calculated
+at       shorter       horizons       are       converted       into       longer       horizons       by       taking       the       corresponding
+scaling     quantity     into     account.     For     instance,     if     a     risk     measure     (e.g.     standard     deviation)
+
+
+  Corresponding    author.    Tel.:    +1-519-2534232;    fax:    +1-519-9737096.
+E-mail    address:    gencay@uwindsor.ca    (R.    Gen cay).
+
+0378-4371/01/$ - see    front    matter           c⃝      2001    Elsevier    Science    B.V.    All    rights    reserved.
+PII:    S 0378-4371(00)00456-8
+250                                                                                                              R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266
+
+is       calculated       at       a       12       hour       frequency,       it       is       converted       to       a       30-day       risk       measure       by
+multiplying    this    half-day    standard    deviation    by           p60.    This    type    of    scaling    is    only    valid
+if    the    underlying    data    is    identically    and    independently    distributed    which    is    not    the    case
+for    nancial    time    series.1       Therefore,    the    type    of    scaling    pointed    out    above    may    provide
+misleading    inferences    for    nancial    time    series.    Diebold    et    al.    [4]    demonstrate    this    point
+with     a     simple     volatility     model     and     present     a     critical     view     of     this     practice.
+    In      the      literature,      a      number      of      authors      have      reported      empirically      observed      scaling
+laws    for    foreign    exchange    and    security    markets.    M /DELuller    et    al.    [5,6]    and    Guillaume    et    al.
+[7]    report    empirical    evidence    for    scaling    of    absolute    returns    for    foreign    exchange    rates.
+Mantegna    and    Stanley    [8]    and    Ghashghaie    et    al.    [9]    provide    examples    of    scaling    prop-
+erties     for     nancial     time     series.     Recently,     Andersen     et     al.     [10]     provide     further     evidence
+that     there     are     precise     scaling     laws     for     daily     volatility     of     foreign     exchange     returns.2
+    An    important    issue    is    whether    nancial    time    series    follow    a    single-scaling    law    across
+all     horizons     or     whether     scaling     properties     are     themselves     time     varying,     adhering     to     a
+multi-scaling     law.     This     paper     provides     evidence     that     there     is     no     unique     global     scaling
+in     nancial     time     series     but     rather     scaling     can     be     time     varying.3        In     this     paper,     we     in-
+vestigate     the     scaling     properties     of     high-frequency     exchange     rates     based     on     a     wavelet
+multi-scaling      approach      which      decomposes      the      variance      of      a      time      series      and      the      co-
+variance     between     two     time     series     on     a     scale     by     scale     basis     through     the     application     of
+a      discrete      wavelet      transformation.      The      wavelet      methodology      is      specication      free      and
+therefore    is    robust    to    misspecications    which    may    originate    from    assuming    a    particular
+distribution     of     returns.
+    Our      results      indicate      that      exchange      rate      volatilities      have      dierent      scaling      law      prop-
+erties       at       dierent       horizons.       Particularly,       there       is       a       smaller       degree       of       persistence       in
+intra-day     volatility     as     compared     to     volatility     at     one     day     or     higher     scales.     The     implica-
+tion    of    these    ndings    is    that    a    multi-scale    approach    to    scaling    is    more    in    line    with    the
+foreign      exchange      rates      as      opposed      to      a      single-scaling      constant      (or      exponent)      for      all
+horizons.     Our     ndings     further     reinforce     the     fact     that     pragmatic     scaling     practices     used
+in      the      nancial      risk      management      industry      are      inappropriate      and      may      lead      to      wrong
+inferences     and     practices.
+
+
+
+
+
+
+1  As     pointed     out     by     Mandelbrot     [1],     Clark     [2],     Mantegna     and     Stanley     [3],     and     many     others,     the     return
+distributions    of    nancial    time    series    are    leptokurtic.    In    Mandelbrot    [1],    the    return    distribution    was    studied
+to     be     a     symmetric     L evy     stable     distribution.     Mantegna     and     Stanley     [3]     has     re-conrmed     that     the     return
+distribution    is    L evy    stable    for    high-frequency    returns    except    for    tails,    which    are    approximately    exponential.
+The    Gaussianity    of    the    returns    only    reveal    themselves    at    longer    times    scales    over    a    month.
+2  Other    authors,    such    as    LeBaron    [11]    studied    what    might    be    responsible    for    the    observed    scaling    laws    by
+showing     that     a     simple     stochastic     volatility     model     calibrated     to     actual     data     is     capable     of     giving     a     power
+scaling   type   of   results.   LeBaron   [11]   indicates   that   this   is   a   mere   illusion   since   a   simple   stochastic   volatility
+model    is    not    scale    invariant    theoretically.    Barndor{Nielsen    and    Praue    [12]    argue    that    empirically    observed
+scaling    laws    are    largely    due    to    the    semi-heavy    tailedness    of    the    underlying    distributions    rather    than    to    real
+scaling.
+3  In   a   recent   paper,   Pasquini   and   Serva   [13]   provide   evidence   on   stock   index   series   that   volatility   correlations
+follow    power    laws    but    the    scaling    exponent    is    not    unique    in    supporting    the    multi-scaling    hypothesis.
+                                              R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266                                                                                                              251
+
+    An       important       question       for       a       portfolio       manager       or       a       trading       manager       is       whether
+the     individual     volatilities     move     together.4       In     this     study,     estimated     wavelet     correlations
+indicate      that      the      correlation      coe cient      between      two      volatilities      increases      with      an      in-
+creasing    scale,    up    to    one    day.    However,    the    correlation    coe cient    remains    constant    for
+scales    one    day    and    higher.    These    results    imply    that    the    benets    to    portfolio    diversica-
+tion     are     the     greatest     at     the     lowest     scale     (intra-day     horizons)     and     diminish     with     scales
+corresponding     to     one     day     and     longer     horizons.
+    In     practice,     trading     managers     focus     on     intra-day     co-movements     while     the     portfolio
+managers    are    usually    interested    in    one    day    and    higher    dynamics    as    they    have    a    longer
+investment     horizon.     Therefore,     it     is     important     to     distinguish     co-movements     of     volatil-
+ities      at      dierent      scales      (horizons).      The      wavelet      multi-scale      cross-correlations      provide
+a     convenient     method     of     disentangling     the     cross-correlations     on     a     scale     by     scale     basis
+to     determine     the     contribution     of     each     scale     to     the     overall     cross-correlation     dynamics.
+At     low     scales,     there     is     hardly     any     signicant     cross-correlations,     whereas     middle     scales
+are      dominated      by      the      intra-day      seasonalities.      At      higher      scales      (lower      frequencies),      a
+persistent     cross-correlation     dynamics     becomes     more     visible.
+    This      paper      is      organized      as      follows:      The      wavelet      methodology,      including      the      max-
+imum      overlap      discrete      wavelet      transformation,      wavelet      variance,      wavelet      covariance
+and      wavelet      correlation,      is      described      in      Section      2.      Empirical      results      are      presented      in
+Section     3.     We     then     conclude.
+
+
+2.      Scaling     and     wavelet     analysis
+
+2.1.      Aggregation     versus     multiresolution
+
+    To     search     for     a     possible     scaling     behavior     in     a     discrete     stochastic     process        xt ,     a     com-
+mon    procedure  5       is    to    aggregate    the    process    over    non-overlapping    time    intervals    (hori-
+zons)     to     form
+                                 Z          t
+            at ( )              1
+                                    (t−1)     xs  ds;                          t  =0;      (T   +1);      2(T   +1);:::    :                                                                                                                     (1)
+The       aggregated       process          at ( )       has       the       same       distributional       properties       of       the       original
+process      through      rescaling      via           .      The      quantity      of      interest                is      the      scaling      parameter,
+allowing     us     to     scale     up     or     down     the     process     to     dierent     time     horizons.     Since     we     are
+simply    averaging    across    time,    the    aggregated    process    also    becomes    more    Gaussian-like
+with     increasing         .     A     useful     alternative     is     to     compute     all     possible     shifted     time     intervals
+of      length            ,      thus      producing      the      process        ~at ( ).      This      is      implemented      by      allowing      the
+computation    in    Eq.    (1)    to    be    performed    for    all    integers    instead    of    only    integer    multiples
+
+
+4  The     existence     of     co-movements     of     dierent     volatilities     is     explored     in     a     series     of     multivariate     volatility
+models    such    as    factor    models,    as    in    Ref.    [14]    or    common    persistent    components    as    studied    by    Bollerslev
+and    Engle    [15].
+5  Aggregation    is    used    in    the    recent    literature    by,    for    example,    Pasquini    and    Serva    [13]    and    LeBaron    [11].
+252                                                                                                              R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266
+
+of         T    +  1.     These     two     competing     processes     will     be     investigated     further     when     we     dene
+the     wavelet     variance.
+     Aggregation      is      closely      related      to      multiresolution      analysis      via      the      discrete      wavelet
+transform    (DWT).    The    key    to    multiresolution    analysis    is    to    represent    a    process    through
+a    series    of    coarse    approximations    and    details    [16].    This    approximation    is    performed    by
+rst     dening     an     orthonormal     basis     of     shifted     and     translated     functions.
+            f j;     k (t)=2    −j=2  (2−j t        −       k)g                                                                                                                                                                                                                                                                           (2)
+based     on     a     single     function          .     The     scaling     coe cients         v1;k      are     dened     via
+                           Z        1                          Z        1    p
+            v1;k                                                                  2 (t=2      −       k)dt:
+                              −1  xt  1;k (t)=                   −1  xt
+There     is     an     inherent     downsampling     (removal     of     every     other     value)     present     that     guar-
+antees    orthogonality    of    this    transform.    As    with    the    aggregation    process,    we    may    ignore
+the    downsampling    and    perform    additional    rescaling    of    the    wavelet    function    in    order    to
+produce      a      \maximally      overlapped"      sequence      of      scaling      coe cients        ~v1;k .      Coarser      ap-
+proximations    are    obtained    by    simply    projecting    the    process        xt                  v0;k      onto    higher-order
+scaling     functions.
+     The      information      contained      in      the      dierence      between      two      adjacent      approximations,
+say          v0;k       and          v1;k ,      is      given      by      the      wavelet      coe cients          w1;k .      Under      a      multiresolution
+framework,      the      wavelet      coe cients      are      obtained      through      a      projection      of      the      process
+onto     shifted     and     translated     versions     of     a     wavelet     function            .     Combining     the     two     sub-
+series,    one    scaling    coe cients    and    the    other    wavelet    coe cients,    we    arrive    at    the    next
+ner     approximation     to     the     original     process.
+     If     we     consider     the     Haar     scaling     function
+                                    1;                                          − 1  <t60     ;
+             (H )(t)=                 0;                  otherwise     ;
+
+then     it     is     easy     to     see     that     the     aggregate     process        at ( )     and     the     scaling     coe cients         vj;     k
+are     identical     under     the     condition           =2 j.     This     is     an     indication     of     how     aggregation     and
+multiresolution     analysis     are     related.     We     can     go     beyond     this     simple     identity     and     utilize
+the      wavelet      coe cients      instead      of      the      scaling      coe cients      to      characterize      self-similar
+behavior     in     observed     stochastic     processes.     We     may     also     use     higher     order     Daubechies
+wavelet     functions     to     compute     the     transform.     If     the     scaling     coe cients     for     level         j      are
+associated     with     averages     of     length     2 j,     then     the     level        j     wavelet     coe cients     (which     are
+dierences    of    averages    half    this    length)    are    associated    with    changes    at    scale        j              2 j−1.
+This     is     true     for     all     families     of     Daubechies     compactly     supported     wavelets.
+
+2.2.      The     wavelet     variance
+
+     The     wavelet     variance     is     introduced     here     in     order     to     estimate     the     scaling     parameter
+of     a     stochastic     process.     Abry     et     al.     [17]     and     Percival     and     Walden     [18]     both     advocate
+using      such      an      estimator      for      investigating      scaling      behavior.      We      restrict      ourselves      to
+analyzing       realizations       of       stationary       processes       with       nite       length            N .       This       brings       the
+                                                 R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266                                                                                                              253
+
+issue      of      boundary      conditions      into      the      computation      procedure.      We      choose      to      simply
+re/CRect     the     time     series     at     the     nal     observation,     thus     producing     a     series     of     length     2N ,
+and    computing    the    wavelet    transform    on    this    series    using    periodic    boundary    conditions.
+     Let         ~hl     =          f  ~h0 ;    ~h1;:::;           ~hN −1 g       denote       the       rescaled       wavelet       lter       coe cients       from       a
+Daubechies      compactly      supported      wavelet      family      (rescaled      such      that        ~h   =      h=21=2)      and
+let       ~gl      be     the     corresponding     rescaled     scaling     lter     coe cients,     dened     via     the     quadra-
+ture      mirror      relationship        ~g1;m   =(− 1)m+1  ~h1;L−1−m.      For      an      observed      series      X      of      length
+N ,     applying     these     lter     coe cients,     and     not     downsampling     the     output,     produces         J
+blog2    N   c     vectors     of     wavelet     coe cients
+            Wj   =      f     ~~W   j;  0 ;         ~W   j;   1;:::;              ~W   j;     N −1 g;j  =1;:::;J   ;                                                                                                                                                                              (3)
+
+computed     via
+
+                             Lj −1X
+            W   j;   t            ~   hj;   l Xt−l  mod    N;t  =0;:::;N                              −    1     ;~
+
+                              l=0
+and     one     vector     of     scaling     coe cients         ~VJ    =      f   ~V   J;   0 ;      ~V   J; 1;:::;            ~V   J; N −1 g     through
+
+                            LJ  −1X
+            V   J;   t            ~   gJ;   l Xt−l  mod    N;t  =0;:::;N                              −    1     :~
+
+                             l=0
+This      is      known      as      the      maximal      overlap      discrete      wavelet      transform      (MODWT).6         As
+discussed    when    comparing    aggregation    and    multiresolution    analysis,    the    term    \maximal
+overlap"      is      used      to      indicate      that      all      possible      shifted      time      intervals      were      computed.
+Thus,      orthogonality      of      the      transform      is      lost      but      it      has      been      shown      that      the      wavelet
+variance    utilizing    MODWT    coe cients    is    more    e cient    than    the    one    obtained    through
+the     orthonormal     DWT.     Percival     [19]     gives     the     asymptotic     relative     e ciencies     for     the
+wavelet     variance     estimator     based     on     the     orthonormal     DWT     compared     to     the     estimator
+based     on     the     MODWT     using     a     variety     of     power     law     processes.
+     The    wavelet    variance    is    dened    to    be    the    variance    of    the    wavelet    coe cients    at    scale
+ j;     i.e.,           2X  ( j)               Var f     ~W   j;   t  g.     In     fact,     due     to     the     inherent     dierencing     associated     with
+wavelet     functions,     if     a     su ciently     long     wavelet     lter     is     used     the     wavelet     coe cients
+have      mean      zero      and      thus            2X  ( j)                      E f     ~W 2j;   t  g.      To      form      an      unbiased      estimator      of      the
+wavelet    variance    using    the    MODWT,    we    remove    all    coe cients    aected    by    the    periodic
+boundary     conditions     to     yield
+
+                                            N −1
+             2~                             X           W 2~
+               X  ( j)                  1N  j~               j;     t       ;
+                                         t  =   Lj −1
+where          ~N  j    =      N           −        Lj    +   1      and          Lj                    (2 j          −     1)(L        −     1)   +   1      is      the      length      of      the      scale           j
+wavelet     lter.     The     wavelet     variance     decomposes     the     variance     of     a     process     on     a     scale
+by    scale    basis,    thus    allowing    us    to    inspect    how    dierent    horizons    behave    relative    to    one
+another.     This     is     related     to     the     fact     that     the     spectrum     (modulus     squared     of     its     Fourier
+
+
+6  For    details    on    the    MODWT    and    its    relationship    to    the    orthonormal    DWT    see    Percival    and    Walden    [18].
+254                                                                                                              R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266
+
+transform)     decomposes     the     variance     of     a     process     on     a     frequency     by     frequency     basis.
+For     example,     if     the     process     we     observe     is     a     power     law     process     with     spectrum     given
+by        SX  (f)     _        jfj,     then     the     wavelet     variance     has     the     following     approximate     relation     to
+wavelet     scale:
+             2X  ( j)     _       −−1j                                             :
+Observing      a      linear      relationship      between      log( 2X  ( j))      and      log( j)      would      thus      indicate
+scaling    behavior.    We    use    this    property    when    analyzing    10    year    records    of    5-min    foreign
+exchange     rates.
+
+2.3.      Condence     intervals     for     the     wavelet     variance
+
+    The     asymptotic     variance     of     the     MODWT-based     estimator     of     the     wavelet     variance     is
+given     by
+                                                                 Z     1=2
+
+            N !1        ~limN  j   Var f~ 2X  ( j)g  =2                        Wj (f)df             2Vj       ;
+                                                                    −1=2    S2
+where         SWj (f)     is     the     spectrum     of     the     scale          j      wavelet     coe cients.     It     follows     that     the
+random     interval"                                         2V         1=2                                                     2V         1=2 #
+                2~                                                   j          ;   ~ 2                                                 j             ;
+                 X  ( j)      −       −1(1      −       p)     N  j~               X  ( j)+     −1(1      −       p)             N  j~
+
+captures       the       true       wavelet       variance       and       corresponds       to       a       100(1         −     2p)%       condence
+interval     for          2X  ( j).     For     Gaussian     processes,     the     quantity        Vj      will     have     to     be     estimated
+using      the      autocovariance      sequence      of      the      scale            j       MODWT      wavelet      coe cients      to
+obtain     an     approximate     condence     interval.7
+    The       last       sentence       of       the       previous       paragraph       made       the       important       assumption       of
+Gaussianity     with     regard     to     the     MODWT     coe cients     at     all     scales.     We     may     relax     this
+assumption       and       slightly       modify       the       results       from       above       to       develop       an       approximate
+condence     interval     valid     for     non-Gaussian     processes.     Let         ~Uj      be     the     vector     of     mean-
+corrected    squared    wavelet    coe cients;    i.e.,         ~U  j; t  =       ~W 2j; t      −     E f     ~W 2j; t  g    for        t  =0;  1;:::;N                           −   1.
+Serroukh     et     al.     [20]     showed     that     the     asymptotic     variance     of      ~ 2X  ( j)     is     given     by
+
+            N !1        ~limN  j   Var f~ 2X  ( j)g  =     SW 2j   − 2X ( j)(0)  =     SUj (0)     ;
+and     further     proposed     a     multitaper     spectral     estimator     for     the     spectrum     evaluated     at     fre-
+quency   zero   on   the   right-hand   side.   This   approach   enables   us   to   produce   an   approximate
+condence     interval     applicable     to     non-Gaussian     processes.
+
+2.4.      The     wavelet     covariance     and     correlation
+
+    The      wavelet      scale      analysis      of      univariate      time      series      may      be      easily      generalized      to
+multiple       time       series       by       dening       the       concept       of       the       wavelet       covariance       between       X
+
+
+7  See     Percival     [19]     and     Percival     and     Walden     [18]     for     an     extensive     discussion     of     approximate     condence
+intervals    for    the    wavelet    variance.
+                                               R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266                                                                                                              255
+
+and      Y.      The      wavelet      covariance      is      dened      to      be      the      covariance      between      the      scale           j
+wavelet      coe cients      of      X       and      Y,      i.e.,           /CRXY ( j)                     Covf     ~W   j;     t;     X   ;       ~W   j;     t;     Y    g.      As      with      the
+wavelet      variance,      assuming      a      su cient      length      for      the      wavelet      lter      guarantees      each
+series    of    wavelet    coe cients    has    mean    zero    and    therefore        /CRXY ( j)               E f     ~W   j;     t;     X       ~W   j;     t;     Y    g.
+    An     unbiased     estimator     of     the     wavelet     covariance     using     the     MODWT     is     given     by
+                                            N −1
+                                             X            ~
+            /CR~XY ( j)                  1N  j~         W   j;     t;     X       ~W   j;     t;     Y         ;
+                                         t  =   Lj −1
+where       all       wavelet       coe cients       aected       by       the       boundary       are       removed.       The       wavelet
+covariance       decomposes       the       covariance       between       two       processes       on       a       scale       by       scale
+basis      and      provides      a      unique      method      for      attributing      levels      of      association      between      the
+processes      with      dierent      horizons.      Whereas      complicated      associations      may      be      present
+in      the      observed      processes,      the      wavelet      covariance      is      able      to      determine      which      scales
+(horizons)     are     signicantly     contributing     to     these     associations.8
+    Just     as     the     usual     correlation     coe cient     is     a     function     of     the     covariance     between     two
+series    of    observations,    standardized    by    their    standard    deviations,    the    wavelet    correlation
+is     composed     of     the     wavelet     covariance     between     X     and     Y     and     the     square     root     of     their
+wavelet     variance;     i.e.,          XY ( j)                 /CRXY ( j)=[ X  ( j) Y ( j)].     An     unbiased     estimator     of     the
+wavelet     correlation     using     the     MODWT     is     given     by     simply     replacing     the     true     wavelet
+covariance     and     wavelet     variances     by     their     unbiased     estimators     via
+             XY ( j)                             ~~/CRXY ( j)
+                                    X  ( j)~~   Y ( j)        :
+
+2.5.      Condence     intervals     for     the     wavelet     covariance     and     correlation
+
+    The     asymptotic     variance     of     the     MODWT-based     estimator     of     the     wavelet     covariance
+is     given     by
+                                                              Z     1=2                                                 Z     1=2
+            N !1       ~limN  j   Var f~/CRXY ( j)g=                                                                                   Wj;     X  ;Wj;   Y  (f)df     j       ;
+                                                                 −1=2    SWj;     X  (f)SWj;     Y  (f)df+                 −1=2    S2
+where        SWj;     X  (f)     and        SWj;     Y  (f)     are     the     spectra     for     the     scale         j     wavelet     coe cients     of     X
+and     Y,     respectively,     and        SWj;     X  ;Wj;     Y  (f)     is     the     cross     spectrum     between     the     two     series     of
+scale          j      wavelet     coe cients.     We     can     construct     the     random     interval"
+                                                               j        1=2                                                        j 1=2 #
+               /CR~XY ( j)      −       −1(1      −       p)     N~            ;       ~/CRXY ( j)+     −1(1      −       p)         N~               ;
+
+that     captures     the     true     wavelet     covariance     and     forms     a     100(1      −    2p)%     condence     inter-
+val.      In      order      to      calculate      an      approximate      condence      interval      for      Gaussian      processes,
+j       can      be      estimated      using      the      autocovariance      and      cross-covariance      sequences      of      the
+scale          j      wavelet     coe cients     from     X     and     Y     which     is     similar     to     the     construction     of     an
+approximate     condence     interval     for     the     wavelet     variance.
+
+
+8  See    Whitcher    [21]    and    Whitcher    et    al.    [22]    for    a    more    thorough    introduction    to    the    wavelet    covariance
+and    its    application    to    observed    multivariate    time    series.
+256                                                                                                              R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266
+
+     We      may      relax      the      assumed      Gaussianity      in      the      two      series      of      wavelet      coe cients
+to       obtain       approximate       condence       intervals       applicable       to       non-Gaussian       time       series.
+Let         ~Uj;   XY        be      the      vector      of      mean-corrected      products      of      the      wavelet      coe cients,      i.e.,
+U  j;     t;     XY   =      ~~W   j;     t;     X       ~W   j;     t;     Y        −     E f     ~W   j;     t;     X       ~W   j;     t;     Y    g.    Serroukh    and    Walden    [23]    showed    that    the
+asymptotic     variance     of      ~/CRXY ( j)     is     given     by
+
+
+             N !1        ~limN  j   Var f~/CRXY ( j)g  =     SW (X )j                W (Y)j                             −       /CRXY ( j)(0)  =     SUj;     XY  (0)     ;
+
+and     proposed     a     multitaper     spectral     estimator     for         SUj;     XY  (0)     in     order     to     produce     an     ap-
+proximate     condence     interval     applicable     to     non-Gaussian     processes.
+     We       now       turn       our       attention       to       the       wavelet       correlation.       Given       the       inherent       non-
+normality      of      the      correlation      coe cient      for      small      sample      sizes,      a      nonlinear      transfor-
+mation     is     sometimes     required     in     order     to     construct     a     condence     interval.     Let         h( )
+tanh−1( )     dene     Fisher’sz-transformation.     For     the     estimated     correlation     coe cient        ^ ,
+based    on        N      independent    samples,           pN          −    3[h(^ )    −      h( )]    is    approximately    distributed    as
+a     Gaussian     with     mean     zero     and     unit     variance.     The     random     interval
+             2           8                                                        9                 8                                                       93
+             4tanh       <                                                        =                 <                                                       =5
+                         :h[~ XY ( j)]      −          −1(1      −       p)q     ;   ;      tanh   :h[~ XY ( j)]  +       −1(1      −       p)q           ;
+                                                                N  j        −    3^                                                        N  j        −    3^
+
+captures     the     true     wavelet     correlation     and     provides     an     approximate     100(1     −    2p)%     con-
+dence     interval.     The     quantity         ^N  j     is     the     number     of     wavelet     coe cients     associated     with
+scale          j      computed     via     the     DWT     {     not     the     MODWT.     This     assumption     of     uncorrelated
+observations      in      order      to      use      Fisher’sz-transformation      is      only      valid      if      we      believe      no
+systematic      trends      or      non-stationary      features      exist      in      the      wavelet      coe cients      at      each
+scale.      The      DWT      is      know      to      approximately      decorrelate      a      wide      range      of      power-law
+processes     and     thus     provides     a     reasonable     measure     of     the     scale-dependent     sample     size.
+     Notice    that    the    approximate    condence    interval    for    the    estimated    wavelet    correlation
+does     not     utilize     any     information     regarding     the     distribution     of     the     wavelet     coe cients.
+Hence,     no     adjustment     is     made     regarding     the     distribution     of     the     incoming     wavelet     co-
+e cients;     they     may     be     Gaussian     or     non-Gaussian.
+
+
+
+3.      Empirical     ndings
+
+     Before      we      examine      the      results,      we      provide      some      basic      properties      of      the      possible
+long-memory    data    generating    processes    which    may    underlie    the    foreign    exchange    mar-
+kets.     These     data     generating     processes     are     the     fractional     Gaussian     noise     process,     pure
+power     law     process     and     the     fractionally     dierenced     process.9
+
+
+
+
+9  An     extensive     discussion     of     long-memory     processes     and     their     properties     can     be     found     in     Percival     and
+Walden    [18].
+                                                            R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266                                                                                                              257
+
+
+Table    1
+The    properties    of    the    fractional    Gaussian    noise,    pure    power    law    and    fractionally    dierenced    processes    for    a
+range    of       H ,           and       d    values.       d    is    related    to           such    that       d  =    −=2,    Ref.    [18]
+
+Process    type                                                                            Nonstationary    long                     Stationary    long                          White    noise                     Stationary    short
+                                                               memory    process                                 memory    process                     process                                          memory    process
+
+Fractional    Gaussian    noise                  |                                                                                              0:5  <H < 1                                                               H  =0:50  <H 60:5
+Pure    power    law                                                                                                          6    −  1                                                                                                                                 −1  << 0                                                                    =0                                                                                     >0
+Fractionally    dierenced                                                 d>0:50  <d<   0:5                                                                    d =0                                                                                    d60
+
+
+      Mandelbrot    and    Van    Ness    [24]    studied    the    fractional    Gaussian    noise    process    whose
+spectral     density     function     is     given     by
+                                                                                  X1                          1
+               S(f)=4      2X   CH   sin2( f)                                                    jf   +     jj2H +1   ;                                   − 0:56f60:5     ;                                                                                        (4)
+                                                                                j=−1
+where        2X      is    the    variance    of    the    process,       CH      >  0    and       H     is    the    so-called    Hurst    exponent.
+This    process    exhibits    stationary    long-memory    dynamics    when    0:5  <H <  1    and    reduces
+to     white     noise     when         H   =0:5.
+      On     the     other     hand,     the     spectral     density     of     a     pure     power-law     process     is     given     by
+               S(f)=     CS   jfj ;                                   − 0:56f60:5     ;                                                                                                                                                                                                                                                    (5)
+where           CS      >  0      and                  is      the      scaling      parameter.      When               − 1  <<  0,      this      process      has
+stationary      long      memory      features.      It      is      nonstationary      for           6         −     1      and      can      be      made
+stationary     through     dierencing.
+      Another    type    of    long-memory    process    is    the    fractionally-dierenced    type,    which    was
+introduced     by     Granger     and     Joyeux     [25]     and     Hosking     [26].     The     fractionally     dierenced
+process     is     dened     by     (1      −       L)d Xt   =     t      where         t      is     a     Gaussian     white     noise.     The     spectral
+density     of     this     process     is     given     by
+
+               S(f)=                                                            2
+                                     (4  sin2( f))d   ;                                   − 0:56f60:5     :                                                                                                                                                                                                            (6)
+For     0  <d<    0:5,     the     fractional     dierence     process     has     the     stationary     long     memory     dy-
+namics    and    becomes    a    white    noise    for        d  =  0.    The    link    between        H;                and        d    is    summa-
+rized     in     Table     1.
+      The    studied    data    sets    are    the    ve-minute    Deutschemark{US    dollar    (DEM-USD)    and
+Japanese       Yen{US       dollar       (JPY-USD)       price       series       for       the       period       from       December       1,
+1986     to     December     1,     1996.10        Bid     and     ask     prices     at     each     5     min     interval     are     obtained
+by      linear      interpolation      over      time      as      in      M /DELuller      et      al.      [5]      and      Dacorogna      et      al.      [27].
+Prices     are     computed     as     the     average     of     the     logarithm     of     the     bid     and     ask     prices
+               Pt    =    12 [log   P(bid)t    +  log   P(ask)t ];t  =1;:::;        751;  645     :                                                                                                                           (7)
+Olsen    and    Associates    applied    data    cleaning    lters    to    the    price    series    (as    received    from
+Reuters)     in     order     to     correct     for     data     errors     and     to     remove     suspected     outliers.     We     also
+
+
+10  The    data    set    is    provided    by    Olsen    and    Associates    in    Z/DELurich,    Switzerland.
+258                                                                                                              R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266
+
+removed     the     weekend     quotes     from     Friday     21  :  05     GMT     to     Sunday     21:00     GMT.     Apart
+from      this,      we      did      not      apply      any      further      ltering      to      the      data      set      nor      did      we      exclude
+any     data     points.11        Continuously     compounded     5-min     returns     are     calculated     as     the     log
+dierence     of     the     prices:
+
+             rt5    =  (log   Pt         −    log   Pt−1)        100      and            t5  =1;:::;        751;  644     :                                                                                                                       (8)
+
+It     is     often     argued     that     price     changes     observed     at     very     high     frequencies     can     be     overly
+biased   by   the   buying   and   selling   intentions   and   the   quoting   institutions   [7].   We   therefore
+decided     to     work     with     20-min     aggregated     returns:  12
+
+
+                         X3
+             rt20    =             rt5−i;t20  =1;:::;        187;  911     :                                                                                                                                                                                                                         (9)
+                          i=0
+Therefore,      our      sample      covers      2610      business      days      in      10      years      with      72      observations
+per       day.13          The       20-min       volatilities       are       dened       to       be       the       20-min       absolute       returns,
+jrt; 20 j.
+     We      use              jrt; 20 j      to      obtain      the      MODWT      decomposition      of      the      variances      of      absolute
+return     series     on     a     scale     by     scale     basis     for     both     the     DEM-USD     and     JPY-USD     series.
+This     study     covers     scales     from     20     min     to     approximately     one     month.     This     coverage     is
+achieved      with      a      12      level      MODWT      decomposition.      The      Daubechies      least      asymmetric
+family     of     wavelets     (LA(8))     was     utilized     in     the     MODWT     (see     Fig.     1).     We     have     tried
+other     wavelets     such     as     Daubechies         D(4)     as     well.     The     results     are     not     sensitive     to     the
+choice      of      the      wavelet      family      as      long      as      the      underlying      process      is      stationary      or      an
+integer     dierence     of     the     process     is     stationary.
+     The     wavelet     variance     for     each     absolute     return     series     and     condence     intervals     under
+the     assumption     of     Gaussianity  14        is     shown     in     Fig.     2,     plotted     on     a     log{log     scale.     Note
+that      lower      scales      correspond      to      higher      frequency      bands.      For      example,      the      rst      scale
+is      associated      with      20      min      changes,      the      second      scale      is      associated      with      2          20=40
+min     changes     and     so     on.     The     rst     six     scales     capture     the     frequencies     1=286f6 12 ;     i.e.,
+oscillations       with       a       period       length       of       2    (40    min)       to       128    (2560    min).       Since       there       are
+
+
+
+
+11  Andersen   et   al.   [10]   utilizes   the   same   sample   of   DEM-USD   and   JPY-USD   series.   However,   they   removed
+weekends     and     several     (mostly     North     American)     holidays     from     the     sample.     They     have     also     excluded     the
+days   containing   \fteen   longest   zero   and   constant   runs".   Andersen   and   Bollerslev   [28,29]   analyzed   a   shorter
+sample    of    the    same    data    set.    They    also    removed    the    weekend    quotes    from    their    sample.    See    Bollerslev    and
+Domowitz    [30]    for    a    detailed    analysis    of    quote    activity    in    the    interbank    market    and    a    justication    for    the
+weekend    denition    above.
+12  We    could    have    worked    with    the    raw    data    set    and    simply    ignored    wavelet    scales    associated    with    higher
+frequencies.    However,    the    aggregation    greatly    reduces    the    computational    burden.
+13  The   last   day   in   the   sample   is   a   Friday.   Since   we   removed   the   weekend   quotes   starting   from   Friday   21:05,
+there    are    only    63    20-min    return    observations    for    the    last    day    in    the    sample.    Therefore,    the    sample    size    is
+(72      209)  +  63  =  187; 911.
+14  The     alternative     condence     intervals     calculated     by     relaxing     the     Gaussianity     assumption     as     suggested     in
+Section    2.3.    These    do    not    dier    signicantly    and    are    not    plotted    in    Fig.    2.
+                                                 R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266                                                                                                              259
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig.   1.   Daubechies   compactly   supported   wavelet   functions:   Haar   wavelet   based   on   two   non-zero   coe cients
+(also     corresponds     to     the     extremal     phase     wavelet     based     on     two     non-zero     coe cients),     the     extremal     phase
+wavelet   based   on   four   non-zero   coe cients   (D(4))   and   the   least   asymmetric   wavelet   based   on   eight   non-zero
+coe cients    (LA(8)).
+
+72         20   =   1440     min     in     one     day,     we     conclude     that     the     rst     six     scales     are     related     with
+intra-day     dynamics     of     our     sample.
+     The      seventh      scale,      where      we      observe      an      apparent      break      in      the      variance      for      both
+series,      is      associated      with      64          20   =   1280      min      changes.      Since      there      are      1440      min      in
+one     day,     the     seventh     scale     corresponds     to     0.89     day.     Therefore,     the     seventh     and     higher
+scales     are     taken     to     be     related     with     one     day     and     higher     dynamics.
+     The      relationship      between      wavelet      variance      and      scale      is      given      by           2X  ( j)        _          −−1j
+where                is      the      scaling      parameter      in      a      pure      power      law      process.      An      estimate      of                is
+obtained     from     the     ordinary     least-squares     (OLS)     regression     of     log    2X  ( j)     on     log    −−1j                       .
+Fig.      3      plots      the      OLS      ts      of      the      sample      points      for      two      dierent      regions.      Estimated
+slopes,            − (1  +    ^),     for     the     smallest     six     scales     are            − 0:48     and            − 0:59     for     DEM-USD     and
+JPY-USD      series,      respectively.      This      result      implies      that      estimated      scaling      parameter      is
+  =      − 0:52     for     the     DEM-USD     and      ^^                =      − 0:40     for     the     JPY-USD     volatilities     for     the     rst
+six     scales     (intra-day).
+     The    estimated    slopes    for    the    higher    scales    (from    the    seventh    to    the    twelfth)    are         − 0:20
+and                − 0:16       for       the       DEM-USD       and       JPY-USD       volatilities,       respectively.       The       wavelet
+variance      estimators      strongly      indicate      the      presence      of      dierent      scaling      parameters      for
+volatility     at     one     day     and     higher     scales     where       ^     are             − 0:80     and             − 0:84     for     DEM-USD
+and     JPY-USD     volatilities,     respectively.
+260                                                                                                              R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig.     2.     Wavelet     variance     for     20-min     volatilities     of     (a)     DEM-USD     and     (b)     JPY-USD     from     December     1,
+1986     to     December     1,     1996     at     log{log     scale.     The     straight     line     is     the     estimated     variance     and     dashed     lines
+are    approximate    95%    condence    intervals    under    the    assumption    of    Gaussianity.    The    alternative    condence
+intervals    calculated    by    relaxing    the    Gaussianity    assumption    as    suggested    in    Section    2.3.    These    do    not    dier
+signicantly    and    are    not    plotted    here.    Each    scale    is    associated    with    a    particular    time    period.    For    example
+the    rst    scale    is    20    min,    the    second    scale    is    2     20  =  40   min,    the    third    scale    is    4     20  =  80   min    and    so    on.
+The    seventh    scale    is    64      20  =  1280   min.    Since    there    are    1440    min    per    day,    the    seventh    scale    corresponds
+to    approximately    one    day.    The    last    scale    is    approximately    28    days.
+
+
+     As    presented    in    Table    1,    the    relationship    between       d    and           is    such    that       d =  −  =2.    The
+results     imply     that     the     fractional     integration     parameters     are        d =0:26     for     the     DEM-USD
+and          d  =0:20      for      the      JPY-USD      volatilities      at      the      lower      scales      (intra-day).      At      higher
+scales     (one     day     and     more)     the     estimated          d     values     for     the     DEM-USD     and     JPY-USD
+volatilities      are      0.40      and      0.42      indicating      less      persistence      in      the      intra-day      horizon      as
+compared       to       the       volatilities       of       one       day       and       higher       scales.       Note       that       a       fractionally
+dierenced     process     becomes     more     persistent     as         d     takes     larger     positive     values.
+     There     are     two     major     implications     of     these     ndings.     The     rst     is     that     the     foreign     ex-
+change    volatility    is    a    stationary    long-memory    process    whether    it    is    governed    by    a    pure
+power    law    or    a    fractionally    dierenced    process.    The    second    is    that    the    foreign    exchange
+volatility     has     a     multi-scaling     behavior.     There     are     two     dierent     scaling     parameters     cor-
+responding       to       intra-day       and       higher       scales,       respectively.       This       apparent       multi-scaling
+behavior     occurs     approximately     at     the     daily     horizon     where     the     intra-day     seasonality     is
+strongly      present.      The      removal      of      the      intra-day      seasonality      would      not      eliminate      this
+                                                R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266                                                                                                              261
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig.   3.   Wavelet   variance   for   20-min   volatilities   of   (a)   DEM-USD   and   (b)   JPY-USD   from   December   1,   1986
+to    December    1,    1996    at    log{log    scale.    The         ’s    are    the    estimated    variances    for    each    scale.    The    straight    lines
+are    OLS    ts.    Each    scale    is    associated    with    a    particular    time    period.    For    example    the    rst    scale    is    20    min,
+the    second    scale    is    2       20  =  40   min,    the    third    scale    is    4       20  =  80   min     and    so    on.    The    seventh    scale    is
+64     20  =  1280   min.    Since    there    are    1440    min    per    day,    the    seventh    scale    corresponds    to    approximately    one
+day.    The    last    scale    is    approximately    28    days.
+
+multi-scaling    but    the    transition    between    two    scaling    regions    would    be    more    gradual    by
+exhibiting     a     concave     scaling     behavior     (see     Corsi     et     al.     [31]).
+     The     wavelet     correlations     between     two     volatilities     are     given     in     Fig.     4.     The     wavelet
+correlation     is     signicantly     dierent     from     zero     for     all     scales.     The     correlation     coe cient
+at    the    lowest    scale    (20  min)    is    0:415  0:005  15       and    increases    at    higher    scales.    It    reaches
+to      a      maximum      at      the      sixth      scale      (640      min)      with      0:695           0:18.      At      large      scales      (one
+day       and       higher),       the       correlation       coe cient       between       two       series       remains       constant       at
+around     0.70.     The     result     is     in     contrast     with     the     ndings     in     Andersen     et     al.     [10].     They
+found     that     volatility     correlation     between     two     exchange     rates     drops     at     longer     horizons,
+suggesting      that      the      benets      to      currency      diversication      may      be      greatest      over      longer
+investment     horizons.     Our     ndings     indicate     that     the     benets     to     currency     diversication
+
+
+
+
+15  As     pointed     out     in     Section     2.5,     the     approximate     condence     interval     for     the     estimated     wavelet     correla-
+tion    does    not    utilize    any    information    regarding    the    distribution    of    the    wavelet    correlation.    Therefore,    these
+condence    intervals    are    robust    to    non-Gaussianity.
+262                                                                                                              R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig.    4.    Wavelet    correlation    for    20-min    volatilities    of    DEM-USD    and    JPY-USD    from    December    1,    1986    to
+December     1,     1996.     The     vertical     lines     form     an     approximate     95%     condence     intervals.     As     pointed     out     in
+Section    2.5,    the    approximate    condence    interval    for    the    estimated    wavelet    correlation    does    not    utilize    any
+information    regarding    the    distribution    of    the    wavelet    correlation.    Therefore,    these    condence    intervals    are
+robust   to   non-Gaussianity.   Each   scale   is   associated   with   a   particular   time   period.   For   example,   the   rst   scale
+is   20   min,   the   second   scale   is   2 20=40   min,   the   third   scale   is   4 20=80   min   and   so   on.   The   seventh   scale
+is    64      20  =  1280   min.    Since    there    are    1440    min    per    day,    the    seventh    scale    corresponds    to    approximately
+one    day.    The    last    scale    is    approximately    28    days.
+
+are       the       greatest       at       the       lowest       scale       and       decreases       with       increasing       scale       during       the
+day.
+     Fig.       5       plots       the       20       min       cross-correlations       of       two       volatilities       for       10       days       where
+the      strong      intra-day      seasonality      is      evident.      As      Gen cay      et      al.      [32]      demonstrates,      the
+presence     of     seasonalities     in     a     long     memory     process     obscures     the     underlying     low     fre-
+quency     dynamics.     With     the     wavelet     analysis,     we     disentangle     the     cross-correlations     on
+a     scale     by     scale     basis     which     enables     us     to     determine     which     scales     are     contributing     to
+the     overall     association     between     two     volatilities.     This     is     demonstrated     in     Fig.     6     which
+−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−!
+Fig.     6.     Wavelet     cross-correlations     for     20-min     volatilities     of     DEM-USD     and     JPY-USD     from     December     1,
+1986    to    December    1,    1996.    The    dashed    lines    are    the    approximate    condence    intervals.    As    pointed    out    in
+Section    2.5,    the    approximate    condence    interval    for    the    estimated    wavelet    correlation    does    not    utilize    any
+information    regarding    the    distribution    of    the    wavelet    correlation.    Therefore,    these    condence    intervals    are
+robust   to   non-Gaussianity.   Each   scale   is   associated   with   a   particular   time   period.   For   example   the   rst   scale
+is    20    min,    the    second    scale    is    2       20  =  40   min,    the    third    scale    is    4       20  =  80   min    and    so    on.    The    sixth
+scale    is    32      20  =  640   min.
+                                                             R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266                                                                                                              263
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig.     5.     Cross-correlations     of     20-min     volatilities     for     DEM-USD     and     JPY-USD     from     December     1,     1986     to
+December    1,    1996.
+264                                                                                                              R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fig.     7.     Wavelet     cross-correlations     for     20-min     volatilities     of     DEM-USD     and     JPY-USD     from     December     1,
+1986    to    December    1,    1996.    The    dashed    lines    are    the    approximate    condence    intervals.    As    pointed    out    in
+Section    2.5.,    the    approximate    condence    interval    for    the    estimated    wavelet    correlation    does    not    utilize    any
+information    regarding    the    distribution    of    the    wavelet    correlation.    Therefore,    these    condence    intervals    are
+robust    to    non-Gaussianity.    Each    scale    is    associated    with    a    particular    time    period.    For    example,    the    seventh
+scale   is   64 20=1280   min,   the   eight   scale   is   128 20=2560   min   and   so   on.   The   last   scale   is   approximately
+28    days.
+
+provides      wavelet      cross-correlations  16         and      the      corresponding      approximate      condence
+intervals  17        for     the     rst     six     scales     for     10     days.     For     scales     1{3     (from     20     to     80     min),
+there    is    a    small    cross-correlation    corresponding    to    intra-day    horizon    after    which    there    is
+no     signicant     cross-correlation     persistence.     At     scales     4 { 6,     a     seasonal     cross-correlation
+gradually     evolves     and     a     daily     seasonality     dominates     in     the     sixth     scale     (     10:7    h).     In
+Fig.    7,    the    cross-correlations    of    the    scales    7{12    are    presented.    At    these    higher    scales,    a
+persistent    cross-correlation    behavior    becomes    more    visible.    At    the    highest    scale    (    28:4
+days),     the     rate     of     the     decay     in     the     cross-correlations     is     more     in     line     with     a     hyperbolic
+decay     than     an     exponential     decay.
+
+
+16  The    cross-correlations    are    roughly    symmetric    about    zero.    Therefore,    the    negative    lags    are    not    plotted    to
+conserve    space.
+17  As     pointed     out     in     Section     2.5,     the     approximate     condence     interval     for     the     estimated     wavelet     correla-
+tion    does    not    utilize    any    information    regarding    the    distribution    of    the    wavelet    correlation.    Therefore,    these
+condence    intervals    are    robust    to    non-Gaussianity.
+                                              R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266                                                                                                              265
+
+4.      Conclusions
+
+    We    have    proposed    a    simple    method    for    identifying    the    scaling    laws    in    nancial    time
+series.    The    proposed    methodology    is    based    on    a    wavelet    multi-scaling    approach    which
+decomposes     the     variance     of     a     time     series     and     the     covariance     between     two     time     series
+on      scale      by      scale      basis      through      the      application      of      a      non-decimated      discrete      wavelet
+transformation.     It     is     simple     to     calculate     and     can     easily     be     implemented     as     it     does     not
+depend     on     a     particular     model     selection     criterion     and     model     specic     parameter     choices.
+    It     is     shown     that     exchange     rate     volatility     has     dierent     scaling     properties     at     dierent
+horizons.    The    intra-day    persistence    in    volatility    is    signicantly    less    than    the    volatility    at
+one    day    or    higher    scales.    The    correlation    between    two    volatility    series    increases    within
+the    day    but    remains    constant    at    one    day    or    higher    scales.    The    wavelet    cross-correlation
+analysis      indicates      that      the      association      between      two      volatilities      is      stronger      at      higher
+scales     (low     frequencies).
+
+
+Acknowledgements
+
+    Ramazan          Gen cay          gratefully          acknowledges          nancial          support          from          the          Natural
+Sciences      and      Engineering      Research      Council      of      Canada      and      the      Social      Sciences      and
+Humanities      Research      Council      of      Canada.      We      are      grateful      to      Olsen      &      Associates      for
+providing   the   data   used   in   this   paper.   We   would   like   to   thank   Abdurrahman   Ulugulya  gci
+for     his     research     assistance.
+
+
+References
+
+ [1]   B.B.    Mandelbrot,    The    variation    of    certain    speculative    prices,    J.    Bus.    36    (1963)    394{419.
+ [2]   P.K.      Clark,      A      subordinated      stochastic      process      model      with      nite      variance      for      speculative      prices,
+       Econometrica    41    (1973)    135{155.
+ [3]   R.N.     Mantegna,     H.E.     Stanley,     Scaling     behavior     in     the     dynamics     of     an     economic     index,     Nature     376
+       (1995)    46{49.
+ [4]   F.X.    Diebold,    A.    Hickman,    A.    Inoue,    T.    Schuermann,    Scale    models,    Risk    11    (1998)    104{107.
+ [5]   U.A.    M/DELuller,    M.M.    Dacorogna,    R.B.    Olsen,    O.V.    Pictet,    M.    Schwarz,    C.    Morgenegg,    Statistical    study
+       of     foreign     exchange     rates,     empirical     evidence     of     a     price     change     scaling     law,     and     intraday     analysis,
+       J.    Banking    Finance    14    (1990)    1189{1208.
+ [6]   U.A.   M/DELuller,   M.M.   Dacorogna,   R.D.   Dave,   O.   Pictet,   R.B.   Ward,   Fractals   and   intrinsic   time,   a   challenge
+       to    econometricians,    Olsen    &    Associates    Discussion    Paper,    1995.
+ [7]   D.M.    Guillaume,    M.M.    Dacorogna,    R.D.    Dave,    U.A.    M/DELuller,    R.B.    Olsen,    O.V.    Pictet,    From    the    bird’s
+       eye     to     the     microscope:     a     survey     of     new     stylized     facts     of     the     Intra-daily     Foreign     Exchange     Markets,
+       Finance    Stochastics    1    (1997)    95{129.
+ [8]   R.N.    Mantegna,    H.E.    Stanley,    Turbulence    and    nancial    markets,    Nature    383    (1996)    587{588.
+ [9]   S.   Ghashghaie,   W.   Brewmann,   J.   Peinke,   P.   Talkner,   Y.   Dodge,   Turbulent   cascades   in   foreign   exchange
+       markets,    Nature    381    (1996)    767{770.
+[10]   T.G.     Andersen,     T.     Bollerslev,     F.X.     Diebold,     P.     Labys,     The     Distribution     of     Realized     Exchange     Rate
+       Volatility,    Journal    of    the    American    Statistical    Association,    forthcoming.
+[11]   B.    LeBaron,    Volatility    persistence    and    apparent    scaling    laws    in    nance,    Brandeis    University    Graduate
+       School    of    International    Studies,    Discussion    Paper,    1999.
+[12]   O.E.    Barndor-Nielsen,    K.    Prause,    Apparent    scaling,    Finance    and    Stochastics.    (2000),    to    appear.
+266                                                                                                              R.    Gen cay    et    al. / Physica    A    289    (2001)    249{266
+
+
+[13]   M.    Pasquini,    M.    Serva,    Multiscale    behaviour    of    volatility    autocorrelations    in    a    nancial    market,    Econ.
+        Lett.    (1999)    275{279.
+[14]   F.X.   Diebold,   M.   Nerlove,   The   dynamics   of   exchange   rate   volatility:   a   multivariate   latent-factor   ARCH
+        model,    J.    Appl.    Econometrics    4    (1989)    1{22.
+[15]   T.    Bollerslev,    R.F.    Engle,    Common    persistence    in    conditional    variances,    Econometrica    61    (1993)    166{
+        187.
+[16]   I.   Daubechies,   Ten   Lectures   on   Wavelets,   Society   for   Industrial   and   Applied   Mathematics,   Philadelphia,
+        1992.
+[17]   P.    Abry,    D.    Veitch,    P.    Flandrin,    Long-range    dependence:    revisiting    aggregation    with    wavelets,    J.    Time
+        Ser.    Anal.    19    (1998)    253{266.
+[18]   D.B.    Percival,    A.T.    Walden,    Wavelet    Methods    for    Time    Series    Analysis,    Cambridge    University    Press,
+        Cambridge,    2000.
+[19]   D.B.    Percival,    On    estimation    of    the    wavelet    variance,    Biometrika    82    (1995)    619{631.
+[20]   A.   Serroukh,   A.T.   Walden,   D.B.   Percival,   Statistical   properties   and   uses   of   the   wavelet   variance   estimator
+        for    the    scale    analysis    of    time    series,    J.    Am.    Stat.    Assoc.    95    (2000)    184{196.
+[21]   B.        Whitcher,        Assessing        nonstationary        time        series        using        wavelets,        Ph.D.        Thesis,        University        of
+        Washington,    1998.
+[22]   B.   Whitcher,   P.   Guttorp,   D.B.   Percival,   Wavelet   analysis   of   covariance   with   application   to   atmospheric
+        time    series,    J.    Geophys.    Res.    {    Atmos.    105    (2000)    14 941{14 962.
+[23]   A.    Serroukh,    A.T.    Walden,    Wavelet    scale    analysis    of    bivariate    time    series    II:    statistical    properties    for
+        linear    processes,    J.    Nonparametric    Stat.    (2000),    in    press.
+[24]   B.B.    Mandelbrot,    J.    Van    Ness,    Fractional    Brownian    motion,    fractional    noises    and    applications,    SIAM
+        Rev.    10    (1968)    422{437.
+[25]   C.    Granger,    R.    Joyeux,    An    introduction    to    long    memory    time    series    models    and    fractional    dierencing,
+        J.    Time    Ser.    Anal.    1    (1980)    15{29.
+[26]   J.    Hosking,    Fractional    dierencing,    Biometrika    68    (1981)    165{176.
+[27]   M.M.     Dacorogna,     U.A.     M/DELuller,     R.J.     Nagler,     R.B.     Olsen,     O.V.     Pictet,     A     geographical     model     for     the
+        daily    and    weekly    seasonal    volatility    in    the    foreign    exchange    markets,    J.    Int.    Money    Finance    12    (1993)
+        413{438.
+[28]   T.G.      Andersen,      T.      Bollerslev,      Heterogeneous      information      arrivals      and      return      volatility      dynamics:
+        uncovering    the    long-run    in    high    frequency    returns,    J.    Finance    52    (1997)    975{1005.
+[29]   T.G.        Andersen,        T.        Bollerslev,        DM-Dollar        volatility:        intraday        activity        patterns,        macroeconomic
+        announcements,    and    longer-run    dependencies,    J.    Finance    53    (1998)    219{265.
+[30]   T.     Bollerslev,     I.     Domowitz,     Trading     patterns     and     prices     in     the     interbank     foreign     exchange     market,
+        J.    Finance    48    (1993)    1421{1443.
+[31]   F.    Corsi,    M.    Dacorogna,    U.    M/DELuller,    G.    Zumbach,    High    frequency    data    do    improve    volatility    and    risk
+        estimation,    Olsen    &    Associated    Discussion    Paper,    Zurich,    Switzerland,    2000.
+[32]   R.    Gen cay,    F.    Sel cuk,    B.    Whitcher,    Dierentiating    intraday    seasonalities    through    wavelet    multi-scaling,
+        manuscript,    1999.

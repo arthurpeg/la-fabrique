@@ -1,0 +1,1394 @@
+  SEARCHING FOR SAFE-HAVEN ASSETS DURING THE COVID-19
+                                                PANDEMIC
+
+
+
+                       QIANG JI1, DAYONG ZHANG2, YUQIAN ZHAO3
+
+
+
+    1Center for Energy and Environmental Policy Research, Institutes of Science and
+
+                             Development, Chinese Academy of Sciences
+
+2Research Institute of Economics and Management, Southwestern University of Finance
+
+                                           and Economics, China
+
+                         3Essex Business School, University of Essex, UK
+
+
+         Abstract. The ongoing COVID-19 pandemic has shaken the global ﬁnancial system
+         and caused great turmoil.  Facing unprecedented risks in the markets, people have in-
+
+         creasing needs to ﬁnd a safe haven for their investments. Given that the nature of this
+
+         crisis is a combination of multiple problems, it is substantially diﬀerent from all other
+
+         ﬁnancial crises known to us. It is therefore urgent to re-evaluate the safe-haven role of
+
+         some traditional asset types, namely, gold, cryptocurrency, foreign exchange and com-
+         modities.  This paper introduces a sequential monitoring procedure to detect changes
+
+         in the left-quantiles of asset returns, and to assess whether a tail change in the eq-
+
+         uity index can be oﬀset by introducing a safe-haven asset into a simple mean-variance
+
+         portfolio. The sample studied covers a training period between August-December 2019
+
+         and a testing period of December 2019-March 2020.   Furthermore, we calculate the
+         cross-quantilogram between pair-wise asset returns and compare their directional pre-
+
+         dictabilityonleft-quantilesinbothnormalmarketconditionsandtheCOVID-19period.
+
+         The main results show that the role of safe haven becomes less eﬀective for most of the
+
+         assets considered in this paper, while gold and soybean commodity futures remain ro-
+         bust as safe-haven assets during this pandemic.
+
+         JEL Classiﬁcation: C12, C52, G11, G15
+
+         Keywords:  COVID-19, Cross-quantilogram, Safe-haven assets, Sequential detection,
+
+         Tail change.
+
+
+
+
+
+
+
+                                                         1
+                                         1. Introduction
+
+GlobalﬁnancialmarketshavefacedenormousrisksduringtherecentoutbreakofCOVID-
+19. Stock markets in the US, for example, hit four circuit breakers in two weeks. Crude
+oil prices plunged to lower than $20 per barrel, a historic low since the start of the
+new century. More astonishing, on April 20, 2020, crude oil futures for the West Texas
+Intermediate(WTI),theUSoilbenchmark,closedat-$37.63perbarrel,anunprecedented
+event that will have a profound impact both on practitioners and policymakers. Due to
+the global spreadof COVID-19, stock markets all over theworld haverespondedin terms
+of growing risks and changing inter-market linkages (Zhang et al., 2020). Figure 1 plots
+the daily closing price of MSCI-US index and WTI crude oil commodity futures from
+November 01, 2019 to March 31, 2020.  Both assets have experienced disastrous losses
+since February 2020 and been moving at a very similar trend during this period.
+
+(Insert Figure 1 here)
+
+Unlike previous ﬁnancial crises, the underlying forces behind the current crisis are more
+complicated than ever.  The outbreak of COVID-19 has been considered a “once-in-a-
+century” pandemic (Gates, 2020). To contain this extremely contagious virus, countries
+across the world have implemented extensive measures, including the lockdown of cities
+and the closing of borders, which has caused a temporary economic suspension in many
+places.  In 2003, the severe acute respiratory syndrome, better known as SARS , was
+estimated to cost the world between $30-100 billion (Smith, 2006). A much larger impact
+on the global economy is expected from the COVID-19 outbreak. Fernandes (2020), for
+example, estimated that the outbreak could cause a median economic slowdown of 2.8%,
+while the extreme case, such as Spain, could fall by more than 15%.  With the great
+
+uncertainty on when the virus might be fully contained, ﬁnancial markets are expected
+to see more troubles and many related issues call for further investigation (Goodwell,
+2020).  Facing great losses, the need to search for safe-haven assets has resurfaced for
+both practitioners and researchers.
+
+Traditionally,gold(BaurandMcDermott,2010; BaurandLucey,2010),bitcoin(Bouriet
+al., 2017; Urquhart and Zhang, 2019), and foreign exchange currencies (Forex, in short)
+                                                    2
+(Grisse and Nitschka, 2015) are all considered safe-haven investments during times of
+ﬁnancial turmoil.  The question is whether their ability to protect investments remains
+true in the current crisis.  It is therefore urgent to re-evaluate the role of traditional
+safe-haven assets during this pandemic period.
+
+Due to the lack of a theoretical model, the deﬁnition of safe-haven assets can be con-
+troversial.  A major perception is that safe-haven assets are uncorrelated or negatively
+correlatedwithotherassetsorportfoliosduringtimesofmarketturmoil(BaurandLucey,
+2010; Shahzad et al., 2020).  This deﬁnition makes sense as safe haven-assets can help
+investors build a portfolio that mitigates the downside market risk. From an econometric
+
+modeling point of view, we thereby need to assess the dependence between assets on
+left-quantiles of the return distribution.  However, many of the conventional methods
+hardly deliver precise results simply because the task is timely demanding and suﬃcient
+observations are not available. This challenge can be addressed, however, if we only focus
+onthestabilityofleft-quantilesfromsafe-havenassets. Theideaisthatthetail-quantiles
+should maintain a stable level for an eﬀective safe-haven asset during the market stress
+period. If a safe-haven asset experiences a tail change like other assets experience, it is
+more likely to correlate with those assets and will lose its eﬀectiveness.
+
+In this paper we consider a few potential safe-haven assets that are usually discussed
+
+in the literature, and then empirically examine their eﬀectiveness toward equity index
+under the current market conditions due to the COVID-19 distress. We use a sequential
+surveillancetesttomonitorthestabilityofthetailbehaviourofpotentialsafe-haveassets.
+Moreover,takingtheideathatpractitionershopetousesafe-havenassetstooﬀsetmarket
+risk, we construct mean-variance optimised portfolios between equity indices and safe-
+haven assets, and we test the tail behavior of portfolio returns during the COVID-19
+period. As a robustness check, we also apply the cross-quantilogram method to identify
+the safe-haven property toward equity indices for each asset in both a normal market
+and a market during turbulent phases. Our results indicate the validity of a safe haven
+becomes weak when it comes to bitcoin, forex currencies and the crude oil commodity
+futures, while gold and the soybean commodity futures remain robust safe-haven assets
+during the pandemic.
+                                                    3
+The paper is structured as follows: Section 2 reviews the related literature on studying
+safe-haven assets. Section 3 discusses the main econometric methods applied, including
+the sequential approach to detect changes in the tails of asset returns, and the cross-
+quantilogram approach. Empirical results are presented in Section 4. The conclusion to
+our ﬁndings is given in Section 5.
+
+
+                                     2. Related Literature
+
+The ﬁrst thing to note is that the concept of a safe-haven asset (Baur and McDermott,
+
+2016) is clearly diﬀerent from that of a safe asset (Gorton et al., 2012). While the need
+to hedge or diversify an investment portfolio applies at all times, safe-haven assets are
+mainly relevant during times of market crash or crisis (Baur and Lucey, 2010; Baur and
+McDermott, 2010). To qualify as a safe-haven asset, a candidate must be able to retain
+or increase in value in case of market downturns.  Statistically, the returns from a safe-
+haven asset should be uncorrelated or negatively correlated with the returns of other
+assets during a crisis period (Baur and Lucey, 2010).
+
+
+Under such a notion, gold has naturally been considered a safe-haven asset given its
+historical role as natural money or a store of value (Shahzad et al., 2020).   A large
+volume of literature empirically investigates whether gold can act as a safe-haven asset,
+
+buttheresultsaremixed. Forexample, BaurandMcDermott(2010)use30yearsofdata
+from major emerging and developing countries to test the safe-haven asset hypothesis of
+gold. They conﬁrm this property of gold for the US and major European stock markets
+but not for other markets.  Reboredo (2013) ﬁnds that gold can have both the role of
+a hedge and an eﬀective safe haven.  Similar results are found also in Beckmann et al.
+(2015).   Meanwhile, Hood and Malik (2013) suggest that gold is a hedge for the US
+stock market, but its role as a safe haven is weak relative to the volatility index (VIX).
+Lucey and Li (2014) study the role of precious metals as safe havens in a time-varying
+framework and they ﬁnd the strength of gold being a safe haven changes over time.  Li
+and Lucey (2017) extend their earlier study (Lucey and Li, 2014) to eleven countries.
+They ﬁnd that economic and political determinants can aﬀect the choice of safe-haven
+assets among precious metals.
+                                                    4
+Cryptocurrencyisanotherpopularcandidateforasafe-havenasset. Bitcoin,forexample,
+wasintroducedbyNakamoto(2008)asadecentraliseddigitalcurrency. Itsspecialnature
+makes bitcoins independent of any particular government or central banks.  Statistical
+analysis by Baur et al. (2018) suggests that bitcoin is uncorrelated with other ﬁnancial
+assets. Bouri et al. (2019) ﬁnd cryptocurrencies can be used as hedges against downside
+risk in equity investment.   This property applies to normal times and crisis periods,
+which makes bitcoin consistent with the concept of a safe-haven asset.   Opinions on
+the role of bitcoin, however, are often on opposite side.   Klein et al.   (2018) analyse
+the statistical properties of bitcoin with other asset classes, and their portfolio analysis
+suggests that bitcoin is not a safe-haven asset and cannot hedge against risk, even for
+developed markets.  Smales (2019) suggests that bitcoin should not even be considered
+as a potential safe asset.  Shahzad et al.  (2019a) ﬁnd that gold has an “indisputable”
+
+safe-haven property over that of bitcoin.  While gold is an eﬀective safe-haven asset for
+all G7 stock indices, bitcoin only oﬀers a safe-haven role for the Canadian stock index.
+
+Supporting evidence to the safe-haven role of bitcoin can also be found in the recent
+literature. Bouri et al. (2017) use a dynamic conditional correlation (DCC) approach to
+support that bitcoin can act as a safe haven for stock markets in the Asia Paciﬁc area.
+Urquhart and Zhang (2019) study intraday data and ﬁnd evidence that bitcoin is safe
+haven for several currencies. Shahzad et al. (2019b) propose the concept of weak/strong
+safehavenandexaminetheroleofbitcoin,goldandcommoditiesforstockmarketindices.
+They use cross-quantilogram of Han et al.  (2016) for the data between 2010 and 2018.
+
+Their main results suggest that bitcoin has weak safe-haven properties to certain indices
+but its role changes over time.
+
+In addition to the two popular candidates, currencies and commodities can also poten-
+tially oﬀer a safe-haven role in ﬁnancial markets.  Ranaldo and Soderlind (2010), for
+example, suggest that the Swiss franc and the Japanese yen demonstrate safe-haven
+properties during a crisis period.  Crisse and Nitschka (2015) add further evidence that
+the Swiss franc exchange rate can act as a safe-haven currency in some cases. Shahzad
+et al.  (2019b) show that the commodity index is a weak safe haven for some stock in-
+dices.  For other commodities, Creti et al.  (2013) include oil, coﬀee and cocoa together
+                                                     5
+with gold to examine their links with stocks between 2001 and 2011.  Gold is found to
+have the safe-haven properties, whereas other commodities’ correlation with stock prices
+changes according to market conditions. The role of commodities in hedging and as safe-
+haven assets are aﬀected by the recent trend of ﬁnancialization (Zhang, 2017; Zhang and
+Broadstock, 2018; Bouri et al., 2020).  In other words, commodities such as crude oil
+(Xia et al., 2019) and food commodities (e.g., soybeans) behave quite diﬀerently since
+the 2008 global ﬁnancial crisis (Wu et al., 2020). Their role as safe-haven assets related
+to the current health crisis is therefore worthy of further exploration.  In general, what
+can be considered safe-haven assets remains a controversial topic.  Even with gold, the
+most popular candidate, its role as a safe haven is not entirely secure.
+
+From the literature, a few characteristics stand out.  First, the value of an asset as a
+safe haven may not be universal. The eﬀectiveness of a safe-haven asset is subject to the
+particular asset class or market studied.  Second, safe-haven property may change over
+time or depend on the fundamental characteristics of the market turmoil. In this sense,
+we would expect that safe-haven assets under the COVID-19 pandemic are diﬀerent from
+those in the 2008 global ﬁnancial crisis. Third, the controversies in the current literature
+may be due to the methodology used.  For example, the DCC approach only looks at
+correlations and do not allow for asymmetric responses. In terms of risk management in
+ﬁnancialmarkets,itisoftenimportanttolookatthetailsofreturndistribution(Shahzad
+
+et al., 2019b).
+
+
+                                         3. Methodology
+
+Investors tend to endow the downside risk with more attention than the proﬁtability
+during times of crisis and market disorder.  Successfully monitoring the downside risk,
+i.e.,theleft-tailofthereturndistribution,wouldpreventlossesandhelpprocurestrategic
+advice for future investment.  Therefore, safe-haven assets draw more attention as they
+are expected to oﬀset the downside risk when the market draws equity indices into a
+situation of risk while traditional portfolio management tools fail.
+
+Followingthislogic,andtochecktheeﬀectivenessofsafe-havenassets,weuseasequential
+test (Hoga and Wied, 2017) to monitor the tail stability of return sequences and to
+                                                     6
+investigate whether the tail instability of a stock index could be oﬀset by safe-haven
+assets by constructing an optimised portfolio.  In addition, Baur and Lucey (2010) and
+Shahzad et al. (2019b) point out that a safe-haven asset has a lead-lag eﬀect for left-low
+quantiles with a stock index (strong version), or no predictability for left-low quantiles
+withstockindex(weakversion). Thus,wealsousethecross-quantilogramapproach(Han
+et al., 2016) to conﬁrm the validity of safe-haven assets for each stock index. The details
+of these approaches are brieﬂy discussed below.
+
+3.1. The sequential monitoring test on the tails.
+A crucial step for monitoring the eﬀectiveness of safe-haven assets is to assess the tail
+stability to a return sequence. Detecting changes in the quantile regression was studied
+by Qu (2008) as well as Oka and Qu (2011). However, their methods are not applicable
+in the current context because limited observations could be made from the period stud-
+ied. Particularly, our focus is on studying asset behaviour during the global outbreak of
+COVID-19 in March 2020, i.e., at the end of the sample. This renders many conventional
+econometric methods impotent. We, therefore, apply a sequential surveillance test (Hoga
+and Wied, 2017) to monitor the tail behaviour of the return series. The sequential test
+accords more with the current situation as its statistics can converge to an asymptotic
+limit with less data so that the test successfully detects a tail change in a responsible
+
+period with the help of real-time observations. More importantly, to add more practical
+values, along with time-series observations during the pandemic, the results are easy to
+update.
+
+Letusconsideraﬁnancialtimeseriesyt,t ={1,2,...,n,n+1,...}, whichisdeﬁnedwith
+the conditional distribution functionFt and the survivor function  ¯Ft(y) = 1−Ft(y) =
+P(yt>y).  Embedding this to the extreme value theory, the conditional quantileτ at
+
+timet is expressed asqt(τ) =Ut(1/τ), whereUt(u) =F−1t   (1− 1u), andF−1t    is the left-
+continuous inverse ofFt. To set a surveillance procedure, the sample fromt = 1 tot =n
+is considered as a training sample, and observations sincet =n+1 are imported into a
+sequential testing sample. We are interested in testing the hypotheses
+
+                          H0 :q1(τ) =··· =qn(τ) =qn+1(τ) =..., vs
+ H1 :q1(τ) =··· =qn(τ) =··· =q⌊ns∗⌋(τ)̸=q⌊ns∗⌋+1(τ) =q⌊ns∗⌋+2(τ) =..., fors∗> 1.
+                                                     7
+Under the null hypothesisH0, the conditional quantile remains stable across the training
+and testing samples, and alternatively, a tail change occurs at some point in the training
+sample.  The basic idea is that, based on the information revealed from the training
+sample, we can foresee the tail behaviour of the time series beyond the training period
+underH0. To adapt this to our context, we form a training sample and a testing sample
+with data collected from normal market condition and the COVID-19 outbreak period,
+respectively, and we expect that the tail behaviour of a safe-haven asset learned from the
+normal market phase could remain the same over the market crisis period.
+
+
+
+To distinguishH1 fromH0, Hoga and Wied (2017) propose two self-normalised statistics
+
+Vn(s)andWn(s). Here, wefocusonthelatterasitrequiresfewerobservationstodetecta
+change, according to the simulation in Hoga and Wied (2017). The training sample [1,n]
+is normalised into the interval [0,1] for simplifying the notations.  Then, the detector
+Wτn(s) is speciﬁed as,
+
+                         Wτn(s) =     [s0log(ˆxτ(s−s0,s)∫1ˆxτ(0,1)  )]2
+
+                                      s0[s0log(ˆxτ(v−s0,v)ˆxτ(0,1)  )]2dv, s≥ 1+s0                            (1)
+
+where 0<s0< 1 separates a fraction ofn from the testing sample for the preparation of
+monitoring. Thequantilemeasurement ˆxτ(v,s) =Yk(v,s)(nkτ)−ˆγ(v,s), whereYk(v,s)isthe
+(⌊k(s−v)⌋+1)-th largest value of{y⌊nv⌋+1,...,y⌊ns⌋}, for somek≤n−1 andk/n→ 0.
+The tail index estimator ˆγ(0,1) =  1         ∑k−1
+                                            k    i=0 log(Yn−i:nYn−k:n), forYn:n≥Yn−1:n≥···≥Y1:n
+denoting the order statistics of the training sample{y1,...,yn}.  In the application we
+chooses0  = 0.2 andk/n = 0.2 as suggested by Hoga and Wied (2017).   Then, the
+stopping time is determined by,
+
+
+                              s∗ = inf{s∈ [1+s0,T] :Wτn(s)>Cτ}
+
+
+whereCτ> 0 is a threshold derived from the limit distribution, and T> 1 is the nor-
+malized close end. Close-end approaches are commonly used in sequential change-point
+tests, such as in Aue et al.  (2012), for monitoring portfolio betas, and in Aschersleben
+et al.  (2015), for monitoring cointegration relationships.  Our dataset assures that the
+
+training sample contains as many observations as the testing sample, i.e., T = 2.
+                                                    8
+Under the null hypothesis, the asymptotic limit ofWτn(s) is provided by Hoga and Wied
+(2017) that,
+                                       sup
+                                    s∈[1+s0,T][ω(s)−W(s−s0)−s0W(1)]2
+                        Wτn(s)≡      ∫1
+                                       s0[W(v)−W(v−s0)−s0W(1)]2dv,
+where{W(s)}s∈[1,T] is a standard Brownian motion. We thereby can simulate the thresh-
+
+oldCτ given the suggestion from the size of empirical dataset.
+
+
+
+
+In practice, safe-haven assets can be included in portfolios to avoid downside risk during
+a crisis period.  A safe-haven asset is considered to add value if its pairwise optimised
+portfolio with an equity index does not experience a tail-behaviour change when a tail
+risk occurs in the equity index itself. In other words, if a stock index experienced a tail
+change during the crisis, this tail change could be oﬀset by constructing a simple mean-
+variance portfolio with a potential safe-haven asset. To examine this, we build pair-wise
+portfolios and re-apply the sequential test to monitor the tail behaviour of these portfolio
+returns.
+
+
+
+
+3.2. The cross-quantilogram approach.
+
+In addition, other than monitoring the tail behaviour of safe-haven portfolio returns, an-
+other popular method, the cross-quantilogram approach (Han et al., 2016) for evaluating
+a safe-haven role is implemented for a robustness check. We calculate the pair-wise cross-
+quantilograms between equity indices and potential safe-haven assets, and compare their
+lead-lag eﬀects over the training and testing samples. The basic idea of this approach is
+brieﬂy explained below.
+
+
+
+
+Given a speciﬁc sample of data, we denote a stationary bivariate vector{yt = [y1,t,y2,t]},
+t∈ [1,T], where in our contexty2,t is a potential safe-haven asset to the equity index
+y1,t.  The unconditionalτth quantile of the return{yi,t},i = 1, 2, is deﬁned asqi(τ) =
+inf{u :Fi(u)≥τ}, forτ∈ [0,1], whereFi(·) is the distribution function ofyi,t and that
+is equipped with the density functionfi(·).
+                                                     9
+Tomeasureandtestforthedirectionalpredictabilitybetween[y1,t,y2,t]fordiﬀerentquan-
+tiles, Han et al. (2016) propose the cross-quantilogram forτ-quantile with lagh as,
+
+
+               ρτ(h)≡ρτ1,τ2(h) =     E[ψτ1(y1,t−q1(τ1))ψτ2(y2,t−q2(τ2))]√E[ψ2τ1(y1,t−q1(τ1))]√E[ψ2τ2(y2,t−q2(τ2))],              (2)
+
+
+whereψτ(u)≡I(u< 0), for an indicator functionI, so thatψτi(yi,t−q1(τi)) describes the
+violation or “hit” process.  According to the formula, the cross-quantilogram measures
+theserialcorrelationbetweenapairofvariablesatdiﬀerentquantiles. Whenh = 1,ρτ(1)
+indicates the cross-dependence between the quantileq1(τ1) of a stock indexy1,t at timet
+and the quantileq2(τ2) of a potential safe-haven assety2,t at timet+1. This therefore
+measures the one-day lead-lag eﬀect betweeny1,t andy2,t, and there is no predictability
+from the quantileτ1 of stock index to the quantileτ2 of safe-haven asset ifρτ(1) = 0, i.e.,
+
+y2,t is a weak safe-haven asset.  Alternatively, forρτ(1)̸= 0,y2,t is a strong safe-haven
+asset when the sign is negative.  For a sample estimator, Han et al.  (2016) suggest the
+cross-quantilogramρτ(h) as,
+
+
+                      ˆρτ(h) =     E[ψτ1(y1,t− ˆq1(τ1))ψτ2(y2,t− ˆq2(τ2))]√E[ψ2τ1(y1,t− ˆq1(τ1))]√E[ψ2τ2(y2,t− ˆq2(τ2))],
+
+
+where ˆqi(τi) is the unconditional sample quantile. Furthermore, in order to test the null
+hypothesis of no cross-dependence,
+
+
+
+          H0 : ˆρτ(h) = 0, for allh∈ [1,H], vsH1 : ˆρτ(h)̸= 0, for someh∈ [1,H],
+
+
+
+a portmanteau-typed statistics is proposed (Han et al., 2016) to detect the null,
+
+                                     ˆQHτ  =T(T +2)∑Hh=1 ˆρ2τ(h)
+                                                      T−H     ,                                          (3)
+
+The pivotal distribution underH0 is not explicitly given due to the noise contained. Han
+et al. (2016) thus advise using the stationary bootstrap method in Politis and Romano
+(1994) to approximate the distribution under the null hypothesis, and derive critical
+values as well as conﬁdence intervals.   This method can be combined with a rolling
+window approach to track the time-varying cross-quantilogram and observe the evolution
+
+of the safe-haven role during the crisis period.
+                                                     10
+                                      4. Empirical Results
+
+4.1. Data.
+Three regions that had been catastrophically impacted by COVID-19:  China, Europe
+(EU), and the United States are studied in this paper. For each market, we collect the
+daily closing price of the MSCI equity index. Following the review of existing literature,
+cryptocurrency, gold, forex, and the commodity futures market are considered the candi-
+dates of safe-haven assets. We use the daily closing/spot price of bitcoin (CoinDesk price
+index), gold (ounce of gold-LBMA), forex rates (EUR-USD and CNY-USD), the WTI
+crude oil (rolling front-month futures contract), and soybeans commodity futures.  The
+three-month Treasury bill rate is used as the risk-free rate. All data are collected from a
+publicly accessible database (see Table 1 for the source of all variables).
+
+Since the early cluster of conﬁrmed cases of COVID-19 were reported in December 2019,
+we deem the testing/monitoring sample from 1 December 2019, to 31 March 2020, as the
+
+COVID-19 period. To meet the condition ofT> 1 (as discussed in Section 3.2), we setT
+= 2 so that the training sample ranged from 1 August 2019 to 30 November 2020, having
+the same number of observations as the testing sample.  Next, for stationarity, we take
+the log return transformation for each asset.
+
+(Insert Table 1 here)
+
+Table1presentskeydescriptivestatisticsofthereturnseries. Notsurprisingly,apartfrom
+the Treasure bill, gold and soybean commodity futures are the only assets that obtained
+positive average returns during the sample period. Similar patterns can also be spotted
+intheskewness, andtheexcesskurtosisshowsassetswerenon-normallydistributed, with
+fat tails. By comparing their Sharpe ratios across training and testing samples, we can
+see that except for bitcoin and forex rates, most of the assets achieved positive Sharpe
+ratios in the training sample.  In contrast, only gold and soybean commodity futures
+retain positive Sharpe ratios during the COVID-19 pandemic. ADF unit root tests and
+KPSS stationary tests consistently indicate a stationary return sequence for each asset.
+
+4.2. Monitoring the tails of safe-haven assets.
+Prior to studying the eﬀectiveness of safe-haven roles toward stock indices, we investigate
+                                                    11
+the tail behaviour of individual assets.  Investors tend to focus on the tail of asset dis-
+tribution as they explore statistic tools for risk control. Value-at-risk (VaR) is the most
+pervasive risk management tool implemented in the ﬁnancial services industry, we thus
+apply the standard approach to calculate VaR at quantileτ and assess the performances
+in both the training and COVID-19 periods.
+
+
+Speciﬁcally, for each time seriesyi,t, we calculate VaR through VaRi,t = ˆσi,tετi, where the
+conditional variance ˆσi,t is ﬁtted through a GARCH(1,1) model, and the sample quantile
+ετi isobtainedfromabootstrappeddistributionbyresamplingresiduals1000times. Since
+our focus is not on evaluating VaR estimation, we do not go to back-test these estimators
+and only compute the ratio of violation/hit in both samples. Here we examineτ = 0.05
+
+and do not study extreme quantiles considering the limited observations available at this
+stage.
+
+
+(Insert Table 2 here)
+
+
+Table2showsdescriptivestatisticsoftheVaRsequenceoneachofasset. Weﬁndthatthe
+VaR estimators are relatively high volatile for bitcoin, crude oil commodity futures, and
+equity indices in US and EU, indicating that these assets have ﬂuctuations on the left-
+tail during the sample period. The columns Hitwhole,training,covid indicate the violation
+ratios in the entire, training, and testing sample, respectively. Against the nominal level
+
+τ  = 0.05, we ﬁnd that despite the violation ratio being close to the nominal quantile
+in the entire sample, the VaR cannot carry out its duty during the pandemic period,
+given that the overall violation ratios are signiﬁcantly higher than the nominal level,
+especially for equity indices in the US, Chinese markets, as well as the WTI crude oil
+commodity futures.  On the contrary, the violation ratios maintain an acceptable level
+over the COVID-19 period for MSCIEU, Bitcoin, gold, and soybean commodity futures.
+
+
+To speculate what causes the failure of VaR estimation, we closely monitor the tail
+stability of each asset for quantileτ = 0.05 by using the sequentialWτn detector. Recall
+thatk/n = 0.2, this leads to the surveillance procedure beginning from 25 December
+2019, as a fraction of the testing sample is used for preparation. The detectorWτn is then
+                                                    12
+computed day by day in the testing sample, but the detection stops once there is the
+detector that exceeds the thresholdCτ.
+
+Figure 2 illustrates the sequential surveillance procedure for each of the assets, as well
+as the VaR estimators.  Combined with the last column in Table 2, the results show
+that the equity indices in all three markets suﬀer from a tail change in March 2020. In
+particular, note that major market indices in the US fell more than 7% on March 9.
+Another remarkable case is the crude oil commodity future that experiences a tail change
+on March 18.  This comes with a collapse of oil price, which dropped by 24% and was
+
+recordedasoneoftheworstdaysinthehistory. Thispartiallyexplainswhyabreakdown
+found in the VaR estimation for the corresponding assets.   On the other hand, four
+safe-haven candidates (bitcoin, gold, CNY-USD exchange rate, and soybean commodity
+futures), do not incur a tail change over the testing period (for a robustness checking,
+we also perform detections whenτ = 0.10, 0.15, 0.20, and obtain similar results). These
+results bring us the hope that potential safe-haven assets to be eﬀective during the crisis.
+
+(Insert Figure 2 here)
+
+Next, for the purpose of evaluating the role of safe-haven asset to investment strategies,
+weconstruct pairwisemean-variance portfoliosbetween equity indicesand potentialsafe-
+haven assets. Treasury bill is used as a risk free rate for calculating the portfolio weights.
+Panel A in Table 3 displays the Sharpe ratio of each portfolio return.  Notably, only
+portfoliosbuiltwithgoldandsoybeancommodityfuturesobtainedpositiveSharperatios.
+Among the portfolios built with three stock market indices, those with the MSC-US and
+the MSCI-EU share some similarities, whereas those with the Chinese market index are
+diﬀerent.   This is consistent with the development of COVID-19 pandemic over time
+(Zhang et al., 2020).
+
+(Insert Table 3 here)
+
+Let us now concentrate on the tail behaviour of portfolio returns.   From the results
+shown in Table 2, we ﬁnd that all of three equity indices experience tail changes during
+the pandemic period, while many safe-haven candidates keep a stable tail behaviour.
+To keep assessing the practical value of safe-haven candidates, we therefore sequentially
+                                                    13
+monitor the stability of the tail behaviour of portfolio returns over the market crisis
+period through the detectorWn. The results are reported as the left-quantileτ varying
+from a set{0.05,0.10,0.15,0.20}. Panel B of Table 3 reports the detection results.
+
+Among six asset candidates, again, only the portfolios constructed with gold and soy-
+bean commodity futures do not experience a change on the left-quantiles considered.
+
+Conversely, bringing bitcoin, forex currencies, and crude oil commodity futures into the
+portfoliocannot avoidchangeson theleft-tails. Afewexceptional cases canbe identiﬁed,
+some portfolios built with bitcoin and CNY-USD oﬀset the tail instability in three eq-
+uity indices, although the Sharp ratios show non-proﬁtability for these portfolios. These
+results are generally in line with the existing literature that certain safe-haven assets are
+market speciﬁc.
+
+Among all candidates, gold and soybean commodity futures are found to be robust safe
+havenassetsduringtheoutbreakofCOVID-19. Figure3showsthecumulativereturnsof
+the portfolios that using gold and soybean commodity futures as safe-haven assets for the
+MSCI-US index, where the vertical lines indicate important dates related to COVID-19
+mentioned in Figure 1. We can see that except for a short-lived and small negative value
+shown for the portfolio of soybean commodity futures in the middle of March 2020, the
+overall cumulative returns are positive during the sample considered.  Similar patterns
+are found for the other two stock market indices.
+
+(Insert Figure 3 here)
+
+4.3. A cross-quantilograms analysis for safe-haven assets.
+To further conﬁrm our ﬁndings above, we implement the cross-quantilograms approach
+as used in Shahzad et al.  (2019b) to evaluate the validity of safe-haven assets over the
+normal market and COVID-19 periods. First, to understand a dynamic eﬀect of COVID-
+19 on the lead-lag eﬀect between equity indices and safe-haven assets, we estimate the
+time varying cross-quantilograms with lagh = 1 andτ = 0.05 by using a one-day rolling
+window approach, where the window length is ﬁxed with 21 trading days. Figure 4 shows
+example plots of the time varying cross-quantilogram between equity indices and bitcoin,
+for the solid blue and dot red lines standing for time varying cross-quantilogram and
+                                                    14
+bootstrapped 95% conﬁdence interval, respectively. The vertical green lines indicate that
+bitcoin can be used as a strong version of safe-haven asset for that particular window,
+which is evidencedby the blue line across the lower bound of red lines. From the plots we
+observe that the role of bitcoin, as a potential safe-haven asset to equity indices, becomes
+less eﬀective during the pandemic period. This is particularly manifest to MSCI-US and
+MSCI-EU, given that the patterns of a lead-lag eﬀect are less often signiﬁcant.
+
+
+(Insert Figure 4 here)
+
+
+Table 4 reports the shares of no and negative predictability indicated by the time varying
+
+cross-quantilograms for each asset pairs in both the training and COVID-19 samples. In
+general, the shares of no-predictability increased for almost all assets during the COVID-
+19 period, whereas most of assets has lower share of negative predictability during the
+crisis.  This overall trend is not entirely surprising as we know that it is hard to ﬁnd
+a perfect safe-haven in such a complicated crisis.  Nonetheless, a few exceptions can be
+seen for bitcoin, gold and soybean commodity futures paired with MSCI-CN, CNY-USD
+paired with MSCI-US and MSCI-EU. In addition, we also need to note that the worst
+scenarios of this crisis happened in the very end of COVID-19 sample, which may further
+change the role of safe-haven assets.
+
+
+(Insert Table 4 here)
+
+
+Following Shahzad et al.   (2019b), we also report pair-wise cross-quantilograms with
+lagh  =  1, but on left-quantilesτ  ={0.05,0.06,...,0.20} in both the training and
+testing samples.   Figure 5 illustrates the results of cross-quantilograms, in which the
+green color on the heatmap represents negative lead-lag eﬀect, meaning the candidate
+asset can be considered as a strong safe-haven asset.  Red color represents a positive
+spillover eﬀect between equity indices and candidate asset, while yellow color stands
+for no predictability on their left-quantiles, i.e., a weak version of safe-haven asset.  An
+independence test is performed to test the signiﬁcance of the cross-quantilogram under
+the stationary bootstrapping procedure (see Equation 3).  We therefore assign a zero
+value to the cross-quantilogram if the null or no predictability cannot be rejected.
+                                                     15
+Theresultsofthepair-wiseassetsintrainingandtestingsamplesarequitemixed(asseen
+in Figure 5). We have the following three observations: ﬁrst, some assets (bitcoin, CNY-
+USD,andthecrudeoilcommodityfutures)playaroleofasafe-haventoequityindicesin
+the period with normal market status, while their roles degenerate during the COVID-19
+period. Second, the rest of the safe haven candidates (gold, EUR-USD, and the soybean
+commodity futures) either keep the same status of being safe-haven assets, or they act as
+a better safe-haven during the COVID-19 sample. And the third, with no conﬂict with
+the ﬁrst two points, the directional predictive patterns between asset candidates and
+equity indices are quite similar in US and EU market, and patterns regarding China are
+slightly diﬀerent in some cases, for example, there are positive spillover eﬀects between
+MSCI-CN and gold and soybean in the training sample.  These results in general are
+consistent with our ﬁndings from monitoring the tail behaviour of safe-haven portfolios
+
+in the previous section.
+
+
+(Insert Figure 5 here)
+
+
+
+                                           5. Conclusion
+
+Searchingforsafe-havenassetsisatimelyandimportantissueunderthecurrentCOVID-
+19 pandemic. The profound impact of this health crisis has caused investors all over the
+world to suﬀer great losses, and thus the demand for safe-haven assets has become even
+more urgent. Traditional candidates for a safe haven such as gold, cryptocurrency, forex
+currencies and commodities may loss some eﬀectiveness given the nature of the current
+crisis. Their role as safe-haven assets must, therefore, be re-evaluated.
+
+
+Extendingtherichliteratureinthisarea, weintroduceasequentialmonitoringprocedure
+to detect changes in the left-quantiles of asset returns. This approach allows us to assess
+whether a tail change in the equity index can be oﬀset by adding a safe-haven asset into
+the simple mean-variance portfolio. Using data from August 2019 to December 2019 as a
+training period for the model, and then taking the outbreak between December 2019 and
+March 2020 as the testing period, our empirical results suggest that gold and soybean
+                                                   16
+commodity futures can be used as safe-haven assets during the outbreak of COVID-
+19. We also used the cross-quantilogram approach (Shahzad et al., 2019b) to check the
+robustness of our empirical ﬁndings. The results are generally consistent.
+
+Overall, we conﬁrm that gold has an irreplaceable role in preserving the value of an
+investment.  The strong and robust role of soybean futures is slightly surprising as it
+is not normally considered a strong candidate.  The logic behind this once again links
+to the nature of the current crisis.  The ﬁnancial turmoil is essentially driven by the
+health crisis.  By implementing measures to contain the virus, both the industrial and
+consumer sector are aﬀected, leading to an over-supply of crude oil and also ruling out
+its relevance as a safe-haven asset.  The locking down of cities and borders also aﬀect
+international trade, and thus put the foreign exchange market into great uncertainty.
+
+The crisis, however, raises the need for agricultural products. Food security, for example,
+has become a major issue for many countries (e.g., Deaton and Deaton, 2020), which
+makes agricultural commodities a strong hold under the current crisis. Our ﬁndings are
+also in line with the literature that safe-haven assets can change over time and across
+countries. In addition, when searching for safe-haven assets, investors cannot ignore the
+underlying characteristics/driving forces of the market turmoil.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                    17
+                                               References
+
+Aschersleben, P., Wagner, M., Wied, D. (2015). Monitoring euro area real exchange rates. In Sto-
+
+chastic models, statistics and their applications, Springer, Cham.
+
+Aue, A., H¨ormann, S., Horv´ath, L., Huˇskov´a, M., Steinebach, J. G. (2012). Sequential testing for
+
+the stability of high-frequency portfolio betas. Econometric Theory, 28, 804–837.
+Baur, D. G., Lucey, B. M. (2010). Is gold a hedge or a safe-haven? An analysis of stocks, bonds and
+
+gold. Financial Review, 45, 217–229.
+
+Baur, D. G., McDermott, T. K. (2010). Is gold a safe-haven?  International evidence. Journal of
+
+Banking & Finance, 34, 1886–1898.
+
+Baur, D. G., McDermott, T. K. (2016). Why is gold a safe-haven?. Journal of Behavioral and
+Experimental Finance, 10, 63–71.
+
+Baur, D. G., Hong, K., Lee, A. D. (2018). Bitcoin:  Medium of exchange or speculative assets?.
+
+Journal of International Financial Markets, Institutions and Money, 54, 177–189.
+
+Beckmann, J., Berger, T., Czudaj, R. (2015). Does gold act as a hedge or a safe-haven for stocks?
+
+A smooth transition approach. Economic Modelling, 48, 16–24.
+Bouri, E., Lucey, B., Roubaud, D. (2019). Cryptocurrencies and the downside risk in equity invest-
+
+ments. Finance Research Letters, https://doi.org/10.1016/j.frl.2019.06.009.
+
+Bouri, E., Moln´ar, P., Azzi, G., Roubaud, D., Hagfors, L. I. (2017). On the hedge and safe-haven
+
+properties of Bitcoin: Is it really more than a diversiﬁer?. Finance Research Letters, 20, 192–198.
+Bouri, E., Shahzad, S., Roubaud, D., Kristoufek, L., Lucey, B. (2020). Bitcoin, gold, and com-
+
+modities as safe havens for stocks: New insight through wavelet analysis. The Quarterly Review of
+
+Economics and Finance, https://doi.org/10.1016/j.qref.2020.03.004.
+
+Bredin, D., Conlon, T., Poti, V. (2015). Does gold glitter in the long-run?  Gold as a hedge and
+
+safe-haven across time and investment horizon. International Review of Financial Analysis,  41,
+320–328.
+
+Creti, A., Jo¨ets, M., Mignon, V. (2013). On the links between stock and commodity markets’
+
+volatility. Energy Economics, 37, 16–28.
+
+Deaton, B. J., Deaton, B. J. (2020). Food security and Canada’s agricultural system challenged by
+
+COVID-19. Canadian Journal of Agricultural Economics, https://doi.org/10.1111/cjag.12227.
+Fernandes, N. (2020). Economic eﬀects of coronavirus outbreak (COVID-19) on the world economy.
+
+SSRN 3557504.
+
+Gates, B. (2020). Responding to Covid-19-a once-in-a-century pandemic? New England Journal of
+
+Medicine, DOI: 10.1056/NEJMp2003762.
+Goodwell, J.W. (2020). COVID-19 and ﬁnance:  Agendas for future research. Finance Research
+
+Letters, 101512.
+
+                                                       18
+Gorton, G., Lewellen, S., Metrick, A. (2012). The safe-asset share. American Economic Review,
+102, 101–106.
+
+Grisse, C., Nitschka, T. (2015). On ﬁnancial risk and the safe-haven characteristics of Swiss franc
+
+exchange rates. Journal of Empirical Finance, 32, 153–164.
+
+Han, H., Linton, O., Oka, T., Whang, Y. J. (2016). The cross-quantilogram:  Measuring quantile
+
+dependenceandtestingdirectionalpredictabilitybetweentimeseries. Journal of Econometrics, 193,
+251–270.
+
+Hoga, Y., Wied, D. (2017). Sequential monitoring of the tail behavior of dependent data. Journal
+
+of Statistical Planning and Inference, 182, 29–49.
+
+Hood, M., Malik, F. (2013). Is gold the best hedge and a safe-haven under changing stock market
+volatility?. Review of Financial Economics, 22, 47–52.
+
+Klein, T., Thu, H. P., Walther, T. (2018). Bitcoin is not the New Gold-A comparison of volatility,
+
+correlation, and portfolio performance. International Review of Financial Analysis, 59, 105–116.
+
+Li, S., Lucey, B. M. (2017). Reassessing the role of precious metals as safe-havens-What colour is
+
+your haven and why?. Journal of Commodity Markets, 7, 1–14.
+Li, S., Lucey, B. M. (2017). Reassessing the role of precious metals as safe-havens-What colour is
+
+your haven and why?. Journal of Commodity Markets, 7, 1–14.
+
+Nakamoto,    S.,    Bitcoin,    A.   (2008).   A   peer-to-peer   electronic   cash   system.   Bitcoin.
+
+https://bitcoin.org/bitcoin.pdf.
+
+Oka, T., Qu, Z. (2011). Estimating structural changes in regression quantiles. Journal of Economet-
+rics, 162, 248–267.
+
+Politis, D. N., Romano, J. P. (1994). The stationary bootstrap. Journal of the American Statistical
+
+association, 89, 1303–1313.
+
+Qu, Z. (2008). Testing for structural change in regression quantiles. Journal of Econometrics, 146,
+170–184.
+
+Ranaldo, A., S¨oderlind, P. (2010). Safe-haven currencies. Review of ﬁnance, 14, 385–407.
+
+Reboredo, J. C. (2013). Is gold a safe-haven or a hedge for the US dollar?  Implications for risk
+
+management. Journal of Banking & Finance, 37, 2665–2676.
+
+Shahzad, S. J. H., Bouri, E., Roubaud, D., Kristoufek, L. (2019a). Safe-haven, hedge and diversiﬁ-
+cation for G7 stock markets: Gold versus bitcoin. Economic Modelling, 87, 212-224.
+
+Shahzad, S. J. H., Bouri, E., Roubaud, D., Kristoufek, L., Lucey, B. (2019b). Is Bitcoin a better
+
+safe-haven investment than gold and commodities?. International Review of Financial Analysis, 63,
+
+322–330.
+
+Smales, L. A. (2019). Bitcoin as a safe-haven:  Is it even worth considering?. Finance Research
+Letters, 30, 385–393.
+
+
+                                                        19
+Smith, R. D. (2006). Responding to gaobal infectious disease outbreaks: lessons from SARS on the
+roleofriskperception, communicationandmanagement. Social Science & Medicine, 63, 3113–3123.
+
+Urquhart, A., Zhang, H. (2019). Is Bitcoin a hedge or safe-haven for currencies?   An intraday
+
+analysis. International Review of Financial Analysis, 63, 49–57.
+
+Wu, F., Zhao, W., Ji, Q., Zhang, D. (2020). Dependency, centrality and dynamic networks for
+
+international commodity futures prices. International Review of Economics and Finance, 67, 118–
+132.
+
+Xia,T.,Ji,Q.,Zhang,D.,Han,J.(2019).Asymmetricandextremeinﬂuenceofenergypricechanges
+
+on renewable energy stock performance. Journal of Cleaner Production, 241, 118338.
+
+Zhang, D. (2017). Oil shocks and stock markets revisited: Measuring connectedness from a global
+perspective. Energy Economics, 62, 323–333.
+
+Zhang, D., Broadstock, D. C. (2018). Global ﬁnancial crisis and rising connectedness in the inter-
+
+national commodity markets. International Review of Financial Analysis.
+
+Zhang, D., Hu, M., Ji, Q. (2020). Financial markets under the global pandemic of COVID-19.
+
+Finance Research Letters, 101528.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                      20
+                       Table 1. Summary statistics and stationary tests.
+                 Average    S.D.    Skewness   Kurtosis   S.R.training   S.R.covid   PADF   PKPSS
+ MSCIUS      -0.08%    2.26%    -1.0554     13.5176       0.0667       -0.0707     0.00      0.64
+ MSCIEU      -0.12%    1.81%    -2.5971     26.2536       0.0454       -0.1130     0.00      0.71
+ MSCICN     -0.01%    1.43%    -0.7272      6.2763       0.0255       -0.0184     0.00      0.44
+  Bitcoin      -0.27%    4.78%    -0.7750     17.2506      -0.0985      -0.0264     0.00      0.55
+   Gold         0.08%    1.09%    -0.4359     10.0930       0.0542       0.0846     0.00      0.45
+EUR-USD    -0.01%    0.44%    -1.0511     12.8541      -0.0185       0.0021     0.00      0.15
+CNY-USD    -0.01%    0.30%    -1.5145      8.7359       -0.0783      -0.0231     0.00      0.19
+     Oil          -0.57%    4.56%    -1.6792     22.1491       0.0167       -0.2009     0.00      0.49
+ Soybean      0.01%    0.90%     0.1766      4.8432       0.0079       0.0170     0.00      0.36
+   T-Bill        0.58%    0.20%    -1.9455      5.9809            -                -          0.01      0.10
+   Note:  Equity indices are available from the MSCI website, bitcoin data is available from
+   Coindesk, Forex and T-Bill are from Yahoo Finance, and Gold and commodity futures are
+   available from Reuters.  S.R. refers to the sharp ratio, which is calculated by dividing the
+   standard deviation from the average of returns. The sharp ratio of T-Bill is not computed as
+   it is considered as a risk-free asset. PADF and PKPSS are p-values of the ADF and KPSS unit
+   root tests, respectively.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                         21
+                               Table 2. Descriptive statistics of VaR and detected changes (τ = 5%).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               Average  Median    S.D.      Min      Max    Hitwhole  Hittraining  Hitcovid  Change date22
+ MSCIUS     -0.0296   -0.0145  0.0359  -0.2099  -0.0082   5.17%      2.30%     8.05%       09-Mar
+ MSCIEU     -0.0231   -0.0145  0.0226  -0.1462  -0.0092   4.60%      4.60%     4.60%       24-Mar
+ MSCICN    -0.0241   -0.0206  0.0092  -0.0590  -0.0158   4.60%      1.15%     8.05%       23-Mar
+  Bitcoin     -0.0566   -0.0501  0.0190  -0.1750  -0.0441   5.75%      5.75%     5.75%           -
+   Gold       -0.0155   -0.0126  0.0090  -0.0504  -0.0074   5.75%      4.60%     6.90%           -
+EUR-USD   -0.0058   -0.0049  0.0026  -0.0180  -0.0035   5.75%      6.90%     4.60%       25-Mar
+CNY-USD   -0.0042   -0.0040  0.0008  -0.0087  -0.0038   5.17%      3.45%     6.90%           -
+    Oil        -0.0485   -0.0324  0.0463  -0.2806  -0.0217   5.75%      3.45%     8.05%       18-Mar
+ Soybean    -0.0162   -0.0154  0.0024  -0.0253  -0.0132   5.17%      3.45%     6.90%           -
+  T-Bill      0.0041    0.0042   0.0013   0.0001   0.0055    5.75%         0        11.49%      23-Mar
+   Note:  VaR estimators for asseti at quantileτ are calculated through VaRτi,t = ˆσi,tετi.  The conditional
+   volatility ˆσi,t is obtained by ﬁtting a GARCH(1,1) model given a general presence of the conditional het-
+   eroscedasticity. The unconditional quantile for the errorετi is obtained from a bootstrapped distribution
+   by re-sampling the historical residuals for 1000 times.  The violations/hits are identiﬁed by the indicator
+   functionI(ri,t<VaRτi,t). All change dates are in the year 2020.
+Table 3. Sharp ratio of optimised portfolios during the COVID-19 and
+detected change dates.
+
+                                              Panel A: Sharp ratios
+                  Bitcoin    Gold    EUR-USD   CNY-USD      Oil      Soybean
+ MSCI-US   -0.0347   0.0711     -0.0049        -0.0494     -0.0347    0.0125
+ MSCI-EU   -0.0652   0.0711     -0.0050        -0.0494     -0.0652    0.0120
+ MSCI-CN   -0.0023   0.0719     -0.0050        -0.0023     -0.0023    0.0125
+                                   Panel B: Break dates whenτ = 0.05
+ MSCI-US   09-Mar       -               -                  -          09-Mar         -
+ MSCI-EU        -            -          26-Mar             -          24-Mar         -
+ MSCI-CN   24-Mar       -          26-Mar        24-Mar     24-Mar         -
+                                                       τ = 0.10
+ MSCI-US   23-Mar       -          06-Mar             -          12-Mar         -
+ MSCI-EU        -            -          06-Mar             -          24-Mar         -
+ MSCI-CN        -            -          06-Mar        24-Mar          -              -
+                                                       τ = 0.15
+ MSCI-US        -            -          06-Mar             -          12-Mar         -
+ MSCI-EU        -            -          06-Mar             -          25-Mar         -
+ MSCI-CN        -            -          06-Mar             -               -              -
+                                                       τ = 0.20
+ MSCI-US   12-Mar       -          06-Mar             -          12-Mar         -
+ MSCI-EU        -            -          06-Mar             -               -              -
+ MSCI-CN        -            -          06-Mar             -               -              -
+     Note: The sharp ratio from Panel A is calculated by dividing the standard
+     deviation from the average of portfolio returns.  In Panel B, the detection
+     is performed for left-quantiles whenτ = 0.05, 0.10, 0.15, 0.20.  All change
+     dates in Panel B are in the year 2020.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                   23
+                             Table 4. Percentage of none and negative predictability over the training
+                             and COVID-19 periods (τ = 0.05).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                         Figure 1. Trajectories of daily closing price of MSCI-US and Crude oil prices.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                    Training sample                    COVID-19 sample
+                                           MSCIUS   MSCIEU   MSCICN   MSCIUS   MSCIEU   MSCICN
+                             Bitcoin        0.44         0.57         0.62         0.61         0.62         0.5324
+                              Gold          0.54         0.60         0.60         0.69         0.69         0.63
+ Weak safe-haven           EUR-USD      0.40         0.42         0.50         0.53         0.48         0.51
+(no predictability)        CNY-USD     0.57         0.54         0.54         0.46         0.46         0.59
+                                Oil           0.57         0.65         0.68         0.70         0.69         0.65
+                            Soybean       0.48         0.51         0.65         0.65         0.66         0.51
+                             Bitcoin        0.56         0.42         0.37         0.38         0.37         0.46
+                              Gold          0.45         0.39         0.39         0.31         0.31         0.36
+Strong safe-haven          EUR-USD      0.59         0.56         0.48         0.46         0.50         0.46
+     (Negative)            CNY-USD     0.41         0.45         0.45         0.51         0.52         0.40
+                                Oil           0.42         0.34         0.32         0.29         0.31         0.34
+                            Soybean       0.51         0.48         0.34         0.34         0.33         0.48
+   Note:  By using a rolling window approach with the window length of 21 trading days, the time
+   varying cross-quantilograms for lagh = 1 andτ = 0.05 are calculated at a daily frequency.  The
+   numberofwindowsinthetrainingsampleis66as21observationsareburnedfromtheﬁrstwindow,
+   thetotalnumberofwindowsinthetestingsampleremains87. Theseratiosstandforthepercentage
+   of windows with no predictability or negative predictability indicated by the time varying cross-
+   quantilograms.
+Figure 2. Plots of VaR estimators and sequential detections on tail be-
+havior of each of the asset whenτ = 0.05.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                           25
+Figure3. Cumulativereturnsofthepairwiseoptimisedportfoliobetween
+MSCI-US, gold and soybean commodity futures.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure4. Timevaryingcross-quantilogramfromequityindicestobitcoin
+whenτ = 0.05(theverticalgreenlinesindicatingsigniﬁcantnegativecross-
+quantilogram on 95% conﬁdence intervals.)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        26
+Figure 5. Cross-quantilogram across left-tail quantiles in training and
+COVID-19 periods.  (The green and red blocks on heatmaps representing
+negative and positive values, respectively, whereas the yellow blocks repre-
+sent no predictability.)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            27

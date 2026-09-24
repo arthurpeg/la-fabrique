@@ -1,0 +1,131 @@
+{
+  "fiche_id": "measuring-volatility-with-the-realized-range-W2133491221",
+  "written": "2026-09-24",
+  "written_by": "session-extraction-2026-09-24",
+  "claim": {
+    "statement": "L'estimateur 'realized range' (somme des carrés du log high-low intra-day, correctement mis à l'échelle) est un estimateur de la volatilité journalière plus efficace que la 'realized variance' (somme des rendements intra-day au carré) à fréquence d'échantillonnage égale ; en présence de frictions de microstructure (non-négociation, bid-ask bounce) cette supériorité ne tient plus telle quelle, mais une procédure de correction de biais par mise à l'échelle (ratio du niveau moyen du range journalier sur le niveau moyen du realized range) restaure cette efficacité.",
+    "quoted": [
+      "that for plausible levels of non-trading and bid-ask bounce the realized range",
+      "has a lower mean squared error than the realized variance"
+    ],
+    "note": "Citation en deux fragments consécutifs de l'abstract (deux lignes adjacentes du texte extrait)."
+  },
+  "universe": {
+    "value": "S&P500 index-futures (contrat le plus liquide, roulé sans mélanger deux contrats) et les 100 actions constituantes du S&P100 (juin 2004), à partir de prix de transaction et cotations bid/ask.",
+    "quoted": [
+      "for the S&P500 index-futures",
+      "from 4 January 1999 to 23 February 2004 (1289 trading days)",
+      "the S&P100 index",
+      "transaction prices at the one-minute frequency."
+    ],
+    "note": "S&P100: échantillon couvrant en général du 9 avril 1997 au 18 juin 2004 (période variable selon les titres, non citée mot pour mot ici car la phrase source contient une coupure d'extraction sur ce segment)."
+  },
+  "horizon": {
+    "value": "Prévision de volatilité à un jour (one-step-ahead) : la valeur retardée (d'un estimateur de volatilité journalière) sert de prédicteur de la volatilité du jour suivant, via une régression AR(1)-like ou une mise à jour à décroissance exponentielle (eq. 16).",
+    "quoted": "one-step ahead forecasts",
+    "note": "Le papier ne prédit pas un rendement ni son signe ; il prévoit/mesure une propriété ex-post (volatilité). Horizon distinct d'un horizon de signal directionnel."
+  },
+  "signal_construction": {
+    "value": "RR = (1/(4 log 2)) * somme_i (log H_i - log L_i)^2 sur les intervalles intra-day i=1..I d'un jour (analogue de la realized variance RV = somme_i r_i^2, mais avec le range high-low de chaque intervalle au lieu du rendement au carré). Correction de biais : RR_scaled,t = (somme_{l=1..q} RR_daily_{t-l} / somme_{l=1..q} RR_{t-l}) * RR_t, où RR_daily est le range journalier (haut-bas de la journée entière) et q le nombre de jours de la fenêtre de mise à l'échelle (q=66 jours, ~3 mois, dans l'application empirique S&P500).",
+    "quoted": [
+      "we replace each squared intra-day return by the high- low range for",
+      "average level of the realized range over the q previous trading days. That is, the"
+    ],
+    "note": "Formules (4), (5) et (11) du papier ; la citation du facteur d'échelle q=66 est traitée séparément dans reported_results (scaling_window_q_days_sp500)."
+  },
+  "reported_results": [
+    {
+      "name": "theoretical_efficiency_ratio_range_vs_squared_return",
+      "value": 5,
+      "spelled_out": "ﬁve",
+      "unit": null,
+      "quoted": "is ﬁve times more eﬃcient",
+      "note": "Résultat théorique de Parkinson (1980) cité par les auteurs : le range journalier (log high-low, mis à l'échelle) est cinq fois plus efficace (variance cinq fois plus faible) que le rendement close-to-close au carré. 'ﬁve' est le mot tel qu'il apparaît dans le texte extrait (ligature 'fi')."
+    },
+    {
+      "name": "rr_rmse_daily_ideal_1440min",
+      "value": 2.564,
+      "unit": null,
+      "quoted": "the RMSE of the range is substantially lower at 2.564",
+      "note": "RMSE du realized range à la fréquence 1440 minutes (= range journalier), simulation en monde idéal (trading continu, sans friction), Table 1 / texte de la Section 3. Unité implicite : variance journalière à l'échelle du papier (σ²=4.41 simulé), non explicitée dans la phrase citée."
+    },
+    {
+      "name": "rv_rmse_daily_ideal_1440min",
+      "value": 5.664,
+      "unit": null,
+      "quoted": "the daily squared return at 5.664",
+      "note": "RMSE de la realized variance (= rendement journalier au carré) à la même fréquence/configuration que l'entrée précédente. Même unité implicite."
+    },
+    {
+      "name": "mean_daily_squared_return_sp500",
+      "value": 1.792,
+      "unit": null,
+      "quoted": "The mean daily squared (close-to-close) return is 1.792",
+      "note": "Moyenne empirique sur l'échantillon S&P500 index-futures (Table 5). Unité implicite (variance journalière, non annualisée dans la phrase citée)."
+    },
+    {
+      "name": "mean_realized_range_sp500_5min",
+      "value": 1.533,
+      "unit": null,
+      "quoted": "average at 1.533",
+      "note": "Moyenne du realized range (5 minutes 9:30-16:15 EST / 15 minutes hors séance) sur l'échantillon S&P500 index-futures, Table 5, inférieure à la realized variance (biais négatif dû au trading non-continu)."
+    },
+    {
+      "name": "mean_scaled_realized_range_sp500",
+      "value": 1.75,
+      "unit": null,
+      "quoted": "the average to 1.750, more in line with the realized variance",
+      "note": "Moyenne du realized range corrigé du biais (q=66 jours), plus proche de la realized variance que le realized range brut."
+    },
+    {
+      "name": "pct_significant_differences_favor_realized_range_sp500",
+      "value": 80,
+      "unit": "%",
+      "quoted": "Of all signiﬁcant diﬀerences 80% are in favour of the",
+      "note": "Proportion des différences statistiquement significatives (tests DM) en faveur du realized range (vs realized variance), pour l'ensemble des configurations testées sur le S&P500 index-futures (Table 15)."
+    },
+    {
+      "name": "avg_spread_sep2001_contract_index_points",
+      "value": 0.443,
+      "unit": "index points",
+      "quoted": "is 0.443 index-points",
+      "note": "Spread bid-ask moyen du contrat futures S&P500 échéance septembre 2001, sur un prix futures moyen de 1190 (soit environ 0.037% du prix) — illustre l'ampleur de la microstructure sur l'instrument étudié."
+    },
+    {
+      "name": "scaling_window_q_days_sp500",
+      "value": 66,
+      "unit": "trading days",
+      "quoted": "in (11) using the previous q = 66 trading",
+      "note": "Fenêtre de q jours de bourse (~3 mois) utilisée pour calculer le facteur d'échelle de la correction de biais (eq. 11) dans l'application empirique au S&P500 index-futures."
+    }
+  ],
+  "what_is_missing": [
+    "Aucune donnée ni paramètre (tick, multiplicateur, frais, fuseau horaire, lag de publication) pour nos neuf futures intraday spécifiques : tout devra être établi indépendamment.",
+    "Pas de cadre d'évaluation compatible avec notre harnais (IC / walk-forward purgé) : le papier utilise R², MSE, MAE et les tests de Diebold-Mariano / encompassing (Harvey et al. 1998), pas une corrélation de rang type IC.",
+    "Aucun signal directionnel ni stratégie de trading n'est proposé : le papier mesure et prévoit un niveau de volatilité, jamais le signe ou l'amplitude d'un rendement futur — ce n'est pas un signal au sens de notre vocabulaire, tout au plus un input de risque.",
+    "Les résultats détaillés avec les estimateurs Garman-Klass (eq. 6-7) appliqués en intra-day et les corrections Rogers-Satchell / Christensen-Podolskij en présence de bid-ask bounce combiné ne sont pas chiffrés dans le texte fourni ('available upon request', 'Unreported results') — non vérifiables ici.",
+    "Aucune indication sur la fréquence optimale ni le comportement de l'estimateur pour des futures autres que des indices actions (matières premières, taux, change, etc.) — le papier ne couvre que des actions/indices actions.",
+    "Pas d'analyse de coûts de transaction, de slippage ni de contraintes d'exécution — hors du périmètre du papier, qui reste une mesure ex-post, pas une stratégie exécutable."
+  ],
+  "source": {
+    "authors": "Martin Martens, Dick van Dijk",
+    "title": "Measuring volatility with the realized range",
+    "year": 2006,
+    "source_url": "https://repub.eur.nl/pub/7582/ei2006-10.pdf",
+    "pdf": "corpus/pdf/measuring-volatility-with-the-realized-range-W2133491221.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": false,
+    "peer_reviewed_note": "Document identifié comme 'Econometric Institute Report EI 2006-10' (février 2006), une version rapport de travail. Le texte remercie 'the special issue guest editors' et 'two anonymous referees', suggérant une soumission à un numéro spécial de revue, mais rien dans le document fourni n'atteste qu'il s'agit de la version finale publiée et arbitrée ; classé prudemment comme non arbitré ici."
+  },
+  "transposability": {
+    "what_transfers": "L'idée centrale — remplacer le rendement intra-day au carré par le carré du (log) high-low de l'intervalle pour construire un estimateur de volatilité plus efficace, sommé sur la journée — ne dépend que de barres OHLC intraday, disponibles pour nos neuf futures. Les mécanismes de biais identifiés (négociation peu fréquente => biais à la baisse du range observé ; bid-ask bounce => biais à la hausse) sont des propriétés de microstructure génériques, pas spécifiques au S&P500. La procédure de correction de biais par mise à l'échelle (ratio range journalier / realized range sur une fenêtre glissante de q jours passés) est simple, déterministe, et ne regarde que le passé (compatible avec l'invariant II — pas de fuite de futur).",
+    "what_does_not_transfer": [
+      "Le calibrage microstructure précis (taille du spread, ex. 0.443 point d'indice / 0.037% du prix pour le contrat S&P500 sept. 2001) est propre à cet instrument et à cette période (1999-2004) ; nos neuf futures peuvent avoir des spreads, tick sizes et profondeurs de marché très différents, rendant la fréquence d'échantillonnage optimale non transposable telle quelle.",
+      "La fenêtre q=66 jours (~3 mois) pour le facteur de correction de biais a été choisie empiriquement pour la stabilité du spread/de l'intensité de négociation du S&P500 index-futures ; ce n'est pas une constante universelle et devra être ré-estimée par instrument.",
+      "Le papier mesure/prévoit un niveau de volatilité (proxy ex-post), pas un rendement ni son signe : il ne fournit aucun signal directionnel utilisable tel quel comme alpha ; au mieux, un input de risque ou de mise à l'échelle de position.",
+      "L'échantillon (S&P500 futures 1999-2004, actions S&P100 1997-2004) précède la microstructure des marchés modernes dominés par le trading électronique/HFT et la décimalisation ; les propriétés du bruit de microstructure ont probablement changé depuis.",
+      "Le papier suppose un processus de prix log-brownien avec bruit de microstructure i.i.d. indépendant du prix ; les auteurs eux-mêmes (citant Hansen and Lunde 2006b) notent des preuves empiriques contre ces deux hypothèses aux fréquences ultra-hautes — pertinent si l'on pousse vers des barres très fines sur nos futures."
+    ],
+    "what_aligns_well": "Notre univers est précisément composé de futures intraday — le cas le plus proche de la section empirique la plus propre du papier (S&P500 index-futures, Section 4), plus liquide et à spread plus stable que les actions individuelles du S&P100 (Section 5, résultats plus 'mixed'). Le calcul ne requiert que des primitives déjà disponibles dans un pipeline par barres (high, low, close par intervalle), sans donnée supplémentaire. La correction de biais par mise à l'échelle utilise uniquement une fenêtre glissante passée (pas de paramètre estimé sur l'ensemble de l'échantillon), ce qui est directement compatible avec la contrainte de point-in-time et l'absence de look-ahead exigées par notre Panel."
+  }
+}

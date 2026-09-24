@@ -1,0 +1,256 @@
+{
+  "fiche_id": "intraday-time-series-momentum-global-evidence-an-W3121499907",
+  "written": "2026-09-24",
+  "written_by": "session d'extraction isolée (phase 09)",
+  "source": {
+    "authors": "Zeming Li, Athanasios Sakkas, Andrew Urquhart",
+    "title": "Intraday time series momentum: global evidence and links to market characteristics",
+    "year": 2022,
+    "source_url": "https://centaur.reading.ac.uk/95566/1/Accepted-Version.pdf",
+    "pdf": "corpus/pdf/intraday-time-series-momentum-global-evidence-an-W3121499907.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "note": "Version acceptée déposée dans l'archive CentAUR de l'University of Reading ; publiée dans Journal of Financial Markets, 57, 100619, doi 10.1016/j.finmar.2021.100619. La page de titre de la version acceptée porte le titre « Intraday Time Series Momentum: International Evidence »."
+  },
+  "claim": "Le momentum temporel intrajournalier (ITSM) documenté par Gao et al. (2018) sur les ETF américains est un phénomène international : le rendement de la première demi-heure de la séance prédit positivement le rendement de la dernière demi-heure, dans 12 des 16 marchés développés étudiés. L'effet est plus fort en crise et en récession, plus fort quand la liquidité est faible et quand l'information est absorbée continûment ; il est exploitable par une stratégie de market timing dont les alphas contre des stratégies passives sont significatifs, et davantage encore en portefeuille global. La rentabilité du portefeuille global n'est pas captée par les facteurs actions globaux mais est expliquée à ~73 % par un facteur de position nette variable dans le temps (TVC), lui-même dû au market timing plus qu'à la sélection d'indices.",
+  "universe": "16 indices boursiers de marchés développés (classification MSCI) : Australie (ASX 200), Autriche (ATX), Canada (S&P/TSX), France (CAC 40), Allemagne (DAX), Irlande (ISEQ), Japon (Nikkei 225), Pays-Bas (AEX), Nouvelle-Zélande (NZX 50), Norvège (OSEAX), Portugal (PSI 20), Espagne (IBEX 35), Suède (OMXSPI), Suisse (SMI), Royaume-Uni (FTSE 100), États-Unis (S&P 500). Données de cotation à la minute issues de Thomson Reuters Tick History, agrégées en intervalles de 30 minutes non chevauchants ; prix convertis en dollars US au taux de change 1-minute contemporain (résultats en devise locale en annexe B). Période du 4 octobre 2005 au 29 décembre 2017. Belgique, Danemark, Finlande, Israël et Italie exclus faute de données liquides ; Hong Kong et Singapour exclus faute de change à la minute. Actions au comptant via indices — aucun future, aucune matière première, aucun ETF.",
+  "horizon": {
+    "value": "intrajournalier, même séance : le prédicteur est le rendement des 30 premières minutes (incluant le gap overnight), la cible le rendement des 30 dernières minutes avant la clôture du même jour ; une observation par jour de bourse et par marché",
+    "note": "Les auteurs notent que la longueur de l'intervalle n'affecte pas significativement l'effet selon Gao et al. (2018), mais ne retiennent que première et dernière demi-heure en raison de l'hétérogénéité des horaires de séance entre pays."
+  },
+  "signal_construction": {
+    "value": "Deux objets distincts. (1) Signal statistique : régression prédictive par marché rL_t = alpha + beta_F * rF_t + epsilon_t, avec rF_t = pfirst30,t / pclose,t-1 − 1 (dernier prix des 30 premières minutes rapporté à la clôture de la veille, donc incluant l'overnight) et rL_t = pclose,t / plast30,t − 1 (clôture rapportée au premier prix des 30 dernières minutes). (2) Signal de trading : règle de signe — position longue sur la dernière demi-heure si rF_t > 0, position courte si rF_t <= 0, toutes positions fermées à la clôture ; rI,t = rL_t si rF_t > 0, −rL_t sinon. Variantes : signal donné par la première demi-heure US appliqué aux autres marchés ; agrégations globales (18 portefeuilles = 3 types de base x 6 pondérations : equally-weighted, value-weighted, inverse-variance, maximum-diversification, mean-variance, minimum-variance), poids estimés en fenêtre extensible avec cinq ans d'amorce, somme des poids à 1 et vente à découvert interdite au niveau des poids.",
+    "note": "L'évaluation hors échantillon utilise une fenêtre extensible : 2005-2010 en estimation initiale, un jour ajouté à la fois."
+  },
+  "reported_results": [
+    {
+      "name": "markets_with_significant_in_sample_predictability",
+      "value": 12,
+      "unit": "marchés sur 16",
+      "quoted": "the ﬁrst half-hour return to the last half-hour return in 12 out of 16 markets",
+      "note": "Panel A de la Table 3, échantillon complet 2005-2017. Parmi eux, neuf ont une pente positive significative au seuil de 1 %."
+    },
+    {
+      "name": "pooled_first_half_hour_slope",
+      "value": 2.86,
+      "unit": "coefficient de pente (mis à l'échelle par 100)",
+      "quoted": "return is 2.86 and statistically signiﬁcantly diﬀerent from zero (t-statistic 7.53)",
+      "note": "Régression en panel sur les 16 marchés avec muettes pays et erreurs groupées par pays, correction Newey-West. ATTENTION : la Table 3 affiche 2.68*** (t = 7.53) pour la ligne Pooled du Panel A — le corps du texte et le tableau ne coïncident pas sur la pente."
+    },
+    {
+      "name": "pooled_first_half_hour_tstat",
+      "value": 7.53,
+      "unit": "t-statistique",
+      "quoted": "return is 2.86 and statistically signiﬁcantly diﬀerent from zero (t-statistic 7.53)",
+      "note": "Même régression en panel ; la t-statistique, elle, coïncide avec la Table 3."
+    },
+    {
+      "name": "us_first_half_hour_slope_financial_crisis",
+      "value": 18.28,
+      "unit": "coefficient de pente (mis à l'échelle par 100)",
+      "quoted": "the US stock market which has a (scaled) coeﬃcient of the ﬁrst half hour equal to 18.28",
+      "note": "Période de crise financière (2 décembre 2007 au 30 juin 2009), marché US. Le texte précise que c'est environ quatre fois le coefficient hors crise, égal à 4.28."
+    },
+    {
+      "name": "pooled_slope_crisis",
+      "value": 3.71,
+      "unit": "coefficient de pente (mis à l'échelle par 100)",
+      "quoted": "coeﬃcients of the ﬁrst half-hour returns are 3.71 and 2.09, for the ﬁnancial and non-ﬁnancial",
+      "note": "Régression en panel, période de crise financière."
+    },
+    {
+      "name": "pooled_slope_non_crisis",
+      "value": 2.09,
+      "unit": "coefficient de pente (mis à l'échelle par 100)",
+      "quoted": "coeﬃcients of the ﬁrst half-hour returns are 3.71 and 2.09, for the ﬁnancial and non-ﬁnancial",
+      "note": "Régression en panel, hors crise financière. Les deux coefficients sont dits statistiquement distinguables de zéro."
+    },
+    {
+      "name": "pooled_adj_r2_crisis_pct",
+      "value": 1.18,
+      "unit": "%",
+      "quoted": "the adjusted R2 is equal to 1.18% during ﬁnancial crisis",
+      "note": "R2 ajusté de la régression en panel pendant la crise."
+    },
+    {
+      "name": "pooled_adj_r2_non_crisis_pct",
+      "value": 0.63,
+      "unit": "%",
+      "quoted": "times larger than the one observed in the non-crisis period (i.e. 0.63%)",
+      "note": "R2 ajusté de la régression en panel hors crise — soit presque deux fois moins qu'en crise."
+    },
+    {
+      "name": "avg_slope_recession",
+      "value": 4.05,
+      "unit": "coefficient de pente moyen (mis à l'échelle par 100)",
+      "quoted": "4.05 (2.52) and 1.72% (0.81%) for the recession (expansion) periods",
+      "note": "Moyenne sur les régressions individuelles par pays ; la valeur entre parenthèses, 2.52, est la moyenne en expansion. Indicateurs de récession OCDE (FRED St. Louis) ; pas de régression en panel ici, les périodes étant spécifiques à chaque pays."
+    },
+    {
+      "name": "avg_adj_r2_recession_pct",
+      "value": 1.72,
+      "unit": "%",
+      "quoted": "4.05 (2.52) and 1.72% (0.81%) for the recession (expansion) periods",
+      "note": "R2 ajusté moyen en récession ; 0.81 % en expansion."
+    },
+    {
+      "name": "countries_with_positive_oos_r2",
+      "value": 5,
+      "spelled_out": "Five",
+      "unit": "pays sur 16",
+      "quoted": "Five out of 16 countries exhibit positive R2",
+      "note": "R2 hors échantillon de Campbell et Thompson (2008), fenêtre extensible amorcée sur 2005-2010. Dix pays donnent un R2 contraint positif et le MSPE-adjusted de Clark et West (2007) rejette la nulle dans dix marchés. Le nombre 5 est écrit en toutes lettres dans le texte."
+    },
+    {
+      "name": "countries_rejecting_forecast_encompassing",
+      "value": 14,
+      "unit": "pays sur 16",
+      "quoted": "is rejected in 14 out of 16 countries",
+      "note": "Test ENC-NEW de Clark et McCracken (2001) : la nulle selon laquelle les prévisions de la moyenne historique englobent celles du modèle prédictif est rejetée dans 14 pays."
+    },
+    {
+      "name": "country_itsm_alpha_vs_always_long_min_pct",
+      "value": 2.66,
+      "unit": "% par an",
+      "quoted": "generate signiﬁcant alphas ranging between 2.66% and 7.45% (2.60% and 7.28%) per year",
+      "note": "Borne basse (Royaume-Uni) des alphas significatifs de l'ITSM pays régressé contre la stratégie Always-long ; entre parenthèses, les bornes contre Buy-and-hold. Dix pays sur 16 donnent des alphas positifs significatifs."
+    },
+    {
+      "name": "country_itsm_alpha_vs_always_long_max_pct",
+      "value": 7.45,
+      "unit": "% par an",
+      "quoted": "generate signiﬁcant alphas ranging between 2.66% and 7.45% (2.60% and 7.28%) per year",
+      "note": "Borne haute (Norvège) des alphas significatifs contre Always-long ; 7.28 % contre Buy-and-hold."
+    },
+    {
+      "name": "country_itsm_sharpe_max",
+      "value": 1.12,
+      "unit": "ratio de Sharpe annualisé",
+      "quoted": "range between -0.40 and 1.12 over the same period",
+      "note": "Bornes des ratios de Sharpe des ITSM pays sur 2005-2017 ; la borne basse citée est −0.40. Sharpe brut, hors coûts de transaction."
+    },
+    {
+      "name": "pc1_share_of_global_itsm_variance_pct",
+      "value": 27.7,
+      "unit": "%",
+      "quoted": "The ﬁrst principal component (PC1) accounts only for 27.7% of the covariance",
+      "note": "ACP sur les séries de rendements ITSM individuels normalisés : communalité globale faible."
+    },
+    {
+      "name": "pc1_share_american_subsample_pct",
+      "value": 63.1,
+      "unit": "%",
+      "quoted": "The ﬁrst principal component from the American countries explains 63.1% of",
+      "note": "ACP par sous-échantillon géographique ; 41.5 % pour l'Asie-Pacifique et 40.3 % pour l'Europe — la communalité est régionale plutôt que globale."
+    },
+    {
+      "name": "countries_with_positive_us_slope",
+      "value": 12,
+      "unit": "pays sur 15",
+      "quoted": "associated with a positive slope coeﬃcient in 12 out of 15 international countries",
+      "note": "Panel B de la Table 7 : rendement de la première demi-heure US ajouté à la régression locale ; 8 de ces coefficients sont significatifs, et le bootstrap sauvage rejette l'absence de prédictibilité US dans 10 marchés sur 16."
+    },
+    {
+      "name": "conclusion_markets_with_significant_us_predictability",
+      "value": 9,
+      "unit": "marchés sur 16",
+      "quoted": "ﬁnd signiﬁcant evidence in 9 out of 16 markets",
+      "note": "Chiffre donné dans la conclusion. Il ne coïncide ni avec les 8 coefficients significatifs ni avec les 10 rejets par bootstrap annoncés à la section 4.2 — incohérence interne à signaler."
+    },
+    {
+      "name": "gitsm_portfolios_with_sharpe_above_one",
+      "value": 11,
+      "spelled_out": "Eleven",
+      "unit": "portefeuilles sur 18",
+      "quoted": "Eleven out of the 18 portfolios yield a Sharpe ratio that is greater than one",
+      "note": "18 portefeuilles globaux = 3 types de base x 6 schémas de pondération. Le nombre 11 est écrit en toutes lettres dans le texte."
+    },
+    {
+      "name": "gitsm_sharpe_max",
+      "value": 1.77,
+      "unit": "ratio de Sharpe annualisé",
+      "quoted": "ranging from 1.01 to 1.77",
+      "note": "Bornes des ratios de Sharpe des 11 portefeuilles globaux au-dessus de 1 ; 1.77 correspond au GITSM équipondéré de Type (3), fondé sur le signal de la première demi-heure US."
+    },
+    {
+      "name": "type3_mean_variance_gitsm_annual_return_pct",
+      "value": 6.75,
+      "unit": "% par an",
+      "quoted": "the strongest strategy in our evaluation, with an annualized return of 6.75%",
+      "note": "GITSM mean-variance de Type (3) ; alphas de spanning annoncés entre 5.63 % et 7.19 %."
+    },
+    {
+      "name": "gitsm_alpha_vs_global_factors_ff5_pct",
+      "value": 2.97,
+      "unit": "% par an",
+      "quoted": "statistically signiﬁcant and positive alphas varying between 2.90% (FF3) and 2.97%",
+      "note": "GITSM équipondéré de Type (1) régressé contre les facteurs actions globaux ; borne basse 2.90 % (FF3), borne haute 2.97 % (FF5). Les chargements sur les facteurs sont insignifiants."
+    },
+    {
+      "name": "tvc_share_of_gitsm_variation_pct",
+      "value": 73,
+      "unit": "%",
+      "quoted": "GITSM proﬁtability and can explain around 73% of the variation of the global time-series",
+      "note": "L'inclusion du facteur variable dans le temps (TVC = position nette x marché équipondéré de la dernière demi-heure) fait passer le R2 ajusté d'environ 0.4 % à environ 73 % et annule l'alpha."
+    },
+    {
+      "name": "tvc_decomposition_risk_premium_pct",
+      "value": 0.53,
+      "unit": "% par an",
+      "quoted": "the risk premium term is 0.53% while that of the market timing component is 4.88%",
+      "note": "Décomposition du TVC (5.40 % par an en moyenne) selon Goyal et Jegadeesh (2018) : prime de risque contre composante de market timing."
+    },
+    {
+      "name": "tvc_market_timing_share_pct",
+      "value": 90.37,
+      "unit": "%",
+      "quoted": "market timing component accounts for 90.37% of the return on TVC",
+      "note": "La rentabilité du facteur variable vient du market timing, non d'une capacité de sélection d'indices."
+    },
+    {
+      "name": "itsm_return_by_liquidity_group",
+      "value": null,
+      "unit": null,
+      "quoted": "yields almost doubled raw returns in the low liquidity group compared to the high liquidity",
+      "note": "Tri quotidien des 16 indices en fin de première demi-heure selon la mesure High-Low de Corwin et Schultz (2012) estimée sur des intervalles de cinq minutes chevauchants ; augmentation monotone des rendements EW-ITSM du groupe liquide vers le groupe illiquide, même profil sur les Sharpe. L'alpha du groupe illiquide survit à l'inclusion du TVC."
+    },
+    {
+      "name": "itsm_return_by_information_discreteness_group",
+      "value": null,
+      "unit": null,
+      "quoted": "observe a monotonic increase in the EW-ITSM portfolio returns from large to small ID",
+      "note": "Information discreteness ID_t = sign(rF_t) x (%neg_t − %pos_t) sur les minutes de la première demi-heure ; l'ITSM est plus fort quand l'information arrive continûment ('frog-in-the-pan' de Da et al. 2014). Contrairement au tri par liquidité, les alphas significatifs deviennent insignifiants une fois le TVC inclus."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun coût de transaction, aucun spread payé, aucun slippage, aucune commission n'est déduit nulle part : tous les rendements, alphas et Sharpe sont bruts, alors que la stratégie fait un aller-retour par jour et par marché.",
+    "Les instruments tradés sont des indices, pas des véhicules négociables : les auteurs écartent explicitement les ETF pays pour illiquidité et historique trop court, mais n'offrent aucun substitut exécutable. Le rendement de la première demi-heure inclut le gap overnight, non capturable.",
+    "Aucun IC, aucune corrélation de rang, aucune métrique transversale : l'évidence statistique est en pente de régression, R2 ajusté, R2 hors échantillon, MSPE-adjusted et ENC-NEW.",
+    "Le décompte des tests conduits n'est pas donné ; aucun ajustement pour tests multiples sur 16 marchés x 5 conditions de marché x 4 statistiques hors échantillon x 18 portefeuilles.",
+    "La conversion en dollars repose sur un taux de change à la minute dont la source, les heures de cotation et le traitement des marchés fermés ne sont pas précisés.",
+    "Le prix exact utilisé comme 'premier prix des 30 dernières minutes' et la manière de gérer les enchères de clôture (très présentes en Europe) ne sont pas documentés.",
+    "Incohérences internes non résolues : le texte annonce une pente en panel de 2.86 là où la Table 3 affiche 2.68 ; la conclusion annonce 9 marchés à prédictibilité US significative là où la section 4.2 annonce 8 coefficients significatifs et 10 rejets par bootstrap.",
+    "Aucune analyse de capacité, de taille de position, d'impact de marché, alors que l'explication avancée repose précisément sur l'impact de marché des chocs de liquidité.",
+    "La pause déjeuner de certaines places (Tokyo) et l'hétérogénéité des horaires sont notées mais leur effet sur la définition des demi-heures n'est pas testé."
+  ],
+  "transposability": {
+    "what_transfers": "Le motif de base est directement testable chez nous : un score quotidien, par instrument, égal au rendement des N premières minutes de séance, servant à prédire le rendement des N dernières minutes de la même séance. L'ordre temporel est strictement causal — le prédicteur est entièrement connu avant le début de la fenêtre prédite — donc il est compatible avec l'invariant II sans aménagement. La règle de signe (long si le matin monte, court sinon) se code en une fonction déterministe sans paramètre libre. Les trois hypothèses de conditionnement sont réutilisables comme candidats de régime : crise/récession, illiquidité mesurée le matin même, continuité de l'information (proportion de minutes positives sur la fenêtre du matin). L'insistance des auteurs sur le fait que la longueur de l'intervalle importe peu donne une première grille de robustesse.",
+    "what_does_not_transfer": [
+      "L'univers : 16 indices actions au comptant contre neuf futures intraday. Les indices ne sont pas négociables, et les futures ne sont pas des indices — le passage suppose un contrat, un multiplicateur, un tick et des frais que le papier n'a jamais eu à connaître.",
+      "La définition du rendement de la première demi-heure, rapportée à la clôture de la veille, suppose un marché qui ferme vraiment. Un future qui cote presque en continu n'a pas de gap overnight au même sens, et la frontière 'première demi-heure' devient un choix arbitraire, non hérité du papier.",
+      "La métrique : alphas annualisés contre Always-long et Buy-and-hold, ratios de Sharpe et appraisal ratios. Notre harnais produit un IC. Aucun chiffre de ce papier n'est directement comparable à une de nos sorties.",
+      "Toute la moitié internationale du papier : communalité globale et régionale, ACP par région, prédictibilité croisée du rendement US, 18 portefeuilles globaux, facteur TVC de position nette. Ces constructions supposent 16 marchés en devises différentes et un investisseur en dollars ; elles n'ont pas d'équivalent sur neuf futures qui ne forment ni régions ni univers de pays.",
+      "L'attribution factorielle (CAPM, FF3, FF5, momentum globaux de la bibliothèque French) : ces facteurs n'existent pas pour notre univers, et l'alpha qu'ils produisent n'est pas une grandeur que nous calculons.",
+      "La mesure de liquidité de Corwin et Schultz (2012), construite sur les plus-hauts et plus-bas d'un indice précisément parce que le volume et les cotations manquent. Sur des futures, cette contrainte disparaît et cette mesure devient un choix discutable plutôt qu'une nécessité.",
+      "La période : 2005-2017, dont une crise financière qui porte une grande part de l'effet. Notre tranche pool commence en 2016 ; la crise de 2008 n'y est pas, et le régime 'crise' identifié par les auteurs n'y a pas d'échantillon.",
+      "Le fait que les rendements soient bruts. Une stratégie qui fait un aller-retour par jour et par instrument, pour des alphas annuels de l'ordre de 2 à 7 %, ne survit pas nécessairement aux frais et au spread une fois transposée.",
+      "Les résultats par pays individuels (Norvège seule à résister aux portefeuilles globaux, Canada à alpha négatif) n'ont aucun analogue nominatif chez nous."
+    ],
+    "what_aligns_well": "L'horizon tombe juste : une observation par jour et par instrument, signal formé le matin, cible l'après-midi — exactement la cadence d'un score intraday évalué en walk-forward. La séparation stricte entre fenêtre de formation et fenêtre évaluée rend le look-ahead structurellement impossible, ce que notre couche Panel exige déjà. Le conditionnement par régime (crise, liquidité, discrétion de l'information) correspond à l'étape 05 de l'ordre d'exécution, et l'ID de Da et al. (2014), calculée sur les minutes de la seule première demi-heure, est calculable point-in-time sans donnée externe ni accès réseau. Enfin, le papier fournit un test hors échantillon en fenêtre extensible, esprit identique au walk-forward purgé que nous imposons."
+  },
+  "inconsistencies": [
+    "Pente en panel : 2.86 dans le corps du texte (section 3.1) contre 2.68*** dans la ligne Pooled du Panel A de la Table 3, avec la même t-statistique 7.53.",
+    "Prédictibilité croisée US : 8 coefficients significatifs et 10 rejets par bootstrap en section 4.2, mais « 9 out of 16 markets » dans la conclusion.",
+    "La Table 10 annonce en en-tête des panels 'Spread', 'Volatility', 'ID' et 'Individualism' alors que le texte ne décrit que deux tris (liquidité et information discreteness) ; les tris par volatilité et par individualisme ne sont décrits nulle part dans le corps fourni."
+  ]
+}

@@ -1,0 +1,882 @@
+                                         International Journal of Energy Economics and
+                                                                                  Policy
+
+                                                                          ISSN: 2146-4553
+
+                                                       available at http: www.econjournals.com
+
+                                        International Journal of Energy Economics and Policy, 2022, 12(5), 441-456.
+
+High Frequency Return and Risk Patterns in U.S. Sector ETFs
+during COVID-19
+
+
+Ikhlaas Gurrib1*, Firuz Kamalov2, Elgilani E. Alshareif3
+
+
+1Faculty of Management, School of Graduate Studies, Canadian University Dubai, UAE, 2Faculty of Engineering and Architecture,
+Canadian University Dubai, UAE, 3Faculty of Management, School of Graduate Studies, Canadian University Dubai, UAE.
+*Email: ikhlaas@cud.ac.ae
+
+Received: 22/03/2022                                                       Accepted: 25/07/2022                                DOI: https://doi.org/10.32479/ijeep.13045
+
+ABSTRACT
+This study investigates intraday patterns in the eleven sectors of the United States (U.S.). Key contributions are (i) risk and return patterns at specific
+trading periods on the New York Stock Exchange (NYSE), (ii) whether a specific day return model can predict the next 15-min positive return, and
+(iii) the impact of the first vaccination rollout in the U.S. on intraday Exchange-Traded-Funds (ETF) returns. Time-dependent regressions capture risk
+and return relationships, decision trees in machine learning compare return models, and impulse responses capture the effect of the 2019 coronavirus
+(COVID-19) vaccine rollout in U.S. 15-min Standard and Poor ’s Depository Receipts (SPDR) Select Sector ETF data is used over 12th March 2020-
+23rd February   2021.   Findings   support   sector   ETF   returns   fluctuate   the   most   in   the   first   and   last   15 min. Average   returns   in   the   first   15 min   are   the
+highest, converging to near zero as the trading session continues. Overnight returns contribute the most to volatility. U-shaped patterns into both return
+and risk exist, especially on Mondays. Mondays and Fridays have the most significant positive returns 15 min after the open. Prediction scores using
+an all-return model were superior to any specific day return model. The first vaccination rollout has a positive effect only in energy, technology, and
+financial sector ETFs, however with a short-lasting effect on ETFs returns.
+
+Keywords: U.S. Sectors, COVID-19, High Frequency Trading, Risk, Return, ETF, Machine Learning
+JEL Classifications:G11, G12, G14, G15
+
+
+                        1.          INTRODUCTION                                            (market, size or value). For example, Chinco et al. (2017) use 1-min
+                                                                                            iShares market ETF for market return, and iShares Russell 1000
+With an average trading volume nearing $85 billion per day and                              and growth ETFs for size and value returns. Jiang et al. (2020) use
+representing roughly 30% of the total U.S. equities volume, ETFs                            30-min returns for 226 sectors and find predictive power in the first
+play a vital role in price discovery. Various studies such as Ernst                         30 min. Lachance (2021) finds order imbalances increase overnight
+(2021),     Hasbrouck     (2013),     Sağlam,    Tugkan     and    Wermers     (2020)       returns in ETFs and are exploitable. While we do not predict return
+emphasize      the      benefits      of      ETFs      in      terms      of      improved      liquidity, or risk in this study, we go one step back by providing useful insights
+hedging and increased pricing efficiency for stocks. While there is an                      into the risk and return behavior of the 11 U.S. sectors using 15-min
+extensive literature on stock market return predictability (e.g. Rapach                     frequency information, in a period characterized by unprecedented
+and Zhou (2013) for a broad survey), machine learning applications                          events like COVID-19. We include both order imbalances at close
+in Finance (Kamalov et al., 2021; Kamalov, 2020a; Smail and Gurrib,                         and overnight returns to better understand ETFs risk and return.
+2020b), studies on industry and sector ETFs are scarce, and studies on
+the major U.S. sector ETFs at high frequency are even more scarce.                          We     are     the     first     to     propose     to     look     at     intraday     risk     and     return
+ETFs have been used extensively to specify returns in a portfolio                           behavior patterns in 11 U.S. sectors, using 15-min frequency
+
+                                   This Journal is licensed under a Creative Commons Attribution 4.0 International License
+
+
+                                                                                                                                                                            441
+ETF data. Our use of high frequency data is motivated by recent                              Second, we break the analysis further to a day-by-day basis. This
+studies like Gao et al. (2018) who use intraday S&P500 ETF                                   enables     us     to     gauge     if     any     significant     risk     and     return     behavior
+data and find intraday momentum patters during the first and last                            at     15-min     intervals     is     observed     during     specific     trading     days     of
+half hour, and Ambros et al. (2020) who use 30-min tick returns                              the week. This study adds to the existing literature on sector
+to examine the impact of COVID-19 news onto global markets.                                  risk     and     return     anomalies     of     the     Efficient     Market     Hypothesis
+Further, to support the use of high frequency data in our sector                             (EMH), specifically at high frequency. For example, McLean and
+ETF study, we borrow from Fama (1998) who justifies that market                              Pontiff    (2016)    show    that    popular    stock    price    anomalies    tend    to
+responses over a short time window provide more insights into                                disappear or weaken after anomalies are highlighted and studied in
+market efficiency. Similar to expected returns on individual stocks                          academia. Comparatively, Jiang et al. (2021) find stronger market
+being small during a short window and not very sensitive to model                            underreaction to Friday news.
+specifications (Fama, 1970), sector ETFs returns are also expected                           Third, we make sure of machine learning to capture the
+to be small since the sector ETFs are based on stocks. In our                                predictability power of return models for sector ETF returns.
+study, we consider large-cap stocks listed in the S&P500. We use                             Specifically, we use decision tree classifiers as a machine learning
+Select Sector SPDR Funds due to the superiority of ETFs in their                             algorithm to obtain the scores of predicting the next 15-min
+respective sectors, in terms of their solid tracking of U.S. sector                          positive returns for all the 11sector ETF returns. Since our analysis
+indices, trading volume, asset under management, low expense                                 include a day-by-day basis analysis, we can compare if any specific
+ratios,     and     fund     flows.     The     eleven     Select     Sector     Indexes     upon day return model is superior to a model which encompass all-
+which the Select Sector SPDR Funds are based together constitute                             returns. This also allows us to compare how each ETF prediction
+all the companies in the S&P 500.                                                            scores vary under each return model.
+
+World Bank (2020) characterized the impact of COVID-19 on                                    Fourth, we are, to our knowledge, the first to provide fresh light into
+financial     markets     as     price     adjustments     with     investors     flight     to whether the first vaccine rollout in the U.S. had a significant impact
+safer assets and waning investors’ risk appetite for riskier assets                          on the risk and return of the 11sector ETFs, including important
+such as equities. Estrada et al. (2020) study ten major markets and                          sectors    like    healthcare.    Our    findings    provide    some    guidance    in
+caution that the current crisis can result in damages comparable to                          terms of whether events like COVID-19 first vaccination rollout
+the 1929 crisis, with a 9–12-month recovery period. Eichenbaum                               can affect return of ETFs or even portfolios which include ETFs
+et al. (2020) estimate that aggregate consumption and GDP in                                 as risky assets. Specifically, we provide insights into the short or
+the U.S. will fall up to 20%. This impact is similar in various                              long last lasting impact on sector ETFs risk and return.
+countries where governments ordered businesses to shut and
+families to stay at home except for essential activities. Shehzad                            The rest of the paper is structured with a literature review section
+et al. (2020) find the conditional variance of stock markets to be                           which investigates the risk and return relationship in ETFs and
+bigger     during     the     COVID-19     compared     to     the     global     financial  equity market, particularly at high frequency levels; the impact
+crisis   of   2007–2008.   Gurrib   (2021)   similarly   find   shocks   to   the            of COVID-19 on ETFs and equity market; and anomalies of the
+number of COVID-19                                                                                                                                                                                  cases affected healthcare sector companies efficient market hypothesis such as the day of the week effect. The
+but lasted only a few days.                                                                  data and methodology sections then follow, before laying down the
+                                                                                             research findings. We rest our case with some conclusive remarks.
+Contributions     of     this     study     are     four-folds.     We     are     the     first     to
+investigate high frequency risk and return intraday patterns of                                                2. LITERATURE REVIEW
+11 ETFs which are representative of the 11sectors in the U.S.
+economy. By using high frequency data of 15-min intervals we                                 2.1. Returns and Risk Relationships on ETFs
+can analyze the volatility and return behavior, both at the open and                         Ackert and Tian (2008) investigate U.S. ETFs including SPDRs
+close of the core trading session on the NYSE. We include a 15-min                           and     find     them      to     be     closely     related     to     their     net     asset      values
+interval data post the close at 4pm ET, to capture order imbalances                          compared to country ETFs. Similarly, Buetow and Henderson
+which take place at the close due to the closing auction. Since 9                            (2012)      find      daily      returns      on      U.S.      ETFs      to      track      closely      their
+of the select ETF have American options which trade until 4.15                               benchmarks. Israeli et al. (2017) find ETFs lead to an increase in
+pm, this provides us with some information as to whether the risk                            the correlations of underlying security returns. Kuok-Kun Chu
+and  return  of  these  sector  ETFs  are  affected  by  trades  occurring                   (2011) supports that large ETFs have lower trading costs. Efimova
+between 4 and 4.15 pm. The decomposition of the analysis into                                and Serletis (2014) argue that using low frequency data in finding
+15-min    intervals    provides    valuable    insights    to    financial    players        volatility  of  financial  asset  prices  may  ignore  a  large  amount  of
+as to the volatility and return to expect during a particular part                           in-market information about intraday trading. This is in line with
+of the day for any of the 11sectors in the U.S. and allows us to                             Andersen and Bollerslev (1998) who find high frequency intraday
+compare risk and return behavior across all the sectors in the                               returns to reduce noise dramatically, relative to daily returns.
+U.S. economy. This also reasserts diffusion of information across                            Lachance (2021) however finds the ETF market is susceptible to
+sectors in the economy (Hong et al., 2007). Findings also allow                              distortions due to its rapid growth which is accompanied by order
+financial regulators to be more informative of the price discovery                           imbalances    exceeding    10%.    Ben-David    et    al.    (2018)    find    ETFs
+process of what can be expected in terms of risk and return during                           can     attract     short     term     uninformed     traders     which     can     affect     the
+the open, close and post close trading session periods.                                      non-fundamental price volatility of underlying stocks.
+
+
+  442
+2.2. Impact of COVID-19 on ETFs                                                       (Henrique et al., 2019). Machine learning algorithms are capable
+There are various studies covering the impact of COVID-19 onto                        of learning complex, nonlinear relationships directly from the
+equity markets, with however scarce evidence on ETFs. Polemis                         data without the aid of an expert. One of the main applications of
+and Soursou (2020) examine the impact of the pandemic on Greek                        machine learning in finance is in price prediction which includes
+companies’ returns, showing it affected the returns of most firms                     stocks, energy, cryptocurrencies, exchange rates, and other assets.
+negatively, with however dissipating effect post the announcement                     In stock prediction, a deep neural network together with a custom
+date of the national lockdown. Albulescu (2020) similarly                             feature selection algorithm was employed by Long et al. (2019)
+assesses the impact of COVID-19 on oil prices and found only a                        to predict the Chinese stock market index CSI 300. Gurrib and
+marginal effect on crude oil, after controlling for economic policy                   Kamalov (2021) compared a linear discriminant analysis model
+uncertainty and U.S. market volatility. Bakas and Triantafyllou                       which includes sentiment analysis and asset specific information
+(2020) study the impact of pandemics uncertainty on the volatility                    such as daily prices, with a support vector machine model, to
+of     commodity     markets,     and     found     a     significant     negative     effect predict tomorrow’s price of bitcoin. Acombination of the classical
+on crude oil, with the shock lasting about 1 year. Billio et al.                      Auto Regressive Integrated Moving Average (ARIMA) model
+(2021) use minute data for 12 country-specific ETFs and find the                      together with the modern neural networks was proposed by Sun
+COVID-19 outbreak increased the centrality and connectedness                          et al. (2019) to capture intra-day patterns for stock market shock
+of China on the global financial network. However, daily returns                      forecasting.   Experiments   on   S&P   500   data   confirm   the   efficacy
+data failed to capture the rise in centrality of China economy.                       of the method. One of the main machine learning models used
+                                                                                      in time series forecasting is Long Short-Term Memory (LSTM)
+2.3. Anomalies of EMH                                                                 network. It is a neural network designed to handle sequential data.
+With Kyle (1985) pioneering the study on the importance of                            It was used by Kamalov (2020) to forecast significant changes in
+asymmetric information, others like Admati and Pfleiderer (1988),                     stock price. For cryptocurrencies, a 2-stage approach based on
+Foster and Viswanathan (1996), Wang (1998) and Back and                               LSTM network was proposed by Chen et al. (2021) to forecast the
+Pedersen (1998) provide plausible explanations on the behavior                        exchange rate of Bitcoin. LSTM network has also been applied to
+of risk and returns such as U-shaped patterns, based on the                           oil price prediction by Cen and Wang (2019). The results suggest
+involvement of liquidity and informed traders. For instance, while                    efficacy of the LSTM-based forecasting models.
+liquidity traders receive asset information from overnight and trade                  The above literature supports the use of high frequency data
+aggressively during the open session, informed traders acquire and                    in analyzing risk and returns, including the existence of some
+process information during the trading session and are more active                    anomalies  at  specific  times  of  the  day  or  days  of  the  week. This
+as the market approaches the close, resulting in a U-shape pattern                    study helps to bridge the gap in understanding the behavior of
+in risk and return. McInish et al. (1985) use 15-min data and find                    sector ETFs risk and return at high frequency. We are also the first
+returns follow a U-shaped pattern in both risk and return of U.S.                     to breakdown the 15-min interval analysis to a day-by-day level,
+stocks. Ozenbas et al. (2002) support the same in international                       thereby providing further insights to the day-of-the week effects
+markets attributing it to price discovery and momentum trading.                       on sector ETFs. The use of machine learning algorithm allows
+Similarly,    Harris    (1986)    finds    significant    positive    returns    at    the us   to   predict   if   any   specific   day   can   yield   a   better   prediction   of
+open and close of trading on the NYSE. This was observed                              the next 15-min return for the 11 U.S. sectors ETFs. Finally, this
+on all trading days except for Monday. More recently, Heston                          study provides fresh information onto the effect of the COVID-19
+et al. (2010) examine intraday patterns in U.S. stock returns and                     vaccination rollout in the U.S. onto the risk and return of the 11
+report a continuation pattern of returns at half-hour intervals.                      U.S. sectors.
+Pagano et al. (2013) find that the volatility of NASDAQ follows
+a     U-shape     with     significant     jumps     in     the     first     and     last     5                         min     of
+trades.    Hussain    (2011)    finds    Germany    equity    returns    to    display           3. RESEARCH METHODOLOGY
+a J-shaped pattern with the aggregate trading volume following
+the L-shaped pattern. L-shaped pattern in return volatilities was                     In addition to correlation analysis and analysis of variance
+also observed in Tian and Guo (2007) for the Shanghai Composite                       (ANOVA), the methodology includes return and volatility
+market index. Karmakar and Paul (2016) use high frequency data                        regressions and impulse responses.
+for 16 global market indices and find that volatility is higher at the
+open and close. Studies like Padhi (2010), Seif et al. (2017) and                     3.1. Return and Risk over Time
+Arora   (2017)   confirm   significant   day   of   the   week   effects.   Other     Based on the return relationships observed at the 15-min intervals,
+anomalies of EMH have also been evidenced in literature where                         we      use      a      time-dependent      regression      to      capture      any      significant
+technical analysis or cross market information have been used for                     behavior in intraday returns. We include an autoregressive term
+individual security or index movement predictions (Gurrib et al.,                     of order one to adjust for the serial correlation. The model is
+2022; Gurrib, 2016; Gurrib, 2018a; Gurrib, 2018b; Gurrib, 2019;                       stated as follows:
+Gurrib and Kamalov, 2019).                                                                                   F
+                                                                                                  RRt/g32/g14/g166f/g32        /g161                                                                                                                                                                                        1/g84/g74/g58f,ttt/g14/g72(1)
+2.4. Machine Learning Applications in Finance                                                                      f
+The recent improvements in machine learning algorithms together                       Rt represents 15-min returns, f represents each of the 15-min
+with the increased computing power have led to the adoption of                        interval within a core trading session. We include 15min after
+machine     learning     methods     in     various     fields     including     finance the core session ends to capture closing auction imbalances which
+
+
+                                                                                                                                                                 443
+might occur since 9 of the 11sector ETFs have American ETF                                                              IRF                          z                                                            E                          R                                                                                                                                                                                                                                R                                                                                                                    s                                         t                                                                         1, ,                 , (           )≡          Φ=   Φ  >
+options trading until 4.15 pm (F=28). We also include the return                                                                           tz                                                      t                                                                                                       s                             t+−                       −                                                                                 −11                                                                                                              1
+from the previous close till the open on the next day to capture the                                                                ER                                                                                                                                                                                                                                       R                                                                                         s               tΦ=   Φ  >0, ,                 ,
+return at the open. Ω            is a dummy variable with a value of 1 for the                                                          tz                                                      t                                                                                                              s                             t+−                       −                                                                                     −11                                                                                                                     1(3)
+                              f,t
+specific 15-min interval of the data, or 0 otherwise. γ captures the
+effect of the autoregressive lag and εt is the stochastic error term.                                   Where the impulse responses are based on the best mean squared
+                                                                                                        multi-step-ahead forecasts. Several proponents of the use of
+In line with Schwert (1989) who estimated volatility as the sum                                         impulse     response     by     local     projections     onto     financial     markets
+of squared period returns after subtracting the average return, we                                      include Gurrib et al. (2019) who analyze the response of major
+estimate the volatility for each 15-min period intervals. This allows                                   cryptocurrencies to one standard deviation shock on Bitcoin’s
+us to understand the impact of the volatility present at each 15-min                                    returns  and  Bernal-Verdugo  et  al.  (2013)  who  analyze  the  effect
+intervals, towards determining the volatility in returns during the                                     of labor reforms and bank crises onto unemployment.
+trading session.
+3.2. Decision Trees Classifier in Machine Learning                                                                                               4 .  D   ATA
+A decision tree classifier is a popular machine learning algorithm. It                                  While    there    are    various    industry    classifications    in    the    U.S.,    we
+is used in a variety of applications including stock price prediction                                   adopt  the  Global  Industry  Classification  Standard  (GICS)  as  the
+(Kamble, 2017). It is a simple yet effective approach to modeling                                       framework      for      sector      classifications.      GICS      was      instilled      as      a
+data. The decision tree algorithm is based on repeatedly splitting                                      retort to the international financial community’s need for accurate,
+the data along its features. At each iteration, the feature that                                        complete and standard industry definitions (SP Global, 2018). It
+produces the maximum information gain is used to further split                                          currently consists of 11sectors, 24 industry groups, 69 industries
+the data. The main advantage of a decision tree classifier over the                                     and 158 sub-industries. For each of the 11sectors of our study,
+more exotic algorithms is that the decision tree structure allows                                       we use Select Sector SPDR Funds due to the superiority of ETFs
+us to visualize the functioning of the algorithm. Unlike neural                                         in their respective sectors, in terms of their solid tracking of U.S.
+networks, which are often called black box models, a decision tree                                      sector indices, trading volume, Asset Under Management, low
+can be examined for purposes of validation. Another advantage                                           expense ratios, and fund flows (SSGA, 2021). The eleven Select
+of a decision tree is the low computational complexity. Thus, a                                         Sector Indexes upon which the Select Sector SPDR Funds are
+decision tree classifier can handle large amounts of data. Specific                                     based together constitute all the companies in the S&P 500. The
+implementations of decision trees exist such as ID3, C4.5, and
+CART. A detailed discussion of the algorithms can be found in                                           ETFs are energy (XLE), technology (XLK), healthcare (XLV),
+Grus (2019).                                                                                            utilities (XLU), consumer staples (XLP), consumer discretionary
+                                                                                                        (XLY), financial (XLF), communication services (XLC), industrial
+The basic decision tree algorithm consists of iteratively splitting                                     (XLI), materials (XLB) and real estate (XLRE). We use 15-min
+the training data into halves to obtain purer (homogeneous) subsets.                                    interval prices for each sector, covering the period 12thof March
+Concretely, given a decision tree node and the corresponding                                            2020 – 23        rdof February 2021, for the core trading session
+subset of data, the features are evaluated based on an information                                      9.30 am-4 pm Eastern Time. We also include 15min following
+criterion. In our model, we use the Gini coefficient to measure the                                     the end of the core trading session to capture closing auction
+level impurity given by the equation.                                                                   imbalances. Return values are calculated based on the percentage
+                                                                                                        change from the previous period. ETF prices are quoted on the
+                            G                                              /g32/g16/g54ppmk                                                                                          mk()1(2)NYSE Arca. Data is sourced from Factset.
+
+where p is the proportion of class k observations at node m.                                                                 5. RESEARCH FINDINGS
+            mk
+The feature that yields the lowest amount of impurity is selected
+and the data is split according to the threshold value of selected 5.1. Descriptive Statistics
+feature. This process is continued until each node contains points Using 6466 observations, all the eleven sectors have average
+from a single class or another user-specified criterion is satisfied. In                                returns, mode and median values close to zero. The energy and
+order to reduce overfitting, various techniques such as pruning and                                     materials sector ETFs reported the lowest and the highest 15-min
+feature randomization are applied. Decision tree-based ensemble                                         interval returns of –10.7% and 23.4%, respectively. Interestingly,
+classifiers such random forest are also used to reduce the variance                                     the highest returns recorded for each sector took place on the
+of the estimator.                                                                                       same day at close on the 14thof March 2020. This shows that all
+                                                                                                        the sectors’ returns were all positively affected, regardless of the
+3.3. Impulse Responses                                                                                  different economic activities provided by different constituents of
+Jordà (2005) provides a breakdown of the methodology of impulse                                         each sector. However, the lowest negative returns for each sector
+responses by local projections. The impulse response function of                                        did not occur at the same time, suggesting negative news affecting
+the selected sector ETF returnsRt   to   the   introduction   of   the   first                          each     sector     differently.   An     un-tabulated   ANOVA     F-test     (with
+COVID-19 vaccination rollout in the U.S. since 14thDecember                                             71115 degrees of freedom) support that the 11sectors’ average
+2020 Φt, that is, up to 1                   day after its occurrence, is calculated as                  returns   are   not   significantly   different   from   each   other.   Standard
+the residual between the following two forecasted estimations:                                          deviation values ranged between 0.34% and 0.67%, with the
+
+
+  444
+consumer staples (energy) sector ETF returns having the lowest                                  relationship  among  the  different  sectors  was  not  observed  at  the
+(highest) risk. This is in line with Davide et al. (2021) Contu,                                15-min return periods after the open and close, at 9.30–9.45 am
+Elshareif & Gurrib (2021) who found positive sentiment from                                     and 4–4.15 pm, with negative correlations observed among a
+social media on energy sources. All sectors had leptokurtic return                              few sector ETFs returns. Except for communication services,
+distributions with kurtosis ranging from energy sector ETF (70.9)                               industrial, and consumer discretionary which always observed
+and materials sector ETF (678.1). This can be attributed to the high                            positive correlation with any sector, all other sectors witnessed a
+number of 15-min returns around nearly zero average returns. All                                drop in the positive relationship, with technology and materials
+return distributions were also positively skewed ranging from the                               sharing the highest negative correlation value of –0.54 between
+energy (0.9) to information technology (7.5). As reported widely                                their returns 15min after the open. A                                                                                                                                                                                                                                   negative correlation value
+in literature, none of the returns were normally distributed using                              of –0.4 was also observed between technology and the energy
+the Jarque-Bera normality test. Both Augmented Dickey-Fuller                                    sector at the same time of the day. Negative correlations were
+(ADF) and Phillips-Perron unit root tests at 1%, 5% and 10% level                               less pronounced at 15-min period post close, with only real estate
+support all sectors’ returns are stationary at levels.                                          and consumer staples posting a –0.43 correlation. Differences in
+                                                                                                magnitude between the maximum and minimum values at the
+Due to the high frequency of the data, as expected, except for the                              open +15 and close +15 periods suggest more volatility in returns
+energy ETF which shows no serial correlation at one lag at 1%                                   across sectors during those periods, particularly at the open +15
+level, all other returns series were serially correlated at 1%, 5%                              period where correlations ranged from –0.43 to 0.66.
+and 10% level, using the Ljung-Box Q statistics (up to 10 lags). In
+line with Yao (1988) and Liu et al. (1997) (LWZ) who support that                               Figure                                                                                                        1 provides the Pearson correlation coefficients for 15-min
+the number of breaks which minimizes the Schwarz Information                                    interval periods around the open and close of a trading session.
+Criterion (SIC) is a reliable estimator of the true number of breaks,                           These are based on returns at the open (open), returns after the first
+we also test for potential structural breaks. Although not tabulated                            15-min of trading (open + 15min), 2                  nd15-min (open + 30min),
+here, multiple breakpoint tests using the global information criteria                           returns at 15-min before the close (close-15min), returns at close
+of Schwarz and LWZ support the existence of no structural breaks                                (close), and the 15-min returns after the close (close + 15                                   min).
+in the returns of the 11 U.S. sector ETF returns between March                                  The 15-min returns after the close captures order imbalances. We
+2020 and February 2021.                                                                         provide both minimum and maximum Pearson correlation values
+                                                                                                for  each  of  the  11  U.S.  sectors  ETFs  at  these  specific  periods  of
+To capture the relationships among the 11 U.S. sectors ETF returns,                             the trading session, including correlation values for the whole
+we include a summary of the return correlations in Figure1                         . For        trading session.
+brevity, we report only results for each of the 15-min intervals in                             While    a    look    at    a    regular    trading    day    for    any    financial    product
+the first 30                                      min at the open and close of the session. These include
+the overnight return, the return after the 1                 st15-min of trading                like stocks or ETFs would, on average, show price and return
+(open+15 min), 2nd 15-min (open+30 min), return at 15-min                                       fluctuations in a random fashion, by grouping the returns, based
+before the close (close-15min), returns at close (close), and the                               on the time of the day, we can extract possible returns patterns
+15-min returns after the close (close+15                                                                                                                                  min). We provide both during   specific   time   of   the   day.  While   most   returns   are   close   to
+minimum and maximum Pearson correlation values for each of                                      zero, as expected, due to the high frequency data and gives some
+the 11 U.S. sectors ETFs at the specific time of the trading session,                           support     to     the     efficient     market     hypothesis     that     intraday     returns
+including correlation values for the whole trading session. As                                  should not be significantly different from each other, three more
+expected, correlation values for a regular trading session show all                             important behavioral patterns are also noticeable. Firstly, the
+the sectors’ ETF returns were positively correlated, ranging from                               returns  of  both  the  first  and  last  15                                          min  of  the  core  session  tend
+0.51 to 0.91. This is consistent with Rapach et al. (2019) who find                             to   fluctuate   more   than   for   the   rest   of   the   day.  This   is   consistent
+diffusion of information across economically linked industries. The                             to     findings     of     Berkman     et     al.     (2012)     who     find     positive     returns
+technology sector shared strong correlations with other sectors’                                during the overnight period to be followed by reversals during
+returns, with the highest correlation observed with communication                               the trading day for U.S. equities. This is similar to the U-smile
+services. Correlations, both at the open and close were consistently                            pattern observed in equity markets in various studies including
+positive among all sector ETFs returns. However, the stable                                     Pagano et al. (2013) and Harris (1986), with however most of the
+                                                                                                fluctuations appear towards in the opening hour. The behavior of
+             Figure1:      Correlation in U.S. sector ETFs returns                              returns at the opening can be attributed to the execution of the core
+                                                                                                open  auction  which  is  the  first  trade  of  the  core  trading  session.
+                                                                                                New limit orders that are not eligible to trade in the early trading
+                                                                                                session   and   market   orders   are   accepted   to   offset   any   imbalance
+                                                                                                between buying and selling volume.
+
+                                                                                                Because the core auction takes place at a single auction price
+                                                                                                (indicative match price), this creates the potential for an opening
+                                                                                                session      price      which      can      be      much      different      from      the      previous
+                                                                                                trading price at close. This results in subsequent returns which
+                                                                                                are higher or lower than the rest of the day, except for the last
+
+
+                                                                                                                                                                                   445
+15                                                      min. The core open auction takes place at a single auction price each of the eleven U.S. sectors. The first return (overnight return)
+(indicative match price) and any unexecuted orders are released                               at the open is based on the percentage change between the previous
+into the core trading session. The returns in the last 15min can                              close and current opening price. We include 15min following the
+be attributed to institutions trading at the close of the day or day-                         end of the core trading session to capture closing auction imbalances.
+traders closing their positions. We also need to point that the end                           The period covered is 12thof March 2020–23rdFebruary 2021. The
+of the closing session is also subject to the closing auction at 4pm,                         average returns for each 15-min period are also displayed on the
+where any imbalance between buying and selling volume are                                     secondary vertical axis. The performance of the 11 U.S. sectors is
+cleared. Imbalances, both at the start and close of the core session,                         represented by the returns under each of the Select sector SPDR
+due to excess buy or selling volume, result in prices which deviate                           funds as follows: energy (XLE), technology (XLK), healthcare
+from the average seen during the day. The prices can also deviate                             (XLV), utilities (XLU), consumer staples (XLP), consumer
+due to 9 of the select ETFs trading American ETF options which                                discretionary      (XLY),      financial      (XLF),      communication      services
+close at 4.15 pm. These prices when used to calculate returns,                                (XLC), industrial (XLI), materials (XLB) and real estate (XLRE).
+result in return values which deviate from average returns seen
+during the day.                                                                               5.2. Intraday Seasonality in Return
+                                                                                              Regression results from Equation (1) are reported in                        Table1     .
+Secondly,     the     average     returns     in     the     first     30                                             min     (two     slots     of Overnight     returns     were     significant     and     negative     in     all     sectors,
+15min) of the core session tend to deviate from the average                                   except for utilities. In all sectors, the returns were negative at the
+returns observed at other times. 10 of the 11sector ETFs (except                              opening, ranging from –0.06% for real estate to –0.23% for energy.
+for technology) average returns in the first 15 min were higher than                          All    returns    were    significant    only    in    the    first    30                                            min    of    trading.
+other times. The average returns in the last 15                                      min were lower in all Further, all the negative returns observed at the open quickly
+sector ETFs, compared to the average return observed at 4 p.m. This                           turned less negative or even positive after the first 15                                         min for all
+can be attributed to the sector ETF prices 4.15 pm, mostly being                              sectors’ returns except for technology and consumer discretionary.
+lower than the prices at close. Thirdly, all average returns converge                         Returns turned positive for 7sectors (energy, healthcare, utilities,
+to values approaching zero as we progress through later part of a                             consumer staples, communication services, materials, and real
+trading session, suggesting information accumulated throughout                                estate),   but   were   significant   only   for   3   of   those.   For   technology
+the day is absorbed and reflected in later prices of the day.                                 and consumer discretionary, which were less negative in after the
+                                                                                              open, returns were less negative than before, turning positive for
+An ANOVA test for the equality of 11sector ETF average returns                                consumer     discretionary     after     30                                             min     of     trade.     The     fluctuations
+in the first 15-min interval reported F-test values of 1.8653 with                            observed in the first 30                                         min quickly dissipated for the remaining
+a probability of 0.0454. This suggests the average returns among                              15-min  intervals  of  the  day.  Returns  started  to  fluctuate  more  in
+the different U.S. sectors in the first quarter of the trading session                        the last 30                                     min of the day, with however no significant results. The
+are      significantly      different      only      at      1%      level.   A      similar      test      was one   lag   autoregressive   coefficients   were   all   significant   negative
+conducted for average return in the last 15-min interval of the core                          for all sectors, suggesting that the previous return period has a
+session, with F-test values of 0.2486 (with degree of freedom of                              significant impact in determining the current 15-min period return.
+2585) and supported that there is no significant difference in the
+average returns among the 11sector ETF returns during the last                                Table                                                                           1      shows      the      regression      coefficients      from      equation      (1).
+15min of trading in the core session. An ANOVA test was also                                  The dependent variable is the 15-min interval return of the 11
+carried out to test if the average return for every 15-min intervals                          U.S. sectors as represent by select sector ETFs, from 12thMarch
+were significantly different from each other. With 6438 degrees of                            2020 – 23rdFebruary 2021. An autoregressive lag of order 1 is
+freedom, F-test probability values found 6 out of 11 sectors (XLE,                            included to account for serial correlation in the high frequency
+XLV, XLP, XLY, XLI and XLRE) with average returns for every                                   data. Although the core trading session runs from 9.30am-4pm. we
+15-min intervals returns to be significantly different.                                       includes return from the previous close until 4.15pm Eastern time
+                                                                                              to capture overnight trades and any closing session imbalances.
+Figure2 captures the behavior of intraday returns on NYSE Arca                                For  brevity,  only  overnight,  the  first  4  and  last  5                      15-min  returns
+from 9.30 am to 4.15 pm (Eastern time), using 15-min intervals, for                           are reported here, where significant results are shown in italics.
+
+ Table1: Seasonality in high frequency returns
+                XLE         XLK            X   LV        XLU          XLP            X   LY        XLF           XLC             XLI          XLB           XLRE
+ Previous       Open       –0.23%        –0.16%        –0.13%        –0.05%        –0.09%        –0.17%        –0.15%          –0.11%        –0.16%        –0.13%         –0.06%
+ close
+ Open           9.45       0.44%         –0.18%         0.07%        0.53%          0.04%        –0.18%        –0.02%          –0.03%         0.07%         0.11%          0.45%
+ 9.45           10.00      0.15%         –0.06%         0.05%        0.02%         –0.04%         0.00%         0.05%          –0.01%         0.03%        –0.07%          0.12%
+ 10.00          10.15      –0.03%         0.00%        –0.03%        –0.02%         0.01%        –0.02%        –0.07%          –0.02%        –0.07%        –0.07%         –0.03%
+ 10.15          10.30      –0.06%        –0.01%         0.00%        –0.02%        –0.03%        –0.02%        –0.01%          –0.02%        –0.01%        –0.02%          0.00%
+ 15.00          15.15      0.02%          0.02%         0.02%        0.02%          0.02%         0.03%         0.01%          0.02%          0.02%         0.01%          0.03%
+ 15.15          15.30      0.01%          0.00%         0.01%        0.01%          0.00%         0.02%         0.00%          0.01%          0.01%        –0.01%          0.03%
+ 15.30          15.45      0.03%         –0.02%        –0.02%        0.00%         –0.01%        –0.01%         0.01%          –0.01%         0.00%        –0.01%          0.00%
+ 15.45          16.00      –0.06%         0.05%         0.03%        0.02%          0.03%         0.03%         0.02%          0.03%          0.02%         0.03%         –0.02%
+ 16.00          16.15      –0.01%        –0.01%        –0.01%        0.00%          0.00%        –0.01%         0.00%          –0.01%         0.00%        –0.01%         –0.02%
+ AR (1)                    –2.60%       –12.79%        –8.81%        –6.77%       –21.52%        –9.41%        –13.01%        –14.88%        –6.65%       –14.70%         –11.93%
+
+
+  446
+                                                                      Figure2     : U.S. ETF sectors returns
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5.3. Intraday Seasonality in Volatility                                                        Table                                                                  2 shows the regression coefficients from equation (2). The
+Similar to the return regression findings, volatility in returns at the                        dependent variable is the 15-min interval volatility of the 11 U.S.
+open was significant in determining the volatility for the trading                             sectors as represent by select sector ETFs, from 12thMarch 2020 –
+day. This was observed in all the 11 U.S. sectors, ranging from                                23rdFebruary 2021. An autoregressive lag of order 1 is included to
+a minimum of 0.011% for the materials sector to 0.052% for the                                 account for serial correlation in the high frequency data. Although
+energy sector. Further, except for utilities, volatility after the first                       the core trading session runs from 9.30am-4pm for stocks, we
+15min decreased for all. More importantly, except for utilities and                            include return from the previous close until 4.15pm Eastern time
+real estate, volatility again increased 30min after the open, with                             to capture overnight trades and any closing session imbalances.
+a positive impact noticed for all sectors. Again, the volatility in                            For     brevity,     only     the     first     4     and     last     5                                   15-min     volatilities     are
+the 9.45am-10am period was highest for energy, relative to other                               reported here, where significant (1%, 5% and 10% levels) results
+sectors. This is in line with the highest return observed for the same                         are  shown  in  italics.  *Denotes  significance  at  10%  level,  **5%,
+sector at the same 15-min period. Similar to the return regression                             10%, and ^10% level.
+results, the one period autoregressive lag was also negatively
+significant    in    the    volatility    regression    for    all    sector    ETFs.    This  5.4. Return Seasonality-Days of the Week
+suggests that a positive (negative) return in one 15-min period                                As observed in the heatmaps of Table3                , returns around the closing
+increasing the likelihood of having a negative (positive) return                               time    tend    to    be    positive    and    significant    on    specific    days    of    the
+in the next 15-min period. This was observed particularly in the                               week. On Mondays, returns in all sectors (except for real estate)
+first 30min of the session.                                                                    were     positive     during     the     16.00–16.15     interval,     with     significant
+
+
+                                                                                                                                                                                  447
+Table2: Seasonality in return volatility
+                          XLE       XLK         X   LV      XLU        XLP        X   LY     XLF       XLC         XLI       XLB       XLRE
+Previous close  Open    0.052%     0.029%      0.014%     0.014%     0.011%     0.022%     0.044%     0.025%     0.027%     0.040%     0.022%
+Open             9.45   0.005%     0.000%      0.001%     0.019%     –0.001%    0.001%     0.002%     0.000%     0.001%     0.003%    0.014%^
+9.45            10.00   0.016%     0.004%*     0.003%     0.005%     0.004%     0.004%     0.007%     0.005%     0.006%     0.007%     0.011%
+10.00           10.15   0.002%     0.001%      0.000%     0.001%     0.001%     0.001%     0.002%     0.000%     0.001%     0.000%     0.005%
+10.15           10.30   0.001%     0.001%      0.000%     0.000%     0.000%     0.000%     0.001%     0.001%     0.000%     0.000%     0.000%
+15.00           15.15   0.000%     0.000%      0.000%     0.000%     0.000%     0.000%     0.000%     0.000%     0.000%     0.000%     0.000%
+15.15           15.30   0.000%     0.000%      0.000%     0.000%     0.000%     0.000%     0.000%     0.000%     0.000%     0.000%     0.000%
+15.30           15.45   –0.001%    0.001%      0.000%     0.001%     0.000%     0.000%     0.000%     0.000%     0.000%     0.001%     0.001%
+15.45           16.00   0.003%     0.004%     0.002%**    0.002%     0.002%^    0.001%     0.002%     0.002%     0.001%     0.001%     0.002%
+16.00           16.15   0.000%     –0.001%     0.000%     0.000%     0.000%     0.000%     0.001%     –0.001%    0.000%    –0.004%     0.001%
+AR (1)                  –0.378%    –1.203%    –0.234%     –0.306%    –0.534%    –0.267%    –0.867%    –1.356%   –0.147%    –2.890%    –0.853%
+
+
+Table3: Intraday return heatmap of U.S. sector ETFs
+                                                                  Mondays
+                         XLE       XLK        X   LV     XLU        XLP        X   LY     XLF        XLC        XLI        XLB        XLRE
+Previous close  Open     –0.16%    –0.31%     –0.26%     –0.13%*    –0.10%     –0.31%     –0.38%     –0.17%     –0.28%     –0.31%     –0.20%
+Open            9.45     0.66%*    –0.24%     0.14%      0.69%      0.24%      –0.03%     0.33%      0.14%      0.24%      00.19%     0.50%*
+9.45            10.00    0.05%     –0.22%     0.07%      0.03%      –0.04%     –0.05%     0.02%      –0.12%*    0.06%      –0.15%*    0.26%
+10.00           10.15    –0.05%    –0.11%^    –0.03%     0.02%      0.01%      –0.06%     –0.04%     –0.12%*    –0.07%     –0.09%     0.00%
+10.15           10.30    0.01%     0.03%      0.02%      –0.05%     0.03%      –0.01%     0.01%      0.00%      0.00%      0.03%      0.00%
+15.00           15.15    0.06%     0.07%      0.05%      0.04%      0.05%      0.06%      0.03%      0.05%      0.05%      0.02%      0.07%
+15.15           15.30    0.00%     0.03%      0.04%      0.05%      0.06%      0.05%      0.05%      0.03%      0.03%      0.02%      0.11%
+15.30           15.45    0.06%     –0.07%     –0.03%     –0.01%     –0.04%     –0.03%     –0.02%     –0.04%     –0.02%     –0.04%     0.01%
+15.45           16.00    0.05%     0.06%      0.02%      –0.02%     0.02%      0.03%      0.06%      0.04%      0.04%      0.04%      0.01%
+16.00           16.15    0.12%     0.09%      0.04%      0.01%      0.10%^     0.05%      0.14%^     0.10%^     0.07%      0.13%^     –0.05%
+AR(1)                    –6.59%    –17.67%    –9.86%     0.35%      –23.79%    –7.83%     –11.14%    –21.04%    –5.74%*    –22.34%    –2.32%
+max return               0.66%     0.09%      0.14%      0.69%      0.24%      0.06%      0.33%      0.14%      0.24%      0.13%      0.50%
+min return               –0.16%    –0.31%     -0.26%     ––0.13%    –0.10%     –0.31%     –0.38%     –0.17%     –0.28%     –0.31%     –0.20%
+                                                                  Tuesdays
+                         XLE       XLK        X   LV     XLU        XLP        X   LY     XLF        XLC        XLI        XLB        XLRE
+Previous close  Open     –0.88%    –0.37%     –0.38%     ––0.33%    –0.32%     –0.45%     –0.58%     –0.27%     –0.51%     –0.48%     –0.46%
+Open            9.45     0.36%     0.11%      –0.05%     –0.06%     0.10%      0.07%      –0.28%     –0.18%     –0.07%     0.14%      –0.08%
+9.45            10.00    –0.02%    –0.01%     0.08%^     0.05%      0.01%      0.07%      0.07%      0.01%      –0.02%     0.00%      0.14%*
+10.00           10.15    –0.06%    –0.04%     ––0.06%    –0.09%^    –0.03%     –0.05%     –0.10%     –0.02%     –0.06%     –0.12%*    –0.08%
+10.15           10.30    –0.15%    –0.04%     –0.02%     –0.08%     –0.11%     –0.07%     0.00%      –0.06%     –0.06%     –0.09%     –0.04%
+15.00           15.15    0.04%     0.10%      0.07%      0.04%      0.06%      0.08%      0.04%      0.08%      0.06%      0.07%      0.06%
+15.15           15.30    0.08%     0.02%      0.04%      0.04%      0.02%      0.03%      0.04%      0.03%      0.04%      0.05%      0.05%
+15.30           15.45    0.01%     –0.01%     –0.05%     –0.10%^    –0.04%     ––0.01%    0.00%      0.00%      –0.02%     –0.02%     –0.09%
+15.45           16.00    0.01%     0.13%*     0.11%      0.10%^     0.09%*     0.10%^     0.07%      0.11%*     0.09%      0.08%      0.08%
+16.00           16.15    –0.01%    0.03%      –0.01%     –0.01%     0.01%      –0.01%     0.00%      0.04%      –0.01%     0.00%      0.01%
+AR(1)                    3.38%     –1.66%     –2.63%     4.39%      –4.45%^    6.01%*     –3.76%     –10.27%    8.82%      2.85%      4.92%^
+max return               0.36%     0.13%      0.11%      0.10%      0.10%      0.10%      0.07%      0.11%      0.09%      0.14%      0.14%
+min return               –0.88%    –0.37%     –0.38%     –0.33%     –0.32%     –0.45%     –0.58%     ––0.27%    –0.51%     –0.48%     –0.46%
+                                                                 Wednesdays
+                           XLE       XLK        X   LV     XLU        XLP        X   LY     XLF        XLC        XLI        XLB       XLRE
+Previous close  Open     –0.41%     –0.34%     –0.14%    –0.05%     –0.07%^     –0.28%     –0.22%     –0.35%     –0.22%     –0.18%    –0.12%*
+Open            9.45     –0.22%     –0.25%     0.05%     –0.72%      –0.28%     –0.79%     –0.34%     –0.33%    –0.55%*     –0.18%     0.05%
+9.45            10.00     0.42%     –0.07%     0.01%      0.08%      –0.02%      0.07%     0.11%^      0.04%     0.09%      0.04%      0.02%
+10.00           10.15    –0.01%     0.01%      0.00%      0.04%      –0.03%      0.01%      0.04%      0.00%     0.00%      –0.07%     0.13%*
+10.15           10.30    –0.04%     –0.08%     –0.02%     0.04%      –0.04%     –0.05%     –0.05%     –0.06%     –0.03%     –0.09%     0.05%
+15.00           15.15     0.02%     –0.01%     –0.02%     0.01%      –0.01%      0.00%      0.00%     –0.01%     –0.02%     –0.03%     0.02%
+15.15           15.30     0.09%     0.05%      0.07%      0.07%      0.04%      0.08%^      0.05%      0.07%     0.05%      0.06%      0.09%
+15.30           15.45     0.02%     0.02%      0.01%      0.04%      0.01%      –0.02%      0.03%      0.01%     0.01%      –0.04%     0.01%
+15.45           16.00     0.03%     0.07%      0.08%^     0.06%      0.07%^      0.06%      0.11%      0.07%     0.08%      0.08%      0.01%
+16.00           16.15     0.01%     0.01%      0.01%      0.01%      0.03%       0.01%     –0.03%     –0.06%     0.01%      0.00%      0.00%
+AR(1)                     8.18%    –10.93%    –5.33%*    –2.91%     –13.35%      0.64%    –6.30%*     –0.12%     5.85%*     2.74%      –1.90%
+max return                0.42%     0.07%      0.08%      0.08%      0.07%       0.08%      0.11%      0.07%     0.09%      0.08%      0.13%
+min return               –0.41%     –0.34%     –0.14%    –0.72%      –0.28%     –0.79%     –0.34%     –0.35%     –0.55%     –0.18%     –0.12%
+                                                                  Thursdays
+                           XLE       XLK        X   LV     XLU        XLP        X   LY     XLF        XLC        XLI        XLB       XLRE
+Previous close  Open      0.05%     –0.07%     –0.01%     0.06%      0.00%       0.00%      0.21%      0.05%     0.05%      0.03%      0.12%
+Open            9.45     –0.11%     0.02%      –0.02%    –0.36%      0.31%      –0.17%     –0.25%     –0.34%     –0.16%     0.03%      –0.54%
+                                                                                                                                       (Contd...)
+
+448
+ Table3: (    Continued)
+                                                                                Thursdays
+                                 XLE         XLK           X   LV       XLU          XLP           X   LY       XLF          XLC           XLI         XLB         XLRE
+ 9.45                10.00      0.16%^      –0.23%        0.01%       –0.05%        –0.15%       –0.19%       –0.18%        –0.24%       0.06%       –0.13%*       0.16%*
+ 10.00               10.15      –0.12%       0.01%       –0.06%       –0.06%         0.00%       –0.05%       –0.22%        –0.03%       –0.21%      –0.12%*       –0.23%
+ 10.15               10.30      –0.13%       0.02%       –0.04%       –0.03%        –0.01%       –0.01%       –0.06%        0.04%        –0.04%       –0.02%       –0.10%
+ 15.00               15.15      0.04%        0.00%        0.01%        0.02%         0.01%        0.02%       –0.01%        0.02%        0.02%        –0.01%        0.00%
+ 15.15               15.30      –0.07%       0.01%       –0.02%       –0.06%        –0.01%        0.01%       –0.05%        –0.01%       –0.01%       –0.06%       –0.04%
+ 15.30               15.45      0.04%       –0.05%       –0.03%        0.02%        –0.03%       –0.03%       –0.01%        –0.04%       –0.02%        0.00%       –0.02%
+ 15.45               16.00      –0.14%       0.04%        0.02%       –0.02%         0.01%        0.02%       –0.01%        0.00%        –0.02%        0.01%       –0.08%
+ 16.00               16.15      –0.13%      –0.01%        0.00%        0.00%         0.00%        0.00%       –0.04%        –0.01%       –0.01%       –0.05%       –0.02%
+ AR(1)                          1.99%       –8.47%      –10.04%       –12.85%      –29.32%       –7.68%       –6.63%*       –8.84%      –13.86%        0.62%      –21.70%
+ max return                     0.16%        0.04%        0.02%        0.06%         0.31%        0.02%        0.21%        0.05%        0.06%         0.03%        0.16%
+ min return                     –0.14%      –0.23%       –0.06%       –0.36%        –0.15%       –0.19%       –0.25%        –0.34%       –0.21%       –0.13%       –0.54%
+                                                                                  Fridays
+                                 XLE         XLK           X   LV       XLU          XLP           X   LY       XLF          XLC           XLI         XLB         XLRE
+ Previous close       Open      –0.18%      –0.01%       –0.13%       –0.02%        –0.07%       –0.16%       –0.21%        –0.14%       –0.15%       –0.15%       –0.08%
+ Open                 9.45      0.91%       –0.37%        1.05%        1.02%        –0.22%        0.16%        0.57%        –0.27%       0.79%^       0.70%^        0.50%
+ 9.45                 10.00     0.21%        0.19%        0.03%        0.02%        –0.02%       0.14%*        0.23%        0.27%        0.00%        –0.02%        0.08%
+ 10.00                10.15     0.05%        0.06%        0.02%        0.03%         0.04%        0.03%        0.01%        0.07%        0.01%         0.04%        0.05%
+ 10.15                10.30     0.03%       –0.02%        0.03%        0.04%         0.03%        0.04%        0.03%        –0.04%       0.05%         0.06%        0.05%
+ 15.00                15.15     –0.05%      –0.06%       –0.03%       –0.03%        –0.03%       –0.05%       –0.02%        –0.04%       –0.03%       –0.01%       –0.04%
+ 15.15                15.30     –0.09%      –0.09%      –0.08%^       –0.06%        –0.06%       –0.07%       –0.09%        –0.07%       –0.09%      –0.10%^       –0.08%
+ 15.30                15.45     0.02%        0.00%       –0.02%        0.06%         0.02%        0.01%        0.02%        0.00%        0.03%         0.00%       0.09%^
+ 15.45                16.00     –0.26%      –0.08%       –0.09%       –0.01%        –0.06%       –0.06%       –0.10%       –0.10%^       –0.07%       –0.09%       –0.07%
+ 16.00                16.15     –0.02%      –0.04%       –0.03%        0.01%        –0.01%       –0.01%        0.01%        –0.03%       –0.01%       –0.01%        0.00%
+ AR(1)                          –3.75%     –5.62%*      –12.83%       –12.80%      –14.26%       –8.95%       –12.97%       –7.39%       –9.31%      –14.98%       –7.64%
+ max return                     0.91%        0.19%        1.05%        1.02%         0.04%        0.16%        0.57%        0.27%        0.79%         0.70%        0.50%
+ min return                     –0.26%      –0.37%       –0.13%       –0.06%        –0.22%       –0.16%       –0.21%        –0.27%       –0.15%       –0.15%       –0.08%
+
+returns for consumer staples, financials, communication services                          Reversals    in    returns    were    observed    after    the    first    15                                            min    in    all
+and materials sectors. On Tuesdays and Wednesdays, returns                                sectors     on     Mondays     and     Tuesdays,     with     however     significant
+during the 15.45–16.00 interval were positive in all sectors,                             positive returns observed only for utilities, real estate and energy
+and   significant   for   health   care   and   consumer   staples.   Returns   at        sectors (Mondays only). However, for Wednesdays, reversals
+close during Thursdays and Fridays were mostly negative and                               occur after 30min post open, where 9sectors posted positive
+insignificant.   Although     not     shown     here,     normalized     heatmaps         returns at the 9.45–10.00 interval. Negligibly, positive returns were
+were also constructed to allow for comparison across the different                        significant    only    for    real    estate.   While    some    reversals    in    returns
+days of the week. Findings reveal the most significantly positive                         occurred     on     Thursdays     after     15                                                           min     none     were     insignificant.
+returns occurred on Mondays and Fridays 15min following the                               Similar to Wednesdays, significant positive returns were observed
+open at 9.30 am. Most significantly negative returns occurred on                          at 9.45–10.00 am interval in the energy (0.16%), and real estate
+Tuesdays and Wednesdays either at the open (overnight returns)                            (0.16%). On Fridays, 8 of all the negative returns posted at the
+or 15min after the open.                                                                  open      were      reversed      in      the      next      15-min      slot,      with      significant
+                                                                                          positive returns in 4sectors (health care, utilities, industrials, and
+Table                                                               3 also supports earlier findings where overnight returns have materials). During the 10.00–10.15 am time interval, all sector ETF
+negative impacts on the 11sectors, returns. This was observed                             returns  were  positive  with  however  non-significant  contribution
+on all trading days, except for Thursdays where some positive                             to the return on the specific day of the week.
+returns were witnessed for 9sectors. On Thursdays, positive                               Table                                                                           2      shows      the      regression      coefficients      from      equation      (1),
+overnight return was significant only in the financial sector with a                      for each trading day of the week. The dependent variable is
+contribution of 0.21%. More significant returns from the open until                       the 15-min interval return of the 11 U.S. sectors as represented
+10.00, and from 15.30 till 16.15 support earlier evidence that prices                     by select sector ETFs, from 12thMarch 2020 – 23                      rdFebruary
+movements around the opening and closing time contribute more                             2021. An autoregressive lag of order 1 is included to account for
+towards the return during a trading session. Most returns which                           serial correlation in the high frequency data. We include return
+occurred at the different 15-min intervals between 10.15 am and                           from the previous close until 4.15pm Eastern time to capture
+15.30  pm  were  insignificant. The  autoregressive  lag  was  mostly                     overnight trades and any closing session imbalances. For brevity,
+negative     and     significant,     particularly     on     Mondays     and     Fridays. only   overnight   returns,   and   the   first   4   and   last   5                       15-min   returns
+For example, on Mondays, lagged returns ranged from –23.79%                               are    reported    here,    where    significant    results    (1%,    5%,    10%)    are
+(consumer staples) to 0.35% (utilities). Except for utilities, one                        shown     in     italics.     *Denotes     significance     at     5%,     10%     level,     ^     at
+day lagged returns contributed negatively to the current return of                        10% level. The heatmap color is scaled from dark blue (highest
+the day. On Fridays, lagged returns ranged –3.75% (energy) to                             positive returns) to dark red (most negative returns) for each 15-
+–14.98% (materials).                                                                      min interval of every trading day.
+
+
+                                                                                                                                                                       449
+5.5. Volatility Patterns-Days of the Week                                                       scatter plot is decomposed into 5 trading days, Monday-Friday.
+To capture the volatility patterns over each trading day, coefficients                          For   brevity,   only   overnight   returns   volatility,   the   first   4   and   last
+of return volatilities at each 15-min interval from Monday to Friday                            515-min returns volatilities are reported.
+are reported in Table                                                                       4. Overnight return volatilities are included
+to     capture     the     effect     of     fluctuations     in     overnight     returns     at     the Table                                                                4 shows the regression volatility coefficients estimated from
+open. Overnight returns were the most significant in contributing                               equation (1), for each trading day of the week. The dependent
+towards the volatility for any trading session, with highest                                    variable is the 15-min interval return volatility of the 11 U.S.
+volatility observed on Mondays, relative to the other days. The                                 sectors as represented by select sector ETFs, from 12thMarch
+energy sector had the highest overnight volatility coefficients on                              2020 – 23rdFebruary 2021. An autoregressive lag of order 1 is
+all trading days, compared to all other sectors’ volatilities, with                             included to account for serial correlation in the high frequency
+the highest value of 0.074% on Mondays. Overnight volatilities                                  data. We include return from the previous close until 4.15 pm
+from Monday to Friday support the earlier U-shaped pattern                                      Eastern time to capture overnight trades and any closing session
+observed in the volatility of returns. As we move from Monday                                   imbalances. For brevity, only overnight returns volatility, the first
+to   Thursday,    overnight    volatilities,    while    still    being    significant,         4 and last 515-min returns volatilities are reported here, where
+started to fell, before starting to recover on Fridays. While not as                            significant results (1%, 5%, 10%) are shown in italics. *Denotes
+significant as overnight volatilities, volatilities at 9:45–10:00 am                            significance at 5%, 10% level, ^ at 10% level. The heat map color
+were    also    positive    and    significant    in    contributing    towards    most         is scaled from dark blue (highest positive returns) to dark red (most
+sectors’ ETF volatilities. Autoregressive one lag period coefficients                           negative returns) for each 15-min interval of every trading day.
+were   positive   significant   for   most   sectors’   return   volatilities,   on
+all trading days.                                                                               5.6. Predicting 15-min Returns
+                                                                                                Based      on     the     above     findings,     where     15-min     ETF     returns     tend
+Except      for      Mondays,      the      most      significantly      negative      volatility reverse itself, we test if it’s possible to predict the next 15-min
+coefficients  were  observed  during  the  first  15                                          min  of  the  trading returns, based on (i) a return model which includes all 15-min
+sessions, particularly on Wednesdays and Fridays. As shown in                                   returns without discriminating between the trading days, and
+Figure3     , U-shaped volatility patterns can be observed on all                               (ii) a return model is based on each trading day. Using machine
+trading days, with Mondays reflecting the U-shape volatility smile                              learning     techniques     which     involve     decision     tree     classifiers,     the
+pattern better than in the other days. This can be explained due to                             scores of models in their abilities to predict the next positive return
+the most significant overnight volatilities coefficients observed on                            is shown in Panels A and B of Figure                                                                                                  4 reports the scores for all
+Monday, and also due to the positive volatilities observed towards                              the 11 ETF sectors.
+the      end      of      the      Monday      sessions,      with      significant      coefficients
+in     consumer      discretionary,     financials,      communication     devices,             All scores were higher than 0.5, which suggest that the 15-min
+materials and real estate sector ETFs. The U-shape volatility                                   returns can provide predictive power which are better than a
+smiles for the remaining 4                    days of the week were affected by the             random walk return. Using a model which includes 15-min
+last 15min session, where volatilities were mostly negative and                                 return of all trading days result in decision trees scores ranging
+insignificant. Further, volatilities at 15:45–16:00 were positive and                           from 0.671 to 0.727 for the energy and communication sector
+significant for all the 11           sectors on Wednesdays and Fridays. These                   respectively. Communication sector and healthcare also had
+results suggest that the volatility smile, mostly on the remaining                              the highest and lowest range in prediction scores of 0.138 and
+days can be observed until 16:00, but not further, except for
+Mondays. This can be explained by the fact that all the U.S. stocks                                     Figure 4: Prediction Scores of next 15-min positive return
+of the S&P500, which are constituents of the sector ETFs trade
+until 16:00, after which the session is closed. The relatively low
+volatilities observed during the 16:00–16:15 session suggest that
+the  closing  auction  imbalances  do  not  have  a  significant  impact
+relative to the volatilities observed during the day.
+
+Figure3 captures the intraday volatility of intraday ETFs, based
+on 15-min interval return of the 11 U.S. sectors as represented by
+select sector ETFs, from 12thMarch 2020 – 23rdFebruary 2021. The
+
+
+  Figure3:     Volatility pattern in U.S. sector ETFs (Mondays-Fridays)
+
+
+
+
+
+
+
+
+
+
+
+
+
+  450
+451
+452
+0.021. This  suggests  that  relying  on  specific  days  returns  model                                         Figure5 shows the cumulative number of vaccinated people, per
+for predicting the next positive return in the healthcare sectors is                                             1000,    in    the    U.S.    who    received    1    or    more    doses    since    the    first
+insignificant   since   all   prediction   scores   on   any   day   model   were                                vaccination roll-out on the 14thof December 2020. These include
+close to each other. Comparatively, for real estate, relying on the                                              those who received one dose of the single-shot Johnson and
+Tuesday return model would have yielded a much higher score                                                      Johnson’s Janssen COVID-19 vaccine. The secondary axis reports
+of 0.722 relative to relying on Thursdays returns.                                                               the number of new COVID-19cases sourced from the Center for
+                                                                                                                 Disease Control and Prevention (CDC, 2021).
+As observed in panel B, the highest scores predicting the next
+positive 15-min return was observed when using a model relying                                                   To capture the potential impact of the vaccination roll-out on
+on all returns data, irrespective of the trading day, where 7 of the                                             the 11sectors’ ETF returns, we test for impulse responses of the
+11sectors had their highest prediction scores. The dispersion in                                                 sectors’ returns to a shock in the number of new daily cases. As
+prediction scores shows that relying on the Monday only 15-min                                                   observed in Figure                                                                                                        5, although the first vaccination took place on
+returns to predict the next 15-min positive return, result in the                                                the 14thof December 2020, the impact on the new cases was seen
+highest range of 0.108, compared to the other days of the week.                                                  only around the 8thof January 2021. This can be explained by the
+This is in line with the higher U-shaped behavior observed in                                                    number of days it takes for a patient to take a second doze of Pfizer-
+return on Mondays. The lowest prediction score of 0.584 was                                                      BioTech, which is the most administered COVID-19 vaccination
+attributed to real estate, when relying on a model based solely                                                  in the U.S. to date (CDC, 2021). This is in line with Polack et al.
+on Thursdays’ returns. Wednesdays reported the lowest range                                                      (2020)    who    confirm    a    95%    protection    against    COVID-19    after
+of 0.072 compared to the other days of the week. However,                                                        a second doze. Due the 8thof January 2021 having the highest
+XLE had the highest prediction score of 0.689 when relying on                                                    number of new COVID-19cases and thereafter falling, we sample
+Wednesdays return only.                                                                                          the data from this date and test for response of the 11sectors’
+                                                                                                                 ETF returns to a shock in the number of new COVID-19cases.
+Figure4 captures the scores of return models in predicting the                                                   Due to the number of vaccinated cases and COVID-19                                                                                                          cases
+next 15-min positive returns in the 11 SPDR sector ETFs, using                                                   being reported daily by 8pm ET after being verified by CDC, the
+decision tree machine learning algorithm. Panel A displays the                                                   impact  on  U.S.  financial  markets  would  be  felt  on  the  next  day,
+scores per each model, were 1, 2,3,4,5,6 on the horizontal axis                                                  due to markets being closed already. Based on a standard Vector
+represent the All-return model, Monday-returns model, Tuesday-                                                   Autoregressive (VAR) model (lags based on minimizing SIC) with
+returns model, Wednesday-returns model, Thursday-returns                                                         stationary returns and new COVID-19                                                                                                                                                                                                                                                                                                           cases data (after 1storder
+model and Friday-returns model. Panel B displays the scores                                                      differencing), results for impulse responses are shown in Figure6                                        .
+for each ETF sector, where 1,2, 3.11 represents the eleven U.S.                                                  Except for energy, technology and financials, all sectors’ returns
+sector ETFs-XLE, XLK, XLV, XLU, XLP, XLY, XLF, XLC,                                                              dropped initially within the first 30                                         min at the open. This can be
+XLI, XLB, and XLRE.                                                                                              explained by the fact that new cases of COVID-19 are reported
+                                                                                                                 by 8pm ET, such that the effect is observed at the open on the next
+5.7. Impulse Responses-First Vaccination Rollout                                                                 trading    day.   The    effect    was    however    short    lasting    with    all    ETF
+in U.S.                                                                                                          returns converging to a zero response within 1h of the opening
+To   capture   the   effect   on   the   1stU.S. vaccination rollout, we test                                    session.
+for its impact on the ETF sector returns. Figure                                                                                                    5 shows that the
+active COVID-19 vaccination campaign in the U.S. had a positive                                                  Figure 6 displays the impulse responses of the 11 sector ETF returns
+effect    with    a    gradual    reduction    in    the    new    COVID-19                                                                                                                                                                                        cases    in to a shock in the change in the number of new COVID-19                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    cases.
+the U.S. The U.S. is ranked 3rd, behind Israel and the U.K., with                                                A VAR model with lag determined by minimizing SIC is used to
+current average daily of administered doses far exceeding the                                                    capture the relationship between the ETF returns and change in
+1.21 million required to achieve herd immunity by December                                                       the new COVID-19cases. All variables are stationary based on
+2021 (Statista, 2021). As per Figure4, as at 21                            stof March 2021, a                    ADF unit root test. New COVID-19cases are sourced from the
+total of nearly 25% of the U.S. population (81.5 million) already                                                Center for Disease Control and Prevention (CDC, 2021) which
+received at least one dose.                                                                                      reports the data daily at 8 pm ET.
+
+                                                              Figure 5: Vaccinated people and New COVID-19 cases in U.S
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                                                                                                                                  453
+                               Figure 6: Impulse responses of U.S. ETF sector returns to COVID-19 vaccination rollout in the U.S
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                             6. CONCLUSION                                                          return. Return volatilities at the open were significant. Volatilities
+                                                                                                    in the 9.45–10 am period were highest for energy, relative to other
+Substantive evidence exists regarding risk and return patterns in                                   sectors. This is in line with the highest return observed for the
+international equity markets. Yet, few studies have attempted to                                    same sector at the same 15-min interval.
+venture into similar sector analysis. We help close the gap with
+the     first     study     on     the     11                              sector     ETFs,     which     represent     all     the Mondays     and     Fridays     had     the     most     significant     positive     returns
+constituents in the S&P500, and more importantly the 11 U.S.                                        15                                          min  after  the  open.  Similarly,  the  most  significantly  negative
+sectors. The study covers intraday behavior in the risk and return of                               returns took place on Tuesdays and Wednesdays either at the open
+the 11 SPDR select sector ETFs, using 15min data, a day-by-day                                      (overnight returns) or 15min after the open. Most returns which
+decomposition to capture day-of-the-week behavior in both risk                                      occurred at the different 15-min intervals between 10.15 am and
+and return, and a look at the effect of the COVID-19 vaccination,                                   15.30      pm      were      insignificant.      Overnight      returns      were      the      most
+which started on the 14thof December 2020, on those ETFs returns.                                   significant   in   contributing   towards   the   volatility   for   any   trading
+                                                                                                    session, with highest volatility observed on Mondays, relative
+While all sectors’ positive correlated returns at the open and close                                to the other days. The energy sector had the highest overnight
+support the dissemination of information across economically                                        volatility   coefficients   on   all   trading   days,   compared   to   all   other
+linked industries, such stable relationships were not observed at                                   sectors’ volatilities. Overnight volatilities from Monday to Friday
+the 15-min return periods after the open and close, with negative                                   support the earlier U-shaped pattern observed in the volatility of
+correlations observed among a few sector ETFs returns. Returns                                      returns. As we progress from Monday to Thursday, overnight
+in     both     the     first     and     last     15                                                   min     of     the     core     session     fluctuate volatilities,     while     still     being     significant,     started     to     fell,     before
+more than for the rest of the day, similar to the U-smile pattern                                   starting to recover on Fridays. Mondays’ U-shape volatility smile
+observed in equity markets. Average returns in the first 30                                       min of patterns are more pronounced than in other days, due to the most
+the core session tend to deviate from average returns observed                                      significant overnight volatilities coefficients observed on Monday,
+at     other     times,     with     average     returns      in     the     first     15                                                            min     being and due to the positive volatilities observed towards the end of the
+highest. Average returns converge to near zero as we progress                                       Monday  sessions. This  motivates  financial  regulators  to  oversee
+through a trading session, suggesting information accumulated                                       trades in the open session at the start of the week, more diligently,
+throughout     the     day     is     absorbed     and     reflected     in     later     prices     of as part of maintaining market stability in those sector ETF prices.
+the     day.     Overnight     returns     were     significant     and     negative     in     all
+sectors,      except      for      utilities.     Fluctuations     observed      in      the      first Relatively low volatilities observed during 4:00–4:15 pm
+30                                                       min quickly dissipated for the remaining 15-min intervals of the sessions suggest that the closing auction imbalances do not have
+day. The one lag autoregressive coefficients were all significantly                                 a significant impact relative to the volatilities observed during the
+negative for all sectors, suggesting that the previous return period                                day. This suggests that those 9sector ETFs which have American
+has a significant impact in determining the current 15-min period                                   options  trading  until  4.15pm  do  not  significantly  affect  the  ETF
+
+
+  454
+return volatilities. Due to the observation of several reversal in                            Buetow, G.W., Henderson, B.J. (2012), An empirical analysis of exchange-
+returns     after     15-min,     we      test      if     any      specific      day     return     model traded funds. The Journal of Portfolio Management, 38(4), 112-127.
+would predict the next 15-min return better than a model which                                Cen, Z., Wang, J. (2019), Crude oil price prediction model with long-short
+includes all 15-min return, without discriminating on any specific                                  term memory deep learning based on prior knowledge data transfer.
+day. Using decision tree classifiers in machine learning, findings                                  Energy, 169, 160-171.
+support that a Monday based return model results in the higher                                Centers for Disease Control and Preventio. (2021), COVID-19
+range compared to other days of the week models. However, the                                       Vaccinations in the United States. Atlanta: Centers for Disease
+all-return model is still superior in predicting the next 15-min                                    Control and Prevention. Available from: https://www.covid.cdc.gov/
+                                                                                                    covid-data-tracker/#vaccinations [Last accessed on 2021Mar21].
+positive return.                                                                              Chen, W., Xu, H., Jia, L., Gao, Y. (2021), Machine learning model for
+                                                                                                    bitcoin exchange rate prediction using economic and technology
+Lastly, the active COVID-19 vaccination campaign in the                                             determinants. International Journal of Forecasting, 37(1), 28-43.
+U.S.     had     a     positive     effect     with     a     gradual     reduction     in     the     new Chinco, A., Clark-Joseph, A., Ye, M. (2019), Sparse signals in the cross-
+COVID-19cases in the country. Except for energy, technology                                         section of returns. The Journal of Finance 74, 449-492.
+and     financials,     all     sectors’     returns     dropped     initially     within     the Chu, P. (2011), Study on the tracking errors and their determinants:
+first    30                                            min    at    the    open.   This    can    be    explained    by    the    fact    that Evidence from Hong Kong exchange traded funds. Applied Financial
+new cases of COVID-19 are reported by 8pm ET, such that the                                         Economics, 21(5), 309-315.
+effect is observed at the open on the next trading day. The effect                            Contu, D., Elshareif, E.E., Gurrib, I. (2021), Assessing views towards
+was however short lasting with all ETF returns converging to a                                      energy sources with social media data: The case of nuclear energy in
+zero response within 1h of the opening session. This suggests                                       the UAE. Processes, 9(11), 1945. https://doi.org/10.3390/pr9111945
+                                                                                              Efimova     O.,     Serletis,   A.     (2014),     Energy     markets     volatility     modelling
+that portfolio managers who are actively managing portfolios                                        using GARCH. Energy Economics, 43, 264-273.
+which consist of the sector ETFs, should not be radically worried                             Eichenbaum, M.S., Rebelo, S., Trabandt, M. (2020), The Macroeconomics
+about  the  effects  of  the  novel  pandemic  onto  their  portfolio  risk                         of Epidemics. NBER, Working Paper 26882.
+and return, as the COVID-19 vaccination continues to decrease                                 Ernst,    T.     (2021),     Stock-specific     Price     Discovery     from     ETFs.    Working
+COVID-19 new cases, with a short-lasting effect on the return of                                    Paper, MIT.
+sector ETFs.                                                                                  Estrada, M.A.R., Koutronas, E., Lee, M. (2021), Stagpression: The
+                                                                                                    economic     and     financial     impact     of     COVID-19     pandemic.     SSRN
+                                                                                                    Electronic Journal, 15(1), 19-33.
+                             REFERENCES                                                       Fama,     E.F.     (1970),     Efficient     capital     markets:   A       review     of     theory     and
+                                                                                                    empirical work. The Journal of Finance, 25(2), 383-417.
+Ackert, L.F., Tian, Y.S. (2008), Arbitrage, liquidity, and the valuation                      Fama, E.F. (1998), Market efficiency, long-term returns, and behavioral
+     of exchange traded funds. Financial Markets, Institutions and                                  finance. Journal of Financial Economics, 49(3), 283-306.
+     Instruments, 17(5), 331-362.                                                             Foster, F.D., Viswanathan, S. (1996), Strategic trading when agents
+Admati, A.R., Pfleiderer, P. (1988), A theory of intraday patterns: Volume                          forecast the forecasts of others. Journal of Finance, 51(4), 1437-1478.
+     and price variability. The Review of Financial Studies, 1(1), 3-40.                      Furceri, D., Zdzienicka, A. (2012), How costly are debt crises? Journal
+Albulescu, C. (2020), Coronavirus and Oil Price Crash. SSRN Working                                 of International Money and Finance, 31(4), 726-742.
+     Paper.                                                                                   Gao, L., Han, Y., Li, S.Z., Zhou, G. (2018). Market intraday momentum.
+Ambros, M., Frenkel, M., Huynh, T.L.D, Kilinc, M. (2020), COVID-19                                  Journal of Financial Economics, 129(2), 394-414.
+     pandemic news and stock market reaction during the onset of the                          Grus, J. (2019), Data Science from Scratch: First Principles with Python.
+     crisis: Evidence from high-frequency data, Applied Economics                                   Sebastopol: O’Reilly Media.
+     Letters, 28(19), 1-4.                                                                    Gurrib, I. (2016), Optimization of the double crossover strategy for
+Andersen, T.G., Bollerslev, T. (1998), Answering the skeptics: Yes,                                 the S&P500 market index. Optimization, 7(1), 92-107. https://doi.
+     standard volatility models do provide accurate forecasts. International                        org/10.1186/s40854-021-00311-8
+     Economic Review, 39(4), 885-905.                                                         Gurrib, I. (2018a), Can an energy futures index predict US stock market
+Arora, H. (2017), A study on intraday seasonality in nifty50 returns.                               index movements? International Journal of Energy Economics and
+     Asian Journal of Research in Banking and Finance, 7(6), 197-207.                               Policy, 8(5), 230-240.
+Back, K., Pedersen, H. (1998), Long lived information and intraday                            Gurrib, I. (2018b), Performance of the average directional index as
+     patterns. Journal of Financial Markets, 1(3-4), 385-402.                                       a market timing tool for the most actively traded USD based
+Bakas, D., Triantafyllou, A. (2020), Commodity price volatility and                                 currency pairs. Banks and Bank Systems, 13(3), 58-70. https://doi.
+     the economic uncertainty of pandemics. Economics Letters, 193,                                 org/10.21511/bbs.13(3).2018.06
+     109283.                                                                                  Gurrib, I. (2019), Can energy commodities affect energy blockchain-based
+Ben-David, I., Franzoni, F., Moussawi, R. (2018), Do ETFs increase                                  cryptos? Studies in Economics and Finance, 36(4), 682-699. https://
+     volatility? Journal of Finance, 73(6), 2471-2535.                                              doi.org/10.1108/SEF-10-2018-0313
+Berkman, H., Koch, P., Tuttle, L., Zhang, Y. (2012), Paying attention:                        Gurrib, I. (2021), Early COVID-19 policy response on healthcare equity
+     Overnight returns and the hidden cost of buying at the open. Journal                           prices. Studies in Economics and Finance, 38(5), 987-1006. https://
+     of Financial and Quantitative Analysis, 47(4), 715-741.                                        doi.org/10.1108/SEF-02-2021-0075
+Bernal-Verdugo, L.E., Furceri, D., Guillaume, D. (2013), Banking                              Gurrib, I., Kamalov, F. (2019), The implementation of an adjusted relative
+     crises, labor reforms, and unemployment. Journal of Comparative                                strength index model in foreign currency and energy markets of
+     Economics, 41(4), 1202-1219.                                                                   emerging and developed economies. Macroeconomics and Finance
+Billio, M., Lo, A.W., Pelizzon, L., Sherman, M.G., Zareei, A. (2021),                               in Emerging Market Economies, 12(2), 105-123.                       https://doi.
+     Global Realignment in Financial Market Dynamics: Evidence from                                 org/10.1108/SEF-07-2021-0293
+     ETF Networks. SAFE Working Paper No.304.                                                 Gurrib, I., Kamalov, F. (2021), Predicting bitcoin price movements
+
+
+                                                                                                                                                                                455
+      using sentiment analysis: A machine learning approach. Studies in                                 164, 163-173.
+      Economics and Finance, 39(3), 347-364.                                                      McInish, T.H., Wood, R.A. (1985), Intraday and overnight returns and
+Gurrib, I., Kweh, Q.L., Nourani, M., Ting, I.W.K. (2019), Are cryptocurrencies                          day-of-the-week effect. Journal of Financial Research, 8, 119-26.
+      affected     by     their     asset     class     movements     or     news     announcements? McLean, R.D., Pontiff, J. (2016), Does academic research destroy stock
+      Malaysian Journal of Economic Studies, 56(2), 201-225.                                            return predictability? The Journal of Finance, 71(1), 5-32.
+Gurrib, I., Nourani, M., Bhaskaran, R.K. (2022), Energy crypto currencies                         Ozenbas, D., Schwartz, R.A., Wood, R.A. (2002), Volatility in US
+      and    leading   U.S.    Energy    stock    prices:  Are    fibonacci   retracements              and European equity markets: An assessment of market quality.
+      profitable?     Financial     Innovation,     8,     8-18. https://doi.org/10.1186/               International Finance, 5(3), 437-461.
+      s40854-021-00311-8                                                                          Padhi, P. (2010), Days-of-the-week-effect and stock return volatility: Theory
+Harris, L. (1986), A transaction data study of weekly and intra-daily                                   and empirical evidence. Advances in Management, 3(4), 10-20.
+      patterns in stock returns. Journal of Financial Economics, 16(1),                           Pagano, M.S., Peng, L., Schwartz, R.A. (2013), A call auction’s impact on
+      99-117.                                                                                           price formation and order routing: Evidence from the Nasdaq stock
+Hasbrouck, J. (2003), Intraday price formation in us equity index markets.                              market. Journal of Financial Markets, 16(2), 331-361.
+      The Journal of Finance, 58(6), 2375-2400.                                                   Polack, F.P., Thomas, S.J., Kitchin, N., Absalon, J., Gurtman, A.,
+Henrique, B.M., Sobreiro, V.A., Kimura, H. (2019), Literature review:                                   Lockhart,  S., Perez, J.L., Marc, G.P., Moreira, E.D., Zerbini,                                                                                                                                                                                                                                                                                           C.,
+      Machine learning techniques applied to financial market prediction.                               Bailey, R., Swanson, K.A., Roychoudhury, S., Koury, K., Li,P.,
+      Expert Systems with Applications, 124, 226-251.                                                   Kalina, W.V., Cooper, D., Frenck, R.W Jr., Hammitt, L.L., Türeci,O.,
+Heston, S.L., Korajczyk, R.A., Sadka, R. (2010), Intraday patterns in                                   Nell, H., Schaefer, A., Ünal, S., Tresnan, D.B., Mather, S.,
+      the cross-section of stock returns. The Journal of Finance, 65(4),                                Dormitzer,          P.R., Şahin, U., Jansen, K.U., Gruber, W.C., C4591001
+      1369-1407.                                                                                        Clinical Trial Group. (2020), Safety and efficacy of the BNT162b2
+Hong, H., Torous, W., Valkanov, R. (2007), Do industries lead stock                                     mRNA COVID-19 vaccine. New England Journal of Medicine,
+      markets? Journal of Financial Economics, 83(2), 367-396.                                          383(27), 2603-2615.
+Hussain, S.M. (2011), The intraday behavior of bid-ask spreads, trading                           Polemis, M., Soursou, S. (2020), Assessing the impact of the COVID-19
+      volume and return volatility: Evidence from DAX30. International                                  pandemic on the greek energy firms: An event study analysis. Energy
+      Journal of Economics and Finance, 3(1), 23-34.                                                    Research Letters, 1(3), 1-4.
+Israeli, D., Lee, C.M., Sridharan, S.A. (2017), Is there a dark side to                           Rapach, D.E., Strauss, J.K., Tu, J., Zhou, G. (2019), Industry return
+      exchange traded funds? An information perspective. Review of                                      predictability: Amachine learning approach. The Journal of Financial
+      Accounting Studies, 22(3), 1048-1083.                                                             Data Science, 1(3), 9-28.
+Jiang, H., Li, S., Wang, H. (2021), Pervasive underreaction: Evidence                             Rapach, D.E., Zhou, G. In: Elliott, G., Timmermann, A., editors. (2013),
+      from high-frequency data. Journal of Financial Economics, 141(2),                                 Forecasting Stock Returns. In: Handbook of Economic Forecasting.
+      573-599.                                                                                          Vol.2A. Amsterdam: Elsevier, 328-383.
+Jiang, H., Li, S.Z., Yuan, P. (2020), Predicting High-Frequency Industry                          Saglam, M. Tuzun, T., Wermers, R.R. (2020), Do ETFs Increase
+      Returns: Machine Learners Meet News Watchers. SSRN.                                               Liquidity? SSRN.
+Jordà, Ò. (2005), Estimation and inference of impulse responses by local                          Schwert, G.W. (1989), Why does stock market volatility change over
+      projections. American Economic Review, 95(1), 161-182.                                            time? Journal of Finance, 44(5), 1115-1153.
+Kamalov,    F.    (2020),    Forecasting    significant    stock    price    changes    using     Seif M., Docherty P., Shamsuddin, A. (2017), Seasonal anomalies
+      neural networks. Neural Computing and Applications, 32(23),                                       in     advanced     emerging     stock     markets.    The     Quarterly     Review     of
+      17655-17667.                                                                                      Economics, 66, 169-181.
+Kamalov, F., Gurrib, I., Rajab, K. (2021), Financial forecasting with                             Shehzad, K., Xiaoxing, L., Kazouz, H. (2020), COVID-19’s disasters
+      machine learning: Price vs return. Journal of Computer Science,                                   are perilous than Global Financial Crisis: A rumor or fact? Finance
+      17(3), 251-264. https://doi.org/10.3844/jcssp.2021.251.264                                        Research Letters, 36, 101669.
+Kamalov, F., Smail, L., Gurrib, I. (2020a), Forecasting with Deep                                 SP     Global.     (2018),     Global     Industry     Classification     Standard     (GICS).
+      Learning: S&P 500 index. In: 202013               thInternational Symposium                       New                                                       York: SP Global. Available from: https://www.spglobal.com/
+      on Computational Intelligence and Design (ISCID) 422425. New                                      marketintelligence/en/documents/112727-gicsmapbook_2018_v3_
+      Jersey: IEEE.                                                                                     letter_digitalspreads.pdf [Last accessed on2020Jan12].
+Kamalov, F., Smail, L., Gurrib, I. (2020b), Stock price forecast with deep                        SSGA. (2021), State Street Global Advisors. Boston: SSGA. Available
+      learning. In: 2020 International Conference on Decision Aid Sciences                              from: https://www.ssga.com/us/en/institutional/etfs
+      and Application (DASA) 1098-1102. New Jersey: IEEE. https://doi.                            Statista. (2021), COVID-19 Vaccination Status Quo. Hamburg: Statista.
+      org/10.1109/DASA51403.2020.9317260                                                                Available from: https://www.statista.com/study/86257/COVID19-
+Kamble, R.A. (2017), Short and long-term stock trend prediction using                                   vaccination-status-quo [Last accessed on 2021Mar20].
+      decision tree. In: 2017 International Conference on Intelligent                             Sun, J., Xiao, K., Liu, C., Zhou, W., Xiong, H. (2019), Exploiting intra-day
+      Computing and Control Systems (ICICCS) 1371-1375. New Jersey:                                     patterns for market shock prediction: A machine learning approach.
+      IEEE.                                                                                             Expert Systems with Applications, 127, 272-281.
+Karmakar M., Paul, S. (2016), Intraday risk management in international                           Tian, G.G., Guo. M. (2007), Interday and intraday volatility: Additional
+      stock markets: A conditional EVT approach. International Review                                   evidence from the Shanghai stock exchange. Review of Quantitative
+      of Financial Analysis, 44, 34-55.                                                                 Finance and Accounting, 28(3), 287-306.
+Kyle, A.S. (1985), Continuous auctions and insider trading. Econometrica,                         Wang, F.A. (1998), Strategic trading, asymmetric information and
+      53(6), 1315-1335.                                                                                 heterogeneous prior beliefs. Journal of Financial Markets, 1(3-4),
+Lachance, M. (2020), ETFs’ high overnight returns: The early liquidity                                  321-352.
+      provider gets the worm. Journal of Financial Markets, 52, 1000563.                          World Bank. (2020), COVID-19 Outbreak: Capital Markets Implications
+Liu, J., Wu, S., Zidek, J.V. (1997), On segmented multivariate regression.                              and Response, Equitable Growth, Finance and Institutions, Finance
+      Statistica Sinica, 7, 497-525.                                                                    Series: COVID-19 Notes, United States: World Bank Group.
+Long, W., Lu, Z., Cui, L. (2019), Deep learning-based feature engineering                         Yao, Y.C. (1988), Estimating the number of change-points via schwarz’
+      for stock price movement prediction. Knowledge Based Systems,                                     criterion. Statistics and Probability Letters, 6(3), 181-189.
+
+  456

@@ -1,0 +1,508 @@
+BCP Business & Management                                                                               FMEME 2022
+Volume 30 (2022)
+
+Exploring the predictability of intraday returns in China's stock
+                                                      market
+                                                   Yanbing Xu*
+
+                      Nanjing University of Science and Technology, Jiangsu, China
+                                *Corresponding author: 1067615488@qq.com
+
+Abstract. With the rapid development of high-frequency trading, intraday trading has become more
+and more popular due to its important role in understanding the efficiency of the intraday market and
+capturing more trading opportunities. This article explores whether there is momentum effect and
+reversal effect in China’s stock market by studying the correlation and predictability between half-
+hour returns. The results show that there is an intraday momentum effect between the first half-hour
+and  full-day  returns.  After  the  investment  strategy,  it         is  found  that  this  effect  has  economic
+significance, but after considering the transaction costs, the momentum effect cannot make investors
+obtain excess returns. These costs are the reason for the long-term predictability of intraday returns.
+Keywords: Intraday returns predictability, Trading costs, Momentum effect, Reversal effect
+
+1.   Introduction
+   With the rapid development of high-frequency trading, intraday trading is gaining popularity due
+to  its  important  role  in  understanding  intraday  market           efficiency  and  capturing  more  trading
+opportunities. However, intraday predictability received little attention prior to the seminal work of
+Gao[1], who extended Moskowitz[2]'s standard time-series momentum to intraday levels in US
+equities and found that the first half-hour returns are more than the second half-hour Returns have
+significant predictive power. Since then, this form of intraday return forecasting has been extended
+to several other markets, including Chu[3] who introduced this forecasting method to the Chinese
+stock market. Since the data sample date selected by Chu is from April 4, 2015 to December 31, 2015,
+the sample time is earlier, so this paper will continue this method and lock the sample time and object
+to the Chinese stock market after 2019.
+   Compared with the US stock market, the Chinese stock market has a special trading mechanism.
+Specifically, the U.S. stock market trades from 9:30 to 16:00 Eastern Time, while the Chinese stock
+market trades from 9:30 am to 11:30 am and 13:00 pm to 15:00 pm Beijing time. Different trading
+hours can lead to very different intraday momentum patterns between the U.S. and Chinese stock
+markets. The U.S. stock market has a 13.5-hour rate of return, however, the Chinese stock market has
+only an 8.5-hour rate of return per trading day, and more importantly, the Chinese stock market has
+a 90-minute lunch break where investors can learn New information or processing earlier information,
+thereby affecting intraday trends.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               Figure 1. Half-hour average trading volume of Shanghai Composite Index
+
+                                                          735
+BCP Business & Management                                                                                 FMEME 2022
+Volume 30 (2022)
+
+   The trading volume is closely related to the attention of investors and the processing of information.
+Figure 1 shows the average half-hour trading volume of the Shanghai Composite Index. It can be seen
+from the figure that the average trading volume from the first hour to the last half hour presents a “W”
+shape, and the trading volume in the first hour is much higher than other times of the day After three
+hours, the transaction volume gradually decreased. After the lunch break, the transaction volume
+rebounded, and the last hour ushered in a small peak. This trading volume pattern reflects that the
+most active periods of the market are the beginning of the day, after the lunch break, and before the
+end, and these half-hours are also the time periods that this paper focuses on in the empirical process.
+   This paper studies the predictability of intraday returns in Chinese stock markets and makes some
+contributions to the existing literature. First, this paper explores whether there is a momentum effect
+and a reversal effect in the Chinese stock market by studying the correlation and predictability
+between half-hour returns, focusing on the first half hour, the fourth half hour, and the fifth Half-hour
+and eighth-half-hour predictability, combined with variables such as overnight returns, refine the
+model to further explore the predictability of each half-hour and full-day returns.
+   This paper selects the intraday data of the Shanghai Composite Index, the Shenzhen Stock
+Exchange Component Index, and the CSI 300 Index from January 2, 2019 to September 1, 2021 to
+study the predictability of intraday returns. First, we used univariate linear regression to explore the
+correlation between full-day and half-day returns, and then divided the opening time of the Chinese
+stock market into eight and a half hours to explore the correlation and predictability of half-hour
+returns. Finally, the univariate linear regression model was refined and new explanatory variables
+were added to explore the predictability of returns for each half-hour of the day.
+   After obtaining the results at the statistical level, this paper further studies whether this effect has
+an economic impact on investment: According to the empirical results, two active investment
+strategies and a set of control strategies are constructed, the annual rate of return of each strategy is
+calculated separately, and the economic significance is calculated. from the perspective of evaluating
+the obtained results.
+
+2.   Literature review
+   Momentum and reversal are two well-known return patterns. For example, the seminal work of
+Jegadeesh and Titman[4] found a well-known momentum strategy whereby buying past winners and
+selling past losers produces significantly positive returns over holding periods of 3 to 12 months;
+Daniel[5] proposed a theory based on investor overconfidence and the change in confidence due to
+biased self-attribution of investment outcomes, which implies that investors overreact to private
+information signals and underreact to public information signals, indicating that positive Return
+autocorrelation may be the result of persistent overreaction; Du[6]                   believed that momentum and
+reversal coexist in international stock indexes; Andrei and Cujean[7] proposed a joint theory of time-
+series momentum and reversal based on rational expectations model, in The necessary condition for
+generating momentum in this framework is that information flows at an increasingly faster rate;
+Gang[8]   research investigates the profitability of momentum and reversal strategies for different
+investment horizons in Chinese stock markets, and the results show that momentum strategies are
+more effective for less than one-week investment. The investment period is profitable. For longer
+investment horizons, reversal strategies can be profitable; Zaremba[9] conducts a comprehensive test
+of long-term reversals of national stock indices, examining data from 1830-2019 for 71 countries,
+finds that past long-term returns are negative predictors of future performance, but very volatile over
+time. However, these studies have mainly focused on investigating cross-sectional momentum and
+reversal  effects.  In  contrast  to  this  cross-sectional  momentum,  Moskowitz[2]                 demonstrated  the
+monthly time-series momentum of stock returns. Most studies have explored this effect based on low-
+frequency data (such as weekly or monthly), ignoring high-frequency data.
+   Gao[1] studied the intraday momentum effect of the US market for the first time, that is, the first
+half-hour return of the US stock market positively predicted the second half-hour return. Due to the
+
+
+                                                           736
+BCP Business & Management                                                                             FMEME 2022
+Volume 30 (2022)
+
+digestion and reflection of new information, the trading volume in the first half-hour was very high. .
+Since then, a growing body of research has focused on exploring intraday momentum across a broad
+range of asset classes. Sun[10] and Renault[11] demonstrated that high-frequency investor sentiment
+can predict intraday stock returns, and Zhang[12], Chu[3], and Li[13] provided strong evidence for
+intraday  time-series  momentum  in  Chinese  stock  markets.  Similarly,  Jin[14]              observed  intraday
+momentum for four Chinese futures contracts, soybean, copper, steel, and soybean meal; however,
+Yang[15] showed that intraday strategies in the Chinese commodity futures market could not generate
+high excess returns due to transaction costs.
+
+3.   Empirical analysis
+3.1 Data
+   This paper studies the predictability of intraday returns using the intraday data of the Shanghai
+Composite Index, the Shenzhen Stock Exchange Component Index, and the CSI 300 Index. The total
+sample is from January 2, 2019 to September 1, 2021, a total of 650 working days, of which the data
+in the sample is from January 2, 2019 to December 31, 2020, a total of 487 working days. All data
+come from Wind economic database and Reis database. The business hours of the China Stock
+Exchange are 9:30 am to 11:30 am and 1:00 pm to 3:00 pm Yield every half hour(                      -   )，    Among
+them, this article focuses on the first half-hour yield and the last half-hour yield of each trading time
+period, namely      ,   ,   ,  . In addition to this, this paper also considers the full-day yield (                 ),
+half-day yield (        ,     ) and overnight yield (       ).
+
+3.2 Model Construction
+   According to Wen et al.'s method to explore the predictability of China's crude oil futures market
+through intraday trading data, this paper first constructs the following two models:
+
+                                                                                                                   (1)
+
+                                                                                                                   (2)
+
+   Where      is the rate of return for the i-th half-hour on day t,             is the rate of return for the j-th
+half-hour on day t. Referring to the methods of existing literature and the definitions of momentum
+effect and reversal effect, in this part of this paper, the first half-hour return and the last half-hour
+return of each day are mainly used as variables.
+   In order to test whether the predictors in predictive regression are still significant when recursive
+estimation is performed, the article uses out-of-sample regression and calculates out-of-sample                       ,
+the formula is as follows:
+
+
+                                                                                                                   (3)
+
+
+
+   Where m is the number of days in the sample, that is, the working days between January 2, 2019
+and December 31, 2020, a total of 487 days, and T is the total sample days, that is, January 2, 2019
+to September 1, 2021.The working days between days, i.e. 650 days.is the actual rate of return,
+is the forecast rate of return, and is the historical average rate of return.
+
+
+                                                         737
+BCP Business & Management                                                                                   FMEME 2022
+Volume 30 (2022)
+
+3.3 Descriptive Statistics
+   In order to ensure the integrity of market data, this paper uses the intraday data of the Shanghai
+Composite Index, the Shenzhen Stock Exchange Component Index, and the CSI 300 Index, where
+      represents the daily return (take the logarithmic return, the same below),                                 and
+represent the first and second half-day returns, respectively, and                   -     represent the first half-hour
+to Eighth and a half hour earnings. Table 1 shows the descriptive statistics of the sequences.
+
+                           Table 1. Descriptive Statistics for Correlated Sequences
+                    mean          median       minimum        maximum           standard        Skewness         Kurtosis
+                                                                                deviation
+        rwhole    0.000754       0.000700       0.057100      -0.077200         0.012255        -0.539362       9.074750
+        rhalf 1   0.000917       0.000150       0.030509      -0.022388         0.006908        0.466772        4.880471
+        rhalf 2   0.000084       0.000092       0.021342      -0.031999         0.006432        -0.602138       6.223978
+          𝑟1      0.000336       0.000035       0.029030      -0.021429         0.004428        0.656239        8.147121
+          r2      0.000141       0.000030       0.012877      -0.013707         0.003176        -0.181160       4.878427
+          r3      0.000143       0.000055       0.010693      -0.014584         0.003011        -0.203564       4.762839
+          r4      0.000309       0.000330       0.013760      -0.013294         0.003273        -0.065647       5.189003
+          r5     -0.000096      -0.000107       0.024872      -0.015797         0.003265        0.556873       12.143970
+          r6     -0.000057       0.000015       0.008986      -0.012375         0.002561        -0.291548       5.335373
+          r7      0.000048       0.000160       0.011583      -0.011857         0.002973        0.173549        4.843358
+          r8      0.000205       0.000322       0.007722      -0.010598         0.002703        -0.668986       4.651984
+        rwhole    0.001546       0.001300       0.055900      -0.084500         0.015702        -0.653454       6.587258
+        rhalf 1   0.001331       0.001134       0.038008      -0.027701         0.009324        0.267598        4.039236
+        rhalf 2   0.000024       0.000125       0.024380      -0.043595         0.008226        -0.745299       6.278618
+          𝑟1      0.000765       0.000574       0.039721      -0.027084         0.006115        0.420162        7.353994
+          r2      0.000117       0.000268       0.019457      -0.019740         0.004444        -0.247772       4.711069
+          r3      0.000129       0.000064       0.014649      -0.017173         0.003957        -0.315037       4.417266
+          r4      0.000320       0.000422       0.019086      -0.017902         0.004295        -0.104997       5.227919
+          r5     -0.000170      -0.000090       0.030766      -0.023565         0.004405        0.084668       11.173600
+          r6     -0.000106       0.000068       0.012586      -0.014274         0.003338        -0.284358       4.667695
+          r7      0.000083       0.000255       0.016750      -0.014255         0.003805        0.109733        4.630016
+          r8      0.000222       0.000447       0.012484      -0.013451         0.003418        -0.513082       4.604207
+        rwhole    0.001219       0.001200       0.059500      -0.078800         0.013440        -0.442310       7.717854
+        rhalf 1   0.000979       0.000363       0.031528      -0.024341         0.007760        0.386659        4.817651
+        rhalf 2   0.000133       0.000200       0.023166      -0.036223         0.006833        -0.592425       6.432477
+          𝑟1      0.000532       0.000192       0.027384      -0.017415         0.005028        0.597069        5.729558
+          r2      0.000116       0.000069       0.014615      -0.015204         0.003624        -0.213471       4.918249
+          r3      0.000145       0.000019       0.012897      -0.017865         0.003333        -0.286310       5.259460
+          r4      0.000191       0.000284       0.014800      -0.014047         0.003627        -0.041571       5.172580
+          r5     -0.000158      -0.000231       0.026080      -0.016932         0.003652        0.427748       10.655160
+          r6     -0.000027       0.000091       0.009549      -0.012853         0.002797        -0.285612       5.024450
+          r7      0.000100       0.000166       0.013343      -0.014038         0.003299        0.260668        5.046910
+          r8      0.000224       0.000404       0.007780      -0.010498         0.002808        -0.539167       4.186700
+
+   Descriptive statistics show that the average value of the entire day's returns is positive, and the
+first half of the day's returns and the second half of the day's returns are also positive. From the
+perspective of specific half-hour earnings, the fifth and sixth half-hour earnings are negative, the
+remaining six and a half hours are positive, and the first half-hour has the highest rate of return. In
+terms of standard deviation, high returns in the first half hour correspond to higher standard deviations,
+but higher returns in the last half hour correspond to lower standard deviations. A positive excess
+kurtosis value proves that the distributions of all given return series have thick tails.
+
+
+                                                             738
+BCP Business & Management                                                                                  FMEME 2022
+Volume 30 (2022)
+
+3.4 Full-day and half-day yield correlation
+   In order to explore the correlation of intraday data of Chinese stock market, this paper first
+performs regression on        rwhole  , rhalf 1and   rhalf 2, and the results are shown in Table 2.
+
+                         Table 2. Regression results of full-day and half-day returns
+
+                         The            Shenzhen                               The             Shenzhen
+                      Shanghai         Component           CSI 300          Shanghai         Component          CSI 300
+                     Composite             Index                           Composite             Index
+                        Index                                                 Index
+                       0.0377             0.0193            0.0146          0.001419           0.000374         0.000212
+                      (0.8292)           (0.4253)          (0.3204)
+                       0.0689             0.0098            0.0296          0.004136           0.000075         0.000683
+                      (1.4178)           (0.1911)          (0.5750)
+                     0.1294***          0.1187***         0.1009***         0.019305           0.018102         0.013137
+                      (3.0899)           (2.9902)          (2.5409)
+                       0.0094             0.0246            0.0119          0.000276           0.001716         0.000427
+                      (0.3655)           (0.9121)          (0.4544)
+                     -0.0534**          -0.0492**               -
+                     (-2.2481)           (-2.0754)        0.0551***         0.010334           0.008821          0.0170
+                                                          (-2.3953)
+
+   Judging from the regression results of the first, second and fourth rows of Table 2, the daily rate
+of return of the previous day and the full-day rate of return of the next day, the rate of return of the
+second half of the previous day and the rate of return of the first half of the next day And there is no
+significant relationship between the full-day return on the previous day and the first half-day return
+on the following day.
+   Judging from the regression results in the third row, there is a correlation between the first half-
+day rate of return and the second half-day rate of return, and the regression coefficient is 0.1294,
+which means that the first-half-day rate of return has a positive impact on the second-half-day rate of
+return. There is an intraday momentum effect between the two indices, which is confirmed in the
+regressions with the three indices as samples, and all of them are significant at the 1% level.
+   From the regression results of the fifth row, there is a correlation between the daily rate of return
+of the previous day and the rate of return of the second half of the next day. The regression coefficient
+is -0.0534, which means that the daily rate of return of the previous day has a similar effect on the
+rate of return of the second half of the next day. Negative effects, this result is also confirmed in the
+regression with the three indices as samples, which are significant at the 1% and 5% levels.
+3.5 Half-hourly return correlation
+   Next, this paper further explores the correlation between intraday half-hour returns. Since the
+opening  time  of  the  Chinese  stock  market  is  in  the  morning  and  afternoon,  considering  the
+concentration of investors and the digestion of information when the market is closed. In this part of
+the regression test, this paper mainly focuses on four special half-hours, namely the first half-hour of
+the morning period and the last half-hour of the morning period, the first half hour of the afternoon
+period and the last half hour of the afternoon period. Table 3 presents the regression results for these
+four special half-hourly returns.
+
+
+
+
+
+
+                                                            739
+BCP Business & Management                                                                               FMEME 2022
+Volume 30 (2022)
+
+                               Table 3. Regression results of half-hour returns
+
+              The Shanghai          Shenzhen                         The Shanghai          Shenzhen
+                Composite          Component           CSI 300         Composite          Component          CSI 300
+                   Index               Index                              Index               Index
+                  0.0163              -0.0049           0.0109          0.000489           0.000049         0.000232
+                 (0.4871)            (-0.1537)         (0.0327)
+                0.1011***           0.0950***        0.1069***          0.018809           0.017413         0.021676
+                 (3.0491)            (2.9317)          (3.2780)
+                  0.0533*             0.0285            0.0271          0.007646           0.002616         0.002369
+                 (1.9331)            (1.1279)          (1.0731)
+                 8.07E-05             0.0021           -0.0203          0.000000           0.000004         0.000409
+                 (0.0017)            (0.0451)         (-0.4455)
+                 0.0926**             0.0837            0.0794          0.012590           0.011071         0.010523
+                 (2.4867)            (2.3301)          (2.2711)
+                  0.0564              -0.0003           0.0028          0.001206           0.000000         0.000003
+                 (0.7645)            (-0.0044)         (0.0351)
+                  -0.0121             -0.0301          -0.0128          0.000101           0.000574         0.000100
+                 (-0.2206)           (-0.5274)        (-0.2195)
+                  -0.0662             -0.0159          -0.0647          0.003015           0.000154         0.002483
+                 (-1.2097)           (-0.2732)        (-1.0975)
+                  -0.0177             -0.0238          -0.0187          0.000317           0.000570         0.000353
+                 (-0.3915)           (-0.5255)        (-0.4137)
+
+   From the regression results in Table 3, at the 1% confidence level, there is a positive correlation
+between the first half-hour rate of return and the fifth-hour rate of return, which is also consistent
+with the first half-hour rate of return and the fifth half-hour return are the highest of the day and the
+results are consistent with the positive correlation between the first and second half-day returns.
+Except for the results in the second row, the regression results of the rest of the series are not
+significant, which indicates that there is no significant correlation between the half-hour returns,
+whether it is the intraday data of the current day or the intraday data of the previous day and the next
+day.
+
+                                   Table 4. Out-of-sample regression results
+
+             The       Shenzhe                     The        Shenzhe                    The       Shenzhe
+           Shangh           n                    Shangh           n                   Shangh           n
+              ai       Compon          CSI           ai      Compon          CSI          ai       Compon        CSI
+           Compo          ent          300       Compo           ent         300      Compo           ent         300
+             site        Index                      site       Index                     site       Index
+            Index                                 Index                                Index
+          0.1011*      0.0950*       0.1069                                            0.8416                   0.545
+              **           **          ***       0.01880      0.01741      0.0216     [0.1467       0.9992         3
+           (3.0491     (2.9317)      (3.2780         9            3          76           ]        [0.1203]      [0.15
+               )                         )                                                                        82]
+
+   Although the correlation regression results between the first half-hour return                   and the fifth half-
+hour return        are significant in-sample, but out-of-sample                 is not significant, so future returns
+cannot be predicted recursively.
+
+
+                                                          740
+BCP Business & Management                                                                                              FMEME 2022
+Volume 30 (2022)
+
+3.6 Refine the model
+    Next, this paper improves the above univariate model and adds new explanatory variables. First,
+considering the impact of the previous day's yield and overnight yield, investors further digest the
+previous day's information or overnight information, and their emotions are reflected in the stock
+price of the next day; secondly, considering whether the trading day is Monday or Friday, and The
+corresponding dummy variables are added to the model. The expanded model is as follows:
+
+                                                                                                                                      (4)
+
+    Where         (       ) represents the return rate of the ith half-hour on day t (t-1),                            represents the
+overnight return rate, defined as the percentage change of the opening price on day t relative to the
+closing price of the previous day,and                        is a dummy variable, if the day is Monday, then                             ,
+otherwise take 0, similarly if the day is Friday, then                          , otherwise take 0.
+
+                                Table 5. Regression results after perfecting the model
+
+
+           -0.1357***     -0.11193***      -0.057004*       0.048281        -0.032137       -0.061624**     -0.038352       1.166613***
+            (-4.313)      (-3.566814)     (-1.686141)      (1.393378)       (-1.194593)     (-2.083695)    (-1.449755)      (12.58735)
+            -0.0516        -0.058492       -0.023600        -0.063897       -0.032899        -0.062344      -0.002762        -0.010252
+            (-1.247)      (-1.346549)     (-0.543332)      (-1.445261)      (-0.749130)     (-1.492600)    (-0.067722)      (-0.309687)
+          0.117693***     0.082360***     0.092527***     0.058472***      0.063843***     0.101189***       0.105506       1.103641***
+           (10.13026)      (7.114174)      (7.419828)      (4.570273)       (6.441145)      (9.277679)      (10.81807)      (19.01032)
+            0.000511       0.000370         0.000152        -0.000112       -0.000122        -0.000675       0.000373        0.001051
+           (1.512667)      (1.100678)      (0.416408)      (-0.301448)      (-0.420981)     (-2.114529)     (1.316753)      (1.022724)
+           -0.000310        1.58E-06      -0.000918**       9.25E-05         0.000435      0.000870***      -2.91E-05        -0.000247
+           (-0.899238)     (0.004601)     (-2.489832)      (0.244156)       (1.478422)      (2.691384)     (-0.100612)      (-0.235614)
+            0.186917       0.102827         0.120163        0.063968         0.085770        0.175546        0.206334        0.490571
+           16.4405***     7.911834***    10.512970***     12.632313***     8.3253296***      -3.424737     18.96832***     32.764409***
+          [0.00001291]    [0.00116873]    [0.00022985]    [0.00029612]    [0.000552617]    [0.10235806]    [0.0000605]    [0.0000000214]
+
+    Table 5 shows that the new model outperforms the univariate model. Horizontally,                                      and         are
+highly significant, that is, the first half-hour rate of return and overnight rate of return has a high
+explanatory power for other half-hour rates of return. From the regression coefficient, the                                       of the
+first half-hour returns are mostly negative, and the absolute value gradually decreases over time,
+which indicates that there is a reversal effect in the day, that is, the first hour returns are high It is
+very likely that the yield on the trading day will be negative in the next half hour.
+    The first half-hour has a positive coefficient on the full-day rate of return, that is, the first half-
+hour has a positive impact on the full-day rate of return, and there is an intraday momentum effect
+between the first half-hour and the full-day rate of return. The last row is the out-of-sample                                        for
+these regressions, and it can be found that compared to the univariate model, the refined model is still
+applicable out-of-sample for most regressions, especially when the dependent variable is an integer
+The p-value for out-of-sample                       is only 0.0000000214 for daily returns. Therefore, using this
+model to make predictions is statistically valid.
+3.7 Economic significance
+    In order to test whether the measurement results can achieve excess returns in the market, that is,
+whether there is economic significance. This paper constructs two investment strategies based on the
+regression results.
+    The first is the MR Strategy. The specific operation of this strategy is that if the rate of return in
+the first half hour is positive, we will go long at the end of the second half hour. If the first half hour
+return of the next day is still positive, we will continue to hold. If the first half hour o                        f the next day is
+negative, we will close the position at the end of the second half hour.
+
+
+                                                                   741
+BCP Business & Management                                                                                   FMEME 2022
+Volume 30 (2022)
+
+   The second is M-Strategy, which works by taking a long position at the end of the first half hour
+if the return in the first half hour is positive. If the first half hour return of the next day is still positive,
+we will continue to hold. If the first half hour of the day is negative, we will close the position at the
+end of the first half hour.
+   The BH-Strategy strategy, as a comparison, refers to buying at the beginning of the sample period
+until the end of the sample period.Table 6 lists the returns that can be obtained by following the above
+strategies.
+
+                                      Table 6. Return on investment strategy
+                              MR-strategy                                 M-strategy                      BH-strategy
+                    Returns%             Trade times            Returns%            Trade times             Returns%
+    2019              10.36%                  129                 9.83%                  129                 21.70%
+    2020              30.62%                  119                28.87%                  118                 12.74%
+    2021              8.56%                    97                  7.6%                   96                  2.21%
+  Average             16.51%                  115                15.43%                  114                 12.22%
+
+   The results in Table 6 show that MR-Strategy and M-Strategy differ in an economic sense, but this
+difference is small in terms of three-year average returns. The average yield of M-Strategy is 15.43%,
+which is lower than 16.51% of MR-Strategy. The results show that MR-Strategy and M-Strategy can
+achieve more returns than BH-Strategy, and according to Chu (2019)[3], if the sample time is extended,
+this return gap will continue to increase. But it is based on zero transaction costs. MR-Strategy trades
+frequently, with an average of 115 (114) trades per year, so in investment pract                      ice, costs must be
+considered. The cost of A-share trading mainly consists of commission and stamp duty. Both costs
+will change over time. Taking the current situation as an example, the transaction commission is about
+0.03%, which is levied bilaterally. Stamp duty is 0.1%, levied unilaterally by the seller. Therefore,
+the total cost of a buy and sell transaction is about 0.16%. The average annual cost of MR-Strategy
+and M-strategy is 9.6%, which is greater than the excess return obtained by MR-Strategy. This means
+that MR-Strategy and M-strategy will not deliver excess returns after including transaction costs.
+
+4.   Conclusion
+   This paper studies the predictability of intraday returns in China's stock market, and draws the
+following conclusions.
+   First of all, there is an intraday momentum effect between the first half of the daily rate of return
+and the second half of the rate of return. This effect has passed the test of the three indices and is
+highly significant. After using the univariate model regression, it is found that only the first half hour
+in the sample is within the sample. There is a significant positive relationship between returns and
+returns in the fifth half-hour (first half-hour in the afternoon), and the correlations between the
+remaining half-hours are not significant or strong. However, an out-of-sample test of this correlation
+found that the intraday momentum does not exist, so the univariate model cannot be used for
+prediction purposes.
+   Second, after perfecting the model, it can be found                 that there is an intraday momentum effect
+between the first hour and the full-day return, and there is a reversal effect between the first half hour
+and the other half hours. This intraday momentum effect has an economic impact on investing, and it
+was further discovered after the portfolio was constructed.
+   Third, although the intraday momentum effect has economic significance, transaction costs hinder
+the  intervention  of  arbitrageurs,  and  investors  cannot  obtain  excess  returns  after  considering
+transaction    costs.  It  is  therefore  concluded  that  these  costs  are  responsible  for  the  long              -term
+predictability of intraday returns.
+
+
+
+
+                                                            742
+BCP Business & Management                                                                                        FMEME 2022
+Volume 30 (2022)
+
+References
+[1]  Gao L, Han Y, Li S Z, et al. Market intraday momentum[J]. Journal of Financial Economics, 2018, 129(2):
+     394-414.
+[2]  Moskowitz T J, Ooi Y H, Pedersen L H. Time series momentum[J]. Journal of financial economics, 2012,
+     104(2): 228-250.
+[3]  Chu X, Gu Z, Zhou H. Intraday momentum and reversal in Chinese stock market[J]. Finance Research
+     Letters, 2019, 30: 83-88.
+[4]  Jegadeesh N, Titman S. Returns to buying winners and selling losers: Implications for stock market
+     efficiency[J]. The Journal of finance, 1993, 48(1): 65-91.
+[5]  Daniel  K,  Hirshleifer  D,  Subrahmanyam  A.  Investor  psychology  and  security  market  under-and
+     overreaction[J]. Advances in Behavioral Finance, 2005(2): 460-501.
+[6]  Du D. The 52-week high and momentum investing in international stock indexes[J]. The Quarterly
+     Review of Economics and Finance, 2008, 48(1): 61-77.
+[7]  Andrei D, Cujean J. Information percolation, momentum and reversal[J]. Journal of Financial Economics,
+     2017, 123(3): 617-645.
+[8]  Gang J, Qian Z, Xu T. Investment horizons, cash flow news, and the profitability of momentum and
+     reversal strategies in the Chinese stock market[J]. Economic Modelling, 2019, 83: 364-371.
+[9]  Zaremba A, Kizys R, Raza M W. The long-run reversal in the long run: Insights from two centuries of
+     international equity returns[J]. Journal of Empirical Finance, 2020, 55: 177-199.
+[10] Sun  L,  Najand  M,  Shen  J.  Stock  return  predictability  and  investor  sentiment:  A  high-frequency
+     perspective[J]. Journal of Banking & Finance, 2016, 73: 147-164.
+[11] Renault T. Intraday online investor sentiment and return patterns in the US stock market[J]. Journal of
+     Banking & Finance, 2017, 84: 25-40.
+[12] Zhang W, Wang G, Wang X, et al. Profitability of reversal strategies: A modified version of the Carhart
+     model in China[J]. Economic Modelling, 2018, 69: 26-37.
+[13] Li Y, Shen D, Wang P, et al. Does intraday time-series momentum exist in Chinese stock index futures
+     market?[J]. Finance Research Letters, 2020, 35: 101292.
+[14] Jin M, Kearney F, Li Y, et al. Intraday time‐series momentum: Evidence from China[J]. Journal of Futures
+     Markets, 2020, 40(4): 632-650.
+[15] Yang Y, Göncü A, Pantelous A A. Momentum and reversal strategies in Chinese commodity futures
+     markets[J]. International Review of Financial Analysis, 2018, 60: 177-196.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                               743

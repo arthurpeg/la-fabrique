@@ -53,6 +53,23 @@ def entry(**overrides) -> dict:
     return base
 
 
+def blank(raw: dict) -> dict:
+    """Le catalogue réel, vidé de ses valeurs externes et de leurs provenances.
+
+    Chaque cas abîme UNE chose. Depuis que les multiplicateurs sont déposés
+    (2026-09-24), abîmer le catalogue réel tel quel mêlerait la faute voulue aux
+    valeurs légitimes qu'elle découvre : un cas qui remplace `provenance` laisse
+    huit multiplicateurs sans source, et le refus ne dit plus rien du cas. On
+    part donc d'un catalogue sans valeur externe — l'état où ce script a été
+    écrit — pour que le refus observé soit celui de la faute, et d'elle seule.
+    """
+    for spec in raw["instruments"]:
+        for field in ("multiplier", "fee_per_contract_usd"):
+            spec[field] = None
+    raw["provenance"] = []
+    return raw
+
+
 def fill(raw: dict, root: str, field: str, value) -> None:
     for spec in raw["instruments"]:
         if spec["root"] == root:
@@ -165,7 +182,7 @@ def main() -> int:
     # -- 2. onze catalogues abîmés ------------------------------------------
     print("\n2. les catalogues fautifs, un par forme de faute")
     for name, damage, expected, must_fail in CASES:
-        broken = copy.deepcopy(raw)
+        broken = blank(copy.deepcopy(raw))
         damage(broken)
         verdict = provenance_failures(broken, rolls)
         if must_fail:
@@ -214,8 +231,13 @@ def main() -> int:
             print(f"  - {line}")
         return 1
     print("PROVENANCE : le garde refuse chacune des 9 fautes, pour la raison prévue")
-    print("  (D09 ; le catalogue réel ne porte encore AUCUNE valeur externe — "
-          "multiplier et fee_per_contract_usd sont null sur les dix instruments)")
+    external = sum(
+        spec.get(field) is not None
+        for spec in raw["instruments"]
+        for field in ("multiplier", "fee_per_contract_usd")
+    )
+    print(f"  (D09 ; le catalogue réel porte {external} valeur(s) externe(s), "
+          f"toutes couvertes — les cas fautifs partent d'un catalogue vidé)")
     return 0
 
 
