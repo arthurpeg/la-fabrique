@@ -231,13 +231,20 @@ registre **entier**, les 56 tests antérieurs compris.
    (default+layout) dans `corpus/text/`, `text_source` basculé à
    `authoritative` pour 34 d'entre eux dans la base (`D22` § Journal, passage
    2). Un exclu (bug `pypdf` reproductible sur un PDF précis, non contourné),
-   un doublon du `gao-2018` déjà connu (`L20`). **Ce que ça ne fait toujours
-   pas** : ficher. `G1`-`G4` sont inchangés (`F47` : le moissonné n'y entre
-   jamais) — il manque encore l'outil de préparation/jugement pour ces
-   35 papiers (l'équivalent de `extract_fiche.py --prepare`, mais hors
-   `corpus/acquisition.json`) et **33 sessions séparées**, une par papier,
-   n'ayant vu que leur consigne (`D16` § Qui peut être l'extracteur) — un
-   agent seul ne peut pas se simuler lui-même non contaminé 33 fois.
+   un doublon du `gao-2018` déjà connu (`L20`). **L'outil de préparation/jugement
+   existe** — `corpus/extract_fiche_harvest.py`, sœur d'`extract_fiche.py` mais
+   avec un **stockage séparé** (`corpus/fiches_harvest/`,
+   `corpus/PRODUCED_harvest.json`) : `gate_07.py` juge G2/G3 sur TOUT
+   `corpus/fiches/*.json` et TOUT `corpus/PRODUCED.json` sans filtrer par
+   population, donc une fiche moissonnée écrite au mauvais endroit aurait pu
+   repasser la porte 07 à NON FRANCHIE sans qu'aucune décision ne l'ait voulu.
+   **Circuit validé de bout en bout, le 2026-09-24, sur un vrai papier** :
+   session isolée (Agent, lisant UNIQUEMENT la consigne) → fiche → `--record`
+   → `--judge` → refus sur 2 citations (espace inséré au milieu d'un chiffre
+   par l'extraction PDF, `"2. 564"`) → renvoyé à la MÊME session (pas une
+   retouche manuelle) → **les cinq conditions de `D16` tiennent, essai 2**.
+   Même schéma que Patton & Sheppard en phase 07 (2 itérations). **1 fiche sur
+   35 candidats, 34 restantes** — chacune une session séparée, comme celle-ci.
 2. **La matrice de corrélation des 50 signaux** doit être produite **avant**
    d'appliquer `BH` : la procédure suppose une dépendance positive, et plusieurs
    papiers d'intraday momentum donneront des signaux corrélés.
