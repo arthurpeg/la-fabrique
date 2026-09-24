@@ -550,10 +550,11 @@ def do_run(fiche_id: str, model: str) -> int:
             }
             trace["essais"].append(ligne)
             trace["verdict"] = ligne["issue"]
-            print(
-                f"    {ligne['issue'].upper()} — {type(e).__name__} apres "
-                f"{TIMEOUT_APPEL_S}s. INSCRIT, pas perdu."
-            )
+            # NE PAS annoncer le plafond quand ce n'est PAS lui qui a coupe : un
+            # `404` affiche « apres 2700s » laisserait croire a une lenteur la
+            # ou il y a un refus immediat, et on chercherait au mauvais endroit.
+            quand = f" apres {TIMEOUT_APPEL_S}s" if isinstance(e, TimeoutError) else ""
+            print(f"    {ligne['issue'].upper()} — {type(e).__name__}{quand}. INSCRIT, pas perdu.")
             break
 
         contenu = (rep.get("message") or {}).get("content", "")
@@ -588,8 +589,7 @@ def do_run(fiche_id: str, model: str) -> int:
             ligne["issue"] = "contexte_depasse"
             trace["essais"].append(ligne)
             trace["verdict"] = "contexte_depasse"
-            print(f"    CONTEXTE DEPASSE — {prompt_tokens} tokens d'invite. "
-                  f"Non juge : {motif}.")
+            print(f"    CONTEXTE DEPASSE — {prompt_tokens} tokens d'invite. Non juge : {motif}.")
             break
 
         objet, note = extraire_json(contenu)
