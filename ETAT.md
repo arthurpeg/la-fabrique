@@ -1,7 +1,8 @@
 # ÉTAT
 
 **Phase courante :** 09 — premier passage complet sur 30 à 50 papiers
-**Date de dernière mise à jour :** 2026-09-23
+**Date de dernière mise à jour :** 2026-09-23 (17:34 UTC — `scripts/gate_09.py`
+écrit, voir § Prochaine action)
 **Dernière porte franchie :** **08**, le 2026-09-23 — `scripts/gate_08.py`. Un
 signal produit par une session de codage séparée tient les **six conditions de
 `D23` au premier essai**, et aucun signal produit n'a été retouché à la main.
@@ -235,22 +236,34 @@ en a rendu **4**. Les lots sont ordonnés par titre, donc l'écart peut venir du
 contenu autant que de la sévérité du trieur. **Non tranché**, et il ne faut pas
 le supposer.
 
-### Donc, dans l'ordre, ce qui vient maintenant
-
-1. **Geler le texte des 39 retenus** — `python corpus/extract_text.py`. Ils sont
-   `harvest` aujourd'hui, donc leur texte n'est pas reproductible depuis le
-   dépôt et `F2` ne peut pas s'en servir (`D22`). Coût mesuré : `corpus/text/`
-   pèse 6,0 Mo pour 17 papiers.
-2. **Les ficher** — `corpus/extract_fiche.py`, une session séparée par papier.
-   Il l'a fait 7 fois le 2026-09-23, dont 5 vertes au premier essai.
-3. **Déclarer par écrit le lot de 50** — une liste de `fiche_id` datée, **avant**
-   la première mesure. C'est la clause `C2` de `D25`, et c'est elle qui rend
-   Benjamini-Hochberg valide.
-4. **Mesurer la corrélation entre les signaux du lot** avant d'appliquer `BH` —
-   la procédure suppose une dépendance positive.
-   `scripts/calibrate_coder.py` sait déjà comparer deux signaux.
-5. **Écrire `scripts/gate_09.py`** — il applique `BH` et refuse un verdict sur un
-   lot non clos.
+1. **Il manque 33 fiches, et le gisement est identifié.** `D25` engage un lot de
+   50 ; le corpus en porte **17**. Le triage des 119 moissonnés (2026-09-23) en
+   retient **39** — soit **56 au total**, donc jouable **sans marge**. Il reste
+   à **geler leur texte** (`python corpus/extract_text.py` ; ils sont `harvest`,
+   donc `F2` ne peut pas s'en servir — `D22`) puis à les ficher. **Si le compte
+   final descend sous 50, `D25` s'amende par écrit** ; on n'ajuste pas `N` en
+   silence.
+2. **La matrice de corrélation des 50 signaux** doit être produite **avant**
+   d'appliquer `BH` : la procédure suppose une dépendance positive, et plusieurs
+   papiers d'intraday momentum donneront des signaux corrélés.
+   `scripts/calibrate_coder.py` sait déjà mesurer une corrélation entre deux
+   signaux. Format attendu par la porte : `scripts/out/lot_09_correlations.json`,
+   voir l'en-tête de `scripts/gate_09.py`.
+3. ~~`scripts/gate_09.py` n'existe pas.~~ **Écrit le 2026-09-23**, avant le lot —
+   le juge avant l'accusé, comme `score_triage.py` et `score_signal.py` avant
+   lui. Il applique `BH` (unilatéral, signe pré-enregistré via `EXPECTED_SIGN`)
+   et refuse tout verdict tant que : le lot n'est pas déclaré dans
+   `hypotheses/LOT-09.json` (format fixé par ce script, faute d'exister
+   ailleurs), que chaque hypothèse n'a pas son fichier dans `hypotheses/`, que
+   la matrice de corrélation n'existe pas ou ne couvre pas exactement les
+   signaux du lot, ou qu'une hypothèse n'a pas exactement une mesure au
+   registre sous le harnais courant. **12 vérifications** (`--check`), vert —
+   elles relisent le tableau de seuils de `D25` à l'envers (`t`=2,88 → `p`
+   ≤0,0020, etc.) et vérifient le pas de `BH` lui-même. Lancé sans lot, il
+   répond correctement NON FRANCHIE : c'est l'état attendu, pas une panne.
+   **Zéro hypothèse retenue sera un résultat VALIDE de la porte**, pas un
+   échec — elle juge que le protocole a été suivi, pas que la pêche a été
+   bonne.
 
 ### Ce qui reste dû par ailleurs, et qui n'a pas bougé
 
