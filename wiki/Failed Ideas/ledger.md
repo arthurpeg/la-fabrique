@@ -116,3 +116,4 @@ Elles ne descendront ici que si *nos* mesures les tuent, avec *nos* chiffres.
 
 - [[lessons]] — la synthèse transversale ; `LECONS.md` à la racine fait foi
 - [[index]] · [[hot]] · [[SCHEMA]]
+| F55 | Remplir `fee_per_contract_usd` avec le **barème de l'exécutant**, pour « fermer » le `todo fees` | 2026-09-24 | 09 | `harness/costs.py` ne lit ce champ que pour savoir s'il est `null` : rempli, il **retire `fee_bp` des composantes manquantes sans l'ajouter au plancher**. Le rapport d'IC se dirait plus complet qu'il n'est — un trou rendu silencieux, ce que `D04` interdit. Et le barème Lucid n'est que la **borne basse** tant qu'on ignore s'il est tout compris. | `D26` option 2 | La décision qui fera **lire** les frais au harnais (avec `slippage_bp`) : le champ se remplit à ce moment-là, sous la forme qu'elle fixera. |

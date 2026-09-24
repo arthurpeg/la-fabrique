@@ -521,6 +521,14 @@ todos:
       de compte Lucid (dit le 2026-09-24). Voies restantes : réponse écrite du
       support Lucid, ou encadrement déclaré par décision (barème seul / barème
       + frais CME exchange, clearing, NFA).
+    decided_2026-09-24: >-
+      D26 ENCADRE les frais : borne basse = barème Lucid, borne haute = Lucid +
+      CME non-membre + NFA 0,02/side ; toute lecture nette qui conditionne un
+      choix se fait à la borne haute. Montants et sources dans D26 et
+      scripts/fee_bracket.py. Ce champ RESTE null exprès : rempli, il ferait
+      disparaître fee_bp des composantes manquantes de harness/costs.py sans
+      l'ajouter au coût (D26 option 2). Il ne se remplit qu'avec la décision
+      qui fera lire les frais au harnais.
     note: >-
       jamais deviné ; la part fixe pèse dix fois plus lourd en micro (D01 §7), et
       les contrats effectivement tradés seront des MICROS quand les séries

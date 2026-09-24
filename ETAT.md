@@ -50,6 +50,13 @@ puis mesurée — la forme en U de la volatilité intra-journalière est retrouv
 reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
 **Décision la plus récente :**
+`decisions/DECISION-26-encadrement-des-frais.md` — les frais par contrat sont
+**encadrés, pas devinés** : borne basse = barème Lucid seul, borne haute = Lucid +
+CME non-membre + NFA ; toute lecture nette qui conditionne un choix se fait à la
+**borne haute**. `fee_per_contract_usd` **reste `null` exprès** — rempli, il
+effacerait `fee_bp` des manques de `harness/costs.py` sans l'ajouter au coût.
+Les frais CME changent le **2026-10-01** : à relever de nouveau.
+**Décision précédente :**
 `decisions/DECISION-25-budget-de-tests.md` — le budget de la phase 09.
 **Benjamini–Hochberg à `q` = 0,10**, test unilatéral au signe pré-enregistré,
 sur un lot de **50 signaux clos avant la première mesure**. Deux faits mesurés la
@@ -174,7 +181,7 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 | Attendu | De qui | Bloque |
 |---|---|---|
 | Moteur de backtest | tiers | phase 10 |
-| Frais par contrat (barème Lucid : all-in ou non ?), multiplicateur FDAX | **nous** — les **neuf multiplicateurs CME sont déposés** depuis le 2026-09-24 (`catalogue.yaml` § provenance) ; les frais restent `null` | la complétude du coût : tant qu'ils sont `null`, `harness/costs.py` ne rend qu'un **plancher** étiqueté, donc tout IC net est un **majorant de performance** (phase 10, et toute lecture nette d'ici là) |
+| Frais par contrat — **encadrés par `D26`**, champ laissé `null` jusqu'à ce que le harnais sache les lire ; multiplicateur FDAX | **nous** — les **neuf multiplicateurs CME sont déposés** depuis le 2026-09-24 (`catalogue.yaml` § provenance) ; les frais restent `null` | la complétude du coût : tant qu'ils sont `null`, `harness/costs.py` ne rend qu'un **plancher** étiqueté, donc tout IC net est un **majorant de performance** (phase 10, et toute lecture nette d'ici là) |
 
 ## Prochaine action
 
@@ -257,7 +264,7 @@ registre **entier**, les 56 tests antérieurs compris.
 
 | Point | Pourquoi ça compte |
 |---|---|
-| **Frais par contrat** — `null` sur les dix. *Multiplicateurs : déposés le 2026-09-24 pour les neuf CME, avec provenance `D09` ; FDAX reste `null` (unité en EUR, hors univers)* | tant que les frais le sont, `harness/costs.py` ne rend qu'un **plancher étiqueté**, donc tout IC net est un **majorant de performance**. La phase 09 produit justement des IC |
+| **Frais par contrat** — `null` sur les dix, **encadrés par `D26`** (relevé CME à refaire après le 2026-10-01 ; l'intégration au harnais, avec `slippage_bp`, sera UNE décision qui périme les 56 tests une seule fois). *Multiplicateurs : déposés le 2026-09-24 pour les neuf CME, avec provenance `D09` ; FDAX reste `null` (unité en EUR, hors univers)* | tant que les frais le sont, `harness/costs.py` ne rend qu'un **plancher étiqueté**, donc tout IC net est un **majorant de performance**. La phase 09 produit justement des IC |
 | **`slippage_bp` à déclarer** | même famille |
 | **`ruff format harness/`** reformaterait 4 fichiers | le harnais est **figé et versionné** ; le reformater changerait son empreinte et **périmerait les 56 tests comptés**. Ne pas lancer |
 | **`scripts/gate_06_controls.py` ÉCRIT au registre** | une ligne de calibration par passage. Légitime (`counted_tests` ne bouge pas) mais **pas gratuit** — le passer dans une revue de gardes coûte une ligne irremplaçable. **Correction du 2026-09-24 : `gate_03_harness.py` (3 lignes de calibration) et `gate_04_registry.py` (1 ligne, `porte-04-chemin-legitime`) écrivent AUSSI** — relancés ce jour sur la foi de la phrase précédente, ils ont ajouté 4 lignes non comptées (`counted_tests` reste 56). Voir `L25` |

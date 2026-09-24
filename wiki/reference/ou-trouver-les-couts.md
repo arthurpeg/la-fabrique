@@ -17,6 +17,7 @@ sources: [decisions/DECISION-01-univers-et-donnees.md, LECONS.md]
 | L'écart plancher en bp par instrument | `D01` §7 |
 | Pourquoi Corwin & Schultz ne suffit pas | `LECONS.md` L04 · [[Failed Ideas/ledger]] F08 |
 | **Les frais d'échange et de compensation** | **`null`** — barème CME (*Non-Member Fee Finder* + PDF daté) et liste EUREX, `D01` §7. `ETAT.md` § Ce qui bloque |
+| **Les frais par contrat** | **encadrés** par `D26` : borne basse Lucid seul, borne haute Lucid + CME non-membre + NFA ; montants, sources et conversion en bp dans `scripts/fee_bracket.py`. Le champ du catalogue **reste `null` exprès** |
 | **Les multiplicateurs de contrat** | **déposés le 2026-09-24** pour les neuf CME, chacun sous sa citation « Contract Unit » : `catalogue/catalogue.yaml` § `provenance` (`D09`). FDAX reste `null` (unité en EUR) |
 | Pourquoi plein et micro ne se valent pas | `D01` §7, arithmétique du frais fixe |
 | À quelle phase les coûts entrent | `D01` §9 — **phase 03**, pas 10 |
