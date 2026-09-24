@@ -1,0 +1,212 @@
+{
+  "fiche_id": "the-impact-of-intraday-momentum-on-stock-returns-W4200303559",
+  "written": "2026-09-24",
+  "written_by": "session d'extraction isolée — Claude Opus 5, phase 09",
+  "source": {
+    "authors": "Saddam Hossain, Beáta Gavurová, Xianghui Yuan, Morshadul Hasan, Judit Oláh",
+    "title": "The Impact of Intraday Momentum on Stock Returns: Evidence from S&P500 and CSI300",
+    "year": 2021,
+    "source_url": "https://doi.org/10.15240/tul/001/2021-4-008",
+    "pdf": "corpus/pdf/the-impact-of-intraday-momentum-on-stock-returns-W4200303559.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "amorce_entry": null,
+    "journal": "E&M Economics and Management, 24(4), 124–141"
+  },
+  "claim": "Pendant le choc COVID-19 (janvier–septembre 2020), le rendement de la première demi-heure de séance prédit positivement le rendement de la dernière demi-heure du même jour pour le S&P500, tandis que l'avant-dernière demi-heure n'a aucun pouvoir prédictif ; aucun effet de momentum intraday n'est trouvé sur le CSI300. La prédictibilité est plus forte lorsque le rendement de la première demi-heure est positif, lorsque volatilité et volume sont élevés, et le lundi matin.",
+  "universe": {
+    "instruments": "Deux indices actions au comptant : S&P500 (États-Unis) et CSI300 (Chine). Pas d'univers transversal : une série temporelle par marché.",
+    "data": "Données intraday 1 minute ; S&P500 acheté chez firstratedata.com, CSI300 via joinquant.com.",
+    "sample_period": "2020-01-01 → 2020-09-11 (échantillon court et entièrement in-sample, revendiqué comme tel).",
+    "sessions": "S&P500 : 09:30–16:00 Eastern Time, 6.5 h, 13 demi-heures par jour, la première mesurée depuis la clôture précédente (16:00) jusqu'à 10:00. CSI300 : 09:30–11:30 et 13:00–15:00 Beijing Time, 4 h, 8 demi-heures par jour.",
+    "note": "Le nombre de jours de bourse de l'échantillon n'est jamais donné, ni le nombre d'observations de régression."
+  },
+  "horizon": {
+    "value": "dernière demi-heure de la même séance",
+    "unit": "intraday",
+    "detail": "La variable expliquée est le rendement de la 13e demi-heure (S&P500) ou de la 8e (CSI300) du jour t ; les prédicteurs sont la 1re et l'avant-dernière (12e / 7e) demi-heure du même jour t. Aucun horizon multi-jour."
+  },
+  "signal_construction": {
+    "value": "rendement de demi-heure, prédicteur de la dernière demi-heure du même jour",
+    "steps": [
+      "Découper la séance en demi-heures ; le rendement de la demi-heure s du jour t est calculé à partir du prix de la demi-heure précédente (la 1re demi-heure du S&P500 part de la clôture de la veille à 16:00).",
+      "Régression prédictive OLS : IMreturn_last,t = α + β·IMreturn_1,t + ε (formules 5 et 8), puis sur l'avant-dernière demi-heure seule (6, 9), puis les deux conjointement (7, 10).",
+      "t-statistiques robustes Newey et West (1987) pour tous les modèles ; seuils 1 %, 5 %, 10 %.",
+      "Règle de trading : si le signal de la première demi-heure est positif, position longue ; sinon position courte ou sortie ; variante à deux signaux (1re et avant-dernière demi-heure) où l'on n'est long que si les deux rendements sont positifs.",
+      "Conditionnements : signe du rendement de la première demi-heure ; terciles (haut / moyen / bas) de volatilité et de volume de la première demi-heure ; séances du lundi matin."
+    ],
+    "note": "Les formules (1) et (2), qui définissent le rendement de demi-heure, et les formules de rendement de la stratégie (11)–(12) ne sont pas rendues par l'extraction du PDF : seul leur commentaire est lisible. La définition exacte du rendement (log ou arithmétique) n'est donc pas vérifiable dans le texte."
+  },
+  "reported_results": [
+    {
+      "name": "sample_period_start",
+      "value": null,
+      "quoted": "the sample period from January 1, 2020, to",
+      "note": "La phrase se poursuit à la ligne suivante par « September 11, 2020. » L'échantillon couvre donc environ 8,5 mois, tous dans le régime COVID-19."
+    },
+    {
+      "name": "sp500_half_hour_intervals_per_day",
+      "value": 13,
+      "unit": "demi-heures",
+      "quoted": "formula (1) S&P500 for 13 and formula",
+      "note": "13 demi-heures pour le S&P500, 8 pour le CSI300 (suite de la même phrase)."
+    },
+    {
+      "name": "sp500_trading_hours_per_day",
+      "value": 6.5,
+      "unit": "heures",
+      "quoted": "S&P500 stock trading time is 6.5 hours, with",
+      "note": "390 observations minute par jour ; le CSI300 a 4 heures et 240 observations."
+    },
+    {
+      "name": "sp500_first_half_hour_slope_insample",
+      "value": 0.102,
+      "unit": "coefficient de pente",
+      "quoted": "βIMreturn1 = 0.102* (t = 1.64) pour la régression S&P500 de IMreturn13, Tab. 1 Panel A colonne 1",
+      "quoted_source": "βIMreturn1 0.102* 0.119**",
+      "quoted_repair": "table",
+      "note": "Tab. 1 Panel A : 0.102* (colonne 1, régression simple) et 0.119** (colonne 3, régression conjointe). La t-stat robuste associée est (1.64) à la ligne suivante du tableau. Significatif seulement à 10 % en régression simple."
+    },
+    {
+      "name": "sp500_r2_first_half_hour_insample",
+      "value": 0.048,
+      "unit": "R²",
+      "quoted": "10% significant with ℛ2 is (0.048).",
+      "note": "Formule (5) : première demi-heure seule, S&P500, plein échantillon COVID-19."
+    },
+    {
+      "name": "sp500_r2_joint_insample",
+      "value": 0.057,
+      "unit": "R²",
+      "quoted": "ℛ2 is a positive slope (0.057),",
+      "note": "Formule (7) : les deux prédicteurs conjointement, S&P500, significatif à 5 %. Les auteurs écrivent « ℛ2 is a positive slope », confusion de rédaction entre R² et coefficient."
+    },
+    {
+      "name": "csi300_r2_first_half_hour_insample",
+      "value": 0.005,
+      "unit": "R²",
+      "quoted": "and statistically significant with ℛ2 is 0.005.",
+      "note": "Formule (8) : CSI300, première demi-heure seule. Le texte dit « statistically significant » alors que Tab. 1 Panel B donne 0.0207 avec t = (0.84), sans étoile — contradiction interne du papier."
+    },
+    {
+      "name": "csi300_r2_joint_insample",
+      "value": 0.022,
+      "unit": "R²",
+      "quoted": "ℛ2 is a positive slope (0.022),",
+      "note": "Formule (10) : CSI300, deux prédicteurs conjointement. Aucun seuil de significativité n'est annoncé ici."
+    },
+    {
+      "name": "sp500_conditional_positive_first_half_hour_slope",
+      "value": 0.219,
+      "unit": "coefficient de pente",
+      "quoted": "IMreturn1 = 0.219** (t = 2.13) quand le rendement de la première demi-heure est positif, Tab. 3 colonne 1",
+      "quoted_source": "IMreturn1 0.219** 0.205**",
+      "quoted_repair": "table",
+      "note": "Tab. 3, S&P500, sous-échantillon IMreturn1 > 0 : 0.219** en régression simple, 0.205** en régression conjointe. Les t-stats robustes sont (2.13) et (2.00) à la ligne suivante. C'est le résultat conditionnel le plus fort du papier hors lundi."
+    },
+    {
+      "name": "sp500_conditional_positive_r2",
+      "value": 0.106,
+      "unit": "R²",
+      "quoted": "0.106, 0.029, and 0.119, respectively.",
+      "note": "S&P500, sous-échantillon IMreturn1 > 0 : R² des trois régressions (1re demi-heure seule ; avant-dernière seule ; conjointe)."
+    },
+    {
+      "name": "sp500_conditional_negative_r2",
+      "value": 0.034,
+      "unit": "R²",
+      "quoted": "is negative and ℛ2 are 0.034, 0.029, and",
+      "note": "S&P500, sous-échantillon IMreturn1 < 0 : R² 0.034, 0.029 et 0.108, tous coefficients insignifiants. Asymétrie revendiquée : le momentum n'existe que du côté positif."
+    },
+    {
+      "name": "sp500_high_volume_first_half_hour_slope",
+      "value": 0.171,
+      "unit": "coefficient de pente",
+      "quoted": "IMreturn1 (0.171**",
+      "note": "Tab. 5 Panel A, tercile de volume haut, significatif à 5 % (t = 2.35) ; le tercile bas donne −0.119** (t = −2.00), soit un signe inversé. Les seuils de découpage des terciles ne sont jamais donnés."
+    },
+    {
+      "name": "sp500_high_volatility_first_half_hour_coefficient",
+      "value": 0.314,
+      "unit": "coefficient de pente",
+      "quoted": "(0.314) is significant with at 10% confidence",
+      "note": "ATTENTION : le texte attribue 0.314 au tercile de volatilité haute, mais Tab. 5 Panel A donne 0.155* pour la colonne « High » et 0.314 (sans étoile, t = 0.48) pour la colonne « Medium ». Le chiffre cité dans le texte contredit le tableau du même papier."
+    },
+    {
+      "name": "sp500_monday_first_half_hour_slope",
+      "value": 0.193,
+      "unit": "coefficient de pente",
+      "quoted": "is a positive slope (0.193) with 1% significant",
+      "note": "Tab. 6, S&P500, séances du lundi uniquement. Seul coefficient du papier significatif à 1 %."
+    },
+    {
+      "name": "sp500_monday_first_half_hour_tstat",
+      "value": 4.11,
+      "unit": "t-stat robuste",
+      "quoted": "t = 4.11 pour βIMreturn1 du S&P500 le lundi matin (Tab. 6 colonne 1), et t = 2.87 pour la régression conjointe",
+      "quoted_source": "(4.11) (2.87)",
+      "quoted_repair": "table",
+      "note": "Tab. 6, ligne de t-statistiques robustes sous les coefficients 0.193*** et 0.144***. Plus forte t-stat du papier, mais obtenue sur les seuls lundis d'un échantillon de 8,5 mois, soit un nombre de points jamais indiqué (ordre de grandeur : une quarantaine)."
+    },
+    {
+      "name": "sp500_monday_second_last_half_hour_slope",
+      "value": 0.867,
+      "unit": "coefficient de pente",
+      "quoted": "marginal slope (0.867*), with a significant",
+      "note": "Tab. 6, S&P500 lundi, avant-dernière demi-heure seule, significatif à 10 %, R² 0.317. Sur le plein échantillon ce même prédicteur était négatif et insignifiant (−0.0384)."
+    },
+    {
+      "name": "sp500_monday_joint_r2",
+      "value": 0.478,
+      "unit": "R²",
+      "quoted": "ℛ2 is 0.478.",
+      "note": "Tab. 6, S&P500 lundi, régression conjointe. R² dix fois supérieur à celui du plein échantillon (0.057) — signe classique de sur-ajustement sur un sous-échantillon minuscule."
+    },
+    {
+      "name": "csi300_monday_r2",
+      "value": 0.038,
+      "unit": "R²",
+      "quoted": "ℛ2 (0.038) position is not well",
+      "note": "Tab. 6, CSI300 lundi, première demi-heure : coefficient 0.0427, insignifiant. L'effet lundi ne se reproduit pas en Chine."
+    },
+    {
+      "name": "bp_heteroskedasticity_pvalue",
+      "value": 0.0019,
+      "unit": "p-value",
+      "quoted": "test de Breusch-Pagan/Cook-Weisberg d'hétéroscédasticité : p = 0.0019 pour le S&P500 et p = 0.0000 pour le CSI300 (Tab. 2)",
+      "quoted_source": "Breusch-Pagan/Cook-Weisberg test for heteroskedasticity 0.0019 0.0000",
+      "quoted_repair": "table",
+      "note": "Résultat le plus important du papier contre le papier lui-même : le texte affirme « The insignificant p-value (reported in Tab. 2) indicates that there is no problem with heteroscedasticity and serial correlation », alors que ces deux p-values rejettent l'homoscédasticité. Les tests de normalité rejettent aussi (0.0000 et 0.0167). Seul le test d'autocorrélation de Breusch-Godfrey ne rejette pas (0.2825 et 0.7521)."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun test hors échantillon. Les auteurs écrivent explicitement que la base est « short and in-sample » ; tous les chiffres sont in-sample sur 8,5 mois.",
+    "Le nombre de jours de bourse, donc le nombre d'observations de chaque régression, n'est jamais donné. Les résultats « lundi matin » reposent sur un sous-échantillon dont la taille est inconnue.",
+    "Aucun rendement, Sharpe ou drawdown de stratégie n'est rapporté. Le papier décrit une règle de timing (long si la première demi-heure est positive) mais ne publie aucune performance chiffrée, ni brute ni nette.",
+    "Aucun coût de transaction, aucun spread, aucun slippage n'est quantifié — le papier affirme en introduction que le momentum intraday « endures after reasonable transaction costs are considered » en renvoyant à la littérature, pas à ses propres mesures.",
+    "Les formules (1), (2), (11) et (12) — définition du rendement de demi-heure et rendement des stratégies conditionnelles — ne sont pas rendues par l'extraction ; la définition exacte du rendement (log vs arithmétique) n'est donc pas vérifiable.",
+    "Les seuils de découpage des terciles de volatilité et de volume ne sont pas donnés ; la mesure de volatilité elle-même n'est pas définie.",
+    "Les diagnostics publiés (Tab. 2) rejettent l'homoscédasticité et la normalité, ce que le texte lit à l'envers ; la validité des t-stats annoncées n'est pas établie par le papier.",
+    "Plusieurs incohérences internes non résolues : le texte attribue 0.314 au tercile de volatilité haute alors que Tab. 5 le place en tercile moyen ; le texte dit le CSI300 « statistically significant » là où Tab. 1 Panel B ne porte aucune étoile ; les en-têtes de Tab. 6 nomment IMreturn13 les colonnes CSI300 ; le texte renvoie aux « formulas (12), (13), and (14) » alors que seules (11) et (12) sont définies.",
+    "Aucun ajustement pour tests multiples, alors que le papier rapporte plus d'une trentaine de régressions et n'en retient que les significatives.",
+    "Aucune comparaison avec un benchmark passif ni avec le papier de référence (Gao et al., 2018) sur période commune."
+  ],
+  "transposability": {
+    "what_transfers": "Le motif lui-même : le rendement du premier segment de séance comme prédicteur du rendement du dernier segment de la même séance, et lui seul — l'avant-dernier segment ne porte rien, ce que le papier confirme sur plein échantillon. Transfèrent aussi les trois conditionnements, tous calculables sans regarder le futur : le signe du rendement du premier segment, les terciles de volatilité et de volume du premier segment, et le jour de la semaine. C'est une famille de signaux purement intra-séance, sans donnée fondamentale ni lag de publication, donc implémentable sur nos neuf futures intraday avec un Panel ouvert à la date du jour.",
+    "what_does_not_transfer": [
+      "L'échantillon : 2020-01-01 → 2020-09-11, huit mois et demi d'un unique régime de choc. C'est exactement le défaut que D01 §5 reproche au bloc validation abandonné — un seul régime ne valide qu'un régime. Chez nous ce sous-intervalle est noyé dans le pool 2016–2023, et un résultat mesuré uniquement là ne serait pas un résultat.",
+      "L'objet : deux indices actions au comptant, pas des futures. La première demi-heure du S&P500 est mesurée depuis la clôture de la veille à 16:00, donc elle encapsule le gap overnight ; nos futures cotent quasi en continu et ce gap n'existe pas sous la même forme. Le mécanisme économique invoqué — éviter le « overnight risk » à la clôture — suppose une séance fermée.",
+      "La grille horaire du CSI300 (pause déjeuner, 8 demi-heures, clôture à 15:00) n'a aucun analogue dans notre univers ; tout le Panel B est inexploitable ici.",
+      "La métrique : pentes OLS et R² sur une série temporelle unique par marché. Notre harnais produit un IC, une statistique transversale sur neuf instruments. Un R² de 0.048 sur une série ne se convertit pas en IC, et le papier ne fournit aucune corrélation.",
+      "Le dispositif de trading : long/short ou sortie sur signe du signal, sans modèle de coût. Le papier ne publie aucun rendement de stratégie, donc rien à répliquer côté performance.",
+      "Les t-stats annoncées, sur lesquelles reposent toutes les conclusions : le papier rejette lui-même l'homoscédasticité et la normalité tout en affirmant le contraire, et n'ajuste pas pour tests multiples. Les niveaux de significativité recopiés ici ne doivent pas être traités comme des seuils calibrés.",
+      "Le résultat « lundi matin » (R² 0.478, t = 4.11) : sous-échantillon de taille inconnue, probablement une quarantaine de lundis, sur un seul régime. À traiter comme une hypothèse de régime à pré-enregistrer, jamais comme un résultat acquis.",
+      "L'identification des terciles de volatilité et de volume : sans les seuils ni la définition de la volatilité, la construction n'est pas reproductible en l'état et devra être redéfinie chez nous, ce qui en fait une hypothèse nouvelle et non une réplication."
+    ],
+    "what_aligns_well": "La granularité demi-heure et l'horizon intra-séance tombent juste sur notre couche de données : le signal est une fonction du seul passé de la séance courante, donc l'invariant II est satisfait par construction, sans vigilance. Les conditionnements proposés (signe du premier segment, terciles de volatilité, terciles de volume, jour de la semaine) sont exactement le genre de régimes que la phase 05 doit instruire, et ils sont tous observables à la date de décision. Enfin le papier donne gratuitement une hypothèse nulle utile : sur le plein échantillon, l'avant-dernier segment ne prédit rien — un prédicteur que nous pouvons écarter avant de dépenser des tests dessus."
+  },
+  "internal_notes": {
+    "quality_flag": "Papier faible : in-sample seulement, taille d'échantillon jamais donnée, diagnostics lus à l'envers, plusieurs contradictions entre texte et tableaux, rédaction approximative (confusion systématique entre « slope » et « ℛ2 »). À traiter comme une pointeuse vers Gao et al. (2018), Journal of Financial Economics 129(2), 394–414, qui est la source réelle du motif, et non comme une cible de réplication.",
+    "primary_reference": "Gao, L., Han, Y., Zhengzi Li, S., & Zhou, G. (2018). Market intraday momentum. Journal of Financial Economics, 129(2), 394–414. https://doi.org/10.1016/j.jfineco.2018.05.009"
+  }
+}

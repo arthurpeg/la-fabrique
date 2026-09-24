@@ -243,8 +243,24 @@ registre **entier**, les 56 tests antérieurs compris.
    → `--judge` → refus sur 2 citations (espace inséré au milieu d'un chiffre
    par l'extraction PDF, `"2. 564"`) → renvoyé à la MÊME session (pas une
    retouche manuelle) → **les cinq conditions de `D16` tiennent, essai 2**.
-   Même schéma que Patton & Sheppard en phase 07 (2 itérations). **1 fiche sur
-   35 candidats, 34 restantes** — chacune une session séparée, comme celle-ci.
+   Même schéma que Patton & Sheppard en phase 07 (2 itérations).
+   **Premier lot de 5 produit le 2026-09-24** : 5 sessions isolées en
+   parallèle, **4 vertes au premier essai**, la cinquième refusée sur
+   `signal_construction.value absent` — **cinquième occurrence indépendante de
+   la même faute**, ce qui renforce le point 9 de la liste ci-dessous (c'est un
+   défaut du schéma ou de la consigne, pas cinq erreurs) — puis verte après
+   repassage. **6 fiches sur 35 candidats, 29 restantes.**
+   **`L26` est sortie de ce lot** : l'isolement de l'extracteur a un plafond que
+   personne n'avait écrit — `CLAUDE.md` est injecté dans toute session de ce
+   dossier, et une fiche a cité `D01` §5 qui n'est ni dans sa consigne ni dans
+   `corpus/SCHEMA.md`. Les 17 fiches de la phase 07 ont été produites dans la
+   même condition. Aucune fuite de verdict ni de fiche ; le cadre, oui.
+   **Un candidat est bloqué** : `market-intraday-momentum-apac-evidence` n'a pas
+   de texte `D18` **sous son propre nom** — son PDF est le doublon d'octets de
+   `gao-2018-market-intraday-momentum.pdf`, donc son texte qui fait foi existe
+   sous le nom d'un AUTRE papier (`L20` qui resurgit). L'outil refuse plutôt que
+   de deviner. À trancher à part : renommer touche des artefacts liés à
+   l'entrée 1, donc à la population `G1`-`G4`.
 2. **La matrice de corrélation des 50 signaux** doit être produite **avant**
    d'appliquer `BH` : la procédure suppose une dépendance positive, et plusieurs
    papiers d'intraday momentum donneront des signaux corrélés.

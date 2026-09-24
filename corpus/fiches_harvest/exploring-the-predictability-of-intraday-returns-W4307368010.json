@@ -1,0 +1,240 @@
+{
+  "fiche_id": "exploring-the-predictability-of-intraday-returns-W4307368010",
+  "written": "2026-09-24",
+  "written_by": "session-extraction-harvest-2026-09-24",
+
+  "claim": "Sur les grands indices actions chinois, le rendement de la premiere demi-heure de seance porte de l'information intraday : il predit positivement le rendement de la cinquieme demi-heure (premiere demi-heure de l'apres-midi) et le rendement de la journee entiere (momentum intraday), et negativement la plupart des autres demi-heures (reversal) une fois le modele enrichi du rendement overnight, du rendement de la veille et de dummies lundi/vendredi. Le momentum demi-journee / demi-journee est significatif a 1% sur les trois indices. Mais la regression univariee r1 -> r5, significative en echantillon, echoue hors echantillon ; et les strategies qui exploitent le motif, bien que battant le buy-and-hold a cout nul, perdent tout exces de rendement apres frais. L'auteur conclut que ce sont les couts de transaction qui expliquent la persistance de la predictibilite.",
+
+  "universe": {
+    "description": "Trois indices actions chinois : Shanghai Composite Index, Shenzhen Stock Exchange Component Index, CSI 300. Donnees intraday agregees en huit demi-heures de seance.",
+    "instruments_count": 3,
+    "period": "2019-01-02 -> 2021-09-01",
+    "in_sample_period": "2019-01-02 -> 2020-12-31",
+    "trading_hours": "9:30-11:30 et 13:00-15:00 heure de Pekin, avec une pause dejeuner de 90 minutes",
+    "data_sources": "Wind economic database et Reis database",
+    "asset_class": "indices actions (niveaux d'indice, pas de contrat tradable specifie)",
+    "note": "Le papier ne dit jamais sur quel instrument les strategies de la Table 6 sont censees etre executees : un indice n'est pas tradable tel quel."
+  },
+
+  "horizon": {
+    "value": "30 minutes a une seance complete",
+    "note": "Les regressions predisent soit une demi-heure par une autre demi-heure du meme jour ou de la veille, soit la demi-journee 2 par la demi-journee 1, soit la journee entiere par la premiere demi-heure. Aucune prediction au-dela d'une seance."
+  },
+
+  "signal_construction": {
+    "value": "Trois familles de regressions lineaires sur rendements logarithmiques, puis deux regles de trading construites sur le signe du rendement de la premiere demi-heure. Definition des rendements : rendements logarithmiques ; r1..r8 = les huit demi-heures de seance, rhalf1 / rhalf2 = les deux demi-journees, rwhole = la journee, rn = rendement overnight defini comme la variation en pourcentage du prix d'ouverture du jour t par rapport a la cloture de la veille. Modele univarie meme jour : r_{i,t} = alpha1 + beta1 * r_{j,t} + eps_t (equation 1). Modele univarie retarde : r_{i,t} = alpha2 + beta2 * r_{j,t-1} + eps_t (equation 2). Modele enrichi : r_{i,t} = beta0 + beta1 * r_{1,t} + beta2 * r_{i,t-1} + beta3 * r_{n,t} + beta4 * D1 + beta5 * D5 + eps_t (equation 4), ou D1 vaut 1 le lundi et D5 vaut 1 le vendredi, 0 sinon. Procedure hors echantillon : R2 hors echantillon de type Campbell-Thompson : estimation recursive a partir des m = 487 premiers jours ouvres, evaluation sur les T - m jours restants, comparaison de l'erreur du modele a celle de la moyenne historique. Demi-heures privilegiees : r1, r4, r5, r8 : premiere et derniere demi-heure de la matinee, premiere et derniere demi-heure de l'apres-midi, choisies parce que le volume moyen demi-horaire dessine un W et culmine a ces moments. Regles de trading : MR-strategy : si le rendement de la premiere demi-heure est positif, prise de position longue a la fin de la deuxieme demi-heure ; maintien tant que la premiere demi-heure du jour suivant reste positive ; cloture a la fin de la deuxieme demi-heure sinon. M-strategy : meme regle mais l'entree et la sortie se font a la fin de la premiere demi-heure. BH-strategy : controle : achat en debut de periode d'echantillon, detention jusqu'a la fin. Aucun seuil, aucune normalisation, aucune ponderation : le signal de trading est le simple signe de r1. Les regressions, elles, ne sont pas converties en signal.",
+    "description": "Trois familles de regressions lineaires sur rendements logarithmiques, puis deux regles de trading construites sur le signe du rendement de la premiere demi-heure.",
+    "returns_definition": "rendements logarithmiques ; r1..r8 = les huit demi-heures de seance, rhalf1 / rhalf2 = les deux demi-journees, rwhole = la journee, rn = rendement overnight defini comme la variation en pourcentage du prix d'ouverture du jour t par rapport a la cloture de la veille.",
+    "model_univariate_same_day": "r_{i,t} = alpha1 + beta1 * r_{j,t} + eps_t (equation 1)",
+    "model_univariate_lagged": "r_{i,t} = alpha2 + beta2 * r_{j,t-1} + eps_t (equation 2)",
+    "model_refined": "r_{i,t} = beta0 + beta1 * r_{1,t} + beta2 * r_{i,t-1} + beta3 * r_{n,t} + beta4 * D1 + beta5 * D5 + eps_t (equation 4), ou D1 vaut 1 le lundi et D5 vaut 1 le vendredi, 0 sinon.",
+    "out_of_sample_procedure": "R2 hors echantillon de type Campbell-Thompson : estimation recursive a partir des m = 487 premiers jours ouvres, evaluation sur les T - m jours restants, comparaison de l'erreur du modele a celle de la moyenne historique.",
+    "focus_half_hours": "r1, r4, r5, r8 : premiere et derniere demi-heure de la matinee, premiere et derniere demi-heure de l'apres-midi, choisies parce que le volume moyen demi-horaire dessine un W et culmine a ces moments.",
+    "trading_rules": {
+      "MR-strategy": "si le rendement de la premiere demi-heure est positif, prise de position longue a la fin de la deuxieme demi-heure ; maintien tant que la premiere demi-heure du jour suivant reste positive ; cloture a la fin de la deuxieme demi-heure sinon.",
+      "M-strategy": "meme regle mais l'entree et la sortie se font a la fin de la premiere demi-heure.",
+      "BH-strategy": "controle : achat en debut de periode d'echantillon, detention jusqu'a la fin."
+    },
+    "note": "Aucun seuil, aucune normalisation, aucune ponderation : le signal de trading est le simple signe de r1. Les regressions, elles, ne sont pas converties en signal."
+  },
+
+  "reported_results": [
+    {
+      "name": "half_day_momentum_coefficient_shanghai_composite",
+      "value": 0.1294,
+      "unit": "coefficient de regression",
+      "quoted": "the regression coefficient is 0.1294,",
+      "note": "Coefficient de rhalf1 sur rhalf2 (Shanghai Composite). Significatif a 1% ; le papier annonce la meme conclusion sur les trois indices (0.1187 Shenzhen, 0.1009 CSI 300, lus dans la Table 3 mise a plat)."
+    },
+    {
+      "name": "prev_day_return_on_second_half_day_coefficient",
+      "value": -0.0534,
+      "unit": "coefficient de regression",
+      "quoted": "is -0.0534, which means that the daily rate of return of the previous day",
+      "quoted_source": "is -0.0534, which means that the daily rate of return of t he previous day",
+      "quoted_repair": "ocr",
+      "note": "Effet negatif du rendement plein-jour de la veille sur la demi-journee 2 du lendemain (Shanghai Composite). L'extraction coupe le mot 'the' en 't he'."
+    },
+    {
+      "name": "r1_predicts_r5_coefficient_shanghai_composite",
+      "value": 0.1011,
+      "unit": "coefficient de regression",
+      "quoted": "0.1011*** (3.0491)",
+      "quoted_source": "0.1011***",
+      "quoted_repair": "table",
+      "note": "Table 3, deuxieme ligne : coefficient de r1 sur r5 pour le Shanghai Composite, t-stat 3.0491, significatif a 1%. La Table est mise a plat par l'extraction, les en-tetes de colonnes ont disparu ; l'attribution a r1 -> r5 vient du texte qui commente explicitement cette ligne."
+    },
+    {
+      "name": "only_significant_half_hour_pair",
+      "value": null,
+      "quoted": "which indicates that there is no significant correlation between the half -hour returns",
+      "quoted_source": "which indicates that there is no significant correlation between the half -hour returns",
+      "quoted_repair": "ocr",
+      "note": "Hors du couple r1 -> r5, aucune des neuf regressions demi-heure de la Table 3 n'est significative. L'extraction insere une espace dans 'half -hour'."
+    },
+    {
+      "name": "univariate_out_of_sample_failure",
+      "value": null,
+      "quoted": "found that the intraday momentum does not exist, so the univariate model cannot be used for",
+      "note": "Resultat central pour nous : le seul couple demi-heure significatif en echantillon ne survit pas au test hors echantillon (R2_OS non significatif, Table 4). Le modele univarie est declare inutilisable en prediction."
+    },
+    {
+      "name": "refined_model_r1_coefficient_largest_negative",
+      "value": -0.1357,
+      "unit": "coefficient de regression",
+      "quoted": "-0.1357*** (-4.313)",
+      "quoted_source": "-0.1357***",
+      "quoted_repair": "table",
+      "note": "Premiere valeur de la premiere ligne de la Table 5 (coefficient de r1 dans le modele enrichi), t-stat -4.313. Les en-tetes de colonnes ont ete perdus par l'extraction : la ligne est identifiee comme celle de beta1 par le texte, mais l'affectation precise de la colonne a une demi-heure donnee n'est pas verifiable dans le texte extrait."
+    },
+    {
+      "name": "intraday_reversal_after_first_half_hour",
+      "value": null,
+      "quoted": "which indicates that there is a reversal effect in the day",
+      "note": "Dans le modele enrichi, les coefficients de r1 sur les autres demi-heures sont majoritairement negatifs et leur valeur absolue decroit au fil de la journee."
+    },
+    {
+      "name": "refined_model_daily_return_oos_pvalue",
+      "value": 0.0000000214,
+      "unit": "p-value",
+      "spelled_out": "0.0000000214",
+      "quoted": "is only 0.0000000214 for daily returns.",
+      "note": "p-value du R2 hors echantillon du modele enrichi quand la variable dependante est le rendement plein-jour. 'spelled_out' est utilise parce que JSON serialise cette valeur en 2.14e-08, forme qu'aucune machine ne retrouverait dans la citation."
+    },
+    {
+      "name": "mr_strategy_average_annual_return_pct",
+      "value": 16.51,
+      "unit": "% par an",
+      "quoted": "which is lower than 16.51% of MR-Strategy.",
+      "note": "Moyenne 2019-2021, avant couts de transaction."
+    },
+    {
+      "name": "m_strategy_average_annual_return_pct",
+      "value": 15.43,
+      "unit": "% par an",
+      "quoted": "The average yield of M-Strategy is 15.43%,",
+      "note": "Moyenne 2019-2021, avant couts de transaction."
+    },
+    {
+      "name": "bh_strategy_average_annual_return_pct",
+      "value": 12.22,
+      "unit": "% par an",
+      "quoted": "Average : MR-strategy 16.51% / 115 trades, M-strategy 15.43% / 114 trades, BH-strategy 12.22%",
+      "quoted_source": "Average 16.51% 115 15.43% 114 12.22%",
+      "quoted_repair": "table",
+      "note": "Ligne 'Average' de la Table 6, lue en cellules par l'extraction. Le buy-and-hold sert de controle ; l'ecart brut des strategies actives sur lui est donc d'environ 4.3 points par an."
+    },
+    {
+      "name": "mr_strategy_trades_per_year",
+      "value": 115,
+      "unit": "aller-retours par an",
+      "quoted": "frequently, with an average of 115 (114) trades per year",
+      "note": "115 pour MR-Strategy, 114 pour M-Strategy. C'est ce compte qui tue la strategie une fois les frais appliques."
+    },
+    {
+      "name": "a_share_commission_pct",
+      "value": 0.03,
+      "unit": "% par cote",
+      "quoted": "0.03%, which is levied bilaterally.",
+      "note": "Commission de courtage actions A, prelevee des deux cotes. Le droit de timbre (0,1%, unilateral cote vendeur) s'y ajoute."
+    },
+    {
+      "name": "round_trip_cost_pct",
+      "value": 0.16,
+      "unit": "% par aller-retour",
+      "quoted": "the total cost of a buy and sell transaction is about 0.16%.",
+      "note": "Commission bilaterale plus droit de timbre. Valeur 'situation actuelle' au moment de l'ecriture, non point-in-time sur la periode d'echantillon."
+    },
+    {
+      "name": "annual_cost_drag_pct",
+      "value": 9.6,
+      "unit": "% par an",
+      "quoted": "and M-strategy is 9.6%, which is greater than the excess return obtained by MR-Strategy.",
+      "note": "Cout annuel moyen des deux strategies, superieur a leur exces de rendement sur le buy-and-hold : conclusion centrale du papier."
+    },
+    {
+      "name": "total_sample_trading_days",
+      "value": 650,
+      "unit": "jours ouvres",
+      "quoted": "sample is from January 2, 2019 to September 1, 2021, a total of 650 working days",
+      "note": "Echantillon total, trois indices."
+    },
+    {
+      "name": "in_sample_trading_days",
+      "value": 487,
+      "unit": "jours ouvres",
+      "quoted": "in the sample is from January 2, 2019 to December 31, 2020, a total of 487 working days.",
+      "note": "Fenetre d'estimation ; il reste donc 163 jours pour le test hors echantillon, soit environ huit mois."
+    },
+    {
+      "name": "first_half_hour_highest_return",
+      "value": null,
+      "quoted": "and the first half -hour has the highest rate of return.",
+      "note": "Statistique descriptive : r1 a la moyenne la plus elevee et l'ecart-type le plus eleve des huit demi-heures ; r5 et r6 sont en moyenne negatives."
+    }
+  ],
+
+  "what_is_missing": [
+    "Aucun IC, aucun rang, aucune mesure de correlation predictive au sens du harnais : le papier ne produit que des coefficients de regression, des t-stats et des rendements annuels bruts.",
+    "Aucun Sharpe, aucune volatilite de strategie, aucun drawdown : la Table 6 ne donne que le rendement annuel et le nombre de trades.",
+    "L'instrument reellement tradable n'est jamais nomme : les strategies sont evaluees sur des niveaux d'indice, sans futures, sans ETF, sans tracking error.",
+    "Les en-tetes de colonnes des Tables 2, 3, 4 et 5 ont disparu de l'extraction ; l'affectation de plusieurs coefficients a une demi-heure precise n'est verifiable que par le texte courant.",
+    "Les valeurs de R2_OS de la Table 4 (0.8416 / 0.9992 / 0.5453 avec p-values entre crochets) sont annoncees non significatives sans que le test employe soit nomme ni sa statistique definie.",
+    "Aucune correction de tests multiples : au moins neuf regressions demi-heure par indice, trois indices, puis huit regressions du modele enrichi, et le seuil de significativite reste 1%/5% nominal.",
+    "Le nombre de specifications essayees avant d'arreter le modele enrichi n'est pas rapporte ; le choix des quatre demi-heures 'speciales' est justifie a posteriori par un graphique de volume.",
+    "Les couts sont appliques comme un forfait uniforme de 0,16% par aller-retour, sans spread, sans impact de marche, sans slippage, sans variation dans le temps alors que le papier reconnait que ces couts changent.",
+    "Le passage du coefficient de regression a la regle de trading n'est pas justifie : les strategies n'utilisent que le signe de r1, pas le modele estime.",
+    "Aucune analyse de sensibilite a la periode : 2019-2021 couvre le choc COVID, et 2020 porte a lui seul 30,62% de rendement MR contre 8,56% en 2021.",
+    "La contrainte T+1 du marche actions chinois, qui interdit de revendre le jour meme, n'est jamais discutee alors qu'elle conditionne la faisabilite de MR-Strategy.",
+    "Aucun code, aucune donnee, aucun detail d'implementation ; la reproduction exacte est impossible a partir du papier."
+  ],
+
+  "transposability": {
+    "what_transfers": [
+      "Le motif testable lui-meme : le rendement de la premiere barre de seance conditionne-t-il le rendement du reste de la seance ? C'est une hypothese time-series, formulable instrument par instrument sur nos neuf futures intraday, et evaluable par le harnais en IC.",
+      "La forme du modele enrichi : ajouter au rendement de la premiere barre le rendement overnight et le rendement de la veille comme variables explicatives separees est directement codable et sans look-ahead si les barres sont lues dans l'ordre.",
+      "La lecon methodologique, qui est le vrai apport : un couple significatif a 1% en echantillon (t = 3.05) peut etre non significatif hors echantillon sur la meme serie. A pre-enregistrer comme attente, pas comme surprise.",
+      "La discipline de confronter l'exces de rendement au cout de rotation avant de conclure : un signal a 115 aller-retours par an doit porter un cout par trade explicite pour etre juge."
+    ],
+    "what_does_not_transfer": [
+      "Le decoupage en huit demi-heures avec pause dejeuner de 90 minutes est propre au marche chinois ; nos futures n'ont ni cette grille ni cette coupure, et le role d'amorcage attribue a r5 (reprise apres dejeuner) n'a aucun equivalent chez nous.",
+      "Le modele de couts : commission A-share de 0,03% bilaterale et droit de timbre de 0,1% unilateral n'existent pas sur des futures, ou le cout est un montant par contrat plus un demi-tick de spread. Les 9,6% par an, donc la conclusion du papier, ne se transposent pas et doivent etre recalcules chez nous.",
+      "La metrique : rendement annuel net d'une strategie longue-seulement. La notre est un IC sur score. Aucun chiffre de la Table 6 n'est comparable a une sortie du harnais.",
+      "Les instruments : trois indices actions chinois fortement correles entre eux, ce qui fait un pari unique presente comme trois confirmations. Nos neuf futures couvrent plusieurs classes d'actifs et la 'confirmation sur trois indices' du papier n'est pas une validation croisee.",
+      "La contrainte T+1 et les limites de variation de 10% du marche actions chinois, qui faconnent le motif intraday observe et sont absentes de nos marches a terme.",
+      "La direction long-seulement des strategies MR et M : elles capturent partiellement la derive haussiere du marche, ce que le buy-and-hold a 12,22% montre. Un score symetrique long/short chez nous n'herite pas de cette prime.",
+      "La definition du rendement overnight comme ouverture sur cloture precedente : sur des futures a seance quasi continue ou a session nocturne, il n'y a pas de gap equivalent et la variable doit etre redefinie, donc reappuyee sur une decision ecrite.",
+      "La taille d'echantillon : 650 jours sur trois series correlees, dont 163 jours hors echantillon. Trop court pour le decoupage en regimes que nous prevoyons en etape 05."
+    ],
+    "what_aligns_well": [
+      "La granularite demi-heure est proche de nos barres intraday, et l'horizon ne depasse jamais une seance : aucun risque d'horizon multi-jours a reconcilier.",
+      "Le papier est explicitement time-series et non cross-sectional, comme notre cadre a neuf instruments juges chacun pour soi.",
+      "Il separe une phase en echantillon d'une phase hors echantillon avec une frontiere temporelle fixe, esprit compatible avec notre pool walk-forward purge / holdout scelle.",
+      "Il publie son resultat negatif apres couts au lieu de s'arreter au t-stat, ce qui en fait une cible de replication honnete : on sait d'avance que l'effet est tenu et qu'il faudra un IC modeste pour le confirmer.",
+      "Le signal est deterministe et sans look-ahead par construction : il n'utilise que des barres deja closes au moment de la decision."
+    ]
+  },
+
+  "cost_model": {
+    "description": "Le papier porte un modele de couts explicite, rare et utile a garder.",
+    "commission_pct_per_side": 0.03,
+    "stamp_duty_pct_seller_only": 0.1,
+    "round_trip_pct": 0.16,
+    "annual_turnover_trades": 115,
+    "annual_cost_drag_pct": 9.6,
+    "point_in_time": false,
+    "note": "Les valeurs sont celles en vigueur au moment de la redaction, pas celles de la periode 2019-2021 ; le papier le dit lui-meme. Elles ne sont pas transposables a nos futures et ne doivent jamais etre reprises comme parametres du catalogue."
+  },
+
+  "source": {
+    "authors": "Yanbing Xu",
+    "title": "Exploring the predictability of intraday returns in China's stock market",
+    "year": 2022,
+    "venue": "BCP Business & Management, FMEME 2022, Volume 30 (2022), pp. 735-743",
+    "source_url": "https://bcpublication.org/index.php/BM/article/download/2524/2497",
+    "pdf": "corpus/pdf/exploring-the-predictability-of-intraday-returns-W4307368010.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": false,
+    "peer_reviewed_note": "Volume d'actes de conference (FMEME 2022) publie par BCP. Le texte ne porte aucune trace d'un processus d'arbitrage, et un volume d'actes n'est pas une revue a comite de lecture. Marque false faute de preuve du contraire, non parce que le papier affirme ne pas l'etre."
+  }
+}

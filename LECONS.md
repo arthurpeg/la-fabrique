@@ -786,3 +786,54 @@ appelle `evaluate(` ou `registry.append` — `grep` d'une seconde — plutôt qu
 fier à une phrase d'`ETAT.md`. C'est `L21` appliquée au texte qui décrit les
 scripts : relancer plutôt que recopier vaut aussi pour les affirmations sur le
 comportement d'un script, qui se vérifient en le lisant, pas en le croyant.
+
+---
+
+## L26 — L'isolement de l'extracteur a un plafond que personne n'avait écrit : `CLAUDE.md`
+
+**Le 2026-09-24**, premier lot de fiches de la phase 09, produit par des sessions
+séparées ne recevant que leur consigne.
+
+**Ce qu'on croyait.** `D16` § Qui peut être l'extracteur énumère ce que
+l'extracteur ne doit pas voir — `AMORCE.md` qui porte le verdict de triage,
+`corpus/fiches/` qui porte les réponses, les décisions qui racontent ce que les
+papiers ont donné — et le protocole était réputé tenu dès lors qu'on ne lui
+donnait que sa consigne. `corpus/SCHEMA.md` a même été purgé de son contenu réel
+le 2026-09-21 pour cette raison (`L17`).
+
+**Ce qui était vrai.** Une fiche du lot écrit, dans `transposability`, *« C'est
+exactement le défaut que `D01` §5 reproche au bloc validation abandonné — un
+seul régime ne valide… »*. Or `D01` n'apparaît **ni dans `corpus/SCHEMA.md`, ni
+dans la consigne** : `grep -c D01` rend **0** sur les deux. L'extracteur n'a rien
+lu d'interdit — il a reçu `CLAUDE.md`, qui est **injecté automatiquement dans
+toute session ouverte dans ce dossier**, et dont les lignes 119-120 disent mot
+pour mot : *« le bloc `validation` contigu a été abandonné par `D01` §5, deux ans
+d'un unique régime baissier ne validant qu'un régime »*.
+
+**Ce que ça touche, et ce que ça ne touche pas.** `CLAUDE.md` ne porte **aucun
+verdict de triage, aucune fiche, aucun résultat de papier** : les trois fuites
+que `D16` nomme restent fermées, et la fidélité aux sources (`F2`, `F3`) n'est
+pas en cause. Ce que l'extracteur reçoit en plus, c'est le **cadre** — invariants,
+vocabulaire, définition de l'univers, raisons de quelques décisions. C'est
+probablement inoffensif, et en partie utile : la consigne lui dit déjà que notre
+univers est de neuf futures intraday. Mais **ce n'est pas ce que le protocole
+prétendait**.
+
+**Comment on s'en est aperçu.** En lisant une fiche produite plutôt qu'en lisant
+son verdict. Les cinq conditions de `D16` étaient vertes ; aucun garde ne pouvait
+voir ceci, puisque aucun ne compare ce que l'extracteur savait à ce qu'il aurait
+dû savoir. Le symptôme à reconnaître : **une sortie qui cite une source qu'on ne
+lui a pas donnée.** C'est la seule trace qu'une fuite de contexte laisse.
+
+**Ce que ça généralise, et c'est le vrai coût.** Les **17 fiches de la phase 07
+ont été produites dans exactement la même condition** — même dossier, même
+injection — et le § Journal de `D16` n'en dit rien, parce que personne ne l'avait
+vu. La porte 07 n'est pas invalidée : ce qu'elle mesure (l'extracteur produit
+sans retouche des fiches fidèles à leur source) reste mesuré. Mais son énoncé
+d'isolement était plus large que la réalité, et c'est la quatrième fois que ce
+dépôt rencontre le même motif — `F16`, `F25`, `F48` : **on ne décrit pas une
+étanchéité qu'on n'a pas vérifiée**. Le réflexe : pour toute frontière
+d'information qu'un protocole déclare, se demander *ce que le mécanisme d'exécution
+ajoute de lui-même*, et l'écrire — un fichier d'instructions de projet, une
+variable d'environnement, un cache partagé se glissent sous la porte sans que
+personne n'ait désobéi.
