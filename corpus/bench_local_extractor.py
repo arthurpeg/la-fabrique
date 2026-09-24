@@ -39,6 +39,7 @@ pas la sienne, et on conclurait faux. Le banc fixe `num_ctx`, mesure
 tronquée** — le cas est inscrit `contexte_depasse`, jamais confondu avec un échec
 de fidélité.
 
+    python corpus/bench_local_extractor.py --machine   # CETTE machine vs la reference
     python corpus/bench_local_extractor.py --list
     python corpus/bench_local_extractor.py --run <fiche_id> [--model qwen3:8b]
     python corpus/bench_local_extractor.py --report
@@ -198,6 +199,130 @@ def ecrire_resultats(res: dict) -> None:
     )
 
 
+# Le poste sur lequel la question a ete posee, MESURE le 2026-09-24. C'est un
+# fait D'UN POSTE, pas un fait du depot — le depot s'est deja trompe trois fois
+# en ecrivant l'un pour l'autre (les PDF de `corpus/pdf/`, `L20`, `L21`). Il est
+# donc date, nomme, et il ne sert qu'a etre COMPARE, jamais a etre cru.
+REFERENCE = {
+    "poste": "arthur (2026-09-24)",
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "vram_go": 4.0,
+    "ram_go": 15.9,
+    "cpu": "Intel i5-10400F",
+    "constat": "4 Go de VRAM : Qwen3-8B (5,2 Go) n'y tient meme pas SANS cache KV. "
+    "Tout deborde en RAM, Windows gonfle son fichier d'echange, et un seul essai "
+    "sur le plus petit papier depasse 25 minutes.",
+}
+
+# Qwen3-8B en Q4 : 5,2 Go de poids, et un cache KV de ~144 ko par token.
+POIDS_8B_GO = 5.2
+KV_KO_PAR_TOKEN = 144
+VRAM_TOUT_LE_CORPUS = 12.0  # couvre num_ctx 40960 : 5,2 + 5,6 = 10,8, plus la marge
+VRAM_PETITS_PAPIERS = 8.0  # couvre num_ctx ~18432 : 5,2 + 2,5 = 7,7
+
+
+def _go(valeur: float) -> str:
+    return f"{valeur:.1f} Go" if valeur else "inconnu"
+
+
+def sonder_machine() -> dict:
+    """Ce que CETTE machine peut faire. Ce qu'on ne sait pas vaut `None`, jamais
+    une valeur plausible — l'interdit constitutionnel vaut ici comme ailleurs."""
+    import shutil
+
+    profil = {"gpu": None, "vram_go": None, "ram_go": None, "disque_libre_go": None}
+
+    try:
+        r = subprocess.run(
+            ["nvidia-smi", "--query-gpu=name,memory.total", "--format=csv,noheader,nounits"],
+            capture_output=True, text=True, timeout=20,
+        )
+        if r.returncode == 0 and r.stdout.strip():
+            nom, mib = (x.strip() for x in r.stdout.strip().splitlines()[0].split(","))
+            profil["gpu"] = nom
+            profil["vram_go"] = round(int(mib) / 1024, 1)
+    except Exception:
+        pass
+
+    try:
+        meminfo = Path("/proc/meminfo")
+        if meminfo.is_file():
+            for ligne in meminfo.read_text().splitlines():
+                if ligne.startswith("MemTotal:"):
+                    profil["ram_go"] = round(int(ligne.split()[1]) / 1024 / 1024, 1)
+                    break
+        else:
+            r = subprocess.run(
+                ["powershell", "-NoProfile", "-Command",
+                 "(Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory"],
+                capture_output=True, text=True, timeout=30,
+            )
+            if r.returncode == 0 and r.stdout.strip().isdigit():
+                profil["ram_go"] = round(int(r.stdout.strip()) / 1024**3, 1)
+    except Exception:
+        pass
+
+    try:
+        profil["disque_libre_go"] = round(shutil.disk_usage(REPO).free / 1024**3, 1)
+    except Exception:
+        pass
+
+    return profil
+
+
+def do_machine() -> int:
+    """Compare CETTE machine au poste de reference, par la mesure.
+
+    Ce mode existe pour une raison precise : la question « ta machine est-elle
+    meilleure que la mienne ? » se repond par un chiffre releve, pas par une
+    memoire de specifications. `L21` — relancer plutot que recopier.
+    """
+    p = sonder_machine()
+    print("CETTE MACHINE\n")
+    print(f"  GPU            {p['gpu'] or 'aucun GPU NVIDIA detecte'}")
+    print(f"  VRAM           {_go(p['vram_go'])}")
+    print(f"  RAM            {_go(p['ram_go'])}")
+    print(f"  disque libre   {_go(p['disque_libre_go'])}")
+
+    print(f"\nPOSTE DE REFERENCE — {REFERENCE['poste']}\n")
+    print(f"  GPU            {REFERENCE['gpu']}")
+    print(f"  VRAM           {_go(REFERENCE['vram_go'])}")
+    print(f"  RAM            {_go(REFERENCE['ram_go'])}")
+    print(f"\n  {REFERENCE['constat']}")
+
+    vram = p["vram_go"]
+    print("\nVERDICT\n")
+    if vram is None:
+        print("  VRAM INCONNUE — sans GPU NVIDIA detecte, `nvidia-smi` ne repond pas.")
+        print("  Un 8B tournerait sur processeur, donc plus lentement encore que la")
+        print("  reference. Ne pas lancer le corpus entier sans avoir mesure UN papier.")
+        return 1
+
+    ecart = vram / REFERENCE["vram_go"]
+    print(f"  VRAM : {_go(vram)} contre {_go(REFERENCE['vram_go'])} — "
+          f"{ecart:.1f}x la reference")
+    if vram >= VRAM_TOUT_LE_CORPUS:
+        print(f"  AU-DESSUS DU SEUIL ({_go(VRAM_TOUT_LE_CORPUS)}) : Qwen3-8B tient en VRAM")
+        print("  pour TOUS les papiers du lot, y compris les 40 960 tokens de contexte.")
+    elif vram >= VRAM_PETITS_PAPIERS:
+        print(f"  SEUIL PARTIEL ({_go(VRAM_PETITS_PAPIERS)}) : Qwen3-8B tient pour les")
+        print("  PETITS papiers seulement. Les gros deborderont — le banc les inscrira")
+        print("  `contexte_depasse` plutot que de rendre un verdict faux.")
+    else:
+        print(f"  SOUS LE SEUIL : {_go(vram)} ne tient pas les 5,2 Go de poids du 8B.")
+        print("  Meme situation que la reference. Un 4B est le maximum realiste.")
+
+    if p["disque_libre_go"] is not None and p["disque_libre_go"] < 15:
+        print(f"\n  ATTENTION DISQUE : {_go(p['disque_libre_go'])} libres. Il faut ~6 Go")
+        print("  pour le modele, ET de la marge : sous pression memoire Windows gonfle")
+        print("  son fichier d'echange. Sur la reference, 12 Go libres sont tombes a 1,4.")
+
+    print("\n  CE QUE CE VERDICT NE DIT PAS : que la fiche PASSE. La VRAM decide si le")
+    print("  modele tourne, jamais s'il sait citer mot pour mot. Cela se mesure avec")
+    print("  `--run`, sur un papier, et se lit dans `--report`.")
+    return 0
+
+
 def do_list() -> int:
     consignes = sorted(CONSIGNES.glob("*.md"))
     print(f"{len(consignes)} consigne(s) disponibles :\n")
@@ -353,11 +478,14 @@ def do_report() -> int:
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description="Banc d'essai — extracteur local")
     ap.add_argument("--list", action="store_true")
+    ap.add_argument("--machine", action="store_true")
     ap.add_argument("--run", metavar="FICHE_ID")
     ap.add_argument("--report", action="store_true")
     ap.add_argument("--model", default=DEFAULT_MODEL)
     a = ap.parse_args(argv)
 
+    if a.machine:
+        return do_machine()
     if a.list:
         return do_list()
     if a.run:

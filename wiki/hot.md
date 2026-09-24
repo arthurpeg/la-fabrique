@@ -25,7 +25,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Décision la plus récente** | `decisions/DECISION-26-encadrement-des-frais.md` — les frais par contrat sont |
 | **Tests au registre** | 169 |
 | **Idées abandonnées recensées** | 55 |
-| **Entrées au journal** | 63 |
+| **Entrées au journal** | 64 |
 
 ## Ce qui bloque
 
@@ -45,6 +45,55 @@ Relancer plutôt que recopier (`L21`) :
 python scripts/gate_07.py      # G1 = G2 = G3 = G4 = 0
 python scripts/gate_08.py      # 1 signal, 6/6, aucune retouche
 ```
+
+### SI TU ARRIVES SUR UNE AUTRE MACHINE — à lancer en premier
+
+Une question ouverte depuis le 2026-09-24 : **l'extraction peut-elle passer à un
+modèle local et gratuit ?** Elle ne se tranche pas en lisant, elle se mesure, et
+**le matériel décide avant le modèle**. Première commande, avant toute
+discussion :
+
+```
+python corpus/bench_local_extractor.py --machine
+```
+
+Elle relève GPU, VRAM, RAM et disque de **cette** machine-ci, les compare au
+poste de référence (mesuré, daté, nommé — c'est un fait d'un poste, jamais un
+fait du dépôt) et rend un verdict. Les seuils, calculés depuis le poids de
+Qwen3-8B (5,2 Go) et son cache KV (~144 ko/token) :
+
+| VRAM | Ce que ça permet |
+|---|---|
+| **≥ 12 Go** | Qwen3-8B tient pour **tout** le lot, `num_ctx` 40 960 compris |
+| **8 à 12 Go** | les **petits** papiers seulement ; les gros s'inscrivent `contexte_depasse` |
+| **< 8 Go** | comme la référence — un **4B** est le maximum réaliste |
+
+**Le poste de référence est sous le seuil** : GTX 1650, 4 Go de VRAM. Qwen3-8B y
+a été téléchargé, constaté inutilisable et **retiré** ; un `num_ctx` plat à
+40 960 y a fait tomber le disque de 12 Go à **1,4 Go** (Windows gonfle son
+fichier d'échange), et un seul essai sur le plus petit papier a dépassé
+**25 minutes** sans rendre la main.
+
+Si ta machine est au-dessus du seuil, la mesure qui manque est celle-ci — un
+papier, le même juge, la même consigne :
+
+```
+ollama pull qwen3:8b
+python corpus/bench_local_extractor.py --run performance-of-time-series-momentum-strategy-us-W4388535504 --model qwen3:8b
+python corpus/bench_local_extractor.py --report
+```
+
+**La règle de décision est écrite AVANT la mesure**, comme le veut l'invariant IV :
+
+| Résultat | Conclusion |
+|---|---|
+| vert en ≤ 2 essais | le local gagne — l'extraction bascule, ~3 M de tokens économisés |
+| vert en 3 essais | utilisable pour dégrossir, à re-juger |
+| `F2` cassé à chaque essai | la citation mot pour mot ne passe pas à cette taille — c'est non |
+| `contexte_depasse` | la VRAM ne suffit pas pour ce papier |
+
+**Référence à battre, mesurée et non recopiée** : **1,33 essai par fiche**,
+6 fiches vertes sur 6, par un modèle de frontière (`corpus/PRODUCED_harvest.json`).
 
 ### Ce que la phase 09 demande
 
@@ -580,6 +629,7 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-09-24 | `outillage` | **BANC D'ESSAI DE L'EXTRACTEUR LOCAL** — `corpus/bench_local_extractor.py`. Question posee apres avoir chiffre le cout de l'extraction : le projet ne fait tourner EN LOCAL qu'une seule chose, `BAAI/bge-base-en-v1.5` via `fastembed` pour les embeddings ; les trois etapes de raisonnement (trieur `D15`, extracteur `D16`, codeur `D23`) ont toujours ete des sessions d'un modele de frontiere, et personne ne l'avait ecrit. L'invariant I dit « le LLM propose, le code deterministe tranche » — il ne dit pas LEQUEL, et l'extraction est l'etape la mieux placee pour un modele faible puisque `score_extraction.py` la juge a tolerance zero : un extracteur faible echoue BRUYAMMENT et recommence | EXPERIENCE CONTROLEE : meme consigne octet pour octet, meme juge, meme boucle de reprise — seul le modele change. Reference a battre, mesuree : **1,33 essai par fiche**, 6 vertes sur 6. LE MATERIEL A TRANCHE AVANT LE MODELE. Poste : GTX 1650, **4 Go de VRAM**, 16 Go de RAM. Qwen3-8B pese 5,2 Go : il n'y tient meme pas SANS cache KV. Telecharge, constate, **retire**. INCIDENT CAUSE PAR MA PREMIERE CONFIGURATION, et inscrit parce qu'il coute : un `num_ctx` PLAT a 40960 impose un cache KV de ~5,9 Go quel que soit le papier (~144 ko/token pour Qwen3-4B) — Windows a gonfle son fichier d'echange a 11 Go, **le disque est tombe de 12 Go a 1,4 Go libres**, et un seul appel sur le PLUS PETIT papier n'avait pas rendu la main apres 25 minutes. Corrige : le contexte se calcule PAR PAPIER (18432 a 40960), le garde de troncature reste inconditionnel — une invite rabotee ferait echouer `F2` pour une raison qui n'est pas celle du modele, et on conclurait faux. DEUX MESURES A VIDE : ~8 tokens/s en generation, et **Qwen3 ignore `think: false` COMME `/no_think`** — il deverse son raisonnement dans la reponse, ce que l'extracteur JSON tolere mais qui double le temps. MODE `--machine` AJOUTE : il releve GPU/VRAM/RAM/disque et les compare au poste de reference, **date et nomme**, parce que c'est un fait D'UN POSTE et que le depot s'est deja trompe trois fois en ecrivant l'un pour l'autre (`L20`, `L21`). Seuils calcules : >= 12 Go de VRAM pour tout le lot, 8-12 Go pour les petits papiers, en dessous un 4B est le maximum. La regle de decision est ecrite AVANT la mesure (invariant IV) et vit dans `ETAT.md` § Si tu arrives sur une autre machine |
 | 2026-09-24 | `extraction` | **PREMIER LOT DE 5 FICHES MOISSONNEES**, cinq sessions isolees lancees en parallele, chacune ne lisant que sa consigne et ecrivant sa fiche elle-meme (le JSON ne transite pas par la session qui orchestre — economie de contexte, et une transcription en moins ou se glisser une retouche) | **4 VERTES AU PREMIER ESSAI**, la cinquieme refusee sur `signal_construction.value absent` puis verte apres repassage de sa propre session. Total : 6 fiches sur 35 candidats, 29 restantes. LA FAUTE DU CINQUIEME EST LA CINQUIEME OCCURRENCE INDEPENDANTE DE LA MEME : `ETAT.md` notait deja « 4 extracteurs independants sur 6 » ecrivant un objet structure sans la cle `value` que le schema exige. Cinq fois la meme faute chez cinq sessions qui ne se sont jamais parle n'est pas cinq erreurs — c'est un defaut du schema ou de la consigne, et il attend toujours sa decision. UN CANDIDAT BLOQUE, et l'outil a refuse plutot que de deviner : `market-intraday-momentum-apac-evidence` n'a pas de texte `D18` sous son propre nom, son PDF etant le doublon d'octets de `gao-2018-market-intraday-momentum.pdf` — son texte qui fait foi existe donc sous le nom d'un AUTRE papier. C'est `L20` qui resurgit ; le renommage touche des artefacts de l'entree 1, donc la population `G1`-`G4`, et se tranche a part. CONTENU : le lot porte 28, 19, 18, 19 et 20 resultats cites. Le plus fort est Li, Sakkas & Urquhart (2022), replication internationale de Gao et al. sur 16 marches — pente poolee 2,86, `t` = 7,53, significatif dans 12 marches sur 16. Trois des cinq annoncent leur propre mort apres couts, ce qui est une information et non un echec. **`L26` EST SORTIE DE CE LOT** : une fiche cite `D01` §5, absent de sa consigne ET de `corpus/SCHEMA.md` (`grep -c` = 0 sur les deux) — la source est `CLAUDE.md`, injecte automatiquement dans TOUTE session de ce dossier, lignes 119-120. Aucun agent n'a desobei ; l'isolement que `D16` decrit a un plafond que personne n'avait ecrit, et **les 17 fiches de la phase 07 ont ete produites dans la meme condition**. Les trois fuites que `D16` nomme (verdict de triage, fiches, resultats des papiers) restent fermees |
 | 2026-09-24 | `outillage` | `corpus/extract_fiche_harvest.py` ECRIT — soeur d'`extract_fiche.py` pour la population moissonnee (35 candidats promus). DECOUVERTE CRITIQUE avant d'ecrire une seule fiche : `gate_07.py` juge `G2` sur TOUT `corpus/fiches/*.json` et `G3` sur TOUT `corpus/PRODUCED.json`, SANS filtrer par population — une fiche moissonnee au mauvais endroit aurait pu repasser la porte 07 (franchie le 2026-09-23) a NON FRANCHIE sans qu'aucune decision ne l'ait demande. Stockage separe donc : `corpus/fiches_harvest/`, `corpus/PRODUCED_harvest.json`, `corpus/consignes_harvest/` (gitignore etendu). Le JUGE reste le meme (`score_extraction.py`, D16) — il juge une fiche seule, jamais un repertoire | CIRCUIT VALIDE DE BOUT EN BOUT sur un vrai papier (`measuring-volatility-with-the-realized-range-W2133491221`, Martens & van Dijk 2006). Session Agent isolee, lisant UNIQUEMENT le fichier consigne (verifie : 4 appels Read, rien d'autre). Premier essai : F1/F3 CASSEES sur 2 citations — l'extraction pypdf `default` insere un espace au milieu d'un chiffre ("2. 564" au lieu de "2.564", "0 .443" au lieu de "0.443"), confirme par grep direct sur `corpus/text/*.default.txt` (le mode `layout` les a PROPRES). Le juge refuse a bon droit meme avec `quoted_repair: math_notation` : la reparation couvre la notation abimee autour du chiffre, pas le chiffre lui-meme devenu illisible par la regex `value_in_quote`. Renvoye a la MEME session (pas une retouche manuelle, D16) avec le verdict exact du juge : elle a retire les deux `quoted_source`/`quoted_repair` et recite proprement. **Essai 2 : les cinq conditions de D16 tiennent.** Meme schema que Patton & Sheppard en phase 07 (2 iterations). `extract_fiche_harvest.py --list` : 1 fichee sur 35, 34 restantes. Cout mesure sur cette seule fiche : 2 appels Agent, ~220K tokens de sous-agent — a extrapoler avant de lancer les 34 autres |
 | 2026-09-24 | `donnees` | **Chatbot Lucid interroge par l'operateur** (tout compris ? meme bareme en live ?) : il reformule le centre d'aide — le tableau « ne dit pas » si les frais CME, clearing ou NFA sont inclus — et ne tranche rien. Ce n'est pas une reponse, c'est la meme source relue. `D26` inchangee, `todo fees` ouvert. Voie restante : un humain du support, par ticket ou e-mail, avec une reponse ecrite citable | — |
@@ -587,7 +637,6 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 | 2026-09-24 | `outillage` | `corpus/promote_harvest.py` ECRIT ET LANCE — le pont mecanique que `D22` exigeait avant qu'un papier `harvest` devienne fichable, applique au triage du 2026-09-23 (39 papiers retenus sur 119, `corpus/triage_harvest_verdicts.json`). Reutilise les fonctions de `harvest.py` (filename, sha256, known_hashes, load/save) plutot que de les reecrire ; correspondance par TITRE NORMALISE (`triage_harvest_verdicts.json` porte l'uuid Postgres, `harvest.json` l'openalex_id, les deux espaces ne se recoupent pas) | 39 apparies sans manquant. 36 PDF promus au premier passage, 3 echecs reseau dont 1 recupere au second (2 pages HTML servies a la place du PDF, NON contournees). UN BUG PYPDF REPRODUCTIBLE TROUVE ET NON CONTOURNE : `ZeroDivisionError` en mode `layout`, page 30, sur un PDF precis — isole par relecture directe de la page, exclu de la promotion (retire de `corpus/pdf/` et de `harvest_promoted.json`) plutot que route autour. Un doublon sha256 avec `gao-2018-market-intraday-momentum.pdf` (deja `authoritative` depuis `L20` — c'est LE MEME papier APAC, retrouve une seconde fois par la meme methode). `corpus/extract_text.py` relance sur le lot propre : **104 fichiers, pypdf 6.14.2, manifeste conforme** (`--check` vert). `text_source` bascule `harvest -> authoritative` pour 34 papiers (D22 § Journal, passage 2) : la base porte desormais 51 `authoritative` contre 85 `harvest`. Un orphelin trouve et nettoye : le `.default.txt` du papier exclu, ecrit avant le crash, ne figurait plus au manifeste. `extract_fiche.py --list` INCHANGE (17 fichees, G1-G4 ne bougent pas — F47) : ce travail ne fiche rien, il rend fichable. **Reste : un outil de preparation pour ces 35 papiers (hors `corpus/acquisition.json`, qui reste la population des 20 d'AMORCE.md) et 33 sessions separees, une par papier, n'ayant vu que leur consigne (D16)** |
 | 2026-09-24 | `donnees` | **FRAIS LUCID : RECHERCHE SANS CONCLUSION.** Bareme relu (inchange), centre d'aide, FAQ officielle, un blog tiers : aucune source ne dit si les montants par side sont all-in. Un resume de recherche affirmant « exchange fees separate » confondait avec les abonnements de donnees -- verifie sur la page, pas suppose. ETABLI : pas de micro devises au bareme (6E/6B/6J/6A en plein format seulement, 2,40) ; evaluation et sim-funded sont SIMULES, le montant debite est celui que Lucid configure ; le bareme live n'est pas publie ; cloture forcee 16:45 ET, regle microscalping (5 s) sans effet a 30 min. Consigne dans `todo fees` (`catalogue.yaml`), aucune valeur deposee. Voie restante : un releve d'execution du compte de l'operateur, qui rend la valeur MESUREE. counted_tests **56** | — |
 | 2026-09-24 | `donnees` | **MULTIPLICATEURS DEPOSES** pour les neuf instruments CME (NQ 20, ES 50, YM 5, GC 100, CL 1000, 6E 125000, 6B 62500, 6J 12500000, 6A 100000), chacun sous une entree `provenance` citant la ligne « Contract Unit » de sa fiche contrat, code Globex verifie sur la page. cmegroup.com refuse toujours les clients HTTP nus (timeout WebFetch), le navigateur passe. FDAX reste `null` : unite en EUR, `multiplier x prix` n'y est pas un notionnel USD. `todo multipliers` reduit a FDAX ; `todo fees` inchange (Lucid all-in ?). `catalogue/validate.py` VALIDE ; `scripts/check_provenance.py` repare — ses cas fautifs partaient du catalogue reel et se melaient aux valeurs deposees, ils partent maintenant d'un catalogue vide, 33 verifications vertes. INCIDENT : `gate_03` et `gate_04` relances sur la foi d'`ETAT.md` (« les autres gardes n'ecrivent rien ») ont ecrit 4 lignes de calibration au registre — `L25`. counted_tests **56**. Rien dans `harness/` touche | — |
-| 2026-09-23 | `outillage` | `scripts/gate_09.py` ECRIT — le juge avant l'accuse, comme `score_triage.py` et `score_signal.py` avant lui : au moment ou il est ecrit, `hypotheses/LOT-09.json` n'existe pas, le corpus porte 17 fiches sur les 50 exigees par `D25`, et lancer la porte doit repondre NON FRANCHIE pour cette seule raison | 12 verifications (`--check`), vert : elles relisent le TABLEAU DE SEUILS DE D25 A L'ENVERS (t=2,88 -> p<=0,0020, t=2,65 -> p<=0,0040, etc.) et verifient le pas de Benjamini-Hochberg lui-meme (retient exactement les rangs sous leur seuil, exclut les p NaN du denominateur, ne fait tomber que le rang fautif). Deux artefacts qui n'existaient nulle part ont vu leur FORMAT FIXE ICI faute d'exister ailleurs : `hypotheses/LOT-09.json` (le lot clos avant mesure, D25 C2) et `scripts/out/lot_09_correlations.json` (la matrice de correlation exigee avant BH, D25 § Pourquoi). La porte refuse tout verdict si le lot est mal forme, si une hypothese declaree n'a pas son fichier dans `hypotheses/` (invariant IV), si la matrice de correlation manque ou ne couvre pas exactement les signaux du lot, ou si une hypothese n'a pas EXACTEMENT une mesure au registre sous le harnais courant. CE QUE LA PORTE NE DEMANDE PAS, ET C'EST ECRIT DANS SON EN-TETE : aucun survivant. `ETAT.md` pose la porte comme « la chaine tourne de bout en bout », pas « un signal survit » — zero hypothese retenue est un resultat VALIDE de BH, pas un echec de la porte. Lance reellement (sans `--check`) : refuse correctement, faute de lot — verifie, pas suppose. Rien dans `harness/` touche, aucune ligne de registre ecrite, `ruff check`/`ruff format` verts. Reste a produire : 33 fiches, autant de signaux, la matrice de correlation, et le lot lui-meme declare par ecrit |
 
 Journal complet : [[log]]
 

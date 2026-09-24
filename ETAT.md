@@ -195,6 +195,55 @@ python scripts/gate_07.py      # G1 = G2 = G3 = G4 = 0
 python scripts/gate_08.py      # 1 signal, 6/6, aucune retouche
 ```
 
+### SI TU ARRIVES SUR UNE AUTRE MACHINE — à lancer en premier
+
+Une question ouverte depuis le 2026-09-24 : **l'extraction peut-elle passer à un
+modèle local et gratuit ?** Elle ne se tranche pas en lisant, elle se mesure, et
+**le matériel décide avant le modèle**. Première commande, avant toute
+discussion :
+
+```
+python corpus/bench_local_extractor.py --machine
+```
+
+Elle relève GPU, VRAM, RAM et disque de **cette** machine-ci, les compare au
+poste de référence (mesuré, daté, nommé — c'est un fait d'un poste, jamais un
+fait du dépôt) et rend un verdict. Les seuils, calculés depuis le poids de
+Qwen3-8B (5,2 Go) et son cache KV (~144 ko/token) :
+
+| VRAM | Ce que ça permet |
+|---|---|
+| **≥ 12 Go** | Qwen3-8B tient pour **tout** le lot, `num_ctx` 40 960 compris |
+| **8 à 12 Go** | les **petits** papiers seulement ; les gros s'inscrivent `contexte_depasse` |
+| **< 8 Go** | comme la référence — un **4B** est le maximum réaliste |
+
+**Le poste de référence est sous le seuil** : GTX 1650, 4 Go de VRAM. Qwen3-8B y
+a été téléchargé, constaté inutilisable et **retiré** ; un `num_ctx` plat à
+40 960 y a fait tomber le disque de 12 Go à **1,4 Go** (Windows gonfle son
+fichier d'échange), et un seul essai sur le plus petit papier a dépassé
+**25 minutes** sans rendre la main.
+
+Si ta machine est au-dessus du seuil, la mesure qui manque est celle-ci — un
+papier, le même juge, la même consigne :
+
+```
+ollama pull qwen3:8b
+python corpus/bench_local_extractor.py --run performance-of-time-series-momentum-strategy-us-W4388535504 --model qwen3:8b
+python corpus/bench_local_extractor.py --report
+```
+
+**La règle de décision est écrite AVANT la mesure**, comme le veut l'invariant IV :
+
+| Résultat | Conclusion |
+|---|---|
+| vert en ≤ 2 essais | le local gagne — l'extraction bascule, ~3 M de tokens économisés |
+| vert en 3 essais | utilisable pour dégrossir, à re-juger |
+| `F2` cassé à chaque essai | la citation mot pour mot ne passe pas à cette taille — c'est non |
+| `contexte_depasse` | la VRAM ne suffit pas pour ce papier |
+
+**Référence à battre, mesurée et non recopiée** : **1,33 essai par fiche**,
+6 fiches vertes sur 6, par un modèle de frontière (`corpus/PRODUCED_harvest.json`).
+
 ### Ce que la phase 09 demande
 
 > La chaîne tourne de bout en bout ; le registre compte tous les tests ; un
