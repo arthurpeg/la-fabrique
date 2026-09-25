@@ -61,7 +61,18 @@ def paper_id_pour(fiche_id: str) -> str:
     raise SystemExit(f"{fiche_id!r} absent de corpus/harvest_promoted.json")
 
 
-def morceaux_pour(fiche_id: str, par_requete: int = 3, plafond: int = 12) -> list[dict]:
+# LE PLAFOND EST UN COMPROMIS, PAS UN REGLAGE NEUTRE, et il faut le dire.
+# Douze morceaux font une invite de ~7 700 tokens : elle ne tient sous les
+# 8 000 par minute de Groq QUE si le seau est vide, et le moindre residu la
+# fait refuser en 413 — constate le 2026-09-25 sur les cinq papiers. Huit
+# morceaux laissent de la marge, au prix de ce que l'extracteur ne verra pas.
+# Ce que ce chiffre achete est du DEBIT ; ce qu'il coute est de la COUVERTURE.
+PLAFOND_MORCEAUX = 8
+
+
+def morceaux_pour(
+    fiche_id: str, par_requete: int = 3, plafond: int = PLAFOND_MORCEAUX
+) -> list[dict]:
     """Les morceaux les plus proches des cinq requetes, dedoublonnes et REMIS EN ORDRE.
 
     L'ordre de lecture est retabli (`ordinal`) plutot que l'ordre de pertinence :
