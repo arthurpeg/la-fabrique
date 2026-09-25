@@ -1,0 +1,105 @@
+{
+ "source": "qwen3:4b",
+ "entries": [
+  {
+   "entry": 1,
+   "verdict": "oui",
+   "reason": "Calculable avec OHLCV 1 minute, sans donnee exterieure."
+  },
+  {
+   "entry": 2,
+   "verdict": "oui",
+   "reason": "Exige uniquement des prix intraday futures, qui sont disponibles dans nos neuf instruments OHLCV 1 minute."
+  },
+  {
+   "entry": 3,
+   "verdict": "oui",
+   "reason": "Calculable avec OHLCV 1 minute, sans donnee exterieure."
+  },
+  {
+   "entry": 4,
+   "verdict": "oui",
+   "reason": "Seulement des prix intraday, sans donnee exterieure necessaire."
+  },
+  {
+   "entry": 5,
+   "verdict": "oui",
+   "reason": "Calcule avec OHLCV uniquement, pas de donnee exterieure necessaire."
+  },
+  {
+   "entry": 6,
+   "verdict": "oui",
+   "reason": "Calculable avec les OHLCV disponibles sur les neuf instruments."
+  },
+  {
+   "entry": 7,
+   "verdict": "oui",
+   "reason": "Calculable avec les neuf instruments, barres 1 minute, OHLCV seul, sans donnee exterieure."
+  },
+  {
+   "entry": 8,
+   "verdict": "non",
+   "reason": "Exige des données d'ordres non disponibles, ce qui est payant et hors de notre univers."
+  },
+  {
+   "entry": 9,
+   "verdict": "non",
+   "reason": "Exige le flux de revisions d'analystes, donnee payante que nous n'avons pas."
+  },
+  {
+   "entry": 10,
+   "verdict": "non",
+   "reason": "Exige des primes de signe opposé qui ne sont pas mesurables avec les OHLCV disponibles, nécessitant des données externes comme des modèles de pricing ou des données de marché non fournies."
+  },
+  {
+   "entry": 11,
+   "verdict": "non",
+   "reason": "Exige une mesure de volatilité intraday, donnee qui n'est pas disponible dans nos neuf instruments (OHLCV seul)"
+  },
+  {
+   "entry": 12,
+   "verdict": "partiel",
+   "reason": "Exige une mesure de volatilité historique qui n'est pas directement calculable avec OHLCV, mais peut être obtenue via la variance des rendements sur les barres 1 minute."
+  },
+  {
+   "entry": 13,
+   "verdict": "non",
+   "reason": "Exige des sauts négatifs, donnee qui n'est pas disponible dans nos données (seulement OHLCV)"
+  },
+  {
+   "entry": 14,
+   "verdict": "partiel",
+   "reason": "Exige une volatilité réalisée journalière, mais nous avons uniquement des barres OHLCV à 1 minute sans calcul de volatilité."
+  },
+  {
+   "entry": 15,
+   "verdict": "partiel",
+   "reason": "Exige un calendrier d'annonces FOMC, qui est gratuit mais pas dans nos fichiers."
+  },
+  {
+   "entry": 16,
+   "verdict": "non",
+   "reason": "Exige le flux de revisions d'analystes, donnee payante que nous n'avons pas."
+  },
+  {
+   "entry": 17,
+   "verdict": "non",
+   "reason": "Exige un calendrier d'annonces macro, donnee que nous n'avons pas et qui coute."
+  },
+  {
+   "entry": 18,
+   "verdict": "non",
+   "reason": "Exige une echeance de contrat qui n'est pas incluse dans nos neuf instruments (seule une seule echeance par contrat)."
+  },
+  {
+   "entry": 19,
+   "verdict": "non",
+   "reason": "Exige une echeance supplémentaire par contrat, mais nous n'avons qu'une seule echeance par contrat."
+  },
+  {
+   "entry": 20,
+   "verdict": "oui",
+   "reason": "Calculable avec OHLCV des 12 derniers mois, sans donnee exterieure."
+  }
+ ]
+}
