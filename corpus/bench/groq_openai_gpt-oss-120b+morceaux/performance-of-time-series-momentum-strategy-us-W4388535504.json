@@ -1,0 +1,61 @@
+{
+  "fiche_id": "performance-of-time-series-momentum-strategy-us-W4388535504",
+  "written": "2026-09-24",
+  "written_by": "extraction_session",
+  "claim": "The time series momentum strategy generates positive returns in the US stock market.",
+  "universe": "US stock market, S&P500 constituent stocks, daily data from 2000 to 2022",
+  "horizon": {
+    "value": null,
+    "reason": "Les passages fournis ne précisent pas le horizon de prédiction au‑delà du jour suivant."
+  },
+  "signal_construction": {
+    "value": "Signals are constructed using simple moving average (MA) and exponential moving average (EMA) of asset returns with a look‑back period N=24.",
+    "reason": null
+  },
+  "reported_results": [
+    {
+      "name": "sharpe_ratio_training",
+      "value": 2.403,
+      "unit": null,
+      "quoted": "Sharpe Ratio 2.403",
+      "note": "Table 1, training set Sharpe ratio without transaction costs."
+    },
+    {
+      "name": "max_drawdown_training",
+      "value": 14.403,
+      "unit": null,
+      "quoted": "Max Drawdown 14.403",
+      "note": "Table 1, training set maximum drawdown without transaction costs."
+    },
+    {
+      "name": "sr_ma1_training",
+      "value": 3.148,
+      "unit": null,
+      "quoted": "SR(tr) 3.148",
+      "note": "Table 4, Sharpe ratio of MA 1 strategy on training data (transaction cost rate = 0)."
+    }
+  ],
+  "what_is_missing": {
+    "value": null,
+    "reason": "Les passages fournis ne précisent pas d’analyse de robustesse hors‑échantillon au‑delà de 2022, aucune comparaison avec d’autres classes d’actifs, aucun détail sur la modélisation des coûts de transaction complexes, et aucune discussion sur l’applicabilité intrajournalière aux futures."
+  },
+  "source": {
+    "authors": "Siyao Duan",
+    "title": "Performance of Time-series Momentum Strategy: US",
+    "year": 2023,
+    "source_url": "https://www.ewadirect.com/proceedings/aemps/article/view/5936/pdf",
+    "pdf": "corpus/pdf/performance-of-time-series-momentum-strategy-us-W4388535504.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "amorce_entry": 11
+  },
+  "transposability": {
+    "what_transfers": "The use of MA and EMA signals and the relative ranking of strategies by Sharpe ratio can be applied to intraday futures.",
+    "what_does_not_transfer": [
+      "Absolute Sharpe ratio values (e.g., 2.403) are based on daily S&P500 data and may not hold for intraday futures.",
+      "Maximum drawdown percentages are specific to the daily equity market sample.",
+      "Transaction‑cost rates examined (0, 0.001, 0.005, 0.01) may differ in magnitude and impact for futures contracts."
+    ],
+    "what_aligns_well": "Lower transaction‑cost environments improve strategy performance, a pattern that likely holds for futures trading."
+  }
+}

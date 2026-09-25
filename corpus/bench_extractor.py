@@ -158,7 +158,32 @@ identique. Rends de nouveau UN SEUL OBJET JSON, rien avant, rien apres.
 # MAUVAISES lignes. C'est `F3` qui l'attrape — la valeur annoncee doit se
 # retrouver dans les lignes resolues — et `F3` devient donc la condition
 # porteuse de la variante. Elle, elle peut echouer.
-VARIANTES = ("citation", "lignes")
+VARIANTES = ("citation", "lignes", "morceaux")
+
+# AVERTISSEMENT AJOUTE A LA CONSIGNE EN MODE `morceaux`, et il n'est pas
+# decoratif. Un extracteur qui ignore qu'il lit des extraits croit lire le
+# papier entier, et remplit `what_is_missing` — « ce que le papier ne dit
+# pas » — comme s'il le savait. Or il ne connait que ce qui n'a pas ete
+# RECUPERE. Confondre les deux fabriquerait une affirmation fausse sur le
+# papier, exactement ce que l'interdit sur les valeurs inventees vise.
+AVERTISSEMENT_MORCEAUX = """\
+## CE QUE TU LIS N'EST PAS LE PAPIER ENTIER
+
+Le texte ci-dessous est un **assemblage de passages** choisis automatiquement,
+dans l'ordre du papier, avec les coupures marquees `[… N passage(s) non
+recupere(s) …]`.
+
+Deux consequences, et la seconde est la plus importante :
+
+1. **Tes citations restent valables** : chaque passage est le texte exact du
+   papier, donc une citation mot pour mot reste mot pour mot.
+2. **Tu ne peux PAS affirmer ce que le papier ne dit pas.** Dans
+   `what_is_missing`, n'ecris que ce que tu constates ABSENT DES PASSAGES
+   FOURNIS, et dis-le ainsi. « Le papier ne precise pas X » est une
+   affirmation que tu n'es pas en mesure de faire ; « les passages fournis ne
+   precisent pas X » en est une que tu peux faire.
+
+"""
 
 REGLE_LIGNES = """\
 1. **Tu ne recopies AUCUNE citation.** Le texte du papier t'est donné avec un
@@ -199,6 +224,21 @@ def consigne_lignes(fiche_id: str) -> str:
         raise SystemExit("les regles 1 et 2 n'ont pas ete retrouvees dans la consigne")
     tete = tete[:debut] + REGLE_LIGNES + "\n" + tete[fin:]
     return tete + "## TEXTE DU PAPIER (numéroté)\n\n" + numeroter(texte.lstrip("\n"))
+
+
+def consigne_morceaux(fiche_id: str) -> str:
+    """La consigne d'origine, son texte remplace par les passages recuperes."""
+    import sys as _sys
+
+    _sys.path.insert(0, str(REPO / "corpus"))
+    from recuperation import morceaux_pour, rendre  # type: ignore
+
+    originale = (CONSIGNES / f"{fiche_id}.md").read_text(encoding="utf-8")
+    tete, _, _ = originale.partition("## TEXTE DU PAPIER\n")
+    if not tete:
+        raise SystemExit(f"consigne illisible : {fiche_id}")
+    morceaux = morceaux_pour(fiche_id)
+    return tete + AVERTISSEMENT_MORCEAUX + "## PASSAGES DU PAPIER\n\n" + rendre(morceaux)
 
 
 def _resoudre(paires, lignes: list[str]):
@@ -466,7 +506,14 @@ def modeles_openai(prefixe: str) -> int:
 # Ce qui n'est PAS retente : `404` (modele non accorde) et `400` (requete
 # fautive) — ceux-la ne changeront pas en attendant.
 RETENTABLES = (429, 503, 500, 502, 504)
-BACKOFF_S = (20, 45, 90, 180)
+
+# L'ATTENTE SE CALE SUR LA FENETRE DU FOURNISSEUR, pas sur une progression
+# geometrique choisie au hasard. Mesure du 2026-09-25 : le palier gratuit de
+# Groq plafonne a 8 000 tokens PAR MINUTE, et une consigne en mode `morceaux`
+# en pese ~7 700 — soit **une requete par minute au maximum**. Un premier
+# reessai a 20 s tombait donc systematiquement dans la meme fenetre et brulait
+# une tentative pour rien. Le premier palier vaut desormais une minute pleine.
+BACKOFF_S = (65, 95, 150, 240)
 
 
 def appel_avec_attente(model: str, messages: list[dict], num_ctx: int) -> dict:
@@ -787,10 +834,12 @@ def do_run(fiche_id: str, model: str, variante: str = "citation") -> int:
     sortie_dir.mkdir(parents=True, exist_ok=True)
     cible = sortie_dir / f"{fiche_id}.json"
 
-    texte_consigne = (
-        consigne.read_text(encoding="utf-8") if variante == "citation"
-        else consigne_lignes(fiche_id)
-    )
+    if variante == "citation":
+        texte_consigne = consigne.read_text(encoding="utf-8")
+    elif variante == "lignes":
+        texte_consigne = consigne_lignes(fiche_id)
+    else:
+        texte_consigne = consigne_morceaux(fiche_id)
     num_ctx = contexte_pour(len(texte_consigne))
     messages = [{"role": "user", "content": texte_consigne}]
 
