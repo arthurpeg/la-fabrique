@@ -341,6 +341,101 @@ def est_gemini(model: str) -> bool:
     return model.startswith("gemini")
 
 
+# ---------------------------------------------------------------------------
+# LE BACKEND COMPATIBLE OpenAI — un seul client, cinq fournisseurs.
+#
+# Presque tous les services parlent le meme dialecte (`/chat/completions`).
+# Ecrire un client par fournisseur serait cinq implementations d'une meme regle,
+# et le depot sait ou cela mene : `value_in_quote` tenue en double jusqu'au
+# 2026-09-22. Un seul client, une table d'adresses.
+#
+# Le modele porte son fournisseur : `groq/llama-3.3-70b-versatile`. La partie
+# avant le PREMIER `/` choisit l'adresse et le nom de la cle ; le reste est
+# envoye tel quel — ce qui laisse passer les noms a deux niveaux d'OpenRouter
+# (`openrouter/meta-llama/llama-3.3-70b-instruct`).
+FOURNISSEURS = {
+    "groq": ("https://api.groq.com/openai/v1", "GROQ_API_KEY"),
+    "openrouter": ("https://openrouter.ai/api/v1", "OPENROUTER_API_KEY"),
+    "cerebras": ("https://api.cerebras.ai/v1", "CEREBRAS_API_KEY"),
+    "mistral": ("https://api.mistral.ai/v1", "MISTRAL_API_KEY"),
+    "together": ("https://api.together.xyz/v1", "TOGETHER_API_KEY"),
+}
+
+
+def est_openai(model: str) -> bool:
+    return model.split("/", 1)[0] in FOURNISSEURS
+
+
+def _fournisseur(model: str) -> tuple[str, str, str]:
+    """Rend (base_url, nom_du_modele, cle). Casse clairement si la cle manque."""
+    prefixe, _, reste = model.partition("/")
+    base, nom_var = FOURNISSEURS[prefixe]
+    charger_env()
+    cle = os.environ.get(nom_var, "").strip()
+    if not cle:
+        raise SystemExit(
+            f"{nom_var} absente. La deposer dans `.env` (jamais dans le code, "
+            f"jamais dans une URL) : voir `.env.example`."
+        )
+    return base, reste, cle
+
+
+def appel_openai(model: str, messages: list[dict], num_ctx: int) -> dict:
+    """Un appel `/chat/completions`, normalise dans la forme que rend `appel()`.
+
+    `num_ctx` est ignore — aucun de ces services ne le prend — mais il reste
+    dans la trace pour que les trois backends se lisent dans la meme colonne.
+
+    `response_format: json_object` contraint la sortie, comme
+    `responseMimeType` cote Gemini et `format: json` cote `ollama`. Les trois
+    backends sont donc a egalite sur la FORME, ce qui etait le confondant du
+    2026-09-24.
+    """
+    base, nom, cle = _fournisseur(model)
+    body = json.dumps({
+        "model": nom,
+        "messages": messages,
+        "temperature": 0,
+        "response_format": {"type": "json_object"},
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        f"{base}/chat/completions",
+        data=body,
+        headers={"Content-Type": "application/json", "Authorization": f"Bearer {cle}"},
+    )
+    debut = time.time()
+    with urllib.request.urlopen(req, timeout=TIMEOUT_APPEL_S) as r:
+        payload = json.loads(r.read().decode("utf-8"))
+
+    choix = (payload.get("choices") or [{}])[0]
+    usage = payload.get("usage") or {}
+    return {
+        "message": {"content": (choix.get("message") or {}).get("content", "")},
+        "prompt_eval_count": usage.get("prompt_tokens", 0),
+        "eval_count": usage.get("completion_tokens", 0),
+        "_wall_s": round(time.time() - debut, 1),
+        "_finish_reason": choix.get("finish_reason"),
+    }
+
+
+def modeles_openai(prefixe: str) -> int:
+    base, _, cle = _fournisseur(f"{prefixe}/")
+    req = urllib.request.Request(
+        f"{base}/models", headers={"Authorization": f"Bearer {cle}"}
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            payload = json.loads(r.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        print(f"l'API refuse : HTTP {e.code} — {e.read().decode('utf-8', 'replace')[:300]}")
+        return 1
+    noms = sorted(m.get("id", "?") for m in (payload.get("data") or []))
+    print(f"{len(noms)} modele(s) appelables chez `{prefixe}` :\n")
+    for n in noms:
+        print(f"  {prefixe}/{n}")
+    return 0
+
+
 # UN 429 N'EST PAS UN REFUS, C'EST « ATTENDS », et les confondre a fait
 # declarer trois papiers en echec le 2026-09-25 alors que rien n'avait ete juge.
 # Mesure : le palier gratuit limite les TOKENS PAR MINUTE, pas la taille — une
@@ -356,7 +451,12 @@ BACKOFF_S = (20, 45, 90, 180)
 
 def appel_avec_attente(model: str, messages: list[dict], num_ctx: int) -> dict:
     """Appelle le backend, et ATTEND sur un code retentable plutot que d'abandonner."""
-    fonction = appel_gemini if est_gemini(model) else appel
+    if est_openai(model):
+        fonction = appel_openai
+    elif est_gemini(model):
+        fonction = appel_gemini
+    else:
+        fonction = appel
     derniere: Exception | None = None
     for i, pause in enumerate((0, *BACKOFF_S)):
         if pause:
@@ -652,7 +752,9 @@ def do_run(fiche_id: str, model: str, variante: str = "citation") -> int:
     consigne = CONSIGNES / f"{fiche_id}.md"
     if not consigne.is_file():
         raise SystemExit(f"consigne absente : {consigne}")
-    if est_gemini(model):
+    if est_openai(model):
+        _fournisseur(model)  # casse ici si la cle manque
+    elif est_gemini(model):
         if cle_gemini() is None:
             raise SystemExit(
                 "GEMINI_API_KEY absente de l'environnement et de `.env` — voir `.env.example`."
@@ -675,8 +777,10 @@ def do_run(fiche_id: str, model: str, variante: str = "citation") -> int:
     resultats = charger_resultats()
     trace = {
         "model": model,
-        "backend": "gemini" if est_gemini(model) else "ollama",
-        "format_json_force": True if est_gemini(model) else FORMAT_JSON_OLLAMA,
+        "backend": ("openai" if est_openai(model) else "gemini" if est_gemini(model) else "ollama"),
+        "format_json_force": (
+            True if (est_gemini(model) or est_openai(model)) else FORMAT_JSON_OLLAMA
+        ),
         "variante": variante,
         "num_ctx": num_ctx,
         "consigne_chars": len(texte_consigne),
@@ -735,7 +839,10 @@ def do_run(fiche_id: str, model: str, variante: str = "citation") -> int:
         #   ollama : l'invite au-dela de `num_ctx` est rabotee EN SILENCE ;
         #   Gemini : l'invite passe, mais la SORTIE peut etre coupee, et l'API
         #            le dit — `finishReason == "MAX_TOKENS"`.
-        if est_gemini(model):
+        if est_openai(model):
+            tronque = rep.get("_finish_reason") == "length"
+            motif = "la sortie a ete coupee (finish_reason=length)"
+        elif est_gemini(model):
             tronque = rep.get("_finish_reason") == "MAX_TOKENS"
             motif = "la sortie a ete coupee (finishReason=MAX_TOKENS)"
         else:
@@ -853,7 +960,12 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--machine", action="store_true")
     ap.add_argument(
-        "--modeles", action="store_true", help="les modeles Gemini appelables par la cle de .env"
+        "--modeles",
+        nargs="?",
+        const="gemini",
+        metavar="FOURNISSEUR",
+        help="les modeles appelables par la cle de .env : gemini (defaut), "
+        "groq, openrouter, cerebras, mistral, together",
     )
     ap.add_argument("--run", metavar="FICHE_ID")
     ap.add_argument("--report", action="store_true")
@@ -863,7 +975,7 @@ def main(argv: list[str]) -> int:
     a = ap.parse_args(argv)
 
     if a.modeles:
-        return do_modeles()
+        return do_modeles() if a.modeles == "gemini" else modeles_openai(a.modeles)
     if a.machine:
         return do_machine()
     if a.list:
