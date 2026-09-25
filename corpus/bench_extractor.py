@@ -341,6 +341,37 @@ def est_gemini(model: str) -> bool:
     return model.startswith("gemini")
 
 
+# UN 429 N'EST PAS UN REFUS, C'EST « ATTENDS », et les confondre a fait
+# declarer trois papiers en echec le 2026-09-25 alors que rien n'avait ete juge.
+# Mesure : le palier gratuit limite les TOKENS PAR MINUTE, pas la taille — une
+# invite de 37 501 tokens passe en 1,8 s, mais trois consignes coup sur coup
+# saturent. Nos consignes pesent 11 a 39K tokens : le rythme est la contrainte.
+#
+# `503` est traite pareil : c'est une indisponibilite passagere, pas un verdict.
+# Ce qui n'est PAS retente : `404` (modele non accorde) et `400` (requete
+# fautive) — ceux-la ne changeront pas en attendant.
+RETENTABLES = (429, 503, 500, 502, 504)
+BACKOFF_S = (20, 45, 90, 180)
+
+
+def appel_avec_attente(model: str, messages: list[dict], num_ctx: int) -> dict:
+    """Appelle le backend, et ATTEND sur un code retentable plutot que d'abandonner."""
+    fonction = appel_gemini if est_gemini(model) else appel
+    derniere: Exception | None = None
+    for i, pause in enumerate((0, *BACKOFF_S)):
+        if pause:
+            print(f"      debit sature — attente {pause}s puis reprise "
+                  f"({i}/{len(BACKOFF_S)})", flush=True)
+            time.sleep(pause)
+        try:
+            return fonction(model, messages, num_ctx)
+        except urllib.error.HTTPError as e:
+            derniere = e
+            if e.code not in RETENTABLES:
+                raise
+    raise derniere if derniere else RuntimeError("appel impossible")
+
+
 def do_modeles() -> int:
     """Liste les modeles que CETTE cle peut reellement appeler.
 
@@ -665,7 +696,7 @@ def do_run(fiche_id: str, model: str, variante: str = "citation") -> int:
         # est un echec qui n'a pas eu lieu, et c'est `L23` — un chemin de code
         # qu'aucun essai n'emprunte n'est pas un chemin verifie.
         try:
-            rep = (appel_gemini if est_gemini(model) else appel)(model, messages, num_ctx)
+            rep = appel_avec_attente(model, messages, num_ctx)
         except (urllib.error.URLError, TimeoutError, OSError) as e:
             ligne = {
                 "essai": essai,

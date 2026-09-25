@@ -253,7 +253,7 @@
       "consigne_chars": 115703,
       "essais": [
         {
-          "detail": "HTTPError: HTTP Error 503: Service Unavailable",
+          "detail": "HTTPError: HTTP Error 429: Too Many Requests",
           "essai": 1,
           "issue": "reseau",
           "timeout_s": 2700
@@ -305,7 +305,7 @@
       "consigne_chars": 69027,
       "essais": [
         {
-          "detail": "HTTPError: HTTP Error 503: Service Unavailable",
+          "detail": "HTTPError: HTTP Error 429: Too Many Requests",
           "essai": 1,
           "issue": "reseau",
           "timeout_s": 2700
@@ -322,8 +322,22 @@
       "consigne_chars": 86001,
       "essais": [
         {
-          "detail": "HTTPError: HTTP Error 503: Service Unavailable",
+          "conditions_cassees": [
+            "F1",
+            "F3"
+          ],
           "essai": 1,
+          "forme_sortie": "json nu",
+          "intervalles_fautifs": [],
+          "output_tokens": 6781,
+          "prompt_tokens": 31920,
+          "quoted_lines_restants": 0,
+          "vert": false,
+          "wall_s": 68.2
+        },
+        {
+          "detail": "HTTPError: HTTP Error 429: Too Many Requests",
+          "essai": 2,
           "issue": "reseau",
           "timeout_s": 2700
         }
