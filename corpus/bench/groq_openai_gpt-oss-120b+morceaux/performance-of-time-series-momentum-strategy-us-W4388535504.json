@@ -1,38 +1,45 @@
 {
   "fiche_id": "performance-of-time-series-momentum-strategy-us-W4388535504",
-  "written": "2026-09-24",
+  "written": "2026-09-25",
   "written_by": "extraction_session",
-  "claim": "This paper examines the effectiveness of the time series momentum strategy in generating positive returns in the US stock market, with a focus on exploring its dynamics and performance using different moving average methods.",
-  "universe": "The data set used in this study was from the S&P500 index, which includes daily closing prices of its constituent stocks.",
+  "claim": {
+    "value": "The time series momentum strategy generates positive returns in the US stock market.",
+    "quoted": "This paper examines the effectiveness of the time series momentum strategy in generating positive returns in the US stock market"
+  },
+  "universe": {
+    "value": "S&P500 constituents US stock market (2000‑2022)",
+    "quoted": [
+      "using S&P500 data from 2000 to 2022",
+      "The data set used in this study was from the S&P500 index, which includes daily closing prices of its constituent stocks"
+    ]
+  },
   "horizon": {
     "value": null,
-    "reason": "les passages fournis ne précisent pas le horizon de prévision du modèle"
+    "reason": "the paper does not specify a prediction horizon beyond the next period"
   },
-  "signal_construction": "After fitting the regression model, a momentum trading strategy that generates portfolio weights based on the simple moving average (MA) or exponential moving average (EMA) of asset returns was developed.",
+  "signal_construction": {
+    "value": "Signals are based on simple moving average (MA) or exponential moving average (EMA) of asset returns over various look‑back windows, applied to generate portfolio weights",
+    "quoted": [
+      "MA and EMA of each stock's returns using different window lengths",
+      "The MA and EMA of each stock's returns using different window lengths"
+    ]
+  },
   "reported_results": [
     {
-      "name": "equal_weight_sharpe_train",
+      "name": "equal_weight_sharpe_training",
       "value": 0.189,
       "unit": "Sharpe",
-      "quoted": "Equal Weight 0.189 5.673 12.488 0.626 4.122 35.909",
-      "note": "Sharpe ratio on the training set for the Equal Weight strategy."
+      "quoted": "Equal Weight 0.189 5.673 12.488",
+      "note": "Sharpe ratio in the training set for the Equal Weight strategy (transaction cost rate 0.001)"
     },
-    {
-      "name": "ema_100_sharpe_train",
-      "value": 1.568,
-      "unit": "Sharpe",
-      "quoted": "EMA 100 1.568 0.320 23.665 0.174 5.295 108.344",
-      "note": "Sharpe ratio on the training set for the EMA 100 strategy."
-    },
-    {
-      "name": "equal_weight_sharpe_train_7",
-      "value": 0.155,
-      "unit": "Sharpe",
-      "quoted": "Equal Weight 0.155 9.026 16.972 0.601 4.219 36.248",
-      "note": "Sharpe ratio on the training set for the Equal Weight strategy when transaction cost rate = 0.01."
-    }
+    "{\"name\":\"ema_100_sharpe_training\",\"value\":1.568,\"unit\":\"Sharpe\",\"quoted\":\"EMA 100 1.568 0.320 23.665 0.174 5.295 108.344\",\"note\":\"Sharpe ratio in the training set for the EMA‑100 strategy (transaction cost rate 0.001)\"}",
+    "{\"name\":\"ma_100_sharpe_training\",\"value\":1.926,\"unit\":\"Sharpe\",\"quoted\":\"MA 100 1.926 0.577 20.423 0.140 9.235 76.219\",\"note\":\"Sharpe ratio in the training set for the MA‑100 strategy (transaction cost rate 0.001)\"}"
   ],
-  "what_is_missing": "Les passages fournis ne précisent pas les tests de significativité statistique des performances, les coûts de transaction détaillés au niveau intraday, les paramètres exacts de décay pour les EMA, ni les poids de portefeuille spécifiques attribués à chaque actif.",
+  "what_is_missing": [
+    "the paper does not detail the exact transaction‑cost model beyond the rates used",
+    "no out‑of‑sample robustness checks beyond the post‑2010 test set are reported",
+    "no discussion of market‑impact or liquidity constraints for implementing the strategies"
+  ],
   "source": {
     "authors": "Siyao Duan",
     "title": "Performance of Time-series Momentum Strategy: US",
@@ -44,20 +51,12 @@
     "amorce_entry": 11
   },
   "transposability": {
-    "what_transfers": [
-      "use of simple and exponential moving averages as momentum signals",
-      "linear regression framework for predicting next‑day returns",
-      "evaluation of strategies via Sharpe ratio"
-    ],
+    "what_transfers": "use of moving‑average based signals and linear regression framework can be applied to futures intraday data",
     "what_does_not_transfer": [
-      "transaction‑cost rates calibrated for equity trading are not directly applicable to futures",
-      "the S&P500 constituent universe differs from futures contracts",
-      "the 24‑day look‑back period may be unsuitable for intraday futures horizons"
+      "the study is based on equity data (S&P500 constituents) not futures contracts",
+      "transaction‑cost rates are calibrated for equities and may differ for futures",
+      "the look‑back period of 24 days is a daily horizon, not directly comparable to intraday intervals"
     ],
-    "what_aligns_well": [
-      "relative ranking of EMA versus MA strategies persists across asset classes",
-      "sensitivity of performance to increasing transaction costs shows a similar degradation pattern",
-      "the benefit of EMA over MA in certain windows is observed in both equities and futures"
-    ]
+    "what_aligns_well": "relative ranking of strategies by Sharpe ratio may remain informative for futures when adjusted for volatility"
   }
 }
