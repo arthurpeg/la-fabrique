@@ -1,0 +1,56 @@
+{
+  "fiche_id": "exploring-the-predictability-of-intraday-returns-W4307368010",
+  "written": "2026-09-24",
+  "written_by": "extraction-session-09",
+  "claim": "Intraday returns of Chinese equities exhibit predictable patterns at the half‑hour level, with significant momentum and reversal effects within a trading day.",
+  "universe": "Chinese A‑share market (Shanghai Composite Index, Shenzhen Component Index, CSI 300) intraday data from 2019‑01‑02 to 2021‑09‑01",
+  "horizon": {
+    "value": null,
+    "reason": "the paper studies half‑hour predictability within the same trading day rather than a multi‑day forecasting horizon"
+  },
+  "signal_construction": {
+    "value": "univariate linear regression on half‑hour returns, later refined with additional explanatory variables (overnight return, dummy for Monday/Friday)",
+    "reason": null
+  },
+  "reported_results": [
+    {
+      "name": "first_half_day_to_second_half_day_coeff",
+      "value": 0.1294,
+      "unit": null,
+      "quoted": "the regression coefficient is 0.1294, which means that the first-half-day rate of return has a positive impact on the second-half-day rate of return."
+    },
+    {
+      "name": "previous_day_full_day_to_second_half_day_coeff",
+      "value": -0.0534,
+      "unit": null,
+      "quoted": "the regression coefficient is -0.0534, which means that the daily rate of return of the previous day has a similar effect on the rate of return of the second half of the next day."
+    },
+    {
+      "name": "first_half_hour_to_fifth_hour_coeff",
+      "value": 0.1011,
+      "unit": null,
+      "quoted": "0.1011***",
+      "note": "coefficient for first half‑hour return predicting the fifth half‑hour return (Table 3)"
+    }
+  ],
+  "what_is_missing": "the provided passages do not contain quantitative estimates of transaction costs nor net excess returns after accounting for those costs, limiting assessment of economic profitability",
+  "source": {
+    "authors": "Authors not provided",
+    "title": "Exploring the Predictability of Intraday Returns",
+    "year": 2022,
+    "source_url": "https://bcpublication.org/index.php/BM/article/download/2524/2497",
+    "pdf": "corpus/pdf/exploring-the-predictability-of-intraday-returns-W4307368010.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "amorce_entry": 11
+  },
+  "transposability": {
+    "what_transfers": "half‑hour return momentum patterns; positive regression coefficients between early and later half‑hours; reversal effects between first half‑hour and later periods",
+    "what_does_not_transfer": [
+      "specific Chinese trading hours (9:30‑11:30 & 13:00‑15:00)",
+      "definition of overnight return based on Chinese market closing/opening prices",
+      "transaction‑cost environment unique to Chinese equities"
+    ],
+    "what_aligns_well": "the identified intraday momentum between early and later half‑hours mirrors similar patterns observed in high‑frequency futures markets"
+  }
+}

@@ -516,6 +516,24 @@ RETENTABLES = (429, 503, 500, 502, 504)
 BACKOFF_S = (65, 95, 150, 240)
 
 
+def attente_conseillee(corps: str) -> float | None:
+    """Le delai que le FOURNISSEUR annonce, quand il l'annonce.
+
+    Groq ecrit « Please try again in 15.51s » dans le corps du `429`, et cette
+    valeur vaut mieux que n'importe quel calendrier devine : elle connait l'etat
+    du seau, nous non. Deviner fait soit attendre trop (on perd du temps), soit
+    trop peu (on brule un essai dans la meme fenetre) — les deux ont ete
+    observes le 2026-09-25.
+    """
+    m = re.search(r"try again in ([\d.]+)\s*s", corps)
+    if m:
+        return float(m.group(1))
+    m = re.search(r"try again in ([\d.]+)m([\d.]+)s", corps)
+    if m:
+        return float(m.group(1)) * 60 + float(m.group(2))
+    return None
+
+
 def appel_avec_attente(model: str, messages: list[dict], num_ctx: int) -> dict:
     """Appelle le backend, et ATTEND sur un code retentable plutot que d'abandonner."""
     if est_openai(model):
@@ -536,6 +554,21 @@ def appel_avec_attente(model: str, messages: list[dict], num_ctx: int) -> dict:
             derniere = e
             if e.code not in RETENTABLES:
                 raise
+            # Le fournisseur sait l'etat de son seau ; nous non. Quand il donne
+            # un delai, c'est lui qui a raison, et le calendrier ci-dessus ne
+            # sert plus que de repli.
+            conseil = attente_conseillee(e.read().decode("utf-8", "replace"))
+            if conseil is not None:
+                attendre = conseil + 2
+                print(f"      le fournisseur demande {conseil:.1f}s — attente {attendre:.0f}s",
+                      flush=True)
+                time.sleep(attendre)
+                try:
+                    return fonction(model, messages, num_ctx)
+                except urllib.error.HTTPError as e2:
+                    derniere = e2
+                    if e2.code not in RETENTABLES:
+                        raise
     raise derniere if derniere else RuntimeError("appel impossible")
 
 
