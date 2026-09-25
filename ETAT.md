@@ -617,6 +617,20 @@ où on le lance. Même péremption que la note « sur cette machine » corrigée
    (`sampling`, `components`, `model`…) sans la clé `value` que le schéma exige.
    Quatre fois la même erreur n'est pas quatre erreurs, c'est un défaut du
    schéma ou de la consigne.
+   **AGGRAVÉ LE 2026-09-25, ET CE POINT EST DEVENU LE PLUS RENTABLE DU PROJET.**
+   Le banc l'a retrouvée chez **deux familles de modèles de plus** — Gemini 2.5
+   Flash et `gpt-oss-120b` — soit **au moins 7 occurrences indépendantes sur
+   trois familles** (sessions de frontière, Gemini, gpt-oss). Aucun extracteur
+   n'a jamais vu les fautes des autres : c'est **le schéma ou la consigne** qui
+   les induit, et plus aucune autre lecture ne tient.
+   **Ce que ça bloque, chiffré.** L'extraction par morceaux récupérés
+   (`corpus/recuperation.py`) sur `gpt-oss-120b` tient `F2`, `F3` **et** `F4` —
+   citations mot pour mot, valeurs dans leur citation, PDF présent. Elle ne
+   casse que sur `F1`, et uniquement sur des fautes de **forme** :
+   `signal_construction` attendu objet, `what_is_missing` attendu liste. **La
+   seule route gratuite qui franchit le mur des 8 000 tokens échoue donc sur
+   notre propre documentation, pas sur sa fidélité.** Corriger la consigne coûte
+   quelques lignes ; c'est peut-être ce qui sépare `F59` d'un `vert`.
 10. **Ficher les 8 papiers restants** — `G1` exige zéro atteignable non fiché.
     `python corpus/extract_fiche.py --list` dit lesquels. Chacun demande une
     **session séparée** qui n'a pas lu `corpus/fiches/`. **Sauf l'entrée 1 :

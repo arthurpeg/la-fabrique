@@ -508,7 +508,7 @@
     },
     "measuring-volatility-with-the-realized-range-W2133491221": {
       "backend": "openai",
-      "consigne_chars": 24467,
+      "consigne_chars": 20907,
       "essais": [
         {
           "detail": "HTTPError: HTTP Error 413: Payload Too Large",
@@ -519,17 +519,28 @@
       ],
       "format_json_force": true,
       "model": "groq/openai/gpt-oss-120b",
-      "num_ctx": 14336,
+      "num_ctx": 12288,
       "variante": "morceaux",
       "verdict": "reseau"
     },
     "performance-of-time-series-momentum-strategy-us-W4388535504": {
       "backend": "openai",
-      "consigne_chars": 26684,
+      "consigne_chars": 22399,
       "essais": [
         {
-          "detail": "HTTPError: HTTP Error 413: Payload Too Large",
+          "conditions_cassees": [
+            "F1"
+          ],
           "essai": 1,
+          "forme_sortie": "json nu",
+          "output_tokens": 2100,
+          "prompt_tokens": 6622,
+          "vert": false,
+          "wall_s": 5.2
+        },
+        {
+          "detail": "HTTPError: HTTP Error 413: Payload Too Large",
+          "essai": 2,
           "issue": "reseau",
           "timeout_s": 2700
         }
@@ -542,7 +553,7 @@
     },
     "the-day-of-the-week-effect-on-stock-market-volat-W2110141348": {
       "backend": "openai",
-      "consigne_chars": 26067,
+      "consigne_chars": 23545,
       "essais": [
         {
           "detail": "HTTPError: HTTP Error 413: Payload Too Large",
@@ -559,18 +570,29 @@
     },
     "the-impact-of-intraday-momentum-on-stock-returns-W4200303559": {
       "backend": "openai",
-      "consigne_chars": 28843,
+      "consigne_chars": 23629,
       "essais": [
         {
-          "detail": "HTTPError: HTTP Error 413: Payload Too Large",
+          "conditions_cassees": [
+            "F1"
+          ],
           "essai": 1,
+          "forme_sortie": "json nu",
+          "output_tokens": 2264,
+          "prompt_tokens": 6882,
+          "vert": false,
+          "wall_s": 5.5
+        },
+        {
+          "detail": "HTTPError: HTTP Error 413: Payload Too Large",
+          "essai": 2,
           "issue": "reseau",
           "timeout_s": 2700
         }
       ],
       "format_json_force": true,
       "model": "groq/openai/gpt-oss-120b",
-      "num_ctx": 16384,
+      "num_ctx": 14336,
       "variante": "morceaux",
       "verdict": "reseau"
     }

@@ -1,0 +1,59 @@
+{
+  "fiche_id": "the-impact-of-intraday-momentum-on-stock-returns-W4200303559",
+  "written": "2026-09-24",
+  "written_by": "extraction_session",
+  "claim": "Intraday momentum, measured by the first half‑hour return, predicts subsequent half‑hour returns and impacts S&P 500 and CSI300 stock returns.",
+  "universe": "S&P 500 and CSI300 equities",
+  "horizon": {
+    "value": "intraday (half‑hour)",
+    "reason": "the study examines returns within the same trading day half‑hour intervals"
+  },
+  "signal_construction": {
+    "value": "signal based on the first half‑hour return (IMreturn1) used to take long positions when positive and close/short otherwise",
+    "reason": "described in the methodology section"
+  },
+  "reported_results": [
+    {
+      "name": "funding_amount_pln",
+      "value": 10788423.16,
+      "unit": "PLN",
+      "quoted": "the amount of funding was PLN 10,788,423.16.",
+      "note": "Funding information reported in acknowledgements."
+    },
+    {
+      "name": "consistent_returns_half_hour",
+      "value": null,
+      "quoted": "They found significant evidence that the returns on particular equity are consistent within the half‑hour intervals across the trading day.",
+      "note": "Qualitative result, no numeric value reported."
+    },
+    {
+      "name": "intraday_momentum_predictive",
+      "value": null,
+      "quoted": "we examine the intraday momentum of the market, which is based on the predictability of the market’s first half‑hour returns ...",
+      "note": "Statement of research focus, not a measured numeric result."
+    }
+  ],
+  "what_is_missing": "the provided passages do not give out‑of‑sample performance metrics, transaction‑cost adjustments, or robustness checks for the intraday momentum strategy.",
+  "source": {
+    "authors": "Unknown",
+    "title": "The impact of intraday momentum on stock returns",
+    "year": 2021,
+    "source_url": "https://doi.org/10.15240/tul/001/2021-4-008",
+    "pdf": "corpus/pdf/the-impact-of-intraday-momentum-on-stock-returns-W4200303559.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "amorce_entry": 11
+  },
+  "transposability": {
+    "what_transfers": [
+      "the half‑hour return signal concept could be applied to futures contracts"
+    ],
+    "what_does_not_transfer": [
+      "stock‑specific liquidity effects",
+      "institutional trading constraints that differ between equities and futures"
+    ],
+    "what_aligns_well": [
+      "the predictive regression framework aligns with our intraday IC modeling"
+    ]
+  }
+}
