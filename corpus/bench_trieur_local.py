@@ -45,7 +45,11 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "corpus"))
 
-from bench_extractor import appel, appel_gemini, est_gemini  # noqa: E402
+# UN SEUL ROUTEUR, celui du banc d'extraction : il connait les trois backends
+# (ollama, Gemini, compatible OpenAI) ET porte l'attente exponentielle sur les
+# codes retentables. Un second aiguillage ici finirait par diverger du premier —
+# c'est ce qui est arrive a `value_in_quote`, tenue en double jusqu'au 2026-09-22.
+from bench_extractor import appel_avec_attente, nom_de_fichier  # noqa: E402
 
 ENTREE = REPO / "corpus" / "triage_input.json"
 BENCH = REPO / "corpus" / "bench"
@@ -159,7 +163,6 @@ def extraire_json(texte: str) -> dict | None:
 def do_run(model: str, consigne_id: str = "a") -> int:
     payload = json.loads(ENTREE.read_text(encoding="utf-8"))
     entrees = payload["entries"]
-    fonction = appel_gemini if est_gemini(model) else appel
 
     verdicts, illisibles, secondes = [], [], 0.0
     print(f"trieur local — {model}, {len(entrees)} entrees, un appel chacune\n")
@@ -169,7 +172,7 @@ def do_run(model: str, consigne_id: str = "a") -> int:
         invite = gabarit.format(papier=rendre_papier(e))
         debut = time.time()
         try:
-            rep = fonction(model, [{"role": "user", "content": invite}], NUM_CTX)
+            rep = appel_avec_attente(model, [{"role": "user", "content": invite}], NUM_CTX)
         except Exception as exc:
             print(f"  entree {e['entry']:>2} : ECHEC {type(exc).__name__}")
             illisibles.append(e["entry"])
@@ -193,7 +196,7 @@ def do_run(model: str, consigne_id: str = "a") -> int:
 
     BENCH.mkdir(parents=True, exist_ok=True)
     suffixe = "" if consigne_id == "a" else f"+{consigne_id}"
-    sortie = BENCH / f"trieur_{model.replace(':', '_')}{suffixe}.json"
+    sortie = BENCH / f"trieur_{nom_de_fichier(model)}{suffixe}.json"
     # LA FORME QUE LE JUGE ATTEND — lue dans `read_verdicts`, pas devinee : un
     # objet portant `entries`, jamais une liste nue. Verifie AVANT de relancer
     # vingt appels, ce qui n'a pas ete fait la premiere fois.

@@ -1,0 +1,105 @@
+{
+ "source": "groq/openai/gpt-oss-120b",
+ "entries": [
+  {
+   "entry": 1,
+   "verdict": "oui",
+   "reason": "Utilise seulement les prix intraday, on peut agréger nos données 1‑min en 30‑min pour les neuf futures"
+  },
+  {
+   "entry": 2,
+   "verdict": "partiel",
+   "reason": "Méthode basée sur un large univers de 60+ futures ; nos 9 instruments suffisent en données mais l'univers est plus restreint, il faut transposer le modèle."
+  },
+  {
+   "entry": 3,
+   "verdict": "partiel",
+   "reason": "nécessite de transposer la méthode des actions US aux 9 futures, ce qui n’est pas garanti mais possible sans données additionnelles"
+  },
+  {
+   "entry": 4,
+   "verdict": "partiel",
+   "reason": "Nécessite les prix du SPY, absent de notre univers; la méthode pourrait être transposée aux futures uniquement"
+  },
+  {
+   "entry": 5,
+   "verdict": "oui",
+   "reason": "Peut être appliqué aux futures NQ en agrégant les barres 1 min en 5 min, aucune donnée externe requise."
+  },
+  {
+   "entry": 6,
+   "verdict": "oui",
+   "reason": "Utilise uniquement les prix intraday (OHLCV) du pétrole WTI, disponible dans notre univers de neuf futures CME à la minute."
+  },
+  {
+   "entry": 7,
+   "verdict": "oui",
+   "reason": "Utilise uniquement OHLCV ; on peut agréger nos barres 1‑min en 5‑min pour MNQ sans donnée externe"
+  },
+  {
+   "entry": 8,
+   "verdict": "non",
+   "reason": "Nécessite des déséquilibres d'ordres (order flow) qui ne sont pas fournis dans nos données OHLCV et ne sont pas gratuits."
+  },
+  {
+   "entry": 9,
+   "verdict": "non",
+   "reason": "Nécessite des rendements overnight et/ou un calendrier macro, données non disponibles dans notre univers intraday minute OHLCV."
+  },
+  {
+   "entry": 10,
+   "verdict": "partiel",
+   "reason": "Méthode basée sur actions, à transposer sur nos futures sans donnée externe"
+  },
+  {
+   "entry": 11,
+   "verdict": "oui",
+   "reason": "La méthode ne nécessite que des séries de prix intrajournalières (close à la minute) et peut être appliquée à nos neuf futures sans données externes."
+  },
+  {
+   "entry": 12,
+   "verdict": "oui",
+   "reason": "Méthode utilisable avec nos 9 futures minute OHLCV, aucune donnée externe requise"
+  },
+  {
+   "entry": 13,
+   "verdict": "partiel",
+   "reason": "Méthode basée sur sauts signés nécessite un univers d'actions et/ou une granularité plus fine que nos minutes OHLCV sur neuf futures"
+  },
+  {
+   "entry": 14,
+   "verdict": "oui",
+   "reason": "Le modèle HAR ne nécessite que la volatilité réalisée calculée à partir des OHLCV minute, disponible dans notre univers."
+  },
+  {
+   "entry": 15,
+   "verdict": "partiel",
+   "reason": "Nécessite le calendrier des annonces FOMC (donnée gratuite non fournie) et des actions, mais on peut agréger nos minutes et transposer la méthode aux futures"
+  },
+  {
+   "entry": 16,
+   "verdict": "partiel",
+   "reason": "Nécessite le calendrier des annonces FOMC, donnée gratuite non fournie"
+  },
+  {
+   "entry": 17,
+   "verdict": "partiel",
+   "reason": "Nécessite le calendrier des annonces macro (données gratuites mais absentes de notre jeu)"
+  },
+  {
+   "entry": 18,
+   "verdict": "partiel",
+   "reason": "Nécessite la deuxième échéance du contrat, donnée non fournie dans notre univers mais obtenable gratuitement."
+  },
+  {
+   "entry": 19,
+   "verdict": "non",
+   "reason": "Nécessite une deuxième échéance et des données de stocks, données absentes et payantes dans notre univers."
+  },
+  {
+   "entry": 20,
+   "verdict": "non",
+   "reason": "Nécessite de conserver des positions sur plusieurs jours/mois, incompatible avec la contrainte de clôture intrajournalière"
+  }
+ ]
+}

@@ -353,6 +353,16 @@ def est_gemini(model: str) -> bool:
 # avant le PREMIER `/` choisit l'adresse et le nom de la cle ; le reste est
 # envoye tel quel — ce qui laisse passer les noms a deux niveaux d'OpenRouter
 # (`openrouter/meta-llama/llama-3.3-70b-instruct`).
+# `urllib` n'envoie AUCUN `User-Agent`, et Groq renvoie alors un 403 Cloudflare
+# (code 1010, « signature du navigateur »). S'identifier n'est pas contourner un
+# controle : on detient une cle valide pour une API faite pour etre appelee par
+# un programme. Rien de ce que `harvest.py` refuse de faire — la, il s'agissait
+# de PDF derriere un controle anti-robot, et ils sont restes inscrits `refus_robot`.
+ENTETES_OPENAI = {
+    "Content-Type": "application/json",
+    "User-Agent": "la-fabrique/bench (+https://github.com/arthurpeg/la-fabrique)",
+}
+
 FOURNISSEURS = {
     "groq": ("https://api.groq.com/openai/v1", "GROQ_API_KEY"),
     "openrouter": ("https://openrouter.ai/api/v1", "OPENROUTER_API_KEY"),
@@ -360,6 +370,16 @@ FOURNISSEURS = {
     "mistral": ("https://api.mistral.ai/v1", "MISTRAL_API_KEY"),
     "together": ("https://api.together.xyz/v1", "TOGETHER_API_KEY"),
 }
+
+
+def nom_de_fichier(model: str) -> str:
+    """Un nom de modele rendu sur pour un chemin.
+
+    `groq/openai/gpt-oss-120b` porte des `/` : n'assainir que les `:` — ce que
+    faisait ce code — fabrique des sous-repertoires fantomes et casse l'ecriture
+    APRES les vingt appels, quand tout est deja paye. Constate le 2026-09-25.
+    """
+    return model.replace(":", "_").replace("/", "_")
 
 
 def est_openai(model: str) -> bool:
@@ -401,7 +421,7 @@ def appel_openai(model: str, messages: list[dict], num_ctx: int) -> dict:
     req = urllib.request.Request(
         f"{base}/chat/completions",
         data=body,
-        headers={"Content-Type": "application/json", "Authorization": f"Bearer {cle}"},
+        headers=ENTETES_OPENAI | {"Authorization": f"Bearer {cle}"},
     )
     debut = time.time()
     with urllib.request.urlopen(req, timeout=TIMEOUT_APPEL_S) as r:
@@ -421,7 +441,7 @@ def appel_openai(model: str, messages: list[dict], num_ctx: int) -> dict:
 def modeles_openai(prefixe: str) -> int:
     base, _, cle = _fournisseur(f"{prefixe}/")
     req = urllib.request.Request(
-        f"{base}/models", headers={"Authorization": f"Bearer {cle}"}
+        f"{base}/models", headers=ENTETES_OPENAI | {"Authorization": f"Bearer {cle}"}
     )
     try:
         with urllib.request.urlopen(req, timeout=60) as r:
@@ -762,7 +782,7 @@ def do_run(fiche_id: str, model: str, variante: str = "citation") -> int:
     elif not ollama_disponible():
         raise SystemExit("ollama ne repond pas sur localhost:11434")
 
-    etiquette = model.replace(":", "_") + ("" if variante == "citation" else f"+{variante}")
+    etiquette = nom_de_fichier(model) + ("" if variante == "citation" else f"+{variante}")
     sortie_dir = BENCH / etiquette
     sortie_dir.mkdir(parents=True, exist_ok=True)
     cible = sortie_dir / f"{fiche_id}.json"
