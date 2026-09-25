@@ -136,6 +136,116 @@ identique. Rends de nouveau UN SEUL OBJET JSON, rien avant, rien apres.
 """
 
 
+# ---------------------------------------------------------------------------
+# VARIANTE « lignes » — changer la TACHE plutot que le modele.
+#
+# Constat du 2026-09-24 : `gemini-2.5-flash` rend du JSON parfait mais echoue
+# `F2` sur 4 papiers sur 5. `F2` exige de RECOPIER mot pour mot depuis 20 000
+# tokens, et c'est exactement ce qu'un modele faible fait le plus mal : il
+# paraphrase. Le seuil n'est pas negociable ; l'INTERFACE, si.
+#
+# Ici le texte est numerote et le modele ne recopie rien : il designe un
+# INTERVALLE DE LIGNES, que le harnais resout lui-meme.
+#
+# CE QUE CELA CHANGE, ET IL FAUT LE LIRE AVANT DE COMPARER LES CHIFFRES.
+# `F2` devient VRAI PAR CONSTRUCTION — la citation est extraite du fichier, elle
+# ne peut plus etre fabriquee. Ce n'est pas un affaiblissement : c'est le geste
+# de l'invariant II, « empeche par construction, jamais par vigilance ». Mais un
+# « vert » sous cette variante ne se compare PAS a un « vert » sous le contrat
+# courant, et le banc l'inscrit dans chaque trace.
+#
+# LE RISQUE SE DEPLACE, IL NE DISPARAIT PAS : le modele peut pointer les
+# MAUVAISES lignes. C'est `F3` qui l'attrape — la valeur annoncee doit se
+# retrouver dans les lignes resolues — et `F3` devient donc la condition
+# porteuse de la variante. Elle, elle peut echouer.
+VARIANTES = ("citation", "lignes")
+
+REGLE_LIGNES = """\
+1. **Tu ne recopies AUCUNE citation.** Le texte du papier t'est donné avec un
+   NUMÉRO DE LIGNE en tête de chaque ligne. Pour chaque citation, tu donnes
+   `"quoted_lines"` à la place de `"quoted"` : l'intervalle de lignes qui
+   contient ce que tu cites, bornes incluses.
+   - dans `reported_results`, un seul intervalle : `"quoted_lines": [1234, 1236]`
+   - dans `claim`, `universe`, `horizon`, `signal_construction`, une LISTE
+     d'intervalles : `"quoted_lines": [[12, 14], [98, 98]]`
+   Le harnais ira chercher le texte lui-même, à l'octet près. Ne mets jamais de
+   champ `quoted` : il sera écrasé.
+2. **Choisis l'intervalle le plus COURT qui porte ce que tu cites**, et pour un
+   résultat chiffré, **l'intervalle DOIT contenir le nombre**. Un contrôle
+   mécanique vérifie que la valeur annoncée se trouve dans les lignes que tu as
+   désignées : pointer à côté fait rejeter la fiche."""
+
+
+def numeroter(texte: str) -> str:
+    return "\n".join(f"{i:>5}| {ligne}" for i, ligne in enumerate(texte.splitlines(), 1))
+
+
+def consigne_lignes(fiche_id: str) -> str:
+    """Bâtit la consigne de la variante depuis les MEMES sources que l'originale.
+
+    Le schéma et le texte sont ceux de `extract_fiche_harvest.py --prepare` ;
+    seules les deux premières règles changent. Rien n'est recopié à la main.
+    """
+    originale = (CONSIGNES / f"{fiche_id}.md").read_text(encoding="utf-8")
+    tete, _, texte = originale.partition("## TEXTE DU PAPIER\n")
+    if not texte:
+        raise SystemExit(f"consigne illisible : {fiche_id}")
+
+    # Les deux premieres regles de la consigne d'origine sont remplacees ; le
+    # reste — schema, interdits, identite de la fiche — est conserve tel quel.
+    debut = tete.find("1. **Chaque citation")
+    fin = tete.find("3. **Si le texte fourni est visiblement abîmé**")
+    if debut < 0 or fin < 0:
+        raise SystemExit("les regles 1 et 2 n'ont pas ete retrouvees dans la consigne")
+    tete = tete[:debut] + REGLE_LIGNES + "\n" + tete[fin:]
+    return tete + "## TEXTE DU PAPIER (numéroté)\n\n" + numeroter(texte.lstrip("\n"))
+
+
+def _resoudre(paires, lignes: list[str]):
+    """Un intervalle (ou une liste d'intervalles) -> le texte exact du fichier."""
+    def une(paire):
+        a, b = int(paire[0]), int(paire[1])
+        if a < 1 or b < a or b > len(lignes):
+            raise ValueError(f"intervalle hors texte : [{a}, {b}] pour {len(lignes)} lignes")
+        return "\n".join(lignes[a - 1 : b])
+
+    if not isinstance(paires, list) or not paires:
+        raise ValueError(f"quoted_lines illisible : {paires!r}")
+    if isinstance(paires[0], (int, float, str)):
+        return une(paires)
+    return [une(p) for p in paires]
+
+
+def resoudre_lignes(objet: dict, fiche_id: str) -> list[str]:
+    """Remplace tout `quoted_lines` par le `quoted` qu'il designe. Rend les fautes.
+
+    Les fautes ne sont PAS corrigees en silence : un intervalle hors texte laisse
+    le champ sans `quoted`, et le juge le refusera — ce qui est le comportement
+    voulu. Un resolveur indulgent masquerait precisement ce qu'on mesure.
+    """
+    texte = (REPO / "corpus" / "text" / f"{fiche_id}.default.txt").read_text(
+        encoding="utf-8", errors="replace"
+    )
+    lignes = texte.splitlines()
+    fautes: list[str] = []
+
+    def traiter(noeud, ou: str):
+        if isinstance(noeud, dict):
+            if "quoted_lines" in noeud:
+                try:
+                    noeud["quoted"] = _resoudre(noeud.pop("quoted_lines"), lignes)
+                except ValueError as e:
+                    fautes.append(f"{ou} : {e}")
+            for cle, valeur in noeud.items():
+                traiter(valeur, f"{ou}.{cle}")
+        elif isinstance(noeud, list):
+            for i, element in enumerate(noeud):
+                traiter(element, f"{ou}[{i}]")
+
+    traiter(objet, "fiche")
+    return fautes
+
+
 def charger_env() -> None:
     """Lit `.env` sans ecraser ce que l'environnement porte deja.
 
@@ -497,7 +607,7 @@ def do_list() -> int:
     return 0
 
 
-def do_run(fiche_id: str, model: str) -> int:
+def do_run(fiche_id: str, model: str, variante: str = "citation") -> int:
     consigne = CONSIGNES / f"{fiche_id}.md"
     if not consigne.is_file():
         raise SystemExit(f"consigne absente : {consigne}")
@@ -509,11 +619,15 @@ def do_run(fiche_id: str, model: str) -> int:
     elif not ollama_disponible():
         raise SystemExit("ollama ne repond pas sur localhost:11434")
 
-    sortie_dir = BENCH / model.replace(":", "_")
+    etiquette = model.replace(":", "_") + ("" if variante == "citation" else f"+{variante}")
+    sortie_dir = BENCH / etiquette
     sortie_dir.mkdir(parents=True, exist_ok=True)
     cible = sortie_dir / f"{fiche_id}.json"
 
-    texte_consigne = consigne.read_text(encoding="utf-8")
+    texte_consigne = (
+        consigne.read_text(encoding="utf-8") if variante == "citation"
+        else consigne_lignes(fiche_id)
+    )
     num_ctx = contexte_pour(len(texte_consigne))
     messages = [{"role": "user", "content": texte_consigne}]
 
@@ -522,6 +636,7 @@ def do_run(fiche_id: str, model: str) -> int:
         "model": model,
         "backend": "gemini" if est_gemini(model) else "ollama",
         "format_json_force": True if est_gemini(model) else FORMAT_JSON_OLLAMA,
+        "variante": variante,
         "num_ctx": num_ctx,
         "consigne_chars": len(texte_consigne),
         "essais": [],
@@ -610,6 +725,17 @@ def do_run(fiche_id: str, model: str) -> int:
             ]
             continue
 
+        if variante == "lignes":
+            fautes = resoudre_lignes(objet, fiche_id)
+            ligne["intervalles_fautifs"] = fautes
+            ligne["quoted_lines_restants"] = json.dumps(objet).count("quoted_lines")
+            if fautes:
+                print(f"    {len(fautes)} intervalle(s) hors texte — champ laisse SANS")
+                print("      citation, le juge le refusera. Non corrige en silence.")
+            if ligne["quoted_lines_restants"]:
+                print(f"    {ligne['quoted_lines_restants']} `quoted_lines` NON RESOLUS "
+                      "— le resolveur ne les a pas vus.")
+
         cible.write_text(json.dumps(objet, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         vert, verdict = juger(cible)
         ligne["conditions_cassees"] = conditions_cassees(verdict)
@@ -630,7 +756,7 @@ def do_run(fiche_id: str, model: str) -> int:
         trace["verdict"] = "epuise"
         print(f"    EPUISE apres {MAX_ESSAIS} essais")
 
-    resultats.setdefault(model, {})[fiche_id] = trace
+    resultats.setdefault(etiquette, {})[fiche_id] = trace
     ecrire_resultats(resultats)
     return 0 if trace["verdict"] == "vert" else 1
 
@@ -684,6 +810,8 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--run", metavar="FICHE_ID")
     ap.add_argument("--report", action="store_true")
     ap.add_argument("--model", default=DEFAULT_MODEL)
+    ap.add_argument("--variante", default="citation", choices=VARIANTES,
+                    help="`lignes` : le modele designe des numeros de ligne au lieu de recopier")
     a = ap.parse_args(argv)
 
     if a.modeles:
@@ -693,7 +821,7 @@ def main(argv: list[str]) -> int:
     if a.list:
         return do_list()
     if a.run:
-        return do_run(a.run, a.model)
+        return do_run(a.run, a.model, a.variante)
     if a.report:
         return do_report()
     print(__doc__)
