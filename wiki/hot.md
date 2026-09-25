@@ -1,6 +1,6 @@
 ---
 type: hub
-updated: 2026-09-24
+updated: 2026-09-25
 status: genere
 sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 ---
@@ -12,7 +12,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 > Toute modification hors du bloc « Prochaines actions » sera perdue.
 > Pour changer ce qui s'affiche ici, édite `wiki/log.md` ou `ETAT.md`.
 
-*Régénérée le 2026-09-24.*
+*Régénérée le 2026-09-25.*
 
 ---
 
