@@ -233,7 +233,17 @@ def resoudre_lignes(objet: dict, fiche_id: str) -> list[str]:
         if isinstance(noeud, dict):
             if "quoted_lines" in noeud:
                 try:
-                    noeud["quoted"] = _resoudre(noeud.pop("quoted_lines"), lignes)
+                    resolu = _resoudre(noeud.pop("quoted_lines"), lignes)
+                    # LA FORME DU CHAMP SUIT LE CONTRAT EXISTANT, pas l'inverse.
+                    # `reported_results[].quoted` est une CHAINE dans toutes les
+                    # fiches du corpus, et `check_f3` l'appelle `.replace()` :
+                    # une liste y fait PLANTER le juge — constate le 2026-09-25,
+                    # `AttributeError: 'list' object has no attribute 'replace'`.
+                    # La variante change l'interface d'ENTREE du modele ; elle ne
+                    # touche pas au schema de sortie, et surtout pas au juge.
+                    if "reported_results" in ou and isinstance(resolu, list):
+                        resolu = "\n".join(resolu)
+                    noeud["quoted"] = resolu
                 except ValueError as e:
                     fautes.append(f"{ou} : {e}")
             for cle, valeur in noeud.items():
@@ -740,6 +750,13 @@ def do_run(fiche_id: str, model: str, variante: str = "citation") -> int:
         vert, verdict = juger(cible)
         ligne["conditions_cassees"] = conditions_cassees(verdict)
         ligne["vert"] = vert
+        # UN JUGE QUI PLANTE N'EST PAS UN JUGE QUI REFUSE, et les confondre
+        # ecrit « aucune condition cassee » sous un rejet. Constate le
+        # 2026-09-25 : `check_f3` leve `AttributeError` sur un `quoted` de type
+        # liste, donc `conditions_cassees` rend [] alors que rien n'est vert.
+        if not vert and not ligne["conditions_cassees"]:
+            ligne["juge_plante"] = verdict.strip().splitlines()[-1][:200] if verdict else "?"
+            print(f"    LE JUGE A PLANTE — {ligne['juge_plante']}")
         trace["essais"].append(ligne)
 
         if vert:
