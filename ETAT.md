@@ -7,6 +7,8 @@ tronquait une barre trop tard ; corrigé, portes 05 et 08 rejouées et franchies
 mesure officielle (calibrations comprises).
 `D29` : pas de plis en phase 09 — une mesure unique sur tout le `pool`, à
 `asof` 2023-12-29 20:00 UTC, vérifiée par la porte.
+Les 11 fiches moissonnées sans trace de production ont été **refaites** par 11
+sessions isolées : 18 fiches sur 18 tracées, 17 vertes sur ce poste.
 **Le reste de ce fichier n'a pas été relu à cette date** et retarde sur le dépôt
 (voir § Revue du 2026-09-26, en fin de § Prochaine action).
 **Dernière porte franchie :** **08**, le 2026-09-23 — `scripts/gate_08.py`. Un
@@ -351,10 +353,24 @@ sont ouverts, du plus grave au moins grave :
 3. ~~Les plis du walk-forward ne sont tranchés nulle part.~~ **Tranché,
    `D29`** : pas de plis en phase 09, mesure unique sur tout le `pool` à un
    `asof` fixé et vérifié.
-4. **11 fiches moissonnées sans trace de production** — 18 fichiers dans
-   `corpus/fiches_harvest/`, 7 seulement dans `PRODUCED_harvest.json`. `G3`
-   n'est pas mesurable pour elles (`L22`). `cryptocurrencies-and-momentum`
-   casse en plus `F1` et `F3`.
+4. ~~11 fiches moissonnées sans trace de production.~~ **Refaites le
+   2026-09-26** par 11 sessions isolées (consigne seule, anciennes fiches
+   retirées du disque avant le lancement, `--record` avant tout `--judge`).
+   **12 essais pour 11 fiches** : 10 vertes au premier essai, la dernière
+   (`cryptocurrencies-and-momentum`) au second, après renvoi du verdict à la
+   même session. Elle a contourné le bogue du point 5 par un `spelled_out` qui
+   recopie le nombre tel que la citation l'écrit (`"17.71"`) — usage documenté
+   par `corpus/SCHEMA.md` pour un texte abîmé, mais qui montre que `spelled_out`
+   devient la soupape de toute faille de `value_in_quote` : corriger le point 5
+   la rend inutile. **État : 18 fiches tracées, 17 vertes sur ce poste.**
+   `bitcoin-is-not-the-new-gold` ne tient pas `F4` ici, et c'est voulu : le PDF
+   de `corpus/pdf/harvest/` **ne rend pas le texte du manifeste** (empreintes
+   `default` différentes), donc ce n'est pas le document dont le texte fait foi,
+   et il n'a pas été copié. Même contrôle pour `intraday-volatility-transmission`
+   : octets différents de ceux enregistrés à la promotion, **texte identique**,
+   copié. Le bon PDF de `bitcoin-is-not-the-new-gold` est à reprendre sur le
+   poste qui l'a promu. Les 33 autres PDF promus ont été copiés dans
+   `corpus/pdf/` après vérification de leur empreinte.
 5. **`value_in_quote` retire toutes les virgules** : `17.71,18.22` devient
    `17.7118.22` (faux refus), `{12,6,1}` devient `1261` (faux accord possible).
 6. **`extract_text.py --check` ne vérifie que les PDF présents sur le poste** :
