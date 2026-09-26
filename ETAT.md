@@ -14,8 +14,10 @@ sessions isolées : 18 fiches sur 18 tracées, 17 vertes sur ce poste.
 `extract_text.py` part désormais du manifeste : `--check` dit combien il a
 vérifié et nomme ce qu'il n'a pas pu vérifier ; l'écriture ne supprime plus les
 entrées des PDF absents.
-**Le reste de ce fichier n'a pas été relu à cette date** et retarde sur le dépôt
-(voir § Revue du 2026-09-26, en fin de § Prochaine action).
+**Relu le 2026-09-26** : les énoncés que le dépôt avait dépassés sont **barrés**,
+avec la date et la preuve de leur correction — rien n'est effacé. Les sections
+datées plus bas restent l'historique ; l'état courant est dans § Prochaine
+action et § Revue du 2026-09-26.
 **Dernière porte franchie :** **08**, le 2026-09-23 — `scripts/gate_08.py`. Un
 signal produit par une session de codage séparée tient les **six conditions de
 `D23` au premier essai**, et aucun signal produit n'a été retouché à la main.
@@ -136,7 +138,8 @@ pas dans `G1`–`G4`** (`F47`). Passage 1 : 132 candidats, **43 PDF**.
 `decisions/DECISION-19-la-version-de-l-extracteur-de-texte.md` — la **version**
 de `pypdf` fait partie de la définition du texte qui fait foi. Épinglée à
 `==6.14.2` dans `pyproject.toml`. En changer est une décision écrite qui
-régénère les 36 fichiers et re-vérifie `F2` sur **toutes** les fiches.
+régénère **tous** les fichiers de `corpus/text/` (36 à l'écriture de `D19`,
+**104** au 2026-09-26) et re-vérifie `F2` sur **toutes** les fiches.
 **Décision précédente :**
 `decisions/DECISION-18-le-texte-qui-fait-foi.md` — « le texte du papier »
 n'existe pas : il y a des **extractions**, qui diffèrent. Le texte qui fait foi
@@ -404,7 +407,9 @@ sont ouverts, du plus grave au moins grave :
    harnais. **`ruff check --fix` n'est pas couvert** : il ne toucherait rien
    aujourd'hui (le harnais passe le lint), mais une règle ajoutée demain le
    pourrait.
-8. **Ce fichier retarde sur le dépôt** : point 9 de § Donc, dans l'ordre (le
+8. ~~Ce fichier retarde sur le dépôt~~ — **corrigé le 2026-09-26** : énoncés
+   périmés barrés et datés, `F55`–`F59` remises dans le tableau du ledger.
+   *Historique :* point 9 de § Donc, dans l'ordre (le
    correctif de `signal_construction` est fait depuis le 2026-09-25), « 6 fiches
    sur 35 », « 36 fichiers » de texte (`--check` en compte 34), les fuites de
    `SCHEMA.md` à la fois fermées et ouvertes. Et `F55`–`F59` du ledger sont
@@ -438,7 +443,20 @@ registre **entier**, les 56 tests antérieurs compris.
 
 ### Ce qui bloque la phase 09, maintenant que le budget est fixé
 
-1. **Il manque 33 fiches.** `D25` engage un lot de 50 ; le corpus en porte **17**.
+1. **Au 2026-09-26 : 35 fiches, et le lot demande 50 SIGNAUX.** 17 fiches
+   `AMORCE` (porte 07) et **18 moissonnées**, toutes tracées dans
+   `PRODUCED_harvest.json` (17 vertes sur ce poste, la dix-huitième pour `F4`,
+   point 4 de la revue). **17 candidats moissonnés restent à ficher**, dont
+   l'APAC, bloqué (ci-dessous) — `python corpus/extract_fiche_harvest.py --list`.
+   Au mieux ~51 fiches pour 50 signaux : **la marge est nulle**, et deux choses
+   la rognent encore. (a) **La pertinence** : une part des papiers moissonnés
+   porte sur les cryptos, les actions de l'énergie propre ou la volatilité du
+   pétrole, et leur transposition à nos neuf futures intraday est douteuse — une
+   fiche n'est pas un signal. (b) **`D28`** : un signal déjà mesuré ne peut plus
+   entrer dans le lot, donc `H01` et `H02` n'en seront pas. Il faudra savoir,
+   **avant de clore le lot**, si 50 tient ou si `D25` doit être amendée par écrit.
+   *Ce qui suit est l'état au 2026-09-24, conservé :*
+   ~~**Il manque 33 fiches.** `D25` engage un lot de 50 ; le corpus en porte **17**.~~
    **La matière existe désormais** : le triage du 2026-09-23 a retenu 39
    papiers moissonnés sur 119 (10 `oui`, 29 `partiel`,
    `corpus/triage_harvest_verdicts.json`), et `corpus/promote_harvest.py`
@@ -464,7 +482,8 @@ registre **entier**, les 56 tests antérieurs compris.
    `signal_construction.value absent` — **cinquième occurrence indépendante de
    la même faute**, ce qui renforce le point 9 de la liste ci-dessous (c'est un
    défaut du schéma ou de la consigne, pas cinq erreurs) — puis verte après
-   repassage. **6 fiches sur 35 candidats, 29 restantes.**
+   repassage. ~~**6 fiches sur 35 candidats, 29 restantes.**~~ *(au 2026-09-24 ;
+   18 sur 35 au 2026-09-26, voir en tête de ce point)*
    **`L26` est sortie de ce lot** : l'isolement de l'extracteur a un plafond que
    personne n'avait écrit — `CLAUDE.md` est injecté dans toute session de ce
    dossier, et une fiche a cité `D01` §5 qui n'est ni dans sa consigne ni dans
@@ -780,7 +799,13 @@ où on le lance. Même péremption que la note « sur cette machine » corrigée
    Gardes rejoués verts : catalogue, `check_provenance` (33 vérifications, 9
    fautes refusées), et **les six portes**, registre 135 → 140 lignes (des
    calibrations), `counted_tests` inchangé à 56, harnais inchangé `9ac3e45e`.
-9. **Trancher `signal_construction` comme objet structuré.** **4 extracteurs
+9. ~~Trancher `signal_construction` comme objet structuré.~~ **CORRIGÉ LE
+   2026-09-25** — `corpus/SCHEMA.md` ne montrait que le cas `null` ; deux
+   sections ajoutées sur un papier fictif (forme normale avec `value`,
+   `what_is_missing` en liste). Premier essai suivant sur `gpt-oss-120b` : la
+   faute a disparu (`wiki/log.md`, 2026-09-25). Les 11 fiches refaites le
+   2026-09-26 n'en portent **aucune** occurrence. *Historique :*
+   **4 extracteurs
    indépendants sur 6 ont fait la même faute** : ils écrivent un objet
    (`sampling`, `components`, `model`…) sans la clé `value` que le schéma exige.
    Quatre fois la même erreur n'est pas quatre erreurs, c'est un défaut du
@@ -799,13 +824,15 @@ où on le lance. Même péremption que la note « sur cette machine » corrigée
    seule route gratuite qui franchit le mur des 8 000 tokens échoue donc sur
    notre propre documentation, pas sur sa fidélité.** Corriger la consigne coûte
    quelques lignes ; c'est peut-être ce qui sépare `F59` d'un `vert`.
-10. **Ficher les 8 papiers restants** — `G1` exige zéro atteignable non fiché.
+10. ~~Ficher les 8 papiers restants~~ — **fait** : porte 07 franchie le
+    2026-09-23, `G1` = 0. *Historique :* `G1` exige zéro atteignable non fiché.
     `python corpus/extract_fiche.py --list` dit lesquels. Chacun demande une
     **session séparée** qui n'a pas lu `corpus/fiches/`. **Sauf l'entrée 1 :
     son PDF est le mauvais papier** (voir l'alerte ci-dessous, `L20`) — la ficher
     avant de l'avoir réparée produirait une fiche fidèle à un texte qui n'est pas
     celui qu'elle annonce, et les cinq conditions n'y verraient rien.
-11. **Réparer les 3 fiches refusées** — andersen-2003, corsi-2009, lou-2019.
+11. ~~Réparer les 3 fiches refusées~~ — **fait** : porte 07 franchie le
+    2026-09-23, `G2` = 0. *Historique :* andersen-2003, corsi-2009, lou-2019.
     Elles se **refont**, elles ne se retouchent pas (`G3`).
 
 ### Trois cassures trouvées et réparées le 2026-09-22
@@ -939,14 +966,17 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
   propre lien désigne est de **Kurov, Wolfe & Gilbert**. `AMORCE.md` n'a pas été
   touché : c'est l'étalon du triage (`D15`), et on ne retouche pas un étalon en
   passant ;
-- **deux fuites du même genre que celle de `TRIAGE.md`**, nommées par `D16` et
-  non encore corrigées : `corpus/SCHEMA.md` illustre ses exemples avec le
-  **contenu réel** de la fiche Andersen & Bollerslev, donc un extracteur qui lit
-  le schéma reçoit une réponse sur trois ; et **où vit le texte source** dont
-  `F2` vérifie les citations n'est pas tranché ;
-- les **multiplicateurs** CME (`cmegroup.com` injoignable depuis ce poste le
-  2026-09-18) et la réponse de **Lucid** ; requis pour toute lecture **nette** et
-  pour la phase 10 ;
+- ~~**deux fuites du même genre que celle de `TRIAGE.md`**, nommées par `D16` et
+  non encore corrigées~~ — **fermées** : les exemples de `corpus/SCHEMA.md` ont
+  été refaits sur un papier fictif le 2026-09-21 (§ Donc, dans l'ordre, point 6),
+  et le texte source est tranché par `D18` (`corpus/text/`, versionné).
+  *Historique :* `corpus/SCHEMA.md` illustrait ses exemples avec le contenu réel
+  de la fiche Andersen & Bollerslev ; où vivait le texte source n'était pas
+  tranché ;
+- ~~les **multiplicateurs** CME et la réponse de **Lucid**~~ — les neuf
+  multiplicateurs CME sont **déposés** depuis le 2026-09-24 avec leur
+  provenance ; les frais sont **encadrés** par `D26` et restent `null` exprès.
+  *Historique :* `cmegroup.com` était injoignable depuis ce poste le 2026-09-18 ;
 - une déclaration écrite de `slippage_bp`, pessimiste, comme `D04` l'exige ;
 - **le corpus implémentable est attendu mort.** Mesfin est transportable (`L14`),
   et `H01`, `H02`, `H03` n'ont rien trouvé. La phase 07 doit être construite en
