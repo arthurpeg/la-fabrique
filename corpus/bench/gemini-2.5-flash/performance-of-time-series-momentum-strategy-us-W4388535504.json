@@ -1,0 +1,113 @@
+{
+  "fiche_id": "performance-of-time-series-momentum-strategy-us-W4388535504",
+  "written": "2026-09-24",
+  "written_by": "session_extraction_09",
+  "source": {
+    "authors": "Siyao Duan",
+    "title": "Performance of Time-series Momentum Strategy: US Evidence",
+    "year": 2023,
+    "source_url": "https://www.ewadirect.com/proceedings/aemps/article/view/5936/pdf",
+    "pdf": "corpus/pdf/performance-of-time-series-momentum-strategy-us-W4388535504.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "amorce_entry": null
+  },
+  "claim": "This paper examines the effectiveness of the time series momentum strategy in generating positive returns in the US stock market, with a focus on exploring its dynamics and performance using different moving average methods.",
+  "universe": "The study uses S&P500 data from 2000 to 2022, specifically daily closing prices of its constituent stocks, to analyze the time series momentum strategy in the US stock market.",
+  "horizon": {
+    "value": "daily",
+    "reason": "The paper uses daily closing prices and aims to predict future returns (Rt+1), implying a daily prediction horizon."
+  },
+  "signal_construction": {
+    "value": "The strategy uses past returns to predict future returns, employing a linear regression model. The model incorporates factors based on Simple Moving Average (MA) or Exponential Moving Average (EMA) of asset returns. For the regression model, a lookback period (N) of 24 was set. Portfolio weights are calculated as (moving average * β + α) / (σ^2), where α and β are regression coefficients and σ^2 is the portfolio's expected volatility. The performance is evaluated with and without transaction costs, and with different window lengths or half-lives for MA and EMA.",
+    "reason": null
+  },
+  "reported_results": [
+    {
+      "name": "Sharpe Ratio (Test Set, no transaction cost)",
+      "value": 0.439,
+      "unit": null,
+      "quoted": "Sharpe Ratio  2.403 0.439",
+      "quoted_source": "Sharpe Ratio  2.403 0.439",
+      "quoted_repair": "table",
+      "note": "From Table 1, for the overall model without transaction costs."
+    },
+    {
+      "name": "Max Drawdown (Test Set, no transaction cost)",
+      "value": 3.304,
+      "unit": null,
+      "quoted": "Max Drawdown 14.403 3.304",
+      "quoted_source": "Max Drawdown 14.403 3.304",
+      "quoted_repair": "table",
+      "note": "From Table 1, for the overall model without transaction costs."
+    },
+    {
+      "name": "Sharpe Ratio (Training Set, no transaction cost)",
+      "value": 2.403,
+      "unit": null,
+      "quoted": "Sharpe Ratio  2.403 0.439",
+      "quoted_source": "Sharpe Ratio  2.403 0.439",
+      "quoted_repair": "table",
+      "note": "From Table 1, for the overall model without transaction costs."
+    },
+    {
+      "name": "Max Drawdown (Training Set, no transaction cost)",
+      "value": 14.403,
+      "unit": null,
+      "quoted": "Max Drawdown 14.403 3.304",
+      "quoted_source": "Max Drawdown 14.403 3.304",
+      "quoted_repair": "table",
+      "note": "From Table 1, for the overall model without transaction costs."
+    },
+    {
+      "name": "Sharpe Ratio (Test Set, overall model, 0.01 transaction cost)",
+      "value": -0.25,
+      "unit": null,
+      "quoted": "0.01 -0.250 7511.158 -54.090 3043.681",
+      "quoted_source": "0.01 -0.250 7511.158 -54.090 3043.681",
+      "quoted_repair": "table",
+      "note": "From Table 3, for the overall model with 0.01 transaction cost."
+    },
+    {
+      "name": "Max Drawdown (Test Set, overall model, 0.01 transaction cost)",
+      "value": 7511.158,
+      "unit": null,
+      "quoted": "0.01 -0.250 7511.158 -54.090 3043.681",
+      "quoted_source": "0.01 -0.250 7511.158 -54.090 3043.681",
+      "quoted_repair": "table",
+      "note": "From Table 3, for the overall model with 0.01 transaction cost."
+    },
+    {
+      "name": "Sharpe Ratio (Test Set, Equal Weight strategy, 0.01 transaction cost)",
+      "value": 0.601,
+      "unit": null,
+      "quoted": "Equal Weight 0.155 9.026 16.972 0.601 4.219 36.248",
+      "quoted_source": "Equal Weight 0.155 9.026 16.972 0.601 4.219 36.248",
+      "quoted_repair": "table",
+      "note": "From Table 7, for the Equal Weight strategy with 0.01 transaction cost."
+    },
+    {
+      "name": "Lookback period N for regression model",
+      "value": 24,
+      "unit": null,
+      "quoted": "𝑁 = 24 was set for this model.",
+      "note": null
+    }
+  ],
+  "what_is_missing": [
+    "Details on the specific parameters (e.g., window lengths, half-lives) used for MA and EMA in the main model (Table 1) are not explicitly stated, only that N=24 was set for the regression model.",
+    "The paper does not provide details on the transaction cost model used, only the rates applied.",
+    "The exact methodology for calculating portfolio weights (Equation 4) is given, but the specific values for alpha, beta, and sigma squared are not provided for the main model, only the resulting performance metrics.",
+    "The paper does not specify the frequency of rebalancing for the portfolio."
+  ],
+  "transposability": {
+    "what_transfers": "The general concept of using time-series momentum with moving averages (MA/EMA) and evaluating performance with transaction costs is transferable. The finding that transaction costs significantly impact profitability is also relevant.",
+    "what_does_not_transfer": [
+      "The study uses S&P500 constituent stocks, which are equities, whereas our universe is intraday futures. The dynamics and liquidity characteristics are different.",
+      "The lookback period (N=24) is for daily data, which would need to be re-evaluated for intraday futures.",
+      "The specific performance metrics (Sharpe Ratio, Max Drawdown, Skewness, Kurtosis) are reported for daily returns, not intraday. Our focus is on intraday alpha and IC.",
+      "The paper does not detail the trading frequency or turnover rates, which are critical for intraday strategies and transaction cost impact."
+    ],
+    "what_aligns_well": "The emphasis on evaluating strategies with transaction costs and the observation that higher transaction costs lead to lower performance is directly applicable to intraday futures trading, where transaction costs are a significant factor."
+  }
+}

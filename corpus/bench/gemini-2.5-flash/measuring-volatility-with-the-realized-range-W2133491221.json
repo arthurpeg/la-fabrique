@@ -1,0 +1,243 @@
+{
+  "fiche_id": "measuring-volatility-with-the-realized-range-W2133491221",
+  "written": "2026-09-24",
+  "written_by": "La Fabrique",
+  "source": {
+    "authors": "Martin Martens and Dick van Dijk",
+    "title": "Measuring volatility with the realized range",
+    "year": 2006,
+    "source_url": "https://repub.eur.nl/pub/7582/ei2006-10.pdf",
+    "pdf": "corpus/pdf/measuring-volatility-with-the-realized-range-W2133491221.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "amorce_entry": null,
+    "reason": "The paper does not specify an Amorce entry number."
+  },
+  "claim": "The 'realized range' estimator, which sums high-low ranges for intra-day intervals, is a more efficient and robust measure of daily volatility than the traditional 'realized variance' (sum of squared intra-day returns), especially when a bias-correction procedure is applied to account for market microstructure frictions like infrequent trading and bid-ask bounce.",
+  "universe": "The study uses simulated prices, S&P500 index-futures, and individual stocks from the S&P100 index.",
+  "horizon": {
+    "value": "daily",
+    "quoted": "Beckers (1983) basically uses the lagged (raw) variance mea sures as forecasts for the current variance. In addition the analysis will be repea ted following Fleming et al. (2003) in adjusting the conditional variances and produ cing rolling forecasts based on exponentially declining weights, building upon the work by Foster and Nelson (1996) and Andreou and Ghysels (2002) on rolling volatility estimators. Consider the following model for close-to-close returns, rt = σ tzt, with zt ∼ iid(0, 1) and σ 2 t = exp(− α )σ 2 t−1 + α exp(− α )Vt−1, (16) where Vt is the measure of volatility for day t used to update the conditional vari- ances.",
+    "note": "The paper focuses on measuring and forecasting daily volatility, often using one-step ahead forecasts based on lagged daily measures."
+  },
+  "signal_construction": {
+    "value": "The realized range (RR∆t) is defined as the sum of high-low ranges for intra-day intervals, scaled by 1/(4 log 2). A bias-correction procedure is suggested by scaling the realized range with the ratio of the average level of the daily range and the average level of the realized range over the previous q trading days.",
+    "quoted": "We therefore sug gest to measure daily volatility by the sum of high-low ranges for intra-day inter vals. The resulting es- timator, which we dub ‘realized range’, should be more eﬃcie nt than the realized variance based on the same sampling frequency. Indeed, in co ncurrent independent work, Christensen and Podolskij (2005) derive the theoreti cal properties of the real- ized range, similar to Barndorﬀ-Nielsen and Shephard (2002 ) for realized variance. [...] RR∆ t = 1 4 log 2 I∑ i=1 (log Ht,i − log Lt,i)2. (5) [...] Hence, we suggest an alternative bias-correcti on procedure by scaling the realized range with the ratio of the average level of the d aily range and the average level of the realized range over the q previous trading days. That is, the scaled realized range is deﬁned as RR∆ S,t = ( ∑ q l=1 RRt−l ∑ q l=1 RR∆ t−l ) RR∆ t , (11) where RRt ≡ RR1 t denotes the daily range.",
+    "note": "The paper also discusses other estimators like Garman and Klass (1980) and Rogers and Satchell (1991) but focuses on the realized range and its scaled version."
+  },
+  "reported_results": [
+    {
+      "name": "realized_range_rmse_vs_squared_return_ideal_case",
+      "value": 2.564,
+      "unit": null,
+      "quoted": "As expected the RMSE of the range is substantially lower at 2.564 than that for the daily squared return at 5.664, reﬂecting the fact that the daily range is ﬁve times more eﬃcient than the daily squared return.",
+      "quoted_source": "As expected the RMSE of the range is substantially lower at 2. 564 than that for the daily squared return at 5.664, reﬂecting the fact that th e daily range is ﬁve times more eﬃcient than the daily squared return.",
+      "quoted_repair": "ocr",
+      "spelled_out": "2. 564",
+      "note": "In an ideal world (continuous trading, no market frictions), the realized range has a lower RMSE than the daily squared return."
+    },
+    {
+      "name": "realized_variance_rmse_vs_squared_return_ideal_case",
+      "value": 5.664,
+      "unit": null,
+      "quoted": "As expected the RMSE of the range is substantially lower at 2. 564 than that for the daily squared return at 5.664, reﬂecting the fact that th e daily range is ﬁve times more eﬃcient than the daily squared return.",
+      "note": "In an ideal world (continuous trading, no market frictions), the daily squared return has a higher RMSE than the realized range."
+    },
+    {
+      "name": "realized_variance_frequency_for_similar_rmse_as_daily_range_ideal_case",
+      "value": 240,
+      "unit": "minutes",
+      "quoted": "Akin to the ﬁndings of Andersen and Bollerslev (1998) and Brandt and Diebold (2006) the real ized variance requires the 4-hour (240 minutes) frequency to achieve a similar RMSE as the daily range.",
+      "note": "In an ideal world, realized variance needs a 4-hour (240 minutes) frequency to match the RMSE of the daily range."
+    },
+    {
+      "name": "true_variance_simulation",
+      "value": 4.41,
+      "unit": null,
+      "quoted": "From Table 1 it appears that the realized range is slightly do wnward biased for the highest frequencies (the true variance is 4.41).",
+      "note": "The true variance used in the simulation experiments."
+    },
+    {
+      "name": "realized_range_rmse_5min_infrequent_trading",
+      "value": 0.953,
+      "unit": null,
+      "quoted": "5 3 . 468 0 . 953 4 . 318 0 . 205 4 . 407 0 . 361 4 . 263 0 . 380 4 . 408 0 . 303 4 . 414 0 . 623",
+      "quoted_source": "5 3 . 468 0 . 953 4 . 318 0 . 205 4 . 407 0 . 361 4 . 263 0 . 380 4 . 408 0 . 303 4 . 414 0 . 623",
+      "quoted_repair": "table",
+      "note": "This is the RMSE for the *unscaled* realized range (RR∆t) at 5-minute frequency with infrequent trading, extracted from Table 2."
+    },
+    {
+      "name": "scaled_realized_range_rmse_5min_infrequent_trading",
+      "value": 0.205,
+      "unit": null,
+      "quoted": "For example, at the 5-minute frequency the RMSE of RR∆ S,t is equal to 0.205, compared to 0.229 and 0.187 for the bias-corrected realized range estimators based upon (9) and (10), respectively.",
+      "note": "RMSE for the scaled realized range (RR∆S,t) at 5-minute frequency with infrequent trading."
+    },
+    {
+      "name": "realized_variance_rmse_5min_infrequent_trading",
+      "value": 0.361,
+      "unit": null,
+      "quoted": "5 3 . 468 0 . 953 4 . 318 0 . 205 4 . 407 0 . 361 4 . 263 0 . 380 4 . 408 0 . 303 4 . 414 0 . 623",
+      "quoted_source": "5 3 . 468 0 . 953 4 . 318 0 . 205 4 . 407 0 . 361 4 . 263 0 . 380 4 . 408 0 . 303 4 . 414 0 . 623",
+      "quoted_repair": "table",
+      "note": "RMSE for the realized variance (RV∆t) at 5-minute frequency with infrequent trading, extracted from Table 2."
+    },
+    {
+      "name": "optimal_q_for_scaled_realized_range_rmse",
+      "value": 500,
+      "unit": "trading days",
+      "quoted": "The RMSE monotonically declines as q increases, but the largest gains occur up to q = 500, beyond which the RMSE more or less stabilizes.",
+      "note": "The number of trading days (q) used to compute the scaling factor for RR∆S,t. Beyond 500 days, gains stabilize."
+    },
+    {
+      "name": "bid_ask_spread_simulation",
+      "value": 0.0005,
+      "unit": null,
+      "quoted": "As in Brandt and Diebold (2006), we set s = 0 . 0005 (or 0.05% of the starting price of 1) and assume that bid and ask prices occur e qually likely.",
+      "note": "Bid-ask spread (s) used in the simulation experiments."
+    },
+    {
+      "name": "realized_range_rmse_5min_bid_ask_bounce",
+      "value": 3.832,
+      "unit": null,
+      "quoted": "5 8 . 237 3 . 832 4 . 490 0 . 142 5 . 331 1 . 013 4 . 320 0 . 362 4 . 442 0 . 295 4 . 437 0 . 663",
+      "quoted_source": "5 8 . 237 3 . 832 4 . 490 0 . 142 5 . 331 1 . 013 4 . 320 0 . 362 4 . 442 0 . 295 4 . 437 0 . 663",
+      "quoted_repair": "table",
+      "note": "RMSE for the unscaled realized range (RR∆t) at 5-minute frequency with bid-ask bounce, extracted from Table 3."
+    },
+    {
+      "name": "scaled_realized_range_rmse_5min_bid_ask_bounce",
+      "value": 0.142,
+      "unit": null,
+      "quoted": "5 8 . 237 3 . 832 4 . 490 0 . 142 5 . 331 1 . 013 4 . 320 0 . 362 4 . 442 0 . 295 4 . 437 0 . 663",
+      "quoted_source": "5 8 . 237 3 . 832 4 . 490 0 . 142 5 . 331 1 . 013 4 . 320 0 . 362 4 . 442 0 . 295 4 . 437 0 . 663",
+      "quoted_repair": "table",
+      "note": "RMSE for the scaled realized range (RR∆S,t) at 5-minute frequency with bid-ask bounce, extracted from Table 3."
+    },
+    {
+      "name": "realized_variance_rmse_5min_bid_ask_bounce",
+      "value": 1.013,
+      "unit": null,
+      "quoted": "5 8 . 237 3 . 832 4 . 490 0 . 142 5 . 331 1 . 013 4 . 320 0 . 362 4 . 442 0 . 295 4 . 437 0 . 663",
+      "quoted_source": "5 8 . 237 3 . 832 4 . 490 0 . 142 5 . 331 1 . 013 4 . 320 0 . 362 4 . 442 0 . 295 4 . 437 0 . 663",
+      "quoted_repair": "table",
+      "note": "RMSE for the realized variance (RV∆t) at 5-minute frequency with bid-ask bounce, extracted from Table 3."
+    },
+    {
+      "name": "optimal_rmse_realized_range_both_frictions",
+      "value": 0.749,
+      "unit": null,
+      "quoted": "In addition the overall minimum RMSE is obtained at 0.749 for the realized range at the 45-minute frequency.",
+      "quoted_source": "In addition the overall minimum RMSE is obtained at 0 .749 for the realized range at the 45-minute frequency.",
+      "quoted_repair": "ocr",
+      "spelled_out": "0 .749",
+      "note": "Minimum RMSE for the realized range (RR∆t) when both infrequent trading and bid-ask bounce are present, occurring at 45-minute frequency."
+    },
+    {
+      "name": "optimal_rmse_realized_variance_both_frictions",
+      "value": 0.717,
+      "unit": null,
+      "quoted": "For the realized variance the optimal frequency is the 10-minute frequency for which the RMSE is 0.717, hence only slightly smaller than that for the optimal realized range.",
+      "note": "Minimum RMSE for the realized variance (RV∆t) when both infrequent trading and bid-ask bounce are present, occurring at 10-minute frequency."
+    },
+    {
+      "name": "sp500_futures_sample_period_start",
+      "value": "1999-01-04",
+      "unit": "date",
+      "quoted": "Our sample contains transaction prices a nd bid and ask quotes running from 4 January 1999 to 23 February 2004.",
+      "note": "Start date of the S&P500 index-futures sample."
+    },
+    {
+      "name": "sp500_futures_sample_period_end",
+      "value": "2004-02-23",
+      "unit": "date",
+      "quoted": "Our sample contains transaction prices a nd bid and ask quotes running from 4 January 1999 to 23 February 2004.",
+      "note": "End date of the S&P500 index-futures sample."
+    },
+    {
+      "name": "sp500_futures_number_of_days",
+      "value": 1289,
+      "unit": "days",
+      "quoted": "For the 1289 day s in the sample period this results in on average 3,223 transaction prices during ﬂ oor trading from 9:30 to 16:15 EST and 1,802 transactions during the remainder of the day with a substantial number taking place in the run-up to the opening of the New Yor k Stock Exchange (NYSE) at 9:30 EST.",
+      "note": "Number of trading days in the S&P500 index-futures sample."
+    },
+    {
+      "name": "sp500_futures_average_transactions_floor_trading",
+      "value": 3223,
+      "unit": "transactions",
+      "quoted": "For the 1289 day s in the sample period this results in on average 3,223 transaction prices during ﬂ oor trading from 9:30 to 16:15 EST and 1,802 transactions during the remainder of the day with a substantial number taking place in the run-up to the opening of the New Yor k Stock Exchange (NYSE) at 9:30 EST.",
+      "note": "Average number of transaction prices during floor trading (9:30 to 16:15 EST) for S&P500 index-futures."
+    },
+    {
+      "name": "sp500_futures_average_transactions_remainder_day",
+      "value": 1802,
+      "unit": "transactions",
+      "quoted": "For the 1289 day s in the sample period this results in on average 3,223 transaction prices during ﬂ oor trading from 9:30 to 16:15 EST and 1,802 transactions during the remainder of the day with a substantial number taking place in the run-up to the opening of the New Yor k Stock Exchange (NYSE) at 9:30 EST.",
+      "note": "Average number of transaction prices during the remainder of the day for S&P500 index-futures."
+    },
+    {
+      "name": "sp500_futures_q_scaling_factor",
+      "value": 66,
+      "unit": "trading days",
+      "quoted": "For this reason we compute the scaling factor for RR∆ S,t in (11) using the previous q = 66 trading days or approximately three months.",
+      "note": "Number of trading days (q) used to compute the scaling factor for RR∆S,t in empirical analysis of S&P500 index-futures."
+    },
+    {
+      "name": "mean_daily_squared_return_sp500_futures",
+      "value": 1.792,
+      "unit": null,
+      "quoted": "The mean daily squared (close-to-close) return is 1.792 imp lying an annualized standard deviation for the S&P500 index of around 21.4%.",
+      "note": "Mean daily squared (close-to-close) return for S&P500 index-futures."
+    },
+    {
+      "name": "mean_realized_range_sp500_futures",
+      "value": 1.533,
+      "unit": null,
+      "quoted": "The mean realized vari- ance is close to this (1.818), whereas as expected the realiz ed range has a lower average at 1.533.",
+      "note": "Mean realized range (RR∆t) for S&P500 index-futures."
+    },
+    {
+      "name": "mean_realized_variance_sp500_futures",
+      "value": 1.818,
+      "unit": null,
+      "quoted": "The mean realized vari- ance is close to this (1.818), whereas as expected the realiz ed range has a lower average at 1.533.",
+      "note": "Mean realized variance (RV∆t) for S&P500 index-futures."
+    },
+    {
+      "name": "std_dev_daily_squared_return_sp500_futures",
+      "value": 3.263,
+      "unit": null,
+      "quoted": "The standard deviation of the daily squared returns is 3.263, substantially higher than the standard deviation of the realized variance at 1.879.",
+      "quoted_source": "The stan- dard deviation of the daily squared returns is 3.263, substa ntially higher than the standard deviation of the realized variance at 1.879.",
+      "quoted_repair": "ocr",
+      "note": "Standard deviation of daily squared returns for S&P500 index-futures."
+    },
+    {
+      "name": "std_dev_realized_variance_sp500_futures",
+      "value": 1.879,
+      "unit": null,
+      "quoted": "The standard deviation of the daily squared returns is 3.263, substantially higher than the standard deviation of the realized variance at 1.879.",
+      "quoted_source": "The stan- dard deviation of the daily squared returns is 3.263, substa ntially higher than the standard deviation of the realized variance at 1.879.",
+      "quoted_repair": "ocr",
+      "note": "Standard deviation of realized variance (RV∆t) for S&P500 index-futures."
+    },
+    {
+      "name": "std_dev_realized_range_sp500_futures",
+      "value": 1.408,
+      "unit": null,
+      "quoted": "Finally, we observe that the realized range is even less noisy with a st andard deviation of 1.408.",
+      "note": "Standard deviation of realized range (RR∆t) for S&P500 index-futures."
+    }
+  ],
+  "what_is_missing": "The paper does not provide a detailed cost model for implementing the realized range or realized variance estimators, nor does it discuss the computational complexity or latency implications for high-frequency trading strategies. It also lacks a clear definition of 'high-frequency' data in terms of actual tick rates or minimum sampling intervals for the S&P500 and S&P100 data.",
+  "transposability": {
+    "what_transfers": "The core idea of using high-low ranges for intra-day intervals to estimate volatility, and the bias-correction method using the ratio of daily range to realized range, are directly applicable. The finding that realized range can outperform realized variance, especially with appropriate bias correction, is relevant.",
+    "what_does_not_transfer": [
+      "The specific sampling frequencies (e.g., 1-minute, 5-minute, 15-minute) used in the paper might not be optimal or directly transferable to our 9 intraday futures, which may have different microstructure characteristics and optimal sampling frequencies.",
+      "The simulation parameters (e.g., bid-ask spread, infrequent trading probability) are specific to the paper's assumptions and may not perfectly reflect the microstructure of our target futures.",
+      "The comparison metrics (e.g., R2, MSE, MAE, Diebold-Mariano test) are useful for evaluating forecast accuracy but need to be adapted to our specific performance metrics (e.g., Information Coefficient, Sharpe Ratio) for strategy evaluation.",
+      "The paper's focus on daily volatility measurement and forecasting needs to be adapted to our intraday context, requiring careful consideration of how 'daily range' and 'realized range' concepts translate to intraday periods."
+    ],
+    "what_aligns_well": "The paper explicitly addresses market microstructure noise (bid-ask bounce, infrequent trading), which is highly relevant for intraday futures. The concept of a bias-correction procedure for volatility estimators is crucial for our context. The use of S&P500 index-futures as an empirical asset is a good proxy for our target futures, providing insights into liquid, electronically traded instruments."
+  }
+}

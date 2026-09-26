@@ -203,7 +203,7 @@ modèle local et gratuit ?** Elle ne se tranche pas en lisant, elle se mesure, e
 discussion :
 
 ```
-python corpus/bench_local_extractor.py --machine
+python corpus/bench_extractor.py --machine
 ```
 
 Elle relève GPU, VRAM, RAM et disque de **cette** machine-ci, les compare au
@@ -220,16 +220,24 @@ Qwen3-8B (5,2 Go) et son cache KV (~144 ko/token) :
 **Le poste de référence est sous le seuil** : GTX 1650, 4 Go de VRAM. Qwen3-8B y
 a été téléchargé, constaté inutilisable et **retiré** ; un `num_ctx` plat à
 40 960 y a fait tomber le disque de 12 Go à **1,4 Go** (Windows gonfle son
-fichier d'échange), et un seul essai sur le plus petit papier a dépassé
-**25 minutes** sans rendre la main.
+fichier d'échange).
+
+**Et le banc a tourné, sur 5 papiers — voir `F56`.** Résultat mesuré le
+2026-09-24 avec Qwen3-4B, le maximum que ce poste tienne : **5 h 21 de calcul,
+ZÉRO fiche produite.** Quatre papiers sur cinq **expirent à une heure** sans
+rien rendre ; le cinquième épuise ses trois essais en **80,5 minutes** et
+**aucun ne rend un objet JSON lisible**. L'échec n'est donc **même pas `F2`** :
+le modèle n'atteint jamais la citation mot pour mot, il échoue à la **forme**.
+Sur ce poste, la question est close ; sur une autre machine, elle se rouvre par
+la mesure ci-dessus.
 
 Si ta machine est au-dessus du seuil, la mesure qui manque est celle-ci — un
 papier, le même juge, la même consigne :
 
 ```
 ollama pull qwen3:8b
-python corpus/bench_local_extractor.py --run performance-of-time-series-momentum-strategy-us-W4388535504 --model qwen3:8b
-python corpus/bench_local_extractor.py --report
+python corpus/bench_extractor.py --run performance-of-time-series-momentum-strategy-us-W4388535504 --model qwen3:8b
+python corpus/bench_extractor.py --report
 ```
 
 **La règle de décision est écrite AVANT la mesure**, comme le veut l'invariant IV :
@@ -665,6 +673,20 @@ où on le lance. Même péremption que la note « sur cette machine » corrigée
    (`sampling`, `components`, `model`…) sans la clé `value` que le schéma exige.
    Quatre fois la même erreur n'est pas quatre erreurs, c'est un défaut du
    schéma ou de la consigne.
+   **AGGRAVÉ LE 2026-09-25, ET CE POINT EST DEVENU LE PLUS RENTABLE DU PROJET.**
+   Le banc l'a retrouvée chez **deux familles de modèles de plus** — Gemini 2.5
+   Flash et `gpt-oss-120b` — soit **au moins 7 occurrences indépendantes sur
+   trois familles** (sessions de frontière, Gemini, gpt-oss). Aucun extracteur
+   n'a jamais vu les fautes des autres : c'est **le schéma ou la consigne** qui
+   les induit, et plus aucune autre lecture ne tient.
+   **Ce que ça bloque, chiffré.** L'extraction par morceaux récupérés
+   (`corpus/recuperation.py`) sur `gpt-oss-120b` tient `F2`, `F3` **et** `F4` —
+   citations mot pour mot, valeurs dans leur citation, PDF présent. Elle ne
+   casse que sur `F1`, et uniquement sur des fautes de **forme** :
+   `signal_construction` attendu objet, `what_is_missing` attendu liste. **La
+   seule route gratuite qui franchit le mur des 8 000 tokens échoue donc sur
+   notre propre documentation, pas sur sa fidélité.** Corriger la consigne coûte
+   quelques lignes ; c'est peut-être ce qui sépare `F59` d'un `vert`.
 10. **Ficher les 8 papiers restants** — `G1` exige zéro atteignable non fiché.
     `python corpus/extract_fiche.py --list` dit lesquels. Chacun demande une
     **session séparée** qui n'a pas lu `corpus/fiches/`. **Sauf l'entrée 1 :

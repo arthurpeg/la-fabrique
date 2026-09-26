@@ -188,6 +188,49 @@ interdits) appliquée ici : l'inconnu s'écrit, il ne se tait pas.
 
 ---
 
+## `signal_construction` — la forme attendue quand il n'est pas `null`
+
+C'est un **objet**, comme `universe` et `horizon` : une `value` en prose, et
+ses `quoted`.
+
+```json
+"signal_construction": {
+  "value": "Score = (clôture de la première demi-heure − ouverture de séance) / ouverture, calculé à l'ouverture + 30 min, appliqué dans le même sens à la dernière demi-heure.",
+  "quoted": ["we define the first half-hour return as", "predicts the last half-hour return"]
+}
+```
+
+**C'est la faute la plus fréquente du corpus, et de loin.** Au moins **sept
+extracteurs indépendants**, appartenant à **trois familles de modèles
+différentes**, ont écrit à la place un objet structuré de leur invention —
+`{"sampling": …, "components": […], "model": …}` — **sans la clé `value`**, que
+le schéma exige et que le validateur refuse.
+
+Aucun de ces extracteurs n'avait vu les fautes des autres. Sept fois la même
+erreur n'est pas sept inattentions : **c'est cette section qui manquait.** Le
+schéma ne montrait que le cas `null` ci-dessus, jamais la forme normale.
+
+Des sous-clés supplémentaires restent **autorisées** si elles éclairent la
+construction. `value` doit être là.
+
+---
+
+## `what_is_missing` — une liste
+
+```json
+"what_is_missing": [
+  "aucun multiplicateur de contrat, aucun frais",
+  "la fenêtre horaire est donnée en heure locale, sans fuseau nommé",
+  "le critère de sélection des jours n'est pas chiffré"
+]
+```
+
+Une **liste de chaînes**, comme `transposability.what_does_not_transfer`. Ce
+qui manque au papier s'énumère ; une prose continue se lit moins bien et se
+compte mal.
+
+---
+
 ## `transposability` — ce qui en survit chez nous
 
 Trois sous-champs, tous exigés :

@@ -177,6 +177,22 @@ def check_f2(fiche: dict, source_text: str | dict[str, str]) -> list[str]:
     haystacks = {k: normalize(v) for k, v in source_text.items()}
     faults = []
     for i, res in enumerate(fiche.get("reported_results") or []):
+        # UN JUGE QUI PLANTE N'EST PAS UN JUGE QUI REFUSE. Un extracteur peut
+        # rendre une entrée qui n'est pas un objet — le 2026-09-25, un modèle a
+        # rendu deux entrées en JSON DOUBLEMENT ENCODÉ, donc des chaînes. Sans
+        # cette garde, `res.get(...)` lève `AttributeError`, la fiche est certes
+        # rejetée (code de retour non nul) mais AUCUNE condition n'est nommée :
+        # un appelant qui compte les conditions cassées en trouve ZÉRO et écrit
+        # « aucune condition cassée » sous un rejet.
+        #
+        # Ça n'assouplit RIEN : le cas était déjà refusé, il est maintenant
+        # refusé AVEC SA RAISON. Aucun seuil ne bouge.
+        if not isinstance(res, dict):
+            faults.append(
+                f"`#{i}` : entrée de `reported_results` qui n'est pas un objet "
+                f"({type(res).__name__}) — une chaîne contenant du JSON reste une chaîne"
+            )
+            continue
         name = res.get("name", f"#{i}")
         needle = anchor(res)
         if not isinstance(needle, str) or not needle.strip():
@@ -232,11 +248,32 @@ def check_f3(fiche: dict) -> list[str]:
     """
     faults = []
     for i, res in enumerate(fiche.get("reported_results") or []):
+        # Même garde qu'en `F2`, et pour la même raison : nommer la faute plutôt
+        # que lever. `F2` et `F3` sont deux conditions distinctes de `D16`, et
+        # chacune doit pouvoir rendre son verdict seule.
+        if not isinstance(res, dict):
+            faults.append(
+                f"`#{i}` : entrée de `reported_results` qui n'est pas un objet "
+                f"({type(res).__name__})"
+            )
+            continue
         name = res.get("name", f"#{i}")
         # La chaîne qui fait foi est celle que F2 a trouvée dans le papier. Sans
         # cela, une réparation déclarée deviendrait un endroit où loger un
         # chiffre que le papier ne porte pas.
         value, quoted = res.get("value"), anchor(res)
+        # `anchor` rend ce que la fiche porte, qui n'est pas forcément une
+        # chaîne : un `quoted` en LISTE faisait lever `value_in_quote`
+        # (`'list' object has no attribute 'replace'`, constaté le 2026-09-25).
+        # Le contrat veut une chaîne ici ; l'écart se nomme, il ne se convertit
+        # pas en silence — convertir laisserait passer une forme que le reste du
+        # corpus n'emploie pas.
+        if not isinstance(quoted, str):
+            faults.append(
+                f"`{name}` : `quoted` doit être une chaîne dans `reported_results`, "
+                f"reçu {type(quoted).__name__}"
+            )
+            continue
         if res.get("derived"):
             continue
         if spelled := res.get("spelled_out"):
@@ -290,13 +327,27 @@ def check_f5(fiche: dict, ref: dict | None) -> list[str]:
 
 
 def diagnose(fiche: dict, ref: dict | None) -> dict:
-    """Ce que L06 exige de voir, et que les cinq conditions ne portent pas."""
-    names = {r.get("name") for r in (fiche.get("reported_results") or [])}
+    """Ce que L06 exige de voir, et que les cinq conditions ne portent pas.
+
+    **Le diagnostic ne doit JAMAIS faire tomber le verdict.** Il est imprimé et
+    ne conditionne rien (`D16` § Pourquoi) : s'il lève, il emporte pourtant les
+    cinq conditions avec lui, et la fiche est rejetée sans qu'aucune soit
+    nommée. C'est ce qui s'est produit le 2026-09-25 sur une entrée de
+    `reported_results` rendue en chaîne. Les entrées mal formées sont donc
+    ignorées ICI — `F2` et `F3`, elles, les refusent et le disent.
+    """
+    resultats = [
+        r for r in (fiche.get("reported_results") or []) if isinstance(r, dict)
+    ]
+    names = {r.get("name") for r in resultats}
     out: dict = {
+        # Le compte porte sur TOUT ce que la fiche déclare, pas seulement sur
+        # ce que le diagnostic sait lire : une entrée mal formée reste une
+        # entrée, et la masquer ferait mentir le compte (`L21`).
         "n_results": len(fiche.get("reported_results") or []),
         "repairs": [
             (r.get("name"), r.get("quoted_repair"))
-            for r in (fiche.get("reported_results") or [])
+            for r in resultats
             if r.get("quoted_source")
         ],
         "n_null": sum(
@@ -309,7 +360,11 @@ def diagnose(fiche: dict, ref: dict | None) -> dict:
         "prose": [],
     }
     if ref is not None:
-        ref_names = {r.get("name") for r in (ref.get("reported_results") or [])}
+        ref_names = {
+            r.get("name")
+            for r in (ref.get("reported_results") or [])
+            if isinstance(r, dict)
+        }
         out["missed"] = sorted(n for n in ref_names - names if n)
         out["extra"] = sorted(n for n in names - ref_names if n)
         for field in PROSE:

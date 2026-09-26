@@ -1,0 +1,62 @@
+{
+  "fiche_id": "performance-of-time-series-momentum-strategy-us-W4388535504",
+  "written": "2026-09-25",
+  "written_by": "extraction_session",
+  "claim": {
+    "value": "The time series momentum strategy generates positive returns in the US stock market.",
+    "quoted": "This paper examines the effectiveness of the time series momentum strategy in generating positive returns in the US stock market"
+  },
+  "universe": {
+    "value": "S&P500 constituents US stock market (2000‑2022)",
+    "quoted": [
+      "using S&P500 data from 2000 to 2022",
+      "The data set used in this study was from the S&P500 index, which includes daily closing prices of its constituent stocks"
+    ]
+  },
+  "horizon": {
+    "value": null,
+    "reason": "the paper does not specify a prediction horizon beyond the next period"
+  },
+  "signal_construction": {
+    "value": "Signals are based on simple moving average (MA) or exponential moving average (EMA) of asset returns over various look‑back windows, applied to generate portfolio weights",
+    "quoted": [
+      "MA and EMA of each stock's returns using different window lengths",
+      "The MA and EMA of each stock's returns using different window lengths"
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "equal_weight_sharpe_training",
+      "value": 0.189,
+      "unit": "Sharpe",
+      "quoted": "Equal Weight 0.189 5.673 12.488",
+      "note": "Sharpe ratio in the training set for the Equal Weight strategy (transaction cost rate 0.001)"
+    },
+    "{\"name\":\"ema_100_sharpe_training\",\"value\":1.568,\"unit\":\"Sharpe\",\"quoted\":\"EMA 100 1.568 0.320 23.665 0.174 5.295 108.344\",\"note\":\"Sharpe ratio in the training set for the EMA‑100 strategy (transaction cost rate 0.001)\"}",
+    "{\"name\":\"ma_100_sharpe_training\",\"value\":1.926,\"unit\":\"Sharpe\",\"quoted\":\"MA 100 1.926 0.577 20.423 0.140 9.235 76.219\",\"note\":\"Sharpe ratio in the training set for the MA‑100 strategy (transaction cost rate 0.001)\"}"
+  ],
+  "what_is_missing": [
+    "the paper does not detail the exact transaction‑cost model beyond the rates used",
+    "no out‑of‑sample robustness checks beyond the post‑2010 test set are reported",
+    "no discussion of market‑impact or liquidity constraints for implementing the strategies"
+  ],
+  "source": {
+    "authors": "Siyao Duan",
+    "title": "Performance of Time-series Momentum Strategy: US",
+    "year": 2023,
+    "source_url": "https://www.ewadirect.com/proceedings/aemps/article/view/5936/pdf",
+    "pdf": "corpus/pdf/performance-of-time-series-momentum-strategy-us-W4388535504.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "amorce_entry": 11
+  },
+  "transposability": {
+    "what_transfers": "use of moving‑average based signals and linear regression framework can be applied to futures intraday data",
+    "what_does_not_transfer": [
+      "the study is based on equity data (S&P500 constituents) not futures contracts",
+      "transaction‑cost rates are calibrated for equities and may differ for futures",
+      "the look‑back period of 24 days is a daily horizon, not directly comparable to intraday intervals"
+    ],
+    "what_aligns_well": "relative ranking of strategies by Sharpe ratio may remain informative for futures when adjusted for volatility"
+  }
+}

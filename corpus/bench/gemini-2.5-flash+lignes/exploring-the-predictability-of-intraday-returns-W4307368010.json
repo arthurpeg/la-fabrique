@@ -1,0 +1,131 @@
+{
+  "fiche_id": "exploring-the-predictability-of-intraday-returns-W4307368010",
+  "written": "2026-09-24",
+  "written_by": "La Fabrique",
+  "source": {
+    "authors": "Yanbing Xu",
+    "title": "Exploring the predictability of intraday returns in China's stock market",
+    "year": 2022,
+    "source_url": "https://bcpublication.org/index.php/BM/article/download/2524/2497",
+    "pdf": "corpus/pdf/exploring-the-predictability-of-intraday-returns-W4307368010.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true
+  },
+  "claim": {
+    "quoted": [
+      "capturing more trading opportunities. This article explores whether there is momentum effect and \nreversal effect in China’s stock market by studying the correlation and predictability between half -\nhour returns. The results show that there is an intraday momentum effect between the first half-hour \nand full -day returns. After the investment strategy, it  is found that this effect has economic \nsignificance, but after considering the transaction costs, the momentum effect cannot make investors \nobtain excess returns. These costs are the reason for the long-term predictability of intraday returns. ",
+      "First of all, there is an intraday momentum effect between the first half of the daily rate of return \nand the second half of the rate of return. This effect has passed the test of the three indices and is \nhighly significant. After using the univariate model regression, it is found that only the first half hour ",
+      "prediction purposes. \nSecond, after perfecting the model, it can be found that there is an intraday momentum effect \nbetween the first hour and the full-day return, and there is a reversal effect between the first half hour ",
+      "Third, although the intraday momentum effect has economic significance, transaction costs hinder \nthe intervention of arbitrageurs, and investors cannot obtain excess returns after considering \ntransaction costs. It is therefore concluded that these costs are responsible for the long -term \npredictability of intraday returns. "
+    ],
+    "note": "The paper claims to find an intraday momentum effect with economic significance, but it is negated by transaction costs, which are identified as the reason for long-term predictability."
+  },
+  "universe": {
+    "quoted": [
+      "This paper selects the intraday data of the Shanghai Composite Index, t he Shenzhen Stock \nExchange Component Index, and the CSI 300 Index from January 2, 2019 to September 1, 2021 to \nstudy the predictability of intraday returns. First, we used univariate linear regression to explore the ",
+      "This paper studies the predictability of intraday returns using the intraday data of the Shanghai \nComposite Index, the Shenzhen Stock Exchange Component Index, and the CSI 300 Index. The total \nsample is from January 2, 2019 to September 1, 2021, a total of 650 working days, of which the data \nin the sample is from January 2, 2019 to December 31, 2020, a total of 487 working days. All data ",
+      "Where m is the number of days in the sample, that is, the working days between January 2, 2019 \nand December 31, 2020, a total of 487 days, and T is the total sample days, that is, January 2, 2019 \nto September 1, 2021.The working days between days, i.e. 650 days. is the actual rate of return,",
+      "In order to ensure the integrity of market data, this paper uses the intraday data of the Shanghai \nComposite Index, the Shenzhen Stock Exchange Component Index, and the CSI 300 Index, where "
+    ],
+    "note": "The study focuses on three major Chinese stock market indices."
+  },
+  "horizon": {
+    "value": null,
+    "reason": "The paper studies intraday predictability but does not explicitly define a prediction horizon in terms of future returns beyond the next half-hour or full-day, and the out-of-sample tests for recursive prediction were not significant for the univariate model."
+  },
+  "signal_construction": {
+    "value": null,
+    "reason": "The paper uses simple linear regression models (univariate and multivariate) to identify correlations and predictability between half-hour returns, full-day returns, and overnight returns, rather than constructing a complex signal. The 'signal' is essentially the lagged returns themselves or dummy variables for Monday/Friday."
+  },
+  "reported_results": [
+    {
+      "name": "intraday_momentum_first_half_day_to_second_half_day_coefficient_shanghai",
+      "value": 0.1294,
+      "quoted": " 0.1294*** \n(3.0899) ",
+      "note": "Regression coefficient for Shanghai Composite Index, significant at 1% level, indicating a positive impact from the first half-day return to the second half-day return."
+    },
+    {
+      "name": "intraday_momentum_first_half_day_to_second_half_day_coefficient_shenzhen",
+      "value": 0.1187,
+      "quoted": "0.1187*** \n(2.9902) ",
+      "note": "Regression coefficient for Shenzhen Component Index, significant at 1% level, indicating a positive impact from the first half-day return to the second half-day return."
+    },
+    {
+      "name": "intraday_momentum_first_half_day_to_second_half_day_coefficient_csi300",
+      "value": 0.1009,
+      "quoted": "0.1009*** \n(2.5409) 0.019305 0.018102 0.013137 ",
+      "note": "Regression coefficient for CSI 300 Index, significant at 1% level, indicating a positive impact from the first half-day return to the second half-day return."
+    },
+    {
+      "name": "intraday_momentum_first_half_hour_to_fifth_half_hour_coefficient_shanghai",
+      "value": 0.1011,
+      "quoted": " 0.1011*** \n(3.0491) ",
+      "note": "Regression coefficient for Shanghai Composite Index, significant at 1% level, indicating a positive correlation between the first half-hour return and the fifth half-hour return (first half-hour in the afternoon)."
+    },
+    {
+      "name": "intraday_momentum_first_half_hour_to_fifth_half_hour_coefficient_shenzhen",
+      "value": 0.095,
+      "quoted": "0.0950*** \n(2.9317) ",
+      "note": "Regression coefficient for Shenzhen Component Index, significant at 1% level, indicating a positive correlation between the first half-hour return and the fifth half-hour return."
+    },
+    {
+      "name": "intraday_momentum_first_half_hour_to_fifth_half_hour_coefficient_csi300",
+      "value": 0.1069,
+      "quoted": "0.1069*** \n(3.2780) 0.018809 0.017413 0.021676 ",
+      "note": "Regression coefficient for CSI 300 Index, significant at 1% level, indicating a positive correlation between the first half-hour return and the fifth half-hour return."
+    },
+    {
+      "name": "mr_strategy_average_annual_return",
+      "value": 16.51,
+      "unit": "%",
+      "quoted": "Average 16.51% 115 15.43% 114 12.22% ",
+      "note": "Average annual return for the MR-Strategy (Momentum-Reversal Strategy) over the sample period (2019-2021)."
+    },
+    {
+      "name": "m_strategy_average_annual_return",
+      "value": 15.43,
+      "unit": "%",
+      "quoted": "Average 16.51% 115 15.43% 114 12.22% ",
+      "note": "Average annual return for the M-Strategy (Momentum Strategy) over the sample period (2019-2021)."
+    },
+    {
+      "name": "bh_strategy_average_annual_return",
+      "value": 12.22,
+      "unit": "%",
+      "quoted": "Average 16.51% 115 15.43% 114 12.22% ",
+      "note": "Average annual return for the Buy-and-Hold Strategy over the sample period (2019-2021)."
+    },
+    {
+      "name": "transaction_cost_per_round_trip",
+      "value": 0.16,
+      "unit": "%",
+      "quoted": "will change over time. Taking the current situation as an example, the transaction commission is about \n0.03%, which is levied bilaterally. S tamp duty is 0.1%, levied unilaterally by the seller. Therefore, \nthe total cost of a buy and sell transaction is about 0.16%. The average annual cost of MR -Strategy \nand M-strategy is 9.6%, which is greater than the excess return obtained by MR-Strategy. This means ",
+      "derived": true,
+      "note": "Calculated as 0.03% (bilateral, so 0.06% for a round trip) + 0.1% (unilateral stamp duty for selling) = 0.16%."
+    },
+    {
+      "name": "average_annual_cost_mr_m_strategy",
+      "value": 9.6,
+      "unit": "%",
+      "quoted": "and M-strategy is 9.6%, which is greater than the excess return obtained by MR-Strategy. This means \nthat MR-Strategy and M-strategy will not deliver excess returns after including transaction costs. ",
+      "note": "Average annual cost for MR-Strategy and M-Strategy, which negates any excess returns."
+    }
+  ],
+  "what_is_missing": [
+    "The paper does not provide details on the specific trading rules for the strategies (e.g., stop-loss, take-profit, position sizing).",
+    "It also lacks a clear definition of the 'half-hour' periods, especially regarding how they handle market open/close and the lunch break.",
+    "The impact of liquidity and market microstructure on the reported returns is not thoroughly discussed beyond transaction costs.",
+    "The paper also does not provide details on how the indices are weighted or constructed, which could influence the reported returns."
+  ],
+  "transposability": {
+    "what_transfers": "The general idea of exploring intraday momentum and reversal effects in equity markets, particularly the focus on specific half-hour periods (opening, closing, post-lunch). The finding that transaction costs can negate economic significance is a crucial insight.",
+    "what_does_not_transfer": [
+      "The specific market (Chinese A-share stock market) and its unique trading hours (9:30-11:30, 13:00-15:00 Beijing time) and lunch break (90 minutes) are different from our target universe of intraday futures.",
+      "The use of stock indices (Shanghai Composite Index, Shenzhen Stock Exchange Component Index, CSI 300 Index) as the primary assets, rather than individual futures contracts.",
+      "The transaction cost structure (0.03% bilateral commission, 0.1% unilateral stamp duty) is specific to the Chinese stock market and would differ for futures.",
+      "The 'half-hour' return periods are fixed and might not align with the dynamic nature of futures trading or our specific timeframes.",
+      "The strategies (MR-Strategy, M-Strategy) are based on holding positions for multiple half-hour periods or even across days, which might not be directly applicable to pure intraday futures strategies without modification."
+    ],
+    "what_aligns_well": "The emphasis on the importance of transaction costs in evaluating the economic significance of intraday strategies. The observation of higher trading volume and potential predictability around market open, after lunch, and before close aligns with common patterns in other markets, including futures. The methodology of using linear regression and out-of-sample testing for predictability is standard."
+  }
+}

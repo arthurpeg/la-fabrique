@@ -1,0 +1,146 @@
+{
+  "fiche_id": "performance-of-time-series-momentum-strategy-us-W4388535504",
+  "written": "2026-09-24",
+  "written_by": "La Fabrique",
+  "source": {
+    "authors": "Siyao Duan",
+    "title": "Performance of Time-series Momentum Strategy: US Evidence",
+    "year": 2023,
+    "source_url": "https://www.ewadirect.com/proceedings/aemps/article/view/5936/pdf",
+    "pdf": "corpus/pdf/performance-of-time-series-momentum-strategy-us-W4388535504.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "amorce_entry": 45
+  },
+  "claim": {
+    "quoted": [
+      "Abstract: This paper examines the effectiveness of the time series momentum strategy in \ngenerating positive returns in the US stock market, with a focus on exploring its dynamics ",
+      "The motivation behind this study is to examine the effectiveness of the time series momentum \nstrategy in generating positive returns in the US stock market, as well as to explore its dynamics and \nperformance using different moving average methods. Specifically, this paper aims to investigate the \nrelationship between time series momentum strategy and idiosyncratic volatility and to evaluate the \nperformance of different moving average methods, such as simple moving average (MA) and \nexponential moving average (EMA), on the strategy.  To achieve these goals, a regression model to "
+    ],
+    "note": "The paper aims to evaluate time series momentum using S&P500 data and different moving average methods, considering transaction costs."
+  },
+  "universe": {
+    "quoted": [
+      "and performance using different moving average methods. The author conducted an empirical \nanalysis of the time series momentum strategy u sing S&P500 data from 2000 to 2022. A ",
+      "The data set used in this study was from the S&P500 index, which includes daily closing prices of its \nconstituent stocks. The S&P500 data set is representative of the US stock market and is widely used ",
+      "The data is organized into time series, with each observation corresponding to a trading day from \nJanuary 1, 2000, to December 31, 2022. "
+    ],
+    "note": "The study uses daily closing prices of S&P500 constituent stocks from 2000 to 2022."
+  },
+  "horizon": {
+    "value": null,
+    "reason": "The paper does not explicitly state a prediction horizon for future returns, beyond 'next period returns' (line 134), which implies daily given the data frequency."
+  },
+  "signal_construction": {
+    "quoted": [
+      "Suppose there is a time series of returns 𝑅𝑡. which will be predict using a linear model with past \nreturns at various horizons, or computed with different smoothing methods: \n Rt+1\ne   =  α  +   ∑ βi\nM\ni = 1 ft\ni  +  εt+1         (1) ",
+      " 𝑀𝐴𝑡\n𝑁 =\n1\n𝑁 ∑ 𝑅𝑠\n𝑒𝑡\n𝑠=𝑡−𝑁      (2) ",
+      " 𝐸𝑀𝐴𝑡\n𝑁 =\n1\n𝑁 ∑ (1 − δ)𝑡−𝑠𝑡\n𝑠=𝑡−𝑁 𝑅𝑠\n𝑒      (3) ",
+      "model can be used to make predictions about the next period returns. 𝑁 = 24 was set for this model. ",
+      " 𝑝𝑜𝑟𝑡𝑓𝑜𝑙𝑖𝑜 𝑤𝑒𝑖𝑔ℎ𝑡𝑠 =\n(𝑚𝑜𝑣𝑖𝑛𝑔 𝑎𝑣𝑒𝑟𝑎𝑔𝑒∗β+α)\n(σ2)      (4) "
+    ],
+    "value": "The signal is constructed using a linear regression model to predict future returns. The factors (ft) in the model are either Simple Moving Averages (MA) or Exponential Moving Averages (EMA) of past returns. The lookback period (N) for these moving averages is set to 24. Portfolio weights are then calculated based on the moving average, regression coefficients (alpha and beta), and expected volatility (sigma squared).",
+    "note": "The paper uses a regression model to predict returns, where factors are MA or EMA. The lookback period N is 24. Portfolio weights are derived from these predictions."
+  },
+  "reported_results": [
+    {
+      "name": "Sharpe Ratio (no transaction cost, test set)",
+      "value": 0.439,
+      "unit": null,
+      "quoted": "Sharpe Ratio  2.403 0.439 ",
+      "quoted_source": "Sharpe Ratio  2.403 0.439",
+      "quoted_repair": "table",
+      "note": "Value for the test set, without transaction costs."
+    },
+    {
+      "name": "Max Drawdown (no transaction cost, test set)",
+      "value": 3.304,
+      "unit": null,
+      "quoted": "Max Drawdown 14.403 3.304 ",
+      "quoted_source": "Max Drawdown 14.403 3.304",
+      "quoted_repair": "table",
+      "note": "Value for the test set, without transaction costs."
+    },
+    {
+      "name": "Sharpe Ratio (transaction cost 0.01, test set)",
+      "value": -0.25,
+      "unit": null,
+      "quoted": "0.01 -0.250 7511.158 -54.090 3043.681 ",
+      "quoted_source": "0.01 -0.250 7511.158 -54.090 3043.681",
+      "quoted_repair": "table",
+      "note": "Sharpe Ratio for the test set with a transaction cost rate of 0.01."
+    },
+    {
+      "name": "Sharpe Ratio (transaction cost 0.001, test set)",
+      "value": 0.254,
+      "unit": null,
+      "quoted": "0.001 0.254 4.392 -0.113 48.099 ",
+      "quoted_source": "0.001 0.254 4.392 -0.113 48.099",
+      "quoted_repair": "table",
+      "note": "Sharpe Ratio for the test set with a transaction cost rate of 0.001."
+    },
+    {
+      "name": "Best Sharpe Ratio (no transaction cost, test set) - MA 1 strategy",
+      "value": 0.794,
+      "unit": null,
+      "quoted": "MA 1 3.148 0.482 151.827 0.794 5.103 29.066 ",
+      "quoted_source": "MA 1 3.148 0.482 151.827 0.794 5.103 29.066",
+      "quoted_repair": "table",
+      "note": "Highest Sharpe Ratio on the test set without transaction costs, achieved by the MA 1 strategy."
+    },
+    {
+      "name": "Best Sharpe Ratio (transaction cost 0.001, test set) - Equal Weight strategy",
+      "value": 0.647,
+      "unit": null,
+      "quoted": "Equal Weight 0.232 4.246 10.563 0.647 4.046 35.660 ",
+      "quoted_source": "Equal Weight 0.232 4.246 10.563 0.647 4.046 35.660",
+      "quoted_repair": "table",
+      "note": "Highest Sharpe Ratio on the test set with a transaction cost rate of 0.001, achieved by the Equal Weight strategy."
+    },
+    {
+      "name": "Worst Sharpe Ratio (no transaction cost, test set) - MA 2 strategy",
+      "value": 0.222,
+      "unit": null,
+      "quoted": "MA_2 2.882 0.65 37.182 0.222 3.546 26.69 ",
+      "quoted_source": "MA_2 2.882 0.65 37.182 0.222 3.546 26.69",
+      "quoted_repair": "table",
+      "note": "Lowest Sharpe Ratio on the test set without transaction costs, achieved by the MA 2 strategy."
+    },
+    {
+      "name": "Worst Sharpe Ratio (transaction cost 0.005, test set) - EMA 5 strategy",
+      "value": -0.564,
+      "unit": null,
+      "quoted": "EMA 5 1.960 2.271 21.298 -0.564 0.000 1154.586 ",
+      "quoted_source": "EMA 5 1.960 2.271 21.298 -0.564 0.000 1154.586",
+      "quoted_repair": "table",
+      "note": "Lowest Sharpe Ratio on the test set with a transaction cost rate of 0.005, achieved by the EMA 5 strategy."
+    },
+    {
+      "name": "Worst Sharpe Ratio (transaction cost 0.01, test set) - EMA 1 strategy",
+      "value": -0.454,
+      "unit": null,
+      "quoted": "EMA 1 -0.151 1137.854 1151.489 -0.454 0.000 1167.909 ",
+      "quoted_source": "EMA 1 -0.151 1137.854 1151.489 -0.454 0.000 1167.909",
+      "quoted_repair": "table",
+      "note": "Lowest Sharpe Ratio on the test set with a transaction cost rate of 0.01, achieved by the EMA 1 strategy."
+    }
+  ],
+  "what_is_missing": [
+    "Detailed trading rules (e.g., specific entry/exit signals, position sizing beyond portfolio weights).",
+    "A robust market impact model for transaction costs, instead of fixed rates.",
+    "Analysis of latency or execution considerations for the strategy.",
+    "Discussion of the specific assets within the S&P500 (e.g., large-cap vs. small-cap, sector biases).",
+    "The paper notes overfitting to the training data but does not propose specific methods to mitigate it within the study."
+  ],
+  "transposability": {
+    "what_transfers": "The general concept of time-series momentum using moving averages (MA/EMA) as signals. The importance of evaluating strategies with and without transaction costs. The finding that simpler strategies (like Equal Weight) can be more robust under higher transaction costs. The methodology of using a regression model to predict returns based on moving average factors could be adapted.",
+    "what_does_not_transfer": [
+      "The specific universe of S&P500 constituent stocks, as our focus is on intraday futures.",
+      "The daily data frequency, as our universe is intraday.",
+      "The fixed transaction cost rates (0.001, 0.005, 0.01) are not representative of real-world market impact for intraday futures trading.",
+      "The lookback period of N=24 days is too long for an intraday strategy.",
+      "The observed overfitting to the training data suggests the model might not generalize well to different market conditions or asset classes without further refinement."
+    ],
+    "what_aligns_well": "The paper's emphasis on the critical role of transaction costs in determining profitability. The comparison of different moving average types (MA vs. EMA) and their varying performance. The evaluation of strategies on an out-of-sample test set. The observation that strategies with lower turnover rates might perform better with higher transaction costs."
+  }
+}
