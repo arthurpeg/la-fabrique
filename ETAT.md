@@ -9,6 +9,8 @@ mesure officielle (calibrations comprises).
 `asof` 2023-12-29 20:00 UTC, vérifiée par la porte.
 Les 11 fiches moissonnées sans trace de production ont été **refaites** par 11
 sessions isolées : 18 fiches sur 18 tracées, 17 vertes sur ce poste.
+`value_in_quote` n'ôte plus que les séparateurs de milliers (`D09` § Journal,
+`L28`) : tout est rejoué vert.
 **Le reste de ce fichier n'a pas été relu à cette date** et retarde sur le dépôt
 (voir § Revue du 2026-09-26, en fin de § Prochaine action).
 **Dernière porte franchie :** **08**, le 2026-09-23 — `scripts/gate_08.py`. Un
@@ -371,8 +373,14 @@ sont ouverts, du plus grave au moins grave :
    copié. Le bon PDF de `bitcoin-is-not-the-new-gold` est à reprendre sur le
    poste qui l'a promu. Les 33 autres PDF promus ont été copiés dans
    `corpus/pdf/` après vérification de leur empreinte.
-5. **`value_in_quote` retire toutes les virgules** : `17.71,18.22` devient
-   `17.7118.22` (faux refus), `{12,6,1}` devient `1261` (faux accord possible).
+5. ~~`value_in_quote` retire toutes les virgules.~~ **Corrigé le 2026-09-26**
+   (`catalogue/validate.py`, `THOUSANDS`) : un séparateur n'est ôté que suivi
+   d'exactement trois chiffres, derrière un entier. Onze cas ajoutés à
+   `check_provenance.py` (44 vérifications), vus échouer avant la correction.
+   Rejoué vert : catalogue, gardes des fiches, portes 07 et 08, 17 fiches
+   `AMORCE` sur 17, 17 moissonnées sur 18. `L28` : le faux refus avait déjà
+   poussé un extracteur vers la soupape `spelled_out`. **Reste ouvert** : le
+   signe moins typographique `−` (U+2212), non lu comme signe par `NUMBER`.
 6. **`extract_text.py --check` ne vérifie que les PDF présents sur le poste** :
    « conforme, 34 fichiers » quand le manifeste en porte 104. Et
    `extract_text.py` sans `--check` réécrirait le manifeste à 34 entrées, en

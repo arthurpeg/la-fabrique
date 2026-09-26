@@ -861,3 +861,28 @@ petite** faute qu'il doit voir, et l'exige attrapée **partout**, pas une fois :
 un seul succès peut venir d'un accident des données. Et toute frontière
 temporelle se vérifie contre la **convention d'horodatage** mesurée, jamais
 contre l'intuition que « `t` » désigne la fin de la barre. Corrigé par `D27`.
+
+---
+
+## L28 — Un garde qui refuse à tort apprend aux extracteurs à passer par la soupape
+
+Le 2026-09-26. `value_in_quote` ôtait toutes les virgules d'une citation avant
+d'y chercher le nombre : « `17.71,18.22` », texte collé par l'extraction PDF,
+devenait `17.7118.22`. La fiche `cryptocurrencies-and-momentum` était refusée
+sur `F1`/`F3` alors que ses citations étaient exactes au caractère près (`F2`
+tenait). Renvoyée à son extracteur, elle est revenue **verte** — non parce que
+la faute était réparée, mais parce que l'extracteur a ajouté `"spelled_out":
+"17.71"`, qui fait vérifier une **sous-chaîne** au lieu d'un **nombre**. Le
+champ est documenté pour ce cas (texte abîmé), l'usage était loyal et annoté ;
+mais le contrôle numérique, celui que `F26` avait imposé contre la sous-chaîne,
+venait d'être contourné sur ces deux résultats sans que personne ne l'ait
+décidé. Une première version de la fiche l'avait déjà fait pour les signes
+moins typographiques (`−14.87`).
+
+**La règle.** Un faux refus ne coûte pas seulement un essai : il **dresse** le
+producteur à emprunter l'échappatoire, et chaque passage par elle affaiblit le
+garde en silence. Quand un verdict est renvoyé et revient vert, regarder
+**comment** il est devenu vert — par la faute corrigée, ou par une soupape — et
+si c'est une soupape, c'est le garde qu'il faut réparer. Corrigé le jour même
+(`D09` § Journal). Reste ouvert : le signe moins typographique `−` (U+2212),
+qui n'est pas lu comme un signe par `NUMBER` et pousse vers la même soupape.

@@ -33,6 +33,15 @@ RETRIEVED = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 # d'extracteur, ou 5 refus sur 10 etaient faux pour cette seule raison.
 NUMBER = re.compile(r"(?:(?<![\w.])-)?\d+(?:\.\d+)?")
 
+# Un entier groupe par milliers : 1 a 3 chiffres qui ne prolongent ni un nombre
+# ni une decimale, puis un ou plusieurs groupes d'EXACTEMENT trois chiffres,
+# chacun derriere le meme separateur (virgule, apostrophe, espace insecable).
+# Seuls ces separateurs-la sont otes : une virgule ailleurs separe deux nombres.
+# Oter toutes les virgules collait les listes -- "17.71,18.22" devenait
+# 17.7118.22 (faux refus) et "{12,6,1}" devenait 1261 (faux accord). Trouve le
+# 2026-09-26 sur la fiche cryptocurrencies-and-momentum.
+THOUSANDS = re.compile(r"(?<![\d.])\d{1,3}([,' ])\d{3}(?!\d)(?:\1\d{3}(?!\d))*")
+
 INVENTORY = REPO / "scripts" / "out" / "a1_inventory.json"
 GRID = REPO / "scripts" / "out" / "a8_session_grid.json"
 
@@ -383,13 +392,18 @@ def value_in_quote(value, quoted: str) -> bool:
     "12,500,000 Japanese yen" vouches for 12500000 and "$20 x Nasdaq-100 Index"
     for 20 -- the units stay in the third party's own words.
 
+    Only THOUSANDS separators, though: a separator followed by exactly three
+    digits, behind an integer (`THOUSANDS`). Stripping every comma looked
+    equivalent and was not -- "17.71,18.22" vouched for neither number, and
+    "{12,6,1}" vouched for 1261. scripts/check_provenance.py keeps both cases.
+
     What this catches is the transcription slip, which stays a plausible number
     forever once deposited. It is not proof: a number that appears anywhere in
     the quote will vouch, so `quoted` holds the contract-unit line itself and
     not a page dump. It does not catch a determined liar, and D09 does not
     claim that it does.
     """
-    flat = quoted.replace(",", "").replace("\u00a0", "").replace("'", "")
+    flat = THOUSANDS.sub(lambda m: re.sub(r"[,'\u00a0]", "", m.group(0)), quoted)
     for token in NUMBER.findall(flat):
         try:
             if float(token) == float(value):

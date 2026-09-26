@@ -105,3 +105,22 @@ plus tard d'où ils venaient.
 | Le caractère **all-in** du barème Lucid, et micro ou mini selon ce qui sera tradé | réponse attendue du tiers ; bloque `todo fees` |
 | `slippage_bp`, valeur **déclarée** et non externe — elle relèvera d'une décision écrite, pessimiste, comme `D04` l'exige, et non de ce registre | avant toute lecture nette |
 | L'extension du registre aux **fiches de papier** (`corpus/fiches/`), qui recopieront des résultats annoncés par des tiers | phase 07, si la même forme convient |
+
+## Journal
+
+- **2026-09-26** — **`value_in_quote` ôtait TOUTES les virgules**, et pas
+  seulement les séparateurs de milliers que § Le choix désigne. Une liste collée
+  par l'extraction PDF — « `17.71,18.22` » — devenait `17.7118.22` et ne
+  cautionnait plus aucun de ses deux nombres (faux refus, fiche moissonnée
+  `cryptocurrencies-and-momentum`) ; « `{12,6,1}` » devenait `1261` et
+  cautionnait un nombre que la citation ne contient pas (faux accord, jamais
+  exploité : les 35 fiches et le catalogue passent avant comme après). Corrigé
+  dans `catalogue/validate.py` (`THOUSANDS`) : un séparateur — virgule,
+  apostrophe, espace insécable — n'est ôté que suivi d'exactement trois
+  chiffres, derrière un entier. `scripts/check_provenance.py` porte les onze
+  cas nouveaux, écrits et vus échouer **avant** la correction (7 faux sur 11),
+  **44 vérifications**. Rejoué vert : catalogue, `validate_fiches`,
+  `check_fiches_guard`, `score_extraction --check`, portes 07 et 08, 17 fiches
+  `AMORCE` sur 17, 17 moissonnées sur 18 (la dix-huitième pour `F4`, sans
+  rapport). La règle de § Le choix ne change pas ; son implémentation la
+  rejoint.

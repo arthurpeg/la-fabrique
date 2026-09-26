@@ -206,6 +206,22 @@ def main() -> int:
         (125000.0, "125,000 euro", True),
         (5.0, "$5 x Dow Jones Industrial Average Index", True),
         (0.5, "$0.50 per side", True),
+        # Une virgule n'est un séparateur de milliers que devant un groupe de
+        # trois chiffres exactement, derrière un entier. Les ôter toutes collait
+        # les listes : « 17.71,18.22 » devenait 17.7118.22 (faux refus, fiche
+        # cryptocurrencies-and-momentum, 2026-09-26) et « {12,6,1} » devenait
+        # 1261 (faux accord).
+        (17.71, "Theaveragepayoffsare17.71,18.22and", True),
+        (18.22, "Theaveragepayoffsare17.71,18.22and", True),
+        (1.65, "statisticsof1.65,1.84,and0.41indicting", True),
+        (12.0, "K = {12,6,1}", True),
+        (1261.0, "K = {12,6,1}", False),
+        (0.51, "weights of 0.5,1 and 2", False),
+        (0.41, "0.41,123 observations", True),
+        (41123.0, "0.41,123 observations", False),
+        (2388.0, "2,388 to 54,000 $/an", True),
+        (54000.0, "2,388 to 54,000 $/an", True),
+        (12500000.0, "12 500 000 Japanese yen", True),
     ):
         got = value_in_quote(value, quoted)
         check(got == expected, f"{value} dans {quoted!r} : {got}, attendu {expected}")
