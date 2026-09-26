@@ -5,6 +5,8 @@
 tronquait une barre trop tard ; corrigé, portes 05 et 08 rejouées et franchies.
 `D28` : la porte 09 refuse toute ligne du registre qui touche le lot hors de sa
 mesure officielle (calibrations comprises).
+`D29` : pas de plis en phase 09 — une mesure unique sur tout le `pool`, à
+`asof` 2023-12-29 20:00 UTC, vérifiée par la porte.
 **Le reste de ce fichier n'a pas été relu à cette date** et retarde sur le dépôt
 (voir § Revue du 2026-09-26, en fin de § Prochaine action).
 **Dernière porte franchie :** **08**, le 2026-09-23 — `scripts/gate_08.py`. Un
@@ -54,6 +56,17 @@ puis mesurée — la forme en U de la volatilité intra-journalière est retrouv
 reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
 **Décision la plus récente :**
+`decisions/DECISION-29-plis-du-walk-forward.md` — **pas de plis en phase 09.**
+Rien n'y est ajusté sur le `pool` : les constantes viennent de la fiche (`S5`),
+tout ce qui s'estime s'estime au passé (`S3`, `D27`), ce qui est déjà un
+walk-forward ancré à purge automatique. Chaque hypothèse est mesurée **une fois
+sur tout le `pool`**, à `asof` = 2023-12-29 20:00 UTC — l'instant des 56 tests
+comptés, jusqu'ici simple convention, désormais exigé par `gate_09.py`. Les plis
+deviennent **obligatoires au premier ajustement** (phases 12-14). Sacrifiés : un
+diagnostic de stabilité par année (à mettre au harnais avec `D26`/`D28`) ; et le
+biais de publication, qu'aucun pli ne lèverait — le holdout reste la seule
+mesure hors échantillon.
+**Décision précédente :**
 `decisions/DECISION-28-aucune-ligne-hors-protocole.md` — une mesure faite en
 calibration (`hypothesis_ref` nul) échappait au décompte **et** à la porte 09 :
 on pouvait regarder un signal avant de le déclarer au lot. `gate_09.py` refuse
@@ -335,9 +348,9 @@ sont ouverts, du plus grave au moins grave :
    registre. Et `harness/registry.settle()` applique `extra` **après** les champs
    du ticket, donc peut écraser `hypothesis_ref` — à noter pour la prochaine
    décision qui touchera le harnais.
-3. **Les plis du walk-forward ne sont tranchés nulle part.** `D04` les a
-   renvoyés en phase 09 ; ni `D25` ni `gate_09` n'en parlent. À écrire avant le
-   lot.
+3. ~~Les plis du walk-forward ne sont tranchés nulle part.~~ **Tranché,
+   `D29`** : pas de plis en phase 09, mesure unique sur tout le `pool` à un
+   `asof` fixé et vérifié.
 4. **11 fiches moissonnées sans trace de production** — 18 fichiers dans
    `corpus/fiches_harvest/`, 7 seulement dans `PRODUCED_harvest.json`. `G3`
    n'est pas mesurable pour elles (`L22`). `cryptocurrencies-and-momentum`
@@ -444,8 +457,9 @@ registre **entier**, les 56 tests antérieurs compris.
    la matrice de corrélation n'existe pas ou ne couvre pas exactement les
    signaux du lot, ou qu'une hypothèse n'a pas exactement une mesure au
    registre sous le harnais courant — et, depuis `D28`, qu'une autre ligne du
-   registre touche le lot. **12 vérifications** à l'écriture, **19 depuis
-   `D28`** (`--check`), vert —
+   registre touche le lot, et depuis `D29`, qu'une mesure ne porte pas sur tout
+   le `pool` à l'`asof` fixé. **12 vérifications** à l'écriture, **21 depuis
+   `D29`** (`--check`), vert —
    elles relisent le tableau de seuils de `D25` à l'envers (`t`=2,88 → `p`
    ≤0,0020, etc.) et vérifient le pas de `BH` lui-même. Lancé sans lot, il
    répond correctement NON FRANCHIE : c'est l'état attendu, pas une panne.

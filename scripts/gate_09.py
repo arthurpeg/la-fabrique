@@ -49,6 +49,9 @@ première faute (D25 § Ce que ça verrouille) :**
    `09-passage`, `code_hash` = celui du harnais **courant** (une ligne
    périmée « ne se compare pas », `registry/SCHEMA.md`) — une hypothèse
    absente ou dupliquée refuse le verdict, elle ne se devine pas.
+   Elle porte en outre sur toute la tranche `pool`, à l'instant fixé par
+   `D29` (`asof` = 2023-12-29 20:00 UTC) : une date choisie par hypothèse
+   serait un bouton.
 5. **aucune autre ligne du registre ne touche le lot** (`D28`) — ni une
    calibration (`hypothesis_ref` nul) portant le `signal_id` d'un signal du
    lot, ni une mesure d'une `ref` du lot sous un autre `stage` ou un autre
@@ -93,6 +96,12 @@ CORR_FILE = REPO / "scripts" / "out" / "lot_09_correlations.json"
 HYPOTHESES_DIR = REPO / "hypotheses"
 SIGNALS_DIR = REPO / "signals"
 STAGE = "09-passage"
+# D29 : une mesure du lot porte sur la tranche `pool` ENTIÈRE, à un instant
+# unique et fixé d'avance — celui des 56 tests comptés avant elle. Une date
+# d'évaluation choisie par hypothèse serait un bouton : raccourcir l'échantillon
+# jusqu'à ce qu'un signal passe.
+SLICE_REQUIRED = "pool"
+ASOF_REQUIRED = "2023-12-29 20:00:00+00:00"
 Q_REQUIRED = 0.10  # D25 C3
 N_REQUIRED = 50  # D25 C2
 
@@ -140,6 +149,8 @@ def est_officielle(r: dict, entry: dict, hash_courant: str) -> bool:
         and r.get("signal_id") == entry.get("signal_id")
         and r.get("stage") == STAGE
         and r.get("code_hash") == hash_courant
+        and r.get("data_slice") == SLICE_REQUIRED
+        and r.get("asof") == ASOF_REQUIRED
     )
 
 
@@ -245,9 +256,9 @@ def run_check() -> int:
     h = "0123456789abcdef"
     lot = [{"ref": "H05", "signal_id": "sig-a"}, {"ref": "H06", "signal_id": "sig-b"}]
 
-    def ligne(signal_id, ref, stage=STAGE, code_hash=h):
+    def ligne(signal_id, ref, stage=STAGE, code_hash=h, asof=ASOF_REQUIRED):
         return {"signal_id": signal_id, "hypothesis_ref": ref, "stage": stage,
-                "code_hash": code_hash}
+                "code_hash": code_hash, "data_slice": SLICE_REQUIRED, "asof": asof}
 
     propre = [ligne("sig-a", "H05"), ligne("sig-b", "H06"),
               ligne("calibration-bruit", None), ligne("autre", "H01")]
@@ -261,12 +272,31 @@ def run_check() -> int:
             ligne("sig-b", "H06", code_hash="f" * 16),
         "une ref du lot mesurée sous un autre signal_id": ligne("sig-z", "H05"),
         "un signal du lot mesuré sous une ref hors lot": ligne("sig-b", "H99"),
+        "une mesure du lot sur un échantillon raccourci (D29)":
+            ligne("sig-a", "H05", asof="2019-12-31 20:00:00+00:00"),
     }
     for nom, intrus in cas.items():
         verifier(f"D28 : refuse {nom}",
                  lignes_hors_protocole(lot, propre + [intrus], h) == [intrus])
     # Une mesure officielle en double n'est pas « hors protocole » : elle est
     # officielle deux fois, et c'est la vérification 4 qui la refuse.
+    # D29 : l'asof exigé tombe dans la tranche `pool`, sur sa DERNIÈRE séance
+    # ouvrée — la tranche entière, pas un échantillon raccourci. Relu dans le
+    # catalogue, pas recopié.
+    import pandas as pd  # noqa: PLC0415
+
+    from panel.catalogue import load_catalogue  # noqa: PLC0415
+
+    tranche = load_catalogue().slices[SLICE_REQUIRED]
+    asof = pd.Timestamp(ASOF_REQUIRED)
+    fin = pd.Timestamp(tranche.end)
+    ouvres_apres = pd.bdate_range(asof.date() + pd.Timedelta(days=1), fin)
+    verifier(
+        f"D29 : l'asof exigé ({ASOF_REQUIRED}) est dans la tranche {SLICE_REQUIRED!r} "
+        f"et sur sa dernière séance ouvrée (fin {tranche.end})",
+        pd.Timestamp(tranche.start) <= asof.tz_localize(None) <= fin + pd.Timedelta(days=1)
+        and len(ouvres_apres) == 0,
+    )
     verifier("D28 : un doublon officiel est laissé à la vérification 4",
              lignes_hors_protocole(lot, propre + [ligne("sig-a", "H05")], h) == [])
 
@@ -370,17 +400,12 @@ def main(argv: list[str]) -> int:
 
     for e in entries:
         ref, signal_id = e["ref"], e["signal_id"]
-        lignes = [
-            r
-            for r in registre
-            if r.get("hypothesis_ref") == ref
-            and r.get("stage") == STAGE
-            and r.get("code_hash") == hash_courant
-        ]
+        lignes = [r for r in registre if est_officielle(r, e, hash_courant)]
         if not lignes:
             fautes.append(
                 f"{ref} : aucune mesure au registre (stage={STAGE!r}, harnais "
-                "courant) — une hypothèse manque, D25 refuse le verdict"
+                f"courant, tranche {SLICE_REQUIRED!r}, asof {ASOF_REQUIRED}) — une "
+                "hypothèse manque, D25 refuse le verdict"
             )
             continue
         if len(lignes) > 1:
@@ -404,8 +429,10 @@ def main(argv: list[str]) -> int:
         fautes.append(
             f"{r.get('test_id', '?')} : ligne hors protocole sur le lot — signal "
             f"{r.get('signal_id')!r}, ref {r.get('hypothesis_ref')!r}, stage "
-            f"{r.get('stage')!r}, harnais {r.get('code_hash')!r}. Un signal du lot "
-            "ne se mesure qu'une fois, sous sa ref, au stage 09-passage (D28)"
+            f"{r.get('stage')!r}, harnais {r.get('code_hash')!r}, tranche "
+            f"{r.get('data_slice')!r}, asof {r.get('asof')!r}. Un signal du lot ne se "
+            f"mesure qu'une fois, sous sa ref, au stage {STAGE}, sur toute la tranche "
+            f"{SLICE_REQUIRED} à {ASOF_REQUIRED} (D28, D29)"
         )
 
     if fautes:

@@ -1,8 +1,8 @@
 ---
 type: concept
-updated: 2026-09-16
+updated: 2026-09-26
 status: stable
-sources: [CLAUDE.md, decisions/DECISION-01-univers-et-donnees.md]
+sources: [CLAUDE.md, decisions/DECISION-01-univers-et-donnees.md, decisions/DECISION-29-plis-du-walk-forward.md]
 ---
 
 # Tranche
@@ -32,6 +32,11 @@ un `pool` en walk-forward. **La décision la plus récente fait foi.** Le champ
   qu'une chose ([[Failed Ideas/ledger]] F07).
 - **Les plis d'un walk-forward ne sont pas k tests**, mais un seul. Voir
   [[concepts/comptage-des-tests]].
+- **Le `pool` n'est pas découpé en plis en phase 09** (`D29`). Rien n'y est
+  ajusté : constantes tirées de la fiche, estimations au passé seulement. Chaque
+  hypothèse est mesurée une fois sur tout le `pool`, à `asof` 2023-12-29
+  20:00 UTC, et `gate_09.py` le vérifie. Les plis deviennent obligatoires au
+  premier ajustement (combinaisons, régimes, générateur).
 
 ## Le holdout est typé, et son type est écrit d'avance
 
