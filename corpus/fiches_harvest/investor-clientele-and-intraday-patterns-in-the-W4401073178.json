@@ -1,0 +1,272 @@
+{
+  "fiche_id": "investor-clientele-and-intraday-patterns-in-the-W4401073178",
+  "written": "2026-09-24",
+  "written_by": "session d'extraction isolee (Claude Opus 5, phase 09)",
+  "source": {
+    "authors": "Jian Chen, Ahmad Haboub, Ali Khan, Syed Mahmud",
+    "title": "Investor clientele and intraday patterns in the cross section of stock returns",
+    "year": 2024,
+    "source_url": "https://publications.aston.ac.uk/id/eprint/46518/6/J_Chen_et_al_Investor_clientele_and_intraday_patterns_in_the_cross_section_of_stock_returns.pdf",
+    "pdf": "corpus/pdf/investor-clientele-and-intraday-patterns-in-the-W4401073178.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "journal": "Review of Quantitative Finance and Accounting",
+    "doi": "10.1007/s11156-024-01319-8"
+  },
+  "claim": "Le motif intra-journalier de Heston, Korajczyk et Sadka (2010) — le rendement d'un intervalle de trente minutes predit le rendement du meme intervalle aux multiples exacts de 24 heures, jusqu'a quarante jours de bourse — existe hors des Etats-Unis, mais son intensite depend de la clientele d'investisseurs et des frictions reglementaires. Il est fort au Royaume-Uni, au Bresil, dans les B-shares et H-shares chinoises cotees en double (detenues par des institutionnels etrangers), et faible dans les A-shares chinoises (detenues par des particuliers domestiques). Trois causes sont avancees et testees separement : la composition des investisseurs (comparaison de titres jumeaux A/B et A/H de la meme firme), les limites a l'arbitrage (limites de prix quotidiennes, regle T+1 interdisant le day trading) et l'heure de la journee (le motif chinois se concentre sur le premier et le dernier intervalle de trente minutes). Un choc exogene — l'entree de 233 A-shares dans l'indice MSCI Emerging Markets le 1er juin 2018, qui augmente la part institutionnelle — renforce le motif sur ces memes titres.",
+  "universe": "Actions ordinaires de trois marches, donnees intra-journalieres Bloomberg appariees aux classifications CSMAR pour la Chine, du 1er juin 2016 au 1er mars 2019. Chine : 3238 A-shares (Shanghai/Shenzhen), 84 doubles cotations A/B, 87 doubles cotations A/H (Hong Kong), plus un sous-echantillon de 233 A-shares incluses au MSCI EM. Royaume-Uni : 1457 firmes. Bresil : 365 firmes. Filtre d'inclusion : au moins 50 transactions par an. Rendements calcules en mid-point (moyenne bid-ask) pour eviter le bid-ask bounce ; 8 intervalles de trente minutes par jour en Chine (9:30-11:30 et 13:00-15:00), 17 au Royaume-Uni (8:00-16:30), 13 pour les H-shares a Hong Kong (9:30-16:00).",
+  "horizon": {
+    "value": "Intervalle de trente minutes, predit par le meme intervalle aux lags journaliers de 1 a 40 jours (k = 8, 16, ..., 320 intervalles en Chine). Un second jeu de regressions utilise des lags intra-journaliers contigus de 1 a 20 intervalles (1 a 51 pour le Royaume-Uni) pour mesurer les reversions de court terme juste au-dela de 24 heures.",
+    "quoted": "interval returns on returns during the same interval on previous days for up to 40 days and",
+    "note": "L'unite de detention du portefeuille est identique : achat du decile haut, vente du decile bas, conserve sur le meme intervalle de trente minutes pendant les quarante jours suivants."
+  },
+  "signal_construction": {
+    "value": "Deux constructions paralleles. (1) Regression transversale a la Jegadeesh (1990) : pour chaque intervalle de trente minutes t, MPR_{i,t} = alpha_{k,t} + beta_{k,t} MPR_{i,t-k} + epsilon_{i,t}, ou MPR est le rendement mid-point (moyenne des prix bid-ask en fin d'intervalle t-1 et en fin d'intervalle t, rapportee a celle de t-1) et k est un multiple du nombre d'intervalles d'une journee (8 en Chine). Les beta_{k,t} sont moyennes dans le temps a la Fama-MacBeth (1973), rapportes en pourcentage, avec leur t-statistique. (2) Portefeuille : tri transversal des titres en dix deciles a chaque demi-heure sur le rendement de l'intervalle, achat du decile haut et vente du decile bas a nombre egal de titres, detention sur le meme intervalle horaire pendant les quarante jours suivants, rendement moyen du spread haut-moins-bas en points de base. Variantes de controle : retrait du premier et du dernier intervalle de la journee ; retrait des deciles extremes a chaque demi-heure (proxy des titres touchant les limites de prix) ; decoupage en terciles de capitalisation ; scission avant/apres le 1er juin 2018.",
+    "quoted": "We run cross-sectional regressions of current 30-minute (half-hour)",
+    "note": "Les auteurs ecartent explicitement les rendements de transaction au profit des mid-points pour ne pas confondre le motif avec le bid-ask bounce ; ils verifient que trade, bid-to-bid et ask-to-ask ne changent pas le resultat au niveau des lags journaliers."
+  },
+  "reported_results": [
+    {
+      "name": "us_hks_lag1_estimate_pct",
+      "value": 1.19,
+      "unit": "percent",
+      "quoted": "market as reported by HKS (2010) in their Table I, the estimate has a co-efficient of 1.19",
+      "note": "Valeur de reference americaine recopiee de HKS (2010) par les auteurs, pas une mesure de ce papier."
+    },
+    {
+      "name": "us_hks_lag1_tstat",
+      "value": 18.22,
+      "unit": "t-stat",
+      "quoted": "and a t-statistic of 18.22. Whereas, our estimate for a daily lag of 1 day has an estimate",
+      "note": "Reference americaine HKS (2010), lag d'un jour."
+    },
+    {
+      "name": "china_all_ashares_lag1_estimate_pct",
+      "value": 0.36,
+      "unit": "percent",
+      "quoted": "with a co-efficient of 0.36 and a t-statistic of 2.94. This is a very striking contrast as when",
+      "note": "Echantillon complet des 3238 A-shares, lag journalier de 1 jour. Table 3. C'est le PLUS FAIBLE des quarante lags pour la Chine, alors qu'il est le plus fort aux Etats-Unis, au Royaume-Uni et au Bresil ; le pic chinois est au lag de 3 jours (0.65)."
+    },
+    {
+      "name": "china_all_ashares_lag1_tstat",
+      "value": 2.94,
+      "unit": "t-stat",
+      "quoted": "with a co-efficient of 0.36 and a t-statistic of 2.94. This is a very striking contrast as when",
+      "note": "Meme phrase, Fama-MacBeth."
+    },
+    {
+      "name": "uk_lag1_estimate_pct",
+      "value": 1.82,
+      "unit": "percent",
+      "quoted": "UK and Brazil which are 1.82 (1.12) and 10.18 (7.22) for a lag of one trading day for UK",
+      "note": "Royaume-Uni, lag d'un jour, t-stat 10.18. La citation donne le Bresil entre parentheses."
+    },
+    {
+      "name": "brazil_lag1_estimate_pct",
+      "value": 1.12,
+      "unit": "percent",
+      "quoted": "UK and Brazil which are 1.82 (1.12) and 10.18 (7.22) for a lag of one trading day for UK",
+      "note": "Bresil, lag d'un jour, t-stat 7.22 ; valeurs entre parentheses dans la phrase."
+    },
+    {
+      "name": "dual_listed_ashares_lag1_estimate_pct",
+      "value": 0.55,
+      "unit": "percent",
+      "quoted": "efficient of 0.55 and a t-statistic of 2.85 for a daily lag of 1 day. Whereas, our dual-listed",
+      "note": "84 A-shares ayant une B-share jumelle. Table 4."
+    },
+    {
+      "name": "dual_listed_bshares_lag1_estimate_pct",
+      "value": 1.30,
+      "unit": "percent",
+      "quoted": "B-share sample has an estimate with a co-efficient of 1.30 and a corresponding t-statistic",
+      "note": "B-shares jumelles des memes firmes (t-stat 6.32) : bilans et flux identiques, seule la clientele differe. C'est le coeur de l'experience naturelle."
+    },
+    {
+      "name": "dual_listed_ashares_vs_hshares_lag1_estimate_pct",
+      "value": 0.50,
+      "unit": "percent",
+      "quoted": "the H-shares at 0.50 and 2.69 respectively.",
+      "note": "A-shares du sous-echantillon des 87 doubles cotations A/H, lag d'un jour (estimate 0.50, t-stat 2.69). Table 5."
+    },
+    {
+      "name": "hshares_lag1_estimate_pct",
+      "value": 4.02,
+      "unit": "percent",
+      "quoted": "4.02 and a t-statistic of 10.45 respectively. For the H-shares, the effect seems to decay",
+      "note": "H-shares cotees a Hong Kong des memes 87 firmes : huit fois le coefficient de leurs jumelles A. Hong Kong n'a ni limites de prix ni interdiction du day trading."
+    },
+    {
+      "name": "china_ashares_lag1_estimate_excl_extreme_deciles_pct",
+      "value": 0.52,
+      "unit": "percent",
+      "quoted": "a co-efficient of 0.52 and a t-statistic of 4.92 versus a co-efficient of 0.36 and a t-statistic of",
+      "note": "Table 8 : en retirant a chaque demi-heure les deciles extremes (proxy des titres susceptibles de toucher la limite de prix), le coefficient a un jour passe de 0.36 (t=2.94) a 0.52 (t=4.92). C'est le test des limites a l'arbitrage."
+    },
+    {
+      "name": "china_ashares_excl_first_last_halfhour_n_estimates_none_above_tstat_3",
+      "value": 40,
+      "unit": "count",
+      "spelled_out": "forty",
+      "quoted": "We find that none out of the forty regression estimates have a t-statistic that is greater",
+      "note": "Table 7 : en retirant le premier et le dernier intervalle de trente minutes, AUCUNE des quarante estimations n'atteint une t-stat superieure a 3 ; le lag de 1 jour tombe a 0.13 (t=1.20). Le motif chinois vit entierement dans l'ouverture et la cloture, contrairement a HKS (2010) qui le trouvent sur toute la journee."
+    },
+    {
+      "name": "china_ashares_small_cap_lag1_estimate_pct",
+      "value": 0.28,
+      "unit": "percent",
+      "quoted": "The weakest estimate for the lag of 1 day comes from the small firms, 0.28 with a",
+      "note": "Terciles de capitalisation, Table 6 (t-stat 2.82)."
+    },
+    {
+      "name": "china_ashares_large_cap_lag1_estimate_pct",
+      "value": 0.46,
+      "unit": "percent",
+      "quoted": "an estimate of 0.46 and a t-statistic of 3.05. We do notice however that across small,",
+      "note": "Grandes capitalisations, lag d'un jour. Progression monotone 0.28 -> 0.33 -> 0.46 du petit au grand. A confronter avec la section 3.2 du meme papier, qui affirme l'inverse (voir internal_inconsistencies)."
+    },
+    {
+      "name": "uk_portfolio_lag1_return_bp",
+      "value": 4,
+      "unit": "bp",
+      "quoted": "the portfolio returns are nearly 4 basis points, which is higher than what has been reported",
+      "note": "Spread decile haut moins decile bas, lag d'un jour, Royaume-Uni. Valeur donnee en prose comme approximation (« nearly 4 ») ; la Table 10 ne reporte pas le lag 1 pour le Royaume-Uni, elle commence au lag 2 (3.11 bp). Rendement brut, sans frais ni spread."
+    },
+    {
+      "name": "uk_portfolio_lag1_tstat",
+      "value": 13.85,
+      "unit": "t-stat",
+      "quoted": "for the US and the t-statistics are highly significant with a value of 13.85. This evidence",
+      "note": "Meme portefeuille britannique, lag d'un jour."
+    },
+    {
+      "name": "china_ashares_portfolio_lag1_return_bp",
+      "value": 0.55,
+      "unit": "bp",
+      "quoted": "return on a strategy based on a 1-day lag for Chinese A-shares is 0.55 basis points and",
+      "note": "Non significatif. Le maximum chinois est au lag de 3 jours (1.40 bp, t=4.02) et au-dela de 10 jours la strategie n'est plus significative."
+    },
+    {
+      "name": "china_ashares_portfolio_lag1_tstat",
+      "value": 1.52,
+      "unit": "t-stat",
+      "quoted": "has a t-statistic of 1.52. We find that the intraday momentum pattern is strongest for the",
+      "note": "Sous le seuil usuel de significativite."
+    },
+    {
+      "name": "bshares_portfolio_lag1_return_bp",
+      "value": 2.36,
+      "unit": "bp",
+      "quoted": "profits are of the range of 2.36 basis points for B-shares, 3.54 basis points for H-shares,",
+      "note": "B-shares jumelles, lag d'un jour (t=7.12 en Table 10). Bruts de frais."
+    },
+    {
+      "name": "hshares_portfolio_lag1_return_bp",
+      "value": 3.54,
+      "unit": "bp",
+      "quoted": "profits are of the range of 2.36 basis points for B-shares, 3.54 basis points for H-shares,",
+      "note": "H-shares jumelles, lag d'un jour (t=10.95 en Table 10). Bruts de frais. Le Bresil est a 3.09 bp dans la meme phrase, page suivante."
+    },
+    {
+      "name": "msci_233_ashares_portfolio_lag1_return_before_bp",
+      "value": 1.44,
+      "unit": "bp",
+      "quoted": "a lag of 1 day the returns before inclusion in the index were 1.44 basis points, whereas,",
+      "note": "233 A-shares, 1er juin 2016 au 31 mai 2018, avant inclusion MSCI (t=4.38 en Table 13)."
+    },
+    {
+      "name": "msci_233_ashares_portfolio_lag1_return_after_bp",
+      "value": 2.85,
+      "unit": "bp",
+      "quoted": "after the inclusion these returns rise to 2.85 basis points.",
+      "note": "Memes 233 titres, 1er juin 2018 au 1er mars 2019 (t=8.85). Le coefficient de regression passe de 0.76 (t=4.89) a 1.68 (t=9.25) selon la Table 12. Les deux sous-periodes ont des longueurs tres inegales, 24 mois contre 9."
+    },
+    {
+      "name": "institutional_holdings_after_msci_inclusion_pct",
+      "value": 55,
+      "unit": "percent",
+      "quoted": "Institutional holdings rise from 49 percent before inclusion to 55 percent",
+      "note": "Table 11 : la detention institutionnelle des 233 A-shares passe de 49 % a 55 % ; le flottant detenu par des institutions de 18 % a 29 % ; le nombre d'institutions de 100 a 150. C'est la mesure du choc suppose exogene."
+    },
+    {
+      "name": "hks_us_first_day_strategy_return_bp",
+      "value": 3.01,
+      "unit": "bp",
+      "quoted": "earns a mean return of 3.01 basis points which is enough to offset the equity premium. In",
+      "note": "Valeur americaine de reference recopiee de HKS (2010), pas une mesure de ce papier. Sert de borne de comparaison economique."
+    },
+    {
+      "name": "china_ashares_sample_size_firms",
+      "value": 3238,
+      "unit": "count",
+      "quoted": "China, there are 3238 firms listed as A-shares. The number of dual-listed A and B-shares",
+      "note": "La note de la Table 6 annonce 3278 firmes pour le meme echantillon ; voir internal_inconsistencies."
+    },
+    {
+      "name": "dual_listed_ab_sample_size_firms",
+      "value": 84,
+      "unit": "count",
+      "quoted": "is 84 and the number of dual-listed A and H-shares is 87.",
+      "note": "84 doubles cotations A/B et 87 doubles cotations A/H. La note de la Table 4 mentionne aussi « 88 shares that are dual listed as A and B-shares both » puis « a total of 84 of these in our sample »."
+    },
+    {
+      "name": "china_halfhour_intervals_per_day",
+      "value": 8,
+      "unit": "count",
+      "quoted": "Chinese markets and we end up with 8 half hour intervals from 9:30 to 11:30 am and then",
+      "note": "8 intervalles par jour en Chine (pause dejeuner), contre 17 au Royaume-Uni et 13 pour les H-shares a Hong Kong. C'est ce nombre qui definit le lag « un jour » (k = 8)."
+    },
+    {
+      "name": "china_reversal_just_beyond_daily_lag",
+      "value": null,
+      "quoted": "The most striking feature is the return reversibility in China at intervals just beyond the",
+      "note": "Resultat qualitatif dans la prose (Table 9) : juste apres le passage des 24 heures, les coefficients chinois deviennent negatifs et significatifs, les auteurs l'attribuent a la regle T+1 qui pousse les particuliers a denouer des que le delai est passe. Le Royaume-Uni ne montre pas ce renversement au-dela du lag journalier. Les valeurs chiffrees ne sont disponibles que dans un tableau mis a plat par l'extraction, et ne sont donc pas citees ici."
+    },
+    {
+      "name": "uk_short_term_reversal_duration_min",
+      "value": 30,
+      "unit": "min",
+      "spelled_out": "thirty",
+      "quoted": "We document similar results for the UK where return reversals last for up to thirty",
+      "note": "Au Royaume-Uni les reversions de court terme se resorbent en trente minutes ; en Chine elles durent 30 a 60 minutes, comme aux Etats-Unis chez HKS (2010) sur un echantillon s'arretant en 2005. Les auteurs en tirent un classement d'efficience, non un signal."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun cout de transaction, aucun frais, aucun spread paye : les rendements de portefeuille sont des spreads bruts haut-moins-bas decile en points de base, de l'ordre de 0.5 a 4 bp. A cette echelle, le signe de la strategie nette n'est pas etabli par le papier.",
+    "Aucune mesure de dispersion : pas d'ecart-type des rendements de strategie, pas de Sharpe, pas de drawdown, pas de turnover — alors que la strategie retrie l'univers toutes les trente minutes.",
+    "Aucun IC ni correlation de rang. La metrique est un coefficient de regression transversale moyenne a la Fama-MacBeth, exprime en pourcentage, et un spread de deciles ; rien n'est directement comparable a un rapport d'IC.",
+    "Le nombre de tests effectues n'est jamais declare. Onze tableaux, quarante lags par tableau, plusieurs sous-echantillons et plusieurs variantes de rendement (trade, bid-to-bid, ask-to-ask, intervalles de 5 a 60 minutes) : aucune correction pour tests multiples, aucun compte.",
+    "Aucune pre-enregistrement des sous-echantillons : la scission en terciles de taille, le retrait des deciles extremes et le retrait des premier/dernier intervalles sont presentes apres coup comme des explications du resultat chinois.",
+    "Aucune donnee ni aucun code : Bloomberg et CSMAR sont proprietaires, et la procedure d'appariement trades/quotes n'est decrite que par renvoi a Fong et al. (2017).",
+    "La construction exacte des rendements mid-point aux frontieres d'intervalle n'est pas precisee : quel quote est retenu si aucune cotation ne tombe a l'instant exact, comment est traitee la pause dejeuner chinoise (11:30-13:00), et si le rendement de l'intervalle d'ouverture inclut le gap de nuit.",
+    "Aucun holdout, aucune validation hors echantillon temporelle : la periode est unique et courte (33 mois, du 1er juin 2016 au 1er mars 2019), et la comparaison avant/apres MSCI porte sur deux sous-periodes de longueurs tres inegales (24 mois contre 9).",
+    "L'identification du choc MSCI n'a pas de groupe de controle : les 233 titres inclus sont compares a eux-memes avant/apres, sans contrefactuel de titres non inclus sur la meme fenetre, alors que le marche chinois change globalement sur 2018-2019.",
+    "Les nombres de titres sont incoherents d'un tableau a l'autre (voir internal_inconsistencies), ce qui empeche de reconstituer exactement l'echantillon.",
+    "Aucune indication de liquidite ni de faisabilite : deciles sur plusieurs milliers de titres retries toutes les trente minutes, vente a decouvert supposee possible, alors que le papier rappelle lui-meme que la Chine impose des contraintes de vente a decouvert."
+  ],
+  "internal_inconsistencies": [
+    "Taille : la section 3.2 affirme « There is no significant difference in the pattern in terms of the regression coefficients obtained and size doesn't explain the pattern », tandis que la section 4.4 et la conclusion affirment l'inverse, une progression monotone du petit au grand (0.28 / 0.33 / 0.46). Les deux affirmations portent sur le meme Table 6.",
+    "Nombre de firmes : 3238 dans le texte et les notes des Tables 3, 4, 5, 7, 8 et 9, mais 3278 dans la note de la Table 6. Les terciles valent 1079/1079/1080 dans la Table 2 mais 1093/1093/1092 dans la note de la Table 6.",
+    "Doubles cotations A/B : 84 dans le texte et a la fin de la note de la Table 4, mais 88 au milieu de cette meme note.",
+    "A-shares incluses au MSCI : 232 en section 3, 233 partout ailleurs.",
+    "Duree des reversions de court terme : l'introduction dit qu'elles durent « 0 to 30 minutes » en Chine comme au Royaume-Uni, la section 4.7 dit 30-60 minutes pour la Chine et jusqu'a trente minutes pour le Royaume-Uni. Les deux passages tirent des conclusions opposees sur l'efficience relative.",
+    "Table 9, ligne 17 du Royaume-Uni : les valeurs 1.80/10.18, 1.55/8.73 et 1.23/8.07 reprennent exactement les lags 1, 2 et 3 jours de la Table 3, ce qui est coherent (17 intervalles = 1 jour au Royaume-Uni) mais n'est pas signale, et le premier chiffre differe de la Table 3 (1.80 contre 1.82).",
+    "La note de la Table 12 decrit le retrait des deciles extremes et une scission en terciles de taille, qui n'ont rien a voir avec le test d'inclusion MSCI qu'elle documente : la note semble recopiee des Tables 6 et 8."
+  ],
+  "transposability": {
+    "what_transfers": "Le motif teste, et non ses chiffres : l'autocorrelation du rendement d'un intervalle intra-journalier avec le meme intervalle a des multiples exacts de 24 heures. Sur neuf futures intraday, cela se code directement — decouper la session en intervalles de trente minutes, regresser le rendement de l'intervalle j sur le rendement du meme intervalle aux jours j-1 a j-40, et lire la structure de decroissance. Trois enseignements de methode transferent aussi : (1) le controle d'heure de la journee — refaire la mesure en retirant le premier et le dernier intervalle est le test le plus discriminant du papier, il fait disparaitre l'effet chinois entierement ; (2) le choix de rendements mid-point plutot que de rendements de transaction pour ne pas confondre le motif avec le bid-ask bounce, particulierement pertinent a l'echelle de la demi-heure ; (3) l'idee que la forme de la decroissance selon le lag est elle-meme un diagnostic — un pic au lag 1 signe un marche a dominante institutionnelle, un creux au lag 1 suivi d'un pic au lag 3 signe une friction de denouement.",
+    "what_does_not_transfer": [
+      "La coupe transversale elle-meme. Le papier trie des milliers d'actions en dix deciles toutes les trente minutes ; neuf futures ne permettent ni deciles ni portefeuille equipondere haut-moins-bas. La metrique centrale du papier (spread de deciles en points de base) n'a aucun equivalent chez nous.",
+      "La metrique statistique. Coefficients de regression transversale Fama-MacBeth en pourcentage et t-stats associees, pas un IC ni une correlation de rang : aucun chiffre de ce papier n'est comparable ligne a ligne a une sortie de notre harnais.",
+      "Le mecanisme explicatif central — la clientele d'investisseurs. Il repose sur l'existence de classes de parts jumelles (A/B, A/H) de la meme firme, detenues par des populations differentes. Sur des futures listes, la composition des detenteurs n'est pas observable de cette facon et il n'existe pas de titres jumeaux a bilan identique.",
+      "Toutes les frictions etudiees sont specifiques aux actions chinoises : limites de prix quotidiennes, regle de reglement T+1 interdisant le day trading, quotas QFII/RQFII, contraintes de vente a decouvert. Aucune n'a d'analogue sur des futures, ou la vente a decouvert est symetrique et le day trading libre. Le resultat le plus net du papier (retirer les deciles extremes double presque le coefficient) est un artefact de ces limites de prix et ne se transpose pas.",
+      "Le choc exogene d'inclusion MSCI est un evenement actions non reproductible sur notre univers.",
+      "La structure horaire. Huit intervalles avec pause dejeuner en Chine, dix-sept au Royaume-Uni, treize a Hong Kong : la notion de « multiple exact de 24 heures » y est un simple multiple du nombre d'intervalles d'une session. Nos futures ont des sessions propres, parfois quasi continues sur 23 heures, avec des ruptures de session et des changements d'heure d'ete non alignes entre places : le lag k doit etre redefini instrument par instrument avant tout test, et une definition naive par « nombre de barres » reintroduirait un decalage.",
+      "Les rendements mid-point exigent un flux de cotations bid-ask a chaque frontiere d'intervalle. Si notre panel ne porte que des barres de transaction, la precaution methodologique du papier est perdue et le motif mesure a la demi-heure peut n'etre qu'un effet de rebond bid-ask — ce que le papier signale explicitement comme la cause de coefficients negatifs aux lags courts.",
+      "Les effets de taille et de capitalisation (terciles) n'ont pas de sens sur neuf futures, ou le classement pertinent serait plutot la liquidite ou la classe d'actif.",
+      "Les niveaux de rendement annonces (0.5 a 4 points de base par demi-heure, bruts de frais) ne disent rien de la rentabilite sur futures : nos couts sont des ticks et des commissions par contrat, pas un spread proportionnel d'actions, et un signal a 1 bp est sous le tick de la plupart de nos instruments.",
+      "La periode 2016-06-01 a 2019-03-01 ne couvre qu'un tiers de notre tranche pool et n'a connu ni 2020, ni 2022 : la stabilite du motif hors de cette fenetre n'est pas testee par le papier."
+    ],
+    "what_aligns_well": "La fenetre d'echantillon (1er juin 2016 au 1er mars 2019) tombe entierement a l'interieur de notre tranche pool (2016-01-03 a 2023-12-31) : rien de ce qui est lu ici ne touche au holdout, et une replication du motif resterait dans la zone de recherche. L'horizon est exactement le notre — intra-journalier, barres de trente minutes, lags journaliers de 1 a 40 — et la variable d'entree est le seul rendement passe, donc calculable sans aucune donnee externe, sans fondamentaux et sans reseau, ce qui satisfait par construction l'invariant II si le lag est defini en barres deja closes. Enfin, le controle « retirer le premier et le dernier intervalle » est une hypothese de regime prete a etre pre-enregistree avant mesure : elle est binaire, se code en quelques lignes, et son resultat sur le papier (l'effet disparait entierement) en fait un test a fort pouvoir discriminant plutot qu'un reglage libre."
+  }
+}

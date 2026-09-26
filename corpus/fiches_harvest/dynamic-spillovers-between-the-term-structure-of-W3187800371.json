@@ -1,0 +1,210 @@
+{
+  "fiche_id": "dynamic-spillovers-between-the-term-structure-of-W3187800371",
+  "written": "2026-09-24",
+  "written_by": "session d'extraction isolee (Claude Opus 5, phase 09)",
+  "claim": "Dans un systeme de neuf variables quotidiennes — les trois composantes de la courbe des taux US (level, slope, curvature), les taux de change USD de cinq devises refuges (CAD, CHF, EUR, JPY, GBP) et le Bitcoin — le niveau et la pente de la courbe sont des emetteurs nets de chocs vers les changes et vers leur volatilite, tandis que la curvature, le JPY, le CHF et le GBP sont des recepteurs nets. En statique, le Bitcoin est quasi independant du systeme (0.54% emis, 0.84% recu), ce qui suggere une propriete de couverture ; mais l'analyse dynamique en fenetre glissante montre que sa connectedness augmente fortement lors des chocs de politique (abandon du plancher CHF/EUR en janvier 2015), de l'incertitude politique (BREXIT) et de la crise systemique (COVID-19). Conclusion des auteurs : le Bitcoin n'est pas un actif refuge ; il est au mieux un diversificateur dont le role varie dans le temps.",
+  "universe": "Neuf series quotidiennes, echantillon du 11 mai 2010 au 26 novembre 2020 (2621 observations), toutes issues de Bloomberg. (1) Trois composantes latentes de la courbe des taux zero-coupon souveraine americaine — level, slope, curvature — estimees par le modele de Nelson et Siegel (1987) dans la version dynamique de Diebold et Li (2006), sur 15 maturites mensuelles (3 a 360 mois). (2) Les taux de change en dollar US de CAD, CHF, EUR, JPY, GBP et du Bitcoin. (3) La volatilite historique de chacune de ces six series de change, egalement fournie par Bloomberg. Toutes les series sont non stationnaires en niveau et sont prises en difference premiere, stationnarite confirmee par ADF et KPSS. Deux systemes distincts de neuf variables sont estimes : un systeme 'taux de change' et un systeme 'volatilite des taux de change'.",
+  "horizon": {
+    "value": 10,
+    "unit": "days",
+    "kind": "horizon de decomposition de variance d'erreur de prevision (H), pas un horizon de prediction de rendement",
+    "quoted": "set the connectedness horizon, H = 10",
+    "note": "Le papier ne predit rien : il decrit une structure de transmission. H = 10 jours est l'horizon de la GFEVD, justifie par analogie avec la VaR 10 jours de Bale. Les mesures dynamiques sont calculees sur une fenetre glissante de 200 jours."
+  },
+  "signal_construction": {
+    "value": "Deux etages strictement enchaines. Etage 1 — estimation de la courbe : les rendements zero-coupon US a 15 maturites (3, 6, 9, 12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 240, 360 mois) sont decomposes par le modele Nelson-Siegel en representation espace-etat (Diebold et Li 2006), estime par maximum de vraisemblance et filtre de Kalman, produisant trois facteurs latents L_t (level), S_t (slope), C_t (curvature). Chaque serie est prise en difference premiere. Etage 2 — connectedness : un VAR d'ordre k a N = 9 variables est estime, puis la decomposition generalisee de variance d'erreur de prevision (GFEVD de Koop, Pesaran et Shin, invariante a l'ordonnancement) est calculee a l'horizon H = 10. Les lignes de la matrice D^g sont normalisees a 1. On en tire, pour chaque variable, le spillover 'TO' (somme de colonne hors diagonale), le spillover 'FROM' (somme de ligne hors diagonale), le net directionnel (TO moins FROM), les paires nettes, et l'indice de connectedness total TCI (moyenne des elements hors diagonale). La version dynamique repete ce calcul sur une fenetre glissante de 200 jours (environ neuf mois).",
+    "note": "Il n'y a aucune fonction de score par instrument et par date au sens du projet : la sortie est un jeu de mesures de connectedness au niveau du systeme et de chaque variable. Aucune regle de position, aucun seuil, aucun tri transversal n'est propose par les auteurs. L'ordre k du VAR n'est pas indique dans le texte fourni.",
+    "quoted": "set the connectedness horizon, H = 10"
+  },
+  "reported_results": [
+    {
+      "name": "static_tci_exchange_rates_pct",
+      "value": 39.92,
+      "unit": "%",
+      "quoted": "the system is 39.92%. This result implies that nearly 40% of the variation in the",
+      "note": "TCI du systeme 'taux de change' (Tableau 2), echantillon complet 2010-2020, H = 10."
+    },
+    {
+      "name": "static_tci_volatility_pct",
+      "value": 25.79,
+      "unit": "%",
+      "quoted": "volatility series is 25.79%, which is lower than the connectedness in terms",
+      "note": "TCI du systeme 'volatilite des taux de change' (Tableau 3) : la connectedness est plus faible en volatilite qu'en niveau de change."
+    },
+    {
+      "name": "static_slope_to_system_pct",
+      "value": 66.46,
+      "unit": "%",
+      "quoted": "the slope (66.46%) and the level (62.09%) components of the",
+      "note": "Spillover 'TO' de la pente vers le reste du systeme des taux de change : premier contributeur du systeme."
+    },
+    {
+      "name": "static_level_to_system_pct",
+      "value": 62.09,
+      "unit": "%",
+      "quoted": "the slope (66.46%) and the level (62.09%) components of the",
+      "note": "Spillover 'TO' du niveau : deuxieme contributeur, devant l'Euro (57.57%)."
+    },
+    {
+      "name": "static_level_from_system_pct",
+      "value": 56.15,
+      "unit": "%",
+      "quoted": "recipients of spillover from the system (56.15% and 57.99%, respectively)",
+      "note": "Spillover 'FROM' du niveau. Level et slope sont a la fois les plus gros emetteurs et les plus gros recepteurs : ils echangent surtout entre eux (38.9 et 38.2 dans le Tableau 2)."
+    },
+    {
+      "name": "static_slope_from_system_pct",
+      "value": 57.99,
+      "unit": "%",
+      "quoted": "recipients of spillover from the system (56.15% and 57.99%, respectively)",
+      "note": "Spillover 'FROM' de la pente, meme phrase que l'entree precedente."
+    },
+    {
+      "name": "static_bitcoin_to_system_pct",
+      "value": 0.54,
+      "unit": "%",
+      "quoted": "only 0.54% of the total variation TO the system and absorbs only 0.84% FROM",
+      "note": "Le Bitcoin n'emet quasiment rien vers le systeme : 99.16% de sa variance vient de lui-meme (diagonale du Tableau 2)."
+    },
+    {
+      "name": "static_bitcoin_from_system_pct",
+      "value": 0.84,
+      "unit": "%",
+      "quoted": "only 0.54% of the total variation TO the system and absorbs only 0.84% FROM",
+      "note": "Spillover recu par le Bitcoin depuis le systeme des taux de change."
+    },
+    {
+      "name": "static_bitcoin_net_pct",
+      "value": -0.3,
+      "unit": "%",
+      "quoted": "the net spillover of Bitcoin is also negligible at ‒ 0.3%",
+      "spelled_out": "‒ 0.3",
+      "note": "L'extraction rend le signe moins par un tiret U+2012 suivi d'une espace, d'ou le spelled_out : '‒ 0.3' vaut -0.3. Net = TO moins FROM = 0.54 - 0.84."
+    },
+    {
+      "name": "static_fx_net_row_table2",
+      "value": 9.11,
+      "unit": "%",
+      "quoted": "NET − 0.3 9.11 − 1.59 − 6.35 − 2.59 − 5.31 5.94 8.47 − 7.39 39.92",
+      "note": "Ligne NET du Tableau 2 lue en cellules, colonnes dans l'ordre BITCOIN, EURO, GBP, JPY, CHF, CAD, LEVEL, SLOPE, CURVATURE, puis TCI. La value retenue est le net de l'Euro, 9.11%, plus gros emetteur net parmi les devises ; le niveau (5.94) et la pente (8.47) sont les autres emetteurs nets, la curvature (− 7.39) le plus gros recepteur."
+    },
+    {
+      "name": "static_vol_net_row_table3_curvature",
+      "value": -9.45,
+      "unit": "%",
+      "quoted": "NET − 0.04 1.73 − 1.23 − 1.22 − 1.18 1.11 3.7 6.58 − 9.45 25.79",
+      "spelled_out": "− 9.45",
+      "note": "Ligne NET du Tableau 3 (systeme volatilite), memes colonnes que le Tableau 2. La value retenue est la curvature, recepteur net dominant ; l'extraction rend le signe moins par U+2212 suivi d'une espace, d'ou le spelled_out."
+    },
+    {
+      "name": "dynamic_tci_exchange_rates_min_pct",
+      "value": 45,
+      "unit": "%",
+      "quoted": "ranges from 45 to 60%",
+      "note": "Plage de la connectedness totale dynamique du systeme des taux de change (Fig. 2a), hors pic exceptionnel de janvier 2015. A comparer au TCI statique de 39.92% : la mesure dynamique est systematiquement plus elevee que la statique."
+    },
+    {
+      "name": "dynamic_tci_exchange_rates_max_pct",
+      "value": 60,
+      "unit": "%",
+      "quoted": "ranges from 45 to 60%",
+      "note": "Haut de la plage dynamique, meme phrase."
+    },
+    {
+      "name": "dynamic_tci_volatility_min_pct",
+      "value": 30,
+      "unit": "%",
+      "quoted": "between 30% and nearly 55%",
+      "note": "Plage de la connectedness totale dynamique du systeme de volatilite (Fig. 2b) ; elle ne depasse 50% que pendant BREXIT (2016-2017) et COVID-19."
+    },
+    {
+      "name": "dynamic_tci_volatility_max_pct",
+      "value": 55,
+      "unit": "%",
+      "quoted": "between 30% and nearly 55%",
+      "note": "Haut de la plage dynamique en volatilite, meme phrase. 'nearly 55%' : borne approximative lue sur le graphique par les auteurs."
+    },
+    {
+      "name": "connectedness_horizon_days",
+      "value": 10,
+      "unit": "days",
+      "quoted": "set the connectedness horizon, H = 10",
+      "note": "Horizon de la GFEVD. Les auteurs disent avoir teste d'autres H avec des resultats qualitativement similaires, sans les publier."
+    },
+    {
+      "name": "rolling_window_days",
+      "value": 200,
+      "unit": "days",
+      "quoted": "We also use a rolling window of 200 days",
+      "note": "Fenetre glissante des mesures dynamiques, environ neuf mois de seances."
+    },
+    {
+      "name": "observations",
+      "value": 2621,
+      "unit": "daily observations",
+      "quoted": "Observations 2621 2621 2621 2621 2621 2621 2621 2621 2621",
+      "note": "Ligne du Tableau 1 lue en cellules : chacune des neuf series compte 2621 observations quotidiennes appariees."
+    },
+    {
+      "name": "yield_curve_maturities_count",
+      "value": 15,
+      "unit": "maturities",
+      "quoted": "15 monthly maturities, including 3, 6, 9, 12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 240, and",
+      "note": "La liste se termine par 360 mois a la page suivante ; 15 maturites zero-coupon US, source Bloomberg."
+    },
+    {
+      "name": "sample_period",
+      "value": null,
+      "quoted": "Our sample period spans from May 11, 2010, to November 26, 2020",
+      "note": "Resultat qualitatif : borne de l'echantillon, fixee par la disponibilite des series appariees (le Bitcoin en est la contrainte)."
+    },
+    {
+      "name": "stress_episodes_raise_connectedness",
+      "value": null,
+      "quoted": "we document an increase in connectedness due to the removal",
+      "note": "Resultat qualitatif central : la connectedness augmente lors de trois evenements datables — abandon du plancher CHF/EUR (janvier 2015), incertitude post-BREXIT (2016-2017), crise COVID-19 (2020). C'est ce qui ruine la these du Bitcoin actif refuge, puisque sa connectedness monte precisement quand on aurait besoin qu'elle baisse."
+    },
+    {
+      "name": "bitcoin_becomes_net_transmitter_during_covid",
+      "value": null,
+      "quoted": "the CAD and Bitcoin become net transmitters in",
+      "note": "Resultat qualitatif : dans le systeme des taux de change, le Bitcoin est recepteur net la plupart du temps mais bascule emetteur net pendant le COVID-19. Le CHF change de role plusieurs fois sur la periode."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun rendement de strategie, aucun IC, aucune t-stat, aucun Sharpe : le papier ne teste aucune regle de trading, seulement des parts de variance.",
+    "Aucun intervalle de confiance ni test de significativite sur les mesures de connectedness ; les valeurs des tableaux 2 et 3 sont donnees sans erreur standard.",
+    "L'ordre k du VAR n'est indique nulle part dans le texte fourni, alors que la GFEVD en depend directement.",
+    "Le parametre de decroissance lambda du modele Nelson-Siegel, et les details d'initialisation du filtre de Kalman, ne sont pas donnes.",
+    "La definition de la 'historical volatility' recuperee de Bloomberg (fenetre, annualisation, base close-to-close) n'est jamais precisee.",
+    "Les tests de robustesse annoncees — ADF, KPSS, autres horizons H, autres longueurs de fenetre, decoupage en trois et quatre sous-periodes — sont declares 'available upon request' et non publies.",
+    "Aucun traitement des fuseaux horaires ni des heures de cloture pour apparier une serie Bitcoin 24/7 avec des changes et des taux a heures fixes ; rien non plus sur les jours feries.",
+    "Aucun cout de transaction, aucun spread, aucune contrainte de liquidite : les conclusions sur la 'couverture' ne sont jamais chiffrees en termes nets.",
+    "Ni code ni donnees fournis ; les series sont sous licence Bloomberg, donc non reproductibles sans abonnement.",
+    "Aucune mesure de stabilite hors echantillon : les regimes de stress sont identifies apres coup, jamais predits."
+  ],
+  "source": {
+    "authors": "David Y. Aharon, Zaghum Umar, Xuan Vinh Vo",
+    "title": "Dynamic spillovers between the term structure of interest rates, bitcoin, and safe-haven currencies",
+    "year": 2021,
+    "source_url": "https://jfin-swufe.springeropen.com/track/pdf/10.1186/s40854-021-00274-w",
+    "pdf": "corpus/pdf/dynamic-spillovers-between-the-term-structure-of-W3187800371.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "note": "Financial Innovation (2021) 7:59, Springer Open Access, DOI 10.1186/s40854-021-00274-w. Recu le 3 fevrier 2021, accepte le 19 juillet 2021 apres relecture par des referes anonymes."
+  },
+  "transposability": {
+    "what_transfers": "Le motif methodologique, pas le resultat. Trois choses sont reutilisables chez nous : (1) la mesure de connectedness de Diebold-Yilmaz calculee sur fenetre glissante est une definition operationnelle et entierement deterministe d'un regime — elle ne consomme que des barres passees, donc elle ne viole pas l'invariant II, et elle produit une serie temporelle unique au niveau du systeme qui peut conditionner un signal (un hybride au sens du vocabulaire du projet) ; (2) l'observation que la connectedness d'un systeme d'actifs monte pendant les chocs, et que les roles emetteur/recepteur basculent alors, est un fait de structure de marche qui n'a rien de specifique au Bitcoin ni au change — un systeme de neuf futures intraday se preterait au meme calcul ; (3) la discipline de comparer systematiquement la mesure statique plein echantillon a la mesure dynamique, et de traiter l'ecart entre les deux comme le resultat, plutot que de ne publier que la statique.",
+    "what_does_not_transfer": [
+      "L'univers entier : taux de change comptant, volatilites Bloomberg et facteurs de courbe des taux souveraine US. Aucun des neuf instruments du projet n'y figure, et rien dans le papier ne porte sur des futures.",
+      "La frequence. Tout est quotidien, avec une fenetre glissante de 200 jours et un horizon H = 10 jours. Notre horizon est intraday ; ni la fenetre ni H ne se transposent par simple changement d'unite, puisque la microstructure intraday (ouvertures decalees, heure de la journee, saisonnalite de la volatilite) n'existe pas dans leur cadre.",
+      "La metrique. La sortie est une part de variance d'erreur de prevision, bornee entre 0 et 1 et normalisee par ligne. Notre metrique officielle est un IC entre un score et un rendement futur. Il n'y a pas de traduction de l'une vers l'autre : une connectedness de 39.92% ne dit rien sur le pouvoir predictif d'un score.",
+      "L'etage d'estimation de la courbe. Il exige 15 maturites zero-coupon US quotidiennes sous licence Bloomberg, un ajustement Nelson-Siegel et un filtre de Kalman. Le catalogue n'a pas cette source, et l'introduire ouvrirait une dependance de donnees obligataires point-in-time entierement nouvelle, avec son propre lag de publication a documenter.",
+      "Les frottements. Aucun multiplicateur, aucun tick, aucun frais, aucun roll, aucun fuseau : le papier traite des series de prix comptant. Nos instruments sont des contrats a terme avec echeances et roulements, ce que le cadre ignore completement.",
+      "La conclusion elle-meme. Elle porte sur le statut d'actif refuge du Bitcoin, question d'allocation de portefeuille sans rapport avec la production d'un score transversal ; il n'y a aucune regle de position a repliquer.",
+      "La periode. 2010-05-11 a 2020-11-26 ne recouvre que partiellement notre tranche pool (2016-01-03 a 2023-12-31) et s'arrete avant la moitie de celle-ci ; les episodes de stress qui portent tout le resultat (plancher CHF 2015, BREXIT 2016, COVID 2020) sont pour l'essentiel hors de notre fenetre de travail ou a sa toute fin.",
+      "La statistique. Avec 2621 observations quotidiennes et trois episodes de stress identifies a posteriori, le nombre effectif d'evenements independants est de l'ordre de la poignee ; les auteurs ne donnent aucun intervalle de confiance. Un resultat de cette forme ne franchirait pas notre propre porte de significativite."
+    ],
+    "what_aligns_well": "Deux alignements reels. D'abord la taille du systeme : neuf variables, exactement le format de notre univers, et la mesure de connectedness est definie pour un systeme de N variables sans hypothese sur leur nature — elle s'appliquerait telle quelle a neuf futures. Ensuite, et c'est le point serieux, la structure logique du papier est celle d'un hybride au sens du projet : une mesure d'etat du systeme, calculee sans regarder le futur, qui distingue des periodes ou la structure des dependances est differente. Si un signal deja teste chez nous se revelait fragile, la connectedness glissante du systeme est un candidat de variable de regime honnete — calculable, deterministe, sans parametre libre au-dela de H et de la longueur de fenetre. Cela reste une piste a pre-enregistrer avant mesure, pas un resultat : le papier ne montre nulle part qu'un tel conditionnement ameliore une prediction."
+  }
+}

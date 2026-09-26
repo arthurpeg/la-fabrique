@@ -1,0 +1,292 @@
+{
+  "fiche_id": "forecasting-oil-price-realized-volatility-using-W2617434451",
+  "written": "2026-09-24",
+  "written_by": "session d'extraction isolee (phase 09 harvest)",
+  "source": {
+    "authors": "Stavros Degiannakis and George Filis",
+    "title": "Forecasting oil price realized volatility using information channels from other asset classes",
+    "year": 2017,
+    "year_note": "Le texte fourni est un manuscrit post-script pour le Journal of International Money and Finance et ne porte aucune annee de publication ; la reference la plus recente qu'il cite est de 2016 et il mentionne la conference ISEFI 2016. 2017 est l'annee de parution dans cette revue, donnee externe au texte fourni.",
+    "source_url": "http://eprints.bournemouth.ac.uk/29263/1/Manuscript_JIMF_post-script.pdf",
+    "pdf": "corpus/pdf/forecasting-oil-price-realized-volatility-using-W2617434451.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "peer_reviewed_evidence": "Les remerciements citent un editeur nomme et un rapporteur anonyme d'une version anterieure du papier, dans une revue nommee (Journal of International Money and Finance)."
+  },
+  "claim": {
+    "value": "Les volatilites realisees d'autres classes d'actifs (actions, change, matieres premieres, macro) constituent des « canaux d'information » : les ajouter a un modele HAR-RV ameliore la precision des previsions de la volatilite realisee du Brent a tous les horizons de 1 a 66 jours. Le modele qui combine les composantes principales des 14 volatilites exogenes (HAR-RV-COMBINED) est le meilleur, et son avantage grandit avec l'horizon. En revanche, pour la seule direction du mouvement de volatilite, le HAR-RV simple fait aussi bien.",
+    "quoted": "provide strong evidence that the use of the different “information channels” enhances"
+  },
+  "universe": {
+    "value": "Brent Crude Oil (ICE Futures Europe), contrat front-month, en tick-by-tick, predit a partir des volatilites realisees de 14 autres actifs front-month : GBP/USD, CAD/USD, EUR/USD (CME), FTSE100, S&P500, Hang Seng, Euro Stoxx 50, Gold, Copper, Natural Gas, Palladium, Silver, US 10yr T-bills, plus l'indice US Economic Policy Uncertainty (disponible en frequence quotidienne seulement). Donnees Tick Data, du 1er aout 2003 au 5 aout 2015, 3028 jours de bourse communs. Jour de bourse defini de 21:01 GMT la veille a 21:00 GMT ; jours feries et week-ends retires ; la session dominicale de 2 heures du Brent est rattachee au lundi.",
+    "quoted": "use tick by tick transaction data of the front -month futures"
+  },
+  "horizon": {
+    "value": "1 a 66 jours ouvres ahead ; six horizons rapportes : 1, 5, 10, 22, 44 et 66 jours.",
+    "quoted": "estimate forecasts for 1 -day to 66-days ahead"
+  },
+  "signal_construction": {
+    "value": "Etape 1, la mesure : volatilite realisee quotidienne = racine de la somme des rendements intraday au carre, a une frequence d'echantillonnage optimale propre a chaque serie (choisie par le plot de signature de volatilite, 23 minutes pour le Brent), puis ajustee de la composante close-to-open selon Hansen et Lunde (2005), puis annualisee. Etape 2, le modele : regression du log de cette volatilite du Brent sur ses propres composantes journaliere (t), hebdomadaire (moyenne sur 5 jours) et mensuelle (moyenne sur 22 jours) -- c'est le HAR-RV de Corsi (2009) -- augmentee des trois memes composantes de la volatilite realisee d'un actif exogene (HAR-RV-X). Etape 3, l'agregation : pour eviter les biais de selection et de look-ahead, les volatilites exogenes d'une meme classe sont remplacees par leurs composantes principales (ACP) ; HAR-RV-COMBINED utilise les composantes principales des 14 series a la fois. Etape 4, l'estimation : fenetre glissante de longueur fixe 1000 jours. Etape 5, la prevision : sortie = exp(prevision du log + variance residuelle / 2) ; au-dela de l'horizon 1 jour, les valeurs futures des variables exogenes ne sont pas connues et sont remplacees par leurs propres previsions HAR-RV (et non par zero ni par leur derniere valeur), ce que les auteurs presentent comme leur innovation methodologique.",
+    "quoted": "We employ the HAR model by Corsi (2009), which is recently implemented"
+  },
+  "reported_results": [
+    {
+      "name": "brent_optimal_sampling_frequency_min",
+      "value": 23,
+      "unit": "minutes",
+      "quoted": "Table 1, optimal sampling frequency: Brent Crude Oil, ticker CO, ICE Futures Europe, m = 23",
+      "quoted_source": "Brent Crude Oil CO ICE Futures Europe 23",
+      "quoted_repair": "table",
+      "note": "m est la frequence d'echantillonnage retenue pour construire la volatilite realisee. Elle varie fortement d'une serie a l'autre dans la meme table (1 min pour le FTSE100, 90 min pour le Palladium), ce qui montre qu'elle se re-mesure par instrument."
+    },
+    {
+      "name": "sample_trading_days",
+      "value": 3028,
+      "unit": "jours de bourse",
+      "quoted": "which provides us with a total of 3028",
+      "note": "Echantillon commun du 1er aout 2003 au 5 aout 2015, apres retrait des feries et alignement sur les jours ou le Brent traite."
+    },
+    {
+      "name": "out_of_sample_days",
+      "value": 2028,
+      "unit": "jours de bourse",
+      "quoted": "2028 days",
+      "note": "Periode hors echantillon utilisee pour l'evaluation et pour le jeu de trading. Le texte extrait a perdu le symbole de la variable qui precede l'egalite ; seule la valeur est lisible. L'echantillon initial d'estimation, note par une autre variable, est illisible dans le texte extrait."
+    },
+    {
+      "name": "rolling_window_days",
+      "value": 1000,
+      "unit": "jours",
+      "quoted": "we use a rolling window approach with fixed length of 1000",
+      "note": "Fenetre glissante de longueur fixe pour toutes les previsions apres la premiere."
+    },
+    {
+      "name": "n_exogenous_variables",
+      "value": 14,
+      "unit": null,
+      "quoted": "consider 14 exogenous variables ( using HAR-RV-X models), which are categorized",
+      "note": "Reparties en quatre classes : Stocks (4), Forex (3), Commodities (5), Macro (2)."
+    },
+    {
+      "name": "rw_mae_level_1d",
+      "value": 11.3344,
+      "unit": "points de volatilite realisee annualisee",
+      "quoted": "Table 4, MAE, 1-day ahead: RW 11.3344; HAR-RV 0.4797; HAR-RV-STOCKS 0.4745; HAR-RV-FOREX 0.4743; HAR-RV-COMMODITIES 0.4765; HAR-RV-MACRO 0.4769; HAR-RV-COMBINED 0.4716; HAR-RV-AVERAGE 0.4732",
+      "quoted_source": "1 11.3344 0.4797 0.4745 0.4743 0.4765 0.4769 0.4716 0.4732",
+      "quoted_repair": "table",
+      "note": "Seule la premiere colonne est un niveau ; toutes les autres sont des ratios au RW. C'est le denominateur de toutes les MAE rapportees a l'horizon 1 jour."
+    },
+    {
+      "name": "harrv_mae_ratio_vs_rw_1d",
+      "value": 0.4797,
+      "unit": "ratio",
+      "quoted": "Table 4, MAE, 1-day ahead: RW 11.3344; HAR-RV 0.4797; HAR-RV-STOCKS 0.4745; HAR-RV-FOREX 0.4743; HAR-RV-COMMODITIES 0.4765; HAR-RV-MACRO 0.4769; HAR-RV-COMBINED 0.4716; HAR-RV-AVERAGE 0.4732",
+      "quoted_source": "1 11.3344 0.4797 0.4745 0.4743 0.4765 0.4769 0.4716 0.4732",
+      "quoted_repair": "table",
+      "note": "Le HAR-RV nu fait deja moins de la moitie de la MAE du random walk a 1 jour. C'est le point de depart contre lequel les gains exogenes se mesurent."
+    },
+    {
+      "name": "combined_mae_ratio_vs_rw_1d",
+      "value": 0.4716,
+      "unit": "ratio",
+      "quoted": "Table 4, MAE, 1-day ahead: RW 11.3344; HAR-RV 0.4797; HAR-RV-STOCKS 0.4745; HAR-RV-FOREX 0.4743; HAR-RV-COMMODITIES 0.4765; HAR-RV-MACRO 0.4769; HAR-RV-COMBINED 0.4716; HAR-RV-AVERAGE 0.4732",
+      "quoted_source": "1 11.3344 0.4797 0.4745 0.4743 0.4765 0.4769 0.4716 0.4732",
+      "quoted_repair": "table",
+      "note": "A 1 jour, l'ecart entre le meilleur modele et le HAR-RV nu est de 0.4797 contre 0.4716, soit environ 1.7% de MAE. Le gain annonce comme massif est en fait tenu a l'horizon court."
+    },
+    {
+      "name": "harrv_mae_ratio_vs_rw_66d",
+      "value": 0.8552,
+      "unit": "ratio",
+      "quoted": "Table 4, MAE, 66-days ahead: RW 12.0567; HAR-RV 0.8552; HAR-RV-STOCKS 0.8169; HAR-RV-FOREX 0.7833; HAR-RV-COMMODITIES 0.7904; HAR-RV-MACRO 0.8484; HAR-RV-COMBINED 0.7686; HAR-RV-AVERAGE 0.7974",
+      "quoted_source": "66 12.0567 0.8552 0.8169 0.7833 0.7904 0.8484 0.7686 0.7974",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "combined_mae_ratio_vs_rw_66d",
+      "value": 0.7686,
+      "unit": "ratio",
+      "quoted": "Table 4, MAE, 66-days ahead: RW 12.0567; HAR-RV 0.8552; HAR-RV-STOCKS 0.8169; HAR-RV-FOREX 0.7833; HAR-RV-COMMODITIES 0.7904; HAR-RV-MACRO 0.8484; HAR-RV-COMBINED 0.7686; HAR-RV-AVERAGE 0.7974",
+      "quoted_source": "66 12.0567 0.8552 0.8169 0.7833 0.7904 0.8484 0.7686 0.7974",
+      "quoted_repair": "table",
+      "note": "C'est a l'horizon long que l'ecart se creuse : 0.7686 contre 0.8552 pour le HAR-RV nu, soit environ 10% de MAE en moins."
+    },
+    {
+      "name": "ar1_mae_ratio_vs_rw_1d",
+      "value": 0.5988,
+      "unit": "ratio",
+      "quoted": "Table 3a, MAE ratios to the RW model, 1-day ahead: RW 11.3344; AR(1) 0.5988; HAR-RV 0.4797; HAR-RV-FT 0.4780; HAR-RV-SP 0.4741; HAR-RV-XX 0.4782; HAR-RV-HI 0.4789; HAR-RV-BP 0.4778; HAR-RV-CD 0.4789",
+      "quoted_source": "1 11.3344 0.5988 0.4797 0.4780 0.4741 0.4782 0.4789 0.4778 0.4789",
+      "quoted_repair": "table",
+      "note": "Le second modele naif. L'ecart entre les modeles HAR-RV-X a actif unique est de l'ordre du millieme : ils sont quasi indistinguables a 1 jour."
+    },
+    {
+      "name": "combined_mae_reduction_vs_rw_short_pct",
+      "value": 50,
+      "unit": "%",
+      "quoted": "by more than 50% (compared to the",
+      "note": "Reduction de l'erreur de prevision en MAE du HAR-RV-COMBINED face au random walk, horizons courts. Coherent avec le ratio 0.4716 de la Table 4."
+    },
+    {
+      "name": "combined_mae_reduction_vs_rw_long_pct",
+      "value": 23,
+      "unit": "%",
+      "quoted": "in short-run horizons and more than 23% in long-run horizons.",
+      "note": "Meme comparaison au random walk, horizons longs."
+    },
+    {
+      "name": "combined_mae_reduction_vs_harrv_long_pct",
+      "value": 10,
+      "unit": "%",
+      "quoted": "HAR-RV-COMBINED model reduces the forecasting error by more than 10% in the",
+      "note": "C'est le seul chiffre de gain qui compte vraiment : face au HAR-RV simple, et non face au random walk. Il ne vaut qu'aux horizons longs."
+    },
+    {
+      "name": "combined_mae_level_1d",
+      "value": 5.3457,
+      "unit": "points de volatilite realisee annualisee",
+      "quoted": "Table 7, HAR-RV-COMBINED: MAE 1-day 5.3457; 5-days 5.9838; 10-days 6.3710; 22-days 7.1022; 44-days 8.2624; 66-days 9.2670",
+      "quoted_source": "MAE 5.3457 5.9838 6.3710 7.1022 8.2624 9.2670",
+      "quoted_repair": "table",
+      "note": "Niveau absolu de l'erreur du meilleur modele, a comparer a la moyenne de la volatilite realisee annualisee du Brent sur l'echantillon."
+    },
+    {
+      "name": "combined_meae_level_1d",
+      "value": 3.6661,
+      "unit": "points de volatilite realisee annualisee",
+      "quoted": "Table 7, HAR-RV-COMBINED: MeAE 1-day 3.6661; 5-days 4.0515; 10-days 4.2615; 22-days 4.6663; 44-days 5.4378; 66-days 5.7089",
+      "quoted_source": "MeAE 3.6661 4.0515 4.2615 4.6663 5.4378 5.7089",
+      "quoted_repair": "table",
+      "note": "L'erreur mediane est tres inferieure a l'erreur moyenne (3.6661 contre 5.3457 a 1 jour), la distribution des deviations etant fortement asymetrique : la MAE est dominee par une queue d'episodes rates."
+    },
+    {
+      "name": "harrv_mcs_pvalue_mae_1d",
+      "value": 0.0023,
+      "unit": "p-value",
+      "quoted": "Table 5, MCS p-values, loss function MAE: HAR-RV row, 1-day 0.0023; 5-days 0.0000; 10-days 0.0000; 22-days 0.0000; 44-days 0.0000; 66-days 0.0000",
+      "quoted_source": "HAR-RV 0.0023 0.0000 0.0000 0.0000 0.0000 0.0000",
+      "quoted_repair": "table",
+      "note": "Le HAR-RV simple est exclu de l'ensemble des meilleurs modeles a tous les horizons. Les p-values MCS ne sont rapportees que pour la MAE."
+    },
+    {
+      "name": "combined_always_in_mcs_best_set",
+      "value": null,
+      "quoted": "the highest probability is assigned to the HAR -RV-COMBINED model",
+      "note": "Qualitatif. Dans la Table 5, la ligne HAR-RV-COMBINED vaut 1.0000 a chacun des six horizons : c'est le modele de reference de l'ensemble MCS, jamais elimine."
+    },
+    {
+      "name": "naive_and_single_asset_never_in_mcs_best_set",
+      "value": null,
+      "quoted": "two naïve models and the HAR -RV are never among the best performing models",
+      "note": "Qualitatif. Une note de bas de page precise la seule exception : le HAR-RV-SP a l'horizon 1 jour."
+    },
+    {
+      "name": "doc_harrv_1d",
+      "value": 0.6838,
+      "unit": "proportion de directions correctes",
+      "quoted": "Table 6, Direction-of-Change, 1-day ahead: HAR-RV 0.6838*; HAR-RV-STOCKS 0.6874***; HAR-RV-FOREX 0.6869**; HAR-RV-COMMODITIES 0.6930***; HAR-RV-MACRO 0.6889***; HAR-RV-COMBINED 0.6889***; HAR-RV-AVERAGE 0.6884***",
+      "quoted_source": "1 0.6838* 0.6874*** 0.6869** 0.6930*** 0.6889*** 0.6889*** 0.6884***",
+      "quoted_repair": "table",
+      "note": "Le HAR-RV nu, exclu de l'ensemble MCS, predit la direction presque aussi bien que le meilleur modele (0.6838 contre 0.6889). C'est le resultat le plus utile du papier pour nous : precision et direction ne classent pas les modeles dans le meme ordre. La note de la table associe ***,**,* aux seuils de 10%, 5% et 1% dans cet ordre, ce qui est l'inverse de l'usage courant."
+    },
+    {
+      "name": "doc_combined_66d",
+      "value": 0.6145,
+      "unit": "proportion de directions correctes",
+      "quoted": "Table 6, Direction-of-Change, 66-days ahead: HAR-RV 0.6012; HAR-RV-STOCKS 0.5987*; HAR-RV-FOREX 0.6073**; HAR-RV-COMMODITIES 0.6186*; HAR-RV-MACRO 0.5936**; HAR-RV-COMBINED 0.6145**; HAR-RV-AVERAGE 0.6037**",
+      "quoted_source": "66 0.6012 0.5987* 0.6073** 0.6186* 0.5936** 0.6145** 0.6037**",
+      "quoted_repair": "table",
+      "note": "La precision directionnelle decroit lentement avec l'horizon (0.6889 a 1 jour, 0.6145 a 66 jours) et le HAR-RV nu a 66 jours (0.6012) ne porte aucune etoile."
+    },
+    {
+      "name": "doc_all_models_statistically_significant",
+      "value": null,
+      "quoted": "all HAR-RV models exhibit statistically significant",
+      "note": "Qualitatif : la precision directionnelle est testee par Pesaran et Timmermann (2009) sous l'hypothese nulle d'absence de precision directionnelle."
+    },
+    {
+      "name": "crisis_forex_always_in_best_set",
+      "value": null,
+      "quoted": "is also always included in the set of the best performing models",
+      "note": "Qualitatif, robustesse sur la seule periode aout 2007 - juin 2009 : en crise, le HAR-RV-FOREX rejoint le HAR-RV-COMBINED dans l'ensemble MCS a tous les horizons, et y obtient meme la p-value de 1.0000. La classe d'actifs qui porte l'information change avec le regime."
+    },
+    {
+      "name": "trading_cum_diff_combined_vs_rw_1d_pct",
+      "value": 109.7344,
+      "unit": "%",
+      "quoted": "Table 9, Full Sample Period, 1 day ahead, HAR-RV-COMBINED vs RW: 109.7344",
+      "quoted_source": "109.7344",
+      "quoted_repair": "table",
+      "note": "Difference cumulee de rendement du jeu de trading sur la periode hors echantillon, en pourcentage, brute de tout cout. Le jeu suppose un actif qui replique la volatilite realisee du petrole, position longue si la volatilite prevue depasse la volatilite realisee courante."
+    },
+    {
+      "name": "trading_cum_diff_combined_vs_harrv_1d_pct",
+      "value": 3.0103,
+      "unit": "%",
+      "quoted": "Table 9, Full Sample Period, 1 day ahead, HAR-RV-COMBINED vs HAR-RV: 3.0103",
+      "quoted_source": "3.0103",
+      "quoted_repair": "table",
+      "note": "Face au HAR-RV et non au random walk, le gain de trading tombe de 109.7344 a 3.0103 points de pourcentage cumules sur environ huit ans. C'est la mesure honnete du gain marginal des canaux d'information a 1 jour, et elle est negative a 1 jour sur la sous-periode 2014-15."
+    },
+    {
+      "name": "volatilities_vs_return_correlations_mae_ratio_combined_66d",
+      "value": 0.8395,
+      "unit": "ratio",
+      "quoted": "Table 11, MAE ratio Volatilities vs. Return correlations, 66 days ahead: HAR-RV-STOCKS 0.9147; HAR-RV-FOREX 0.8489; HAR-RV-COMMODITIES 0.8930; HAR-RV-MACRO 0.9578; HAR-RV-COMBINED 0.8395; HAR-RV-AVERAGE 0.9139",
+      "quoted_source": "66 0.9147 0.8489 0.8930 0.9578 0.8395 0.9139",
+      "quoted_repair": "table",
+      "note": "Variante ou les volatilites exogenes sont remplacees par les correlations conditionnelles DCC entre le Brent et chaque actif. Tous les ratios sont sous 1 : la volatilite exogene brute bat sa correlation au Brent."
+    },
+    {
+      "name": "return_correlations_accuracy_loss_pct",
+      "value": 16,
+      "unit": "%",
+      "quoted": "return correlations provide about 16 % lower predictive accuracy compared to the",
+      "note": "Lecture par les auteurs du ratio 0.8395 ci-dessus, a l'horizon 66 jours."
+    },
+    {
+      "name": "trading_combined_superior_to_rw_and_harrv",
+      "value": null,
+      "quoted": "HAR-RV-COMBINED provides greater positive returns compared to both the RW",
+      "note": "Qualitatif. Un second critere economique, un jeu de straddles Black-Scholes entre trois investisseurs, donne la meme hierarchie, avec des rendements cumules negatifs pour le RW a tous les horizons."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun cout de transaction, spread ni slippage dans le jeu de trading (Table 9) ni dans le jeu de straddles (Table 10) : les rendements cumules sont bruts, et l'instrument suppose -- un actif qui replique la volatilite realisee du petrole -- n'est pas nomme.",
+    "La taille de l'echantillon initial d'estimation est perdue dans le texte extrait : la variable qui la porte apparait sans valeur. Seules la fenetre glissante de 1000 jours et la periode hors echantillon de 2028 jours sont lisibles.",
+    "Les poids de l'ajustement close-to-open de Hansen et Lunde (2005) ne sont pas chiffres : on sait qu'ils minimisent la variance de la volatilite realisee, pas ce qu'ils valent.",
+    "Le nombre de composantes principales retenues par classe d'actifs n'est jamais donne ; le texte dit seulement que le modele peut en accueillir jusqu'a g.",
+    "Le taux sans risque de la formule de Black-Scholes utilisee pour les straddles n'est pas chiffre.",
+    "Le lag de publication de l'indice EPU n'est pas precise, alors que c'est la seule variable non intraday du jeu : rien ne dit qu'elle etait connue a la date ou elle est utilisee.",
+    "Les p-values MCS ne sont rapportees que pour la fonction de perte MAE ; celles de la MSE sont annoncees comme disponibles sur demande.",
+    "La comparaison RW contre HAR-RV pour la prevision des variables exogenes, qui justifie le choix methodologique central du papier, n'est pas montree (non shown here for brevity).",
+    "Les resultats en periode de crise n'existent que pour les modeles par classe d'actifs ; ceux des HAR-RV-X a actif unique sont ecartes comme inferieurs, sans chiffre.",
+    "Aucune regle de roulement des contrats front-month n'est donnee, alors que quatorze series de futures sont roulees.",
+    "Aucun intervalle de confiance ni erreur standard sur les ratios de MAE et MSE : seuls la MCS et le test de Pesaran-Timmermann portent une inference.",
+    "Le nombre total de specifications essayees n'est pas compte : 14 modeles a actif unique, 4 par classe, 1 combine, 1 moyenne, 6 horizons, 2 fonctions de perte, plus deux variantes DCC, sans aucun ajustement pour tests multiples autre que la MCS."
+  ],
+  "transposability": {
+    "what_transfers": "Le motif central est reutilisable tel quel : la volatilite realisee d'un instrument se predit mieux quand on lui adjoint les volatilites realisees d'autres instruments, resumees par ACP plutot que selectionnees. Tout se calcule a partir de barres intraday et d'une regression lineaire, sans donnee externe, sans reseau, et sans parametre exotique. Se transposent aussi : la structure HAR a trois composantes (1 / 5 / 22 jours), qui est un moule de features et non un modele proprietaire ; la reduction par ACP pour eviter de choisir a posteriori quel actif exogene aide ; la fenetre glissante d'estimation de longueur fixe ; la mesure de la volatilite realisee par somme des rendements intraday au carre, avec frequence d'echantillonnage choisie par plot de signature ; et surtout la discipline de prevoir les variables exogenes au-dela de l'horizon 1 jour au lieu d'y lire leurs valeurs realisees.",
+    "what_does_not_transfer": [
+      "La cible. Le papier predit une volatilite, notre harnais juge un IC entre un score et un rendement futur. Un predicteur de volatilite ne produit aucun IC sans etre re-specifie -- par exemple en tri transversal des neuf instruments par volatilite prevue, ou en filtre de regime -- et cette re-specification n'est pas celle qui a ete testee ici : rien de ce papier ne garantit que le tri survive.",
+      "Les metriques. Ratios de MAE et MSE au random walk, MCS, Direction-of-Change, jeux de trading et de straddles : aucune n'est la notre, aucune ne s'ecrit au registre, et aucun chiffre de ce papier n'est comparable a un IC. Le 0.4716 de la Table 4 ne dit rien sur ce que vaudrait le signal chez nous.",
+      "L'univers. La force du resultat vient du nombre de canaux -- 14 actifs exogenes dans quatre classes. Nous avons neuf futures en tout, cible comprise : l'ACP sur huit series correlees ne resumera pas quatre classes d'actifs distinctes, et le HAR-RV-COMBINED ne peut pas etre reproduit a cette echelle.",
+      "L'EPU. Une des deux variables de la classe Macro n'est pas intraday, vient d'un fournisseur externe, et son lag de publication n'est pas donne. Elle est hors de notre couche point-in-time et devrait etre abandonnee, ce qui ampute la classe qui contribue le moins mais qui existe dans le decompte.",
+      "La periode. L'echantillon 2003-2015 est anterieur en entier a notre pool (2016-2023). Les deux episodes qui portent l'essentiel du gain -- la crise de 2007-08 et l'effondrement petrolier de 2014-15 -- sont hors de nos donnees, et c'est precisement en crise que le HAR-RV-FOREX devient le meilleur modele.",
+      "La microstructure. Le jour de bourse est defini de 21:01 a 21:00 GMT, les donnees sont tick-by-tick chez un fournisseur donne, la session dominicale du Brent est rattachee au lundi, et la frequence d'echantillonnage optimale (23 minutes pour le Brent, 1 minute pour le FTSE100, 90 minutes pour le Palladium) est propre a chaque contrat. Aucune de ces valeurs ne se recopie : elles se re-mesurent, ou elles restent nulles.",
+      "Le Brent. L'instrument cible du papier n'est pas necessairement dans notre catalogue, et le choix des exogenes y est justifie par des liens specifiques au Brent (GBP/USD pour son ancrage londonien, CAD/USD comme devise exportatrice). Ce raisonnement ne se transpose pas mecaniquement a un autre sous-jacent.",
+      "Les jeux economiques. Le jeu de trading suppose un actif qui replique la volatilite realisee du petrole, le jeu de straddles suppose des options Black-Scholes sur le Brent, sans couts. Nous n'avons ni l'un ni l'autre.",
+      "L'ampleur annoncee. Les gains de 50% et 23% sont mesures contre un random walk, pas contre le HAR-RV. Contre le modele de reference de la litterature, le gain est de 1.7% de MAE a 1 jour et d'environ 10% a 66 jours : c'est ce dernier chiffre qu'il faudrait esperer battre, pas le premier."
+    ],
+    "what_aligns_well": "Trois choses tombent juste. D'abord l'invariant II : les auteurs identifient explicitement que prevoir a 2 jours et au-dela exige des valeurs futures des variables exogenes, refusent de les lire, et les remplacent par leurs propres previsions -- ils vont jusqu'a ecrire que la litterature qui ignore ce point voit sa precision annoncee mise en doute. Le recours a l'ACP est presente dans les memes termes, comme un moyen d'eviter les biais de selection et de look-ahead. Ensuite l'estimation en fenetre glissante de longueur fixe, qui est deja proche d'un walk-forward et se purge facilement. Enfin, et c'est la lecon la plus directement reutilisable : precision et direction ne classent pas les modeles dans le meme ordre. Le HAR-RV simple est exclu de l'ensemble MCS a tous les horizons tout en predisant la direction aussi bien que le meilleur modele. Un harnais qui ne mesure qu'une des deux dimensions declarera mort un signal qui porte encore l'information qui nous interesse -- ou l'inverse. La comparaison MAE / mediane (5.3457 contre 3.6661 a 1 jour) dit la meme chose autrement : une metrique moyenne est dominee par une queue d'episodes rates, ce qui vaut aussi pour un IC moyen.",
+    "note_evaluation": "La Table 8 apporte un point de regime directement pertinent pour l'etape 05 : la classe d'actifs porteuse d'information change selon le regime. En pleine periode, c'est la combinaison des quatre classes qui domine ; en crise (aout 2007 - juin 2009), c'est le Forex seul qui obtient la meilleure p-value MCS a tous les horizons. Une hypothese de regime pre-enregistree pourrait s'en inspirer, sans recopier aucun chiffre."
+  },
+  "evaluation_protocol": {
+    "value": "Deux fonctions de perte (MAE, MSE) rapportees en ratio au random walk ; Model Confidence Set de Hansen, Lunde et Nason (2011) pour identifier l'ensemble des meilleurs modeles sans modele de reference a priori ; Direction-of-Change avec test de Pesaran et Timmermann (2009) ; deux criteres economiques (jeu de trading directionnel, jeu de straddles Black-Scholes entre trois investisseurs) ; robustesse sur la seule periode de crise 2007-09, sur les deviations medianes (MeAE, MeSE), et contre deux variantes ou les volatilites exogenes sont remplacees par des correlations conditionnelles DCC (de volatilites, puis de rendements).",
+    "quoted": "We further employ the newly established Model Confidence Set (MCS)"
+  },
+  "look_ahead_handling": {
+    "value": "Le papier traite explicitement le probleme et le nomme son innovation. Au-dela de l'horizon 1 jour, les volatilites exogenes futures ne sont pas dans l'ensemble d'information ; trois options sont posees (zero, valeur constante de type random walk, prevision), les deux premieres sont ecartees -- la deuxieme parce que le HAR-RV bat le random walk sur chacune des variables exogenes -- et les exogenes sont donc remplacees par leurs propres previsions HAR-RV.",
+    "quoted": "This is an important innovation in our approach. The existing literature either"
+  }
+}

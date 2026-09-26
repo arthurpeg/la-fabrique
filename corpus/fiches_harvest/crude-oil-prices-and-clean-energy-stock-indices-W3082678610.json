@@ -1,0 +1,242 @@
+{
+  "fiche_id": "crude-oil-prices-and-clean-energy-stock-indices-W3082678610",
+  "written": "2026-09-24",
+  "written_by": "session d'extraction isolee (phase 09, harvest)",
+  "source": {
+    "authors": "Dawar, Ishaan; Dutta, Anupam; Bouri, Elie; Saeed, Tareq",
+    "title": "Crude oil prices and clean energy stock indices: Lagged and asymmetric effects with quantile regression",
+    "year": 2021,
+    "source_url": "https://osuva.uwasa.fi/bitstreams/76cf1bd7-4979-4244-bca6-361a88de62a8/download",
+    "pdf": "corpus/pdf/crude-oil-prices-and-clean-energy-stock-indices-W3082678610.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "journal": "Renewable Energy",
+    "volume": "163, 288-299",
+    "doi": "https://doi.org/10.1016/j.renene.2020.08.162",
+    "version": "Accepted manuscript auto-archive (University of Vaasa), pouvant differer de la version publiee ; l'article lui-meme est paru dans une revue a comite de lecture."
+  },
+  "claim": {
+    "statement": "La sensibilite des rendements des indices actions d'energie propre aux rendements du petrole WTI n'est pas une constante : elle decroit a mesure qu'on monte dans les quantiles de la distribution des rendements de l'indice (forte en etat baissier, faible ou non significative en etat haussier). Elle persiste avec retard, mais pas selon le schema de la diffusion graduelle de l'information. Et elle est asymetrique : les rendements negatifs du WTI dominent en periode baissiere, les rendements positifs en periode haussiere.",
+    "quoted": "regression analyses provide solid evidence of the dec reasing dependence of clean energy stock",
+    "note": "Citation tiree du resume. Le mot 'decreasing' est coupe par l'extraction du PDF ('dec reasing') : l'espace est conserve tel quel."
+  },
+  "universe": {
+    "value": "Quatre series hebdomadaires : le petrole brut WTI comme reference internationale, et trois indices actions d'energie propre — WilderHill Clean Energy Index (ECO), MAC Global Solar Energy Index (MAC), S&P Global Clean Energy Index (SPGCE). Rendements logarithmiques hebdomadaires, source Bloomberg.",
+    "quoted": "We use the WTI crude oil index as the international benchmark for oil prices and three different",
+    "period": {
+      "start": "2005-03-31",
+      "end": "2019-06-21",
+      "quoted": "Our sample period spans 31 March 2005 to 21 June 2019,"
+    },
+    "frequency": "weekly",
+    "frequency_quoted": "providing 743 weekly observations.",
+    "note": "Les auteurs justifient l'hebdomadaire par le desir d'eviter les biais lies au chevauchement des heures de cotation entre le marche petrolier et les marches actions."
+  },
+  "horizon": {
+    "value": "1 semaine pour l'effet contemporain ; effets retardes testes de i = 0 a i = 8 semaines dans l'equation (7).",
+    "unit": "week",
+    "quoted": "The lag length is 8, optimally",
+    "note": "La longueur de retard est choisie par critere d'information ; la phrase se poursuit sur la ligne suivante du texte extrait ('chosen based on information criterion.'), d'ou une citation courte. Aucun horizon de prevision au sens d'un signal : les equations (6) et (8) sont contemporaines."
+  },
+  "signal_construction": {
+    "value": "Aucun signal negociable n'est construit ; le papier estime des regressions quantiles. Trois specifications, toutes avec le rendement retarde d'une semaine de l'indice lui-meme comme regresseur de controle : (6) rendement de l'indice sur le rendement WTI contemporain ; (7) rendement de l'indice sur les retards 0 a 8 du rendement WTI, pour tester l'hypothese de diffusion graduelle de l'information ; (8) rendement de l'indice sur la partie positive et la partie negative du rendement WTI separees, pour tester l'asymetrie. Chaque specification est estimee a sept quantiles tau et par MCO. Le 'score' implicite, s'il fallait en tirer un, serait le rendement WTI de la semaine (ou son signe), la variable conditionnante etant le quantile de la distribution des rendements de l'indice — quantile qui n'est pas observable a la date de decision.",
+    "quoted": "We consider seven quantiles,   = (0.05, 0.10, 0.25, 0.50, 0 .75, 0.90, 0.95).",
+    "note": "Le symbole tau est perdu par l'extraction du PDF et remplace par des espaces dans la citation ; '0 .75' porte egalement un espace parasite. La citation est recopiee telle quelle. Estimations sous EViews 10, re-estimees sous SPSS a la demande d'un relecteur."
+  },
+  "reported_results": [
+    {
+      "name": "eco_wti_contemporaneous_beta_q05",
+      "value": 0.3558,
+      "unit": "coefficient",
+      "quoted": "WTIRET 0.3558*** 0.3804*** 0.2732*** 0.2723*** 0.2492*** 0.2584 0.1455*** 0.3297***",
+      "note": "Table 2, Panel A (indice ECO), equation 6. La ligne du tableau est recopiee entiere : les colonnes sont, dans l'ordre, tau = 0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95, puis MCO. 0.3558 est la colonne tau = 0.05. Significatif a 1%."
+    },
+    {
+      "name": "eco_wti_contemporaneous_beta_q95",
+      "value": 0.1455,
+      "unit": "coefficient",
+      "quoted": "WTIRET 0.3558*** 0.3804*** 0.2732*** 0.2723*** 0.2492*** 0.2584 0.1455*** 0.3297***",
+      "note": "Meme ligne, colonne tau = 0.95. Le coefficient passe de 0.3558 a 0.1455 du quantile bas au quantile haut : c'est la 'dependance decroissante' du titre."
+    },
+    {
+      "name": "eco_wti_contemporaneous_beta_ols",
+      "value": 0.3297,
+      "unit": "coefficient",
+      "quoted": "WTIRET 0.3558*** 0.3804*** 0.2732*** 0.2723*** 0.2492*** 0.2584 0.1455*** 0.3297***",
+      "note": "Meme ligne, derniere colonne (MCO). C'est la moyenne que la regression quantile vient decomposer."
+    },
+    {
+      "name": "mac_wti_contemporaneous_beta_q05",
+      "value": 0.6107,
+      "unit": "coefficient",
+      "quoted": "WTIRET 0.6107*** 0.5371*** 0.4308*** 0.3449*** 0.3553*** 0.4096*** 0.2930 0.4395***",
+      "note": "Table 2, Panel B (indice MAC), equation 6, colonne tau = 0.05. La colonne tau = 0.95 (0.2930) n'est pas significative."
+    },
+    {
+      "name": "spgce_wti_contemporaneous_beta_q05",
+      "value": 0.5,
+      "unit": "coefficient",
+      "quoted": "WTIRET 0.5000*** 0.3829*** 0.3126*** 0.2487*** 0.2648*** 0.2101 0.2395*** 0.3336***",
+      "spelled_out": "0.5000",
+      "note": "Table 2, Panel C (indice SPGCE), equation 6, colonne tau = 0.05. Le tableau ecrit 0.5000 ; la valeur JSON est 0.5, d'ou le spelled_out qui nomme la lecture."
+    },
+    {
+      "name": "spgce_wti_contemporaneous_beta_ols",
+      "value": 0.3336,
+      "unit": "coefficient",
+      "quoted": "WTIRET 0.5000*** 0.3829*** 0.3126*** 0.2487*** 0.2648*** 0.2101 0.2395*** 0.3336***",
+      "note": "Meme ligne, colonne MCO."
+    },
+    {
+      "name": "eco_adjusted_r2_q05_pct",
+      "value": 15.61,
+      "unit": "%",
+      "quoted": "Adjusted R2 15.61% 10.95% 6.37% 5.06% 4.79% 3.87% 3.70% 13.27%",
+      "note": "Table 2, Panel A (ECO), equation 6, colonne tau = 0.05. Memes colonnes que ci-dessus."
+    },
+    {
+      "name": "eco_adjusted_r2_q95_pct",
+      "value": 3.7,
+      "unit": "%",
+      "quoted": "Adjusted R2 15.61% 10.95% 6.37% 5.06% 4.79% 3.87% 3.70% 13.27%",
+      "spelled_out": "3.70%",
+      "note": "Meme ligne, colonne tau = 0.95. Le tableau ecrit 3.70% ; la valeur JSON est 3.7, d'ou le spelled_out. Le pouvoir explicatif est divise par plus de quatre entre le quantile bas et le quantile haut."
+    },
+    {
+      "name": "average_r_squared_pct",
+      "value": 13,
+      "unit": "%",
+      "quoted": "13% for R squared levels in our models.",
+      "note": "Section 4.1. Ordre de grandeur du R2 moyen sur l'ensemble des modeles, que les auteurs presentent comme concordant avec la litterature anterieure. C'est le plafond honnete du pouvoir explicatif annonce."
+    },
+    {
+      "name": "eco_negative_oil_beta_q05",
+      "value": 0.8628,
+      "unit": "coefficient",
+      "quoted": "  0.8628*** 0.9134*** 0.6656*** 0.3796*** 0.2494*** 0.2113** 0.0216 0.4888***",
+      "note": "Table 6 (ECO), equation 8, ligne du rendement WTI negatif : le libelle de la ligne (WTIRET-) est perdu par l'extraction, la ligne commence par deux espaces qui sont conserves. Colonnes tau = 0.05 ... 0.95 puis MCO. L'effet du petrole negatif passe de 0.8628 (tau = 0.05) a 0.0216 non significatif (tau = 0.95)."
+    },
+    {
+      "name": "eco_positive_oil_beta_q95",
+      "value": 0.5259,
+      "unit": "coefficient",
+      "quoted": "  -0.0065 -0.1017* 0.0158 0.0930** 0.2484** 0.3724*** 0.5259*** 0.1435**",
+      "note": "Table 6 (ECO), equation 8, ligne du rendement WTI positif (libelle perdu par l'extraction, deux espaces initiaux conserves). Effet quasi nul ou negatif dans les quantiles bas, 0.5259 au quantile 0.95 : c'est l'asymetrie, exactement en miroir de la ligne du petrole negatif."
+    },
+    {
+      "name": "mac_negative_oil_beta_q05",
+      "value": 1.297,
+      "unit": "coefficient",
+      "quoted": "  1.2970*** 1.2869*** 0.9951*** 0.4522*** 0.4137*** 0.3855*** -0.1104** 0.6213***",
+      "spelled_out": "1.2970",
+      "note": "Table 7 (MAC), equation 8, ligne du rendement WTI negatif (libelle perdu). Le tableau ecrit 1.2970 ; la valeur JSON est 1.297, d'ou le spelled_out."
+    },
+    {
+      "name": "spgce_negative_oil_beta_q05",
+      "value": 1.2979,
+      "unit": "coefficient",
+      "quoted": "  1.2979*** 1.0111*** 0.6493*** 0.3572** 0.2352** 0.1166** 0.0105 0.4641***",
+      "note": "Table 8 (SPGCE), equation 8, ligne du rendement WTI negatif (libelle perdu). Un rendement WTI negatif de 1% s'accompagne, au quantile 0.05, d'un mouvement de l'ordre de 1.3% de l'indice."
+    },
+    {
+      "name": "eco_asymmetric_model_adjusted_r2_q05_pct",
+      "value": 23.03,
+      "unit": "%",
+      "quoted": "Adjusted R2 23.03% 17.36% 8.42% 5.75% 4.66% 3.90% 5.95% 14.94%",
+      "note": "Table 6 (ECO), equation 8. Separer le rendement WTI en partie positive et partie negative fait passer le R2 ajuste au quantile 0.05 de 15.61% (equation 6) a 23.03%. C'est le seul gain de specification chiffre du papier."
+    },
+    {
+      "name": "spgce_contemporaneous_over_lag1_ratio_ols",
+      "value": 9,
+      "unit": "ratio",
+      "quoted": "is about 9 times the effect of the first lag, which defies the first condition.",
+      "note": "Section 4.2, SPGCE, modele MCO. Sert a rejeter la premiere condition de l'hypothese de diffusion graduelle de l'information : l'effet contemporain domine largement le premier retard."
+    },
+    {
+      "name": "n_weekly_observations",
+      "value": 743,
+      "unit": "observations",
+      "quoted": "providing 743 weekly observations.",
+      "note": "Taille d'echantillon unique pour les quatre series. Environ 14 ans de donnees hebdomadaires."
+    },
+    {
+      "name": "n_quantiles_estimated",
+      "value": 7,
+      "unit": "quantiles",
+      "quoted": "We consider seven quantiles,   = (0.05, 0.10, 0.25, 0.50, 0 .75, 0.90, 0.95). The median (0.50)",
+      "spelled_out": "seven",
+      "note": "Sept quantiles, trois indices, trois specifications : au moins 63 coefficients d'interet estimes, sans correction de multiplicite annoncee. Le symbole tau est perdu par l'extraction et rendu par des espaces ; la citation est recopiee telle quelle."
+    },
+    {
+      "name": "wti_weekly_return_std_dev",
+      "value": 0.0504,
+      "unit": "rendement logarithmique hebdomadaire",
+      "quoted": "Std. Dev. 0.0453 0.0450 0.0643 0.0504",
+      "note": "Table 1. Ligne du tableau recopiee entiere ; les colonnes sont, dans l'ordre, ECO, SPGCE, MAC, WTI. 0.0504 est la colonne WTI. MAC (0.0643) est la serie la plus volatile."
+    },
+    {
+      "name": "gradual_information_diffusion_rejected",
+      "value": null,
+      "quoted": "which rejects the gradual information diffusion h ypothesis.",
+      "note": "Resultat qualitatif, section 4.2, valable pour les trois indices : l'effet contemporain est toujours superieur au premier retard. L'extraction coupe 'hypothesis' en 'h ypothesis' ; conserve tel quel."
+    },
+    {
+      "name": "median_quantile_lag_5_to_6_weeks",
+      "value": null,
+      "quoted": "conditions investors take five to six weeks to react to changes in oil prices.",
+      "note": "Resultat qualitatif, section 4.2, indice ECO. En conditions de marche normales (quantile median) le retard dominant est le 5e ou le 6e ; en quantiles bas c'est le premier retard qui domine. Le retard dominant depend donc du regime, ce qui est le point interessant pour nous."
+    },
+    {
+      "name": "negative_oil_moves_dominate_in_distress",
+      "value": null,
+      "quoted": "asymmetrical tests show that negative oil movements are more useful than po sitive movements",
+      "note": "Resultat qualitatif, section 4.3. L'extraction coupe 'positive' en 'po sitive' ; conserve tel quel. C'est la conclusion de synthese du papier sur l'asymetrie."
+    }
+  ],
+  "what_is_missing": [
+    "Aucune statistique t, aucun ecart-type, aucun intervalle de confiance chiffre : la significativite n'est donnee que par des etoiles (1%, 5%, 10%). Impossible de recalculer une significativite ou de la corriger.",
+    "Aucune correction de multiplicite, alors que sept quantiles x trois indices x trois specifications sont estimes sur un unique echantillon. Le papier ne compte pas ses tests.",
+    "Aucune validation hors echantillon, aucun walk-forward, aucune coupure temporelle : toutes les regressions sont estimees en une fois sur 2005-2019, periode qui contient la crise de 2008 dont les auteurs disent eux-memes qu'elle domine les graphiques.",
+    "Aucune strategie, aucun rendement, aucun Sharpe, aucun cout de transaction, aucun modele d'execution. Le papier s'arrete aux coefficients de regression.",
+    "Les statistiques du test de Wald d'asymetrie ne sont pas identifiables dans le texte extrait : la ligne correspondante des tables 6-8 a perdu son libelle. Les conclusions sur le test de Wald sont donc lues dans la prose, pas dans un chiffre attribuable.",
+    "Le texte se contredit sur la definition des quantiles hauts : la liste des quantiles estimes contient 0.75, mais la phrase qui definit les etats haussiers ecrit 'higher quantiles (i.e. 0.70, 0.90, 0.95)'. Une des deux valeurs est fausse et le papier ne tranche pas.",
+    "Aucun ticker Bloomberg, aucune regle de construction ou de rebalancement des trois indices, aucun delai de publication. Impossible de reconstruire les series.",
+    "Aucun R2 pseudo-quantile proprement defini : le papier parle de 'adjusted R-squared' pour une regression quantile sans dire lequel (Koenker-Machado ou autre).",
+    "Le mecanisme economique propose (les investisseurs fuiraient le petrole vers l'energie propre en marche baissier) n'est ni teste ni mesure ; il est avance en discussion.",
+    "Les figures 1 a 10, qui portent les bandes de confiance a 95%, sont illisibles dans le texte extrait (axes mis a plat). Aucune valeur n'en a ete tiree.",
+    "Aucune justification du choix du retard d'ordre 1 de l'indice lui-meme comme unique controle : ni facteur de marche, ni taux, ni indice technologique, alors que la litterature citee (Henriques et Sadorsky) designe les valeurs technologiques comme un determinant plus fort que le petrole."
+  ],
+  "transposability": {
+    "what_transfers": [
+      "L'idee centrale, qui est un motif et non un chiffre : la sensibilite d'un actif a un facteur exogene n'est pas une constante, elle depend de l'etat du marche. C'est exactement la notion d'hybride du projet — un signal conditionne a un regime.",
+      "La decomposition d'un rendement de driver en partie positive et partie negative (max(r,0) et min(r,0)) est une construction de signal deterministe, sans parametre a ajuster, directement implementable sur nos futures et evaluable par le harnais.",
+      "Le balayage systematique des retards 0 a 8 d'un driver est une grille d'horizons que nous pouvons reproduire telle quelle, en remplacant la semaine par notre pas intraday.",
+      "L'observation que le retard dominant change avec le regime (premier retard en etat de stress, cinquieme ou sixieme en etat normal) est une hypothese testable chez nous, a pre-enregistrer avant mesure.",
+      "Le constat que la specification asymetrique ameliore nettement l'ajustement dans la queue basse (23.03% contre 15.61%) suggere qu'un signal signe sur le driver peut battre un signal lineaire — hypothese, pas resultat."
+    ],
+    "what_does_not_transfer": [
+      "La frequence. Tout le papier est hebdomadaire, et les auteurs ont explicitement ecarte le quotidien pour eviter les biais de chevauchement des heures de cotation. Notre univers est intraday : le probleme qu'ils fuient est precisement celui que nous devons resoudre.",
+      "L'univers. Trois indices actions d'energie propre et un indice petrolier ; aucun n'est un des neuf futures. Les indices ne sont pas negociables tels quels, et leurs trackers ont leurs propres frais, ecarts et heures.",
+      "La metrique. Le papier juge par un coefficient de regression et un R2 ajuste. Nous jugeons par un IC issu du harnais officiel. Un beta de 0.36 ne se convertit pas en IC, et un R2 de 13% sur une regression contemporaine ne dit rien d'un pouvoir predictif.",
+      "Le conditionnement par quantile. Les quantiles sont ceux de la distribution des rendements de la variable dependante, donc definis a posteriori sur le rendement que l'on cherche a expliquer. Utiliser ce conditionnement comme regime de signal serait un look-ahead pur — interdit par construction chez nous (invariant II). Seul un proxy observable ex ante (volatilite realisee, drawdown courant) pourrait s'en approcher, et ce n'est plus le meme objet.",
+      "Les equations (6) et (8) sont contemporaines : le rendement WTI de la semaine t explique le rendement de l'indice de la semaine t. Telles quelles, elles ne fournissent aucun signal. Seule l'equation (7), restreinte aux retards i >= 1, est utilisable sans voir le futur.",
+      "Le regresseur de controle — le rendement retarde de l'indice lui-meme — suppose que l'on dispose de la serie de l'indice. Chez nous ce serait le rendement retarde du future, ce qui change la nature du modele (autoregression) et melange deux effets que nous voudrions separer.",
+      "La periode. 2005-2019 est dominee par la crise de 2008 et par l'effondrement petrolier de 2014-2015 ; notre pool commence en 2016. Les regimes qui portent l'essentiel des coefficients bas-quantile du papier sont hors de notre fenetre.",
+      "Tous les chiffres du papier sans exception : ce sont des constats d'un tiers sur ses donnees, a sa frequence, sur son univers. Ils disent quoi verifier, jamais ce qui est vrai chez nous.",
+      "L'absence totale de couts. Un signal conditionne a un regime se retourne souvent ; a notre frequence, le cout de retournement est un premier ordre, alors qu'il est nul dans une regression hebdomadaire.",
+      "Le cadre statistique lui-meme : une regression quantile decrit une distribution conditionnelle, elle ne produit pas une prevision ponctuelle a partir de laquelle trier des instruments."
+    ],
+    "what_aligns_well": [
+      "Le vocabulaire. 'Hybride' chez nous est un signal conditionne a un regime ; ce papier est une longue demonstration que la conditionnalite au regime est le fait dominant. Il appuie la phase 05 (regimes) plutot que la phase 02 (codage d'un signal).",
+      "La grille de retards 0 a 8, choisie par critere d'information, est une structure de balayage d'horizons qui se transpose sans reamenagement conceptuel.",
+      "L'asymetrie signee est une construction de signal a zero parametre libre : elle ne consomme pas de degre de liberte et se pre-enregistre en une ligne.",
+      "Le papier reconnait lui-meme que son pouvoir explicatif plafonne autour de 13%, et que l'essentiel se concentre dans la queue basse. Cette honnetete donne une attente d'effet modeste, ce qui est le bon ordre de grandeur pour calibrer un test chez nous plutot qu'une deception.",
+      "Le driver propose — le petrole brut WTI — est directement disponible comme future, ce qui evite tout probleme de construction de la variable explicative."
+    ]
+  },
+  "notes": [
+    "Le papier est un manuscrit accepte auto-archive par l'Universite de Vaasa ; la page de garde previent qu'il peut differer de la version publiee dans Renewable Energy 163, 288-299.",
+    "Aucune valeur n'a ete inventee. Les lignes de tableau sont recopiees entieres parce que l'extraction du PDF a perdu les libelles de ligne des equations 7 et 8 (symboles mathematiques) ; l'attribution colonne par colonne est donnee dans chaque note et reste un geste de lecture humain.",
+    "Rien dans ce papier ne permet d'ouvrir un test chez nous en l'etat : il n'y a pas de signal predictif, seulement une structure de dependance contemporaine. Ce qui en survit est un motif de conditionnement, a pre-enregistrer avant toute mesure (invariant IV)."
+  ]
+}

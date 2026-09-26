@@ -1,0 +1,190 @@
+{
+  "fiche_id": "dynamic-connectedness-between-stock-markets-in-t-W3134867108",
+  "written": "2026-09-24",
+  "written_by": "session-harvest-isolee",
+  "source": {
+    "authors": "Manel Youssef, Khaled Mokni, Ahdi Noomen Ajmi",
+    "title": "Dynamic connectedness between stock markets in the presence of the COVID-19 pandemic: does economic policy uncertainty matter?",
+    "year": 2021,
+    "source_url": "https://jfin-swufe.springeropen.com/counter/pdf/10.1186/s40854-021-00227-3",
+    "pdf": "corpus/pdf/dynamic-connectedness-between-stock-markets-in-t-W3134867108.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "journal": "Financial Innovation (2021) 7:13",
+    "note": "Article de recherche en accès libre, reçu le 6 août 2020 et accepté le 15 février 2021 ; revue à comité de lecture."
+  },
+  "claim": "La connectivité (spillovers de variance) entre huit indices boursiers nationaux est élevée en permanence et bondit à des niveaux sans précédent pendant le premier trimestre 2020 ; les marchés européens (sauf l'Italie) sont des émetteurs nets de spillovers, la Chine, la Russie et les États-Unis des receveurs nets ; la connectivité est plus forte pour les rendements négatifs que positifs (asymétrie) ; et l'incertitude de politique économique (EPU) affecte significativement la connectivité totale, avec un changement de SIGNE de son effet sur la connectivité nette entre l'avant et le pendant de la pandémie.",
+  "universe": "Huit indices boursiers nationaux quotidiens : Chine (SSE), France (CAC40), Allemagne (DAX30), Italie (FTSE MIB), Russie (RTSI), Espagne (IBEX), Royaume-Uni (FTSE100), États-Unis (S&P500), du 01/01/2015 au 05/18/2020 (données Datastream), plus l'indice quotidien d'incertitude de politique économique (EPU) news-based de Baker et al. (2016), source policyuncertainty.com. Rendements calculés en log-différences des indices et de l'EPU.",
+  "horizon": {
+    "value": "10 jours : les décompositions de variance d'erreur de prévision (GFEVD) sont calculées à 10 pas d'avance sur données quotidiennes, avec un TVP-VAR d'ordre 1.",
+    "reason": "Ce n'est PAS un horizon de prédiction de rendement : le papier ne prédit rien hors échantillon. Les 10 pas sont l'horizon de décomposition de variance qui définit la mesure de connectivité ; la régression EPU (Eq. 11) est contemporaine, sans décalage."
+  },
+  "signal_construction": {
+    "value": "TVP-VAR(1) de Koop et Korobilis (2014) estimé par filtre de Kalman sur le vecteur des N=8 rendements log quotidiens (Eq. 1-2), puis transformation en moyenne mobile vectorielle et calcul des GIRF et GFEVD de Diebold et Yilmaz (2014) à 10 pas (Eq. 3-6). De la GFEVD on tire quatre indices : connectivité totale TCI (Eq. 7), connectivité directionnelle reçue des autres (Eq. 8), transmise aux autres (Eq. 9), et nette = transmise moins reçue (Eq. 10). Signe de l'indice net : positif, l'instrument influence le réseau ; négatif, il est piloté par lui. Version asymétrique : on sépare R+ = max(R,0) et R- = min(R,0), vérifiant R = R+ + R-, et on ré-estime les mêmes indices séparément sur chaque composante. Enfin H_t est régressé sur les variations de l'EPU américain (Eq. 11, H_t = theta0 + theta1*EPU_t + eps_t), sur la période entière puis sur deux sous-périodes (01/01/2015-12/23/2019 et 12/24/2019-05/18/2020).",
+    "reason": "Construction entièrement décrite dans le papier ; en revanche aucun code, aucune valeur de prior du TVP-VAR ni facteur d'oubli du filtre de Kalman n'est donné, et les données ne sont disponibles que sur demande."
+  },
+  "reported_results": [
+    {
+      "name": "tci_full_sample_pct",
+      "value": 65.43,
+      "unit": "%",
+      "quoted": "markets was 65.43%, as shown in Table",
+      "note": "Indice de connectivité totale moyen sur 01/01/2015-05/18/2020, TVP-VAR(1), GFEVD à 10 pas. La citation s'arrête avant « Table 2 » parce que l'extraction y insère une espace insécable. La Table 2 porte 65.346 pour la même quantité."
+    },
+    {
+      "name": "france_contribution_to_others_pct",
+      "value": 97.48,
+      "unit": "%",
+      "quoted": "transmitting the highest index of 97.48%",
+      "note": "France = plus gros émetteur de spillovers. La table 2 porte 97.423 pour la même cellule ; le texte arrondit à 97.48, écart non expliqué par les auteurs."
+    },
+    {
+      "name": "china_contribution_to_others_pct",
+      "value": 8.83,
+      "unit": "%",
+      "quoted": "with 8.83%, 29.89%, 53.83%, and 77.32, respectively.",
+      "note": "Contributions aux autres, dans l'ordre Chine, Russie, États-Unis, Royaume-Uni. La Chine est le plus faible émetteur du panel."
+    },
+    {
+      "name": "france_received_from_others_pct",
+      "value": 77.9,
+      "unit": "%",
+      "quoted": "spillovers from others: France 77.9%, Germany 76.63%, and Spain and Italy around 75%.",
+      "note": "Les plus gros émetteurs sont aussi les plus gros receveurs : la connectivité européenne est bidirectionnelle et massive."
+    },
+    {
+      "name": "tci_peak_covid_q1_2020_pct",
+      "value": 80,
+      "unit": "%",
+      "quoted": "with a level close to 80%",
+      "note": "Pic du TCI dynamique au premier trimestre 2020 (lecture de la Fig. 2, pas un chiffre de table)."
+    },
+    {
+      "name": "tci_lowest_levels_pct",
+      "value": 57,
+      "unit": "%",
+      "quoted": "level, with approximately 57% and 55%, respectively.",
+      "note": "Creux du TCI : environ 57% mi-2015 et 55% au premier trimestre 2018. L'amplitude totale du TCI sur cinq ans est donc d'environ 25 points (55% à 80%), lue sur figure."
+    },
+    {
+      "name": "tci_positive_returns",
+      "value": 61.378,
+      "unit": "%",
+      "quoted": "Net spillovers (Panel A, rendements positifs) : China -16.885, France 18.911, Germany 12.268, Italy 6.062, Russia -20.077, Spain 7.234, UK 1.894, US -9.406 ; TCI 61.378",
+      "quoted_source": "Net spillovers −16.885 18.911 12.268 6.062 −20.077 7.234 1.894 −9.406 61.378",
+      "quoted_repair": "table",
+      "note": "Table 3, Panel A. La dernière colonne est le TCI, les huit précédentes les spillovers nets par pays."
+    },
+    {
+      "name": "tci_negative_returns",
+      "value": 66.516,
+      "unit": "%",
+      "quoted": "Net spillovers (Panel B, rendements négatifs) : China -30.015, France 21.141, Germany 13.197, Italy 7.796, Russia -20.678, Spain 10.021, UK -0.929, US -0.532 ; TCI 66.516",
+      "quoted_source": "Net spillovers −30.015 21.141 13.197 7.796 −20.678 10.021 −0.929 −0.532 66.516",
+      "quoted_repair": "table",
+      "note": "Table 3, Panel B. Écart avec les rendements positifs : 66.516 - 61.378 = 5.138 points de TCI en faveur des rendements négatifs."
+    },
+    {
+      "name": "tci_asymmetry_gap_points",
+      "value": 5.138,
+      "unit": "points de TCI",
+      "quoted": "Net spillovers (Panel B, rendements négatifs) : China -30.015, France 21.141, Germany 13.197, Italy 7.796, Russia -20.678, Spain 10.021, UK -0.929, US -0.532 ; TCI 66.516",
+      "quoted_source": "Net spillovers −30.015 21.141 13.197 7.796 −20.678 10.021 −0.929 −0.532 66.516",
+      "quoted_repair": "table",
+      "derived": true,
+      "note": "Calculé par nous : 66.516 (TCI rendements négatifs, Table 3 Panel B) moins 61.378 (TCI rendements positifs, Table 3 Panel A). C'est la taille chiffrée de l'asymétrie que le papier n'énonce qu'en mots."
+    },
+    {
+      "name": "asymmetry_negative_above_positive",
+      "value": null,
+      "quoted": "for the negative returns was higher than for the positive returns,",
+      "note": "Énoncé qualitatif de l'asymétrie ; la mauvaise nouvelle se transmet plus intensément que la bonne. Chiffré par l'entrée tci_asymmetry_gap_points."
+    },
+    {
+      "name": "china_spillover_to_others_during_covid_pct",
+      "value": 9,
+      "unit": "%",
+      "quoted": "4% before the pandemic onset to nearly 9% during the pandemic outbreak. The dynamic",
+      "note": "Spillovers transmis par la Chine à tous les autres : environ 4% avant, près de 9% pendant. Lecture de figure, sans intervalle de confiance."
+    },
+    {
+      "name": "spillover_peak_received_china_russia_pct",
+      "value": 3.2,
+      "unit": "%",
+      "quoted": "reaching a peak of 3.2% and 8% in China and Russia, respectively.",
+      "note": "Pic des spillovers REÇUS par la Chine (3.2%) et la Russie (8%) au premier trimestre 2020."
+    },
+    {
+      "name": "epu_effect_on_total_connectedness_full_period",
+      "value": 0.0239,
+      "quoted": "theta1 (période entière) : total connectedness 0.0239***, China -0.0042***, France -0.0002, Germany 0.0014***, Italy -0.0011***, Russia 0.0015***, Spain 0.0006***, UK 0.0016***, US 0.0005",
+      "quoted_source": "θ1 0.0239*** −0.0042*** −0.0002 0.0014*** −0.0011*** 0.0015*** 0.0006*** 0.0016*** 0.0005",
+      "quoted_repair": "table",
+      "note": "Table 4, Panel A. Effet positif significatif à 1% de l'EPU sur la connectivité totale sur toute la période. Le papier ne donne ni R2 ni nombre d'observations pour cette régression."
+    },
+    {
+      "name": "epu_effect_on_total_connectedness_before_covid",
+      "value": -0.0027,
+      "quoted": "theta1 (avant COVID-19) : total connectedness -0.0027 (non significatif), China 0.0012, Germany 0.0014***, Italy 0.0026***, Russia -0.0012***, Spain -0.0010***, UK -0.0007***, US -0.0032***",
+      "quoted_source": "θ1 −0.0027 0.0012 0.0014*** 0.0026*** −0.0012*** −0.0010*** −0.0007*** −0.0032*** 0.0008",
+      "quoted_repair": "table",
+      "spelled_out": "−0.0027",
+      "note": "Table 4, Panel B (01/01/2015-12/23/2019). Coefficient sans étoile donc non significatif : avant la pandémie, l'EPU n'explique pas la connectivité totale. L'extraction rend le signe moins par U+2212, d'où spelled_out."
+    },
+    {
+      "name": "epu_effect_on_total_connectedness_during_covid",
+      "value": 0.0241,
+      "quoted": "theta1 (période COVID-19) : total connectedness 0.0241***, China -0.0029***, France -0.0017***, Germany -0.0004***, Italy -0.0005**, Russia 0.0014***, Spain 0.0004**, UK 0.0038***, US -0.0002",
+      "quoted_source": "θ1 0.0241*** −0.0029*** −0.0017*** −0.0004*** −0.0005** 0.0014*** 0.0004** 0.0038*** −0.0002",
+      "quoted_repair": "table",
+      "note": "Table 4, Panel C (12/24/2019-05/18/2020). L'effet de l'EPU sur la connectivité totale passe de non significatif à significativement positif ; et les signes des effets sur la connectivité NETTE de la France et de l'Allemagne s'inversent (positifs avant, négatifs pendant). C'est le résultat central du papier sur l'EPU."
+    },
+    {
+      "name": "tci_range_across_var_lags_1_to_5_pct",
+      "value": 65,
+      "unit": "%",
+      "quoted": "65 and 67% for all returns, between 59 and 61% for the positive returns, and between 63",
+      "note": "Robustesse : en faisant varier l'ordre du VAR de 1 à 5 jours, le TCI reste entre 65 et 67% (tous rendements), 59-61% (positifs), 63-66% (négatifs). Amplitude d'environ 2 points : la mesure n'est pas fragile au choix du lag."
+    },
+    {
+      "name": "correlation_france_germany",
+      "value": 0.942,
+      "quoted": "between the French and German stock markets by a value of 0.942",
+      "note": "Corrélation la plus forte du panel, sur rendements quotidiens. La Chine est le marché le moins corrélé à tous les autres (0.15 à 0.223 selon la matrice de la Table 1)."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun test hors échantillon, aucun pouvoir prédictif : tous les indices de connectivité sont des mesures in-sample, descriptives. Le papier ne prétend nulle part prévoir un rendement.",
+    "La régression EPU (Eq. 11) est CONTEMPORAINE : H_t sur EPU_t, sans décalage. Rien n'indique qu'un EPU d'aujourd'hui annonce la connectivité de demain.",
+    "Aucun intervalle de confiance, aucune erreur standard sur les indices de connectivité eux-mêmes (les seules erreurs standard données sont celles de la régression Table 4).",
+    "Aucune stratégie, aucun portefeuille, aucun rendement, aucun Sharpe, aucun coût de transaction : rien de tradable n'est construit ni évalué.",
+    "Le filtre de Kalman du TVP-VAR : ni les priors, ni les facteurs d'oubli, ni le point d'initialisation ne sont donnés, et rien ne dit si l'estimation est filtrée (temps réel) ou lissée (deux-passes, donc contaminée par le futur). Point bloquant pour toute réplication point-in-time.",
+    "Le lag de publication de l'indice EPU n'est jamais donné : on sait qu'il est quotidien et news-based, on ignore à quelle heure d'un jour t sa valeur du jour t devient connaissable.",
+    "Le traitement des jours fériés et des séances décalées entre huit pays (Chine, Europe, Russie, États-Unis) n'est pas décrit — or le calcul sur rendements quotidiens de marchés qui ne sont pas ouverts en même temps affecte directement les spillovers mesurés.",
+    "Aucun code publié, et les données ne sont disponibles que sur demande auprès des auteurs.",
+    "L'écart entre le texte (France 97.48%) et la Table 2 (97.423) n'est pas expliqué ; idem pour le TCI 65.43% du texte contre 65.346 de la Table 2.",
+    "Le découpage des sous-périodes (rupture au 12/23/2019) est justifié narrativement par l'actualité de Wuhan, pas par un test de rupture structurelle.",
+    "Aucun ajustement de tests multiples alors que Table 4 estime 27 coefficients theta1 et que la lecture des signes porte sur chacun."
+  ],
+  "transposability": {
+    "what_transfers": [
+      "La machinerie elle-même : un TVP-VAR estimé par filtre de Kalman puis une GFEVD à J pas se calcule sur nos neuf futures intraday exactement comme sur huit indices quotidiens ; N=9 est du même ordre que N=8, donc la dimension reste estimable.",
+      "L'idée d'un état de marché mesuré uniquement à partir des rendements passés du panel : le TCI et le spillover net par instrument sont des fonctions des rendements du panel, sans donnée externe, donc compatibles avec l'invariant II si et seulement si l'estimation est strictement filtrée.",
+      "La décomposition asymétrique R+ = max(R,0) / R- = min(R,0), triviale à implémenter et qui produit deux états au lieu d'un.",
+      "Le motif régime : la connectivité monte fortement en stress et retombe en calme (55% à 80% de TCI sur cinq ans). C'est un candidat naturel de variable de régime pour un signal hybride, pas un signal en soi.",
+      "La discipline de robustesse au lag (k de 1 à 5), qui donne ici une amplitude d'environ 2 points de TCI : le même test s'applique directement chez nous."
+    ],
+    "what_does_not_transfer": [
+      "L'univers : huit indices ACTIONS nationaux quotidiens, pas neuf futures intraday. Les corrélations qui portent le résultat (0.942 France-Allemagne) viennent de l'intégration des marchés actions européens, un fait institutionnel qui n'a aucun équivalent dans un panel de futures multi-classes.",
+      "La fréquence : tout est quotidien. Un TVP-VAR intraday affronte la saisonnalité intra-journalière du volume et de la volatilité, l'ouverture décalée des séances et la microstructure — aucun de ces problèmes n'est traité ici.",
+      "L'événement : le résultat central est un pic sur UN épisode non répétable (T1 2020). Un régime observé une fois sur cinq ans ne fournit aucune base d'échantillonnage pour valider un conditionnement de régime chez nous.",
+      "L'indice EPU : national, américain, quotidien, news-based, sans horodatage de disponibilité publié. L'intégrer à un signal intraday importerait du look-ahead par construction — interdit par l'invariant II, et sa valeur de lag de publication vaudrait null avec un todo ouvert.",
+      "La métrique : la sortie du papier est une part de variance d'erreur de prévision, pas un IC ni une t-stat de prédiction de rendement. Rien dans ce papier ne peut être comparé à un rapport d'IC ; le transposer suppose de REDÉFINIR ce qui est évalué, donc de pré-enregistrer une hypothèse neuve.",
+      "La régression EPU contemporaine (Eq. 11), qui n'est pas un signal : sans décalage, elle n'est pas implémentable dans un harnais qui n'a pas accès au futur.",
+      "L'estimation possiblement lissée du TVP-VAR : si les paramètres sont obtenus en deux passes sur l'échantillon complet, tous les chiffres de connectivité annoncés utilisent le futur, et aucune de leurs valeurs ne survit chez nous. Le papier ne tranche pas ; on ne peut pas reprendre ses niveaux, seulement sa recette, ré-estimée en expanding window.",
+      "Les niveaux chiffrés eux-mêmes (TCI 65.43%, France 97.48%, seuils 55%/80%) : ce sont des constats d'un tiers sur ses données. Ils disent quoi vérifier, jamais ce qui est vrai ici ; aucun seuil de régime ne peut être repris tel quel.",
+      "Le coût : aucun coût de transaction, aucun slippage, aucune exécution. Toute traduction en stratégie ajoute une couche que le papier n'a jamais testée."
+    ],
+    "what_aligns_well": "Le papier produit une variable d'état — la connectivité — calculable à partir des seuls rendements passés du panel, ce qui est exactement la forme d'un candidat de RÉGIME au sens de notre étape 05, et non d'un signal au sens de l'étape 02. Son asymétrie (66.516 contre 61.378 de TCI, rendements négatifs contre positifs) dit que le régime baissier n'est pas le symétrique du régime haussier, ce qui justifie de conditionner plutôt que de moyenner. Et sa robustesse au lag du VAR (environ 2 points de TCI entre k=1 et k=5) est le genre de contrôle qu'on exigerait avant de retenir une variable de régime : elle suggère que la mesure ne dépend pas d'un réglage arbitraire. À retenir comme piste de régime à pré-enregistrer, avec re-estimation strictement filtrée, et non comme signal à répliquer."
+  }
+}

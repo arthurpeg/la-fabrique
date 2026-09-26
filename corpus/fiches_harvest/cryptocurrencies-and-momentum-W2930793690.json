@@ -1,0 +1,234 @@
+{
+  "fiche_id": "cryptocurrencies-and-momentum-W2930793690",
+  "written": "2026-09-24",
+  "written_by": "session-extraction-isolee-2026-09-24",
+  "source": {
+    "authors": "Grobys, Klaus; Sapkota, Niranjan",
+    "title": "Cryptocurrencies and momentum",
+    "year": 2019,
+    "journal": "Economics Letters 180(July), 6-10",
+    "doi": "https://doi.org/10.1016/j.econlet.2019.03.028",
+    "source_url": "https://osuva.uwasa.fi/bitstreams/ffee5cb1-92a8-443e-a117-cbaacd8a1028/download",
+    "pdf": "corpus/pdf/cryptocurrencies-and-momentum-W2930793690.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true
+  },
+  "claim": {
+    "value": "Le momentum transversal classique (tri sur rendement cumule passe, quintiles, portefeuille zero-cout gagnants moins perdants, detention un mois) ne produit pas de payoff significatif sur les cryptomonnaies entre 2014 et 2018 ; le momentum temporel (TSMOM) non plus. Les auteurs en tirent que le marche crypto serait plus efficient que ne le suggeraient les etudes anterieures. C'est donc un resultat NEGATIF sur une anomalie connue, pas un signal a repliquer.",
+    "quoted": "Wefindthatmomentumisinsignificantinthe2014–2018sampleperiod.",
+    "note": "L'abstract redit la meme chose : « findingsdonotindicateanyevidenceofsignificantmomentumpayoffs »."
+  },
+  "universe": {
+    "value": "143 cryptomonnaies telechargees de coinmarketcap.com, toutes en Proof-of-Work et cotees avant le 31 decembre 2014 ; donnees mensuelles du 1er janvier 2014 au 31 decembre 2018. Sous-echantillon secondaire : les 30 plus grosses capitalisations au 28 decembre 2014. En moyenne 89 cryptos reellement investissables chaque mois.",
+    "quoted": "Ourdatacontainallcryptocurrenciesthat",
+    "note": "La phrase complete court sur plusieurs lignes du texte extrait ; la suite precise « incorporatedthe Proof-of-Workmechanismandstartedtrading priortoDecember31,2014 »."
+  },
+  "horizon": {
+    "value": "1 mois de detention, rebalancement au debut de chaque mois ; fenetres de formation de 12, 6 ou 1 mois (strategies n-m-h : 12-1-1, 6-1-1, 1-0-1).",
+    "quoted": "Theportfoliosareheldonemonthahead.This n-m-hstrategy,",
+    "reason": null
+  },
+  "signal_construction": {
+    "value": "Tri transversal de toutes les cryptos par rendement cumule passe, en ordre croissant, en quintiles equipomderes. Quintile 1 = perdants (20% des plus faibles rendements cumules sur la periode t-12 a t-2, soit un mois de saut avant la detention), quintile 5 = gagnants (20% des plus eleves sur la meme periode). Portefeuille zero-cout : vendre le quintile 1, acheter le quintile 5 ; variante moins extreme long groupe 4 / short groupe 2. Detention un mois, rebalancement mensuel. Variantes 6-1-1 (formation 6 mois, saut 1 mois) et 1-0-1 (formation 1 mois, sans saut). Variante robustesse : payoffs « trimmes », les deux rendements les plus extremes de chaque serie etant exclus. Seules les cryptos disposant de donnees sur la periode de formation entrent dans la strategie. Signal alternatif TSMOM : position longue si le signe du rendement cumule des K derniers mois est positif, courte sinon, K dans {12, 6, 1}.",
+    "quoted": "mulativereturnsfortheperiod t-12–t-2,whereasthefifthgroup",
+    "reason": null,
+    "note": "Les autres elements de la construction sont cites dans reported_results et dans la methodologie (Section 2) : « Thezero-costportfolioswerecompoundedbysellingtheloser », « Theportfoliosareheldonemonthahead », « wedefinedaspayoffswiththetwomostextremereturnsforeach »."
+  },
+  "reported_results": [
+    {
+      "name": "n_cryptocurrencies_retrieved",
+      "value": 143,
+      "unit": "cryptomonnaies",
+      "quoted": "1, 2014 until December 31, 2018. In total, we retrieved 143",
+      "note": "Univers total : toutes les cryptos Proof-of-Work cotees avant le 31/12/2014, donnees mensuelles 2014-2018."
+    },
+    {
+      "name": "avg_cryptocurrencies_investable_per_month",
+      "value": 89,
+      "unit": "cryptomonnaies",
+      "quoted": "143cryptocurrencies.Onaverage,wecouldinvestin89cryp-",
+      "note": "Nombre moyen de cryptos reellement investissables par mois (donnees disponibles en periode de formation) : 89 sur 143. La largeur transversale effective est donc bien plus faible que l'univers annonce."
+    },
+    {
+      "name": "sample_period",
+      "value": null,
+      "unit": null,
+      "quoted": "priortoDecember31,2014.OurmonthlydatasetisfromJanuary",
+      "note": "Periode d'echantillon : janvier 2014 - decembre 2018, en frequence mensuelle. Resultat qualitatif, aucune valeur numerique unique a porter."
+    },
+    {
+      "name": "cross_sectional_momentum_untrimmed_all_insignificant",
+      "value": null,
+      "unit": null,
+      "quoted": "that none of the untrimmed momentum strategies generated",
+      "note": "Resultat principal, qualitatif : aucune des strategies de momentum non trimmees (Table 1, univers complet) ne produit de payoff statistiquement significatif. La suite de la phrase est « statistically significant payoffs. »"
+    },
+    {
+      "name": "wml_12_1_1_all_monthly_pct",
+      "value": 18.24,
+      "unit": "%_per_month",
+      "quoted": "12-1-1 24.70 19.53 47.72 19.11 42.94 18.24",
+      "note": "Table 1, univers complet : payoff moyen W-L (long quintile 5, short quintile 1) de la strategie 12-1-1, en pourcent par mois (« tumstrategiesinpercentpermonth »). Le tableau est mis a plat par l'extraction : la ligne donne Loser, quintiles 2, 3, 4, Winner, puis W-L."
+    },
+    {
+      "name": "wml_12_1_1_all_tstat",
+      "value": 1.18,
+      "unit": "t-stat",
+      "quoted": "(1.18)",
+      "note": "Table 1 : t-statistique du payoff W-L de la 12-1-1 sur l'univers complet, imprimee sous la valeur 18.24 et rendue sur sa propre ligne par l'extraction. Non significatif : un payoff mensuel de 18% qui ne tient pas statistiquement."
+    },
+    {
+      "name": "wml_12_1_1_all_monthly_std_pct",
+      "value": 107.14,
+      "unit": "%_per_month",
+      "quoted": "Std.Dev. 107.14 62.57 33.87 20.45",
+      "note": "Table A.1 Panel B (strategies 12-1-1) : ecart-type mensuel du payoff (5-1) = 107.14%, ce qui explique pourquoi un payoff moyen de 18.24% reste insignifiant. Les colonnes sont (5-1), (5-1) trimme, (4-2), (4-2) trimme."
+    },
+    {
+      "name": "wml_1_0_1_all_monthly_pct",
+      "value": -6.28,
+      "unit": "%_per_month",
+      "spelled_out": "−6.28",
+      "quoted": "1-0-1 38.48 23.50 18.51 18.34 32.20 −6.28",
+      "note": "Table 1 : payoff W-L de la strategie 1-0-1 (reversal a un mois) sur l'univers complet, negatif et insignifiant (t = −0.28). Le signe moins du PDF est le caractere U+2212, d'ou le spelled_out."
+    },
+    {
+      "name": "wml_1_0_1_all_trimmed_monthly_pct",
+      "value": -14.87,
+      "unit": "%_per_month",
+      "spelled_out": "−14.87",
+      "quoted": "1-0-1a −14.87**",
+      "note": "Table 1, ligne trimmee (deux rendements les plus extremes exclus) de la 1-0-1 : seul resultat significatif du papier, et il est NEGATIF. Les deux asterisques valent « **Statisticallysignificantona5%level. » ; l'exposant a vaut « aEstimatesbasedontrimmeddata. » Le signe moins est U+2212."
+    },
+    {
+      "name": "wml_1_0_1_all_trimmed_tstat",
+      "value": -2.2,
+      "unit": "t-stat",
+      "spelled_out": "−2.20",
+      "quoted": "(−2.20)",
+      "note": "Table 1 : t-statistique du payoff trimme de la 1-0-1 sur l'univers complet, imprimee sous −14.87 et isolee sur sa propre ligne par l'extraction. Signe moins U+2212."
+    },
+    {
+      "name": "cross_sectional_only_significant_payoff_is_negative",
+      "value": null,
+      "unit": null,
+      "quoted": "trimming, only the trimmed 1-0-1 strategy appeared to have",
+      "note": "Resultat qualitatif : apres trimming, la seule strategie a payoff moyen significatif est la 1-0-1, et il est negatif (« generated significant average payoffs, and those, surprisingly, » / « werenegative. »)."
+    },
+    {
+      "name": "top30_universe_size",
+      "value": 30,
+      "unit": "cryptomonnaies",
+      "quoted": "Predictedmomentumreturnsusing30cryptocurrencieswithhighestmarketcapitalization.",
+      "note": "Legende de la Table 2 : sous-echantillon conditionne aux 30 plus fortes capitalisations au 28 decembre 2014, pour tester si les resultats sont pilotes par les micro-capitalisations."
+    },
+    {
+      "name": "top30_12_1_1_g4_g2_monthly_pct",
+      "value": -17.14,
+      "unit": "%_per_month",
+      "spelled_out": "−17.14",
+      "quoted": "−17.14*",
+      "note": "Table 2 : payoff (4-2) de la 12-1-1 sur les 30 plus grosses capitalisations, negatif et significatif a 10% (« *Statisticallysignificantona10%level. »), t = −1.78. Ici encore le seul effet detectable va contre le momentum. Signe moins U+2212."
+    },
+    {
+      "name": "tsmom_avg_payoff_K12",
+      "value": 17.71,
+      "unit": null,
+      "quoted": "usingK = {12,6,1}.Theaveragepayoffsare17.71,18.22and",
+      "note": "Momentum temporel (TSMOM, Moskowitz et al. 2012) avec K = 12 mois. Le papier n'ecrit pas l'unite pour ces payoffs TSMOM ; unit laissee a null plutot que deduite de la legende de la Table 1."
+    },
+    {
+      "name": "tsmom_avg_payoff_K6",
+      "value": 18.22,
+      "unit": null,
+      "quoted": "usingK = {12,6,1}.Theaveragepayoffsare17.71,18.22and",
+      "note": "TSMOM avec K = 6 mois. Unite non ecrite dans le papier."
+    },
+    {
+      "name": "tsmom_avg_payoff_K1",
+      "value": 3.94,
+      "unit": null,
+      "quoted": "3.94for K = 12,K = 6,and K = 1,withcorresponding t-",
+      "note": "TSMOM avec K = 1 mois. Unite non ecrite dans le papier."
+    },
+    {
+      "name": "tsmom_tstat_K12",
+      "value": 1.65,
+      "unit": "t-stat",
+      "quoted": "statisticsof1.65,1.84,and0.41indictingthatthestrategiesdo",
+      "note": "t-stat du TSMOM K = 12. Sous le seuil de 5% ; la conclusion parle de payoffs « only marginally significant »."
+    },
+    {
+      "name": "tsmom_tstat_K6",
+      "value": 1.84,
+      "unit": "t-stat",
+      "quoted": "statisticsof1.65,1.84,and0.41indictingthatthestrategiesdo",
+      "note": "t-stat du TSMOM K = 6. Le plus eleve des trois, et encore insignifiant a 5%."
+    },
+    {
+      "name": "tsmom_tstat_K1",
+      "value": 0.41,
+      "unit": "t-stat",
+      "quoted": "statisticsof1.65,1.84,and0.41indictingthatthestrategiesdo",
+      "note": "t-stat du TSMOM K = 1. La suite de la phrase : « notgeneratestatisticallysignificantpayoffsonacommon5%level »."
+    },
+    {
+      "name": "formation_period_return_winner_12_1_1_pct",
+      "value": 1167.23,
+      "unit": "%",
+      "quoted": "12-1-1 −19.35 72.31 149.07 268.46 1167.23",
+      "note": "Table A.3 Panel A : rendements moyens de PERIODE DE FORMATION des cinq quintiles de la 12-1-1, du perdant au gagnant. L'etalement est parfaitement monotone en formation (−19.35% a 1167.23%) alors qu'il ne l'est pas du tout en rendement predit : c'est le coeur du resultat negatif, le tri fonctionne mais ne predit rien."
+    },
+    {
+      "name": "no_linear_spread_in_predicted_returns",
+      "value": null,
+      "unit": null,
+      "quoted": "thereisnolinearspreadinpredictedreturnsaswemovefrom",
+      "note": "Resultat qualitatif adosse a l'entree precedente : aucun etalement lineaire des rendements predits du perdant au gagnant, dans les deux univers, malgre l'etalement lineaire net des rendements de formation."
+    },
+    {
+      "name": "extreme_monthly_payoff_excluded_12_1_1_pct",
+      "value": 540.51,
+      "unit": "%_per_month",
+      "quoted": "−294.28% and 540.51% (−104.85% and 154.97%), 182.00% and",
+      "note": "Ordre de grandeur des valeurs extremes retirees au trimming pour la 12-1-1 (long groupe 5, short groupe 1) : −294.28% et +540.51% sur un seul mois. Mesure la queue de distribution a laquelle ces payoffs sont adosses."
+    },
+    {
+      "name": "avg_market_cap_excluded_coins_usd",
+      "value": 12000,
+      "unit": "USD",
+      "quoted": "those80%ofcoinsthatwereexcludedfromthissampleisaboutUSD12,000",
+      "note": "Note a de la Table A.2 : la capitalisation moyenne des 80% de coins exclus du sous-echantillon top-30 est d'environ 12 000 USD. L'univers principal de 143 cryptos contient donc des actifs d'une taille ou aucune execution serieuse n'est possible."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun cout de transaction, aucun spread bid-ask, aucun cout ni contrainte d'emprunt de titres, alors que la moitie des strategies est short et que l'univers contient des coins a 12 000 USD de capitalisation.",
+    "Aucune metrique de type IC ou correlation de rang : le papier ne rapporte que des payoffs moyens de portefeuille et des t-statistiques. Rien ne permet de reconstruire un IC a partir de ce qui est publie.",
+    "Aucune correction pour tests multiples, alors que le papier essaie 3 fenetres de formation x 2 variantes de jambes (5-1 et 4-2) x 2 traitements (brut, trimme) x 2 univers, plus 3 TSMOM, soit 27 statistiques dont deux seulement sont significatives.",
+    "La methode d'inference n'est pas decrite : pas de mention de Newey-West, d'erreurs-types robustes, ni de p-valeurs exactes, alors que les skewness (jusqu'a 6.32) et kurtosis (jusqu'a 44.39) de la Table A.1 rendent l'hypothese de normalite intenable.",
+    "Aucun traitement explicite du biais du survivant ni des radiations : la seule regle enoncee est que la crypto ait des donnees en periode de formation.",
+    "Aucune decomposition par sous-periode ou par regime, alors que 2014-2018 contient la bulle de 2017 et son effondrement, et que la Fig. 1 des rendements cumules n'est pas chiffree dans le texte.",
+    "Le prix utilise (close coinmarketcap ?), l'heure exacte de rebalancement, le fuseau horaire et le lag de disponibilite des donnees ne sont pas precises.",
+    "L'unite des payoffs TSMOM (17.71, 18.22, 3.94) n'est jamais ecrite : seule la legende de la Table 1 declare le pourcent par mois, et elle ne couvre pas le TSMOM.",
+    "Les ecarts-types et t-statistiques du sous-echantillon top-30 ne sont pas donnes en Table A.1, qui ne couvre que l'univers complet.",
+    "Aucun test de sensibilite au choix du quintile ni au nombre de groupes ; le decoupage en cinq est repris de Fama et French (2008) sans justification propre a un univers de largeur variable (89 actifs en moyenne)."
+  ],
+  "transposability": {
+    "what_transfers": "Le patron de construction : tri transversal sur rendement cumule passe avec un mois de saut (t-12 a t-2), groupes equipomderes, jambe longue moins jambe courte, detention fixe, rebalancement a frequence fixe. La variante moins extreme (groupe 4 contre groupe 2) comme test de robustesse du tri. Le trimming des deux observations les plus extremes de chaque serie comme controle de dependance aux queues. La regle TSMOM (signe du rendement cumule passe) transferable telle quelle a neuf futures, ou elle est meme mieux adaptee qu'un tri transversal. Et surtout le geste de diagnostic le plus utile du papier : verifier separement l'etalement en periode de FORMATION et l'etalement en rendement PREDIT, puisqu'un tri parfaitement monotone en formation peut ne rien predire.",
+    "what_does_not_transfer": [
+      "Le decoupage en quintiles : avec neuf futures, un quintile vaut moins de deux instruments. Tout le dispositif de portefeuille de Fama-French (2008) suppose une largeur transversale d'ordre 89 a 143, pas 9.",
+      "L'horizon mensuel : formation de 12 ou 6 mois et detention d'un mois n'ont pas de traduction directe dans un cadre intraday, et un simple changement d'echelle n'est pas une transposition.",
+      "La metrique : payoff moyen de portefeuille et t-statistique, la notre est un IC. Un resultat annonce ici n'est ni comparable ni convertible dans notre harnais.",
+      "L'univers lui-meme : des cryptos Proof-of-Work dont 80% pesent en moyenne 12 000 USD, avec des rendements mensuels de +1087% a −569%. Nos neuf futures sont liquides, reglementes et a distribution incomparablement moins extreme ; les queues qui pilotent tout ici n'existent pas chez nous.",
+      "Le marche continu 24/7 des cryptos : pas de cloture, pas de session, pas de gap overnight, alors que nos futures ont des sessions, des fuseaux et des lags de publication.",
+      "Le conditionnement de l'univers a la capitalisation boursiere : nos instruments n'ont pas de capitalisation, et l'analogue (open interest, volume) n'est pas la meme chose. Le filtre Proof-of-Work n'a aucun equivalent non plus.",
+      "L'hypothese implicite de short sans cout ni contrainte sur des actifs micro-capitalises : chez nous le short d'un future est symetrique et bon marche, ce qui rend nos payoffs non comparables aux leurs meme a construction identique.",
+      "Le contexte d'efficience de marche : la question du papier est de savoir si le marche crypto est efficient, pas de produire un signal exploitable. Sa conclusion est une absence, et une absence sur un autre univers ne se transporte pas."
+    ],
+    "what_aligns_well": "Trois choses tombent juste. D'abord le statut du resultat : c'est un papier qui trouve une absence et le dit, ce qui en fait une entree utile au registre des idees deja essayees plutot qu'une cible de replication. Ensuite la discipline d'outliers : le seul resultat significatif du papier n'apparait qu'apres trimming et change de signe, exactement le genre de fragilite que notre harnais doit detecter avant de croire un chiffre. Enfin le decompte honnete : le papier expose ses 27 statistiques et n'en cache aucune, ce qui est la meme exigence que notre invariant III, meme s'il n'en tire pas de correction pour tests multiples."
+  },
+  "implementability_notes": {
+    "value": "Non implementable tel quel dans notre univers : le signal repose sur un tri transversal en quintiles qui exige des dizaines d'actifs, et son horizon est mensuel. Ce que l'on peut en retenir est la regle TSMOM (signe du rendement cumule passe), qui ne depend pas de la largeur transversale, et le controle formation-contre-prediction.",
+    "note": "Cette cle n'est pas au schema ; elle est ajoutee au titre des champs supplementaires autorises."
+  }
+}

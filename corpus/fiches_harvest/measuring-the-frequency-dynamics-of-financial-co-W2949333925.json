@@ -1,0 +1,238 @@
+{
+  "fiche_id": "measuring-the-frequency-dynamics-of-financial-co-W2949333925",
+  "written": "2026-09-24",
+  "written_by": "session d'extraction isolée (Claude Opus 5)",
+  "source": {
+    "authors": "Jozef Baruník, Tomáš Křehlík",
+    "title": "Measuring the frequency dynamics of financial connectedness and systemic risk",
+    "year": 2017,
+    "source_url": "https://arxiv.org/pdf/1507.01729",
+    "pdf": "corpus/pdf/measuring-the-frequency-dynamics-of-financial-co-W2949333925.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "peer_reviewed_evidence": "Le texte fourni est la version arXiv:1507.01729v4 [stat.ME] du 19 Dec 2017, datée 20 décembre 2017. La note de bas de page de titre remercie « the editor George Tauchen, an associate editor, two anonymous referees », ce qui atteste d'un passage en revue à comité de lecture. Le nom de la revue n'apparaît pas dans le texte fourni et n'est donc pas renseigné ici."
+  },
+  "claim": "La connectedness entre variables financières doit être mesurée par bande de fréquence, et pas seulement agrégée dans le domaine temporel. Les auteurs définissent la représentation spectrale de la décomposition généralisée de la variance d'erreur de prévision (GFEVD) et en tirent deux mesures — la « frequency connectedness » (dont la somme sur une partition de (−π,π) reconstruit exactement la connectedness totale de Diebold-Yilmaz) et la « within connectedness » (non pondérée par la puissance spectrale de la bande). L'argument central : deux systèmes de coefficients opposés (+0.9 et −0.9) produisent la même connectedness totale à tout horizon de prévision alors que sa source est à l'opposé du spectre ; faire varier l'horizon H dans le domaine temporel ne révèle donc pas les réponses fréquentielles hétérogènes. Empiriquement, sur les volatilités réalisées de onze grandes institutions financières américaines (2000-2016, fenêtre glissante de 300 jours, VAR(2) sur log-volatilité), les pics de connectedness pendant les crises sont portés surtout par la bande longue (> 1 mois), tandis que les périodes calmes montrent des composantes court et moyen terme ; et la connectedness haute fréquence est en grande partie un artefact des corrélations transversales contemporaines, ce que montre le recalcul en n'utilisant que la diagonale de la matrice de covariance des résidus.",
+  "universe": "Deux univers. (1) Simulations : processus VAR(1) bivariés x1,t = β1·x1,t−1 + s·x2,t−1 + ε1,t et x2,t = s·x1,t−1 + β2·x2,t−1 + ε2,t, bruits N(0,Σ) avec corrélation ρ ∈ {0, 0.9}, 100 simulations de longueur 1000 et burn-in de 100. (2) Empirique : onze institutions financières américaines majeures — WFC, USB, MS, JPM, GS, C, BK, BAC, AXP, AIG, PNC — sur 2000-2016, 4216 jours de bourse, plus FNM et FRE en contrôle de robustesse sur la période s'achevant en 2010 (2617 observations). La variable étudiée est la volatilité réalisée journalière en logarithme, calculée comme somme des carrés des rendements intra-journaliers à 5 minutes sur les heures d'ouverture du NYSE (9h30-16h00), horodatages synchronisés, week-ends, jours fériés fédéraux, 24-26 décembre et 31 décembre-2 janvier exclus. Données brutes de TICK Data et www.price-data.com.",
+  "horizon": {
+    "value": null,
+    "reason": "Le papier ne prédit rien : il mesure une propriété de décomposition de variance d'un système, pas un rendement futur. L'horizon H de la GFEVD y est explicitement dégradé au rang de facteur d'approximation sans interprétation temporelle dans le domaine fréquentiel, et sa valeur retenue dans l'application empirique n'est pas donnée. Les seuls « horizons » sont des bandes de fréquence en jours (voir reported_results, entrée frequency_bands_days), qui décrivent la persistance d'un choc, pas une date de sortie.",
+    "frequency_bands_days": {
+      "short_term": "[1, 5]",
+      "medium_term": "(5, 20]",
+      "long_term": "(20, 300]"
+    }
+  },
+  "signal_construction": {
+    "value": "Chaîne entièrement déterministe, sans paramètre libre au-delà de l'ordre du VAR, de la longueur de fenêtre et des bornes de bande. (1) Sur une fenêtre glissante de 300 jours ouvrés, estimer un VAR(p) avec constante sur les logarithmes des volatilités réalisées journalières des N séries du système ; le papier retient p = 2. (2) Inverser en représentation MA(∞) tronquée à H pas par la récursion Ψ̂0 = I, Ψ̂h = Σ_j Φ(j)·Ψ̂h−1, et estimer Σ̂ = ε̂'ε̂/(T−z). (3) Passer au domaine fréquentiel par transformée de Fourier discrète des coefficients MA : Ψ̂(ω) = Σ_{h=0}^{H−1} Ψ̂h·e^(−2iπω/H), pour ω dans {⌊aH/2π⌋,…,⌊bH/2π⌋} définissant la bande d = (a,b). (4) Former le spectre de causation généralisé (f̂(ω))_{j,k} = σ̂_kk^(−1)·((Ψ̂(ω)Σ̂)_{j,k})² / (Ψ̂(ω)Σ̂Ψ̂'(ω))_{j,j} et la fonction de pondération Γ̂_j(ω) = (Ψ̂(ω)Σ̂Ψ̂'(ω))_{j,j} / (Ω)_{j,j} avec Ω = Σ_ω Ψ̂(ω)Σ̂Ψ̂'(ω). (5) La décomposition de variance sur la bande est (θ̂_d)_{j,k} = Σ_ω Γ̂_j(ω)·(f̂(ω))_{j,k} ; normaliser par la somme en ligne de θ∞. (6) Deux agrégats : within connectedness CW_d = 100·(1 − Tr{θ̃_d}/Σθ̃_d) et frequency connectedness CF_d = 100·(Σθ̃_d/Σθ̃∞ − Tr{θ̃_d}/Σθ̃∞) = CW_d·(Σθ̃_d/Σθ̃∞). Sur une partition de (−π,π), les CF_d somment exactement à la connectedness totale C∞. (7) Pour séparer la causalité de la simple corrélation contemporaine, refaire le calcul en ne gardant que la diagonale de la matrice de covariance des résidus. (8) En grand système, bootstrap paramétrique pour débiaiser (référence Engsted et Pedersen, 2014). Implémentation de référence fournie par les auteurs : package R frequencyConnectedness (CRAN, github.com/tomaskrehlik/frequencyConnectedness).",
+    "identification": "Décomposition généralisée de Pesaran et Shin (1998), invariante à l'ordre des variables — pas de factorisation de Cholesky, donc pas d'ordonnancement à justifier.",
+    "output_shape": "Le produit est une matrice N×N par bande et par date, agrégée en un scalaire par bande et par date pour le système entier. Le papier ne produit à aucun moment un score par instrument et par date, ce qui est le format dont nous aurions besoin.",
+    "note": "H n'est pas fixé numériquement dans l'application empirique : les auteurs conseillent seulement de le prendre « suffisamment haut », particulièrement quand les basses fréquences intéressent. z, la correction de degrés de liberté, dépend de la spécification du VAR et n'est pas chiffrée."
+  },
+  "reported_results": [
+    {
+      "name": "sample_trading_days",
+      "value": 4216,
+      "unit": "jours de bourse",
+      "quoted": "4216 trading days.",
+      "note": "Échantillon empirique 2000-2016 pour les onze titres conservés. La Table 5 confirme 4216 observations par titre, sauf FNM et FRE à 2617 (2000-01-03 à 2010-07-07)."
+    },
+    {
+      "name": "n_institutions",
+      "value": 11,
+      "unit": "titres",
+      "spelled_out": "eleven",
+      "quoted": "We concentrate on the eleven major",
+      "note": "WFC, USB, MS, JPM, GS, C, BK, BAC, AXP, AIG, PNC. FNM et FRE portent le système à 13 sur la sous-période s'achevant en 2010, en contrôle de robustesse seulement."
+    },
+    {
+      "name": "realized_volatility_sampling_minutes",
+      "value": 5,
+      "unit": "minutes",
+      "quoted": "is computed using 5-minute returns",
+      "note": "Volatilité réalisée journalière = somme des carrés des rendements intra-journaliers, sur les heures du NYSE 9h30-16h00, puis passée en logarithme avant le VAR."
+    },
+    {
+      "name": "rolling_window_days",
+      "value": 300,
+      "unit": "jours de bourse",
+      "quoted": "computed on a moving window with a length of one year (300 days).",
+      "note": "La longueur de fenêtre borne aussi la fréquence la plus basse mesurable à chaque date : rien au-delà de 300 jours n'est observable."
+    },
+    {
+      "name": "var_lags",
+      "value": 2,
+      "unit": "retards",
+      "spelled_out": "two",
+      "quoted": "a vector auto-regression with two lags",
+      "note": "Avec constante, sur les logarithmes des volatilités. Les auteurs disent avoir essayé d'autres longueurs de retard sans changement matériel des résultats, mais ne publient pas ces variantes."
+    },
+    {
+      "name": "frequency_bands_days",
+      "value": null,
+      "quoted": "medium-term (d2∈ (5, 20]), and long-term (d3∈ (20, 300])",
+      "note": "Résultat qualitatif : les trois bandes retenues sont d1 ∈ [1, 5] jours (jour à semaine), d2 ∈ (5, 20] (semaine à mois) et d3 ∈ (20, 300] (mois à un an de fenêtre). Ce découpage est un choix des auteurs, pas une estimation."
+    },
+    {
+      "name": "total_connectedness_min_pct",
+      "value": 55,
+      "unit": "%",
+      "quoted": "55% and 85%, with a substantial variation over the course of 16 years.",
+      "note": "Plancher de la connectedness totale sur 2000-2016, lu sur la Figure 1 (a) ; le creux se situe dans les périodes calmes de 2005-2006. Aucune série chiffrée n'accompagne la figure."
+    },
+    {
+      "name": "total_connectedness_max_pct",
+      "value": 85,
+      "unit": "%",
+      "quoted": "55% and 85%, with a substantial variation over the course of 16 years.",
+      "note": "Plafond de la connectedness totale ; le pic correspond à la crise financière américaine de 2008."
+    },
+    {
+      "name": "sim_corr_only_total_connectedness",
+      "value": 44.68,
+      "unit": "%",
+      "quoted": "β = 0.00, s = 0.00, ρ = 0.90 — Connectedness : Total 44.68, (π/2,π) 44.75, (π/4,π/2) 44.74, (0,π/4) 44.72 ; Connectedness without correlation : Total 0.47, (π/2,π) 0.41, (π/4,π/2) 0.41, (0,π/4) 0.41",
+      "quoted_source": "0.00 0.00 0.90 44.68 44.75 44.74 44.72 0.47 0.41 0.41 0.41",
+      "quoted_repair": "table",
+      "note": "Table 1. Deux processus SANS aucun lien dynamique (β = 0, s = 0) mais dont les bruits sont corrélés à 0.9 affichent une connectedness de ~45 %, uniformément répartie sur toutes les bandes. C'est le piège central du papier pour nous : une corrélation contemporanée pure se lit comme de la connectedness."
+    },
+    {
+      "name": "sim_corr_only_total_connectedness_nulled",
+      "value": 0.47,
+      "unit": "%",
+      "quoted": "β = 0.00, s = 0.00, ρ = 0.90 — Connectedness without correlation : Total 0.47, (π/2,π) 0.41, (π/4,π/2) 0.41, (0,π/4) 0.41",
+      "quoted_source": "0.00 0.00 0.90 44.68 44.75 44.74 44.72 0.47 0.41 0.41 0.41",
+      "quoted_repair": "table",
+      "note": "Même ligne de la Table 1, colonnes de droite : en n'utilisant que la diagonale de la matrice de covariance estimée des résidus, la mesure retombe correctement à zéro. Le correctif fonctionne donc sur données simulées."
+    },
+    {
+      "name": "sim_ar_positive_total_connectedness",
+      "value": 37.65,
+      "unit": "%",
+      "quoted": "β = 0.90, s = 0.09, ρ = 0.00 — Connectedness : Total 37.65, (π/2,π) 0.69, (π/4,π/2) 1.26, (0,π/4) 37.77",
+      "quoted_source": "0.90 0.09 0.00 37.65 0.69 1.26 37.77 37.24 0.64 1.22 37.84",
+      "quoted_repair": "table",
+      "note": "Table 1, coefficients AR positifs, bruits non corrélés : toute la connectedness vient de la bande basse fréquence."
+    },
+    {
+      "name": "sim_ar_positive_low_freq_band_connectedness",
+      "value": 37.77,
+      "unit": "%",
+      "quoted": "β = 0.90, s = 0.09, ρ = 0.00 — Connectedness : (0,π/4) 37.77, contre 0.69 sur (π/2,π) et 1.26 sur (π/4,π/2)",
+      "quoted_source": "0.90 0.09 0.00 37.65 0.69 1.26 37.77 37.24 0.64 1.22 37.84",
+      "quoted_repair": "table",
+      "note": "La bande (0,π/4) porte 37.77 des 37.65 de connectedness totale ; les deux autres bandes sont quasi nulles."
+    },
+    {
+      "name": "sim_ar_negative_total_connectedness",
+      "value": 39.33,
+      "unit": "%",
+      "quoted": "β = −0.90, s = −0.09, ρ = 0.00 — Connectedness : Total 39.33, (π/2,π) 38.91, (π/4,π/2) 0.96, (0,π/4) 0.87",
+      "quoted_source": "-0.90 -0.09 0.00 39.33 38.91 0.96 0.87 38.97 38.68 0.81 0.71",
+      "quoted_repair": "table",
+      "note": "Table 1, coefficients de signe opposé et de même amplitude : connectedness totale comparable au cas positif (39.33 contre 37.65), mais source entièrement déplacée vers les hautes fréquences. C'est l'argument qui justifie le papier."
+    },
+    {
+      "name": "sim_ar_negative_high_freq_band_connectedness",
+      "value": 38.91,
+      "unit": "%",
+      "quoted": "β = −0.90, s = −0.09, ρ = 0.00 — Connectedness : (π/2,π) 38.91, contre 0.96 sur (π/4,π/2) et 0.87 sur (0,π/4)",
+      "quoted_source": "-0.90 -0.09 0.00 39.33 38.91 0.96 0.87 38.97 38.68 0.81 0.71",
+      "quoted_repair": "table",
+      "note": "Miroir exact du cas positif : la masse spectrale est sur la bande haute fréquence."
+    },
+    {
+      "name": "n_simulations",
+      "value": 100,
+      "unit": "réplications",
+      "quoted": "The results are based on 100 simulations of VAR.",
+      "note": "Séries de longueur 1000, burn-in de 100. L'estimateur publié est la moyenne des 100 réplications, l'erreur reportée entre parenthèses est l'écart-type d'échantillon."
+    },
+    {
+      "name": "crisis_connectedness_driven_by_low_frequency",
+      "value": null,
+      "quoted": "above are driven mostly by low-frequency components (d3 movements longer than one month).",
+      "note": "Résultat qualitatif principal de la partie empirique : les périodes 2001 à mi-2003, mi-2007 à mi-2010 et 2012 — celles de forte connectedness totale — sont portées par la bande longue. Aucune statistique de test n'accompagne cette lecture, qui est faite sur figure."
+    },
+    {
+      "name": "high_frequency_connectedness_is_correlation_artifact",
+      "value": null,
+      "quoted": "during the crisis is mainly created by an increase in contemporaneous short-term correlations",
+      "note": "Résultat qualitatif : en annulant les corrélations transversales des résidus, la structure de la within connectedness change fortement — la composante haute fréquence est largement portée par la corrélation contemporanée, alors que les basses fréquences résistent. Les auteurs en concluent deux moteurs distincts du risque systémique en crise : corrélations contemporaines et persistance des chocs."
+    },
+    {
+      "name": "papandreou_event_short_term_jump_pct",
+      "value": 5,
+      "unit": "points de %",
+      "quoted": "than 5% and the medium-term connectedness likewise.",
+      "note": "Étude d'événement, crise grecque : la révélation des déficits par Papandreou fait bondir instantanément la connectedness court terme de plus de 5 points, et le moyen terme de même. Lecture sur figure, sans test."
+    },
+    {
+      "name": "short_term_connectedness_min_pct",
+      "value": 10,
+      "unit": "%",
+      "quoted": "ranges from 10% to 35% throughout the sample",
+      "note": "Plage de la connectedness court terme (bande jour-semaine) sur tout l'échantillon ; sert d'échelle pour juger qu'un saut de 5 points est significatif — argument d'ordre de grandeur, pas statistique."
+    },
+    {
+      "name": "short_term_connectedness_max_pct",
+      "value": 35,
+      "unit": "%",
+      "quoted": "ranges from 10% to 35% throughout the sample",
+      "note": "Borne haute de la même plage."
+    },
+    {
+      "name": "second_greek_bailout_long_term_jump_pct",
+      "value": 15,
+      "unit": "points de %",
+      "quoted": "connectedness has jumped by 15%.",
+      "note": "Le second plan d'aide à la Grèce fait sauter la connectedness long terme de 15 points : les auteurs y lisent un basculement des anticipations vers des chocs persistants. Lecture sur figure."
+    },
+    {
+      "name": "fnm_fre_connectedness_difference_max_pct",
+      "value": 6,
+      "unit": "points de %",
+      "quoted": "peaks at approximately 6% in mid-2006",
+      "note": "Contrôle de robustesse (appendice B.1) : inclure Fannie Mae et Freddie Mac augmente la connectedness totale, d'au plus ~6 points vers mi-2006, sans changer la dynamique. Mesure de la sensibilité du résultat à la composition du système."
+    },
+    {
+      "name": "correlated_noise_total_connectedness_text",
+      "value": 45,
+      "unit": "%",
+      "quoted": "estimated at approximately 45, with an equal footprint on all scales.",
+      "note": "Formulation en prose du résultat de simulation ci-dessus (44.68 en Table 1) : des bruits corrélés sans lien dynamique produisent ~45 % de connectedness, également répartie sur toutes les échelles."
+    }
+  ],
+  "what_is_missing": [
+    "Aucun exercice prédictif : la connectedness est mesurée, jamais utilisée pour prévoir un rendement, une volatilité ou un drawdown. Il n'existe dans tout le papier aucun IC, aucun t-stat de prévision, aucun R² hors échantillon.",
+    "Aucune règle de trading, aucun P&L, aucun coût de transaction, aucun horizon de détention.",
+    "La valeur de H (horizon d'approximation de la MA) retenue dans l'application empirique n'est jamais donnée : les auteurs conseillent seulement de le prendre « suffisamment haut ». Une réplication doit donc le choisir elle-même.",
+    "La correction de degrés de liberté z dans Σ̂ = ε̂'ε̂/(T−z) est dite dépendre de la spécification du VAR, sans formule ni valeur.",
+    "Le nombre de réplications du bootstrap paramétrique utilisé pour débiaiser les mesures empiriques n'est pas donné ; seules des bandes (5 %, 95 %) sont tracées en appendice, sans tableau de valeurs.",
+    "Les séries des Figures 1 à 4 et 6-7 ne sont pas tabulées : les seules valeurs empiriques chiffrées du papier sont des bornes lues en prose (55-85 %, 10-35 %, sauts de 5 %, 15 %, 6 %). Une réplication ne peut comparer ses chiffres qu'à des ordres de grandeur.",
+    "Les résultats des longueurs de retard alternatives, annoncés comme sans changement matériel, sont « available upon request » et absents du papier.",
+    "Le nettoyage des rendements 5 minutes (traitement des barres manquantes, des enchères d'ouverture et de clôture, des jours écourtés) n'est pas décrit au-delà de l'exclusion des week-ends, fériés fédéraux, 24-26 décembre et 31 décembre-2 janvier.",
+    "Les données brutes viennent de TICK Data et www.price-data.com, sources payantes ; aucune procédure de reconstruction à partir de données publiques n'est fournie.",
+    "Aucun test formel de stationnarité locale n'est reporté, alors que tout l'édifice repose sur l'hypothèse que la fenêtre de 300 jours est localement stationnaire — les auteurs écrivent seulement qu'ils la « confirment ».",
+    "Aucune classe d'actifs hors actions financières américaines : ni futures, ni change, ni matières premières, ni intraday.",
+    "Aucune analyse de sensibilité à la longueur de la fenêtre glissante (300 jours), qui borne pourtant la bande longue par construction.",
+    "Aucun critère chiffré pour déclarer une variation de connectedness significative : les lectures d'étude d'événement (« a 5% jump is significant ») reposent sur une comparaison d'amplitude, pas sur un test."
+  ],
+  "transposability": {
+    "what_transfers": "Trois choses. (1) La machinerie : VAR(p) sur les log-volatilités réalisées d'un panier, inversion en MA, transformée de Fourier discrète des coefficients MA, décomposition de variance généralisée par bande. Tout est déterministe, sans dépendance réseau, sans paramètre ajusté sur le résultat, et calculable sur une fenêtre fermée en t — donc compatible par construction avec l'invariant II si la fenêtre s'arrête à la dernière barre disponible. Une implémentation de référence existe (package R frequencyConnectedness) et peut servir de banc de vérification pour un portage Python. (2) L'avertissement, qui est le contenu le plus précieux du papier pour nous : une mesure de co-mouvement estimée avec une matrice de covariance de résidus non diagonale attribue à de la « connectedness » ce qui n'est que corrélation contemporanée — la simulation le chiffre, ~45 % de connectedness entre deux processus strictement indépendants dont seuls les bruits sont corrélés. Le correctif est mécanique : recalculer en n'utilisant que la diagonale de Σ̂ et comparer. Tout état de régime qu'on dériverait d'une matrice de covariance intraday devrait passer ce contrôle. (3) L'idée d'état de marché, si l'on abandonne l'ambition de signal transversal : la part de connectedness portée par la bande courte contre la bande longue est un scalaire par date, calculable sur nos neuf futures, et candidat naturel à une variable de régime au sens de l'étape 05 — c'est-à-dire un conditionnement, pas un score.",
+    "what_does_not_transfer": [
+      "La sortie elle-même. Le papier produit un (ou trois) scalaire(s) par date pour le système entier, pas un score par instrument et par date. Notre harnais juge un score transversal par un IC ; tel quel, cet objet n'a rien à lui donner à manger. Il faudrait passer aux éléments directionnels de la matrice (connectedness émise / reçue par instrument), que le papier définit mais n'exploite ni ne valide empiriquement.",
+      "La métrique. Aucun IC, aucun t-stat de prévision, aucun Sharpe n'existe dans ce papier ; ses chiffres sont des parts de variance en pourcentage. Il n'y a donc aucun résultat annoncé à répliquer au sens de notre porte : il n'existe pas de cible chiffrée contre laquelle se mesurer.",
+      "L'univers. Onze à treize actions d'un seul secteur, cotées sur la même place, sur la même session 9h30-16h00, « time-synchronized by the same timestamps ». Nos neuf futures traversent plusieurs classes d'actifs et plusieurs sessions quasi continues : la synchronisation des barres, gratuite chez eux, est chez nous un travail à part entière, et une mauvaise synchronisation fabrique exactement le biais de corrélation contemporanée que le papier dénonce.",
+      "La définition de la volatilité réalisée journalière. Sur actions, une journée de bourse est un intervalle propre. Sur futures, le roll de contrat, la session de nuit et le multiplicateur cassent la définition : la somme des carrés des rendements 5 minutes « du jour » dépend de choix (quelle session, quel contrat, quelle règle de roll) que le papier n'a pas à faire et nous si — et chacun de ces choix est une valeur que nous n'avons pas le droit d'inventer.",
+      "La période. 2000-2016, dont l'essentiel du signal vient de la crise 2007-2009 et de la crise de la dette européenne. Notre tranche pool commence le 2016-01-03, c'est-à-dire après la fin de leur échantillon : il n'y a aucun recouvrement, et la totalité de leurs constats empiriques porte sur des régimes que nous n'observerons pas.",
+      "La fréquence. Le papier est journalier avec des bandes de 1 à 300 jours ; sa bande « courte » est de 1 à 5 jours. Un projet intraday devrait tout redescendre d'un ou deux ordres de grandeur, et rien ne garantit que la séparation court/long conserve son sens économique à ces échelles — la justification invoquée (hétérogénéité des horizons d'investissement, cycles de consommation) ne dit rien de l'intraday.",
+      "L'étude d'événement (sections 4.2.1 et Figure 4). Elle est narrative : chaque saut de la courbe est rapproché d'un titre de presse, sans test, sans fenêtre pré-enregistrée, sans contrefactuel. C'est le contraire de notre invariant IV et cela ne peut fonder aucune hypothèse.",
+      "La taille du système. Avec N = 11 séries et p = 2, le VAR compte déjà beaucoup de paramètres pour une fenêtre de 300 points, ce qui motive leur bootstrap de débiaisement ; N = 9 change le compte mais pas le problème, et le nombre de réplications du bootstrap n'étant pas publié, le débiaisement n'est pas reproductible à l'identique.",
+      "Les valeurs numériques empiriques. Les seules publiées sont des bornes lues sur figures (55-85 %, 10-35 %) pour des actions financières américaines sur 2000-2016. Elles ne disent rien de ce qu'on devrait obtenir sur neuf futures après 2016, et les prendre comme cible serait une faute de lecture.",
+      "La fenêtre de 300 jours. Elle borne la fréquence la plus basse mesurable ; toute bande « longue » que nous définirions serait bornée par notre propre longueur de fenêtre, donc non comparable à la leur."
+    ],
+    "what_aligns_well": "La discipline du papier tombe juste sur plusieurs points. Il refuse d'interpréter H comme un horizon de prévision et le traite comme un simple facteur d'approximation : c'est exactement le genre de confusion qui fabriquerait chez nous un look-ahead déguisé en horizon. Il traite la non-stationnarité par approximation locale sur fenêtre glissante plutôt que par un modèle global ajusté sur tout l'échantillon, ce qui est structurellement compatible avec un Panel point-in-time. Il isole explicitement une source de biais — la corrélation transversale contemporanée — et fournit un contrôle mécanique pour la retirer, soit précisément la forme d'un contrôle de harnais plutôt que d'une vigilance. Il publie une implémentation de référence, ce qui rend un portage vérifiable ligne à ligne plutôt que de confiance. Et ses bandes de fréquence 1-5 jours / 5-20 jours / plus d'un mois recouvrent des durées de détention plausibles pour un opérateur seul, ce qui fait de la décomposition un candidat honnête de variable de régime — à condition d'assumer qu'elle entre dans la chaîne à l'étape 05 comme conditionnement, et jamais à l'étape 02 comme score.",
+    "verdict_note": "Ce papier n'est pas une cible de réplication : il n'annonce aucun résultat prédictif chiffré, donc rien à répliquer au sens de la porte. Sa valeur pour nous est double et ailleurs — un contrôle de biais (corrélation contemporanée contre lien dynamique) et un candidat de variable de régime."
+  }
+}
