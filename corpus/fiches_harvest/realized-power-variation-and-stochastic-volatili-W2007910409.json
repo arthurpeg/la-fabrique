@@ -1,0 +1,123 @@
+{
+  "fiche_id": "realized-power-variation-and-stochastic-volatili-W2007910409",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-19",
+  "source": {
+    "authors": "Ole E. Barndorff-Nielsen, Neil Shephard",
+    "title": "Realized power variation and stochastic volatility models",
+    "year": 2003,
+    "source_url": "https://projecteuclid.org/journals/bernoulli/volume-9/issue-2/Realized-power-variation-and-stochastic-volatility-models/10.3150/bj/1068128977.pdf",
+    "pdf": "corpus/pdf/realized-power-variation-and-stochastic-volatili-W2007910409.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "journal": "Bernoulli 9(2), 2003, 243-265"
+  },
+  "claim": {
+    "value": "Papier de théorie des probabilités, pas de prédiction de rendement. La variation de puissance réalisée (somme des |rendements intrajournaliers|^r), convenablement normalisée, converge en probabilité vers la volatilité de puissance intégrée sur un intervalle fixe quand la fréquence d'échantillonnage augmente, et suit asymptotiquement une loi de mélange normal ; une version studentisée par une quantité observable ([y][2r]) est asymptotiquement N(0,1), sans connaître la dérive ni la volatilité. Cas couverts : volatilité réalisée (r=2) et variation absolue réalisée (r=1). En simulation, la variation absolue réalisée se comporte mieux en échantillon fini que la variation quadratique, et la transformation logarithmique rend l'approximation normale précise dès des M modérés.",
+    "quoted": [
+      "Limit distribution results on realized power variation, that is, sums of absolute powers of increments",
+      "Hence the limit",
+      "theory is statistically feasible and does not depend upon knowledge of",
+      "Our work provides, in particular, a theory for the use of",
+      "sums of absolute returns."
+    ]
+  },
+  "universe": {
+    "value": "Aucune donnée de marché. Modèle de volatilité stochastique brownien (semimartingale à volatilité indépendante du brownien, sans sauts dans le prix) ; l'expérience de Monte Carlo simule un processus d'Ornstein-Uhlenbeck non gaussien pour la variance spot, dérive nulle.",
+    "quoted": [
+      "Instead of this we will work with the non-Gaussian",
+      "Throughout we have set the mean process",
+      "To examine the magnitude of this error we have",
+      "carried out a simulation."
+    ]
+  },
+  "horizon": {
+    "value": null,
+    "reason": "le papier ne prédit rien : il fournit un estimateur (et sa loi asymptotique) de la volatilité intégrée sur un intervalle fixe déjà écoulé, sans horizon de prévision"
+  },
+  "signal_construction": {
+    "value": "Pas un signal au sens trading, mais un estimateur de volatilité. Sur un intervalle [0,t] découpé en M pas de longueur delta = t/M : variation de puissance réalisée [y][r] = somme_j |y_j|^r des rendements intra-intervalle ; estimateur normalisé mu_r^{-1} delta^{1-r/2} [y][r] de la volatilité de puissance intégrée, mu_r = E|u|^r, u ~ N(0,1). Cas r=1 (variation absolue réalisée) : sqrt(pi/2) sqrt(delta) somme |y_j| estime l'intégrale de sigma ; erreur-type estimée à partir de la somme des carrés. Les auteurs recommandent de travailler en logarithme pour l'inférence. La condition r >= 1/2 est requise par le théorème.",
+    "quoted": [
+      "computed using sums of absolute values of intra-day returns on speculative assets",
+      "Hence we use the standard logarithmic transforma-",
+      "This theorem tells us that, for"
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "absolute_variation_better_finite_sample_than_quadratic",
+      "value": null,
+      "quoted": "The realized absolute variation version of the statistic has much better",
+      "note": "Qualitatif, lu sur des QQ-plots (Figure 2), sans chiffre. Suite de la phrase : la variation quadratique réalisée est « quite poorly behaved »."
+    },
+    {
+      "name": "quadratic_variation_poorly_behaved_finite_sample",
+      "value": null,
+      "quoted": "while the realized quadratic variation is quite poorly behaved.",
+      "note": "Qualitatif, simulation OU uniquement."
+    },
+    {
+      "name": "standardized_errors_fat_tailed_small_M",
+      "value": null,
+      "quoted": "random variables are too fat-tailed in small samples, with this problem reducing as M",
+      "note": "Les deux statistiques studentisées (7) et (8) ont des queues trop épaisses pour M petit."
+    },
+    {
+      "name": "log_transform_accurate_moderate_M",
+      "value": null,
+      "quoted": "approximation being accurate even for moderate values of M. This result carries over to",
+      "note": "Après transformation log (28) de la variation absolue réalisée ; « moderate » n'est pas chiffré, les M testés sont 12, 48, 144."
+    },
+    {
+      "name": "log_transform_standard_errors_stable",
+      "value": null,
+      "quoted": "now stabilized, almost not moving with n.",
+      "note": "Les erreurs-types de la version log ne varient presque plus avec le niveau de volatilité."
+    },
+    {
+      "name": "rpv_variance_increases_with_volatility_level",
+      "value": null,
+      "quoted": "while Figure 1 shows that the variance of the realized power variation increases with the level",
+      "note": "Conforme à la théorie : le dénominateur croît avec le niveau de volatilité."
+    },
+    {
+      "name": "monte_carlo_max_intervals_M",
+      "value": 144,
+      "quoted": "Again we vary M over 12, 48 and 144.",
+      "note": "Nombre de rendements intra-intervalle par intervalle unitaire dans la simulation ; valeurs 12, 48 et 144."
+    },
+    {
+      "name": "monte_carlo_sample_size",
+      "value": 10000,
+      "quoted": "subsection, with a sample size of 10 000. Again we vary M over 12, 48 and 144. The left-",
+      "spelled_out": "10 000",
+      "note": "Nombre d'intervalles simulés pour les QQ-plots ; le nombre est écrit avec une espace comme séparateur de milliers."
+    },
+    {
+      "name": "ou_persistence_parameter_lambda",
+      "value": 0.99,
+      "quoted": "a Γ(4, 8) marginal distribution, λ = −log(0.99) and Δ = 1, along with the associated",
+      "quoted_source": "a ˆ(t4, 8) marginal distribution, º ¼/C0log(0:99) and ˜ ¼ 1, along with the associated",
+      "quoted_repair": "math_notation",
+      "spelled_out": "0:99",
+      "note": "Paramètre de simulation : lambda = -log(0.99), intervalle Delta = 1, loi marginale Gamma(4, 8) pour la variance (le texte extrait rend ':' pour '.'). Paramètre de conception, pas un résultat mesuré."
+    }
+  ],
+  "what_is_missing": [
+    "aucune donnée empirique : tous les résultats chiffrés sont des simulations sur un processus OU",
+    "aucun résultat de prévision, aucun rendement, aucun IC : le papier ne dit pas si la variation absolue réalisée prédit quoi que ce soit",
+    "le modèle exclut les sauts du prix, le bruit de microstructure et la corrélation volatilité-rendement (effet de levier)",
+    "les résultats de finite-sample sont lus sur des graphiques (QQ-plots), sans tableau de taux de couverture chiffrés",
+    "aucune recommandation de fréquence d'échantillonnage sur données réelles ; « moderate values of M » n'est pas chiffré"
+  ],
+  "transposability": {
+    "what_transfers": "L'estimateur lui-même : variation absolue réalisée (somme des |rendements intrajournaliers|, normalisée par sqrt(pi/2) sqrt(delta)) et volatilité réalisée, calculables sur nos barres intraday des neuf futures, comme mesure de volatilité journalière ou brique d'un régime de volatilité ; et la préférence pour la version log et pour la variation absolue, plus robuste en échantillon fini.",
+    "what_does_not_transfer": [
+      "aucun signal prédictif : le papier ne fournit rien que le harnais d'IC puisse tester directement ; tout usage comme signal serait une hypothèse nouvelle, à pré-enregistrer",
+      "les conclusions de précision reposent sur un processus OU simulé sans sauts ni bruit de microstructure ; sur nos futures intraday, les sauts (annonces, ouvertures) et le bid-ask biaisent la variation de puissance réalisée",
+      "le cadre suppose volatilité indépendante du brownien, donc sans effet de levier, hypothèse fausse pour les futures d'indices actions",
+      "les valeurs M = 12, 48, 144 sont des paramètres de simulation, pas une fréquence validée sur un marché"
+    ],
+    "what_aligns_well": "Notre univers est intraday : les ingrédients (rendements intra-journaliers de barres) sont exactement ce que l'estimateur consomme, et la mesure n'utilise que des rendements passés de l'intervalle, donc sans look-ahead par construction. Utile surtout pour définir une variable de régime (étape 05) plutôt qu'un signal."
+  }
+}

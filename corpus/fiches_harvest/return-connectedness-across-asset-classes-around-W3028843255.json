@@ -1,0 +1,156 @@
+{
+  "fiche_id": "return-connectedness-across-asset-classes-around-W3028843255",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-20",
+  "source": {
+    "authors": "Elie Bouri, Oguzhan Cepni, David Gabauer, Rangan Gupta",
+    "title": "Return connectedness across asset classes around the COVID-19 outbreak",
+    "year": 2021,
+    "year_note": "Le texte fourni ne porte aucune date de publication ni revue ; 2021 est lu dans le nom du fichier de l'URL (Bouri_Return_2021.pdf). Les références les plus récentes datent de 2020.",
+    "source_url": "https://repository.up.ac.za/bitstream/2263/85783/1/Bouri_Return_2021.pdf",
+    "pdf": "corpus/pdf/return-connectedness-across-asset-classes-around-W3028843255.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": false,
+    "peer_reviewed_note": "Aucune revue n'est nommée dans le texte fourni (version de dépôt institutionnel, sans en-tête de journal). Faute de preuve d'arbitrage dans la source, marqué false ; à vérifier."
+  },
+  "claim": {
+    "value": "La connectedness (au sens Diebold-Yilmaz, estimée par TVP-VAR) des rendements journaliers entre or, pétrole brut, actions mondiales, indice dollar et obligations d'entreprise IG a été modérée et stable jusqu'à début 2020, puis a bondi avec l'épidémie de COVID-19 ; la structure du réseau a changé (l'indice obligataire devient transmetteur, le dollar récepteur net), et le TCI est positivement lié à un indice de presse de volatilité due aux maladies infectieuses, surtout dans les quantiles hauts. Étude descriptive, sans prédiction de rendement.",
+    "quoted": [
+      "that the dynamic total connectedness across the ﬁve assets was moderate and quite stable until early",
+      "After that, the total connectedness spikes and the structure of the network of connectedness",
+      "the bond index becomes the main transmitters",
+      "the USD index is a net receiver of shocks to"
+    ]
+  },
+  "universe": {
+    "value": "Cinq indices au pas journalier, Datastream : S&P GSCI Gold (spot), S&P GSCI Crude Oil (spot), MSCI World, indice USD, ETF PIMCO Investment Grade Corporate Bond. Du 12 mai 2011 au 12 mai 2020, 2349 observations journalières. Rupture COVID fixée au 13 janvier 2020.",
+    "quoted": [
+      "We employ daily data covering various assets like gold, crude oil, equities, currencies, and bonds.",
+      "consider the spot price index of S&P GSCI gold, S&P GSCI crude oil, MSCI World, USD index, and",
+      "The sample period is May 12, 2011 - May 12, 2020, yielding 2349 daily observations as dictated by data",
+      "3We choose January 13, 2020, as outbreak date of the coronavirus since the ﬁrst cross-border transmission of infection"
+    ]
+  },
+  "horizon": {
+    "value": "Aucun horizon de prédiction de rendement. La seule échelle temporelle est celle de la décomposition de variance : horizon de 20 pas (20 jours) pour la GFEVD, données journalières.",
+    "quoted": [
+      "Notes: Results are based on a TVP-VAR model with lag length of order one (BIC) and a 20-step-ahead generalized forecast error variance decomposition."
+    ]
+  },
+  "signal_construction": {
+    "value": "Pas un signal au sens prédictif. Mesure construite : rendements = premières différences logarithmiques journalières ; TVP-VAR(1) (ordre choisi par BIC) à variance-covariance variable, estimé par filtre de Kalman ; GFEVD généralisée (Koop-Pesaran-Potter, Pesaran-Shin) à 20 pas, normalisée par ligne ; TO_j = somme des parts de j dans la variance des autres, FROM_j = somme des parts des autres dans j, NET_j = TO_j − FROM_j, TCI_t = moyenne des TO (k^-1 somme), NPDC_ij = phi_ij − phi_ji. Utilisable chez nous au mieux comme variable de régime (TCI élevé = marché couplé) ou comme score de transmetteur net.",
+    "quoted": [
+      "that can be interpreted as the daily percentage changes",
+      "and Gabauer and Gupta (2018)1. In particular, we are estimating a TVP-VAR(1) as suggested by the",
+      "Bayesian information criterion (BIC) which can be outlined as:",
+      "NET jt =TO jt −FROM jt (5)",
+      "by Equation (6) thetotal connectedness index (TCI t) which represents the average impact one variable"
+    ],
+    "unspecified_parameters": "Les paramètres de lissage/oubli du filtre de Kalman et les priors du TVP-VAR ne sont pas donnés (renvoi à Koop et Korobilis 2013, 2014)."
+  },
+  "reported_results": [
+    {
+      "name": "tci_post_covid_pct",
+      "value": 27.2,
+      "unit": "% de la variance d'erreur de prévision",
+      "quoted": "as they constitute 27.2% of the total forecast error variance of the network",
+      "note": "TCI moyen sur la sous-période post-COVID (2020-01-13 → 2020-05-12), horizon GFEVD 20 jours."
+    },
+    {
+      "name": "tci_pre_covid_pct",
+      "value": 21.4,
+      "unit": "% de la variance d'erreur de prévision",
+      "quoted": "TCI 21.4",
+      "quoted_source": "NPDC transmitter 1.0 2.0 4.0 3.0 0.0 21.4",
+      "quoted_repair": "table",
+      "note": "Table 2, bloc pré-COVID (2011/08/19 - 2020/01/13) : la valeur TCI est dans la dernière colonne de la ligne NPDC, l'étiquette TCI étant à la fin de la ligne précédente. Hausse de 21.4 à 27.2 entre les deux périodes."
+    },
+    {
+      "name": "net_bond_index_post_covid",
+      "value": 18.6,
+      "unit": "points de % (TO − FROM)",
+      "quoted": "NET directional connectedness -9.2 2.2 6.2 -17.9 18.6 TCI",
+      "note": "Table 2 post-COVID, ordre des colonnes : Gold, Crude oil, MSCI World, USD index, Bond index. 18.6 est l'indice obligataire (TO 40.6 − FROM 22.0)."
+    },
+    {
+      "name": "net_usd_index_post_covid",
+      "value": -17.9,
+      "unit": "points de % (TO − FROM)",
+      "quoted": "NET directional connectedness -9.2 2.2 6.2 -17.9 18.6 TCI",
+      "note": "Table 2 post-COVID, quatrième colonne (USD index) : récepteur net."
+    },
+    {
+      "name": "net_msci_world_post_covid",
+      "value": 6.2,
+      "unit": "points de % (TO − FROM)",
+      "quoted": "NET directional connectedness -9.2 2.2 6.2 -17.9 18.6 TCI",
+      "note": "Table 2 post-COVID, troisième colonne (MSCI World) ; en pré-COVID le NET MSCI World vaut 1.4."
+    },
+    {
+      "name": "net_bond_index_pre_covid",
+      "value": -1.7,
+      "unit": "points de % (TO − FROM)",
+      "quoted": "NET directional connectedness 0.0 -0.2 1.4 0.6 -1.7 TCI",
+      "note": "Table 2 pré-COVID, cinquième colonne (Bond index) : légèrement récepteur net avant la rupture, transmetteur net (18.6) après."
+    },
+    {
+      "name": "to_others_bond_index_post_covid",
+      "value": 40.6,
+      "unit": "% cumulé",
+      "quoted": "Contribution TO others 26.1 21.7 33.4 14.4 40.6 136.2",
+      "note": "Table 2 post-COVID : contribution de l'indice obligataire aux autres (contre 11.9 en pré-COVID)."
+    },
+    {
+      "name": "npdc_bond_to_gold_usd_peak_pct",
+      "value": 15,
+      "unit": "%",
+      "quoted": "up to 15%. This ﬁnding reﬂects that the bond market became a sender of stress during the post-corona",
+      "note": "Pic des spillovers nets de l'indice obligataire vers l'or et l'indice USD pendant l'épidémie, lu sur la Figure 5 (non reproduite dans le texte)."
+    },
+    {
+      "name": "quantile_regression_tci_on_emv_id",
+      "value": null,
+      "quoted": "that the higher EVM is the higher is TCI especially on the upper end",
+      "note": "Régression quantile du TCI sur l'indice EMV infectious disease de Baker et al. (2020), à partir du 13 janvier 2020 : toutes les pentes positives, plus fortes dans les quantiles hauts. Aucun coefficient chiffré dans le texte (Figure 6 seulement)."
+    },
+    {
+      "name": "crude_oil_return_variance",
+      "value": 7.99,
+      "unit": "%² journalier",
+      "quoted": "Variance 1.035 7.99 0.893 0.186 0.16",
+      "note": "Table 1, deuxième colonne (Crude oil) : variance la plus forte des cinq séries, échantillon complet."
+    },
+    {
+      "name": "unconditional_corr_gold_usd",
+      "value": -0.355,
+      "quoted": "Gold 1.000 0.121 0.086 −0.355 0.235",
+      "quoted_source": "Gold 1.000 0 .121 0 .086 −0.355 0 .235",
+      "quoted_repair": "table",
+      "spelled_out": "−0.355",
+      "note": "Table 1, corrélation inconditionnelle or / indice USD sur l'échantillon complet ; l'extraction écrit le signe moins en caractère Unicode et disloque les autres cellules (« 0 .121 »)."
+    }
+  ],
+  "what_is_missing": [
+    "aucune prédiction de rendement, aucune mesure de pouvoir prédictif hors échantillon, aucun IC ni stratégie",
+    "paramètres du TVP-VAR (facteurs d'oubli, priors du filtre de Kalman) non donnés",
+    "aucun coefficient ni erreur-type chiffrés pour la régression quantile TCI ~ EMV-ID (figure seulement)",
+    "la sous-période post-COVID ne compte qu'environ quatre mois (2020-01-13 → 2020-05-12) : aucune inférence statistique sur la différence de TCI entre périodes",
+    "la Table 2 fait commencer la période pré-COVID le 2011/08/19 alors que l'échantillon démarre le 12 mai 2011 ; l'écart (période de chauffe du filtre ?) n'est pas expliqué",
+    "contradiction interne : l'abstract et le tableau font de l'indice obligataire le principal transmetteur post-COVID, alors que la section 4.2 le décrit comme en rôle de récepteur net persistant après la pandémie",
+    "le texte parle tantôt d'EMV tantôt d'EVM pour le même indice, et décrit en 4.4 l'EVM pré-2020 comme couvrant l'incertitude de politique économique, sans cohérence avec sa définition",
+    "heure de clôture et fuseau des séries Datastream non précisés alors que les marchés (or, pétrole, MSCI World, USD, ETF US) ferment à des heures différentes : les rendements journaliers ne sont pas synchrones",
+    "aucun coût de transaction, aucun multiplicateur, aucun contrat future : ce sont des indices spot et un ETF"
+  ],
+  "transposability": {
+    "what_transfers": "La construction du TCI / NET par TVP-VAR sur un panier multi-actifs est calculable sur nos futures (or, pétrole, indices actions, change, taux) à partir de rendements et, comme elle n'utilise que le passé via un filtre de Kalman, peut être rendue point-in-time. Le TCI est candidat comme variable de régime (réseau couplé vs découplé) pour conditionner un autre signal — un hybride — plutôt que comme signal en soi.",
+    "what_does_not_transfer": [
+      "le papier ne prédit rien : aucun résultat n'est un IC ou un rendement futur, il n'y a donc aucune hypothèse de signal à répliquer directement",
+      "la granularité est journalière et l'horizon GFEVD de 20 jours ; notre cadre est intraday",
+      "le résultat central repose sur un seul épisode (COVID, environ 80 jours de bourse post-rupture), qui tombe hors de toute validation possible et ne se répète pas",
+      "les instruments sont des indices spot et un ETF d'obligations d'entreprise IG, pas des futures ; l'ETF de crédit n'a pas d'équivalent direct dans un univers de futures de taux souverains",
+      "la régression quantile sur l'indice EMV-ID dépend d'une donnée externe de presse, publiée avec un délai et hors de notre catalogue",
+      "les moyennes de la Table 2 sont calculées sur toute la sous-période, donc avec information future par rapport à chaque date"
+    ],
+    "what_aligns_well": "Notre univers de neuf futures couvre la plupart des classes d'actifs du papier (actions, or, pétrole, change, taux), ce qui rend la mesure de connectedness croisée reconstructible. L'idée que la hiérarchie transmetteur/récepteur change de régime en crise rejoint notre usage des régimes (étape 05)."
+  }
+}

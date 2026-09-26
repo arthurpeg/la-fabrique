@@ -1,0 +1,176 @@
+{
+  "fiche_id": "from-the-bird-s-eye-to-the-microscope-a-survey-o-W1969306056",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-12",
+  "source": {
+    "authors": "Dominique M. Guillaume, Michel M. Dacorogna, Rakhal R. Davé, Ulrich A. Müller, Richard B. Olsen, Olivier V. Pictet",
+    "title": "From the bird's eye to the microscope: A survey of new stylized facts of the intra-daily foreign exchange markets",
+    "year": 1997,
+    "source_url": "https://link.springer.com/content/pdf/10.1007/s007800050018.pdf",
+    "pdf": "corpus/pdf/from-the-bird-s-eye-to-the-microscope-a-survey-o-W1969306056.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "journal": "Finance and Stochastics 1, 95-129 (1997)"
+  },
+  "claim": {
+    "value": "Survey descriptif, sans stratégie ni test prédictif propre : le marché des changes spot intraday présente quinze « faits stylisés » (queues épaisses non stables à variance finie, autocorrélation négative d'ordre 1 des cotations à très haute fréquence, spreads discrets, saisonnalité intrajournalière forte, mémoire longue de la volatilité, lois d'échelle, prévisibilité conditionnelle de la volatilité, effet mixte des nouvelles), que les auteurs attribuent à l'hétérogénéité des agents (zones géographiques, horizons de temps).",
+    "quoted": [
+      "Empirical regularities of the foreign ex-",
+      "change intra-daily data are then grouped under three major topics: the distribution",
+      "This paper is of a survey and descriptive character, embracing a broad range of different aspects",
+      "The co-existence of different types of",
+      "traders might be why conditional forecasts are possible although the price changes",
+      "are globally unpredictable (see Fact 15)."
+    ]
+  },
+  "universe": {
+    "value": "Taux de change spot majeurs contre USD (DEM, JPY, GBP, CHF, FRF) du 01.01.1987 au 31.12.1993, et quelques croisés contre DEM (01.10.1992-31.12.1993) ; cotations indicatives tick-par-tick de la page Reuters FXFX (base Olsen & Associates), pas de prix de transaction.",
+    "quoted": [
+      "Table 1. Data set. Number of data for the main FX rates against the USD (period 01.01.1987-",
+      "Therefore this survey concerns itself with tick-by-tick quoted",
+      "prices from Reuter’s FXFX page and equivalent service from Knight Ridder and",
+      "Our focus is on the nominal spot exchange rates of major currencies. In"
+    ]
+  },
+  "horizon": {
+    "value": null,
+    "reason": "Le papier ne prédit rien et ne tient aucune position : il décrit des propriétés statistiques sur des intervalles allant de 10 minutes à 2 mois (lois d'échelle), et distingue le régime < 10-15 minutes (formation des prix) du reste.",
+    "quoted": [
+      "studied and for a wide variety of time intervals – from 10 minutes to 2 months –",
+      "the highest frequency (within the 10 to 15 minutes time-interval) in order to"
+    ]
+  },
+  "signal_construction": {
+    "value": null,
+    "reason": "Aucun signal n'est construit ni évalué. Le papier définit des variables descriptives (prix moyen log bid/ask, rendement, volatilité en valeur absolue, spread relatif, fréquence de ticks, ratio de volatilité, fréquence de changements directionnels) qui pourraient servir de matière première, sans les tester comme prédicteurs.",
+    "candidate_constructs": [
+      {
+        "name": "volatility_ratio",
+        "value": "Q = |somme des n rendements| / somme des |rendements| sur n sous-intervalles ; 1 = tendance pure, 0 = aléatoire.",
+        "quoted": "The ratio can take values between “1” when the price"
+      },
+      {
+        "name": "directional_change_frequency",
+        "value": "Nombre de renversements de mode (hausse/baisse) dépassant un seuil rc depuis le dernier extremum, divisé par la période ; algorithme récursif en annexe 2. Seuil illustratif 0.0003 sur USD/DEM horaire à 10 sous-intervalles.",
+        "quoted": "frequency. The number of subintervals (per hour) is 10. The threshold value for the directional change"
+      },
+      {
+        "name": "long_horizon_vol_predicts_short_horizon_vol",
+        "value": "Volatilité sur horizon long (ex. 1 jour) prédisant la volatilité sur horizon court (ex. 1 heure) du lendemain ; résultat rapporté de Müller et al. (1994), non chiffré ici.",
+        "quoted": "horizon (for example 1 hour) can be systematically predicted by the volatility on"
+      }
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "tail_index_major_usd_rates_approx",
+      "value": 3.5,
+      "unit": "tail index alpha",
+      "quoted": "main FX rates against the USD have a tail index of ≈ 3.5, whereas the tail index",
+      "note": "Queues épaisses, moments d'ordre < alpha finis ; donc variance finie, quatrième moment non fini. Repris de Dacorogna et al. (1994)."
+    },
+    {
+      "name": "tail_index_ems_computed_cross_rates_approx",
+      "value": 2.7,
+      "unit": "tail index alpha",
+      "quoted": "for the EMS computed rates against the DEM has a lower value of ≈ 2.7 and the",
+      "note": "Volatilité réduite par l'EMS au prix d'une probabilité plus forte d'événements extrêmes."
+    },
+    {
+      "name": "tail_index_usd_dem_10min",
+      "value": 3.11,
+      "unit": "tail index alpha",
+      "quoted": "USD DEM 3.11 ±0.33 3.35 ±0.29 3.50 ±0.57 4.48 ±1.64",
+      "note": "Ligne de la table 3 ; colonnes 10m, 30m, 1h, 6h. Erreur standard 0.33 à 10 minutes."
+    },
+    {
+      "name": "kurtosis_usd_dem_10min",
+      "value": 35.1,
+      "unit": "kurtosis",
+      "quoted": "USD/DEM 10 minutes −2.73 · 10−7 2.62 · 10−7 0.17 35.10",
+      "note": "Table 4 ; colonnes moyenne, variance, skewness, kurtosis. La kurtosis décroît avec l'agrégation (3.33 à 24 heures, 0.71 à 1 semaine sur la même table)."
+    },
+    {
+      "name": "volatility_scaling_drift_exponent",
+      "value": 0.58,
+      "unit": "exposant 1/E",
+      "quoted": "FX rates against the USD. The drift exponent 1 /E is about 0.58 for the major",
+      "note": "Contre 0.5 pour une marche aléatoire gaussienne ; loi d'échelle de la volatilité estimée par moindres carrés de 10 minutes à 2 mois."
+    },
+    {
+      "name": "directional_change_scaling_drift_exponent",
+      "value": -1.75,
+      "unit": "exposant 1/D",
+      "quoted": "The drift exponent 1 /D is about -1.75 for the major FX rates, whereas a pure",
+      "note": "Contre -2.0 pour une marche aléatoire gaussienne."
+    },
+    {
+      "name": "quoted_spread_conventional_peaks_share_pct",
+      "value": 97,
+      "unit": "%",
+      "quoted": "together those peaks account for more than 97% of the distribution (Bollerslev",
+      "note": "Pics à 10, 5, 15 et 7 points de base ; résultat de Bollerslev et Melvin (1994), sur cotations, pas sur transactions."
+    },
+    {
+      "name": "usd_dem_quotes_per_business_day",
+      "value": 4500,
+      "unit": "cotations par jour ouvré",
+      "quoted": "On the largest market, the USD/DEM, 4,500 quotes per day are available; that",
+      "note": "3 à 4 cotations par minute en moyenne, 15-20 aux heures les plus actives."
+    },
+    {
+      "name": "outlier_filter_rejection_pct",
+      "value": 0.5,
+      "unit": "% (borne supérieure)",
+      "quoted": "eliminated by such ﬁlters is very low (less than 0.5%).",
+      "note": "Part des cotations éliminées par les filtres d'aberrations."
+    },
+    {
+      "name": "negative_first_order_autocorrelation_quotes",
+      "value": null,
+      "quoted": "order autocorrelation of the price changes at the highest frequencies, which disap-",
+      "note": "Qualitatif, non chiffré : propre aux cotations FXFX sous 10 minutes, absent des prix de transaction dans le petit échantillon cité."
+    },
+    {
+      "name": "news_effect_duration",
+      "value": null,
+      "quoted": "effect is, however, temporary (3 to 4 days) as markets eventually incorporate the",
+      "note": "Effet des annonces macro majeures temporaire, 3 à 4 jours ; direction difficile à prédire. Résultat de Goodhart et al. (1993)."
+    },
+    {
+      "name": "seasonality_all_variables",
+      "value": null,
+      "quoted": "trading zones can be observed. These seasonal patterns are found for all the ﬁve",
+      "note": "Saisonnalité heure du jour / jour de semaine sur volatilité, spread, fréquence de ticks, ratio de volatilité, changements directionnels ; biaise les statistiques intraday si non traitée."
+    }
+  ],
+  "what_is_missing": [
+    "aucun test prédictif propre, aucun IC, aucune t-stat de prévisibilité : les résultats de prévisibilité conditionnelle sont rapportés d'autres travaux sans chiffres",
+    "aucun coût de transaction ni aucune performance de stratégie",
+    "les cotations FXFX sont indicatives, pas des prix de transaction ; les faits sous 10-15 minutes sont explicitement fragiles",
+    "le seuil rc des changements directionnels n'est donné que pour une figure (0.0003), sans règle générale de calibration",
+    "la constante ΔT de la loi d'échelle n'est donnée qu'en ordre de grandeur",
+    "les erreurs standard des exposants de loi d'échelle ne sont pas données",
+    "données 1987-1993 : aucune vérification hors échantillon ni sur période récente"
+  ],
+  "transposability": {
+    "what_transfers": [
+      "le prix milieu en moyenne des log bid/ask et la volatilité en valeur absolue des rendements plutôt qu'au carré, justifiée par un quatrième moment non fini",
+      "le traitement obligatoire de la saisonnalité intrajournalière (dummies, Fourier, temps déformé) avant tout calcul de statistique ou d'IC intraday",
+      "la mise en garde sur l'autocorrélation négative d'ordre 1 aux plus hautes fréquences (bid-ask bounce) : piège de faux signal de retour à la moyenne",
+      "les variables ratio de volatilité et fréquence de changements directionnels comme descripteurs de régime tendance/aléatoire"
+    ],
+    "what_does_not_transfer": [
+      "l'univers est du FX spot OTC coté par des banques (page Reuters FXFX), pas des futures négociés sur une bourse centralisée avec carnet et volume réels",
+      "la fréquence de ticks comme proxy de volume n'a pas lieu d'être sur des futures où le volume est observé",
+      "les spreads conventionnels en points de base (5, 7, 10, 15) sont propres au FX OTC de l'époque, pas au tick des futures",
+      "la saisonnalité géographique en trois zones 24h est spécifique au FX ; nos futures ont des sessions et des heures de liquidité différentes",
+      "les faits EMS (cours croisés, bandes) n'ont aucun équivalent dans notre univers",
+      "données 1987-1993 : la microstructure a profondément changé depuis (électronisation, trading algorithmique)"
+    ],
+    "what_aligns_well": [
+      "la piste de prévisibilité conditionnelle de la volatilité courte par la volatilité longue, et du lien tendance d'hier / volatilité d'aujourd'hui, est une hypothèse de régime testable par notre harnais",
+      "la recommandation de ne pas analyser les données sous 10 minutes sans prix effectif rejoint notre discipline sur la qualité des barres"
+    ]
+  }
+}

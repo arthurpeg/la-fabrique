@@ -1,0 +1,158 @@
+{
+  "fiche_id": "realised-volatility-and-industry-momentum-return-W4292756288",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-18",
+  "source": {
+    "authors": "Xiaoyue Chen, Bin Li, Andrew C. Worthington",
+    "title": "Realised volatility and industry momentum returns",
+    "year": 2022,
+    "source_url": "https://www.nature.com/articles/s41599-022-01309-y.pdf",
+    "pdf": "corpus/pdf/realised-volatility-and-industry-momentum-return-W4292756288.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "journal": "Humanities and Social Sciences Communications (2022) 9:287"
+  },
+  "claim": {
+    "value": "Le momentum sectoriel (achat des secteurs gagnants, vente des perdants) rapporte davantage parmi les secteurs dont la volatilité réalisée passée est la plus haute ; la relation persiste, et se renforce, après contrôle par CAPM et Fama-French 3 et 5 facteurs, et vaut pour les deux composantes (idiosyncratique et systématique) de la volatilité. Un momentum sectoriel mis à l'échelle de sa volatilité réalisée (Barroso et Santa-Clara) est plus rentable et moins exposé aux krachs que le momentum brut.",
+    "quoted": [
+      "volatility positively relates to industry momentum and that this relationship is stronger after",
+      "study reveals that both decomposed components are positively related to industry",
+      "shows that the volatility-adjusted industry momentum return is"
+    ]
+  },
+  "universe": {
+    "value": "48 portefeuilles sectoriels américains pondérés par la capitalisation (Kenneth French Data Library), rendements quotidiens, juillet 1969 à juin 2021.",
+    "quoted": [
+      "The analysis uses daily return data for 48 US industries from July 1969 to",
+      "Daily data on value-weighted industry returns of the 48 industry",
+      "sample period starts in July 1969 and ends in June 2021."
+    ]
+  },
+  "horizon": {
+    "value": "Mensuel : fenêtre d'estimation E et période de détention H chacune dans {1, 3, 6, 9, 12, 24} mois ; rebalancement à chaque mois t.",
+    "quoted": [
+      "realised volatility over the E-month ( E = 1, 3, 6, 9, 12, 24)",
+      "the following H-months ( H = 1, 3, 6, 9, 12, 24). We calculate"
+    ]
+  },
+  "signal_construction": {
+    "value": "Double tri séquentiel mensuel. (1) Rendements quotidiens convertis en log-rendements r = ln(1 + x/100). (2) Volatilité réalisée sur la fenêtre d'estimation E : racine de la somme des carrés des log-rendements quotidiens (moyenne supposée nulle). (3) Au mois t, les 48 secteurs sont classés en terciles de volatilité réalisée passée ; dans chaque tercile, en quatre groupes selon le rendement moyen passé sur E. (4) Portefeuille momentum équipondéré : long le groupe gagnant, court le groupe perdant, tenu H mois. Le signal utile est le spread gagnants-perdants dans le tercile de haute volatilité. Décomposition : régression CAPM sur chaque fenêtre ; volatilité idiosyncratique = volatilité réalisée des résidus ; systématique = totale moins idiosyncratique. Variante mise à l'échelle : momentum 6 groupes sur rendements t-12 à t-2, multiplié par une cible de volatilité annualisée d'environ 13 % divisée par la volatilité réalisée du momentum sur les 6 derniers mois de rendements quotidiens.",
+    "quoted": [
+      "t, we rank industries into three groups based on their past",
+      "estimation period. Within each vo latility-based group, we rank",
+      "industries into four groups based on their past estimation-",
+      "equal-weighted raw and adjusted returns over these different",
+      "period T. The estimation-period realised volatility is the standard",
+      "component, systematic volatility, as total realised volatility minus",
+      "on the returns from month t – 12 to t – 2. We then scale the",
+      "a target constant volatility around 13%, measured as the annualised"
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "raw_momentum_high_total_vol_12_1_monthly_pct",
+      "value": 1.004,
+      "unit": "% par mois",
+      "quoted": "a 1.004% momentum return per month",
+      "note": "Stratégie 12/1 (estimation 12 mois, détention 1 mois), tercile de haute volatilité totale, significatif à 5 % selon les auteurs (t = 2.514 dans le Tableau 2)."
+    },
+    {
+      "name": "raw_momentum_low_total_vol_12_1_monthly_pct",
+      "value": 0.295,
+      "unit": "% par mois",
+      "quoted": "H-L 0.295 0.427 1.004** 0.254",
+      "note": "Tableau 2, ligne E=12, colonne H=1 : Low 0.295 (non significatif), Middle 0.427, High 1.004**. Le spread high-low de la volatilité est l'argument central."
+    },
+    {
+      "name": "raw_momentum_high_total_vol_9_9_monthly_pct",
+      "value": 0.799,
+      "unit": "% par mois",
+      "quoted": "0.248*** 0.314*** 0.799***",
+      "note": "Tableau 2, E=9, H=9 : Low 0.248, Middle 0.314, High 0.799 (t = 5.742). Sharpe du tercile haut 0.353 contre 0.219 pour le bas (même tableau)."
+    },
+    {
+      "name": "raw_momentum_high_total_vol_24_24_monthly_pct",
+      "value": 0.110,
+      "unit": "% par mois",
+      "quoted": "−0.017 0.011 0.110",
+      "note": "Tableau 2, E=24, H=24 : l'effet disparaît aux horizons les plus longs (t = 1.383, non significatif). L'exception 1/1 (le tercile bas bat le haut) est aussi signalée par les auteurs."
+    },
+    {
+      "name": "raw_momentum_high_idio_vol_12_12_monthly_pct",
+      "value": 0.515,
+      "unit": "% par mois",
+      "quoted": "H-L 0.166** (1.977) 0.198** (2.059) 0.515*** (4.626)",
+      "note": "Tableau 4 (volatilité idiosyncratique), 12/12 : Low 0.166, Middle 0.198, High 0.515."
+    },
+    {
+      "name": "unscaled_industry_momentum_mean_return_pct",
+      "value": 0.833,
+      "unit": "%",
+      "quoted": "Unscaled momentum −0.254 3.036 0.167 0.833** (2.479)",
+      "note": "Tableau 6 : skewness −0.254, kurtosis 3.036, Sharpe 0.167, rendement moyen 0.833 (t = 2.479). Périodicité du rendement non précisée dans le tableau."
+    },
+    {
+      "name": "vol_scaled_industry_momentum_mean_return_pct",
+      "value": 9.611,
+      "unit": "%",
+      "quoted": "Volatility-adjusted momentum −0.015 0.546 0.222 9.611*** (5.490)",
+      "note": "Tableau 6 : Sharpe 0.222 contre 0.167 non mis à l'échelle. Le rendement moyen 9.611 contre 0.833 est d'un ordre de grandeur incompatible avec un Sharpe à peine supérieur à même périodicité : l'unité ou l'échelle de levier n'est pas expliquée."
+    },
+    {
+      "name": "vol_scaled_momentum_sharpe",
+      "value": 0.222,
+      "unit": "ratio de Sharpe (périodicité non précisée)",
+      "quoted": "Volatility-adjusted momentum −0.015 0.546 0.222 9.611*** (5.490)",
+      "note": "Contre 0.167 pour le momentum non mis à l'échelle (Tableau 6)."
+    },
+    {
+      "name": "vol_scaling_kurtosis_before",
+      "value": 3.036,
+      "quoted": "– 0.015 and kurtosis from 3.036 to 0.546.",
+      "note": "La mise à l'échelle réduit le kurtosis de 3.036 à 0.546 et la skewness de −0.254 à −0.015 : risque de krach réduit."
+    },
+    {
+      "name": "vol_scaling_target_annualised_vol_pct",
+      "value": 13,
+      "unit": "% annualisé",
+      "quoted": "a target constant volatility around 13%, measured as the annualised",
+      "note": "Paramètre de construction, pas un résultat mesuré ; cible proche des 12 % de Barroso et Santa-Clara."
+    },
+    {
+      "name": "vol_scaling_lookback_months",
+      "value": 6,
+      "unit": "mois",
+      "quoted": "month t by using daily returns over the past 6 months. RVOLtarget is",
+      "note": "Fenêtre de la volatilité réalisée du momentum utilisée pour la mise à l'échelle."
+    },
+    {
+      "name": "drift_adjusted_vol_high_9_9_monthly_pct",
+      "value": 0.797,
+      "unit": "% par mois",
+      "quoted": "trading strategy with a 0.797% momentum return for the high",
+      "note": "Robustesse : volatilité ajustée de la dérive (moyenne retirée), stratégie 9/9, tercile haut ; effet le plus fort selon les auteurs."
+    }
+  ],
+  "what_is_missing": [
+    "aucun coût de transaction, aucune rotation du portefeuille, aucune capacité",
+    "aucun échantillon hors échantillon ni holdout : tout est in-sample sur 1969-2021",
+    "aucune correction pour tests multiples, alors que 36 combinaisons E/H × 3 terciles × 4 mesures de rendement sont rapportées",
+    "le traitement des périodes de détention chevauchantes (H > 1) et la correction des t-stats (Newey-West ou non) ne sont pas décrits",
+    "le Tableau 6 ne précise ni la périodicité ni l'échelle des rendements ; 9.611 contre 0.833 avec des Sharpe 0.222 contre 0.167 n'est pas réconcilié",
+    "le sens exact de la ligne H-L (gagnants moins perdants) et la taille des groupes gagnants/perdants (quartiles de 4 secteurs environ) ne sont pas explicités numériquement",
+    "l'équation 4 décrit des rendements en excès alors que l'équation 1 transforme des rendements bruts ; l'ordre des opérations n'est pas clair",
+    "aucun IC ni mesure de prédiction transversale : seulement des spreads de portefeuilles triés"
+  ],
+  "transposability": {
+    "what_transfers": "L'idée de conditionner un signal de momentum à un régime de volatilité réalisée passée (un hybride) ; le calcul de volatilité réalisée à moyenne nulle et sa variante ajustée de la dérive ; la décomposition volatilité systématique / idiosyncratique par régression sur un facteur de marché ; la mise à l'échelle d'un signal par cible de volatilité / volatilité réalisée récente (Barroso et Santa-Clara), qui se transpose en série temporelle instrument par instrument.",
+    "what_does_not_transfer": [
+      "le double tri 3 terciles × 4 groupes suppose une coupe transversale de 48 secteurs ; avec neuf futures, un tercile de volatilité contient trois instruments et le tri interne en quatre groupes est impossible",
+      "les horizons sont mensuels (1 à 24 mois d'estimation et de détention) ; rien ne dit que la relation existe à l'échelle intraday",
+      "les ajustements CAPM et Fama-French (taille, valeur, rentabilité, investissement) sont des facteurs d'actions sans équivalent pour des futures multi-classes",
+      "la mesure est un spread de rendement de portefeuille et un Sharpe, pas un IC ; aucun chiffre n'est comparable à notre rapport d'IC",
+      "l'argument d'idiosyncrasie repose sur des portefeuilles sectoriels non diversifiés d'actions, pas sur des contrats à terme",
+      "les résultats sont bruts de frais, in-sample, sans holdout"
+    ],
+    "what_aligns_well": "La lecture « momentum conditionné à la volatilité » correspond exactement à notre notion d'hybride (signal conditionné à un régime), et le régime (tercile de volatilité réalisée passée) est calculable sans look-ahead à partir de barres passées. La mise à l'échelle par volatilité réalisée des 6 derniers mois est un traitement point-in-time direct."
+  }
+}

@@ -1,0 +1,306 @@
+{
+  "fiche_id": "premium-for-heightened-uncertainty-explaining-pr-W3122856157",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-16",
+  "source": {
+    "authors": "Grace Xing Hu, Jun Pan, Jiang Wang, Haoxiang Zhu",
+    "title": "Premium for Heightened Uncertainty: Explaining Pre-Announcement Market Returns",
+    "year": 2019,
+    "source_url": "http://www.nber.org/papers/w25817.pdf",
+    "pdf": "corpus/pdf/premium-for-heightened-uncertainty-explaining-pr-W3122856157.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": false,
+    "peer_review_note": "NBER Working Paper 25817, mai 2019 révisé mars 2021 ; le texte dit explicitement « They have not been peer-reviewed »."
+  },
+  "claim": {
+    "value": "Le marché actions américain (futures S&P 500) gagne un rendement anormal positif dans la fenêtre qui précède les grandes annonces macro programmées (NFP, ISM, GDP, FOMC), mesurée de la clôture 16h de la veille à 5 minutes avant l'annonce — donc surtout la nuit — sans variance anormale, alors que la fenêtre post-annonce a un rendement faible et une forte variance. Les auteurs l'expliquent par une prime pour « incertitude d'impact » résolue avant l'annonce, mesurée par le VIX : une montée du VIX sur les six jours précédents prédit un rendement pré-annonce plus élevé, et, hors annonces, un pic soudain du VIX est suivi d'un rendement positif le lendemain.",
+    "quoted": [
+      "We find large overnight returns, with no abnormal variance, before the release of nonfarm",
+      "change in VIX over the six-day accumulation window to predict the pre-announcement",
+      "we ﬁnd that such heightened VIX days are followed by large next-day market"
+    ]
+  },
+  "universe": {
+    "value": "Futures sur indice S&P 500 (E-mini à partir de septembre 1997, contrat « big » avant), contrat le plus actif du jour ; annonces NFP, ISM, GDP, FOMC (plus IP, PI, HST, INC, PPI, CPI, CSI en comparaison) ; échantillon principal septembre 1994 – mai 2018. Pour les jours de VIX élevé : indice S&P 500 quotidien, janvier 1986 – mai 2018 et sous-période 1994–2018. VIX intraday et futures VIX (CBOE).",
+    "quoted": [
+      "We rely on the S&P 500 index futures, which are traded almost around the clock, to",
+      "sample period is from September 1994 to May 2018.",
+      "Our data sample for studying surprise VIX hikes is larger, starting in January 1986 and"
+    ]
+  },
+  "horizon": {
+    "value": "Pour les annonces : fenêtre pré-annonce, de la clôture 16h (heure de l'Est) de la veille à 5 minutes avant l'annonce (8:25 pour NFP/GDP, 9:55 pour ISM, ~13h55-14h10 pour FOMC). Pour les jours de VIX élevé : rendement quotidien du jour suivant (t+1).",
+    "quoted": [
+      "returns for NFP and GDP are realized overnight, from the previous day’s",
+      "close at 4pm to 8:25 am, while those for ISM are from the previous day’s close to 9:55 am.",
+      "At the close of trading day t, we deﬁne day t + 1 as a heightened VIX day, if ∆VIX t"
+    ]
+  },
+  "signal_construction": {
+    "value": "Trois constructions. (1) Calendrier d'événements : être long le futures S&P 500 de la clôture 16h de la veille à 5 minutes avant chaque annonce NFP/ISM/GDP/FOMC ; rendement = variation en pourcentage du dernier prix de transaction du contrat le plus actif (volume max le jour de t2) entre t1 et t2. (2) Conditionnement par l'accumulation : ΔVIX d'accumulation = VIX(t−1) − VIX(t−7), connu la veille de l'annonce ; tri en groupe haut (30 % supérieurs) / bas, ou régression du rendement pré-annonce sur ce ΔVIX (pente positive). (3) Jours de VIX élevé hors annonces : à la clôture du jour t, le jour t+1 est « heightened » si VIX(t) − μ(t−1) ≥ seuil, où μ est une moyenne mobile exponentielle du VIX passé de facteur η (η = 0 : simple ΔVIX quotidien) ; seuils de 0 à 4 points de VIX ; on est long l'indice le jour t+1. En annexe, VIX mesuré à 15h30 ou 15h45 pour rendre la règle exécutable. NB : le tri de la table 4 par ΔVIX PRÉ-annonce est contemporain du rendement, pas prédictif.",
+    "quoted": [
+      "we deﬁne the pre-announcement period as the window from the",
+      "we ﬁrst pick the most active",
+      "we measure the VIX build-up over a six-day accumulation period.",
+      "at the close of trading day t, we deﬁne day t + 1 as a heightened VIX day if",
+      "with η serving as the decay factor. When η = 0, there is no smoothing, µη",
+      "it is possible to use information as early as 3:45 pm to identify"
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "nfp_pre_announcement_return_bps",
+      "value": 10.1,
+      "unit": "bp par événement",
+      "quoted": "announcement return is 10.10 basis points for NFP with a t-stat of 3.63; 9.14 basis points",
+      "note": "t-stat 3.63 ; fenêtre 16h veille → 8:25 ; septembre 1994 – mai 2018, 243 observations (table 1)."
+    },
+    {
+      "name": "ism_pre_announcement_return_bps",
+      "value": 9.14,
+      "unit": "bp par événement",
+      "quoted": "announcement return is 10.10 basis points for NFP with a t-stat of 3.63; 9.14 basis points",
+      "note": "t-stat 2.10 (phrase suivante) ; fenêtre 16h veille → 9:55."
+    },
+    {
+      "name": "gdp_pre_announcement_return_bps",
+      "value": 7.46,
+      "unit": "bp par événement",
+      "quoted": "7.46 basis points for GDP with a t-stat of 2.08",
+      "note": "t-stat 2.08."
+    },
+    {
+      "name": "fomc_pre_announcement_return_bps",
+      "value": 27.14,
+      "unit": "bp par événement",
+      "quoted": "announcement returns associated with FOMC, with an average value of 27.14 basis points per",
+      "note": "Fenêtre 16h veille → 5 min avant ~14h ; nettement inférieur aux 49 bp de Lucca-Moench."
+    },
+    {
+      "name": "non_announcement_overnight_return_bps",
+      "value": 0.69,
+      "unit": "bp par nuit",
+      "quoted": "return of 0.69 bps for non-announcement days, the pre-announcement returns documented",
+      "note": "Référence close-to-open (16h → 9h30) des jours sans annonce ; t-stat 0.78 en table 1."
+    },
+    {
+      "name": "trimmed_pre_announcement_return_nfp_ism_bps",
+      "value": 9.8,
+      "unit": "bp par événement",
+      "quoted": "9.80 basis points for NPF, 10.31",
+      "note": "Après retrait des 1 % extrêmes des deux côtés : NFP 9.80, ISM 10.31, GDP 6.09. Robustesse aux valeurs aberrantes."
+    },
+    {
+      "name": "ex_fomc_pre_announcement_return_2012_2018_bps",
+      "value": 6.98,
+      "unit": "bp par événement",
+      "quoted": "lar, during the last subperiod of 2012–2018, the pre-announcement return is on average 6.98",
+      "note": "NFP+ISM+GDP ; statistiquement significatif selon les auteurs (t 2.27 en table 2)."
+    },
+    {
+      "name": "fomc_pre_announcement_return_2012_2018_bps",
+      "value": 3.96,
+      "unit": "bp par événement",
+      "quoted": "3.96 basis points for the FOMC announcements",
+      "note": "Non significatif : l'effet pré-FOMC a disparu après 2011, l'effet NFP/ISM/GDP non."
+    },
+    {
+      "name": "ex_fomc_pre_announcement_return_annual_pct",
+      "value": 3.41,
+      "unit": "% par an",
+      "quoted": "at 3.41% per year, realized over the pre-announcement",
+      "note": "Somme sur 36 annonces par an (NFP, ISM, GDP) ; à comparer à 9.10 % par an pour l'indice sur 252 jours."
+    },
+    {
+      "name": "pre_announcement_return_to_variance_ratio_all4",
+      "value": 35.53,
+      "unit": "ratio rendement/variance",
+      "quoted": "yielding a return-to-variance ratio of 35.53 with a highly",
+      "note": "t-stat 5.27 ; quatre annonces réunies ; référence d'un jour moyen ≈ 4."
+    },
+    {
+      "name": "post_announcement_return_to_variance_ratio_all4",
+      "value": 2.34,
+      "unit": "ratio rendement/variance",
+      "quoted": "the pre-announcement period, and a mere 2.34 and insigniﬁcant during the",
+      "note": "Fenêtre ann−5min → 16h."
+    },
+    {
+      "name": "pre_minus_post_rvr_difference_all4",
+      "value": 33.19,
+      "unit": "ratio rendement/variance",
+      "quoted": "ratios is 33.19 and statistically",
+      "note": "Significatif à 1 % ; rejet du modèle à un seul risque selon les auteurs."
+    },
+    {
+      "name": "pre_return_high_vix_reduction_group_bps",
+      "value": 68.23,
+      "unit": "bp par événement",
+      "quoted": "positive at 68.23 basis points and highly statistically",
+      "note": "Tri par ΔVIX PRÉ-annonce (30 % plus fortes baisses) : CONTEMPORAIN du rendement, non exploitable comme prévision."
+    },
+    {
+      "name": "pre_return_low_vix_reduction_group_bps",
+      "value": -6.96,
+      "unit": "bp par événement",
+      "quoted": "the average pre-announcement return is negative at −6.96 basis points",
+      "spelled_out": "−6.96",
+      "note": "Le texte écrit le signe moins avec le caractère U+2212 ; même tri contemporain."
+    },
+    {
+      "name": "pre_return_high_minus_low_vix_reduction_bps",
+      "value": 75.19,
+      "unit": "bp par événement",
+      "quoted": "75.19 basis points and statistically",
+      "note": "Significatif à 1 % ; tri contemporain."
+    },
+    {
+      "name": "double_sort_high_vix_reduction_high_low_vol_bps",
+      "value": 76.6,
+      "unit": "bp par événement",
+      "quoted": "with large pre-announcement returns, averaged at 76.6 bps and 64.8 bps, respectively, for",
+      "note": "Double tri indépendant ΔVIX × Δvolatilité réalisée : 76.6 bp (forte baisse de vol) et 64.8 bp (faible) ; l'effet vient du VIX, pas de la volatilité réalisée."
+    },
+    {
+      "name": "double_sort_low_vix_reduction_high_vol_bps",
+      "value": -5.0,
+      "unit": "bp par événement",
+      "quoted": "yield pre-announcement returns of -5.0 bps and -8.8 bps, respectively, for groups of high",
+      "note": "Groupe de faible baisse du VIX : -5.0 et -8.8 bp."
+    },
+    {
+      "name": "accumulation_period_return_high_vix_buildup_bps",
+      "value": -192,
+      "unit": "bp sur 6 jours",
+      "quoted": "and associated with the VIX spikes are large negative returns of -192 basis points over the",
+      "note": "Rendement de la période d'accumulation (6 jours) pour le groupe à forte hausse du VIX : c'est la définition du groupe, pas une prévision."
+    },
+    {
+      "name": "pre_return_high_accumulation_vix_group_bps",
+      "value": 20.63,
+      "unit": "bp par événement",
+      "quoted": "the average pre-announcement return is 20.63 basis points for the high group, statistically",
+      "note": "Tri PRÉDICTIF : ΔVIX d'accumulation VIX(t−1)−VIX(t−7), 30 % supérieurs. Seuil de 30 % fixé sur l'échantillon entier."
+    },
+    {
+      "name": "pre_return_low_accumulation_vix_group_bps",
+      "value": 9.42,
+      "unit": "bp par événement",
+      "quoted": "twice as large the 9.42 basis points for the low group",
+      "note": "Écart haut − bas 11.21 bp, t 2.41 (table 5)."
+    },
+    {
+      "name": "predictive_slope_pre_return_on_accumulation_dvix_bps_per_pt",
+      "value": 3.4,
+      "unit": "bp par point de VIX",
+      "quoted": "accumulation period leads to a 3.40 basis points increase in pre-announcement return. The",
+      "note": "Régression des rendements pré-annonce (démoyennés) sur ΔVIX [-6,-1], quatre annonces, 922 obs."
+    },
+    {
+      "name": "predictive_slope_tstat_all4",
+      "value": 2.79,
+      "unit": "t-stat",
+      "quoted": "∆VIX [-6, -1] 3.40∗∗∗ [2.79]",
+      "quoted_source": "[2.79] [−2.57] [2.34] [ −2.00] [1.71] [−1.51]",
+      "quoted_repair": "table",
+      "note": "Table 6, première colonne (Ret, All 4 Macro) ; la ligne des t-stats est mise à plat par l'extraction."
+    },
+    {
+      "name": "predictive_regression_adj_r2_all4_pct",
+      "value": 3.13,
+      "unit": "% R² ajusté",
+      "quoted": "adjusted R-squared of the regression is 3.13%, which is rather large for predictive regressions",
+      "note": "Ex FOMC 3.38 %, FOMC seul 1.16 % (table 6)."
+    },
+    {
+      "name": "hvix_days_per_year_cutoff_2_5",
+      "value": 11.1,
+      "unit": "jours par an",
+      "quoted": "value of 2.5% yields an average of 11.1 heightened VIX days per year, comparable to the",
+      "note": "Seuil ΔVIX quotidien ≥ 2.5 points, 1994–2018, η = 0."
+    },
+    {
+      "name": "hvix_next_day_return_cutoff_2_5_bps",
+      "value": 36.59,
+      "unit": "bp par jour",
+      "quoted": "36.59 and 42.70 basis points, respectively, and both statistically",
+      "note": "Seuils 2.5 et 3.0 respectivement ; la table 7 donne 36.58 (t 2.83) pour le seuil 2.5, le texte 36.59."
+    },
+    {
+      "name": "hvix_next_day_return_cutoff_3_0_bps",
+      "value": 42.7,
+      "unit": "bp par jour",
+      "quoted": "36.59 and 42.70 basis points, respectively, and both statistically",
+      "note": "Seuil 3.0 points, ≈ 7.7 jours par an, t 2.46 (table 7)."
+    },
+    {
+      "name": "hvix_ewma_eta030_cutoff3_next_day_return_bps",
+      "value": 48.04,
+      "unit": "bp par jour",
+      "quoted": "frequency. And the average return realized on such heightened VIX days is 48.04 basis",
+      "note": "η = 0.30, seuil 3 %, échantillon 1986–2018, 7.6 jours par an."
+    },
+    {
+      "name": "hvix_regression_slope_bps_per_pt",
+      "value": 7.03,
+      "unit": "bp par point de VIX",
+      "quoted": "VIX increase from day −7 to day −1 predicts a 7.03 bps higher stock return and a 0.15%",
+      "note": "Jours HVIX (η = 0.3), 202 obs ; significativité « borderline » selon les auteurs (t 1.75, Newey-West)."
+    },
+    {
+      "name": "hvix_regression_adj_r2_pct",
+      "value": 2.34,
+      "unit": "% R² ajusté",
+      "quoted": "days with heightened VIX and the adjusted R-squared of the predictive regression is 2.34%,",
+      "note": "Jours normaux : R² ≈ 0 (−0.01 % en table 9)."
+    },
+    {
+      "name": "normal_days_regression_slope",
+      "value": 0.33,
+      "unit": "bp par point de VIX",
+      "quoted": "is 0.33 and statistically",
+      "note": "Jours sans annonce ni HVIX : pente non significative."
+    },
+    {
+      "name": "hvix_tradeable_345pm_next_day_return_bps",
+      "value": 46.94,
+      "unit": "bp par jour",
+      "quoted": "of closing VIX. The average daily returns are very close, 46.94 basis points and 43.32 basis",
+      "note": "VIX mesuré à 15h45 (6.5 jours par an) vs VIX de clôture (43.32 bp ; la table A1 donne 43.31) ; seuil 3.0, 1992–2018."
+    },
+    {
+      "name": "after_large_price_drops_next_day_return",
+      "value": null,
+      "quoted": "predicted returns are statistically insigniﬁcance. In other words, although the correlation",
+      "note": "Contrôle : les fortes baisses de prix ne prédisent pas significativement le lendemain (table 8)."
+    },
+    {
+      "name": "after_realized_vol_increase_next_day_return",
+      "value": null,
+      "quoted": "returns on S&P 500 index futures, the next-day returns are on average negative but statisti-",
+      "note": "Contrôle : une hausse de volatilité réalisée intraday est suivie de rendements négatifs non significatifs ; c'est le VIX, pas la vol réalisée, qui porte le signal."
+    }
+  ],
+  "what_is_missing": [
+    "aucun coût de transaction, aucun slippage, aucun frais ni multiplicateur de contrat",
+    "aucun Sharpe, aucune stratégie backtestée hors de moyennes par événement ; aucun IC",
+    "les seuils (30 % supérieurs, seuils de VIX, η) sont fixés sur l'échantillon entier : pas de validation hors échantillon ni de walk-forward",
+    "le tri de la table 4 par ΔVIX pré-annonce est contemporain du rendement : non exploitable en temps réel",
+    "les variations de VIX pour les annonces de 8:30 ne sont disponibles qu'à partir de décembre 2010 (futures VIX hors séance) : échantillon réduit pour NFP/GDP",
+    "le rôle du roulement du contrat est traité seulement par « le plus actif du jour », sans ajustement explicite",
+    "écart entre texte et table sur certains chiffres (36.59 vs 36.58 ; 43.32 vs 43.31 ; 2.17 vs 2.25 % par an pour FOMC)",
+    "échantillon arrêté en mai 2018 ; rien sur 2018-2026"
+  ],
+  "transposability": {
+    "what_transfers": "Le motif calendaire : un rendement positif du futures actions dans la fenêtre nocturne qui précède NFP, ISM, GDP (16h veille → ann−5min), calculable sur barres intraday d'un future d'indice actions de notre univers si le calendrier des annonces est connu d'avance (il l'est : dates pré-programmées). Le conditionnement par ΔVIX d'accumulation VIX(t−1)−VIX(t−7) est connu avant la fenêtre et donc sans look-ahead.",
+    "what_does_not_transfer": [
+      "l'étude porte sur le seul S&P 500 ; rien ne dit que le motif existe sur les autres futures de notre univers (taux, matières premières, devises)",
+      "le conditionnement exige le VIX (indice et futures VIX) : donnée externe qui n'est pas nécessairement dans notre catalogue",
+      "le rendement est mesuré par événement, sur ~36 à 44 dates par an : pas un score continu par instrument, donc un IC en coupe transversale n'a guère de sens ; il faudrait un score événementiel",
+      "l'effet FOMC a disparu après 2011 ; l'échantillon s'arrête en 2018, avant notre holdout 2024-2026",
+      "les seuils (30 %, cutoffs de VIX, η) sont choisis ex post sur tout l'échantillon",
+      "le tri de la table 4 par baisse du VIX pré-annonce est contemporain et ne se transpose pas en signal"
+    ],
+    "what_aligns_well": "La fenêtre est définie en heures précises (16h ET → 8:25 ou 9:55), ce qui s'implémente naturellement sur des futures intraday quasi 24h ; le calendrier d'annonces est une information point-in-time connue d'avance ; l'annexe B montre une variante exécutable (VIX à 15h45) pour les jours de VIX élevé."
+  }
+}

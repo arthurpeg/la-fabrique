@@ -1,0 +1,182 @@
+{
+  "fiche_id": "the-impact-of-covid-19-on-g7-stock-markets-volat-W3037145595",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-26",
+  "source": {
+    "authors": "Marwan Izzeldin, Gulnur Muradoglu, Vasileios Pappas, Sheeja Sivaprasad",
+    "title": "The impact of Covid-19 on G7 stock markets volatility: Evidence from a ST-HAR model",
+    "year": 2021,
+    "source_url": "https://kar.kent.ac.uk/85238/3/Covid19%20Financial%20markets%20paper%20v15-10-20.pdf",
+    "pdf": "corpus/pdf/the-impact-of-covid-19-on-g7-stock-markets-volat-W3037145595.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "journal": "International Review of Financial Analysis, 74",
+    "version_note": "Author's Accepted Manuscript (après arbitrage, avant mise en page) déposé sur le dépôt de l'université de Kent ; daté October 2020."
+  },
+  "claim": {
+    "value": "Le Covid-19 a fait basculer la volatilité (conditionnelle GARCH(1,1)) des indices actions agrégés et sectoriels des pays du G7 d'un régime calme à un régime de crise, avec une transition non linéaire mais lisse, pilotée par le nombre cumulé de cas mondiaux (en log). L'intensité (pente γ) et la précocité (seuil ψ) de la transition varient : Santé et Services aux consommateurs les plus touchés, Technologie la dernière et la moins touchée, Pétrole & Gaz la première ; Royaume-Uni et États-Unis les plus touchés et les plus hétérogènes ; les pays qui ont confiné plus tôt et plus fort ont mieux encaissé. C'est une étude descriptive in-sample, pas un signal prédictif.",
+    "quoted": [
+      "We find strong transition",
+      "evidence to a crisis regime in all countries and sectors, yet crisis intensity and timings vary.",
+      "The Health Care and the Consumer Services were the most severely affected",
+      "Countries that engaged",
+      "sooner and more thoroughly in containment measures against Covid -19 weathered the financial crisis"
+    ]
+  },
+  "universe": {
+    "value": "Indices actions quotidiens, pondérés par la capitalisation, hors dividendes, agrégés et par secteur ICB (10 secteurs : Consumer Goods, Consumer Services, Financials, Healthcare, Industrials, Materials, Oil & Gas, Technology, Telecommunications, Utilities) pour les 7 pays du G7 (Canada, France, Allemagne, Italie, Japon, Royaume-Uni, États-Unis). Source Datastream, du 24/4/2018 au 24/4/2020 ; l'analyse de la transition démarre le 1/2/2020. Cas Covid-19 : Johns Hopkins, agrégés au niveau mondial. Robustesse : RV et noyau réalisé sur rendements 5 minutes (Oxford-Man) ; comparaison historique sur le S&P 500 depuis 1927.",
+    "quoted": [
+      "The data comprises daily prices of the aggregate and sector equity indices for the G7 economies",
+      "All indices are value -weighted and exclude",
+      "Datastream and cover the period from 24/4/2018 – 24/4/2020",
+      "hence we start the analysis from 1/2/2020 and aggregate",
+      "the number of observed Covid-19 cases worldwide",
+      "where j subscripts each of the M equally-spaced 5-minute subintervals in each day."
+    ]
+  },
+  "horizon": {
+    "value": null,
+    "reason": "Le papier ne prédit rien et n'évalue aucune prévision hors échantillon : il ajuste in-sample un modèle HAR à transition lisse (volatilité du jour t expliquée par les retards journalier, hebdomadaire, mensuel) pour décrire le passage d'un régime à l'autre. Aucun horizon de trading n'est défini."
+  },
+  "signal_construction": {
+    "value": "Pas de signal de trading. Construction du modèle descriptif : (1) rendement log quotidien en % sur la clôture ; (2) volatilité conditionnelle h_t estimée par GARCH(1,1) sur les rendements démeanés ; (3) ST-HAR : h_t = β0 + β1 h_{t-1} + α1 h_t^(w) + α2 h_t^(m) + (δ0 + δ1 h_{t-1}) × G(s_t; γ, ψ) + e_t, où h^(w) et h^(m) sont les moyennes de h sur 5 et 22 jours passés (invariantes de régime), G = 1 − exp(−γ/σ²_s (s_t − ψ)²) est une fonction de transition exponentielle (ESTAR) ; (4) variable de transition s_t = log du nombre cumulé de cas Covid-19 mondiaux ; (5) estimation par moindres carrés non linéaires, erreurs de Newey-West. γ mesure l'intensité (brutalité) de la transition, ψ le seuil (précocité). Robustesse : GARCH remplacé par RV et noyau réalisé ; TVP-HAR en fenêtre roulante d'un an avancée d'un jour.",
+    "quoted": [
+      "we compute the",
+      "is estimated as a GARCH(1,1) process:",
+      "In our specification we use an ST-HAR model that allows for a smooth transition between two regimes",
+      "assume HAR parameters related to the weekly and mo nthly volatility are regime invariant",
+      "The following equation is estimated via nonlinear least square techniques and Newey-West robust standard",
+      "ploted against the Covid-19 Cumulative worldwide cases (log scaled)",
+      "High values of",
+      "the slope coefficient indicate an abrupt transition between volatility regimes.",
+      "The threshold coefficient indicates the degree of tolerance until the",
+      "24/4/2018 – 24/4/2019 as our initial estimation window, which we roll over by one day."
+    ],
+    "transition_variable": "log du nombre cumulé de cas Covid-19 mondiaux (Johns Hopkins)",
+    "volatility_proxy": "volatilité conditionnelle GARCH(1,1) quotidienne ; RV et RKV 5 minutes en robustesse"
+  },
+  "reported_results": [
+    {
+      "name": "health_care_median_slope_gamma_table2",
+      "value": 35.775,
+      "unit": "coefficient γ (sans unité)",
+      "quoted": "Health Care γ = 35.775***",
+      "quoted_source": "γ 3.914*** 3.277** 2.950*** 3.368** 3.487*** 35.775*** 4.354*** 3.057** 5.851*** 4.242** 1.884***",
+      "quoted_repair": "table",
+      "note": "Table 2, ligne γ, 6e colonne (ordre des colonnes : Aggregate, Oil & Gas, Materials, Industrials, Consumer Goods, Health Care, …). Médiane sur les 7 pays. Les autres secteurs sont entre 1.884 (Technology) et 5.851 (Utilities) : la Santé a une transition près de dix fois plus brutale."
+    },
+    {
+      "name": "health_care_mean_slope_gamma_table3",
+      "value": 147.7,
+      "unit": "coefficient γ (sans unité)",
+      "quoted": "Health Care 147.7 [1] 35.78 [1] 9.382 [1] 5.644 [6] 5.670 [6] 0.469 [4]",
+      "note": "Table 3 : moyenne 147.7, médiane 35.78, QCV 9.382 de la pente γ sur les 7 pays. L'écart moyenne/médiane et le QCV signalent quelques pays extrêmes : la moyenne n'est pas représentative."
+    },
+    {
+      "name": "oil_gas_mean_threshold_psi",
+      "value": 4.737,
+      "unit": "log du nombre cumulé de cas mondiaux",
+      "quoted": "Oil & Gas 3.581 [10] 3.280 [8] 1.598 [10] 4.737 [1] 4.730 [1] 0.021 [1]",
+      "note": "Table 3 : seuil ψ moyen 4.737 (le plus bas, donc secteur touché le premier), QCV 0.021 (le plus homogène entre pays)."
+    },
+    {
+      "name": "technology_mean_threshold_psi",
+      "value": 6.221,
+      "unit": "log du nombre cumulé de cas mondiaux",
+      "quoted": "Technology 4.361 [9] 1.880 [11] 5.574 [5] 6.221 [11] 6.160 [11] 1.187 [8]",
+      "note": "Table 3 : seuil ψ moyen 6.221 (le plus haut, secteur touché le dernier) et pente médiane 1.880 (la plus faible)."
+    },
+    {
+      "name": "us_mean_threshold_psi",
+      "value": 5.395,
+      "unit": "log du nombre cumulé de cas mondiaux",
+      "quoted": "US 12.10 [5] 4.210 [1] 7.090 [1] 5.395 [1] 5.540 [3] 0.743 [2]",
+      "note": "Table 3 panel B : seuil moyen le plus bas des pays (marché touché le plus tôt), QCV de la pente 7.090 (le plus hétérogène entre secteurs)."
+    },
+    {
+      "name": "corr_government_response_index_vs_crisis_intensity",
+      "value": -0.742,
+      "unit": "coefficient de corrélation",
+      "quoted": "ρ -0.742* -0.787**",
+      "note": "Table 4 : corrélation, sur 7 pays seulement, entre l'indice moyen de réponse gouvernementale OxCGRT (1/2/2020 – 24/4/2020) et l'intensité de crise (pente médiane par pays). Significative à 10 %."
+    },
+    {
+      "name": "corr_containment_health_index_vs_crisis_intensity",
+      "value": -0.787,
+      "unit": "coefficient de corrélation",
+      "quoted": "ρ -0.742* -0.787**",
+      "note": "Table 4 : même corrélation avec le Containment and Health Index, significative à 5 %. n = 7."
+    },
+    {
+      "name": "us_slope_gamma_garch_vs_rv",
+      "value": 14.374,
+      "unit": "coefficient γ (sans unité)",
+      "quoted": "US 14.374*** 20.649*** 7.248** 5.555*** 5.321*** 4.685***",
+      "note": "Table 5 (robustesse, niveau pays ; le papier ne précise pas si c'est l'indice agrégé) : pente γ US 14.374 avec GARCH, 20.649 avec RV, 7.248 avec RKV ; la plus élevée des pays sous chaque mesure."
+    },
+    {
+      "name": "spearman_slope_garch_vs_rv",
+      "value": 0.979,
+      "unit": "corrélation de rang de Spearman",
+      "quoted": "ρ — 0.979 0.845 — 0.778 0.708",
+      "note": "Table 5 : rang des pentes GARCH vs RV 0.979, vs RKV 0.845 ; rang des seuils GARCH vs RV 0.778, vs RKV 0.708. Sur 7 pays."
+    },
+    {
+      "name": "aggregate_linearity_test_F",
+      "value": 2.41,
+      "unit": "statistique F",
+      "quoted": "Linearity Test 2.410* 2.583** 2.739** 3.072** 3.033** 2.248* 3.083** 3.067** 2.486** 2.603** 4.276***",
+      "note": "Table 2 : test de linéarité contre non-linéarité, médiane sur les pays ; rejet à 10 % seulement pour l'agrégat et la Santé, à 1 % pour la Technologie (4.276)."
+    },
+    {
+      "name": "st_har_adj_r2_aggregate",
+      "value": 0.833,
+      "unit": "R² ajusté",
+      "quoted": "Adj-R2 0.833 0.785 0.901 0.844 0.849 0.949",
+      "note": "Table 2 : R² ajusté médian du ST-HAR sur la volatilité GARCH (in-sample), 0.833 pour l'agrégat, 0.949 pour la Santé. Un R² élevé est attendu : la variable expliquée est elle-même une volatilité GARCH très persistante."
+    },
+    {
+      "name": "us_aggregate_annualised_vol_covid_period",
+      "value": 17.845,
+      "unit": "% annualisé",
+      "quoted": "Volatility 17.845 15.095 13.511 17.401 18.401 21.289 17.835 13.398",
+      "note": "Table 1 : volatilité annualisée de l'indice agrégé US sur la période Covid (01/02/2020-24/4/2020) ; le dernier nombre de la citation, 13.398, est la même mesure US sur la période pré-Covid (24/4/2018-31/1/2020)."
+    },
+    {
+      "name": "us_aggregate_annualised_vol_pre_covid",
+      "value": 13.398,
+      "unit": "% annualisé",
+      "quoted": "Volatility 17.845 15.095 13.511 17.401 18.401 21.289 17.835 13.398",
+      "note": "Table 1, panel B, colonne US. La hausse n'est que d'environ un tiers en moyenne sur la fenêtre Covid, parce que la fenêtre inclut février calme."
+    },
+    {
+      "name": "technology_last_and_least_affected",
+      "value": null,
+      "quoted": "That Technology was the last and",
+      "note": "Qualitatif ; les chiffres correspondants sont dans l'entrée technology_mean_threshold_psi."
+    }
+  ],
+  "what_is_missing": [
+    "aucune prévision hors échantillon, aucune mesure de pouvoir prédictif (IC, perte de prévision, rendement) : le modèle est estimé in-sample sur une fenêtre qui contient la crise",
+    "la variable de transition (cas cumulés de Covid) est propre à cet événement et n'a pas d'équivalent générique ; aucun déclencheur de régime réutilisable n'est proposé",
+    "les coefficients rapportés sont des médianes entre pays ; les estimations pays × secteur individuelles ne sont pas publiées",
+    "incohérences internes : la note du Table 3 dit que le rang 1 correspond à l'intensité la plus faible, alors que la Santé (γ le plus élevé) est classée [1] ; le texte dit que la Santé et les Matériaux ont la plus forte et la plus faible intensité, alors que la médiane la plus faible du Table 3 est la Technologie (1.880) ; le texte dit que l'Allemagne a l'intensité la plus faible, alors que le Table 4 donne l'Italie (2.870) ; le texte renvoie au Table 4 au lieu du Table 5 en section 6 et à l'« equation 11 » au lieu de l'équation 8 dans les notes de figures",
+    "la pente GARCH des États-Unis vaut 14.374 dans le Table 5 contre une médiane de 4.210 aux Tables 3 et 4, et les seuils GARCH du Table 5 diffèrent de ceux du Table 3 ; le papier ne dit pas si le Table 5 porte sur l'indice agrégé seul",
+    "les corrélations de politique publique (Table 4) reposent sur 7 observations",
+    "aucun coût, aucune donnée intraday exploitée dans l'analyse principale (seulement en robustesse), aucun fuseau horaire pour aligner les clôtures des 7 marchés",
+    "l'équation GARCH (2) mélange u et r avec des indices i et j non définis ; la spécification exacte n'est pas vérifiable",
+    "l'échelle de σ² dans la fonction de transition (écart-type de s_t sur quelle fenêtre) n'est pas précisée"
+  ],
+  "transposability": {
+    "what_transfers": "L'idée méthodologique : une volatilité modélisée par un HAR (retards jour/semaine/mois) dont le niveau et la persistance journalière changent de régime via une fonction de transition lisse d'une variable observable, avec un seuil ψ (quand) et une pente γ (à quelle vitesse). C'est un cadre de définition de régime de volatilité pour un hybride, applicable à la RV intraday de nos futures si la variable de transition est remplacée par une variable connue en temps réel (niveau de RV, VIX, écart de volatilité).",
+    "what_does_not_transfer": [
+      "la variable de transition (cas cumulés de Covid mondiaux) est propre à un seul événement et n'existe pas hors de 2020",
+      "l'univers est des indices actions nationaux et sectoriels au pas quotidien, pas des futures intraday ; les résultats sectoriels n'ont pas d'analogue dans neuf futures",
+      "l'estimation est in-sample sur une fenêtre qui contient la crise : les seuils ψ et pentes γ sont connus après coup, donc inutilisables tels quels sans look-ahead",
+      "le papier décrit la volatilité, il ne prédit ni rendement ni direction : aucun IC n'est calculable à partir de ses résultats",
+      "la fenêtre de crise (1/2/2020 – 24/4/2020) est un seul épisode de moins de trois mois : un régime calibré sur un épisode unique ne se valide pas",
+      "les chiffres de politique publique (OxCGRT) sont annuels-pays, sans lien avec nos instruments"
+    ],
+    "what_aligns_well": "La structure HAR sur une volatilité réalisée à 5 minutes (utilisée ici en robustesse, avec résultats alignés : Spearman 0.979 sur les pentes) correspond exactement à ce qu'on peut calculer sur nos futures intraday, et la forme ESTAR donne une définition continue et pré-enregistrable d'un régime calme/crise, utile pour l'étape 05 (régimes)."
+  }
+}

@@ -1,0 +1,215 @@
+{
+  "fiche_id": "overnight-intraday-mispricing-of-chinese-energy-W4214609326",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-15",
+  "source": {
+    "authors": "Min Zhou, Xiaoqun Liu",
+    "title": "Overnight-Intraday Mispricing of Chinese Energy Stocks: A View from Financial Anomalies",
+    "year": 2022,
+    "source_url": "https://www.frontiersin.org/articles/10.3389/fenrg.2021.807881/pdf",
+    "pdf": "corpus/pdf/overnight-intraday-mispricing-of-chinese-energy-W4214609326.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "venue": "Frontiers in Energy Research 9:807881 (publié le 25 février 2022, relecteurs nommés)"
+  },
+  "claim": {
+    "value": "Sur les actions chinoises du secteur de l'énergie (et sur l'ensemble des A-shares), le rendement de nuit (clôture→ouverture) est fortement négatif et le rendement de séance (ouverture→clôture) positif, à l'inverse des marchés américains. Les composantes nuit et séance persistent d'un mois sur l'autre (continuation dans la même composante, renversement dans l'autre), et les alphas des stratégies d'anomalies (beta, volatilité idiosyncratique, turnover, reversal) sont gagnés presque entièrement la nuit ; seule la taille (et la prime de marché) est un effet de séance. Les auteurs attribuent ce renversement du motif américain à la règle « T+1 ».",
+    "quoted": [
+      "the overnight returns are strongly negative and intraday returns",
+      "overnight/intraday momentum and reversal patterns both in",
+      "stocks. Finally, it is risk-related anomalies that occur overnight for energy industry stocks,",
+      "We ﬁnd the",
+      "size alpha occurs intraday for both samples, which is quite",
+      "“T+1” trading mechanism in China. “T+1” trading rule prohibits"
+    ]
+  },
+  "universe": {
+    "value": "Actions chinoises du secteur de l'énergie (74 titres selon le Tableau 1) et, comme échantillon de contrôle, toutes les A-shares ; données CSMAR et Wind, janvier 2001 à décembre 2019 (le Tableau 1 dit 2002–2019) ; titres de prix inférieur à 1 yuan exclus ; portefeuilles pondérés par la capitalisation.",
+    "quoted": [
+      "Research (CSMAR) database and Wind database from January",
+      "2001 to December 2019 for all energy stocks and A-shares stocks",
+      "traded in Chinese stock markets. Stocks with prices below ¥1 a",
+      "variables for energy industry stocks. First, there are 74 energy",
+      "this paper, we use market capitalization value-weight portfolios."
+    ]
+  },
+  "horizon": {
+    "value": "Mensuel : tri sur la composante du mois écoulé, portefeuille rebalancé chaque mois, rendements (nuit et séance, cumulés sur les jours) mesurés le mois suivant.",
+    "quoted": [
+      "patterns by rebalancing the portfolios in the current month and",
+      "calculating the components of the close-to-close return in the",
+      "current month value-weight top (bottom) quintile for the past 1-"
+    ]
+  },
+  "signal_construction": {
+    "value": "Pour chaque titre et chaque jour : rendement de nuit = ouverture(d)/clôture(d−1) − 1 ; rendement de séance = clôture(d)/ouverture(d) − 1 (la formule imprimée écrit ouverture d−1, coquille probable). Les deux composantes sont cumulées sur le mois. Score = rendement de nuit (ou de séance) du mois passé ; tri transversal en quintiles (énergie) ou déciles (A-shares) ; long le quintile haut, short le quintile bas, pondération par capitalisation ; on mesure séparément les rendements de nuit et de séance du portefeuille le mois suivant, bruts, alpha CAPM et alpha Fama-French 3 facteurs, t-stats corrigés sur 12 retards. Même décomposition appliquée à neuf stratégies d'anomalies (taille, value BM, momentum, reversal 1 mois, ROE, Ivol FFC 4 facteurs sur 1 an, beta Dimson 12 mois avec 3 retards, turnover moyen 12 mois, prime de marché) et à des régressions Fama-MacBeth mensuelles.",
+    "quoted": [
+      "we decompose daily close-to-close return (r",
+      "Then, we calculate the monthly overnight return and intraday",
+      "return by accumulating the above daily return components across",
+      "construct zero-cost trading strategies of longing (shorting) the",
+      "current month value-weight top (bottom) quintile for the past 1-",
+      "month overnight return-sorted portfolios (Panel A) and the",
+      "subsequent month. We report monthly raw excess portfolio returns, alphas adjusted by the CAPM and by the Fama-French three-factor model. t-statistics are calculated by correcting"
+    ],
+    "sort_variable": "rendement de nuit (ou de séance) cumulé du mois précédent",
+    "portfolio": "quintiles (énergie) / déciles (A-shares), pondération capitalisation, long haut − short bas"
+  },
+  "reported_results": [
+    {
+      "name": "energy_mean_monthly_overnight_return_pct",
+      "value": -3.71,
+      "unit": "% par mois",
+      "quoted": "market is −3.71% ( −3.67%), while the mean monthly intraday",
+      "spelled_out": "−3.71",
+      "note": "Moyenne (médiane −3.67 %) sur les 74 actions énergie, 2002–2019. Le texte emploie le signe moins unicode « − »."
+    },
+    {
+      "name": "energy_mean_monthly_intraday_return_pct",
+      "value": 2.83,
+      "unit": "% par mois",
+      "quoted": "return is 2.83% (2.93), further con ﬁrming the pattern of overall",
+      "note": "Moyenne (médiane 2.93) sur les 74 actions énergie."
+    },
+    {
+      "name": "energy_monthly_overnight_intraday_return_std",
+      "value": 0.0143,
+      "unit": "fraction",
+      "quoted": "return are 0.0143 and 0.0114, consistent with the classic",
+      "note": "Écarts-types respectifs du rendement mensuel de nuit (0.0143) et de séance (0.0114), Tableau 1 ; la dispersion est transversale sur 74 observations (count = 74), pas une volatilité temporelle."
+    },
+    {
+      "name": "energy_overnight_sorted_5m1_next_month_overnight_excess_pct",
+      "value": 2.24,
+      "unit": "% par mois",
+      "quoted": "excess overnight return of 2.24% as well as signiﬁcantly CAPM or",
+      "note": "Continuation de nuit : long quintile au plus fort rendement de nuit passé, short le plus faible ; t = 6.23 au Tableau 2 (Panel A). Alphas CAPM / 3F : 2.31 % / 2.30 %."
+    },
+    {
+      "name": "energy_overnight_sorted_5m1_overnight_excess_tstat",
+      "value": 6.23,
+      "unit": "t-stat",
+      "quoted": "(6.23) (6.40) (5.83) ( −4.39) ( −4.27) ( −4.24)",
+      "note": "Ligne des t-stats sous « 5–1 » du Tableau 2, Panel A : excès nuit, CAPM nuit, 3F nuit, puis les trois colonnes séance."
+    },
+    {
+      "name": "energy_overnight_sorted_5m1_next_month_intraday_capm_alpha_pct",
+      "value": -2.34,
+      "unit": "% par mois",
+      "quoted": "CAPM (three-factor)-adjusted intraday alpha of −2.34%",
+      "spelled_out": "−2.34",
+      "note": "Renversement en séance du même portefeuille trié sur la nuit ; t = −4.27 (CAPM) au Tableau 2. Alpha 3F : −2.22 %."
+    },
+    {
+      "name": "energy_intraday_sorted_5m1_next_month_intraday_excess_pct",
+      "value": 1.73,
+      "unit": "% par mois",
+      "quoted": "5–1 −2.77%ppp −2.79%ppp −2.81%ppp 1.73%ppp 1.73%ppp 1.77%ppp",
+      "note": "Tableau 2, Panel B (tri sur le rendement de séance passé) : nuit suivante −2.77 % (excès), séance suivante +1.73 % (excès) ; « ppp » = significatif à 1 %. t séance excès = 3.20."
+    },
+    {
+      "name": "ashares_overnight_sorted_10m1_next_month_overnight_excess_pct",
+      "value": 2.83,
+      "unit": "% par mois",
+      "quoted": "average raw excess overnight return of 2.83% in the current",
+      "note": "Échantillon A-shares, déciles ; t = 22.32 au Tableau 3."
+    },
+    {
+      "name": "ashares_overnight_sorted_10m1_next_month_intraday_capm_alpha_pct",
+      "value": -3.06,
+      "unit": "% par mois",
+      "quoted": "adjusted intraday alpha of −3.06% ( −2.95%) per month is",
+      "spelled_out": "−3.06",
+      "note": "t = −9.91 au Tableau 3. Même tableau : le t de l'excès séance (2.96) semble recopié de la ligne décile 10, incohérent avec un rendement négatif."
+    },
+    {
+      "name": "energy_beta_bab_overnight_capm_alpha_pct",
+      "value": 0.98,
+      "unit": "% par mois",
+      "quoted": "CAPM alpha is 0.98% (1.10%) with an associatedt-statistics of 2.65",
+      "note": "Long bas beta, short haut beta ; énergie 0.98 % (t 2.65), A-shares 1.10 % (t 6.31). Alpha de séance −0.50 % non significatif."
+    },
+    {
+      "name": "energy_ivol_overnight_capm_alpha_pct",
+      "value": 2.23,
+      "unit": "% par mois",
+      "quoted": "overnight CAPM alpha is 2.23%",
+      "note": "Long basse Ivol, short haute Ivol ; t = 5.55 (Tableau 4). Le texte donne l'alpha de séance à −0.27 % mais le Tableau 4 porte −0.79 % : incohérence interne."
+    },
+    {
+      "name": "energy_turnover_overnight_capm_alpha_pct",
+      "value": 2.54,
+      "unit": "% par mois",
+      "quoted": "alpha is 2.54% (1.97%) for energy stocks (all A-shares stock), and",
+      "note": "Long bas turnover, short haut turnover ; t = 5.08 (Tableau 4). Alpha de séance −1.29 % (t −2.18, marqué ** au tableau, que le texte qualifie pourtant d'insignifiant)."
+    },
+    {
+      "name": "energy_reversal_overnight_capm_alpha_pct",
+      "value": 1.45,
+      "unit": "% par mois",
+      "quoted": "alpha is 1.45% (1.72%) for energy stocks (A-shares stocks),",
+      "note": "Reversal 1 mois ; t = 2.99 (Tableau 4). Le texte donne l'alpha de séance à −1.29 %, le Tableau 4 à −0.51 % : incohérence interne."
+    },
+    {
+      "name": "energy_size_intraday_capm_alpha_pct",
+      "value": 1.90,
+      "unit": "% par mois",
+      "quoted": "adjusted intraday alphas are 1.90% with an associated t-statistics",
+      "note": "Long petites, short grandes ; t = 3.47 ; seule anomalie de séance avec la prime de marché. Alpha de nuit −1.57 %."
+    },
+    {
+      "name": "energy_market_overnight_excess_return_pct",
+      "value": -2.28,
+      "unit": "% par mois",
+      "quoted": "average monthly overnight raw excess return of −2.28% and an",
+      "spelled_out": "−2.28",
+      "note": "Portefeuille de marché énergie pondéré ; séance +1.23 %. Pour les A-shares le texte inverse visiblement les deux chiffres par rapport au Tableau 5 (nuit −1.68 %, séance 2.03 %)."
+    },
+    {
+      "name": "energy_bm_overnight_capm_alpha_pct",
+      "value": -2.63,
+      "unit": "% par mois",
+      "quoted": "both the overnight and intraday CAPM alphas are negative,−2.63%",
+      "spelled_out": "−2.63",
+      "note": "Value (long haut BM, short bas BM) : pas d'alpha positif sur l'énergie ; t = −5.49."
+    },
+    {
+      "name": "energy_fm_ret_overnight_coef_on_next_intraday",
+      "value": -0.0049,
+      "unit": "coefficient Fama-MacBeth",
+      "quoted": "ret_overnight −0.0028 0.0022** −0.0049*** 0.0070*** 0.0241***",
+      "spelled_out": "−0.0049",
+      "note": "Tableau 6 : le rendement de nuit du mois passé prédit positivement la nuit suivante (0.0022, t 2.15) et négativement la séance suivante (−0.0049, t −3.06). Unités des régresseurs non précisées."
+    },
+    {
+      "name": "energy_fm_observations",
+      "value": 10135,
+      "unit": "observations titre-mois",
+      "quoted": "No.obs 10135 10135 10135 10135 10135",
+      "note": "Tableau 6."
+    }
+  ],
+  "what_is_missing": [
+    "aucun IC, aucun rendement net de coûts : les résultats sont des alphas de portefeuilles long-short mensuels bruts",
+    "aucun coût de transaction ni contrainte de vente à découvert, alors que la vente à découvert des A-shares est très restreinte",
+    "la formule du rendement de séance est imprimée avec l'ouverture de la veille (P_open,d−1), coquille probable non corrigée",
+    "plusieurs chiffres du texte contredisent les tableaux (Ivol séance −0.27 % vs −0.79 %, reversal séance −1.29 % vs −0.51 %, A-shares nuit/séance du marché inversés, t-stats du momentum et de la taille recopiés)",
+    "la conclusion dit l'inverse de la section 4.2.2 (« occur within the day » pour les anomalies A-shares, présentées ailleurs comme nocturnes)",
+    "le Tableau 7 (A-shares) n'a aucune t-stat, et les colonnes « scaled difference » (p24/18.5, p24/5.5) ne sont pas expliquées",
+    "74 titres énergie seulement, quintiles de ~15 titres : aucune analyse de robustesse, de sous-période ni de sensibilité",
+    "l'heure exacte d'ouverture utilisée (enchère d'ouverture 9h25/9h30 ?) et le traitement de la pause de midi ne sont pas précisés",
+    "la période est donnée tantôt 2001–2019, tantôt 2002–2019"
+  ],
+  "transposability": {
+    "what_transfers": "La décomposition du rendement en composante de nuit (clôture→ouverture) et de séance (ouverture→clôture), et l'hypothèse testable qu'elles portent des dynamiques distinctes : persistance de la composante de nuit d'une période à l'autre, et renversement de la séance suivante après une forte composante de nuit. Chez nous, cela devient un score par instrument : rendement de nuit cumulé récent, utilisé pour prédire le rendement de la séance suivante (signe attendu négatif selon le papier), à évaluer par IC.",
+    "what_does_not_transfer": [
+      "l'univers : actions chinoises au comptant (74 titres énergie), pas des futures ; l'essentiel des résultats sont des tris transversaux en quintiles, impossibles à répliquer sur neuf instruments",
+      "le mécanisme invoqué, la règle T+1 des A-shares, n'existe pas sur les futures, qui se vendent le jour même",
+      "la « nuit » des futures n'est pas une période sans négociation : beaucoup de contrats ont une séance de nuit ou cotent presque 24h, la frontière nuit/séance est à redéfinir",
+      "les anomalies de caractéristiques d'entreprise (BM, ROE, taille, turnover, beta, Ivol) n'ont pas d'équivalent sur un indice ou une matière première",
+      "l'horizon mensuel et la métrique (alpha de portefeuille long-short) ne correspondent pas à un IC intraday",
+      "le signe du motif est explicitement l'inverse du motif américain : rien ne dit lequel vaut sur nos marchés"
+    ],
+    "what_aligns_well": "Les définitions de rendement de nuit et de séance sont point-in-time et simples à calculer depuis les barres d'ouverture et de clôture ; le tri sur le mois écoulé n'utilise que du passé. L'idée de séparer la mesure d'un signal selon qu'il paie la nuit ou en séance est directement utile pour un score intraday."
+  }
+}

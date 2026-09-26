@@ -1,0 +1,239 @@
+{
+  "fiche_id": "speculation-and-lottery-like-demand-in-cryptocur-W3121081402",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-24",
+  "source": {
+    "authors": "Klaus Grobys, Juha Junttila",
+    "title": "Speculation and lottery-like demand in cryptocurrency markets",
+    "year": 2021,
+    "source_url": "https://osuva.uwasa.fi/bitstreams/a78c09ee-7f77-4f1a-bd23-1ec8a7f4dbc4/download",
+    "pdf": "corpus/pdf/speculation-and-lottery-like-demand-in-cryptocur-W3121081402.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "journal": "Journal of International Financial Markets, Institutions & Money 71 (2021) 101289"
+  },
+  "claim": {
+    "value": "Effet MAX transposé aux cryptomonnaies : les cryptos dont le plus fort rendement journalier de la semaine passée est le plus élevé (demande de type loterie) ont un rendement plus faible la semaine suivante. Le spread quintile haut moins quintile bas est négatif, d'environ −1,5 % par semaine, et résiste à l'ajustement par Bitcoin, au saut d'un jour et au trimming.",
+    "quoted": [
+      "Our results show that average raw and",
+      "risk-adjusted return differences between cryptocurrencies in the lowest and highest MAX",
+      "this evidence suggests that investors",
+      "may be willing to pay more for cryptocurrencies that exhibit extreme positive returns, and thus, these cryptocurrencies"
+    ]
+  },
+  "universe": {
+    "value": "20 cryptomonnaies de rang 2 à 21 en capitalisation au 2 janvier 2016 (Bitcoin exclu du tri, utilisé comme facteur de marché), données journalières coinmarketcap.com en USD, du 1er janvier 2016 au 31 décembre 2019 ; YbCoin remplacé par MonaCoin faute de données.",
+    "quoted": [
+      "the 20 cryptocurrencies that we use in our sorts are between rank 2 and 21 in terms of",
+      "The daily data set used in this study starts on January 1, 2016 and ends on December 31,",
+      "2019, resulting in 1463 daily observations.",
+      "Daily data for the following cryptocurrencies were retrieved from coinmarketcap.com"
+    ]
+  },
+  "horizon": {
+    "value": "Une semaine (sept jours calendaires, marché 24/7), rendements hebdomadaires non chevauchants, rebalancement au début de chaque semaine.",
+    "quoted": [
+      "weekly non-overlapping returns were calcu-",
+      "lated as the return over seven trading days leaving us with 209 observations as",
+      "on the ﬁrst quintile, and the allocation is updated based on this strategy at the beginning of each week."
+    ]
+  },
+  "signal_construction": {
+    "value": "Score_i,t = maximum des log-rendements journaliers de l'instrument i sur les sept derniers jours avant la formation. Au début de chaque semaine, tri croissant des 20 cryptos, allocation en quintiles (4 cryptos par quintile), portefeuilles équipondérés ; stratégie à coût nul quintile 5 (MAX haut) moins quintile 1 (MAX bas), dont le rendement moyen est négatif. Variante de robustesse : le jour le plus récent est exclu du calcul du MAX (saut d'un jour entre formation et détention). Ajustement de risque : régression du spread sur l'excès de rendement de Bitcoin ; inférence par block bootstrap stationnaire (longueur de bloc géométrique d'espérance h = 20, B = 1000).",
+    "quoted": [
+      "the beginning of each week by the maximum daily log-return during the last week (i.e., seven days) in an increasing order",
+      "Next, the cryptocurrencies are allocated into ﬁve portfolio groups.",
+      "The zero-cost strategy is long on the ﬁfth and short",
+      "address this issue by implementing the MAX strategy by discounting the most recent past trading day when determining",
+      "First, we chose an equal-weighted scheme for the portfolios which is in line with the literature on tra-",
+      "Finally, our blocks bootstrap approach makes use of B ¼ 1000 bootstrap replications."
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "hl_spread_abstract_bound_weekly_pct",
+      "value": 1.50,
+      "unit": "% par semaine (valeur absolue)",
+      "quoted": "quintiles exceed 1.50% per week. These results are robust after controlling for Bitcoin risk",
+      "note": "Borne annoncée dans le résumé, pour les écarts bruts et ajustés du risque entre quintiles bas et haut MAX."
+    },
+    {
+      "name": "hl_raw_mean_weekly_pct",
+      "value": -1.54,
+      "unit": "% par semaine",
+      "quoted": "The zero-cost portfolio generates −1.54% weekly",
+      "quoted_source": "The zero-cost portfolio generates /C0 1.54% weekly",
+      "quoted_repair": "math_notation",
+      "spelled_out": "/C0 1.54",
+      "note": "L'extraction rend le signe moins par « /C0 ». Spread quintile 5 moins quintile 1, 20 cryptos, 2016-2019, 209 semaines."
+    },
+    {
+      "name": "hl_raw_bootstrap_tstat",
+      "value": -2.68,
+      "unit": "t-stat (block bootstrap, h = 20)",
+      "quoted": "average returns with a HAC-robust t-statistic of −2.68",
+      "quoted_source": "average returns with a HAC-robust t-statistic of /C0 2.68",
+      "quoted_repair": "math_notation",
+      "spelled_out": "/C0 2.68",
+      "note": "t-stat « HAC-robust » au sens des auteurs : block bootstrap stationnaire, pas Newey-West."
+    },
+    {
+      "name": "hl_raw_standard_ols_tstat",
+      "value": -1.57,
+      "unit": "t-stat (OLS standard)",
+      "quoted": "Standard t-statistic −1.57 −1.78 −1.75 −2.08",
+      "quoted_source": "Standard t-statistic /C0 1.57 /C0 1.78 /C0 1.75 /C0 2.08",
+      "quoted_repair": "table",
+      "spelled_out": "/C0 1.57",
+      "note": "Table A8, première colonne (spread brut de la Table 1). Avec une t-stat classique le spread brut n'est PAS significatif ; la significativité dépend du choix d'inférence."
+    },
+    {
+      "name": "hl_raw_newey_west_lag1_tstat",
+      "value": -1.89,
+      "unit": "t-stat (Newey-West, 1 retard)",
+      "quoted": "HAC-robust t-statistics as proposed in Newey-West (1987) using a lag-length of l =1 −1.89 −2.14 −1.76 −2.14",
+      "quoted_source": "HAC-robust t-statistics as proposed in Newey-West (1987) using a lag-length of l =1 /C0 1.89 /C0 2.14 /C0 1.76 /C0 2.14",
+      "quoted_repair": "table",
+      "spelled_out": "/C0 1.89",
+      "note": "Table A8, spread brut. Avec 5 retards la t-stat atteint −2,51 (même table)."
+    },
+    {
+      "name": "hl_raw_trimmed_mean_weekly_pct",
+      "value": -1.89,
+      "unit": "% par semaine",
+      "quoted": "Average return 1.33 1.38 0.55 1.08 −0.22 −1.54*** −1.89***",
+      "quoted_source": "Average return 1.33 1.38 0.55 1.08 /C0 0.22 /C0 1.54*** /C0 1.89***",
+      "quoted_repair": "table",
+      "spelled_out": "/C0 1.89",
+      "note": "Table 1, dernière colonne : spread après coupe de 2,5 % de chaque queue. Les rendements moyens par quintile (1,33 bas à −0,22 haut) sont dans la même ligne."
+    },
+    {
+      "name": "hl_btc_adjusted_alpha_weekly_pct",
+      "value": -1.75,
+      "unit": "% par semaine",
+      "quoted": "The point estimate for a is −1.75 per week with corresponding HAC-robust t-statistic of −2.70",
+      "quoted_source": "The point estimate for a is /C0 1.75 per week with corresponding HAC-robust t-statistic of /C0 2.70",
+      "quoted_repair": "math_notation",
+      "spelled_out": "/C0 1.75",
+      "note": "Alpha de la régression du spread sur l'excès de rendement de Bitcoin (éq. 1), bêta 0,16 non significatif (Table A3)."
+    },
+    {
+      "name": "hl_btc_adjusted_alpha_bootstrap_tstat",
+      "value": -2.70,
+      "unit": "t-stat (block bootstrap, h = 20)",
+      "quoted": "The point estimate for a is −1.75 per week with corresponding HAC-robust t-statistic of −2.70",
+      "quoted_source": "The point estimate for a is /C0 1.75 per week with corresponding HAC-robust t-statistic of /C0 2.70",
+      "quoted_repair": "math_notation",
+      "spelled_out": "/C0 2.70"
+    },
+    {
+      "name": "hl_skip_one_day_raw_mean_weekly_pct",
+      "value": -1.82,
+      "unit": "% par semaine",
+      "quoted": "Average return 1.65 1.01 0.98 0.65 −0.17 −1.82** −2.24***",
+      "quoted_source": "Average return 1.65 1.01 0.98 0.65 /C0 0.17 /C0 1.82** /C0 2.24***",
+      "quoted_repair": "table",
+      "spelled_out": "/C0 1.82",
+      "note": "Table 3 : MAX calculé en excluant le jour le plus récent. t-stat bootstrap −2,43 (ligne suivante de la table)."
+    },
+    {
+      "name": "hl_skip_one_day_btc_adjusted_alpha_weekly_pct",
+      "value": -2.14,
+      "unit": "% par semaine",
+      "quoted": "20 −2.14** 0.25 −2.35 1.32",
+      "quoted_source": "20 /C0 2.14** 0.25 /C0 2.35 1.32",
+      "quoted_repair": "table",
+      "spelled_out": "/C0 2.14",
+      "note": "Table A4, ligne h = 20 : alpha −2,14, bêta 0,25, t(alpha) −2,35."
+    },
+    {
+      "name": "hl_with_bitcoin_raw_mean_weekly_pct",
+      "value": -1.37,
+      "unit": "% par semaine",
+      "quoted": "Average return 1.11 1.43 0.62 0.95 −0.26 −1.37** −1.68***",
+      "quoted_source": "Average return 1.11 1.43 0.62 0.95 /C0 0.26 /C0 1.37** /C0 1.68***",
+      "quoted_repair": "table",
+      "spelled_out": "/C0 1.37",
+      "note": "Table A7 : Bitcoin inclus, NEM exclu ; t-stat bootstrap −2,27."
+    },
+    {
+      "name": "hl_raw_weekly_std_pct",
+      "value": 14.21,
+      "unit": "% par semaine",
+      "quoted": "Std. Dev. 13.23 13.90 13.33 15.47 16.80 14.21",
+      "quoted_source": "Std. Dev. 13.23 13.90 13.33 15.47 16.80 14.21",
+      "quoted_repair": "table",
+      "note": "Table 2, dernière colonne (H-L). quoted_source identique à quoted : chaîne issue d'une table mise à plat."
+    },
+    {
+      "name": "hl_raw_annualized_sharpe_derived",
+      "value": 0.78,
+      "unit": "ratio (valeur absolue, annualisé)",
+      "derived": true,
+      "quoted": "Mean 1.33 1.38 0.55 1.08 /C0 0.22 /C0 1.54",
+      "note": "Calcul de l'extracteur : 1,54 / 14,21 × racine(52) ≈ 0,78, pour le côté court du spread (long quintile bas, court quintile haut), avant coûts. Non annoncé par les auteurs."
+    },
+    {
+      "name": "transition_prob_high_to_high",
+      "value": 0.3394,
+      "unit": "probabilité hebdomadaire",
+      "quoted": "0.3394***",
+      "quoted_source": "0.3394***",
+      "quoted_repair": "table",
+      "note": "Table 5 : probabilité qu'une crypto du quintile haut MAX y reste la semaine suivante (t = 8,84 contre 0,20). Persistance du MAX."
+    },
+    {
+      "name": "fm_max_premium_bootstrap_tstat",
+      "value": 3.83,
+      "unit": "t-stat (block bootstrap, h = 3)",
+      "quoted": "= (2.54; 3.83; 3.18; 2.03)",
+      "quoted_source": "¼ 2:54; 3:83; 3:18; 2:03ðÞ",
+      "quoted_repair": "math_notation",
+      "spelled_out": "3:83",
+      "note": "Prime de risque en coupe transversale associée au bêta MAX (deuxième élément ; le premier est la constante). Prime estimée 3,47 (« 0:39; 3:47; 4:43; 0:51 »). L'extraction rend le point décimal par « : ». Sur 20 cryptos seulement ; t OLS 6,99 selon la note 7."
+    },
+    {
+      "name": "fm_cross_sectional_r2_pct",
+      "value": 61,
+      "unit": "%",
+      "quoted": "is capable of explaining 61% of the variation in cross-sectional average returns."
+    },
+    {
+      "name": "past_max_range_pct",
+      "value": 21.39,
+      "unit": "% (MAX moyen du quintile haut)",
+      "quoted": "the average of the past MAX which ranges from 3.18% to 21.39% average daily maximum return, is",
+      "note": "MAX passé moyen de 3,18 % (quintile bas) à 21,39 % (quintile haut)."
+    },
+    {
+      "name": "market_cap_rank_correlation",
+      "value": 0.4496,
+      "unit": "corrélation de rang",
+      "quoted": "ization in the beginning and at the end of the sample. The rank correlation is estimated at 0.4496 with a t-statistic of",
+      "note": "Rangs de capitalisation début 2016 contre fin 2019 ; plusieurs cryptos tombent au-delà du rang 1000 (Table A6)."
+    }
+  ],
+  "what_is_missing": [
+    "aucun coût de transaction, aucun spread, aucun frais ; aucune performance nette",
+    "la faisabilité de la jambe courte n'est pas traitée : les auteurs admettent eux-mêmes que la vente à découvert est contrainte sur ces cryptos et que la stratégie ne serait implémentable qu'en long seul, sans la tester",
+    "incohérence de signe dans le texte : la stratégie est décrite long quintile 5 / court quintile 1, mais l'équation (1) décrit MAX_t comme long MAX bas / court MAX haut ; l'alpha −1,75 est négatif alors que cette seconde définition donnerait un alpha positif",
+    "« Controlling for Bitcoin risk increases the spread by 21 basis points per month » alors que −1,75 contre −1,54 donne 21 points de base par semaine",
+    "l'heure de coupure des « jours » coinmarketcap (fuseau, heure de clôture) n'est pas donnée",
+    "univers minuscule (4 cryptos par quintile), fixé ex ante sur les capitalisations de janvier 2016, sans taux de disparition ni gestion des cryptos devenues illiquides",
+    "une seule période (2016-2019), aucun hors-échantillon, aucune correction pour tests multiples",
+    "la significativité dépend du choix d'inférence : t OLS standard −1,57 non significatif sur le spread brut",
+    "pas d'IC par date, pas de décomposition du rendement par sous-période ou régime"
+  ],
+  "transposability": {
+    "what_transfers": "Le motif : un score égal au maximum des rendements de sous-période sur une fenêtre passée, utilisé en sens contraire (MAX élevé → rendement futur plus faible), en coupe transversale. Se calcule sur barres intraday agrégées (max des rendements horaires sur la journée ou la semaine) sans look-ahead. La persistance du MAX (matrice de transition) est une propriété vérifiable directement.",
+    "what_does_not_transfer": [
+      "l'explication comportementale (demande de loterie d'investisseurs particuliers sur des actifs spéculatifs peu capitalisés) n'a pas d'équivalent évident sur neuf futures liquides à forte présence institutionnelle",
+      "la coupe transversale en quintiles de 20 actifs devient dégénérée sur neuf instruments : au mieux un rang ou un tercile, et une corrélation de rang très bruitée",
+      "l'horizon hebdomadaire et le MAX sur rendements journaliers ne correspondent pas à un horizon intraday ; une version intraday est une hypothèse nouvelle, pas une réplication",
+      "l'ampleur (−1,5 % par semaine) est propre à des cryptos à volatilité hebdomadaire de 13-17 % ; aucun ordre de grandeur n'est transposable à des futures",
+      "la métrique est un spread de portefeuille équipondéré et un alpha contre Bitcoin, pas un IC",
+      "le marché 24/7 du papier n'a pas de séances ni de gaps d'ouverture comme les futures"
+    ],
+    "what_aligns_well": "Le score est déterministe, causal et trivial à calculer point-in-time ; le papier insiste sur une inférence robuste à la dépendance temporelle (block bootstrap) et montre que la conclusion change avec l'inférence, ce qui rejoint notre prudence sur les t-stats. La variante « saut d'un jour » est un contrôle de microstructure directement réutilisable."
+  }
+}

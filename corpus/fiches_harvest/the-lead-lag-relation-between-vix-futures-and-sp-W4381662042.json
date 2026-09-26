@@ -1,0 +1,188 @@
+{
+  "fiche_id": "the-lead-lag-relation-between-vix-futures-and-sp-W4381662042",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-27",
+  "source": {
+    "authors": "Christine Bangsgaard, Thomas Kokholm",
+    "title": "The lead–lag relation between VIX futures and SPX futures",
+    "year": 2024,
+    "journal": "Journal of Financial Markets 67 (2024) 100851",
+    "doi": "https://doi.org/10.1016/j.finmar.2023.100851",
+    "source_url": "https://pure.au.dk/ws/files/448941848/1-s2.0-S1386418123000496-main.pdf",
+    "pdf": "corpus/pdf/the-lead-lag-relation-between-vix-futures-and-sp-W4381662042.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true
+  },
+  "claim": {
+    "value": "Entre futures VIX (VX) et E-mini S&P 500 (ES), la relation lead-lag dépend du régime de volatilité : faible lien quand la volatilité est basse ; quand elle est haute, les prix sont fortement négativement corrélés et le VX mène l'ES, mais sur un délai si court (fraction de seconde) que les stratégies qui l'exploitent perdent de l'argent une fois exécutées au bid/ask. La force du lead est expliquée par la liquidité relative, l'activité cross-market (couverture des dealers VX / HFT) et le gamma net négatif des dealers d'options SPX.",
+    "quoted": [
+      "prices are highly negatively correlated, with VIX futures leading SPX futures.",
+      "tightness of the lead–lag relation prevents the formation of profitable trading strategies in a",
+      "are weakly connected when market volatility is low. By contrast, when volatility is high, their"
+    ]
+  },
+  "universe": {
+    "value": "Deux contrats : E-mini S&P 500 futures (ES, contrat le plus proche sauf à moins de six jours de l'échéance, alors le suivant) et VIX futures (VX, contrat le plus proche d'une échéance de 30 jours). Données tick (trades et quotes, horodatage milliseconde) de Tick Data, janvier 2013 à septembre 2020. Analyse principale sur les heures régulières du VX, 9:30-16:15 EST ; analyse secondaire en after-hours. Jours à clôture anticipée retirés.",
+    "quoted": [
+      "Tick-by-tick trade and quote data on SPX futures (ES) and VIX futures (VX) are obtained from Tick Data and cover the period",
+      "the VIX futures contract used for the analysis is the one closest to an expiry of 30 days, and the SPX futures contract used is the",
+      "we focus on trades during the regular trading hours of VIX futures, 9:30-16:15 EST.",
+      "Any date where the exchanges closed"
+    ]
+  },
+  "horizon": {
+    "value": "Relation lead-lag mesurée sur une grille de décalages de ±1 ms à ±60 s ; la corrélation croisée médiane est quasi nulle au-delà d'environ 20 s. Les stratégies entrent à la milliseconde suivant le mouvement du leader et tiennent de 5 ms à 5 minutes. Les mesures lead-lag sont journalières (une valeur par jour), régressées sur des variables journalières.",
+    "quoted": [
+      "where the numbers are in seconds and the largest value ( ±60 seconds) reflects the maximum allowed lead–lag. When the grid is",
+      "the cross-correlation function is close to zero for lags greater than approximately 20 s in absolute value.",
+      "implemented during regular trading hours, and we let the holding period of each position in the futures contract vary from five",
+      "milliseconds to five minutes."
+    ]
+  },
+  "signal_construction": {
+    "value": "Deux objets distincts. (a) Mesure : fonction de corrélation croisée Hayashi-Yoshida entre log-rendements tick-à-tick d'ES (horodatages fixes) et de VX (horodatages décalés de ϑ), calculée chaque jour ; on en tire LLT (ϑ qui maximise la |corrélation|), LLC (corrélation en ce point) et LLR (somme des corrélations au carré aux décalages positifs / somme aux décalages négatifs ; LLR < 1 = VX mène). Significativité par block bootstrap de 27 blocs de 15 min, 2000 tirages par jour. (b) Stratégie 1 : à chaque milliseconde où le prix traité du VX monte (baisse), on ouvre une position courte (longue) ES à la milliseconde suivante, fermée après une durée fixe ; positions cumulables. Stratégie 2 symétrique : on trade le VX contre les mouvements de l'ES. Évaluées au mid et au bid/ask.",
+    "quoted": [
+      "The first strategy is based on a VIX futures leadership and uses movements in the VIX",
+      "futures for a given millisecond, a short (long) SPX futures position is entered at the following millisecond. The position is closed",
+      "after a specified amount of time. A new SPX futures position is opened every time the VIX futures price moves. This means that",
+      "The second strategy mirrors the first strategy, except that it is based on the SPX futures being the leader. Hence, a positive return",
+      "The lead–lag ratio of Huth and Abergel",
+      "Here we split the regular trading hours into 27 non-overlapping intervals of 15 min.",
+      "This procedure is repeated 2,000 times to get a set of lead–lag measures that form the empirical distribution of the"
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "vix_threshold_high_vol_regime_60pct_quantile",
+      "value": 15.35,
+      "unit": "points de VIX",
+      "quoted": "corresponding to values above 15.35",
+      "note": "Seuil du régime « haute volatilité » (60 % quantile supérieur du VIX) sur leur échantillon 2013-2020 ; les régressions de la section 4.5 portent sur ce sous-échantillon."
+    },
+    {
+      "name": "crosscorr_near_zero_beyond_lag_s",
+      "value": 20,
+      "unit": "s",
+      "quoted": "the cross-correlation function is close to zero for lags greater than approximately 20 s in absolute value.",
+      "note": "Corrélation croisée médiane ES/VX sur tout l'échantillon : au-delà d'environ 20 s, plus rien. Point décisif pour la transposition à des barres."
+    },
+    {
+      "name": "llr_median_full_sample",
+      "value": 0.805,
+      "unit": "ratio",
+      "quoted": "Median 0.805 −0.010 −0.062 0.762 −0.003 −0.126 0.830 0.016 −0.281",
+      "note": "Table 1, Panel A, ligne Median : première colonne = LLR plein échantillon. LLR < 1 signifie VX mène. 0.762 = LLR médian du sous-échantillon VIX quartile supérieur pré-COVID ; 0.830 = période COVID."
+    },
+    {
+      "name": "llr_level_high_vol_days",
+      "value": 0.8,
+      "unit": "ratio",
+      "quoted": "First, 𝐿𝐿𝑅 seems to be more stable and around a level of approximately 0.8.",
+      "note": "Lecture graphique des auteurs (Fig. 5) sur les jours à VIX élevé."
+    },
+    {
+      "name": "share_days_llr_below_1_high_vix_pre_covid_pct",
+      "value": 94.4,
+      "unit": "%",
+      "quoted": "𝐿𝐿𝑅< 1 (VX lead) 84.8% 94.4% 100.0%",
+      "note": "Table 1, Panel B : part des jours où VX mène selon LLR ; 84.8 % plein échantillon, 94.4 % VIX quartile supérieur pré-COVID, 100 % période COVID (après le 20 février 2020)."
+    },
+    {
+      "name": "share_days_llr_significantly_below_1_high_vix_pre_covid_pct",
+      "value": 78.8,
+      "unit": "%",
+      "quoted": "0.95 < 1 (VX lead) 48.5% 78.8% 92.9%",
+      "note": "Table 1, Panel C, ligne q^LLR_0.95 < 1 : part des jours où le 95e centile bootstrap de LLR est sous 1 (VX mène significativement à 5 %) ; 48.5 % plein échantillon, 78.8 % haute vol pré-COVID, 92.9 % COVID."
+    },
+    {
+      "name": "share_days_llt_significantly_above_0_covid_pct",
+      "value": 51,
+      "unit": "%",
+      "quoted": "Here 𝐿𝐿𝑇 is significantly greater than zero on 51% of the days, pointing to an",
+      "note": "En période COVID, LLT pointe vers un lead de l'ES, en désaccord avec LLR : la direction du lead dépend de la mesure."
+    },
+    {
+      "name": "llt_max_high_vol_pre_covid_s",
+      "value": 0.66,
+      "unit": "s",
+      "quoted": "a minimum value of −2.900 s and a maximum value equal to 0.660 s",
+      "note": "Étendue de LLT sur le sous-échantillon haute volatilité pré-COVID (min −2.900 s) : le lead est de l'ordre de la milliseconde à la seconde. Médiane −0.003 s (Table 1)."
+    },
+    {
+      "name": "strategy_bid_ask_returns",
+      "value": null,
+      "quoted": "Overall, this strategy generates negative returns",
+      "note": "Stratégie ES déclenchée par les mouvements du VX, exécutée au bid/ask : rendements négatifs quelle que soit la durée de détention (5 ms à 5 min). Au mid, rendement moyen positif la plupart des jours. Aucun chiffre de rendement n'est donné dans le texte (seulement des figures)."
+    },
+    {
+      "name": "strategy_not_monetizable_conclusion",
+      "value": null,
+      "quoted": "where trades are executed at bid and ask prices, the lead–lag relation can no longer be monetized.",
+      "note": "Conclusion des auteurs, valable pour les deux stratégies."
+    },
+    {
+      "name": "llr_on_pcma_coef_high_vix_with_controls",
+      "value": -0.403,
+      "spelled_out": "−0.403",
+      "unit": "coefficient standardisé",
+      "quoted": "−0.296∗∗∗ −0.403∗∗∗",
+      "note": "Table 3, colonnes (5)-(6) : régression de LLR sur l'activité cross-market de pointe (PCMA), sous-échantillon VIX > 60e centile, 773 jours, variables standardisées ; t de Newey-West −4.33 et −5.45. Plus d'activité cross-market = lead du VX renforcé. Le nombre est écrit avec un signe moins Unicode, d'où spelled_out."
+    },
+    {
+      "name": "llr_regression_adj_r2_best_pct",
+      "value": 13.06,
+      "unit": "%",
+      "quoted": "Adj. 𝑅2 (%) 1.61 3.89 −0.05 2.21 8.61 13.06 4.80 6.70",
+      "note": "Table 3 : R² ajusté des huit spécifications pour LLR ; le meilleur (13.06 %) est PCMA + contrôles. Les régressions de LLT ont un R² ajusté sous 1 % (Table 4)."
+    },
+    {
+      "name": "llr_on_negative_net_gamma_coef_with_controls",
+      "value": 0.199,
+      "unit": "coefficient standardisé",
+      "quoted": "0.194∗∗∗ 0.199∗∗∗",
+      "note": "Table 3, colonnes (7)-(8), variable NGP− (gamma net des dealers d'options SPX quand il est négatif) ; t = 4.20 et 4.15. Coefficient positif : gamma plus négatif = LLR plus bas = lead du VX renforcé."
+    },
+    {
+      "name": "llc_on_pcma_adj_r2_pct",
+      "value": 56.84,
+      "unit": "%",
+      "quoted": "Adj. 𝑅2 (%) 56.84 76.43",
+      "note": "Table 5 : LLC (corrélation au pic) expliquée à 56.84 % par PCMA seule, 76.43 % avec contrôles (VIX notamment). Relation quasi-mécanique : plus de trading simultané, corrélation plus négative."
+    },
+    {
+      "name": "corr_pcma_vix",
+      "value": 0.67,
+      "unit": "corrélation",
+      "quoted": "between 𝑃𝐶𝑀𝐴 and VIX equals 0.67.",
+      "note": "Corrélation empirique entre l'activité cross-market de pointe et le niveau du VIX."
+    },
+    {
+      "name": "regression_sample_days_high_vix",
+      "value": 773,
+      "unit": "jours",
+      "quoted": "No. of Obs. 773 773 773 773 773 773 773 773",
+      "note": "Nombre de jours du sous-échantillon VIX > 60e centile (Table 3) ; 1933 jours sur l'échantillon complet (Table A.2)."
+    }
+  ],
+  "what_is_missing": [
+    "aucun rendement chiffré des stratégies dans le texte : seules des figures (Fig. 8, 9, A.2) les montrent ; ni Sharpe, ni coût moyen, ni nombre de trades",
+    "aucun modèle de coûts explicite au-delà de l'exécution au bid/ask ; pas de frais de bourse ni de commissions",
+    "le sous-échantillon « VIX upper quartile » de la Table 1 et le seuil « 60% upper quantile » (15.35) des régressions et des figures coexistent sans que le seuil du quartile soit chiffré",
+    "le seuil du régime est calculé sur tout l'échantillon (quantile ex post), pas en temps réel",
+    "aucune mesure du lead-lag à des pas de temps de barres (1 min, 5 min) : tout est en temps de trade, décalages jusqu'à 60 s",
+    "multiplicateurs de contrat, tick size et fuseau autre que « EST » non précisés",
+    "aucune prévision hors échantillon : les régressions des déterminants sont contemporaines, sur des mesures journalières"
+  ],
+  "transposability": {
+    "what_transfers": "Le motif de régime : les liens inter-marchés actions/volatilité se resserrent quand la volatilité est haute, et la corrélation ES/VX devient fortement négative. Une variable de régime fondée sur le niveau du VIX (ou d'une volatilité réalisée) pour conditionner un signal inter-actifs est un geste transposable. L'idée que la direction du lead dépend de la liquidité relative et du positionnement gamma des dealers peut servir d'hypothèse de régime à pré-enregistrer.",
+    "what_does_not_transfer": [
+      "l'horizon : le lead est de l'ordre de la milliseconde à la seconde et la corrélation croisée s'éteint vers 20 s ; sur des barres intraday de une minute ou plus il ne reste rien à prédire",
+      "la rentabilité : les auteurs montrent que même au tick près le signal ne couvre pas le bid/ask ; un signal plus lent ne peut pas hériter d'un avantage qui n'existe déjà pas à la source",
+      "la métrique : leurs résultats sont des LLR/LLT/LLC journaliers et des coefficients de régression contemporains, pas un IC d'un score sur un rendement futur",
+      "l'univers : le VX n'est pas nécessairement dans nos neuf futures ; sans lui, le leader disparaît",
+      "le gamma net des dealers d'options SPX (OptionMetrics) et l'activité cross-market de Dobrev-Schaumburg exigent des données tick ou options que la chaîne n'a pas",
+      "le seuil de régime 15.35 est un quantile calculé ex post sur 2013-2020"
+    ],
+    "what_aligns_well": "Le papier est honnête sur le négatif : il documente qu'un lead-lag statistiquement net n'est pas monétisable après coûts, ce qui plaide pour ne pas coder de signal lead-lag VX→ES à nos pas de temps. Il fournit aussi un contrôle utile : la direction du lead varie selon la mesure (LLR contre LLT, COVID), rappel que conclure sur une seule mesure est fragile."
+  }
+}

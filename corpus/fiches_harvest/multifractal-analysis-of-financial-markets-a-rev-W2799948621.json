@@ -1,0 +1,232 @@
+{
+  "fiche_id": "multifractal-analysis-of-financial-markets-a-rev-W2799948621",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-13",
+  "source": {
+    "authors": "Zhi-Qiang Jiang, Wen-Jie Xie, Wei-Xing Zhou, Didier Sornette",
+    "title": "Multifractal analysis of financial markets",
+    "year": 2018,
+    "source_url": "https://arxiv.org/pdf/1805.04750",
+    "pdf": "corpus/pdf/multifractal-analysis-of-financial-markets-a-rev-W2799948621.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": false,
+    "note": "Version arXiv v1 (12 mai 2018), marquée « Preprint submitted to Physics Reports » : le texte fourni est un préprint soumis, pas la version arbitrée. C'est une REVUE de littérature (plus de mille références), pas une étude empirique originale ; presque tous les chiffres ci-dessous sont des résultats d'autres papiers que les auteurs résument."
+  },
+  "claim": {
+    "value": "Revue : la multifractalité est quasi universellement observée dans les séries financières (rendements absolus/volatilité, volumes, durées), mais une grande part en est « apparente » (effets de taille finie, queues épaisses, choix de la plage d'échelle, prix non stationnaires) ; il n'y a aucune multifractalité quand le signe des rendements est conservé. Les auteurs affirment que le résultat empirique le plus convaincant est que les méthodes et modèles multifractals (MSM, MRW, volatilité multifractale) prévoient mieux la volatilité et la VaR que les modèles économétriques classiques ; la largeur du spectre (Δα, ΔH) est aussi utilisée comme mesure d'inefficience de marché, avec des réserves.",
+    "quoted": [
+      "We will show below that the most convincing empirical resultis that multifractality-based methods usually perform",
+      "better in forecasting volatility and V alue-at-Risk than conventional econometric models.",
+      "is no multifractality when the signs are included",
+      "it is clear that a time series with only li near correlations and fat-tailed distribution cannot prod uce",
+      "It suggests tha t the apparent multifractality may be a biased measure of"
+    ]
+  },
+  "universe": {
+    "value": "Aucun univers propre : la revue recense des études sur indices actions (majoritairement), actions individuelles, changes, matières premières, taux, et quelques futures actions (DAX futures à 10 s, CSI 300 futures à 5 min, E-mini S&P 500 au niveau transaction). La plupart des séries étudiées sont quotidiennes.",
+    "quoted": [
+      "the return time series of stock market indice s attract most attention",
+      "10-sec prices of the DAX futures during 60 trading",
+      "5-min prices of the CSI 300 futures from 16 April 2010 to 12 A pril 2012 using MF-DFA",
+      "Futures contract from 1 January 2014 to 31 December 2014 and f ound that the compound MSMD model outperforms"
+    ]
+  },
+  "horizon": {
+    "value": "Pas d'horizon unique. L'essentiel du papier décrit une propriété d'échelle des données, sans prédiction. Pour les applications prédictives citées : prévision de volatilité à un jour (volatilité multifractale), gains MSM à 10-50 jours, MRW testé à 1, 5, 20 et 50 jours ; la stratégie de Dewandaru et al. est exprimée en rendement mensuel.",
+    "quoted": [
+      "better performances in one-day ahead volatility forecasti ng",
+      "considerable gains in forecasting accuracy are obtained at horizons of 10 to 50 days",
+      "at four different prediction scales (1, 5, 20 and 50 days)"
+    ]
+  },
+  "signal_construction": {
+    "value": "Deux constructions de score sont décrites, les autres usages étant descriptifs. (a) Volatilité multifractale (Wei & Wang) : pour chaque jour t, on estime la largeur du spectre Δα(t) = αmax − αmin sur les données intraday du jour (fonction de partition ou MF-DFA), puis MFV(t) = [Σ r²(j) / Σ Δα(ℓ)] · Δα(t) sur l'échantillon, ensuite modélisée par ARFIMA(1,d,1) pour prévoir la volatilité du lendemain. (b) Indice d'inefficience D = ½(|H(qmin) − 0,5| + |H(qmax) − 0,5|), issu des exposants de Hurst généralisés H(q) (MF-DFA, Fq(s) ∼ s^H(q)), calculé sur fenêtres glissantes de trois ans de rendements quotidiens et combiné à des facteurs momentum (Dewandaru et al.) pour prévoir les rendements futurs. Les normalisations « sur l'échantillon » de (a) et plusieurs variantes de détrendage (DMA centré ou avant) utilisent de l'information future si elles sont appliquées telles quelles.",
+    "quoted": [
+      "where ∆α(t) is the singularity width obtained from the intraday data on the t-th day",
+      "together with momentum factors to construct factor",
+      "The analysis was conducted on daily returns in moving wind ows",
+      "Fq(s) ∼ sH(q)"
+    ],
+    "look_ahead_warnings": {
+      "value": "La revue signale elle-même deux pièges de causalité : le MMAR construit sur une mesure multifractale géométrique « connaît » son futur ; les versions centrée et avant du DMA utilisent des points futurs pour le trend local.",
+      "quoted": [
+        "the measure at a given instant already “knows” its future",
+        "half past and half future information in each window"
+      ]
+    }
+  },
+  "reported_results": [
+    {
+      "name": "dewandaru_mf_strength_strategy_monthly_excess_return_pct",
+      "value": 6.12,
+      "unit": "% par mois",
+      "quoted": "the strategy based on multifractal strength produced monthly excess returns of 6.12%, outperforming other momentum",
+      "note": "Résultat cité (Dewandaru et al., réf. 1043), actions islamiques du Dow Jones Islamic market 1996-2011, fenêtres glissantes de trois ans. Aucun coût, aucune t-stat, aucune taille d'échantillon donnés dans la revue. Seul résultat de stratégie de trading de toute la revue."
+    },
+    {
+      "name": "illusionary_width_vs_market_shock_index_spearman",
+      "value": 0.87,
+      "spelled_out": "0.8 7",
+      "quoted": "Spearman correlation coefﬁcient is equal to 0.8 7",
+      "note": "L'extraction écrit « 0.8 7 » pour 0.87 (espace parasite). Maillet & Michel : largeur de spectre « illusoire » (partition appliquée aux prix) corrélée à un indice de chocs de volatilité ; corrélation contemporaine, pas prédictive."
+    },
+    {
+      "name": "csi300_5min_deltaH_before_futures_listing",
+      "value": 0.406,
+      "quoted": "in which ∆H decreased from 0.406 to 0.180 and ∆α",
+      "note": "Rendements 5 min du CSI 300, avant/après le lancement des futures CSI 300 le 16 avril 2010 (Zhou et al.) ; ΔH passe de 0.406 à 0.180."
+    },
+    {
+      "name": "csi300_5min_deltaalpha_after_futures_listing",
+      "value": 0.291,
+      "quoted": "decreased from 0.559 to 0.291",
+      "note": "Même étude : Δα passe de 0.559 à 0.291 après l'introduction des futures ; interprété par les auteurs comme un gain d'efficience."
+    },
+    {
+      "name": "djia_daily_deltaalpha_calm_period_1964",
+      "value": 0.19,
+      "quoted": "∆α = 1.04 for the 1929 crash, ∆α = 0.97 for 1987, and ∆α = 0.19 for the calm period",
+      "note": "Siokis, MF-DFA avec q dans [−5, 5] : période calme de 1964."
+    },
+    {
+      "name": "djia_daily_deltaalpha_1929_crash",
+      "value": 1.04,
+      "quoted": "∆α = 1.04 for the 1929 crash, ∆α = 0.97 for 1987, and ∆α = 0.19 for the calm period",
+      "note": "Même étude : la largeur du spectre est environ cinq fois plus grande autour des krachs qu'en période calme ; Δα suit donc surtout le régime de volatilité et les extrêmes."
+    },
+    {
+      "name": "sp500_daily_deltaalpha_raw",
+      "value": 0.597,
+      "quoted": "∆α = 0.593 for SSEC and ∆α = 0.597 for S&P 500",
+      "note": "He & Wang, rendements quotidiens du 20/12/1990 au 07/01/2016, MF-DFA."
+    },
+    {
+      "name": "sp500_daily_deltaalpha_gaussian_surrogate",
+      "value": 0.241,
+      "quoted": "∆αsurr = 0.294 for SSEC and ∆αsurr = 0.241 for S&P 500",
+      "note": "Même étude : remplacer la distribution par une gaussienne (ordre des rangs conservé) réduit fortement Δα ; la distribution à queues épaisses porte une grande part de la multifractalité apparente."
+    },
+    {
+      "name": "sp500_daily_deltaalpha_shuffled",
+      "value": 0.400,
+      "quoted": "∆αshuf = 0.645 for SSEC and ∆αshuf = 0.400 for S&P 500",
+      "note": "Même étude : le mélange aléatoire, qui détruit l'ordre temporel, a moins d'effet que la gaussianisation. Pour SSEC, la série mélangée est même plus large que la série brute."
+    },
+    {
+      "name": "djia_mean_waiting_time_loss_5pct_days",
+      "value": 10,
+      "unit": "jours",
+      "quoted": "(for instance 10 days for a loss of 5% and 20 days for a gain of 5% on the DJIA)",
+      "note": "Asymétrie gain-perte (statistiques inverses) : une baisse de 5 % du DJIA est atteinte en moyenne en deux fois moins de temps qu'une hausse de 5 %. Les auteurs l'attribuent à l'effet de levier et indiquent qu'elle est plus forte pour les indices que pour les actions individuelles."
+    },
+    {
+      "name": "djia_mean_waiting_time_gain_5pct_days",
+      "value": 20,
+      "unit": "jours",
+      "quoted": "(for instance 10 days for a loss of 5% and 20 days for a gain of 5% on the DJIA)",
+      "note": "Pendant du résultat précédent."
+    },
+    {
+      "name": "optimal_investment_horizon_scaling_exponent_gamma",
+      "value": 1.8,
+      "quoted": "whereγ ≈ 1.8, deviating fromγ = 2 for Brownian motions",
+      "note": "Simonsen et al. : le temps de premier passage le plus probable s* varie comme (ΔX)^γ, avec γ ≈ 1.8 contre 2 pour un brownien (DJIA quotidien filtré par ondelettes)."
+    },
+    {
+      "name": "djia_stocks_1min_volume_deltaH_correlation_component",
+      "value": 0.027,
+      "quoted": "∆H = 0.675, ∆Hcorr = 0.027, ∆HPDF = 0.445, and ∆Hnlin = 0.203",
+      "note": "Moyano et al., volume à 1 min des 30 actions du DJIA, juillet-décembre 2004 : sur un ΔH total de 0.675, la composante due aux corrélations est quasi nulle (0.027), la composante due à la distribution domine (0.445)."
+    },
+    {
+      "name": "wig20_1min_returns_deltaalpha_raw",
+      "value": 0.14,
+      "quoted": "October 2005 ( ∆α ≈ 0.14 and ∆αshuf ≈ 0.04)",
+      "note": "Rendements à 1 min de l'indice WIG20, janvier 1999 - octobre 2005 : faible largeur brute (≈ 0.14), réduite à ≈ 0.04 après mélange. Seul chiffre intraday de ce type dans la revue ; il s'agit d'un indice actions, pas de son future."
+    },
+    {
+      "name": "deltaH_vs_deltaH2_correlation_1y_window_wti",
+      "value": 0.373,
+      "quoted": "Pearson correlation coefﬁcient of 0.373 when the wind ow size is 1 year",
+      "note": "Pétrole WTI, quotidien 1986-2012 : la corrélation entre deux mesures d'inefficience (δH(2) et ΔH) vaut 0.373 sur fenêtres d'un an, 0.807 sur fenêtres de quatre ans. Les estimateurs sur fenêtres courtes sont bruités."
+    },
+    {
+      "name": "recommended_max_abs_q_daily_series",
+      "value": 6,
+      "quoted": "we suggest that the range of q should be |q| ≤ 6",
+      "note": "Recommandation des auteurs pour des séries quotidiennes (moments d'ordre élevé non convergents), pas une mesure."
+    },
+    {
+      "name": "msm_volatility_forecast_gain_horizons",
+      "value": null,
+      "quoted": "considerable gains in forecasting accuracy are obtained at horizons of 10 to 50 days",
+      "note": "Calvet & Fisher, changes quotidiens sur environ 30 ans : le MSM binomial bat GARCH, MS-GARCH et FIGARCH dans l'échantillon et hors échantillon ; ampleur des gains non chiffrée dans la revue."
+    },
+    {
+      "name": "har_rv_beats_multifractal_volatility",
+      "value": null,
+      "quoted": "realized volatility (HAR-log(RV)) performs better than th e multifractal volatility model in predicting future volat ility",
+      "note": "Contre-résultat cité (Ma et al., réf. 982) : le benchmark HAR sur volatilité réalisée bat le modèle de volatilité multifractale."
+    },
+    {
+      "name": "mrw_best_mae_all_horizons_fx",
+      "value": null,
+      "quoted": "provides smallest mean absolute prediction errors for all t ime series and at all prediction scales",
+      "note": "Bacry et al., 4 changes contre USD, calibration 1977-1989, test hors échantillon 1989-2006, horizons 1, 5, 20 et 50 jours ; le MRW bat les GARCH(1,1) normal et Student."
+    },
+    {
+      "name": "emini_msmd_realized_vol_forecast",
+      "value": null,
+      "quoted": "Futures contract from 1 January 2014 to 31 December 2014 and f ound that the compound MSMD model outperforms",
+      "note": "Aldrich et al., E-mini S&P 500 au niveau transaction, 2014 : le modèle de durées multifractal (MSMD) bat les modèles exponentiel composé, ACD composé et ACD-GARCH(1,1) en prévision hors échantillon de la volatilité réalisée. Seul résultat de la revue sur un future d'indice intraday, un an de données."
+    },
+    {
+      "name": "no_multifractality_in_signed_returns",
+      "value": null,
+      "quoted": "is no multifractality when the signs are included",
+      "note": "Les propriétés multifractales rapportées sont celles des rendements absolus, donc de la volatilité : elles ne portent aucune information directionnelle."
+    },
+    {
+      "name": "lux_parametric_test_null_not_rejected",
+      "value": null,
+      "quoted": "the results show that the null model cannot be rejected",
+      "note": "Test paramétrique de Lux (NYSE, DAX, DEM/USD, or, quotidiens jusqu'en 1998) : pas de rejet de la monofractalité. Les auteurs l'attribuent peut-être à la faible puissance du test ou à un modèle mal spécifié."
+    },
+    {
+      "name": "multifractal_inefficiency_measure_possibly_biased",
+      "value": null,
+      "quoted": "It suggests tha t the apparent multifractality may be a biased measure of",
+      "note": "Après le Stock Connect Shanghai-Hong Kong, la mesure classe Hong Kong moins efficient que Shanghai, résultat que les auteurs jugent contre-intuitif."
+    }
+  ],
+  "what_is_missing": [
+    "aucun IC, aucune corrélation score → rendement futur signé ; les usages prédictifs portent sur la volatilité ou la VaR, avec des critères de type MSE/MAE ou backtest de VaR",
+    "le seul résultat de stratégie (6.12 % par mois, Dewandaru et al.) n'a ni coûts, ni t-stat, ni nombre de titres, ni règle de portefeuille détaillée",
+    "aucune spécification causale : les estimations de Δα, H(q) et τ(q) se font sur l'échantillon entier ou sur des fenêtres, et le choix de la plage d'échelle se fait souvent « à l'œil »",
+    "aucun frais, multiplicateur, tick ou fuseau ; la gestion des sauts de nuit et de la saisonnalité intraday est seulement évoquée",
+    "pas de compte du nombre de spécifications essayées (méthode, plage d'échelle, plage de q, fenêtre) dans les études citées",
+    "les chiffres sont recopiés d'autres papiers, sans intervalles de confiance ni conditions de reproduction"
+  ],
+  "method_pitfalls": {
+    "value": "Pièges nommés par la revue : plage d'échelle choisie à l'œil ; saisonnalité intraday à retirer avant l'analyse ; sauts de nuit qui modifient H(q) ; nombre de points fini qui crée une multifractalité fausse.",
+    "quoted": [
+      "adopted method is actually eye balling",
+      "have daily cycles known as intraday patterns that occur in returns",
+      "When a high-frequency intraday price or index time series is analyzed with the partition function approach, the",
+      "All these works produce illusionary multifractality simpl y because these indices are not singular"
+    ]
+  },
+  "transposability": {
+    "what_transfers": "Des outils, pas un signal. La largeur Δα(t) ou ΔH calculée sur les barres intraday d'une journée (ou d'une fenêtre glissante strictement passée), après retrait de la saisonnalité intraday et des sauts de nuit, peut servir de variable d'état de volatilité ou de régime (phase 05), ou de prédicteur de la volatilité future. L'asymétrie gain/perte des temps de premier passage (les baisses arrivent plus vite que les hausses d'amplitude égale, surtout sur indices) est une propriété testable sur futures d'indices. Les contrôles de la revue (mélange, surrogats IAAFT, gaussianisation par rangs) peuvent servir de contrôles du harnais pour tout score fondé sur la multifractalité.",
+    "what_does_not_transfer": [
+      "aucune information directionnelle : sans signe, pas de multifractalité ; un score multifractal ne prédit pas le rendement signé que mesure notre IC",
+      "la métrique des applications est la précision de prévision de volatilité ou de VaR (MSE, MAE, backtest VaR), pas un IC score/rendement",
+      "l'essentiel des preuves porte sur des indices, changes et matières premières au pas quotidien, pas sur nos neuf futures intraday ; les rares cas futures sont DAX 10 s (60 jours), CSI 300 5 min et E-mini au niveau transaction (un an)",
+      "la stratégie à 6.12 % par mois porte sur des actions islamiques en coupe transversale avec facteurs momentum, sans coûts : ni l'univers ni la construction transversale n'existent chez nous",
+      "l'estimation de Δα demande de longues séries et des fenêtres longues (corrélation entre mesures 0.373 sur un an contre 0.807 sur quatre ans) ; nos neuf instruments et la tranche pool 2016-2023 laissent peu de fenêtres indépendantes",
+      "plusieurs variantes (DMA centré ou avant, MMAR géométrique, normalisation sur tout l'échantillon) utilisent le futur par construction et sont inutilisables telles quelles derrière un Panel point-in-time",
+      "le choix de la plage d'échelle, de q et de la méthode (MF-DFA, MF-DMA, WTMM, ondelettes leaders) est un degré de liberté non figé qui multiplierait les tests au registre"
+    ],
+    "what_aligns_well": "La revue alerte d'elle-même sur la multifractalité apparente, les effets de taille finie, la non-causalité de certains modèles et le besoin de tests contre surrogats. Cela rejoint nos invariants II (pas d'accès au futur) et III (compter les tests). Le point le plus solide qu'elle revendique porte sur la volatilité, pas la direction : cela oriente vers un usage de Δα comme variable de régime conditionnante (hybride) plutôt que comme signal directionnel."
+  }
+}

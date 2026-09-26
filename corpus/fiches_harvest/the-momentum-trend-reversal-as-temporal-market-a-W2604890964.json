@@ -1,0 +1,167 @@
+{
+  "fiche_id": "the-momentum-trend-reversal-as-temporal-market-a-W2604890964",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-25",
+  "source": {
+    "authors": "Vasiliki A. Basdekidou",
+    "title": "The Momentum & Trend-Reversal as Temporal Market Anomalies",
+    "year": 2017,
+    "source_url": "http://www.ccsenet.org/journal/index.php/ijef/article/download/65327/36605",
+    "pdf": "corpus/pdf/the-momentum-trend-reversal-as-temporal-market-a-W2604890964.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "peer_review_note": "Publié dans International Journal of Economics and Finance (CCSE), vol. 9 no. 5, avec remerciements à des relecteurs anonymes. L'arbitrage n'a visiblement pas relevé les incohérences internes listées dans what_is_missing ; le label ne vaut pas garantie de qualité."
+  },
+  "claim": {
+    "value": "Le « momentum » rapporte la nuit (achat à la clôture après une forte tendance de fin de séance, revente à l'ouverture suivante), le « retournement de tendance » rapporte en séance (entrées/sorties sur retournement du Parabolic SAR en 10 minutes). L'auteur affirme que ces deux « anomalies temporelles » sont profitables sur des ETF/ETN à levier, à commission faible.",
+    "quoted": [
+      "accumulates entirely overnight, while trend-reversal profit occurs entirely intraday.",
+      "On detecting a strong evening trend at the last 30 min of the daytime session (i.e. 3:30 - 4:00 pm EST)"
+    ]
+  },
+  "universe": {
+    "value": "Deux instruments principaux : UWTI (ETN 3x pétrole WTI) pour le momentum, SPY (ETF S&P 500) pour le retournement ; puis 28 ETF/ETN 2x et 28 ETF/ETN 3x (Direxion, VelocityShares). Période annoncée 1/1/2010 – 30/6/2016, mais les figures 6-7 sur SPY couvrent 1993-2011.",
+    "quoted": [
+      "4,820 and 4,624 trades respectively (Tables 1-4).",
+      "leveraged ETF/ETN and twenty-eight (28) 3x leveraged ETF/ETN instruments, the proposed temporal anomalies",
+      "The above four (4) trading rules were following strictly in the back-testing procedure (1/1/2010-30/6/2016 data)"
+    ]
+  },
+  "horizon": {
+    "value": "Deux horizons de détention : overnight (clôture 16:00 EST → ouverture/première demi-heure du lendemain) et intraday (entrée en séance, sortie au plus tard à la clôture).",
+    "quoted": [
+      "Hold position during the overnight period",
+      "Hold position during the current session only"
+    ]
+  },
+  "signal_construction": {
+    "value": "Quatre règles. Momentum overnight : si « forte tendance » sur la dernière demi-heure (15:30-16:00 EST), achat dans les 5 dernières minutes, revente dans la première demi-heure du lendemain. Momentum intraday : si « forte tendance » sur la première demi-heure (9:30-10:00), achat en ouverture, revente dans les 5 dernières minutes. Retournement (overnight et intraday) : entre 10:00 et 15:00 EST, achat quand les points du Parabolic SAR (barres de 10 minutes) passent au-dessous du prix, vente au retournement inverse (le lendemain ou en séance/à la clôture). « Forte tendance » n'est jamais chiffrée ; les paramètres du Parabolic SAR ne sont pas donnés. Tous les exemples sont longs uniquement.",
+    "quoted": [
+      "On detecting a strong evening trend at the last 30 min of the daytime session (i.e. 3:30 - 4:00 pm EST)",
+      "Buy at the “Close” (i.e. during the last 5 min: 3:55 – 4:00 pm EST) of the current daily session",
+      "On detecting a strong morning trend at the first 30 min of the daytime session (i.e. 9:30 - 10:00 am EST)",
+      "On detecting a strong intraday trend-reversal between 10:00 am EST and 3:00 pm EST",
+      "with a [10-min] time-frame, the"
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "uwti_momentum_overnight_annual_return_pct",
+      "value": 7.88,
+      "unit": "% par an",
+      "quoted": "the UWTI has an annual overnight return of 7.88%",
+      "note": "Stratégie momentum overnight sur UWTI, 2010-2016, sans coûts."
+    },
+    {
+      "name": "uwti_momentum_daytime_annual_return_pct",
+      "value": -5.13,
+      "unit": "% par an",
+      "quoted": "daytime return is -5.13%.",
+      "note": "Même instrument, position en séance."
+    },
+    {
+      "name": "uwti_momentum_overnight_sharpe",
+      "value": 0.92,
+      "unit": "Sharpe annuel sans taux sans risque",
+      "quoted": "strategy is 0.92, compared to the -0.28 of the daytime-position temporal Momentum Anomaly strategy.",
+      "note": "Incohérent avec le tableau 1 : 7.88 / 11.32 = 0.70, pas 0.92."
+    },
+    {
+      "name": "uwti_momentum_overnight_annual_std_pct",
+      "value": 11.32,
+      "unit": "% par an",
+      "quoted": "Overnight-position Return Strategy 7.88% 11.32% 0.92 130.42%",
+      "note": "Ligne du tableau 1 (UWTI) : rendement annuel, écart-type annuel, Sharpe, rendement total."
+    },
+    {
+      "name": "uwti_momentum_overnight_sharpe_recomputed",
+      "value": 0.70,
+      "unit": "Sharpe",
+      "derived": true,
+      "quoted": "Overnight-position Return Strategy 7.88% 11.32% 0.92 130.42%",
+      "note": "Calculé par nous : 7.88 / 11.32 = 0.696. Le Sharpe annoncé (0.92) ne découle pas des deux chiffres du même tableau."
+    },
+    {
+      "name": "spy_trend_reversal_overnight_annual_return_pct",
+      "value": -8.65,
+      "unit": "% par an",
+      "quoted": "the SPY has an annual overnight return of -8.65%, while",
+      "note": "Retournement de tendance sur SPY, position overnight."
+    },
+    {
+      "name": "spy_trend_reversal_daytime_annual_return_pct",
+      "value": 4.09,
+      "unit": "% par an",
+      "quoted": "the annual daytime return is 4.09%",
+      "note": "Retournement de tendance sur SPY, position intraday, sans coûts."
+    },
+    {
+      "name": "spy_trend_reversal_daytime_sharpe",
+      "value": 0.91,
+      "unit": "Sharpe annuel sans taux sans risque",
+      "quoted": "0.91, compared to the -0.21 of the overnight-position temporal Trend-reversal Anomaly strategy",
+      "note": "Incohérent avec le tableau 2 : 4.09 / 10.93 = 0.37, pas 0.91."
+    },
+    {
+      "name": "spy_trend_reversal_overnight_total_return_pct",
+      "value": -156.90,
+      "unit": "% cumulé",
+      "quoted": "Overnight-position Return Strategy -8.65% 16.31% -0.21 -156.90%",
+      "note": "Ligne du tableau 2 (SPY). Un rendement total inférieur à -100 % est impossible pour une position longue non levée ; indice fort d'erreurs de construction."
+    },
+    {
+      "name": "uwti_momentum_overnight_net_profit_usd",
+      "value": 49666,
+      "unit": "USD sur la période, 100 000 USD par trade, commission 0,01 USD/action",
+      "quoted": "Temporal Momentum Anomaly UWTI 4,820 2,730 2,090 $130,420 $49,666",
+      "note": "Tableau 3 : 4 820 trades, 2 730 gagnants, 2 090 perdants, profit brut 130 420 USD, net 49 666 USD. La commission absorbe ~62 % du brut."
+    },
+    {
+      "name": "spy_trend_reversal_daytime_net_profit_usd",
+      "value": -44920,
+      "unit": "USD sur la période, 100 000 USD par trade, commission 0,01 USD/action",
+      "quoted": "Temporal Trend-reversal Anomaly SPY 4,624 2,541 2,083 $32,550 $-44,920",
+      "note": "Tableau 5 : la stratégie de retournement intraday, présentée comme gagnante, est perdante nette de commission (brut +32 550, net -44 920)."
+    },
+    {
+      "name": "commission_breakeven_per_share_usd",
+      "value": 0.02,
+      "unit": "USD par action",
+      "quoted": "in case of a commission cost of $0.02 per share, the total net profit of both overnight-position",
+      "note": "L'auteur reconnaît qu'à 0,02 USD/action les deux stratégies deviennent négatives, et que tout slippage aggrave le résultat."
+    },
+    {
+      "name": "uwti_table7_momentum_vs_reversal_annual_usd",
+      "value": 13882,
+      "unit": "USD par an en moyenne",
+      "quoted": "9 UWTI Crude Oil 13,882 17,805 -3,923 +0.022",
+      "note": "Tableau 7 : sur UWTI le retournement (17 805) fait mieux que le momentum (13 882), ce qui contredit le choix de UWTI comme vitrine du momentum dans les tableaux 1-3."
+    }
+  ],
+  "what_is_missing": [
+    "« strong trend » / « strong intraday trend-reversal » n'est jamais défini ni chiffré : la condition d'entrée n'est pas reproductible",
+    "paramètres du Parabolic SAR (pas d'accélération, maximum) absents",
+    "aucun test statistique : pas de t-stat, pas d'erreur-type, pas d'IC ; seuls rendements, écarts-types et Sharpe",
+    "Sharpe annoncés incohérents avec rendement / écart-type des mêmes tableaux (0.92 vs 0.70 ; 0.91 vs 0.37)",
+    "rendement total de -156.90 % sur SPY en position longue, arithmétiquement impossible",
+    "4 624 à 4 820 trades sur un instrument en ~6,5 ans (≈1 640 séances) : plus de deux trades par jour, incompatible avec une règle d'un trade overnight par jour",
+    "période contradictoire : 2010-2016 dans les tableaux, 1993-2011 dans les figures SPY, « 16 years » pour 2010-2016",
+    "pas de short, pas de position vendeuse décrite ; pas de traitement explicite des jours sans signal",
+    "slippage exclu et déclaré « not applicable nowadays », ce qui n'est pas défendable ; spread non modélisé",
+    "sources de données multiples et hétérogènes (Barron's, StockCharts, Yahoo, CFTC…) sans description des barres intraday utilisées",
+    "aucune séparation échantillon d'apprentissage / de test ; sélection a posteriori des secteurs « qui marchent »",
+    "la colonne « autocorrelation between momentum & trend-reversal » des tableaux 6-7 n'est pas définie"
+  ],
+  "transposability": {
+    "what_transfers": "Le seul motif utilisable est l'hypothèse structurelle : un score calculé sur la dernière demi-heure de séance (sens du mouvement 15:30-16:00) pour prédire le rendement overnight (clôture → ouverture ou fin de première demi-heure), et un score de première demi-heure pour prédire le reste de séance. Ces deux constructions s'expriment en IC sur des futures, avec un score connu avant la décision.",
+    "what_does_not_transfer": [
+      "les chiffres : produits sur ETF/ETN à levier (décote de volatilité quotidienne), sans test statistique et avec des incohérences arithmétiques, ils ne disent rien de mesurable",
+      "la frontière overnight/séance : nos futures cotent quasi 23 h/24, la « nuit » n'est pas un trou de cotation comme pour SPY ou UWTI",
+      "les horaires en heure de New York (NYSE 9:30-16:00) ne correspondent pas aux séances de nos neuf futures",
+      "le Parabolic SAR non paramétré ne peut pas être implémenté sans inventer ses paramètres",
+      "le modèle de coûts en USD par action n'a pas d'équivalent pour des contrats à terme",
+      "la mesure de performance (profit en dollars par trade de 100 000 USD, Sharpe) n'est pas un IC"
+    ],
+    "what_aligns_well": "Le découpage intraday en fenêtres fixes (première et dernière demi-heure) et la séparation explicite rendement de séance / rendement overnight rejoignent directement une grille de futures intraday ; les règles d'entrée n'utilisent que des prix passés à l'instant de décision."
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "fiche_id": "profitability-of-technical-trading-strategies-un-W4205498289",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-17",
+  "source": {
+    "authors": "Alfred Ma",
+    "title": "Profitability of technical trading strategies under market manipulation",
+    "year": 2022,
+    "source_url": "https://jfin-swufe.springeropen.com/counter/pdf/10.1186/s40854-021-00304-7",
+    "pdf": "corpus/pdf/profitability-of-technical-trading-strategies-un-W4205498289.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "venue": "Financial Innovation (2022) 8:5",
+    "peer_review_evidence": "He thanks the referees for their helpful suggestions."
+  },
+  "claim": {
+    "value": "Alimenter des règles d'analyse technique avec le prix de la toute dernière transaction de la séance continue plutôt qu'avec le cours de clôture officiel (sujet à manipulation, même après l'enchère de clôture) améliore significativement leur rentabilité quotidienne, sur les constituants du Hang Seng de 2011 à 2018.",
+    "quoted": [
+      "The results show a significant improvement \nof profitability by using the last tick price over the official closing price based on a data \nset in Hong Kong from 2011 to 2018.",
+      "the traded price of the very last tick \nrecorded in the continuous trading session is used to substitute the official closing price \nto generate trading signals."
+    ]
+  },
+  "universe": {
+    "value": "37 actions constituantes du Hang Seng Index (HSI), liquides et de forte capitalisation, 2011-2018 inclus ; clôtures officielles Bloomberg, données intraday HKEx.",
+    "quoted": [
+      "The dataset covers the Hang Seng Index (HSI) constituents from 2011 to 2018 inclu -\nsively.",
+      "There are \n37 stocks with complete data"
+    ]
+  },
+  "horizon": {
+    "value": "Quotidien : la variable observée est le rendement journalier de la stratégie ; les règles FMA et TRB tiennent la position dix jours.",
+    "quoted": [
+      "The observed variable is the daily return of the trading strategy on a \nparticular trading day.",
+      "The holding period will be fixed \nas ten days according to Bessembinder and Chan (1998)."
+    ]
+  },
+  "signal_construction": {
+    "value": "75 règles techniques en cinq classes (VMA 1-50, 1-150, 5-150, 1-200, 2-200 avec bande ; FMA croisement avec bande et détention de 10 jours ; TRB cassure du max/min sur n jours, détention 10 jours ; RSI « 50 crossover » avec N = 5, 10, 20, 30 ; momentum intraday/interday AIM/AOM, 5 règles de Lam et al. 2007). Chaque règle est calculée deux fois : une fois sur le cours de clôture officiel, une fois en substituant le dernier prix traité de la séance continue. La différence de rendement quotidien est testée par une ANOVA à blocs (repas, mécanisme de clôture, mois, année, stratégie, action).",
+    "quoted": [
+      "The strategies include Variable Length Moving Average (VMA), Fixed Length Moving Aver -\nage (FMA), Trading Range Break (TRB), Relative Strength Index (RSI), and Intraday and \nInterday Momentum (IIM)",
+      "When the RIS \nis higher than 50, it is a buy signal, and vice versa.",
+      "The differences in profitabilities are then tested using Analysis of \nVariance (ANOVA) models with blocking."
+    ],
+    "input_substitution": "official closing price -> last tick price of the continuous session"
+  },
+  "reported_results": [
+    {
+      "name": "last_tick_vs_official_close_annual_gain_bp",
+      "value": 76,
+      "unit": "bp par an",
+      "quoted": "price increases profitability by 76 basis points a year",
+      "note": "Coefficient quotidien 3.059300e−05 multiplié par 250 jours ; moyenne sur 75 stratégies et 37 actions HK, avant coûts."
+    },
+    {
+      "name": "last_price_daily_return_coefficient",
+      "value": 3.0593e-05,
+      "unit": "rendement quotidien",
+      "quoted": "Last price 3.059300e−05",
+      "quoted_source": "Last price 3.059300e −05",
+      "quoted_repair": "table",
+      "spelled_out": "3.059300e −05",
+      "note": "Coefficient de l'ANOVA (Table 4) pour l'usage du dernier prix au lieu de la clôture officielle."
+    },
+    {
+      "name": "anova_input_choice_F_value",
+      "value": 20.14,
+      "unit": "F",
+      "quoted": "αi 1 0.0 0.00247 20.140 7.20e−06",
+      "quoted_source": "αi 1 0.0 0.00247 20.140 7.20e−06",
+      "quoted_repair": "table",
+      "spelled_out": "20.140",
+      "note": "Table 3 ; p-valeur 7.20e−06 pour le facteur « choix de l'entrée »."
+    },
+    {
+      "name": "closing_auction_session_daily_return_coefficient",
+      "value": -6.292007e-05,
+      "unit": "rendement quotidien",
+      "quoted": "With Closing Auction Session −6.292007e−05",
+      "quoted_source": "With Closing Auction Session −6.292007e−05",
+      "quoted_repair": "table",
+      "spelled_out": "−6.292007e−05",
+      "note": "Effet de bloc : période après l'introduction de l'enchère de clôture (25 juillet 2016), rendement des stratégies plus faible."
+    },
+    {
+      "name": "anova_residual_df",
+      "value": 10536595,
+      "unit": "degrés de liberté",
+      "quoted": "Residuals 10536595 1289.8 0.00012",
+      "quoted_source": "Residuals 10536595 1289.8 0.00012",
+      "quoted_repair": "table",
+      "note": "Ordre de grandeur du nombre d'observations stratégie-action-jour-entrée."
+    },
+    {
+      "name": "n_distinct_strategies",
+      "value": 75,
+      "unit": "stratégies",
+      "quoted": "There are 75 dis-"
+    },
+    {
+      "name": "robustness_across_blocks",
+      "value": null,
+      "quoted": "The \nresult is also consistent across different blocking factors including the lunch hours, clos -\ning price methodologies, calendar month/year, trading strategies, and stocks.",
+      "note": "Affirmation qualitative ; aucune interaction n'est rapportée en chiffres."
+    }
+  ],
+  "what_is_missing": [
+    "aucun coût de transaction, spread ni slippage : le gain de 76 bp/an est brut",
+    "aucune rentabilité par stratégie ni par classe : seul l'effet moyen du choix d'entrée est publié, les coefficients stratégies/actions sont exclus",
+    "paramètres manquants : bande des VMA/FMA, n du TRB, les 5 règles IIM ne sont pas détaillées",
+    "l'heure exacte du dernier tick et l'écart temporel avec la clôture officielle ne sont pas quantifiés",
+    "la manipulation n'est pas mesurée directement ; elle est inférée de la différence de rentabilité",
+    "aucune statistique d'erreur-type sur le coefficient hors F et p-valeur ; pas de Sharpe, pas d'IC",
+    "l'exécution est implicitement au prix de signal, sans préciser à quel prix les trades sont exécutés"
+  ],
+  "transposability": {
+    "what_transfers": "L'idée méthodologique : le prix d'entrée d'un signal doit être le dernier prix réellement traité en séance continue plutôt qu'un prix de règlement/clôture officiel issu d'une enchère ou d'une moyenne, susceptible d'être distordu. Sur nos futures, cela revient à préférer le dernier trade de la barre à un settlement officiel.",
+    "what_does_not_transfer": [
+      "univers d'actions au comptant de Hong Kong, pas de futures",
+      "la manipulation de la clôture visée est propre aux marchés actions avec enchère de clôture ; les futures ont des settlements calculés autrement",
+      "horizon quotidien et règles techniques sur clôtures journalières, alors que notre univers est intraday",
+      "métrique = différence de rendement moyen quotidien par ANOVA, pas un IC",
+      "effet minuscule (3e-05 par jour) et brut de coûts : non exploitable tel quel comme signal"
+    ],
+    "what_aligns_well": "Le papier rappelle un point de construction des données pour notre panel point-in-time : choisir explicitement quel prix (dernier trade vs clôture officielle/settlement) sert d'entrée aux signaux, et documenter ce choix."
+  }
+}

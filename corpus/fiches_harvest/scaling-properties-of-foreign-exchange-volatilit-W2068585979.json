@@ -1,0 +1,204 @@
+{
+  "fiche_id": "scaling-properties-of-foreign-exchange-volatilit-W2068585979",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-21",
+  "source": {
+    "authors": "Ramazan Gencay, Faruk Selcuk, Brandon Whitcher",
+    "title": "Scaling properties of foreign exchange volatility",
+    "year": 2001,
+    "source_url": "https://repository.bilkent.edu.tr/bitstreams/ae204608-8a23-46d1-a9ed-ffb3e49d3813/download",
+    "pdf": "corpus/pdf/scaling-properties-of-foreign-exchange-volatilit-W2068585979.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "journal": "Physica A 289 (2001) 249-266"
+  },
+  "claim": {
+    "value": "La volatilité de change (valeur absolue des rendements 20 min) n'obéit pas à une loi d'échelle unique : la persistance est plus faible aux échelles intrajournalières (jusqu'à ~640 min) qu'aux échelles d'un jour et plus, avec une rupture vers l'échelle journalière. Mettre à l'échelle un risque par un paramètre global (racine du temps) est donc inapproprié. La corrélation entre volatilités DEM-USD et JPY-USD croît avec l'échelle dans la journée puis se stabilise vers 0.70 au-delà d'un jour. Papier descriptif : aucun signal prédictif, aucune stratégie.",
+    "quoted": [
+      "It is shown that foreign exchange rate volatilities",
+      "horizons into longer horizons through a global scaling parameter may not be appropriate. This",
+      "Our results indicate that exchange rate volatilities have dierent scaling law prop-"
+    ]
+  },
+  "universe": {
+    "value": "Deux taux de change au comptant interbancaires, DEM-USD et JPY-USD, cotations Reuters nettoyées par Olsen & Associates, pas de 5 min interpolé linéairement (moyenne log bid/ask), agrégés en rendements 20 min ; du 1er décembre 1986 au 1er décembre 1996, week-ends (vendredi 21:05 GMT à dimanche 21:00 GMT) retirés.",
+    "quoted": [
+      "The studied data sets are the ve-minute Deutschemark{US dollar (DEM-USD) and",
+      "Japanese Yen{US dollar (JPY-USD) price series for the period from December 1,",
+      "removed the weekend quotes from Friday 21:05 GMT to Sunday 21:00 GMT. Apart",
+      "decided to work with 20-min aggregated returns:"
+    ]
+  },
+  "horizon": {
+    "value": null,
+    "reason": "le papier ne prédit rien ; il décrit la décomposition de variance de la volatilité sur des échelles allant de 20 min à environ un mois (12 niveaux MODWT), sans horizon de prévision",
+    "quoted": ["This study covers scales from 20 min to approximately one month. This coverage is"]
+  },
+  "signal_construction": {
+    "value": null,
+    "reason": "aucun signal ni score n'est construit : le papier estime des variances, corrélations et corrélations croisées d'ondelettes par échelle, sans règle de décision ni prévision",
+    "method": "Volatilité = |r_20min| (rendement log 20 min x 100, somme de quatre rendements 5 min). Décomposition MODWT à 12 niveaux avec filtre Daubechies least asymmetric LA(8), réflexion de la série en fin d'échantillon, coefficients affectés par la frontière retirés. Paramètre d'échelle beta estimé par MCO de log variance d'ondelette sur log échelle, séparément sur les échelles 1-6 (intrajournalier) et 7-12 (un jour et plus) ; d = -beta/2.",
+    "quoted": [
+      "The 20-min volatilities are dened to be the 20-min absolute returns,",
+      "achieved with a 12 level MODWT decomposition. The Daubechies least asymmetric"
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "intraday_slope_scales_1_6_dem_usd",
+      "value": -0.48,
+      "unit": "pente log-log (variance d'ondelette vs échelle)",
+      "quoted": "slopes, −(1+β̂), for the smallest six scales are −0.48 and −0.59 for DEM-USD and",
+      "quoted_source": "slopes, −(1+^), for the smallest six scales are−0:48 and−0:59 for DEM-USD and",
+      "quoted_repair": "math_notation",
+      "spelled_out": "−0:48",
+      "note": "L'extraction rend le point décimal par ':' (confirmé par 0:5, 0:26 ailleurs). −0.59 est la valeur JPY-USD."
+    },
+    {
+      "name": "intraday_slope_scales_1_6_jpy_usd",
+      "value": -0.59,
+      "unit": "pente log-log",
+      "quoted": "slopes, −(1+β̂), for the smallest six scales are −0.48 and −0.59 for DEM-USD and",
+      "quoted_source": "slopes, −(1+^), for the smallest six scales are−0:48 and−0:59 for DEM-USD and",
+      "quoted_repair": "math_notation",
+      "spelled_out": "−0:59"
+    },
+    {
+      "name": "intraday_scaling_parameter_beta_dem_usd",
+      "value": -0.52,
+      "unit": "beta (loi de puissance)",
+      "quoted": "β̂ = −0.52 for the DEM-USD and β̂ = −0.40 for the JPY-USD volatilities for the rst",
+      "quoted_source": "^= −0:52 for the DEM-USD and ^= −0:40 for the JPY-USD volatilities for the rst",
+      "quoted_repair": "math_notation",
+      "spelled_out": "−0:52"
+    },
+    {
+      "name": "intraday_scaling_parameter_beta_jpy_usd",
+      "value": -0.40,
+      "unit": "beta (loi de puissance)",
+      "quoted": "β̂ = −0.52 for the DEM-USD and β̂ = −0.40 for the JPY-USD volatilities for the rst",
+      "quoted_source": "^= −0:52 for the DEM-USD and ^= −0:40 for the JPY-USD volatilities for the rst",
+      "quoted_repair": "math_notation",
+      "spelled_out": "−0:40"
+    },
+    {
+      "name": "daily_plus_slope_scales_7_12_dem_usd",
+      "value": -0.20,
+      "unit": "pente log-log",
+      "quoted": "Theestimatedslopesforthehigherscales(fromtheseventhtothetwelfth)are −0:20",
+      "quoted_source": "Theestimatedslopesforthehigherscales(fromtheseventhtothetwelfth)are −0:20",
+      "quoted_repair": "math_notation",
+      "spelled_out": "−0:20",
+      "note": "La pente JPY-USD correspondante (−0.16) est à la ligne suivante du texte extrait. Ici quoted = quoted_source : seul le séparateur décimal est abîmé."
+    },
+    {
+      "name": "daily_plus_scaling_parameter_beta_dem_usd",
+      "value": -0.80,
+      "unit": "beta (loi de puissance)",
+      "quoted": "volatility at one day and higher scales where β̂ are −0.80 and −0.84 for DEM-USD",
+      "quoted_source": "volatility at one day and higher scales where ^ are −0:80 and −0:84 for DEM-USD",
+      "quoted_repair": "math_notation",
+      "spelled_out": "−0:80"
+    },
+    {
+      "name": "daily_plus_scaling_parameter_beta_jpy_usd",
+      "value": -0.84,
+      "unit": "beta (loi de puissance)",
+      "quoted": "volatility at one day and higher scales where β̂ are −0.80 and −0.84 for DEM-USD",
+      "quoted_source": "volatility at one day and higher scales where ^ are −0:80 and −0:84 for DEM-USD",
+      "quoted_repair": "math_notation",
+      "spelled_out": "−0:84"
+    },
+    {
+      "name": "intraday_fractional_d_dem_usd",
+      "value": 0.26,
+      "unit": "paramètre d'intégration fractionnaire d",
+      "quoted": "results imply that the fractional integration parameters are d = 0.26 for the DEM-USD",
+      "quoted_source": "results imply that the fractional integration parameters ared=0:26 for the DEM-USD",
+      "quoted_repair": "math_notation",
+      "spelled_out": "0:26"
+    },
+    {
+      "name": "intraday_fractional_d_jpy_usd",
+      "value": 0.20,
+      "unit": "paramètre d'intégration fractionnaire d",
+      "quoted": "and d = 0.20 for the JPY-USD volatilities at the lower scales (intra-day). At higher",
+      "quoted_source": "and d=0 :20 for the JPY-USD volatilities at the lower scales (intra-day). At higher",
+      "quoted_repair": "math_notation",
+      "spelled_out": "0 :20"
+    },
+    {
+      "name": "daily_plus_fractional_d_dem_usd",
+      "value": 0.40,
+      "unit": "paramètre d'intégration fractionnaire d",
+      "quoted": "volatilities are 0.40 and 0.42 indicating less persistence in the intra-day horizon as",
+      "note": "0.40 DEM-USD, 0.42 JPY-USD, échelles d'un jour et plus : persistance plus forte qu'en intrajournalier."
+    },
+    {
+      "name": "daily_plus_fractional_d_jpy_usd",
+      "value": 0.42,
+      "unit": "paramètre d'intégration fractionnaire d",
+      "quoted": "volatilities are 0.40 and 0.42 indicating less persistence in the intra-day horizon as"
+    },
+    {
+      "name": "vol_wavelet_correlation_scale1_20min",
+      "value": 0.415,
+      "unit": "corrélation d'ondelette DEM-USD / JPY-USD",
+      "quoted": "atthelowestscale(20min)is0.415±0.005",
+      "quoted_source": "atthelowestscale(20min)is0 :4150:005",
+      "quoted_repair": "math_notation",
+      "spelled_out": "0 :415",
+      "note": "Le signe ± est perdu à l'extraction ; lecture 0.415 ± 0.005 (intervalle de confiance approché)."
+    },
+    {
+      "name": "vol_wavelet_correlation_max_scale6_640min",
+      "value": 0.695,
+      "unit": "corrélation d'ondelette DEM-USD / JPY-USD",
+      "quoted": "to a maximum at the sixth scale (640 min) with 0.695 ± 0.18. At large scales (one",
+      "quoted_source": "to a maximum at the sixth scale (640 min) with 0:695 0:18. At large scales (one",
+      "quoted_repair": "math_notation",
+      "spelled_out": "0:695",
+      "note": "La demi-largeur « 0:18 » est telle qu'extraite ; elle paraît incohérente avec 0.005 à l'échelle 1 (peut-être 0.018), non vérifiable ici."
+    },
+    {
+      "name": "vol_wavelet_correlation_daily_plus_plateau",
+      "value": 0.70,
+      "unit": "corrélation d'ondelette DEM-USD / JPY-USD",
+      "quoted": "around 0.70. The result is in contrast with the ndings in Andersen et al. [10]. They",
+      "note": "Échelles d'un jour et plus : corrélation constante autour de 0.70, contrairement à Andersen et al. qui trouvaient une baisse aux horizons longs."
+    },
+    {
+      "name": "sample_business_days",
+      "value": 2610,
+      "unit": "jours ouvrés",
+      "quoted": "Therefore, our sample covers 2610 business days in 10 years with 72 observations",
+      "note": "187 911 rendements 20 min au total."
+    },
+    {
+      "name": "break_scale_seventh_in_days",
+      "value": 0.89,
+      "unit": "jour",
+      "quoted": "one day, the seventh scale corresponds to 0.89 day. Therefore, the seventh and higher",
+      "note": "La rupture de la variance d'ondelette apparaît à l'échelle 7 (1280 min)."
+    }
+  ],
+  "what_is_missing": [
+    "aucun signal, aucune prévision, aucune mesure de pouvoir prédictif (IC, R², hors échantillon) : uniquement une description de la structure d'échelle",
+    "aucune erreur-type ni test formel de la différence entre les deux pentes (intrajournalier vs un jour et plus) ; les régressions MCO portent sur 6 points chacune",
+    "la saisonnalité intrajournalière n'est pas retirée avant l'estimation ; les auteurs renvoient à Corsi et al. pour dire que la rupture subsisterait, sans le montrer",
+    "aucune analyse de stabilité dans le temps (sous-périodes) sur les dix ans",
+    "la demi-largeur de l'intervalle à l'échelle 6 (« 0:18 ») est ambiguë dans le texte extrait",
+    "données de change au comptant interbancaire indicatives (cotations Reuters interpolées), sans coûts, sans volumes, sans transactions"
+  ],
+  "transposability": {
+    "what_transfers": "L'idée que la persistance de la volatilité diffère entre échelles intrajournalières et échelles d'un jour et plus, et donc qu'un modèle de volatilité ou de mise à l'échelle du risque doit être calibré par échelle plutôt que par une racine du temps globale. La méthode (variance d'ondelette MODWT par échelle) est applicable à la volatilité en barres de nos futures intraday comme diagnostic, pour choisir les fenêtres d'un estimateur de volatilité utilisé en normalisation de score ou en sizing.",
+    "what_does_not_transfer": [
+      "l'univers : deux paires de change au comptant 1986-1996, cotations indicatives Reuters, marché 24 h, alors que nous avons neuf futures intraday avec séances, gaps et microstructure propres",
+      "les valeurs des paramètres (beta, d, corrélations 0.415 à 0.70) sont propres à DEM-USD et JPY-USD sur cette période et ne disent rien de nos instruments",
+      "le papier ne mesure aucun pouvoir prédictif : aucun IC n'est transposable, seul un fait descriptif sur la volatilité",
+      "la conclusion sur la diversification (corrélations de volatilité plus faibles en intrajournalier) concerne la volatilité, pas les rendements, et n'est pas une stratégie",
+      "la rupture d'échelle est localisée à l'échelle journalière d'un marché continu ; sur des futures à séance, la coupure overnight change la nature des échelles proches d'un jour"
+    ],
+    "what_aligns_well": "Le papier travaille en intrajournalier (pas de 20 min) et sépare explicitement les échelles intrajournalières des échelles d'un jour et plus, ce qui recoupe notre cadre de futures intraday ; il fournit un contrôle utile : ne pas extrapoler une volatilité intrajournalière à l'horizon journalier par racine du temps."
+  }
+}

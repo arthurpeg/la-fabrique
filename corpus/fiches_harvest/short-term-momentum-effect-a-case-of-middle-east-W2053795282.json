@@ -1,0 +1,172 @@
+{
+  "fiche_id": "short-term-momentum-effect-a-case-of-middle-east-W2053795282",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-23",
+  "source": {
+    "authors": "Abdullah Ejaz, Petr Polak",
+    "title": "Short-term momentum effect: a case of Middle East stock markets",
+    "year": 2015,
+    "source_url": "https://journals.vilniustech.lt/index.php/BTP/article/download/8310/7174",
+    "pdf": "corpus/pdf/short-term-momentum-effect-a-case-of-middle-east-W2053795282.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "journal": "Verslas: Teorija ir praktika / Business: Theory and Practice 16(1): 104-112, doi:10.3846/btp.2015.438"
+  },
+  "claim": {
+    "value": "Une stratégie de momentum en coupe transversale J=6/K=6 (long les 10 meilleures actions sur 6 mois, short les 10 pires, détention 6 mois) produit des profits positifs et « statistiquement significatifs » sur les sept bourses du Moyen-Orient étudiées (2008-2013), et le CAPM n'explique pas ces profits (bêtas non significatifs, R² faibles).",
+    "quoted": [
+      "investment strategy are statistically significant.",
+      "It is clear from Table 2, that CAPM has been unable to",
+      "the sample. The beta coefficients of all the stock markets"
+    ]
+  },
+  "universe": {
+    "value": "Toutes les actions cotées sur sept bourses de six pays du Moyen-Orient / Afrique du Nord : Abu Dhabi Securities Exchange, Dubai Financial Market, Egypt Stock Exchange, Amman Stock Exchange, Casablanca Stock Exchange, Muscat Securities Market, Tadawul. Prix mensuels DataStream, janvier 2008 - décembre 2013, en devise locale. Les actions aux rendements « anormaux » sont exclues, sans critère chiffré.",
+    "quoted": [
+      "The countries are UAE (United Arab Emirates), Egypt,",
+      "Tadawul respectively. Monthly Stock prices of all the stock",
+      "resulted in abnormal returns is left out."
+    ]
+  },
+  "horizon": {
+    "value": "Période de formation 6 mois, période de détention 6 mois, portefeuilles formés à chaque fin de mois (portefeuilles glissants à la Jegadeesh-Titman). Horizon mensuel à semestriel, sans rien d'intraday.",
+    "quoted": [
+      "period and equals 6 months. As a result each month gives an",
+      "equals 6 months. So a portfolio on 1"
+    ]
+  },
+  "signal_construction": {
+    "value": "Score = rendement cumulé (ou moyen) de l'action sur les 6 mois passés, calculé à chaque fin de mois à partir de rendements mensuels simples (Prix_t - Prix_{t-1})/Prix_{t-1} x 100. Classement en coupe transversale au sein de chaque bourse ; portefeuille gagnant = 10 actions au score le plus élevé, perdant = 10 actions au score le plus faible ; position W-L (long gagnants, short perdants) détenue 6 mois. Pondération dans les portefeuilles non précisée (équipondération présumée, non écrite).",
+    "quoted": [
+      "The top 10 stocks that give highest average returns",
+      "bottom 10 stocks that result in lowest returns are chosen and",
+      "portfolios or momentum portfolios also mean that going"
+    ],
+    "sampling": "mensuel",
+    "cross_section": "au sein de chaque bourse, séparément"
+  },
+  "reported_results": [
+    {
+      "name": "momentum_profit_j6k6_abu_dhabi",
+      "value": 10.60877791,
+      "unit": "pct (période non précisée : mensuel ou sur la détention de 6 mois)",
+      "quoted": "Abu Dhabi, UAE 10.60877791 31.03705",
+      "note": "Table 1, colonne MP (j6k6) ; t-stat 31.03705 dans la même ligne."
+    },
+    {
+      "name": "momentum_profit_j6k6_dubai",
+      "value": 10.74698341,
+      "unit": "pct (période non précisée)",
+      "quoted": "Dubai, UAE 10.74698341 15.80765",
+      "note": "Table 1 ; t-stat 15.80765."
+    },
+    {
+      "name": "momentum_profit_j6k6_egypt",
+      "value": 9.175037543,
+      "unit": "pct (période non précisée)",
+      "quoted": "Egypt 9.175037543 42.28385",
+      "note": "Table 1 ; t-stat 42.28385. Incohérent avec l'annexe (Table 5), où la constante de la régression CAPM de l'Égypte vaut -0.954665 et la moyenne de la variable dépendante -0.954333."
+    },
+    {
+      "name": "momentum_profit_j6k6_jordan",
+      "value": 14.72645511,
+      "unit": "pct (période non précisée)",
+      "quoted": "Jordan 14.72645511 73.99146",
+      "note": "Table 1 ; le plus élevé de l'échantillon, t-stat 73.99146."
+    },
+    {
+      "name": "momentum_profit_j6k6_jordan_tstat",
+      "value": 73.99146,
+      "unit": "t-stat",
+      "quoted": "Jordan 14.72645511 73.99146",
+      "note": "t-stats de 15 à 74 sur 60 observations mensuelles de portefeuilles à détention chevauchante : non corrigés de l'autocorrélation (Durbin-Watson ~0.09 en annexe), donc très probablement gonflés."
+    },
+    {
+      "name": "momentum_profit_j6k6_morocco",
+      "value": 9.489600264,
+      "unit": "pct (période non précisée)",
+      "quoted": "Morocco 9.489600264 52.35359",
+      "note": "Table 1 ; t-stat 52.35359."
+    },
+    {
+      "name": "momentum_profit_j6k6_oman",
+      "value": 7.597171484,
+      "unit": "pct (période non précisée)",
+      "quoted": "Oman 7.597171484 24.28733",
+      "note": "Table 1 ; le plus faible, t-stat 24.28733. Pas de régression CAPM pour Oman (taux sans risque indisponible)."
+    },
+    {
+      "name": "momentum_profit_j6k6_saudi_arabia",
+      "value": 13.94580752,
+      "unit": "pct (période non précisée)",
+      "quoted": "Saudi Arabia 13.94580752 27.58471",
+      "note": "Table 1 ; t-stat 27.58471."
+    },
+    {
+      "name": "capm_alpha_jordan",
+      "value": 13.81044,
+      "unit": "pct (constante de la régression CAPM)",
+      "quoted": "C 13.81044 0.208142 66.35115 0.0000",
+      "note": "Table 6 (annexe) : constante, écart-type 0.208142, t 66.35. L'alpha reste quasi égal au profit brut : le bêta n'absorbe rien."
+    },
+    {
+      "name": "capm_beta_egypt",
+      "value": 0.001897,
+      "unit": "coefficient",
+      "quoted": "Egypt 0.001897 0.741 0.456 0.958",
+      "note": "Table 2 : bêta, t, p-value, puis une colonne R2 qui vaut 0.958 alors que l'annexe (Table 5) donne R-squared 0.009583 — la colonne R2 de la Table 2 semble exprimée en pourcent sans le dire (idem Jordanie 4.010 contre 0.040103)."
+    },
+    {
+      "name": "capm_beta_saudi_arabia",
+      "value": 0.061306,
+      "unit": "coefficient",
+      "quoted": "Saudi Arabia 0.061306 0.7233 0.472 0.894",
+      "note": "Table 2 ; p = 0.472, non significatif."
+    },
+    {
+      "name": "capm_beta_jordan",
+      "value": -0.082935,
+      "unit": "coefficient",
+      "quoted": "Jordan –0.082935 –1.55 0.125 4.010",
+      "spelled_out": "–0.082935",
+      "note": "Table 2 ; le signe moins est un tiret demi-cadratin dans le texte extrait. p = 0.125, non significatif."
+    },
+    {
+      "name": "capm_regression_observations",
+      "value": 60,
+      "unit": "mois",
+      "quoted": "Included observations: 60",
+      "note": "Chaque régression CAPM de l'annexe porte sur 60 mois, échantillon 2009M01-2013M12, alors que les données commencent en janvier 2008."
+    },
+    {
+      "name": "durbin_watson_abu_dhabi",
+      "value": 0.090388,
+      "unit": "statistique de Durbin-Watson",
+      "quoted": "stat 0.090388",
+      "note": "Table 3 (annexe), ligne F-statistic / Durbin-Watson stat. Autocorrélation positive extrême des résidus, cohérente avec des portefeuilles de 6 mois qui se chevauchent : les t-stats des Tables 1 et 3-8 ne sont pas fiables. Les autres bourses ont des DW de 0.075 à 0.39."
+    }
+  ],
+  "what_is_missing": [
+    "l'unité et la période des profits MP (j6k6) ne sont pas dites : pourcentage mensuel moyen ou rendement sur 6 mois ; un profit mensuel de 10 à 15 % serait invraisemblable",
+    "aucune correction de l'autocorrélation due au chevauchement des portefeuilles (pas de Newey-West) ; Durbin-Watson de 0.07 à 0.39 en annexe",
+    "la construction du score est ambiguë : 'average returns' sur 6 mois ou rendement cumulé ; 'top 10 stocks' contredit le classement en déciles annoncé une ligne plus haut",
+    "pondération des portefeuilles non précisée ; pas de mois de saut entre formation et détention",
+    "le critère d'exclusion des actions aux 'abnormal returns' n'est pas chiffré — biais de sélection possible",
+    "aucun frais de transaction, aucune liquidité, aucune faisabilité de la vente à découvert sur ces marchés",
+    "nombre d'actions par bourse non donné ; biais de survie non discuté",
+    "incohérences internes : Égypte positive en Table 1 mais constante CAPM négative en annexe ; colonne R2 de la Table 2 incompatible avec l'annexe ; échantillon de régression 2009-2013 contre données 2008-2013",
+    "pas de régression CAPM pour Oman (taux sans risque absent)",
+    "aucune analyse hors échantillon ni de robustesse (autres J/K, sous-périodes)"
+  ],
+  "transposability": {
+    "what_transfers": "Seulement l'idée générale de momentum en coupe transversale sur un horizon de formation passé : classer des instruments sur leur rendement passé et être long des gagnants, short des perdants. Chez nous, cela ne pourrait devenir qu'un score de momentum relatif entre neuf futures, sans chiffre repris du papier.",
+    "what_does_not_transfer": [
+      "l'univers : des actions individuelles de marchés émergents du Moyen-Orient, pas neuf futures ; une coupe de 10 gagnants / 10 perdants est impossible sur neuf instruments",
+      "l'horizon : formation et détention de 6 mois sur données mensuelles, sans rien d'intraday",
+      "la métrique : profits moyens et t-stats de portefeuille W-L, pas un IC",
+      "les niveaux de profit et les t-stats sont inutilisables comme référence : unité non dite, t-stats gonflés par le chevauchement, incohérences entre tables",
+      "l'explication par sous-réaction d'investisseurs particuliers sur des marchés peu intégrés n'a pas de raison de valoir sur des futures liquides"
+    ],
+    "what_aligns_well": "Presque rien. Le papier rappelle au mieux qu'un test de momentum à détention chevauchante doit corriger l'autocorrélation — ce que le harnais doit faire par construction — et il en fournit un contre-exemple chiffré (Durbin-Watson ~0.09 avec des t-stats de 15 à 74)."
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "fiche_id": "searching-for-safe-haven-assets-during-the-covid-W3026661449",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-22",
+  "source": {
+    "authors": "Qiang Ji, Dayong Zhang, Yuqian Zhao",
+    "title": "Searching for safe-haven assets during the COVID-19 pandemic",
+    "year": 2020,
+    "source_url": "https://kar.kent.ac.uk/93922/1/IRFA_accept.pdf",
+    "pdf": "corpus/pdf/searching-for-safe-haven-assets-during-the-covid-W3026661449.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "note": "L'annee n'est pas imprimee dans le texte fourni : 2020 est deduite de l'echantillon (jusqu'a mars 2020) et des references les plus recentes. peer_reviewed = true repose sur le nom du fichier source (IRFA_accept, manuscrit accepte a International Review of Financial Analysis), pas sur le texte."
+  },
+  "claim": {
+    "value": "Pendant la crise COVID-19 (dec. 2019 - mars 2020), le role de valeur refuge devient moins efficace pour la plupart des actifs candidats (bitcoin, change, petrole), tandis que l'or et les futures de soja restent des valeurs refuges robustes vis-a-vis des indices actions MSCI US, EU et Chine : leur ajout a un portefeuille moyenne-variance a deux actifs empeche la rupture de queue gauche detectee sur les indices actions.",
+    "quoted": [
+      "Among all candidates, gold and soybean commodity futures are found to be robust safe",
+      "Among six asset candidates, again, only the portfolios constructed with gold and soy-",
+      "bean commodity futures do not experience a change on the left-quantiles considered."
+    ]
+  },
+  "universe": {
+    "value": "Trois indices actions MSCI (US, EU, Chine) et six candidats refuges : bitcoin (indice CoinDesk), or (LBMA), EUR-USD, CNY-USD, petrole WTI (future front-month roule), futures de soja ; bon du Tresor a trois mois comme taux sans risque. Donnees quotidiennes de cloture, 1er aout 2019 - 31 mars 2020.",
+    "quoted": [
+      "Three regions that had been catastrophically impacted by COVID-19: China, Europe",
+      "We use the daily closing/spot price of bitcoin (CoinDesk price",
+      "crude oil (rolling front-month futures contract), and soybeans commodity futures. The"
+    ]
+  },
+  "horizon": {
+    "value": "Quotidien. La surveillance sequentielle est recalculee jour par jour ; le cross-quantilogramme mesure une dependance a un jour (lag h = 1). Aucune prevision de rendement n'est evaluee : le papier teste la stabilite d'un quantile de queue et une dependance entre quantiles.",
+    "quoted": [
+      "time varying cross-quantilograms with lag h = 1 and τ = 0.05 by using a one-day rolling",
+      "and the quantile q2(τ2) of a potential safe-haven asset y2,t at time t + 1."
+    ]
+  },
+  "signal_construction": {
+    "value": "Pas un signal de trading. Trois outils : (1) VaR a tau = 5 % = volatilite conditionnelle GARCH(1,1) x quantile bootstrappe des residus (1000 tirages), et taux de violation par sous-echantillon ; (2) detecteur sequentiel auto-normalise W_n^tau de Hoga et Wied (2017) sur le quantile de queue gauche, echantillon d'apprentissage aout-nov. 2019, echantillon de surveillance dec. 2019 - mars 2020 (T = 2, s0 = 0.2, k/n = 0.2), arret des que W depasse un seuil simule C_tau ; applique aux actifs seuls puis a des portefeuilles moyenne-variance a deux actifs (indice + candidat refuge) ; (3) cross-quantilogramme de Han et al. (2016) entre indice (t) et candidat (t+1) aux quantiles gauches, en fenetre glissante de 21 jours, significativite par bootstrap stationnaire.",
+    "quoted": [
+      "choose s0 = 0.2 and k/n = 0.2 as suggested by Hoga and Wied (2017). Then, the",
+      "we construct pairwise mean-variance portfolios between equity indices and potential safe-",
+      "By using a rolling window approach with the window length of 21 trading days, the time"
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "msci_us_var5_hit_ratio_covid_pct",
+      "value": 8.05,
+      "unit": "%",
+      "quoted": "MSCIUS -0.0296 -0.0145 0.0359 -0.2099 -0.0082 5.17% 2.30% 8.05% 09-Mar",
+      "note": "Table 2, colonne Hit covid : taux de violation de la VaR 5 % sur la periode COVID contre 2.30 % en apprentissage ; rupture de queue detectee le 9 mars 2020."
+    },
+    {
+      "name": "oil_var5_hit_ratio_covid_pct",
+      "value": 8.05,
+      "unit": "%",
+      "quoted": "Oil -0.0485 -0.0324 0.0463 -0.2806 -0.0217 5.75% 3.45% 8.05% 18-Mar",
+      "note": "Table 2 : WTI, rupture de queue detectee le 18 mars 2020."
+    },
+    {
+      "name": "gold_var5_hit_ratio_covid_pct",
+      "value": 6.9,
+      "unit": "%",
+      "quoted": "Gold -0.0155 -0.0126 0.0090 -0.0504 -0.0074 5.75% 4.60% 6.90% -",
+      "note": "Table 2 : pas de rupture detectee pour l'or ('-' en colonne Change date)."
+    },
+    {
+      "name": "gold_sharpe_covid_daily",
+      "value": 0.0846,
+      "unit": "ratio quotidien",
+      "quoted": "Gold 0.08% 1.09% -0.4359 10.0930 0.0542 0.0846 0.00 0.45",
+      "note": "Table 1, colonne S.R.covid. Ratio de Sharpe quotidien non annualise ; la note du tableau le dit calcule en divisant 'l'ecart-type par la moyenne', formulation vraisemblablement inversee."
+    },
+    {
+      "name": "soybean_sharpe_covid_daily",
+      "value": 0.017,
+      "unit": "ratio quotidien",
+      "quoted": "Soybean 0.01% 0.90% 0.1766 4.8432 0.0079 0.0170 0.00 0.36",
+      "note": "Table 1, colonne S.R.covid."
+    },
+    {
+      "name": "oil_sharpe_covid_daily",
+      "value": -0.2009,
+      "unit": "ratio quotidien",
+      "quoted": "Oil -0.57% 4.56% -1.6792 22.1491 0.0167 -0.2009 0.00 0.49",
+      "note": "Table 1, colonne S.R.covid ; pire actif de l'echantillon."
+    },
+    {
+      "name": "portfolio_msci_us_gold_sharpe_covid_daily",
+      "value": 0.0711,
+      "unit": "ratio quotidien",
+      "quoted": "MSCI-US -0.0347 0.0711 -0.0049 -0.0494 -0.0347 0.0125",
+      "note": "Table 3 Panel A, colonne Gold ; la colonne Soybean donne 0.0125. Seuls les portefeuilles avec or et soja ont un Sharpe positif."
+    },
+    {
+      "name": "gold_soybean_portfolios_no_tail_break",
+      "value": null,
+      "quoted": "bean commodity futures do not experience a change on the left-quantiles considered.",
+      "note": "Table 3 Panel B : aucune date de rupture pour les portefeuilles indice+or et indice+soja, pour tau = 0.05, 0.10, 0.15, 0.20 et les trois indices."
+    },
+    {
+      "name": "gold_msci_us_no_predictability_share_covid",
+      "value": 0.69,
+      "unit": "part des fenetres",
+      "quoted": "Gold 0.54 0.60 0.60 0.69 0.69 0.63",
+      "note": "Table 4, bloc 'weak safe-haven' : part des fenetres glissantes de 21 jours sans predictabilite, 0.54 en apprentissage contre 0.69 en COVID pour MSCI-US."
+    },
+    {
+      "name": "gold_msci_us_negative_predictability_share_covid",
+      "value": 0.31,
+      "unit": "part des fenetres",
+      "quoted": "Gold 0.45 0.39 0.39 0.31 0.31 0.36",
+      "note": "Table 4, bloc 'strong safe-haven' : la part de fenetres a dependance negative baisse de 0.45 a 0.31 pour MSCI-US ; la meme ligne 'Gold' apparait deux fois dans le tableau (blocs weak et strong), celle-ci est la seconde."
+    },
+    {
+      "name": "us_index_drop_march9_pct",
+      "value": 7,
+      "unit": "%",
+      "quoted": "major market indices in the US fell more than 7% on March 9.",
+      "note": "Contexte de la rupture de queue detectee sur MSCI-US."
+    },
+    {
+      "name": "oil_drop_march18_pct",
+      "value": 24,
+      "unit": "%",
+      "quoted": "This comes with a collapse of oil price, which dropped by 24% and was",
+      "note": "Contexte de la rupture detectee sur le WTI le 18 mars 2020."
+    },
+    {
+      "name": "testing_sample_windows",
+      "value": 87,
+      "unit": "fenetres (jours)",
+      "quoted": "the total number of windows in the testing sample remains 87. These ratios stand for the percentage",
+      "note": "Taille de l'echantillon de test : de l'ordre de 87 observations quotidiennes. Tous les resultats reposent sur quatre mois de donnees."
+    }
+  ],
+  "what_is_missing": [
+    "aucune prevision de rendement ni IC : le papier teste la stabilite d'un quantile de queue, pas un pouvoir predictif exploitable",
+    "echantillon minuscule : environ 87 jours d'apprentissage et 87 jours de test, un seul episode de crise",
+    "le seuil C_tau du detecteur est simule et sa valeur n'est pas donnee",
+    "incoherences de dates : la fin de l'apprentissage est ecrite '30 November 2020' (vraisemblablement 2019), et la surveillance est dite commencer le 25 decembre 2019 en invoquant k/n = 0.2 alors que la fraction de preparation est s0",
+    "les poids des portefeuilles moyenne-variance ne sont pas publies, ni leur frequence de reoptimisation, ni la fenetre d'estimation",
+    "aucun cout de transaction, aucun multiplicateur, aucun fuseau horaire pour les clotures d'actifs cotes sur des places differentes (MSCI Chine, LBMA, CoinDesk, CME)",
+    "la definition du ratio de Sharpe dans les notes de tableaux est inversee (ecart-type divise par la moyenne), sans que l'on sache laquelle a ete calculee",
+    "aucune correction pour tests multiples malgre 6 candidats x 3 indices x 4 quantiles"
+  ],
+  "transposability": {
+    "what_transfers": "L'idee de surveiller la stabilite d'un quantile de queue gauche par un detecteur sequentiel (Hoga-Wied) comme indicateur de regime de stress, et le cross-quantilogramme comme mesure de dependance de queue entre un indice actions et un actif refuge (or, soja, petrole) au pas d'un jour, sont des outils de conditionnement de regime applicables a un panier de futures.",
+    "what_does_not_transfer": [
+      "le resultat est un constat descriptif sur un seul episode (COVID, dec. 2019 - mars 2020), pas un signal predictif : rien a mesurer en IC",
+      "frequence quotidienne a cloture, alors que notre univers est intraday",
+      "une partie de l'univers est hors de nos neuf futures : bitcoin CoinDesk, or spot LBMA, change spot, indices MSCI, bon du Tresor",
+      "l'episode etudie (2019-2020) est dans notre tranche pool, mais un seul evenement ne permet aucune generalisation walk-forward",
+      "le critere de succes (absence de rupture de queue d'un portefeuille moyenne-variance) n'est ni un IC ni un rendement"
+    ],
+    "what_aligns_well": "Or, petrole WTI et soja sont des futures ; la lecture 'l'or et les produits agricoles decorreles en queue quand actions et petrole s'effondrent ensemble' peut servir d'hypothese de regime pre-enregistree pour un hybride, a tester sur notre pool plutot qu'a reprendre comme resultat."
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "fiche_id": "on-covariance-estimation-of-non-synchronously-ob-W2094859553",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-14",
+  "source": {
+    "authors": "Takaki Hayashi, Nakahiro Yoshida",
+    "title": "On covariance estimation of non-synchronously observed diffusion processes",
+    "year": 2005,
+    "source_url": "https://projecteuclid.org/journals/bernoulli/volume-11/issue-2/On-covariance-estimation-of-non-synchronously-observed-diffusion-processes/10.3150/bj/1116340299.pdf",
+    "pdf": "corpus/pdf/on-covariance-estimation-of-non-synchronously-ob-W2094859553.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "journal": "Bernoulli 11(2), 2005, 359–379"
+  },
+  "claim": {
+    "value": "L'estimateur de covariance réalisée calculé sur une grille régulière après synchronisation (interpolation previous-tick) est biaisé vers zéro quand les deux actifs sont observés de façon non synchrone, d'autant plus que le pas h est petit devant l'intervalle moyen entre transactions (explication partielle de l'effet Epps). Les auteurs proposent un estimateur de covariance cumulée (Hayashi-Yoshida) qui somme les produits d'incréments de chaque paire d'intervalles d'observation qui se chevauchent, sans aucune synchronisation ; il est sans biais sans drift et convergent quand la fréquence d'observation tend vers l'infini.",
+    "quoted": [
+      "realized covariance estimator has potentially a serious bias, especially when the regular",
+      "We propose a new estimator which is free of any ‘synchronization’ processing",
+      "of the original data, hence free of bias or other problems caused by it."
+    ]
+  },
+  "universe": {
+    "value": "Aucun univers empirique : papier purement théorique. Deux processus de diffusion (Itô) observés à des temps aléatoires non synchrones, étendu à d titres suivant un Black-Scholes multidimensionnel (log-prix). Aucune donnée réelle n'est utilisée.",
+    "quoted": [
+      "Consider a market with d securities, ( P1, ... , Pd), with Pk",
+      "Throughout the paper, we will suppose that processes evolve continuously, in continuous"
+    ]
+  },
+  "horizon": {
+    "value": null,
+    "reason": "le papier ne prédit rien ; il propose un estimateur de covariance cumulée sur une fenêtre ]0, T] (T donné en exemple comme une journée), sans horizon de prévision"
+  },
+  "signal_construction": {
+    "value": "Pas un signal prédictif mais un estimateur. Covariance cumulée de Hayashi-Yoshida : U_n = somme sur toutes les paires (i, j) de ΔP1(I_i)·ΔP2(J_j)·1{I_i ∩ J_j ≠ ∅}, où I_i et J_j sont les intervalles entre observations successives de chaque actif sur ]0, T]. Corrélation : R(2) = U_n / (sqrt(Σ ΔP1(I_i)²)·sqrt(Σ ΔP2(J_j)²)), éventuellement tronquée à [-1, 1]. En multidimensionnel, appliqué aux incréments de log-prix. Par contraste, l'estimateur réalisé V_h échantillonne les deux prix previous-tick sur une grille de pas h.",
+    "quoted": [
+      "That is, the product of any pair of increments ˜P1(I i) and ˜P2(J j) will make a contribution",
+      "to the summation only when the respective observation intervals I i and J j are overlapping.",
+      "particular, let j(x) :¼ (x ^ 1) _ (/C0 1) be such a transformation. Then we may deﬁne"
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "realized_covariance_downward_bias_nonsynchronous",
+      "value": null,
+      "quoted": "realized covariance estimator has potentially a serious bias, especially when the regular",
+      "note": "Résultat théorique (Propositions 2.1 et 2.2) : biais vers zéro (en magnitude) quand la covariation est monotone, avec interpolation previous-tick."
+    },
+    {
+      "name": "realized_covariance_vanishes_linearly_as_h_shrinks",
+      "value": null,
+      "quoted": "That is, approximately linearly, E[Vh] vanishes as h decreases for any ﬁxed intensities º1 and",
+      "note": "Proposition 2.2 : mouvements browniens corrélés échantillonnés par deux Poisson indépendants ; E[V_h] est d'ordre h quand h tend vers 0. Formule exacte illisible dans l'extraction."
+    },
+    {
+      "name": "hy_estimator_unbiased_without_drift",
+      "value": null,
+      "quoted": "of the proof, unbiasedness will also be obtained when the diffusion processes have no drift.",
+      "note": "Remarque 3.3 : sans drift, U_n sans biais pour tout n."
+    },
+    {
+      "name": "hy_estimator_consistent",
+      "value": null,
+      "quoted": "consistency as the observation frequency tends to inﬁnity.",
+      "note": "Théorème 3.1 : convergence L2 ou en probabilité sous la Condition C (pas maximal entre observations tendant vers 0, temps d'observation indépendants des prix)."
+    },
+    {
+      "name": "realized_covariance_fixed_h_not_consistent",
+      "value": null,
+      "quoted": "Remark 3.4. The realized covariance estimator (1.1) is not generally consistent as n !1 ,",
+      "note": "À h fixé, augmenter la fréquence des transactions ne fait pas disparaître la variance de V_h."
+    },
+    {
+      "name": "hy_convergence_rate_poisson_brownian",
+      "value": null,
+      "quoted": "has turned out to be √n.",
+      "quoted_source": "has turned out to be ﬃﬃﬃnp .",
+      "quoted_repair": "math_notation",
+      "note": "Vitesse en racine de n dans le cas Brownien + échantillonnage de Poisson, annoncée ici, démontrée dans un papier séparé (normalité asymptotique)."
+    },
+    {
+      "name": "clipped_correlation_mse_improvement",
+      "value": null,
+      "quoted": "experiments (with small or medium-size n) have indicated some potential improvements in",
+      "note": "Expériences numériques préliminaires non chiffrées : la troncature à [-1, 1] améliorerait l'EQM, surtout pour une corrélation élevée en magnitude."
+    },
+    {
+      "name": "epps_effect_prior_evidence_sampling_minutes",
+      "value": 10,
+      "unit": "minutes",
+      "quoted": "intraday returns data (up to 10 minutes) on four US stocks, he ﬁnds that correlations have a",
+      "note": "Rappel de la littérature (Epps 1979), pas une mesure des auteurs : les corrélations baissent quand la fréquence d'échantillonnage augmente."
+    }
+  ],
+  "what_is_missing": [
+    "aucune donnée réelle, aucune application empirique : tous les résultats sont des propositions et théorèmes",
+    "aucun chiffre de biais sur des données de marché ; la formule de la Proposition 2.2 suppose variances unitaires, corrélation constante et arrivées de Poisson",
+    "le bruit de microstructure est exclu du modèle (mentionné comme piste seulement)",
+    "les temps d'observation sont supposés indépendants des prix, hypothèse que les auteurs jugent eux-mêmes restrictive",
+    "les expériences numériques sur la troncature de la corrélation ne sont pas chiffrées",
+    "aucun signal ni aucune prévision de rendement : le papier fournit un outil de mesure, pas une hypothèse testable par IC"
+  ],
+  "transposability": {
+    "what_transfers": "L'estimateur de Hayashi-Yoshida est un outil de mesure directement applicable à des paires de futures intraday cotés avec des horloges de transaction différentes : covariance/corrélation réalisée sans choix de grille ni interpolation. Utile comme brique d'un signal (bêta ou corrélation intraday entre contrats, lead-lag) ou comme contrôle de l'effet Epps sur nos barres.",
+    "what_does_not_transfer": [
+      "notre panel est en barres régulières et non en ticks : l'avantage de l'estimateur (travailler sur les temps de transaction bruts) disparaît largement si les données sont déjà synchronisées sur une grille",
+      "le cadre suppose des diffusions continues sans bruit de microstructure ; sur des futures au tick, le bid-ask bounce biaiserait l'estimateur",
+      "aucune hypothèse prédictive : rien à évaluer directement par un rapport d'IC",
+      "l'hypothèse de temps d'observation indépendants des prix est peu réaliste pour des carnets de futures"
+    ],
+    "what_aligns_well": "Le diagnostic (biais vers zéro de la corrélation réalisée quand le pas est petit devant la fréquence des échanges) est pertinent pour des contrats de liquidité très différente dans notre univers de neuf futures : il dit de se méfier des corrélations calculées sur des barres fines entre un contrat liquide et un contrat peu liquide."
+  }
+}
