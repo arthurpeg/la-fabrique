@@ -1,10 +1,10 @@
 ---
 type: phase
-updated: 2026-09-17
+updated: 2026-09-26
 status: franchie
 phase: 05
 gate: un signal qui tente de lire le futur échoue au test de causalité, automatiquement
-sources: [ETAT.md, decisions/DECISION-07-contrat-de-signal.md, sandbox/, LECONS.md]
+sources: [ETAT.md, decisions/DECISION-07-contrat-de-signal.md, decisions/DECISION-27-l-instant-de-troncature.md, sandbox/, LECONS.md]
 ---
 
 # Phase 05 — API de signal, sandbox, test de causalité
@@ -33,8 +33,8 @@ porte n'est franchie que parce que trois look-ahead injectés exprès
 
 ## Le test, en une phrase
 
-Prendre une barre que le signal a scorée à l'instant `t`, tronquer le panel **une
-minute après `t`**, et redemander. Un signal honnête rend le score identique :
+Prendre une barre que le signal a scorée à l'instant `t`, tronquer le panel **à
+`t`** (et non plus une minute après — voir ci-dessous), et redemander. Un signal honnête rend le score identique :
 tout ce qu'il a utilisé était à `t` ou avant. Un tricheur rend autre chose, ou ne
 rend rien.
 
@@ -68,6 +68,16 @@ Le contrôle qui a trouvé ça n'existait pas avant, et il existe maintenant :
 *combien des scores produits tombent sur une barre que le harnais sait mesurer*.
 Il n'y a pas de meilleur résumé de la phase — un signal se juge sur ses
 observations, pas sur ses scores.
+
+## Révisée le 2026-09-26 — `D27`, la troncature était trop tardive d'une barre
+
+Les barres sont horodatées à leur **ouverture**. Tronquer à `t + 1 min` gardait
+la barre `t+1` : un tricheur lisant **une seule** barre de futur passait **14
+sondes sur 16**, attrapé seulement là où la cotation avait un trou. Le test
+tronque désormais à `t`, et un quatrième tricheur, `tainted-next-bar`, doit
+tomber à **chaque** sonde — il mesure la résolution du test à chaque passage de
+la porte. Rejoué : porte 05 (32 vérifications) et porte 08 franchies, harnais
+inchangé, aucune ligne de registre périmée. Leçon : `LECONS.md` `L27`.
 
 ## Ce que ça ne prétend pas
 

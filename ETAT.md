@@ -1,8 +1,10 @@
 # ÉTAT
 
 **Phase courante :** 09 — premier passage complet sur 30 à 50 papiers
-**Date de dernière mise à jour :** 2026-09-24 (08:30 UTC — 35 papiers moissonnés
-promus au texte D18, voir § Prochaine action)
+**Date de dernière mise à jour :** 2026-09-26 — `D27` : le test de causalité
+tronquait une barre trop tard ; corrigé, portes 05 et 08 rejouées et franchies.
+**Le reste de ce fichier n'a pas été relu à cette date** et retarde sur le dépôt
+(voir § Revue du 2026-09-26, en fin de § Prochaine action).
 **Dernière porte franchie :** **08**, le 2026-09-23 — `scripts/gate_08.py`. Un
 signal produit par une session de codage séparée tient les **six conditions de
 `D23` au premier essai**, et aucun signal produit n'a été retouché à la main.
@@ -50,6 +52,12 @@ puis mesurée — la forme en U de la volatilité intra-journalière est retrouv
 reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
 **Décision la plus récente :**
+`decisions/DECISION-27-l-instant-de-troncature.md` — le test de causalité
+tronque **à la barre scorée**, plus une minute après : les barres sont
+horodatées à leur ouverture, et `t + 1 min` laissait passer un signal lisant
+une barre de futur (14 sondes sur 16). Quatrième tricheur, exigé attrapé à
+chaque sonde. `sandbox/` est hors du harnais : **aucune ligne périmée**.
+**Décision précédente :**
 `decisions/DECISION-26-encadrement-des-frais.md` — les frais par contrat sont
 **encadrés, pas devinés** : borne basse = barème Lucid seul, borne haute = Lucid +
 CME non-membre + NFA ; toute lecture nette qui conditionne un choix se fait à la
@@ -152,7 +160,7 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 
 | # | Phase | Porte | État |
 |---|---|---|---|
-| 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07` |
+| 05 | API de signal, sandbox, test de causalité | Un signal qui tente de lire le futur échoue au test de causalité, automatiquement. | **franchie 2026-09-17** — `gate_05_signal_api.py`, 3 tricheurs sur 3 attrapés, `D07`. **Rejouée le 2026-09-26 sous `D27`** : 4 tricheurs sur 4, dont `tainted-next-bar` (une barre de futur) attrapé à 16 sondes sur 16 ; 32 vérifications |
 | 06 | Contrôles automatiques et réplication | Un signal dégénéré est rejeté avant le harnais ; la chaîne reproduit un fait publié sur nos données. La cible a changé deux fois : Mesfin (métrique incompatible, `D12`), Heston (motif absent, `H03`), puis Andersen & Bollerslev (`D13`). | **franchie 2026-09-18** — `gate_06_controls.py` (25) et `scripts/measure_h04.py` (19) |
 | 07 | Triage et extraction | **Requalifiée par `D17` le 2026-09-20.** Le triage écarte ce qu'il doit écarter, sur un verdict humain de référence (`D15`) ; l'extracteur produit sans retouche des fiches qui passent `D16`, sur **tout le corpus atteignable**, le reste étant recensé avec sa raison (`G1`–`G4`). Le « 20 » d'origine venait du nombre d'entrées d'`AMORCE.md`, non d'une exigence. | **FRANCHIE le 2026-09-23** — `scripts/gate_07.py`, les quatre effectifs a ZERO : `G1` = `G2` = `G3` = `G4` = 0. **17 fiches, 450 resultats cites**, produites par sept sessions separees n'ayant vu que leur consigne (`D16`). **9 essais pour 7 fiches, 1,29 par fiche** — deux fiches rejetees sur un point de schema, renvoyees a leur extracteur et non reparees a la main. `corpus/PRODUCED.json` rend `G3` mesurable, ce qu'il n'etait pas (`L22`). `D24` separe *atteignable* de *fichable* : l'entree 9 (HTML) est atteignable et hors de `G1`, **comptee dans sa propre colonne avec sa raison**, jamais effacee |
 | 08 | Le codeur de signal | **Son seuil est écrit depuis le 2026-09-23 — `D23`.** Six conditions à tolérance zéro : contrat de `D07`, liste blanche, causalité, non-dégénérescence, **fidélité à la fiche** (`S5` : toute constante du code s'y retrouve) et **zéro retouche manuelle**. Aucun IC n'est calculé pour franchir cette porte. | **FRANCHIE le 2026-09-23** — `scripts/gate_08.py`. Un signal produit par une session de codage separee, `baltussen-2021-hedging-demand-intraday-momentum`, tient les **six conditions au premier essai**. `signals/PRODUCED.json` rend `S6` mesurable, ce qu'il n'etait pas (`L22`). **Aucun IC calcule.** La calibration de `D06`, que `D23` avait reportee faute de fiche, est faite : **correlation 0,5334** avec l'implementation humaine, 15 644 paires — elle **ne conditionne rien** |
@@ -300,6 +308,41 @@ est acquis :
 modèle local de taille comparable **avec sortie JSON contrainte** (`format:
 json` d'ollama, ou un modèle entraîné à l'appel d'outil). L'essai ci-dessus ne
 l'avait pas, et c'est peut-être tout ce qui manquait.
+
+### Revue du 2026-09-26 — ce qui reste à traiter avant de mesurer
+
+Une revue complète du dépôt (gardes relancés en lecture seule, registre 169 →
+169) a trouvé huit points. **Le premier est corrigé (`D27`).** Les sept autres
+sont ouverts, du plus grave au moins grave :
+
+1. ~~Le test de causalité laissait passer une barre de futur.~~ **Corrigé, `D27`.**
+2. **Des tests peuvent échapper au dénominateur.** Une mesure avec
+   `hypothesis_ref=None` compte comme calibration : `counted_tests()` l'ignore et
+   `gate_09.py` ne cherche que les lignes portant la `ref` d'une hypothèse. À
+   fermer dans `gate_09` : refuser tout signal du lot ayant une autre ligne au
+   registre. Et `harness/registry.settle()` applique `extra` **après** les champs
+   du ticket, donc peut écraser `hypothesis_ref` — à noter pour la prochaine
+   décision qui touchera le harnais.
+3. **Les plis du walk-forward ne sont tranchés nulle part.** `D04` les a
+   renvoyés en phase 09 ; ni `D25` ni `gate_09` n'en parlent. À écrire avant le
+   lot.
+4. **11 fiches moissonnées sans trace de production** — 18 fichiers dans
+   `corpus/fiches_harvest/`, 7 seulement dans `PRODUCED_harvest.json`. `G3`
+   n'est pas mesurable pour elles (`L22`). `cryptocurrencies-and-momentum`
+   casse en plus `F1` et `F3`.
+5. **`value_in_quote` retire toutes les virgules** : `17.71,18.22` devient
+   `17.7118.22` (faux refus), `{12,6,1}` devient `1261` (faux accord possible).
+6. **`extract_text.py --check` ne vérifie que les PDF présents sur le poste** :
+   « conforme, 34 fichiers » quand le manifeste en porte 104. Et
+   `extract_text.py` sans `--check` réécrirait le manifeste à 34 entrées, en
+   perdant les 70 textes moissonnés sans rien dire.
+7. **Le piège `ruff format`** n'est toujours pas désamorcé dans
+   `pyproject.toml` (exclure `harness/`).
+8. **Ce fichier retarde sur le dépôt** : point 9 de § Donc, dans l'ordre (le
+   correctif de `signal_construction` est fait depuis le 2026-09-25), « 6 fiches
+   sur 35 », « 36 fichiers » de texte (`--check` en compte 34), les fuites de
+   `SCHEMA.md` à la fois fermées et ouvertes. Et `F55`–`F59` du ledger sont
+   écrites **hors du tableau**, après « Voir aussi ».
 
 ### Ce que la phase 09 demande
 

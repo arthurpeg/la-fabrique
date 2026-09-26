@@ -6,11 +6,14 @@ Les trois autres sections préparent le terrain ; celle-là décide.
 
     python scripts/gate_05_signal_api.py
 
-Trois tricheurs sont soumis au test (`sandbox/tainted.py`), et chacun doit être
-attrapé pour une raison qu'on écrit d'avance : le premier parce que ses scores
-disparaissent quand on lui retire le futur, les deux autres parce qu'ils changent
-de valeur. Un tricheur attrapé « pour une autre raison que prévu » est un test
-qu'on ne comprend pas, donc une porte non franchie.
+Quatre tricheurs sont soumis au test (`sandbox/tainted.py`), et chacun doit être
+attrapé pour une raison qu'on écrit d'avance : le premier et le quatrième parce
+que leurs scores disparaissent quand on leur retire le futur, les deux autres
+parce qu'ils changent de valeur. Le quatrième ne lit qu'UNE barre de trop, et il
+doit tomber à CHAQUE sonde : c'est lui qui mesure la résolution du test (`D27`),
+et un trou de cotation ne doit pas pouvoir faire le travail à sa place.
+Un tricheur attrapé « pour une autre raison que prévu » est un test qu'on ne
+comprend pas, donc une porte non franchie.
 """
 
 from __future__ import annotations
@@ -36,7 +39,12 @@ EXPECTED_CATCH = {
     "tainted-forward-return": "disparu",
     "tainted-full-sample-zscore": "valeur",
     "tainted-window-close": "valeur",
+    "tainted-next-bar": "disparu",
 }
+
+# Ceux-là doivent tomber à CHAQUE sonde, pas seulement à une (D27). Avant D27,
+# `tainted-next-bar` tombait à 2 sondes sur 16, par accident de cotation.
+CAUGHT_AT_EVERY_PROBE = {"tainted-next-bar"}
 
 REFUSED_SOURCES = {
     "le réseau": "import requests\n",
@@ -136,6 +144,13 @@ def main() -> int:
         check(expected in kinds,
               f"{tainted.SIGNAL_ID} est attrapé sur {kinds} et non sur {expected!r} — "
               "le test fonctionne pour une raison qu'on n'a pas prévue")
+        if tainted.SIGNAL_ID in CAUGHT_AT_EVERY_PROBE:
+            probes = causality.probe_instants(tainted.scores(panel), PROBES)
+            caught = {d.probe for d in divergences}
+            check(len(caught) == len(probes),
+                  f"{tainted.SIGNAL_ID} n'est attrapé qu'à {len(caught)} sonde(s) sur "
+                  f"{len(probes)} — la résolution du test ne tient pas à une barre (D27)")
+            print(f"   {tainted.SIGNAL_ID:34s} attrapé à {len(caught)} sonde(s) sur {len(probes)}")
         first = divergences[0] if divergences else None
         print(f"   {tainted.SIGNAL_ID:34s} ATTRAPÉ — {len(divergences)} divergence(s), "
               f"{sorted(kinds)}")

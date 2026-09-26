@@ -1,10 +1,10 @@
 """The test. A signal that needed the future stops producing the same thing without it.
 
-THE IDEA. Take a bar the signal scored, at instant `t`. Truncate the panel one
-minute after `t` -- so the scored bar is still there, and nothing that follows it
-is. Ask the signal again. An honest signal gives the identical score: everything
-it used was at or before `t`. A signal that read ahead either gives a different
-number, or gives none at all, because what it leaned on is gone.
+THE IDEA. Take a bar the signal scored, at instant `t`. Truncate the panel AT
+`t` -- so the scored bar is still there, and nothing that follows it is. Ask
+the signal again. An honest signal gives the identical score: everything it used
+was at or before `t`. A signal that read ahead either gives a different number,
+or gives none at all, because what it leaned on is gone.
 
 WHY THE PROBES SIT ON THE SCORED BARS. Anywhere else, a cheat is invisible: in
 the middle of the panel the future it reads is available on both sides, so both
@@ -17,6 +17,13 @@ does not return a wrong number on a truncated panel -- it returns nothing there,
 the bar being absent. Comparing only shared timestamps would let it through. So a
 score the full panel produces and the truncated panel does not is itself the
 violation.
+
+WHY AT `t` AND NOT ONE MINUTE LATER (D27). A bar is stamped at its OPEN: the bar
+`ts_event = t` closes at t+1min. Truncating at t+1min kept the bar t+1, whose
+close is known only at t+2min, so a signal reading ONE bar ahead scored the same
+on both panels. Measured: a one-bar cheat passed 14 probes out of 16, caught only
+where the quotes had a hole. At a 30-bar horizon that one minute correlates
+~0.18 with the target -- ten times the IC this project is looking for.
 
 WHAT THIS DOES NOT PROVE (D07). That the signal is causal everywhere. Only that
 it was causal at the instants probed. The proof is empirical, the probes are many
@@ -31,8 +38,6 @@ import numpy as np
 import pandas as pd
 
 from panel.panel import Panel
-
-ONE_MINUTE = pd.Timedelta(minutes=1)
 
 
 @dataclass(frozen=True)
@@ -94,7 +99,7 @@ def check(
     divergences: list[Divergence] = []
 
     for cell, instant in probe_instants(reference, probes):
-        truncated = panel.truncate(end=instant + ONE_MINUTE)
+        truncated = panel.truncate(end=instant)
         again = module.scores(truncated, cells=[cell], horizon_bars=horizon_bars)
 
         expected = reference[cell]

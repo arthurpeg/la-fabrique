@@ -1,4 +1,4 @@
-"""Three signals that cheat on purpose. They exist so the test has something to catch.
+"""Four signals that cheat on purpose. They exist so the test has something to catch.
 
 A test that has never caught anything is not a test -- it is a habit. These three
 are the deliberate look-aheads the gate injects, and the gate fails if any of them
@@ -15,6 +15,10 @@ paper. Nothing may ever measure them.
                      is not enough (D07).
   window-close       reads the window's closing price to score a bar half an hour
                      before it. The subtle one: it looks like ordinary indexing.
+  next-bar           reads ONE bar ahead -- the off-by-one a coder writes without
+                     noticing. The three above all read FAR ahead, so they said
+                     nothing about the test's resolution; this one measures it.
+                     Added by D27, after it passed 14 probes out of 16.
 """
 
 from __future__ import annotations
@@ -107,4 +111,28 @@ class window_close:  # noqa: N801
         return _common.run(panel, _peek_at_close, cells=cells, horizon_bars=horizon_bars)
 
 
-TAINTED = (forward_return, full_sample_zscore, window_close)
+# -- 4. lire une seule barre de trop (D27) --------------------------------------
+
+def _next_bar(closes: pd.Series, position: int) -> float | None:
+    ahead = position + 1
+    if ahead >= len(closes):
+        return None
+    opening = float(closes.iloc[0])
+    if opening <= 0:
+        return None
+    return float(closes.iloc[ahead]) / opening - 1.0
+
+
+class next_bar:  # noqa: N801
+    SIGNAL_ID = "tainted-next-bar"
+    HYPOTHESIS = None
+    PAPER = "aucun. Ce signal triche, et c'est son seul emploi."
+    EXPECTED_SIGN = +1
+    __file__ = __file__
+
+    @staticmethod
+    def scores(panel: Panel, cells=None, horizon_bars: int = HORIZON_BARS):
+        return _common.run(panel, _next_bar, cells=cells, horizon_bars=horizon_bars)
+
+
+TAINTED = (forward_return, full_sample_zscore, window_close, next_bar)

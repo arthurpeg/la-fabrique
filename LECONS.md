@@ -837,3 +837,27 @@ d'information qu'un protocole déclare, se demander *ce que le mécanisme d'exé
 ajoute de lui-même*, et l'écrire — un fichier d'instructions de projet, une
 variable d'environnement, un cache partagé se glissent sous la porte sans que
 personne n'ait désobéi.
+
+---
+
+## L27 — Un test calibré sur des fraudes grossières ne dit rien de sa résolution
+
+Le 2026-09-26, en revue du dépôt. Le test de causalité (`sandbox/causality.py`,
+`D07`) tronquait le panel « une minute après » la barre scorée. Or une barre est
+horodatée à son **ouverture** (`ts_event` Databento ; vérifié sur `CL` : dernière
+barre 16:59 avant l'arrêt quotidien, première 18:00). Le panel tronqué gardait
+donc la barre `t+1`, et **un signal lisant une seule barre de futur passait 14
+sondes sur 16** — attrapé seulement là où la cotation avait un trou.
+
+Les trois tricheurs de la porte 05 lisaient tous **loin** (30 barres, la clôture
+de fenêtre, la cellule entière) : ils prouvaient que le test attrape une fraude,
+pas **à quelle distance** il cesse de la voir. Et c'est l'erreur d'un décalage
+d'une barre — la plus probable chez un codeur automatique — qu'il laissait
+passer, avec une corrélation parasite de l'ordre de 0,18 à 30 barres, dix fois
+la cible de `D01`.
+
+**La règle.** Un test qui doit attraper une faute se calibre aussi sur la **plus
+petite** faute qu'il doit voir, et l'exige attrapée **partout**, pas une fois :
+un seul succès peut venir d'un accident des données. Et toute frontière
+temporelle se vérifie contre la **convention d'horodatage** mesurée, jamais
+contre l'intuition que « `t` » désigne la fin de la barre. Corrigé par `D27`.
