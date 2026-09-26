@@ -23,6 +23,22 @@ changerait le texte périmerait les `quoted_source` ; `--check` le rend bruyant.
     python corpus/extract_text.py --check    # ne produit rien, dit ce qui a bouge
 
 Code de sortie 1 si `--check` trouve une divergence, ou si une extraction echoue.
+
+**Le manifeste couvre plus de papiers que n'en porte un poste donne.** Les PDF
+sont hors depot (`corpus/pdf/` est ignore par git) : un poste peut n'en avoir
+qu'une partie. Deux regles en decoulent (2026-09-26) :
+
+- `--check` part du MANIFESTE, pas du disque. Il dit combien d'entrees il a
+  reellement verifiees et NOMME celles qu'il n'a pas pu verifier faute de PDF.
+  Auparavant il annoncait « conforme, 34 fichiers » quand le manifeste en
+  portait 104 : les 70 autres n'etaient verifies nulle part, et rien ne le
+  disait (`L21`) ;
+- sans `--check`, une entree dont le PDF est absent est CONSERVEE telle quelle.
+  Auparavant le manifeste etait reecrit a partir du seul disque, et un passage
+  sur un poste incomplet effacait en silence les entrees des papiers absents.
+  Si la version de `pypdf` a change, l'ecriture est refusee tant que des
+  entrees ne peuvent pas etre reproduites ici : le manifeste melangerait deux
+  versions, ce que `D19` interdit.
 """
 
 from __future__ import annotations
@@ -117,30 +133,55 @@ def main() -> int:
             dest.write_text(text, encoding="utf-8")
             written += 1
 
-    manifest = {"decision": "D18", "pypdf": pypdf.__version__,
-                "modes": sorted(MODES), "files": entries}
+    # Les entrees du manifeste dont le PDF n'est pas sur ce poste : ni verifiables
+    # ni reproductibles ici, mais JAMAIS effacees pour autant.
+    present = {e["pdf"] for e in entries}
+    kept = [e for e in old.get("files", []) if e["pdf"] not in present]
+    absent_pdfs = sorted({e["pdf"] for e in kept})
+    version_changed = bool(old.get("pypdf")) and old["pypdf"] != pypdf.__version__
 
     if args.check:
-        missing = [e["path"] for e in entries if not (REPO / e["path"]).is_file()]
+        missing = [e["path"] for e in entries + kept if not (REPO / e["path"]).is_file()]
         if changed:
             print("LE TEXTE A CHANGE — les `quoted_source` reposent dessus (D18) :")
             for rel, was, now in changed:
                 print(f"  {rel}  {was} -> {now}")
         if missing:
             print(f"{len(missing)} fichier(s) texte absent(s), dont {missing[0]}")
-        if old.get("pypdf") and old["pypdf"] != pypdf.__version__:
+        if version_changed:
             print(f"pypdf {old['pypdf']} -> {pypdf.__version__} : montee de version")
-        if not changed and not missing and old.get("pypdf") == pypdf.__version__:
-            print(f"texte conforme au manifeste — {len(entries)} fichiers, "
-                  f"pypdf {pypdf.__version__}")
+        if absent_pdfs:
+            print(f"{len(kept)} entree(s) du manifeste NON VERIFIABLE(S) sur ce poste — "
+                  f"le PDF de {len(absent_pdfs)} papier(s) est absent de corpus/pdf/ :")
+            for pdf in absent_pdfs:
+                print(f"  {pdf}")
+            print("  Le texte versionne de ces papiers fait foi, mais son accord avec son "
+                  "PDF n'a PAS ete rejoue ici.")
+        if not changed and not missing and not version_changed:
+            print(f"texte conforme au manifeste — {len(entries)} fichier(s) verifie(s) "
+                  f"sur {len(entries) + len(kept)}, pypdf {pypdf.__version__}")
             return 0
         return 1
 
+    if version_changed and kept:
+        print(f"REFUS D'ECRIRE LE MANIFESTE : pypdf {old['pypdf']} -> {pypdf.__version__}, "
+              f"et {len(kept)} entree(s) ne peuvent pas etre reproduites ici (PDF absents).")
+        print("Le manifeste melangerait deux versions de pypdf (D19). Reunir tous les PDF, "
+              "puis relancer avec --force.")
+        return 1
+
+    order = list(MODES)
+    files = sorted(entries + kept, key=lambda e: (e["pdf"], order.index(e["mode"])))
+    manifest = {"decision": "D18", "pypdf": pypdf.__version__,
+                "modes": sorted(MODES), "files": files}
     MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
                         encoding="utf-8")
     total = sum(e["chars"] for e in entries)
     print(f"{len(pdfs)} PDF x {len(MODES)} modes = {len(entries)} fichiers, "
           f"{written} ecrit(s), {total/1e6:.2f} Mo, pypdf {pypdf.__version__}")
+    if kept:
+        print(f"{len(kept)} entree(s) du manifeste CONSERVEE(S) telles quelles : "
+              f"PDF absent de ce poste pour {len(absent_pdfs)} papier(s).")
     if changed:
         print("ATTENTION — le texte de ces fichiers a CHANGE depuis le manifeste :")
         for rel, was, now in changed:

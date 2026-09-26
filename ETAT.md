@@ -11,6 +11,9 @@ Les 11 fiches moissonnées sans trace de production ont été **refaites** par 1
 sessions isolées : 18 fiches sur 18 tracées, 17 vertes sur ce poste.
 `value_in_quote` n'ôte plus que les séparateurs de milliers (`D09` § Journal,
 `L28`) : tout est rejoué vert.
+`extract_text.py` part désormais du manifeste : `--check` dit combien il a
+vérifié et nomme ce qu'il n'a pas pu vérifier ; l'écriture ne supprime plus les
+entrées des PDF absents.
 **Le reste de ce fichier n'a pas été relu à cette date** et retarde sur le dépôt
 (voir § Revue du 2026-09-26, en fin de § Prochaine action).
 **Dernière porte franchie :** **08**, le 2026-09-23 — `scripts/gate_08.py`. Un
@@ -381,10 +384,18 @@ sont ouverts, du plus grave au moins grave :
    `AMORCE` sur 17, 17 moissonnées sur 18. `L28` : le faux refus avait déjà
    poussé un extracteur vers la soupape `spelled_out`. **Reste ouvert** : le
    signe moins typographique `−` (U+2212), non lu comme signe par `NUMBER`.
-6. **`extract_text.py --check` ne vérifie que les PDF présents sur le poste** :
-   « conforme, 34 fichiers » quand le manifeste en porte 104. Et
-   `extract_text.py` sans `--check` réécrirait le manifeste à 34 entrées, en
-   perdant les 70 textes moissonnés sans rien dire.
+6. ~~`extract_text.py --check` ne vérifiait que les PDF présents.~~ **Corrigé
+   le 2026-09-26.** `--check` part du manifeste et nomme les entrées non
+   vérifiables faute de PDF ; sans `--check`, ces entrées sont conservées telles
+   quelles, et l'écriture est refusée si `pypdf` a changé alors que des entrées
+   ne peuvent pas être reproduites (`D19`). Testé dans une copie isolée : 2 PDF
+   sur 52, manifeste réécrit **identique au contenu** (100 entrées conservées) ;
+   version changée → refus. Sur ce poste : **100 fichiers vérifiés sur 104**,
+   non vérifiables `bitcoin-is-not-the-new-gold` (PDF local qui n'est pas le
+   bon, point 4) et `gao-2018-market-intraday-momentum` (entrée 1, devenue
+   inatteignable, `F53` — son texte versionné est celui du doublon APAC, `L20`).
+   Au passage, les 34 PDF moissonnés copiés dans `corpus/pdf/` rendent
+   exactement le texte du manifeste.
 7. **Le piège `ruff format`** n'est toujours pas désamorcé dans
    `pyproject.toml` (exclure `harness/`).
 8. **Ce fichier retarde sur le dépôt** : point 9 de § Donc, dans l'ordre (le
