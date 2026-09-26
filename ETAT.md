@@ -396,8 +396,14 @@ sont ouverts, du plus grave au moins grave :
    inatteignable, `F53` — son texte versionné est celui du doublon APAC, `L20`).
    Au passage, les 34 PDF moissonnés copiés dans `corpus/pdf/` rendent
    exactement le texte du manifeste.
-7. **Le piège `ruff format`** n'est toujours pas désamorcé dans
-   `pyproject.toml` (exclure `harness/`).
+7. ~~Le piège `ruff format`.~~ **Désamorcé le 2026-09-26** dans
+   `pyproject.toml` : `[tool.ruff.format] exclude = ["harness/**"]` et
+   `force-exclude = true`, pour qu'un chemin nommé explicitement soit exclu lui
+   aussi. Vérifié en lançant le formateur pour de bon sur une copie : `harness/`
+   intact, empreinte `9ac3e45e` inchangée ; `ruff check` lit toujours le
+   harnais. **`ruff check --fix` n'est pas couvert** : il ne toucherait rien
+   aujourd'hui (le harnais passe le lint), mais une règle ajoutée demain le
+   pourrait.
 8. **Ce fichier retarde sur le dépôt** : point 9 de § Donc, dans l'ordre (le
    correctif de `signal_construction` est fait depuis le 2026-09-25), « 6 fiches
    sur 35 », « 36 fichiers » de texte (`--check` en compte 34), les fuites de
@@ -508,7 +514,7 @@ registre **entier**, les 56 tests antérieurs compris.
 |---|---|
 | **Frais par contrat** — `null` sur les dix, **encadrés par `D26`** (relevé CME à refaire après le 2026-10-01 ; l'intégration au harnais, avec `slippage_bp`, sera UNE décision qui périme les 56 tests une seule fois). *Multiplicateurs : déposés le 2026-09-24 pour les neuf CME, avec provenance `D09` ; FDAX reste `null` (unité en EUR, hors univers)* | tant que les frais le sont, `harness/costs.py` ne rend qu'un **plancher étiqueté**, donc tout IC net est un **majorant de performance**. La phase 09 produit justement des IC |
 | **`slippage_bp` à déclarer** | même famille |
-| **`ruff format harness/`** reformaterait 4 fichiers | le harnais est **figé et versionné** ; le reformater changerait son empreinte et **périmerait les 56 tests comptés**. Ne pas lancer |
+| ~~**`ruff format harness/`** reformaterait 4 fichiers~~ | **désamorcé le 2026-09-26** (`pyproject.toml`, exclusion du formateur + `force-exclude`). Reste vrai pour `ruff check --fix` |
 | **`scripts/gate_06_controls.py` ÉCRIT au registre** | une ligne de calibration par passage. Légitime (`counted_tests` ne bouge pas) mais **pas gratuit** — le passer dans une revue de gardes coûte une ligne irremplaçable. **Correction du 2026-09-24 : `gate_03_harness.py` (3 lignes de calibration) et `gate_04_registry.py` (1 ligne, `porte-04-chemin-legitime`) écrivent AUSSI** — relancés ce jour sur la foi de la phrase précédente, ils ont ajouté 4 lignes non comptées (`counted_tests` reste 56). Voir `L25` |
 | **Le texte qui fait foi pour le HTML** | `D24` § Ce qui reste ouvert. Si `D18` s'étend au HTML, l'entrée 9 redevient fichable, `G1` repasse à 1, et la porte 07 est réputée non franchie |
 

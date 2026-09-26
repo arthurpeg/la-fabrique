@@ -20,6 +20,15 @@ dev = ["ruff>=0.14"]
 [tool.ruff]
 line-length = 100
 target-version = "py313"
+# Les exclusions valent aussi pour un chemin nommé explicitement
+# (`ruff format harness/metric.py`), pas seulement pour un parcours de dossier.
+force-exclude = true
+
+[tool.ruff.format]
+# Le harnais est figé : son empreinte (`harness/registry.py`, `code_hash`) porte
+# sur le contenu, et le reformater périmerait tous les tests comptés. Le
+# formateur n'y entre jamais ; `ruff check` continue de le lire.
+exclude = ["harness/**"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
