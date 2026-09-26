@@ -3,6 +3,8 @@
 **Phase courante :** 09 — premier passage complet sur 30 à 50 papiers
 **Date de dernière mise à jour :** 2026-09-26 — `D27` : le test de causalité
 tronquait une barre trop tard ; corrigé, portes 05 et 08 rejouées et franchies.
+`D28` : la porte 09 refuse toute ligne du registre qui touche le lot hors de sa
+mesure officielle (calibrations comprises).
 **Le reste de ce fichier n'a pas été relu à cette date** et retarde sur le dépôt
 (voir § Revue du 2026-09-26, en fin de § Prochaine action).
 **Dernière porte franchie :** **08**, le 2026-09-23 — `scripts/gate_08.py`. Un
@@ -52,6 +54,15 @@ puis mesurée — la forme en U de la volatilité intra-journalière est retrouv
 reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
 **Décision la plus récente :**
+`decisions/DECISION-28-aucune-ligne-hors-protocole.md` — une mesure faite en
+calibration (`hypothesis_ref` nul) échappait au décompte **et** à la porte 09 :
+on pouvait regarder un signal avant de le déclarer au lot. `gate_09.py` refuse
+désormais toute ligne qui touche un signal ou une `ref` du lot sans en être la
+mesure officielle. **Conséquence : un signal déjà mesuré ne peut plus entrer
+dans le lot** (`H01`, `H02` exclus). Le trou d'`extra` dans `registry.settle()`
+reste ouvert, à fermer **dans la même décision** que l'intégration des frais
+(`D26`), pour ne périmer les 56 tests qu'une fois.
+**Décision précédente :**
 `decisions/DECISION-27-l-instant-de-troncature.md` — le test de causalité
 tronque **à la barre scorée**, plus une minute après : les barres sont
 horodatées à leur ouverture, et `t + 1 min` laissait passer un signal lisant
@@ -316,7 +327,8 @@ Une revue complète du dépôt (gardes relancés en lecture seule, registre 169 
 sont ouverts, du plus grave au moins grave :
 
 1. ~~Le test de causalité laissait passer une barre de futur.~~ **Corrigé, `D27`.**
-2. **Des tests peuvent échapper au dénominateur.** Une mesure avec
+2. ~~Des tests peuvent échapper au dénominateur.~~ **Corrigé côté porte 09,
+   `D28`** ; le trou d'`extra` dans le harnais reste ouvert (voir `D28`). Une mesure avec
    `hypothesis_ref=None` compte comme calibration : `counted_tests()` l'ignore et
    `gate_09.py` ne cherche que les lignes portant la `ref` d'une hypothèse. À
    fermer dans `gate_09` : refuser tout signal du lot ayant une autre ligne au
@@ -431,7 +443,9 @@ registre **entier**, les 56 tests antérieurs compris.
    ailleurs), que chaque hypothèse n'a pas son fichier dans `hypotheses/`, que
    la matrice de corrélation n'existe pas ou ne couvre pas exactement les
    signaux du lot, ou qu'une hypothèse n'a pas exactement une mesure au
-   registre sous le harnais courant. **12 vérifications** (`--check`), vert —
+   registre sous le harnais courant — et, depuis `D28`, qu'une autre ligne du
+   registre touche le lot. **12 vérifications** à l'écriture, **19 depuis
+   `D28`** (`--check`), vert —
    elles relisent le tableau de seuils de `D25` à l'envers (`t`=2,88 → `p`
    ≤0,0020, etc.) et vérifient le pas de `BH` lui-même. Lancé sans lot, il
    répond correctement NON FRANCHIE : c'est l'état attendu, pas une panne.

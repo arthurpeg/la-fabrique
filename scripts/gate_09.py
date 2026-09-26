@@ -49,6 +49,14 @@ première faute (D25 § Ce que ça verrouille) :**
    `09-passage`, `code_hash` = celui du harnais **courant** (une ligne
    périmée « ne se compare pas », `registry/SCHEMA.md`) — une hypothèse
    absente ou dupliquée refuse le verdict, elle ne se devine pas.
+5. **aucune autre ligne du registre ne touche le lot** (`D28`) — ni une
+   calibration (`hypothesis_ref` nul) portant le `signal_id` d'un signal du
+   lot, ni une mesure d'une `ref` du lot sous un autre `stage` ou un autre
+   harnais, qu'elle soit antérieure ou postérieure à la clôture. Une
+   calibration n'entre pas dans `counted_tests()` : mesurer un signal « pour
+   calibrer » avant sa mesure officielle serait un regard gratuit sur le
+   résultat, invisible au dénominateur. Un signal déjà mesuré ne peut donc pas
+   entrer dans un lot — il n'y serait plus à l'aveugle.
 
 Alors seulement : `p` unilatéral au signe pré-enregistré (`EXPECTED_SIGN`,
 `D07`), `BH` à `q` = 0,10 sur les `m` `p`-values du lot.
@@ -125,6 +133,44 @@ def benjamini_hochberg(pvalues: dict[str, float], q: float) -> list[str]:
     return [k for k, _ in items[:seuil_max]]
 
 
+def est_officielle(r: dict, entry: dict, hash_courant: str) -> bool:
+    """La ligne est-elle LA mesure prévue de cette hypothèse du lot ?"""
+    return (
+        r.get("hypothesis_ref") == entry.get("ref")
+        and r.get("signal_id") == entry.get("signal_id")
+        and r.get("stage") == STAGE
+        and r.get("code_hash") == hash_courant
+    )
+
+
+def lignes_hors_protocole(
+    entries: list[dict], registre: list[dict], hash_courant: str
+) -> list[dict]:
+    """Les lignes du registre qui touchent le lot sans en être la mesure officielle (`D28`).
+
+    Une ligne TOUCHE le lot si elle porte le `signal_id` d'un de ses signaux ou
+    la `ref` d'une de ses hypothèses — calibrations comprises, puisque c'est
+    précisément par elles qu'un regard échapperait à `counted_tests()`. Elle est
+    officielle si elle est la mesure `09-passage`, sous le harnais courant, d'une
+    entrée du lot, `ref` et `signal_id` concordants. Tout le reste est rendu :
+    une liste vide est la seule réponse acceptable.
+
+    Ce que ça ne voit pas : une ligne dont `signal_id` ET `hypothesis_ref`
+    auraient été écrasés par l'argument `extra` de `registry.settle()`. Ce trou
+    est dans le harnais figé ; `D28` § Ce qui reste ouvert.
+    """
+    signal_ids = {e.get("signal_id") for e in entries}
+    refs = {e.get("ref") for e in entries}
+    hors = []
+    for r in registre:
+        touche = r.get("signal_id") in signal_ids or (
+            r.get("hypothesis_ref") is not None and r.get("hypothesis_ref") in refs
+        )
+        if touche and not any(est_officielle(r, e, hash_courant) for e in entries):
+            hors.append(r)
+    return hors
+
+
 def importer_par_signal_id(signal_id: str):
     for chemin in sorted(SIGNALS_DIR.glob("*.py")):
         if chemin.name in ("_common.py", "__init__.py"):
@@ -193,6 +239,36 @@ def run_check() -> int:
         "lot de p-values vide -> aucune découverte, pas d'exception",
         benjamini_hochberg({}, 0.10) == [],
     )
+
+    # D28 : aucune ligne ne touche le lot hors de sa mesure officielle. Registre
+    # fabriqué, jamais le vrai.
+    h = "0123456789abcdef"
+    lot = [{"ref": "H05", "signal_id": "sig-a"}, {"ref": "H06", "signal_id": "sig-b"}]
+
+    def ligne(signal_id, ref, stage=STAGE, code_hash=h):
+        return {"signal_id": signal_id, "hypothesis_ref": ref, "stage": stage,
+                "code_hash": code_hash}
+
+    propre = [ligne("sig-a", "H05"), ligne("sig-b", "H06"),
+              ligne("calibration-bruit", None), ligne("autre", "H01")]
+    verifier("D28 : un registre où le lot n'a que ses mesures officielles passe",
+             lignes_hors_protocole(lot, propre, h) == [])
+    cas = {
+        "une calibration (ref nulle) d'un signal du lot": ligne("sig-a", None, "04-rapport-ic"),
+        "une mesure antérieure d'une ref du lot, autre stage":
+            ligne("sig-a", "H05", "04-rapport-ic"),
+        "une mesure d'une ref du lot sous un harnais périmé":
+            ligne("sig-b", "H06", code_hash="f" * 16),
+        "une ref du lot mesurée sous un autre signal_id": ligne("sig-z", "H05"),
+        "un signal du lot mesuré sous une ref hors lot": ligne("sig-b", "H99"),
+    }
+    for nom, intrus in cas.items():
+        verifier(f"D28 : refuse {nom}",
+                 lignes_hors_protocole(lot, propre + [intrus], h) == [intrus])
+    # Une mesure officielle en double n'est pas « hors protocole » : elle est
+    # officielle deux fois, et c'est la vérification 4 qui la refuse.
+    verifier("D28 : un doublon officiel est laissé à la vérification 4",
+             lignes_hors_protocole(lot, propre + [ligne("sig-a", "H05")], h) == [])
 
     for nom, ok in verifs:
         print(f"  {'OK' if ok else 'ECHEC'}  {nom}")
@@ -323,6 +399,14 @@ def main(argv: list[str]) -> int:
         p = one_sided_p(t, signe)
         pvalues[ref] = p
         diagnostics.append((ref, signal_id, t, signe, p))
+
+    for r in lignes_hors_protocole(entries, registre, hash_courant):
+        fautes.append(
+            f"{r.get('test_id', '?')} : ligne hors protocole sur le lot — signal "
+            f"{r.get('signal_id')!r}, ref {r.get('hypothesis_ref')!r}, stage "
+            f"{r.get('stage')!r}, harnais {r.get('code_hash')!r}. Un signal du lot "
+            "ne se mesure qu'une fois, sous sa ref, au stage 09-passage (D28)"
+        )
 
     if fautes:
         print("PORTE 09 : NON FRANCHIE")
