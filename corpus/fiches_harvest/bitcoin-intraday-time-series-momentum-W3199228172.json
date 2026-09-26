@@ -1,262 +1,327 @@
 {
   "fiche_id": "bitcoin-intraday-time-series-momentum-W3199228172",
-  "written": "2026-09-24",
-  "written_by": "session-extraction-harvest-2026-09-24",
-  "claim": "Sur Bitcoin, le rendement de la premiere demi-heure de seance — mesure de la cloture de la veille (17:00 EST) jusqu'a 30 minutes apres l'ouverture, cette derniere etant definie par le pic de volume de chaque place — predit POSITIVEMENT le rendement de la derniere demi-heure (16:30-17:00 EST) du meme jour, en echantillon comme hors echantillon. L'effet est concentre sur les jours ou la premiere demi-heure a le plus fort volume ou la plus forte volatilite, et sur les jours ou le rendement d'ouverture est positif. Le rendement de l'avant-derniere demi-heure predit lui NEGATIVEMENT (anti-persistance), et les deux signaux sont complementaires. Les auteurs attribuent le phenomene a la fourniture de liquidite par les intraday traders (effet de disposition + aversion au risque overnight) et rejettent l'hypothese des investisseurs informes tardivement.",
-  "universe": "Bitcoin au comptant, paire BTC/USD, sur cinq places : Bitfinex (2013-04-02 au 2020-12-31), Bitstamp (2013-01-01), CEX.IO (2014-07-20), Coinbase (2014-12-03), Kraken (2014-01-09), toutes jusqu'au 2020-12-31. Donnees tick de www.bitcoincharts.com agregees au pas d'une minute ; regressions poolees sur les cinq places. Extensions : BTC/JPY (bitFlyer, BtcBox, Zaif) et BTC/KRW (Korbit), avec ouverture au pic de volume local et cloture a la fermeture du marche actions local.",
-  "horizon": {
-    "value": "Intraday, sans detention overnight : le predicteur est connu 30 minutes apres l'ouverture, la position est prise au debut de la derniere demi-heure et fermee a la cloture de la seance le meme jour.",
-    "quoted": "the last half-hour return is the return between 4:30pm to 5pm."
-  },
-  "signal_construction": {
-    "value": "score = r_ONFH,t = p_{o+30,t} / p_{c,t-1} - 1, c'est-a-dire le rendement entre la cloture de la veille (17:00 EST) et le prix 30 minutes apres l'ouverture du jour t, l'ouverture etant l'heure de pic de volume propre a chaque place (9:00 a 9:40 EST selon la place, Table 1). Predicteur auxiliaire : r_SLH,t = p_{c-30,t} / p_{c-60,t} - 1 (avant-derniere demi-heure), dont le coefficient est negatif. Regression poolee r_LH,t = alpha + beta_ONFH * r_ONFH,t + beta_SLH * r_SLH,t + eps_t. Regle de trading : long sur la derniere demi-heure si r_ONFH > 0, short sinon, position fermee a la cloture ; variante combinee : long si r_ONFH > 0 et r_SLH < 0, short si r_ONFH <= 0 et r_SLH >= 0, hors marche sinon.",
-    "quoted": "the first half-hour return using the previous day’s (t-1) close price (c) and the price of 30 minutes"
-  },
-  "reported_results": [
-    {
-      "name": "in_sample_beta_onfh",
-      "value": 0.968,
-      "unit": "coefficient de pente (rendements annualises)",
-      "quoted": "with a slope of 0.968.",
-      "note": "Regression poolee sur les cinq places, r_LH sur r_ONFH seul (Table 3, colonne 1)."
-    },
-    {
-      "name": "in_sample_newey_west_t_onfh",
-      "value": 4.38,
-      "unit": "t-statistique",
-      "quoted": "The Newey West t -statistic is 4.38",
-      "note": "t de Newey-West (1987) associe au beta_ONFH de 0.968 ; significatif a 1%."
-    },
-    {
-      "name": "in_sample_r2_onfh_pct",
-      "value": 1.44,
-      "unit": "%",
-      "quoted": "The R2 is 1.44%, which is much higher than found in the previous literature",
-      "note": "R2 de la regression poolee avec le seul r_ONFH."
-    },
-    {
-      "name": "in_sample_r2_onfh_and_slh_pct",
-      "value": 2.12,
-      "unit": "%",
-      "quoted": "The R2 of 2.12% is very high and larger than the individual R2s suggesting that the",
-      "note": "Regression avec les deux predicteurs. ATTENTION : le texte annonce 2.12% alors que la Table 3 affiche 2.32% pour la meme colonne — contradiction interne du papier, non resolue ici."
-    },
-    {
-      "name": "out_of_sample_r2_onfh_pct",
-      "value": 1.09,
-      "unit": "%",
-      "quoted": "2  is 1.09%. When we use the",
-      "note": "R2 hors echantillon (equation 6), predicteur r_ONFH seul. La citation commence par le '2' de l'exposant de R_OOS^2, que l'extraction du PDF rejette sur la ligne suivante ; c'est la chaine telle qu'elle figure dans le texte."
-    },
-    {
-      "name": "out_of_sample_r2_onfh_and_slh_pct",
-      "value": 1.61,
-      "unit": "%",
-      "quoted": "1.61%. This is much higher than Bond, Commodity and Currency futures contracts",
-      "note": "R2 hors echantillon avec les deux predicteurs. La Table 3 affiche 1.81% pour cette meme case — seconde contradiction texte/tableau."
-    },
-    {
-      "name": "r2_high_volume_days_pct",
-      "value": 3.86,
-      "unit": "%",
-      "quoted": "The R 2 is 3.86% for high volume days suggesting strong forecasting power",
-      "note": "Tercile haut de volume de la premiere demi-heure, terciles formes annee par annee (Table 4). beta_ONFH = 2.013, t = 4.74."
-    },
-    {
-      "name": "r2_low_volume_days_pct",
-      "value": 1.09,
-      "unit": "%",
-      "quoted": "the R2 is 1.09% for low volume days.",
-      "note": "Tercile bas de volume : le coefficient sur r_ONFH y est insignifiant (0.430, t = 1.30), l'essentiel du R2 venant du terme r_SLH."
-    },
-    {
-      "name": "r2_high_volatility_days_pct",
-      "value": 2.83,
-      "unit": "%",
-      "quoted": "the first half hour coefficient is statistical significance at the 1% level and the R2 is 2.83%.",
-      "note": "Tercile haut de volatilite de la premiere demi-heure, estimee sur donnees a la minute ; aucun effet significatif sur les terciles moyen et bas."
-    },
-    {
-      "name": "timing_onfh_annual_return_pct",
-      "value": 7.82,
-      "unit": "% par an",
-      "quoted": "average return is 7.82% on an annual basis",
-      "note": "Strategie eta(r_ONFH) : long la derniere demi-heure si r_ONFH > 0, short sinon. Brut de frais. Table 5 : 7.817%, ecart-type 11.976%, Sharpe 0.653, taux de succes 51.598%."
-    },
-    {
-      "name": "timing_slh_annual_return_pct",
-      "value": 17.32,
-      "unit": "% par an",
-      "quoted": "returns 17.32% while combining the two signals provides a return of 16.69%",
-      "note": "Strategie eta(r_SLH), fondee sur l'anti-persistance de l'avant-derniere demi-heure : elle bat le signal de momentum intraday lui-meme. Brut de frais."
-    },
-    {
-      "name": "timing_combined_annual_return_pct",
-      "value": 16.69,
-      "unit": "% par an",
-      "quoted": "returns 17.32% while combining the two signals provides a return of 16.69%",
-      "note": "Strategie eta(r_ONFH, r_SLH), hors marche quand les deux signaux se contredisent — donc seulement 1465 jours de position sur 3375."
-    },
-    {
-      "name": "always_long_benchmark_annual_return_pct",
-      "value": 6.54,
-      "unit": "% par an",
-      "quoted": "6.54% per annum.  Conversely the buy -and-hold benchmark return a substantial 154.62% per",
-      "note": "Reference 'always long' : etre long chaque jour pendant la seule derniere demi-heure."
-    },
-    {
-      "name": "buy_and_hold_annual_return_pct",
-      "value": 154.62,
-      "unit": "% par an",
-      "quoted": "6.54% per annum.  Conversely the buy -and-hold benchmark return a substantial 154.62% per",
-      "note": "Achat-conservation de Bitcoin sur 2013-2020 ; Sharpe 1.520, inferieur a celui de deux des trois strategies de timing. Chiffre domine par 2013 (+5308.965%) et 2017 (+1322.570%)."
-    },
-    {
-      "name": "breakeven_cost_onfh_full_sample_bps",
-      "value": 3,
-      "unit": "bps",
-      "quoted": "are 3, 7 and 10 bps respectively, indicating that all of these three strategies are",
-      "note": "Couts d'equilibre sans levier, plein echantillon, pour eta(r_ONFH), eta(r_SLH) et eta(r_ONFH, r_SLH) : 3, 7 et 10 bps. Les auteurs concluent eux-memes que les trois strategies ne sont PAS rentables sans levier."
-    },
-    {
-      "name": "bitstamp_trading_fee_bps",
-      "value": 25,
-      "unit": "bps",
-      "quoted": "the trading fee of Bitstamp is 25bps",
-      "note": "Frais de reference retenus par les auteurs, tres superieurs aux couts d'equilibre sans levier. Lintilhac et Tourin (2017) suggerent par ailleurs 50 bps."
-    },
-    {
-      "name": "breakeven_cost_onfh_leverage_10_bps",
-      "value": 29,
-      "unit": "bps",
-      "quoted": "in the full sample period are 29, 64 and 96",
-      "note": "Couts d'equilibre avec levier 10:1 pour les trois strategies : 29, 64 et 96 bps, soit 0.28%, 0.61% et 0.96% par trade. Toute la rentabilite apres frais repose donc sur le levier."
-    },
-    {
-      "name": "cer_onfh_annual_pct",
-      "value": 5.95,
-      "unit": "% par an",
-      "quoted": "5.95% per annum, indicating the sizable economic gains",
-      "note": "Gain d'equivalent-certain d'un investisseur moyenne-variance (aversion gamma = 5, poids borne entre -0.5 et 1.5) utilisant r_ONFH, contre la moyenne historique."
-    },
-    {
-      "name": "utility_combined_avg_return_pct",
-      "value": 13.95,
-      "unit": "% par an",
-      "quoted": "with an average return of 13.95% per annum, a Sharpe ratio of 1.15, and a CER of 8.09%",
-      "note": "Portefeuille moyenne-variance utilisant les deux predicteurs. Table 6 : 13.951%, ecart-type 12.160%, skewness 18.386, kurtosis 611.192."
-    },
-    {
-      "name": "utility_combined_sharpe",
-      "value": 1.15,
-      "unit": "ratio de Sharpe annualise",
-      "quoted": "with an average return of 13.95% per annum, a Sharpe ratio of 1.15, and a CER of 8.09%",
-      "note": "A comparer au 0.53 du portefeuille fonde sur la moyenne historique des rendements."
-    },
-    {
-      "name": "cer_onfh_and_slh_annual_pct",
-      "value": 8.09,
-      "unit": "% par an",
-      "quoted": "with an average return of 13.95% per annum, a Sharpe ratio of 1.15, and a CER of 8.09%",
-      "note": "Gain d'equivalent-certain avec les deux predicteurs, brut de frais."
-    },
-    {
-      "name": "r2_conditional_positive_onfh_pct",
-      "value": 1.89,
-      "unit": "%",
-      "quoted": "1.89%, 2.78% and 3.19% respectively when the first half-hour return is positive",
-      "note": "Table 7 panel A, les trois specifications (r_ONFH seul, r_SLH seul, les deux). beta_ONFH = 1.950, t = 5.12."
-    },
-    {
-      "name": "r2_conditional_negative_onfh_pct",
-      "value": 0.11,
-      "unit": "%",
-      "quoted": "R2 is only 0.11%, 0.88% and 0.89% when the first half-hour return is negative.",
-      "note": "Table 7 panel B : beta_ONFH tombe a 0.050 avec t = 0.12, donc NON significatif — ce que le texte du papier contredit en affirmant que le coefficient est significatif dans chaque cas."
-    },
-    {
-      "name": "t_spread_x_onfh_interaction",
-      "value": 8.85,
-      "unit": "t-statistique",
-      "quoted": "is positively significant at the 1% level with t-statistics of 8.85 and 8.18 in the last",
-      "note": "Interaction entre le spread Corwin-Schultz de la premiere demi-heure et r_ONFH (Table 9 panel D, colonnes 4 et 5) ; une fois l'interaction incluse, beta_ONFH devient insignifiant (t = -1.47 et -1.18). C'est l'argument central en faveur de la fourniture de liquidite."
-    },
-    {
-      "name": "late_informed_hypothesis_rejected",
-      "value": null,
-      "quoted": "indicate that the predictive relation is not significant in days with more Bitcoin news",
-      "note": "Resultat qualitatif : l'interaction entre le nombre (en log) de nouvelles Bitcoin et r_ONFH est insignifiante (beta = -0.405 et -0.429, t = -1.17 et -1.24), ce qui conduit les auteurs a ecarter l'hypothese des investisseurs informes tardivement."
-    },
-    {
-      "name": "btc_jpy_newey_west_t_onfh",
-      "value": 2.38,
-      "unit": "t-statistique",
-      "quoted": "Newey West t-statistic of 2.38 and 2.50, indicating that the intraday momentum of BTC/JPY and",
-      "note": "Paires alternatives : BTC/JPY (t = 2.38) et BTC/KRW (t = 2.50), significatives a 5% seulement. Le R2 de BTC/JPY avec r_ONFH seul tombe a 0.10% et son R2 hors echantillon est NEGATIF (-1.40%, Table 11 panel B)."
-    },
-    {
-      "name": "alternative_window_10am_4pm_weaker",
-      "value": null,
-      "quoted": "Table 12 reports the results and shows that the first half hour does predict the last half hour, but",
-      "note": "Resultat qualitatif : en reprenant la fenetre 10:00-16:00 EST de Gao et al. (2018), la prediction subsiste mais s'affaiblit nettement (beta_ONFH = 0.372, t = 2.54 contre 0.968 et 4.38). Le choix de la fenetre est donc un degre de liberte qui pese sur le resultat."
-    },
-    {
-      "name": "exchange_market_share_pct",
-      "value": 91.66,
-      "unit": "%",
-      "quoted": "Coinbase, and Kraken account for more than 91.66% of total Bitcoin markets at the end of 2020.",
-      "note": "Justification du choix des cinq places retenues, part de marche fin 2020 selon bitcoinity."
-    },
-    {
-      "name": "mean_half_hour_return",
-      "value": 0.00008,
-      "unit": "rendement decimal par demi-heure",
-      "quoted": "The mean of all half hour buckets is 0.00008 and the mean trading volume is 178.6 BTC",
-      "note": "Moyenne de toutes les tranches de 30 minutes, toutes places confondues (Table 2). L'ecart-type correspondant est 0.00743."
-    },
-    {
-      "name": "mean_half_hour_volume_btc",
-      "value": 178.6,
-      "unit": "BTC par tranche de 30 minutes",
-      "quoted": "The mean of all half hour buckets is 0.00008 and the mean trading volume is 178.6 BTC",
-      "note": "Volume moyen par tranche, invoque par les auteurs comme preuve de liquidite du marche."
-    }
-  ],
-  "what_is_missing": [
-    "La definition operationnelle du 'pic de volume' qui fixe l'heure d'ouverture de chaque place n'est jamais donnee : seules les heures retenues figurent en Table 1 (9:05, 9:00, 9:00, 9:40, 9:15 EST). Rien ne dit si elles ont ete estimees sur l'echantillon entier, auquel cas le choix de fenetre est un look-ahead.",
-    "Aucun IC ni aucune correlation de rang : toute la mesure est en R2, t de Newey-West et rendements annualises de strategies long/short. Rien n'est directement comparable a la sortie de notre harnais.",
-    "Le nombre total de tests menes n'est nulle part compte ; aucune correction pour tests multiples, alors que le papier enchaine terciles de volume, terciles de volatilite, conditionnement au signe, trois paires de devises, une fenetre alternative et quatre niveaux de levier.",
-    "Le modele de couts est incomplet : les auteurs calculent des couts d'equilibre et citent 25 bps (Bitstamp) et 50 bps (Lintilhac et Tourin, 2017), sans modele de slippage, sans cout de financement du levier et sans cout de portage des positions a effet de levier.",
-    "Ni code ni donnees publies ; les donnees tick viennent de www.bitcoincharts.com, dont la disponibilite n'est pas garantie.",
-    "Deux contradictions internes entre le texte et les tableaux, non signalees par les auteurs : R2 combine 2.12% (texte) contre 2.32% (Table 3), et R2 hors echantillon combine 1.61% (texte) contre 1.81% (Table 3).",
-    "Le texte affirme que le coefficient de la premiere demi-heure est 'statistiquement significatif dans chaque cas' du conditionnement au signe, alors que la Table 7 panel B donne t = 0.12 pour les jours a rendement d'ouverture negatif.",
-    "Aucun test de stabilite hors de 2013-2020 : pas de holdout, pas de walk-forward, la prediction hors echantillon etant recursive sur la meme periode.",
-    "Aucune mesure de capacite : combien de capital la derniere demi-heure de ces places absorbe sans deplacer le prix n'est pas estime, alors que la Table 2 montre des volumes medians faibles sur CEX.IO et Kraken.",
-    "Les regressions sont poolees sur cinq places fortement correlees entre elles ; l'inflation de t-statistique qui en decoule n'est ni discutee ni corrigee au-dela de Newey-West."
-  ],
-  "transposability": {
-    "what_transfers": "Le motif, et seulement lui : un rendement d'ouverture — incluant la nuit — qui predit positivement le rendement de la derniere barre de la seance, et un rendement d'avant-derniere barre qui predit negativement. Le signal est causal par construction (r_ONFH est entierement connu plus de cinq heures avant la barre predite), donc codable chez nous sans acces au futur. Les deux conditionnements testes — volume et volatilite de la premiere barre, signe du rendement d'ouverture — se traduisent directement en regimes au sens de notre etape 05. Le papier cite d'ailleurs Baltussen et al. (2021), qui documentent le meme motif sur plus de 60 futures : c'est cette voie-la, pas Bitcoin, qui porte la transposition.",
-    "what_does_not_transfer": [
-      "L'actif. Bitcoin au comptant sur cinq places non reglementees, sans multiplicateur ni tick de contrat, avec des frais de 25 bps : nos neuf futures intraday ont une microstructure, des frais et un carnet sans rapport.",
-      "Le bricolage des heures de seance. Tout le papier repose sur le fait que Bitcoin n'a ni ouverture ni cloture, ce qui oblige les auteurs a fabriquer une ouverture par pic de volume et une cloture a 17:00 EST (pause de 60 minutes du future CME). Nos futures ont des heures de seance donnees par le calendrier de la place : la question que le papier resout n'existe pas chez nous, et la latitude qu'il s'octroie est un degre de liberte que nous n'avons pas a reprendre.",
-      "La metrique. Rendements annualises, R2, CER, ratio de Sharpe de strategies long/short a levier : rien de cela n'est un IC, et aucun chiffre du papier ne peut servir de cible de replication pour notre harnais. Le seul point de comparaison serait le signe et la stabilite du coefficient.",
-      "Le levier. Sans levier, les auteurs reconnaissent que les trois strategies ne sont pas rentables (couts d'equilibre de 3, 7 et 10 bps contre 25 bps de frais). La rentabilite affichee tient entierement au levier margin 2:1 a 10:1, qui n'est pas notre cadre.",
-      "La periode et le regime. 2013-2020, dominee par deux bulles (2013 : +5309% ; 2017 : +1323%) et par des annees ou Bitcoin perd plus de la moitie de sa valeur. Le recouvrement avec notre pool 2016-2023 est partiel, et les annees ou le signal brille (2014, 2015, 2018) sont precisement celles que notre pool couvre le moins.",
-      "L'explication mecanique. L'estimateur de spread Corwin-Schultz est retenu faute de carnet haute frequence sur les places crypto ; sur des futures, ou la fourchette est observable, ce detour n'a pas lieu d'etre, et la conclusion 'fourniture de liquidite' ne se transporte pas telle quelle.",
-      "Le canal d'information invoque. Les auteurs justifient leur fenetre par la publication du PIB et du CPI a 8:30 EST et par le fait que Bitcoin se negocie 24h/24 : ce raisonnement est propre a un actif qui ne ferme jamais.",
-      "Les extensions BTC/JPY et BTC/KRW, dont le R2 hors echantillon est negatif pour BTC/JPY : elles affaiblissent la generalisation plutot qu'elles ne l'etendent."
-    ],
-    "what_aligns_well": "L'horizon est intraday et sans detention overnight, exactement le cadre que nous visons. Le signal se calcule a partir de barres passees seules et se resout en une seule barre, donc il s'inscrit sans effort dans un Panel ouvert a une date. Surtout, le papier fait le travail de regime a notre place en publiant la decomposition par tercile de volume, par tercile de volatilite et par signe du rendement d'ouverture : c'est une hypothese de regime deja formulee, qu'il suffit de pre-enregistrer avant mesure. Enfin, l'anti-persistance de l'avant-derniere demi-heure est un second signal, orthogonal au premier et plus fort dans leurs chiffres, qui merite d'etre teste separement.",
-    "note": "Ce papier est une piste de motif, pas une cible de replication. Aucune de ses valeurs ne peut etre comparee a une sortie de notre harnais ; seul le signe attendu du coefficient et la direction des effets de regime sont reutilisables."
-  },
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-01",
   "source": {
-    "authors": "Shen, D., Urquhart, A. and Wang, P.",
+    "authors": "Shen, D., Urquhart, A., Wang, P.",
     "title": "Bitcoin intraday time-series momentum",
     "year": 2022,
     "source_url": "https://centaur.reading.ac.uk/100181/3/21Sep2021Bitcoin%20Intraday%20Time-Series%20Momentum.R2.pdf",
     "pdf": "corpus/pdf/bitcoin-intraday-time-series-momentum-W3199228172.pdf",
     "retrieved": "2026-09-22",
     "peer_reviewed": true,
-    "note": "Version acceptee (accepted version) deposee dans l'archive CentAUR de l'Universite de Reading. La version d'editeur est Financial Review, 57 (2), pp. 319-344, ISSN 1540-6288, doi 10.1111/fire.12290, Wiley. Les numeros de page et la mise en forme des tableaux peuvent differer de la version publiee."
+    "venue": "Financial Review, 57 (2). pp. 319-344 (version acceptée déposée sur CentAUR)"
+  },
+  "claim": "Sur le BTC/USD de cinq plateformes au comptant, le rendement « première demi-heure » (de la clôture conventionnelle de la veille à 17:00 EST jusqu'à 30 minutes après l'ouverture conventionnelle, fixée au pic de volume vers 9:00-9:40 EST) prédit positivement le rendement de la dernière demi-heure (16:30-17:00 EST) du même jour, en échantillon et hors échantillon ; l'avant-dernière demi-heure le prédit négativement (anti-persistance). L'effet est concentré sur les jours de fort volume ou de forte volatilité d'ouverture, plus fort après un rendement d'ouverture positif, porté surtout par la composante nocturne, et attribué par les auteurs à la fourniture de liquidité (interaction avec l'écart de Corwin-Schultz d'ouverture) plutôt qu'à des investisseurs informés tardivement.",
+  "universe": {
+    "value": "BTC/USD au comptant sur Bitfinex, Bitstamp, CEX.IO, Coinbase et Kraken, données tick de bitcoincharts agrégées en barres d'une minute, du début de chaque série (2013-2014) au 2020-12-31, en régression poolée entre plateformes. Robustesse : BTC/JPY (bitFlyer, BtcBox, Zaif) et BTC/KRW (Korbit) avec horaires locaux.",
+    "quoted": [
+      "we select BTC/USD t o examine intraday momentum effects",
+      "We use the trading of Bitfinex,",
+      "from the earliest date to 31st December 2020 in US dollars.",
+      "We then aggregate the tick level data up to the 1-",
+      "Bitfinex BTC/USD 2013-04-02 2020-12-31 18747.49 2827 9:05-17:00",
+      "Coinbase BTC/USD 2014-12-03 2020-12-31 11833.09 2188 9:40-17:00",
+      "We select BTC/JPY and BTC/KRW as the alternative trading"
+    ]
+  },
+  "horizon": {
+    "value": "Une demi-heure : la dernière demi-heure de la séance conventionnelle, 16:30-17:00 EST, position ouverte au début de cette demi-heure et fermée à 17:00 EST, une fois par jour.",
+    "quoted": [
+      "the last half-hour return is the return between 4:30pm to 5pm.",
+      "We take a long position in the market at the beginning of the last half hour if the timing",
+      "We close the position (long or short) at the market"
+    ]
+  },
+  "signal_construction": {
+    "value": "Séance conventionnelle par plateforme : ouverture = heure du pic de volume (9:00 à 9:40 EST selon la plateforme, Table 1), clôture = 17:00 EST (début de la pause de 60 minutes des futures Bitcoin CME). Prédicteur principal r_ONFH,t = p(ouverture+30min, t) / p(clôture 17:00, t-1) − 1 : il agrège la nuit (≈16 h) et la première demi-heure. Prédicteur secondaire r_SLH,t = p(clôture−30, t) / p(clôture−60, t) − 1 (16:00-16:30 EST). Cible r_LH,t = p(17:00, t) / p(16:30, t) − 1. Régression poolée r_LH = α + β_ONFH r_ONFH (+ β_SLH r_SLH), t de Newey-West ; R² hors échantillon par régression récursive contre la moyenne historique. Stratégie de timing : long sur la dernière demi-heure si r_ONFH > 0, short sinon ; version SLH : long si r_SLH < 0, short sinon ; version combinée : long si r_ONFH > 0 et r_SLH < 0, short si r_ONFH ≤ 0 et r_SLH ≥ 0, hors marché sinon. Variante allocation moyenne-variance, γ = 5, poids bornés entre −0,5 et 1,5.",
+    "quoted": [
+      "times of each exchange  when volumes spikes",
+      "The closing time is chosen as 5pm EST as CME",
+      "the first half-hour return using the previous day’s (t-1) close price (c) and the price of 30 minutes",
+      "our first half-hour return is from 5pm the previous day to volume",
+      "we use the first and second last half hours as timing signals to trade the market in the last half",
+      "We also examine the case where we use both the first half hour and the second last half hour as",
+      "aversion coefficient, which is set at 5 and we impose the portfolio constraint that the weight on"
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "beta_onfh_pooled_insample",
+      "value": 0.968,
+      "unit": "coefficient (rendements annualisés selon la légende de la Table 3)",
+      "quoted": "with a slope of 0.968."
+    },
+    {
+      "name": "tstat_onfh_pooled_insample_newey_west",
+      "value": 4.38,
+      "unit": "t-stat",
+      "quoted": "The Newey West t -statistic is 4.38"
+    },
+    {
+      "name": "r2_onfh_alone_insample_pct",
+      "value": 1.44,
+      "unit": "%",
+      "quoted": "The R2 is 1.44%, which is much higher than found in the previous literature"
+    },
+    {
+      "name": "r2_onfh_and_slh_insample_pct_text",
+      "value": 2.12,
+      "unit": "%",
+      "quoted": "The R2 of 2.12% is very high",
+      "note": "Le texte dit 2.12 % ; la Table 3 porte 2.32 % pour la même régression. Contradiction interne non résolue."
+    },
+    {
+      "name": "beta_slh_alone_insample",
+      "value": -9.778,
+      "unit": "coefficient",
+      "quoted": "β_SLH -9.778*** -9.720***",
+      "quoted_source": "𝛽𝑆𝐿𝐻  -9.778*** -9.720***",
+      "quoted_repair": "table",
+      "note": "Table 3, t de Newey-West −10.22 (SLH seul) et −10.17 (avec ONFH). Anti-persistance forte de l'avant-dernière demi-heure vers la dernière."
+    },
+    {
+      "name": "r2oos_onfh_alone_pct",
+      "value": 1.09,
+      "unit": "%",
+      "quoted": "the R²OOS is 1.09%. When we use the",
+      "quoted_source": "2  is 1.09%. When we use the",
+      "quoted_repair": "math_notation",
+      "note": "L'exposant et l'indice de R²_OOS sont perdus par l'extraction ; la ligne précédente porte « 𝑅𝑂𝑂𝑆 »."
+    },
+    {
+      "name": "r2oos_onfh_and_slh_pct_table",
+      "value": 1.81,
+      "unit": "%",
+      "quoted": "R²OOS 1.09% 1.40% 1.81%",
+      "quoted_source": "2  1.09% 1.40% 1.81%",
+      "quoted_repair": "table",
+      "note": "Table 3 : ONFH seul, SLH seul, les deux. Le texte annonce 1.61 % pour la combinaison, la table 1.81 %."
+    },
+    {
+      "name": "r2_high_volume_days_pct",
+      "value": 3.86,
+      "unit": "%",
+      "quoted": "The R 2 is 3.86% for high volume days",
+      "note": "Terciles de volume de la première demi-heure formés par année. β_ONFH = 2.013 (t 4.74) en fort volume."
+    },
+    {
+      "name": "beta_onfh_high_medium_low_volume",
+      "value": 2.013,
+      "unit": "coefficient",
+      "quoted": "β_ONFH 2.013*** 1.247* 0.430",
+      "quoted_source": "𝛽𝑂𝑁𝐹𝐻 2.013*** 1.247* 0.430",
+      "quoted_repair": "table",
+      "note": "Table 4, régression ONFH + SLH par tercile de volume ; bas volume 0.430 non significatif (t 1.30)."
+    },
+    {
+      "name": "onfh_insignificant_low_volume",
+      "value": null,
+      "quoted": "but the result is insignificant in low",
+      "note": "Qualitatif : pas d'effet les jours de faible volume d'ouverture."
+    },
+    {
+      "name": "r2_high_volatility_days_pct",
+      "value": 2.83,
+      "unit": "%",
+      "quoted": "the R2 is 2.83%",
+      "note": "Terciles de volatilité de la première demi-heure (rendements 1 minute) ; effet significatif seulement en forte volatilité."
+    },
+    {
+      "name": "timing_onfh_annual_return_pct",
+      "value": 7.82,
+      "unit": "% par an, sans coûts",
+      "quoted": "average return is 7.82% on an annual basis."
+    },
+    {
+      "name": "timing_slh_annual_return_pct",
+      "value": 17.32,
+      "unit": "% par an, sans coûts",
+      "quoted": "returns 17.32% while combining the two signals provides a return of 16.69%."
+    },
+    {
+      "name": "timing_combined_annual_return_pct",
+      "value": 16.69,
+      "unit": "% par an, sans coûts",
+      "quoted": "returns 17.32% while combining the two signals provides a return of 16.69%."
+    },
+    {
+      "name": "timing_onfh_sharpe_full_sample",
+      "value": 0.653,
+      "unit": "Sharpe annualisé",
+      "quoted": "η(rONFH) 7.817** 11.976 0.653 -0.444 62.546 51.598",
+      "quoted_source": "𝜂(𝑟𝑂𝑁𝐹𝐻) 7.817** 11.976  0.653  -0.444  62.546  51.598",
+      "quoted_repair": "table",
+      "note": "Table 5, échantillon complet : rendement 7.817 %, écart-type 11.976 %, Sharpe 0.653, taux de succès 51.598 %. SLH : Sharpe 1.715 ; combiné : 1.724."
+    },
+    {
+      "name": "always_long_last_half_hour_annual_return_pct",
+      "value": 6.54,
+      "unit": "% par an",
+      "quoted": "6.54% per annum"
+    },
+    {
+      "name": "timing_slh_annual_return_2020_pct",
+      "value": 0.475,
+      "unit": "% par an",
+      "quoted": "η(rSLH) 0.475 13.580 0.035",
+      "quoted_source": "𝜂(𝑟𝑆𝐿𝐻) 0.475 13.580  0.035",
+      "quoted_repair": "table",
+      "note": "Table 5, année 2020 : la stratégie SLH tombe à un Sharpe de 0.035 ; ONFH à 3.861 % (Sharpe 0.284), combinée à 2.145 %. Dernière année de l'échantillon, la plus faible."
+    },
+    {
+      "name": "timing_onfh_annual_return_2020_pct",
+      "value": 3.861,
+      "unit": "% par an",
+      "quoted": "η(rONFH) 3.861 13.579 0.284",
+      "quoted_source": "𝜂(𝑟𝑂𝑁𝐹𝐻) 3.861 13.579  0.284",
+      "quoted_repair": "table"
+    },
+    {
+      "name": "downturn_years_outperformance",
+      "value": null,
+      "quoted": "However the value of the intraday momentum is clear in 2014, 2015 and 2018",
+      "note": "Qualitatif : années où le buy-and-hold est négatif. En 2018 la version ONFH seule est pourtant à −0.192 % (Table 5) ; c'est SLH qui porte le résultat."
+    },
+    {
+      "name": "cer_onfh_mean_variance_pct",
+      "value": 5.95,
+      "unit": "% par an",
+      "quoted": "5.95% per annum, indicating the sizable economic gains"
+    },
+    {
+      "name": "cer_onfh_and_slh_mean_variance_pct",
+      "value": 8.09,
+      "unit": "% par an",
+      "quoted": "a Sharpe ratio of 1.15, and a CER of 8.09%"
+    },
+    {
+      "name": "r2_conditional_onfh_positive_pct",
+      "value": 1.89,
+      "unit": "%",
+      "quoted": "1.89%, 2.78% and 3.19% respectively when the first half-hour return is positive. In contrast, the"
+    },
+    {
+      "name": "r2_conditional_onfh_negative_pct",
+      "value": 0.11,
+      "unit": "%",
+      "quoted": "R2 is only 0.11%, 0.88% and 0.89% when the first half-hour return is negative."
+    },
+    {
+      "name": "beta_onfh_conditional_negative",
+      "value": 0.05,
+      "unit": "coefficient",
+      "quoted": "β_ONFH 1.950*** 1.777*** β1 0.050 0.106",
+      "quoted_source": "𝛽𝑂𝑁𝐹𝐻 1.950***   1.777*** 𝛽1 0.050  0.106",
+      "quoted_repair": "table",
+      "note": "Table 7 : après r_ONFH < 0, β = 0.050 (t 0.12), non significatif, alors que le texte affirme le coefficient « statistically significant in each case ». Contradiction interne."
+    },
+    {
+      "name": "breakeven_cost_onfh_no_leverage_bp",
+      "value": 3,
+      "unit": "bp",
+      "quoted": "are 3, 7 and 10 bps respectively",
+      "note": "Ordre : ONFH, SLH, combiné. Profit par trade 0.028 %, 0.061 %, 0.096 % (Table 8)."
+    },
+    {
+      "name": "breakeven_cost_slh_no_leverage_bp",
+      "value": 7,
+      "unit": "bp",
+      "quoted": "are 3, 7 and 10 bps respectively"
+    },
+    {
+      "name": "breakeven_cost_combined_no_leverage_bp",
+      "value": 10,
+      "unit": "bp",
+      "quoted": "are 3, 7 and 10 bps respectively"
+    },
+    {
+      "name": "bitstamp_trading_fee_bp",
+      "value": 25,
+      "unit": "bp",
+      "quoted": "not profitable given that the trading fee of Bitstamp is 25bps",
+      "note": "Les auteurs concluent eux-mêmes que les trois stratégies sans levier ne sont pas rentables ; la « rentabilité » sous levier 10:1 vient de la multiplication du rendement par 10, pas d'un meilleur rapport signal/coût."
+    },
+    {
+      "name": "tstat_spread_x_onfh_interaction",
+      "value": 8.85,
+      "unit": "t-stat",
+      "quoted": "is positively significant at the 1% level with t-statistics of 8.85 and 8.18",
+      "note": "Table 9 Panel D ; avec l'interaction, β_ONFH devient non significatif (−0.401, t −1.47)."
+    },
+    {
+      "name": "onfh_insignificant_with_spread_interaction",
+      "value": null,
+      "quoted": "but insignificant after adding the interaction in columns (4) and (5).",
+      "note": "Qualitatif : l'effet ONFH est absorbé par son interaction avec l'écart Corwin-Schultz de la première demi-heure."
+    },
+    {
+      "name": "tstat_spread_alone",
+      "value": 5.33,
+      "unit": "t-stat",
+      "quoted": "in column (1) has t-statistic of 5.33"
+    },
+    {
+      "name": "tstat_overnight_component",
+      "value": 5.28,
+      "unit": "t-stat",
+      "quoted": "smaller than that of 𝛽𝑂𝑁 with a value of 5.28",
+      "note": "Décomposition r_ONFH = nuit (17:00 veille → ouverture) + première demi-heure : la composante nocturne domine."
+    },
+    {
+      "name": "tstat_first_half_hour_component",
+      "value": 2.09,
+      "unit": "t-stat",
+      "quoted": "the t-statistic of 𝛽𝐹𝐻 is 2.09"
+    },
+    {
+      "name": "tstat_onfh_btcjpy_btckrw",
+      "value": 2.38,
+      "unit": "t-stat",
+      "quoted": "Newey West t-statistic of 2.38 and 2.50",
+      "note": "BTC/JPY puis BTC/KRW (régression ONFH + SLH). Pour BTC/JPY, R²_OOS de ONFH seul = −1.40 % (Table 11 Panel B)."
+    },
+    {
+      "name": "r2oos_onfh_btcjpy_pct",
+      "value": -1.4,
+      "unit": "%",
+      "quoted": "R²OOS -1.40% 9.93% 8.63%",
+      "quoted_source": "2  -1.40% 9.93% 8.63%",
+      "quoted_repair": "table",
+      "note": "Hors échantillon, ONFH seul ne bat pas la moyenne historique sur le BTC/JPY ; SLH seul atteint 9.93 %."
+    },
+    {
+      "name": "beta_onfh_nyse_hours_alternative",
+      "value": 0.372,
+      "unit": "coefficient",
+      "quoted": "β_ONFH 0.372**",
+      "quoted_source": "𝛽𝑂𝑁𝐹𝐻 0.372**",
+      "quoted_repair": "table",
+      "note": "Table 12, fenêtre calée sur les heures NYSE (texte : 10:00-16:00 EST ; légende : 9:30 à 16:00). t 2.54, R²_OOS 0.51 % : effet nettement plus faible qu'avec l'ouverture au pic de volume."
+    }
+  ],
+  "what_is_missing": [
+    "aucune gestion explicite de l'heure d'été : toutes les heures sont dites « EST », sans préciser si 17:00 suit EST/EDT ou reste fixe en heure d'hiver",
+    "la règle de détection du « pic de volume » qui fixe l'ouverture n'est pas chiffrée ; seules les heures retenues par plateforme sont données (Table 1), estimées sur tout l'échantillon, donc avec un choix ex post",
+    "l'unité des coefficients est ambiguë : les légendes disent les rendements « annualized », ce qui rend β_ONFH (0.968) et β_SLH (−9.778) difficilement comparables",
+    "contradictions internes texte/tables : R² combiné 2.12 % (texte) contre 2.32 % (Table 3), R²_OOS combiné 1.61 % contre 1.81 %, β_ONFH après ouverture négative dit significatif alors que la Table 7 donne t = 0.12, fenêtre alternative 10:00 (texte) contre 9:30 (légende Table 12)",
+    "aucun IC ni corrélation de rang ; seulement des pentes de régression poolée entre plateformes corrélées, sans correction pour la dépendance entre plateformes",
+    "aucun coût réaliste intégré au backtest de timing ; seuils de rentabilité seulement, de 3 à 10 bp sans levier contre des frais de 25 bp",
+    "le traitement des week-ends n'est pas décrit alors que le marché trade 7 jours sur 7 (la Table 8 compte 365 jours par an)",
+    "aucun résultat postérieur à 2020 ; l'année 2020 est déjà la plus faible pour les trois stratégies de timing",
+    "le prix utilisé pour les rendements (dernier prix de la minute, VWAP ?) n'est pas précisé",
+    "le nombre de spécifications essayées (fenêtres, « alternative periods » évoquées en note 19) n'est pas donné"
+  ],
+  "transposability": {
+    "what_transfers": "Le motif générique de momentum intraday : le rendement cumulé depuis la clôture de la veille jusqu'à 30 minutes après l'ouverture de l'activité, utilisé comme score à ouverture+30 min pour prédire la dernière demi-heure de séance. Il se calcule sur des barres d'une minute, sans donnée externe, et le score est connu bien avant la fenêtre cible, ce qui exclut le look-ahead. Le conditionnement par tercile de volume ou de volatilité de la première demi-heure, formé par année, se transpose aussi comme hybride candidat. Enfin, l'anti-persistance de l'avant-dernière demi-heure vers la dernière (β_SLH fortement négatif) est un second signal distinct qu'on peut tester séparément.",
+    "what_does_not_transfer": [
+      "l'actif : du BTC au comptant sur des plateformes crypto, qui traite 24h/24 et 7j/7. Nos futures ont de vraies sessions, des pauses et des clôtures de règlement, et la notion de « pic de volume » comme ouverture n'a pas d'équivalent direct",
+      "la clôture à 17:00 EST est choisie parce que c'est la pause des futures Bitcoin CME ; chez nous la fenêtre cible doit être refixée par instrument à partir de nos propres horaires, pas recopiée",
+      "la métrique : pente de régression poolée, R² et R²_OOS contre la moyenne historique, rendements de timing annualisés. Aucun IC, donc aucun chiffre du papier n'est comparable à un rapport d'IC",
+      "la mesure de liquidité (écart Corwin-Schultz high/low sur la première demi-heure) sert à expliquer l'effet, pas à le prédire hors échantillon, et elle est calibrée sur des plateformes crypto",
+      "les frais (25 bp Bitstamp) et les ratios de levier crypto (jusqu'à 10:1) ne décrivent pas nos coûts de futures ; la conclusion « rentable avec levier » ne transfère pas",
+      "le pooling sur cinq plateformes qui cotent le même actif gonfle le nombre effectif d'observations ; chez nous, neuf futures distincts ne sont pas cinq copies d'un même prix"
+    ],
+    "what_aligns_well": "Le signal est une fonction pure de prix passés, à horizon intrajournalier court, évaluable à une date et heure fixes par instrument. C'est exactement la forme d'un score que notre harnais sait juger. Les résultats qui affaiblissent le papier indiquent aussi quoi mesurer en priorité : l'effet vient surtout de la composante nocturne (t 5.28 contre 2.09), il disparaît les jours de faible volume, il est non significatif après une ouverture négative (Table 7) et il se dégrade en 2020. Ce sont des découpes qu'un rapport d'IC par régime et par année peut vérifier directement."
   }
 }

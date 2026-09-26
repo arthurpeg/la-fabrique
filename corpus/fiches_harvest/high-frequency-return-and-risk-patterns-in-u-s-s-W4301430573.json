@@ -1,322 +1,7 @@
 {
   "fiche_id": "high-frequency-return-and-risk-patterns-in-u-s-s-W4301430573",
-  "written": "2026-09-24",
-  "written_by": "session-extraction-harvest-2026-09-24",
-  "claim": "Les rendements a 15 minutes des onze ETF sectoriels SPDR americains portent des regularites intrajournalieres stables sur la periode COVID : le rendement overnight (cloture precedente -> ouverture) est significativement negatif dans tous les secteurs sauf les utilities et contribue le plus a la volatilite de la seance ; risque et rendement dessinent un U, plus marque le lundi ; les rendements moyens sont les plus eleves sur les 15 premieres minutes puis convergent vers zero ; le coefficient autoregressif d'ordre 1 est negatif et significatif dans tous les secteurs, c'est-a-dire qu'un rendement de 15 minutes tend a s'inverser au creneau suivant ; et un arbre de decision entraine sur l'ensemble des rendements prevoit le signe du rendement des 15 minutes suivantes mieux qu'une marche aleatoire, mieux que tout modele restreint a un jour de la semaine.",
-  "universe": "Les onze ETF Select Sector SPDR representant les onze secteurs GICS des Etats-Unis : energie (XLE), technologie (XLK), sante (XLV), utilities (XLU), consommation de base (XLP), consommation discretionnaire (XLY), financiere (XLF), services de communication (XLC), industrie (XLI), materiaux (XLB), immobilier (XLRE). Prix cotes sur NYSE Arca, donnees Factset, barres de 15 minutes, seance principale 9h30-16h00 heure de l'Est plus un creneau de 15 minutes apres la cloture (16h00-16h15) pour capter les desequilibres de l'encheres de cloture, du 12 mars 2020 au 23 fevrier 2021, soit 6466 observations.",
-  "horizon": {
-    "value": "15 minutes",
-    "note": "Deux horizons coexistent dans le papier. Les regressions de la section 5.2-5.5 sont descriptives et contemporaines : elles expliquent le rendement (ou la volatilite) d'un creneau de 15 minutes par des muettes de creneau et un retard d'ordre 1, sans horizon predictif. Seule la section 5.6 est predictive, et son horizon est le creneau de 15 minutes suivant (signe du rendement)."
-  },
-  "signal_construction": {
-    "value": "Trois constructions distinctes. (1) Regression de saisonnalite : R_t = somme sur f des theta_f * Omega_{f,t} + gamma * R_{t-1} + epsilon_t, ou f indexe chacun des creneaux de 15 minutes de la seance etendue (F=28, incluant le rendement overnight de la cloture precedente a l'ouverture et le creneau 16h00-16h15), Omega_{f,t} est une muette valant 1 si l'observation tombe dans le creneau f et 0 sinon, et gamma capte l'autocorrelation d'ordre 1. (2) Regression de volatilite : meme specification, la variable dependante etant la volatilite du creneau estimee a la Schwert (1989) comme la somme des rendements de periode au carre apres soustraction du rendement moyen. Les deux regressions sont ensuite re-estimees jour de semaine par jour de semaine (lundi a vendredi). (3) Classifieur : arbre de decision (critere de Gini, G = somme des p_mk (1 - p_mk)) entraine a predire si le rendement des 15 minutes suivantes est positif, compare entre un modele 'tous rendements' et cinq modeles restreints a un jour de la semaine.",
-    "note": "Le papier ne decrit ni les variables explicatives fournies a l'arbre, ni le decoupage entrainement/test, ni les hyperparametres, ni la definition exacte du 'score' rapporte. La construction (3) n'est donc pas reimplementable en l'etat ; les constructions (1) et (2) le sont."
-  },
-  "reported_results": [
-    {
-      "name": "n_observations",
-      "value": 6466,
-      "unit": "barres de 15 minutes",
-      "quoted": "Using 6466 observations, all the eleven sectors have average",
-      "note": "Taille de l'echantillon total, du 12 mars 2020 au 23 fevrier 2021, tous secteurs confondus."
-    },
-    {
-      "name": "lowest_15min_return_energy_pct",
-      "value": -10.7,
-      "unit": "%",
-      "quoted": "interval returns of –10.7% and 23.4%, respectively.",
-      "spelled_out": "–10.7",
-      "note": "Le texte ecrit le signe negatif avec un tiret demi-cadratin, que la comparaison numerique ne reconnait pas ; la chaine exacte est donnee dans spelled_out. Rendement le plus bas sur un creneau de 15 minutes, secteur energie."
-    },
-    {
-      "name": "highest_15min_return_materials_pct",
-      "value": 23.4,
-      "unit": "%",
-      "quoted": "interval returns of –10.7% and 23.4%, respectively.",
-      "note": "Rendement le plus haut sur un creneau de 15 minutes, secteur materiaux. Les plus hauts de chaque secteur tombent tous le meme jour, a la cloture du 14 mars 2020."
-    },
-    {
-      "name": "return_sd_min_consumer_staples_pct",
-      "value": 0.34,
-      "unit": "%",
-      "quoted": "ranged between 0.34% and 0.67%",
-      "note": "Ecart-type des rendements de 15 minutes, le plus bas etant celui de la consommation de base."
-    },
-    {
-      "name": "return_sd_max_energy_pct",
-      "value": 0.67,
-      "unit": "%",
-      "quoted": "ranged between 0.34% and 0.67%",
-      "note": "Ecart-type des rendements de 15 minutes, le plus haut etant celui de l'energie."
-    },
-    {
-      "name": "kurtosis_energy",
-      "value": 70.9,
-      "unit": null,
-      "quoted": "kurtosis ranging from energy sector ETF (70.9)",
-      "note": "Distributions leptokurtiques dans tous les secteurs ; borne basse."
-    },
-    {
-      "name": "kurtosis_materials",
-      "value": 678.1,
-      "unit": null,
-      "quoted": "and materials sector ETF (678.1).",
-      "note": "Borne haute du kurtosis. Attribuee par les auteurs au grand nombre de rendements de 15 minutes proches de zero."
-    },
-    {
-      "name": "skewness_energy",
-      "value": 0.9,
-      "unit": null,
-      "quoted": "energy (0.9) to information technology (7.5).",
-      "note": "Toutes les distributions de rendement sont asymetriques a droite ; borne basse."
-    },
-    {
-      "name": "skewness_information_technology",
-      "value": 7.5,
-      "unit": null,
-      "quoted": "energy (0.9) to information technology (7.5).",
-      "note": "Borne haute de l'asymetrie."
-    },
-    {
-      "name": "anova_equal_sector_means_df",
-      "value": 71115,
-      "unit": "degres de liberte",
-      "quoted": "71115 degrees of freedom) support that the 11 sectors",
-      "note": "Test F d'ANOVA non tabule : les rendements moyens des 11 secteurs ne sont pas significativement differents entre eux."
-    },
-    {
-      "name": "cross_sector_correlation_min_open_plus_15",
-      "value": -0.43,
-      "unit": null,
-      "quoted": "correlations ranged from –0.43 to 0.66.",
-      "spelled_out": "–0.43",
-      "note": "Sur le creneau 9h30-9h45, la correlation entre secteurs se disloque et devient negative pour certaines paires, alors qu'elle est uniformement positive sur la seance entiere."
-    },
-    {
-      "name": "cross_sector_correlation_max_open_plus_15",
-      "value": 0.66,
-      "unit": null,
-      "quoted": "correlations ranged from –0.43 to 0.66.",
-      "note": "Borne haute sur le meme creneau."
-    },
-    {
-      "name": "most_negative_pair_correlation_tech_materials_open_plus_15",
-      "value": -0.54,
-      "unit": null,
-      "quoted": "sharing the highest negative correlation value of –0.54 between",
-      "spelled_out": "–0.54",
-      "note": "Technologie contre materiaux, 15 minutes apres l'ouverture."
-    },
-    {
-      "name": "anova_first_15min_f_stat",
-      "value": 1.8653,
-      "unit": null,
-      "quoted": "in the first 15-min interval reported F-test values of 1.8653 with",
-      "note": "Egalite des rendements moyens des 11 secteurs sur le premier creneau de 15 minutes."
-    },
-    {
-      "name": "anova_first_15min_p_value",
-      "value": 0.0454,
-      "unit": null,
-      "quoted": "a probability of 0.0454. This suggests the average returns among",
-      "note": "Les auteurs commentent cette valeur comme significative 'only at 1% level', ce qui est incoherent avec une p-value de 0.0454 ; la valeur est recopiee telle quelle, l'interpretation des auteurs n'est pas reprise."
-    },
-    {
-      "name": "anova_last_15min_f_stat",
-      "value": 0.2486,
-      "unit": null,
-      "quoted": "with F-test values of 0.2486 (with degree of freedom of",
-      "note": "Pas de difference significative entre les rendements moyens des 11 secteurs sur le dernier creneau de la seance principale."
-    },
-    {
-      "name": "sectors_with_significantly_different_interval_returns",
-      "value": 6,
-      "unit": "secteurs sur 11",
-      "quoted": "F-test probability values found 6 out of 11 sectors (XLE,",
-      "note": "XLE, XLV, XLP, XLY, XLI et XLRE : rendements moyens significativement differents d'un creneau de 15 minutes a l'autre."
-    },
-    {
-      "name": "sectors_with_highest_average_return_in_first_15min",
-      "value": 10,
-      "unit": "secteurs sur 11",
-      "quoted": "10 of the 11 sector ETFs (except",
-      "note": "Seule la technologie fait exception : son rendement moyen des 15 premieres minutes n'est pas le plus eleve de la journee."
-    },
-    {
-      "name": "overnight_open_return_min_real_estate_pct",
-      "value": -0.06,
-      "unit": "%",
-      "quoted": "ranging from –0.06% for real estate to –0.23% for energy.",
-      "spelled_out": "–0.06",
-      "note": "Coefficient de la muette 'previous close -> open' dans la regression de l'equation (1), borne la moins negative."
-    },
-    {
-      "name": "overnight_open_return_max_energy_pct",
-      "value": -0.23,
-      "unit": "%",
-      "quoted": "ranging from –0.06% for real estate to –0.23% for energy.",
-      "spelled_out": "–0.23",
-      "note": "Coefficient de la muette overnight le plus negatif, secteur energie. Le tableau 1 donne la meme valeur pour XLE."
-    },
-    {
-      "name": "open_volatility_coefficient_min_materials_pct",
-      "value": 0.011,
-      "unit": "%",
-      "quoted": "a minimum of 0.011% for the materials sector to 0.052% for the",
-      "note": "Coefficient de volatilite du creneau overnight dans la regression de volatilite ; significatif dans les 11 secteurs."
-    },
-    {
-      "name": "open_volatility_coefficient_max_energy_pct",
-      "value": 0.052,
-      "unit": "%",
-      "quoted": "a minimum of 0.011% for the materials sector to 0.052% for the",
-      "note": "Borne haute, secteur energie."
-    },
-    {
-      "name": "monday_overnight_volatility_energy_pct",
-      "value": 0.074,
-      "unit": "%",
-      "quoted": "the highest value of 0.074% on Mondays.",
-      "note": "Plus forte volatilite overnight de tout le papier : energie, lundi. Le tableau 4 (lundi, XLE, 'Previous close Open') porte la meme valeur."
-    },
-    {
-      "name": "monday_open_plus_15_return_by_sector_pct",
-      "value": 0.66,
-      "unit": "%",
-      "quoted": "Open 9.45 | XLE 0.66%* | XLK –0.24% | XLV 0.14% | XLU 0.69% | XLP 0.24% | XLY –0.03% | XLF 0.33% | XLC 0.14% | XLI 0.24% | XLB 0.19% | XLRE 0.50%*",
-      "quoted_source": "Open 9.45 0.66%* –0.24% 0.14% 0.69% 0.24% –0.03% 0.33% 0.14% 0.24% 00.19% 0.50%*",
-      "quoted_repair": "table",
-      "note": "Ligne du tableau 3 (lundis), creneau 9h30-9h45, mise a plat par l'extraction : les onze colonnes sectorielles perdent leur en-tete. La valeur retenue est celle de XLE (0.66%, significative). La cellule XLB est imprimee '00.19%' dans le texte extrait, coquille laissee telle quelle dans quoted_source."
-    },
-    {
-      "name": "monday_ar1_consumer_staples_pct",
-      "value": -23.79,
-      "unit": "%",
-      "quoted": "on Mondays, lagged returns ranged from –23.79%",
-      "spelled_out": "–23.79",
-      "note": "Coefficient autoregressif d'ordre 1 le plus negatif des lundis (consommation de base) ; les utilities font exception avec +0.35%."
-    },
-    {
-      "name": "friday_ar1_energy_pct",
-      "value": -3.75,
-      "unit": "%",
-      "quoted": "On Fridays, lagged returns ranged –3.75% (energy) to",
-      "spelled_out": "–3.75",
-      "note": "Borne la moins negative des vendredis ; la borne opposee est –14.98% (materiaux)."
-    },
-    {
-      "name": "decision_tree_min_score_all_models",
-      "value": 0.5,
-      "unit": "score",
-      "quoted": "All scores were higher than 0.5, which suggest that the 15-min",
-      "note": "Seuil de reference implicite (marche aleatoire). La metrique exacte derriere 'score' n'est pas definie dans le papier."
-    },
-    {
-      "name": "all_return_model_score_energy",
-      "value": 0.671,
-      "unit": "score",
-      "quoted": "from 0.671 to 0.727 for the energy and communication sector",
-      "note": "Modele 'tous rendements', borne basse (energie)."
-    },
-    {
-      "name": "all_return_model_score_communication",
-      "value": 0.727,
-      "unit": "score",
-      "quoted": "from 0.671 to 0.727 for the energy and communication sector",
-      "note": "Modele 'tous rendements', borne haute (services de communication)."
-    },
-    {
-      "name": "score_range_communication_highest",
-      "value": 0.138,
-      "unit": "score",
-      "quoted": "the highest and lowest range in prediction scores of 0.138 and",
-      "note": "Dispersion des scores entre modeles de jour, la plus large (communication) ; la plus etroite est 0.021 (sante), ce qui rend inutile un modele specifique a un jour pour la sante."
-    },
-    {
-      "name": "sectors_best_served_by_all_return_model",
-      "value": 7,
-      "unit": "secteurs sur 11",
-      "quoted": "on all returns data, irrespective of the trading day, where 7 of the",
-      "note": "Sept des onze secteurs atteignent leur meilleur score avec le modele non conditionne au jour."
-    },
-    {
-      "name": "monday_model_score_range",
-      "value": 0.108,
-      "unit": "score",
-      "quoted": "highest range of 0.108, compared to the other days of the week.",
-      "note": "Le modele 'lundi seulement' produit la dispersion de scores la plus large entre secteurs ; les auteurs la relient au U plus marque des lundis."
-    },
-    {
-      "name": "wednesday_model_score_range",
-      "value": 0.072,
-      "unit": "score",
-      "quoted": "of 0.072 compared to the other days of the week.",
-      "note": "Dispersion la plus etroite parmi les modeles de jour."
-    },
-    {
-      "name": "lowest_prediction_score_real_estate_thursday",
-      "value": 0.584,
-      "unit": "score",
-      "quoted": "The lowest prediction score of 0.584 was",
-      "note": "Immobilier, modele fonde sur les seuls rendements du jeudi. Le meme secteur atteint 0.722 avec le modele du mardi."
-    },
-    {
-      "name": "real_estate_tuesday_model_score",
-      "value": 0.722,
-      "unit": "score",
-      "quoted": "of 0.722 relative to relying on Thursdays returns.",
-      "note": "Ecart de 0.138 entre modeles de jour pour un meme secteur, sans correction pour la multiplicite des essais."
-    },
-    {
-      "name": "xle_wednesday_model_score",
-      "value": 0.689,
-      "unit": "score",
-      "quoted": "XLE had the highest prediction score of 0.689 when relying on",
-      "note": "Meilleur score de l'energie, obtenu avec le modele 'mercredi seulement'."
-    },
-    {
-      "name": "covid_shock_impulse_response_decay",
-      "value": 1,
-      "unit": "heure",
-      "quoted": "returns converging to a zero response within 1 h of the opening",
-      "note": "Reponse impulsionnelle des rendements sectoriels a un choc sur le nombre de nouveaux cas de COVID-19, modele VAR avec retards choisis par SIC, echantillon a partir du 8 janvier 2021."
-    },
-    {
-      "name": "overnight_returns_significant_negative_all_sectors_except_utilities",
-      "value": null,
-      "unit": null,
-      "quoted": "Overnight returns were significant and negative in all sectors,",
-      "note": "Resultat qualitatif : le papier ne donne pas de t-stat, seulement un marquage en italique dans les tableaux. L'exception est le secteur utilities."
-    },
-    {
-      "name": "ar1_negative_significant_all_sectors",
-      "value": null,
-      "unit": null,
-      "quoted": "one lag autoregressive coefficients were all significant negative",
-      "note": "C'est le resultat le plus directement transposable : reversal a une barre de 15 minutes, present dans les onze instruments. Aucune t-stat n'est publiee."
-    },
-    {
-      "name": "sectors_returns_drop_at_open_after_covid_case_shock",
-      "value": null,
-      "unit": null,
-      "quoted": "dropped initially within the first 30 min at the open. This can be",
-      "note": "Resultat qualitatif : tous les secteurs sauf energie, technologie et financieres voient leurs rendements baisser dans les 30 premieres minutes apres un choc sur les nouveaux cas, l'information etant publiee a 20h ET la veille."
-    }
-  ],
-  "what_is_missing": [
-    "Aucune t-statistique, aucun ecart-type, aucun intervalle de confiance n'est publie. La significativite n'apparait que sous forme d'italiques et d'asterisques dans les tableaux, et la legende de ces marques est elle-meme incoherente : le tableau 2 annonce '*Denotes significance at 10% level, **5%, 10%, and ^10% level', ce qui attribue trois fois le meme seuil.",
-    "Le protocole du classifieur est absent : aucune liste de variables explicatives, aucun decoupage entrainement/validation/test, aucun hyperparametre, aucune indication de validation croisee ou de purge temporelle. Rien n'exclut que les scores de 0.58 a 0.73 soient in-sample.",
-    "La metrique appelee 'score' n'est jamais definie (exactitude ? AUC ?), ce qui interdit de la comparer a quoi que ce soit hors du papier.",
-    "Aucune correction pour la multiplicite des tests, alors que le papier estime 11 secteurs x 28 creneaux x 6 modeles de jour, soit plusieurs milliers de coefficients rapportes ou resumes.",
-    "Aucun cout de transaction, aucun spread, aucun slippage, aucune contrainte de capacite. Les effets rapportes (0.06% a 0.23% sur un creneau) sont du meme ordre que les couts d'execution sur actions.",
-    "Aucun rendement de strategie, aucun Sharpe, aucun IC : le papier decrit des coefficients de regression et des scores de classification, jamais une performance nette.",
-    "L'echantillon couvre 11,5 mois d'un unique regime (krach COVID puis rebond) et le papier reconnait lui-meme ne tester aucune stabilite hors de cette fenetre ; les tests de rupture structurelle concluent a l'absence de rupture, ce qui est plutot un signe que la fenetre est trop courte pour en contenir une.",
-    "Le detail des tableaux est tronque 'for brevity' : seuls le creneau overnight, les 4 premiers et les 5 derniers creneaux sont publies, sur 28. Les creneaux de 10h30 a 15h00 ne sont jamais chiffres.",
-    "La constante F=28 est posee sans derivation explicite, et la numerotation des equations est contradictoire : le tableau 2 est dit provenir de 'equation (2)' dans un paragraphe et de 'equation (1)' dans un autre.",
-    "Le mode de calcul du rendement overnight n'est pas precise au-dela de 'percentage change between the previous close and current opening price' : rien ne dit si le prix de cloture retenu est celui de 16h00 ou celui de 16h15, alors que le papier utilise les deux.",
-    "Aucun code, aucune donnee : la source est Factset, non reproductible sans abonnement.",
-    "Les scores de prediction sont lus sur une figure (Figure 4), pas sur un tableau : seules les valeurs commentees dans le texte sont recuperables, les autres ne sont pas chiffrees."
-  ],
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-08",
   "source": {
     "authors": "Ikhlaas Gurrib, Firuz Kamalov, Elgilani E. Alshareif",
     "title": "High Frequency Return and Risk Patterns in U.S. Sector ETFs during COVID-19",
@@ -325,23 +10,187 @@
     "pdf": "corpus/pdf/high-frequency-return-and-risk-patterns-in-u-s-s-W4301430573.pdf",
     "retrieved": "2026-09-22",
     "peer_reviewed": true,
-    "journal": "International Journal of Energy Economics and Policy, 2022, 12(5), 441-456",
-    "doi": "https://doi.org/10.32479/ijeep.13045",
-    "note": "peer_reviewed est mis a true sur la foi des dates de soumission et d'acceptation imprimees sur la premiere page ('Received: 22/03/2022 Accepted: 25/07/2022') et de la publication en numero de revue. Quatre mois entre reception et acceptation, dans une revue dont plusieurs references sont des auto-citations du premier auteur : la qualite de l'arbitrage n'est pas etablie par la seule mention."
+    "venue": "International Journal of Energy Economics and Policy, 2022, 12(5), 441-456",
+    "peer_review_note": "Le papier porte « Received: 22/03/2022 Accepted: 25/07/2022 » ; revue à comité, mais de faible exigence méthodologique au vu des incohérences relevées dans what_is_missing."
   },
+  "claim": "Sur les 11 ETF sectoriels SPDR (données 15 min, mars 2020 – février 2021), les rendements et la volatilité intraday suivent un motif en U : les premiers et derniers quarts d'heure fluctuent le plus, le rendement overnight est négatif et significatif (sauf utilities), le premier quart d'heure a le rendement moyen le plus élevé puis les rendements convergent vers zéro ; le coefficient AR(1) des rendements 15 min est négatif et significatif pour tous les secteurs (retournement d'un quart d'heure au suivant). Un arbre de décision prédit le signe positif du quart d'heure suivant avec un « score » de 0.671 à 0.727, meilleur avec toutes les journées qu'avec un modèle par jour de la semaine.",
+  "universe": {
+    "value": "11 ETF Select Sector SPDR (XLE, XLK, XLV, XLU, XLP, XLY, XLF, XLC, XLI, XLB, XLRE), cotés sur NYSE Arca, barres de 15 min sur la séance 9h30–16h00 ET plus le quart d'heure 16h00–16h15, plus le rendement overnight ; du 12 mars 2020 au 23 février 2021 ; données Factset.",
+    "quoted": [
+      "The ETFs are energy (XLE), technology (XLK), healthcare (XLV)",
+      "interval prices for each sector, covering the period 12th of March",
+      "9.30 am-4 pm Eastern Time",
+      "NYSE Arca. Data is sourced from Factset.",
+      "Using 6466 observations, all the eleven sectors have average"
+    ]
+  },
+  "horizon": {
+    "value": "15 minutes : le quart d'heure suivant (régression AR(1) sur rendements 15 min, et classification du signe du prochain rendement 15 min).",
+    "quoted": [
+      "algorithm to obtain the scores of predicting the next 15-min"
+    ]
+  },
+  "signal_construction": {
+    "value": "Deux constructions. (1) Régression descriptive : rendement 15 min (variation en pourcentage depuis la période précédente) régressé sur des indicatrices de créneau horaire (Ω_f,t = 1 pour le quart d'heure f, F=28 créneaux, overnight inclus comme premier créneau) plus un terme AR(1) ; même régression sur la volatilité par créneau (somme des carrés des rendements moins la moyenne, à la Schwert). Le score implicite transposable est le rendement du quart d'heure précédent, de signe opposé (AR(1) négatif). (2) Classifieur arbre de décision (critère de Gini) qui prédit si le prochain rendement 15 min est positif, entraîné soit sur toutes les journées, soit par jour de la semaine ; les variables d'entrée, la profondeur, le découpage apprentissage/test et la définition du « score » ne sont pas donnés.",
+    "quoted": [
+      "Ωf,t is a dummy variable with a value of 1 for the",
+      "Return values are calculated based on the percentage",
+      "we use decision tree classifiers as a machine learning",
+      "algorithm to obtain the scores of predicting the next 15-min"
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "decision_tree_score_all_days_min_energy",
+      "value": 0.671,
+      "unit": "score (non défini, probablement accuracy)",
+      "quoted": "from 0.671 to 0.727 for the energy and communication sector",
+      "note": "Modèle toutes journées ; borne basse (énergie). Aucune méthode d'évaluation hors échantillon décrite ; le hasard vaut 0.5 selon les auteurs, mais la proportion de rendements positifs n'est pas donnée."
+    },
+    {
+      "name": "decision_tree_score_all_days_max_communication",
+      "value": 0.727,
+      "unit": "score",
+      "quoted": "from 0.671 to 0.727 for the energy and communication sector",
+      "note": "Borne haute (communication services, XLC), modèle toutes journées."
+    },
+    {
+      "name": "sectors_best_with_all_days_model",
+      "value": 7,
+      "unit": "secteurs sur 11",
+      "quoted": "on all returns data, irrespective of the trading day, where 7 of the",
+      "note": "Le modèle toutes journées donne le meilleur score pour 7 des 11 ETF ; les modèles par jour ne l'emportent donc pas."
+    },
+    {
+      "name": "lowest_prediction_score_real_estate_thursday",
+      "value": 0.584,
+      "unit": "score",
+      "quoted": "return on Mondays. The lowest prediction score of 0.584 was",
+      "note": "XLRE, modèle entraîné sur les seuls jeudis."
+    },
+    {
+      "name": "real_estate_tuesday_model_score",
+      "value": 0.722,
+      "unit": "score",
+      "quoted": "of 0.722 relative to relying on Thursdays returns.",
+      "note": "XLRE, modèle du mardi. Écart jeudi/mardi de 0.138 pour un même ETF : forte dispersion selon le sous-échantillon, signe de sur-apprentissage probable."
+    },
+    {
+      "name": "monday_model_score_range",
+      "value": 0.108,
+      "unit": "écart de score entre ETF",
+      "quoted": "highest range of 0.108, compared to the other days of the week.",
+      "note": "Dispersion des scores entre les 11 ETF pour le modèle du lundi."
+    },
+    {
+      "name": "ar1_return_coef_consumer_staples",
+      "value": -21.52,
+      "unit": "% (coefficient AR(1) tel que présenté)",
+      "quoted": "AR (1)  –2.60% –12.79% –8.81% –6.77% –21.52% –9.41% –13.01% –14.88% –6.65% –14.70% –11.93%",
+      "spelled_out": "–21.52",
+      "note": "Table 1, ligne AR(1), colonne XLP (5e colonne, ordre XLE XLK XLV XLU XLP XLY XLF XLC XLI XLB XLRE). Tous les coefficients sont négatifs, de –2.60 % (XLE) à –21.52 % (XLP) ; le texte les dit tous significatifs. Le signe moins est un tiret demi-cadratin dans le texte."
+    },
+    {
+      "name": "ar1_return_all_negative_significant",
+      "value": null,
+      "quoted": "The one lag autoregressive coefficients were all significantly",
+      "note": "Qualitatif : retournement d'un quart d'heure au suivant, pour les 11 secteurs. C'est le seul motif qui ait une chance de transférer."
+    },
+    {
+      "name": "overnight_return_coef_energy",
+      "value": -0.23,
+      "unit": "%",
+      "quoted": "opening, ranging from –0.06% for real estate to –0.23% for energy.",
+      "spelled_out": "–0.23",
+      "note": "Coefficient du créneau overnight (clôture précédente → ouverture), Table 1 ; de –0.06 % (XLRE) à –0.23 % (XLE). Période de rebond post-krach de mars 2020."
+    },
+    {
+      "name": "first_15min_return_coef_utilities",
+      "value": 0.53,
+      "unit": "%",
+      "quoted": "Open 9.45 0.44% –0.18% 0.07% 0.53% 0.04% –0.18% –0.02% –0.03% 0.07% 0.11% 0.45%",
+      "note": "Table 1, créneau 9h30–9h45, colonne XLU (4e). XLE 0.44 %, XLRE 0.45 % ; XLK et XLY négatifs (–0.18 %). Le texte dit que seuls 3 des 7 secteurs positifs sont significatifs."
+    },
+    {
+      "name": "anova_first_15min_f_stat",
+      "value": 1.8653,
+      "unit": "F",
+      "quoted": "in the first 15-min interval reported F-test values of 1.8653 with",
+      "note": "Test d'égalité des rendements moyens des 11 ETF sur le premier quart d'heure."
+    },
+    {
+      "name": "anova_first_15min_p_value",
+      "value": 0.0454,
+      "unit": "p-value",
+      "quoted": "a probability of 0.0454. This suggests the average returns among",
+      "note": "Les auteurs concluent ensuite « significantly different only at 1% level », ce qui contredit une p-value de 0.0454 (significatif à 5 %, pas à 1 %)."
+    },
+    {
+      "name": "overnight_volatility_coef_energy_monday",
+      "value": 0.074,
+      "unit": "%",
+      "quoted": "the highest value of 0.074% on Mondays. Overnight volatilities",
+      "note": "Coefficient de volatilité overnight, XLE, lundi (Table 4). L'overnight est le créneau qui contribue le plus à la volatilité, surtout le lundi."
+    },
+    {
+      "name": "open_volatility_coef_energy",
+      "value": 0.052,
+      "unit": "%",
+      "quoted": "a minimum of 0.011% for the materials sector to 0.052% for the",
+      "note": "Table 2, créneau overnight/ouverture. Incohérence : le texte attribue le minimum 0.011 % aux matériaux, mais Table 2 donne 0.011 % à XLP et 0.040 % à XLB."
+    },
+    {
+      "name": "open_plus_15_correlation_tech_materials",
+      "value": -0.54,
+      "unit": "corrélation de Pearson",
+      "quoted": "sharing the highest negative correlation value of –0.54 between",
+      "spelled_out": "–0.54",
+      "note": "Corrélation XLK/XLB des rendements 9h30–9h45 ; sur la séance entière, les corrélations inter-secteurs vont de 0.51 à 0.91."
+    },
+    {
+      "name": "session_correlation_min",
+      "value": 0.51,
+      "unit": "corrélation de Pearson",
+      "quoted": "0.51 to 0.91. This is consistent with Rapach et al. (2019) who find",
+      "note": "Borne basse des corrélations inter-secteurs sur la séance régulière."
+    },
+    {
+      "name": "return_std_range_max",
+      "value": 0.67,
+      "unit": "% (écart-type des rendements 15 min)",
+      "quoted": "deviation values ranged between 0.34% and 0.67%, with the",
+      "note": "De 0.34 % (consumer staples) à 0.67 % (énergie)."
+    }
+  ],
+  "what_is_missing": [
+    "le « score » de l'arbre de décision n'est pas défini (accuracy ? sur quel échantillon ?), et aucun découpage apprentissage/test ni validation croisée n'est décrit",
+    "les variables d'entrée de l'arbre de décision, sa profondeur et ses hyperparamètres ne sont pas donnés",
+    "la proportion de rendements 15 min positifs (taux de base) n'est pas donnée : un score de 0.67 contre un hasard supposé de 0.5 n'est pas interprétable",
+    "aucune statistique de t ni erreur-type n'est reportée dans les tableaux ; la significativité est signalée par italiques perdues à l'extraction et des astérisques dont la légende est incohérente (« *Denotes significance at 10% level, **5%, 10%, and ^10% level »)",
+    "aucun backtest, aucun coût de transaction, aucun spread, aucune stratégie : le papier est descriptif",
+    "échantillon d'un an environ (12 mars 2020 – 23 février 2021), entièrement pendant le COVID, commençant au creux du krach ; aucune période hors échantillon",
+    "incohérences internes : p-value 0.0454 déclarée « significant only at 1% level » ; minimum de volatilité attribué aux matériaux alors que Table 2 le donne à XLP ; Table 2 dite estimée par « equation (2) », qui est l'indice de Gini ; l'introduction affirme « we do not predict return » avant d'en prédire",
+    "la construction exacte du rendement overnight en présence de week-ends et du quart d'heure 16h00–16h15 (prix de quelle transaction ?) n'est pas précisée",
+    "aucun contrôle des tests multiples malgré 11 ETF × 28 créneaux × 5 jours de la semaine"
+  ],
   "transposability": {
-    "what_transfers": "Le motif, pas les chiffres. Trois elements se testent tels quels sur nos neuf futures intraday. (1) Le conditionnement par creneau horaire : une muette par creneau de 15 minutes est un regresseur deterministe, calculable a la date sans aucune information future, donc compatible par construction avec l'invariant II. (2) Le reversal a une barre : un coefficient AR(1) negatif et significatif sur les rendements de 15 minutes, present dans les onze instruments du papier, est l'hypothese la plus simple et la plus directement implementable en signal (score = -1 x rendement de la barre precedente, eventuellement conditionne au creneau). (3) Le conditionnement par jour de semaine, qui est exactement ce que notre vocabulaire appelle un hybride : un signal conditionne a un regime, ici un regime calendaire, non estime et donc sans risque de surajustement dans la definition du regime lui-meme. S'y ajoute un avertissement transferable : le papier montre que le meilleur modele est le modele non conditionne au jour dans 7 secteurs sur 11, c'est-a-dire que le decoupage par jour de semaine coute plus en donnees qu'il ne rapporte en specificite.",
-    "what_does_not_transfer": [
-      "Le rendement overnight, qui est le resultat central du papier, n'a pas d'equivalent sur nos futures : les ETF cotes sur NYSE Arca ont une cloture a 16h00 et une reouverture a 9h30, soit un trou de 17h30 pendant lequel aucun prix ne se forme, alors que nos futures cotent quasiment en continu. Un 'gap overnight' futures est une discontinuite de quelques minutes autour de la pause de maintenance, pas la meme chose economiquement ni statistiquement.",
-      "L'encheres d'ouverture et l'encheres de cloture de NYSE Arca, auxquelles les auteurs attribuent explicitement la forme du U ('the execution of the core open auction which is the first trade of the core trading session', 'any imbalance between buying and selling volume are cleared'). Nos futures n'ont pas d'encheres a prix unique de ce type ; le mecanisme causal invoque disparait, et avec lui la raison de s'attendre au meme U.",
-      "Le creneau 16h00-16h15, construit pour capter les desequilibres de cloture et l'expiration des options americaines de 9 des 11 ETF a 16h15. Ce creneau n'existe pas dans notre univers et represente pourtant une part importante des resultats du papier.",
-      "Toute l'analyse de correlation croisee entre secteurs et la 'diffusion de l'information across economically linked industries' : elle suppose onze instruments qui sont des decoupages d'un meme indice, partageant leurs constituants. Nos neuf futures ne sont pas des partitions d'un panier commun, et la structure de correlation n'a aucune raison d'etre analogue.",
-      "Les magnitudes. Un rendement d'ouverture de -0.23% sur 15 minutes et un kurtosis de 678 sont les chiffres d'un krach et de son rebond, sur 11,5 mois. Ils disent quoi verifier, jamais ce qui est vrai chez nous ; aucun d'entre eux ne peut servir de seuil, de calibration ou de point de comparaison.",
-      "La metrique. Le papier juge par un 'score' de classification du signe du rendement suivant ; nous jugeons par un IC issu du harnais officiel. Un score de 0.727 ne se convertit pas en IC, et il ne dit rien du gain economique : un classifieur peut avoir raison 72% du temps sur des barres a rendement quasi nul et perdre de l'argent sur les 28% restantes.",
-      "La fenetre 12 mars 2020 - 23 fevrier 2021 tombe entierement dans notre tranche pool, mais elle est un regime unique. Une hypothese calibree sur elle serait calibree sur la COVID ; le papier ne fournit aucune preuve de stabilite hors de ce regime, et ses propres tests de rupture, qui n'en trouvent aucune, le confirment plutot qu'ils ne le rassurent.",
-      "Le classifieur par arbre de decision, qui n'est pas reimplementable : ni variables, ni decoupage, ni hyperparametres ne sont donnes. Tenter de le reproduire reviendrait a inventer le protocole, donc a produire un resultat qui ne testerait pas le papier.",
-      "L'analyse des reponses impulsionnelles au choc de cas COVID-19 : elle depend d'un flux de donnees exogene publie a 20h ET, qui n'a aucun analogue dans notre chaine et qui ne fait pas partie de notre couche de donnees point-in-time."
+    "what_transfers": [
+      "le motif de retournement d'un quart d'heure au suivant (AR(1) négatif sur rendements 15 min) est une hypothèse testable directement sur nos futures : score = –rendement de la dernière barre de 15 min",
+      "l'idée que les premier et dernier quarts d'heure de la séance cash concentrent volatilité et rendements anormaux, et que les rendements convergent vers zéro en milieu de séance",
+      "l'effet ouverture/overnight : le premier quart d'heure après l'ouverture cash tend à corriger le gap overnight"
     ],
-    "what_aligns_well": "La granularite. Le papier travaille sur des barres de 15 minutes, dans une seance, sur un petit nombre d'instruments : c'est exactement l'echelle de notre univers, et les regresseurs qu'il utilise (creneau horaire, jour de semaine, rendement de la barre precedente) sont tous strictement point-in-time, donc implementables dans notre Panel sans risque structurel de look-ahead. Le papier est aussi honnete sur un point qui nous sert : il compare explicitement un modele conditionne au jour de la semaine a un modele qui ne l'est pas, et conclut en faveur du second. C'est une pre-inscription involontaire du risque de surajustement par conditionnement de regime, et elle va dans le sens de notre prudence sur les hybrides. Enfin, l'AR(1) negatif a 15 minutes est une hypothese qui se formule en une phrase, s'implemente en quelques lignes, et se juge par un IC : elle est un candidat a l'etape 02 de l'ordre d'execution, si et seulement si la porte correspondante est ouverte."
+    "what_does_not_transfer": [
+      "l'univers : 11 ETF sectoriels actions US, fortement corrélés entre eux (0.51 à 0.91), alors que nos neuf futures intraday couvrent des classes d'actifs différentes et se négocient presque 24 h",
+      "l'overnight et les enchères d'ouverture/clôture NYSE : nos futures n'ont pas de gap overnight au même sens ni d'enchère d'ouverture identique ; le créneau 16h00–16h15 lié aux options américaines sur ETF est sans équivalent",
+      "la période : un an de COVID débutant au creux du krach de mars 2020, régime unique et extrême",
+      "le « score » d'arbre de décision (accuracy de signe non définie) n'est pas un IC et ne peut être comparé à notre métrique",
+      "les effets jour de la semaine sont estimés sur une cinquantaine de jours par jour, sans correction des tests multiples",
+      "l'étude d'impulsion sur la vaccination COVID est un événement unique non transposable"
+    ],
+    "what_aligns_well": [
+      "la fréquence de 15 minutes et l'horizon d'un quart d'heure correspondent à un horizon intraday que nous pouvons scorer",
+      "le signal de retournement AR(1) est un score simple, déterministe, calculable à la clôture de la barre sans look-ahead",
+      "le découpage par créneau horaire (indicatrices de quart d'heure) fournit un conditionnement naturel pour un hybride horaire : retournement concentré dans les 30 premières minutes de la séance cash"
+    ]
   }
 }

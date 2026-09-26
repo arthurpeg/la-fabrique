@@ -1,199 +1,156 @@
 {
   "fiche_id": "intraday-volatility-transmission-among-precious-W3153001253",
-  "written": "2026-09-24",
-  "written_by": "session-extraction-isolee-harvest",
-  "claim": "La structure de la transmission de volatilite intraday entre actions americaines, energie et metaux precieux n'est pas stable : elle se reconfigure pendant le choc COVID-19. Le papier affirme trois choses testables. (a) Le marche actions americain est le plus gros emetteur net de chocs de volatilite dans le reseau, avant comme pendant l'epidemie ; l'or est le second sur l'echantillon complet. (b) La connectedness totale du reseau culmine en mars 2020, c'est-a-dire que la diversification disparait precisement quand on en a besoin. (c) Le gaz naturel est l'actif le moins connecte au reseau, avant et pendant, d'ou une fonction supposee de couverture / valeur refuge. S'y ajoute une affirmation de regime : plusieurs paires changent de sens (receveur net -> emetteur net) pendant l'epidemie, notamment petrole vs gaz, petrole vs or, et argent vs or. Le papier ne predit aucun rendement : il decrit une propriete de second moment et en tire des implications de portefeuille non testees.",
-  "universe": "Cinq ETF americains tres liquides, pris comme proxys de cinq marches : SPY (actions, S&P 500), USO (petrole WTI via futures), UNG (gaz naturel), GLD (or physique OTC), SLV (argent). Donnees 5 minutes, du 2 janvier 2019 au 29 mai 2020, 27623 observations intraday par serie. Sous-echantillon COVID-19 : du 1er janvier 2020 au 29 mai 2020. Tout est libelle en USD, sur horaires de seance NYSE / NYSE Arca. Aucun future n'est utilise directement, aucun actif non americain.",
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-09",
+  "source": {
+    "authors": "Saqib Farid, Ghulam Mujtaba Kayani, Muhammad Abubakr Naeem, Syed Jawad Hussain Shahzad",
+    "title": "Intraday volatility transmission among precious metals, energy and stocks during the COVID-19 pandemic",
+    "year": 2021,
+    "journal": "Resources Policy, 72, 102101",
+    "doi": "10.1016/j.resourpol.2021.102101",
+    "source_url": "https://ray.yorksj.ac.uk/id/eprint/10039/1/1-s2.0-S030142072100115X-main.pdf",
+    "pdf": "corpus/pdf/intraday-volatility-transmission-among-precious-W3153001253.pdf",
+    "retrieved": "2026-09-22",
+    "peer_reviewed": true,
+    "note": "Copie de dépôt institutionnel (RaY, York St John) ; le dépôt avertit que la version peut différer de la version publiée."
+  },
+  "claim": {
+    "value": "Descriptif, pas prédictif : la connectivité de volatilité (Diebold-Yilmaz 2012, sur des volatilités intraday MCS-GARCH de cinq ETF US) entre actions, pétrole, gaz naturel, or et argent culmine pendant le COVID-19 (mars 2020) ; les actions US sont le plus gros émetteur de chocs de volatilité avant et pendant ; le gaz naturel est le moins connecté ; plusieurs paires changent de rôle émetteur/récepteur pendant la crise.",
+    "quoted": [
+      "significant effects of COVID-19 pandemic on the volatility linkages of",
+      "financial markets as the volatility connectedness among the different",
+      "stock market is the largest transmitter of volatility shocks in the system",
+      "gas is least connected to other assets in terms of volatility spillovers,"
+    ]
+  },
+  "universe": {
+    "value": "Cinq ETF US négociés en barres de 5 minutes : SPY (S&P 500), USO (pétrole WTI, via futures), UNG (gaz naturel), GLD (or), SLV (argent). Échantillon du 2 janvier 2019 au 29 mai 2020 ; sous-échantillon COVID du 1er janvier 2020 au 29 mai 2020.",
+    "quoted": [
+      "We use five actively traded US exchange traded funds (ETFs) to",
+      "We employ high-frequency-5 min data of the mentioned ETFs from 02,",
+      "January 2019 to 29, May 2020 for the empirical analysis. We choose 5",
+      "over network for the COVID19 sub-sample starting from 01 January"
+    ]
+  },
   "horizon": {
-    "value": "2 jours (H = 2), horizon de la decomposition de variance d'erreur de prevision ; estimation en fenetre roulante de 10 jours",
-    "reason": "Ce H n'est pas un horizon de detention ni un horizon de prevision de rendement : le papier ne predit rien, il decompose la variance d'erreur de prevision d'un VAR sur volatilites. Aucun horizon de signal n'est defini par les auteurs."
+    "value": null,
+    "reason": "Le papier ne prédit aucun rendement ni aucune volatilité à un horizon exploitable : il décrit la structure de transmission de la volatilité. Le seul horizon mentionné est celui de la décomposition de variance (H = 2 jours), paramètre de la mesure de connectivité, pas horizon de prévision d'un signal."
   },
   "signal_construction": {
-    "value": "Deux etages, entierement deterministes et sans donnee exogene. Etage 1 — volatilite intraday desaisonnalisee : rendements log 5 minutes ; modele MCS-GARCH (multiplicative component GARCH, Engle & Sokalska 2012) qui ecrit la variance conditionnelle intraday comme le produit de trois composantes, une composante journaliere (sigma_j, issue d'un GARCH journalier de type e-GARCH avec terme d'asymetrie), une composante diurne (p_m, moyenne des residus au carre normalises par la variance journaliere, sur la meme tranche horaire a travers les jours) et une composante stochastique intraday (w_{j,m}, un GARCH sur les residus normalises). Specification retenue : ARMA(1,1)-mcsGARCH(1,1), innovations Student-t, estimee par maximum de vraisemblance, separement sur chacun des cinq ETF. Le modele est ajuste directement sur les series de rendements originales, les auteurs le jugeant capable d'absorber lui-meme la saisonnalite en U. Etage 2 — reseau de connectedness : VAR sur les cinq series de volatilites intraday estimees, puis decomposition generalisee de variance d'erreur de prevision (FEVD generalisee, ordre-invariante), normalisee ligne par ligne puisque les parts ne somment pas a 1 par construction ; l'indice de spillover de Diebold et Yilmaz (2012) en est tire : total, to others, from others, net, et net par paire. Version dynamique : le tout recalcule en fenetre roulante de 10 jours avec H = 2 jours.",
-    "note": "Le nombre de retards du VAR n'est pas donne dans le texte ; les ordres p, q, r, m du MCS-GARCH sont dits selectionnes par log-vraisemblance sur des valeurs de 0 a 2."
+    "value": null,
+    "reason": "Aucun signal n'est construit. La chaîne de mesure est : rendements log 5 min -> ARMA(1,1)-mcsGARCH(1,1) (composantes quotidienne, diurne et stochastique) -> volatilité intraday -> VAR et décomposition généralisée de la variance d'erreur de prévision de Diebold-Yilmaz (2012), statique sur l'échantillon complet et le sous-échantillon COVID, puis glissante (fenêtre de 10 jours, H = 2 jours). Rien n'y est transformé en score ni testé en prévision.",
+    "quoted": [
+      "Estimation results from ARMA (1,1)-mcsGARCH(1,1) model on intraday returns .",
+      "variance decompositions using a rolling window size of 10 days (7800"
+    ]
   },
   "reported_results": [
     {
-      "name": "n_assets_in_network",
-      "value": 5,
-      "spelled_out": "five",
-      "quoted": "We use five actively traded US exchange traded funds (ETFs) to",
-      "note": "SPY, USO, UNG, GLD, SLV. Le nombre est ecrit en toutes lettres dans la phrase."
-    },
-    {
-      "name": "data_frequency_minutes",
-      "value": 5,
-      "unit": "minutes",
-      "quoted": "We employ high-frequency-5 min data of the mentioned ETFs from 02,",
-      "note": "Frequence justifiee comme compromis entre bruit de microstructure et precision d'estimation ; aucune robustesse a une autre frequence n'est presentee."
-    },
-    {
-      "name": "sample_period",
+      "name": "full_sample_largest_transmitters",
       "value": null,
-      "quoted": "January 2019 to 29, May 2020 for the empirical analysis.",
-      "note": "Du 2 janvier 2019 au 29 mai 2020, soit environ 17 mois dont un choc unique. Resultat qualitatif : pas de valeur numerique a porter."
+      "quoted": "analysis shows that stocks and gold are two largest contributors of",
+      "note": "Échantillon complet (janv. 2019 - mai 2020). Qualitatif ; aucun chiffre de spillover n'est donné dans le texte, seulement dans les figures."
     },
     {
-      "name": "n_intraday_observations_per_etf",
-      "value": 27623,
-      "unit": "observations",
-      "quoted": "No. of Observations 27623 27623 27623 27623 27623",
-      "note": "Ligne de la Table 1, une colonne par ETF dans l'ordre SPY, USO, UNG, GLD, SLV : le meme compte pour les cinq series."
-    },
-    {
-      "name": "implied_bars_per_trading_day",
-      "value": 78,
-      "unit": "barres de 5 minutes",
-      "derived": true,
-      "quoted": "No. of Observations 27623 27623 27623 27623 27623",
-      "note": "Calcul a nous : 27623 observations sur environ 354 seances entre le 2 janvier 2019 et le 29 mai 2020 donne environ 78 barres de 5 minutes par jour, soit exactement une seance NYSE de 6h30. Consequence genante : une fenetre roulante de 10 jours vaut alors 780 barres, et non les 7800 annoncees par les notes des figures 5 a 7. L'un des deux chiffres est faux, le papier ne permet pas de trancher lequel."
-    },
-    {
-      "name": "covid_subsample_window",
+      "name": "covid_subsample_largest_transmitter_stocks",
       "value": null,
-      "quoted": "Fig. 4. Spillover network for the COVID19 sub-sample from 01 January 2020 until 29 May 2020.",
-      "note": "Le sous-echantillon COVID est defini par une date choisie a posteriori (1er janvier 2020) ; aucun test de rupture n'est fait pour la justifier."
+      "quoted": "stock market continues to act as the largest transmitter of volatility",
+      "note": "Sous-échantillon COVID (1er janv. - 29 mai 2020). Qualitatif."
+    },
+    {
+      "name": "total_spillover_peak_month",
+      "value": null,
+      "quoted": "spillovers among the markets peaked in the month of March 2020. The",
+      "note": "Indice de spillover total glissant ; le niveau du pic n'est pas donné dans le texte."
+    },
+    {
+      "name": "covid_largest_net_contributor_silver",
+      "value": null,
+      "quoted": "Interestingly, the findings unveil that silver emerges as the largest",
+      "note": "Spillovers nets pendant l'épidémie ; qualitatif."
+    },
+    {
+      "name": "oil_switches_to_net_transmitter_vs_gas_and_gold",
+      "value": null,
+      "quoted": "crude oil switches from net receiver to net transmitter of volatility be -",
+      "note": "Avant le COVID, le gaz naturel et l'or étaient émetteurs nets vers le pétrole ; pendant, le pétrole devient émetteur net. Qualitatif."
+    },
+    {
+      "name": "gold_silver_net_transmitter_switch",
+      "value": null,
+      "quoted": "note that gold is net transmitter of volatility shocks to silver before the",
+      "note": "Suivi de : l'argent devient émetteur net pendant la pandémie. Qualitatif."
     },
     {
       "name": "corr_gld_slv",
       "value": 0.794,
+      "unit": "corrélation",
       "quoted": "SLV 0.312*** 0.167*** 0.106*** 0.794*** 1.000",
-      "note": "Ligne SLV de la Table 1, colonnes dans l'ordre SPY, USO, UNG, GLD, SLV : la correlation or-argent (0.794) est de loin la plus forte de la matrice, significative a 1%. C'est la paire la plus redondante du panier."
+      "note": "Table 1, ligne SLV, colonne GLD (quatrième valeur). Corrélation des séries de la Table 1 (le papier les appelle rendements, mais minimum positif et moyenne proche de 1 suggèrent des séries de volatilité — ambigu). t-stat 217.117 à la ligne suivante."
     },
     {
       "name": "corr_spy_gld",
       "value": 0.414,
+      "unit": "corrélation",
       "quoted": "GLD 0.414*** 0.218*** 0.165*** 1.000",
-      "note": "Ligne GLD de la Table 1 : correlation avec SPY de 0.414, significative a 1%. Les auteurs en tirent que la propriete de valeur refuge de l'or contre les actions americaines n'est pas stable."
+      "note": "Table 1, ligne GLD, colonne SPY. Mêmes réserves que ci-dessus sur la nature des séries."
     },
     {
       "name": "corr_spy_ung",
       "value": 0.079,
+      "unit": "corrélation",
       "quoted": "UNG 0.079*** 0.132*** 1.000",
-      "note": "Ligne UNG de la Table 1 : correlation avec SPY de 0.079, la plus faible du tableau, bien que declaree significative a 1%. C'est la base chiffree de tout l'argument sur le gaz naturel comme couverture."
+      "note": "Table 1, ligne UNG, colonne SPY : la plus faible corrélation avec les actions, base de l'affirmation « gaz naturel le moins connecté »."
     },
     {
-      "name": "mcsgarch_beta1_spy",
+      "name": "n_observations_5min",
+      "value": 27623,
+      "unit": "barres de 5 min par ETF",
+      "quoted": "No. of Observations 27623 27623 27623 27623 27623",
+      "note": "Table 1. Environ 354 séances de 78 barres, cohérent avec janv. 2019 - mai 2020."
+    },
+    {
+      "name": "garch_beta1_spy",
       "value": 0.8895,
-      "quoted": "β 1 0.8895*** 0.8903*** 0.8953*** 0.8623*** 0.8857***",
-      "quoted_source": "0.8895*** 0.8903*** 0.8953*** 0.8623*** 0.8857***",
-      "quoted_repair": "table",
-      "note": "Table 2, ligne beta_1 du mcsGARCH(1,1), colonnes SPY, USO, UNG, GLD, SLV. L'etiquette de ligne est separee de ses valeurs par la mise a plat du tableau, d'ou la reparation. Les cinq valeurs sont comprises entre 0.8623 et 0.8953 : la persistance de la volatilite intraday est forte et remarquablement homogene entre classes d'actifs."
+      "quoted": "0.8895*** 0.8903*** 0.8953*** 0.8623*** 0.8857***",
+      "note": "Table 2, β1 (persistance GARCH), ordre SPY USO UNG GLD SLV ; valeurs de 0.86 à 0.90 pour les cinq ETF."
     },
     {
-      "name": "rolling_window_days",
-      "value": 10,
-      "unit": "jours",
-      "quoted": "using a rolling window size of 10 days (7800 intraday",
-      "note": "Fenetre d'estimation des indices de spillover dynamiques. Voir implied_bars_per_trading_day : ces 10 jours sont incompatibles avec les 7800 observations annoncees."
-    },
-    {
-      "name": "rolling_window_observations",
+      "name": "rolling_window_intraday_obs",
       "value": 7800,
-      "unit": "observations",
-      "quoted": "using a rolling window size of 10 days (7800 intraday",
-      "note": "Chiffre donne par les auteurs comme equivalent des 10 jours. A 78 barres de 5 minutes par jour, 7800 observations correspondraient a 100 jours, pas a 10."
+      "unit": "observations de volatilité intraday",
+      "quoted": "using a rolling window size of 10 days (7800",
+      "note": "Annoncé comme fenêtre de 10 jours ; 10 séances de 78 barres de 5 min font 780, pas 7800 — incohérence interne non résolue par le texte."
     },
     {
       "name": "fevd_forecast_horizon_days",
       "value": 2,
       "unit": "jours",
-      "quoted": "intraday volatility observations) and a forecast horizon of H = 2 days.",
-      "note": "Horizon H de la decomposition de variance d'erreur de prevision. Aucune sensibilite a H n'est presentee."
-    },
-    {
-      "name": "network_edge_strong_threshold_pct",
-      "value": 20,
-      "unit": "%",
-      "quoted": "more than 20% while green and blue colour arrows show spillover be -",
-      "note": "Seuil de lecture des graphes de reseau : fleches rouges pour plus de 20% de spillover, vertes entre 10% et 20%, bleues en dessous de 10%. C'est la seule quantification de l'intensite des spillovers accessible dans le texte : les valeurs elles-memes ne sont que dans les figures."
-    },
-    {
-      "name": "stocks_largest_volatility_transmitter",
-      "value": null,
-      "quoted": "stock market is the largest transmitter of volatility shocks in the system",
-      "note": "Affirmation centrale, valable sur l'echantillon complet et sur le sous-echantillon COVID. Aucune valeur d'indice n'accompagne l'affirmation dans le texte."
-    },
-    {
-      "name": "precious_metals_bidirectional_spillovers",
-      "value": null,
-      "quoted": "spillovers between precious metals in US over the full sample period.",
-      "note": "Spillovers bidirectionnels forts entre or et argent, coherents avec la correlation de 0.794. Qualitatif, lu sur la figure 3."
-    },
-    {
-      "name": "oil_to_natural_gas_unilateral",
-      "value": null,
-      "quoted": "transmission from crude oil to natural gas market.",
-      "note": "Transmission de volatilite unilaterale du petrole vers le gaz naturel sur l'echantillon complet. C'est la seule relation declaree unilaterale du reseau statique."
-    },
-    {
-      "name": "natural_gas_least_connected",
-      "value": null,
-      "quoted": "is least connected to other assets in terms of volatility spillovers,",
-      "note": "Le gaz naturel est le moins connecte, en emission comme en reception, avant et pendant l'epidemie. Les auteurs en deduisent une fonction de couverture et de valeur refuge, sans jamais construire ni tester le portefeuille correspondant."
-    },
-    {
-      "name": "total_spillover_peak_march_2020",
-      "value": null,
-      "quoted": "spillovers among the markets peaked in the month of March 2020.",
-      "note": "Pic de l'indice de spillover total en mars 2020, lu sur la figure 4. Aucune valeur de pic n'est donnee dans le texte."
-    },
-    {
-      "name": "silver_largest_net_transmitter_during_outbreak",
-      "value": null,
-      "quoted": "the findings unveil that silver emerges as the largest",
-      "note": "Pendant l'epidemie, l'argent devient le plus gros contributeur net de spillovers aux autres classes d'actifs, alors que sur l'echantillon complet ce sont les actions et l'or. Resultat de regime, lu sur la figure 5."
-    },
-    {
-      "name": "gold_to_silver_direction_switch",
-      "value": null,
-      "quoted": "gold is net transmitter of volatility shocks to silver before the",
-      "note": "Avant l'epidemie l'or emet vers l'argent ; pendant, c'est l'argent qui emet. C'est le motif le plus interessant du papier pour nous : la direction d'une paire s'inverse avec le regime, ce qui interdit de figer un signe."
+      "quoted": "volatility observations) and a forecast horizon of H = 2 days.",
+      "note": "Horizon de la décomposition de variance Diebold-Yilmaz dans l'analyse glissante."
     }
   ],
   "what_is_missing": [
-    "Aucune valeur numerique de l'indice de spillover total, ni de la matrice de connectedness. Tous les chiffres du resultat principal sont dans les figures 3 a 7 et ne sont pas reproduits dans le texte : rien de ce que le papier affirme sur les spillovers n'est verifiable ou replicable sur chiffres.",
-    "Incoherence non resolue sur la fenetre roulante : 10 jours et 7800 observations intraday ne peuvent pas designer la meme fenetre, puisque l'echantillon implique 78 barres de 5 minutes par jour. Le pas de roulement n'est pas non plus precise.",
-    "Nature exacte des series de la Table 1 : les auteurs parlent de rendements, mais les moyennes (de l'ordre de 0.95) et les minima strictement positifs indiquent des niveaux de volatilite. Le texte ne leve pas l'ambiguite, ce qui rend les correlations citees difficiles a interpreter.",
-    "Signes perdus par l'extraction : les colonnes de la ligne Asymmetry et de la ligne psi_2 de la Table 2, ainsi que les statistiques ADF et PP, portent des espaces multiples la ou un signe moins se trouve probablement. Aucun signe n'est reconstruit ici.",
-    "Ordre de retards du VAR non precise, ordres p, q, r, m du MCS-GARCH non reportes individuellement.",
-    "Aucun detail de traitement des donnees intraday : heures de seance retenues, gestion de l'ouverture et de la cloture, des demi-seances, des jours feries, des barres vides, des dividendes des ETF, ni de la source des donnees 5 minutes.",
-    "Aucune evaluation predictive : pas d'IC, pas de t-stat de prevision, pas de rendement, pas de Sharpe, pas de test hors echantillon. Le papier est descriptif de bout en bout.",
-    "Aucune regle de trading, aucun portefeuille, aucun cout de transaction, aucune contrainte de liquidite, alors que la conclusion recommande explicitement le gaz naturel comme couverture.",
-    "Aucun test statistique de la difference entre le reseau avant et le reseau pendant : le contraste est visuel, la date de coupure est choisie sans test de rupture.",
-    "Aucune robustesse : une seule frequence, un seul H, une seule taille de fenetre, un seul modele de volatilite, un seul jeu de cinq actifs.",
-    "Ni code ni donnees partages ; la specification exacte du GARCH journalier (e-GARCH avec terme d'asymetrie) est ecrite avec des equations mutilees par l'extraction.",
-    "Aucun compte du nombre de specifications essayees avant celles qui sont montrees."
+    "aucun chiffre de spillover (total, directionnel, net) n'est donné dans le texte : tout est dans des figures non lisibles ici",
+    "aucun test de significativité des spillovers ni des changements de régime avant/pendant COVID",
+    "aucune prévision hors échantillon, aucun signal, aucune stratégie, aucun coût",
+    "l'ordre du VAR et le choix des retards du VAR Diebold-Yilmaz ne sont pas donnés",
+    "incohérence : fenêtre glissante de 10 jours annoncée à 7800 observations intraday, alors que 10 séances de barres de 5 min en font 780",
+    "la Table 1 est présentée comme des statistiques de rendements, mais ses valeurs (minimum positif, moyenne proche de 1) évoquent des volatilités ; la nature exacte des séries corrélées n'est pas claire",
+    "fuseau horaire, heures de séance retenues et traitement des nuits/ouvertures non précisés",
+    "les instruments sont des ETF, pas les futures sous-jacents ; USO a connu en 2020 des changements de composition non discutés",
+    "la notation mathématique de la section méthode est incohérente (indices et symboles mélangés), ce qui empêche une réplication exacte à partir du texte"
   ],
   "transposability": {
-    "what_transfers": "Le mecanisme de mesure, entierement. Rien dans la chaine n'exige de donnee exogene, de reseau, ni de source payante : barres intraday, un GARCH multiplicatif par instrument, un VAR sur les volatilites, une FEVD generalisee en fenetre roulante. Tout cela se calcule sur nos neuf futures intraday sans acces au futur si la fenetre est strictement passee et purgee. Trois choses en particulier survivent : (1) la decomposition de la volatilite intraday en composante journaliere, composante diurne et composante stochastique, qui est exactement le probleme pose par toute barre intraday et que nous aurons a resoudre quel que soit le signal ; (2) la connectedness totale comme variable d'etat scalaire, candidate naturelle a un regime au sens de l'etape 05 — elle monte en crise et signale la disparition de la diversification ; (3) le statut emetteur net / receveur net par instrument comme variable transversale, candidate a un classement. La persistance elevee et homogene de la volatilite intraday (beta_1 entre 0.86 et 0.90 sur cinq classes d'actifs) est un fait de second moment robuste, qui transfere sans doute au-dela de leur panier.",
+    "what_transfers": "Le motif descriptif : en crise, la connectivité de volatilité entre actions, énergie et métaux précieux monte ; les actions tendent à émettre les chocs de volatilité, l'or et l'argent sont fortement liés entre eux, le gaz naturel reste à part. Utile comme variable de régime (niveau de connectivité) ou comme hypothèse sur la direction de transmission de la volatilité entre nos futures, à pré-enregistrer et tester par le harnais.",
     "what_does_not_transfer": [
-      "L'univers. Cinq ETF americains ne sont pas neuf futures : SPY, USO, UNG, GLD, SLV cotent sur horaires NYSE / NYSE Arca en seance de 6h30, quand un future tourne quasiment 24h. Les 78 barres par jour du papier, la forme en U de la saisonnalite diurne et donc toute la composante diurne du MCS-GARCH sont calibrees sur une seance actions. Chez nous la composante diurne a plusieurs bosses, une par zone horaire ouverte.",
-      "Les vehicules. USO et UNG sont des fonds qui roulent des futures : leur volatilite porte la signature du roulement et du contango du fonds, pas seulement celle du sous-jacent. Un future n'a pas cette couche ; inversement il a des sauts de roulement que l'ETF lisse. Les conclusions sur le gaz naturel comme actif le moins connecte pourraient etre une propriete d'UNG et non du gaz.",
-      "La periode. Dix-sept mois dont un choc unique, et un sous-echantillon COVID de cinq mois : c'est un regime observe une fois, pas une distribution. Tout ce que le papier appelle 'pendant la pandemie' est un echantillon de taille un en nombre d'evenements, meme s'il compte des dizaines de milliers de barres.",
-      "La metrique. Un indice de connectedness n'est pas un IC. Rien dans ce papier n'est directement comparable a la sortie du harnais, et aucun de ses chiffres ne peut servir de cible de replication : il n'y a pas de chiffre de performance a repliquer.",
-      "L'absence de regle de decision. Il n'y a pas de signal a coder tel quel : aucun horizon de detention, aucun sens de position, aucun seuil. Ce qu'on en tirerait serait notre construction, donc notre hypothese a pre-enregistrer, pas une replication.",
-      "Les affirmations de couverture et de valeur refuge. Elles sont deduites d'une faible connectedness, jamais testees sur un portefeuille, jamais nettes de couts. Une faible connectedness de volatilite ne dit rien du rendement conjoint et ne suffit pas a etablir une couverture.",
-      "L'estimation en une passe. Le MCS-GARCH et le VAR du papier sont ajustes sur tout l'echantillon pour les analyses statiques, ce qui regarde le futur. Chez nous, toute composante — y compris la composante diurne et la variance journaliere — doit etre estimee point-in-time, ce que le papier ne discute jamais. La version roulante n'est appliquee qu'aux indices dynamiques.",
-      "Les correlations de la Table 1 comme reference chiffree : la nature meme des series est ambigue (rendements ou volatilites), donc ces nombres ne peuvent servir de controle de sanite pour une reimplementation.",
-      "Le calibrage de la fenetre. Les deux tailles annoncees (10 jours, 7800 observations) se contredisent, donc le choix de fenetre est a refaire entierement chez nous et ne peut pas etre repris."
+      "aucune mesure prédictive : les résultats décrivent des co-mouvements de volatilité, pas un IC sur des rendements futurs",
+      "instruments : ETF US (SPY, USO, UNG, GLD, SLV) et non des futures ; frais, tracking error et roll des ETF différents",
+      "échantillon d'un an et demi dominé par un unique choc (COVID, mars 2020) ; hors de notre pool, les conclusions reposent sur un seul épisode",
+      "la méthode Diebold-Yilmaz sur échantillon complet utilise toute la période : les résultats statiques sont look-ahead par construction",
+      "aucun chiffre quantitatif de spillover n'est récupérable du texte, donc rien à répliquer au chiffre près",
+      "le constat sur le gaz naturel comme valeur refuge repose sur une faible connectivité, pas sur un rendement de couverture mesuré"
     ],
-    "what_aligns_well": "La frequence et l'intention. Notre univers est deja intraday et multi-actifs, avec de l'energie et des metaux precieux en vis-a-vis d'un indice actions : c'est presque le panier du papier, en futures plutot qu'en ETF. La chaine est purement deterministe et locale, sans dependance reseau, ce qui la rend compatible avec l'interdit sur les dependances reseau dans le chemin de calcul d'un signal. Le decoupage avant / pendant tombe juste sur l'etape 05 (regimes) : la connectedness totale est exactement le type de variable d'etat qu'on y cherche, calculable a une date sans rien savoir du futur. Et le resultat d'inversion or -> argent puis argent -> or est un avertissement utile a notre propre travail : un signal transversal entre instruments lies doit etre teste sur les deux sens, car le sens se retourne avec le regime. Enfin la persistance intraday forte et homogene suggere qu'une normalisation par la volatilite recente est plus stable que la volatilite brute, ce qui concerne toutes nos constructions de signal."
-  },
-  "additional_notes": {
-    "figures_only_results": "Les figures 1 a 7 (volatilites intraday, ACF, reseaux, indices roulants, spillovers par paire) portent la quasi-totalite des resultats et ne sont pas lisibles dans le texte extrait. Une fiche plus chiffree exigerait la lecture des figures du PDF, et meme alors les valeurs seraient lues sur un graphique.",
-    "paper_status": "Version deposee au depot institutionnel RaY de l'Universite York St John, pouvant differer de la version publiee. L'article final est publie dans Resources Policy 72 (2021) 102101, sous licence CC BY.",
-    "editorial_quality": "Le texte porte plusieurs fautes qui ne sont pas des artefacts d'extraction : 'natural gas natural gas is least connected', 'sab-sample analysis', 'Global Financial crisis 200-7-08', 'GRACH' pour GARCH, un renvoi a la figure 2 la ou il faut lire la figure 4, et la Table 1 est annoncee comme resume de la litterature alors que c'est la Table A1. Cela n'invalide rien, mais invite a la prudence sur les chiffres non verifiables."
-  },
-  "source": {
-    "authors": "Saqib Farid, Ghulam Mujtaba Kayani, Muhammad Abubakr Naeem, Syed Jawad Hussain Shahzad",
-    "title": "Intraday volatility transmission among precious metals, energy and stocks during the COVID-19 pandemic",
-    "year": 2021,
-    "journal": "Resources Policy 72 (2021) 102101",
-    "doi": "10.1016/j.resourpol.2021.102101",
-    "source_url": "https://ray.yorksj.ac.uk/id/eprint/10039/1/1-s2.0-S030142072100115X-main.pdf",
-    "pdf": "corpus/pdf/intraday-volatility-transmission-among-precious-W3153001253.pdf",
-    "retrieved": "2026-09-22",
-    "peer_reviewed": true
+    "what_aligns_well": "Barres de 5 minutes, traitement explicite de la saisonnalité intraday (composante diurne du MCS-GARCH, profil en U) et univers proche du nôtre (indice actions, pétrole, gaz naturel, or, argent) : la décomposition diurne et la fenêtre glissante de connectivité sont implémentables point-in-time sur nos futures si l'on se limite à la version glissante."
   }
 }

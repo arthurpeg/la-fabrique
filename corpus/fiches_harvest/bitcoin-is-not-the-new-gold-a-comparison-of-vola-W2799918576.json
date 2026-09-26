@@ -1,192 +1,221 @@
 {
   "fiche_id": "bitcoin-is-not-the-new-gold-a-comparison-of-vola-W2799918576",
-  "written": "2026-09-24",
-  "written_by": "session d'extraction isolee (claude-opus-5)",
-  "claim": "Bitcoin n'est pas 'le nouvel or'. Sur donnees quotidiennes 2011-2017, Bitcoin partage avec Gold et Silver un seul trait de variance conditionnelle - un effet de levier INVERSE, la volatilite montant apres un rendement positif - mais s'en separe sur tout le reste. La correlation conditionnelle de Gold avec les indices actions BASCULE vers le negatif pendant les phases de detresse (fuite vers la qualite intacte), tandis que celle de Bitcoin MONTE vers le positif dans les memes phases : Bitcoin accompagne la baisse. Un portefeuille min-variance indice+Bitcoin ne couvre rien - il degrade meme le rendement moyen en detresse - la ou indice+Gold le releve nettement. Le resultat tient aussi pour l'indice large CRIX.",
-  "universe": "Sept series de prix quotidiens, du 2011-07-01 au 2017-12-31, synchronisees et amputees des week-ends pour aligner Bitcoin sur les marches conventionnels : Bitcoin (coindesk.com, prix de fin de journee, horodatage GMT), Gold et Silver en USD/oz, petrole WTI, et les trois indices actions S&P 500, MSCI World, MSCI Emerging Markets 50 (Datastream, horodatage GMT). 1 695 rendements par serie, calcules comme differences de logarithmes multipliees par 100. Robustesse sur l'indice large de cryptomonnaies CRIX (crix.hu-berlin.de), 891 rendements du 2014-08-01 au 2017-12-31. Aucun future, aucune donnee intraday, aucune coupe transversale : sept series de niveau agrege, etudiees par paires.",
-  "horizon": {
-    "value": null,
-    "reason": "Le papier ne predit rien et n'a donc pas d'horizon de prevision. Il decrit des proprietes contemporaines - variance conditionnelle, correlation conditionnelle, poids de portefeuille ex-post - sur une frequence quotidienne. La seule structure temporelle explicite est le retard d'un jour des modeles AR(1)-(FI)APARCH et BEKK, et les auteurs qualifient eux-memes l'exercice de portefeuille d'ex-post. Inscrire un horizon ici serait inventer une valeur."
-  },
-  "signal_construction": {
-    "value": "Deux quantites sont reellement constructibles a partir du papier, aucune n'est un score transversal. (1) La correlation conditionnelle par paire, issue d'un BEKK-GARCH diagonal bivarie (k=2) : Ht = C'C + A'eps_{t-1}eps'_{t-1}A + G'H_{t-1}G, A et G diagonales, C triangulaire inferieure, estime sur residus centres d'un AR(1) ; les correlations tracees sont lissees par un filtre Savitzky-Golay. (2) Le poids de portefeuille min-variance a deux composantes, w_t = argmin w'H_t w sous w'1 = 1, H_t venant du meme BEKK. Le conditionnement au regime, lui, se construit par un seuil de quantile empirique : VaR_q est le quantile q (1%, 5%, 10%) des rendements de l'indice sur TOUT l'echantillon, et les dates de detresse sont t* = {t | r_t < VaR_q}. Cote variance univariee, AR(1)-APARCH(1,1) et AR(1)-FIAPARCH(1,d,1) a erreurs de Student, avec troncature ARCH(infini) au retard 1 000 ; gamma dans (-1,1) porte l'asymetrie, d la memoire longue, delta la puissance.",
-    "note": "Attention, ce sont des briques d'analyse, pas un signal au sens du projet : rien ici ne produit un nombre par date et par instrument destine a etre trie en coupe. De plus le seuil VaR_q est calcule sur l'echantillon entier, donc en regard de l'invariant II il est look-ahead par construction et devrait etre reconstruit en fenetre glissante purgee."
-  },
-  "reported_results": [
-    {
-      "name": "n_daily_returns_per_series",
-      "value": 1695,
-      "unit": "observations",
-      "quoted": "Hence, we obtain 1 695 returns for each time series.",
-      "spelled_out": "1 695",
-      "note": "Serie quotidienne synchronisee 2011-07-01 -> 2017-12-31, week-ends exclus pour aligner Bitcoin sur les marches conventionnels."
-    },
-    {
-      "name": "wti_daily_std_dev_pct",
-      "value": 2.14,
-      "unit": "% par jour",
-      "quoted": "the WTI has the highest daily standard deviation with 2.14%.",
-      "note": "Reference de risque la plus haute parmi les cinq actifs conventionnels du panel."
-    },
-    {
-      "name": "bitcoin_daily_std_dev_pct",
-      "value": 5.76,
-      "unit": "% par jour",
-      "quoted": "standard deviation of 5.76% which is more than two times of the risk of WTI.",
-      "note": "C'est le chiffre structurant du papier : tout le reste (poids de portefeuille minuscules, correlations erratiques) en decoule."
-    },
-    {
-      "name": "bitcoin_uncond_corr_highest_pair_upper",
-      "value": 0.049,
-      "unit": "correlation de Pearson",
-      "quoted": "have the highest correlation with Bitcoin between 0.045 and 0.049.",
-      "note": "Les trois plus fortes correlations inconditionnelles de Bitcoin (Gold, S&P 500, MSCI World) tiennent dans la bande 0.045-0.049 : quasi-orthogonalite en moyenne d'echantillon."
-    },
-    {
-      "name": "gold_msci_world_uncond_corr",
-      "value": 0.059,
-      "unit": "correlation de Pearson",
-      "quoted": "but a positive correlation of 0.059 with MSCI World,",
-      "note": "Cite pour montrer que la correlation moyenne d'echantillon ne distingue pas Gold de Bitcoin : c'est le conditionnement au regime qui les separe."
-    },
-    {
-      "name": "bitcoin_sp500_uncond_corr",
-      "value": 0.0491,
-      "unit": "correlation de Pearson",
-      "quoted": "Bitcoin 1.0000 0.0459 0.0071 0.0158 0.0491 0.0457 0.0042",
-      "quoted_source": "Bitcoin 1.0000 0 .0459 0 .0071 0 .0158 0 .0491 0 .0457 0 .0042",
-      "quoted_repair": "table",
-      "spelled_out": "0 .0491",
-      "note": "Tab. 3, ligne Bitcoin, colonnes Bitcoin/Gold/Silver/WTI/S&P 500/MSCI World/MSCI EM50 ; la 5e valeur est la paire Bitcoin-S&P 500. L'extraction separe la partie entiere de la decimale."
-    },
-    {
-      "name": "gold_silver_uncond_corr",
-      "value": 0.6877,
-      "unit": "correlation de Pearson",
-      "quoted": "Gold 1.0000 0.6877 0.0655 −0.0366 0.0591 0.0840",
-      "quoted_source": "Gold 1.0000 0 .6877 0 .0655 −0.0366 0 .0591 0 .0840",
-      "quoted_repair": "table",
-      "spelled_out": "0 .6877",
-      "note": "Tab. 3, ligne Gold : la premiere valeur apres la diagonale est la paire Gold-Silver. Sert de temoin : deux actifs reellement semblables sont correles a 0.69, Bitcoin-Gold a 0.046."
-    },
-    {
-      "name": "bitcoin_daily_mean_return_pct",
-      "value": 0.4037,
-      "unit": "% par jour",
-      "quoted": "Mean 0.4037 −0.0079 −0.0407 −0.0267 0.0489 0.0363 0.0245",
-      "quoted_source": "Mean 0.4037 −0.0079 −0.0407 −0.0267 0 .0489 0 .0363 0 .0245",
-      "quoted_repair": "table",
-      "note": "Tab. 2, ligne Mean, meme ordre de colonnes. Rendement moyen quotidien de Bitcoin sur 1 695 jours, contre des moyennes negatives pour Gold, Silver et WTI."
-    },
-    {
-      "name": "bitcoin_aparch_leverage_gamma",
-      "value": -0.1972,
-      "unit": "parametre gamma",
-      "quoted": "γ −0.1972 −0.0368 −0.1748 0.9995 0.9995 0.9929 0.9982",
-      "quoted_source": "γ −0.1972∗∗∗ −0.0368 −0.1748∗ 0.9995∗∗∗ 0.9995∗∗∗ 0.9929∗∗∗ 0.9982∗∗∗",
-      "quoted_repair": "table",
-      "spelled_out": "−0.1972",
-      "note": "Tab. 4, ligne gamma. Gamma negatif = levier inverse (la volatilite monte apres un rendement POSITIF), signe partage avec Gold et Silver, oppose aux quatre autres actifs dont gamma avoisine +0.99. C'est le seul trait 'or' que le papier concede a Bitcoin."
-    },
-    {
-      "name": "bitcoin_fiaparch_long_memory_d",
-      "value": 0.7838,
-      "unit": "parametre d",
-      "quoted": "d 0.7838 0.3046 0.1163 0.9855 0.5390 0.4580 0.2836",
-      "quoted_source": "d 0.7838∗∗∗ 0.3046∗∗∗ 0.1163∗ 0.9855∗∗∗ 0.5390∗∗∗ 0.4580∗∗∗ 0.2836∗∗∗",
-      "quoted_repair": "table",
-      "note": "Tab. 5, ligne d. d=0.7838 pour Bitcoin contre 0.3046 pour Gold et 0.1163 pour Silver ; le papier lit d proche de zero comme forte persistance, donc Bitcoin est MOINS persistant que les metaux."
-    },
-    {
-      "name": "gold_sp500_bekk_corr_drop_in_distress_low",
-      "value": -0.4,
-      "unit": "correlation BEKK non lissee",
-      "quoted": "significant as (non-smoothed) correlations drop from 0.3 to -0.4 within a few trading days",
-      "quoted_source": "signiﬁcant as (non-smoothed) correlations drop from 0 .3 to −0.4 within a few trading",
-      "quoted_repair": "math_notation",
-      "spelled_out": "−0.4",
-      "note": "Fin 2015 / debut 2016. L'extraction disloque le 0.3 en '0 .3' et rend le signe moins par U+2212. Borne basse de l'amplitude 0.3 -> -0.4 en quelques seances : c'est la fuite vers la qualite, et c'est le comportement que Bitcoin n'a PAS."
-    },
-    {
-      "name": "bitcoin_sp500_bekk_corr_peak",
-      "value": 0.5,
-      "unit": "correlation BEKK non lissee",
-      "quoted": "peak up to 0.5 and get as low as −0.4.",
-      "note": "Bornes de la correlation dynamique Bitcoin-S&P 500 non lissee a partir de 2014. Le papier souligne que la correlation monte vers le positif PENDANT les baisses de l'indice : l'inverse d'un abri."
-    },
-    {
-      "name": "gold_mean_min_variance_weight_vs_sp500_pct",
-      "value": 36.98,
-      "unit": "% du portefeuille",
-      "quoted": "The average Gold weight is 36.98% for S&P 500,",
-      "note": "Poids moyen de Gold dans le portefeuille min-variance a deux composantes Gold/S&P 500, poids re-optimises a chaque date sur la covariance BEKK."
-    },
-    {
-      "name": "bitcoin_mean_min_variance_weight_range_low_pct",
-      "value": 2.92,
-      "unit": "% du portefeuille",
-      "quoted": "averages between 2.92% and 4.78%,",
-      "note": "Borne basse de la fourchette 2.92%-4.78% des poids moyens de Bitcoin face aux trois indices actions. Un optimiseur de variance ne lui accorde presque rien, ecart-type du poids du meme ordre que le poids lui-meme."
-    },
-    {
-      "name": "sp500_bitcoin_mv_portfolio_mean_return_distress_var001_pct",
-      "value": -3.6577,
-      "unit": "% par jour",
-      "quoted": "Return|VaR0.01 −3.5755 −3.6577 −1.0105 −3.4736 −3.4840 −1.1856 −3.2653 −3.0775 −1.0866",
-      "quoted_source": "Return|VaR0.01 −3.5755 −3.6577 −1.0105 −3.4736 −3.4840 −1.1856 −3.2653 −3.0775 −1.0866",
-      "quoted_repair": "table",
-      "spelled_out": "−3.6577",
-      "note": "Tab. 6 Panel C, ligne Return|VaR0.01 ; triplets (indice seul, +Bitcoin, +Gold) pour S&P 500, MSCI World, MSCI EM50. Le S&P 500 seul rend -3.5755 en detresse ; lui adjoindre Bitcoin AGGRAVE la perte a -3.6577."
-    },
-    {
-      "name": "sp500_gold_mv_portfolio_mean_return_distress_var001_pct",
-      "value": -1.0105,
-      "unit": "% par jour",
-      "quoted": "Return|VaR0.01 −3.5755 −3.6577 −1.0105 −3.4736 −3.4840 −1.1856 −3.2653 −3.0775 −1.0866",
-      "quoted_source": "Return|VaR0.01 −3.5755 −3.6577 −1.0105 −3.4736 −3.4840 −1.1856 −3.2653 −3.0775 −1.0866",
-      "quoted_repair": "table",
-      "spelled_out": "−1.0105",
-      "note": "Meme ligne, troisieme colonne du bloc S&P 500. Gold ramene la perte moyenne en detresse de -3.5755 a -1.0105 : c'est la couverture dont Bitcoin est depourvu. Ecart de 2.5 points de pourcentage par jour de detresse."
-    }
-  ],
-  "what_is_missing": [
-    "Aucun IC, aucun t-stat de prevision, aucun Sharpe : le papier ne produit aucune metrique predictive, seulement des parametres de variance, des correlations et des rendements moyens conditionnels.",
-    "Aucun cout de transaction, aucun spread, aucun slippage, aucun cout de financement ni de portage - l'exercice de portefeuille est explicitement ex-post et suppose un reequilibrage quotidien sans frais.",
-    "Les seuils de detresse VaR_q sont estimes sur l'echantillon complet (quantile empirique de toutes les T observations), ce qui injecte de l'information future dans la definition des dates t*. Aucune version en fenetre glissante n'est proposee.",
-    "Les poids min-variance sont derives de H_t issu d'un BEKK estime sur l'echantillon entier ; le papier ne dit pas si l'estimation est recursive, donc la reproductibilite point-in-time est indeterminee.",
-    "Aucune erreur-type sur les correlations dynamiques : les estimations de parametres BEKK sont annoncees 'available upon request' et ne figurent pas dans le texte. Les lectures de correlation reposent sur des figures.",
-    "La significativite des ecarts du Panel C n'est pas testee : les rendements moyens en detresse sont compares sans intervalle de confiance, alors que |t*| vaut environ 17 dates au seuil 1%.",
-    "Le nombre d'episodes de detresse est tres faible et les auteurs le reconnaissent : l'echantillon ne contient aucun marche baissier majeur et prolonge, seulement deux chocs courts (aout 2015, fin 2015/debut 2016).",
-    "Les parametres delta et d sont libres et estimes par actif ; aucune analyse de sensibilite du choix APARCH vs FIAPARCH n'est fournie au-dela d'une comparaison de BIC en echantillon.",
-    "Aucun test hors echantillon : tout est en echantillon, y compris le choix de modele par BIC.",
-    "Le filtre Savitzky-Golay utilise pour lisser les correlations n'a ni ordre ni demi-fenetre documentes ; un lissage centre serait en outre non causal.",
-    "Les tableaux et figures de l'annexe CRIX sont annonces 'To be made available in the supplementary material' et 'To be made available online' : la version du texte fourni ne contient pas tous les elements graphiques (Fig. B.12 notamment).",
-    "Aucun multiplicateur, tick, fuseau horaire de reference autre que GMT ni lag de publication ne sont documentes - sans objet pour un papier sur prix de cloture, mais a reconstruire integralement chez nous."
-  ],
+  "written": "2026-09-26",
+  "written_by": "extracteur-isole-2026-09-26-02",
   "source": {
     "authors": "Klein, T., Thu, H. P., & Walther, T.",
-    "title": "Bitcoin is not the New Gold - A comparison of volatility, correlation, and portfolio performance",
+    "title": "Bitcoin is not the New Gold – A comparison of volatility, correlation, and portfolio performance",
     "year": 2018,
+    "journal": "International Review of Financial Analysis, 59, 105-116",
+    "doi": "10.1016/j.irfa.2018.07.010",
     "source_url": "https://pureadmin.qub.ac.uk/ws/files/155247201/crypto_V2.pdf",
     "pdf": "corpus/pdf/bitcoin-is-not-the-new-gold-a-comparison-of-vola-W2799918576.pdf",
     "retrieved": "2026-09-22",
     "peer_reviewed": true,
-    "note": "Le fichier est la 'Peer reviewed version' deposee au Queen's University Belfast Research Portal (Working Paper Version 2 - May 21, 2018), de l'article paru dans International Review of Financial Analysis, 59, 105-116, doi 10.1016/j.irfa.2018.07.010. Revue a comite de lecture, mais le texte lu est le manuscrit accepte, pas la version d'editeur : une pagination et des chiffres pourraient differer a la marge."
+    "peer_reviewed_note": "Version acceptée (« Peer reviewed version ») d'un article publié dans l'International Review of Financial Analysis ; le PDF porte en pied « Working Paper Version 2 - May 21, 2018 »."
   },
+  "claim": {
+    "value": "Bitcoin n'est pas un « nouvel or » : sa volatilité partage avec l'or et l'argent un effet de levier inverse (la volatilité monte après un résidu positif), mais sa corrélation dynamique (BEKK-GARCH diagonal) avec les indices actions devient positive pendant les épisodes de détresse, là où celle de l'or devient négative (flight-to-quality). Dans un portefeuille de variance minimale à deux actifs, l'ajout de Bitcoin ne protège pas les jours où l'indice est sous sa VaR historique, alors que l'or le fait. Le papier est descriptif : il ne construit ni ne teste aucun signal prédictif.",
+    "quoted": [
+      "times of market distress. Our results show that Bitcoin behaves as the exact opposite",
+      "and it positively correlates with downward markets. Lastly, we analyze the properties of",
+      "Hence, we conclude from our ex-post portfolio exercise that in contrast to Gold, Bitcoin",
+      "does not provide a hedge for equity investments.",
+      "All three assets tend to have higher volatility, if the former"
+    ]
+  },
+  "universe": {
+    "value": "Sept séries journalières : Bitcoin (coindesk.com, prix de fin de journée GMT), or et argent en USD/oz, pétrole WTI, S&P 500, MSCI World, MSCI Emerging Markets 50 (Datastream, clôtures, horodatage GMT). Période 2011-07-01 à 2017-12-31, jours de semaine seulement (week-ends de Bitcoin retirés pour synchroniser), 1 695 rendements log par série. Robustesse sur l'indice crypto CRIX, 2014-08-01 à 2017-12-31, 891 rendements.",
+    "quoted": [
+      "In our analysis, we include a data set of six times series: the cryptocurrency Bitcoin,",
+      "time series cover the period from 2011-07-01 to 2017-12-31 and are synchronized.",
+      "points of each trading day. Data for these assets are obtained from Datastream with",
+      "the week to synchronize our dataset.6 Hence, we obtain 1 695 returns for each time series.",
+      "weekends) as before for the Bitcoin prices. Hence, we calculate 891 returns beginning"
+    ]
+  },
+  "horizon": {
+    "value": null,
+    "reason": "Le papier ne prédit rien : il décrit la structure de volatilité conditionnelle (APARCH/FIAPARCH) et les corrélations conditionnelles contemporaines (BEKK) sur rendements journaliers, puis évalue ex post un portefeuille de variance minimale. Aucun horizon de prévision n'est défini ; la seule granularité est le rendement journalier."
+  },
+  "signal_construction": {
+    "value": null,
+    "reason": "Aucun signal n'est construit. Les objets calculés — paramètres GARCH estimés sur tout l'échantillon, corrélations BEKK lissées par un filtre de Savitzky-Golay (bilatéral), poids de variance minimale « ex-post », seuils de VaR empiriques calculés sur l'échantillon entier — ne sont pas des scores point-in-time."
+  },
+  "reported_results": [
+    {
+      "name": "bitcoin_daily_return_std_pct",
+      "value": 5.76,
+      "unit": "% par jour",
+      "quoted": "standard deviation of 5.76% which is more than two times of the risk of WTI.",
+      "note": "Écart-type des rendements log journaliers ×100 de Bitcoin, 2011-07 à 2017-12, jours de semaine."
+    },
+    {
+      "name": "wti_daily_return_std_pct",
+      "value": 2.14,
+      "unit": "% par jour",
+      "quoted": "assets, the WTI has the highest daily standard deviation with 2.14%.",
+      "note": "Le plus volatil des cinq actifs conventionnels ; même échantillon."
+    },
+    {
+      "name": "bitcoin_mean_daily_return_pct",
+      "value": 0.4037,
+      "unit": "% par jour",
+      "quoted": "Mean 0.4037",
+      "note": "Tableau 2, colonne Bitcoin. Moyenne sur échantillon, sans rien de prédictif."
+    },
+    {
+      "name": "unconditional_corr_bitcoin_sp500",
+      "value": 0.0491,
+      "unit": "corrélation de Pearson",
+      "quoted": "Bitcoin 1.0000 0.0459 0.0071 0.0158 0.0491 0.0457 0.0042",
+      "quoted_source": "Bitcoin 1.0000 0 .0459 0 .0071 0 .0158 0 .0491 0 .0457 0 .0042",
+      "quoted_repair": "table",
+      "spelled_out": "0 .0491",
+      "note": "Tableau 3, ligne Bitcoin ; colonnes dans l'ordre Bitcoin, Gold, Silver, WTI, S&P 500, MSCI World, MSCI EM50. La corrélation Bitcoin–or est 0.0459."
+    },
+    {
+      "name": "unconditional_corr_bitcoin_max_vs_gold_sp500_msciworld",
+      "value": 0.049,
+      "unit": "corrélation de Pearson",
+      "quoted": "have the highest correlation with Bitcoin between 0.045 and 0.049.",
+      "note": "Borne haute de la fourchette annoncée pour or, S&P 500 et MSCI World : corrélation inconditionnelle quasi nulle."
+    },
+    {
+      "name": "unconditional_corr_gold_msciworld",
+      "value": 0.059,
+      "unit": "corrélation de Pearson",
+      "quoted": "correlation with S&P 500, but a positive correlation of 0.059 with MSCI World, which",
+      "note": "L'or est légèrement négativement corrélé au S&P 500 (Tableau 3 : −0.0366)."
+    },
+    {
+      "name": "gold_sp500_bekk_corr_low_in_distress_2015_2016",
+      "value": -0.4,
+      "unit": "corrélation conditionnelle BEKK (non lissée)",
+      "quoted": "correlations drop from 0 .3 to −0.4 within a few trading",
+      "spelled_out": "−0.4",
+      "note": "Chute de la corrélation or–S&P 500 pendant l'épisode de détresse fin 2015 / début 2016, en quelques séances (0.3 → −0.4). Lecture graphique rapportée par les auteurs."
+    },
+    {
+      "name": "bitcoin_sp500_bekk_corr_peak_unsmoothed",
+      "value": 0.5,
+      "unit": "corrélation conditionnelle BEKK (non lissée)",
+      "quoted": "peak up to 0.5 and get as low as −0.4.",
+      "note": "Amplitude de la corrélation Bitcoin–S&P 500 à partir de 2014 ; minimum −0.4. La corrélation est décrite comme très erratique."
+    },
+    {
+      "name": "bitcoin_corr_rises_in_distress",
+      "value": null,
+      "quoted": "correlations are steeply increasing from negative to a positive relationship while the index",
+      "note": "Résultat qualitatif central : pendant les baisses de l'indice, la corrélation Bitcoin–actions passe de négative à positive ; même comportement avec le MSCI World. Seulement deux épisodes de détresse dans l'échantillon (août 2015, fin 2015/début 2016)."
+    },
+    {
+      "name": "bitcoin_aparch_leverage_gamma",
+      "value": -0.1972,
+      "unit": "paramètre γ APARCH",
+      "quoted": "γ −0.1972∗∗∗",
+      "spelled_out": "−0.1972",
+      "note": "Tableau 4, AR(1)-APARCH à erreurs de Student, significatif à 1 %. Négatif = effet de levier inverse (volatilité plus forte après un résidu positif), comme l'argent (−0.1748) ; S&P 500 et MSCI World ont γ proche de 1. Avec des erreurs normales, les auteurs ne retrouvent pas l'effet (réplication de Dyhrberg 2016)."
+    },
+    {
+      "name": "bitcoin_fiaparch_long_memory_d",
+      "value": 0.7838,
+      "unit": "paramètre d FIAPARCH",
+      "quoted": "d 0.7838∗∗∗ 0.3046∗∗∗ 0.1163∗ 0.9855∗∗∗ 0.5390∗∗∗ 0.4580∗∗∗ 0.2836∗∗∗",
+      "note": "Tableau 5 ; colonnes Bitcoin, Gold, Silver, WTI, S&P 500, MSCI World, MSCI EM50."
+    },
+    {
+      "name": "bitcoin_fiaparch_bic",
+      "value": 9505.46,
+      "unit": "BIC",
+      "quoted": "BIC 9505.46",
+      "note": "Tableau 5 (FIAPARCH) ; à comparer au BIC APARCH de Bitcoin, 9574.96 (Tableau 4). FIAPARCH préféré pour Bitcoin, S&P 500 et MSCI World ; APARCH pour or, argent, WTI, MSCI EM50."
+    },
+    {
+      "name": "bitcoin_minvar_weight_mean_upper_pct",
+      "value": 4.78,
+      "unit": "% du portefeuille",
+      "quoted": "lio with the three stock indices and averages between 2.92% and 4.78%, while having a",
+      "note": "Poids moyen de Bitcoin dans le portefeuille de variance minimale à deux actifs avec chacun des trois indices : entre 2.92 % et 4.78 %."
+    },
+    {
+      "name": "gold_minvar_weight_mean_sp500_pct",
+      "value": 36.98,
+      "unit": "% du portefeuille",
+      "quoted": "portfolio or is even short sold. The average Gold weight is 36.98% for S&P 500, 30.88%",
+      "note": "30.88 % avec le MSCI World, 42.70 % avec le MSCI EM50."
+    },
+    {
+      "name": "sp500_historical_var_1pct",
+      "value": -2.5438,
+      "unit": "% par jour",
+      "quoted": "VaR0.01 −2.5438 −2.3171 −2.5096",
+      "spelled_out": "−2.5438",
+      "note": "Tableau 6 panel B : quantile empirique à 1 % des rendements du S&P 500 sur tout l'échantillon (puis MSCI World, MSCI EM50). Seuil calculé sur l'échantillon entier, donc ex post."
+    },
+    {
+      "name": "sp500_alone_mean_return_below_var1",
+      "value": -3.5755,
+      "unit": "% par jour",
+      "quoted": "Return|VaR0.01 −3.5755 −3.6577 −1.0105 −3.4736 −3.4840 −1.1856 −3.2653 −3.0775 −1.0866",
+      "spelled_out": "−3.5755",
+      "note": "Tableau 6 panel C : rendement moyen du S&P 500 seul les jours où il est sous sa VaR à 1 %. Colonnes : S&P 500, Bitcoin, Gold, MSCI World, Bitcoin, Gold, MSCI EM50, Bitcoin, Gold."
+    },
+    {
+      "name": "btc_sp500_minvar_mean_return_below_var1",
+      "value": -3.6577,
+      "unit": "% par jour",
+      "quoted": "Return|VaR0.01 −3.5755 −3.6577 −1.0105 −3.4736 −3.4840 −1.1856 −3.2653 −3.0775 −1.0866",
+      "spelled_out": "−3.6577",
+      "note": "Même ligne : le portefeuille de variance minimale S&P 500 + Bitcoin fait pire que l'indice seul les jours de détresse — pas de couverture."
+    },
+    {
+      "name": "gold_sp500_minvar_mean_return_below_var1",
+      "value": -1.0105,
+      "unit": "% par jour",
+      "quoted": "Return|VaR0.01 −3.5755 −3.6577 −1.0105 −3.4736 −3.4840 −1.1856 −3.2653 −3.0775 −1.0866",
+      "spelled_out": "−1.0105",
+      "note": "Même ligne : le portefeuille S&P 500 + or perd nettement moins les jours de détresse. Poids de variance minimale calculés à partir de la covariance BEKK estimée sur tout l'échantillon."
+    },
+    {
+      "name": "btc_sp500_minvar_volatility",
+      "value": 0.9044,
+      "unit": "% par jour",
+      "quoted": "Volatility 0.8859 0.9044 0.6483",
+      "quoted_source": "Volatility 0.8859 0 .9044 0 .6483",
+      "quoted_repair": "table",
+      "spelled_out": "0 .9044",
+      "note": "Tableau 6 panel C : volatilité du S&P 500 seul 0.8859, du portefeuille avec Bitcoin 0.9044 (hausse), avec l'or 0.6483 (baisse)."
+    }
+  ],
+  "what_is_missing": [
+    "aucun signal ni aucune prévision : toutes les mesures sont contemporaines ou ex post",
+    "les paramètres BEKK ne sont pas publiés (« available upon request »)",
+    "les poids de variance minimale et les seuils de VaR sont calculés sur l'échantillon entier : le test de couverture est in-sample",
+    "le lissage de Savitzky-Golay est bilatéral et sa fenêtre n'est pas donnée",
+    "les épisodes de détresse sont identifiés à l'œil (deux épisodes seulement pour le S&P 500) ; aucun test de significativité du changement de corrélation",
+    "aucun coût de transaction, aucun rééquilibrage chiffré pour le portefeuille",
+    "prix spot Bitcoin d'un agrégateur (coindesk), pas de futures ; les futures CME/CBOE n'apparaissent qu'en décembre 2017, fin d'échantillon",
+    "les week-ends de Bitcoin sont retirés, ce qui cumule les rendements du week-end dans celui du lundi sans que l'effet soit mesuré",
+    "annexe B (graphiques) et une partie de l'annexe A annoncées comme matériel supplémentaire"
+  ],
   "transposability": {
-    "what_transfers": "Le MOTIF, pas les chiffres. Trois choses passent chez nous. (1) La methode de definition d'un regime de detresse par quantile empirique des rendements d'un instrument de reference, t* = {t | r_t < VaR_q}, a trois seuils declares d'avance (1%, 5%, 10%) - a condition de recalculer le quantile en fenetre glissante purgee au lieu de l'echantillon entier. (2) L'idee de test qui mord : ne pas se contenter de la correlation moyenne mais comparer une statistique CONDITIONNEE au regime a la meme statistique inconditionnelle. C'est exactement la forme d'un signal hybride au sens de notre vocabulaire, et le papier montre que la moyenne d'echantillon masque entierement le phenomene (Gold et Bitcoin ont tous deux une correlation inconditionnelle voisine de 0.05 avec MSCI World, et des comportements opposes en detresse). (3) Le trait de variance conditionnelle - levier inverse, signe de gamma - comme variable de classification d'un instrument, calculable sur nos neuf futures avec un APARCH quotidien et utilisable comme entree de taxonomie a l'etape 06.",
-    "what_does_not_transfer": [
-      "Les instruments : aucun des sept actifs du papier n'est un future intraday de notre univers. Bitcoin n'y figure pas, Gold et WTI n'y figurent qu'eventuellement sous forme de futures, jamais en prix spot USD/oz ni en index points.",
-      "La frequence : tout le papier est quotidien, sur prix de cloture. Notre univers est intraday ; la memoire longue, l'asymetrie et les correlations BEKK mesurees a l'echelle du jour ne se reportent pas telles quelles a l'echelle de la barre intraday, ou la saisonnalite intra-journaliere domine.",
-      "La metrique : le papier juge par rendement moyen conditionnel, volatilite de portefeuille et poids min-variance. Nous jugeons par IC issu du harnais officiel. Aucun chiffre du papier n'est comparable a un IC, et aucun ne peut servir de cible de replication.",
-      "La structure du test : le papier est bivarie, par paires, sans coupe transversale. Notre harnais evalue un score transversal sur neuf instruments a une date. Il n'y a pas de tri a repliquer.",
-      "Le seuil de detresse calcule sur l'echantillon entier : c'est du look-ahead, interdit par l'invariant II. Il doit etre reconstruit, ce qui change sa valeur et probablement ses conclusions.",
-      "L'exercice de portefeuille ex-post lui-meme : reequilibrage quotidien sans frais, poids non contraints admettant des ventes a decouvert que le papier reconnait irrealisables pour Bitcoin avant decembre 2017.",
-      "La conclusion economique - 'Bitcoin n'est pas l'or' - n'a aucun contenu operatoire chez nous : elle porte sur la nature d'un actif absent de notre catalogue.",
-      "Le regime de marche etudie : un echantillon 2011-2017 sans crise majeure, avec deux chocs courts seulement. Notre tranche pool couvre 2016-2023, qui contient mars 2020 et 2022 ; la rarete des episodes de detresse qui limite le papier ne nous limite pas de la meme facon.",
-      "La correlation conditionnelle BEKK comme sortie : elle n'est ni un score ni un classement, et son estimation est lissee a posteriori par un filtre Savitzky-Golay centre, donc non causal.",
-      "Le comptage de tests : le papier ne declare aucun compte d'hypotheses testees, alors que sept actifs x deux modeles x trois seuils de VaR x plusieurs paires representent une surface de recherche importante. Rien ne peut etre repris de sa significativite sans recompter chez nous (invariant III)."
+    "what_transfers": [
+      "le motif de régime : la corrélation or–actions devient négative quand l'indice actions chute (flight-to-quality), celle de Bitcoin devient positive ; un régime « détresse actions » défini par un seuil de rendement pourrait conditionner un signal cross-asset (hybride)",
+      "l'effet de levier inverse de l'or, de l'argent et de Bitcoin (volatilité plus forte après une hausse) contre l'effet de levier classique des indices actions et du WTI : utile pour un signal de volatilité asymétrique dont le signe dépend de la classe d'actif",
+      "l'avertissement méthodologique : l'effet de levier de Bitcoin n'apparaît qu'avec des erreurs à queues épaisses ; le choix de distribution change la conclusion"
     ],
-    "what_aligns_well": "Deux alignements reels. D'abord la discipline du conditionnement : le papier est une demonstration propre que la statistique inconditionnelle et la statistique conditionnee au regime peuvent pointer en sens opposes, ce qui est precisement le pari de notre etape 05 (regimes) et justifie que le harnais decompose l'IC par regime plutot que de ne rendre qu'un agregat. Ensuite la posture : les auteurs declarent leurs limites - taille d'echantillon, rarete des episodes de detresse, instabilite numerique du DCC les ayant fait basculer sur BEKK - et ne surinterpretent pas. Le seuil VaR_q et ses trois niveaux sont fixes avant mesure et enonces dans la section methodologie, soit l'esprit de notre invariant IV. Enfin l'usage du signe de gamma comme signature d'un actif est directement reutilisable comme descripteur de taxonomie, sans avoir a reprendre une seule valeur du papier."
+    "what_does_not_transfer": [
+      "fréquence journalière, clôtures GMT synchronisées : rien n'est mesuré en intraday",
+      "aucun IC, aucune prévision : les résultats sont des corrélations contemporaines et des paramètres GARCH, pas une relation score → rendement futur",
+      "poids de variance minimale, seuils de VaR et lissage calculés avec l'échantillon entier : look-ahead par construction, inutilisable tel quel",
+      "sous-jacents spot et indices (MSCI World, MSCI EM50, CRIX) plutôt que des contrats futures ; Bitcoin échangé 7 jours sur 7 contre des futures à séances",
+      "échantillon 2011-2017 avec deux épisodes de détresse seulement ; les auteurs eux-mêmes demandent de retester sur un marché crypto mûri",
+      "la question posée (valeur de couverture dans un portefeuille long) n'est pas celle d'un opérateur qui cherche un signal directionnel"
+    ],
+    "what_aligns_well": [
+      "l'or et le pétrole WTI (et un indice actions type S&P 500) sont des sous-jacents qu'un univers de futures couvre typiquement : le régime de corrélation or–actions en détresse est testable chez nous en point-in-time",
+      "la définition des jours de détresse par un quantile de rendement de l'indice est simple à rendre point-in-time (quantile glissant au lieu du quantile plein échantillon)"
+    ]
   }
 }
