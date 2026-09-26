@@ -22,7 +22,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 |---|---|
 | **Phase courante** | 09 — premier passage complet sur 30 à 50 papiers |
 | **Dernière porte franchie** | **08**, le 2026-09-23 — `scripts/gate_08.py`. Un signal produit par une session de codage séparée tient les **six conditions de `D23` au premier essai**, et aucun signal produit n'a été retouché à la main. |
-| **Décision la plus récente** | `decisions/DECISION-26-encadrement-des-frais.md` — les frais par contrat sont |
+| **Décision la plus récente** | `decisions/DECISION-27-l-instant-de-troncature.md` — le test de causalité tronque **à la barre scorée**, plus une minute après : les barres sont |
 | **Tests au registre** | 169 |
 | **Idées abandonnées recensées** | 59 |
 | **Entrées au journal** | 76 |
@@ -151,6 +151,41 @@ est acquis :
 modèle local de taille comparable **avec sortie JSON contrainte** (`format:
 json` d'ollama, ou un modèle entraîné à l'appel d'outil). L'essai ci-dessus ne
 l'avait pas, et c'est peut-être tout ce qui manquait.
+
+### Revue du 2026-09-26 — ce qui reste à traiter avant de mesurer
+
+Une revue complète du dépôt (gardes relancés en lecture seule, registre 169 →
+169) a trouvé huit points. **Le premier est corrigé (`D27`).** Les sept autres
+sont ouverts, du plus grave au moins grave :
+
+1. ~~Le test de causalité laissait passer une barre de futur.~~ **Corrigé, `D27`.**
+2. **Des tests peuvent échapper au dénominateur.** Une mesure avec
+   `hypothesis_ref=None` compte comme calibration : `counted_tests()` l'ignore et
+   `gate_09.py` ne cherche que les lignes portant la `ref` d'une hypothèse. À
+   fermer dans `gate_09` : refuser tout signal du lot ayant une autre ligne au
+   registre. Et `harness/registry.settle()` applique `extra` **après** les champs
+   du ticket, donc peut écraser `hypothesis_ref` — à noter pour la prochaine
+   décision qui touchera le harnais.
+3. **Les plis du walk-forward ne sont tranchés nulle part.** `D04` les a
+   renvoyés en phase 09 ; ni `D25` ni `gate_09` n'en parlent. À écrire avant le
+   lot.
+4. **11 fiches moissonnées sans trace de production** — 18 fichiers dans
+   `corpus/fiches_harvest/`, 7 seulement dans `PRODUCED_harvest.json`. `G3`
+   n'est pas mesurable pour elles (`L22`). `cryptocurrencies-and-momentum`
+   casse en plus `F1` et `F3`.
+5. **`value_in_quote` retire toutes les virgules** : `17.71,18.22` devient
+   `17.7118.22` (faux refus), `{12,6,1}` devient `1261` (faux accord possible).
+6. **`extract_text.py --check` ne vérifie que les PDF présents sur le poste** :
+   « conforme, 34 fichiers » quand le manifeste en porte 104. Et
+   `extract_text.py` sans `--check` réécrirait le manifeste à 34 entrées, en
+   perdant les 70 textes moissonnés sans rien dire.
+7. **Le piège `ruff format`** n'est toujours pas désamorcé dans
+   `pyproject.toml` (exclure `harness/`).
+8. **Ce fichier retarde sur le dépôt** : point 9 de § Donc, dans l'ordre (le
+   correctif de `signal_construction` est fait depuis le 2026-09-25), « 6 fiches
+   sur 35 », « 36 fichiers » de texte (`--check` en compte 34), les fuites de
+   `SCHEMA.md` à la fois fermées et ouvertes. Et `F55`–`F59` du ledger sont
+   écrites **hors du tableau**, après « Voir aussi ».
 
 ### Ce que la phase 09 demande
 
