@@ -440,7 +440,9 @@ def _fournisseur(model: str) -> tuple[str, str, str]:
     return base, reste, cle
 
 
-def appel_openai(model: str, messages: list[dict], num_ctx: int) -> dict:
+def appel_openai(
+    model: str, messages: list[dict], num_ctx: int, json_force: bool = True
+) -> dict:
     """Un appel `/chat/completions`, normalise dans la forme que rend `appel()`.
 
     `num_ctx` est ignore — aucun de ces services ne le prend — mais il reste
@@ -456,7 +458,10 @@ def appel_openai(model: str, messages: list[dict], num_ctx: int) -> dict:
         "model": nom,
         "messages": messages,
         "temperature": 0,
-        "response_format": {"type": "json_object"},
+        # LE FORCAGE JSON N'EST PAS UNIVERSEL : le codeur de signal rend du
+        # PYTHON, pas un objet. L'imposer la ferait rendre du code enveloppe
+        # dans une chaine JSON, donc inexploitable.
+        **({"response_format": {"type": "json_object"}} if json_force else {}),
     }).encode("utf-8")
     req = urllib.request.Request(
         f"{base}/chat/completions",
@@ -534,10 +539,13 @@ def attente_conseillee(corps: str) -> float | None:
     return None
 
 
-def appel_avec_attente(model: str, messages: list[dict], num_ctx: int) -> dict:
+def appel_avec_attente(
+    model: str, messages: list[dict], num_ctx: int, json_force: bool = True
+) -> dict:
     """Appelle le backend, et ATTEND sur un code retentable plutot que d'abandonner."""
     if est_openai(model):
-        fonction = appel_openai
+        def fonction(m, msg, ctx):
+            return appel_openai(m, msg, ctx, json_force)
     elif est_gemini(model):
         fonction = appel_gemini
     else:
