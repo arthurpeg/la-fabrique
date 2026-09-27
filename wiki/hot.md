@@ -1,6 +1,6 @@
 ---
 type: hub
-updated: 2026-09-26
+updated: 2026-09-27
 status: genere
 sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 ---
@@ -12,7 +12,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 > Toute modification hors du bloc « Prochaines actions » sera perdue.
 > Pour changer ce qui s'affiche ici, édite `wiki/log.md` ou `ETAT.md`.
 
-*Régénérée le 2026-09-26.*
+*Régénérée le 2026-09-27.*
 
 ---
 
@@ -25,7 +25,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Décision la plus récente** | `decisions/DECISION-29-plis-du-walk-forward.md` — **pas de plis en phase 09.** Rien n'y est ajusté sur le `pool` : les constantes viennent de la fiche (`S5`), |
 | **Tests au registre** | 169 |
 | **Idées abandonnées recensées** | 59 |
-| **Entrées au journal** | 83 |
+| **Entrées au journal** | 84 |
 
 ## Ce qui bloque
 
@@ -194,8 +194,12 @@ sont ouverts, du plus grave au moins grave :
    `check_provenance.py` (44 vérifications), vus échouer avant la correction.
    Rejoué vert : catalogue, gardes des fiches, portes 07 et 08, 17 fiches
    `AMORCE` sur 17, 17 moissonnées sur 18. `L28` : le faux refus avait déjà
-   poussé un extracteur vers la soupape `spelled_out`. **Reste ouvert** : le
-   signe moins typographique `−` (U+2212), non lu comme signe par `NUMBER`.
+   poussé un extracteur vers la soupape `spelled_out`. ~~**Reste ouvert** : le
+   signe moins typographique `−` (U+2212)~~ — **corrigé le 2026-09-27**. Mais
+   l'inventaire du même jour montre **83 `spelled_out` chiffrés sur 95** dans le
+   corpus, dont 16 encore nécessaires : restreindre `spelled_out` aux mots est
+   une décision sur le juge de `D16`, qui ferait tomber des fiches de la porte
+   07 — **non tranchée** (`D09` § Journal).
 6. ~~`extract_text.py --check` ne vérifiait que les PDF présents.~~ **Corrigé
    le 2026-09-26.** `--check` part du manifeste et nomme les entrées non
    vérifiables faute de PDF ; sans `--check`, ces entrées sont conservées telles
@@ -252,7 +256,18 @@ registre **entier**, les 56 tests antérieurs compris.
 
 ### Ce qui bloque la phase 09, maintenant que le budget est fixé
 
-1. **Au 2026-09-26 : 35 fiches, et le lot demande 50 SIGNAUX.** 17 fiches
+1. **Au 2026-09-27 : 51 fiches, et le lot demande 50 SIGNAUX.** 17 `AMORCE`
+   + **34 moissonnées**, toutes tracées ; 50 vertes sur ce poste, la
+   cinquante-et-unième (`bitcoin-is-not-the-new-gold`) pour `F4` seulement. Le
+   corpus moissonné est **épuisé** : il ne reste que l'APAC, bloqué (`L20`).
+   **La marge est donc d'une fiche**, avant même de retirer celles qui ne se
+   transposent pas — revues de littérature (`multifractal-analysis`,
+   `from-the-bird-s-eye…`), papiers théoriques sans données
+   (`on-covariance-estimation…`, `realized-power-variation…`), cryptos, actions
+   chinoises ou du Moyen-Orient. **Le lot de 50 ne tiendra pas en l'état** :
+   amender `D25` par écrit, ou relancer un moissonnage (`D20`, `D21`), est une
+   décision à prendre **avant** de coder les signaux.
+   *État au 2026-09-26, conservé :* **35 fiches, et le lot demande 50 SIGNAUX.** 17 fiches
    `AMORCE` (porte 07) et **18 moissonnées**, toutes tracées dans
    `PRODUCED_harvest.json` (17 vertes sur ce poste, la dix-huitième pour `F4`,
    point 4 de la revue). **17 candidats moissonnés restent à ficher**, dont
@@ -807,6 +822,7 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-09-27 | `extraction` | **LE CORPUS MOISSONNE EST EPUISE : 51 FICHES, POUR UN LOT DE 50.** Les 16 candidats fichables restants ont ete fiches par 16 sessions isolees, `--record` avant tout `--judge` : 14 vertes au premier essai, 2 refusees sur `F2` (citation non recopiee a la lettre : un mot manquant ; six passages ou l'extraction a perdu des symboles), renvoyees a leur session, vertes au second — **18 essais pour 16 fiches**. Le dix-septieme candidat, l'APAC, reste bloque (`L20`). Total : 17 `AMORCE` + 34 moissonnees, 50 vertes sur ce poste, la 51e (`bitcoin-is-not-the-new-gold`) pour `F4` seul | **Marge d'une fiche**, avant de retirer revues de litterature, papiers theoriques sans donnees et papiers hors univers : le lot de 50 de `D25` ne tiendra pas en l'etat — amender `D25` ou remoissonner, AVANT de coder. Au passage : `value_in_quote` lit le signe `−` (U+2212), 4 cas ajoutes a `check_provenance` (48 verifications), tout rejoue vert. **Inventaire** : 83 `spelled_out` chiffres sur 95 dans le corpus (soupape de `L28`, y compris dans 5 fiches `AMORCE`), 67 devenus inutiles, 16 encore necessaires ; restreindre `spelled_out` aux mots ferait tomber des fiches de la porte 07 — decision non prise (`D09` § Journal). Registre 169 -> 169. |
 | 2026-09-26 | `documentation` | **`ETAT.md` ET LE LEDGER REMIS EN ACCORD AVEC LE DEPOT.** Huitieme et dernier point de la revue du jour. `ETAT.md` annoncait encore « 6 fiches sur 35 », « il manque 33 fiches », le point 9 (`signal_construction`) ouvert alors que le correctif date du 2026-09-25, les points 10 et 11 a faire alors que la porte 07 est franchie depuis le 2026-09-23, les fuites de `SCHEMA.md` a la fois fermees et ouvertes, les multiplicateurs CME manquants alors qu'ils sont deposes depuis le 2026-09-24, et « 36 fichiers » de texte quand le manifeste en porte 104 | Enonces perimes **barres et dates**, rien d'efface. Etat courant ecrit en tete du point 1 de § Ce qui bloque la phase 09 : **35 fiches (17 `AMORCE` + 18 moissonnees), 17 candidats restants, pour un lot de 50 signaux** — marge nulle, rognee par la pertinence douteuse d'une partie des papiers moissonnes et par `D28` (`H01`/`H02` exclus) ; a trancher avant de clore le lot. Ledger : `F55`–`F59` avaient ete ecrites APRES « Voir aussi », hors du tableau ; deplacees sous `F54`, contenu identique (verifie : memes lignes, `F01`–`F59` dans l'ordre). |
 | 2026-09-26 | `outillage` | **LE PIEGE `ruff format` EST DESAMORCE.** Septieme point de la revue du jour, signale dans `ETAT.md` depuis le 2026-09-19 et jamais ferme : `ruff format` reformaterait 4 des 7 fichiers de `harness/`, changerait l'empreinte (`code_hash` porte sur le contenu) et perimerait les 56 tests comptes | `pyproject.toml` : `[tool.ruff.format] exclude = ["harness/**"]` et `force-exclude = true` (un chemin nomme explicitement est exclu lui aussi). Verifie en lancant le formateur pour de bon sur une copie : harnais intact, empreinte `9ac3e45e` inchangee, 0 fichier de `harness/` parmi les 64 que `ruff format --check .` reformaterait. `ruff check` lit toujours le harnais. Non couvert : `ruff check --fix`. |
 | 2026-09-26 | `correctif` | **`extract_text.py` PART DU MANIFESTE, PAS DU DISQUE.** Sixieme point de la revue du jour. `--check` ne verifiait que les PDF presents sur le poste et annoncait « conforme, 34 fichiers » quand le manifeste en portait 104 (`L21`) ; sans `--check`, le manifeste etait reecrit a partir du seul disque et un passage sur un poste incomplet aurait efface en silence les entrees des papiers absents | `--check` nomme les entrees NON VERIFIABLES faute de PDF et dit « N verifies sur M » ; l'ecriture CONSERVE ces entrees telles quelles, et refuse si `pypdf` a change alors que des entrees ne peuvent pas etre reproduites ici (`D19`). Teste dans une copie isolee du depot : 2 PDF presents, manifeste reecrit identique au contenu (100 entrees conservees), version changee -> refus. Sur ce poste : **100 verifies sur 104**, non verifiables `bitcoin-is-not-the-new-gold` (PDF local qui n'est pas le bon) et `gao-2018-market-intraday-momentum` (entree 1 inatteignable, `F53`, `L20`). Les 34 PDF moissonnes copies dans `corpus/pdf/` rendent exactement le texte du manifeste. Registre 169 -> 169. |
@@ -814,7 +830,6 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 | 2026-09-26 | `extraction` | **LES 11 FICHES MOISSONNEES SANS TRACE ONT ETE REFAITES PAR 11 SESSIONS ISOLEES.** Quatrieme point de la revue du jour : 18 fiches dans `corpus/fiches_harvest/`, 7 seulement dans `PRODUCED_harvest.json` — `G3` non mesurable pour 11 (`L22`), et `cryptocurrencies-and-momentum` cassait `F1`/`F3`. Protocole : anciennes fiches retirees du disque (elles restent dans l'historique git) AVANT le lancement, 11 consignes regenerees, 11 sessions en parallele ne lisant que leur consigne (limite `L26` inchangee : `CLAUDE.md` injecte), `--record` de chaque fiche AVANT tout `--judge`, verdict renvoye a la meme session en cas de refus | **12 essais pour 11 fiches** : 10 vertes au premier essai, `cryptocurrencies-and-momentum` au second — elle a contourne le bogue de `value_in_quote` (virgules collees, `17.71,18.22` -> `17.7118.22`) par un `spelled_out` recopiant le nombre de la citation, usage documente par `corpus/SCHEMA.md` mais qui fait de `spelled_out` la soupape de toute faille de `value_in_quote`. Etat : 18 fiches tracees, **17 vertes sur ce poste**. `bitcoin-is-not-the-new-gold` ne tient pas `F4` ici, volontairement : son PDF local ne rend pas le texte du manifeste, ce n'est pas le document qui fait foi, il n'a pas ete copie. 33 PDF promus copies dans `corpus/pdf/` apres controle d'empreinte ; `intraday-volatility-transmission` copie malgre des octets differents car son texte est identique au manifeste. Registre 169 -> 169. |
 | 2026-09-26 | `decision` | **D29 — PAS DE PLIS EN PHASE 09 : UNE MESURE UNIQUE SUR TOUT LE `pool`.** Troisieme point de la revue du jour. `D04` renvoyait le nombre de plis du walk-forward a la phase 09 ; ni `D25` ni `gate_09` n'en parlaient. Un walk-forward protege d'un parametre AJUSTE sur les donnees ou on le juge ; en phase 09 rien ne l'est — constantes tirees de la fiche (`S5`), estimations au passe seulement (`S3`, resolution d'une barre depuis `D27`), ce qui est deja un walk-forward ancre a purge automatique | Chaque hypothese du lot est mesuree une fois, sur tout le `pool`, a `asof` = 2023-12-29 20:00 UTC : l'instant des 56 tests comptes, jusqu'ici simple convention, desormais exige par `gate_09.py` (`SLICE_REQUIRED`, `ASOF_REQUIRED` ; une mesure a un autre instant est hors protocole). `--check` : **21 verifications**, dont la fin de tranche relue dans le catalogue. Plis obligatoires au premier ajustement (phases 12-14). Sacrifies et ecrits : pas de diagnostic de stabilite par annee (a mettre au harnais avec `D26`/`D28`) ; le biais de publication, qu'aucun pli ne leverait — le holdout reste la seule mesure hors echantillon. Registre 169 -> 169. |
 | 2026-09-26 | `decision` | **D28 — AUCUNE LIGNE DU REGISTRE NE TOUCHE LE LOT HORS DE SA MESURE OFFICIELLE.** Deuxieme point de la revue du jour. Une mesure faite par `evaluate()` sans `hypothesis_ref` est une calibration : elle ecrit sa ligne (invariant III tenu) mais `counted_tests()` l'ignore et `gate_09.py` ne cherchait que les lignes portant la `ref` d'une hypothese. Mesurer les signaux « en calibration », garder ceux qui plaisent et ne declarer qu'eux au lot aurait franchi la porte 09 sur un lot qui n'etait plus aveugle | `gate_09.py` : `lignes_hors_protocole()` refuse toute ligne portant le `signal_id` ou la `ref` d'une entree du lot sans en etre la mesure officielle (`09-passage`, harnais courant, `ref` et `signal_id` concordants). `--check` : 12 -> **19 verifications**, six fraudes fabriquees refusees. Branchement verifie hors depot sur un lot fabrique : propre -> FRANCHIE, avec une calibration du signal -> NON FRANCHIE. Consequence voulue : `H01`/`H02` ne peuvent pas entrer dans le lot. **Reste ouvert** : `registry.settle()` applique `extra` apres les champs du ticket et peut les ecraser — dans le harnais fige, a fermer dans la meme decision que l'integration des frais (`D26`). Registre 169 -> 169, harnais inchange. |
-| 2026-09-26 | `correctif` | **LE TEST DE CAUSALITE LAISSAIT PASSER UNE BARRE DE FUTUR — `D27`.** Trouve en revue du depot. Les barres sont horodatees a leur OUVERTURE (`ts_event` Databento ; verifie sur `CL` : derniere barre 16:59 avant l'arret quotidien, premiere 18:00), et `sandbox/causality.py` tronquait a `t + 1 min` : le panel tronque gardait la barre `t+1`. Un tricheur lisant `close[t+1]` a passe **14 sondes sur 16** de la porte 05, attrape seulement sur `6A x US` et `6B x US` ou la barre suivante manquait. Enjeu : a 30 barres, une minute d'avance correle ~0,18 avec la cible, dix fois l'IC que cherche `D01` | Troncature a `t` ; quatrieme tricheur `tainted-next-bar` exige attrape a CHAQUE sonde (16/16, contre 2/16 avant). Rejoue : porte 05 franchie (32 verifications), porte 08 franchie (`S3` tenue), `check_signals` 261 verifications. `sandbox/` est hors de `harness/` : empreinte inchangee `9ac3e45e`, registre 169 -> 169, **aucune ligne perimee**. `LECONS.md` `L27`. |
 
 Journal complet : [[log]]
 

@@ -124,3 +124,18 @@ plus tard d'où ils venaient.
   `AMORCE` sur 17, 17 moissonnées sur 18 (la dix-huitième pour `F4`, sans
   rapport). La règle de § Le choix ne change pas ; son implémentation la
   rejoint.
+- **2026-09-27** — **le signe moins typographique `−` (U+2212) est lu comme un
+  signe**, sous la même règle que `-` (collé à un mot, ce n'en est pas un). Sans
+  lui, un négatif était introuvable dans sa citation (faux refus) et son opposé
+  positif passait (faux accord sur le signe). Quatre cas ajoutés à
+  `check_provenance.py`, vus échouer avant (3 sur 4) : **48 vérifications**.
+  Rejoué vert : catalogue, gardes des fiches, portes 07 et 08, 17 fiches
+  `AMORCE` sur 17, 33 moissonnées sur 34 (la trente-quatrième pour `F4`).
+  **Inventaire fait le même jour, et il dépasse ce correctif** : sur 95
+  `spelled_out` du corpus, **83 portent des chiffres** — la soupape de `L28`,
+  pas un nombre écrit en toutes lettres — dont 5 dans les fiches `AMORCE` de la
+  phase 07. Les correctifs du 26 et du 27 en rendent **67 inutiles** ; **16
+  restent nécessaires** (tiret `–` employé comme signe, espaces dans un nombre,
+  notation scientifique, `.0087`, `0:20`). Restreindre `spelled_out` aux mots
+  changerait le juge de `D16` et **ferait tomber des fiches de la porte 07** :
+  c'est une décision à prendre par écrit, pas un correctif. Non tranché.

@@ -14,6 +14,10 @@ sessions isolées : 18 fiches sur 18 tracées, 17 vertes sur ce poste.
 `extract_text.py` part désormais du manifeste : `--check` dit combien il a
 vérifié et nomme ce qu'il n'a pas pu vérifier ; l'écriture ne supprime plus les
 entrées des PDF absents.
+**2026-09-27** : les 16 candidats moissonnés fichables restants sont fichés par
+16 sessions isolées — **18 essais pour 16 fiches**, toutes vertes. **51 fiches
+vertes au total** (17 `AMORCE` + 34 moissonnées dont 33 vertes sur ce poste).
+`value_in_quote` lit le signe `−` (`D09` § Journal).
 **Relu le 2026-09-26** : les énoncés que le dépôt avait dépassés sont **barrés**,
 avec la date et la preuve de leur correction — rien n'est effacé. Les sections
 datées plus bas restent l'historique ; l'état courant est dans § Prochaine
@@ -385,8 +389,12 @@ sont ouverts, du plus grave au moins grave :
    `check_provenance.py` (44 vérifications), vus échouer avant la correction.
    Rejoué vert : catalogue, gardes des fiches, portes 07 et 08, 17 fiches
    `AMORCE` sur 17, 17 moissonnées sur 18. `L28` : le faux refus avait déjà
-   poussé un extracteur vers la soupape `spelled_out`. **Reste ouvert** : le
-   signe moins typographique `−` (U+2212), non lu comme signe par `NUMBER`.
+   poussé un extracteur vers la soupape `spelled_out`. ~~**Reste ouvert** : le
+   signe moins typographique `−` (U+2212)~~ — **corrigé le 2026-09-27**. Mais
+   l'inventaire du même jour montre **83 `spelled_out` chiffrés sur 95** dans le
+   corpus, dont 16 encore nécessaires : restreindre `spelled_out` aux mots est
+   une décision sur le juge de `D16`, qui ferait tomber des fiches de la porte
+   07 — **non tranchée** (`D09` § Journal).
 6. ~~`extract_text.py --check` ne vérifiait que les PDF présents.~~ **Corrigé
    le 2026-09-26.** `--check` part du manifeste et nomme les entrées non
    vérifiables faute de PDF ; sans `--check`, ces entrées sont conservées telles
@@ -443,7 +451,18 @@ registre **entier**, les 56 tests antérieurs compris.
 
 ### Ce qui bloque la phase 09, maintenant que le budget est fixé
 
-1. **Au 2026-09-26 : 35 fiches, et le lot demande 50 SIGNAUX.** 17 fiches
+1. **Au 2026-09-27 : 51 fiches, et le lot demande 50 SIGNAUX.** 17 `AMORCE`
+   + **34 moissonnées**, toutes tracées ; 50 vertes sur ce poste, la
+   cinquante-et-unième (`bitcoin-is-not-the-new-gold`) pour `F4` seulement. Le
+   corpus moissonné est **épuisé** : il ne reste que l'APAC, bloqué (`L20`).
+   **La marge est donc d'une fiche**, avant même de retirer celles qui ne se
+   transposent pas — revues de littérature (`multifractal-analysis`,
+   `from-the-bird-s-eye…`), papiers théoriques sans données
+   (`on-covariance-estimation…`, `realized-power-variation…`), cryptos, actions
+   chinoises ou du Moyen-Orient. **Le lot de 50 ne tiendra pas en l'état** :
+   amender `D25` par écrit, ou relancer un moissonnage (`D20`, `D21`), est une
+   décision à prendre **avant** de coder les signaux.
+   *État au 2026-09-26, conservé :* **35 fiches, et le lot demande 50 SIGNAUX.** 17 fiches
    `AMORCE` (porte 07) et **18 moissonnées**, toutes tracées dans
    `PRODUCED_harvest.json` (17 vertes sur ce poste, la dix-huitième pour `F4`,
    point 4 de la revue). **17 candidats moissonnés restent à ficher**, dont

@@ -222,6 +222,15 @@ def main() -> int:
         (2388.0, "2,388 to 54,000 $/an", True),
         (54000.0, "2,388 to 54,000 $/an", True),
         (12500000.0, "12 500 000 Japanese yen", True),
+        # Le signe moins typographique (U+2212) est un signe, comme « - » : sans
+        # lui, un négatif était introuvable (faux refus, qui poussait les
+        # extracteurs vers `spelled_out`, L28) et son opposé positif passait
+        # (faux accord sur le signe). Mêmes règles que « - » : collé à un mot, ce
+        # n'est pas un signe.
+        (-3.71, "alpha of −3.71% per month", True),
+        (3.71, "alpha of −3.71% per month", False),
+        (-2.2, "(−2.20)", True),
+        (100.0, "Nasdaq−100 Index", True),
     ):
         got = value_in_quote(value, quoted)
         check(got == expected, f"{value} dans {quoted!r} : {got}, attendu {expected}")

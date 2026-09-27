@@ -403,7 +403,9 @@ def value_in_quote(value, quoted: str) -> bool:
     not a page dump. It does not catch a determined liar, and D09 does not
     claim that it does.
     """
+    # The typographic minus (U+2212) is a sign, read under the same rule as "-".
     flat = THOUSANDS.sub(lambda m: re.sub(r"[,'\u00a0]", "", m.group(0)), quoted)
+    flat = flat.replace("\u2212", "-")
     for token in NUMBER.findall(flat):
         try:
             if float(token) == float(value):

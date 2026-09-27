@@ -48,8 +48,8 @@
       "name": "intraday_slope_scales_1_6_dem_usd",
       "value": -0.48,
       "unit": "pente log-log (variance d'ondelette vs échelle)",
-      "quoted": "slopes, −(1+β̂), for the smallest six scales are −0.48 and −0.59 for DEM-USD and",
-      "quoted_source": "slopes, −(1+^), for the smallest six scales are−0:48 and−0:59 for DEM-USD and",
+      "quoted": "for the smallest six scales are −0.48 and −0.59 for DEM-USD and",
+      "quoted_source": "for the smallest six scales are−0:48 and−0:59 for DEM-USD and",
       "quoted_repair": "math_notation",
       "spelled_out": "−0:48",
       "note": "L'extraction rend le point décimal par ':' (confirmé par 0:5, 0:26 ailleurs). −0.59 est la valeur JPY-USD."
@@ -58,8 +58,8 @@
       "name": "intraday_slope_scales_1_6_jpy_usd",
       "value": -0.59,
       "unit": "pente log-log",
-      "quoted": "slopes, −(1+β̂), for the smallest six scales are −0.48 and −0.59 for DEM-USD and",
-      "quoted_source": "slopes, −(1+^), for the smallest six scales are−0:48 and−0:59 for DEM-USD and",
+      "quoted": "for the smallest six scales are −0.48 and −0.59 for DEM-USD and",
+      "quoted_source": "for the smallest six scales are−0:48 and−0:59 for DEM-USD and",
       "quoted_repair": "math_notation",
       "spelled_out": "−0:59"
     },
@@ -67,19 +67,21 @@
       "name": "intraday_scaling_parameter_beta_dem_usd",
       "value": -0.52,
       "unit": "beta (loi de puissance)",
-      "quoted": "β̂ = −0.52 for the DEM-USD and β̂ = −0.40 for the JPY-USD volatilities for the rst",
-      "quoted_source": "^= −0:52 for the DEM-USD and ^= −0:40 for the JPY-USD volatilities for the rst",
+      "quoted": "−0.52 for the DEM-USD and",
+      "quoted_source": "−0:52 for the DEM-USD and",
       "quoted_repair": "math_notation",
-      "spelled_out": "−0:52"
+      "spelled_out": "−0:52",
+      "note": "Beta estimé sur les six premières échelles (intrajournalier)."
     },
     {
       "name": "intraday_scaling_parameter_beta_jpy_usd",
       "value": -0.40,
       "unit": "beta (loi de puissance)",
-      "quoted": "β̂ = −0.52 for the DEM-USD and β̂ = −0.40 for the JPY-USD volatilities for the rst",
-      "quoted_source": "^= −0:52 for the DEM-USD and ^= −0:40 for the JPY-USD volatilities for the rst",
+      "quoted": "−0.40 for the JPY-USD volatilities",
+      "quoted_source": "−0:40 for the JPY-USD volatilities",
       "quoted_repair": "math_notation",
-      "spelled_out": "−0:40"
+      "spelled_out": "−0:40",
+      "note": "Beta estimé sur les six premières échelles (intrajournalier)."
     },
     {
       "name": "daily_plus_slope_scales_7_12_dem_usd",
@@ -144,21 +146,21 @@
       "name": "vol_wavelet_correlation_scale1_20min",
       "value": 0.415,
       "unit": "corrélation d'ondelette DEM-USD / JPY-USD",
-      "quoted": "atthelowestscale(20min)is0.415±0.005",
-      "quoted_source": "atthelowestscale(20min)is0 :4150:005",
+      "quoted": "atthelowestscale(20min)is0.415",
+      "quoted_source": "atthelowestscale(20min)is0 :415",
       "quoted_repair": "math_notation",
       "spelled_out": "0 :415",
-      "note": "Le signe ± est perdu à l'extraction ; lecture 0.415 ± 0.005 (intervalle de confiance approché)."
+      "note": "Le texte extrait poursuit par une demi-largeur d'intervalle (lue 0.005), le signe ± étant perdu ; seule la valeur centrale est citée."
     },
     {
       "name": "vol_wavelet_correlation_max_scale6_640min",
       "value": 0.695,
       "unit": "corrélation d'ondelette DEM-USD / JPY-USD",
-      "quoted": "to a maximum at the sixth scale (640 min) with 0.695 ± 0.18. At large scales (one",
-      "quoted_source": "to a maximum at the sixth scale (640 min) with 0:695 0:18. At large scales (one",
+      "quoted": "to a maximum at the sixth scale (640 min) with 0.695",
+      "quoted_source": "to a maximum at the sixth scale (640 min) with 0:695",
       "quoted_repair": "math_notation",
       "spelled_out": "0:695",
-      "note": "La demi-largeur « 0:18 » est telle qu'extraite ; elle paraît incohérente avec 0.005 à l'échelle 1 (peut-être 0.018), non vérifiable ici."
+      "note": "La demi-largeur qui suit (« 0:18 » à l'extraction) paraît incohérente avec 0.005 à l'échelle 1 (peut-être 0.018), non vérifiable ici."
     },
     {
       "name": "vol_wavelet_correlation_daily_plus_plateau",
