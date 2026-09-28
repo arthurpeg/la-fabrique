@@ -1075,7 +1075,8 @@ def do_ingest_manual() -> int:
     return 1 if refused else 0
 
 
-def do_probe(limit: int | None, retry: bool = False, only_ssrn: bool = False) -> int:
+def do_probe(limit: int | None, retry: bool = False, only_ssrn: bool = False,
+             no_ssrn: bool = False) -> int:
     """Sonde les candidats non encore juges, et avec `--retry` les REFUS perimes.
 
     Un verdict `inatteignable` ne vaut que pour l'ensemble de portes essayees ce
@@ -1103,6 +1104,10 @@ def do_probe(limit: int | None, retry: bool = False, only_ssrn: bool = False) ->
               f"`--probe --retry` les reprend")
     if only_ssrn:
         todo = [w for w in todo if ssrn_id(w)]
+    if no_ssrn:
+        # Les depots SSRN passent par la recherche d'autres versions chez
+        # OpenAlex, lente sans HARVEST_MAILTO : les sonder a part (`D30`).
+        todo = [w for w in todo if not ssrn_id(w)]
     if limit:
         todo = todo[:limit]
     print(f"{len(todo)} candidats a sonder "
@@ -1305,6 +1310,8 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--axes", action="store_true", help="liste les axes declares")
     ap.add_argument("--ssrn", action="store_true",
                     help="avec --probe : ne sonde que les travaux au DOI SSRN (D30)")
+    ap.add_argument("--sans-ssrn", action="store_true",
+                    help="avec --probe : saute les travaux au DOI SSRN")
     ap.add_argument("--ssrn-list", action="store_true",
                     help="les papiers SSRN sans PDF et leur page, sans reseau (D30)")
     ap.add_argument("--ingest-manual", action="store_true",
@@ -1323,7 +1330,7 @@ def main(argv: list[str]) -> int:
     if a.search:
         return do_search(a.per_family, a.axis)
     if a.probe:
-        return do_probe(a.limit, a.retry, a.ssrn)
+        return do_probe(a.limit, a.retry, a.ssrn, a.sans_ssrn)
     if a.reverdict:
         return do_reverdict()
     if a.migrate:
