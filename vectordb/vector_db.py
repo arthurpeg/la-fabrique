@@ -36,7 +36,7 @@ from psycopg.rows import dict_row
 
 Section = Literal["intro", "methodology", "results", "conclusion", "other"]
 # `D22` : d'ou vient le texte, et ce qu'on a le droit d'en faire.
-TextSource = Literal["authoritative", "harvest"]
+TextSource = Literal["authoritative", "harvest", "abstract"]  # `abstract` : D31
 StrategyType = Literal["momentum", "carry", "mean_reversion", "other"]
 
 DEFAULT_DIM = 768

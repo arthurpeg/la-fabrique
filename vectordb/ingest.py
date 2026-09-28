@@ -330,6 +330,64 @@ def harvest_sources(filtre: str | None = None) -> list[Source]:
     return out
 
 
+def abstract_sources() -> list[dict]:
+    """Les depots SSRN dont on n'a que le RESUME — `text_source = abstract` (`D31`).
+
+    Un papier par travail de `harvest.json` au DOI SSRN portant un resume, et
+    dont le PDF n'est PAS sur ce poste (sinon `--harvest` le verse en texte
+    integral). Un seul morceau : le resume. Il se cherche ; il ne se fiche pas.
+    """
+    if not HARVEST.is_file():
+        raise VectorDBError("corpus/harvest.json absent — lancer le moissonneur")
+    works = json.loads(HARVEST.read_text(encoding="utf-8"))["works"]
+    out = []
+    for w in works:
+        doi = (w.get("doi") or "").lower()
+        if not doi.startswith("10.2139/ssrn.") or not w.get("abstract"):
+            continue
+        if w.get("pdf") and (REPO / w["pdf"]).is_file():
+            continue
+        if w.get("duplicate_of"):
+            continue
+        out.append(w)
+    return out
+
+
+def ingest_abstracts(dry_run: bool) -> int:
+    works = abstract_sources()
+    print(f"{len(works)} depot(s) SSRN avec resume, sans PDF sur ce poste — "
+          "`text_source = abstract` (D31).")
+    print("Un morceau par papier : le resume. AUCUNE fiche ne peut en sortir")
+    print("avant le texte integral puis D18.\n")
+    if dry_run:
+        for w in works[:5]:
+            print(f"  {w['doi']:28s} {(w.get('title') or '')[:60]}")
+        print("\n--dry-run : rien n'a ete ecrit.")
+        return 0
+    inserted = skipped = 0
+    with VectorDB.from_env() as db:
+        for w in works:
+            ident = w["doi"].rsplit(".", 1)[-1]
+            try:
+                paper_id = db.insert_paper(Paper(
+                    title=w["title"], authors=list(w.get("authors") or []),
+                    year=w.get("year"), doi=w["doi"],
+                    pdf_url=f"https://papers.ssrn.com/sol3/papers.cfm?abstract_id={ident}",
+                    abstract=w["abstract"], text_source="abstract",
+                ))
+            except DuplicatePaper:
+                skipped += 1
+                continue
+            db.insert_chunks(paper_id, [Chunk(content=w["abstract"], ordinal=0,
+                                              section="other", page=None)])
+            inserted += 1
+            if inserted % 50 == 0:
+                print(f"  {inserted} verses…", flush=True)
+    print(f"\n{inserted} papier(s) verse(s), {skipped} deja en base.")
+    print("Embeddings laisses a NULL : `python vectordb/embed.py` les calcule.")
+    return 0
+
+
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description="Ingestion du corpus — D18 vers vectordb")
     ap.add_argument("--dry-run", action="store_true",
@@ -338,7 +396,16 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--harvest", action="store_true",
                     help="les papiers moissonnés (texte NON versionné, D22) "
                          "au lieu des 17 d'AMORCE")
+    ap.add_argument("--abstracts", action="store_true",
+                    help="les depots SSRN dont on n'a que le resume (D31)")
     a = ap.parse_args(argv)
+
+    if a.abstracts:
+        try:
+            return ingest_abstracts(a.dry_run)
+        except VectorDBError as e:
+            print(f"ARRÊT : {e}")
+            return 1
 
     try:
         papers = harvest_sources(a.paper) if a.harvest else sources(a.paper)

@@ -321,15 +321,26 @@ def query_url(search: str, per_page: int, oa_only: bool, sort: str | None) -> st
     return f"{OPENALEX}?{urllib.parse.urlencode(params)}"
 
 
-def crossref_url(search: str, rows: int) -> str:
-    """La liste des papiers SSRN correspondant a `search`, par prefixe de DOI."""
+def crossref_url(search: str, rows: int, sort: str = "citations") -> str:
+    """La liste des papiers SSRN correspondant a `search`, par prefixe de DOI.
+
+    `sort` vaut `citations` (defaut de `D20`) ou `relevance` (`D31`, second
+    passage) : Crossref accepte N'IMPORTE QUEL mot de la requete, et trie par
+    citations il fait remonter les papiers generaux les plus cites — 242 sur 352
+    hors des quatre actifs demandes, mesure du 2026-09-28. Trie par pertinence,
+    il classe d'abord les papiers qui portent les mots de la requete.
+    """
+    if sort not in ("citations", "relevance"):
+        raise SystemExit(f"tri Crossref inconnu : {sort!r}")
     params = {
         "filter": f"prefix:{SSRN_PREFIX},from-pub-date:{FROM_DATE}",
         "query.bibliographic": search,
         "rows": rows,
-        "sort": CROSSREF_SORT,
+        "sort": CROSSREF_SORT if sort == "citations" else "score",
         "order": "desc",
-        "select": "DOI,title,author,issued,container-title,is-referenced-by-count",
+        # `abstract` depuis `D31` : SSRN depose le resume chez Crossref, et c'est
+        # le seul texte d'un depot SSRN qu'un robot puisse lire.
+        "select": "DOI,title,author,issued,container-title,is-referenced-by-count,abstract",
     }
     if MAILTO:
         params["mailto"] = MAILTO
@@ -494,6 +505,17 @@ def do_migrate() -> int:
     return 0
 
 
+def clean_abstract(raw: str | None) -> str | None:
+    """Le resume Crossref sans ses balises JATS (`<jats:p>`...) — `D31`."""
+    if not raw:
+        return None
+    text = re.sub(r"<[^>]+>", " ", raw)
+    text = re.sub(r"\s+", " ", text).strip()
+    text = re.sub(r"\s+([.,;:!?)])", r"", text)
+    text = re.sub(r"^abstract[:.\s]+", "", text, flags=re.I)
+    return text or None
+
+
 def row_from_crossref(rec: dict, axis: str, seen_titles: dict[str, int]) -> dict:
     """Un papier connu de Crossref mais INCONNU d'OpenAlex.
 
@@ -578,7 +600,8 @@ def do_search(per_family: int, pattern: str = "all") -> int:
             # Decouverte chez Crossref, resolution chez OpenAlex. Les deux pas
             # sont distincts parce qu'ils repondent a deux questions : « ce
             # papier existe-t-il ? » et « ou vit une copie libre ? ».
-            page = get_json(crossref_url(search, per_family))["message"]
+            page = get_json(crossref_url(search, per_family,
+                                         spec.get("sort", "citations")))["message"]
             time.sleep(PAUSE_API)
             items = page.get("items", [])
             total = oa_total = page.get("total-results", 0)
@@ -587,8 +610,10 @@ def do_search(per_family: int, pattern: str = "all") -> int:
             for it in items:
                 doi = (it.get("DOI") or "").lower()
                 oa = resolved.get(doi)
-                rows.append(work_row(oa, key, seen_titles) if oa
-                            else row_from_crossref(it, key, seen_titles))
+                row = (work_row(oa, key, seen_titles) if oa
+                       else row_from_crossref(it, key, seen_titles))
+                row["abstract"] = clean_abstract(it.get("abstract"))
+                rows.append(row)
             oa_total = len(resolved)
         else:
             total = get_json(query_url(search, 1, False, None))["meta"]["count"]
@@ -616,7 +641,8 @@ def do_search(per_family: int, pattern: str = "all") -> int:
             kept += 1
         families[key] = {
             "label": spec["label"], "search": search, "added": str(spec.get("added")),
-            "source": source, "total": total, "oa_total": oa_total,
+            "source": source, "sort": spec.get("sort", "citations"),
+            "total": total, "oa_total": oa_total,
             "retrieved": len(rows), "new": kept,
         }
         tag = "resolus" if source == "crossref" else "libres"

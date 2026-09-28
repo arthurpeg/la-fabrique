@@ -98,6 +98,10 @@ def faults(data: dict) -> list[str]:
         elif f.get("source", "openalex") != declared[key].get("source", "openalex"):
             out.append(f"H10 axe {key} : la SOURCE de decouverte a change depuis "
                        f"le passage qui l'a utilise")
+        # Le tri fait partie de la requete (`D31`) : le changer re-selectionne.
+        # Absent des passages anterieurs a `D31`, il vaut alors `citations`.
+        elif f.get("sort", "citations") != declared[key].get("sort", "citations"):
+            out.append(f"H10 axe {key} : le TRI a change depuis le passage qui l'a utilise")
     for w in data.get("works") or []:
         if not (w.get("axes") or []):
             out.append(f"H10 travail {w.get('openalex_id')} : AUCUN axe — il est "
