@@ -765,6 +765,14 @@ def core_urls(doi: str, title: str) -> list[dict]:
     return out
 
 
+# Les resolveurs qui n'ont PAS PU repondre pour le travail en cours. Un refus
+# du service (503, 429) n'est pas une absence de copie libre : le confondre
+# ferait inscrire `sans_source_libre` sur un papier qu'on n'a pas cherche —
+# un silence pris pour une absence, `L05`. `do_probe` laisse alors le travail
+# NON SONDE plutot que de le declarer inatteignable (2026-09-28).
+UNAVAILABLE: list[str] = []
+
+
 def surnames(names: list[str]) -> set[str]:
     """Les noms de famille, pour dire si deux notices partagent un auteur."""
     out = set()
@@ -795,6 +803,7 @@ def openalex_siblings(work: dict) -> list[dict]:
         results = get_json(f"{OPENALEX}?{urllib.parse.urlencode(params)}",
                            tries=2).get("results", [])
     except Exception:
+        UNAVAILABLE.append("openalex (autres versions)")
         return []
     want, authors = norm_title(title), surnames(work.get("authors"))
     out = []
@@ -1073,7 +1082,9 @@ def do_probe(limit: int | None, retry: bool = False, only_ssrn: bool = False) ->
     print(f"{len(todo)} candidats a sonder "
           f"({sum(1 for w in data['works'] if w['duplicate_of'])} doublons sautes)\n")
 
+    postponed = 0
     for i, w in enumerate(todo, 1):
+        UNAVAILABLE.clear()
         cands = pdf_candidates(w)
         attempts = []
         for c in cands:
@@ -1081,7 +1092,14 @@ def do_probe(limit: int | None, retry: bool = False, only_ssrn: bool = False) ->
             time.sleep(PAUSE_PROBE)
             if attempts[-1].get("is_pdf") and attempts[-1].get("bytes", 0) >= MIN_PDF_BYTES:
                 break
-        w.update(verdict(cands, attempts))
+        found = verdict(cands, attempts)
+        if found["status"] != "atteignable" and UNAVAILABLE:
+            # Un resolveur n'a pas repondu : on ne sait pas, donc on ne conclut pas.
+            postponed += 1
+            print(f"  {i:>3}/{len(todo)} REPORTE ({', '.join(UNAVAILABLE)} indisponible) "
+                  f"{w['title'][:40]}")
+            continue
+        w.update(found)
         w["attempts"] = attempts
         w["checked"] = today
         w["resolvers"] = RESOLVERS
@@ -1093,6 +1111,9 @@ def do_probe(limit: int | None, retry: bool = False, only_ssrn: bool = False) ->
     save(data)
     ok = sum(1 for w in data["works"] if w["status"] == "atteignable")
     print(f"\n{ok} atteignables sur {len(data['works'])} candidats")
+    if postponed:
+        print(f"{postponed} REPORTE(S) : un resolveur n'a pas repondu, ils restent non "
+              f"sondes — relancer plus tard, ou avec HARVEST_MAILTO")
     print("AUCUN fichier n'a ete ecrit — c'est `--fetch` qui enregistre")
     return 0
 
@@ -1176,7 +1197,12 @@ def do_fetch(dry_run: bool) -> int:
         digest = sha256(dest)
         w["sha256"] = digest
         w["pdf"] = str(dest.relative_to(REPO)).replace("\\", "/")
-        if digest in hashes:
+        # Un fichier du MEME NOM n'est pas un doublon : c'est sa propre copie.
+        # `promote_harvest.py` copie par conception les PDF promus dans
+        # `corpus/pdf/`, que `known_hashes()` lit — sans cette exception, tout
+        # `--fetch` posterieur marquait chaque papier promu doublon de lui-meme
+        # (33 le 2026-09-28, tous fiches, que `duplicate_of` aurait ecartes).
+        if digest in hashes and hashes[digest] != name:
             dups += 1
             w["duplicate_of"] = {"rule": "empreinte sha256", "file": hashes[digest]}
             print(f"  DOUBLON   | {name}  =  {hashes[digest]}")

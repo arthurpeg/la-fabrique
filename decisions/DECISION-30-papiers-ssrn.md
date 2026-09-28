@@ -103,3 +103,23 @@ entrer : la population reste celle de la requête écrite d'avance (`D20`).
 ## Journal
 
 - **2026-09-28** — décision prise et appliquée. Sondage préalable noté ci-dessus.
+- **2026-09-28, premier passage** (`harvest.py --probe --ssrn`, sans
+  `HARVEST_MAILTO`). **5 atteignables sur 59** : *Momentum Crashes* par sa
+  version NBER (mais **doublon d'octets** d'un travail que le moissonneur avait
+  déjà par OpenAlex), un par l'autre version sur RePEc, trois par CORE au titre
+  vérifié. **4 papiers réellement nouveaux, tous hors sujet** (retraites,
+  scolarité, rentabilité des fonds propres, prévisibilité macroéconomique).
+  **Les 54 autres n'ont PAS été jugés** : OpenAlex refusait alors la majorité
+  des requêtes (`503`, 2 sur 3 à l'instant du constat), et la première version
+  du code inscrivait ce refus comme `sans_source_libre` — un silence pris pour
+  une absence (`L05`). Corrigé le jour même : quand la recherche des autres
+  versions n'a pas pu avoir lieu et qu'aucun PDF n'a été trouvé, le travail
+  reste **non sondé** (`REPORTE`) ; les 54 refus ont été remis à « non sondé ».
+  **À relancer avec `HARVEST_MAILTO` renseigné.**
+- **2026-09-28, défaut trouvé par le `--fetch` qui a suivi** : 33 papiers
+  promus marqués doublons **d'eux-mêmes**. `promote_harvest.py` copie par
+  conception les PDF promus dans `corpus/pdf/`, que le dédoublonnage de
+  `--fetch` lit : chaque PDF y retrouvait sa propre copie. Les 33 sont des
+  papiers fichés, que `duplicate_of` aurait écartés de la chaîne. Corrigé dans
+  `do_fetch` (un fichier du même nom n'est pas un doublon), les 33 marques
+  annulées, vérifié : aucune fiche marquée. `LECONS.md` `L29`.

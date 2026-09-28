@@ -18,6 +18,14 @@ entrées des PDF absents.
 16 sessions isolées — **18 essais pour 16 fiches**, toutes vertes. **51 fiches
 vertes au total** (17 `AMORCE` + 34 moissonnées dont 33 vertes sur ce poste).
 `value_in_quote` lit le signe `−` (`D09` § Journal).
+**2026-09-28 — `D30`, les papiers SSRN.** Jamais par ssrn.com (contrôle
+anti-robot, non contourné, `F60`) : par leur **autre version** (titre identique,
+autre DOI, un auteur commun) ou par **dépôt manuel** de l'opérateur
+(`harvest.py --ssrn-list`, `--ingest-manual`). Premier passage : 4 papiers
+nouveaux, hors sujet ; **54 non jugés**, OpenAlex refusant l'anonyme — à
+relancer avec `HARVEST_MAILTO`. En route : `--fetch` marquait les papiers
+promus doublons d'eux-mêmes (33, tous fichés) — corrigé, `L29`. **164 PDF
+moissonnés atteignables** sur ce poste.
 **Relu le 2026-09-26** : les énoncés que le dépôt avait dépassés sont **barrés**,
 avec la date et la preuve de leur correction — rien n'est effacé. Les sections
 datées plus bas restent l'historique ; l'état courant est dans § Prochaine

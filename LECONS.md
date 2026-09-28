@@ -886,3 +886,27 @@ garde en silence. Quand un verdict est renvoyé et revient vert, regarder
 si c'est une soupape, c'est le garde qu'il faut réparer. Corrigé le jour même
 (`D09` § Journal). Reste ouvert : le signe moins typographique `−` (U+2212),
 qui n'est pas lu comme un signe par `NUMBER` et pousse vers la même soupape.
+
+---
+
+## L29 — Une copie voulue, lue par un dédoublonnage, devient un doublon d'elle-même
+
+Le 2026-09-28. `corpus/promote_harvest.py` copie **par conception** chaque PDF
+promu de `corpus/pdf/harvest/` vers `corpus/pdf/`, où `extract_text.py` le
+trouve. Le dédoublonnage de `harvest.py --fetch` lit, lui, les empreintes de
+`corpus/pdf/`. Le premier `--fetch` lancé après une promotion a donc trouvé
+chaque PDF promu **déjà présent** — sa propre copie — et a marqué **33 papiers
+doublons d'eux-mêmes**. Tous étaient fichés ; `duplicate_of` les aurait écartés
+de toute la suite, sans une erreur, avec un compte de « doublons » parfaitement
+plausible. Deux scripts corrects chacun, écrits à deux dates, se contredisaient
+par un répertoire partagé.
+
+Le symptôme était visible pour qui lisait la sortie : `speculation…pdf =
+speculation…pdf`, un fichier égal à lui-même. Le compte seul (« 36 doublons »)
+ne l'aurait jamais montré.
+
+**La règle.** Un dédoublonnage compare deux **identités**, pas seulement deux
+empreintes : une empreinte égale sous le **même nom** est la même chose, pas un
+doublon. Et quand un script dépose des fichiers là où un autre les inventorie,
+écrire dans les deux que l'un nourrit l'autre. Corrigé dans `do_fetch`
+(`D30` § Journal).
