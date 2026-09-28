@@ -79,8 +79,14 @@ d'univers** — jamais celles dont le `partiel` tient à une donnée manquante.
 manquante, 5 sans motif écrit). **Le nombre se relance, il ne se recopie pas**
 (`L21`). Les quatre clauses de `D25` sont inchangées ; l'échelle de `BH` se
 desserre légèrement (`t` 2,81 au lieu de 2,88 pour le premier retenu).
-**LE LOT N'EST PAS ENCORE FIGÉ** : `--ecrire` n'a pas été lancé, et les 5 fiches
-sans motif écrit peuvent encore y entrer si on les lit.
+**LOT FIGÉ le 2026-09-28**, `hypotheses/LOT-09.json`, **`N` = 41**. Les 5 fiches
+sans motif ont été lues une par une : une entre (`lou-2019`), trois sortent pour
+donnée manquante (consensus MMS, calendrier FOMC ×2), une pour **horizon
+incompatible** — catégorie créée à cette occasion, Moskowitz étant mensuel
+quand notre grille est intraday à clôture forcée. Le lot est **clos** : l'élargir
+après une mesure casse `BH`. `scripts/gate_09.py` a été aligné sur `D27` — il ne
+grave plus `N` = 50 et vérifie que le lot nomme la décision qui l'autorise et que
+son compte se reconstitue.
 **Décision précédente :**
 `decisions/DECISION-29-plis-du-walk-forward.md` — **pas de plis en phase 09.**
 Rien n'y est ajusté sur le `pool` : les constantes viennent de la fiche (`S5`),

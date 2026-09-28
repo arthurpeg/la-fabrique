@@ -1,0 +1,35 @@
+{
+ "decision": "D27 § Ce qui reste ouvert",
+ "lu_le": "2026-09-28",
+ "lu_par": "session Claude Opus 5, qui AVAIT DEJA LU les fiches",
+ "pourquoi_ce_fichier": "L'etalon humain d'AMORCE.md (phase 01) porte un verdict `partiel` mais AUCUN motif ecrit. Le critere de D27 distingue un `partiel` par DONNEE MANQUANTE d'un `partiel` par TRANSPOSITION D'UNIVERS : sans motif, la fiche est indecidable et sort du lot. Ces cinq motifs sont lus dans les fiches elles-memes, champ par champ, et ecrits ici pour que le critere s'applique.",
+ "declaration_de_contamination": "La session qui a lu ces fiches compose aussi le lot. Elle ne REJUGE pas le verdict `partiel`, qui reste celui de l'etalon humain ; elle classe seulement la RAISON dans l'une des categories de D27. Le biais n'est pas elimine, il est declare — meme regime que le § Journal de D15 pour le trieur, et meme aveu que F16 sur le perimetre de la porte 04.",
+ "motifs": {
+  "andersen-2003-micro-effects-macro-announcements": {
+   "classe": "donnee manquante",
+   "raison": "Le signal standardise des surprises macroeconomiques : S_kt = (A_kt - E_kt) / sigma_k, ou E_kt est la MEDIANE DES PREVISIONS MMS du vendredi precedent. Cela exige un consensus de previsions, donnee que nous n'avons pas et qui est payante, en plus du calendrier d'annonces.",
+   "lu_dans": "signal_construction.value"
+  },
+  "kurov-2021-disappearing-pre-fomc-drift": {
+   "classe": "donnee manquante",
+   "raison": "Le signal est une regle d'evenement binaire declenchee par le CALENDRIER PUBLIC DU FOMC. Gratuit et obtenable, mais absent de nos fichiers : D01 le dit, aucun calendrier d'annonces macro n'y figure.",
+   "lu_dans": "signal_construction.value"
+  },
+  "lucca-moench-2015-pre-fomc-drift": {
+   "classe": "donnee manquante",
+   "raison": "Le signal est un indicateur de calendrier : une muette valant 1 quand une annonce programmee du FOMC doit paraitre dans les 24 heures. Meme donnee manquante que kurov-2021.",
+   "lu_dans": "signal_construction.value"
+  },
+  "lou-2019-tug-of-war": {
+   "classe": "transposition d'univers",
+   "raison": "Le signal decompose le rendement quotidien en intraday (P_close / VWAP de la premiere demi-heure) et overnight : PUREMENT OHLCV, volume compris, donc calculable chez nous. Ce qui ne transpose pas est le tri en DECILES en coupe transversale — neuf instruments ne forment pas dix deciles (F03) — mais c'est le test du papier, pas son signal.",
+   "lu_dans": "signal_construction.value, transposability.what_does_not_transfer"
+  },
+  "moskowitz-2012-time-series-momentum": {
+   "classe": "horizon incompatible",
+   "raison": "Le signal est le SIGNE du rendement en exces passe, dimensionne a l'inverse de la volatilite : aucune donnee manquante, tout est en OHLCV. Mais le papier est MENSUEL de bout en bout — look-back de 12 mois, detention de 1 mois — et notre grille est intraday A CLOTURE FORCEE en fin de fenetre (D01 §3). Un signal de plusieurs mois ne s'y loge pas, et c'est exactement le motif qui a ecarte la famille carry en phase 01 (F04, F05).",
+   "lu_dans": "signal_construction.value, transposability.what_does_not_transfer",
+   "note": "CETTE CLASSE N'EXISTAIT PAS DANS D27. Elle n'est ni une donnee manquante ni une transposition d'univers : c'est une incompatibilite d'HORIZON. La forcer dans une case existante aurait menti sur la raison — L18. D27 § Ce qui reste ouvert prevoyait ce cas : « a la premiere fiche mal classee »."
+  }
+ }
+}

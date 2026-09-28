@@ -53,7 +53,16 @@ effectif déguisé en chiffre.
 
 **Le lot de la phase 09 est l'ensemble des fiches dont le papier a été trié
 `oui`, plus celles triées `partiel` dont la raison écrite est une transposition
-d'univers — jamais celles dont le `partiel` tient à une donnée manquante.**
+d'univers — jamais celles dont le `partiel` tient à une donnée manquante, ni
+celles dont l'horizon est incompatible avec la grille intraday.**
+
+**La troisième catégorie a été trouvée en appliquant la décision**, le jour même :
+Moskowitz (2012) n'exige aucune donnée manquante — le signe d'un rendement passé
+est du pur OHLCV — mais son horizon est mensuel de bout en bout, look-back de
+12 mois et détention de 1 mois, quand notre grille est intraday **à clôture
+forcée** (`D01` §3). Ce n'est ni une donnée manquante ni une transposition : la
+ranger dans l'une des deux aurait menti sur la raison (`L18`). C'est le motif
+qui avait déjà écarté la famille carry en phase 01 (`F04`, `F05`).
 
 `corpus/lot_phase09.py` applique ce critère et écrit `hypotheses/LOT-09.json`.
 Au 2026-09-28 il rend **`N` = 40**, et **ce nombre se relance** (`L21`) : toute
@@ -131,4 +140,5 @@ date et qui l'a fait.
 
 | # | Date | `N` rendu | Note |
 |---|---|---|---|
-| — | 2026-09-28 | **40** | critère écrit ; lot **non encore figé** — `--ecrire` n'a pas été lancé |
+| — | 2026-09-28 | **40** | critère écrit ; lot non encore figé |
+| 1 | 2026-09-28 | **41** | **Les 5 `partiel` d'`AMORCE` sans motif ont été LUS**, fiche par fiche, et leur raison inscrite dans `corpus/motifs_amorce_partiel.json`. Une entre (`lou-2019-tug-of-war` : décomposition intraday/overnight en pur OHLCV ; seul le tri en déciles ne transpose pas). Trois sortent pour **donnée manquante** — `andersen-2003` exige la médiane des prévisions MMS, `kurov-2021` et `lucca-moench-2015` le calendrier FOMC. Une sort pour **horizon incompatible**, catégorie créée à cette occasion. **Lu par une session qui avait déjà lu les fiches** : elle n'a pas rejugé le `partiel` de l'étalon, seulement classé sa raison ; le biais est déclaré dans le fichier, comme `D15` § Journal le fait pour le trieur. **LOT FIGÉ** le 2026-09-28 par `--ecrire` : `hypotheses/LOT-09.json`, `N` = 41. Il est **clos** — l'élargir après une mesure casse `BH` (`D25` C2). |
