@@ -103,7 +103,14 @@ STAGE = "09-passage"
 SLICE_REQUIRED = "pool"
 ASOF_REQUIRED = "2023-12-29 20:00:00+00:00"
 Q_REQUIRED = 0.10  # D25 C3
-N_REQUIRED = 50  # D25 C2
+# `D25` C2 fixait N = 50. `D27` l'a AMENDE le 2026-09-28 : le lot n'est plus un
+# nombre mais un CRITERE, applique par `corpus/lot_phase09.py`, et le fichier
+# porte le `n` qu'il a rendu le jour ou il a ete clos. La porte ne verifie donc
+# plus un chiffre grave ici — elle verifie que le lot est INTERNEMENT COHERENT
+# et qu'il nomme la decision qui l'autorise. Graver 50 ferait refuser un lot
+# parfaitement valide, et un garde qui crie pour une non-raison s'apprend comme
+# du bruit (`L12`).
+DECISIONS_ADMISES = ("D25", "D27")
 
 
 def one_sided_p(t_stat: float, expected_sign: int) -> float:
@@ -334,19 +341,31 @@ def main(argv: list[str]) -> int:
         return 1
 
     lot = json.loads(LOT_FILE.read_text(encoding="utf-8"))
-    entries = lot.get("hypotheses") or []
+    # `fiches` est la forme que `D27` produit a la cloture : le lot designe des
+    # FICHES, et chaque entree gagnera son `ref` d'hypothese et son `signal_id`
+    # a mesure qu'ils sont ecrits. `hypotheses` reste accepte pour un lot
+    # compose autrement.
+    entries = lot.get("fiches") or lot.get("hypotheses") or []
     q = lot.get("q")
     declared_at = lot.get("declared_at")
 
     fautes: list[str] = []
     if q != Q_REQUIRED:
         fautes.append(f"q déclaré = {q!r} ; D25 C3 exige {Q_REQUIRED} sauf amendement écrit à D25")
-    if len(entries) != N_REQUIRED:
+    decision = lot.get("decision")
+    if decision not in DECISIONS_ADMISES:
         fautes.append(
-            f"{len(entries)} hypothèse(s) déclarée(s) ; D25 C2 exige {N_REQUIRED} "
-            "sauf amendement écrit à D25"
+            f"le lot ne nomme aucune décision qui l'autorise (`decision` = {decision!r}) ; "
+            f"attendu l'une de {list(DECISIONS_ADMISES)}"
         )
-    refs = [e.get("ref") for e in entries]
+    if lot.get("n") is not None and lot["n"] != len(entries):
+        fautes.append(
+            f"le lot s'annonce à n={lot['n']} et porte {len(entries)} entrée(s) — "
+            "un compte qui ne se reconstitue pas est un compte faux (`L21`)"
+        )
+    if not entries:
+        fautes.append("le lot est vide : il n'y a rien à juger")
+    refs = [e.get("ref") or e.get("fiche_id") for e in entries]
     if len(set(refs)) != len(refs):
         fautes.append("des `ref` sont dupliqués dans le lot")
     if not declared_at:
@@ -361,11 +380,15 @@ def main(argv: list[str]) -> int:
         return 1
 
     for e in entries:
-        ref = e.get("ref", "")
+        # Le lot de `D27` designe des FICHES ; son `ref` d'hypothese n'existe
+        # qu'une fois celle-ci ecrite. Nommer la fiche en attendant vaut mieux
+        # qu'un message vide, qui laisserait croire a une entree anonyme.
+        ref = e.get("ref") or ""
+        quoi = ref or f"(fiche {e.get('fiche_id', '?')}, hypothèse non encore écrite)"
         if not list(HYPOTHESES_DIR.glob(f"{ref}-*.md")):
             fautes.append(
-                f"{ref} : aucun fichier hypotheses/{ref}-*.md — une hypothèse non "
-                "écrite n'est pas une hypothèse (invariant IV)"
+                f"{quoi} : aucun fichier hypotheses/{ref or '<ref>'}-*.md — une "
+                "hypothèse non écrite n'est pas une hypothèse (invariant IV)"
             )
 
     if not CORR_FILE.is_file():
@@ -399,7 +422,7 @@ def main(argv: list[str]) -> int:
     diagnostics: list[tuple[str, str, float, int, float]] = []
 
     for e in entries:
-        ref, signal_id = e["ref"], e["signal_id"]
+        ref, signal_id = e.get("ref"), e.get("signal_id")
         lignes = [r for r in registre if est_officielle(r, e, hash_courant)]
         if not lignes:
             fautes.append(

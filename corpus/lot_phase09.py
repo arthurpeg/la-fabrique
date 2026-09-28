@@ -41,6 +41,7 @@ FICHES_HARVEST = REPO / "corpus" / "fiches_harvest"
 PROMOTED = REPO / "corpus" / "harvest_promoted.json"
 VERDICTS = REPO / "corpus" / "triage_harvest_verdicts.json"
 ACQUISITION = REPO / "corpus" / "acquisition.json"
+MOTIFS_AMORCE = REPO / "corpus" / "motifs_amorce_partiel.json"
 LOT = REPO / "hypotheses" / "LOT-09.json"
 
 # Les mots qui, dans la RAISON du trieur, designent une DONNEE MANQUANTE. Un
@@ -79,6 +80,11 @@ def verdicts_amorce() -> dict[str, dict]:
     from score_triage import read_etalon  # type: ignore
 
     etalon = read_etalon()
+    motifs = (
+        json.loads(MOTIFS_AMORCE.read_text(encoding="utf-8"))["motifs"]
+        if MOTIFS_AMORCE.is_file()
+        else {}
+    )
     out = {}
     for a in json.loads(ACQUISITION.read_text(encoding="utf-8")):
         if not a.get("pdf"):
@@ -87,19 +93,40 @@ def verdicts_amorce() -> dict[str, dict]:
         if not (FICHES_AMORCE / f"{stem}.json").is_file():
             continue
         if v := etalon.get(a["entry"]):
-            # L'etalon humain ne porte pas de raison ecrite : un `partiel` y est
-            # donc INDECIDABLE au regard du critere, et il sort du lot. Le dire
-            # plutot que de trancher a sa place.
-            out[stem] = {"verdict": v, "raison": "", "source": "AMORCE (etalon humain)"}
+            # L'etalon humain ne porte pas de raison ecrite : un `partiel` y
+            # serait INDECIDABLE au regard du critere. Les cinq concernes ont
+            # ete LUS un par un le 2026-09-28 et leur motif inscrit dans
+            # `motifs_amorce_partiel.json`, qui porte aussi la declaration de
+            # contamination (`D27` § Ce qui reste ouvert). Ceux qui n'y sont
+            # pas restent indecidables, et sortent.
+            m = motifs.get(stem) or {}
+            out[stem] = {
+                "verdict": v,
+                "raison": m.get("raison", ""),
+                "classe": m.get("classe"),
+                "source": "AMORCE (etalon humain)",
+            }
     return out
 
 
-def classer(verdict: str, raison: str) -> tuple[bool, str]:
+# TROUVEE EN LISANT LES CINQ, le 2026-09-28, et inscrite plutot que forcee.
+# Moskowitz (2012) n'exige AUCUNE donnee manquante — le signe d'un rendement
+# passe est du pur OHLCV — mais son horizon est MENSUEL de bout en bout, et
+# notre grille est intraday a cloture forcee (`D01` §3). Ce n'est donc ni une
+# donnee manquante ni une transposition d'univers : c'est une troisieme chose,
+# et c'est exactement le motif qui a ecarte la famille carry (`F04`, `F05`).
+# La ranger dans une case existante aurait menti sur la raison (`L18`).
+HORIZON_INCOMPATIBLE = "horizon incompatible"
+
+
+def classer(verdict: str, raison: str, classe: str | None = None) -> tuple[bool, str]:
     """Rend (dans_le_lot, motif). Le motif est ecrit, jamais sous-entendu."""
     if verdict == "oui":
         return True, "trié `oui` — calculable en OHLCV seul"
     if verdict != "partiel":
         return False, f"trié `{verdict}`"
+    if classe == HORIZON_INCOMPATIBLE:
+        return False, "trié `partiel`, horizon incompatible avec la grille intraday"
     if not raison.strip():
         return False, "trié `partiel` sans raison écrite — indécidable, donc écarté"
     bas = raison.lower()
@@ -113,7 +140,7 @@ def composer() -> tuple[list[dict], list[dict]]:
     tous = {**verdicts_amorce(), **verdicts_moissonnes()}
     dedans, dehors = [], []
     for fiche_id, v in sorted(tous.items()):
-        ok, motif = classer(v["verdict"], v.get("raison") or "")
+        ok, motif = classer(v["verdict"], v.get("raison") or "", v.get("classe"))
         ligne = {"fiche_id": fiche_id, "verdict": v["verdict"], "motif": motif}
         (dedans if ok else dehors).append(ligne)
     return dedans, dehors
