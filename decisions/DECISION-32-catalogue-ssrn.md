@@ -101,3 +101,19 @@ verse des papiers d'actions — mesuré, 79 % au premier passage de `D31`.
 ## Journal
 
 - **2026-09-28** — décision prise. Résultats du passage ci-dessous.
+- **2026-09-28, premier passage** (`--ingest`, 10 pages au plus par requête) :
+  **12 618 dépôts** nouveaux dans le périmètre et pourvus d'un résumé — devises
+  6 014, pétrole 4 247, crypto 3 102, or 1 275 (un dépôt peut compter pour deux
+  actifs). **11 929 versés** ; les autres étaient déjà en base (DOI ou titre).
+  Base : 163 → 220 Mo avant embeddings. Aucun `429` : les pauses ont suffi.
+  **Le budget n'a pas tranché, l'offre si** : `bitcoin`, `cryptocurrency`,
+  `blockchain`, `ethereum`, `stablecoin`, `crude oil` (9 897 notices, toutes
+  lues), `petroleum`, `gold`, `currency` épuisées ; `oil` n'ajoute rien à
+  `crude oil`, qui l'englobe ; `precious metals` et `carry trade` arrêtées par
+  la règle des 10 %. **Deux requêtes ont été coupées par le plafond de 10
+  pages et non par le périmètre** : `exchange rate` (13 % à la page 10) et
+  `foreign exchange` (23 %), ainsi que `oil price` (52 %, mais tout dépôt
+  pétrole y est déjà couvert par `crude oil`).
+- **2026-09-28, amendement déclaré AVANT le second passage** : `MAX_PAGES`
+  passe de 10 à **25**. Seule la règle des 10 % et le budget arrêtent désormais
+  une requête. Les requêtes et le périmètre ne changent pas.

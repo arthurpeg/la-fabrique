@@ -70,7 +70,9 @@ SCOPE: dict[str, str] = {
 }
 
 PAGE_ROWS = 1000
-MAX_PAGES = 10
+# 10 au premier passage ; 25 depuis le § Journal de `D32` (2026-09-28) : deux
+# requetes de devises avaient ete coupees par ce plafond et non par le perimetre.
+MAX_PAGES = 25
 MIN_SCOPE_SHARE = 0.10  # une page sous 10 % dans le perimetre arrete la requete
 PAUSE = 2.0
 
