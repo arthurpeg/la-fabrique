@@ -24,6 +24,15 @@ target-version = "py313"
 # (`ruff format harness/metric.py`), pas seulement pour un parcours de dossier.
 force-exclude = true
 
+# `corpus/bench/` porte les SORTIES du banc d'essai — des fiches et des modules
+# écrits par des modèles qu'on évalue. Ce ne sont pas des sources du projet :
+# ce sont des PREUVES de ce qu'un modèle a produit.
+#
+# Les linter serait pire qu'inutile : ça inviterait à les corriger, et une
+# preuve corrigée ne prouve plus rien. Le juge, lui, continue de les lire —
+# `score_extraction.py` et `score_signal.py` ne consultent pas cette liste.
+extend-exclude = ["corpus/bench/**"]
+
 [tool.ruff.format]
 # Le harnais est figé : son empreinte (`harness/registry.py`, `code_hash`) porte
 # sur le contenu, et le reformater périmerait tous les tests comptés. Le
