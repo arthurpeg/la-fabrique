@@ -91,6 +91,8 @@ MIN_SECTIONS_DETECTED = 2
 # incrémenté depuis `split_pages`, et un compte qui n'est pas affiché est un
 # nettoyage silencieux.
 NUL_COUNT = [0]
+SURROGATE = re.compile(r"[\ud800-\udfff]")
+SURROGATE_COUNT = [0]
 
 CITATION = re.compile(r"\*\*(?P<authors>[^*]+?)\s*\((?P<year>\d{4})\)\*\*"
                       r"(?:.*?[«]\s*(?P<title>.+?)\s*[»])?", re.S)
@@ -230,6 +232,14 @@ def split_pages(pages: list[str]) -> list[tuple[str, int, str]]:
         if nuls:
             NUL_COUNT[0] += nuls
             raw = raw.replace("\x00", "")
+        # Meme famille, trouve le 2026-09-28 sur un PDF moissonne : `pypdf` rend
+        # certains symboles mathematiques (U+1D400 et suivants) en DEMI-paires
+        # de substitution isolees (`\ud835`), qu'UTF-8 ne sait pas encoder. Elles
+        # ont fait tomber l'ingestion apres 125 papiers. Retirees et comptees.
+        lone = SURROGATE.findall(raw)
+        if lone:
+            SURROGATE_COUNT[0] += len(lone)
+            raw = SURROGATE.sub("", raw)
 
         text = re.sub(r"[ \t]+", " ", raw)
         text = re.sub(r"\n{3,}", "\n\n", text).strip()
@@ -450,6 +460,9 @@ def main(argv: list[str]) -> int:
     if NUL_COUNT[0]:
         print(f"  {NUL_COUNT[0]} octet(s) NUL retiré(s) — PostgreSQL les refuse."
               " `corpus/text/` n'est pas touché.")
+    if SURROGATE_COUNT[0]:
+        print(f"  {SURROGATE_COUNT[0]} demi-paire(s) Unicode isolée(s) retirée(s) — UTF-8"
+              " ne les encode pas. `corpus/text/` n'est pas touché.")
 
     if a.dry_run:
         print("\n--dry-run : rien n'a été écrit. Exemple du premier morceau :\n")
