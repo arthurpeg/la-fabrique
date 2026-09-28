@@ -117,3 +117,15 @@ verse des papiers d'actions — mesuré, 79 % au premier passage de `D31`.
 - **2026-09-28, amendement déclaré AVANT le second passage** : `MAX_PAGES`
   passe de 10 à **25**. Seule la règle des 10 % et le budget arrêtent désormais
   une requête. Les requêtes et le périmètre ne changent pas.
+- **2026-09-28, second passage** (25 pages au plus) : **731 papiers de plus**
+  versés ; base 230 → 235 Mo avant embeddings. **Toutes les requêtes sont
+  désormais épuisées** — lues jusqu'à leur dernière page (`exchange rate` 17,
+  `foreign exchange` 15, `oil price` 23), ou arrêtées par la règle des 10 %
+  (`precious metals`, `carry trade`). Le passage annonçait 1 472 « nouveaux » :
+  la différence est faite de dépôts SSRN **au même titre** qu'un papier déjà
+  en base (SSRN attribue un numéro par version), écartés par
+  `papers_title_norm_key` et absents du manifeste, d'où leur retour.
+- **Bilan** : **13 269 papiers `abstract`** en base (609 de `D31`, 12 660 de
+  ce catalogue), manifeste de 12 660 lignes. **Le budget n'a jamais tranché :
+  c'est l'offre SSRN de ces requêtes qui est épuisée.** Taille finale après
+  embeddings : ci-dessous.

@@ -26,6 +26,14 @@ nouveaux, hors sujet ; **54 non jugés**, OpenAlex refusant l'anonyme — à
 relancer avec `HARVEST_MAILTO`. En route : `--fetch` marquait les papiers
 promus doublons d'eux-mêmes (33, tous fichés) — corrigé, `L29`. **164 PDF
 moissonnés atteignables** sur ce poste.
+**2026-09-28 — `D31`, `D32` : la base est remplie de résumés SSRN.** Pétrole,
+or, crypto, devises : **13 269 papiers `text_source = 'abstract'`** (un morceau
+chacun, le résumé déposé chez Crossref), à côté des 51 `authoritative` et 85
+`harvest`. Migration `003` appliquée. `corpus/ssrn_catalogue.py` a épuisé ses
+requêtes sous un budget de 400 Mo (80 % des 500 Mo du plan gratuit). **Aucune
+fiche ne peut venir d'un résumé** : il faut d'abord le texte intégral (`D30`),
+puis `D18`. Ces papiers servent la RECHERCHE ; ils ne sont pas dans
+`harvest.json` et n'entrent pas dans le lot.
 **Relu le 2026-09-26** : les énoncés que le dépôt avait dépassés sont **barrés**,
 avec la date et la preuve de leur correction — rien n'est effacé. Les sections
 datées plus bas restent l'historique ; l'état courant est dans § Prochaine
