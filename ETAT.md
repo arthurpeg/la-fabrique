@@ -69,6 +69,19 @@ puis mesurée — la forme en U de la volatilité intra-journalière est retrouv
 reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
 **Décision la plus récente :**
+`decisions/DECISION-27-le-lot-de-la-phase-09.md` — le lot de la phase 09 est un
+**critère, pas un nombre**. `D25` engageait 50 signaux, chiffre écrit quand le
+corpus portait 17 fiches ; il en porte 51 et le moissonné est épuisé. Le lot est
+désormais : les fiches triées **`oui`**, plus les **`partiel` par transposition
+d'univers** — jamais celles dont le `partiel` tient à une donnée manquante.
+`corpus/lot_phase09.py` l'applique et rend **`N` = 40** au 2026-09-28
+(16 `oui` + 24 `partiel` transposables ; écartées : 2 `non`, 2 à donnée
+manquante, 5 sans motif écrit). **Le nombre se relance, il ne se recopie pas**
+(`L21`). Les quatre clauses de `D25` sont inchangées ; l'échelle de `BH` se
+desserre légèrement (`t` 2,81 au lieu de 2,88 pour le premier retenu).
+**LE LOT N'EST PAS ENCORE FIGÉ** : `--ecrire` n'a pas été lancé, et les 5 fiches
+sans motif écrit peuvent encore y entrer si on les lit.
+**Décision précédente :**
 `decisions/DECISION-29-plis-du-walk-forward.md` — **pas de plis en phase 09.**
 Rien n'y est ajusté sur le `pool` : les constantes viennent de la fiche (`S5`),
 tout ce qui s'estime s'estime au passé (`S3`, `D27`), ce qui est déjà un
