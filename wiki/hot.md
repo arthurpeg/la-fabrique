@@ -24,7 +24,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Dernière porte franchie** | **08**, le 2026-09-23 — `scripts/gate_08.py`. Un signal produit par une session de codage séparée tient les **six conditions de `D23` au premier essai**, et aucun signal produit n'a été retouché à la main. |
 | **Décision la plus récente** | `decisions/DECISION-27-le-lot-de-la-phase-09.md` — le lot de la phase 09 est un |
 | **Tests au registre** | 169 |
-| **Idées abandonnées recensées** | 59 |
+| **Idées abandonnées recensées** | 60 |
 | **Entrées au journal** | 88 |
 
 ## Ce qui bloque

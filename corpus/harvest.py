@@ -154,7 +154,20 @@ CORE_KEY: str | None = None  # renseigne plus bas, apres _load_env_file()
 # La VERSION DU RESOLVEUR. Un verdict `inatteignable` ne vaut que pour l'ensemble
 # de portes qu'on a essayees ce jour-la : en ajouter une PERIME les refus
 # anterieurs, sans toucher aux reussites. `--probe --retry` les reprend.
-RESOLVERS = "2026-09-22b : openalex + nber + landing + core"
+RESOLVERS = "2026-09-28 : openalex + nber + landing + core + siblings (D30)"
+
+# Le depot manuel de `D30` : ce que l'operateur a telecharge LUI-MEME sur SSRN,
+# dans son navigateur, nomme par le numero SSRN (`1363476.pdf`). Le moissonneur
+# ne touche jamais a ssrn.com ; il fait seulement entrer ces fichiers par la meme
+# porte que les autres (`%PDF-`, taille, empreinte).
+MANUAL_DIR = REPO / "corpus" / "pdf" / "manual"
+SSRN_PAGE = "https://papers.ssrn.com/sol3/papers.cfm?abstract_id={ident}"
+
+
+def ssrn_id(work: dict) -> str | None:
+    """Le numero SSRN d'un travail au DOI `10.2139/ssrn.<numero>`, sinon None."""
+    m = re.fullmatch(r"10\.2139/ssrn\.(\d+)", (work.get("doi") or "").lower())
+    return m.group(1) if m else None
 
 # Le « pool poli » d'OpenAlex et l'API d'Unpaywall demandent une adresse de
 # courriel. Elle n'est PAS ecrite en dur : c'est une donnee personnelle, et
@@ -741,9 +754,71 @@ def core_urls(doi: str, title: str) -> list[dict]:
         return []
     out = []
     for w in (d.get("results") or [])[:3]:
+        # Cherche par TITRE, CORE rend des papiers « proches » : seul un titre
+        # identique apres normalisation est garde (`L20`, `D30`). Par DOI, la
+        # notice rendue est celle du DOI, et la regle ne change rien.
+        if not doi and norm_title(w.get("title") or "") != norm_title(title):
+            continue
         for key in ("downloadUrl", "fullTextIdentifier"):
             if w.get(key):
                 out.append({"url": w[key], "via": f"CORE ({key})"})
+    return out
+
+
+def surnames(names: list[str]) -> set[str]:
+    """Les noms de famille, pour dire si deux notices partagent un auteur."""
+    out = set()
+    for name in names or []:
+        parts = norm_title(name).split()
+        if parts:
+            out.add(parts[-1])
+    return out
+
+
+def openalex_siblings(work: dict) -> list[dict]:
+    """L'AUTRE version d'un papier SSRN, retrouvee par son titre — `D30`.
+
+    OpenAlex range la version publiee, le document de travail NBER ou la copie
+    arXiv sous un autre identifiant que le depot SSRN. On cherche le titre, et
+    on ne garde un travail que s'il a (1) le titre IDENTIQUE apres
+    normalisation, (2) un autre DOI que SSRN, (3) au moins un auteur en commun.
+    Ce n'est pas une preuve (`L20`, `F52`) : c'est la regle la plus stricte
+    disponible sans lire le texte, et la lecture vient ensuite.
+    """
+    title = work.get("title") or ""
+    if not title.strip():
+        return []
+    params = {"search": title, "per-page": 10}
+    if MAILTO:
+        params["mailto"] = MAILTO
+    try:
+        results = get_json(f"{OPENALEX}?{urllib.parse.urlencode(params)}",
+                           tries=2).get("results", [])
+    except Exception:
+        return []
+    want, authors = norm_title(title), surnames(work.get("authors"))
+    out = []
+    for r in results:
+        doi = (r.get("doi") or "").lower()
+        if norm_title(r.get("title") or r.get("display_name") or "") != want:
+            continue
+        if SSRN_PREFIX in doi:
+            continue
+        theirs = surnames([(a.get("author") or {}).get("display_name") or ""
+                           for a in r.get("authorships") or []])
+        if authors and not (authors & theirs):
+            continue
+        ident = (r.get("id") or "").rsplit("/", 1)[-1]
+        for loc in r.get("locations") or []:
+            if not loc.get("is_oa"):
+                continue
+            host = (loc.get("source") or {}).get("display_name")
+            via = f"autre version ({ident}, {host}), titre identique et auteur commun — D30"
+            if loc.get("pdf_url") and "ssrn.com" not in loc["pdf_url"]:
+                out.append({"url": loc["pdf_url"], "via": via})
+            elif loc.get("landing_page_url") and "ssrn.com" not in loc["landing_page_url"]:
+                out += [dict(c, via=f"{via} ; {c['via']}")
+                        for c in landing_page_pdfs(loc["landing_page_url"], limit=2)]
     return out
 
 
@@ -771,14 +846,24 @@ def pdf_candidates(work: dict) -> list[dict]:
     # qu'ils annoncent « libre » et refusent une fois sur deux (mesure du
     # 2026-09-22 : 290 `pdf_url` annonces, 123 tenus).
     out = list(repos)
+    # Un DOI SSRN n'a qu'une copie, sur ssrn.com, qui refuse les robots : on
+    # cherche l'AUTRE version du papier, et CORE par le titre (`D30`).
+    ssrn = ssrn_id(work) is not None
+    if ssrn:
+        out += openalex_siblings(work)
     out += nber_urls(work.get("title") or "")
     for lp in landings[:2]:
         out += landing_page_pdfs(lp)
-    out += core_urls(work.get("doi") or "", work.get("title") or "")
-    out += unpaywall_urls(work.get("doi") or "")
+    out += core_urls("" if ssrn else work.get("doi") or "", work.get("title") or "")
+    if not ssrn:
+        out += unpaywall_urls(work.get("doi") or "")
     out += publishers
     seen, uniq = set(), []
     for c in out:
+        # ssrn.com n'est jamais sonde, d'ou que vienne l'URL (`D30`) : son
+        # controle anti-robot n'est pas un obstacle a essayer, c'est une limite.
+        if "ssrn.com" in c["url"].lower():
+            continue
         if c["url"] not in seen:
             seen.add(c["url"])
             uniq.append(c)
@@ -857,7 +942,105 @@ def do_reverdict() -> int:
     return 0
 
 
-def do_probe(limit: int | None, retry: bool = False) -> int:
+def do_ssrn_list() -> int:
+    """Les papiers SSRN encore non atteignables, et leur page — `D30`. Sans reseau.
+
+    Pour l'operateur, qui choisit ceux qu'il telechargera dans SON navigateur.
+    Le moissonneur ne juge pas (`F50`) : la liste est triee par citations, pas
+    par pertinence.
+    """
+    works = [w for w in load()["works"]
+             if ssrn_id(w) and w.get("status") != "atteignable" and not w.get("duplicate_of")]
+    works.sort(key=lambda w: -(w.get("cited_by_count") or 0))
+    print(f"{len(works)} papier(s) SSRN sans PDF — a deposer, si l'operateur le choisit,")
+    print(f"dans {MANUAL_DIR.relative_to(REPO)}/<numero>.pdf, puis `--ingest-manual`\n")
+    for w in works:
+        print(f"  {w.get('cited_by_count') or 0:>5} cit. | {w.get('year')} | "
+              f"{(w.get('title') or '')[:70]}")
+        print(f"        {SSRN_PAGE.format(ident=ssrn_id(w))}")
+    return 0
+
+
+def title_on_first_pages(pdf: Path, title: str) -> bool:
+    """Le titre normalise figure-t-il dans le texte des deux premieres pages ?"""
+    from pypdf import PdfReader  # noqa: PLC0415 -- seul usage dans le moissonneur
+
+    try:
+        reader = PdfReader(str(pdf))
+        text = " ".join((p.extract_text() or "") for p in reader.pages[:2])
+    except Exception:
+        return False
+    want = norm_title(title)
+    return bool(want) and want.replace(" ", "") in norm_title(text).replace(" ", "")
+
+
+def do_ingest_manual() -> int:
+    """Fait entrer les PDF deposes a la main dans `corpus/pdf/manual/` — `D30`.
+
+    Chaque fichier se nomme `<numero SSRN>.pdf`. Il doit correspondre a un
+    travail DEJA connu de `harvest.json` : la population reste celle de la
+    requete ecrite d'avance (`D20`). Memes criteres que la sonde et `--fetch` :
+    `%PDF-`, taille minimale, dedoublonnage par empreinte. Le geste est inscrit
+    comme humain dans `source_via`, date.
+    """
+    files = sorted(MANUAL_DIR.glob("*.pdf")) if MANUAL_DIR.is_dir() else []
+    if not files:
+        print(f"aucun PDF dans {MANUAL_DIR.relative_to(REPO)} — rien a faire")
+        return 0
+    data = load()
+    by_id = {ssrn_id(w): w for w in data["works"] if ssrn_id(w)}
+    hashes = known_hashes()
+    for pdf in sorted(PDFDIR.glob("*.pdf")) if PDFDIR.is_dir() else []:
+        hashes.setdefault(sha256(pdf), pdf.name)
+    PDFDIR.mkdir(parents=True, exist_ok=True)
+    today, taken, refused = str(date.today()), 0, []
+    for f in files:
+        w = by_id.get(f.stem)
+        body = f.read_bytes()
+        if w is None:
+            refused.append((f.name, "numero SSRN inconnu de harvest.json (D20 : la population "
+                                    "est celle de la requete)"))
+            continue
+        if body[:5] != b"%PDF-" or len(body) < MIN_PDF_BYTES:
+            refused.append((f.name, f"pas un PDF plausible ({len(body)} o)"))
+            continue
+        digest = hashlib.sha256(body).hexdigest()
+        if digest in hashes and hashes[digest] != filename(w):
+            refused.append((f.name, f"doublon d'octets de {hashes[digest]}"))
+            continue
+        # Un fichier mal nomme par l'operateur entrerait sous le titre d'un autre
+        # papier (`L20`). Le titre attendu est cherche dans les deux premieres
+        # pages : son absence REFUSE, sa presence ne prouve rien (`F52`) — un
+        # papier peut citer celui qu'on attend. C'est un filet contre l'erreur de
+        # manipulation, pas une verification d'identite.
+        if not title_on_first_pages(f, w.get("title") or ""):
+            refused.append((f.name, f"titre attendu introuvable dans les 2 premieres pages "
+                                    f"(« {(w.get('title') or '')[:60]} ») — mauvais "
+                                    f"fichier ou mauvais numero ?"))
+            continue
+        dest = PDFDIR / filename(w)
+        dest.write_bytes(body)
+        hashes[digest] = dest.name
+        w.update({
+            "status": "atteignable", "reason": None,
+            "source_url": SSRN_PAGE.format(ident=f.stem),
+            "source_via": f"depot manuel de l'operateur, telecharge sur SSRN dans son "
+                          f"navigateur, le {today} (D30)",
+            "evidence": {"is_pdf": True, "bytes": len(body), "manual": True},
+            "refused_by": None, "checked": today, "resolvers": RESOLVERS,
+            "pdf": str(dest.relative_to(REPO)).replace("\\", "/"), "sha256": digest,
+        })
+        taken += 1
+        print(f"  pris   | {len(body):>8} o | {f.name} -> {dest.name}")
+    save(data)
+    for name, why in refused:
+        print(f"  REFUS  | {name} : {why}")
+    print(f"\n{taken} pris, {len(refused)} refuse(s). Ils passeront par le trieur comme "
+          "les autres : deposer n'est pas trier (F50).")
+    return 1 if refused else 0
+
+
+def do_probe(limit: int | None, retry: bool = False, only_ssrn: bool = False) -> int:
     """Sonde les candidats non encore juges, et avec `--retry` les REFUS perimes.
 
     Un verdict `inatteignable` ne vaut que pour l'ensemble de portes essayees ce
@@ -883,6 +1066,8 @@ def do_probe(limit: int | None, retry: bool = False) -> int:
     elif stale:
         print(f"note : {len(stale)} refus datent d'un resolveur plus etroit — "
               f"`--probe --retry` les reprend")
+    if only_ssrn:
+        todo = [w for w in todo if ssrn_id(w)]
     if limit:
         todo = todo[:limit]
     print(f"{len(todo)} candidats a sonder "
@@ -1066,7 +1251,18 @@ def main(argv: list[str]) -> int:
                     help="`all`, un axe entier (`anomaly`) ou un seul "
                          "(`anomaly:reversal`). Voir corpus/harvest_axes.yaml")
     ap.add_argument("--axes", action="store_true", help="liste les axes declares")
+    ap.add_argument("--ssrn", action="store_true",
+                    help="avec --probe : ne sonde que les travaux au DOI SSRN (D30)")
+    ap.add_argument("--ssrn-list", action="store_true",
+                    help="les papiers SSRN sans PDF et leur page, sans reseau (D30)")
+    ap.add_argument("--ingest-manual", action="store_true",
+                    help="fait entrer corpus/pdf/manual/<numero SSRN>.pdf (D30)")
     a = ap.parse_args(argv)
+
+    if a.ssrn_list:
+        return do_ssrn_list()
+    if a.ingest_manual:
+        return do_ingest_manual()
 
     if a.axes:
         for k, v in sorted(load_axes().items()):
@@ -1075,7 +1271,7 @@ def main(argv: list[str]) -> int:
     if a.search:
         return do_search(a.per_family, a.axis)
     if a.probe:
-        return do_probe(a.limit, a.retry)
+        return do_probe(a.limit, a.retry, a.ssrn)
     if a.reverdict:
         return do_reverdict()
     if a.migrate:
