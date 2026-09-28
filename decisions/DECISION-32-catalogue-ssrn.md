@@ -129,3 +129,10 @@ verse des papiers d'actions — mesuré, 79 % au premier passage de `D31`.
   ce catalogue), manifeste de 12 660 lignes. **Le budget n'a jamais tranché :
   c'est l'offre SSRN de ces requêtes qui est épuisée.** Taille finale après
   embeddings : ci-dessous.
+- **2026-09-28, taille finale après embeddings** : **335 Mo** sur un budget de
+  400 Mo (67 % des 500 Mo du plan gratuit) ; 25 082 morceaux, **tous
+  vectorisés** (`bge-base-en-v1.5`) ; table `chunks` 284 Mo dont index HNSW
+  98 Mo. Coût réel mesuré : ~13,5 Ko par papier `abstract`, conforme à
+  l'estimation. **Marge restante : ~65 Mo sous le budget, ~165 Mo sous le
+  plafond** — de quoi verser environ 4 800 résumés de plus avant le budget, si
+  des requêtes nouvelles sont décidées par écrit.
