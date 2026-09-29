@@ -318,7 +318,13 @@ def harvest_sources(filtre: str | None = None) -> list[Source]:
     par_pdf = {Path(w["pdf"]).name: w for w in works if w.get("pdf")}
 
     out = []
-    for pdf in sorted(HARVEST_PDFDIR.glob("*.pdf")):
+    tous = sorted(HARVEST_PDFDIR.glob("*.pdf"))
+    for rang, pdf in enumerate(tous, 1):
+        # Un avancement lisible : `scripts/pipeline_runner.py` en tire le temps
+        # restant, et une ligne regulierement emise tient eloigne son chien de
+        # garde (20 min sans sortie = relance). Lecture de ~1 000 PDF : ~1 h.
+        if rang % 10 == 0 or rang == len(tous):
+            print(f"  lecture {rang}/{len(tous)}", flush=True)
         if filtre and filtre.lower() not in pdf.stem.lower():
             continue
         w = par_pdf.get(pdf.name)
