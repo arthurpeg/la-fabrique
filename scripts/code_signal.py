@@ -70,6 +70,10 @@ sys.path.insert(0, str(REPO))
 from sandbox import contract, scan  # noqa: E402
 
 FICHES = REPO / "corpus" / "fiches"
+# Les fiches moissonnees (phase 09) : 32 des 41 fiches du lot y vivent. Jusqu'au
+# 2026-09-29 ce script ne lisait que `corpus/fiches/` et ne les voyait pas.
+FICHES_HARVEST = REPO / "corpus" / "fiches_harvest"
+LOT = REPO / "hypotheses" / "LOT-09.json"
 SIGNALS = REPO / "signals"
 WORK = REPO / "corpus" / "consignes-signaux"
 PRODUCED = SIGNALS / "PRODUCED.json"
@@ -229,11 +233,27 @@ qu'un signal qui prétend.
 """
 
 
+def fiche_files() -> dict[str, Path]:
+    """Toutes les fiches, AMORCE et moissonnees. Un meme identifiant dans les
+    deux dossiers serait une ambiguite : on refuse plutot que de choisir."""
+    out: dict[str, Path] = {}
+    for d in (FICHES, FICHES_HARVEST):
+        for f in sorted(d.glob("*.json")):
+            if f.stem in out:
+                raise SystemExit(f"fiche en double : {f.stem} dans {out[f.stem].parent} et {d}")
+            out[f.stem] = f
+    return out
+
+
 def fiches() -> dict[str, dict]:
-    return {
-        f.stem: json.loads(f.read_text(encoding="utf-8"))
-        for f in sorted(FICHES.glob("*.json"))
-    }
+    return {fid: json.loads(f.read_text(encoding="utf-8")) for fid, f in fiche_files().items()}
+
+
+def lot_fiches() -> list[str]:
+    """Les `fiche_id` du lot fige de la phase 09 (`hypotheses/LOT-09.json`)."""
+    if not LOT.is_file():
+        raise SystemExit("hypotheses/LOT-09.json absent : aucun lot n'est fige")
+    return [e["fiche_id"] for e in json.loads(LOT.read_text(encoding="utf-8"))["fiches"]]
 
 
 def module_path(fiche_id: str) -> Path:
@@ -270,8 +290,15 @@ def empreinte16(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
 
 
-def do_list() -> int:
+def do_list(lot: bool = False) -> int:
     toutes = fiches()
+    if lot:
+        # Le lot seulement, dans son ordre : c'est ce que la phase 09 attend.
+        ids = lot_fiches()
+        absentes = [fid for fid in ids if fid not in toutes]
+        if absentes:
+            raise SystemExit(f"fiches du lot introuvables : {absentes}")
+        toutes = {fid: toutes[fid] for fid in ids}
     existants = signaux_existants()
     produits = json.loads(PRODUCED.read_text(encoding="utf-8")) if PRODUCED.is_file() else {}
 
@@ -410,6 +437,10 @@ def do_judge(path: Path, fiche: Path, sans_donnees: bool) -> int:
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description="Le harnais du codeur de signal — D23")
     ap.add_argument("--list", action="store_true", help="les fiches sans signal")
+    ap.add_argument("--lot", action="store_true",
+                    help="avec --list : seulement les fiches du lot fige (LOT-09.json)")
+    ap.add_argument("--fiche-path", metavar="FICHE_ID",
+                    help="le chemin de la fiche, pour --judge --fiche")
     ap.add_argument("--prepare", metavar="FICHE_ID", help="ecrire la consigne")
     ap.add_argument("--record", type=Path, metavar="MODULE", help="figer S6")
     ap.add_argument("--judge", type=Path, metavar="MODULE")
@@ -418,8 +449,11 @@ def main(argv: list[str]) -> int:
                     help="S1, S2, S5, S6 seuls — porte NON franchie sur un verdict partiel")
     a = ap.parse_args(argv)
 
+    if a.fiche_path:
+        print(fiche_files()[a.fiche_path].relative_to(REPO).as_posix())
+        return 0
     if a.list:
-        return do_list()
+        return do_list(a.lot)
     if a.prepare:
         return do_prepare(a.prepare)
     if a.record:
