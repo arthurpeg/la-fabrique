@@ -304,7 +304,19 @@ def sources(filtre: str | None = None) -> list[Source]:
     return out
 
 
-def harvest_sources(filtre: str | None = None) -> list[Source]:
+def title_norm(title: str) -> str:
+    """La forme de `papers.title_norm` (colonne generee, migration 001)."""
+    return re.sub(r"[^a-zA-Z0-9]+", " ", title).lower().strip()
+
+
+def titres_en_base() -> set[str]:
+    with VectorDB.from_env() as db, db.conn.cursor() as cur:
+        cur.execute("select title_norm from papers")
+        return {r["title_norm"] for r in cur.fetchall()}
+
+
+def harvest_sources(filtre: str | None = None,
+                    deja: set[str] | None = None) -> list[Source]:
     """Les papiers moissonnés — texte lu du PDF, `text_source = harvest`.
 
     Aucune vérification de recollage ici, et c'est le point : il n'y a AUCUN
@@ -332,6 +344,11 @@ def harvest_sources(filtre: str | None = None) -> list[Source]:
             # Un PDF sur le disque que la moisson ne connaît pas : on ne devine
             # pas ses métadonnées, on le saute en le disant.
             print(f"  ignoré, absent de harvest.json : {pdf.name}")
+            continue
+        # Deja en base : on ne relit pas son PDF (2026-09-29). Sans ce saut,
+        # chaque versement relisait des milliers de PDF pour les ecarter a
+        # l'insertion, une heure de lecture pour rien.
+        if deja and title_norm(w.get("title") or "") in deja:
             continue
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
@@ -432,7 +449,8 @@ def main(argv: list[str]) -> int:
             return 1
 
     try:
-        papers = harvest_sources(a.paper) if a.harvest else sources(a.paper)
+        papers = (harvest_sources(a.paper, None if a.dry_run else titres_en_base())
+                  if a.harvest else sources(a.paper))
     except VectorDBError as e:
         print(f"ARRÊT : {e}")
         return 1

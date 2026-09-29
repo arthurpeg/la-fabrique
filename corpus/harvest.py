@@ -122,7 +122,10 @@ SORT = "cited_by_count:desc"
 # n'est re-selectionne en voyant ce que le passage 1 a rendu. Changer un
 # mot-cle, une famille, le domaine ou le tri resterait une decision a part
 # entiere — c'est cela que `D20` verrouille.
-PER_FAMILY = 60
+#
+# Porte de 60 a 200 le 2026-09-29 (`D20` § Journal, passage 6), par le meme
+# argument : 200 est la taille maximale d'une page OpenAlex.
+PER_FAMILY = 200
 
 OPENALEX = "https://api.openalex.org/works"
 UNPAYWALL = "https://api.unpaywall.org/v2"

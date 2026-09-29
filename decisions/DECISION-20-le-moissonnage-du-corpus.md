@@ -295,3 +295,24 @@ travail de la présente décision.
 remplacer : les travaux déjà sondés gardent statut, preuve et date. Sans quoi
 approfondir obligerait à tout re-sonder, et effacerait le constat daté du
 passage précédent — qui est une pièce du dossier, pas un brouillon.
+
+**Passage 6 — 2026-09-29 : le plafond passe de 60 à 200, déclaré AVANT le
+lancement.** L'opérateur demande 1 000 papiers de plus. Même geste que le
+passage 2, pour la même raison : **creuser plus profond n'est pas changer la
+requête**. Recherche, domaine, date et tri (`cited_by_count:desc`) ne bougent
+pas : les 60 premiers de chaque axe sont le **préfixe exact** des 200 premiers,
+et rien n'est re-sélectionné en voyant ce que les passages précédents ont
+rendu. 200 est la taille maximale d'une page OpenAlex : une requête par axe,
+comme avant.
+
+- **Portée** : les **79 axes OpenAlex** (`family`, `asset`, `method`,
+  `anomaly`, `strategy`, `hypothesis`, `intraday`, `instrument`, `causality`,
+  `mechanism`). **Pas** les 23 axes `ssrn:*` : Crossref n'y rend que des
+  notices, et leur texte n'est lisible qu'en résumé (`D30`, `D31`).
+- **Attendu, écrit avant** : ~4 000 à 6 000 travaux nouveaux après
+  dédoublonnage, ~2 000 PDF libres, ~1 200 à 1 500 papiers pertinents en base
+  (`D33`). Taux tirés des passages du 2026-09-28 et 2026-09-29.
+- **Ce que ça coûte** : la pertinence baisse en descendant dans le tri par
+  citations — les papiers 61 à 200 sont moins cités, souvent plus récents ou
+  plus périphériques. `D33` écarte ce qui est hors sujet à l'entrée de la base ;
+  le trieur (`D15`) reste le seul juge de l'implémentabilité.

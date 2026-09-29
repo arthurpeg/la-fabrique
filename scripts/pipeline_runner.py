@@ -47,8 +47,11 @@ BACKOFF = [60, 120, 300, 600, 900, 1800, 1800, 1800, 1800, 1800, 1800, 1800]
 # (nom, commande, codes de sortie acceptes). `--fetch` rend 1 quand un fichier
 # annonce n'etait pas un PDF : c'est un refus juste, pas un plantage.
 STAGES: list[tuple[str, list[str], set[int]]] = [
+    # Passage 6 (`D20` § Journal) : les 79 axes OpenAlex, plafond 200. Pas les
+    # axes `ssrn:*`, dont Crossref ne rend que des notices (`D30`, `D31`).
     *[(f"recherche {g}", [*PY, "corpus/harvest.py", "--search", "--axis", g], {0})
-      for g in ("intraday", "instrument", "anomaly", "causality", "mechanism")],
+      for g in ("family", "asset", "method", "anomaly", "strategy", "hypothesis",
+                "intraday", "instrument", "causality", "mechanism")],
     ("sonde", [*PY, "corpus/harvest.py", "--probe", "--sans-ssrn"], {0}),
     ("telechargement", [*PY, "corpus/harvest.py", "--fetch"], {0, 1}),
     ("versement", [*PY, "vectordb/ingest.py", "--harvest"], {0}),
