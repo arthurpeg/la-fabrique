@@ -114,7 +114,9 @@ def fetch(db: VectorDB, top: int) -> dict:
         if len(par_papier.setdefault(pid, [])) < EXCERPTS_PER_PAPER:
             par_papier[pid].append({
                 "page": e["page"], "section": e["section"],
-                "excerpt": (e["excerpt"] or "").strip(),
+                # U+FFFD : caractere que pypdf n'a pas su decoder. La page publiee
+                # les refuse ; ils ne portent aucun sens (2026-09-29, 28 retires).
+                "excerpt": (e["excerpt"] or "").replace("�", "").strip(),
             })
 
     connus = {str(p["id"]) for p in papers}

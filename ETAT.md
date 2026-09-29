@@ -7,6 +7,12 @@ tronquait une barre trop tard ; corrigé, portes 05 et 08 rejouées et franchies
 mesure officielle (calibrations comprises).
 `D29` : pas de plis en phase 09 — une mesure unique sur tout le `pool`, à
 `asof` 2023-12-29 20:00 UTC, vérifiée par la porte.
+**2026-09-29 — moisson par 46 nouveaux axes** (intraday, instruments NQ/ES/YM/or/
+pétrole, anomalies sur tous les actifs, causalité, mécanismes de causalité) :
+1 097 papiers atteignables, 1 043 PDF, **589 `harvest` en base** (+290, règle de
+pertinence `D33`), 51 `authoritative`, 4 767 `abstract` ; 57 264 morceaux, tous
+vectorisés (GPU, `embed.py --gpu`) ; base 707 Mo sur un budget de 6,4 Go. Coder
+des signaux : `scripts/CODAGE-DES-SIGNAUX.md`.
 Les 11 fiches moissonnées sans trace de production ont été **refaites** par 11
 sessions isolées : 18 fiches sur 18 tracées, 17 vertes sur ce poste.
 `value_in_quote` n'ôte plus que les séparateurs de milliers (`D09` § Journal,
