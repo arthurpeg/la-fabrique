@@ -797,6 +797,7 @@ def core_urls(doi: str, title: str) -> list[dict]:
 # un silence pris pour une absence, `L05`. `do_probe` laisse alors le travail
 # NON SONDE plutot que de le declarer inatteignable (2026-09-28).
 UNAVAILABLE: list[str] = []
+LOCAL_NETWORK_ERRORS = ("CERTIFICATE_VERIFY_FAILED", "getaddrinfo failed")
 
 
 def surnames(names: list[str]) -> set[str]:
@@ -1124,6 +1125,15 @@ def do_probe(limit: int | None, retry: bool = False, only_ssrn: bool = False,
             if attempts[-1].get("is_pdf") and attempts[-1].get("bytes", 0) >= MIN_PDF_BYTES:
                 break
         found = verdict(cands, attempts)
+        # Une erreur de CERTIFICAT ou de RESOLUTION DNS dit que NOTRE reseau ne
+        # joint pas l'hote — portail wifi qui intercepte, connexion coupee — et
+        # rien du papier. Le 2026-09-29, 176 refus ont ete rendus ainsi pendant
+        # un passage sur le wifi de l'universite (`L05`) : on ne conclut pas.
+        if found["status"] != "atteignable" and any(
+            k in str(a.get("error") or "")
+            for a in attempts for k in LOCAL_NETWORK_ERRORS
+        ):
+            UNAVAILABLE.append("reseau local")
         if found["status"] != "atteignable" and UNAVAILABLE:
             # Un resolveur n'a pas repondu : on ne sait pas, donc on ne conclut pas.
             postponed += 1
