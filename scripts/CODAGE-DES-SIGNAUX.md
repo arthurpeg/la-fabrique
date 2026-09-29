@@ -1,56 +1,80 @@
-# Coder les signaux — guide de la session qui orchestre
+# Coder des signaux — le tutoriel de la session qui orchestre
 
-**À qui s'adresse ce fichier.** À une session Claude Code lancée pour produire
-des signaux à partir des fiches. Cette session **orchestre** : elle prépare les
-consignes, lance des **sessions de codage séparées**, les juge, et tient le
-compte. **Elle ne code jamais un signal elle-même.**
+**À qui s'adresse ce fichier.** À toute session Claude Code lancée pour
+**produire des signaux**, aujourd'hui comme dans six mois. Il ne vise aucun lot
+ni aucun papier en particulier : il dit comment transformer **le plus grand
+nombre possible de fiches** en signaux jugés, sans jamais tricher.
 
-Lis ce fichier en entier avant de commencer. Il dit ce que tu fais, dans quel
-ordre, et ce que tu n'as **pas le droit** de faire. Les règles viennent de
-`D07` (le contrat de signal), `D23` (le juge du codeur), `D25`–`D29` (le lot
-et sa mesure) et de l'invariant I de `CLAUDE.md` : **l'IA propose, le code
-déterministe tranche.**
+**Le rôle de la session qui lit ce fichier : orchestrer.** Elle choisit les
+fiches, prépare les consignes, lance des **sessions de codage séparées**, les
+fait juger, et tient le compte. **Elle ne code jamais un signal elle-même.**
+
+Les règles viennent de `D07` (le contrat de signal), `D23` (le juge du
+codeur), `D25`–`D29` (les lots et leur mesure) et de l'invariant I de
+`CLAUDE.md` : **l'IA propose, le code déterministe tranche.**
 
 ---
 
 ## 0. Avant de commencer
 
 1. Suis la séquence de démarrage de `CLAUDE.md` (wiki, `ETAT.md`, `LECONS.md`).
-2. Vérifie que les données sont là : `RSL_DATA_DIR` dans `.env`. Sans elles,
-   le juge ne peut pas vérifier la causalité (`S3`) ni la dégénérescence
-   (`S4`), et **un verdict partiel ne vaut pas un signal réussi**.
-3. Vérifie le quota de l'abonnement (outil `get_usage` de l'application, ou
-   la carte d'usage). Une session de codage consomme ~100 000 tokens. Ne
-   lance pas un lot qui ferait dépasser **85 %** de la fenêtre de 5 heures :
-   une session coupée en plein codage est un essai perdu.
-4. Liste ce qui reste à faire :
+2. **Données** : `RSL_DATA_DIR` doit être renseigné dans `.env`. Sans les
+   données, le juge ne peut vérifier ni la causalité (`S3`) ni la
+   dégénérescence (`S4`), et **un verdict partiel ne vaut pas un signal
+   réussi**.
+3. **Quota** : regarde l'usage de l'abonnement (outil `get_usage` de
+   l'application, ou la carte d'usage). Une session de codage consomme
+   ~100 000 tokens. Ne lance jamais un groupe qui ferait dépasser **85 %** de
+   la fenêtre de 5 heures : une session coupée en plein codage est un essai
+   perdu.
+4. **Ce qui reste à coder** :
+
+       uv run python scripts/code_signal.py --list
+
+   Toutes les fiches sans signal, qu'elles viennent d'`AMORCE.md`
+   (`corpus/fiches/`) ou du moissonneur (`corpus/fiches_harvest/`).
+
+## 1. L'ordre de priorité
+
+Code dans cet ordre, et **aussi loin que le quota le permet** :
+
+1. **Les fiches d'un lot figé**, s'il en existe un (`hypotheses/LOT-*.json`) :
 
        uv run python scripts/code_signal.py --list --lot
 
-   La priorité est **le lot figé de la phase 09** (`hypotheses/LOT-09.json`,
-   41 fiches). Hors lot : `--list` sans `--lot`.
+   Un lot attend ses signaux pour être mesuré ; c'est ce qui débloque la suite.
+2. **Toutes les autres fiches sans signal**, dans l'ordre de `--list`.
+3. **Quand il ne reste plus aucune fiche à coder**, le goulot n'est plus le
+   codage mais les fiches : dis-le dans le compte rendu (§ 4) — il faut alors
+   ficher de nouveaux papiers, ce qui est un autre travail
+   (`corpus/extract_fiche_harvest.py`), avec ses propres règles (`D16`).
+
+Une fiche donne **un** signal (un module par fiche, nommé d'après elle). Une
+fiche dont rien ne se transpose à nos neuf futures intraday peut ne donner
+aucun signal valable : le juge le dira.
 
 ---
 
-## 1. La boucle, fiche par fiche
+## 2. La boucle, fiche par fiche
 
-Travaille par **lots de 5 fiches**, sessions de codage lancées **en
-parallèle**. Pour chaque fiche `<fiche_id>` :
+Travaille par **groupes de 5 fiches**, sessions de codage lancées **en
+parallèle**, et enchaîne les groupes tant que le quota le permet. Pour chaque
+fiche `<fiche_id>` :
 
-### 1.1 Préparer la consigne
+### 2.1 Préparer la consigne
 
     uv run python scripts/code_signal.py --prepare <fiche_id>
 
-Elle est écrite dans `corpus/consignes-signaux/<fiche_id>.md`. Elle contient
-**tout** ce que le codeur a le droit de savoir : la fiche, le contrat `D07`,
-la liste blanche des imports, l'interface de `signals/_common.py`, la règle
-`S5`. Le module attendu est `signals/<fiche_id avec _ au lieu de ->.py`.
+Elle est écrite dans `corpus/consignes-signaux/<fiche_id>.md` et contient
+**tout** ce que le codeur a le droit de savoir : la fiche, le contrat `D07`, la
+liste blanche des imports, l'interface de `signals/_common.py`, la règle `S5`.
+Le module attendu est `signals/<fiche_id, les - remplacés par des _>.py`.
 
-### 1.2 Lancer la session de codage — isolée
+### 2.2 Lancer la session de codage — isolée
 
 Outil `Agent` (type `general-purpose`), une par fiche, en parallèle, **au
-premier plan** (`run_in_background: false`) pour que le lot se termine dans ton
-tour. Consigne à donner, **mot pour mot**, en remplaçant les deux chemins :
+premier plan** (`run_in_background: false`). Consigne à donner **mot pour
+mot**, en remplaçant les deux chemins :
 
 > Tu es un codeur de signal isolé. Ta seule source est ce fichier de consigne :
 >
@@ -77,14 +101,14 @@ tour. Consigne à donner, **mot pour mot**, en remplaçant les deux chemins :
 Note l'identifiant de chaque session (`agentId`) : c'est à elle, et à elle
 seule, que tu renverras un refus.
 
-### 1.3 Figer ce qu'elle a produit — AVANT de juger
+### 2.3 Figer ce qu'elle a produit — AVANT de juger
 
     uv run python scripts/code_signal.py --record signals/<module>.py
 
 C'est ce qui rend « zéro retouche » (`S6`) mesurable (`L22`). **Toujours
 `--record` avant `--judge`**, à chaque essai.
 
-### 1.4 Juger
+### 2.4 Juger
 
     uv run python scripts/code_signal.py --judge signals/<module>.py --fiche $(uv run python scripts/code_signal.py --fiche-path <fiche_id>)
 
@@ -92,75 +116,77 @@ Six conditions à tolérance zéro (`D23`) : `S1` contrat, `S2` liste blanche,
 `S3` causalité, `S4` non-dégénérescence, `S5` fidélité à la fiche, `S6` zéro
 retouche. **Aucun IC n'est calculé.**
 
-### 1.5 Si le juge refuse
+### 2.5 Si le juge refuse
 
 Renvoie le verdict **tel quel**, par `SendMessage`, **à la même session**
 (son `agentId`), avec : « Corrige en réécrivant le fichier entier, à partir de
-la seule consigne, mêmes règles d'isolement. » Puis reprends en 1.3.
+la seule consigne, mêmes règles d'isolement. » Puis reprends en 2.3.
 
 - **Trois essais au plus par fiche.** Au troisième refus, arrête : la fiche
-  est notée en échec, avec le verdict, dans le compte rendu (§ 3).
+  est notée en échec, avec le dernier verdict, dans le compte rendu (§ 4), et
+  tu passes à la suivante. Un échec est un résultat, pas une panne.
 - Regarde **comment** un signal devient vert (`L28`) : par la faute corrigée,
   ou par un contournement. Un contournement se signale, il ne se garde pas en
   silence.
 
 ---
 
-## 2. Ce que tu n'as PAS le droit de faire
+## 3. Ce que tu n'as PAS le droit de faire
 
 Ce ne sont pas des recommandations.
 
 - **Ne jamais écrire ni corriger un signal toi-même.** Pas une ligne. Une
-  retouche à la main casse `S6` et invalide le signal. Si un signal est faux,
-  il se refait par le codeur.
+  retouche à la main casse `S6` et invalide le signal. Un signal faux se
+  refait par le codeur.
 - **Ne jamais donner au codeur autre chose que sa consigne** : ni un signal
-  voisin, ni une hypothèse, ni un indice sur « ce qui marche ». Il
-  recopierait au lieu de coder (`D23`, `F42`).
-- **Ne jamais calculer un IC, ni lancer une mesure.** Pas de `evaluate()`,
-  pas de `scripts/measure_*.py`, pas de corrélation « pour voir ». Tout IC
-  s'écrit au registre et compte au dénominateur (invariant III) ; un signal
-  regardé avant sa mesure officielle est exclu du lot (`D28`).
+  voisin, ni une hypothèse, ni un indice sur « ce qui marche ». Il recopierait
+  au lieu de coder (`D23`, `F42`).
+- **Ne jamais calculer un IC, ni lancer une mesure.** Pas de `evaluate()`, pas
+  de `scripts/measure_*.py`, pas de corrélation « pour voir ». Tout IC s'écrit
+  au registre et compte au dénominateur (invariant III) ; un signal regardé
+  avant sa mesure officielle ne peut plus entrer dans un lot (`D28`).
 - **Ne jamais lancer les portes 03, 04 ou 06** : elles écrivent au registre
-  (`L25`). Les portes 05, 07, 08 et 09 (`--check`) sont en lecture seule.
-- **Ne jamais écrire ni modifier une hypothèse** (`hypotheses/H*.md`) : c'est
-  une étape à part, qui se fait avant la mesure et qui n'est pas celle du
-  codeur. `HYPOTHESIS` vaut `None` dans chaque signal produit.
-- **Ne jamais modifier le lot** (`hypotheses/LOT-09.json`) : il est figé. L'élargir après une mesure casse `BH` (`D25` C2).
+  (`L25`). Les portes 05, 07, 08 et `gate_09.py --check` sont en lecture seule.
+- **Ne jamais écrire ni modifier une hypothèse** (`hypotheses/H*.md`), ni un
+  lot (`hypotheses/LOT-*.json`) : ce sont des étapes à part, avant la mesure,
+  qui ne sont pas celles du codeur. `HYPOTHESIS` vaut `None` dans chaque
+  signal produit.
 - **Ne jamais toucher** au harnais (`harness/`), au registre
   (`registry/tests.jsonl`), à la tranche `holdout`, ni aux fiches.
-- **Ne jamais retoucher un fichier `signals/PRODUCED.json` à la main** : il
-  n'est écrit que par `--record`.
+- **Ne jamais modifier `signals/PRODUCED.json` à la main** : il n'est écrit
+  que par `--record`.
 
 ---
 
-## 3. En fin de session
+## 4. En fin de session
 
-1. Relance le juge de la porte en lecture seule :
+1. Relance le juge de la porte, en lecture seule :
 
        uv run python scripts/gate_08.py
 
 2. Écris le compte rendu dans `wiki/log.md` (une ligne datée, en ajout) :
-   combien de fiches traitées, combien de signaux verts, combien d'essais au
-   total, et **chaque échec avec sa raison**.
-3. Mets à jour `ETAT.md` : combien de signaux du lot restent à coder.
-4. Commite (le hook de fin de session le fait, mais un message explicite vaut
-   mieux) et pousse.
+   fiches traitées, signaux verts, essais au total, **chaque échec avec sa
+   raison**, et ce qui reste à coder (`--list`).
+3. Mets à jour `ETAT.md` : signaux produits, signaux restant à coder, et si
+   le goulot est devenu les fiches (§ 1, point 3).
+4. Commite et pousse.
 
 ---
 
-## 4. Reprendre après une coupure
+## 5. Reprendre après une coupure
 
-Tout est reprenable : `--list --lot` ne montre que les fiches **sans** signal,
-et `signals/PRODUCED.json` garde chaque essai. Une session de codage coupée en
+Tout est reprenable : `--list` ne montre que les fiches **sans** signal, et
+`signals/PRODUCED.json` garde chaque essai. Une session de codage coupée en
 cours laisse soit rien, soit un fichier non inscrit : dans le second cas,
-**supprime ce fichier non inscrit** et relance la fiche depuis 1.2, avec une
+**supprime ce fichier non inscrit** et relance la fiche depuis 2.2, avec une
 session neuve.
 
 ---
 
-## 5. Ce qui vient après, et qui n'est PAS ce travail
+## 6. Ce qui vient après, et qui n'est PAS ce travail
 
-Une fois les 41 signaux du lot codés : écrire les 41 hypothèses
-pré-enregistrées, produire la matrice de corrélation du lot, puis mesurer une
-fois chaque hypothèse (`D25`, `D28`, `D29`). Ces étapes ont leurs propres
-règles et **ne se font pas dans une session de codage**.
+Un signal codé n'est pas un signal testé. Pour qu'il soit mesuré, il faut, dans
+cet ordre et **hors de la session de codage** : écrire son hypothèse
+pré-enregistrée, le déclarer dans un lot clos, produire la matrice de
+corrélation du lot, puis mesurer une fois chaque hypothèse (`D25`, `D28`,
+`D29`).
