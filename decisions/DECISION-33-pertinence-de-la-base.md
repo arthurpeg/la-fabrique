@@ -84,3 +84,10 @@ reste dans `harvest.json`, et le retrait est inscrit.
   (64 %)**. Ce qui reste écarté à l'examen est surtout hors sujet (Medicaid,
   SIG, microcrédit, régulation bancaire) ; quelques cas limites de finance
   macro le restent aussi — c'est le prix d'une règle sur des mots.
+- **2026-09-29, purge faite** (`relevance.py --prune`) : **8 679 papiers
+  retirés** — 177 `harvest`, 8 502 `abstract` — inscrits un par un dans
+  `corpus/base_retraits.jsonl`. La base garde **299 `harvest`, 4 767
+  `abstract`, 51 `authoritative`** (intacts) ; 34 870 morceaux, dont 16 478
+  encore sans vecteur. `VACUUM (ANALYZE)` passé : place réutilisable, fichier
+  à 487 Mo (PostgreSQL ne rend pas l'espace au disque sans `VACUUM FULL`,
+  inutile sous 8 Go).

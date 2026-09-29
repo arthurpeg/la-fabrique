@@ -40,9 +40,9 @@ STATE = WORK / "state.json"
 STATUS = WORK / "status.json"
 PY = [sys.executable]
 
-MAX_ATTEMPTS = 6
+MAX_ATTEMPTS = 12
 STALL_SECONDS = 20 * 60
-BACKOFF = [60, 120, 300, 600, 900, 1800]
+BACKOFF = [60, 120, 300, 600, 900, 1800, 1800, 1800, 1800, 1800, 1800, 1800]
 
 # (nom, commande, codes de sortie acceptes). `--fetch` rend 1 quand un fichier
 # annonce n'etait pas un PDF : c'est un refus juste, pas un plantage.
