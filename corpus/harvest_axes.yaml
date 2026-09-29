@@ -319,3 +319,171 @@ axes:
     label: hypotheses comportementales — sur-reaction, sous-reaction, attention
     added: 2026-09-28
     search: '"overreaction hypothesis" OR "underreaction" OR "investor attention" OR "disposition effect"'
+
+  # --------------------------------------------------------------------------
+  # intraday — 2026-09-29, a la demande de l'operateur : des TEXTES INTEGRAUX
+  # utiles a NOTRE univers — neuf futures CME, horizon intra-journalier, signal
+  # calculable sur OHLCV seul (ni carnet d'ordres, ni news, ni calendrier).
+  # OpenAlex, libre acces seul, memes domaine, date, tri et plafond que tous
+  # (D20). Declares avant d'etre lances ; ils ne se reecrivent plus (D21).
+  # --------------------------------------------------------------------------
+  - id: intraday:futures-returns
+    label: rendements intra-journaliers sur futures d'indices
+    added: 2026-09-29
+    search: '"intraday" AND ("index futures" OR "E-mini" OR "S&P 500 futures" OR "Nasdaq futures")'
+  - id: intraday:reversal
+    label: retournement intra-journalier
+    added: 2026-09-29
+    search: '"intraday reversal" OR "intraday mean reversion" OR "intraday return reversal"'
+  - id: intraday:predictability
+    label: previsibilite des rendements intra-journaliers
+    added: 2026-09-29
+    search: '"intraday return predictability" OR "intraday return patterns" OR "intraday returns predict"'
+  - id: intraday:open-close
+    label: ouverture, cloture et derniere demi-heure
+    added: 2026-09-29
+    search: '"opening auction" OR "closing auction" OR "last half hour" OR "first half hour" OR "market close returns"'
+  - id: intraday:trading-sessions
+    label: effets de seance Asie, Europe, US
+    added: 2026-09-29
+    search: '"trading session" AND ("Asian session" OR "European session" OR "around the clock" OR "24-hour trading")'
+  - id: intraday:gold-oil
+    label: or et petrole en intra-journalier
+    added: 2026-09-29
+    search: '"intraday" AND ("gold futures" OR "crude oil futures" OR "WTI" OR "precious metals")'
+  - id: intraday:fx
+    label: devises en intra-journalier
+    added: 2026-09-29
+    search: '"intraday" AND ("exchange rate" OR "currency futures" OR "foreign exchange market" OR "FX market")'
+  - id: intraday:volume-volatility
+    label: volume, volatilite et rendement
+    added: 2026-09-29
+    search: '"volume-volatility" OR "trading volume and volatility" OR "volume and returns" OR "intraday volume"'
+  - id: intraday:volatility-timing
+    label: timing et gestion par la volatilite
+    added: 2026-09-29
+    search: '"volatility timing" OR "volatility-managed" OR "volatility scaling" OR "volatility targeting"'
+  - id: intraday:breakout
+    label: cassures de fourchette et de canal
+    added: 2026-09-29
+    search: '"opening range breakout" OR "breakout strategy" OR "channel breakout" OR "range breakout"'
+  - id: intraday:short-term-momentum
+    label: momentum de court terme
+    added: 2026-09-29
+    search: '"short-term momentum" OR "high-frequency momentum" OR "intraday trend" OR "intraday time series momentum"'
+  - id: intraday:time-of-day
+    label: effet heure de la journee
+    added: 2026-09-29
+    search: '"time-of-day effect" OR "hour-of-the-day" OR "intraday seasonality" OR "time of day returns"'
+  - id: intraday:technical-rules
+    label: regles techniques en intra-journalier
+    added: 2026-09-29
+    search: '"intraday" AND ("technical analysis" OR "trading rules" OR "moving average")'
+  - id: intraday:statistical-arbitrage
+    label: arbitrage statistique intra-journalier
+    added: 2026-09-29
+    search: '"intraday" AND ("pairs trading" OR "statistical arbitrage" OR "mean reversion strategy")'
+  - id: intraday:realized-moments
+    label: moments realises — asymetrie, semi-variance
+    added: 2026-09-29
+    search: '"realized skewness" OR "realized kurtosis" OR "realized semivariance" OR "signed jumps"'
+  - id: intraday:price-discovery
+    label: decouverte des prix sur futures
+    added: 2026-09-29
+    search: '"price discovery" AND ("futures" OR "E-mini" OR "spot and futures")'
+  - id: intraday:high-frequency-forecasting
+    label: prevision a haute frequence
+    added: 2026-09-29
+    search: '"high-frequency" AND ("return forecasting" OR "direction prediction" OR "price prediction")'
+
+  # --------------------------------------------------------------------------
+  # instrument — un axe par contrat de l'univers que l'operateur a nomme :
+  # NQ, ES, YM, or, petrole (2026-09-29). Plus etroits que `asset:*`.
+  # --------------------------------------------------------------------------
+  - id: instrument:nq
+    label: Nasdaq-100 et ses futures
+    added: 2026-09-29
+    search: '"Nasdaq-100" OR "Nasdaq 100 futures" OR "E-mini Nasdaq" OR "NQ futures"'
+  - id: instrument:es
+    label: S&P 500 et ses futures
+    added: 2026-09-29
+    search: '"S&P 500 futures" OR "E-mini S&P" OR "S&P 500 index futures" OR "SPX futures"'
+  - id: instrument:ym
+    label: Dow Jones et ses futures
+    added: 2026-09-29
+    search: '"Dow Jones futures" OR "E-mini Dow" OR "DJIA futures" OR "Dow Jones Industrial Average returns"'
+  - id: instrument:gold
+    label: or et ses futures
+    added: 2026-09-29
+    search: '"gold futures" OR "COMEX gold" OR "gold returns" OR "gold price dynamics"'
+  - id: instrument:oil
+    label: petrole et ses futures
+    added: 2026-09-29
+    search: '"crude oil futures" OR "WTI futures" OR "oil futures returns" OR "Brent futures"'
+
+  # --------------------------------------------------------------------------
+  # anomaly par actif — les anomalies SUR TOUS les actifs (2026-09-29).
+  # Completent les `anomaly:*` du 2026-09-22, qui ne ciblaient aucun actif.
+  # --------------------------------------------------------------------------
+  - id: anomaly:futures
+    label: anomalies sur les marches a terme
+    added: 2026-09-29
+    search: '("anomaly" OR "anomalies" OR "mispricing") AND ("futures market" OR "futures markets")'
+  - id: anomaly:equity-index
+    label: anomalies sur indices actions
+    added: 2026-09-29
+    search: '("anomaly" OR "anomalies" OR "calendar effect") AND ("stock index" OR "index returns")'
+  - id: anomaly:gold
+    label: anomalies sur l'or
+    added: 2026-09-29
+    search: '"gold" AND ("anomaly" OR "calendar effect" OR "day-of-the-week" OR "seasonality")'
+  - id: anomaly:oil
+    label: anomalies sur le petrole
+    added: 2026-09-29
+    search: '"oil" AND ("anomaly" OR "calendar effect" OR "day-of-the-week" OR "seasonality")'
+  - id: anomaly:fx
+    label: anomalies sur les devises
+    added: 2026-09-29
+    search: '("anomaly" OR "anomalies" OR "calendar effect") AND ("foreign exchange" OR "currency")'
+  - id: anomaly:crypto
+    label: anomalies sur les crypto-actifs
+    added: 2026-09-29
+    search: '("anomaly" OR "anomalies" OR "calendar effect") AND ("bitcoin" OR "cryptocurrency")'
+  - id: anomaly:commodities
+    label: anomalies sur les matieres premieres
+    added: 2026-09-29
+    search: '("anomaly" OR "anomalies" OR "mispricing") AND ("commodity" OR "commodities")'
+  - id: anomaly:day-of-week
+    label: effet jour de la semaine
+    added: 2026-09-29
+    search: '"day-of-the-week effect" OR "weekend effect" OR "Monday effect"'
+  - id: anomaly:turn-of-month
+    label: tournant du mois et jours feries
+    added: 2026-09-29
+    search: '"turn-of-the-month" OR "month-end effect" OR "holiday effect" OR "pre-holiday"'
+
+  # --------------------------------------------------------------------------
+  # causality — qui entraine qui : avance-retard, causalite de Granger,
+  # transmission entre actifs (2026-09-29). Un signal cross-actif ne se
+  # calcule qu'avec les series de l'univers : c'est le cas ici.
+  # --------------------------------------------------------------------------
+  - id: causality:lead-lag
+    label: relations d'avance et de retard
+    added: 2026-09-29
+    search: '"lead-lag" AND ("futures" OR "index" OR "spot" OR "returns")'
+  - id: causality:granger
+    label: causalite de Granger
+    added: 2026-09-29
+    search: '"Granger causality" AND ("futures" OR "returns" OR "volatility")'
+  - id: causality:intraday-spillover
+    label: transmission intra-journaliere
+    added: 2026-09-29
+    search: '"intraday" AND ("spillover" OR "transmission" OR "contagion")'
+  - id: causality:cross-asset
+    label: previsibilite entre actifs
+    added: 2026-09-29
+    search: '"cross-asset" OR "cross-market predictability" OR "return predictability across markets"'
+  - id: causality:information-flow
+    label: flux d'information et entropie de transfert
+    added: 2026-09-29
+    search: '"information flow" AND ("markets" OR "futures") OR "transfer entropy"'

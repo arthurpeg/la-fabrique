@@ -76,7 +76,9 @@ MAX_PAGES = 25
 MIN_SCOPE_SHARE = 0.10  # une page sous 10 % dans le perimetre arrete la requete
 PAUSE = 2.0
 
-BUDGET_BYTES = 400_000_000  # `D32` : 80 % des 500 Mo (decimaux) du plan gratuit
+# `D32` : 80 % du plan Supabase — 500 Mo gratuits jusqu'au 2026-09-28, 8 Go depuis
+# le 2026-09-29 (§ Journal). Meme budget que `vectordb/ingest.py`.
+BUDGET_BYTES = 6_400_000_000
 BYTES_PER_PAPER = 13_000  # mesure du 2026-09-28, vecteur et index compris
 
 

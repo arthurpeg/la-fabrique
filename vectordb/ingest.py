@@ -90,6 +90,14 @@ MIN_SECTIONS_DETECTED = 2
 # Compteur des octets NUL retirés. Une liste plutôt qu'un entier : il est lu et
 # incrémenté depuis `split_pages`, et un compte qui n'est pas affiché est un
 # nettoyage silencieux.
+# Le budget de taille de la base — `D32` § Journal du 2026-09-29 : 80 % des
+# 8 Go du plan Supabase de l'operateur. Couts mesures le 2026-09-28 sur 44 070
+# morceaux de texte integral : ~2,3 Ko de texte et d'index plein texte, ~3,1 Ko
+# de vecteur, ~3,9 Ko d'index HNSW, plus les cles.
+BUDGET_BYTES = 6_400_000_000
+BYTES_PER_NEW_CHUNK = 10_000
+BYTES_PER_PENDING_CHUNK = 7_500
+
 NUL_COUNT = [0]
 SURROGATE = re.compile(r"[\ud800-\udfff]")
 SURROGATE_COUNT = [0]
@@ -474,7 +482,25 @@ def main(argv: list[str]) -> int:
     print("\nInsertion…", flush=True)
     inserted = skipped = 0
     with VectorDB.from_env() as db:
+        # LE BUDGET, verifie AVANT chaque papier (`D32` § Journal). Le 2026-09-28
+        # l'ingestion n'en avait aucun et a porte la base a 487 Mo sur 500. On
+        # projette la taille FINALE : les morceaux deja verses sans vecteur en
+        # recevront un (~7,5 Ko avec l'index HNSW), et chaque nouveau morceau
+        # coute ~10 Ko une fois vectorise.
+        with db.conn.cursor() as cur:
+            cur.execute("select pg_database_size(current_database()) as b, "
+                        "(select count(*) from chunks where embedding is null) as n")
+            row = cur.fetchone()
+        projected = int(row["b"]) + int(row["n"]) * BYTES_PER_PENDING_CHUNK
+        print(f"  base {row['b'] / 1e6:.0f} Mo, {row['n']} morceau(x) sans vecteur ; "
+              f"taille projetee {projected / 1e6:.0f} Mo sur un budget de "
+              f"{BUDGET_BYTES / 1e6:.0f} Mo")
         for s, chunks in plan:
+            cost = len(chunks) * BYTES_PER_NEW_CHUNK
+            if projected + cost > BUDGET_BYTES:
+                print(f"\nBUDGET ATTEINT — {s.stem[:46]} ({len(chunks)} morceaux) le "
+                      f"depasserait. Arret ; rien n'est verse au-dela (D32).")
+                break
             try:
                 paper_id = db.insert_paper(Paper(
                     title=s.title, authors=s.authors, year=s.year,
@@ -490,6 +516,7 @@ def main(argv: list[str]) -> int:
             ])
             print(f"  {s.stem[:46]:<46} {n:>4} morceaux")
             inserted += n
+            projected += cost
 
     print(f"\n{inserted} morceaux insérés, {skipped} papier(s) déjà présent(s)")
     print("La recherche PLEIN TEXTE fonctionne dès maintenant (le tsvector est")
