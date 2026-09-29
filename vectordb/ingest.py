@@ -435,6 +435,24 @@ def main(argv: list[str]) -> int:
         return 1
 
     if a.harvest:
+        # `D33` : la base de recherche ne garde que les papiers PERTINENTS,
+        # par une regle mecanique ecrite d'avance. Les ecartes restent
+        # moissonnes (harvest.json, PDF sur le disque) et restent triables.
+        sys.path.insert(0, str(REPO / "corpus"))
+        from relevance import is_relevant
+
+        kept = []
+        for s in papers:
+            ok, m, sig = is_relevant(s.title, "\n".join(s.pages), "full")
+            if ok:
+                kept.append(s)
+            else:
+                print(f"  ecarte (D33, marche={m}, signal={sig}) : {s.title[:70]}")
+        print(f"  pertinence D33 : {len(kept)} gardes sur {len(papers)}\n")
+        papers = kept
+        if not papers:
+            print("aucun papier pertinent a verser")
+            return 0
         print(f"{len(papers)} papier(s) MOISSONNÉ(S) — texte lu du PDF à "
               "l'instant, `text_source = harvest` (D22).")
         print("Ce texte NE FAIT PAS FOI : aucune pagination n'est vérifiée, car")
