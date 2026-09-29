@@ -65,3 +65,22 @@ reste dans `harvest.json`, et le retrait est inscrit.
 ## Journal
 
 - **2026-09-29** — décision prise ; règle branchée dans `ingest.py --harvest`.
+- **2026-09-29, calibrage AVANT toute purge — la règle d'origine était trop
+  stricte pour les textes intégraux.** Premier passage à blanc : 261 `harvest`
+  sur 476 écartés (55 %), 8 512 `abstract` sur 13 269 (64 %). L'examen de 45
+  textes intégraux écartés montrait de vrais papiers de finance retirés à tort
+  — *Expected Option Returns* (22 signaux, 1 marché), *Volatility timing* (23,
+  0), *What happened to the quants in August 2007*, *Short- and Long-Horizon
+  Behavioral Factors* : ils disent « stocks », « equities », « options » et non
+  « futures » ou « stock market ». Trois amendements, **faits avant qu'un seul
+  papier soit retiré** :
+  1. marchés : `stocks`, `equities`, `option(s) prices/returns/markets`,
+     `treasur…` ; et `crude` restreint à `crude oil` (« crude protein » passait) ;
+  2. un texte intégral dont le début porte **≥ 8 signaux** est pertinent même
+     sans marché nommé ;
+  3. un texte intégral dont le début nomme **≥ 10 fois un marché** est
+     pertinent même sans signal (« macro news … forex market », 17 mentions).
+  Résultat : **177 `harvest` sur 476 écartés (37 %), 8 502 `abstract` sur 13 269
+  (64 %)**. Ce qui reste écarté à l'examen est surtout hors sujet (Medicaid,
+  SIG, microcrédit, régulation bancaire) ; quelques cas limites de finance
+  macro le restent aussi — c'est le prix d'une règle sur des mots.

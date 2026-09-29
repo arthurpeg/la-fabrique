@@ -30,10 +30,15 @@ REMOVED = REPO / "corpus" / "base_retraits.jsonl"
 
 MARKET = re.compile(
     r"\bfutures?\b|\bstock (?:market|index|indices|returns?|prices?)\b|\bequity (?:index|market)"
-    r"|\bs&p\b|\bs&p 500\b|\bnasdaq\b|\bdow jones\b|\be-mini\b|\bgold\b|\bcrude\b"
+    r"|\bs&p\b|\bs&p 500\b|\bnasdaq\b|\bdow jones\b|\be-mini\b|\bgold\b|\bcrude oil\b"
     r"|\boil (?:price|prices|market|futures)\b|\bcommodit|\bexchange rates?\b|\bcurrenc"
     r"|\bforex\b|\bforeign exchange\b|\bbitcoin\b|\bcrypto|\btreasury (?:bond|futures|yield)"
-    r"|\bbond market|\bvix\b|\bindex returns\b|\bstock returns\b",
+    r"|\bbond market|\bvix\b|\bindex returns\b|\bstock returns\b"
+    # Amendement du 2026-09-29 (`D33` § Journal), AVANT toute purge : le texte
+    # integral de papiers de finance dit « stocks », « equities », « options »
+    # plutot que « futures » ou « stock market » — vu sur 45 retraits examines,
+    # dont « Expected Option Returns » et « Volatility timing ».
+    r"|\bstocks?\b|\bequities\b|\boptions? (?:prices?|returns?|markets?)\b|\btreasur",
     re.I,
 )
 SIGNAL = re.compile(
@@ -47,6 +52,12 @@ HEAD_CHARS = 5000
 # Un resume est court : un marche et un signal suffisent. Un texte integral
 # nomme en passant bien des choses : il en faut davantage, sur son debut.
 THRESHOLDS = {"abstract": (1, 1), "full": (2, 3)}
+# Un debut de texte integral SATURE de vocabulaire de signal est un papier de
+# marches financiers meme sans marche nomme (`D33` § Journal, 2026-09-29).
+FULL_SIGNAL_ALONE = 8
+# Et un debut de texte integral qui nomme dix fois un marche en parle, meme sans
+# le vocabulaire de signal (« macro news ... forex market », 17 mentions).
+FULL_MARKET_ALONE = 10
 
 
 def is_relevant(title: str, text: str, kind: str) -> tuple[bool, int, int]:
@@ -54,7 +65,9 @@ def is_relevant(title: str, text: str, kind: str) -> tuple[bool, int, int]:
     head = f"{title}\n{(text or '')[:HEAD_CHARS]}"
     m, s = len(MARKET.findall(head)), len(SIGNAL.findall(head))
     need_m, need_s = THRESHOLDS[kind]
-    return (m >= need_m and s >= need_s), m, s
+    ok = (m >= need_m and s >= need_s) or (
+        kind == "full" and (s >= FULL_SIGNAL_ALONE or m >= FULL_MARKET_ALONE))
+    return ok, m, s
 
 
 def scan(db) -> list[dict]:
