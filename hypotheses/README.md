@@ -46,6 +46,31 @@ elle croit battre la littérature, et pas seulement l'espérer. Un IC au-dessus 
 
 | [H04](H04-andersen-bollerslev-1997-periodicite.md) | *(aucun signal — `scripts/measure_h04.py`)* | **testée** | 2026-09-18 | **les quatre clauses tiennent** — forme en U, rapports 1,74 à 2,05 contre 1,91 chez les auteurs ; **aucun IC, aucun test compté** |
 
+### Le lot de la phase 09 — `H05` à `H14`, écrites le 2026-09-29
+
+Dix hypothèses **pré-enregistrées, non mesurées**, au format de `D33` et jugées
+par `hypotheses/score_hypothese.py` (sept conditions à tolérance zéro). Le lot
+compte **41 fiches** et **31 n'ont pas d'hypothèse mesurable** : le recensement,
+fiche par fiche avec sa raison, est dans `hypotheses/NON-ECRITES-09.md` et au
+ledger sous `F61`.
+
+| # | Fiche | Signe | Ce qu'elle affirme |
+|---|---|---|---|
+| [H05](H05-baltussen-2021-reste-de-la-journee-futures.md) | `baltussen-2021-hedging-demand-intraday-momentum` | +1 | le reste de la fenêtre prédit sa dernière demi-heure |
+| [H06](H06-shen-2022-momentum-intraday-transpose.md) | `bitcoin-intraday-time-series-momentum-…` | +1 | l'ouverture prédit la dernière demi-heure |
+| [H07](H07-xu-2022-premiere-demi-heure-et-demi-journee.md) | `exploring-the-predictability-of-intraday-returns-…` | +1 | la première demi-heure prédit **tout** le reste de la fenêtre |
+| [H08](H08-gurrib-2022-retournement-du-quart-d-heure.md) | `high-frequency-return-and-risk-patterns-…` | **−1** | un quart d'heure se **retourne** au suivant |
+| [H09](H09-li-2022-itsm-international.md) | `intraday-time-series-momentum-global-evidence-…` | +1 | le motif de `H01`, affirmé sur 16 marchés |
+| [H10](H10-chen-2024-saisonnalite-de-la-tranche-horaire.md) | `investor-clientele-and-intraday-patterns-…` | +1 | un créneau horaire revient le lendemain |
+| [H11](H11-lou-2019-continuation-par-segment-de-seance.md) | `lou-2019-tug-of-war` | +1 | un segment de séance persiste |
+| [H12](H12-hossain-2021-momentum-intraday-en-choc.md) | `the-impact-of-intraday-momentum-on-stock-returns-…` | +1 | le motif de `H01`, affirmé sur 8 mois et demi de choc |
+| [H13](H13-zarattini-2024-sortie-de-la-zone-de-bruit.md) | `zarattini-2024-beat-the-market-spy` | +1 | sortir de la zone de bruit prédit la fin de fenêtre |
+| [H14](H14-zarattini-2024-franchissement-du-range-d-ouverture.md) | `zarattini-2024-profitable-day-trading-us-equity` | +1 | le sens des premières minutes prédit le reste — **et le papier prédit que non** |
+
+**Cinq d'entre elles portent le même motif** que `H01` et `H03`, tous deux mesurés
+sans résultat. Leurs signaux seront corrélés, et c'est pourquoi `D25` exige la
+matrice de corrélation du lot **avant** `BH`.
+
 **`counted_tests()` vaut 56 pour TROIS hypothèses.** `H01` et `H02` portent deux
 lignes chacune : la première mesure et sa reprise sous `D11`, qui a corrigé la
 déflation de recouvrement. `H03` en porte 52 — 40 dents et 12 creux — pour **un

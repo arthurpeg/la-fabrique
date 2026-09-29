@@ -34,6 +34,18 @@ requêtes sous un budget de 400 Mo (80 % des 500 Mo du plan gratuit). **Aucune
 fiche ne peut venir d'un résumé** : il faut d'abord le texte intégral (`D30`),
 puis `D18`. Ces papiers servent la RECHERCHE ; ils ne sont pas dans
 `harvest.json` et n'entrent pas dans le lot.
+**2026-09-29 — `D33` : les hypothèses du lot ont un format, un juge, et il n'y en
+a que DIX de possibles sur 41.** `hypotheses/score_hypothese.py` (28 vérifications,
+0 échec) pose sept conditions à tolérance zéro et ferme un trou réel : `gate_09`
+lit le signe dans `module.EXPECTED_SIGN`, pas dans l'hypothèse, et rien ne
+vérifiait la concordance. **`H05` à `H14` sont écrites** et passent les sept
+conditions. **31 fiches n'ont pas d'hypothèse mesurable** — 20 ne prédisent aucun
+rendement (7 l'écrivent elles-mêmes), 9 ont un horizon hors fenêtre
+(`harness/metric.py` groupe le rendement futur par *(séance, fenêtre)* : un
+horizon qui franchit une séance ne rend **aucune** observation), 2 exigent une
+donnée absente. Recensement fiche par fiche : `hypotheses/NON-ECRITES-09.md`,
+ledger `F61`. **Le lot reste clos** (`D25` `C2`) : l'amender est une décision de
+l'opérateur, et les trois issues sont chiffrées dans `F61`.
 **Relu le 2026-09-26** : les énoncés que le dépôt avait dépassés sont **barrés**,
 avec la date et la preuve de leur correction — rien n'est effacé. Les sections
 datées plus bas restent l'historique ; l'état courant est dans § Prochaine
@@ -85,6 +97,20 @@ puis mesurée — la forme en U de la volatilité intra-journalière est retrouv
 reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
 **Décision la plus récente :**
+`decisions/DECISION-33-ce-qu-une-hypothese-du-lot-contient.md` — une hypothèse du
+lot est un fichier à **en-tête fixe et six sections**, dont une table qui rattache
+chaque chiffre du papier à l'entrée `reported_results` de sa fiche : *un chiffre
+du papier absent de la fiche est un chiffre inventé* (`F2` et `S5` transposés).
+Sept conditions à tolérance zéro, comptées par `hypotheses/score_hypothese.py`,
+**écrit avant la première hypothèse**. Deux portent sur l'ensemble : la
+**bijection avec le lot**, et la **concordance du signe** entre l'hypothèse et
+`module.EXPECTED_SIGN` du signal — seul trou de protocole que cette décision
+*ferme* plutôt que documente. Les 41 hypothèses sont écrites par une session
+contaminée (elle connaît les résultats nuls de `H01`-`H03`), ce qui pousse aux
+affirmations prudentes : d'où la condition `A7`, qui **compte** les clauses de
+falsification. `--lier` inscrit `ref` et `signal_id` dans le lot en les dérivant
+des fichiers d'hypothèse, jamais l'inverse (`F54`).
+**Décision précédente :**
 `decisions/DECISION-27-le-lot-de-la-phase-09.md` — le lot de la phase 09 est un
 **critère, pas un nombre**. `D25` engageait 50 signaux, chiffre écrit quand le
 corpus portait 17 fiches ; il en porte 51 et le moissonné est épuisé. Le lot est
@@ -268,6 +294,32 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 
 **LES PORTES 07 ET 08 SONT FRANCHIES. LA PHASE 09 EST OUVERTE — et c'est la
 première qui dépense des tests.**
+
+### Au 2026-09-29, ce qui bloque la porte 09 se réduit à trois choses
+
+```
+python hypotheses/score_hypothese.py --check   # 28 verifications, 0 echec
+python hypotheses/score_hypothese.py           # 10 ecrites sur 41, 31 nommees
+python scripts/gate_09.py                      # NON FRANCHIE, et elle dit pourquoi
+```
+
+1. **Les 31 fiches sans hypothèse mesurable** — et ce n'est pas un retard de
+   rédaction, c'est un constat mesuré fiche par fiche
+   (`hypotheses/NON-ECRITES-09.md`, ledger `F61`). **Décision de l'opérateur** :
+   amender `D27` d'un écran « prédit un rendement dans une fenêtre » et rétrécir
+   le lot — ce qui **abaisse** la barre de `BH` après avoir vu les fiches, donc
+   exige une contamination déclarée ; ou écrire 31 hypothèses explicitement
+   **dérivées**, ce qui la **relève** ; ou attendre un second moissonnage. Le lot
+   est **clos** : une session ne le rétrécit pas seule.
+2. **La matrice de corrélation du lot**, `scripts/out/lot_09_correlations.json`,
+   toujours absente. Elle n'est pas décorative : **cinq des dix hypothèses
+   écrites sont des variantes du même motif**, déjà mesuré absent par `H01`
+   (`t` −1,56) et `H03` (`F33`, `p` = 0,25).
+3. **Aucun signal n'est codé** pour les dix hypothèses — c'est la porte 08 qui
+   décrit comment le faire, et elle est franchie.
+
+**Ce qui n'est plus un blocage :** le format d'une hypothèse, son juge, et la
+concordance du signe entre hypothèse et signal (`D33`).
 
 Relancer plutôt que recopier (`L21`) :
 

@@ -47,7 +47,9 @@ Une page par phase de l'**ordre de construction** (`ETAT.md`, phases 01→15).
 - [[phases/phase-07-triage-et-extraction|Phase 07 — Triage et extraction]] — `franchie` 2026-09-23 : **17 fiches, 450 résultats cités**, produites par sept sessions séparées, `G1`–`G4` à zéro. A demandé `D24` et `L22` pour le devenir
 - [[phases/phase-08-codeur-de-signal|Phase 08 — Le codeur de signal]] — `franchie` 2026-09-23 : un signal produit par une session séparée tient les six conditions **au premier essai**, aucun IC dépensé. Calibration `D06` faite : 0,5334
 
-> Les phases 09 à 15 n'ont pas encore de page. On les crée en s'en approchant,
+- [[phases/phase-09-premier-passage|Phase 09 — Le premier passage complet]] — `en-cours` : lot figé à 41, **10 hypothèses écrites, 31 sans hypothèse mesurable** (`F61`). La première phase qui dépense des tests
+
+> Les phases 10 à 15 n'ont pas encore de page. On les crée en s'en approchant,
 > pas d'avance : une page de phase lointaine est une page qui vieillit sans être
 > lue.
 
