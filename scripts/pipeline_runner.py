@@ -108,7 +108,8 @@ def run_stage(name: str, cmd: list[str], ok: set[int], attempt: int, status: dic
             fh.write(line)
             fh.flush()
             last_out[0] = time.time()
-            m = PROGRESS.search(line)
+            # « pause 10 s (1/5) » est un compteur de reprises, pas un avancement.
+            m = None if "pause" in line else PROGRESS.search(line)
             cur = status["current"]
             cur["last_line"] = line.strip()[:160]
             if m and int(m.group(2)) >= int(m.group(1)) and int(m.group(2)) > 0:
