@@ -17,10 +17,9 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
+from _common import load, series_index, session_date, write_json
 from scipy.cluster import hierarchy
 from scipy.spatial.distance import squareform
-
-from _common import load, series_index, session_date, write_json
 
 SHORT_HISTORY_YEARS = 5.0  # below this an instrument is measured apart, never blended
 

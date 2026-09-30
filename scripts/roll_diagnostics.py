@@ -28,7 +28,6 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
-
 from _common import load, series_index, write_json
 
 LOCAL_WINDOW = 61  # minutes, centred: the neighbourhood a jump is compared with
