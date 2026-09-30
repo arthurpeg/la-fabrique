@@ -1,8 +1,8 @@
 ---
 type: phase
-updated: 2026-09-29
+updated: 2026-09-30
 status: en-cours
-sources: [ETAT.md, decisions/DECISION-25-budget-de-tests.md, decisions/DECISION-27-le-lot-de-la-phase-09.md, decisions/DECISION-40-ce-qu-une-hypothese-du-lot-contient.md, scripts/gate_09.py]
+sources: [ETAT.md, decisions/DECISION-25-budget-de-tests.md, decisions/DECISION-36-le-lot-de-la-phase-09.md, decisions/DECISION-40-ce-qu-une-hypothese-du-lot-contient.md, scripts/gate_09.py]
 ---
 
 # Phase 09 — Le premier passage complet
@@ -25,7 +25,7 @@ hypothèses, toutes trois sans résultat.
 | | |
 |---|---|
 | `D25` | le budget : **Benjamini–Hochberg à `q` = 0,10**, unilatéral au signe pré-enregistré, lot **clos** avant la première mesure. Le dénominateur de la phase 15 reste le registre **entier** |
-| `D27` | le lot est un **critère, pas un nombre** : les fiches triées `oui`, plus les `partiel` par transposition d'univers. Jamais celles à donnée manquante ni à horizon incompatible |
+| `D36` | le lot est un **critère, pas un nombre** : les fiches triées `oui`, plus les `partiel` par transposition d'univers. Jamais celles à donnée manquante ni à horizon incompatible |
 | `D28` | **aucune ligne hors protocole** : un signal déjà mesuré ne peut pas entrer dans le lot |
 | `D29` | **pas de plis** : une mesure unique sur tout le `pool`, à `asof` 2023-12-29 20:00 UTC |
 | `D40` | ce qu'une **hypothèse** contient, et son juge — `hypotheses/score_hypothese.py` |

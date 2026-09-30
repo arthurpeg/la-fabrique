@@ -134,10 +134,10 @@ déclare ce qu'on ne peut pas rendre impossible.
 
 | Point | Échéance |
 |---|---|
-| **Deux décisions portent le numéro `D27`** — `DECISION-27-l-instant-de-troncature.md` et `DECISION-27-le-lot-de-la-phase-09.md`. `gate_09.DECISIONS_ADMISES` admet `"D27"` et `LOT-09.json` le nomme : le lot s'autorise d'un numéro qui désigne deux textes. Non tranché ici — renuméroter touche `ETAT.md`, `wiki/log.md` (append-only) et le lot figé | avant la première mesure du lot |
+| ~~**Deux décisions portent le numéro `D27`**~~ — **TRANCHÉ le 2026-09-30 par la ligne distante, avant la première mesure, comme l'échéance l'exigeait : `D27` reste à l'instant de troncature (le plus ancien), le lot devient `D36`. `LOT-09.json` porte `"decision": "D36"` et le fichier renuméroté porte sa note ; les mentions de « `D27` » dans `wiki/log.md` et `LECONS.md` n'ont pas été retouchées, elles sont append-only. C'est ce précédent qui a servi à renuméroter la présente décision `D33` → `D40` | **fermé** |
 | **`baltussen-2021-hedging-demand-intraday-momentum` a son signal AVANT son hypothèse** — produit le 2026-09-23 pour franchir la porte 08. Son `EXPECTED_SIGN` est donc lu, pas dicté ; le juge vérifiera la concordance au lieu de l'imposer. Aucun IC n'a été calculé dessus, donc rien n'est vu d'un résultat | constaté, sans échéance |
 | **Le juge ne sait pas dire qu'une hypothèse est creuse** — même limite que `D16` pour les fiches | au verdict de la porte 09 |
-| **Une fiche du lot peut se révéler inécrivable en signal** au moment de la coder — `D27` § Ce qui reste ouvert l'annonçait (« un faux inclus coûte un signal qu'on découvre inécrivable »). L'hypothèse est écrite quand même : c'est elle qui rend le refus visible plutôt que silencieux | à la première |
+| **Une fiche du lot peut se révéler inécrivable en signal** au moment de la coder — `D36` (ex-`D27`) § Ce qui reste ouvert l'annonçait (« un faux inclus coûte un signal qu'on découvre inécrivable »). L'hypothèse est écrite quand même : c'est elle qui rend le refus visible plutôt que silencieux | à la première |
 
 ## Journal des passages
 

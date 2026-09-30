@@ -2,7 +2,7 @@
 
 **Écrit le :** 2026-09-29, par la session qui a écrit `D40` et les dix hypothèses.
 **Statut : constat, pas décision.** Rien n'est retiré du lot — il est **clos**
-depuis le 2026-09-28 (`D25` `C2`, `D27`) et une session ne le rétrécit pas seule.
+depuis le 2026-09-28 (`D25` `C2`, `D36`, ex-`D27`) et une session ne le rétrécit pas seule.
 Ce fichier dit seulement **pourquoi** dix hypothèses ont pu s'écrire et
 trente et une pas, pour que la décision qui viendra parte d'un compte et non d'une
 impression.
@@ -30,7 +30,7 @@ couple *(séance, fenêtre)* **avant** de décaler, donc un horizon qui franchit
 frontière de séance ne produit **aucune observation**, jamais. Le harnais est figé
 (invariant I). Un papier mensuel, hebdomadaire ou à six mois de détention n'a pas
 d'hypothèse mesurable ici — c'est exactement la catégorie « horizon incompatible »
-que `D27` a créée pour écarter Moskowitz, sauf que `corpus/lot_phase09.py` ne l'a
+que `D36` (ex-`D27`) a créée pour écarter Moskowitz, sauf que `corpus/lot_phase09.py` ne l'a
 appliquée qu'aux `partiel` d'`AMORCE.md` et **jamais aux moissonnées**.
 
 Un retard peut toujours vivre dans le **score**, qui lit librement le passé : c'est
@@ -139,5 +139,5 @@ vérifiée.
 ## Voir aussi
 
 - `decisions/DECISION-40-ce-qu-une-hypothese-du-lot-contient.md` — le format, le juge, et le journal où ce recensement est daté
-- `decisions/DECISION-27-le-lot-de-la-phase-09.md` — le critère du lot, et § Ce qui reste ouvert : *« à la première fiche mal classée »*
+- `decisions/DECISION-36-le-lot-de-la-phase-09.md` — le critère du lot, et § Ce qui reste ouvert : *« à la première fiche mal classée »*
 - `wiki/Failed Ideas/ledger.md` `F61` — ce que cette mesure a fermé
