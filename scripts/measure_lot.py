@@ -59,6 +59,29 @@ HORIZON = "30min"
 HARNAIS_DU_LOT: str | None = "94b495fa7525d3b8"  # D35, D37
 
 
+RAPPORTS = REPO / "scripts" / "out" / "rapports"
+
+
+def garder_rapport(rapport) -> Path:
+    """Le rapport d'IC ENTIER, recopié tel que le harnais l'a rendu.
+
+    Le registre ne porte que l'IC poolé ; la ventilation par cellule, la
+    décomposition du t, les coûts et les avertissements n'existaient qu'à
+    l'écran. Ils sont gardés ici, nommés par le `test_id` de la ligne que le
+    harnais a écrite : c'est une copie de SA sortie, jamais un calcul de plus
+    (invariant III). Le tableau de bord les lit (`scripts/tableau_de_bord.py`).
+    """
+    import dataclasses  # noqa: PLC0415
+
+    RAPPORTS.mkdir(parents=True, exist_ok=True)
+    chemin = RAPPORTS / f"{rapport.test_id}.json"
+    donnees = dataclasses.asdict(rapport)
+    donnees["render"] = rapport.render()
+    chemin.write_text(json.dumps(donnees, ensure_ascii=False, indent=1, default=str) + "\n",
+                      encoding="utf-8")
+    return chemin
+
+
 def charger() -> tuple[dict, list[dict]]:
     lot = json.loads(LOT_FILE.read_text(encoding="utf-8"))
     return lot, lot.get("fiches") or lot.get("hypotheses") or []
@@ -131,6 +154,7 @@ def main(argv: list[str]) -> int:
                            signal_id=e["signal_id"], hypothesis_ref=e["ref"], stage=STAGE)
         print(f"  {i}/{len(a_faire)} {e['ref']} {e['signal_id']:<48} "
               f"IC {rapport.ic:+.5f}  t {rapport.t['final']:+.2f}", flush=True)
+        garder_rapport(rapport)
     print(f"\ntests comptés : {avant} -> {registry.counted_tests()}")
     print("Étape suivante : python scripts/gate_09.py")
     return 0
