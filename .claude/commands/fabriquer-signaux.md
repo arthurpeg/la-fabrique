@@ -35,6 +35,13 @@ précisé), dans l'ordre de priorité, sans dépasser 85 % de la fenêtre de
    - `--record` puis `--judge` pour chacun ; un refus se renvoie tel quel à la
      même session par `SendMessage`, trois essais au plus ;
    - `scripts/double_codage.py <id>` ; si DISCORDANT, la procédure § 2.7.
+   - **Après chaque fiche**, lance la réaction en chaîne :
+     `uv run python scripts/avancer.py`. Elle fait seule tout ce qui ne demande
+     plus d'IA : écarts pour marché absent, doubles codages prêts, hypothèses
+     écrites et commitées — et, **dès que le lot est complet**, la matrice de
+     corrélation, **la mesure des IC**, la porte 09 et le tableau de bord. Si
+     elle s'arrête sur des corrélations négatives (choix BH ou BY, `D25`),
+     arrête-toi et demande à l'opérateur.
 6. **Consulte `fabrique-critique`** si un groupe finit mal (discordances,
    refus en série) ou avant de changer quoi que ce soit au processus. Son avis
    ne remplace ni les portes ni une décision écrite.

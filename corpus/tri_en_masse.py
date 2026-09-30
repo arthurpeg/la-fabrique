@@ -73,7 +73,7 @@ def deja_tries() -> set[str]:
     return titres
 
 
-def population() -> list[dict]:
+def population(semantique: bool = False) -> list[dict]:
     works = lire_json(HARVEST, {}).get("works", [])
     faits = deja_tries()
     retires = set()
@@ -89,9 +89,48 @@ def population() -> list[dict]:
                 or not (REPO / w["pdf"]).is_file()):
             continue
         vus.add(t)
-        out.append({**w, "_pertinent": t not in retires})
-    out.sort(key=lambda w: (not w["_pertinent"], -(w.get("cited_by_count") or 0), w["title"]))
+        out.append({**w, "_pertinent": t not in retires, "_priorite": None})
+    if semantique and out:
+        prioriser(out)
+        out.sort(key=lambda w: (-w["_priorite"], w["title"]))
+    else:
+        out.sort(key=lambda w: (not w["_pertinent"], -(w.get("cited_by_count") or 0), w["title"]))
     return out
+
+
+MODELE = "BAAI/bge-base-en-v1.5"  # celui de la base et des grappes (D39)
+
+
+def cibles() -> list[str]:
+    """Ce qui nous intéresse déjà : chaque fiche, et chaque papier retenu par le tri."""
+    sys.path.insert(0, str(REPO / "scripts"))
+    from code_signal import fiche_files  # noqa: PLC0415
+    from grappes import representation  # noqa: PLC0415
+
+    out = [representation(json.loads(p.read_text(encoding="utf-8")))
+           for p in fiche_files().values()]
+    out += [v["title"] for v in lire_json(VERDICTS, []) if v["verdict"] in ("oui", "partiel")]
+    return out
+
+
+def prioriser(papiers: list[dict]) -> None:
+    """La priorité d'un papier : sa plus grande similarité (cosinus) avec une fiche
+    ou un papier retenu. ORDONNER, jamais filtrer (D33) : chaque papier passera ;
+    ceux qui ressemblent à ce que la chaîne sait déjà transformer passent d'abord,
+    là où les grappes et les synthèses ont le plus de chances de naître (D39).
+    Titre et résumé moissonné seuls : aucun rendement, aucun IC, aucun PDF lu ici.
+    """
+    import numpy as np  # noqa: PLC0415
+    from fastembed import TextEmbedding  # noqa: PLC0415
+
+    modele = TextEmbedding(model_name=MODELE)
+    norme = lambda m: m / np.linalg.norm(m, axis=1, keepdims=True)  # noqa: E731
+    c = norme(np.array(list(modele.embed(cibles()))))
+    textes = [f"{w['title']}\n{w.get('abstract') or ''}"[:1500] for w in papiers]
+    p = norme(np.array(list(modele.embed(textes))))
+    sim = p @ c.T
+    for w, s in zip(papiers, sim.max(axis=1), strict=True):
+        w["_priorite"] = round(float(s), 4)
 
 
 def debut_du_papier(w: dict) -> str:
@@ -124,12 +163,12 @@ def do_status() -> int:
     return 0
 
 
-def do_preparer(lots: int, taille: int) -> int:
+def do_preparer(lots: int, taille: int, semantique: bool = True) -> int:
     ouverts = [p for p in passages() if not p.get("verse")]
     if ouverts:
         raise SystemExit(f"le passage {ouverts[0]['passage']} est encore ouvert : "
                          f"`--verser {ouverts[0]['passage']}` d'abord")
-    pop = population()[: lots * taille]
+    pop = population(semantique=semantique)[: lots * taille]
     if not pop:
         print("rien à trier")
         return 0
@@ -153,8 +192,10 @@ def do_preparer(lots: int, taille: int) -> int:
     (PASSAGES / f"passage-{numero}.json").write_text(json.dumps({
         "passage": numero, "prepared": date.today().isoformat(), "lots": len(groupes),
         "taille": taille, "verse": False,
+        "order": "similarité sémantique aux fiches et aux papiers retenus (D39)",
         "papiers": [{"id": w["openalex_id"], "title": w["title"], "lot": i // taille + 1,
-                     "pertinent_d33": w["_pertinent"]} for i, w in enumerate(pop)],
+                     "pertinent_d33": w["_pertinent"], "priority": w["_priorite"]}
+                    for i, w in enumerate(pop)],
     }, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(f"passage {numero} : {len(pop)} papiers en {len(groupes)} lot(s)")
     for n in range(1, len(groupes) + 1):
@@ -251,7 +292,7 @@ def self_check() -> int:
             (tmp / "v.json").write_text("[]", encoding="utf-8")
         VERDICTS, PASSAGES, WORK = tmp / "v.json", tmp / "passages", tmp / "consignes"
         avant = len(population())
-        do_preparer(1, 3)
+        do_preparer(1, 3, semantique=False)
         p = lire_json(PASSAGES / "passage-02.json", {})
         ids = [x["id"] for x in p.get("papiers", [])]
         cas("un passage de 3 papiers est préparé", len(ids) == 3)

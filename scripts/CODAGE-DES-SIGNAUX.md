@@ -396,3 +396,22 @@ textes de toutes ses sources), marché, deux codeurs, double codage.
 sources s'ils ont leur propre hypothèse : consulte `fabrique-critique` avant
 de la déclarer dans un lot. **Jamais** de synthèse choisie ou refaite d'après un
 résultat de nos données.
+
+---
+
+## 8. La réaction en chaîne — `scripts/avancer.py`
+
+Après **chaque** fiche traitée (réponses des sous-agents reçues, `--record` et
+`--judge` faits), lance :
+
+    uv run python scripts/avancer.py
+
+Il fait seul tout ce qui ne demande plus d'IA, dans l'ordre : écarter les
+fiches dont le marché est absent (`D38`), lancer les doubles codages prêts,
+écrire les hypothèses des fiches vérifiées et les commiter aussitôt — puis,
+**dès que chaque entrée du lot a son hypothèse ou a été écartée**, la matrice
+de corrélation, **la mesure des IC**, la porte 09, le tableau de bord et un
+commit. La mesure attend le lot entier : BH se calcule sur le lot clos, et plus
+rien ne s'écarte après la première mesure. Seul arrêt : des corrélations
+négatives, qui demandent à l'opérateur de choisir BH ou BY (`D25`).
+`--etat` dit ce qui bloque sans rien faire.
