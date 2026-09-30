@@ -13,6 +13,12 @@ pétrole, anomalies sur tous les actifs, causalité, mécanismes de causalité) 
 pertinence `D33`), 51 `authoritative`, 4 767 `abstract` ; 57 264 morceaux, tous
 vectorisés (GPU, `embed.py --gpu`) ; base 707 Mo sur un budget de 6,4 Go. Coder
 des signaux : `scripts/CODAGE-DES-SIGNAUX.md`.
+**2026-09-30 — les étapes 8, 9 et 10 ont leurs outils** : `scripts/hypotheses_lot.py`
+(hypothèses rédigées mécaniquement depuis la fiche et le signal, avant toute
+mesure), `scripts/lot_correlations.py` (matrice de Spearman entre scores, aucun
+IC), `scripts/measure_lot.py` (la seule mesure ; **refuse** tant que
+`HARNAIS_DU_LOT` n'est pas renseigné par la décision de harnais groupée — mesurer
+avant brûlerait le lot, `D28`). Tous vérifient leurs préalables à blanc.
 Les 11 fiches moissonnées sans trace de production ont été **refaites** par 11
 sessions isolées : 18 fiches sur 18 tracées, 17 vertes sur ce poste.
 `value_in_quote` n'ôte plus que les séparateurs de milliers (`D09` § Journal,

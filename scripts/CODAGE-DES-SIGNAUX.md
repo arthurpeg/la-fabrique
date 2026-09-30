@@ -190,3 +190,10 @@ cet ordre et **hors de la session de codage** : écrire son hypothèse
 pré-enregistrée, le déclarer dans un lot clos, produire la matrice de
 corrélation du lot, puis mesurer une fois chaque hypothèse (`D25`, `D28`,
 `D29`).
+
+| Étape | Outil |
+|---|---|
+| 8. Hypothèses | `scripts/hypotheses_lot.py --status` puis `--write`, **commiter aussitôt** |
+| 9. Matrice de corrélation | `scripts/lot_correlations.py --check` puis sans option |
+| 10. Mesure | `scripts/measure_lot.py --check` ; `--run --je-mesure` seulement après la décision de harnais groupée, qui renseigne `HARNAIS_DU_LOT` |
+| Porte 09 | `scripts/gate_09.py` |
