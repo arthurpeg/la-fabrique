@@ -130,6 +130,42 @@ puis mesurée — la forme en U de la volatilité intra-journalière est retrouv
 reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
 **Décision la plus récente :**
+`decisions/DECISION-39-hypotheses-de-synthese.md` — une hypothèse peut naître
+de plusieurs papiers, reliés par les embeddings de leurs fiches.
+**Une seule version**, choisie **avant toute mesure** : grappes au-delà d'un
+cosinus de 0,80, et le seuil fixé avant de les lire.
+**Corrigé le 2026-09-30** : ce champ annonçait encore `D36` alors que `D37`, `D38`,
+`D39` — toutes du 2026-09-30 — et `D40` avaient été prises depuis. Le champ est
+recopié tel quel par `wiki/update_hot.py` dans `wiki/hot.md`, qu'une session
+froide lit avant tout le reste : un pointeur faux ici se propage.
+`scripts/grappes.py` vectorise chaque fiche sur son titre, son affirmation, sa
+construction, son univers et son horizon ; les grappes sont les composantes
+connexes au-delà du seuil, **fixé avant de les lire** (88ᵉ centile des
+similarités entre paires, médiane 0,756), recoupées plus haut au-delà de
+6 fiches. **8 grappes sur 51 fiches.** La même sortie donne à chaque fiche ses
+cinq voisines : la mémoire sémantique du critique.
+`scripts/synthese.py` et le sous-agent `fabrique-synthese` : une session isolée
+lit les fiches d'une grappe, **aucun résultat**, et écrit une fiche au schéma de
+`D14` plus un bloc `synthesis`. **Une seule version**, choisie **avant toute
+mesure** dans cet ordre — accord entre papiers, transposabilité à nos neuf
+futures, parcimonie, traçabilité : mesurer des variantes pour garder la
+meilleure serait choisir sur le résultat (invariants III et IV, `D28`), et
+déclarer plusieurs variantes durcirait le seuil de tout le lot.
+Le validateur exige que chaque citation soit recopiée d'une fiche source et se
+retrouve **à la lettre** dans le texte d'au moins un papier source. Ensuite,
+c'est la chaîne ordinaire : `corpus/fiches_synthese/`, la recette sur les textes
+de toutes les sources, le marché (`D38`), les deux codeurs, le double codage
+(`D34`). Première synthèse validée : `synthese-g-a9d7ec`.
+**Une synthèse est un test de plus**, et corrélée à ses sources si elles ont
+aussi leur hypothèse : la matrice de corrélation du lot (`D25`) le mesure.
+**Les trois autres du 2026-09-30, à lire avec elle :** `D37` (contrats micro
+partout où Lucid en propose, frais rapportés au contrat exécuté — harnais
+`94b495fa7525d3b8`), `D38` (chaque hypothèse se mesure sur le marché de son
+papier, un seul test ; un papier dont le marché nous manque est écarté **avant**
+codage), et `D40` (datée du 2026-09-29, arrivée par la fusion du 2026-09-30 :
+ce qu'une hypothèse du lot contient et qui la juge).
+
+**Décision précédente :**
 `decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un
 **critère, pas un nombre**. `D25` engageait 50 signaux, chiffre écrit quand le
 corpus portait 17 fiches ; il en porte 51 et le moissonné est épuisé. Le lot est
