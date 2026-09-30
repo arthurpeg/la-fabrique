@@ -49,7 +49,10 @@ PRIVATE_NAMES = {"_pool", "_deflated_t"}
 
 def repo_modules() -> list[Path]:
     """Tout le code de ce dépôt, sans l'environnement ni les caches."""
-    skip = {".venv", "__pycache__", ".git", ".ruff_cache"}
+    # `.venv-gpu` : l'environnement des embeddings sur carte graphique (2026-09-29),
+    # du code tiers comme `.venv` ; sans lui, `connection_pool.py` passait pour
+    # un appel à `_pool`.
+    skip = {".venv", ".venv-gpu", "__pycache__", ".git", ".ruff_cache"}
     return [
         path
         for path in sorted(REPO.rglob("*.py"))

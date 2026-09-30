@@ -1,6 +1,6 @@
 # Les 31 fiches du lot 09 sans hypothèse, et pourquoi
 
-**Écrit le :** 2026-09-29, par la session qui a écrit `D33` et les dix hypothèses.
+**Écrit le :** 2026-09-29, par la session qui a écrit `D40` et les dix hypothèses.
 **Statut : constat, pas décision.** Rien n'est retiré du lot — il est **clos**
 depuis le 2026-09-28 (`D25` `C2`, `D27`) et une session ne le rétrécit pas seule.
 Ce fichier dit seulement **pourquoi** dix hypothèses ont pu s'écrire et
@@ -138,6 +138,6 @@ vérifiée.
 
 ## Voir aussi
 
-- `decisions/DECISION-33-ce-qu-une-hypothese-du-lot-contient.md` — le format, le juge, et le journal où ce recensement est daté
+- `decisions/DECISION-40-ce-qu-une-hypothese-du-lot-contient.md` — le format, le juge, et le journal où ce recensement est daté
 - `decisions/DECISION-27-le-lot-de-la-phase-09.md` — le critère du lot, et § Ce qui reste ouvert : *« à la première fiche mal classée »*
 - `wiki/Failed Ideas/ledger.md` `F61` — ce que cette mesure a fermé

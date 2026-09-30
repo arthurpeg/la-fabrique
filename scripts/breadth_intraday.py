@@ -20,7 +20,6 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
-
 from _common import load, series_index, session_date, write_json
 
 FREQUENCIES = ["15min", "30min", "60min"]

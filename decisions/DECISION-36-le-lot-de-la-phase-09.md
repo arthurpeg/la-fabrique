@@ -1,4 +1,9 @@
-# D27 — Le lot de la phase 09 est un critère, pas un nombre
+# D36 — Le lot de la phase 09 est un critère, pas un nombre
+
+> **Renumérotée le 2026-09-30 : D27 → D36.** Deux décisions portaient le numéro
+> `D27` ; la plus ancienne (l'instant de troncature, 2026-09-26) le garde. Toute
+> mention de « `D27` » à propos du lot, dans les fichiers append-only
+> (`LECONS.md`, `wiki/log.md`) et l'historique git, désigne celle-ci.
 
 **Date :** 2026-09-28
 **Phase :** 09

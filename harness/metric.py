@@ -45,6 +45,10 @@ from scipy import stats
 
 from harness.registry import RegistryBypass, Ticket, settle
 
+# D35: under this many observations, one cell-year says nothing (same floor as
+# a cell, `cell_ic`).
+MIN_YEAR_OBSERVATIONS = 30
+
 
 @dataclass(frozen=True)
 class CellIC:
@@ -61,6 +65,11 @@ class CellIC:
     # overlapping case D04 had in mind. It defaults to 1 so that a caller who
     # does not measure it gets the old, conservative treatment (D11).
     sampling_gap_bars: float = 1.0
+    # D29, D35: the same IC, cut by calendar year (UTC) -- (year, ic, n) for
+    # every year with at least `MIN_YEAR_OBSERVATIONS` observations. A
+    # DIAGNOSTIC of stability, never a test: it is written on the pooled line
+    # so that no IC exists outside the registry (invariant III).
+    by_year: tuple[tuple[int, float, int], ...] = ()
 
     @property
     def overlap_ratio(self) -> float:
@@ -151,6 +160,12 @@ def cell_ic(scores: pd.Series, returns: pd.Series, index: pd.DatetimeIndex,
         return None
     ic = float(stats.spearmanr(frame["score"], frame["ret"]).statistic)
     median_span, p99_span = realised_horizon(index, frame.index, horizon_bars)
+    by_year = []
+    for year, part in frame.groupby(frame.index.year):
+        if (len(part) >= MIN_YEAR_OBSERVATIONS and part["score"].nunique() >= 2
+                and part["ret"].nunique() >= 2):
+            year_ic = float(stats.spearmanr(part["score"], part["ret"]).statistic)
+            by_year.append((int(year), year_ic, int(len(part))))
     return CellIC(
         root=root,
         window=window,
@@ -159,7 +174,25 @@ def cell_ic(scores: pd.Series, returns: pd.Series, index: pd.DatetimeIndex,
         horizon_median_minutes=median_span,
         horizon_p99_minutes=p99_span,
         sampling_gap_bars=sampling_gap(index, frame.index),
+        by_year=tuple(by_year),
     )
+
+
+def _pool_by_year(cells: list[CellIC]) -> dict[str, dict]:
+    """The pooled IC of each calendar year, cells weighted by their observations.
+
+    Same pooling as the headline figure, restricted to one year. A diagnostic
+    (D29): it says whether a pooled IC is spread over the sample or carried by
+    one period, and it is never read as a set of tests.
+    """
+    sums: dict[int, list[float]] = {}
+    for cell in cells:
+        for year, ic, n in cell.by_year:
+            acc = sums.setdefault(year, [0.0, 0])
+            acc[0] += ic * n
+            acc[1] += n
+    return {str(year): {"ic": round(total / n, 6), "observations": int(n)}
+            for year, (total, n) in sorted(sums.items()) if n}
 
 
 def _pool(cells: list[CellIC]) -> tuple[float, int]:
@@ -243,5 +276,7 @@ def record_pooled(
     t = _deflated_t(ic, observations, cells, horizon_bars, instruments, effective_breadth)
     line = dict(extra or {})
     line["observations"] = observations
+    line["ic_by_year"] = _pool_by_year(cells)
     test_id = settle(ticket, ic=ic, t_stat=t["final"], extra=line)
-    return {"ic": ic, "observations": observations, "t": t, "test_id": test_id}
+    return {"ic": ic, "observations": observations, "t": t, "test_id": test_id,
+            "ic_by_year": line["ic_by_year"]}

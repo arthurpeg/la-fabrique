@@ -5,7 +5,7 @@
 **signal :** `investor-clientele-and-intraday-patterns-in-the-W4401073178` — *non encore codé*
 **signe attendu :** +1
 **tranche :** `pool` uniquement, `asof` 2023-12-29 20:00 UTC (`D29`)
-**écrite par :** session 2026-09-29, sous `D33`. Contamination déclarée : elle a lu `ETAT.md`, le wiki et les fiches, **donc elle connaît `F33`** — le peigne de Heston, qui est ce motif exactement, a été mesuré absent sur nos données. Voir ci-dessous. Aucun IC ne porte sur ce signal-ci au registre (`D28` vérifié).
+**écrite par :** session 2026-09-29, sous `D40`. Contamination déclarée : elle a lu `ETAT.md`, le wiki et les fiches, **donc elle connaît `F33`** — le peigne de Heston, qui est ce motif exactement, a été mesuré absent sur nos données. Voir ci-dessous. Aucun IC ne porte sur ce signal-ci au registre (`D28` vérifié).
 **Statut :** pré-enregistrée, non mesurée
 
 ## Ce qui est affirmé

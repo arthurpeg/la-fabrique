@@ -192,6 +192,19 @@ def do_fetch() -> int:
                 continue
 
         digest = harvest.sha256(quarantaine)
+        # Un papier déjà promu ne se repromeut JAMAIS avec un autre PDF. Le
+        # 2026-09-30, la copie promue d'un papier fiché avait disparu de
+        # corpus/pdf/ ; la promotion l'a recréée depuis la quarantaine, qui
+        # portait une AUTRE version du même papier, puis `extract_text` a
+        # réécrit le texte sur lequel reposaient les citations de sa fiche
+        # (D18). Le texte versionné fait foi : on refuse, et on le dit.
+        deja = promus.get(verdict["id"])
+        if deja and deja.get("sha256") and deja["sha256"] != digest:
+            echecs.append((name, f"déjà promu avec l'empreinte {deja['sha256'][:16]}, "
+                                 f"la quarantaine porte {digest[:16]} : REFUS"))
+            print(f"  REFUS     | {name} — autre version que celle promue ; le texte "
+                  "versionné fait foi, rien n'est copié")
+            continue
         work["sha256"] = digest
         work["pdf"] = str(quarantaine.relative_to(REPO)).replace("\\", "/")
 

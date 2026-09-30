@@ -12,7 +12,6 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
-
 from _common import load, series_index, session_date, write_json
 
 # Proposed slices, to be confirmed or corrected by DECISION-01. Measuring them

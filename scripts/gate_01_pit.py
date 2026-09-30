@@ -32,7 +32,6 @@ import tempfile
 from pathlib import Path
 
 import pandas as pd
-
 from _common import OUT, data_dir, series_index
 
 # Arbitrary, fixed, inside the pool slice (2016-2023, see DECISION-01).

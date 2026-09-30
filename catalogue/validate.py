@@ -61,7 +61,8 @@ CELL_FIELDS = {
 #   external  copied from a third party   -- contradicted by nothing in the repo
 #
 # The external ones below carry a provenance entry, or they do not enter.
-EXTERNAL_FIELDS = ("multiplier", "fee_per_contract_usd")
+EXTERNAL_FIELDS = ("multiplier", "fee_broker_usd", "fee_exchange_usd", "fee_regulatory_usd",
+                   "execution_multiplier")
 
 # External too, but corroborated: one of our own measurements can contradict
 # them, so they already have a judge and need no entry. The list is CLOSED

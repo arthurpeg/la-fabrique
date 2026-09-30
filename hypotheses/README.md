@@ -48,7 +48,7 @@ elle croit battre la littérature, et pas seulement l'espérer. Un IC au-dessus 
 
 ### Le lot de la phase 09 — `H05` à `H14`, écrites le 2026-09-29
 
-Dix hypothèses **pré-enregistrées, non mesurées**, au format de `D33` et jugées
+Dix hypothèses **pré-enregistrées, non mesurées**, au format de `D40` et jugées
 par `hypotheses/score_hypothese.py` (sept conditions à tolérance zéro). Le lot
 compte **41 fiches** et **31 n'ont pas d'hypothèse mesurable** : le recensement,
 fiche par fiche avec sa raison, est dans `hypotheses/NON-ECRITES-09.md` et au

@@ -206,7 +206,39 @@ def texte_de_la_fiche(fiche: dict) -> str:
     justifie par la construction du signal, son horizon, son univers ou son
     modele de cout — jamais par un t-stat rapporte ni un numero de page.
     """
-    return json.dumps({k: fiche.get(k) for k in CHAMPS_RECETTE}, ensure_ascii=False)
+    return (json.dumps({k: fiche.get(k) for k in CHAMPS_RECETTE}, ensure_ascii=False)
+            + texte_de_la_recette(fiche.get("recipe")))
+
+
+def texte_de_la_recette(recette) -> str:
+    """Ce que la recette de `D34` peut justifier : ses VALEURS et ses CITATIONS.
+
+    Jamais sa prose (`statement`, `description`, `known_at`, `question`) : la
+    recette est écrite par une session, et un nombre qu'elle écrirait de sa
+    main dans une phrase serait un paramètre inventé que `S5` blanchirait.
+    Les citations, elles, sont vérifiées à la lettre contre le texte du papier
+    par `scripts/recette.py`, et les valeurs contre leurs citations.
+    """
+    if not isinstance(recette, dict):
+        return ""
+    morceaux: list[str] = []
+
+    def cite(bloc) -> None:
+        if isinstance(bloc, dict):
+            for cle in ("quoted", "quoted_source"):
+                if isinstance(bloc.get(cle), str):
+                    morceaux.append(bloc[cle])
+
+    cite(recette.get("formula"))
+    cite(recette.get("timing"))
+    for bloc in (recette.get("inputs") or []) + (recette.get("ambiguities") or []):
+        cite(bloc)
+    for p in recette.get("parameters") or []:
+        cite(p)
+        v = p.get("value") if isinstance(p, dict) else None
+        if isinstance(v, (int, float)) and not isinstance(v, bool):
+            morceaux.append(repr(v))
+    return " | " + " | ".join(morceaux) if morceaux else ""
 
 
 # ---------------------------------------------------------------------------
@@ -292,11 +324,17 @@ def check_s6(module) -> Verdict:
     qui la viderait de son sens.
     """
     v = Verdict("S6", "zéro retouche manuelle depuis la production")
-    if not PRODUCED.is_file():
+    # Le registre de production est celui du DOSSIER du module : `signals/`
+    # pour le codage principal, `verification/temoins/` pour le témoin de
+    # `D34`, qui porte le même SIGNAL_ID et le même nom de fichier. Un registre
+    # unique confondrait les deux et casserait `S6` à tort.
+    fichier = getattr(module, "__file__", None)
+    produced = Path(fichier).resolve().parent / "PRODUCED.json" if fichier else PRODUCED
+    if not produced.is_file():
         v.sans_objet = ("aucun registre de production — `signals/PRODUCED.json` "
                         "sera écrit par `code_signal.py`, qui n'existe pas encore")
         return v
-    registre = json.loads(PRODUCED.read_text(encoding="utf-8"))
+    registre = json.loads(produced.read_text(encoding="utf-8"))
     attendu = registre.get(module.SIGNAL_ID)
     if attendu is None:
         v.sans_objet = f"« {module.SIGNAL_ID} » n'est pas au registre de production"
@@ -429,6 +467,16 @@ def self_check() -> int:
     cas("une valeur du dépôt NON listée est refusée", not s5_sur("Z = 7\n").tenue)
     cas("un nombre en docstring ne suffit PAS à justifier le code",
         not s5_sur('"""37"""\nW = 37\n').tenue)
+    # `D34` : la recette justifie par ses VALEURS et ses CITATIONS, jamais par
+    # sa prose — une phrase écrite par la session de recette n'est pas le papier.
+    fiche["recipe"] = {
+        "timing": {"statement": "le score se pose 37 minutes avant", "quoted": None},
+        "parameters": [{"name": "w", "value": 20, "quoted": "twenty days, i.e. 20"}],
+    }
+    cas("D34 : une valeur de la recette passe", s5_sur("W = 20\n").tenue)
+    cas("D34 : un nombre de la PROSE de la recette est refusé",
+        not s5_sur("W = 37\n").tenue)
+    del fiche["recipe"]
 
     # Les utilitaires du dépôt ne sont pas la sortie du codeur. Sans cette
     # exemption, `signals/_common.py` et son `24 * 60` — de l'arithmétique

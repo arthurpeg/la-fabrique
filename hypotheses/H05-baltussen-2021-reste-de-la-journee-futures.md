@@ -5,7 +5,7 @@
 **signal :** `baltussen-2021-hedging-demand-intraday-momentum` (`signals/baltussen_2021_hedging_demand_intraday_momentum.py`, produit le 2026-09-23 par la porte 08)
 **signe attendu :** +1
 **tranche :** `pool` uniquement, `asof` 2023-12-29 20:00 UTC (`D29`)
-**écrite par :** session 2026-09-29, sous `D33`. Contamination déclarée : cette session a lu `ETAT.md`, le wiki et les fiches, donc elle sait que `H01`, `H02` et `H03` sont sans résultat. Elle n'a vu **aucun IC** portant sur ce signal — le registre n'en porte aucun (`D28` vérifié).
+**écrite par :** session 2026-09-29, sous `D40`. Contamination déclarée : cette session a lu `ETAT.md`, le wiki et les fiches, donc elle sait que `H01`, `H02` et `H03` sont sans résultat. Elle n'a vu **aucun IC** portant sur ce signal — le registre n'en porte aucun (`D28` vérifié).
 **Statut :** pré-enregistrée, non mesurée
 
 ## Ce qui est affirmé

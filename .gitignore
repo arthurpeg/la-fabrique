@@ -47,3 +47,23 @@ corpus/consignes-triage/
 # Les consignes d'extraction pour la population moissonnee (phase 09) sont
 # fabriquees par corpus/extract_fiche_harvest.py : meme statut.
 corpus/consignes_harvest/
+
+# le superviseur de la moisson : etat et journaux, propres a un poste
+.pipeline/
+
+# environnement GPU des embeddings (vectordb/embed.py --gpu) — propre a un poste
+.venv-gpu/
+
+# Les consignes de recette sont fabriquees par scripts/recette.py depuis la
+# fiche et le texte du papier (D34) : derivees, volumineuses, meme statut.
+corpus/consignes-recettes/
+
+# Le statut par papier est regenere par scripts/statut_papiers.py a chaque
+# lancement : derive, volumineux.
+scripts/out/statut_papiers.json
+# La page du tableau de bord est regeneree par scripts/tableau_de_bord.py.
+scripts/out/tableau_de_bord.html
+scripts/out/quota.json
+
+# Les consignes de synthese sont fabriquees par scripts/synthese.py (D39).
+corpus/consignes-synthese/

@@ -51,14 +51,36 @@ PASSAGE_PREFIX = ""
 QUERY_PREFIX = "Represent this sentence for searching relevant passages: "
 
 
-def load_model():
-    """Charge le modèle, en disant ce qu'il télécharge la première fois."""
+def load_model(gpu: bool = False):
+    """Charge le modèle, en disant ce qu'il télécharge la première fois.
+
+    **`gpu`** (2026-09-29) : le même modèle, exécuté par `onnxruntime-gpu` sur
+    la carte graphique. Il vit dans un environnement À PART (`.venv-gpu`), parce
+    que `fastembed` et `fastembed-gpu` ne cohabitent pas :
+
+        uv venv --python 3.13 .venv-gpu
+        uv pip install --python .venv-gpu/Scripts/python.exe fastembed-gpu==0.8.1 \\
+            "onnxruntime-gpu[cuda,cudnn]" "psycopg[binary]>=3.2" "numpy>=2.0"
+        .venv-gpu/Scripts/python.exe vectordb/embed.py --gpu
+
+    **Les vecteurs sont les mêmes**, et c'est ce qui autorise à garder le même
+    nom de modèle dans `embedding_model` : mesuré sur 300 morceaux de la base,
+    cosinus GPU/CPU ≥ 0,999992, écart absolu maximal 6,6e-4. Vitesse mesurée
+    sur une RTX 4050 Laptop : 49,6 morceaux/s, contre 1,5 sur le processeur.
+    """
     from fastembed import TextEmbedding
 
-    print(f"Modèle : {MODEL} ({MODEL_DIM} dimensions, local, CPU)")
+    if gpu:
+        import onnxruntime as ort
+
+        # Charge les bibliothèques CUDA/cuDNN installées par pip (`[cuda,cudnn]`).
+        ort.preload_dlls()
+        if "CUDAExecutionProvider" not in ort.get_available_providers():
+            raise VectorDBError("--gpu : CUDA indisponible — lancer depuis .venv-gpu")
+    print(f"Modèle : {MODEL} ({MODEL_DIM} dimensions, local, {'GPU' if gpu else 'CPU'})")
     print("Premier lancement : ~0,21 Go téléchargés puis mis en cache.\n", flush=True)
-    model = TextEmbedding(model_name=MODEL)
-    return model
+    kw = {"providers": ["CUDAExecutionProvider"]} if gpu else {}
+    return TextEmbedding(model_name=MODEL, **kw)
 
 
 def embed_texts(model, textes: list[str]) -> list[list[float]]:
@@ -81,6 +103,8 @@ def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description="Embeddings locaux — bge-base-en-v1.5")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument("--gpu", action="store_true",
+                    help="sur la carte graphique, depuis .venv-gpu (voir load_model)")
     a = ap.parse_args(argv)
 
     if DEFAULT_DIM != MODEL_DIM:
@@ -107,7 +131,7 @@ def main(argv: list[str]) -> int:
             print("\n--dry-run : ni modèle chargé, ni base écrite.")
             return 0
 
-        model = load_model()
+        model = load_model(a.gpu)
         depart = time.time()
         traites = 0
         coupures = 0

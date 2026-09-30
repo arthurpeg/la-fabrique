@@ -193,10 +193,35 @@ def main() -> int:
         "fee_bp" in report_perfect.unknown_cost_components,
         "les frais ne sont pas signalés comme inconnus alors qu'ils sont null",
     )
-    check(
-        "slippage_bp" in report_perfect.unknown_cost_components,
-        "le glissement n'est pas signalé comme inconnu",
-    )
+    # D35 : le glissement n'est plus inconnu, il est déclaré en grille de 1 à 5
+    # ticks par side. La grille doit croître avec le glissement, et la borne
+    # haute ne jamais passer sous la basse.
+    from harness.costs import BOUNDS, SLIPPAGE_TICKS  # noqa: PLC0415
+
+    grid = report_perfect.cost_grid()
+    check(len(grid) == len(SLIPPAGE_TICKS) * len(BOUNDS),
+          f"la grille de coût porte {len(grid)} cases au lieu de "
+          f"{len(SLIPPAGE_TICKS) * len(BOUNDS)}")
+    means = [grid[(k, "low")][0] for k in SLIPPAGE_TICKS]
+    check(all(b > a for a, b in zip(means, means[1:], strict=False)),
+          f"le coût ne croît pas avec le glissement : {means}")
+    check(all(grid[(k, "high")][0] >= grid[(k, "low")][0] for k in SLIPPAGE_TICKS),
+          "la borne haute passe sous la borne basse")
+    check("slippage_bp" not in report_perfect.unknown_cost_components,
+          "le glissement est encore signalé inconnu alors que D35 le déclare")
+    # D37 : les frais se rapportent au contrat EXÉCUTÉ. Un micro dont le
+    # multiplicateur manque laisse ses frais NOMMÉS manquants ; une devise, en
+    # plein format, se rapporte au multiplicateur de l'instrument.
+    cat = panel.catalogue
+    check(cat.instrument("6E").fee_multiplier == cat.instrument("6E").multiplier,
+          "une devise (plein format) ne se rapporte pas au multiplicateur de l'instrument")
+    nq = cat.instrument("NQ")
+    if nq.execution_contract != "NQ" and nq.execution_multiplier is None:
+        check("execution_multiplier" in report_perfect.unknown_cost_components,
+              "le multiplicateur du micro manque et n'est pas nommé")
+    cost = report_perfect.costs[0]
+    check(cost.tick_bp is not None and abs(cost.slippage_bp(3) - 6 * cost.tick_bp) < 1e-12,
+          "3 ticks par side ne valent pas 6 ticks d'aller-retour")
     before = len(registry.REGISTRY.read_text(encoding="utf-8").splitlines())
     counted_before = registry.counted_tests()
     evaluate(
@@ -219,6 +244,27 @@ def main() -> int:
         f"une calibration a fait passer counted_tests de {counted_before} à "
         f"{registry.counted_tests()}",
     )
+    # D35 : l'IC par année civile est écrit SUR la ligne poolée, jamais ailleurs.
+    derniere = registry.read_all()[-1]
+    par_an = derniere.get("ic_by_year") or {}
+    check(bool(par_an), "la ligne du registre ne porte pas `ic_by_year`")
+    check(sum(v["observations"] for v in par_an.values()) <= derniere["observations"],
+          "les observations par année dépassent le total poolé")
+    check(all(v["ic"] > 0.99 for v in par_an.values()),
+          f"le signal parfait n'a pas un IC ~1 chaque année : {par_an}")
+
+    # D28, D35 : `extra` ne peut plus écraser un champ du ticket.
+    ticket = registry.open_test(signal_id="calibration-extra", hypothesis_ref="H99",
+                                stage="03-calibration", data_slice="pool", horizon="30min")
+    lignes = len(registry.read_all())
+    try:
+        registry.settle(ticket, ic=0.5, t_stat=1.0, extra={"hypothesis_ref": None})
+        refuse = False
+    except registry.RegistryBypass:
+        refuse = True
+    check(refuse, "`extra` a pu écraser `hypothesis_ref` (trou de D28)")
+    check(len(registry.read_all()) == lignes, "le refus d'`extra` a quand même écrit une ligne")
+
     print(f"   plancher {report_perfect.cost_floor_bp:.2f} bp, manquent "
           f"{', '.join(report_perfect.unknown_cost_components)} ; "
           f"{after} lignes au registre, {registry.counted_tests()} test(s) compté(s), "

@@ -1,0 +1,705 @@
+diff --git a/catalogue/catalogue.yaml b/catalogue/catalogue.yaml
+index 5e211f2..03f14c2 100644
+--- a/catalogue/catalogue.yaml
++++ b/catalogue/catalogue.yaml
+@@ -75,7 +75,9 @@ instruments:
+       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+     tick: 0.25
+     multiplier: 20  # provenance cme-nq-contract-unit (D09)
+-    fee_per_contract_usd: null  # todo fees
++    fee_broker_usd: null  # todo fees (D26, D35)
++    fee_exchange_usd: null  # todo fees
++    fee_regulatory_usd: null  # todo fees
+     cells:
+       ASIA:
+         retained: true
+@@ -119,7 +121,9 @@ instruments:
+       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+     tick: 0.25
+     multiplier: 50  # provenance cme-es-contract-unit (D09)
+-    fee_per_contract_usd: null  # todo fees
++    fee_broker_usd: null  # todo fees (D26, D35)
++    fee_exchange_usd: null  # todo fees
++    fee_regulatory_usd: null  # todo fees
+     cells:
+       ASIA:
+         retained: true
+@@ -163,7 +167,9 @@ instruments:
+       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+     tick: 1.0
+     multiplier: 5  # provenance cme-ym-contract-unit (D09)
+-    fee_per_contract_usd: null  # todo fees
++    fee_broker_usd: null  # todo fees (D26, D35)
++    fee_exchange_usd: null  # todo fees
++    fee_regulatory_usd: null  # todo fees
+     cells:
+       ASIA:
+         retained: false
+@@ -210,7 +216,9 @@ instruments:
+       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+     tick: 0.1  # mesuré 0.0999999999994543 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
+     multiplier: 100  # provenance cme-gc-contract-unit (D09)
+-    fee_per_contract_usd: null  # todo fees
++    fee_broker_usd: null  # todo fees (D26, D35)
++    fee_exchange_usd: null  # todo fees
++    fee_regulatory_usd: null  # todo fees
+     cells:
+       ASIA:
+         retained: true
+@@ -254,7 +262,9 @@ instruments:
+       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+     tick: 0.01  # mesuré 0.009999999999990905 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
+     multiplier: 1000  # provenance cme-cl-contract-unit (D09)
+-    fee_per_contract_usd: null  # todo fees
++    fee_broker_usd: null  # todo fees (D26, D35)
++    fee_exchange_usd: null  # todo fees
++    fee_regulatory_usd: null  # todo fees
+     cells:
+       ASIA:
+         retained: true
+@@ -298,7 +308,9 @@ instruments:
+       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+     tick: 5.0e-05  # mesuré 4.999999999988347e-05 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
+     multiplier: 125000  # provenance cme-6e-contract-unit (D09)
+-    fee_per_contract_usd: null  # todo fees
++    fee_broker_usd: null  # todo fees (D26, D35)
++    fee_exchange_usd: null  # todo fees
++    fee_regulatory_usd: null  # todo fees
+     cells:
+       ASIA:
+         retained: true
+@@ -342,7 +354,9 @@ instruments:
+       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+     tick: 0.0001  # mesuré 9.999999999998899e-05 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
+     multiplier: 62500  # provenance cme-6b-contract-unit (D09)
+-    fee_per_contract_usd: null  # todo fees
++    fee_broker_usd: null  # todo fees (D26, D35)
++    fee_exchange_usd: null  # todo fees
++    fee_regulatory_usd: null  # todo fees
+     cells:
+       ASIA:
+         retained: false
+@@ -386,7 +400,9 @@ instruments:
+       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+     tick: 5.0e-07  # mesuré 4.999999999987653e-07 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
+     multiplier: 12500000  # provenance cme-6j-contract-unit (D09)
+-    fee_per_contract_usd: null  # todo fees
++    fee_broker_usd: null  # todo fees (D26, D35)
++    fee_exchange_usd: null  # todo fees
++    fee_regulatory_usd: null  # todo fees
+     cells:
+       ASIA:
+         retained: true
+@@ -430,7 +446,9 @@ instruments:
+       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+     tick: 5.0e-05  # mesuré 4.999999999999449e-05 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
+     multiplier: 100000  # provenance cme-6a-contract-unit (D09)
+-    fee_per_contract_usd: null  # todo fees
++    fee_broker_usd: null  # todo fees (D26, D35)
++    fee_exchange_usd: null  # todo fees
++    fee_regulatory_usd: null  # todo fees
+     cells:
+       ASIA:
+         retained: true
+@@ -480,7 +498,9 @@ instruments:
+       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
+     tick: null  # non mesuré : hors univers
+     multiplier: null  # todo multipliers
+-    fee_per_contract_usd: null  # todo fees
++    fee_broker_usd: null  # todo fees (D26, D35)
++    fee_exchange_usd: null  # todo fees
++    fee_regulatory_usd: null  # todo fees
+     cells: null  # hors univers : la grille n'a pas été mesurée sur FDAX
+ 
+ # Ce qui est inconnu, et de qui on l'attend. Un null sans todo est un bug.
+@@ -494,7 +514,7 @@ todos:
+       déposés depuis le 2026-09-24 (voir provenance). FDAX exige aussi une
+       conversion EUR -> USD avant que multiplier x prix soit un notionnel USD.
+   - id: fees
+-    field: instruments[*].fee_per_contract_usd
++    field: instruments[*].fee_broker_usd, fee_exchange_usd, fee_regulatory_usd
+     blocks: la complétude du coût -- sans eux le coût reste un plancher étiqueté (harness/costs.py)
+     owed_by: >-
+       Lucid Trading (prop firm) — son barème s'applique, pas la grille
+@@ -563,7 +583,9 @@ todos:
+ # FDAX reste null : son unité est en EUR (« EUR 25 per index point »), donc
+ # multiplier x prix n'est pas un notionnel en USD et la définition de D09 ne
+ # s'applique pas sans conversion -- et il est hors univers.
+-# fee_per_contract_usd reste null sur les dix : todo fees.
++# Les trois composantes de frais restent null sur les dix : todo fees. Le
++# harnais sait les lire depuis D35 (borne basse = courtier, borne haute = les
++# trois) ; chacune se dépose avec sa provenance, jamais leur somme.
+ provenance:
+   - id: cme-nq-contract-unit
+     source: CME Group -- fiche contrat E-mini Nasdaq-100 Futures, ligne « Contract Unit »
+diff --git a/catalogue/validate.py b/catalogue/validate.py
+index e1b55b9..5c361f3 100644
+--- a/catalogue/validate.py
++++ b/catalogue/validate.py
+@@ -61,7 +61,7 @@ CELL_FIELDS = {
+ #   external  copied from a third party   -- contradicted by nothing in the repo
+ #
+ # The external ones below carry a provenance entry, or they do not enter.
+-EXTERNAL_FIELDS = ("multiplier", "fee_per_contract_usd")
++EXTERNAL_FIELDS = ("multiplier", "fee_broker_usd", "fee_exchange_usd", "fee_regulatory_usd")
+ 
+ # External too, but corroborated: one of our own measurements can contradict
+ # them, so they already have a judge and need no entry. The list is CLOSED
+diff --git a/harness/costs.py b/harness/costs.py
+index 5a7a68a..bb5c9b2 100644
+--- a/harness/costs.py
++++ b/harness/costs.py
+@@ -1,20 +1,34 @@
+-"""The round-trip cost, as a floor that says what it is missing.
++"""The round-trip cost: a floor, two fee bounds, a slippage grid, and its holes named.
+ 
+ D01 7 gives the shape and forbids the shortcut:
+ 
+     round_trip_cost_bp(cell) = spread_floor_bp(cell)     measured
+-                             + fee_bp(instrument, size)   null -- todo
+-                             + slippage_bp(cell)          declared, pessimistic
++                             + fee_bp(instrument, size)   two bounds (D26, D35)
++                             + slippage_bp(cell)          declared, a grid (D35)
+ 
+-Two of the three are unknown today. Treating an unknown as zero would produce a
+-net IC that is wrong in the flattering direction, and a flattering number that
+-has circulated cannot be recalled. So the harness returns a FLOOR and names every
+-component it could not price. A cost with a hole is not an unknown cost: it is a
+-lower bound, useful exactly as long as it is labelled as one.
+-
+-The floor itself is measured, not declared: the smallest non-zero price change
++**The floor** is measured, not declared: the smallest non-zero price change
+ over eleven years gives each contract its tick, and no market is tighter than a
+ tick (L04). The catalogue holds it per cell.
++
++**The fees** come in two bounds, per contract and per side, as D26 framed them:
++the LOW bound is the broker's schedule alone (as if it were all-in), the HIGH
++bound adds the exchange and the regulatory fees on top (as if nothing were
++included). Each component is an external value with its own provenance in the
++catalogue (D09); the sum is computed here and never deposited, because a sum is
++nobody's quotation. A component still `null` leaves its bound unpriced, and
++the bound is NAMED as missing -- never treated as zero.
++
++**The slippage** is not a measurement and not a single guess: it is declared as
++a GRID of 1 to 5 ticks per side (`SLIPPAGE_TICKS`, D35), so that a reader sees
++how the cost moves with it instead of trusting one number. It is on top of the
++floor: the floor pays for crossing the spread, the slippage for the ticks the
++fill moves beyond it, on both sides of the round trip.
++
++Everything is converted to basis points at the cell's MEDIAN RAW PRICE over the
++evaluated sample -- the same reference `scripts/session_grid.py` used for the
++floor -- so the three terms add up in one unit. Treating an unknown as zero
++would produce a net figure that is wrong in the flattering direction, and a
++flattering number that has circulated cannot be recalled.
+ """
+ 
+ from __future__ import annotations
+@@ -23,38 +37,91 @@ from dataclasses import dataclass
+ 
+ from panel.catalogue import Catalogue
+ 
++# D35. Ticks of slippage PER SIDE. A grid, not a choice: the report shows all
++# five, and nothing in the harness picks one.
++SLIPPAGE_TICKS = (1, 2, 3, 4, 5)
++BOUNDS = ("low", "high")
++
++
++def _round_trip_bp(per_side: float, price: float) -> float:
++    """Two sides, in basis points of the price."""
++    return 2.0 * per_side / price * 1e4
++
+ 
+ @dataclass(frozen=True)
+ class CellCost:
+     root: str
+     window: str
+     floor_bp: float
++    # The reference price the bp are taken at, and one tick in bp of it.
++    median_price: float | None
++    tick_bp: float | None
++    # Round-trip fees in bp, per bound; None when a component is still null.
++    fee_low_bp: float | None
++    fee_high_bp: float | None
+     unknown: tuple[str, ...]
+ 
+     @property
+     def complete(self) -> bool:
+         return not self.unknown
+ 
++    def fee_bp(self, bound: str) -> float | None:
++        return self.fee_low_bp if bound == "low" else self.fee_high_bp
+ 
+-def cell_cost(catalogue: Catalogue, root: str, window: str) -> CellCost:
+-    """What a round trip in this cell costs, at least."""
++    def slippage_bp(self, ticks: int) -> float | None:
++        return None if self.tick_bp is None else 2.0 * ticks * self.tick_bp
++
++    def round_trip_bp(self, ticks: int, bound: str) -> float:
++        """Floor + slippage + fee. A missing fee is left OUT and named in `unknown`:
++        the figure is then a floor, never a completed cost."""
++        total = self.floor_bp + (self.slippage_bp(ticks) or 0.0)
++        fee = self.fee_bp(bound)
++        return total + (fee or 0.0)
++
++
++def cell_cost(catalogue: Catalogue, root: str, window: str,
++              median_price: float | None = None) -> CellCost:
++    """What a round trip in this cell costs, as far as it can be priced."""
+     instrument = catalogue.instrument(root)
+     cell = instrument.cell(window)
+-
+     unknown: list[str] = []
+-    if instrument.fee_per_contract_usd is None:
++
++    priced = median_price is not None and median_price == median_price and median_price > 0
++    notional = (instrument.multiplier * median_price
++                if priced and instrument.multiplier is not None else None)
++    tick_bp = (instrument.tick / median_price * 1e4
++               if priced and instrument.tick is not None else None)
++    if tick_bp is None:
++        unknown.append("slippage_bp")
++
++    broker = instrument.fee_broker_usd
++    exchange = instrument.fee_exchange_usd
++    regulatory = instrument.fee_regulatory_usd
++    fee_low = fee_high = None
++    if notional is None or broker is None:
+         unknown.append("fee_bp")
+-    # slippage_bp is a declared, pessimistic assumption that D04 leaves open until
+-    # the first real signal. Until it is written down it is missing, not zero.
+-    unknown.append("slippage_bp")
++    else:
++        fee_low = _round_trip_bp(broker, notional)
++        if exchange is None or regulatory is None:
++            unknown.append("fee_high_bp")
++        else:
++            fee_high = _round_trip_bp(broker + exchange + regulatory, notional)
+ 
+     return CellCost(
+         root=root,
+         window=window,
+         floor_bp=float(cell.spread_floor_bp),
++        median_price=float(median_price) if priced else None,
++        tick_bp=tick_bp,
++        fee_low_bp=fee_low,
++        fee_high_bp=fee_high,
+         unknown=tuple(unknown),
+     )
+ 
+ 
+-def costs_for(catalogue: Catalogue, cells) -> dict[tuple[str, str], CellCost]:
+-    return {(root, window): cell_cost(catalogue, root, window) for root, window in cells}
++def costs_for(catalogue: Catalogue, cells,
++              prices: dict[tuple[str, str], float] | None = None,
++              ) -> dict[tuple[str, str], CellCost]:
++    prices = prices or {}
++    return {(root, window): cell_cost(catalogue, root, window, prices.get((root, window)))
++            for root, window in cells}
+diff --git a/harness/evaluate.py b/harness/evaluate.py
+index 81d798d..684840f 100644
+--- a/harness/evaluate.py
++++ b/harness/evaluate.py
+@@ -76,8 +76,12 @@ def evaluate(
+     )
+ 
+     cells: list[CellIC] = []
++    # The cell's median RAW price over the evaluated sample: the reference the
++    # fees and the slippage are converted to bp at (D35), as the floor was.
++    prices: dict[tuple[str, str], float] = {}
+     for root in sorted({root for root, _ in scores}):
+         adjusted = panel.adjusted(root, columns=["close"])["close"]
++        raw = panel.close(root).reindex(adjusted.index)
+         labels = window_labels(adjusted.index, catalogue)
+         sessions = session_date(adjusted.index, catalogue)
+         for window in sorted({w for r, w in scores if r == root}):
+@@ -85,6 +89,7 @@ def evaluate(
+             close = adjusted[mask]
+             if close.empty:
+                 continue
++            prices[(root, window)] = float(raw[mask].median())
+             returns = forward_returns(close, sessions[mask], labels[mask], bars)
+             aligned = scores[(root, window)].reindex(close.index)
+             measured = cell_ic(aligned, returns, close.index, root, window, bars, ticket)
+@@ -102,6 +107,7 @@ def evaluate(
+         extra={"asof": str(panel.asof), "cells": len(cells)},
+     )
+     ic, observations, t = settled["ic"], settled["observations"], settled["t"]
++    ic_by_year = settled["ic_by_year"]
+     test_id = settled["test_id"]
+ 
+     return ICReport(
+@@ -117,11 +123,12 @@ def evaluate(
+         observations=observations,
+         t=t,
+         cells=tuple(cells),
+-        costs=tuple(costs_for(catalogue, sorted(scores)).values()),
++        costs=tuple(costs_for(catalogue, sorted(scores), prices).values()),
+         instruments=instruments,
+         breadth=breadth,
+         code_hash=registry.code_hash(),
+         counted_tests=registry.counted_tests(),
+         warnings=controls.warnings_for(ic, scores),
+         refused_cells=refused,
++        ic_by_year=ic_by_year,
+     )
+diff --git a/harness/metric.py b/harness/metric.py
+index 86316c1..9711a07 100644
+--- a/harness/metric.py
++++ b/harness/metric.py
+@@ -45,6 +45,10 @@ from scipy import stats
+ 
+ from harness.registry import RegistryBypass, Ticket, settle
+ 
++# D35: under this many observations, one cell-year says nothing (same floor as
++# a cell, `cell_ic`).
++MIN_YEAR_OBSERVATIONS = 30
++
+ 
+ @dataclass(frozen=True)
+ class CellIC:
+@@ -61,6 +65,11 @@ class CellIC:
+     # overlapping case D04 had in mind. It defaults to 1 so that a caller who
+     # does not measure it gets the old, conservative treatment (D11).
+     sampling_gap_bars: float = 1.0
++    # D29, D35: the same IC, cut by calendar year (UTC) -- (year, ic, n) for
++    # every year with at least `MIN_YEAR_OBSERVATIONS` observations. A
++    # DIAGNOSTIC of stability, never a test: it is written on the pooled line
++    # so that no IC exists outside the registry (invariant III).
++    by_year: tuple[tuple[int, float, int], ...] = ()
+ 
+     @property
+     def overlap_ratio(self) -> float:
+@@ -151,6 +160,12 @@ def cell_ic(scores: pd.Series, returns: pd.Series, index: pd.DatetimeIndex,
+         return None
+     ic = float(stats.spearmanr(frame["score"], frame["ret"]).statistic)
+     median_span, p99_span = realised_horizon(index, frame.index, horizon_bars)
++    by_year = []
++    for year, part in frame.groupby(frame.index.year):
++        if (len(part) >= MIN_YEAR_OBSERVATIONS and part["score"].nunique() >= 2
++                and part["ret"].nunique() >= 2):
++            year_ic = float(stats.spearmanr(part["score"], part["ret"]).statistic)
++            by_year.append((int(year), year_ic, int(len(part))))
+     return CellIC(
+         root=root,
+         window=window,
+@@ -159,9 +174,27 @@ def cell_ic(scores: pd.Series, returns: pd.Series, index: pd.DatetimeIndex,
+         horizon_median_minutes=median_span,
+         horizon_p99_minutes=p99_span,
+         sampling_gap_bars=sampling_gap(index, frame.index),
++        by_year=tuple(by_year),
+     )
+ 
+ 
++def _pool_by_year(cells: list[CellIC]) -> dict[str, dict]:
++    """The pooled IC of each calendar year, cells weighted by their observations.
++
++    Same pooling as the headline figure, restricted to one year. A diagnostic
++    (D29): it says whether a pooled IC is spread over the sample or carried by
++    one period, and it is never read as a set of tests.
++    """
++    sums: dict[int, list[float]] = {}
++    for cell in cells:
++        for year, ic, n in cell.by_year:
++            acc = sums.setdefault(year, [0.0, 0])
++            acc[0] += ic * n
++            acc[1] += n
++    return {str(year): {"ic": round(total / n, 6), "observations": int(n)}
++            for year, (total, n) in sorted(sums.items()) if n}
++
++
+ def _pool(cells: list[CellIC]) -> tuple[float, int]:
+     """The pooled IC: cells weighted by their observations, and the total count.
+ 
+@@ -243,5 +276,7 @@ def record_pooled(
+     t = _deflated_t(ic, observations, cells, horizon_bars, instruments, effective_breadth)
+     line = dict(extra or {})
+     line["observations"] = observations
++    line["ic_by_year"] = _pool_by_year(cells)
+     test_id = settle(ticket, ic=ic, t_stat=t["final"], extra=line)
+-    return {"ic": ic, "observations": observations, "t": t, "test_id": test_id}
++    return {"ic": ic, "observations": observations, "t": t, "test_id": test_id,
++            "ic_by_year": line["ic_by_year"]}
+diff --git a/harness/registry.py b/harness/registry.py
+index e65420d..07f3915 100644
+--- a/harness/registry.py
++++ b/harness/registry.py
+@@ -43,7 +43,7 @@ REQUIRED = (
+     "test_id", "timestamp", "signal_id", "hypothesis_ref", "stage",
+     "data_slice", "horizon", "ic", "t_stat", "requested_by", "code_hash",
+ )
+-OPTIONAL = ("asof", "cells", "observations", "note")
++OPTIONAL = ("asof", "cells", "observations", "note", "ic_by_year")
+ 
+ # The two slices D01 5 left. Not three: the contiguous `validation` block was
+ # abandoned, and a line naming it would be a line about a world that does not
+@@ -184,6 +184,15 @@ def settle(ticket: Ticket, *, ic: float, t_stat: float, extra: dict | None = Non
+         "code_hash": code_hash(),
+     }
+     if extra:
++        # D28, D35: `extra` ADDS fields, it never overwrites one the ticket fixed.
++        # Applied after them, it used to let a caller replace `hypothesis_ref`
++        # (or `signal_id`) and take a line out of the count without a trace.
++        clash = sorted(set(extra) & set(record))
++        if clash:
++            raise RegistryBypass(
++                f"extra would overwrite {clash}: those fields belong to the ticket, "
++                "fixed before the result existed (invariant IV, D28)"
++            )
+         record.update(extra)
+     return append(record)
+ 
+@@ -227,6 +236,10 @@ def validate_record(record: dict) -> list[str]:
+     typed("observations", int, lambda v: v >= 0, "is negative")
+     typed("asof", str, lambda v: bool(v.strip()), "is empty")
+     typed("note", str, lambda v: bool(v.strip()), "is empty")
++    typed("ic_by_year", dict, lambda v: all(
++        isinstance(k, str) and k.isdigit() and isinstance(x, dict)
++        and set(x) == {"ic", "observations"} for k, x in v.items()),
++        "must map a year to {ic, observations}")
+ 
+     if "hypothesis_ref" in record:
+         value = record["hypothesis_ref"]
+diff --git a/harness/report.py b/harness/report.py
+index f4e0db5..023e9b8 100644
+--- a/harness/report.py
++++ b/harness/report.py
+@@ -6,7 +6,9 @@ It carries, always and inseparably:
+   - BOTH targets of D01 2 -- 0.018 if the three windows are independent, 0.031 if
+     they are not -- because showing the flattering one alone is how a project
+     talks itself into a signal;
+-  - the round-trip cost floor and the components it could not price;
++  - the round-trip cost: the floor, the two fee bounds and the slippage grid
++    of 1 to 5 ticks per side (D35), and every component it could not price;
++  - the pooled IC by calendar year, marked as a diagnostic (D29, D35);
+   - the per-cell breakdown, marked as a diagnostic, never as a set of tests;
+   - the registry id of the line this report wrote, and the hash of the harness
+     that produced it.
+@@ -20,7 +22,7 @@ import json
+ from dataclasses import dataclass
+ from pathlib import Path
+ 
+-from harness.costs import CellCost
++from harness.costs import BOUNDS, SLIPPAGE_TICKS, CellCost
+ from harness.metric import CellIC
+ 
+ BREADTH_FILE = Path(__file__).resolve().parents[1] / "scripts" / "out" / "a5_breadth_intraday.json"
+@@ -61,11 +63,33 @@ class ICReport:
+     # cellules au lieu de vingt-cinq ne passe pas pour un IC sur vingt-cinq.
+     warnings: tuple[str, ...] = ()
+     refused_cells: tuple = ()
++    # D29, D35 : l'IC poolé par année civile, recopié de la ligne du registre.
++    ic_by_year: dict | None = None
+ 
+     @property
+     def cost_floor_bp(self) -> float:
+         return max((cost.floor_bp for cost in self.costs), default=float("nan"))
+ 
++    def cost_grid(self) -> dict[tuple[int, str], tuple[float, float]]:
++        """(ticks, bound) -> (moyenne pondérée par observations, pire cellule), en bp.
++
++        La moyenne est pondérée comme l'IC poolé : c'est le coût du pari moyen.
++        La pire cellule dit ce que coûte la plus chère, qui n'est pas négligeable
++        parce qu'elle est rare.
++        """
++        weights = {(c.root, c.window): c.observations for c in self.cells}
++        grid = {}
++        for ticks in SLIPPAGE_TICKS:
++            for bound in BOUNDS:
++                values = [(cost.round_trip_bp(ticks, bound),
++                           weights.get((cost.root, cost.window), 0))
++                          for cost in self.costs]
++                total = sum(w for _, w in values)
++                mean = (sum(v * w for v, w in values) / total) if total else float("nan")
++                worst = max((v for v, _ in values), default=float("nan"))
++                grid[(ticks, bound)] = (mean, worst)
++        return grid
++
+     @property
+     def unknown_cost_components(self) -> tuple[str, ...]:
+         seen: list[str] = []
+@@ -107,10 +131,20 @@ class ICReport:
+             add(f"  {label}   cible {target:.3f}   {ratio:+.2f}× la cible   {verdict}")
+         add("")
+         floor = self.cost_floor_bp
+-        add(f"coût d'aller-retour : plancher {floor:.2f} bp (pire cellule) — "
+-            f"INCOMPLET, manquent : {', '.join(self.unknown_cost_components)}")
+-        add("  un IC net calculé là-dessus serait un MINORANT de coût, "
+-            "donc un MAJORANT de performance.")
++        missing = self.unknown_cost_components
++        add(f"coût d'aller-retour, en bp — plancher d'écart {floor:.2f} (pire cellule) "
++            "+ frais + glissement (D35)")
++        add("  glissement par side    borne basse (moy. / pire)    borne haute (moy. / pire)")
++        grid = self.cost_grid()
++        for ticks in SLIPPAGE_TICKS:
++            low, high = grid[(ticks, "low")], grid[(ticks, "high")]
++            add(f"  {ticks} tick{'s' if ticks > 1 else ' '}               "
++                f"{low[0]:6.2f} / {low[1]:6.2f}              {high[0]:6.2f} / {high[1]:6.2f}")
++        if missing:
++            add(f"  INCOMPLET, manquent : {', '.join(missing)} — ces lignes sont des "
++                "PLANCHERS ;")
++            add("  un IC net calculé là-dessus serait un MINORANT de coût, "
++                "donc un MAJORANT de performance.")
+         add("")
+         if self.refused_cells:
+             add(f"cellules refusées par les contrôles (D08) : {len(self.refused_cells)} — "
+@@ -125,6 +159,12 @@ class ICReport:
+             add("")
+         add(f"tests comptés au registre (hors calibrations) : {self.counted_tests}")
+         add("")
++        if self.ic_by_year:
++            add("par année civile (UTC) — DIAGNOSTIC de stabilité, pas des tests (D29) :")
++            for year, row in sorted(self.ic_by_year.items()):
++                add(f"  {year}  IC {row['ic']:+.5f}  n={row['observations']:>8,}"
++                    .replace(",", " "))
++            add("")
+         add("ventilation par cellule — DIAGNOSTIC, pas des tests (D01 §4) :")
+         for cell in sorted(self.cells, key=lambda c: -abs(c.ic)):
+             add(f"  {cell.root:5s} {cell.window:7s} IC {cell.ic:+.5f}  "
+diff --git a/panel/catalogue.py b/panel/catalogue.py
+index 35a6e91..41ffaec 100644
+--- a/panel/catalogue.py
++++ b/panel/catalogue.py
+@@ -49,7 +49,11 @@ class Instrument:
+     years: float
+     tick: float | None
+     multiplier: float | None
+-    fee_per_contract_usd: float | None
++    # D26, D35 : USD par contrat et PAR SIDE, trois composantes externes (D09).
++    # Borne basse = courtier seul ; borne haute = les trois. Null = inconnu.
++    fee_broker_usd: float | None
++    fee_exchange_usd: float | None
++    fee_regulatory_usd: float | None
+     roll_rule: str
+     roll_cycle: str | None
+     splice_minute_utc: str
+@@ -123,7 +127,7 @@ class Catalogue:
+                 holes["roll-dates"].append(root)
+             if inst.multiplier is None:
+                 holes["multipliers"].append(root)
+-            if inst.fee_per_contract_usd is None:
++            if None in (inst.fee_broker_usd, inst.fee_exchange_usd, inst.fee_regulatory_usd):
+                 holes["fees"].append(root)
+         return holes
+ 
+@@ -201,7 +205,9 @@ def load_catalogue(path: Path = CATALOGUE) -> Catalogue:
+             years=float(spec["history"]["years"]),
+             tick=spec["tick"],
+             multiplier=spec["multiplier"],
+-            fee_per_contract_usd=spec["fee_per_contract_usd"],
++            fee_broker_usd=spec["fee_broker_usd"],
++            fee_exchange_usd=spec["fee_exchange_usd"],
++            fee_regulatory_usd=spec["fee_regulatory_usd"],
+             roll_rule=spec["roll"]["rule"],
+             roll_cycle=spec["roll"]["cycle"],
+             splice_minute_utc=spec["roll"]["splice_minute_utc"],
+diff --git a/registry/SCHEMA.md b/registry/SCHEMA.md
+index 0d1cd8f..fc39b31 100644
+--- a/registry/SCHEMA.md
++++ b/registry/SCHEMA.md
+@@ -50,6 +50,7 @@ Facultatifs, écrits par le harnais quand ils ont un sens :
+ | `cells` | entier ≥ 0 | le nombre de cellules qui ont produit un IC |
+ | `observations` | entier ≥ 0 | le nombre total d'observations poolées |
+ | `note` | chaîne non vide | une phrase sur les circonstances du calcul — pourquoi cette ligne existe, quand ce n'est pas évident. Jamais un résultat, jamais une justification après coup |
++| `ic_by_year` | objet | depuis `D35` : l'IC poolé de chaque année civile (UTC), `{"2016": {"ic": …, "observations": …}, …}`. **Diagnostic de stabilité, jamais un test** (`D29`) : il est écrit sur la ligne pour qu'aucun IC n'existe hors du registre (invariant III) |
+ 
+ ## Comment une ligne naît
+ 
+diff --git a/scripts/check_provenance.py b/scripts/check_provenance.py
+index 6458790..64588ef 100644
+--- a/scripts/check_provenance.py
++++ b/scripts/check_provenance.py
+@@ -64,7 +64,8 @@ def blank(raw: dict) -> dict:
+     écrit — pour que le refus observé soit celui de la faute, et d'elle seule.
+     """
+     for spec in raw["instruments"]:
+-        for field in ("multiplier", "fee_per_contract_usd"):
++        for field in ("multiplier", "fee_broker_usd", "fee_exchange_usd",
++                      "fee_regulatory_usd"):
+             spec[field] = None
+     raw["provenance"] = []
+     return raw
+@@ -259,7 +260,8 @@ def main() -> int:
+     external = sum(
+         spec.get(field) is not None
+         for spec in raw["instruments"]
+-        for field in ("multiplier", "fee_per_contract_usd")
++        for field in ("multiplier", "fee_broker_usd", "fee_exchange_usd",
++                      "fee_regulatory_usd")
+     )
+     print(f"  (D09 ; le catalogue réel porte {external} valeur(s) externe(s), "
+           f"toutes couvertes — les cas fautifs partent d'un catalogue vidé)")
+diff --git a/scripts/gate_03_harness.py b/scripts/gate_03_harness.py
+index 4c70625..a71c6c0 100644
+--- a/scripts/gate_03_harness.py
++++ b/scripts/gate_03_harness.py
+@@ -193,10 +193,25 @@ def main() -> int:
+         "fee_bp" in report_perfect.unknown_cost_components,
+         "les frais ne sont pas signalés comme inconnus alors qu'ils sont null",
+     )
+-    check(
+-        "slippage_bp" in report_perfect.unknown_cost_components,
+-        "le glissement n'est pas signalé comme inconnu",
+-    )
++    # D35 : le glissement n'est plus inconnu, il est déclaré en grille de 1 à 5
++    # ticks par side. La grille doit croître avec le glissement, et la borne
++    # haute ne jamais passer sous la basse.
++    from harness.costs import BOUNDS, SLIPPAGE_TICKS  # noqa: PLC0415
++
++    grid = report_perfect.cost_grid()
++    check(len(grid) == len(SLIPPAGE_TICKS) * len(BOUNDS),
++          f"la grille de coût porte {len(grid)} cases au lieu de "
++          f"{len(SLIPPAGE_TICKS) * len(BOUNDS)}")
++    means = [grid[(k, "low")][0] for k in SLIPPAGE_TICKS]
++    check(all(b > a for a, b in zip(means, means[1:], strict=False)),
++          f"le coût ne croît pas avec le glissement : {means}")
++    check(all(grid[(k, "high")][0] >= grid[(k, "low")][0] for k in SLIPPAGE_TICKS),
++          "la borne haute passe sous la borne basse")
++    check("slippage_bp" not in report_perfect.unknown_cost_components,
++          "le glissement est encore signalé inconnu alors que D35 le déclare")
++    cost = report_perfect.costs[0]
++    check(cost.tick_bp is not None and abs(cost.slippage_bp(3) - 6 * cost.tick_bp) < 1e-12,
++          "3 ticks par side ne valent pas 6 ticks d'aller-retour")
+     before = len(registry.REGISTRY.read_text(encoding="utf-8").splitlines())
+     counted_before = registry.counted_tests()
+     evaluate(
+@@ -219,6 +234,27 @@ def main() -> int:
+         f"une calibration a fait passer counted_tests de {counted_before} à "
+         f"{registry.counted_tests()}",
+     )
++    # D35 : l'IC par année civile est écrit SUR la ligne poolée, jamais ailleurs.
++    derniere = registry.read_all()[-1]
++    par_an = derniere.get("ic_by_year") or {}
++    check(bool(par_an), "la ligne du registre ne porte pas `ic_by_year`")
++    check(sum(v["observations"] for v in par_an.values()) <= derniere["observations"],
++          "les observations par année dépassent le total poolé")
++    check(all(v["ic"] > 0.99 for v in par_an.values()),
++          f"le signal parfait n'a pas un IC ~1 chaque année : {par_an}")
++
++    # D28, D35 : `extra` ne peut plus écraser un champ du ticket.
++    ticket = registry.open_test(signal_id="calibration-extra", hypothesis_ref="H99",
++                                stage="03-calibration", data_slice="pool", horizon="30min")
++    lignes = len(registry.read_all())
++    try:
++        registry.settle(ticket, ic=0.5, t_stat=1.0, extra={"hypothesis_ref": None})
++        refuse = False
++    except registry.RegistryBypass:
++        refuse = True
++    check(refuse, "`extra` a pu écraser `hypothesis_ref` (trou de D28)")
++    check(len(registry.read_all()) == lignes, "le refus d'`extra` a quand même écrit une ligne")
++
+     print(f"   plancher {report_perfect.cost_floor_bp:.2f} bp, manquent "
+           f"{', '.join(report_perfect.unknown_cost_components)} ; "
+           f"{after} lignes au registre, {registry.counted_tests()} test(s) compté(s), "
+diff --git a/scripts/measure_lot.py b/scripts/measure_lot.py
+index e7bfbe5..749e3aa 100644
+--- a/scripts/measure_lot.py
++++ b/scripts/measure_lot.py
+@@ -56,7 +56,7 @@ HORIZON = "30min"
+ # L'empreinte du harnais avec lequel le lot sera mesuré. None tant que la
+ # décision de harnais groupée (`D26`, `D28`, `D29`) n'est pas prise : elle
+ # renseigne cette valeur, et nulle part ailleurs.
+-HARNAIS_DU_LOT: str | None = None
++HARNAIS_DU_LOT: str | None = "4806666dc55c46c9"  # D35
+ 
+ 
+ def charger() -> tuple[dict, list[dict]]:

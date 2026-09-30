@@ -136,3 +136,15 @@ verse des papiers d'actions — mesuré, 79 % au premier passage de `D31`.
   l'estimation. **Marge restante : ~65 Mo sous le budget, ~165 Mo sous le
   plafond** — de quoi verser environ 4 800 résumés de plus avant le budget, si
   des requêtes nouvelles sont décidées par écrit.
+- **2026-09-28, soir — budget dépassé, par moi.** Le versement des textes
+  intégraux moissonnés (`ingest.py --harvest`) n'avait **aucun contrôle de
+  taille**, et je ne l'ai pas vérifié avant de le lancer : la base est montée à
+  **487 Mo sur 500**, au-delà du budget de 400 Mo que cette décision fixait.
+  Embeddings arrêtés à temps, 29 223 morceaux laissés sans vecteur, aucune
+  écriture jusqu'à la décision de l'opérateur.
+- **2026-09-29 — le plan change, le budget se réécrit ici** (§ Ce qui reste
+  ouvert). L'opérateur passe la base à **8 Go**. Budget : **6,4 Go** (80 %),
+  même règle de marge. Il vaut désormais pour **toute** écriture en base :
+  `corpus/ssrn_catalogue.py` et `vectordb/ingest.py` portent la même constante,
+  et l'ingestion projette la taille **finale** (vecteurs à venir compris) avant
+  chaque papier, et s'arrête avant de dépasser.

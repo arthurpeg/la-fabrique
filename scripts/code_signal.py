@@ -50,8 +50,25 @@ humain, postérieur, et `D23` ne le lui délègue pas.
 
     python scripts/code_signal.py --list
     python scripts/code_signal.py --prepare <fiche_id>
+    python scripts/code_signal.py --prepare <fiche_id> --temoin # le second codeur, D34
     python scripts/code_signal.py --record <module.py>          # fige S6
-    python scripts/code_signal.py --judge <module.py> --fiche <fiche.json>
+    python scripts/code_signal.py --judge <module.py>           # D23 + CHOICES (D34)
+
+## Ce que `D34` ajoute
+
+**La recette.** `--prepare` refuse une fiche sans recette valide
+(`scripts/recette.py`) : la consigne porte la fiche ET sa recette, sous la clé
+`recipe`, et le juge reçoit exactement le même JSON — `S5` y lit les valeurs et
+les citations de la recette, jamais sa prose.
+
+**Les choix écrits.** Chaque module déclare `CHOICES`, les interprétations que
+son codeur a faites. `--judge` refuse un module qui n'en déclare pas.
+
+**Le témoin.** `--prepare --temoin` écrit la consigne du second codeur, d'un
+autre modèle, qui code la même fiche dans `verification/temoins/`, avec son
+propre registre de production. Les deux codages sont ensuite comparés par
+`scripts/double_codage.py`. Chaque `--judge` est inscrit dans
+`verification/jugements.jsonl`, que le double codage exige.
 """
 
 from __future__ import annotations
@@ -67,9 +84,24 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
+sys.path.insert(0, str(REPO / "scripts"))
+
+from codage_verifie import (  # noqa: E402
+    TEMOINS,
+    fautes_choix,
+    inscrire_jugement,
+    temoin_path,
+)
+
 from sandbox import contract, scan  # noqa: E402
 
 FICHES = REPO / "corpus" / "fiches"
+# Les fiches moissonnees (phase 09) : 32 des 41 fiches du lot y vivent. Jusqu'au
+# 2026-09-29 ce script ne lisait que `corpus/fiches/` et ne les voyait pas.
+FICHES_HARVEST = REPO / "corpus" / "fiches_harvest"
+# D39 : les fiches de synthèse, tirées de plusieurs papiers d'une même grappe.
+FICHES_SYNTHESE = REPO / "corpus" / "fiches_synthese"
+LOT = REPO / "hypotheses" / "LOT-09.json"
 SIGNALS = REPO / "signals"
 WORK = REPO / "corpus" / "consignes-signaux"
 PRODUCED = SIGNALS / "PRODUCED.json"
@@ -103,6 +135,9 @@ SIGNAL_ID = "{signal_id}"      # cette chaîne, à la lettre
 HYPOTHESIS = None              # None, et rien d'autre — voir plus bas
 PAPER = "<auteurs (année), titre, revue>"
 EXPECTED_SIGN = +1             # ou -1. JAMAIS 0, jamais None
+CHOICES = (                    # tes interprétations, une chaîne chacune — D34
+    "la fiche dit X ; j'ai compris Y, parce que Z",
+)
 
 def scores(panel, cells=None, horizon_bars: int = 30):
     \"\"\"Rend {{(root, window): pd.Series}}.\"\"\"
@@ -110,6 +145,11 @@ def scores(panel, cells=None, horizon_bars: int = 30):
 
 - `EXPECTED_SIGN` dit dans quel sens le papier prétend que le signal prédit.
   Un signal dont on n'attend aucun signe est un signal dont on n'attend rien.
+- `CHOICES` est un tuple **littéral** de chaînes : chaque endroit où la fiche
+  ou sa recette te laissait un choix, ce que tu as choisi, et pourquoi. Un
+  paramètre `null` de la recette, une ambiguïté non résolue, une normalisation
+  non dite : tout ce que tu as dû trancher s'écrit ici. **Un choix écrit se
+  relit ; un choix silencieux passe.** Un module sans `CHOICES` est refusé.
 - `HYPOTHESIS` vaut **`None`**. Les hypothèses pré-enregistrées du projet ne te
   sont pas montrées ; tout identifiant que tu écrirais serait inventé.
 - `scores()` rend un dictionnaire dont les clés sont des paires
@@ -161,6 +201,9 @@ entier. S'ils diffèrent d'un seul point, le signal est refusé.
 dans l'un de ces champs, et seulement ceux-là :
 
 {champs}
+- `recipe` — **ses valeurs et ses citations seulement** : la recette complète
+  la fiche, citée mot pour mot dans le papier (`D34`). Un nombre qui n'apparaît
+  que dans sa prose (`statement`, `description`, `question`) ne justifie rien.
 
 Si la fiche dit « quarante-cinq minutes » et que tu écris `FENETRE = 30`, le
 signal tournera, sera causal, ne sera pas dégénéré — et ne codera pas ce papier.
@@ -221,7 +264,11 @@ qu'un signal qui prétend.
 
 ---
 
-## LA FICHE
+## LA FICHE, ET SA RECETTE (clé `recipe`)
+
+La recette dit la formule, les entrées, le timing et les paramètres **tels que
+le papier les écrit**. Un paramètre `null` y est un paramètre que le papier ne
+donne pas : ne l'invente pas, et écris dans `CHOICES` ce que tu as fait.
 
 ```json
 {fiche}
@@ -229,11 +276,27 @@ qu'un signal qui prétend.
 """
 
 
+def fiche_files() -> dict[str, Path]:
+    """Toutes les fiches, AMORCE et moissonnees. Un meme identifiant dans les
+    deux dossiers serait une ambiguite : on refuse plutot que de choisir."""
+    out: dict[str, Path] = {}
+    for d in (FICHES, FICHES_HARVEST, FICHES_SYNTHESE):
+        for f in sorted(d.glob("*.json")):
+            if f.stem in out:
+                raise SystemExit(f"fiche en double : {f.stem} dans {out[f.stem].parent} et {d}")
+            out[f.stem] = f
+    return out
+
+
 def fiches() -> dict[str, dict]:
-    return {
-        f.stem: json.loads(f.read_text(encoding="utf-8"))
-        for f in sorted(FICHES.glob("*.json"))
-    }
+    return {fid: json.loads(f.read_text(encoding="utf-8")) for fid, f in fiche_files().items()}
+
+
+def lot_fiches() -> list[str]:
+    """Les `fiche_id` du lot fige de la phase 09 (`hypotheses/LOT-09.json`)."""
+    if not LOT.is_file():
+        raise SystemExit("hypotheses/LOT-09.json absent : aucun lot n'est fige")
+    return [e["fiche_id"] for e in json.loads(LOT.read_text(encoding="utf-8"))["fiches"]]
 
 
 def module_path(fiche_id: str) -> Path:
@@ -270,8 +333,15 @@ def empreinte16(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
 
 
-def do_list() -> int:
+def do_list(lot: bool = False) -> int:
     toutes = fiches()
+    if lot:
+        # Le lot seulement, dans son ordre : c'est ce que la phase 09 attend.
+        ids = lot_fiches()
+        absentes = [fid for fid in ids if fid not in toutes]
+        if absentes:
+            raise SystemExit(f"fiches du lot introuvables : {absentes}")
+        toutes = {fid: toutes[fid] for fid in ids}
     existants = signaux_existants()
     produits = json.loads(PRODUCED.read_text(encoding="utf-8")) if PRODUCED.is_file() else {}
 
@@ -298,15 +368,32 @@ def do_list() -> int:
     return 0
 
 
-def do_prepare(fiche_id: str) -> int:
+def fiche_et_recette(fiche_id: str) -> dict:
+    """La fiche, augmentée de sa recette sous `recipe` — ce que voient le codeur
+    ET le juge. Refuse si la recette manque ou ne passe pas (`D34`)."""
+    from recette import recette_path, recette_valide  # noqa: PLC0415
+
+    ok, fautes = recette_valide(fiche_id)
+    if not ok:
+        raise SystemExit(
+            f"{fiche_id} : recette absente ou refusée — `D34` exige la recette AVANT "
+            "le codage :\n  " + "\n  ".join(fautes)
+            + f"\n  `python scripts/recette.py --prepare {fiche_id}`"
+        )
+    fiche = fiches()[fiche_id]
+    fiche["recipe"] = json.loads(recette_path(fiche_id).read_text(encoding="utf-8"))
+    return fiche
+
+
+def do_prepare(fiche_id: str, temoin: bool = False) -> int:
     toutes = fiches()
     if fiche_id not in toutes:
         raise SystemExit(
             f"fiche inconnue : {fiche_id}\n"
             f"connues : {', '.join(sorted(toutes))}"
         )
-    fiche = toutes[fiche_id]
-    chemin = module_path(fiche_id)
+    fiche = fiche_et_recette(fiche_id)
+    chemin = temoin_path(module_path(fiche_id)) if temoin else module_path(fiche_id)
 
     WORK.mkdir(parents=True, exist_ok=True)
     texte = CONSIGNE.format(
@@ -318,7 +405,7 @@ def do_prepare(fiche_id: str) -> int:
         du_depot=", ".join(f"`{v:g}` ({r})" for v, r in sorted(DU_DEPOT.items())),
         fiche=json.dumps(fiche, ensure_ascii=False, indent=2),
     )
-    out = WORK / f"{fiche_id}.md"
+    out = WORK / f"{fiche_id}{'.temoin' if temoin else ''}.md"
     out.write_text(texte, encoding="utf-8")
 
     print(f"consigne ecrite : {out.relative_to(REPO)}  ({out.stat().st_size / 1000:.0f} ko)")
@@ -359,7 +446,12 @@ def enregistrer(path: Path) -> dict:
     if not signal_id:
         raise SystemExit(f"{path.name} ne declare pas de SIGNAL_ID — `S1` le refuserait")
 
-    registre = json.loads(PRODUCED.read_text(encoding="utf-8")) if PRODUCED.is_file() else {}
+    # Le registre du DOSSIER : `signals/` pour le principal, `verification/
+    # temoins/` pour le témoin de `D34`, qui porte le même SIGNAL_ID.
+    if path.parent not in (SIGNALS.resolve(), TEMOINS.resolve()):
+        raise SystemExit(f"{path} : un signal vit dans signals/ ou verification/temoins/")
+    produced = path.parent / "PRODUCED.json"
+    registre = json.loads(produced.read_text(encoding="utf-8")) if produced.is_file() else {}
     ligne = registre.get(signal_id) or {"attempts": []}
     ligne.setdefault("attempts", []).append({
         "produced": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
@@ -371,7 +463,7 @@ def enregistrer(path: Path) -> dict:
     ligne["produced"] = ligne["attempts"][-1]["produced"]
     registre[signal_id] = ligne
 
-    PRODUCED.write_text(
+    produced.write_text(
         json.dumps(dict(sorted(registre.items())), ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
@@ -393,9 +485,34 @@ def do_record(path: Path) -> int:
     return 0
 
 
-def do_judge(path: Path, fiche: Path, sans_donnees: bool) -> int:
+def signal_id_de(path: Path) -> str | None:
+    for ligne in path.read_text(encoding="utf-8").splitlines():
+        if ligne.startswith("SIGNAL_ID"):
+            return ligne.split("=", 1)[1].strip().strip("\"'")
+    return None
+
+
+def do_judge(path: Path, fiche: Path | None, sans_donnees: bool) -> int:
+    """`D23` contre la fiche ET sa recette, puis `CHOICES` ; le verdict est inscrit.
+
+    Sans `--fiche`, la fiche est celle que désigne le `SIGNAL_ID` du module,
+    augmentée de sa recette : le juge voit exactement ce qu'a vu le codeur.
+    `--fiche` reste accepté pour les signaux antérieurs à `D34`, jugés contre
+    leur fiche seule — le verdict n'est alors PAS inscrit, parce qu'il ne vaut
+    pas jugement `D34`.
+    """
+    path = path.resolve()
     if not path.is_file():
         raise SystemExit(f"module introuvable : {path}")
+    inscrire = fiche is None and not sans_donnees
+    fiche_id = signal_id_de(path)
+    if fiche is None:
+        if not fiche_id:
+            raise SystemExit(f"{path.name} ne déclare pas de SIGNAL_ID")
+        WORK.mkdir(parents=True, exist_ok=True)
+        fiche = WORK / f"{fiche_id}.fiche-et-recette.json"
+        fiche.write_text(json.dumps(fiche_et_recette(fiche_id), ensure_ascii=False, indent=2),
+                         encoding="utf-8")
     if not fiche.is_file():
         raise SystemExit(f"fiche introuvable : {fiche}")
     argv = [sys.executable, str(JUGE), str(path), "--fiche", str(fiche)]
@@ -404,13 +521,28 @@ def do_judge(path: Path, fiche: Path, sans_donnees: bool) -> int:
     r = subprocess.run(argv, capture_output=True, text=True,
                        encoding="utf-8", errors="replace")
     print(r.stdout or r.stderr)
-    return r.returncode
+
+    fautes = fautes_choix(path.read_text(encoding="utf-8"))
+    print("CHOICES (D34) : " + ("déclarés" if not fautes else "REFUSÉ — " + fautes[0]))
+    if inscrire:
+        inscrire_jugement(path, fiche_id, r.returncode, not fautes)
+        print("jugement inscrit : verification/jugements.jsonl")
+    elif not sans_donnees:
+        print("jugé contre une fiche donnée à la main : verdict NON inscrit "
+              "(ce n'est pas un jugement D34)")
+    return r.returncode or (1 if fautes else 0)
 
 
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description="Le harnais du codeur de signal — D23")
     ap.add_argument("--list", action="store_true", help="les fiches sans signal")
+    ap.add_argument("--lot", action="store_true",
+                    help="avec --list : seulement les fiches du lot fige (LOT-09.json)")
+    ap.add_argument("--fiche-path", metavar="FICHE_ID",
+                    help="le chemin de la fiche, pour --judge --fiche")
     ap.add_argument("--prepare", metavar="FICHE_ID", help="ecrire la consigne")
+    ap.add_argument("--temoin", action="store_true",
+                    help="avec --prepare : la consigne du second codeur (D34)")
     ap.add_argument("--record", type=Path, metavar="MODULE", help="figer S6")
     ap.add_argument("--judge", type=Path, metavar="MODULE")
     ap.add_argument("--fiche", type=Path, metavar="FICHE.json")
@@ -418,15 +550,16 @@ def main(argv: list[str]) -> int:
                     help="S1, S2, S5, S6 seuls — porte NON franchie sur un verdict partiel")
     a = ap.parse_args(argv)
 
+    if a.fiche_path:
+        print(fiche_files()[a.fiche_path].relative_to(REPO).as_posix())
+        return 0
     if a.list:
-        return do_list()
+        return do_list(a.lot)
     if a.prepare:
-        return do_prepare(a.prepare)
+        return do_prepare(a.prepare, a.temoin)
     if a.record:
         return do_record(a.record)
     if a.judge:
-        if not a.fiche:
-            raise SystemExit("--judge demande --fiche : un signal se juge CONTRE une fiche")
         return do_judge(a.judge, a.fiche, a.no_data)
     print(__doc__)
     return 1

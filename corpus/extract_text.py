@@ -107,15 +107,22 @@ def main() -> int:
         return 1
 
     entries, changed, written = [], [], 0
+    # Un PDF qui fait tomber pypdf n'arrête plus la boucle : jusqu'au 2026-09-30,
+    # un seul échec en mode `layout` (ZeroDivisionError dans pypdf) laissait
+    # sans texte tous les PDF suivants dans l'ordre alphabétique, sans le dire.
+    # Un échec `layout` est nommé et toléré ; un échec `default` — le texte qui
+    # fait foi (D18) — est nommé et rend le code 1, après que les autres PDF
+    # ont été traités.
+    echecs: list[tuple[str, str, str]] = []
     for pdf in pdfs:
         for mode in MODES:
             rel = f"corpus/text/{pdf.stem}.{mode}.txt"
             dest = REPO / rel
             try:
                 text, pages, rotated = extract(pdf, mode)
-            except Exception as e:
-                print(f"ECHEC {pdf.name} [{mode}] : {type(e).__name__}: {e}")
-                return 1
+            except Exception as e:  # noqa: BLE001
+                echecs.append((pdf.name, mode, f"{type(e).__name__}: {e}"))
+                continue
 
             h = digest(text)
             entries.append({"path": rel, "pdf": f"corpus/pdf/{pdf.name}", "mode": mode,
@@ -140,6 +147,11 @@ def main() -> int:
     absent_pdfs = sorted({e["pdf"] for e in kept})
     version_changed = bool(old.get("pypdf")) and old["pypdf"] != pypdf.__version__
 
+    bloquants = [x for x in echecs if x[1] != "layout"]
+    for nom, mode, err in echecs:
+        grave = "ECHEC" if mode != "layout" else "echec toléré"
+        print(f"{grave} {nom} [{mode}] : {err}")
+
     if args.check:
         missing = [e["path"] for e in entries + kept if not (REPO / e["path"]).is_file()]
         if changed:
@@ -157,7 +169,7 @@ def main() -> int:
                 print(f"  {pdf}")
             print("  Le texte versionne de ces papiers fait foi, mais son accord avec son "
                   "PDF n'a PAS ete rejoue ici.")
-        if not changed and not missing and not version_changed:
+        if not changed and not missing and not version_changed and not bloquants:
             print(f"texte conforme au manifeste — {len(entries)} fichier(s) verifie(s) "
                   f"sur {len(entries) + len(kept)}, pypdf {pypdf.__version__}")
             return 0
@@ -187,7 +199,7 @@ def main() -> int:
         for rel, was, now in changed:
             print(f"  {rel}  {was} -> {now}")
         print("Les `quoted_source` ecrites contre l'ancien texte sont a reverifier (D18).")
-    return 0
+    return 1 if bloquants else 0
 
 
 if __name__ == "__main__":

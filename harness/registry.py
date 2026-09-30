@@ -43,7 +43,7 @@ REQUIRED = (
     "test_id", "timestamp", "signal_id", "hypothesis_ref", "stage",
     "data_slice", "horizon", "ic", "t_stat", "requested_by", "code_hash",
 )
-OPTIONAL = ("asof", "cells", "observations", "note")
+OPTIONAL = ("asof", "cells", "observations", "note", "ic_by_year")
 
 # The two slices D01 5 left. Not three: the contiguous `validation` block was
 # abandoned, and a line naming it would be a line about a world that does not
@@ -184,6 +184,15 @@ def settle(ticket: Ticket, *, ic: float, t_stat: float, extra: dict | None = Non
         "code_hash": code_hash(),
     }
     if extra:
+        # D28, D35: `extra` ADDS fields, it never overwrites one the ticket fixed.
+        # Applied after them, it used to let a caller replace `hypothesis_ref`
+        # (or `signal_id`) and take a line out of the count without a trace.
+        clash = sorted(set(extra) & set(record))
+        if clash:
+            raise RegistryBypass(
+                f"extra would overwrite {clash}: those fields belong to the ticket, "
+                "fixed before the result existed (invariant IV, D28)"
+            )
         record.update(extra)
     return append(record)
 
@@ -227,6 +236,10 @@ def validate_record(record: dict) -> list[str]:
     typed("observations", int, lambda v: v >= 0, "is negative")
     typed("asof", str, lambda v: bool(v.strip()), "is empty")
     typed("note", str, lambda v: bool(v.strip()), "is empty")
+    typed("ic_by_year", dict, lambda v: all(
+        isinstance(k, str) and k.isdigit() and isinstance(x, dict)
+        and set(x) == {"ic", "observations"} for k, x in v.items()),
+        "must map a year to {ic, observations}")
 
     if "hypothesis_ref" in record:
         value = record["hypothesis_ref"]

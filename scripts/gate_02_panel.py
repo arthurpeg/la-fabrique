@@ -45,11 +45,10 @@ from panel import (  # noqa: E402
     HoldoutLocked,
     LookaheadRefused,
     Panel,
-    RollDatesMissing,
     SliceExceeded,
     back_adjust,
-    splice_ratios,
     load_catalogue,
+    splice_ratios,
     visible_rolls,
 )
 

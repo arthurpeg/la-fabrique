@@ -1,0 +1,269 @@
+diff --git a/catalogue/catalogue.yaml b/catalogue/catalogue.yaml
+index 03f14c2..826ba86 100644
+--- a/catalogue/catalogue.yaml
++++ b/catalogue/catalogue.yaml
+@@ -78,6 +78,8 @@ instruments:
+     fee_broker_usd: null  # todo fees (D26, D35)
+     fee_exchange_usd: null  # todo fees
+     fee_regulatory_usd: null  # todo fees
++    execution_contract: MNQ  # D37 : toujours micro
++    execution_multiplier: null  # todo micro-multipliers
+     cells:
+       ASIA:
+         retained: true
+@@ -124,6 +126,8 @@ instruments:
+     fee_broker_usd: null  # todo fees (D26, D35)
+     fee_exchange_usd: null  # todo fees
+     fee_regulatory_usd: null  # todo fees
++    execution_contract: MES  # D37 : toujours micro
++    execution_multiplier: null  # todo micro-multipliers
+     cells:
+       ASIA:
+         retained: true
+@@ -170,6 +174,8 @@ instruments:
+     fee_broker_usd: null  # todo fees (D26, D35)
+     fee_exchange_usd: null  # todo fees
+     fee_regulatory_usd: null  # todo fees
++    execution_contract: MYM  # D37 : toujours micro
++    execution_multiplier: null  # todo micro-multipliers
+     cells:
+       ASIA:
+         retained: false
+@@ -219,6 +225,8 @@ instruments:
+     fee_broker_usd: null  # todo fees (D26, D35)
+     fee_exchange_usd: null  # todo fees
+     fee_regulatory_usd: null  # todo fees
++    execution_contract: MGC  # D37 : toujours micro
++    execution_multiplier: null  # todo micro-multipliers
+     cells:
+       ASIA:
+         retained: true
+@@ -265,6 +273,8 @@ instruments:
+     fee_broker_usd: null  # todo fees (D26, D35)
+     fee_exchange_usd: null  # todo fees
+     fee_regulatory_usd: null  # todo fees
++    execution_contract: MCL  # D37 : toujours micro
++    execution_multiplier: null  # todo micro-multipliers
+     cells:
+       ASIA:
+         retained: true
+@@ -311,6 +321,8 @@ instruments:
+     fee_broker_usd: null  # todo fees (D26, D35)
+     fee_exchange_usd: null  # todo fees
+     fee_regulatory_usd: null  # todo fees
++    execution_contract: 6E  # D37 : pas de micro au barème Lucid, plein format
++    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
+     cells:
+       ASIA:
+         retained: true
+@@ -357,6 +369,8 @@ instruments:
+     fee_broker_usd: null  # todo fees (D26, D35)
+     fee_exchange_usd: null  # todo fees
+     fee_regulatory_usd: null  # todo fees
++    execution_contract: 6B  # D37 : pas de micro au barème Lucid, plein format
++    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
+     cells:
+       ASIA:
+         retained: false
+@@ -403,6 +417,8 @@ instruments:
+     fee_broker_usd: null  # todo fees (D26, D35)
+     fee_exchange_usd: null  # todo fees
+     fee_regulatory_usd: null  # todo fees
++    execution_contract: 6J  # D37 : pas de micro au barème Lucid, plein format
++    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
+     cells:
+       ASIA:
+         retained: true
+@@ -449,6 +465,8 @@ instruments:
+     fee_broker_usd: null  # todo fees (D26, D35)
+     fee_exchange_usd: null  # todo fees
+     fee_regulatory_usd: null  # todo fees
++    execution_contract: 6A  # D37 : pas de micro au barème Lucid, plein format
++    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
+     cells:
+       ASIA:
+         retained: true
+@@ -501,6 +519,8 @@ instruments:
+     fee_broker_usd: null  # todo fees (D26, D35)
+     fee_exchange_usd: null  # todo fees
+     fee_regulatory_usd: null  # todo fees
++    execution_contract: FDAX  # D37 : pas de micro au barème Lucid, plein format
++    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
+     cells: null  # hors univers : la grille n'a pas été mesurée sur FDAX
+ 
+ # Ce qui est inconnu, et de qui on l'attend. Un null sans todo est un bug.
+@@ -513,6 +533,14 @@ todos:
+       fiche contrat EUREX, pour FDAX seul -- les neuf instruments CME sont
+       déposés depuis le 2026-09-24 (voir provenance). FDAX exige aussi une
+       conversion EUR -> USD avant que multiplier x prix soit un notionnel USD.
++  - id: micro-multipliers
++    field: instruments[*].execution_multiplier
++    blocks: les frais en bp des micros (D37) -- sans lui la borne de frais reste nommée manquante
++    owed_by: >-
++      fiches contrat CME des micros (MNQ, MES, MYM, MGC, MCL), ligne « Contract
++      Unit ». D26 les a lues le 2026-09-24 et a constaté un rapport d'exactement
++      un dixième, sans en recopier les citations mot pour mot : à relever avec
++      leur provenance (D09) avant d'être déposées.
+   - id: fees
+     field: instruments[*].fee_broker_usd, fee_exchange_usd, fee_regulatory_usd
+     blocks: la complétude du coût -- sans eux le coût reste un plancher étiqueté (harness/costs.py)
+diff --git a/catalogue/validate.py b/catalogue/validate.py
+index 5c361f3..48944b6 100644
+--- a/catalogue/validate.py
++++ b/catalogue/validate.py
+@@ -61,7 +61,8 @@ CELL_FIELDS = {
+ #   external  copied from a third party   -- contradicted by nothing in the repo
+ #
+ # The external ones below carry a provenance entry, or they do not enter.
+-EXTERNAL_FIELDS = ("multiplier", "fee_broker_usd", "fee_exchange_usd", "fee_regulatory_usd")
++EXTERNAL_FIELDS = ("multiplier", "fee_broker_usd", "fee_exchange_usd", "fee_regulatory_usd",
++                   "execution_multiplier")
+ 
+ # External too, but corroborated: one of our own measurements can contradict
+ # them, so they already have a judge and need no entry. The list is CLOSED
+diff --git a/harness/costs.py b/harness/costs.py
+index bb5c9b2..fa3982a 100644
+--- a/harness/costs.py
++++ b/harness/costs.py
+@@ -3,7 +3,8 @@
+ D01 7 gives the shape and forbids the shortcut:
+ 
+     round_trip_cost_bp(cell) = spread_floor_bp(cell)     measured
+-                             + fee_bp(instrument, size)   two bounds (D26, D35)
++                             + fee_bp(instrument, size)   two bounds (D26, D35),
++                                                          on the EXECUTED contract (D37)
+                              + slippage_bp(cell)          declared, a grid (D35)
+ 
+ **The floor** is measured, not declared: the smallest non-zero price change
+@@ -87,8 +88,12 @@ def cell_cost(catalogue: Catalogue, root: str, window: str,
+     unknown: list[str] = []
+ 
+     priced = median_price is not None and median_price == median_price and median_price > 0
+-    notional = (instrument.multiplier * median_price
+-                if priced and instrument.multiplier is not None else None)
++    # D37 : les frais se rapportent au contrat EXÉCUTÉ (micro partout où Lucid
++    # en propose), pas au contrat des données. Un micro vaut un dixième du
++    # plein : à frais par contrat voisins, il coûte environ trois fois plus en bp.
++    fee_multiplier = instrument.fee_multiplier
++    notional = (fee_multiplier * median_price
++                if priced and fee_multiplier is not None else None)
+     tick_bp = (instrument.tick / median_price * 1e4
+                if priced and instrument.tick is not None else None)
+     if tick_bp is None:
+@@ -98,6 +103,8 @@ def cell_cost(catalogue: Catalogue, root: str, window: str,
+     exchange = instrument.fee_exchange_usd
+     regulatory = instrument.fee_regulatory_usd
+     fee_low = fee_high = None
++    if priced and fee_multiplier is None:
++        unknown.append("execution_multiplier")
+     if notional is None or broker is None:
+         unknown.append("fee_bp")
+     else:
+diff --git a/panel/catalogue.py b/panel/catalogue.py
+index 41ffaec..22e6e19 100644
+--- a/panel/catalogue.py
++++ b/panel/catalogue.py
+@@ -54,6 +54,19 @@ class Instrument:
+     fee_broker_usd: float | None
+     fee_exchange_usd: float | None
+     fee_regulatory_usd: float | None
++    # D37 : le contrat EXÉCUTÉ, et son multiplicateur. Micro partout où Lucid
++    # en propose ; plein format pour les devises. Les frais ci-dessus sont ceux
++    # de ce contrat-là. `execution_multiplier` null sur un contrat plein format
++    # veut dire « le `multiplier` de l'instrument s'applique ».
++    execution_contract: str | None
++    execution_multiplier: float | None
++
++    @property
++    def fee_multiplier(self) -> float | None:
++        """Le multiplicateur auquel les frais se rapportent (D37)."""
++        if self.execution_contract in (None, self.root):
++            return self.multiplier
++        return self.execution_multiplier
+     roll_rule: str
+     roll_cycle: str | None
+     splice_minute_utc: str
+@@ -121,7 +134,8 @@ class Catalogue:
+ 
+     def missing(self) -> dict[str, list[str]]:
+         """Every field still null, by todo id. A null without a todo is a bug."""
+-        holes: dict[str, list[str]] = {"roll-dates": [], "multipliers": [], "fees": []}
++        holes: dict[str, list[str]] = {"roll-dates": [], "multipliers": [], "fees": [],
++                                       "micro-multipliers": []}
+         for root, inst in self.instruments.items():
+             if inst.roll_dates is None:
+                 holes["roll-dates"].append(root)
+@@ -129,6 +143,8 @@ class Catalogue:
+                 holes["multipliers"].append(root)
+             if None in (inst.fee_broker_usd, inst.fee_exchange_usd, inst.fee_regulatory_usd):
+                 holes["fees"].append(root)
++            if inst.execution_contract not in (None, root) and inst.execution_multiplier is None:
++                holes["micro-multipliers"].append(root)
+         return holes
+ 
+ 
+@@ -208,6 +224,8 @@ def load_catalogue(path: Path = CATALOGUE) -> Catalogue:
+             fee_broker_usd=spec["fee_broker_usd"],
+             fee_exchange_usd=spec["fee_exchange_usd"],
+             fee_regulatory_usd=spec["fee_regulatory_usd"],
++            execution_contract=spec.get("execution_contract"),
++            execution_multiplier=spec.get("execution_multiplier"),
+             roll_rule=spec["roll"]["rule"],
+             roll_cycle=spec["roll"]["cycle"],
+             splice_minute_utc=spec["roll"]["splice_minute_utc"],
+diff --git a/scripts/check_provenance.py b/scripts/check_provenance.py
+index 64588ef..6fb1f08 100644
+--- a/scripts/check_provenance.py
++++ b/scripts/check_provenance.py
+@@ -65,7 +65,7 @@ def blank(raw: dict) -> dict:
+     """
+     for spec in raw["instruments"]:
+         for field in ("multiplier", "fee_broker_usd", "fee_exchange_usd",
+-                      "fee_regulatory_usd"):
++                      "fee_regulatory_usd", "execution_multiplier"):
+             spec[field] = None
+     raw["provenance"] = []
+     return raw
+@@ -261,7 +261,7 @@ def main() -> int:
+         spec.get(field) is not None
+         for spec in raw["instruments"]
+         for field in ("multiplier", "fee_broker_usd", "fee_exchange_usd",
+-                      "fee_regulatory_usd")
++                      "fee_regulatory_usd", "execution_multiplier")
+     )
+     print(f"  (D09 ; le catalogue réel porte {external} valeur(s) externe(s), "
+           f"toutes couvertes — les cas fautifs partent d'un catalogue vidé)")
+diff --git a/scripts/gate_03_harness.py b/scripts/gate_03_harness.py
+index a71c6c0..95877a0 100644
+--- a/scripts/gate_03_harness.py
++++ b/scripts/gate_03_harness.py
+@@ -209,6 +209,16 @@ def main() -> int:
+           "la borne haute passe sous la borne basse")
+     check("slippage_bp" not in report_perfect.unknown_cost_components,
+           "le glissement est encore signalé inconnu alors que D35 le déclare")
++    # D37 : les frais se rapportent au contrat EXÉCUTÉ. Un micro dont le
++    # multiplicateur manque laisse ses frais NOMMÉS manquants ; une devise, en
++    # plein format, se rapporte au multiplicateur de l'instrument.
++    cat = panel.catalogue
++    check(cat.instrument("6E").fee_multiplier == cat.instrument("6E").multiplier,
++          "une devise (plein format) ne se rapporte pas au multiplicateur de l'instrument")
++    nq = cat.instrument("NQ")
++    if nq.execution_contract != "NQ" and nq.execution_multiplier is None:
++        check("execution_multiplier" in report_perfect.unknown_cost_components,
++              "le multiplicateur du micro manque et n'est pas nommé")
+     cost = report_perfect.costs[0]
+     check(cost.tick_bp is not None and abs(cost.slippage_bp(3) - 6 * cost.tick_bp) < 1e-12,
+           "3 ticks par side ne valent pas 6 ticks d'aller-retour")
+diff --git a/scripts/measure_lot.py b/scripts/measure_lot.py
+index 749e3aa..72f1e05 100644
+--- a/scripts/measure_lot.py
++++ b/scripts/measure_lot.py
+@@ -56,7 +56,7 @@ HORIZON = "30min"
+ # L'empreinte du harnais avec lequel le lot sera mesuré. None tant que la
+ # décision de harnais groupée (`D26`, `D28`, `D29`) n'est pas prise : elle
+ # renseigne cette valeur, et nulle part ailleurs.
+-HARNAIS_DU_LOT: str | None = "4806666dc55c46c9"  # D35
++HARNAIS_DU_LOT: str | None = "94b495fa7525d3b8"  # D35, D37
+ 
+ 
+ def charger() -> tuple[dict, list[dict]]:

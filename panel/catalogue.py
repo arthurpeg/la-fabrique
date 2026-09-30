@@ -49,7 +49,24 @@ class Instrument:
     years: float
     tick: float | None
     multiplier: float | None
-    fee_per_contract_usd: float | None
+    # D26, D35 : USD par contrat et PAR SIDE, trois composantes externes (D09).
+    # Borne basse = courtier seul ; borne haute = les trois. Null = inconnu.
+    fee_broker_usd: float | None
+    fee_exchange_usd: float | None
+    fee_regulatory_usd: float | None
+    # D37 : le contrat EXÉCUTÉ, et son multiplicateur. Micro partout où Lucid
+    # en propose ; plein format pour les devises. Les frais ci-dessus sont ceux
+    # de ce contrat-là. `execution_multiplier` null sur un contrat plein format
+    # veut dire « le `multiplier` de l'instrument s'applique ».
+    execution_contract: str | None
+    execution_multiplier: float | None
+
+    @property
+    def fee_multiplier(self) -> float | None:
+        """Le multiplicateur auquel les frais se rapportent (D37)."""
+        if self.execution_contract in (None, self.root):
+            return self.multiplier
+        return self.execution_multiplier
     roll_rule: str
     roll_cycle: str | None
     splice_minute_utc: str
@@ -117,14 +134,17 @@ class Catalogue:
 
     def missing(self) -> dict[str, list[str]]:
         """Every field still null, by todo id. A null without a todo is a bug."""
-        holes: dict[str, list[str]] = {"roll-dates": [], "multipliers": [], "fees": []}
+        holes: dict[str, list[str]] = {"roll-dates": [], "multipliers": [], "fees": [],
+                                       "micro-multipliers": []}
         for root, inst in self.instruments.items():
             if inst.roll_dates is None:
                 holes["roll-dates"].append(root)
             if inst.multiplier is None:
                 holes["multipliers"].append(root)
-            if inst.fee_per_contract_usd is None:
+            if None in (inst.fee_broker_usd, inst.fee_exchange_usd, inst.fee_regulatory_usd):
                 holes["fees"].append(root)
+            if inst.execution_contract not in (None, root) and inst.execution_multiplier is None:
+                holes["micro-multipliers"].append(root)
         return holes
 
 
@@ -201,7 +221,11 @@ def load_catalogue(path: Path = CATALOGUE) -> Catalogue:
             years=float(spec["history"]["years"]),
             tick=spec["tick"],
             multiplier=spec["multiplier"],
-            fee_per_contract_usd=spec["fee_per_contract_usd"],
+            fee_broker_usd=spec["fee_broker_usd"],
+            fee_exchange_usd=spec["fee_exchange_usd"],
+            fee_regulatory_usd=spec["fee_regulatory_usd"],
+            execution_contract=spec.get("execution_contract"),
+            execution_multiplier=spec.get("execution_multiplier"),
             roll_rule=spec["roll"]["rule"],
             roll_cycle=spec["roll"]["cycle"],
             splice_minute_utc=spec["roll"]["splice_minute_utc"],

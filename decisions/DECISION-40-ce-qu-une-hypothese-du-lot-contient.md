@@ -1,4 +1,12 @@
-# D33 — Ce qu'une hypothèse du lot 09 contient, et qui l'écrit
+# D40 — Ce qu'une hypothèse du lot 09 contient, et qui l'écrit
+
+> **Renumérotée le 2026-09-30 : `D33` → `D40`.** Deux décisions portaient le numéro
+> `D33`, écrites le même jour sur deux lignes de travail parallèles. La ligne
+> distante le garde (`D33` — la pertinence de la base), comme `D27` avait été
+> gardé par la plus ancienne lors de la renumérotation `D27` → `D36`. Toute
+> mention de « `D33` » à propos du **format d'une hypothèse** — dans les fichiers
+> append-only (`wiki/log.md`, `wiki/Failed Ideas/ledger.md` § `F61`) et
+> l'historique git — désigne celle-ci.
 
 **Date :** 2026-09-29
 **Phase :** 09

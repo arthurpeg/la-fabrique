@@ -103,14 +103,14 @@ STAGE = "09-passage"
 SLICE_REQUIRED = "pool"
 ASOF_REQUIRED = "2023-12-29 20:00:00+00:00"
 Q_REQUIRED = 0.10  # D25 C3
-# `D25` C2 fixait N = 50. `D27` l'a AMENDE le 2026-09-28 : le lot n'est plus un
+# `D25` C2 fixait N = 50. `D36` (ex-`D27`) l'a AMENDE le 2026-09-28 : le lot n'est plus un
 # nombre mais un CRITERE, applique par `corpus/lot_phase09.py`, et le fichier
 # porte le `n` qu'il a rendu le jour ou il a ete clos. La porte ne verifie donc
 # plus un chiffre grave ici — elle verifie que le lot est INTERNEMENT COHERENT
 # et qu'il nomme la decision qui l'autorise. Graver 50 ferait refuser un lot
 # parfaitement valide, et un garde qui crie pour une non-raison s'apprend comme
 # du bruit (`L12`).
-DECISIONS_ADMISES = ("D25", "D27")
+DECISIONS_ADMISES = ("D25", "D36")
 
 
 def one_sided_p(t_stat: float, expected_sign: int) -> float:
@@ -341,7 +341,7 @@ def main(argv: list[str]) -> int:
         return 1
 
     lot = json.loads(LOT_FILE.read_text(encoding="utf-8"))
-    # `fiches` est la forme que `D27` produit a la cloture : le lot designe des
+    # `fiches` est la forme que `D36` produit a la cloture : le lot designe des
     # FICHES, et chaque entree gagnera son `ref` d'hypothese et son `signal_id`
     # a mesure qu'ils sont ecrits. `hypotheses` reste accepte pour un lot
     # compose autrement.
@@ -380,7 +380,7 @@ def main(argv: list[str]) -> int:
         return 1
 
     for e in entries:
-        # Le lot de `D27` designe des FICHES ; son `ref` d'hypothese n'existe
+        # Le lot de `D36` designe des FICHES ; son `ref` d'hypothese n'existe
         # qu'une fois celle-ci ecrite. Nommer la fiche en attendant vaut mieux
         # qu'un message vide, qui laisserait croire a une entree anonyme.
         ref = e.get("ref") or ""
@@ -409,6 +409,13 @@ def main(argv: list[str]) -> int:
         mesuree_le = corr.get("measured_at") or ""
         if not mesuree_le or mesuree_le < declared_at:
             fautes.append("la matrice de corrélation n'est pas datée après la clôture du lot")
+
+    # `D34` : chaque signal du lot a un double codage concordant, et chaque
+    # fiche écartée l'a été avant la première mesure.
+    from codage_verifie import fautes_d34_du_lot, fautes_univers  # noqa: PLC0415
+
+    fautes += fautes_d34_du_lot(lot, registry.read_all(), STAGE)
+    fautes += fautes_univers(lot)  # D38
 
     if fautes:
         print("PORTE 09 : NON FRANCHIE")

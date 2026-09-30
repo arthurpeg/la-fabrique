@@ -1,19 +1,19 @@
-"""Le juge des hypothèses du lot 09 — `D33`, écrit AVANT la première hypothèse.
+"""Le juge des hypothèses du lot 09 — `D40`, écrit AVANT la première hypothèse.
 
 Ce que `gate_09.py` vérifie aujourd'hui d'une hypothèse : **qu'un fichier du bon
 nom existe**. C'est tout, et c'est trop peu pour quarante et une. Ce script pose
-les conditions de `D33` et les compte.
+les conditions de `D40` et les compte.
 
 Sept conditions, à tolérance zéro comme `D16` et `D23` :
 
-- `A1` — l'en-tête porte les sept champs de `D33`, et le nom du fichier donne une
+- `A1` — l'en-tête porte les sept champs de `D40`, et le nom du fichier donne une
   `ref` `H<NN>` unique ;
 - `A2` — la fiche nommée **existe sur disque**, et `signal` = `fiche` (la
-  convention que `D33` fixe) ;
+  convention que `D40` fixe) ;
 - `A3` — le signe attendu est `+1` ou `−1`, jamais autre chose (`D25` `C1`) ;
 - `A4` — la tranche est `pool` à l'`asof` **exact** de `D29` — une date choisie
   par hypothèse serait un bouton ;
-- `A5` — les six sections de `D33` sont présentes, dans l'ordre, et non vides ;
+- `A5` — les six sections de `D40` sont présentes, dans l'ordre, et non vides ;
 - `A6` — chaque chiffre du papier invoqué **se retrouve dans `reported_results`
   de la fiche**, au même nom et à la même valeur (`F2` et `S5` transposés) ;
 - `A7` — « Ce qui la contredirait » porte **au moins deux clauses et au moins un
@@ -27,11 +27,11 @@ Plus deux conditions qui portent sur l'ensemble, pas sur un fichier :
   `gate_09` lit `module.EXPECTED_SIGN`, pas l'hypothèse, et rien ne vérifiait
   que les deux disent la même chose.
 
-`B2` est le seul trou de protocole que `D33` ferme plutôt que documente : un
+`B2` est le seul trou de protocole que `D40` ferme plutôt que documente : un
 codeur qui oriente son score à l'envers ferait calculer un `p` unilatéral sur un
 signe que personne n'avait pré-enregistré.
 
-**Ce que ce juge ne sait pas faire**, et `D33` le dit : dire qu'une hypothèse est
+**Ce que ce juge ne sait pas faire**, et `D40` le dit : dire qu'une hypothèse est
 *creuse*. Une affirmation fidèle à sa fiche, signée, falsifiable sur le papier et
 sans le moindre intérêt passe les sept conditions. Même limite que `D16` pour les
 fiches.
@@ -84,9 +84,9 @@ SECTION_PAPIER = SECTIONS_REQUISES[3]
 SECTION_CONTREDIT = SECTIONS_REQUISES[4]
 
 RE_REF = re.compile(r"^(H\d{2})-[a-z0-9-]+\.md$")
-# Les quatre hypothèses écrites AVANT `D33`, dans les phases 05 et 06 : elles ne
+# Les quatre hypothèses écrites AVANT `D40`, dans les phases 05 et 06 : elles ne
 # portent pas son en-tête et ne se jugent pas sur elle. Toute autre hypothèse est
-# dans le périmètre de `D33` et doit nommer une fiche du lot — sans quoi elle est
+# dans le périmètre de `D40` et doit nommer une fiche du lot — sans quoi elle est
 # refusée ici, plutôt que silencieusement ignorée pendant que `B1` annonce sa
 # fiche comme non couverte.
 REFS_AVANT_D33 = ("H01", "H02", "H03", "H04")
@@ -206,7 +206,7 @@ def juger_fichier(
     elif fiche_id is not None and signal_id != fiche_id:
         fautes.append(
             f"A2 {chemin.name} : `signal` = `{signal_id}` mais `fiche` = `{fiche_id}` — "
-            "`D33` fixe la convention `signal_id` = `fiche_id`, et `gate_09` apparie "
+            "`D40` fixe la convention `signal_id` = `fiche_id`, et `gate_09` apparie "
             "les lignes du registre sur `signal_id`"
         )
 
@@ -237,7 +237,7 @@ def juger_fichier(
             fautes.append(f"A5 {chemin.name} : section(s) absente(s) : {manquantes}")
         else:
             fautes.append(
-                f"A5 {chemin.name} : les six sections de `D33` ne sont pas dans "
+                f"A5 {chemin.name} : les six sections de `D40` ne sont pas dans "
                 f"l'ordre — lu {presentes}"
             )
     corps = dict(sections)
@@ -298,7 +298,7 @@ def juger_fichier(
     if len(clauses) < 2:
         fautes.append(
             f"A7 {chemin.name} : « {SECTION_CONTREDIT} » porte {len(clauses)} clause(s) ; "
-            "`D33` en exige au moins deux"
+            "`D40` en exige au moins deux"
         )
     if not re.search(r"\d", contre):
         fautes.append(
@@ -338,7 +338,7 @@ def juger_ensemble(
     for chemin in sorted(dossier.glob("H*.md")):
         m = RE_REF.match(chemin.name)
         if m and m.group(1) in REFS_AVANT_D33:
-            continue  # écrite avant `D33`, hors de son périmètre
+            continue  # écrite avant `D40`, hors de son périmètre
         ref, fiche_id, f = juger_fichier(chemin, fiches, signes_signaux)
         if fiche_id is not None and fiche_id not in du_lot:
             fautes.append(
@@ -564,13 +564,13 @@ def run_check() -> int:
         ecrire(dossier, "H99-autre.md")
         _, f4 = juger_ensemble(dossier, ["papier-fictif"], fiches, {"papier-fictif": None})
         verifier("A1 — refuse deux fichiers portant la même `ref`", f4 != [])
-    # `H01`-`H04` précèdent `D33` et ne se jugent pas sur elle ; toute autre
+    # `H01`-`H04` précèdent `D40` et ne se jugent pas sur elle ; toute autre
     # hypothèse doit nommer une fiche du lot, et être refusée sinon.
     with tempfile.TemporaryDirectory() as tmp:
         dossier = Path(tmp)
-        ecrire(dossier, "H01-ancienne.md", signe="+2")  # fautive, mais antérieure à D33
+        ecrire(dossier, "H01-ancienne.md", signe="+2")  # fautive, mais antérieure à D40
         _, f5 = juger_ensemble(dossier, [], fiches, {})
-        verifier("une hypothèse antérieure à `D33` est ignorée, pas refusée", f5 == [])
+        verifier("une hypothèse antérieure à `D40` est ignorée, pas refusée", f5 == [])
     with tempfile.TemporaryDirectory() as tmp:
         dossier = Path(tmp)
         ecrire(dossier, "H99-hors-lot.md")
@@ -587,7 +587,7 @@ def run_check() -> int:
 
 
 def main(argv: list[str]) -> int:
-    ap = argparse.ArgumentParser(description="Le juge des hypothèses du lot 09 — D33")
+    ap = argparse.ArgumentParser(description="Le juge des hypothèses du lot 09 — D40")
     ap.add_argument("--check", action="store_true", help="auto-test, NE JUGE RIEN de réel")
     ap.add_argument("--lier", action="store_true", help="inscrit `ref`/`signal_id` dans le lot")
     a = ap.parse_args(argv)
@@ -604,9 +604,9 @@ def main(argv: list[str]) -> int:
             print(f"  - {f}")
         if len(fautes) > 60:
             print(f"  … et {len(fautes) - 60} autre(s)")
-        print(f"\n{len(fautes)} faute(s) — les sept conditions de `D33` sont à tolérance zéro.")
+        print(f"\n{len(fautes)} faute(s) — les sept conditions de `D40` sont à tolérance zéro.")
         return 1
-    print("  les sept conditions de `D33` tiennent, et la bijection avec le lot est faite.")
+    print("  les sept conditions de `D40` tiennent, et la bijection avec le lot est faite.")
     if a.lier:
         return lier(liens)
     print("  `--lier` inscrira `ref` et `signal_id` dans hypotheses/LOT-09.json.")

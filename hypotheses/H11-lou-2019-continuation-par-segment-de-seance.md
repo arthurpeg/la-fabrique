@@ -5,7 +5,7 @@
 **signal :** `lou-2019-tug-of-war` — *non encore codé*
 **signe attendu :** +1
 **tranche :** `pool` uniquement, `asof` 2023-12-29 20:00 UTC (`D29`)
-**écrite par :** session 2026-09-29, sous `D33`. Contamination déclarée : elle a lu `ETAT.md`, le wiki et les fiches, donc elle connaît `F33` — le peigne de Heston, qui est le motif voisin, **n'est pas sur nos données**. Aucun IC ne porte sur ce signal au registre (`D28` vérifié).
+**écrite par :** session 2026-09-29, sous `D40`. Contamination déclarée : elle a lu `ETAT.md`, le wiki et les fiches, donc elle connaît `F33` — le peigne de Heston, qui est le motif voisin, **n'est pas sur nos données**. Aucun IC ne porte sur ce signal au registre (`D28` vérifié).
 **Statut :** pré-enregistrée, non mesurée
 
 ## Ce qui est affirmé

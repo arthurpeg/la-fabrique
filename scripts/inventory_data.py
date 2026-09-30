@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
-
 from _common import load, series_index, session_date, write_json
 
 PRICE_COLUMNS = ["open", "high", "low", "close"]
@@ -99,7 +98,9 @@ def divergences(entry: dict, measured: dict) -> list[str]:
         found.append(f"end: manifest {entry.get('fin')} vs measured {measured['end']}")
     declared_columns = entry.get("colonnes") or []
     if list(measured["columns"]) != list(declared_columns):
-        found.append(f"columns: manifest {declared_columns} vs measured {list(measured['columns'])}")
+        found.append(
+            f"columns: manifest {declared_columns} vs measured {list(measured['columns'])}"
+        )
     if entry.get("fuseau", "").upper() != str(measured["index_tz"]).upper():
         found.append(f"timezone: manifest {entry.get('fuseau')} vs measured {measured['index_tz']}")
     return found

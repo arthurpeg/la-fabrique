@@ -37,6 +37,12 @@ EXCERPTS_PER_PAPER = 3
 EXCERPT_CHARS = 320
 
 
+# Les resumes SSRN (`text_source = 'abstract'`, `D31`/`D32`) sont exclus par
+# defaut : un morceau chacun, des milliers — le graphe deviendrait illisible
+# et son calcul, en paires, quadratique (2026-09-29).
+SOURCES = ("authoritative", "harvest")
+
+
 def fetch(db: VectorDB, top: int) -> dict:
     with db.conn.cursor() as cur:
         cur.execute("""
@@ -45,9 +51,10 @@ def fetch(db: VectorDB, top: int) -> dict:
                    count(ch.id) filter (where ch.embedding is not null) as vectorises
             from papers p
             left join chunks ch on ch.paper_id = p.id
+            where p.text_source = any(%s)
             group by p.id
             order by p.title
-        """)
+        """, (list(SOURCES),))
         papers = cur.fetchall()
 
         # Un centroide par papier, puis toutes les paires. 136 papiers font
@@ -55,7 +62,9 @@ def fetch(db: VectorDB, top: int) -> dict:
         cur.execute("""
             with cent as (
                 select paper_id, avg(embedding)::vector(768) as v
-                from chunks where embedding is not null
+                from chunks
+                where embedding is not null and paper_id in (
+                    select id from papers where text_source = any(%s))
                 group by paper_id
             )
             -- ALIASER LES DEUX COLONNES, sans quoi elles s'appellent toutes
@@ -64,7 +73,7 @@ def fetch(db: VectorDB, top: int) -> dict:
             -- identifiant, et le graphe entier était faux sans une erreur.
             select a.paper_id as pa, b.paper_id as pb, 1 - (a.v <=> b.v) as sim
             from cent a join cent b on a.paper_id < b.paper_id
-        """)
+        """, (list(SOURCES),))
         paires = cur.fetchall()
 
         # Quelques extraits par papier, répartis sur les sections plutôt que
@@ -76,10 +85,11 @@ def fetch(db: VectorDB, top: int) -> dict:
                        row_number() over (partition by paper_id, section
                                           order by ordinal) as rang
                 from chunks
+                where paper_id in (select id from papers where text_source = any(%s))
             ) t
             where rang = 2
             order by paper_id, page
-        """, (EXCERPT_CHARS,))
+        """, (EXCERPT_CHARS, list(SOURCES)))
         extraits = cur.fetchall()
 
     # Voisinage par RANG : les `top` plus proches de chaque papier, dans les
@@ -104,7 +114,9 @@ def fetch(db: VectorDB, top: int) -> dict:
         if len(par_papier.setdefault(pid, [])) < EXCERPTS_PER_PAPER:
             par_papier[pid].append({
                 "page": e["page"], "section": e["section"],
-                "excerpt": (e["excerpt"] or "").strip(),
+                # U+FFFD : caractere que pypdf n'a pas su decoder. La page publiee
+                # les refuse ; ils ne portent aucun sens (2026-09-29, 28 retires).
+                "excerpt": (e["excerpt"] or "").replace("�", "").strip(),
             })
 
     connus = {str(p["id"]) for p in papers}

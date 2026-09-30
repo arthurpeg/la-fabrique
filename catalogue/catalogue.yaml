@@ -75,7 +75,11 @@ instruments:
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 0.25
     multiplier: 20  # provenance cme-nq-contract-unit (D09)
-    fee_per_contract_usd: null  # todo fees
+    fee_broker_usd: null  # todo fees (D26, D35)
+    fee_exchange_usd: null  # todo fees
+    fee_regulatory_usd: null  # todo fees
+    execution_contract: MNQ  # D37 : toujours micro
+    execution_multiplier: null  # todo micro-multipliers
     cells:
       ASIA:
         retained: true
@@ -119,7 +123,11 @@ instruments:
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 0.25
     multiplier: 50  # provenance cme-es-contract-unit (D09)
-    fee_per_contract_usd: null  # todo fees
+    fee_broker_usd: null  # todo fees (D26, D35)
+    fee_exchange_usd: null  # todo fees
+    fee_regulatory_usd: null  # todo fees
+    execution_contract: MES  # D37 : toujours micro
+    execution_multiplier: null  # todo micro-multipliers
     cells:
       ASIA:
         retained: true
@@ -163,7 +171,11 @@ instruments:
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 1.0
     multiplier: 5  # provenance cme-ym-contract-unit (D09)
-    fee_per_contract_usd: null  # todo fees
+    fee_broker_usd: null  # todo fees (D26, D35)
+    fee_exchange_usd: null  # todo fees
+    fee_regulatory_usd: null  # todo fees
+    execution_contract: MYM  # D37 : toujours micro
+    execution_multiplier: null  # todo micro-multipliers
     cells:
       ASIA:
         retained: false
@@ -210,7 +222,11 @@ instruments:
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 0.1  # mesuré 0.0999999999994543 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
     multiplier: 100  # provenance cme-gc-contract-unit (D09)
-    fee_per_contract_usd: null  # todo fees
+    fee_broker_usd: null  # todo fees (D26, D35)
+    fee_exchange_usd: null  # todo fees
+    fee_regulatory_usd: null  # todo fees
+    execution_contract: MGC  # D37 : toujours micro
+    execution_multiplier: null  # todo micro-multipliers
     cells:
       ASIA:
         retained: true
@@ -254,7 +270,11 @@ instruments:
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 0.01  # mesuré 0.009999999999990905 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
     multiplier: 1000  # provenance cme-cl-contract-unit (D09)
-    fee_per_contract_usd: null  # todo fees
+    fee_broker_usd: null  # todo fees (D26, D35)
+    fee_exchange_usd: null  # todo fees
+    fee_regulatory_usd: null  # todo fees
+    execution_contract: MCL  # D37 : toujours micro
+    execution_multiplier: null  # todo micro-multipliers
     cells:
       ASIA:
         retained: true
@@ -298,7 +318,11 @@ instruments:
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 5.0e-05  # mesuré 4.999999999988347e-05 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
     multiplier: 125000  # provenance cme-6e-contract-unit (D09)
-    fee_per_contract_usd: null  # todo fees
+    fee_broker_usd: null  # todo fees (D26, D35)
+    fee_exchange_usd: null  # todo fees
+    fee_regulatory_usd: null  # todo fees
+    execution_contract: 6E  # D37 : pas de micro au barème Lucid, plein format
+    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
     cells:
       ASIA:
         retained: true
@@ -342,7 +366,11 @@ instruments:
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 0.0001  # mesuré 9.999999999998899e-05 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
     multiplier: 62500  # provenance cme-6b-contract-unit (D09)
-    fee_per_contract_usd: null  # todo fees
+    fee_broker_usd: null  # todo fees (D26, D35)
+    fee_exchange_usd: null  # todo fees
+    fee_regulatory_usd: null  # todo fees
+    execution_contract: 6B  # D37 : pas de micro au barème Lucid, plein format
+    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
     cells:
       ASIA:
         retained: false
@@ -386,7 +414,11 @@ instruments:
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 5.0e-07  # mesuré 4.999999999987653e-07 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
     multiplier: 12500000  # provenance cme-6j-contract-unit (D09)
-    fee_per_contract_usd: null  # todo fees
+    fee_broker_usd: null  # todo fees (D26, D35)
+    fee_exchange_usd: null  # todo fees
+    fee_regulatory_usd: null  # todo fees
+    execution_contract: 6J  # D37 : pas de micro au barème Lucid, plein format
+    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
     cells:
       ASIA:
         retained: true
@@ -430,7 +462,11 @@ instruments:
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: 5.0e-05  # mesuré 4.999999999999449e-05 — bruit de soustraction flottante ; D01 §7 déclare cette valeur
     multiplier: 100000  # provenance cme-6a-contract-unit (D09)
-    fee_per_contract_usd: null  # todo fees
+    fee_broker_usd: null  # todo fees (D26, D35)
+    fee_exchange_usd: null  # todo fees
+    fee_regulatory_usd: null  # todo fees
+    execution_contract: 6A  # D37 : pas de micro au barème Lucid, plein format
+    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
     cells:
       ASIA:
         retained: true
@@ -480,7 +516,11 @@ instruments:
       authoritative_dates: roll_dates.json  # reçu du fournisseur, 2026-09-17
     tick: null  # non mesuré : hors univers
     multiplier: null  # todo multipliers
-    fee_per_contract_usd: null  # todo fees
+    fee_broker_usd: null  # todo fees (D26, D35)
+    fee_exchange_usd: null  # todo fees
+    fee_regulatory_usd: null  # todo fees
+    execution_contract: FDAX  # D37 : pas de micro au barème Lucid, plein format
+    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
     cells: null  # hors univers : la grille n'a pas été mesurée sur FDAX
 
 # Ce qui est inconnu, et de qui on l'attend. Un null sans todo est un bug.
@@ -493,8 +533,16 @@ todos:
       fiche contrat EUREX, pour FDAX seul -- les neuf instruments CME sont
       déposés depuis le 2026-09-24 (voir provenance). FDAX exige aussi une
       conversion EUR -> USD avant que multiplier x prix soit un notionnel USD.
+  - id: micro-multipliers
+    field: instruments[*].execution_multiplier
+    blocks: les frais en bp des micros (D37) -- sans lui la borne de frais reste nommée manquante
+    owed_by: >-
+      fiches contrat CME des micros (MNQ, MES, MYM, MGC, MCL), ligne « Contract
+      Unit ». D26 les a lues le 2026-09-24 et a constaté un rapport d'exactement
+      un dixième, sans en recopier les citations mot pour mot : à relever avec
+      leur provenance (D09) avant d'être déposées.
   - id: fees
-    field: instruments[*].fee_per_contract_usd
+    field: instruments[*].fee_broker_usd, fee_exchange_usd, fee_regulatory_usd
     blocks: la complétude du coût -- sans eux le coût reste un plancher étiqueté (harness/costs.py)
     owed_by: >-
       Lucid Trading (prop firm) — son barème s'applique, pas la grille
@@ -563,7 +611,9 @@ todos:
 # FDAX reste null : son unité est en EUR (« EUR 25 per index point »), donc
 # multiplier x prix n'est pas un notionnel en USD et la définition de D09 ne
 # s'applique pas sans conversion -- et il est hors univers.
-# fee_per_contract_usd reste null sur les dix : todo fees.
+# Les trois composantes de frais restent null sur les dix : todo fees. Le
+# harnais sait les lire depuis D35 (borne basse = courtier, borne haute = les
+# trois) ; chacune se dépose avec sa provenance, jamais leur somme.
 provenance:
   - id: cme-nq-contract-unit
     source: CME Group -- fiche contrat E-mini Nasdaq-100 Futures, ligne « Contract Unit »

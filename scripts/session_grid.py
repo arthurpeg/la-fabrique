@@ -26,7 +26,6 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
-
 from _common import load, series_index, write_json
 
 # All nine retained instruments trade on CME Globex: one clock for the grid.
@@ -147,7 +146,8 @@ def breadth_per_window(retained: pd.DataFrame) -> dict:
         ].tolist()
         frame = panel[members].dropna()
         correlation = frame.corr()
-        eigenvalues = np.clip(np.sort(np.linalg.eigvalsh(correlation.to_numpy()))[::-1], 1e-12, None)
+        eigenvalues = np.sort(np.linalg.eigvalsh(correlation.to_numpy()))[::-1]
+        eigenvalues = np.clip(eigenvalues, 1e-12, None)
         out[name] = {
             "instruments": members,
             "observations": int(len(frame)),

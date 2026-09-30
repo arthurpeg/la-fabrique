@@ -7,6 +7,51 @@ tronquait une barre trop tard ; corrigé, portes 05 et 08 rejouées et franchies
 mesure officielle (calibrations comprises).
 `D29` : pas de plis en phase 09 — une mesure unique sur tout le `pool`, à
 `asof` 2023-12-29 20:00 UTC, vérifiée par la porte.
+**2026-09-29 — moisson par 46 nouveaux axes** (intraday, instruments NQ/ES/YM/or/
+pétrole, anomalies sur tous les actifs, causalité, mécanismes de causalité) :
+1 097 papiers atteignables, 1 043 PDF, **589 `harvest` en base** (+290, règle de
+pertinence `D33`), 51 `authoritative`, 4 767 `abstract` ; 57 264 morceaux, tous
+vectorisés (GPU, `embed.py --gpu`) ; base 707 Mo sur un budget de 6,4 Go. Coder
+des signaux : `scripts/CODAGE-DES-SIGNAUX.md`.
+**2026-09-30 — les étapes 8, 9 et 10 ont leurs outils** : `scripts/hypotheses_lot.py`
+(hypothèses rédigées mécaniquement depuis la fiche et le signal, avant toute
+mesure), `scripts/lot_correlations.py` (matrice de Spearman entre scores, aucun
+IC), `scripts/measure_lot.py` (la seule mesure ; **refuse** tant que
+`HARNAIS_DU_LOT` n'est pas renseigné par la décision de harnais groupée — mesurer
+avant brûlerait le lot, `D28`). Tous vérifient leurs préalables à blanc.
+**2026-09-30 — les deux lignes de travail sont fusionnées, la distante fait foi.**
+Ce poste avait couru 2 commits hors ligne depuis le 2026-09-29 10:25 pendant que
+la ligne distante en produisait 87. Fusion faite (merge, pas rebase : aucun
+commit réécrit), **la ligne distante gagne tous les conflits** — `ETAT.md` et
+`wiki/hot.md` sont les siens, `wiki/log.md` est l'union des deux dans l'ordre des
+dates, aucune ligne append-only supprimée. Les fichiers irremplaçables étaient
+saufs : `registry/tests.jsonl` et `LECONS.md` distants **contiennent les versions
+locales intactes** (169 → 181 lignes, 30 → 32 leçons) ; `F61` du ledger n'existait
+que localement et entre sans collision.
+**Collision de numéro tranchée : `D33` → `D40`.** Deux décisions différentes
+portaient `D33`. La distante le garde (la pertinence de la base) ; celle de ce
+poste devient `D40` (le format d'une hypothèse et son juge), selon le précédent
+`D27` → `D36` : la note de renumérotation est en tête du fichier, et les mentions
+de « `D33` » dans `wiki/log.md`, le ledger et l'historique git **ne sont pas
+retouchées** — elles sont append-only.
+**Ce que la ligne locale apporte en second**, non mesuré, aucun IC calculé :
+`D40`, `hypotheses/score_hypothese.py` (28 vérifications), **`H05` à `H14`
+écrites à la main**, et `hypotheses/NON-ECRITES-09.md` (recensement fiche par
+fiche : 31 des 41 sans hypothèse mesurable, ledger `F61`).
+**À TRANCHER PAR L'OPÉRATEUR, et ce n'est pas tranché ici.** Les deux lignes
+répondent à la même question de l'étape 8 de deux façons qui ne se recouvrent
+pas : la distante rédige les hypothèses **mécaniquement** depuis la fiche et le
+signal (`scripts/hypotheses_lot.py`) et écarte avant codage les papiers dont le
+marché nous manque (`D38`, `scripts/ecarter_du_lot.py`) ; la locale les rédige à
+la main sous un juge écrit d'avance (`D40`). Trois points restent ouverts :
+(1) `H05`–`H14` sont-elles reconnues par la chaîne distante, ou sont-elles
+périmées par le harnais `94b495fa7525d3b8` (`D35`, `D37`) postérieur à leur
+rédaction ? (2) `score_hypothese.py` reste-t-il le juge, à côté de
+`hypotheses_lot.py` ? (3) le recensement de `NON-ECRITES-09.md` et l'écran de
+`D38` disent-ils la même chose des 31 fiches ? `hypotheses_lot.py` numérote à
+partir du plus grand `H*` existant et ne réécrit jamais un fichier : les deux
+jeux **coexistent sans s'écraser**, donc rien n'est urgent — mais **le lot reste
+clos** (`D25` `C2`) et aucune mesure ne doit partir avant cet arbitrage.
 Les 11 fiches moissonnées sans trace de production ont été **refaites** par 11
 sessions isolées : 18 fiches sur 18 tracées, 17 vertes sur ce poste.
 `value_in_quote` n'ôte plus que les séparateurs de milliers (`D09` § Journal,
@@ -34,18 +79,6 @@ requêtes sous un budget de 400 Mo (80 % des 500 Mo du plan gratuit). **Aucune
 fiche ne peut venir d'un résumé** : il faut d'abord le texte intégral (`D30`),
 puis `D18`. Ces papiers servent la RECHERCHE ; ils ne sont pas dans
 `harvest.json` et n'entrent pas dans le lot.
-**2026-09-29 — `D33` : les hypothèses du lot ont un format, un juge, et il n'y en
-a que DIX de possibles sur 41.** `hypotheses/score_hypothese.py` (28 vérifications,
-0 échec) pose sept conditions à tolérance zéro et ferme un trou réel : `gate_09`
-lit le signe dans `module.EXPECTED_SIGN`, pas dans l'hypothèse, et rien ne
-vérifiait la concordance. **`H05` à `H14` sont écrites** et passent les sept
-conditions. **31 fiches n'ont pas d'hypothèse mesurable** — 20 ne prédisent aucun
-rendement (7 l'écrivent elles-mêmes), 9 ont un horizon hors fenêtre
-(`harness/metric.py` groupe le rendement futur par *(séance, fenêtre)* : un
-horizon qui franchit une séance ne rend **aucune** observation), 2 exigent une
-donnée absente. Recensement fiche par fiche : `hypotheses/NON-ECRITES-09.md`,
-ledger `F61`. **Le lot reste clos** (`D25` `C2`) : l'amender est une décision de
-l'opérateur, et les trois issues sont chiffrées dans `F61`.
 **Relu le 2026-09-26** : les énoncés que le dépôt avait dépassés sont **barrés**,
 avec la date et la preuve de leur correction — rien n'est effacé. Les sections
 datées plus bas restent l'historique ; l'état courant est dans § Prochaine
@@ -97,21 +130,7 @@ puis mesurée — la forme en U de la volatilité intra-journalière est retrouv
 reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
 **Décision la plus récente :**
-`decisions/DECISION-33-ce-qu-une-hypothese-du-lot-contient.md` — une hypothèse du
-lot est un fichier à **en-tête fixe et six sections**, dont une table qui rattache
-chaque chiffre du papier à l'entrée `reported_results` de sa fiche : *un chiffre
-du papier absent de la fiche est un chiffre inventé* (`F2` et `S5` transposés).
-Sept conditions à tolérance zéro, comptées par `hypotheses/score_hypothese.py`,
-**écrit avant la première hypothèse**. Deux portent sur l'ensemble : la
-**bijection avec le lot**, et la **concordance du signe** entre l'hypothèse et
-`module.EXPECTED_SIGN` du signal — seul trou de protocole que cette décision
-*ferme* plutôt que documente. Les 41 hypothèses sont écrites par une session
-contaminée (elle connaît les résultats nuls de `H01`-`H03`), ce qui pousse aux
-affirmations prudentes : d'où la condition `A7`, qui **compte** les clauses de
-falsification. `--lier` inscrit `ref` et `signal_id` dans le lot en les dérivant
-des fichiers d'hypothèse, jamais l'inverse (`F54`).
-**Décision précédente :**
-`decisions/DECISION-27-le-lot-de-la-phase-09.md` — le lot de la phase 09 est un
+`decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un
 **critère, pas un nombre**. `D25` engageait 50 signaux, chiffre écrit quand le
 corpus portait 17 fiches ; il en porte 51 et le moissonné est épuisé. Le lot est
 désormais : les fiches triées **`oui`**, plus les **`partiel` par transposition
@@ -126,7 +145,7 @@ sans motif ont été lues une par une : une entre (`lou-2019`), trois sortent po
 donnée manquante (consensus MMS, calendrier FOMC ×2), une pour **horizon
 incompatible** — catégorie créée à cette occasion, Moskowitz étant mensuel
 quand notre grille est intraday à clôture forcée. Le lot est **clos** : l'élargir
-après une mesure casse `BH`. `scripts/gate_09.py` a été aligné sur `D27` — il ne
+après une mesure casse `BH`. `scripts/gate_09.py` a été aligné sur `D36` — il ne
 grave plus `N` = 50 et vérifie que le lot nomme la décision qui l'autorise et que
 son compte se reconstitue.
 **Décision précédente :**
@@ -295,37 +314,54 @@ coûté. **Les trois hypothèses mesurées sont sans résultat.**
 **LES PORTES 07 ET 08 SONT FRANCHIES. LA PHASE 09 EST OUVERTE — et c'est la
 première qui dépense des tests.**
 
-### Au 2026-09-29, ce qui bloque la porte 09 se réduit à trois choses
-
-```
-python hypotheses/score_hypothese.py --check   # 28 verifications, 0 echec
-python hypotheses/score_hypothese.py           # 10 ecrites sur 41, 31 nommees
-python scripts/gate_09.py                      # NON FRANCHIE, et elle dit pourquoi
-```
-
-1. **Les 31 fiches sans hypothèse mesurable** — et ce n'est pas un retard de
-   rédaction, c'est un constat mesuré fiche par fiche
-   (`hypotheses/NON-ECRITES-09.md`, ledger `F61`). **Décision de l'opérateur** :
-   amender `D27` d'un écran « prédit un rendement dans une fenêtre » et rétrécir
-   le lot — ce qui **abaisse** la barre de `BH` après avoir vu les fiches, donc
-   exige une contamination déclarée ; ou écrire 31 hypothèses explicitement
-   **dérivées**, ce qui la **relève** ; ou attendre un second moissonnage. Le lot
-   est **clos** : une session ne le rétrécit pas seule.
-2. **La matrice de corrélation du lot**, `scripts/out/lot_09_correlations.json`,
-   toujours absente. Elle n'est pas décorative : **cinq des dix hypothèses
-   écrites sont des variantes du même motif**, déjà mesuré absent par `H01`
-   (`t` −1,56) et `H03` (`F33`, `p` = 0,25).
-3. **Aucun signal n'est codé** pour les dix hypothèses — c'est la porte 08 qui
-   décrit comment le faire, et elle est franchie.
-
-**Ce qui n'est plus un blocage :** le format d'une hypothèse, son juge, et la
-concordance du signe entre hypothèse et signal (`D33`).
-
 Relancer plutôt que recopier (`L21`) :
 
 ```
 python scripts/gate_07.py      # G1 = G2 = G3 = G4 = 0
 python scripts/gate_08.py      # 1 signal, 6/6, aucune retouche
+```
+
+### Trois outils de confort — le 2026-09-30
+
+```
+python scripts/verifier_tout.py                 # toutes les gardes, lecture seule ; --calibrations, --base
+python scripts/statut_papiers.py                # où en est chaque papier, et s'il peut encore servir
+python scripts/anti_veille.py --pid <pid>       # garder le PC éveillé tant qu'un processus tourne
+```
+
+`pipeline_runner.py --run` garde désormais le PC éveillé tout seul (veille
+automatique seulement ; la fermeture du capot reste un réglage Windows).
+
+### Le harnais du lot — `D35` puis `D37` (contrats micro), appliquées le 2026-09-30 — harnais `94b495fa7525d3b8`
+
+Frais en deux bornes, glissement en grille de 1 à 5 ticks par side, IC par année
+civile, trou d'`extra` fermé : une seule modification du harnais, préparée et
+testée dans une copie, livrée en patch. **Aucun agent n'écrit dans `harness/`** :
+
+```
+git apply --check decisions/DECISION-35-harnais.patch
+git apply decisions/DECISION-35-harnais.patch
+uv run python scripts/gate_03_harness.py     # FRANCHIE, harnais 94b495fa7525d3b8
+```
+
+Appliqué : `HARNAIS_DU_LOT` est renseigné, les 169 lignes antérieures sont périmées. Les frais
+restent `null` au catalogue : à relever après le 2026-10-01 (changement CME).
+
+### Le codage vérifié — `D34`, le 2026-09-30
+
+Aucun signal n'entre plus dans un lot sans **recette** (`scripts/recette.py`),
+**choix écrits** (`CHOICES`) et **double codage concordant**
+(`scripts/double_codage.py`, principal `opus`, témoin `sonnet`, ρ ≥ 0,70 sur
+les scores). La boucle complète est dans `scripts/CODAGE-DES-SIGNAUX.md`.
+Porte 09, `measure_lot.py` et `hypotheses_lot.py` l'exigent.
+
+**Lot `LOT-09` : 1 fiche vérifiée sur 41** —
+`baltussen-2021-hedging-demand-intraday-momentum` (ρ 1,000). Les 40 autres
+attendent recette et deux codages ; environ 325 000 tokens par fiche.
+
+```
+python scripts/hypotheses_lot.py --status   # où en est chaque fiche du lot
+python scripts/double_codage.py --status    # verdicts de concordance
 ```
 
 ### SI TU ARRIVES SUR UNE AUTRE MACHINE — à lancer en premier

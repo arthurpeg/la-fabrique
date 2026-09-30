@@ -1,0 +1,175 @@
+{
+  "fiche_id": "synthese-g-a9d7ec",
+  "written": "2026-09-30",
+  "written_by": "Claude Opus 5.5 (session de synthèse isolée)",
+  "source": {
+    "authors": "Synthèse de : Zeming Li, Athanasios Sakkas, Andrew Urquhart ; Siyao Duan ; Abdullah Ejaz, Petr Polak",
+    "title": "Synthèse — momentum : le rendement passé d'un actif prédit, avec le même signe, son rendement futur",
+    "year": 2023,
+    "source_url": "https://centaur.reading.ac.uk/95566/1/Accepted-Version.pdf",
+    "retrieved": "2026-09-30",
+    "peer_reviewed": false
+  },
+  "claim": "Les trois papiers soutiennent un effet de momentum : le rendement passé d'un actif prédit positivement (même signe) son rendement sur la fenêtre suivante. Li, Sakkas et Urquhart le montrent en série temporelle intrajournalière (première demi-heure → dernière demi-heure de la même séance, 12 marchés sur 16) ; Duan en série temporelle quotidienne (moyennes mobiles des rendements passés), avec une performance qui se dégrade fortement hors échantillon et sous coûts ; Ejaz et Polak en coupe transversale mensuelle (J=6/K=6) sur sept bourses du Moyen-Orient.",
+  "universe": "Version retenue (Li, Sakkas, Urquhart) : 16 indices boursiers de marchés développés, données à la minute agrégées en intervalles de 30 minutes, 4 octobre 2005 → 29 décembre 2017. Les autres sources portent sur les actions du S&P500 en quotidien 2000-2022 (Duan) et sur les actions de sept bourses du Moyen-Orient en mensuel 2008-2013 (Ejaz, Polak). Aucune source ne porte sur des futures.",
+  "horizon": {
+    "value": "intrajournalier, même séance : le prédicteur est le rendement des 30 premières minutes (incluant le gap overnight), la cible le rendement des 30 dernières minutes avant la clôture du même jour ; une observation par jour de bourse et par marché",
+    "from_fiche": "intraday-time-series-momentum-global-evidence-an-W3121499907",
+    "note": "Horizon de la version retenue, recopié de sa fiche. Les autres sources ont des horizons incompatibles : 1 période quotidienne en avant (Duan), formation et détention de 6 mois (Ejaz, Polak)."
+  },
+  "signal_construction": {
+    "value": "Score quotidien par instrument = rF_t = pfirst30,t / pclose,t-1 − 1 (dernier prix des 30 premières minutes de la séance rapporté à la clôture de la veille). Cible : rL_t = pclose,t / plast30,t − 1 (clôture rapportée au premier prix des 30 dernières minutes de la même séance). Règle de signe du papier : long sur la dernière demi-heure si rF_t > 0, court si rF_t <= 0, position fermée à la clôture. Aucune agrégation globale, aucune pondération de portefeuille, aucun signal croisé US n'est retenu.",
+    "quoted": [
+      "the ﬁrst half-hour return to the last half-hour return in 12 out of 16 markets"
+    ],
+    "from_fiche": "intraday-time-series-momentum-global-evidence-an-W3121499907",
+    "note": "Construction (1) et (2) de la fiche source, sans ses variantes (portefeuilles globaux, signal US). Pour des futures qui cotent presque en continu, la « clôture de la veille » et la « première demi-heure » ne sont pas définies par le papier (voir what_does_not_transfer) : le repère de séance reste à fixer par une décision écrite, pas ici."
+  },
+  "reported_results": [
+    {
+      "name": "markets_with_significant_in_sample_predictability",
+      "value": 12,
+      "unit": "marchés sur 16",
+      "quoted": "the ﬁrst half-hour return to the last half-hour return in 12 out of 16 markets",
+      "from_fiche": "intraday-time-series-momentum-global-evidence-an-W3121499907",
+      "note": "Panel A de la Table 3, échantillon complet 2005-2017."
+    },
+    {
+      "name": "pooled_first_half_hour_tstat",
+      "value": 7.53,
+      "unit": "t-statistique",
+      "quoted": "return is 2.86 and statistically signiﬁcantly diﬀerent from zero (t-statistic 7.53)",
+      "from_fiche": "intraday-time-series-momentum-global-evidence-an-W3121499907",
+      "note": "Régression en panel ; la fiche source signale que la Table 3 affiche une pente de 2.68 et non 2.86."
+    },
+    {
+      "name": "countries_with_positive_oos_r2",
+      "value": 5,
+      "spelled_out": "Five",
+      "unit": "pays sur 16",
+      "quoted": "Five out of 16 countries exhibit positive R2",
+      "from_fiche": "intraday-time-series-momentum-global-evidence-an-W3121499907",
+      "note": "R2 hors échantillon de Campbell et Thompson (2008), fenêtre extensible."
+    },
+    {
+      "name": "country_itsm_alpha_vs_always_long_min_pct",
+      "value": 2.66,
+      "unit": "% par an",
+      "quoted": "generate signiﬁcant alphas ranging between 2.66% and 7.45% (2.60% and 7.28%) per year",
+      "from_fiche": "intraday-time-series-momentum-global-evidence-an-W3121499907",
+      "note": "Bornes des alphas significatifs, bruts de coûts."
+    },
+    {
+      "name": "itsm_return_by_liquidity_group",
+      "value": null,
+      "unit": null,
+      "quoted": "yields almost doubled raw returns in the low liquidity group compared to the high liquidity",
+      "from_fiche": "intraday-time-series-momentum-global-evidence-an-W3121499907"
+    },
+    {
+      "name": "sharpe_ratio_test_no_cost",
+      "value": 0.439,
+      "unit": "ratio",
+      "quoted": "Sharpe Ratio 2.403 (Training Set) / 0.439 (Test Set), modèle sans coût de transaction, Table 1",
+      "quoted_source": "2.403 0.439",
+      "quoted_repair": "table",
+      "from_fiche": "performance-of-time-series-momentum-strategy-us-W4388535504",
+      "note": "Chute du Sharpe entre entraînement (avant 2010) et test (après 2010), sans coût."
+    },
+    {
+      "name": "cost_negative_sharpe_threshold",
+      "value": 0.01,
+      "unit": "taux de coût proportionnel",
+      "quoted": "negative Sharpe Ratio at the 0.01 transaction cost rate shows that it is too high to generate positive",
+      "from_fiche": "performance-of-time-series-momentum-strategy-us-W4388535504"
+    },
+    {
+      "name": "ma1_sharpe_test_no_cost",
+      "value": 0.794,
+      "unit": "ratio",
+      "quoted": "MA 1 3.148 0.482 151.827 0.794 5.103 29.066",
+      "quoted_source": "MA 1 3.148 0.482 151.827 0.794 5.103 29.066",
+      "quoted_repair": "table",
+      "from_fiche": "performance-of-time-series-momentum-strategy-us-W4388535504",
+      "note": "Table 4, coût nul : la moyenne mobile la plus courte est la meilleure hors échantillon brut."
+    },
+    {
+      "name": "equal_weight_sharpe_test_cost_0p01",
+      "value": 0.601,
+      "unit": "ratio",
+      "quoted": "Equal Weight 0.155 9.026 16.972 0.601 4.219 36.248",
+      "quoted_source": "Equal Weight 0.155 9.026 16.972 0.601 4.219 36.248",
+      "quoted_repair": "table",
+      "from_fiche": "performance-of-time-series-momentum-strategy-us-W4388535504",
+      "note": "Le portefeuille sans signal bat toutes les variantes de momentum au coût 0,01."
+    },
+    {
+      "name": "momentum_profit_j6k6_jordan",
+      "value": 14.72645511,
+      "unit": "pct (période non précisée)",
+      "quoted": "Jordan 14.72645511 73.99146",
+      "from_fiche": "short-term-momentum-effect-a-case-of-middle-east-W2053795282",
+      "note": "Table 1 ; t-stats non corrigés du chevauchement."
+    },
+    {
+      "name": "durbin_watson_abu_dhabi",
+      "value": 0.090388,
+      "unit": "statistique de Durbin-Watson",
+      "quoted": "stat 0.090388",
+      "from_fiche": "short-term-momentum-effect-a-case-of-middle-east-W2053795282",
+      "note": "Autocorrélation extrême des résidus : les t-stats de ce papier ne sont pas fiables."
+    }
+  ],
+  "what_is_missing": [
+    "Aucune source ne porte sur des futures ; aucune ne donne de multiplicateur, de tick ni de frais transposables.",
+    "La version retenue est brute de coûts, alors qu'elle fait un aller-retour par jour et par instrument ; Duan montre que le classement des variantes de momentum s'inverse sous coûts.",
+    "Aucune source ne produit d'IC ni de corrélation de rang : les preuves sont en pentes de régression, R2, alphas, Sharpe et profits de portefeuille.",
+    "Aucune source ne donne le décompte des configurations testées ni de correction de multiplicité.",
+    "Le repère de séance (clôture de la veille, première et dernière demi-heure) n'est défini que pour des marchés au comptant qui ferment ; il n'est pas défini pour des futures cotant presque en continu.",
+    "Incohérences internes dans chacune des trois sources (pente 2.86 contre 2.68 chez Li et al. ; tables contradictoires chez Duan et chez Ejaz et Polak)."
+  ],
+  "transposability": {
+    "what_transfers": "Un score quotidien par instrument égal au rendement des 30 premières minutes de séance, prédisant le rendement des 30 dernières minutes de la même séance. Le prédicteur est entièrement connu avant la fenêtre prédite : compatible par construction avec l'invariant II. La règle de signe ne comporte aucun paramètre libre au-delà de la longueur de fenêtre (30 minutes), citée par la source.",
+    "what_does_not_transfer": [
+      "L'univers : indices au comptant (Li et al.), actions S&P500 (Duan), actions du Moyen-Orient (Ejaz, Polak) — aucun future.",
+      "Le rendement de la première demi-heure rapporté à la clôture de la veille suppose un marché qui ferme ; sur un future quasi continu, ce repère n'est pas hérité du papier.",
+      "Les métriques : alphas, Sharpe, R2 hors échantillon, profits W-L — aucune n'est un IC.",
+      "La période 2005-2017 de la version retenue, dont une crise financière portant une grande part de l'effet, absente de notre tranche pool.",
+      "Le momentum en coupe transversale d'Ejaz et Polak (10 gagnants / 10 perdants) est impossible sur neuf instruments.",
+      "Les fenêtres quotidiennes de Duan (N = 24, grille 1 à 100) n'ont pas de traduction évidente en barres intraday."
+    ],
+    "what_aligns_well": "Une observation par jour et par instrument, signal formé le matin et cible en fin de séance : la cadence d'un score intraday évalué en walk-forward. Calculable en OHLCV à partir des seules barres de la séance et de la clôture précédente, sans donnée externe."
+  },
+  "synthesis": {
+    "group": "G-a9d7ec",
+    "sources": [
+      "intraday-time-series-momentum-global-evidence-an-W3121499907",
+      "performance-of-time-series-momentum-strategy-us-W4388535504",
+      "short-term-momentum-effect-a-case-of-middle-east-W2053795282"
+    ],
+    "mechanism": "Momentum : le rendement récent d'un actif se prolonge dans le même sens sur la fenêtre suivante.",
+    "agreements": [
+      "Les trois papiers annoncent un effet de même signe : un rendement passé positif est suivi d'un rendement futur positif (continuation, pas retournement).",
+      "Li et al. et Duan décrivent un momentum en série temporelle (l'actif contre son propre passé), et non en coupe transversale.",
+      "Aucun des trois ne déduit de coûts réalistes de futures, et aucun ne produit d'IC."
+    ],
+    "disagreements": [
+      "Nature du momentum : série temporelle (Li et al., Duan) contre coupe transversale gagnants-moins-perdants (Ejaz, Polak).",
+      "Horizon : même séance, 30 minutes → 30 minutes (Li et al.) ; 1 période quotidienne en avant avec N = 24 (Duan) ; formation et détention de 6 mois (Ejaz, Polak).",
+      "Fenêtre et construction du prédicteur : rendement brut de la première demi-heure avec règle de signe (Li et al.) ; moyenne mobile simple ou exponentielle des rendements passés, pondérée par (MA·β + α)/σ² (Duan) ; rendement moyen ou cumulé sur 6 mois, classement top 10 / bottom 10 (Ejaz, Polak).",
+      "Marché : 16 indices de pays développés, actions S&P500, actions de sept bourses du Moyen-Orient.",
+      "Robustesse annoncée : Li et al. et Ejaz et Polak concluent à un effet significatif ; Duan conclut que la performance s'effondre hors échantillon et devient négative au coût 0,01, un portefeuille équipondéré sans signal dominant alors. Ce n'est pas un désaccord de signe de l'effet brut, mais de son exploitabilité.",
+      "Fiabilité statistique : Li et al. corrigent par Newey-West et testent hors échantillon ; Ejaz et Polak publient des t-stats non corrigés du chevauchement (Durbin-Watson ~0.09) ; Duan ne publie aucune mesure d'incertitude."
+    ],
+    "criteria_applied": [
+      "1. Accord : aucune construction précise n'est partagée par deux papiers ; la famille « série temporelle, l'actif prédit par son propre rendement passé, même signe » est décrite par deux sources sur trois (Li et al., Duan), la coupe transversale par une seule. Le critère écarte Ejaz et Polak et laisse Li et al. et Duan à égalité.",
+      "2. Transposabilité : la construction de Li et al. est intrajournalière et se calcule directement sur des barres OHLCV de futures intraday (prix à 30 minutes de l'ouverture, 30 minutes avant la clôture, clôture) ; celle de Duan est quotidienne, suppose une régression et des fenêtres sans traduction intraday. Le critère tranche pour Li et al.",
+      "3. Parcimonie : confirme le choix — la règle de signe de Li et al. n'a qu'un paramètre (la fenêtre de 30 minutes), contre N, δ, M, α, β, σ² chez Duan. Les variantes de Li et al. (portefeuilles globaux, signal US) sont écartées pour la même raison.",
+      "4. Traçabilité : la fenêtre de 30 minutes, le prédicteur rF_t, la cible rL_t et la règle de signe sont tous écrits dans la fiche de Li et al. Aucun paramètre n'est ajouté."
+    ],
+    "chosen_from": [
+      "intraday-time-series-momentum-global-evidence-an-W3121499907"
+    ],
+    "why": "La famille série temporelle est soutenue par deux sources sur trois, et parmi elles la construction de Li et al. est la seule intrajournalière, calculable en OHLCV sur nos futures, avec un unique paramètre cité par le papier."
+  }
+}

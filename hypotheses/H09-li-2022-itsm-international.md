@@ -5,7 +5,7 @@
 **signal :** `intraday-time-series-momentum-global-evidence-an-W3121499907` — *non encore codé*
 **signe attendu :** +1
 **tranche :** `pool` uniquement, `asof` 2023-12-29 20:00 UTC (`D29`)
-**écrite par :** session 2026-09-29, sous `D33`. Contamination déclarée : elle a lu `ETAT.md`, le wiki et les fiches, **donc elle connaît le résultat de `H01`, qui porte sur le même motif.** Voir ci-dessous — c'est la chose la plus importante de ce fichier. Aucun IC ne porte sur ce signal-ci au registre (`D28` vérifié).
+**écrite par :** session 2026-09-29, sous `D40`. Contamination déclarée : elle a lu `ETAT.md`, le wiki et les fiches, **donc elle connaît le résultat de `H01`, qui porte sur le même motif.** Voir ci-dessous — c'est la chose la plus importante de ce fichier. Aucun IC ne porte sur ce signal-ci au registre (`D28` vérifié).
 **Statut :** pré-enregistrée, non mesurée
 
 ## Ce qui est affirmé

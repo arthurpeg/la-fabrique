@@ -90,6 +90,14 @@ MIN_SECTIONS_DETECTED = 2
 # Compteur des octets NUL retirés. Une liste plutôt qu'un entier : il est lu et
 # incrémenté depuis `split_pages`, et un compte qui n'est pas affiché est un
 # nettoyage silencieux.
+# Le budget de taille de la base — `D32` § Journal du 2026-09-29 : 80 % des
+# 8 Go du plan Supabase de l'operateur. Couts mesures le 2026-09-28 sur 44 070
+# morceaux de texte integral : ~2,3 Ko de texte et d'index plein texte, ~3,1 Ko
+# de vecteur, ~3,9 Ko d'index HNSW, plus les cles.
+BUDGET_BYTES = 6_400_000_000
+BYTES_PER_NEW_CHUNK = 10_000
+BYTES_PER_PENDING_CHUNK = 7_500
+
 NUL_COUNT = [0]
 SURROGATE = re.compile(r"[\ud800-\udfff]")
 SURROGATE_COUNT = [0]
@@ -296,7 +304,19 @@ def sources(filtre: str | None = None) -> list[Source]:
     return out
 
 
-def harvest_sources(filtre: str | None = None) -> list[Source]:
+def title_norm(title: str) -> str:
+    """La forme de `papers.title_norm` (colonne generee, migration 001)."""
+    return re.sub(r"[^a-zA-Z0-9]+", " ", title).lower().strip()
+
+
+def titres_en_base() -> set[str]:
+    with VectorDB.from_env() as db, db.conn.cursor() as cur:
+        cur.execute("select title_norm from papers")
+        return {r["title_norm"] for r in cur.fetchall()}
+
+
+def harvest_sources(filtre: str | None = None,
+                    deja: set[str] | None = None) -> list[Source]:
     """Les papiers moissonnés — texte lu du PDF, `text_source = harvest`.
 
     Aucune vérification de recollage ici, et c'est le point : il n'y a AUCUN
@@ -310,7 +330,13 @@ def harvest_sources(filtre: str | None = None) -> list[Source]:
     par_pdf = {Path(w["pdf"]).name: w for w in works if w.get("pdf")}
 
     out = []
-    for pdf in sorted(HARVEST_PDFDIR.glob("*.pdf")):
+    tous = sorted(HARVEST_PDFDIR.glob("*.pdf"))
+    for rang, pdf in enumerate(tous, 1):
+        # Un avancement lisible : `scripts/pipeline_runner.py` en tire le temps
+        # restant, et une ligne regulierement emise tient eloigne son chien de
+        # garde (20 min sans sortie = relance). Lecture de ~1 000 PDF : ~1 h.
+        if rang % 10 == 0 or rang == len(tous):
+            print(f"  lecture {rang}/{len(tous)}", flush=True)
         if filtre and filtre.lower() not in pdf.stem.lower():
             continue
         w = par_pdf.get(pdf.name)
@@ -318,6 +344,11 @@ def harvest_sources(filtre: str | None = None) -> list[Source]:
             # Un PDF sur le disque que la moisson ne connaît pas : on ne devine
             # pas ses métadonnées, on le saute en le disant.
             print(f"  ignoré, absent de harvest.json : {pdf.name}")
+            continue
+        # Deja en base : on ne relit pas son PDF (2026-09-29). Sans ce saut,
+        # chaque versement relisait des milliers de PDF pour les ecarter a
+        # l'insertion, une heure de lecture pour rien.
+        if deja and title_norm(w.get("title") or "") in deja:
             continue
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
@@ -418,7 +449,8 @@ def main(argv: list[str]) -> int:
             return 1
 
     try:
-        papers = harvest_sources(a.paper) if a.harvest else sources(a.paper)
+        papers = (harvest_sources(a.paper, None if a.dry_run else titres_en_base())
+                  if a.harvest else sources(a.paper))
     except VectorDBError as e:
         print(f"ARRÊT : {e}")
         return 1
@@ -427,6 +459,24 @@ def main(argv: list[str]) -> int:
         return 1
 
     if a.harvest:
+        # `D33` : la base de recherche ne garde que les papiers PERTINENTS,
+        # par une regle mecanique ecrite d'avance. Les ecartes restent
+        # moissonnes (harvest.json, PDF sur le disque) et restent triables.
+        sys.path.insert(0, str(REPO / "corpus"))
+        from relevance import is_relevant
+
+        kept = []
+        for s in papers:
+            ok, m, sig = is_relevant(s.title, "\n".join(s.pages), "full")
+            if ok:
+                kept.append(s)
+            else:
+                print(f"  ecarte (D33, marche={m}, signal={sig}) : {s.title[:70]}")
+        print(f"  pertinence D33 : {len(kept)} gardes sur {len(papers)}\n")
+        papers = kept
+        if not papers:
+            print("aucun papier pertinent a verser")
+            return 0
         print(f"{len(papers)} papier(s) MOISSONNÉ(S) — texte lu du PDF à "
               "l'instant, `text_source = harvest` (D22).")
         print("Ce texte NE FAIT PAS FOI : aucune pagination n'est vérifiée, car")
@@ -474,7 +524,25 @@ def main(argv: list[str]) -> int:
     print("\nInsertion…", flush=True)
     inserted = skipped = 0
     with VectorDB.from_env() as db:
+        # LE BUDGET, verifie AVANT chaque papier (`D32` § Journal). Le 2026-09-28
+        # l'ingestion n'en avait aucun et a porte la base a 487 Mo sur 500. On
+        # projette la taille FINALE : les morceaux deja verses sans vecteur en
+        # recevront un (~7,5 Ko avec l'index HNSW), et chaque nouveau morceau
+        # coute ~10 Ko une fois vectorise.
+        with db.conn.cursor() as cur:
+            cur.execute("select pg_database_size(current_database()) as b, "
+                        "(select count(*) from chunks where embedding is null) as n")
+            row = cur.fetchone()
+        projected = int(row["b"]) + int(row["n"]) * BYTES_PER_PENDING_CHUNK
+        print(f"  base {row['b'] / 1e6:.0f} Mo, {row['n']} morceau(x) sans vecteur ; "
+              f"taille projetee {projected / 1e6:.0f} Mo sur un budget de "
+              f"{BUDGET_BYTES / 1e6:.0f} Mo")
         for s, chunks in plan:
+            cost = len(chunks) * BYTES_PER_NEW_CHUNK
+            if projected + cost > BUDGET_BYTES:
+                print(f"\nBUDGET ATTEINT — {s.stem[:46]} ({len(chunks)} morceaux) le "
+                      f"depasserait. Arret ; rien n'est verse au-dela (D32).")
+                break
             try:
                 paper_id = db.insert_paper(Paper(
                     title=s.title, authors=s.authors, year=s.year,
@@ -490,6 +558,7 @@ def main(argv: list[str]) -> int:
             ])
             print(f"  {s.stem[:46]:<46} {n:>4} morceaux")
             inserted += n
+            projected += cost
 
     print(f"\n{inserted} morceaux insérés, {skipped} papier(s) déjà présent(s)")
     print("La recherche PLEIN TEXTE fonctionne dès maintenant (le tsvector est")
