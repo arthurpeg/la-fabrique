@@ -77,7 +77,7 @@ def rediger(ref: str, fiche: dict, module, fiche_path: Path) -> str:
 **Signal :** `{module.SIGNAL_ID}` (`{mod}`)
 **Fiche :** `{fiche_path.relative_to(REPO).as_posix()}`
 **Origine :** {module.PAPER}
-**Lot :** `hypotheses/LOT-09.json` (`D27`) — mesurée une fois, à l'étape 10.
+**Lot :** `hypotheses/LOT-09.json` (`D36`) — mesurée une fois, à l'étape 10.
 **Rédaction :** mécanique (`scripts/hypotheses_lot.py`) : signe tiré du signal,
 affirmation et mécanisme recopiés de la fiche, seuils de `D25`. Rien n'a été vu.
 

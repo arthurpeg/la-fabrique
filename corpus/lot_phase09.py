@@ -1,11 +1,11 @@
-"""Le lot de la phase 09 — appliqué, jamais recopié. `D27`.
+"""Le lot de la phase 09 — appliqué, jamais recopié. `D36`.
 
 `D25` engageait **50 signaux**. Ce chiffre a été écrit le 2026-09-23, quand le
 corpus portait 17 fiches : c'était une estimation, pas une mesure. Le corpus en
 porte 51 aujourd'hui, le moissonné est épuisé, et **50 ne tient pas** — pas
 sans y verser des papiers qui exigent une donnée que nous n'avons pas.
 
-`D27` remplace donc le nombre par un **critère**, et ce fichier l'applique :
+`D36` remplace donc le nombre par un **critère**, et ce fichier l'applique :
 
 > Le lot est l'ensemble des fiches dont le papier a été trié **`oui`**, plus
 > celles triées **`partiel` dont la raison est une transposition d'univers** —
@@ -97,7 +97,7 @@ def verdicts_amorce() -> dict[str, dict]:
             # serait INDECIDABLE au regard du critere. Les cinq concernes ont
             # ete LUS un par un le 2026-09-28 et leur motif inscrit dans
             # `motifs_amorce_partiel.json`, qui porte aussi la declaration de
-            # contamination (`D27` § Ce qui reste ouvert). Ceux qui n'y sont
+            # contamination (`D36` § Ce qui reste ouvert). Ceux qui n'y sont
             # pas restent indecidables, et sortent.
             m = motifs.get(stem) or {}
             out[stem] = {
@@ -147,12 +147,12 @@ def composer() -> tuple[list[dict], list[dict]]:
 
 
 def main(argv: list[str]) -> int:
-    ap = argparse.ArgumentParser(description="Le lot de la phase 09 — D27")
+    ap = argparse.ArgumentParser(description="Le lot de la phase 09 — D36")
     ap.add_argument("--ecrire", action="store_true", help="fige le lot et le date (D25 C2)")
     a = ap.parse_args(argv)
 
     dedans, dehors = composer()
-    print(f"LOT DE LA PHASE 09 — critère de `D27`, appliqué le {date.today()}\n")
+    print(f"LOT DE LA PHASE 09 — critère de `D36`, appliqué le {date.today()}\n")
     print(f"  DANS LE LOT : {len(dedans)}")
     for ligne in dedans:
         print(f"    {ligne['verdict']:8} {ligne['fiche_id'][:52]}")
@@ -168,7 +168,7 @@ def main(argv: list[str]) -> int:
         LOT.write_text(
             json.dumps(
                 {
-                    "decision": "D27",
+                    "decision": "D36",
                     "declared_at": date.today().isoformat(),
                     "q": 0.10,
                     "critere": "trié `oui`, ou `partiel` par transposition d'univers",

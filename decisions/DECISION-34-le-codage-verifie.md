@@ -2,7 +2,7 @@
 
 **Date :** 2026-09-30
 **Phase :** 09
-**État :** prise — complète `D23` ; resserre l'entrée dans un lot (`D25`, `D27`, `D28`) ; ne touche pas au harnais
+**État :** prise — complète `D23` ; resserre l'entrée dans un lot (`D25`, `D36`, `D28`) ; ne touche pas au harnais
 
 ## La question
 

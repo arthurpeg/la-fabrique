@@ -97,7 +97,7 @@ puis mesurée — la forme en U de la volatilité intra-journalière est retrouv
 reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
 **Décision la plus récente :**
-`decisions/DECISION-27-le-lot-de-la-phase-09.md` — le lot de la phase 09 est un
+`decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un
 **critère, pas un nombre**. `D25` engageait 50 signaux, chiffre écrit quand le
 corpus portait 17 fiches ; il en porte 51 et le moissonné est épuisé. Le lot est
 désormais : les fiches triées **`oui`**, plus les **`partiel` par transposition
@@ -112,7 +112,7 @@ sans motif ont été lues une par une : une entre (`lou-2019`), trois sortent po
 donnée manquante (consensus MMS, calendrier FOMC ×2), une pour **horizon
 incompatible** — catégorie créée à cette occasion, Moskowitz étant mensuel
 quand notre grille est intraday à clôture forcée. Le lot est **clos** : l'élargir
-après une mesure casse `BH`. `scripts/gate_09.py` a été aligné sur `D27` — il ne
+après une mesure casse `BH`. `scripts/gate_09.py` a été aligné sur `D36` — il ne
 grave plus `N` = 50 et vérifie que le lot nomme la décision qui l'autorise et que
 son compte se reconstitue.
 **Décision précédente :**
