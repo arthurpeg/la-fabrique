@@ -141,6 +141,16 @@ def run_stage(name: str, cmd: list[str], ok: set[int], attempt: int, status: dic
 
 
 def run() -> int:
+    # Le PC en veille tuait le superviseur (code 4) : il le garde éveillé tant
+    # qu'il travaille, et rend la veille au système en sortant.
+    sys.path.insert(0, str(REPO / "scripts"))
+    from anti_veille import eveille  # noqa: PLC0415
+
+    with eveille():
+        return _run()
+
+
+def _run() -> int:
     state = load(STATE, {"done": []})
     status = {"started": now(), "pid": os.getpid(), "events": [], "current": {},
               "stages": [s[0] for s in STAGES], "done": state["done"]}

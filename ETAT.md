@@ -288,6 +288,17 @@ python scripts/gate_07.py      # G1 = G2 = G3 = G4 = 0
 python scripts/gate_08.py      # 1 signal, 6/6, aucune retouche
 ```
 
+### Trois outils de confort — le 2026-09-30
+
+```
+python scripts/verifier_tout.py                 # toutes les gardes, lecture seule ; --calibrations, --base
+python scripts/statut_papiers.py                # où en est chaque papier, et s'il peut encore servir
+python scripts/anti_veille.py --pid <pid>       # garder le PC éveillé tant qu'un processus tourne
+```
+
+`pipeline_runner.py --run` garde désormais le PC éveillé tout seul (veille
+automatique seulement ; la fermeture du capot reste un réglage Windows).
+
 ### Le harnais du lot — `D35`, prise et appliquée le 2026-09-30 (harnais `4806666dc55c46c9`)
 
 Frais en deux bornes, glissement en grille de 1 à 5 ticks par side, IC par année

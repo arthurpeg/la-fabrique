@@ -273,9 +273,10 @@ Ce ne sont pas des recommandations.
 
 ## 4. En fin de session
 
-1. Relance le juge de la porte, en lecture seule :
+1. Relance toutes les gardes, en lecture seule — elles doivent finir sur
+   `TOUT PASSE` :
 
-       uv run python scripts/gate_08.py
+       uv run python scripts/verifier_tout.py
 
 2. Écris le compte rendu dans `wiki/log.md` (une ligne datée, en ajout) :
    fiches traitées, recettes valides, signaux vérifiés (CONCORDANT), essais et
