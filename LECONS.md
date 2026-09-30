@@ -934,3 +934,25 @@ locale, **renommer la globale** plutôt que la doubler, pour qu'un oubli casse a
 lieu de lire l'ancienne valeur. Et un outil n'est vérifié que lorsqu'il a jugé un
 vrai cas de bout en bout : les auto-tests prouvent que les refus tiennent, pas
 que le chemin nominal existe (même famille que `L25`).
+
+---
+
+## L31 — Une promotion « idempotente » a remplacé le papier sous sa fiche
+
+Le 2026-09-30. `promote_harvest.py --fetch` saute un papier déjà promu… **si sa
+copie est encore dans `corpus/pdf/`**. Celle d'un papier fiché et entré dans le
+lot (`bitcoin-is-not-the-new-gold…`) avait disparu ; la promotion l'a recréée
+depuis la quarantaine, qui portait **une autre version** du même papier (même
+URL, le serveur avait changé de fichier). `extract_text.py` a alors réécrit son
+texte `default`, celui sur lequel reposent les citations de la fiche (`D18`), et
+l'annonçait en toutes lettres — « le texte de ces fichiers a CHANGÉ » — dans une
+sortie que j'ai lue en diagonale, puis commitée.
+
+Le texte versionné l'a sauvé : il a été rétabli depuis git, avec son manifeste.
+Le PDF d'origine, lui, est perdu sur ce poste.
+
+**La règle.** Un geste qui peut réécrire le texte qui fait foi vérifie
+l'**empreinte** de ce qu'il a déjà fait, pas la seule présence d'un fichier : la
+promotion refuse désormais un PDF dont l'empreinte diffère de celle promue. Et
+un avertissement « a changé » sur un texte qui fait foi **arrête la session** :
+il ne se lit pas en diagonale.

@@ -48,6 +48,7 @@ GARDES = [
     ("juge du codeur (D23)", "scripts/score_signal.py --check"),
     ("validateur de recette (D34)", "scripts/recette.py --self-check"),
     ("juge du triage", "corpus/score_triage.py --check"),
+    ("tri en masse", "corpus/tri_en_masse.py --self-check"),
     ("juge de l'extraction", "corpus/score_extraction.py --check"),
     ("garde des fiches", "corpus/check_fiches_guard.py"),
     ("schéma des fiches", "corpus/validate_fiches.py"),
@@ -90,7 +91,7 @@ def resume(sortie: str, rc: int) -> str:
 
     lignes = sortie.splitlines()
     for motif in (r"PORTE \d\d", r"GATE \d\d", r"VALIDE", r"PASSÉS", r"conforme",
-                  r"vérifications", r"verifications", r"RECETTE", r"VALIDATEUR"):
+                  r"vérifications", r"verifications", r"RECETTE", r"VALIDATEUR", r"TRI EN MASSE"):
         for x in reversed(lignes):
             if re.search(motif, x):
                 return x.strip()
