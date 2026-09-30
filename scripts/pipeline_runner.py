@@ -49,12 +49,23 @@ BACKOFF = [60, 120, 300, 600, 900, 1800, 1800, 1800, 1800, 1800, 1800, 1800]
 STAGES: list[tuple[str, list[str], set[int]]] = [
     # Passage 6 (`D20` § Journal) : les 79 axes OpenAlex, plafond 200. Pas les
     # axes `ssrn:*`, dont Crossref ne rend que des notices (`D30`, `D31`).
+    #
+    # L'ORDRE, revu le 2026-09-30 : OpenAlex facture desormais ses requetes
+    # (`cost_usd` dans chaque reponse) et refuse l'anonyme une fois son credit
+    # du jour epuise — la recherche intraday a ete refusee plus de trois heures.
+    # La sonde, elle, ne l'interroge pas (liens deja inscrits, NBER, CORE,
+    # pages de depot). On sonde donc ce qui est deja trouve AVANT de relancer
+    # les recherches restantes : un refus d'OpenAlex ne bloque plus le reste.
     *[(f"recherche {g}", [*PY, "corpus/harvest.py", "--search", "--axis", g], {0})
-      for g in ("family", "asset", "method", "anomaly", "strategy", "hypothesis",
-                "intraday", "instrument", "causality", "mechanism")],
+      for g in ("family", "asset", "method", "anomaly", "strategy", "hypothesis")],
     ("sonde", [*PY, "corpus/harvest.py", "--probe", "--sans-ssrn"], {0}),
     ("telechargement", [*PY, "corpus/harvest.py", "--fetch"], {0, 1}),
     ("versement", [*PY, "vectordb/ingest.py", "--harvest"], {0}),
+    *[(f"recherche {g}", [*PY, "corpus/harvest.py", "--search", "--axis", g], {0})
+      for g in ("intraday", "instrument", "causality", "mechanism")],
+    ("sonde (2)", [*PY, "corpus/harvest.py", "--probe", "--sans-ssrn"], {0}),
+    ("telechargement (2)", [*PY, "corpus/harvest.py", "--fetch"], {0, 1}),
+    ("versement (2)", [*PY, "vectordb/ingest.py", "--harvest"], {0}),
 ]
 
 PROGRESS = re.compile(r"(\d+)\s*/\s*(\d+)")
