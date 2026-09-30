@@ -24,8 +24,8 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Dernière porte franchie** | **08**, le 2026-09-23 — `scripts/gate_08.py`. Un signal produit par une session de codage séparée tient les **six conditions de `D23` au premier essai**, et aucun signal produit n'a été retouché à la main. |
 | **Décision la plus récente** | `decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un |
 | **Tests au registre** | 181 |
-| **Idées abandonnées recensées** | 60 |
-| **Entrées au journal** | 106 |
+| **Idées abandonnées recensées** | 61 |
+| **Entrées au journal** | 107 |
 
 ## Ce qui bloque
 
@@ -883,7 +883,7 @@ Journal complet : [[log]]
 | `(racine)` | 5 |
 | `Failed Ideas` | 1 |
 | `concepts` | 13 |
-| `phases` | 8 |
+| `phases` | 9 |
 | `reference` | 3 |
 | `research` | 7 |
 | `signaux` | 1 |
