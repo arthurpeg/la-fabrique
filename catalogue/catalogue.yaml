@@ -78,6 +78,8 @@ instruments:
     fee_broker_usd: null  # todo fees (D26, D35)
     fee_exchange_usd: null  # todo fees
     fee_regulatory_usd: null  # todo fees
+    execution_contract: MNQ  # D37 : toujours micro
+    execution_multiplier: null  # todo micro-multipliers
     cells:
       ASIA:
         retained: true
@@ -124,6 +126,8 @@ instruments:
     fee_broker_usd: null  # todo fees (D26, D35)
     fee_exchange_usd: null  # todo fees
     fee_regulatory_usd: null  # todo fees
+    execution_contract: MES  # D37 : toujours micro
+    execution_multiplier: null  # todo micro-multipliers
     cells:
       ASIA:
         retained: true
@@ -170,6 +174,8 @@ instruments:
     fee_broker_usd: null  # todo fees (D26, D35)
     fee_exchange_usd: null  # todo fees
     fee_regulatory_usd: null  # todo fees
+    execution_contract: MYM  # D37 : toujours micro
+    execution_multiplier: null  # todo micro-multipliers
     cells:
       ASIA:
         retained: false
@@ -219,6 +225,8 @@ instruments:
     fee_broker_usd: null  # todo fees (D26, D35)
     fee_exchange_usd: null  # todo fees
     fee_regulatory_usd: null  # todo fees
+    execution_contract: MGC  # D37 : toujours micro
+    execution_multiplier: null  # todo micro-multipliers
     cells:
       ASIA:
         retained: true
@@ -265,6 +273,8 @@ instruments:
     fee_broker_usd: null  # todo fees (D26, D35)
     fee_exchange_usd: null  # todo fees
     fee_regulatory_usd: null  # todo fees
+    execution_contract: MCL  # D37 : toujours micro
+    execution_multiplier: null  # todo micro-multipliers
     cells:
       ASIA:
         retained: true
@@ -311,6 +321,8 @@ instruments:
     fee_broker_usd: null  # todo fees (D26, D35)
     fee_exchange_usd: null  # todo fees
     fee_regulatory_usd: null  # todo fees
+    execution_contract: 6E  # D37 : pas de micro au barème Lucid, plein format
+    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
     cells:
       ASIA:
         retained: true
@@ -357,6 +369,8 @@ instruments:
     fee_broker_usd: null  # todo fees (D26, D35)
     fee_exchange_usd: null  # todo fees
     fee_regulatory_usd: null  # todo fees
+    execution_contract: 6B  # D37 : pas de micro au barème Lucid, plein format
+    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
     cells:
       ASIA:
         retained: false
@@ -403,6 +417,8 @@ instruments:
     fee_broker_usd: null  # todo fees (D26, D35)
     fee_exchange_usd: null  # todo fees
     fee_regulatory_usd: null  # todo fees
+    execution_contract: 6J  # D37 : pas de micro au barème Lucid, plein format
+    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
     cells:
       ASIA:
         retained: true
@@ -449,6 +465,8 @@ instruments:
     fee_broker_usd: null  # todo fees (D26, D35)
     fee_exchange_usd: null  # todo fees
     fee_regulatory_usd: null  # todo fees
+    execution_contract: 6A  # D37 : pas de micro au barème Lucid, plein format
+    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
     cells:
       ASIA:
         retained: true
@@ -501,6 +519,8 @@ instruments:
     fee_broker_usd: null  # todo fees (D26, D35)
     fee_exchange_usd: null  # todo fees
     fee_regulatory_usd: null  # todo fees
+    execution_contract: FDAX  # D37 : pas de micro au barème Lucid, plein format
+    execution_multiplier: null  # sans objet : plein format, `multiplier` s'applique
     cells: null  # hors univers : la grille n'a pas été mesurée sur FDAX
 
 # Ce qui est inconnu, et de qui on l'attend. Un null sans todo est un bug.
@@ -513,6 +533,14 @@ todos:
       fiche contrat EUREX, pour FDAX seul -- les neuf instruments CME sont
       déposés depuis le 2026-09-24 (voir provenance). FDAX exige aussi une
       conversion EUR -> USD avant que multiplier x prix soit un notionnel USD.
+  - id: micro-multipliers
+    field: instruments[*].execution_multiplier
+    blocks: les frais en bp des micros (D37) -- sans lui la borne de frais reste nommée manquante
+    owed_by: >-
+      fiches contrat CME des micros (MNQ, MES, MYM, MGC, MCL), ligne « Contract
+      Unit ». D26 les a lues le 2026-09-24 et a constaté un rapport d'exactement
+      un dixième, sans en recopier les citations mot pour mot : à relever avec
+      leur provenance (D09) avant d'être déposées.
   - id: fees
     field: instruments[*].fee_broker_usd, fee_exchange_usd, fee_regulatory_usd
     blocks: la complétude du coût -- sans eux le coût reste un plancher étiqueté (harness/costs.py)

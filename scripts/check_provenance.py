@@ -65,7 +65,7 @@ def blank(raw: dict) -> dict:
     """
     for spec in raw["instruments"]:
         for field in ("multiplier", "fee_broker_usd", "fee_exchange_usd",
-                      "fee_regulatory_usd"):
+                      "fee_regulatory_usd", "execution_multiplier"):
             spec[field] = None
     raw["provenance"] = []
     return raw
@@ -261,7 +261,7 @@ def main() -> int:
         spec.get(field) is not None
         for spec in raw["instruments"]
         for field in ("multiplier", "fee_broker_usd", "fee_exchange_usd",
-                      "fee_regulatory_usd")
+                      "fee_regulatory_usd", "execution_multiplier")
     )
     print(f"  (D09 ; le catalogue réel porte {external} valeur(s) externe(s), "
           f"toutes couvertes — les cas fautifs partent d'un catalogue vidé)")

@@ -299,7 +299,7 @@ python scripts/anti_veille.py --pid <pid>       # garder le PC éveillé tant qu
 `pipeline_runner.py --run` garde désormais le PC éveillé tout seul (veille
 automatique seulement ; la fermeture du capot reste un réglage Windows).
 
-### Le harnais du lot — `D35`, prise et appliquée le 2026-09-30 (harnais `4806666dc55c46c9`)
+### Le harnais du lot — `D35` puis `D37` (contrats micro), appliquées le 2026-09-30 — harnais `94b495fa7525d3b8`
 
 Frais en deux bornes, glissement en grille de 1 à 5 ticks par side, IC par année
 civile, trou d'`extra` fermé : une seule modification du harnais, préparée et
@@ -308,7 +308,7 @@ testée dans une copie, livrée en patch. **Aucun agent n'écrit dans `harness/`
 ```
 git apply --check decisions/DECISION-35-harnais.patch
 git apply decisions/DECISION-35-harnais.patch
-uv run python scripts/gate_03_harness.py     # FRANCHIE, harnais 4806666dc55c46c9
+uv run python scripts/gate_03_harness.py     # FRANCHIE, harnais 94b495fa7525d3b8
 ```
 
 Appliqué : `HARNAIS_DU_LOT` est renseigné, les 169 lignes antérieures sont périmées. Les frais

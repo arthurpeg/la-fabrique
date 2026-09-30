@@ -3,7 +3,8 @@
 D01 7 gives the shape and forbids the shortcut:
 
     round_trip_cost_bp(cell) = spread_floor_bp(cell)     measured
-                             + fee_bp(instrument, size)   two bounds (D26, D35)
+                             + fee_bp(instrument, size)   two bounds (D26, D35),
+                                                          on the EXECUTED contract (D37)
                              + slippage_bp(cell)          declared, a grid (D35)
 
 **The floor** is measured, not declared: the smallest non-zero price change
@@ -87,8 +88,12 @@ def cell_cost(catalogue: Catalogue, root: str, window: str,
     unknown: list[str] = []
 
     priced = median_price is not None and median_price == median_price and median_price > 0
-    notional = (instrument.multiplier * median_price
-                if priced and instrument.multiplier is not None else None)
+    # D37 : les frais se rapportent au contrat EXÉCUTÉ (micro partout où Lucid
+    # en propose), pas au contrat des données. Un micro vaut un dixième du
+    # plein : à frais par contrat voisins, il coûte environ trois fois plus en bp.
+    fee_multiplier = instrument.fee_multiplier
+    notional = (fee_multiplier * median_price
+                if priced and fee_multiplier is not None else None)
     tick_bp = (instrument.tick / median_price * 1e4
                if priced and instrument.tick is not None else None)
     if tick_bp is None:
@@ -98,6 +103,8 @@ def cell_cost(catalogue: Catalogue, root: str, window: str,
     exchange = instrument.fee_exchange_usd
     regulatory = instrument.fee_regulatory_usd
     fee_low = fee_high = None
+    if priced and fee_multiplier is None:
+        unknown.append("execution_multiplier")
     if notional is None or broker is None:
         unknown.append("fee_bp")
     else:

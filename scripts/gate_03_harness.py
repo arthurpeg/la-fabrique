@@ -209,6 +209,16 @@ def main() -> int:
           "la borne haute passe sous la borne basse")
     check("slippage_bp" not in report_perfect.unknown_cost_components,
           "le glissement est encore signalé inconnu alors que D35 le déclare")
+    # D37 : les frais se rapportent au contrat EXÉCUTÉ. Un micro dont le
+    # multiplicateur manque laisse ses frais NOMMÉS manquants ; une devise, en
+    # plein format, se rapporte au multiplicateur de l'instrument.
+    cat = panel.catalogue
+    check(cat.instrument("6E").fee_multiplier == cat.instrument("6E").multiplier,
+          "une devise (plein format) ne se rapporte pas au multiplicateur de l'instrument")
+    nq = cat.instrument("NQ")
+    if nq.execution_contract != "NQ" and nq.execution_multiplier is None:
+        check("execution_multiplier" in report_perfect.unknown_cost_components,
+              "le multiplicateur du micro manque et n'est pas nommé")
     cost = report_perfect.costs[0]
     check(cost.tick_bp is not None and abs(cost.slippage_bp(3) - 6 * cost.tick_bp) < 1e-12,
           "3 ticks par side ne valent pas 6 ticks d'aller-retour")
