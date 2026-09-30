@@ -288,6 +288,21 @@ python scripts/gate_07.py      # G1 = G2 = G3 = G4 = 0
 python scripts/gate_08.py      # 1 signal, 6/6, aucune retouche
 ```
 
+### Le harnais du lot — `D35`, proposée le 2026-09-30, À APPLIQUER PAR L'OPÉRATEUR
+
+Frais en deux bornes, glissement en grille de 1 à 5 ticks par side, IC par année
+civile, trou d'`extra` fermé : une seule modification du harnais, préparée et
+testée dans une copie, livrée en patch. **Aucun agent n'écrit dans `harness/`** :
+
+```
+git apply --check decisions/DECISION-35-harnais.patch
+git apply decisions/DECISION-35-harnais.patch
+uv run python scripts/gate_03_harness.py     # FRANCHIE, harnais 4806666dc55c46c9
+```
+
+Tant qu'il n'est pas appliqué, `measure_lot.py` refuse de mesurer. Les frais
+restent `null` au catalogue : à relever après le 2026-10-01 (changement CME).
+
 ### Le codage vérifié — `D34`, le 2026-09-30
 
 Aucun signal n'entre plus dans un lot sans **recette** (`scripts/recette.py`),
