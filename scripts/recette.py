@@ -199,6 +199,14 @@ def recette_path(fiche_id: str) -> Path:
 
 
 def texte_du_papier(fiche_id: str) -> str:
+    if fiche_id.startswith("synthese-"):
+        # D39 : une synthèse n'a pas UN papier ; son texte est celui de chacune
+        # de ses sources, bout à bout, chacune sous son nom. Une citation de la
+        # recette doit se trouver dans l'une d'elles.
+        f = REPO / "corpus" / "fiches_synthese" / f"{fiche_id}.json"
+        sources = json.loads(f.read_text(encoding="utf-8"))["synthesis"]["sources"]
+        sep = chr(10) * 2
+        return sep.join(f"===== {s} ====={sep}{texte_du_papier(s)}" for s in sources)
     p = TEXT / f"{fiche_id}.{MODE}.txt"
     if not p.is_file():
         raise SystemExit(f"texte absent : {p.relative_to(REPO)} — `python corpus/extract_text.py`")

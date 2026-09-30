@@ -372,3 +372,27 @@ corrélation du lot, puis mesurer une fois chaque hypothèse (`D25`, `D28`,
 | 9. Matrice de corrélation | `scripts/lot_correlations.py --check` puis sans option |
 | 10. Mesure | `scripts/measure_lot.py --check` ; `--run --je-mesure` seulement après la décision de harnais groupée, qui renseigne `HARNAIS_DU_LOT` |
 | Porte 09 | `scripts/gate_09.py` |
+
+---
+
+## 7. Les hypothèses de synthèse — plusieurs papiers, une hypothèse (`D39`)
+
+Des papiers qui décrivent le même mécanisme sont réunis en **grappes** par les
+embeddings de leurs fiches. Une synthèse en tire **une** hypothèse, choisie
+avant toute mesure, selon des critères écrits : l'accord entre papiers, la
+transposabilité, la parcimonie, la traçabilité.
+
+    uv run python scripts/grappes.py              # recalcule les grappes (après de nouvelles fiches)
+    uv run python scripts/synthese.py --status    # quelles grappes attendent leur synthèse
+    uv run python scripts/synthese.py --prepare <G-xxxxxx>
+
+Lance `fabrique-synthese` avec **le seul chemin de la consigne**, puis, après
+sa réponse, `--record` et `--check` ; un refus se renvoie tel quel, trois essais
+au plus. Une synthèse valide devient une fiche comme une autre
+(`corpus/fiches_synthese/`) : elle suit la boucle § 2 — recette (qui lit les
+textes de toutes ses sources), marché, deux codeurs, double codage.
+
+**Une synthèse est un test de plus**, et elle est corrélée à ses papiers
+sources s'ils ont leur propre hypothèse : consulte `fabrique-critique` avant
+de la déclarer dans un lot. **Jamais** de synthèse choisie ou refaite d'après un
+résultat de nos données.

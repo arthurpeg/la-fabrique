@@ -99,6 +99,8 @@ FICHES = REPO / "corpus" / "fiches"
 # Les fiches moissonnees (phase 09) : 32 des 41 fiches du lot y vivent. Jusqu'au
 # 2026-09-29 ce script ne lisait que `corpus/fiches/` et ne les voyait pas.
 FICHES_HARVEST = REPO / "corpus" / "fiches_harvest"
+# D39 : les fiches de synthèse, tirées de plusieurs papiers d'une même grappe.
+FICHES_SYNTHESE = REPO / "corpus" / "fiches_synthese"
 LOT = REPO / "hypotheses" / "LOT-09.json"
 SIGNALS = REPO / "signals"
 WORK = REPO / "corpus" / "consignes-signaux"
@@ -278,7 +280,7 @@ def fiche_files() -> dict[str, Path]:
     """Toutes les fiches, AMORCE et moissonnees. Un meme identifiant dans les
     deux dossiers serait une ambiguite : on refuse plutot que de choisir."""
     out: dict[str, Path] = {}
-    for d in (FICHES, FICHES_HARVEST):
+    for d in (FICHES, FICHES_HARVEST, FICHES_SYNTHESE):
         for f in sorted(d.glob("*.json")):
             if f.stem in out:
                 raise SystemExit(f"fiche en double : {f.stem} dans {out[f.stem].parent} et {d}")
