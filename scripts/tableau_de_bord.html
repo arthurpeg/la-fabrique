@@ -163,12 +163,12 @@ let filtre = '';
 
 /* --------------------------------------------------------------- bandeau */
 function stats() {
-  const lot = DATA.lot || {};
   const items = [
     ['Harnais', DATA.harness],
     ['Tests comptés', DATA.counted_tests],
     ['Lignes au registre', DATA.registry_lines],
-    ['Lot', `${lot.with_hypothesis ?? 0} / ${lot.n ?? '—'} hypothèses`],
+    ['Hypothèses écrites', DATA.hypotheses.length],
+    ['Lots déclarés', DATA.lots],
     ['Codages vérifiés', DATA.verified],
     ['Écartés ou périmés', (DATA.excluded || []).length],
     ['Généré', DATA.generated.replace('T', ' ')],
@@ -443,28 +443,45 @@ function compteur() {
   const c = DATA.counter || {};
   const lignes = Object.entries(c.by_stage || {}).map(([k, v]) =>
     `<tr><td>${esc(k)}</td><td>${v.counted}</td><td>${v.calibrations}</td><td>${v.stale}</td></tr>`).join('');
-  const bh = c.bh || {};
+  const bh = c.bh || [];
   $('#counter').innerHTML = `
     <dl class="kv"><dt>Tests comptés</dt><dd class="mono"><b>${c.counted ?? '—'}</b> — le dénominateur de la phase 15</dd>
       <dt>Lignes de calibration</dt><dd class="mono">${c.calibrations ?? '—'} (hors décompte)</dd>
       <dt>Périmées</dt><dd class="mono">${c.stale ?? '—'} (harnais antérieur, D05)</dd>
       <dt>Harnais courant</dt><dd class="mono">${esc(DATA.harness)}</dd></dl>
     <div class="scroll"><table><thead><tr><th>étape</th><th>comptés</th><th>calibr.</th><th>périmés</th></tr></thead><tbody>${lignes}</tbody></table></div>
-    ${bh.n ? `<span class="lbl">Le seuil du lot (Benjamini–Hochberg, q = ${bh.q})</span>
-    <p class="note">${bh.n} hypothèses dans le lot. La meilleure doit dépasser t ≈ <b class="mono">${bh.t_first}</b> (p ≤ ${bh.p_first}) ; la n-ième, t ≈ <b class="mono">${bh.t_last}</b>. Chaque hypothèse de plus dans le lot rend le premier seuil plus sévère. Aucun IC n'est calculé ici : ce sont les seuils de D25.</p>` : ''}`;
+    ${bh.length ? `<span class="lbl">Le seuil de chaque lot (Benjamini–Hochberg)</span>
+    <div class="scroll"><table><thead><tr><th>lot</th><th>taille</th><th>hyp. écrites</th><th>t de la meilleure</th><th>t de la dernière</th></tr></thead><tbody>
+    ${bh.map(b => `<tr><td>${esc(b.lot)}</td><td>${b.n}</td><td>${b.written}</td><td>${b.t_first}</td><td>${b.t_last}</td></tr>`).join('')}</tbody></table></div>
+    <p class="note">Il n'y a pas de plafond : de nouvelles hypothèses entrent dans de nouveaux lots. Chaque lot est fermé à sa déclaration, parce que la correction BH n'est valide que sur un ensemble fixé avant la mesure ; plus un lot est grand, plus son premier seuil est sévère. Aucun IC n'est calculé ici : ce sont les seuils de D25, q = 0,10.</p>` : ''}`;
 }
 
 /* ----------------------------------------------------------------- quota */
 function quota() {
-  const q = DATA.quota;
-  if (!q || !q.windows) { $('#quota').innerHTML = '<p class="empty">Quota non relevé à la génération de cette page.</p>'; return; }
-  $('#q-when').textContent = 'relevé le ' + (q.at || '').replace('T', ' ').slice(0, 16);
-  $('#quota').innerHTML = q.windows.map(w => {
-    const col = w.percentUsed >= 85 ? 'var(--neg)' : w.percentUsed >= 60 ? 'var(--warn)' : 'var(--pos)';
-    return `<div class="gline"><span class="lbl">${esc(w.label)} · remise à zéro ${esc((w.resetsAt || '').replace('T', ' ').slice(0, 16))} UTC</span>
-      <span class="track"><i style="left:0;width:${w.percentUsed}%;background:${col}"></i></span>
-      <span class="mono">${w.percentUsed} % utilisés</span></div>`;
-  }).join('') + `<p class="note">Coût mesuré d'une fiche (recette + deux codeurs) : environ ${(q.per_fiche || 325000).toLocaleString('fr-FR')} tokens. Le tutoriel interdit de lancer un groupe au-delà de 85 % de la fenêtre de 5 heures. Ce relevé date de la génération de la page ; il ne se met pas à jour seul.</p>`;
+  const qs = DATA.quotas || [];
+  $('#q-when').textContent = `${qs.length} Claude`;
+  if (!qs.length) { $('#quota').innerHTML = '<p class="empty">Aucun relevé. Chaque Claude inscrit le sien : python scripts/quota.py --nom &lt;nom&gt; --fenetre … --semaine …</p>'; return; }
+  const barre = (label, pct, reset) => {
+    const col = pct >= 85 ? 'var(--neg)' : pct >= 60 ? 'var(--warn)' : 'var(--pos)';
+    return `<div class="gline"><span class="lbl">${esc(label)}${reset ? ' · remise à zéro ' + esc(String(reset).replace('T', ' ').slice(0, 16)) + ' UTC' : ''}</span>
+      <span class="track"><i style="left:0;width:${Math.min(100, pct)}%;background:${col}"></i></span>
+      <span class="mono">${pct} % utilisés · ${Math.max(0, 100 - pct)} % restants</span></div>`;
+  };
+  const conv = (q, cle, pct) => {
+    const c = q.calibration?.[cle + '_pct_par_million'];
+    if (!c) return null;
+    const tokens = Math.max(0, 100 - pct) / c * 1e6;
+    return Object.entries(q.costs).map(([k, v]) => `<tr><td>${esc(k)}</td><td>${Math.floor(tokens / v).toLocaleString('fr-FR')}</td></tr>`).join('');
+  };
+  $('#quota').innerHTML = qs.map(q => {
+    const r = q.last;
+    const cf = conv(q, 'fenetre', r.fenetre), cs = conv(q, 'semaine', r.semaine);
+    const table = (cf || cs) ? `<div class="scroll"><table><thead><tr><th>ce qui tient encore</th><th>${cs ? 'cette semaine' : 'fenêtre de 5 h'}</th></tr></thead><tbody>${cs || cf}</tbody></table></div>
+      <p class="note">Conversion mesurée sur ${q.n_releves} relevés : ${q.calibration.semaine_pct_par_million ? q.calibration.semaine_pct_par_million.toFixed(2) + ' % de la semaine par million de tokens' : ''}. Un papier codé = une fiche du lot.</p>`
+      : `<p class="warnbox">Conversion en papiers à calibrer : elle se mesure au premier groupe de travail (relevé avant, relevé après avec --depense). Aucun chiffre n'est supposé.</p>`;
+    return `<div class="gauge" style="padding:0;border-bottom:1px solid var(--line);padding-bottom:12px"><span class="lbl" style="color:var(--ink)">${esc(q.name)} · relevé ${esc((r.at || '').replace('T', ' '))} UTC</span>
+      ${barre('Fenêtre de 5 heures', r.fenetre, r.reset_fenetre)}${barre('Semaine', r.semaine, r.reset_semaine)}${table}</div>`;
+  }).join('') + '<p class="note">Un relevé par compte : les sessions d\'un même compte partagent son quota. Le tutoriel interdit de lancer un groupe au-delà de 85 % de la fenêtre de 5 heures. Les relevés ne se mettent pas à jour seuls.</p>';
 }
 
 /* ---------------------------------------------------------------- départ */

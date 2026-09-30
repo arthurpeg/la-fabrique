@@ -340,6 +340,17 @@ def ecartes(lot: dict, liste_ic: list[dict], hc: str) -> list[dict]:
     return out
 
 
+def tous_les_lots() -> list[dict]:
+    """Chaque lot déclaré (`hypotheses/LOT-*.json`) : il n'y a pas de plafond, un lot
+    suit l'autre ; chacun est fermé à sa déclaration, pour que BH y soit valide."""
+    out = []
+    for f in sorted(HYP.glob("LOT-*.json")):
+        d = lire_json(f) or {}
+        d["_name"] = f.stem
+        out.append(d)
+    return out
+
+
 def entonnoir(lot: dict, reg: list[dict]) -> list[dict]:
     """Combien de papiers à chaque étape, de la moisson au test. Des comptes, pas des IC."""
     from statut_papiers import bilan  # noqa: PLC0415
@@ -348,7 +359,7 @@ def entonnoir(lot: dict, reg: list[dict]) -> list[dict]:
     works = [r for r in rows if r["origin"] == "moisson"]
     tri = lire_json(REPO / "corpus" / "triage_harvest_verdicts.json", [])
     fiches = sum(len(list(d.glob("*.json"))) for d in FICHES)
-    entrees = lot.get("fiches", [])
+    entrees = [e for x in tous_les_lots() for e in x.get("fiches", [])]
     ids = {e["fiche_id"] for e in entrees}
     concord = {c["fiche_id"]: c["verdict"] for c in lire(CONCORDANCE)}
     mesures = {r["signal_id"] for r in reg if r.get("stage") == "09-passage"}
@@ -363,7 +374,7 @@ def entonnoir(lot: dict, reg: list[dict]) -> list[dict]:
         ("retenus par le tri", sum(1 for v in tri if v["verdict"] in ("oui", "partiel")),
          "oui + partiel"),
         ("fiches (AMORCE + moisson)", fiches, "corpus/fiches, corpus/fiches_harvest"),
-        ("dans le lot 09", len(entrees), "hypotheses/LOT-09.json"),
+        ("dans un lot", len(entrees), "hypotheses/LOT-*.json, tous les lots"),
         ("recette valide", sum(1 for i in ids if (RECETTES / f"{i}.json").is_file()), "D34"),
         ("signal codé", sum(1 for i in ids
                             if (REPO / "signals" / (i.replace("-", "_") + ".py")).is_file()), ""),
@@ -387,12 +398,15 @@ def compteur(reg: list[dict], lot: dict, hc: str, counted: int) -> dict:
             d["counted"] += 1
         if r.get("code_hash") != hc:
             d["stale"] += 1
-    n, q = lot.get("n") or 0, lot.get("q") or 0.10
-    bh = {}
-    if n:
-        z = NormalDist()
-        bh = {"n": n, "q": q, "p_first": f"{q / n:.4f}", "t_first": f"{z.inv_cdf(1 - q / n):.2f}",
-              "t_last": f"{z.inv_cdf(1 - q):.2f}"}
+    z = NormalDist()
+    bh = []
+    for x in tous_les_lots():
+        n, q = x.get("n") or 0, x.get("q") or 0.10
+        if n:
+            bh.append({"lot": x["_name"], "n": n, "q": q, "p_first": f"{q / n:.4f}",
+                       "t_first": f"{z.inv_cdf(1 - q / n):.2f}",
+                       "t_last": f"{z.inv_cdf(1 - q):.2f}",
+                       "written": sum(1 for e in x.get("fiches", []) if e.get("ref"))})
     return {"counted": counted,
             "calibrations": sum(1 for r in reg if r.get("hypothesis_ref") is None),
             "stale": sum(1 for r in reg if r.get("code_hash") != hc),
@@ -408,7 +422,19 @@ def fenetres() -> dict:
     return {k: f"{v['start']}–{v['end']}" for k, v in w.items()}
 
 
-def rassembler(avec_base: bool, quota: Path | None = None) -> dict:
+def quotas() -> list[dict]:
+    """Un relevé par Claude (`scripts/quota.py`), le dernier de chacun."""
+    out = []
+    for f in sorted((REPO / "scripts" / "out" / "quota").glob("*.json")):
+        d = lire_json(f) or {}
+        if d.get("releves"):
+            out.append({"name": d["name"], "last": d["releves"][-1],
+                        "calibration": d.get("calibration"), "costs": d.get("couts") or {},
+                        "n_releves": len(d["releves"])})
+    return out
+
+
+def rassembler(avec_base: bool) -> dict:
     from harness import registry  # noqa: PLC0415
 
     reg = [json.loads(x) for x in REGISTRE.read_text(encoding="utf-8").splitlines() if x.strip()]
@@ -425,9 +451,7 @@ def rassembler(avec_base: bool, quota: Path | None = None) -> dict:
         "registry_lines": len(reg),
         "windows": fenetres(),
         "clock": "America/New_York",
-        "lot": {"n": lot.get("n"), "declared_at": lot.get("declared_at"),
-                "decision": lot.get("decision"),
-                "with_hypothesis": sum(1 for e in lot.get("fiches", []) if e.get("ref"))},
+        "lots": len(tous_les_lots()),
         "verified": sum(1 for c in {c["fiche_id"]: c for c in lire(CONCORDANCE)}.values()
                         if c["verdict"] == "CONCORDANT"),
         "judgements": len(lire(JUGEMENTS)),
@@ -437,7 +461,7 @@ def rassembler(avec_base: bool, quota: Path | None = None) -> dict:
         "excluded": liste_ecartes,
         "funnel": entonnoir(lot, reg),
         "counter": compteur(reg, lot, hc, registry.counted_tests()),
-        "quota": lire_json(quota) if quota else None,
+        "quotas": quotas(),
         "codes": codes,
     })
 
@@ -446,9 +470,8 @@ def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description="Le tableau de bord — rassemble, ne calcule rien")
     ap.add_argument("--base", action="store_true", help="relier les citations aux morceaux")
     ap.add_argument("--sortie", type=Path, default=SORTIE)
-    ap.add_argument("--quota", type=Path, help="le relevé du quota (JSON), si on l'a")
     a = ap.parse_args(argv)
-    data = rassembler(a.base, a.quota)
+    data = rassembler(a.base)
     page = TEMPLATE.read_text(encoding="utf-8").replace(
         "/*__DATA__*/null", json.dumps(data, ensure_ascii=False).replace("</", "<\\/"))
     a.sortie.parent.mkdir(parents=True, exist_ok=True)
