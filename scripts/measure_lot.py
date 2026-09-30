@@ -48,6 +48,7 @@ from gate_09 import (  # noqa: E402
     importer_par_signal_id,
     lignes_hors_protocole,
 )
+from verification import fautes_d34_du_lot  # noqa: E402
 
 from harness import registry  # noqa: E402
 
@@ -89,6 +90,7 @@ def prealables() -> tuple[list[str], list[dict]]:
         if (corr.get("measured_at") or "") < (lot.get("declared_at") or "9"):
             fautes.append("la matrice de corrélation n'est pas datée après la clôture du lot")
     registre = registry.read_all()
+    fautes += fautes_d34_du_lot(lot, registre, STAGE)
     for r in lignes_hors_protocole(entries, registre, courant):
         fautes.append(f"{r.get('test_id')} touche déjà le lot hors protocole (D28)")
     a_faire = [e for e in entries

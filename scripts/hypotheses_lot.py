@@ -38,6 +38,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 
 from code_signal import fiche_files, signaux_existants  # noqa: E402
 from gate_09 import LOT_FILE, importer_par_signal_id  # noqa: E402
+from verification import concordance, principal_de  # noqa: E402
 
 from harness import registry  # noqa: E402
 
@@ -129,8 +130,14 @@ def do_status() -> int:
     codes = signaux_existants()
     for e in lot["fiches"]:
         fid = e["fiche_id"]
-        etat = ("hypothèse " + e["ref"]) if e.get("ref") else (
-            "signal codé, hypothèse à écrire" if fid in codes else "signal à coder")
+        if e.get("ref"):
+            etat = "hypothèse " + e["ref"]
+        elif fid not in codes:
+            etat = "signal à coder"
+        elif not concordance(fid, principal_de(fid))[0]:
+            etat = "codé, double codage à faire (D34)"
+        else:
+            etat = "vérifié, hypothèse à écrire"
         print(f"  {etat:<34} {fid}")
     faits = sum(1 for e in lot["fiches"] if e.get("ref"))
     print(f"\n{faits}/{len(lot['fiches'])} hypothèses écrites")
@@ -149,6 +156,11 @@ def do_write() -> int:
         if fid in touches:
             print(f"  REFUS {fid} : son signal a déjà une ligne au registre — il n'est "
                   "plus à l'aveugle et ne peut pas entrer dans le lot (D28)")
+            continue
+        ok, pourquoi = concordance(fid, principal_de(fid))
+        if not ok:
+            print(f"  ATTENTE {pourquoi} — l'hypothèse s'écrira quand le codage "
+                  "sera vérifié (D34)")
             continue
         module = importer_par_signal_id(fid)
         if module.EXPECTED_SIGN not in (1, -1):

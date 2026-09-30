@@ -1,0 +1,215 @@
+{
+  "fiche_id": "baltussen-2021-hedging-demand-intraday-momentum",
+  "written": "2026-09-30",
+  "written_by": "claude-opus-5-5",
+  "formula": {
+    "statement": "score r_ROD,t = P(c-30,t) / P(c,t-1) - 1 : rendement simple d'un achat a la cloture de la veille et d'une vente 30 minutes avant la cloture du jour t, sur les heures de seance retenues. Il predit r_LH,t, rendement des 30 dernieres minutes (P(c,t)/P(c-30,t) - 1). Evaluation par regression r_LH,t = a + b_ROD * r_ROD,t + e_t (Eq. 7) et par strategie de timing binaire sur le signe de r_ROD (Eq. 12). Predicteurs concurrents sur le meme decoupage : r_ONFH = P(o+30,t)/P(c,t-1) - 1 (Eq. 1), r_M = P(c-60,t)/P(o+30,t) - 1 (Eq. 3), r_SLH = P(c-30,t)/P(c-60,t) - 1 (Eq. 4).",
+    "quoted": "r ROD,t = P c−30,t / P c,t−1 − 1 , (2)",
+    "quoted_source": "r ROD,t = P c−30 ,t P c,t−1 −1 , (2)",
+    "quoted_repair": "math_notation",
+    "reason": null
+  },
+  "inputs": [
+    {
+      "name": "price_prev_close",
+      "description": "P(c,t-1) : prix a l'heure de cloture retenue (heures 'communes' du marche sous-jacent, pas la fin de seance du future) du jour de negociation precedent",
+      "known_at": "a la cloture retenue du jour t-1",
+      "quoted": "using the price at our closing time on the previous day"
+    },
+    {
+      "name": "price_close_minus_30",
+      "description": "P(c-30,t) : prix 30 minutes avant la cloture retenue du jour t ; fin de la fenetre de r_ROD et debut de la fenetre cible r_LH",
+      "known_at": "a c-30 du jour t",
+      "quoted": "return until 30 minutes before close r ROD ) is positive"
+    },
+    {
+      "name": "price_open_plus_30",
+      "description": "P(o+30,t) : prix 30 minutes apres l'ouverture retenue du jour t ; sert seulement aux predicteurs concurrents r_ONFH et r_M",
+      "known_at": "a o+30 du jour t",
+      "quoted": "selling 30 minutes after today’s ( t) opening (o)"
+    },
+    {
+      "name": "price_close_minus_60",
+      "description": "P(c-60,t) : prix une heure avant la cloture retenue ; sert seulement aux predicteurs concurrents r_M et r_SLH",
+      "known_at": "a c-60 du jour t",
+      "quoted": "r M,t = P c−60,t / P o+30,t − 1 (3)",
+      "quoted_source": "P c−60 ,t P o+30 ,t −1 (3)",
+      "quoted_repair": "math_notation"
+    },
+    {
+      "name": "price_close",
+      "description": "P(c,t) : prix a la cloture retenue du jour t ; ne sert qu'a la cible r_LH, jamais au score",
+      "known_at": "a la cloture retenue du jour t (posterieur au score)",
+      "quoted": "The return during the last 30 minutes before the market close is positively predicted by the return during the rest of the day"
+    },
+    {
+      "name": "one_minute_bars",
+      "description": "barres d'une minute construites depuis du tick-by-tick (Tick Data LLC), contrat le plus liquide, roule sur le volume",
+      "known_at": "a la cloture de chaque minute",
+      "quoted": "We retrieve one-minute intervals containing the corre- sponding open price, close price and trade volume."
+    }
+  ],
+  "timing": {
+    "statement": "Le score se lit a c-30 du jour t (30 minutes avant la cloture retenue). Position prise a c-30 et tenue jusqu'a la cloture c du meme jour : longue si r_ROD > 0, courte sinon. Rebalancement quotidien.",
+    "quoted": "If the predictor return is positive, we will earn the last half-hour return, r LH , otherwise we will earn −r LH .",
+    "reason": null
+  },
+  "parameters": [
+    {
+      "name": "rod_end_offset_minutes",
+      "value": 30,
+      "unit": "minutes avant la cloture",
+      "quoted": "return until 30 minutes before close r ROD ) is positive"
+    },
+    {
+      "name": "target_window_minutes",
+      "value": 30,
+      "unit": "minutes",
+      "quoted": "The return during the last 30 minutes before the market close is positively predicted"
+    },
+    {
+      "name": "onfh_end_offset_minutes",
+      "value": 30,
+      "unit": "minutes apres l'ouverture",
+      "quoted": "selling 30 minutes after today’s ( t) opening (o)",
+      "note": "predicteur concurrent r_ONFH uniquement"
+    },
+    {
+      "name": "m_end_offset_minutes",
+      "value": 60,
+      "unit": "minutes avant la cloture",
+      "quoted": "r M,t = P c−60,t / P o+30,t − 1 (3)",
+      "quoted_source": "P c−60 ,t P o+30 ,t −1 (3)",
+      "quoted_repair": "math_notation",
+      "note": "predicteurs concurrents r_M et r_SLH uniquement"
+    },
+    {
+      "name": "oos_min_observations",
+      "value": 500,
+      "unit": "observations journalieres",
+      "quoted": "window, requiring at least 500 observations, or about two"
+    },
+    {
+      "name": "min_daily_volume_contracts",
+      "value": 100,
+      "unit": "contrats par jour",
+      "quoted": "(iv) removing all days in which the total traded vol- ume is less than 100 contracts"
+    },
+    {
+      "name": "es_session_hours",
+      "value": "09:30-16:00",
+      "unit": "heure locale (Eastern)",
+      "quoted": "tions of the S&P E-Mini between 09:30 and 16:00, as these are the trading hours of the S&P 500"
+    },
+    {
+      "name": "session_hours_per_instrument_over_time",
+      "value": null,
+      "unit": "heure locale de l'exchange",
+      "quoted": "The trading hours we consider over time and average volume plots are avail- able upon request.",
+      "reason": "Tables 1 et A1-A4 ne donnent que les heures en fin d'echantillon ; l'historique des heures retenues, dont depend tout le decoupage ON/FH/M/SLH/LH, n'est pas publie."
+    },
+    {
+      "name": "jump_percentile_low_high",
+      "value": 10,
+      "unit": "percentile (10 / 90)",
+      "quoted": "below (above) the 10% (90%) percentile of the full-sample",
+      "note": "uniquement pour le test des sauts (Table 10), pas pour le signal r_ROD"
+    }
+  ],
+  "ambiguities": [
+    {
+      "question": "Quel prix de la barre d'une minute vaut P a un instant donne (c-30, c, o+30) : l'open ou le close de la minute, et la barre qui finit ou qui commence a cet instant ?",
+      "resolution": "Le papier parle du prix de cloture a l'heure donnee ; il ne precise pas l'etiquetage de la barre (minute qui se termine a 08:30 ou qui commence a 08:30).",
+      "quoted": "r ONF H is computed over the closing price at 17:15 yesterday and the closing price of the ﬁrst half hour today, 08:30."
+    },
+    {
+      "question": "Quelles heures d'ouverture et de cloture exactes retenir pour chaque contrat et a chaque date ?",
+      "resolution": null,
+      "quoted": "The trading hours we consider over time and average volume plots are avail- able upon request."
+    },
+    {
+      "question": "Fuseau horaire et changement d'heure : les heures US sont dites en 'Eastern Standard Time' ; faut-il suivre l'heure locale d'ete (EDT) ou une heure fixe EST ? Certains soft commodities sont en heure de Londres.",
+      "resolution": null,
+      "quoted": "Trading hours are expressed in the local exchange time zone. U.S.-listed futures are expressed in Eastern Standard Time (EST)."
+    },
+    {
+      "question": "Le jour du roll, P(c,t-1) est-il pris sur l'ancien contrat ou sur le nouveau ?",
+      "resolution": null,
+      "quoted": "and roll it over when the daily tick volume of the next back-month contract exceeds the current contract."
+    },
+    {
+      "question": "Que faire si aucune transaction n'a lieu dans la minute c-30 (ou c, o+30) : prix de la derniere minute disponible, ou jour exclu ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Apres un week-end, un jour ferie ou un jour retire par les filtres (cloture anticipee, volume < 100), P(c,t-1) est-il la cloture du dernier jour retenu ou du dernier jour de cotation ?",
+      "resolution": "Le papier retire les jours de cloture anticipee et les jours non ouvres mais ne dit pas quelle cloture sert de reference le jour suivant.",
+      "quoted": "removing all days in which the exchange closed earlier (such as Memorial Day)"
+    },
+    {
+      "question": "Le score est-il r_ROD continu ou son signe ?",
+      "resolution": "Les deux : r_ROD continu dans les regressions (Eq. 7), son signe dans la strategie de timing (Eq. 12).",
+      "quoted": "take a long position when the ﬁrst half hour return r ONF H (return until 30 minutes before close r ROD ) is positive, and a short position otherwise"
+    },
+    {
+      "question": "Si r_ROD vaut exactement zero, position longue, courte ou nulle ?",
+      "resolution": "Courte : la position longue exige r > 0, tout autre cas est 'otherwise'.",
+      "quoted": "−r_LH, otherwise.",
+      "quoted_source": "−r LH , otherwise .",
+      "quoted_repair": "math_notation"
+    },
+    {
+      "question": "Rendement simple ou logarithmique ?",
+      "resolution": "Simple : rapport de prix moins un.",
+      "quoted": "r ROD,t = P c−30,t / P c,t−1 − 1 , (2)",
+      "quoted_source": "r ROD,t = P c−30 ,t P c,t−1 −1 , (2)",
+      "quoted_repair": "math_notation"
+    },
+    {
+      "question": "Pour le S&P 500, la cloture de reference est-elle celle du cash (16:00) ou celle du future (16:15) ?",
+      "resolution": "Celle du sous-jacent cash, 16:00 ; la predictibilite ne s'etend pas au rendement du future apres 16:00.",
+      "quoted": "tions of the S&P E-Mini between 09:30 and 16:00, as these are the trading hours of the S&P 500"
+    },
+    {
+      "question": "Pour les futures obligataires, qu'est-ce que la 'cloture' ?",
+      "resolution": "La fin de la periode de settlement quotidien (sauf futures australiens et japonais : heures regulieres).",
+      "quoted": "the end of the daily settlement period as close."
+    },
+    {
+      "question": "A quelle date exacte passer du contrat standard au contrat mini ?",
+      "resolution": "Apres l'introduction du mini ; la date precise de bascule n'est pas donnee.",
+      "quoted": "we ﬁrst consider the standard contracts and replace them with the mini versions after its introduction."
+    },
+    {
+      "question": "Comment les contrats sont-ils agreges dans la strategie : poids egaux sur les rendements, ou normalisation par la volatilite ?",
+      "resolution": "Portefeuille 1/N par classe d'actifs ; aucune normalisation par la volatilite n'est mentionnee.",
+      "quoted": "a 1/ N portfolio is used to combine the various futures belonging to the same asset class into one portfolio."
+    },
+    {
+      "question": "Pour les matieres premieres, comment les heures sont-elles fixees avant et apres l'arrivee de la cotation continue ?",
+      "resolution": "Heures reelles de cotation avant ; apres, heures choisies d'apres des graphiques de volume non publies.",
+      "quoted": "we select trading hours based on volume plots"
+    },
+    {
+      "question": "Hybride NGE : le regime se lit-il sur NGE(t-1) ou NGE(t) ? La Table 7 conditionne sur NGE t-1, le texte de la Table 8 parle de NGE t multiplie par r_ROD,t-1.",
+      "resolution": null,
+      "quoted": "NGE t−1 < 0 ... We include NGE t and NGE t multiplied by r ROD,t−1 into Eq. (7) ."
+    },
+    {
+      "question": "Hybride NGE : la borne est-elle NGE < 0 ou NGE <= 0 ? La legende de la Table 8 et sa ligne ne concordent pas.",
+      "resolution": null,
+      "quoted": "I NGE< 0 ∗ r ROD,t ... I NGE≤0 ∗ r ROD,t"
+    },
+    {
+      "question": "Test des sauts : les percentiles 10/90 sont-ils calcules sur l'echantillon complet ou en fenetre glissante ?",
+      "resolution": "Sur la distribution de l'echantillon complet de l'actif.",
+      "quoted": "below (above) the 10% (90%) percentile of the full-sample"
+    },
+    {
+      "question": "R2 hors echantillon : la regression est-elle re-estimee chaque jour sur la fenetre extensible, et le minimum de 500 observations compte-t-il par marche ?",
+      "resolution": "Par marche individuel, fenetre extensible, au moins 500 observations ; la frequence de re-estimation n'est pas dite.",
+      "quoted": "For each individual market, we make forecasts using an expanding window, requiring at least 500 observations"
+    }
+  ]
+}

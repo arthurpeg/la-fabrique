@@ -152,6 +152,37 @@ def jugement_vert(module_path: Path) -> tuple[bool, str]:
 # La concordance — le verdict qui ouvre le lot
 # ---------------------------------------------------------------------------
 
+def principal_de(fiche_id: str) -> Path:
+    """Le module principal d'une fiche — la règle de `code_signal.module_path`."""
+    return REPO / "signals" / (fiche_id.replace("-", "_") + ".py")
+
+
+def fautes_d34_du_lot(lot: dict, registre: list[dict], stage: str) -> list[str]:
+    """Ce que `D34` exige d'un lot, pour la porte 09 et la mesure.
+
+    1. chaque entrée a un double codage CONCORDANT, à l'empreinte actuelle de
+       son module principal ;
+    2. chaque fiche écartée l'a été AVANT la première mesure du lot — écarter
+       après avoir vu un IC serait choisir le lot sur son résultat (`D28`).
+    """
+    fautes: list[str] = []
+    entries = lot.get("fiches") or lot.get("hypotheses") or []
+    for e in entries:
+        fid = e.get("fiche_id") or e.get("signal_id")
+        ok, pourquoi = concordance(fid, principal_de(fid))
+        if not ok:
+            fautes.append(f"{pourquoi} (D34)")
+    ids = ({e.get("signal_id") for e in entries} | {e.get("fiche_id") for e in entries}
+           | {x.get("fiche_id") for x in lot.get("ecartees_codage") or []}) - {None}
+    mesures = sorted(r["timestamp"] for r in registre
+                     if r.get("stage") == stage and r.get("signal_id") in ids)
+    for x in lot.get("ecartees_codage") or []:
+        if mesures and (x.get("at") or "9") >= mesures[0]:
+            fautes.append(f"{x.get('fiche_id')} écartée le {x.get('at')}, APRÈS la première "
+                          f"mesure du lot ({mesures[0]}) — D34 l'interdit")
+    return fautes
+
+
 def concordance(fiche_id: str, module_path: Path) -> tuple[bool, str]:
     """Le module principal a-t-il un verdict CONCORDANT, à son empreinte actuelle ?"""
     if not module_path.is_file():

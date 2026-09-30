@@ -410,6 +410,12 @@ def main(argv: list[str]) -> int:
         if not mesuree_le or mesuree_le < declared_at:
             fautes.append("la matrice de corrélation n'est pas datée après la clôture du lot")
 
+    # `D34` : chaque signal du lot a un double codage concordant, et chaque
+    # fiche écartée l'a été avant la première mesure.
+    from verification import fautes_d34_du_lot  # noqa: PLC0415
+
+    fautes += fautes_d34_du_lot(lot, registry.read_all(), STAGE)
+
     if fautes:
         print("PORTE 09 : NON FRANCHIE")
         for f in fautes:
