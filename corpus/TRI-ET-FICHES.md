@@ -38,6 +38,14 @@ de l'invariant I : **l'IA propose, le code déterministe tranche.**
 4. **Aucun réseau n'est nécessaire** pour trier ni pour ficher : le tri lit les
    PDF locaux, l'extraction lit `corpus/text/`. Seule la promotion télécharge.
 
+## 0 bis. Les sous-agents du projet — à utiliser en priorité
+
+`fabrique-trieur` (sonnet) et `fabrique-extracteur` (opus), définis dans
+`.claude/agents/`, portent leurs règles d'isolement et n'ont que Read et Write.
+Lance-les avec **le seul chemin de la consigne** comme message. Une session
+ouverte avant leur création ne les voit pas : emploie alors `general-purpose`
+avec la consigne mot pour mot ci-dessous.
+
 ## 1. L'ordre de priorité
 
 Chaque étape nourrit la suivante. Quand il faut choisir, fais **d'abord ce qui

@@ -66,6 +66,23 @@ aucun signal valable : le juge le dira.
 
 ---
 
+## 1 bis. Les sous-agents du projet — à utiliser en priorité
+
+Le projet définit ses sessions isolées dans `.claude/agents/`, disponibles dans
+**toute session ouverte sur le dépôt** (chargées au démarrage de la session) :
+
+| Rôle | `subagent_type` | Modèle | Outils |
+|---|---|---|---|
+| recette | `fabrique-recette` | opus | Read, Write |
+| codeur principal | `fabrique-codeur` | opus | Read, Write |
+| codeur témoin | `fabrique-temoin` | sonnet | Read, Write |
+
+Leurs règles d'isolement sont écrites **dans leur définition** et ils n'ont ni
+recherche, ni shell, ni web : ils ne peuvent pas fouiller le dépôt. Lance-les
+avec **le seul chemin de la consigne** comme message, rien d'autre. Si une
+session ne les voit pas (ouverte avant leur création), emploie
+`general-purpose` avec le modèle et la consigne mot pour mot ci-dessous.
+
 ## 2. La boucle, fiche par fiche
 
 Travaille par **groupes de 5 fiches**, sessions lancées **en parallèle**, et
