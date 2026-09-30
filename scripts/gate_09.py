@@ -412,7 +412,7 @@ def main(argv: list[str]) -> int:
 
     # `D34` : chaque signal du lot a un double codage concordant, et chaque
     # fiche écartée l'a été avant la première mesure.
-    from verification import fautes_d34_du_lot  # noqa: PLC0415
+    from codage_verifie import fautes_d34_du_lot  # noqa: PLC0415
 
     fautes += fautes_d34_du_lot(lot, registry.read_all(), STAGE)
 

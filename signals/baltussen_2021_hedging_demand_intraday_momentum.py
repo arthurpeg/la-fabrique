@@ -1,90 +1,32 @@
-"""r_ROD — le rendement du reste de la journee, predicteur de la derniere demi-heure.
+"""Baltussen, Da, Lammers, Martens (2021) -- r_ROD, le rendement du reste de la journee.
 
-Ce module code la recette de la fiche `baltussen-2021-hedging-demand-intraday-momentum`,
-et elle seule.
+Score : r_ROD,t = P(c-30,t) / P(c,t-1) - 1 (Eq. 2), rendement simple d'un achat a
+la cloture de la seance precedente et d'une vente 30 minutes avant la cloture de
+la seance t. Il predit positivement r_LH,t, le rendement des 30 dernieres minutes.
 
-Ce que dit la fiche (`signal_construction`)
--------------------------------------------
-La journee de negociation va de la cloture du jour t-1 a la cloture du jour t. Elle
-est decoupee en cinq intervalles : ON, FH, M, SLH, LH. Le signal retenu est le
-rendement du *reste de la journee* :
+Mecanique : `_common.run` place le score a UNE barre par seance, la premiere dont
+la distance a la cloture declaree de la fenetre est au plus `horizon_bars`
+(30 par defaut, soit c-30 sur des barres d'une minute). Cet ancrage se lit sur
+l'horloge, pas sur les donnees.
 
-    r_ROD,t = P(c-30, t) / P(c, t-1) - 1
+P(c,t-1) est la derniere cloture de la seance precedente de la meme cellule, lue
+dans `_common.cell_bars` ; elle est entierement anterieure a la seance notee, donc
+causale.
 
-c'est-a-dire le rendement d'un achat a la cloture de la veille et d'une vente trente
-minutes avant la cloture du jour t. Il se lit a c-30, n'utilise que des prix
-anterieurs a cet instant, et predit le rendement des trente dernieres minutes
-(r_LH). Aucun parametre n'est ajuste.
-
-Le signe attendu
-----------------
-`EXPECTED_SIGN = +1`. Le `claim` de la fiche est explicite : r_LH est *positivement*
-predit par r_ROD (momentum intrajournalier). La regression Eq. (7),
-r_LH = a + b_ROD * r_ROD + e, a un b_ROD positif et fortement significatif
-(t = 7.29 sur les actions poolees), et la regle de negociation est « longue si le
-predicteur est positif, courte sinon ». On rend donc le rendement r_ROD lui-meme,
-pas son signe : la regle binaire de la fiche est une transformation monotone de ce
-nombre, et la garder continue evite de fabriquer des ex aequo massifs.
-
-Mecanique, et pourquoi elle est causale
----------------------------------------
-L'ancrage de la barre notee est delegue a `_common.run` : une barre par seance et
-par cellule, la premiere dont la distance a la cloture declaree de la fenetre est au
-plus `horizon_bars`. Cet ancrage se lit sur l'horloge, jamais sur les donnees ; avec
-`horizon_bars = 30` et des barres d'une minute, il tombe exactement sur le c-30 de
-la fiche.
-
-Le predicteur ne reçoit que les clotures d'UNE seance, alors que r_ROD a besoin de
-la cloture de la veille. On la fournit par une table construite en amont depuis
-`_common.cell_bars` : la derniere clotures de chaque seance, *decalee d'une seance*.
-La valeur lue a la seance t est donc celle de la seance t-1, entierement passee — et
-elle est identique sur un panel tronque, puisque tronquer ne change pas une seance
-deja close (et si la troncature coupe la seance t-1, la seance t n'existe plus et
-n'est pas notee). Dans le predicteur, seuls `closes.index[position]` et
-`closes.iloc[position]` sont lus : rien au-dela de la position.
-
-Les prix sont ceux de `cell_bars`, recolles, ce qui importe ici plus qu'ailleurs :
-r_ROD franchit une frontiere de seance, donc un raccord de contrat non recolle
-produirait un faux rendement de nuit.
-
-Ce que la fiche ne donne pas, et qui n'a donc pas ete invente
-------------------------------------------------------------
-- **Les heures de seance.** Tout le decoupage ON/FH/M/SLH/LH depend des heures
-  « communes » du sous-jacent, que les auteurs ne publient pas (`what_is_missing`,
-  « available upon request »). Aucune heure n'est ecrite ici : la frontiere est la
-  cloture declaree de la fenetre du panel, quelle qu'elle soit.
-- **La granularite des barres.** La fiche travaille sur des barres d'une minute
-  construites depuis du tick-by-tick. Si le panel est plus grossier, `c-30` n'est pas
-  reconstituable a l'identique ; `horizon_bars` reste le seul reglage, et il est
-  laisse au harnais plutot que redefini ici.
-- **Les couts.** Aucun cout, tick, multiplicateur ni frais de roll n'existe dans le
-  papier (`no_transaction_costs_in_results`) : le module n'en porte aucun, alors
-  meme que la recette impose un aller-retour quotidien.
-- **Le lag de publication et le fuseau de reference** ne sont pas specifies.
-
-Ce qui ne se transpose pas a neuf futures intraday
---------------------------------------------------
-- **Le regime de gamma negatif.** C'est pourtant la condition sous laquelle l'effet
-  existe (Table 7 : rien de significatif quand NGE(t-1) >= 0, soit environ la moitie
-  des jours). Il demande le NGE d'OptionMetrics / SqueezeMetrics et des NAV de LETF,
-  donnees que nous n'avons pas. Le signal code ici est donc l'effet
-  *inconditionnel*, c'est-a-dire une version diluee de ce que le papier decrit.
-- **Les Sharpe de 0.87 a 1.73.** Ils viennent de portefeuilles 1/N de 8 a 21 contrats
-  par classe d'actifs. A neuf futures, cette diversification transversale n'existe
-  pas ; les chiffres par contrat (Tables B1-B4) sont bien plus faibles. Aucun de ces
-  nombres n'est donc une cible, et aucun n'apparait dans ce code.
-- **La metrique.** Le papier mesure des R2 poolees, un R2 hors echantillon a fenetre
-  extensible (minimum 500 observations) et un Sharpe de strategie binaire. Rien de
-  cela n'est un IC ; la validation hors echantillon recursive n'est pas transposee,
-  elle appartiendrait au harnais et non au signal.
-- **Les predicteurs concurrents** r_ONFH, r_M et r_SLH sont dans la fiche mais sont
-  d'autres signaux : un module, un signal. Seul r_ROD est code ici.
-- **Le controle de reversion** a un a trois jours et l'arret de la predictabilite a
-  la cloture du cash (Table 12) sont des controles, pas des scores : ils ne sont pas
-  implementes.
+Ce qui manque et ce qui a ete fait a la place :
+- les heures d'ouverture/cloture retenues par le papier par marche ne sont pas
+  publiees : on prend la seance et la cloture declaree de la fenetre du panel ;
+- l'etiquetage de la barre d'une minute n'est pas precise : on prend la cloture
+  de la barre notee par `run` ;
+- le canal NGE (gamma net des teneurs de marche) exige des donnees absentes ;
+  seul le signal non conditionne est code ;
+- les Sharpe du papier viennent de portefeuilles 1/N de 8 a 21 contrats par
+  classe ; avec neuf futures, cette diversification ne se transpose pas.
 """
 
 from __future__ import annotations
+
+import math
 
 import pandas as pd
 
@@ -93,74 +35,112 @@ from signals import _common
 SIGNAL_ID = "baltussen-2021-hedging-demand-intraday-momentum"
 HYPOTHESIS = None
 PAPER = (
-    "Baltussen, Da, Lammers, Martens (2021), "
-    "Hedging demand and market intraday momentum, "
-    "Journal of Financial Economics"
+    "Baltussen, Da, Lammers, Martens (2021), Hedging demand and market intraday "
+    "momentum, Journal of Financial Economics 142, 377-403"
 )
 EXPECTED_SIGN = +1
+CHOICES = (
+    "la fiche dit que r_ROD predit positivement r_LH (Eq. 7, strategie longue si "
+    "r_ROD > 0) ; j'ai choisi EXPECTED_SIGN = +1, parce que c'est le sens annonce "
+    "du momentum intrajournalier",
+    "la fiche donne r_ROD continu (regressions) et son signe (strategie de timing) ; "
+    "j'ai rendu r_ROD continu, parce que c'est la variable de l'Eq. 7 et que le "
+    "harnais mesure un IC sur un score, le signe en etant une version appauvrie",
+    "la fiche dit P(c-30,t), 30 minutes avant la cloture retenue ; j'ai pris la "
+    "cloture de la barre ancree par _common.run avec horizon_bars (30 par defaut, "
+    "soit 30 barres d'une minute), parce que cet ancrage se lit sur l'horloge de la "
+    "cloture declaree de la fenetre, comme c-30 dans le papier",
+    "la fiche dit P(c,t-1), prix a la cloture retenue de la veille, sans preciser "
+    "le traitement des week-ends, jours feries ou jours retires ; j'ai pris la "
+    "derniere cloture disponible de la seance precedente de la meme cellule "
+    "(root, window) dans les clotures recollees de _common.cell_bars, parce que "
+    "c'est la derniere cloture de reference connue et qu'elle est anterieure a la "
+    "seance notee",
+    "la fiche laisse ouverte la question du roll le jour de bascule (P(c,t-1) sur "
+    "l'ancien ou le nouveau contrat) ; j'ai utilise les clotures recollees de "
+    "_common.cell_bars, parce qu'un rendement brut a travers un raccord est un "
+    "artefact",
+    "les heures de seance par marche ne sont pas publiees (available upon request) ; "
+    "j'ai pris la seance et la cloture declaree de la fenetre du panel, parce que "
+    "c'est la seule definition disponible, ce qui deplace les frontieres du "
+    "decoupage ON/FH/M/SLH/LH par rapport au papier",
+    "la fiche ne dit pas quoi faire si le prix a c-30 ou c(t-1) manque ; je n'ecris "
+    "aucun score (None) si la seance precedente est absente de la cellule ou si un "
+    "prix est manquant, non fini ou non positif, parce que le papier retire les prix "
+    "non positifs et qu'inventer un prix de reference serait inventer une donnee",
+    "la fiche mentionne un filtre de volume (jours < 100 contrats retires) et le "
+    "retrait des jours de cloture anticipee ; je ne les applique pas, parce que le "
+    "predicteur ne recoit que des clotures et que le calendrier des clotures "
+    "anticipees n'est pas dans la fiche",
+    "la fiche conditionne l'effet au signe du NGE ; je ne l'implemente pas, parce "
+    "que les donnees NGE (OptionMetrics, SqueezeMetrics) sont absentes",
+    "rendement simple et non logarithmique, parce que l'Eq. 2 ecrit un rapport de "
+    "prix moins un",
+)
 
 
-def _previous_session_close_by_bar(
-    closes: pd.Series, sessions: pd.Series
-) -> pd.Series:
-    """Pour chaque barre, la cloture de la seance precedente — P(c, t-1).
+def _previous_close_map(closes: pd.Series, sessions: pd.Series):
+    """Pour chaque barre, la derniere cloture de la seance precedente.
 
-    Construit par decalage d'une seance sur les clotures de seance : la valeur
-    portee par les barres de la seance t est celle de la seance t-1, jamais celle
-    de la seance t.
-    """
-    session_close = closes.groupby(sessions).last()
-    previous = session_close.shift(1)
-    mapped = sessions.map(previous)
-    return mapped[~mapped.index.duplicated()]
+    La seance precedente est terminee avant la premiere barre de la seance
+    courante : aucune lecture posterieure a la barre notee."""
+    frame = pd.DataFrame({"close": closes, "session": sessions}).dropna(
+        subset=["session"]
+    )
+    last_by_session = frame.groupby("session", sort=False)["close"].last()
+    first_ts = frame.reset_index().groupby("session", sort=False).first()
+    order = sorted(
+        last_by_session.index,
+        key=lambda s: first_ts.loc[s].iloc[0],
+    )
+    prev = {}
+    for i in range(1, len(order)):
+        prev[order[i]] = last_by_session.loc[order[i - 1]]
+    session_of_bar = frame["session"]
+    return session_of_bar, prev
 
 
-def _make_predictor(previous_close_by_bar: pd.Series):
-    """Le predicteur r_ROD pour une cellule, ferme sur sa table de clotures veille."""
-
-    def predictor(closes: pd.Series, position: int) -> float | None:
-        stamp = closes.index[position]
-        base = previous_close_by_bar.get(stamp)
-        if base is None or pd.isna(base) or base == 0:
+def _make_predictor(session_of_bar: pd.Series, prev: dict):
+    def predictor(closes: pd.Series, position: int):
+        if position < 0 or position >= len(closes):
             return None
-        price = closes.iloc[position]
-        if pd.isna(price) or price == 0:
+        ts = closes.index[0]
+        if ts not in session_of_bar.index:
             return None
-        return float(price) / float(base) - 1
+        sess = session_of_bar.loc[ts]
+        if isinstance(sess, pd.Series):
+            sess = sess.iloc[0]
+        p_prev = prev.get(sess)
+        if p_prev is None:
+            return None
+        p_prev = float(p_prev)
+        p_now = float(closes.iloc[position])
+        if not (math.isfinite(p_prev) and math.isfinite(p_now)):
+            return None
+        if p_prev <= 0 or p_now <= 0:
+            return None
+        return p_now / p_prev - 1
 
     return predictor
 
 
-def scores(panel, cells=None, horizon_bars: int = 30) -> dict:
-    """Rend {(root, window): pd.Series} — r_ROD lu a la barre ancree sur l'horloge.
-
-    `horizon_bars` vaut trente par defaut : la fiche predit le rendement des trente
-    dernieres minutes de la seance a partir de l'information disponible a c-30
-    (`horizon.value` = « 30 minutes »).
-    """
-    selected = list(cells) if cells is not None else list(panel.cells())
-
-    out: dict = {}
+def scores(panel, cells=None, horizon_bars: int = 30):
+    """Rend {(root, window): pd.Series} : r_ROD a c-30, une valeur par seance."""
+    selected = list(panel.cells()) if cells is None else list(cells)
+    out = {}
     for cell in selected:
         root, window = cell
         closes, sessions = _common.cell_bars(panel, root, window)
         if closes is None or len(closes) == 0:
             continue
-
-        previous_close_by_bar = _previous_session_close_by_bar(closes, sessions)
-        produced = _common.run(
-            panel,
-            _make_predictor(previous_close_by_bar),
-            cells=[(root, window)],
-            horizon_bars=horizon_bars,
+        session_of_bar, prev = _previous_close_map(closes, sessions)
+        if not prev:
+            continue
+        predictor = _make_predictor(session_of_bar, prev)
+        result = _common.run(
+            panel, predictor, cells=[(root, window)], horizon_bars=horizon_bars
         )
-
-        for key, series in produced.items():
-            if series is None:
-                continue
-            series = series.dropna()
-            if len(series) == 0:
-                continue
-            out[key] = series
-
+        for key, series in result.items():
+            if series is not None and len(series) > 0:
+                out[key] = series
     return out

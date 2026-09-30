@@ -37,6 +37,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 
+from codage_verifie import fautes_d34_du_lot  # noqa: E402
 from gate_09 import (  # noqa: E402
     ASOF_REQUIRED,
     CORR_FILE,
@@ -48,7 +49,6 @@ from gate_09 import (  # noqa: E402
     importer_par_signal_id,
     lignes_hors_protocole,
 )
-from verification import fautes_d34_du_lot  # noqa: E402
 
 from harness import registry  # noqa: E402
 

@@ -44,9 +44,9 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "catalogue"))
 sys.path.insert(0, str(REPO / "corpus"))
 
+from codage_verifie import RECETTES, empreinte16, maintenant  # noqa: E402
 from score_extraction import REPAIRS, normalize  # noqa: E402
 from validate import value_in_quote  # noqa: E402
-from verification import RECETTES, empreinte16, maintenant  # noqa: E402
 
 TEXT = REPO / "corpus" / "text"
 WORK = REPO / "corpus" / "consignes-recettes"

@@ -36,9 +36,9 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 
+from codage_verifie import concordance, principal_de  # noqa: E402
 from code_signal import fiche_files, signaux_existants  # noqa: E402
 from gate_09 import LOT_FILE, importer_par_signal_id  # noqa: E402
-from verification import concordance, principal_de  # noqa: E402
 
 from harness import registry  # noqa: E402
 

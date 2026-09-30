@@ -86,7 +86,7 @@ sys.path.insert(0, str(REPO))
 
 sys.path.insert(0, str(REPO / "scripts"))
 
-from verification import (  # noqa: E402
+from codage_verifie import (  # noqa: E402
     TEMOINS,
     fautes_choix,
     inscrire_jugement,

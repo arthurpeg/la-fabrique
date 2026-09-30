@@ -25,7 +25,8 @@ l'invariant I de `CLAUDE.md` : **l'IA propose, le code déterministe tranche.**
    verdict partiel ne vaut pas un signal réussi.**
 3. **Quota** : regarde l'usage de l'abonnement (outil `get_usage` de
    l'application, ou la carte d'usage). Une fiche coûte **trois sessions** :
-   une recette (~60 000 tokens) et deux codages (~100 000 chacun). Ne lance
+   une recette (~165 000 tokens mesurés : elle lit le papier entier) et deux
+   codages (~80 000 chacun), soit ~325 000 tokens par fiche. Ne lance
    jamais un groupe qui ferait dépasser **85 %** de la fenêtre de 5 heures :
    une session coupée en plein travail est un essai perdu.
 4. **Ce qui reste à coder** :
@@ -92,7 +93,9 @@ cette consigne **mot pour mot** :
 > le papier ne dit pas est null avec sa raison — n'invente jamais une valeur.
 > Réponds en une ligne : le chemin écrit et le nombre d'ambiguïtés relevées.
 
-Puis, **toujours dans cet ordre** :
+Puis, **seulement après la réponse de la session** — figer un fichier qu'elle
+écrit encore inscrit un état intermédiaire, et `--check` le refuse (vu le
+2026-09-30) — et **toujours dans cet ordre** :
 
     uv run python scripts/recette.py --record corpus/recettes/<fiche_id>.json
     uv run python scripts/recette.py --check corpus/recettes/<fiche_id>.json
@@ -263,7 +266,7 @@ Ce ne sont pas des recommandations.
   `verification/temoins/PRODUCED.json`, `corpus/recettes/PRODUCED.json`,
   `verification/jugements.jsonl` ni `verification/concordance.jsonl` : ils ne
   s'écrivent que par les outils, et les deux journaux sont append-only.
-- **Ne jamais changer un seuil de `D34`** (`scripts/verification.py`) : c'est
+- **Ne jamais changer un seuil de `D34`** (`scripts/codage_verifie.py`) : c'est
   une décision écrite, et elle est interdite après la première mesure d'un lot.
 
 ---

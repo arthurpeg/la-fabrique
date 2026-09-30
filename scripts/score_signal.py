@@ -334,7 +334,7 @@ def check_s6(module) -> Verdict:
         v.sans_objet = ("aucun registre de production — `signals/PRODUCED.json` "
                         "sera écrit par `code_signal.py`, qui n'existe pas encore")
         return v
-    registre = json.loads(PRODUCED.read_text(encoding="utf-8"))
+    registre = json.loads(produced.read_text(encoding="utf-8"))
     attendu = registre.get(module.SIGNAL_ID)
     if attendu is None:
         v.sans_objet = f"« {module.SIGNAL_ID} » n'est pas au registre de production"

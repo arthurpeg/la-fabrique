@@ -288,6 +288,23 @@ python scripts/gate_07.py      # G1 = G2 = G3 = G4 = 0
 python scripts/gate_08.py      # 1 signal, 6/6, aucune retouche
 ```
 
+### Le codage vérifié — `D34`, le 2026-09-30
+
+Aucun signal n'entre plus dans un lot sans **recette** (`scripts/recette.py`),
+**choix écrits** (`CHOICES`) et **double codage concordant**
+(`scripts/double_codage.py`, principal `opus`, témoin `sonnet`, ρ ≥ 0,70 sur
+les scores). La boucle complète est dans `scripts/CODAGE-DES-SIGNAUX.md`.
+Porte 09, `measure_lot.py` et `hypotheses_lot.py` l'exigent.
+
+**Lot `LOT-09` : 1 fiche vérifiée sur 41** —
+`baltussen-2021-hedging-demand-intraday-momentum` (ρ 1,000). Les 40 autres
+attendent recette et deux codages ; environ 325 000 tokens par fiche.
+
+```
+python scripts/hypotheses_lot.py --status   # où en est chaque fiche du lot
+python scripts/double_codage.py --status    # verdicts de concordance
+```
+
 ### SI TU ARRIVES SUR UNE AUTRE MACHINE — à lancer en premier
 
 Une question ouverte depuis le 2026-09-24 : **l'extraction peut-elle passer à un

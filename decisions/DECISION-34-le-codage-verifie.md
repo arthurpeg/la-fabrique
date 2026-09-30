@@ -76,7 +76,7 @@ impossible.
 **Écarter n'est permis qu'avant la première mesure du lot.** L'entrée passe de
 `fiches` à `ecartees_codage`, avec sa preuve, son motif et sa date, et `n`
 diminue d'autant. La porte 09 revérifie la concordance de chaque entrée et
-l'antériorité de chaque écart (`verification.fautes_d34_du_lot`).
+l'antériorité de chaque écart (`codage_verifie.fautes_d34_du_lot`).
 
 ## Pourquoi
 
@@ -112,7 +112,7 @@ tenu par `D16` et par les citations de la recette, pas par `D34`.
 
 ## Ce que ça verrouille
 
-- `scripts/verification.py` (seuils, chemins, journaux), `scripts/recette.py`,
+- `scripts/codage_verifie.py` (seuils, chemins, journaux), `scripts/recette.py`,
   `scripts/double_codage.py`, `scripts/ecarter_du_lot.py` ;
 - `scripts/code_signal.py` (`--temoin`, recette, `CHOICES`, jugements inscrits) ;
 - `scripts/score_signal.py` (`S5` lit la recette ; `S6` lit le registre du
@@ -148,3 +148,4 @@ la boucle comme les autres. Son module actuel reste l'essai 1 de
 |---|---|---|
 | 2026-09-30 | décision prise | — |
 | 2026-09-30 | calibration de l'outil, `double_codage.py --compare` (rien d'inscrit) | un signal contre lui-même : ρ 1,000, couverture 1,000, CONCORDANT. Baltussen main contre codeur : ρ **0,506** (Spearman ; 0,53 en Pearson dans `D23`), couverture 0,998, **DISCORDANT** — NQ/US 0,80, YM/US 0,75, YM/EUROPE 0,30. Registre inchangé : 169 lignes, 56 tests |
+| 2026-09-30 | premier passage réel : `baltussen-2021-hedging-demand-intraday-momentum` | recette valide au 2ᵉ essai (un paramètre non numérique refusé), 18 ambiguïtés ; principal `opus` et témoin `sonnet` verts au 1ᵉʳ essai ; **ρ 1,000, couverture 1,000, CONCORDANT** sur 25 cellules. Coût mesuré : recette ~165 000 tokens (le texte du papier entier), codages ~80 000 chacun. Deux bugs d'outil trouvés par ce passage et corrigés (`L30`) |

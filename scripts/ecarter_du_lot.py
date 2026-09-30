@@ -11,7 +11,7 @@ du lot, **avant toute mesure**, et la sortie est écrite dans le lot même :
 
 **Refusé dès que la mesure du lot a commencé.** Écarter après avoir vu un IC,
 c'est choisir le lot sur son résultat (`D28`). La porte 09 le revérifie par les
-dates (`verification.fautes_d34_du_lot`).
+dates (`codage_verifie.fautes_d34_du_lot`).
 
     python scripts/ecarter_du_lot.py <fiche_id> --preuve concordance --motif "…"
     python scripts/ecarter_du_lot.py <fiche_id> --preuve juge --motif "…"
@@ -29,8 +29,8 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 
+from codage_verifie import CONCORDANCE, TOURS_MAX, lire, maintenant  # noqa: E402
 from gate_09 import LOT_FILE, STAGE  # noqa: E402
-from verification import CONCORDANCE, TOURS_MAX, lire, maintenant  # noqa: E402
 
 from harness import registry  # noqa: E402
 

@@ -910,3 +910,27 @@ empreintes : une empreinte égale sous le **même nom** est la même chose, pas 
 doublon. Et quand un script dépose des fichiers là où un autre les inventorie,
 écrire dans les deux que l'un nourrit l'autre. Corrigé dans `do_fetch`
 (`D30` § Journal).
+
+---
+
+## L30 — Deux choses du même nom, et seul un vrai passage les sépare
+
+Le 2026-09-30, en posant `D34`. Deux fautes du même genre, trouvées toutes les
+deux par le **premier vrai passage** d'une fiche dans la boucle, et par aucun
+auto-test :
+
+- le module `scripts/verification.py` et le dossier `verification/temoins/`
+  portaient le même nom. Le juge, lancé depuis `scripts/`, importait le module
+  à la place du dossier, et le témoin était « introuvable » ;
+- dans `check_s6`, le registre de production devenait une variable locale
+  `produced`, mais une ligne lisait encore la globale `PRODUCED`. Le témoin
+  était donc comparé à l'empreinte du principal, et `S6` le déclarait retouché
+  à la main. Les 27 auto-tests passaient : ils emploient un faux module sans
+  `__file__`, qui retombe justement sur la globale.
+
+**La règle.** Un nom ne désigne qu'une chose dans un chemin d'import : un module
+et un dossier voisins ne partagent jamais un nom. Quand une globale devient une
+locale, **renommer la globale** plutôt que la doubler, pour qu'un oubli casse au
+lieu de lire l'ancienne valeur. Et un outil n'est vérifié que lorsqu'il a jugé un
+vrai cas de bout en bout : les auto-tests prouvent que les refus tiennent, pas
+que le chemin nominal existe (même famille que `L25`).

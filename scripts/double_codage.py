@@ -40,8 +40,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
-from code_signal import fiche_files, module_path  # noqa: E402
-from verification import (  # noqa: E402
+from codage_verifie import (  # noqa: E402
     ASOF_CONCORDANCE,
     CONCORDANCE,
     MIN_PAIRES,
@@ -59,6 +58,7 @@ from verification import (  # noqa: E402
     rel,
     temoin_path,
 )
+from code_signal import fiche_files, module_path  # noqa: E402
 
 from harness import registry  # noqa: E402
 
