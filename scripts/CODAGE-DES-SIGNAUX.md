@@ -29,6 +29,15 @@ l'invariant I de `CLAUDE.md` : **l'IA propose, le code déterministe tranche.**
    codages (~80 000 chacun), soit ~325 000 tokens par fiche. Ne lance
    jamais un groupe qui ferait dépasser **85 %** de la fenêtre de 5 heures :
    une session coupée en plein travail est un essai perdu.
+
+   **Inscris le quota avant et après chaque groupe**, sous le nom de ton
+   compte : c'est ce qui calibre, au tableau de bord, la conversion du quota en
+   papiers. Avant :
+
+       uv run python scripts/quota.py --nom <compte> --fenetre <%> --semaine <%> --reset-fenetre <iso> --reset-semaine <iso>
+
+   Après : la même commande avec `--depense <tokens>`, la somme des
+   `subagent_tokens` que les sessions du groupe ont rapportés.
 4. **Ce qui reste à coder** :
 
        uv run python scripts/code_signal.py --list

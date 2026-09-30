@@ -31,7 +31,10 @@ de l'invariant I : **l'IA propose, le code déterministe tranche.**
 3. **Quota** : regarde l'usage (outil `get_usage`, ou la carte d'usage). Ordres
    de grandeur : un lot de tri de 30 papiers ≈ 40 000 tokens ; une fiche ≈
    170 000 (elle lit le papier entier). Ne lance jamais un groupe qui ferait
-   dépasser **85 %** de la fenêtre de 5 heures.
+   dépasser **85 %** de la fenêtre de 5 heures. **Inscris le quota avant et
+   après chaque groupe** (`scripts/quota.py --nom <compte> …`, avec
+   `--depense <tokens>` après) : c'est ce qui calibre la conversion en papiers
+   du tableau de bord.
 4. **Aucun réseau n'est nécessaire** pour trier ni pour ficher : le tri lit les
    PDF locaux, l'extraction lit `corpus/text/`. Seule la promotion télécharge.
 
