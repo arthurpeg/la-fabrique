@@ -152,6 +152,54 @@ def jugement_vert(module_path: Path) -> tuple[bool, str]:
 # La concordance — le verdict qui ouvre le lot
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# L'univers d'une hypothèse — D38
+# ---------------------------------------------------------------------------
+
+def univers_de(recette: dict) -> dict | None:
+    """Les cellules de la mesure, tirées du marché que la recette déclare (`D38`).
+
+    `exact` : nos instruments qui SONT le marché du papier ; `classe` : les autres
+    instruments de la même `asset_class` du catalogue, ajoutés par ce code et non
+    par la session de recette ; `fenetres` : celles que le papier couvre, ou les
+    trois s'il ne le dit pas. `None` si la recette ne déclare pas de marché ;
+    `exact` vide = marché absent de notre univers, la fiche s'écarte.
+    """
+    m = (recette or {}).get("market")
+    if not isinstance(m, dict):
+        return None
+    import sys  # noqa: PLC0415
+
+    sys.path.insert(0, str(REPO))
+    from panel.catalogue import load_catalogue  # noqa: PLC0415
+
+    cat = load_catalogue()
+    exact = [r for r in m.get("exact_roots") or [] if r in cat.instruments]
+    classes = {cat.instrument(r).asset_class for r in exact}
+    classe = [r for r, i in cat.instruments.items()
+              if i.in_universe and i.asset_class in classes and r not in exact]
+    fenetres = m.get("sessions") or ["ASIA", "EUROPE", "US"]
+    return {"exact": exact, "classe": classe, "fenetres": list(fenetres),
+            "studied": m.get("studied"), "fenetres_du_papier": m.get("sessions") is not None}
+
+
+def cellules_de(univers: dict) -> set[tuple[str, str]]:
+    return {(r, w) for r in univers["exact"] + univers["classe"] for w in univers["fenetres"]}
+
+
+def fautes_univers(lot: dict) -> list[str]:
+    """`D38` : chaque entrée du lot porte l'univers déclaré avant la mesure."""
+    fautes = []
+    for e in lot.get("fiches") or lot.get("hypotheses") or []:
+        u = e.get("universe")
+        if not u:
+            fautes.append(f"{e.get('fiche_id')} : pas d'univers déclaré (D38)")
+        elif not u.get("exact"):
+            fautes.append(f"{e.get('fiche_id')} : univers sans actif du papier — la fiche "
+                          "devait être écartée (D38)")
+    return fautes
+
+
 def principal_de(fiche_id: str) -> Path:
     """Le module principal d'une fiche — la règle de `code_signal.module_path`."""
     return REPO / "signals" / (fiche_id.replace("-", "_") + ".py")

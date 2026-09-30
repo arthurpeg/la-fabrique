@@ -53,6 +53,21 @@ WORK = REPO / "corpus" / "consignes-recettes"
 PRODUCED = RECETTES / "PRODUCED.json"
 MODE = "default"  # D18, identique aux extracteurs de fiches
 
+# D38 : nos instruments, dits comme un papier les nommerait. Liste close : un
+# `exact_roots` hors d'elle est refusé.
+INSTRUMENTS = {
+    "ES": "E-mini S&P 500 (l'indice S&P 500, ses contrats, le SPY)",
+    "NQ": "E-mini Nasdaq-100 (l'indice Nasdaq-100, ses contrats, le QQQ)",
+    "YM": "E-mini Dow (le Dow Jones Industrial Average, ses contrats, le DIA)",
+    "GC": "l'or (contrat COMEX, or au comptant)",
+    "CL": "le pétrole brut WTI (contrat NYMEX)",
+    "6E": "l'euro contre dollar (EUR/USD)",
+    "6B": "la livre contre dollar (GBP/USD)",
+    "6J": "le yen contre dollar (USD/JPY, JPY/USD)",
+    "6A": "le dollar australien contre dollar (AUD/USD)",
+}
+FENETRES = ("ASIA", "EUROPE", "US")
+
 ELISION = re.compile(r"\s*(?:\.\.\.|…|\[\.\.\.\]|\[…\])\s*")
 
 CONSIGNE = """\
@@ -100,7 +115,15 @@ Exemple **fabriqué** — il cite un papier qui n'existe pas (`L17`) :
   "ambiguities": [
     {{"question": "la volatilité est-elle calculée sur les rendements journaliers ou intraday ?",
       "resolution": null, "quoted": null}}
-  ]
+  ],
+  "market": {{
+    "studied": "le contrat à terme sur l'indice S&P 500, séance régulière",
+    "quoted": "we use one-minute prices of the S&P 500 index futures",
+    "exact_roots": ["ES"],
+    "sessions": ["US"],
+    "sessions_quoted": "from the 9:30 open to the 16:00 close",
+    "sessions_reason": null
+  }}
 }}
 ```
 
@@ -124,6 +147,21 @@ Exemple **fabriqué** — il cite un papier qui n'existe pas (`L17`) :
   change le calcul — une fenêtre, une normalisation, un traitement des jours
   fériés, un signe — s'écrit ici, avec la réponse du papier si elle existe
   (`resolution` et `quoted`), ou `null` s'il n'en donne pas.
+- **`market` dit sur quel marché le papier mesure** (`D38`) — c'est lui qui
+  fixe les cellules de la mesure, avant tout résultat :
+  - `studied` : le marché, en tes mots ; `quoted` : la phrase du papier qui le
+    nomme, à la lettre ;
+  - `exact_roots` : parmi **nos** instruments, ceux qui sont **ce marché même**
+    ou son équivalent direct — et eux seuls :
+{instruments}
+    Des actions individuelles, un indice étranger (Chine, Moyen-Orient…), le
+    bitcoin, des obligations : **aucun** de nos instruments n'est ce marché,
+    `exact_roots` vaut `[]`, et c'est une réponse valable. Ne rapproche pas
+    « par ressemblance » : la classe est ajoutée par le code, pas par toi ;
+  - `sessions` : nos fenêtres (heure de New York) que les données du papier
+    couvrent — `ASIA` 19:00–03:00, `EUROPE` 03:00–09:30, `US` 09:30–16:00 —
+    avec `sessions_quoted` ; ou `null` avec `sessions_reason` si le papier ne
+    le dit pas.
 {precisions}
 ## Ce que tu ne fais pas
 
@@ -277,6 +315,33 @@ def valider(recette: dict, fiche_id: str, texte: str) -> list[str]:
         if a.get("resolution") is not None and a.get("quoted") is None:
             fautes.append(f"{where} : une résolution sans citation est une réponse devinée")
         fautes += fautes_citation(where, a, texte_n, exige_raison_si_null=False)
+
+    # D38 : le marché. Facultatif pour la recette elle-même (les recettes
+    # antérieures n'en ont pas) ; `hypotheses_lot.py` l'EXIGE avant d'écrire.
+    m = recette.get("market")
+    if m is not None:
+        if not isinstance(m, dict):
+            return fautes + ["`market` doit être un objet"]
+        if not str(m.get("studied") or "").strip():
+            fautes.append("market : `studied` vide")
+        fautes += fautes_citation("market", m, texte_n)
+        ex = m.get("exact_roots")
+        if not isinstance(ex, list) or any(r not in INSTRUMENTS for r in ex):
+            fautes.append("market : `exact_roots` doit être une liste prise dans "
+                          f"{list(INSTRUMENTS)}")
+        se = m.get("sessions")
+        if se is None:
+            if not str(m.get("sessions_reason") or "").strip():
+                fautes.append("market : `sessions` vaut null sans `sessions_reason`")
+        elif not isinstance(se, list) or not se or any(w not in FENETRES for w in se):
+            fautes.append("market : `sessions` doit être une liste non vide prise dans "
+                          f"{FENETRES}")
+        elif m.get("sessions_quoted") is None:
+            fautes.append("market : des `sessions` sans `sessions_quoted` sont des "
+                          "fenêtres devinées")
+        else:
+            fautes += fautes_citation("market.sessions",
+                                      {"quoted": m["sessions_quoted"]}, texte_n)
     return fautes
 
 
@@ -323,6 +388,7 @@ def do_prepare(fiche_id: str, precisions: str | None) -> int:
         fiche_id=fiche_id,
         repairs=", ".join(f"`{r}`" for r in sorted(REPAIRS)),
         precisions=bloc,
+        instruments=chr(10).join(f"    - `{r}` : {d}" for r, d in INSTRUMENTS.items()),
         fiche=fiches[fiche_id].read_text(encoding="utf-8"),
         text=texte_du_papier(fiche_id),
     ), encoding="utf-8")
@@ -411,6 +477,18 @@ def self_check() -> int:
                                                "derived": True, "note": "45 / 60",
                                                "quoted": "45 minutes"}), attendu=True)
     variante("aucune entrée", lambda r: r.update(inputs=[]))
+    marche = {"studied": "S&P 500", "quoted": "return since the open",
+              "exact_roots": ["ES"], "sessions": ["US"],
+              "sessions_quoted": "45 minutes before the close"}
+    variante("D38 : marché cité accepté", lambda r: r.update(market=dict(marche)), attendu=True)
+    variante("D38 : marché hors de nos instruments accepté (exact_roots vide)",
+             lambda r: r.update(market={**marche, "exact_roots": []}), attendu=True)
+    variante("D38 : instrument inconnu refusé",
+             lambda r: r.update(market={**marche, "exact_roots": ["BTC"]}))
+    variante("D38 : fenêtres sans citation refusées",
+             lambda r: r.update(market={**marche, "sessions_quoted": None}))
+    variante("D38 : fenêtres inconnues sans raison refusées",
+             lambda r: r.update(market={**marche, "sessions": None}))
 
     ok = True
     for label, r, attendu in cas:

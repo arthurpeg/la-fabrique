@@ -37,7 +37,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 
-from codage_verifie import fautes_d34_du_lot  # noqa: E402
+from codage_verifie import cellules_de, fautes_d34_du_lot, fautes_univers  # noqa: E402
 from gate_09 import (  # noqa: E402
     ASOF_REQUIRED,
     CORR_FILE,
@@ -62,7 +62,7 @@ HARNAIS_DU_LOT: str | None = "94b495fa7525d3b8"  # D35, D37
 RAPPORTS = REPO / "scripts" / "out" / "rapports"
 
 
-def garder_rapport(rapport) -> Path:
+def garder_rapport(rapport, univers: dict | None = None) -> Path:
     """Le rapport d'IC ENTIER, recopié tel que le harnais l'a rendu.
 
     Le registre ne porte que l'IC poolé ; la ventilation par cellule, la
@@ -77,6 +77,8 @@ def garder_rapport(rapport) -> Path:
     chemin = RAPPORTS / f"{rapport.test_id}.json"
     donnees = dataclasses.asdict(rapport)
     donnees["render"] = rapport.render()
+    # Pour lire à part l'actif du papier et sa classe (D38) : l'univers déclaré.
+    donnees["universe"] = univers
     chemin.write_text(json.dumps(donnees, ensure_ascii=False, indent=1, default=str) + "\n",
                       encoding="utf-8")
     return chemin
@@ -114,6 +116,7 @@ def prealables() -> tuple[list[str], list[dict]]:
             fautes.append("la matrice de corrélation n'est pas datée après la clôture du lot")
     registre = registry.read_all()
     fautes += fautes_d34_du_lot(lot, registre, STAGE)
+    fautes += fautes_univers(lot)
     for r in lignes_hors_protocole(entries, registre, courant):
         fautes.append(f"{r.get('test_id')} touche déjà le lot hors protocole (D28)")
     a_faire = [e for e in entries
@@ -150,11 +153,16 @@ def main(argv: list[str]) -> int:
     avant = registry.counted_tests()
     for i, e in enumerate(a_faire, 1):
         module = importer_par_signal_id(e["signal_id"])
-        rapport = evaluate(module.scores(panel, horizon_bars=30), panel, HORIZON,
+        # D38 : la mesure porte sur les cellules que l'hypothèse a déclarées,
+        # et sur elles seules. Le signal note toute la grille ; on ne garde que
+        # l'univers écrit AVANT, jamais une cellule choisie après.
+        garder = cellules_de(e["universe"]) & set(panel.cells())
+        scores = {c: s for c, s in module.scores(panel, horizon_bars=30).items() if c in garder}
+        rapport = evaluate(scores, panel, HORIZON,
                            signal_id=e["signal_id"], hypothesis_ref=e["ref"], stage=STAGE)
         print(f"  {i}/{len(a_faire)} {e['ref']} {e['signal_id']:<48} "
               f"IC {rapport.ic:+.5f}  t {rapport.t['final']:+.2f}", flush=True)
-        garder_rapport(rapport)
+        garder_rapport(rapport, e["universe"])
     print(f"\ntests comptés : {avant} -> {registry.counted_tests()}")
     print("Étape suivante : python scripts/gate_09.py")
     return 0

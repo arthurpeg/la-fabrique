@@ -38,6 +38,7 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 
 import pandas as pd  # noqa: E402
+from codage_verifie import cellules_de  # noqa: E402
 from gate_09 import (  # noqa: E402
     ASOF_REQUIRED,
     CORR_FILE,
@@ -87,6 +88,7 @@ def main(argv: list[str]) -> int:
             print(f"  - {f}")
         return 1
     ids = sorted({e["signal_id"] for e in entrees()})
+    univers = {e["signal_id"]: e.get("universe") for e in entrees()}
     print(f"lot prêt : {len(ids)} signaux")
     if a.check:
         print("--check : rien n'a été calculé.")
@@ -98,7 +100,11 @@ def main(argv: list[str]) -> int:
     plates: dict[str, pd.Series] = {}
     for i, sid in enumerate(ids, 1):
         module = importer_par_signal_id(sid)
-        plates[sid] = serie_plate(module.scores(panel, horizon_bars=30))
+        scores = module.scores(panel, horizon_bars=30)
+        if univers.get(sid):  # D38 : les cellules que la mesure lira, pas les autres
+            garder = cellules_de(univers[sid])
+            scores = {c: s for c, s in scores.items() if c in garder}
+        plates[sid] = serie_plate(scores)
         print(f"  scores {i}/{len(ids)} : {sid} ({len(plates[sid])} valeurs)", flush=True)
 
     pairs = []

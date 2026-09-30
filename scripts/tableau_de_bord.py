@@ -35,7 +35,14 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 
-from codage_verifie import CONCORDANCE, JUGEMENTS, RECETTES, choix, lire  # noqa: E402
+from codage_verifie import (  # noqa: E402
+    CONCORDANCE,
+    JUGEMENTS,
+    RECETTES,
+    choix,
+    lire,
+    univers_de,
+)
 
 HYP = REPO / "hypotheses"
 LOT = HYP / "LOT-09.json"
@@ -256,6 +263,7 @@ def hypotheses(registre: list[dict], lot: dict, mods: dict, base: Base) -> list[
             "recipe": recette,
             "quotes": cites,
             "chunks": base.morceaux(source.get("title") or "", [c["quoted"] for c in cites]),
+            "measured_universe": (entree or {}).get("universe") or univers_de(recette or {}),
             "concordance": ({k: concordance.get(k) for k in
                              ("verdict", "rho", "coverage", "round", "at")}
                             if concordance else None),
@@ -292,6 +300,105 @@ def ics(registre: list[dict], mods: dict, hash_courant: str) -> tuple[list[dict]
     return out, codes
 
 
+def ecartes(lot: dict, liste_ic: list[dict], hc: str) -> list[dict]:
+    """Ce qui ne sera pas mesuré, ou plus lu : chaque entrée avec sa raison écrite."""
+    out = []
+    for e in lot.get("ecartees") or []:
+        out.append({"kind": "écarté à la constitution du lot", "id": e.get("fiche_id"),
+                    "why": e.get("motif"), "detail": {"verdict du tri": e.get("verdict"),
+                                                      "décision": lot.get("decision")}})
+    for e in lot.get("ecartees_codage") or []:
+        out.append({"kind": f"écarté avant mesure ({e.get('preuve')})", "id": e.get("fiche_id"),
+                    "why": e.get("motif_ecart"), "detail": {"le": e.get("at"),
+                                                            "preuve": e.get("preuve")}})
+    ecartees = {e.get("fiche_id") for e in lot.get("ecartees_codage") or []}
+    for e in lot.get("fiches") or []:
+        r = lire_json(RECETTES / f"{e['fiche_id']}.json")
+        u = univers_de(r or {})
+        if u is not None and not u["exact"] and e["fiche_id"] not in ecartees:
+            out.append({"kind": "à écarter : marché absent de notre univers", "id": e["fiche_id"],
+                        "why": f"Le papier étudie « {u['studied']} » ; aucun de nos neuf "
+                               "instruments n'est ce marché (D38).",
+                        "detail": {"prochaine étape": "ecarter_du_lot.py --preuve univers"}})
+    perimes: dict[tuple, list] = {}
+    for r in liste_ic:
+        if r["stale"]:
+            perimes.setdefault((r["hypothesis_ref"], r["code_hash"]), []).append(r["test_id"])
+    for (ref, h), tests in perimes.items():
+        out.append({"kind": "IC périmé", "id": f"{ref} · {len(tests)} mesure(s)",
+                    "why": f"Mesuré(s) sous le harnais {h} ; le harnais courant est {hc}. Toute "
+                           "modification du harnais périme les résultats antérieurs (D05) : ils "
+                           "restent au registre et au décompte, mais rien ne s'appuie plus dessus.",
+                    "detail": {"tests": ", ".join(tests[:6]) + (" …" if len(tests) > 6 else "")}})
+    for r in liste_ic:
+        rep_ = r.get("report") or {}
+        for v in rep_.get("refused_cells") or []:
+            cell = v.get("cell") if isinstance(v, dict) else None
+            out.append({"kind": "données insuffisantes", "id": f"{r['test_id']} · {cell}",
+                        "why": (v.get("reason") if isinstance(v, dict) else str(v)),
+                        "detail": {"signal": r["signal_id"]}})
+    return out
+
+
+def entonnoir(lot: dict, reg: list[dict]) -> list[dict]:
+    """Combien de papiers à chaque étape, de la moisson au test. Des comptes, pas des IC."""
+    from statut_papiers import bilan  # noqa: PLC0415
+
+    rows = bilan()
+    works = [r for r in rows if r["origin"] == "moisson"]
+    tri = lire_json(REPO / "corpus" / "triage_harvest_verdicts.json", [])
+    fiches = sum(len(list(d.glob("*.json"))) for d in FICHES)
+    entrees = lot.get("fiches", [])
+    ids = {e["fiche_id"] for e in entrees}
+    concord = {c["fiche_id"]: c["verdict"] for c in lire(CONCORDANCE)}
+    mesures = {r["signal_id"] for r in reg if r.get("stage") == "09-passage"}
+    etapes = [
+        ("papiers moissonnés", len(works), "corpus/harvest.json, doublons compris"),
+        ("atteignables, non doublons", sum(1 for r in works if r["stage"] not in
+                                           ("doublon", "inatteignable", "non sondé")),
+         "une source libre a été trouvée"),
+        ("PDF sur ce poste", sum(1 for r in works if r["stage"] not in
+                                 ("doublon", "inatteignable", "non sondé", "à télécharger")), ""),
+        ("triés", len(tri), "corpus/triage_harvest_verdicts.json"),
+        ("retenus par le tri", sum(1 for v in tri if v["verdict"] in ("oui", "partiel")),
+         "oui + partiel"),
+        ("fiches (AMORCE + moisson)", fiches, "corpus/fiches, corpus/fiches_harvest"),
+        ("dans le lot 09", len(entrees), "hypotheses/LOT-09.json"),
+        ("recette valide", sum(1 for i in ids if (RECETTES / f"{i}.json").is_file()), "D34"),
+        ("signal codé", sum(1 for i in ids
+                            if (REPO / "signals" / (i.replace("-", "_") + ".py")).is_file()), ""),
+        ("codage vérifié", sum(1 for i in ids if concord.get(i) == "CONCORDANT"),
+         "double codage concordant, D34"),
+        ("hypothèse écrite", sum(1 for e in entrees if e.get("ref")), "étape 8"),
+        ("mesurée", sum(1 for e in entrees if e.get("signal_id") in mesures), "étape 10"),
+    ]
+    return [{"label": a, "n": n, "note": c, "warn": False} for a, n, c in etapes]
+
+
+def compteur(reg: list[dict], lot: dict, hc: str, counted: int) -> dict:
+    from statistics import NormalDist  # noqa: PLC0415
+
+    par: dict[str, dict] = {}
+    for r in reg:
+        d = par.setdefault(r.get("stage") or "?", {"counted": 0, "calibrations": 0, "stale": 0})
+        if r.get("hypothesis_ref") is None:
+            d["calibrations"] += 1
+        else:
+            d["counted"] += 1
+        if r.get("code_hash") != hc:
+            d["stale"] += 1
+    n, q = lot.get("n") or 0, lot.get("q") or 0.10
+    bh = {}
+    if n:
+        z = NormalDist()
+        bh = {"n": n, "q": q, "p_first": f"{q / n:.4f}", "t_first": f"{z.inv_cdf(1 - q / n):.2f}",
+              "t_last": f"{z.inv_cdf(1 - q):.2f}"}
+    return {"counted": counted,
+            "calibrations": sum(1 for r in reg if r.get("hypothesis_ref") is None),
+            "stale": sum(1 for r in reg if r.get("code_hash") != hc),
+            "by_stage": par, "bh": bh}
+
+
 def fenetres() -> dict:
     import yaml  # noqa: PLC0415
 
@@ -301,7 +408,7 @@ def fenetres() -> dict:
     return {k: f"{v['start']}–{v['end']}" for k, v in w.items()}
 
 
-def rassembler(avec_base: bool) -> dict:
+def rassembler(avec_base: bool, quota: Path | None = None) -> dict:
     from harness import registry  # noqa: PLC0415
 
     reg = [json.loads(x) for x in REGISTRE.read_text(encoding="utf-8").splitlines() if x.strip()]
@@ -310,6 +417,7 @@ def rassembler(avec_base: bool) -> dict:
     base = Base(avec_base)
     hc = registry.code_hash()
     liste_ic, codes = ics(reg, mods, hc)
+    liste_ecartes = ecartes(lot, liste_ic, hc)
     return propre({
         "generated": datetime.now(UTC).isoformat(timespec="minutes"),
         "harness": hc,
@@ -326,6 +434,10 @@ def rassembler(avec_base: bool) -> dict:
         "base": {"asked": avec_base, "error": base.erreur},
         "hypotheses": hypotheses(reg, lot, mods, base),
         "ics": liste_ic,
+        "excluded": liste_ecartes,
+        "funnel": entonnoir(lot, reg),
+        "counter": compteur(reg, lot, hc, registry.counted_tests()),
+        "quota": lire_json(quota) if quota else None,
         "codes": codes,
     })
 
@@ -334,8 +446,9 @@ def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description="Le tableau de bord — rassemble, ne calcule rien")
     ap.add_argument("--base", action="store_true", help="relier les citations aux morceaux")
     ap.add_argument("--sortie", type=Path, default=SORTIE)
+    ap.add_argument("--quota", type=Path, help="le relevé du quota (JSON), si on l'a")
     a = ap.parse_args(argv)
-    data = rassembler(a.base)
+    data = rassembler(a.base, a.quota)
     page = TEMPLATE.read_text(encoding="utf-8").replace(
         "/*__DATA__*/null", json.dumps(data, ensure_ascii=False).replace("</", "<\\/"))
     a.sortie.parent.mkdir(parents=True, exist_ok=True)

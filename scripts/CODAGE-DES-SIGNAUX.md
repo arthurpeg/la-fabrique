@@ -105,6 +105,23 @@ Un refus se renvoie **tel quel**, par `SendMessage`, à la même session :
 `--check` à nouveau. **Trois essais au plus** ; au troisième refus, la fiche
 est en échec « recette » (§ 2.8).
 
+### 2.1 bis Le marché du papier — avant de coder (`D38`)
+
+La recette déclare `market` : sur quel marché le papier mesure, et lesquels de
+nos instruments **sont** ce marché (`exact_roots`). Regarde-le **avant** de
+lancer les codeurs :
+
+    uv run python -c "import json,sys; print(json.load(open(sys.argv[1], encoding='utf-8')).get('market'))" corpus/recettes/<fiche_id>.json
+
+- `exact_roots` non vide : continue en 2.2. La mesure portera sur ces
+  instruments et leur classe, dans les fenêtres du papier.
+- `exact_roots: []` : le marché du papier nous est absent. **Ne code pas** —
+  écarte la fiche, c'est une économie de ~160 000 tokens :
+
+      uv run python scripts/ecarter_du_lot.py <fiche_id> --preuve univers --motif "<le marché du papier>"
+
+  et commite aussitôt.
+
 ### 2.2 Les deux consignes de codage
 
     uv run python scripts/code_signal.py --prepare <fiche_id>

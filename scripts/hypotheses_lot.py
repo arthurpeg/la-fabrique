@@ -36,7 +36,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 
-from codage_verifie import concordance, principal_de  # noqa: E402
+from codage_verifie import RECETTES, concordance, principal_de, univers_de  # noqa: E402
 from code_signal import fiche_files, signaux_existants  # noqa: E402
 from gate_09 import LOT_FILE, importer_par_signal_id  # noqa: E402
 
@@ -65,7 +65,11 @@ def texte(v) -> str:
     return str(v or "")
 
 
-def rediger(ref: str, fiche: dict, module, fiche_path: Path) -> str:
+def rediger(ref: str, fiche: dict, module, fiche_path: Path, univers: dict) -> str:
+    classe = ", ".join(univers["classe"]) or "aucun autre instrument de cette classe"
+    fenetres = ", ".join(univers["fenetres"])
+    precision = ("" if univers["fenetres_du_papier"]
+                 else " — le papier ne les précise pas : les trois")
     signe = "positif" if module.EXPECTED_SIGN > 0 else "négatif"
     contraire = "négatif" if module.EXPECTED_SIGN > 0 else "positif"
     src = fiche.get("source") or {}
@@ -98,7 +102,11 @@ L'affirmation du papier, telle que la fiche la rapporte :
 
 ## Le domaine
 
-- **Univers :** les cellules retenues de la grille (`D01` §3).
+- **Marché du papier :** {univers["studied"] or "—"} (recette, `D38`).
+- **Actif du papier :** {", ".join(univers["exact"])} — lu à part dans les résultats.
+- **Même classe :** {classe} — ajoutée par le code, lue à part.
+- **Fenêtres :** {fenetres} (heure de New York){precision}.
+- **Un seul test** : l'IC poolé sur ces cellules, et sur elles seules (`D01` §4, `D38`).
 - **Horizon :** 30 minutes, à l'intérieur de la fenêtre et de la séance.
 - **Tranche :** `pool` entière, `asof` 2023-12-29 20:00 UTC (`D29`).
 - **Une seule mesure**, par le harnais, au stage `09-passage` (`D28`).
@@ -162,6 +170,17 @@ def do_write() -> int:
             print(f"  ATTENTE {pourquoi} — l'hypothèse s'écrira quand le codage "
                   "sera vérifié (D34)")
             continue
+        recette_p = RECETTES / f"{fid}.json"
+        univers = univers_de(json.loads(recette_p.read_text(encoding="utf-8"))
+                             if recette_p.is_file() else {})
+        if univers is None:
+            print(f"  ATTENTE {fid} : la recette ne déclare pas le marché du papier (D38) — "
+                  "refaire la recette")
+            continue
+        if not univers["exact"]:
+            print(f"  REFUS {fid} : le papier étudie « {univers['studied']} », absent de notre "
+                  "univers — `scripts/ecarter_du_lot.py --preuve univers` (D38)")
+            continue
         module = importer_par_signal_id(fid)
         if module.EXPECTED_SIGN not in (1, -1):
             print(f"  REFUS {fid} : EXPECTED_SIGN = {module.EXPECTED_SIGN!r}")
@@ -169,8 +188,9 @@ def do_write() -> int:
         ref = f"H{prochain_numero():02d}"
         path = HYP_DIR / f"{ref}-{fid}.md"
         path.write_text(rediger(ref, json.loads(fiches[fid].read_text(encoding="utf-8")),
-                                module, fiches[fid]), encoding="utf-8")
+                                module, fiches[fid], univers), encoding="utf-8")
         e["ref"], e["signal_id"] = ref, module.SIGNAL_ID
+        e["universe"] = {k: univers[k] for k in ("exact", "classe", "fenetres", "studied")}
         # Le lot est réécrit APRÈS chaque hypothèse : une coupure ne laisse
         # jamais une hypothèse écrite sans sa ref dans le lot.
         LOT_FILE.write_text(json.dumps(lot, ensure_ascii=False, indent=1) + "\n",

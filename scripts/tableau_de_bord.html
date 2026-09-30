@@ -82,6 +82,18 @@ ul.plain{margin:0;padding-left:18px;display:grid;gap:4px;max-width:72ch}
 .heat div{padding:6px 4px;text-align:center;border-radius:3px}
 .heat .h{font:600 10.5px var(--cond);letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
 .heat .r{text-align:left;color:var(--muted)}
+.heat .x{outline:2px solid var(--ink);outline-offset:-2px;font-weight:600}
+.kind{font:600 10.5px/1.2 var(--cond);letter-spacing:.05em;text-transform:uppercase;color:var(--warn)}
+.nav{font:600 13px/1 var(--cond);letter-spacing:.03em;text-decoration:none;color:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:9px 12px;white-space:nowrap}
+.nav:hover{background:var(--accent-soft)}
+.funnel{display:grid;gap:5px;padding:12px 16px}
+.fstep{display:grid;grid-template-columns:minmax(0,190px) 1fr 70px;gap:10px;align-items:center;font-size:13px}
+.fstep .track{height:16px}
+.fstep .v{font:500 13px var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.gauge{display:grid;gap:10px;padding:12px 16px}
+.gline{display:grid;gap:4px}
+.gline .track{height:14px}
+.pad{padding:12px 16px;display:grid;gap:10px}
 .bars{display:grid;gap:4px;max-width:520px}
 .bar{display:grid;grid-template-columns:42px 1fr 78px;gap:8px;align-items:center;font:12px var(--mono)}
 .track{position:relative;height:12px;background:var(--sunk);border-radius:2px}
@@ -100,13 +112,30 @@ a{color:var(--accent)}
       <h1>Pupitre de la Fabrique</h1>
       <p class="sub">Les hypothèses écrites avant toute mesure, et les IC que le harnais a inscrits au registre. Cette page recopie, elle ne calcule rien.</p>
     </div>
-    <div class="tools"><input id="q" type="search" placeholder="Filtrer : H02, momentum, NQ…" aria-label="Filtrer"></div>
+    <div class="tools"><input id="q" type="search" placeholder="Filtrer : H02, momentum, NQ…" aria-label="Filtrer">
+      <a class="nav" id="to-atlas" href="https://claude.ai/artifact/B5iiDPZ2227dDejE5azSBW" target="_blank" rel="noopener">Atlas du corpus →</a></div>
   </header>
   <div class="stats" id="stats"></div>
   <div class="mosaic">
+    <section class="tile" aria-labelledby="t-f">
+      <header><h2 id="t-f">Entonnoir de la chaîne</h2><span class="lbl">papier → signal → test</span></header>
+      <div class="funnel" id="funnel"></div>
+    </section>
+    <section class="tile" aria-labelledby="t-c">
+      <header><h2 id="t-c">Compteur de tests</h2><span class="lbl">le compte honnête</span></header>
+      <div class="pad" id="counter"></div>
+    </section>
     <section class="tile" aria-labelledby="t-h">
       <header><h2 id="t-h">Hypothèses</h2><span class="lbl" id="n-h"></span></header>
       <div class="body" id="hyps"></div>
+    </section>
+    <section class="tile" aria-labelledby="t-x">
+      <header><h2 id="t-x">Écartés, périmés, insuffisants</h2><span class="lbl" id="n-x"></span></header>
+      <div class="body" id="exc"></div>
+    </section>
+    <section class="tile" aria-labelledby="t-q">
+      <header><h2 id="t-q">Quota</h2><span class="lbl" id="q-when"></span></header>
+      <div class="gauge" id="quota"></div>
     </section>
     <section class="tile" aria-labelledby="t-i">
       <header><h2 id="t-i">IC mesurés</h2><span class="lbl" id="n-i"></span></header>
@@ -141,6 +170,7 @@ function stats() {
     ['Lignes au registre', DATA.registry_lines],
     ['Lot', `${lot.with_hypothesis ?? 0} / ${lot.n ?? '—'} hypothèses`],
     ['Codages vérifiés', DATA.verified],
+    ['Écartés ou périmés', (DATA.excluded || []).length],
     ['Généré', DATA.generated.replace('T', ' ')],
   ];
   $('#stats').innerHTML = items.map(([k, v]) =>
@@ -237,6 +267,16 @@ function md(t) {
     .replace(/^# (.*)$/gm, '<b>$1</b>').replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/`([^`]+)`/g, '<code>$1</code>');
 }
 
+function univH(h) {
+  const u = h.measured_universe;
+  if (!u) return '<p class="warnbox">Univers pas encore déclaré : la recette ne dit pas sur quel marché le papier mesure (D38). Il sera fixé avant la mesure.</p>';
+  if (!u.exact.length) return `<p class="warnbox">Le papier étudie « ${esc(u.studied || '—')} », qu'aucun de nos instruments ne représente : la fiche est à écarter du lot (D38).</p>`;
+  return `<dl class="kv"><dt>Marché du papier</dt><dd>${esc(u.studied || '—')}</dd>
+    <dt>Actif du papier</dt><dd class="mono"><b>${esc(u.exact.join(', '))}</b></dd>
+    <dt>Même classe</dt><dd class="mono">${esc(u.classe.join(', ') || 'aucun autre instrument')}</dd>
+    <dt>Fenêtres mesurées</dt><dd>${u.fenetres.map(w => `${WIN_FR[w] || w} <span class="mono">${esc(DATA.windows[w] || '')}</span>`).join(' · ')}</dd></dl>
+    <p class="note">La mesure ne porte que sur ces cellules : un seul test (D01 §4, D38). Dans les résultats, l'actif du papier et sa classe se lisent séparément.</p>`;
+}
 function ouAQuandH(h) {
   const nb = h.used_by.tests.length;
   const lignes = WIN.map(w => `<dt>${WIN_FR[w]}</dt><dd class="mono">${esc(DATA.windows[w] || '')} (New York)</dd>`).join('');
@@ -273,6 +313,7 @@ function ouvrirH(h) {
   tiroir(`Hypothèse ${h.ref} · écrite le ${h.written || '—'}`, h.title,
     sec('Pourquoi — ce que le papier affirme', para(h.claim) || para(h.origin)) +
     sec('Le papier', papier) +
+    sec('Univers de la mesure', univH(h)) +
     sec('Où et quand', ouAQuandH(h)) +
     sec('Comment — la construction', para(h.construction) + recette) +
     sec('Ce qui se transpose, et ce qui ne se transpose pas', (h.transfers ? `<p><b>Se transpose :</b> ${esc(h.transfers)}</p>` : '') + (h.does_not_transfer ? `<p><b>Ne se transpose pas :</b> ${esc(h.does_not_transfer)}</p>` : '')) +
@@ -288,6 +329,7 @@ function ouvrirH(h) {
 function heat(r) {
   const cells = r.report?.cells || [];
   if (!cells.length) return '';
+  const u = r.report?.universe;
   const m = new Map(cells.map(c => [c.root + '|' + c.window, c]));
   const max = Math.max(...cells.map(c => Math.abs(c.ic || 0)), 1e-9);
   let h = '<div class="heat"><div></div>' + WIN.map(w => `<div class="h">${WIN_FR[w]}</div>`).join('');
@@ -297,10 +339,23 @@ function heat(r) {
       const c = m.get(a + '|' + w);
       if (!c) { h += '<div class="note">—</div>'; continue; }
       const f = Math.min(1, Math.abs(c.ic) / max), col = c.ic >= 0 ? 'var(--pos)' : 'var(--neg)';
-      h += `<div title="n = ${c.observations}" style="background:color-mix(in srgb,${col} ${Math.round(12 + f * 55)}%,transparent)">${num(c.ic, 4)}</div>`;
+      const k = u && u.exact.includes(a) ? 'x' : '';
+      h += `<div class="${k}" title="n = ${c.observations}" style="background:color-mix(in srgb,${col} ${Math.round(12 + f * 55)}%,transparent)">${num(c.ic, 4)}</div>`;
     }
   }
-  return h + '</div><p class="note">IC par cellule — diagnostic, jamais des tests (D01 §4). Survoler une case donne son nombre d\'observations.</p>';
+  let t = h + '</div><p class="note">IC par cellule — diagnostic, jamais des tests (D01 §4). Survoler une case donne son nombre d\'observations.' +
+    (u ? ' Cases cerclées : l\'actif du papier.' : '') + '</p>';
+  if (u) {
+    const bloc = (titre, roots) => {
+      const cs = cells.filter(c => roots.includes(c.root));
+      if (!cs.length) return '';
+      return `<span class="lbl">${esc(titre)}</span><div class="scroll"><table><thead><tr><th>cellule</th><th>IC</th><th>obs.</th></tr></thead><tbody>${cs.map(c =>
+        `<tr><td>${esc(c.root)} · ${WIN_FR[c.window] || c.window}</td><td class="${cls(c.ic)}">${num(c.ic, 5)}</td><td>${(c.observations || 0).toLocaleString('fr-FR')}</td></tr>`).join('')}</tbody></table></div>`;
+    };
+    t += bloc(`Actif du papier — ${u.exact.join(', ')}`, u.exact) + bloc(`Même classe — ${u.classe.join(', ') || 'aucun'}`, u.classe) +
+      '<p class="note">Valeurs par cellule recopiées du rapport officiel. Aucun IC n\'est recalculé ici : seul l\'IC poolé de l\'univers entier est un test.</p>';
+  }
+  return t;
 }
 function annees(y) {
   const e = Object.entries(y || {});
@@ -355,7 +410,64 @@ function ouvrirI(r) {
     sec('Le code du signal', code ? `<p class="note">${esc(code.path)} · ${esc(code.when)}</p><pre>${esc(code.source)}</pre>` : '<p class="note">Module introuvable.</p>'));
 }
 
+/* ------------------------------------------------------------- écartés */
+function listeX() {
+  const xs = (DATA.excluded || []).filter(x => !filtre || [x.kind, x.id, x.why].join(' ').toLowerCase().includes(filtre));
+  $('#n-x').textContent = `${xs.length}`;
+  $('#exc').innerHTML = xs.length ? xs.map(x => `
+    <button class="row" data-x="${DATA.excluded.indexOf(x)}">
+      <span class="kind">${esc(x.kind)}</span>
+      <span class="t" title="${esc(x.id)}">${esc(x.id)}</span><span></span>
+    </button>`).join('') : '<p class="empty">Rien d\'écarté ni de périmé.</p>';
+  document.querySelectorAll('[data-x]').forEach(b => b.onclick = () => {
+    const x = DATA.excluded[+b.dataset.x];
+    tiroir(x.kind, x.id, sec('Pourquoi', para(x.why || 'Raison non écrite.')) +
+      sec('Détail', `<dl class="kv">${Object.entries(x.detail || {}).map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v ?? '—')}</dd>`).join('')}</dl>`));
+  });
+}
+
+/* ------------------------------------------------------------ entonnoir */
+function entonnoir() {
+  const f = DATA.funnel || [];
+  const max = Math.max(...f.map(x => x.n || 0), 1);
+  $('#funnel').innerHTML = f.map(x => {
+    const w = x.n == null ? 0 : Math.max(0.6, Math.log10(1 + x.n) / Math.log10(1 + max) * 100);
+    return `<div class="fstep" title="${esc(x.note || '')}"><span>${esc(x.label)}</span>
+      <span class="track"><i style="left:0;width:${w}%;background:${x.warn ? 'var(--warn)' : 'var(--accent)'}"></i></span>
+      <span class="v">${x.n == null ? '—' : x.n.toLocaleString('fr-FR')}</span></div>`;
+  }).join('') + '<p class="note">Échelle logarithmique : chaque étape se lit, même quand elle est cent fois plus petite que la précédente. Survoler une étape donne sa source.</p>';
+}
+
+/* ------------------------------------------------------ compteur de tests */
+function compteur() {
+  const c = DATA.counter || {};
+  const lignes = Object.entries(c.by_stage || {}).map(([k, v]) =>
+    `<tr><td>${esc(k)}</td><td>${v.counted}</td><td>${v.calibrations}</td><td>${v.stale}</td></tr>`).join('');
+  const bh = c.bh || {};
+  $('#counter').innerHTML = `
+    <dl class="kv"><dt>Tests comptés</dt><dd class="mono"><b>${c.counted ?? '—'}</b> — le dénominateur de la phase 15</dd>
+      <dt>Lignes de calibration</dt><dd class="mono">${c.calibrations ?? '—'} (hors décompte)</dd>
+      <dt>Périmées</dt><dd class="mono">${c.stale ?? '—'} (harnais antérieur, D05)</dd>
+      <dt>Harnais courant</dt><dd class="mono">${esc(DATA.harness)}</dd></dl>
+    <div class="scroll"><table><thead><tr><th>étape</th><th>comptés</th><th>calibr.</th><th>périmés</th></tr></thead><tbody>${lignes}</tbody></table></div>
+    ${bh.n ? `<span class="lbl">Le seuil du lot (Benjamini–Hochberg, q = ${bh.q})</span>
+    <p class="note">${bh.n} hypothèses dans le lot. La meilleure doit dépasser t ≈ <b class="mono">${bh.t_first}</b> (p ≤ ${bh.p_first}) ; la n-ième, t ≈ <b class="mono">${bh.t_last}</b>. Chaque hypothèse de plus dans le lot rend le premier seuil plus sévère. Aucun IC n'est calculé ici : ce sont les seuils de D25.</p>` : ''}`;
+}
+
+/* ----------------------------------------------------------------- quota */
+function quota() {
+  const q = DATA.quota;
+  if (!q || !q.windows) { $('#quota').innerHTML = '<p class="empty">Quota non relevé à la génération de cette page.</p>'; return; }
+  $('#q-when').textContent = 'relevé le ' + (q.at || '').replace('T', ' ').slice(0, 16);
+  $('#quota').innerHTML = q.windows.map(w => {
+    const col = w.percentUsed >= 85 ? 'var(--neg)' : w.percentUsed >= 60 ? 'var(--warn)' : 'var(--pos)';
+    return `<div class="gline"><span class="lbl">${esc(w.label)} · remise à zéro ${esc((w.resetsAt || '').replace('T', ' ').slice(0, 16))} UTC</span>
+      <span class="track"><i style="left:0;width:${w.percentUsed}%;background:${col}"></i></span>
+      <span class="mono">${w.percentUsed} % utilisés</span></div>`;
+  }).join('') + `<p class="note">Coût mesuré d'une fiche (recette + deux codeurs) : environ ${(q.per_fiche || 325000).toLocaleString('fr-FR')} tokens. Le tutoriel interdit de lancer un groupe au-delà de 85 % de la fenêtre de 5 heures. Ce relevé date de la génération de la page ; il ne se met pas à jour seul.</p>`;
+}
+
 /* ---------------------------------------------------------------- départ */
-$('#q').addEventListener('input', e => { filtre = e.target.value.trim().toLowerCase(); listeH(); listeI(); });
-stats(); listeH(); listeI();
+$('#q').addEventListener('input', e => { filtre = e.target.value.trim().toLowerCase(); listeH(); listeI(); listeX(); });
+stats(); listeH(); listeI(); listeX(); entonnoir(); compteur(); quota();
 </script>
