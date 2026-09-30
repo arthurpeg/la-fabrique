@@ -956,3 +956,28 @@ l'**empreinte** de ce qu'il a déjà fait, pas la seule présence d'un fichier :
 promotion refuse désormais un PDF dont l'empreinte diffère de celle promue. Et
 un avertissement « a changé » sur un texte qui fait foi **arrête la session** :
 il ne se lit pas en diagonale.
+
+---
+
+## L32 — `origin/main` bouge sous la session : une attribution se pin sur un commit, jamais sur une référence
+
+Le 2026-09-30. Fusion des deux lignes de travail. `verifier_tout` rendait une
+panne (`corpus/tri_en_masse.py --self-check`, « passage 02 inconnu ») et la
+question était : la fusion l'a-t-elle causée ? J'ai créé un worktree sur
+`origin/main` pour comparer à un état « pur » — sauf que le crochet `Stop`
+avait commité **et poussé** ma propre fusion entre-temps. `origin/main` pointait
+donc sur un commit **qui contenait ce que je cherchais à exonérer**. Le test
+reproduisait la panne et ne prouvait rien du tout, et je l'avais déjà rapporté
+comme une preuve.
+
+Refait sur `ce04411` — le tip distant d'**avant** la fusion, nommé par son
+empreinte — puis sur `5e541af` et `444457e` : la panne est antérieure à la
+fusion, et présente dès le commit qui crée le fichier. Elle n'a jamais passé.
+
+**La règle.** Un test d'attribution — « est-ce moi qui ai cassé ça ? » — se
+lance sur un **commit nommé par son empreinte**, relevée avant de commencer.
+`origin/main`, `HEAD` et `main` sont des références mobiles, et dans ce dépôt le
+crochet `Stop` commite et pousse tout seul à chaque fin de tour : la référence
+que je lis au début n'est pas celle que j'interroge à la fin. Corollaire :
+**relever `git rev-parse origin/main` avant toute fusion** et le citer, sans
+quoi le compte rendu désigne un commit que personne ne peut retrouver.
