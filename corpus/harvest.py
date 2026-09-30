@@ -801,6 +801,24 @@ def core_urls(doi: str, title: str) -> list[dict]:
 # NON SONDE plutot que de le declarer inatteignable (2026-09-28).
 UNAVAILABLE: list[str] = []
 LOCAL_NETWORK_ERRORS = ("CERTIFICATE_VERIFY_FAILED", "getaddrinfo failed")
+# L'hote temoin : Crossref, joint en HTTPS, qui ne nous limite pas. Le verdict
+# est garde une minute pour ne pas le solliciter a chaque papier.
+TEMOIN = "https://api.crossref.org/works?rows=0"
+_TEMOIN_CACHE: dict[str, float | bool] = {"t": 0.0, "ok": True}
+
+
+def reseau_local_ok() -> bool:
+    """Notre reseau joint-il l'Internet ? Un hote temoin repond-il en HTTPS ?"""
+    if time.time() - float(_TEMOIN_CACHE["t"]) < 60:
+        return bool(_TEMOIN_CACHE["ok"])
+    try:
+        req = urllib.request.Request(TEMOIN, headers={"User-Agent": UA})
+        with urllib.request.urlopen(req, timeout=15) as r:
+            ok = r.status == 200
+    except Exception:  # noqa: BLE001 — toute panne du temoin vaut « reseau local en defaut »
+        ok = False
+    _TEMOIN_CACHE.update(t=time.time(), ok=ok)
+    return ok
 
 
 def surnames(names: list[str]) -> set[str]:
@@ -1128,14 +1146,18 @@ def do_probe(limit: int | None, retry: bool = False, only_ssrn: bool = False,
             if attempts[-1].get("is_pdf") and attempts[-1].get("bytes", 0) >= MIN_PDF_BYTES:
                 break
         found = verdict(cands, attempts)
-        # Une erreur de CERTIFICAT ou de RESOLUTION DNS dit que NOTRE reseau ne
-        # joint pas l'hote — portail wifi qui intercepte, connexion coupee — et
-        # rien du papier. Le 2026-09-29, 176 refus ont ete rendus ainsi pendant
-        # un passage sur le wifi de l'universite (`L05`) : on ne conclut pas.
+        # Une erreur de CERTIFICAT ou de RESOLUTION DNS PEUT dire que NOTRE
+        # reseau ne joint rien — portail wifi qui intercepte, connexion coupee.
+        # Le 2026-09-29, 176 refus ont ete rendus ainsi sur le wifi de
+        # l'universite (`L05`). Mais elle peut aussi venir d'UN hote au
+        # certificat mal forme (« unable to get local issuer certificate »,
+        # depot ASEP, 2026-09-30) : le reporter alors le reporterait pour
+        # toujours. On tranche par un hote temoin : s'il repond, notre reseau
+        # va bien, la faute est a l'hote, et le verdict tient.
         if found["status"] != "atteignable" and any(
             k in str(a.get("error") or "")
             for a in attempts for k in LOCAL_NETWORK_ERRORS
-        ):
+        ) and not reseau_local_ok():
             UNAVAILABLE.append("reseau local")
         if found["status"] != "atteignable" and UNAVAILABLE:
             # Un resolveur n'a pas repondu : on ne sait pas, donc on ne conclut pas.
