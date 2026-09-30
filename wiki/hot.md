@@ -23,9 +23,9 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Phase courante** | 09 — premier passage complet sur 30 à 50 papiers |
 | **Dernière porte franchie** | **08**, le 2026-09-23 — `scripts/gate_08.py`. Un signal produit par une session de codage séparée tient les **six conditions de `D23` au premier essai**, et aucun signal produit n'a été retouché à la main. |
 | **Décision la plus récente** | `decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un |
-| **Tests au registre** | 176 |
+| **Tests au registre** | 181 |
 | **Idées abandonnées recensées** | 60 |
-| **Entrées au journal** | 98 |
+| **Entrées au journal** | 99 |
 
 ## Ce qui bloque
 
@@ -57,7 +57,7 @@ python scripts/anti_veille.py --pid <pid>       # garder le PC éveillé tant qu
 `pipeline_runner.py --run` garde désormais le PC éveillé tout seul (veille
 automatique seulement ; la fermeture du capot reste un réglage Windows).
 
-### Le harnais du lot — `D35`, prise et appliquée le 2026-09-30 (harnais `4806666dc55c46c9`)
+### Le harnais du lot — `D35` puis `D37` (contrats micro), appliquées le 2026-09-30 — harnais `94b495fa7525d3b8`
 
 Frais en deux bornes, glissement en grille de 1 à 5 ticks par side, IC par année
 civile, trou d'`extra` fermé : une seule modification du harnais, préparée et
@@ -66,7 +66,7 @@ testée dans une copie, livrée en patch. **Aucun agent n'écrit dans `harness/`
 ```
 git apply --check decisions/DECISION-35-harnais.patch
 git apply decisions/DECISION-35-harnais.patch
-uv run python scripts/gate_03_harness.py     # FRANCHIE, harnais 4806666dc55c46c9
+uv run python scripts/gate_03_harness.py     # FRANCHIE, harnais 94b495fa7525d3b8
 ```
 
 Appliqué : `HARNAIS_DU_LOT` est renseigné, les 169 lignes antérieures sont périmées. Les frais
@@ -865,6 +865,7 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-09-30 | `harnais` | **`D37` PRISE ET APPLIQUEE : micro partout ou Lucid en propose (MNQ, MES, MYM, MGC, MCL), plein format pour les devises** (choix de l'operateur ; pas de micro devises chez Lucid). Les frais se rapportent au contrat execute (`fee_multiplier`) ; multiplicateurs micro `null`, todo `micro-multipliers`, a relever avec provenance. Harnais `94b495fa7525d3b8` ; portes 03 (52), 04, 06 franchies ; verifier_tout TOUT PASSE | registre 176 -> 181 (calibrations), 56 tests comptes. |
 | 2026-09-30 | `corpus` | **Points 8 et 9, et un incident.** `corpus/tri_en_masse.py` : le tri par passages successifs, hors ligne (PDF locaux), compte refuse s'il ne se reconstitue pas (`L21`), auto-test 7/7 ; 2 104 papiers restent a trier, dont 1 951 gardes par `D33` en tete de file. `corpus/TRI-ET-FICHES.md` : le tutoriel des sessions de tri et d'extraction. 4 papiers promus (39/39) ; `extract_text.py` ne s'arrete plus au premier PDF qui fait tomber pypdf en mode layout (4 textes manquaient). **Incident `L31`** : la promotion avait recree le PDF d'un papier fiche du lot depuis une autre version, et le texte qui fait foi avait ete reecrit ; retabli depuis git, promotion desormais gardee par l'empreinte ; le PDF d'origine est perdu sur ce poste (F4 de sa fiche casse, F2/F3 tiennent) | registre 176 -> 176. |
 | 2026-09-30 | `decision` | **Double D27 resolu : le lot devient `D36`.** La plus ancienne (instant de troncature, 2026-09-26) garde `D27` ; celle du lot (2026-09-28) est renumerotee `D36`, avec une note en tete. Mis a jour : `hypotheses/LOT-09.json` (`decision`), `scripts/gate_09.py` (`DECISIONS_ADMISES`), `corpus/lot_phase09.py`, `corpus/motifs_amorce_partiel.json`, `hypotheses_lot.py`, `D34`, `ETAT.md`. Dans ce journal et dans `LECONS.md`, append-only, « `D27` » a propos du lot designe `D36` | registre 176 -> 176. |
 | 2026-09-30 | `outils` | **Confort (point 12).** `scripts/verifier_tout.py` : 19 gardes en lecture seule en une commande, plus les etats du lot, registre verifie inchange -> TOUT PASSE (176 -> 176). `scripts/statut_papiers.py` : l'etape et le sort (fini, bloque, en cours) de chacun des 8 061 papiers -> 4 139 en cours (2 108 a trier, 1 088 a telecharger, 886 non sondes, 50 fiches a mettre en recette), 3 813 bloques, 109 finis. `scripts/anti_veille.py` et `pipeline_runner.py` : le PC ne se met plus en veille pendant la moisson | registre 176 -> 176. |
@@ -872,7 +873,6 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 | 2026-09-30 | `harnais` | **`D35` PROPOSEE, PATCH LIVRE.** Choix de l'operateur : frais en deux bornes (courtier seul / courtier + CME + NFA, trois composantes citees, somme jamais deposee), glissement en grille de 1 a 5 ticks par side, IC poole par annee civile ecrit sur la ligne du registre (`ic_by_year`, diagnostic), `extra` ne peut plus ecraser un champ du ticket (trou de `D28`). Prepare dans une copie isolee, jamais dans `harness/` : porte 03 FRANCHIE (50), 04, 05, 06, 08 franchies, empreinte `4806666dc55c46c9`. A appliquer par l'operateur (`decisions/DECISION-35-harnais.patch`) ; les frais restent null jusqu'au releve CME d'apres le 2026-10-01 | registre 169 -> 169. |
 | 2026-09-30 | `codage` | **`D34`, LE CODAGE VERIFIE.** Trois gestes mecaniques avant qu'un signal entre dans un lot : la recette (`scripts/recette.py`, formule, entrees, timing, parametres et ambiguites cites mot pour mot dans le texte du papier), les choix ecrits (`CHOICES` dans chaque module), le double codage (`scripts/double_codage.py`, principal `opus` et temoin `sonnet` isoles ; rho >= 0,70 et couverture >= 0,80 sur les scores, jamais un rendement). Porte 09, `measure_lot.py` et `hypotheses_lot.py` exigent la concordance ; `scripts/ecarter_du_lot.py` sort une fiche avant mesure. Calibration : Baltussen main contre codeur rho 0,506, DISCORDANT. Premier passage reel : `baltussen-2021-hedging-demand-intraday-momentum`, recette valide au 2e essai (18 ambiguites), deux codages verts, **rho 1,000, CONCORDANT** ; porte 08 toujours franchie. Deux bugs trouves par ce passage, `L30` | registre 169 -> 169. |
 | 2026-09-29 | `moisson` | **46 NOUVEAUX AXES, 589 TEXTES INTEGRAUX EN BASE.** Axes declares et commites AVANT d'etre lances (`D21`) : 17 `intraday:*`, `instrument:nq/es/ym/gold/oil`, anomalies sur tous les actifs, 5 `causality:*`, 10 `mechanism:*` (les mecanismes de causalite, axe juge tres important par l'operateur). Superviseur `scripts/pipeline_runner.py` (reprise, temps restant, relance seule). Incidents : un portail wifi (`CERTIFICATE_VERIFY_FAILED`) a fait inscrire 176 refus faux, corriges (174 remis a « non sonde », la sonde ne conclut plus sur une erreur de reseau local) ; base injoignable sur le wifi universitaire (ports 5432/6543 bloques), reprise par partage de connexion et pooler | **1 097 atteignables sur 3 072 candidats, 1 043 PDF ; 642 papiers pertinents sur 1 042 lus (`D33`), +290 en base : 589 `harvest`**, 51 `authoritative`, 4 767 `abstract`. Embeddings sur la carte graphique (RTX 4050, `.venv-gpu`, vecteurs identiques au CPU a cosinus >= 0,999992) : 57 264 morceaux, tous vectorises. Base 707 Mo / 6,4 Go. Atlas du corpus republie (640 papiers, 2 039 liens). Guide `scripts/CODAGE-DES-SIGNAUX.md` pour les sessions de codage. Registre 169 -> 169. |
-| 2026-09-28 | `donnees` | **LA BASE EST REMPLIE DE RESUMES SSRN — `D31`, `D32`.** Demande de l'operateur : des papiers SSRN sur le petrole, l'or, le bitcoin et les devises, jusqu'a remplir la base. SSRN refuse les robots (`F60`) ; mais SSRN depose chez Crossref titre, auteurs, date et **resume**, lisibles sans toucher a ssrn.com. `D31` : 18 axes du moissonneur (le tri par citations ramenait 79 % de papiers hors actifs — Crossref accepte n'importe quel mot ; le tri par pertinence, 19 %), migration `003` (`text_source = 'abstract'`), 609 papiers verses. `D32` : un **catalogue** hors du moissonneur (`corpus/ssrn_catalogue.py`), 15 requetes et une regle de perimetre ecrites d'avance (un mot de l'actif dans le titre ou le resume — definition de la population demandee, pas un jugement d'implementabilite, donc pas `F50`), budget 400 Mo (80 % du plan gratuit, marge pour que la base reste utilisable) | **12 660 papiers verses en deux passages**, toutes les requetes epuisees jusqu'a leur derniere page ; le plafond de pages est passe de 10 a 25 par amendement ecrit avant le second passage. **13 269 papiers `abstract` en base**, manifeste `corpus/ssrn_catalogue.jsonl` (DOI, titre, annee, actifs, requete — pas le resume, que le DOI rend). Le budget n'a jamais tranche : l'offre SSRN est epuisee avant. Aucune fiche ne peut venir d'un resume. Registre 169 -> 169. |
 
 Journal complet : [[log]]
 
