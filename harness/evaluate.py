@@ -76,8 +76,12 @@ def evaluate(
     )
 
     cells: list[CellIC] = []
+    # The cell's median RAW price over the evaluated sample: the reference the
+    # fees and the slippage are converted to bp at (D35), as the floor was.
+    prices: dict[tuple[str, str], float] = {}
     for root in sorted({root for root, _ in scores}):
         adjusted = panel.adjusted(root, columns=["close"])["close"]
+        raw = panel.close(root).reindex(adjusted.index)
         labels = window_labels(adjusted.index, catalogue)
         sessions = session_date(adjusted.index, catalogue)
         for window in sorted({w for r, w in scores if r == root}):
@@ -85,6 +89,7 @@ def evaluate(
             close = adjusted[mask]
             if close.empty:
                 continue
+            prices[(root, window)] = float(raw[mask].median())
             returns = forward_returns(close, sessions[mask], labels[mask], bars)
             aligned = scores[(root, window)].reindex(close.index)
             measured = cell_ic(aligned, returns, close.index, root, window, bars, ticket)
@@ -102,6 +107,7 @@ def evaluate(
         extra={"asof": str(panel.asof), "cells": len(cells)},
     )
     ic, observations, t = settled["ic"], settled["observations"], settled["t"]
+    ic_by_year = settled["ic_by_year"]
     test_id = settled["test_id"]
 
     return ICReport(
@@ -117,11 +123,12 @@ def evaluate(
         observations=observations,
         t=t,
         cells=tuple(cells),
-        costs=tuple(costs_for(catalogue, sorted(scores)).values()),
+        costs=tuple(costs_for(catalogue, sorted(scores), prices).values()),
         instruments=instruments,
         breadth=breadth,
         code_hash=registry.code_hash(),
         counted_tests=registry.counted_tests(),
         warnings=controls.warnings_for(ic, scores),
         refused_cells=refused,
+        ic_by_year=ic_by_year,
     )

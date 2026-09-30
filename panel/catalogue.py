@@ -49,7 +49,11 @@ class Instrument:
     years: float
     tick: float | None
     multiplier: float | None
-    fee_per_contract_usd: float | None
+    # D26, D35 : USD par contrat et PAR SIDE, trois composantes externes (D09).
+    # Borne basse = courtier seul ; borne haute = les trois. Null = inconnu.
+    fee_broker_usd: float | None
+    fee_exchange_usd: float | None
+    fee_regulatory_usd: float | None
     roll_rule: str
     roll_cycle: str | None
     splice_minute_utc: str
@@ -123,7 +127,7 @@ class Catalogue:
                 holes["roll-dates"].append(root)
             if inst.multiplier is None:
                 holes["multipliers"].append(root)
-            if inst.fee_per_contract_usd is None:
+            if None in (inst.fee_broker_usd, inst.fee_exchange_usd, inst.fee_regulatory_usd):
                 holes["fees"].append(root)
         return holes
 
@@ -201,7 +205,9 @@ def load_catalogue(path: Path = CATALOGUE) -> Catalogue:
             years=float(spec["history"]["years"]),
             tick=spec["tick"],
             multiplier=spec["multiplier"],
-            fee_per_contract_usd=spec["fee_per_contract_usd"],
+            fee_broker_usd=spec["fee_broker_usd"],
+            fee_exchange_usd=spec["fee_exchange_usd"],
+            fee_regulatory_usd=spec["fee_regulatory_usd"],
             roll_rule=spec["roll"]["rule"],
             roll_cycle=spec["roll"]["cycle"],
             splice_minute_utc=spec["roll"]["splice_minute_utc"],

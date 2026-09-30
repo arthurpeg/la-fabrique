@@ -56,7 +56,7 @@ HORIZON = "30min"
 # L'empreinte du harnais avec lequel le lot sera mesuré. None tant que la
 # décision de harnais groupée (`D26`, `D28`, `D29`) n'est pas prise : elle
 # renseigne cette valeur, et nulle part ailleurs.
-HARNAIS_DU_LOT: str | None = None
+HARNAIS_DU_LOT: str | None = "4806666dc55c46c9"  # D35
 
 
 def charger() -> tuple[dict, list[dict]]:

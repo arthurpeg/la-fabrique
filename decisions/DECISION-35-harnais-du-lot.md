@@ -2,7 +2,7 @@
 
 **Date :** 2026-09-30
 **Phase :** 09
-**État :** proposée — prise quand l'opérateur applique le patch (voir § Comment l'appliquer). Tranche ce que `D26`, `D28` et `D29` renvoyaient à **une seule** modification du harnais.
+**État :** prise le 2026-09-30 — patch appliqué par un agent **sur instruction explicite de l'opérateur** (« applique le patch toi-même »), qui lève pour ce seul geste la règle de l'invariant I. Tranche ce que `D26`, `D28` et `D29` renvoyaient à **une seule** modification du harnais.
 
 ## La question
 
@@ -163,3 +163,4 @@ commiter, et passer l'état de cette décision à « prise ».
 |---|---|---|
 | 2026-09-30 | patch préparé et testé dans une copie isolée | porte 03 FRANCHIE sur le harnais modifié, 50 vérifications, empreinte `4806666dc55c46c9` ; signal parfait IC 1,000000000 sur 25 cellules ; bruit IC +0,00108, t final +0,06 ; grille de coût NQ×US de 1,72 bp (1 tick) à 5,43 bp (5 ticks), frais manquants nommés |
 | 2026-09-30 | toutes les portes relancées sur la copie modifiée | 01 PASSED, 02 FRANCHIE (103), 04 FRANCHIE (6 343 ; 169 lignes antérieures périmées, comme prévu), 05 FRANCHIE (32), 06 FRANCHIE (25), 08 FRANCHIE, 09 `--check` 21/21, `check_signals` 261, `score_signal --check` 27/27, catalogue et provenance valides. Porte 07 non franchie **dans la copie seulement** : `corpus/pdf/` n'y est pas (ignoré par git), donc F4 échoue sur 17 fiches ; franchie sur le dépôt. Patch appliqué sur une copie neuve : empreinte `4806666dc55c46c9`, identique |
+| 2026-09-30 | **patch appliqué au dépôt**, par un agent, sur instruction explicite de l'opérateur | empreinte `4806666dc55c46c9` ; porte 03 FRANCHIE (50) ; 01, 02, 05, 06, 07, 08 franchies ; 04 FRANCHIE après exclusion de `.venv-gpu/` de son balayage (du code tiers, dont `connection_pool.py`, y passait pour un appel à `_pool` — sans rapport avec le patch) ; 169 lignes antérieures périmées ; registre 169 → 176, lignes de calibration des portes 03 et 04 seulement, 56 tests comptés |

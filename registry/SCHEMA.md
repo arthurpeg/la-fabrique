@@ -50,6 +50,7 @@ Facultatifs, écrits par le harnais quand ils ont un sens :
 | `cells` | entier ≥ 0 | le nombre de cellules qui ont produit un IC |
 | `observations` | entier ≥ 0 | le nombre total d'observations poolées |
 | `note` | chaîne non vide | une phrase sur les circonstances du calcul — pourquoi cette ligne existe, quand ce n'est pas évident. Jamais un résultat, jamais une justification après coup |
+| `ic_by_year` | objet | depuis `D35` : l'IC poolé de chaque année civile (UTC), `{"2016": {"ic": …, "observations": …}, …}`. **Diagnostic de stabilité, jamais un test** (`D29`) : il est écrit sur la ligne pour qu'aucun IC n'existe hors du registre (invariant III) |
 
 ## Comment une ligne naît
 
