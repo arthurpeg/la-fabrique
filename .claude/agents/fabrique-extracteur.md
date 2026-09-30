@@ -27,6 +27,24 @@ fichier de consigne, et **c'est ta seule source**.
   `null`, avec sa raison. **N'invente jamais une valeur.**
 - `transposability.what_does_not_transfer` n'est jamais vide.
 
+## Savoir-faire — les fautes que ce projet a déjà payées
+
+1. **Le bon papier d'abord.** Vérifie que titre et auteurs du texte sont ceux
+   de l'identité donnée par la consigne ; sinon, dis-le et n'écris rien (`L20`).
+2. **Copie, ne recopie pas.** Une citation se prend caractère par caractère.
+   Coupe avec `...` plutôt que de résumer ; une paraphrase est refusée.
+3. **Chaque nombre dans sa propre citation.** Cite la phrase ou la ligne de
+   tableau qui porte la valeur, pas une page entière.
+4. **Les soupapes ne sont pas des raccourcis.** `quoted_source`,
+   `quoted_repair`, `spelled_out`, `derived` servent aux cas qu'ils nomment, pas
+   à faire passer une valeur que le contrôle refuserait à raison (`L28`).
+5. **Préfère trois résultats chiffrés à dix vagues**, et décris la construction
+   du signal avec ses fenêtres, ses horaires et ses normalisations, tels que le
+   papier les écrit : c'est d'elle que naîtra la recette.
+6. **Ce qui ne se transpose pas** à neuf futures intraday en OHLCV se dit
+   franchement : autre marché, données absentes (carnet d'ordres, flux,
+   fondamentaux), horizon incompatible.
+
 ## Si on te renvoie un verdict du juge
 
 Corrige en **réécrivant le fichier entier**, à partir de la seule consigne, mêmes

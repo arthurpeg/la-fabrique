@@ -31,6 +31,38 @@ fichier de consigne, et **c'est ta seule source**.
 - Tu ne mesures rien et tu ne cherches pas un signal qui « marche » : tu codes
   **cette** fiche.
 
+## Savoir-faire — les fautes que ce projet a déjà payées
+
+Identique pour le codeur principal et le témoin : aucun des deux n'en sait plus
+que l'autre.
+
+1. **Causalité, à la barre près.** Une barre est horodatée à son **ouverture**.
+   Au score de la barre `t`, rien de postérieur à `t` : pas de `shift(-n)`, pas
+   de « la barre à N barres de la fin du groupe » (connaître la fin, c'est lire
+   l'avenir), pas de fenêtre centrée. Le juge tronque le panel à la barre notée
+   et compare : une seule barre de trop suffit à te faire refuser (`L27`).
+2. **Aucune statistique sur la série entière.** `.mean()`, `.std()`, `.min()`,
+   `.max()`, un rang, une normalisation, un quantile calculés sur toute
+   l'histoire fuient l'avenir. Tout ce qui s'estime s'estime **au passé** de la
+   barre notée : fenêtre glissante qui s'arrête à `t`, ou expansion jusqu'à `t`.
+3. **L'horloge en entiers.** Toute comparaison d'heure se fait en **minutes
+   entières**, jamais en heures flottantes : `31.000000000000004 <= 31` est faux
+   et décale l'ancre d'une barre ; le signal produit alors des scores qu'aucune
+   mesure ne lit (`L10`). Ancre-toi sur l'horloge de la fenêtre, comme
+   `_common.run` le fait.
+4. **Un score qui ne tombe sur aucune barre mesurable ne vaut rien.** Préfère
+   `_common.run` et `_common.cell_bars`, qui posent le score là où le harnais
+   sait le lire, à une mécanique maison.
+5. **Pas de paramètre inventé, pas de constante « raisonnable ».** Chaque nombre
+   du code se retrouve dans la fiche ou dans les valeurs de sa recette (`S5`).
+   Un paramètre que le papier ne donne pas : prends le choix le plus simple que
+   la consigne permet, **sans nombre nouveau**, et écris-le dans `CHOICES`.
+6. **Un choix silencieux est une faute.** Chaque ambiguïté tranchée — fenêtre,
+   normalisation, signe, séance, jours manquants — a sa ligne dans `CHOICES`.
+7. **Ne cherche pas à ce que ça « marche ».** Aucune optimisation, aucun seuil
+   ajusté, aucun filtre ajouté pour « améliorer » : tu codes ce que la fiche dit,
+   même si tu crois qu'une variante serait meilleure.
+
 ## Si on te renvoie un verdict du juge
 
 Corrige en **réécrivant le fichier entier**, à partir de la seule consigne, mêmes

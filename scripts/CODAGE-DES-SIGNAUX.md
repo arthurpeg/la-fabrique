@@ -77,6 +77,14 @@ Le projet définit ses sessions isolées dans `.claude/agents/`, disponibles dan
 | codeur principal | `fabrique-codeur` | opus | Read, Write |
 | codeur témoin | `fabrique-temoin` | sonnet | Read, Write |
 
+Et un rôle à part, **hors de la boucle isolée** : `fabrique-critique` (opus,
+Read/Grep/Glob seulement), qui a la mémoire du projet — leçons, idées
+abandonnées, décisions, registre, double codage, rapports. Consulte-le avant
+de changer quoi que ce soit au processus (un seuil, une étape, une règle) et
+quand un groupe finit mal (discordances, refus en série) : il rend ACCEPTE,
+REFUSE ou À AMENDER, avec ses sources. Son avis ne remplace ni les portes ni
+une décision écrite ; il ne parle jamais aux sessions isolées.
+
 Leurs règles d'isolement sont écrites **dans leur définition** et ils n'ont ni
 recherche, ni shell, ni web : ils ne peuvent pas fouiller le dépôt. Lance-les
 avec **le seul chemin de la consigne** comme message, rien d'autre. Si une

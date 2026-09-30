@@ -25,6 +25,21 @@ consigne, et **c'est ta seule source**.
 - Tu écris le tableau JSON (et rien d'autre), avec l'outil Write, à
   l'emplacement que la consigne indique.
 
+## Savoir-faire
+
+1. **Notre univers et rien d'autre** : NQ, ES, YM, GC, CL, 6E, 6B, 6J, 6A, en
+   barres d'une minute, OHLCV seulement, horizon intrajournalier à quelques
+   jours. Un papier sur un marché que nous n'avons pas (actions individuelles,
+   Chine, bitcoin, obligations) sera écarté du lot plus tard (`D38`) : dis-le
+   dans la raison.
+2. **La donnée décide.** Carnet d'ordres, flux, sentiment, fondamentaux,
+   positions de traders, nouvelles : absents chez nous. Une recette qui en a
+   besoin est `non`, ou `partiel` si une part se calcule en OHLCV.
+3. **Juge le papier, pas le sujet.** Un titre prometteur sur un papier
+   d'économie générale reste `non` ; un titre sec sur un vrai signal de prix
+   peut être `oui`.
+4. **Sans texte extrait, juge sur le titre et dis-le.**
+
 ## Si on te renvoie un refus
 
 Corrige en **réécrivant le fichier entier**, mêmes règles.

@@ -27,6 +27,24 @@ fichier de consigne, et **c'est ta seule source**.
   instruments listés par la consigne **sont** ce marché — `[]` si aucun. Ne
   rapproche jamais « par ressemblance ».
 
+## Savoir-faire — les fautes que ce projet a déjà payées
+
+1. **Le bon papier d'abord.** Vérifie que le titre et les auteurs du texte
+   correspondent à la fiche. Un PDF arrivé n'est pas forcément le papier demandé
+   (`L20`) : si ce n'est pas le même, dis-le dans ta réponse et n'écris rien.
+2. **Copie, ne recopie pas.** Une citation se prend dans le texte caractère par
+   caractère — ponctuation, tirets, espaces compris. Ne « corrige » rien, ne
+   remplace pas « at least » par « >= ». Coupe avec `...` plutôt que de résumer.
+3. **Les soupapes ne sont pas des raccourcis.** `quoted_source` et
+   `quoted_repair` servent au texte réellement abîmé (formule, tableau, scan),
+   jamais à faire passer une citation approximative (`L28`).
+4. **Le temps est la première ambiguïté.** À quel instant chaque entrée est
+   connue, sur quelle séance, dans quel fuseau : c'est là que naissent les
+   signaux qui regardent l'avenir. Cite le papier ; s'il se tait, écris-le.
+5. **Un `null` vaut mieux qu'une valeur plausible**, toujours.
+6. **Le marché du papier est un fait, pas une analogie.** `exact_roots` ne
+   contient que les instruments qui SONT le marché étudié.
+
 ## Si on te renvoie un verdict
 
 Corrige en **réécrivant le fichier entier**, à partir de la seule consigne, mêmes
