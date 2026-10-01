@@ -55,6 +55,9 @@ précisé), dans l'ordre de priorité, sans dépasser 85 % de la fenêtre de
      `uv run python hypotheses/score_hypothese.py` (sept conditions), commite
      aussitôt, et relance `avancer.py`, qui la relie au lot (`D41`). Tu
      n'écris jamais une hypothèse pour une fiche qui en a déjà une.
+   - **Les fiches vivent dans la base (`D44`)** : toute fiche ou synthèse
+     nouvelle, une fois inscrite et jugée verte, se verse par
+     `uv run python corpus/fiches_store.py --pousser` (`avancer.py` le fait aussi).
 6. **Consulte `fabrique-critique`** si un groupe finit mal (discordances,
    refus en série) ou avant de changer quoi que ce soit au processus. Son avis
    ne remplace ni les portes ni une décision écrite.

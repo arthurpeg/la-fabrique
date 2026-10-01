@@ -96,6 +96,15 @@ def main(argv: list[str]) -> int:
     for c in lire(CONCORDANCE):
         tours[c["fiche_id"]] = tours.get(c["fiche_id"], 0) + 1
 
+    # 0 — D44 : la base fait foi pour les fiches. On tire celles qu'une autre
+    # session a versées, puis on pousse les nouvelles d'ici. Sans réseau, on
+    # continue sur le miroir, et on le dit.
+    if faire:
+        for sens in ("--tirer", "--pousser"):
+            rc, out = lancer("corpus/fiches_store.py", sens)
+            print("  fiches " + (out.splitlines()[-1] if out and rc == 0
+                                 else f"{sens} impossible (réseau ?) : on continue sur le miroir"))
+
     # 1 et 2 — fiche par fiche
     bloque: dict[str, list[str]] = {}
     for e in list(entries):
