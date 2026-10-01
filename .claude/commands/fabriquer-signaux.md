@@ -42,6 +42,12 @@ précisé), dans l'ordre de priorité, sans dépasser 85 % de la fenêtre de
      corrélation, **la mesure des IC**, la porte 09 et le tableau de bord. Si
      elle s'arrête sur des corrélations négatives (choix BH ou BY, `D25`),
      arrête-toi et demande à l'opérateur.
+   - **Chaque fiche a son hypothèse (`D42`)**, sans exception : aucune ne
+     s'écarte parce qu'elle « ne prédit pas de rendement ». Pour un tel papier,
+     transpose son idée en une prédiction intraday sur nos contrats — **le
+     signe** (monte / baisse) et **l'horizon intraday** déclaré dans « Le domaine »
+     (`**Horizon :**` 15 minutes, 2 heures, ou jusqu'à la clôture de la fenêtre) —
+     et dis dans « Ce qui n'est pas affirmé ici » que c'est une transposition.
    - **Hypothèse** : si `avancer.py` signale « vérifiée, hypothèse D40 à écrire »,
      écris-la toi-même **au format de `D40`** (prends `hypotheses/H05-*.md` comme
      modèle), avec dans « Le domaine » le paragraphe que donne

@@ -52,7 +52,11 @@ from gate_09 import (  # noqa: E402
 
 from harness import registry  # noqa: E402
 
-HORIZON = "30min"
+# D42 : chaque hypothèse est mesurée à SON horizon intraday, déclaré avant la
+# mesure (`horizon` de l'entrée du lot, lu dans « Le domaine » par
+# hypotheses_lot.py). « cloture » — jusqu'à la clôture de la fenêtre — demande au
+# harnais un horizon variable qu'il n'a pas encore : refusé, jamais remplacé.
+HORIZON_CLOTURE = "cloture"
 # L'empreinte du harnais avec lequel le lot sera mesuré. None tant que la
 # décision de harnais groupée (`D26`, `D28`, `D29`) n'est pas prise : elle
 # renseigne cette valeur, et nulle part ailleurs.
@@ -125,6 +129,13 @@ def prealables() -> tuple[list[str], list[dict]]:
     fautes += [f"D40 : {f}" for f in fautes_d40]
     for r in lignes_hors_protocole(entries, registre, courant):
         fautes.append(f"{r.get('test_id')} touche déjà le lot hors protocole (D28)")
+    for e in entries:
+        h = e.get("horizon")
+        if not h:
+            fautes.append(f"{e.get('fiche_id')} : pas d'horizon déclaré (D42)")
+        elif h == HORIZON_CLOTURE:
+            fautes.append(f"{e.get('ref')} : horizon « jusqu'à la clôture de la fenêtre » — "
+                          "le harnais ne sait pas encore le mesurer (D42)")
     a_faire = [e for e in entries
                if not any(est_officielle(r, e, courant) for r in registre)]
     return fautes, a_faire
@@ -152,7 +163,7 @@ def main(argv: list[str]) -> int:
         print("--run exige --je-mesure : chaque mesure dépense un test, et elle est définitive.")
         return 1
 
-    from harness import evaluate
+    from harness import evaluate, horizon_to_bars
     from panel import Panel
 
     panel = Panel.open(asof=ASOF_REQUIRED.replace("+00:00", ""), slice=SLICE_REQUIRED)
@@ -163,8 +174,11 @@ def main(argv: list[str]) -> int:
         # et sur elles seules. Le signal note toute la grille ; on ne garde que
         # l'univers écrit AVANT, jamais une cellule choisie après.
         garder = cellules_de(e["universe"]) & set(panel.cells())
-        scores = {c: s for c, s in module.scores(panel, horizon_bars=30).items() if c in garder}
-        rapport = evaluate(scores, panel, HORIZON,
+        horizon = e["horizon"]
+        barres = horizon_to_bars(horizon)
+        scores = {c: s for c, s in module.scores(panel, horizon_bars=barres).items()
+                  if c in garder}
+        rapport = evaluate(scores, panel, horizon,
                            signal_id=e["signal_id"], hypothesis_ref=e["ref"], stage=STAGE)
         print(f"  {i}/{len(a_faire)} {e['ref']} {e['signal_id']:<48} "
               f"IC {rapport.ic:+.5f}  t {rapport.t['final']:+.2f}", flush=True)

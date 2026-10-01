@@ -73,6 +73,31 @@ def grille() -> dict:
             "studied": "la grille entière, pré-enregistrée avant D38"}
 
 
+def horizon_de(texte: str) -> str | None:
+    """L'horizon intraday que l'hypothèse a déclaré (`D42`) : « 15min », « 2h »,
+    « cloture » (jusqu'à la clôture de la fenêtre), ou None s'il n'est pas lisible."""
+    m = re.search(r"\*\*Horizon\s*:\*\*\s*(.+?)(?:\n\s*\n|\n- \*\*|\Z)",
+                  section(texte, "Le domaine"), re.S | re.I)
+    if not m:
+        return None
+    ligne = " ".join(m.group(1).split()).lower()
+    # « de la fin de la première demi-heure à la clôture » : l'horizon est la
+    # clôture, la demi-heure n'est que le point de départ. La clôture d'abord.
+    if re.search(r"(?:à|jusqu.?à)\s+la\s+\**cl[ôo]ture", ligne):
+        return "cloture"
+    if "demi-heure" in ligne:
+        return "30min"
+    n = re.search(r"(\d+)\s*(minutes?|min\b)", ligne)
+    if n:
+        return f"{int(n.group(1))}min"
+    n = re.search(r"(\d+)\s*(heures?|h\b)", ligne)
+    if n:
+        return f"{int(n.group(1))}h"
+    if "clôture" in ligne or "cloture" in ligne:
+        return "cloture"
+    return None
+
+
 def univers_pour(fid: str, ref: str) -> tuple[dict | None, str]:
     """L'univers que l'hypothèse a pré-enregistré, ou pourquoi on ne peut pas encore le dire."""
     texte = fichier_de(ref).read_text(encoding="utf-8")
@@ -128,8 +153,12 @@ def do_lier() -> int:
         if u is None:
             attente.append((fid, pourquoi))
             continue
-        if e.get("ref") != ref or e.get("universe") != u:
-            e["ref"], e["signal_id"], e["universe"] = ref, fid, u
+        h = horizon_de(fichier.read_text(encoding="utf-8"))
+        if h is None:
+            attente.append((fid, f"{ref} : horizon illisible dans « Le domaine » (D42)"))
+            continue
+        if e.get("ref") != ref or e.get("universe") != u or e.get("horizon") != h:
+            e["ref"], e["signal_id"], e["universe"], e["horizon"] = ref, fid, u, h
             reliees += 1
     LOT_FILE.write_text(json.dumps(lot, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(f"{reliees} entrée(s) reliée(s) ; {len(liens)} hypothèse(s) D40 au total")

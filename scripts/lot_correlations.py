@@ -89,18 +89,22 @@ def main(argv: list[str]) -> int:
         return 1
     ids = sorted({e["signal_id"] for e in entrees()})
     univers = {e["signal_id"]: e.get("universe") for e in entrees()}
+    horizons = {e["signal_id"]: e.get("horizon") for e in entrees()}
     print(f"lot prêt : {len(ids)} signaux")
     if a.check:
         print("--check : rien n'a été calculé.")
         return 0
 
+    from harness import horizon_to_bars
     from panel import Panel
 
     panel = Panel.open(asof=ASOF_REQUIRED.replace("+00:00", ""), slice=SLICE_REQUIRED)
     plates: dict[str, pd.Series] = {}
     for i, sid in enumerate(ids, 1):
         module = importer_par_signal_id(sid)
-        scores = module.scores(panel, horizon_bars=30)
+        h = horizons.get(sid) or "30min"
+        barres = 30 if h == "cloture" else horizon_to_bars(h)  # D42 : l'horizon de l'hypothèse
+        scores = module.scores(panel, horizon_bars=barres)
         if univers.get(sid):  # D38 : les cellules que la mesure lira, pas les autres
             garder = cellules_de(univers[sid])
             scores = {c: s for c, s in scores.items() if c in garder}
