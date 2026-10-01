@@ -1,0 +1,100 @@
+"""Retirer puis reconstruire l'index de similarité des morceaux — sans toucher aux données.
+
+L'index HNSW (`chunks_embedding_hnsw`, migration 001) se met à jour à chaque
+embedding écrit. Le 2026-09-30, avec ~90 000 vecteurs déjà indexés, la petite
+instance Supabase n'a plus suivi : un lot de 64 morceaux toutes les ~20 minutes,
+des délais dépassés, des connexions fermées. La pratique pour un remplissage en
+masse : retirer l'index, écrire les vecteurs, le reconstruire en une fois.
+
+**Aucune donnée n'est touchée.** L'index est une structure de recherche
+calculée à partir des embeddings stockés ; le retirer laisse intacts papiers,
+morceaux et vecteurs. Sans lui, une recherche par similarité reste exacte, mais
+lente (parcours complet). La reconstruction reprend **la définition de la
+migration 001**, lue dans le fichier, jamais recopiée.
+
+    python vectordb/index_hnsw.py --etat
+    python vectordb/index_hnsw.py --retirer
+    python vectordb/index_hnsw.py --reconstruire
+"""
+
+from __future__ import annotations
+
+import argparse
+import re
+import sys
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+
+from vector_db import VectorDB  # noqa: E402
+
+NOM = "chunks_embedding_hnsw"
+MIGRATION = HERE / "migrations" / "001_init_vector_db.sql"
+
+
+def definition() -> str:
+    """Le `create index` de la migration 001, tel qu'il y est écrit."""
+    sql = MIGRATION.read_text(encoding="utf-8")
+    m = re.search(rf"create index {NOM} on chunks\s+using hnsw[^;]+;", sql)
+    if not m:
+        raise SystemExit(f"définition de {NOM} introuvable dans {MIGRATION.name}")
+    return m.group(0)
+
+
+def existe(db: VectorDB) -> bool:
+    with db.conn.cursor() as cur:
+        cur.execute("select 1 from pg_indexes where indexname = %s", (NOM,))
+        return cur.fetchone() is not None
+
+
+def main(argv: list[str]) -> int:
+    ap = argparse.ArgumentParser(description="Index HNSW des morceaux")
+    g = ap.add_mutually_exclusive_group(required=True)
+    g.add_argument("--etat", action="store_true")
+    g.add_argument("--retirer", action="store_true")
+    g.add_argument("--reconstruire", action="store_true")
+    a = ap.parse_args(argv)
+
+    db = VectorDB.from_env()
+    try:
+        with db.conn.cursor() as cur:
+            cur.execute("set statement_timeout = '180min'")
+        if a.etat:
+            print(f"{NOM} : {'présent' if existe(db) else 'ABSENT'}")
+            print(f"définition (migration 001) : {definition()}")
+            return 0
+        if a.retirer:
+            if not existe(db):
+                print(f"{NOM} est déjà absent")
+                return 0
+            with db.conn.cursor() as cur:
+                cur.execute(f"drop index {NOM}")
+            db.conn.commit()
+            print(f"{NOM} retiré. Les données sont intactes ; les recherches par similarité "
+                  "seront lentes jusqu'à la reconstruction.")
+            return 0
+        if existe(db):
+            print(f"{NOM} est déjà présent : rien à reconstruire")
+            return 0
+        sql = definition()
+        print(f"reconstruction : {sql}")
+        t0 = time.time()
+        with db.conn.cursor() as cur:
+            # Plus de mémoire de travail accélère la construction ; si l'instance
+            # la refuse, on continue avec la valeur par défaut.
+            try:
+                cur.execute("set maintenance_work_mem = '512MB'")
+            except Exception:  # noqa: BLE001
+                db.conn.rollback()
+            cur.execute(sql)
+        db.conn.commit()
+        print(f"{NOM} reconstruit en {(time.time() - t0) / 60:.1f} min")
+        return 0
+    finally:
+        db.close()
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))
