@@ -275,10 +275,22 @@ def self_check() -> int:
     import shutil  # noqa: PLC0415
     import tempfile  # noqa: PLC0415
 
-    global VERDICTS, PASSAGES, WORK  # noqa: PLW0603
+    global VERDICTS, PASSAGES, WORK, population  # noqa: PLW0603
     reels = (VERDICTS, PASSAGES, WORK)
+    vraie_population = population
     tmp = Path(tempfile.mkdtemp())
     ok = True
+
+    # La population du test est FABRIQUÉE, et ne dépend d'aucun PDF du poste :
+    # les PDF ne sont pas dans git, et un poste qui n'a pas moissonné avait une
+    # file vide — le test échouait alors sur « passage 02 inconnu » (L32).
+    fabriques = [{"openalex_id": f"WTEST{i}", "title": f"Papier fabrique pour le test {i}",
+                  "authors": ["Test"], "year": 2000, "abstract": "Texte fabrique.",
+                  "pdf": None, "_pertinent": True, "_priorite": None} for i in range(5)]
+
+    def population_de_test(semantique: bool = False) -> list[dict]:
+        faits = deja_tries()
+        return [w for w in fabriques if norm(w["title"]) not in faits]
 
     def cas(label: str, cond: bool) -> None:
         nonlocal ok
@@ -291,6 +303,7 @@ def self_check() -> int:
         else:
             (tmp / "v.json").write_text("[]", encoding="utf-8")
         VERDICTS, PASSAGES, WORK = tmp / "v.json", tmp / "passages", tmp / "consignes"
+        population = population_de_test
         avant = len(population())
         do_preparer(1, 3, semantique=False)
         p = lire_json(PASSAGES / "passage-02.json", {})
@@ -315,6 +328,7 @@ def self_check() -> int:
         cas("la file diminue d'autant", len(population()) == avant - 3)
     finally:
         VERDICTS, PASSAGES, WORK = reels
+        population = vraie_population
         shutil.rmtree(tmp, ignore_errors=True)
     print("TRI EN MASSE : " + ("le compte tient" if ok else "EN DÉFAUT"))
     return 0 if ok else 1
