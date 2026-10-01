@@ -60,7 +60,7 @@ HORIZON_CLOTURE = "cloture"
 # L'empreinte du harnais avec lequel le lot sera mesuré. None tant que la
 # décision de harnais groupée (`D26`, `D28`, `D29`) n'est pas prise : elle
 # renseigne cette valeur, et nulle part ailleurs.
-HARNAIS_DU_LOT: str | None = "94b495fa7525d3b8"  # D35, D37
+HARNAIS_DU_LOT: str | None = "bfcfcae68c20a212"  # D35, D37, D43
 
 
 RAPPORTS = REPO / "scripts" / "out" / "rapports"
@@ -133,9 +133,6 @@ def prealables() -> tuple[list[str], list[dict]]:
         h = e.get("horizon")
         if not h:
             fautes.append(f"{e.get('fiche_id')} : pas d'horizon déclaré (D42)")
-        elif h == HORIZON_CLOTURE:
-            fautes.append(f"{e.get('ref')} : horizon « jusqu'à la clôture de la fenêtre » — "
-                          "le harnais ne sait pas encore le mesurer (D42)")
     a_faire = [e for e in entries
                if not any(est_officielle(r, e, courant) for r in registre)]
     return fautes, a_faire
@@ -175,7 +172,9 @@ def main(argv: list[str]) -> int:
         # l'univers écrit AVANT, jamais une cellule choisie après.
         garder = cellules_de(e["universe"]) & set(panel.cells())
         horizon = e["horizon"]
-        barres = horizon_to_bars(horizon)
+        # D43 : la clôture est un horizon variable ; le signal pose ses scores à
+        # l'ancrage par défaut, le harnais mesure jusqu'à la clôture de chaque fenêtre.
+        barres = horizon_to_bars(horizon) or 30
         scores = {c: s for c, s in module.scores(panel, horizon_bars=barres).items()
                   if c in garder}
         rapport = evaluate(scores, panel, horizon,
