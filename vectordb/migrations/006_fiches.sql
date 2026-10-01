@@ -16,7 +16,7 @@
 -- À coller dans l'éditeur SQL du tableau de bord Supabase.
 
 create table if not exists public.fiches (
-    fiche_id    text        primary key check (fiche_id ~ '^[a-z0-9][a-z0-9-]*$'),
+    fiche_id    text        primary key check (fiche_id ~ '^[A-Za-z0-9][A-Za-z0-9-]*$'),
     origin      text        not null check (origin in ('amorce', 'harvest', 'synthese')),
     paper_id    uuid        references public.papers(id) on delete set null,
     raw         text        not null,
