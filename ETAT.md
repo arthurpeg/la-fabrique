@@ -19,6 +19,39 @@ mesure), `scripts/lot_correlations.py` (matrice de Spearman entre scores, aucun
 IC), `scripts/measure_lot.py` (la seule mesure ; **refuse** tant que
 `HARNAIS_DU_LOT` n'est pas renseigné par la décision de harnais groupée — mesurer
 avant brûlerait le lot, `D28`). Tous vérifient leurs préalables à blanc.
+**2026-09-30 — les deux lignes de travail sont fusionnées, la distante fait foi.**
+Ce poste avait couru 2 commits hors ligne depuis le 2026-09-29 10:25 pendant que
+la ligne distante en produisait 87. Fusion faite (merge, pas rebase : aucun
+commit réécrit), **la ligne distante gagne tous les conflits** — `ETAT.md` et
+`wiki/hot.md` sont les siens, `wiki/log.md` est l'union des deux dans l'ordre des
+dates, aucune ligne append-only supprimée. Les fichiers irremplaçables étaient
+saufs : `registry/tests.jsonl` et `LECONS.md` distants **contiennent les versions
+locales intactes** (169 → 181 lignes, 30 → 32 leçons) ; `F61` du ledger n'existait
+que localement et entre sans collision.
+**Collision de numéro tranchée : `D33` → `D40`.** Deux décisions différentes
+portaient `D33`. La distante le garde (la pertinence de la base) ; celle de ce
+poste devient `D40` (le format d'une hypothèse et son juge), selon le précédent
+`D27` → `D36` : la note de renumérotation est en tête du fichier, et les mentions
+de « `D33` » dans `wiki/log.md`, le ledger et l'historique git **ne sont pas
+retouchées** — elles sont append-only.
+**Ce que la ligne locale apporte en second**, non mesuré, aucun IC calculé :
+`D40`, `hypotheses/score_hypothese.py` (28 vérifications), **`H05` à `H14`
+écrites à la main**, et `hypotheses/NON-ECRITES-09.md` (recensement fiche par
+fiche : 31 des 41 sans hypothèse mesurable, ledger `F61`).
+**À TRANCHER PAR L'OPÉRATEUR, et ce n'est pas tranché ici.** Les deux lignes
+répondent à la même question de l'étape 8 de deux façons qui ne se recouvrent
+pas : la distante rédige les hypothèses **mécaniquement** depuis la fiche et le
+signal (`scripts/hypotheses_lot.py`) et écarte avant codage les papiers dont le
+marché nous manque (`D38`, `scripts/ecarter_du_lot.py`) ; la locale les rédige à
+la main sous un juge écrit d'avance (`D40`). Trois points restent ouverts :
+(1) `H05`–`H14` sont-elles reconnues par la chaîne distante, ou sont-elles
+périmées par le harnais `94b495fa7525d3b8` (`D35`, `D37`) postérieur à leur
+rédaction ? (2) `score_hypothese.py` reste-t-il le juge, à côté de
+`hypotheses_lot.py` ? (3) le recensement de `NON-ECRITES-09.md` et l'écran de
+`D38` disent-ils la même chose des 31 fiches ? `hypotheses_lot.py` numérote à
+partir du plus grand `H*` existant et ne réécrit jamais un fichier : les deux
+jeux **coexistent sans s'écraser**, donc rien n'est urgent — mais **le lot reste
+clos** (`D25` `C2`) et aucune mesure ne doit partir avant cet arbitrage.
 Les 11 fiches moissonnées sans trace de production ont été **refaites** par 11
 sessions isolées : 18 fiches sur 18 tracées, 17 vertes sur ce poste.
 `value_in_quote` n'ôte plus que les séparateurs de milliers (`D09` § Journal,
