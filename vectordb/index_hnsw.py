@@ -76,18 +76,29 @@ def main(argv: list[str]) -> int:
                   "seront lentes jusqu'à la reconstruction.")
             return 0
         if existe(db):
-            print(f"{NOM} est déjà présent : rien à reconstruire")
-            return 0
+            # Une construction interrompue (le 2026-10-01, l'éditeur SQL du tableau
+            # de bord a coupé la requête) peut laisser un index INVALIDE : il porte
+            # le bon nom, ne sert à rien, et `if not exists` le sauterait.
+            with db.conn.cursor() as cur:
+                cur.execute("select i.indisvalid from pg_index i join pg_class c "
+                            "on c.oid = i.indexrelid where c.relname = %s", (NOM,))
+                ligne = cur.fetchone()
+            if ligne and ligne["indisvalid"]:
+                print(f"{NOM} est déjà présent et valide : rien à reconstruire")
+                return 0
+            print(f"{NOM} existe mais est INVALIDE (construction interrompue) : on le retire")
+            with db.conn.cursor() as cur:
+                cur.execute(f"drop index {NOM}")
+            db.conn.commit()
         sql = definition()
         print(f"reconstruction : {sql}")
         t0 = time.time()
         with db.conn.cursor() as cur:
-            # Plus de mémoire de travail accélère la construction ; si l'instance
-            # la refuse, on continue avec la valeur par défaut.
-            try:
-                cur.execute("set maintenance_work_mem = '512MB'")
-            except Exception:  # noqa: BLE001
-                db.conn.rollback()
+            # La petite instance n'a pas la mémoire partagée de 512 Mo, ni d'un
+            # travail en parallèle (« No space left on device », 2026-10-01) :
+            # 128 Mo, un seul processus. Plus lent, mais ça tient.
+            cur.execute("set maintenance_work_mem = '128MB'")
+            cur.execute("set max_parallel_maintenance_workers = 0")
             cur.execute(sql)
         db.conn.commit()
         print(f"{NOM} reconstruit en {(time.time() - t0) / 60:.1f} min")
