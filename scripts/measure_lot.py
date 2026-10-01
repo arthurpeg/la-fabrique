@@ -117,6 +117,12 @@ def prealables() -> tuple[list[str], list[dict]]:
     registre = registry.read_all()
     fautes += fautes_d34_du_lot(lot, registre, STAGE)
     fautes += fautes_univers(lot)
+    # D40, D41 : chaque hypothèse passe son juge, et la bijection avec le lot tient.
+    sys.path.insert(0, str(REPO / "hypotheses"))
+    import score_hypothese as sh  # noqa: PLC0415
+
+    _, fautes_d40 = sh.juger_ensemble(sh.HYPOTHESES_DIR, sh.fiche_ids_du_lot())
+    fautes += [f"D40 : {f}" for f in fautes_d40]
     for r in lignes_hors_protocole(entries, registre, courant):
         fautes.append(f"{r.get('test_id')} touche déjà le lot hors protocole (D28)")
     a_faire = [e for e in entries

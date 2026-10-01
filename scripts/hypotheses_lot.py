@@ -1,26 +1,26 @@
-"""Les hypothèses pré-enregistrées du lot — étape 8 de la phase 09.
+"""Relier les hypothèses du lot à leur lot — étape 8 de la phase 09 (`D40`, `D41`).
 
-Pour chaque fiche du lot (`hypotheses/LOT-09.json`) dont le signal est **codé**,
-écrit `hypotheses/Hnn-<fiche>.md` et inscrit dans le lot sa `ref` et son
-`signal_id` — ce que `scripts/gate_09.py` attend (« chaque entrée gagnera son
-`ref` d'hypothèse et son `signal_id` »).
+**Ce script n'écrit aucune hypothèse.** Leur format, leur rédaction et leur juge
+sont ceux de `D40` (`hypotheses/score_hypothese.py`, sept conditions et la
+bijection avec le lot). Jusqu'au 2026-10-01, ce script en écrivait une version
+mécanique ; deux lignes de travail produisaient alors deux hypothèses pour une
+même fiche. `D41` tranche : le format de `D40` fait foi, ce script relie.
 
-**Écrite avant toute mesure, et par construction** : l'hypothèse ne peut pas
-dépendre d'un résultat, parce qu'il n'en existe aucun. Le script refuse
-d'écrire l'hypothèse d'un signal qui a déjà une ligne au registre (`D28`).
+Ce qu'il fait, pour chaque fiche du lot dont l'hypothèse passe le juge de `D40` :
 
-**Rédigée mécaniquement, sans jugement** : le signe attendu est celui que le
-signal déclare (`EXPECTED_SIGN`, choisi par le codeur depuis la fiche) ;
-l'affirmation, le mécanisme et ce qui ne transpose pas sont **recopiés** de la
-fiche ; les seuils qui la contrediraient sont ceux de `D25` et de `D01`. Aucune
-magnitude n'est inventée. Une hypothèse plus riche — un mécanisme discuté, une
-comparaison entre signaux — reste possible à la main, mais **avant** la mesure.
+- il inscrit dans le lot sa `ref` et son `signal_id` (le reflet que
+  `score_hypothese.py --lier` reconstruit aussi : mêmes valeurs) ;
+- il inscrit l'**univers de la mesure** (`D38`) :
+  - une hypothèse **écrite avant `D38`** (avant le 2026-09-30) ou qui déclare
+    « les 25 cellules » garde ce qu'elle a pré-enregistré : **la grille entière**.
+    Une hypothèse ne se réécrit pas (invariant IV) ;
+  - une hypothèse **écrite depuis** est mesurée sur l'actif du papier et sa
+    classe, tirés de la recette — et sa section « Le domaine » doit nommer
+    chaque actif du papier, sans quoi elle n'est pas reliée.
 
-**Jamais réécrite** (`hypotheses/README.md`) : un fichier existant n'est pas
-touché, et une entrée qui a déjà sa `ref` est laissée telle quelle.
-
-    python scripts/hypotheses_lot.py --status   # quelle fiche en est où
-    python scripts/hypotheses_lot.py --write    # écrit celles dont le signal est codé
+    python scripts/hypotheses_lot.py --status
+    python scripts/hypotheses_lot.py --lier            # relie ce qui est prêt
+    python scripts/hypotheses_lot.py --domaine <fiche> # le paragraphe d'univers D38 à écrire
 """
 
 from __future__ import annotations
@@ -29,190 +29,149 @@ import argparse
 import json
 import re
 import sys
-from datetime import date
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
+sys.path.insert(0, str(REPO / "hypotheses"))
 
 from codage_verifie import RECETTES, concordance, principal_de, univers_de  # noqa: E402
-from code_signal import fiche_files, signaux_existants  # noqa: E402
-from gate_09 import LOT_FILE, importer_par_signal_id  # noqa: E402
-
-from harness import registry  # noqa: E402
+from gate_09 import LOT_FILE  # noqa: E402
 
 HYP_DIR = REPO / "hypotheses"
-HORIZON = "30min"  # l'horizon de la grille et des signaux (`horizon_bars=30`)
+DATE_D38 = "2026-09-30"
+FENETRES = ["ASIA", "EUROPE", "US"]
 
 
-def prochain_numero() -> int:
-    nums = [int(m.group(1)) for p in HYP_DIR.glob("H*.md")
-            if (m := re.match(r"H(\d+)-", p.name))]
-    lot = json.loads(LOT_FILE.read_text(encoding="utf-8"))
-    for e in lot.get("fiches") or lot.get("hypotheses") or []:
-        if (m := re.match(r"H(\d+)$", e.get("ref") or "")):
-            nums.append(int(m.group(1)))
-    return max(nums, default=0) + 1
+def juge() -> tuple[dict[str, str], list[str]]:
+    """(fiche_id -> ref, fautes), par le juge de `D40`, sur les fiches du lot."""
+    import score_hypothese as sh  # noqa: PLC0415
+
+    return sh.juger_ensemble(HYP_DIR, sh.fiche_ids_du_lot())
 
 
-def texte(v) -> str:
-    """Le texte d'un champ de fiche, qu'il soit une chaîne ou `{value: ...}`."""
-    if isinstance(v, dict):
-        return str(v.get("value") or v.get("reason") or "")
-    if isinstance(v, list):
-        return " ; ".join(texte(x) for x in v)
-    return str(v or "")
+def fichier_de(ref: str) -> Path | None:
+    return next(iter(sorted(HYP_DIR.glob(f"{ref}-*.md"))), None)
 
 
-def rediger(ref: str, fiche: dict, module, fiche_path: Path, univers: dict) -> str:
-    classe = ", ".join(univers["classe"]) or "aucun autre instrument de cette classe"
-    fenetres = ", ".join(univers["fenetres"])
-    precision = ("" if univers["fenetres_du_papier"]
-                 else " — le papier ne les précise pas : les trois")
-    signe = "positif" if module.EXPECTED_SIGN > 0 else "négatif"
-    contraire = "négatif" if module.EXPECTED_SIGN > 0 else "positif"
-    src = fiche.get("source") or {}
-    tr = fiche.get("transposability") or {}
-    mod = Path(module.__file__).relative_to(REPO).as_posix()
-    return f"""# {ref} — {src.get("title") or fiche["fiche_id"]}
-
-**Écrite le :** {date.today().isoformat()}, avant toute mesure sur nos données
-**Signal :** `{module.SIGNAL_ID}` (`{mod}`)
-**Fiche :** `{fiche_path.relative_to(REPO).as_posix()}`
-**Origine :** {module.PAPER}
-**Lot :** `hypotheses/LOT-09.json` (`D36`) — mesurée une fois, à l'étape 10.
-**Rédaction :** mécanique (`scripts/hypotheses_lot.py`) : signe tiré du signal,
-affirmation et mécanisme recopiés de la fiche, seuils de `D25`. Rien n'a été vu.
-
-## Ce qui est affirmé
-
-Le score du signal `{module.SIGNAL_ID}` prédit le rendement des
-**30 minutes** suivantes, avec un signe **{signe}**.
-
-L'affirmation du papier, telle que la fiche la rapporte :
-
-> {texte(fiche.get("claim"))}
-
-## Le mécanisme, et ce qui ne transpose pas
-
-- **Construction** (fiche) : {texte(fiche.get("signal_construction"))}
-- **Ce qui se transpose** (fiche) : {texte(tr.get("what_transfers"))}
-- **Ce qui ne se transpose pas** (fiche) : {texte(tr.get("what_does_not_transfer"))}
-
-## Le domaine
-
-- **Marché du papier :** {univers["studied"] or "—"} (recette, `D38`).
-- **Actif du papier :** {", ".join(univers["exact"])} — lu à part dans les résultats.
-- **Même classe :** {classe} — ajoutée par le code, lue à part.
-- **Fenêtres :** {fenetres} (heure de New York){precision}.
-- **Un seul test** : l'IC poolé sur ces cellules, et sur elles seules (`D01` §4, `D38`).
-- **Horizon :** 30 minutes, à l'intérieur de la fenêtre et de la séance.
-- **Tranche :** `pool` entière, `asof` 2023-12-29 20:00 UTC (`D29`).
-- **Une seule mesure**, par le harnais, au stage `09-passage` (`D28`).
-
-## Ce qui est attendu, en chiffres
-
-| | |
-|---|---|
-| Signe de l'IC | **{signe}** |
-| Seuil de rétention | `BH` à `q` = 0,10 sur le lot, test **unilatéral** au signe (`D25`) |
-| Cible économique | IC de 0,018 à 0,031 pour un IR de 1 (`D01` §2) |
-
-## Ce qui la contredirait
-
-- Un IC poolé **{contraire}** : le signe affirmé est faux.
-- Une `p`-valeur unilatérale qui ne passe pas le seuil de `BH` à son rang :
-  indistinguable du bruit sur cet univers, au nombre de tests près.
-- Un IC du bon signe mais sous **0,018** : statistiquement présent peut-être,
-  économiquement sans intérêt (`D01` §2).
-"""
+def section(texte: str, titre: str) -> str:
+    m = re.search(rf"^##\s+{re.escape(titre)}\s*$(.*?)(?=^##\s|\Z)", texte, re.M | re.S)
+    return m.group(1) if m else ""
 
 
-def charger_lot() -> dict:
-    return json.loads(LOT_FILE.read_text(encoding="utf-8"))
+def ecrite_le(texte: str) -> str:
+    m = re.search(r"^\*\*Écrite le\s*:\*\*\s*(\d{4}-\d{2}-\d{2})", texte, re.M | re.I)
+    return m.group(1) if m else ""
+
+
+def grille() -> dict:
+    from panel.catalogue import load_catalogue  # noqa: PLC0415
+
+    roots = [r for r, i in load_catalogue().instruments.items() if i.in_universe]
+    return {"exact": roots, "classe": [], "fenetres": FENETRES, "grille": True,
+            "studied": "la grille entière, pré-enregistrée avant D38"}
+
+
+def univers_pour(fid: str, ref: str) -> tuple[dict | None, str]:
+    """L'univers que l'hypothèse a pré-enregistré, ou pourquoi on ne peut pas encore le dire."""
+    texte = fichier_de(ref).read_text(encoding="utf-8")
+    domaine = section(texte, "Le domaine")
+    if ecrite_le(texte) < DATE_D38 or "25 cellules" in domaine:
+        return grille(), ""
+    rp = RECETTES / f"{fid}.json"
+    u = univers_de(json.loads(rp.read_text(encoding="utf-8")) if rp.is_file() else {})
+    if u is None:
+        return None, "la recette ne déclare pas encore le marché (D38)"
+    if not u["exact"]:
+        return None, "marché absent de notre univers : la fiche s'écarte (D38)"
+    absents = [r for r in u["exact"] if not re.search(rf"\b{re.escape(r)}\b", domaine)]
+    if absents:
+        return None, (f"« Le domaine » ne nomme pas l'actif du papier {absents} : l'univers "
+                      "mesuré doit être celui que l'hypothèse a écrit")
+    return {k: u[k] for k in ("exact", "classe", "fenetres", "studied")}, ""
 
 
 def do_status() -> int:
-    lot = charger_lot()
-    codes = signaux_existants()
+    liens, fautes = juge()
+    lot = json.loads(LOT_FILE.read_text(encoding="utf-8"))
     for e in lot["fiches"]:
         fid = e["fiche_id"]
-        if e.get("ref"):
-            etat = "hypothèse " + e["ref"]
-        elif fid not in codes:
-            etat = "signal à coder"
-        elif not concordance(fid, principal_de(fid))[0]:
-            etat = "codé, double codage à faire (D34)"
+        ref = liens.get(fid)
+        verif = "vérifiée" if concordance(fid, principal_de(fid))[0] else "non vérifiée"
+        if not ref:
+            etat = "hypothèse D40 à écrire"
+        elif e.get("ref") == ref and e.get("universe"):
+            etat = f"reliée {ref}" + (" (grille)" if e["universe"].get("grille") else "")
         else:
-            etat = "vérifié, hypothèse à écrire"
-        print(f"  {etat:<34} {fid}")
-    faits = sum(1 for e in lot["fiches"] if e.get("ref"))
-    print(f"\n{faits}/{len(lot['fiches'])} hypothèses écrites")
+            etat = f"{ref} écrite, à relier"
+        print(f"  {etat:<30} {verif:<13} {fid}")
+    print(f"\n{len(liens)}/{len(lot['fiches'])} hypothèses au format D40 ; "
+          f"{len(fautes)} faute(s) du juge (score_hypothese.py)")
     return 0
 
 
-def do_write() -> int:
-    lot = charger_lot()
-    codes, fiches = signaux_existants(), fiche_files()
-    touches = {r.get("signal_id") for r in registry.read_all()}
-    ecrites = 0
+def do_lier() -> int:
+    liens, fautes = juge()
+    lot = json.loads(LOT_FILE.read_text(encoding="utf-8"))
+    reliees, attente = 0, []
     for e in lot["fiches"]:
         fid = e["fiche_id"]
-        if e.get("ref") or fid not in codes:
+        ref = liens.get(fid)
+        if not ref:
             continue
-        if fid in touches:
-            print(f"  REFUS {fid} : son signal a déjà une ligne au registre — il n'est "
-                  "plus à l'aveugle et ne peut pas entrer dans le lot (D28)")
+        fichier = fichier_de(ref)
+        if any(fichier.name in f for f in fautes):
+            attente.append((fid, f"{ref} refusée par le juge de D40"))
             continue
-        ok, pourquoi = concordance(fid, principal_de(fid))
-        if not ok:
-            print(f"  ATTENTE {pourquoi} — l'hypothèse s'écrira quand le codage "
-                  "sera vérifié (D34)")
+        u, pourquoi = univers_pour(fid, ref)
+        if u is None:
+            attente.append((fid, pourquoi))
             continue
-        recette_p = RECETTES / f"{fid}.json"
-        univers = univers_de(json.loads(recette_p.read_text(encoding="utf-8"))
-                             if recette_p.is_file() else {})
-        if univers is None:
-            print(f"  ATTENTE {fid} : la recette ne déclare pas le marché du papier (D38) — "
-                  "refaire la recette")
-            continue
-        if not univers["exact"]:
-            print(f"  REFUS {fid} : le papier étudie « {univers['studied']} », absent de notre "
-                  "univers — `scripts/ecarter_du_lot.py --preuve univers` (D38)")
-            continue
-        module = importer_par_signal_id(fid)
-        if module.EXPECTED_SIGN not in (1, -1):
-            print(f"  REFUS {fid} : EXPECTED_SIGN = {module.EXPECTED_SIGN!r}")
-            continue
-        ref = f"H{prochain_numero():02d}"
-        path = HYP_DIR / f"{ref}-{fid}.md"
-        path.write_text(rediger(ref, json.loads(fiches[fid].read_text(encoding="utf-8")),
-                                module, fiches[fid], univers), encoding="utf-8")
-        e["ref"], e["signal_id"] = ref, module.SIGNAL_ID
-        e["universe"] = {k: univers[k] for k in ("exact", "classe", "fenetres", "studied")}
-        # Le lot est réécrit APRÈS chaque hypothèse : une coupure ne laisse
-        # jamais une hypothèse écrite sans sa ref dans le lot.
-        LOT_FILE.write_text(json.dumps(lot, ensure_ascii=False, indent=1) + "\n",
-                            encoding="utf-8")
-        print(f"  {ref} écrite — {fid}")
-        ecrites += 1
-    print(f"\n{ecrites} hypothèse(s) écrite(s). Les commiter AVANT toute mesure : "
-          "la date du commit est la preuve qu'elles précèdent le résultat.")
+        if e.get("ref") != ref or e.get("universe") != u:
+            e["ref"], e["signal_id"], e["universe"] = ref, fid, u
+            reliees += 1
+    LOT_FILE.write_text(json.dumps(lot, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    print(f"{reliees} entrée(s) reliée(s) ; {len(liens)} hypothèse(s) D40 au total")
+    for fid, pourquoi in attente:
+        print(f"  ATTENTE {fid} : {pourquoi}")
+    if reliees:
+        print("Commiter le lot aussitôt : la date du commit prouve que l'univers "
+              "précède la mesure.")
+    return 0
+
+
+def do_domaine(fid: str) -> int:
+    rp = RECETTES / f"{fid}.json"
+    u = univers_de(json.loads(rp.read_text(encoding="utf-8")) if rp.is_file() else {})
+    if u is None:
+        raise SystemExit("la recette ne déclare pas de marché : la refaire (D38)")
+    if not u["exact"]:
+        raise SystemExit("marché absent : la fiche s'écarte, pas d'hypothèse à écrire (D38)")
+    print("À recopier dans la section « Le domaine » de l'hypothèse (D38, D41) :\n")
+    print(f"- **Marché du papier :** {u['studied']}.")
+    print(f"- **Actif du papier :** {', '.join(u['exact'])} — lu à part dans les résultats.")
+    print(f"- **Même classe :** {', '.join(u['classe']) or 'aucun autre instrument'} — lue à part.")
+    print(f"- **Fenêtres :** {', '.join(u['fenetres'])} (heure de New York).")
+    print("- **Un seul test** : l'IC poolé sur ces cellules, et sur elles seules (D01 §4, D38).")
     return 0
 
 
 def main(argv: list[str]) -> int:
-    ap = argparse.ArgumentParser(description="Hypothèses pré-enregistrées du lot")
+    ap = argparse.ArgumentParser(description="Relier les hypothèses D40 au lot — D41")
     ap.add_argument("--status", action="store_true")
-    ap.add_argument("--write", action="store_true")
+    ap.add_argument("--lier", action="store_true")
+    ap.add_argument("--domaine", metavar="FICHE_ID")
+    ap.add_argument("--write", action="store_true", help=argparse.SUPPRESS)
     a = ap.parse_args(argv)
     if a.write:
-        return do_write()
-    if a.status:
-        return do_status()
-    ap.print_help()
-    return 1
+        raise SystemExit("--write n'existe plus (D41) : les hypothèses s'écrivent au format D40 "
+                         "et se jugent par hypotheses/score_hypothese.py ; ce script les relie.")
+    if a.lier:
+        return do_lier()
+    if a.domaine:
+        return do_domaine(a.domaine)
+    return do_status()
 
 
 if __name__ == "__main__":

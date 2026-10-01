@@ -34,8 +34,10 @@ from codage_verifie import (  # noqa: E402
     CONCORDANCE,
     RECETTES,
     TOURS_MAX,
+    concordance,
     lire,
     maintenant,
+    principal_de,
     univers_de,
 )
 from gate_09 import LOT_FILE, STAGE  # noqa: E402
@@ -57,9 +59,15 @@ def main(argv: list[str]) -> int:
     cible = next((e for e in entries if e["fiche_id"] == a.fiche_id), None)
     if cible is None:
         raise SystemExit(f"{a.fiche_id} n'est pas dans le lot")
-    if cible.get("ref"):
-        raise SystemExit(f"{a.fiche_id} a déjà son hypothèse {cible['ref']} : elle a passé "
-                         "le double codage, elle ne s'écarte plus")
+    # D41 : une hypothèse au format D40 peut précéder le codage ; avoir une `ref` ne
+    # dit donc plus que le codage a réussi. On décide sur le codage lui-même.
+    if a.preuve in ("concordance", "juge") and concordance(a.fiche_id,
+                                                           principal_de(a.fiche_id))[0]:
+        raise SystemExit(f"{a.fiche_id} a un double codage CONCORDANT : elle ne s'écarte pas "
+                         "pour son codage")
+    if a.preuve == "univers" and (cible.get("universe") or {}).get("grille"):
+        raise SystemExit(f"{a.fiche_id} : son hypothèse {cible.get('ref')} a pré-enregistré la "
+                         "grille entière avant D38 ; elle se mesure comme elle a été écrite")
     ids = {e.get("signal_id") for e in entries} | {e["fiche_id"] for e in entries}
     mesures = [r for r in registry.read_all()
                if r.get("stage") == STAGE and r.get("signal_id") in ids]

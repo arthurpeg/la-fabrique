@@ -42,6 +42,13 @@ précisé), dans l'ordre de priorité, sans dépasser 85 % de la fenêtre de
      corrélation, **la mesure des IC**, la porte 09 et le tableau de bord. Si
      elle s'arrête sur des corrélations négatives (choix BH ou BY, `D25`),
      arrête-toi et demande à l'opérateur.
+   - **Hypothèse** : si `avancer.py` signale « vérifiée, hypothèse D40 à écrire »,
+     écris-la toi-même **au format de `D40`** (prends `hypotheses/H05-*.md` comme
+     modèle), avec dans « Le domaine » le paragraphe que donne
+     `uv run python scripts/hypotheses_lot.py --domaine <fiche_id>` ; puis
+     `uv run python hypotheses/score_hypothese.py` (sept conditions), commite
+     aussitôt, et relance `avancer.py`, qui la relie au lot (`D41`). Tu
+     n'écris jamais une hypothèse pour une fiche qui en a déjà une.
 6. **Consulte `fabrique-critique`** si un groupe finit mal (discordances,
    refus en série) ou avant de changer quoi que ce soit au processus. Son avis
    ne remplace ni les portes ni une décision écrite.
