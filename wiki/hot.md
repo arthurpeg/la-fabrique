@@ -23,9 +23,9 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Phase courante** | 09 — premier passage complet sur 30 à 50 papiers |
 | **Dernière porte franchie** | **08**, le 2026-09-23 — `scripts/gate_08.py`. Un signal produit par une session de codage séparée tient les **six conditions de `D23` au premier essai**, et aucun signal produit n'a été retouché à la main. |
 | **Décision la plus récente** | `decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un |
-| **Tests au registre** | 181 |
+| **Tests au registre** | 187 |
 | **Idées abandonnées recensées** | 61 |
-| **Entrées au journal** | 111 |
+| **Entrées au journal** | 112 |
 
 ## Ce qui bloque
 
@@ -865,6 +865,7 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-10-01 | `harnais` | **`D43` prise et appliquee** (instruction explicite de l'operateur) : le harnais mesure l'horizon « jusqu'a la cloture de la fenetre » (`cloture`), deflation du t sur la plus longue mediane des barres restantes. Harnais `bfcfcae68c20a212` ; porte 03 FRANCHIE (73, dont 4 bis), 04 et 06 franchies ; H07, H11, H13, H14 se mesureront a leur horizon | registre 181 -> 187 (calibrations), 56 tests comptes. |
 | 2026-10-01 | `decision` | **`D42` : une hypothese pour chaque fiche, a son horizon intraday** (choix de l'operateur : aucun ecart par ecran de contenu ; l'IA transpose les papiers sans prediction de rendement ; horizon declare par hypothese). Horizons lus et inscrits au lot : H05 H06 H09 H10 H12 = 30 min, H08 = 15 min, H07 H11 H13 H14 = jusqu'a la cloture de la fenetre. La mesure lit l'horizon de chaque hypothese (elle mesurait tout a 30 min) et refuse « cloture », que le harnais ne sait pas encore mesurer | registre 181 -> 181. |
 | 2026-10-01 | `decision` | **`D41` : le format D40 fait foi pour les hypotheses** (choix de l'operateur, apres fusion de la ligne d'arthurpeg : D40, H05-H14, score_hypothese.py). `hypotheses_lot.py` n'ecrit plus, il relie (`--lier`) : H05-H14 reliees au lot, mesurees sur la grille entiere qu'elles ont pre-enregistree (avant D38) ; les suivantes sur l'actif du papier et sa classe (`--domaine`). `ecarter_du_lot` decide sur le codage reel ; une fiche ecartee garde son hypothese hors bijection B1 ; `measure_lot` exige le juge D40 ; `avancer.py` traite aussi les fiches deja hypothetisees. Etat : 10/41 hypotheses reliees, 40 recettes a faire | registre 181 -> 181. |
 | 2026-10-01 | `corpus` | **Panne de `tri_en_masse --self-check` reparee** (signalee par L32) : l'auto-test dependait des PDF moissonnes presents sur le poste, absents de git ; sur un poste sans PDF la file etait vide et le test tombait sur « passage 02 inconnu ». Population de test desormais fabriquee dans la copie temporaire | registre 181 -> 181. |
@@ -872,7 +873,6 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 | 2026-09-30 | `outils` | **Tri ordonne par le sens et reaction en chaine.** La file de tri (3 074 papiers) s'ordonne par similarite aux fiches et aux papiers retenus (D39), sans filtrer. `scripts/avancer.py` : apres chaque fiche, tout le deterministe s'enchaine seul (ecarts D38, doubles codages, hypotheses commitees) et, lot complet, matrice + mesure des IC + porte 09 + tableau de bord ; seul arret : correlations negatives (BH/BY, D25). Branche dans /fabriquer-signaux | registre 181 -> 181. |
 | 2026-09-30 | `decision` | **`D39` : hypotheses de synthese.** Grappes de fiches par embeddings (`scripts/grappes.py`, bge-base, cosinus >= 0,80) : 8 grappes sur 51 fiches, et les 5 voisines de chaque fiche (memoire semantique du critique). Synthese isolee (`scripts/synthese.py`, sous-agent `fabrique-synthese`) : une seule version, choisie avant mesure (accord, transposabilite, parcimonie, tracabilite), citations recopiees des fiches sources et verifiees dans leurs textes. Premiere synthese `synthese-g-a9d7ec` valide ; elle entre dans la chaine ordinaire (recette multi-papiers, D38, D34) | registre 181 -> 181. |
 | 2026-09-30 | `outils` | **Commande `/fabriquer-signaux [n]`** (`.claude/commands/`) : une session neuve la tape et orchestre toute la boucle de `CODAGE-DES-SIGNAUX.md` avec les sous-agents du projet, quota releve avant et apres, verifier_tout et tableau de bord en fin de session | registre 181 -> 181. |
-| 2026-09-30 | `outils` | **Sous-agents : savoir-faire et critique.** Chaque sous-agent isole porte les fautes deja payees de son role (codeurs, a l'identique pour ne pas biaiser le double codage : causalite a la barre `L27`, aucune statistique sur la serie entiere, horloge en entiers `L10`, `S5`, CHOICES ; recette et extracteur : bon papier `L20`, citation au caractere, soupapes `L28` ; trieur : univers et donnees). Nouveau `fabrique-critique` (opus, Read/Grep/Glob) : memoire du projet, verdict ACCEPTE/REFUSE/A AMENDER source, controle du chemin qui bifurque ; avis seulement. Skills publics examines (anthropics/skills, shakeebshaan/claude-code-quant-skills, HyperFrequency/skills, liste Snyk) : non installes — ils optimisent sur les donnees et apporteraient des a priori aux sessions isolees ; la liste d'audit de backtest-review est reprise dans le critique. Embeddings relances : 83 228 morceaux | registre 181 -> 181. |
 
 Journal complet : [[log]]
 
