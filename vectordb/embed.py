@@ -185,12 +185,16 @@ def main(argv: list[str]) -> int:
                     break
 
                 vecteurs = embed_texts(model, [r["content"] for r in lot])
+                # UNE requête par lot, pas une par morceau : à travers une
+                # connexion lente, chaque aller-retour coûte (skill Supabase,
+                # « batch » ; 2026-10-01). Les vecteurs voyagent en texte et se
+                # convertissent côté base.
                 with db.conn.transaction(), db.conn.cursor() as cur:
-                    cur.executemany(
-                        "update chunks set embedding = %s::vector, "
-                        "embedding_model = %s where id = %s",
-                        [(to_pgvector(v, MODEL_DIM), MODEL, r["id"])
-                         for v, r in zip(vecteurs, lot, strict=True)],
+                    cur.execute(
+                        "update chunks as c set embedding = v.e::vector, embedding_model = %s "
+                        "from unnest(%s::uuid[], %s::text[]) as v(id, e) where c.id = v.id",
+                        (MODEL, [r["id"] for r in lot],
+                         [to_pgvector(v, MODEL_DIM) for v in vecteurs]),
                     )
             except psycopg.OperationalError as e:
                 coupures += 1
