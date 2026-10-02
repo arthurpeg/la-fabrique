@@ -356,7 +356,7 @@ def harvest_sources(filtre: str | None = None,
             continue
         # Un PDF qui ne porte pas le titre du papier n'est pas ce papier
         # (`corpus/titre_du_pdf.py`) : un lien de bibliographie pris pour le PDF.
-        if not porte_son_titre(pdf, w.get("title") or ""):
+        if not w.get("title_check_ok") and not porte_son_titre(pdf, w.get("title") or ""):
             print(f"  ignoré, le PDF ne porte pas son titre : {pdf.name}")
             continue
         # Deja en base : on ne relit pas son PDF (2026-09-29). Sans ce saut,

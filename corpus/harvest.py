@@ -1263,9 +1263,10 @@ def do_fetch(dry_run: bool) -> int:
                 if s is None or s < SEUIL_TITRE:
                     tmp.unlink()
                     w["status"] = "inatteignable"
-                    w["reason"] = f"le PDF ne porte pas le titre du papier (score {s})"
-                    failed.append((name, w["reason"]))
-                    print(f"  REFUS     | {name} : {w['reason']}")
+                    w["reason"] = "pdf_illisible" if s is None else "pdf_mal_attribue"
+                    w["reason_detail"] = f"le PDF ne porte pas le titre du papier (score {s})"
+                    failed.append((name, w["reason_detail"]))
+                    print(f"  REFUS     | {name} : {w['reason_detail']}")
                     continue
                 tmp.replace(dest)
                 taken += 1

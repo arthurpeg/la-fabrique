@@ -60,6 +60,9 @@ REASONS = {
     "peage": "le texte est derriere un peage",
     "refus_robot": "le site sert un controle anti-robot, non contourne",
     "sans_source_libre": "aucune version libre trouvee au recensement",
+    # 2026-10-02 (L33) : le PDF obtenu n'est pas ce papier, ou ne se lit pas.
+    "pdf_mal_attribue": "le PDF trouve est celui d'un autre document (titre absent du debut)",
+    "pdf_illisible": "le PDF trouve ne livre aucun texte lisible",
 }
 
 # Les sources trouvees HORS d'AMORCE.md, avec leur provenance. Une URL ajoutee
