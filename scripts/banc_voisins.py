@@ -181,15 +181,13 @@ def main() -> int:
         pref = classer(d["fiche+prefixe"], t, "top3")
         multi = fusion([classer(d["mecanisme+prefixe"], t, "top3"),
                         classer(d["construction+prefixe"], t, "top3")])
-        pool = d["mecanisme+prefixe"] + d["construction+prefixe"]
-        rr = rerang(reranker, c["queries"]["fiche"], pool, [p for p, _ in multi])
         rr1 = rerang(reranker, c["queries"]["fiche"], d["fiche"], [p for p, _ in top3])
         rrm = rerang(reranker, c["queries"]["mecanisme"], d["fiche"], [p for p, _ in top3])
         top5 = classer(d["fiche"], t, "top5")
         cen = cents.get(g, [])
         for nom, cl in (("0 actuelle (fiche, max)", base), ("1 fiche, top-3", top3),
                         ("2 fiche + préfixe, top-3", pref), ("3 mécanisme + construction", multi),
-                        ("4 = 3 + reclassement", rr), ("5 fiche, top-5", top5),
+                        ("5 fiche, top-5", top5),
                         ("6 = 1 + reclassement (fiche)", rr1),
                         ("7 = 1 + reclassement (mécanisme)", rrm),
                         ("8 centroïde du papier graine", cen),
