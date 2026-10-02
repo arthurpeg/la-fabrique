@@ -140,7 +140,8 @@ def rerang(reranker, requete: str, morceaux: list[dict], ordre: list[str],
     return sorted(par.items(), key=lambda x: -x[1]) + [(p, -1e9) for p in ordre[n:]]
 
 
-def par_centroides(graines_papiers: dict[str, str], n: int = 300) -> dict[str, list[tuple[str, float]]]:
+def par_centroides(graines_papiers: dict[str, str],
+                   n: int = 300) -> dict[str, list[tuple[str, float]]]:
     """Le papier ENTIER de la graine contre chaque papier : centroïde contre
     centroïde, comme les arêtes de l'Atlas (`vectordb/graph.py`)."""
     from vector_db import VectorDB  # noqa: PLC0415
