@@ -92419,8 +92419,8 @@
    "duplicate_of": null,
    "status": "atteignable",
    "reason": null,
-   "source_url": "https://arxiv.org/pdf/1403.0064",
-   "source_via": "OpenAlex, depot « arXiv (Cornell University) »",
+   "source_url": "https://library.utia.cas.cz/separaty/2013/E/kristoufek-0420811.pdf",
+   "source_via": "OpenAlex, depot ASEP (corrige le 2026-10-02 : arXiv 1403.0064 est 'Leverage effect in energy futures')",
    "evidence": {
     "url": "https://arxiv.org/pdf/1403.0064",
     "http": 200,
@@ -92440,8 +92440,12 @@
    ],
    "checked": "2026-09-28",
    "pdf": "corpus/pdf/harvest/commodity-futures-and-market-efficiency-W2112376992.pdf",
-   "sha256": "add7c1b65d87b623d50f7e1f702f974fcfcbc7c85e035f483b94c2bdd0f8f03a",
-   "resolvers": "2026-09-28 : openalex + nber + landing + core + siblings (D30)"
+   "sha256": "c036037ab46a8d78edd46a263c4f52916cf11c1717ac226105afa8ed447d78e3",
+   "resolvers": "2026-09-28 : openalex + nber + landing + core + siblings (D30)",
+   "corrected": {
+    "date": "2026-10-02",
+    "why": "PDF mal attribue : texte d'un autre papier (vecteurs identiques dans le graphe du corpus)"
+   }
   },
   {
    "openalex_id": "W3008632327",
@@ -110724,9 +110728,9 @@
    ],
    "found_via": "OpenAlex, axe intraday:realized-moments, requete de D20/D21",
    "duplicate_of": null,
-   "status": "atteignable",
-   "reason": null,
-   "source_url": "https://bitcoin.org/bitcoin.pdf",
+   "status": "inatteignable",
+   "reason": "PDF mal attribue (le lien PMC pris etait celui de la bibliographie : le livre blanc de Bitcoin) ; Springer et PMC refusent le telechargement automatique (2026-10-02)",
+   "source_url": null,
    "source_via": "lien PDF trouve sur la page de depot https://www.ncbi.nlm.nih.gov/pmc/articles/8990612",
    "evidence": {
     "url": "https://bitcoin.org/bitcoin.pdf",
@@ -110751,9 +110755,13 @@
     }
    ],
    "checked": "2026-09-29",
-   "pdf": "corpus/pdf/harvest/testing-for-asymmetric-non-linear-short-and-long-W4225580801.pdf",
-   "sha256": "b1674191a88ec5cdd733e4240a81803105dc412d6c6708d53ab94fc248f4f553",
-   "resolvers": "2026-09-28 : openalex + nber + landing + core + siblings (D30)"
+   "pdf": null,
+   "sha256": null,
+   "resolvers": "2026-09-28 : openalex + nber + landing + core + siblings (D30)",
+   "corrected": {
+    "date": "2026-10-02",
+    "why": "faux PDF retire"
+   }
   },
   {
    "openalex_id": "W3083082176",
@@ -133319,14 +133327,11 @@
     }
    ],
    "found_via": "OpenAlex, axe anomaly:crypto, requete de D20/D21",
-   "duplicate_of": {
-    "rule": "empreinte sha256",
-    "file": "testing-for-asymmetric-non-linear-short-and-long-W4225580801.pdf"
-   },
+   "duplicate_of": null,
    "status": "atteignable",
    "reason": null,
-   "source_url": "https://bitcoin.org/bitcoin.pdf",
-   "source_via": "lien PDF trouve sur la page de depot https://doi.org/10.1371/journal.pone.0219243",
+   "source_url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0219243&type=printable",
+   "source_via": "PLoS ONE, version imprimable du DOI (corrige le 2026-10-02 : le lien PMC etait celui de la bibliographie, le livre blanc de Bitcoin)",
    "evidence": {
     "url": "https://bitcoin.org/bitcoin.pdf",
     "http": 200,
@@ -133346,8 +133351,12 @@
    ],
    "checked": "2026-09-29",
    "pdf": "corpus/pdf/harvest/some-comments-on-bitcoin-market-in-efficiency-W2957548041.pdf",
-   "sha256": "b1674191a88ec5cdd733e4240a81803105dc412d6c6708d53ab94fc248f4f553",
-   "resolvers": "2026-09-28 : openalex + nber + landing + core + siblings (D30)"
+   "sha256": "ae0f0570da2d3540c02a4a1f0dfbe13d7bef87c5a703c0da85f8d73858f6c41d",
+   "resolvers": "2026-09-28 : openalex + nber + landing + core + siblings (D30)",
+   "corrected": {
+    "date": "2026-10-02",
+    "why": "PDF mal attribue : texte d'un autre papier (vecteurs identiques dans le graphe du corpus)"
+   }
   },
   {
    "openalex_id": "W4221068986",
@@ -186095,10 +186104,7 @@
     }
    ],
    "found_via": "OpenAlex, axe asset:commodities, requete de D20/D21",
-   "duplicate_of": {
-    "rule": "empreinte sha256",
-    "file": "commodity-futures-and-market-efficiency-W2112376992.pdf"
-   },
+   "duplicate_of": null,
    "status": "atteignable",
    "reason": null,
    "source_url": "http://arxiv.org/pdf/1403.0064",
@@ -186123,7 +186129,11 @@
    "checked": "2026-09-30",
    "pdf": "corpus/pdf/harvest/leverage-effect-in-energy-futures-W3124256151.pdf",
    "sha256": "add7c1b65d87b623d50f7e1f702f974fcfcbc7c85e035f483b94c2bdd0f8f03a",
-   "resolvers": "2026-09-28 : openalex + nber + landing + core + siblings (D30)"
+   "resolvers": "2026-09-28 : openalex + nber + landing + core + siblings (D30)",
+   "corrected": {
+    "date": "2026-10-02",
+    "why": "marque a tort doublon de 'Commodity futures and market efficiency' : c'est ce PDF-ci qui etait le bon"
+   }
   },
   {
    "openalex_id": "W2528063373",
@@ -274585,7 +274595,10 @@
     }
    ],
    "found_via": "OpenAlex, axe anomaly:seasonality, requete de D20/D21",
-   "duplicate_of": null,
+   "duplicate_of": {
+    "rule": "meme papier, autre depot (titre normalise, memes auteurs, 2026-10-02)",
+    "file": "now-you-see-it-now-you-don-t-the-effectiveness-o-W4313425105.pdf"
+   },
    "status": "atteignable",
    "reason": null,
    "source_url": "http://repository.essex.ac.uk/12957/1/jdm06162.pdf",
