@@ -126,11 +126,11 @@ def fusion(classements: list[list[tuple[str, float]]]) -> list[tuple[str, float]
 
 
 def rerang(reranker, requete: str, morceaux: list[dict], ordre: list[str],
-           n: int = 40) -> list[tuple[str, float]]:
+           n: int = 25) -> list[tuple[str, float]]:
     """Le cross-encodeur relit (requête, passage) pour les n premiers papiers."""
     meilleurs: dict[str, list[dict]] = {}
     for m in sorted(morceaux, key=lambda m: -m["s"]):
-        if m["paper_id"] in ordre[:n] and len(meilleurs.setdefault(m["paper_id"], [])) < 3:
+        if m["paper_id"] in ordre[:n] and len(meilleurs.setdefault(m["paper_id"], [])) < 2:
             meilleurs[m["paper_id"]].append(m)
     paires = [(p, m["content"]) for p, ms in meilleurs.items() for m in ms]
     notes = list(reranker.rerank(requete, [c for _, c in paires]))
@@ -173,7 +173,8 @@ def main() -> int:
             api.appel("GET", "/rest/v1/fiches?select=fiche_id,paper_id&paper_id=not.is.null")}
     cents = par_centroides({g: lien[g] for g in cand if g in lien})
     methodes = {}
-    for g, c in cand.items():
+    for i, (g, c) in enumerate(cand.items(), 1):
+        print(f"  classé {i}/{len(cand)} : {g}", flush=True)
         d, t = c["draws"], c["title"]
         base = classer(d["fiche"], t, "max")
         top3 = classer(d["fiche"], t, "top3")
