@@ -192,8 +192,15 @@ def do_prepare(graine: str, n_voisins: int) -> int:
     ff = fiches()
     if graine not in ff:
         raise SystemExit(f"fiche graine inconnue : {graine}")
+    sid = sid_de(graine)
+    if (DOSSIER / f"{sid}.json").is_file():
+        raise SystemExit(f"{sid} existe déjà : son dossier est figé. Une synthèse se refait "
+                         "par une décision écrite, pas en réécrivant ce contre quoi on la juge.")
     d = chercher(graine, n_voisins, PASSAGES)
-    ecrire(d)  # le dossier, versionné : la liste des voisins que juge le validateur
+    # Le dossier d'une synthèse est figé sous le nom de la synthèse : `voisins.py`
+    # peut réécrire le dossier d'exploration, jamais celui contre lequel on juge.
+    d["seed"]["dossier_of"] = sid_de(graine)
+    ecrire(d, nom=sid_de(graine))
     api = Api()
     blocs = []
     for v in d["neighbors"]:
@@ -210,7 +217,6 @@ def do_prepare(graine: str, n_voisins: int) -> int:
             + " ".join(p["content"].split()) for p in v["passages"])
         blocs.append(f"### [{ident}] {v['title']}\n\nSimilarité {v['similarity']:.3f}.\n\n"
                      f"{corps}Ses passages les plus proches de la graine :\n\n{passages}\n")
-    sid = sid_de(graine)
     WORK.mkdir(parents=True, exist_ok=True)
     out = WORK / f"{sid}.md"
     out.write_text(CONSIGNE.format(
@@ -220,7 +226,7 @@ def do_prepare(graine: str, n_voisins: int) -> int:
         schema=SCHEMA.read_text(encoding="utf-8"),
         fiche_graine=ff[graine].read_text(encoding="utf-8"), voisins="\n".join(blocs)),
         encoding="utf-8")
-    print(f"dossier         : {(DOSSIERS / f'{graine}.json').relative_to(REPO).as_posix()} "
+    print(f"dossier         : {(DOSSIERS / f'{sid}.json').relative_to(REPO).as_posix()} "
           f"({len(d['neighbors'])} voisins)")
     ko = out.stat().st_size / 1000
     print(f"consigne écrite : {out.relative_to(REPO).as_posix()}  ({ko:.0f} ko)")
@@ -248,7 +254,7 @@ def valider(path: Path) -> list[str]:
     if not isinstance(syn, dict):
         return ["bloc `synthesis` absent"]
     graine = syn.get("dossier")
-    f_dossier = DOSSIERS / f"{graine}.json"
+    f_dossier = DOSSIERS / f"{sid_de(graine)}.json"
     if not graine or not f_dossier.is_file():
         return [f"dossier introuvable : {f_dossier.relative_to(REPO).as_posix()}"]
     possibles = sources_du_dossier(json.loads(f_dossier.read_text(encoding="utf-8")))
@@ -307,8 +313,8 @@ def do_check(path: Path) -> int:
 
 
 def do_status() -> int:
-    for f in sorted(DOSSIERS.glob("*.json")):
-        p = DOSSIER / f"{sid_de(f.stem)}.json"
+    for f in sorted(DOSSIERS.glob("synthese-dossier-*.json")):
+        p = DOSSIER / f"{f.stem}.json"
         etat = ("valide" if not valider(p) else "REFUSÉE") if p.is_file() else "à synthétiser"
         print(f"  {etat:<14} {f.stem}")
     return 0

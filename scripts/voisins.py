@@ -33,7 +33,9 @@ from code_signal import fiche_files  # noqa: E402
 from grappes import MODELE, representation  # noqa: E402
 
 DOSSIERS = REPO / "corpus" / "dossiers"
-LARGEUR = 40  # morceaux demandés par voisin voulu : de quoi en regrouper assez
+LARGEUR = 60  # morceaux demandés par voisin voulu : de quoi en regrouper assez
+PLANCHER = 600  # au moins autant de morceaux tirés, comme le banc d'essai (D48)
+TOP = 3  # un papier vaut la moyenne de ses trois meilleurs morceaux (D48)
 
 
 def norm_titre(t: str) -> str:
@@ -59,7 +61,7 @@ def chercher(fiche_id: str, n_voisins: int, n_passages: int) -> dict:
     api = Api()
     morceaux = api.appel("POST", "/rest/v1/rpc/vector_search", {
         "query_embedding": vecteur(representation(fiche)),
-        "match_count": n_voisins * LARGEUR}) or []
+        "match_count": max(PLANCHER, n_voisins * LARGEUR)}) or []
 
     fiches_par_papier = {}
     lignes = api.appel("GET", "/rest/v1/fiches?select=fiche_id,paper_id&paper_id=not.is.null")
@@ -67,29 +69,35 @@ def chercher(fiche_id: str, n_voisins: int, n_passages: int) -> dict:
         fiches_par_papier[r["paper_id"]] = r["fiche_id"]
 
     voisins: dict[str, dict] = {}
-    for m in morceaux:
+    for m in sorted(morceaux, key=lambda m: -m["similarity"]):
         if norm_titre(m["title"]) == norm_titre(titre_graine):
             continue  # le papier graine lui-même
         v = voisins.setdefault(m["paper_id"], {
-            "paper_id": m["paper_id"], "title": m["title"], "similarity": m["similarity"],
-            "fiche_id": fiches_par_papier.get(m["paper_id"]), "passages": []})
+            "paper_id": m["paper_id"], "title": m["title"],
+            "fiche_id": fiches_par_papier.get(m["paper_id"]), "passages": [], "_s": []})
+        v["_s"].append(m["similarity"])
         if len(v["passages"]) < n_passages:
             v["passages"].append({"section": m["section"], "page": m["page"],
                                   "similarity": round(m["similarity"], 4),
                                   "content": m["content"]})
+    # D48 : la moyenne des trois meilleurs morceaux, un manquant comptant zéro.
+    # Un papier qui ne ressemble à la graine que par une phrase recule ; le
+    # banc d'essai (scripts/banc_voisins.py) fait passer le rappel à 10 de
+    # 0,29 (meilleur morceau seul) à 0,37.
+    for v in voisins.values():
+        v["similarity"] = round(sum(v.pop("_s")[:TOP]) / TOP, 4)
     classes = sorted(voisins.values(), key=lambda v: -v["similarity"])[:n_voisins]
-    for v in classes:
-        v["similarity"] = round(v["similarity"], 4)
     return {"generated": datetime.now(UTC).isoformat(timespec="minutes"),
             "seed": {"fiche_id": fiche_id, "title": titre_graine,
                      "representation": representation(fiche)},
             "model": MODELE, "neighbors": classes}
 
 
-def ecrire(d: dict) -> Path:
+def ecrire(d: dict, nom: str | None = None) -> Path:
     DOSSIERS.mkdir(parents=True, exist_ok=True)
     fid = d["seed"]["fiche_id"]
-    (DOSSIERS / f"{fid}.json").write_text(json.dumps(d, ensure_ascii=False, indent=1) + "\n",
+    nom = nom or fid
+    (DOSSIERS / f"{nom}.json").write_text(json.dumps(d, ensure_ascii=False, indent=1) + "\n",
                                           encoding="utf-8")
     lignes = [f"# Dossier — {d['seed']['title']}", "",
               f"Papier graine : `{fid}`. Voisins trouvés par le sens dans toute la base "
@@ -100,7 +108,7 @@ def ecrire(d: dict) -> Path:
         for p in v["passages"]:
             lignes += [f"> *{p['section']}, similarité {p['similarity']:.3f}* — "
                        + " ".join(p["content"].split())[:1500], ""]
-    chemin = DOSSIERS / f"{fid}.md"
+    chemin = DOSSIERS / f"{nom}.md"
     chemin.write_text("\n".join(lignes), encoding="utf-8")
     return chemin
 

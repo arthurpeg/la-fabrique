@@ -1,0 +1,195 @@
+{
+ "generated": "2026-10-02T12:50+00:00",
+ "seed": {
+  "fiche_id": "baltussen-2021-hedging-demand-intraday-momentum",
+  "title": "Hedging demand and market intraday momentum",
+  "representation": "Hedging demand and market intraday momentum \nLe rendement de la derniere demi-heure avant la cloture (r_LH) est positivement predit par le rendement du reste de la meme journee (r_ROD : de la cloture de la veille jusqu'a 30 minutes avant la cloture), sur plus de 60 futures d'actions, d'obligations, de matieres premieres et de devises, de decembre 1974 a mai 2020. Ce predicteur r_ROD bat le predicteur r_ONFH (nuit + premiere demi-heure) de Gao et al. (2018), surtout lorsque les deux sont de signes opposes. La cause avancee est la demande de couverture des participants en gamma negatif (teneurs de marche d'options, ETF a effet de levier), qui doivent acheter quand le prix monte et vendre quand il baisse, et qui concentrent l'essentiel de leur couverture avant la cloture. Corollaire teste : la pression de prix etant transitoire, r_LH se retourne sur les un a trois jours suivants. \nA chaque date t et pour chaque contrat, decouper la journee de negociation en cinq intervalles allant de la cloture du jour t-1 a la cloture du jour t, sur les heures 'communes' du marche sous-jacent : la nuit (ON), la premiere demi-heure (FH), le milieu de journee (M), l'avant-derniere demi-heure (SLH) et la derniere demi-heure (LH). Le signal est le rendement du reste de la journee, r_ROD,t = P(c-30,t) / P(c,t-1) - 1 : le rendement d'un achat a la cloture de la veille et d'une vente 30 minutes avant la cloture du jour t. Il se lit a c-30, n'utilise que des prix anterieurs a cet instant, et predit le rendement des 30 dernieres minutes, r_LH. Il s'evalue de deux manieres : en regression, r_LH,t = a + b_ROD * r_ROD,t + e_t, avec un R2 hors echantillon contre la moyenne historique recursive (fenetre extensible, minimum 500 observations) ; en strategie, par une position binaire prise a c-30 et tenue jusqu'a la cloture, longue si r_ROD,t est positif, courte sinon. Les predicteurs concurrents se construisent sur le meme decoupage : r_ONFH,t = P(o+30,t)/P(c,t-1) - 1, r_M,t = P(c-60,t)/P(o+30,t) - 1, r_SLH,t = P(c-30,t)/P(c-60,t) - 1. Aucun parametre n'est ajuste, aucune donnee exterieure aux prix intraday n'entre dans le calcul ; seules les heures d'ouverture et de cloture retenues pour chaque marche, et la regle de roll du contrat le plus liquide, sont des choix prealables. \n30 minutes"
+ },
+ "model": "BAAI/bge-base-en-v1.5",
+ "neighbors": [
+  {
+   "paper_id": "289ca991-e2e4-4876-83ab-97ac36a418b8",
+   "title": "Time-Varying Crash Risk Embedded in Index Options: The Role of Stock Market Liquidity",
+   "similarity": 0.7855,
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "other",
+     "page": 44,
+     "similarity": 0.7855,
+     "content": "Table 7: Explaining Change in Risk-Neutral Skewness with Illiquidity-related Variables\nChange in Risk-Neutral Skewness: ∆RNSkewt\n(1) (2) (3) (4)\n∆Noiset -2.177** -2.159** -2.101**\n(-2.26) (-2.24) (-2.18)\n∆|AbOrderFlow t| -0.642\n(-1.63)\n∆BuyOrderFlow t -0.445 -0.491\n(-0.99) (-1.09)\n∆SellOrderFlow t -1.164** -1.247**\n(-2.27) (-2.43)\n∆ILQt -1.170*** -0.916**\n(-2.82) (-2.11)\n∆MinRVt 0.151 0.152 0.496* 0.454*\n(0.68) (0.69) (1.88) (1.72)\nReturnt -3.978*** -4.317*** -3.876*** -4.458***\n(-7.94) (-7.59) (-7.75) (-7.79)\n∆RNSkewt−1 0.473*** 0.474*** 0.475*** 0.473***\n(19.95) (20.03) (19.76) (19.80)\nR2 24.91% 25.06% 24.76% 25.24%\nNotes: We report regression results on daily changes in risk-neutral skewness of S&P500\nindex returns, ∆RSkewt. The sample period is from November 1, 2004 to December 30, 2014.\nWe use an ARMA(2,1) structure in the regression model. Each speciﬁcation is estimated\nusing maximum likelihood. We control for seasonality due to the day-of-the-week eﬀect. Risk-\nneutral skewness, RSkewt, on day t is calculated from end-of-the-day S&P 500 index option\nprices with maturity closest to 30 days. We use the nonparametric method of Bakshi and\nMadan (2000) to calculate the 30-day forward-looking risk-neutral skewness measure. The\nindependent variables include change in realized variance estimator, ∆ MinRV ; change in\nmarket illiquidity, ∆ILQ; and log S&P 500 return, Return. In addition, we include two"
+    },
+    {
+     "section": "results",
+     "page": 30,
+     "similarity": 0.7634,
+     "content": "rket illiquidity\nincreases following a day with negative stock market return. These ﬁndings are consistent\nwith the existing literature (e.g., Chordia, Roll, and Subrahmanyam, 2001). We also ﬁnd that\ntheVIX t positively predicts an increase in the stock market illiquidity the next day, which is\nconsistent with Nagel (2012) who shows that the VIX index is a strong predictor of the return\nfrom liquidity provisions. However, we do not ﬁnd that MinRVt signiﬁcantly predicts market\nilliquidity the next day after controlling for the lead-lag relationships through the VAR model.\nWe ﬁnd thatNoiset and|AbOrderFlow t| are strong predictors of stock market illiquidity.\nThe economic magnitude of their impacts is substantial. Looking at Column (4) in Table 6,\nwe ﬁnd that a one-standard-deviation increase in Noiset leads to an about 13% increase in\nILQt+1, or approximately, a two-cent increase in the annualized round-trip trading cost for\nevery dollar investment in the stock market. The economic magnitude of |AbOrderFlow t| is\nabout half of the Noiset measure.\n28\nElectronic copy available at: https://ssrn.com/abstract=2797308"
+    },
+    {
+     "section": "results",
+     "page": 32,
+     "similarity": 0.7537,
+     "content": "This ﬁnding provides support for “limits to arbitrage” in explaining the relative pricing of\nindex options (Shleifer and Vishny, 1997). During periods where liquidity providers face\nfunding constraint, they are less willing to deploy arbitrage capital to help keep the relative\nprices of OTM puts to ATM calls in line with fundamental values. As OTM puts become\nincreasingly more expensive relative to ATM calls, the risk-neutral skewness implied by index\noptions drop, signaling a higher risk-neutral probability of crash risk.\nThe results in Column (1) of Table 7 show that the coeﬃcient estimate on ∆|AbOrderFlow t|\nis negative, but not statistically signiﬁcant at conventional levels. This result is based on the\nmagnitude of abnormal order ﬂow, regardless of the direction, in the E-mini futures market.\nWe further examine the impact of negative order ﬂows and positive order ﬂows separately.\nThe results are shown in Columns (2) and (4). We use abnormal order ﬂow on day t to deﬁne\nbuy- and sell-order ﬂows as follows:\nBuyOrderFlow t = max (0 ,AbOrderFlow t)\nSellOrderFlow t = − min (0,AbOrderFlow t).\nWe ﬁnd a clear pattern in the eﬀect of adverse selection cost on risk-neutral skewness when\nwe examine buy and sell order ﬂows separately. The results in Table 7 show that an excessive\nselling pressure in the S&P500 E-mini futures market is related to a more negative risk-neutral\nskewness observed in index option prices. On the other hand, the impact of excessive buying"
+    }
+   ]
+  },
+  {
+   "paper_id": "115703c8-4601-4230-80f9-32de983ddb63",
+   "title": "Short-Term Price Overreactions: Identification, Testing, Exploitation",
+   "similarity": 0.7835,
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "results",
+     "page": 12,
+     "similarity": 0.7835,
+     "content": "924 G. M. Caporale et al.\ncannot be seen as inconsistent with the EMH. By contrast, Strategy 2, based on the\n“inertia anomaly”, appears to be more successful and generates stable proﬁts in the\ncase of the Gold and EURUSD.\nAcknowledgements Comments from the Editor and various anonymous referees have been gratefully\nacknowledged.\nOpen Access This article is distributed under the terms of the Creative Commons Attribution 4.0 Interna-\ntional License (http://creativecommons.org/licenses/by/4.0/ ), which permits unrestricted use, distribution,\nand reproduction in any medium, provided you give appropriate credit to the original author(s) and the\nsource, provide a link to the Creative Commons license, and indicate if changes were made.\nAppendix 1\nExample of optimisation results: case of EURUSD, period 2013, H1 testing (Fig. 1;\nTable 7).\nFig. 1 Distribution of results (X—proﬁt_koef, Y —stop)—deeper green means better results\nTable 7 Results of testing: case of EURUSD, period 2013 (changeable parameters proﬁt_koef from 0.5 to\n3 with step 0.5; stop from 1 to 5 with step 1), start deposit = 10,000$, size of trading lot = 10,000$, margin\n(credit) leverage= 100, time_val =22, period_dz = 30, sigma_koef=1\nNumber of\nsimulation\nProﬁt, $ Total\ntrades\nProﬁt\nfactor\nExpected\npayoff\nDrawdown, $ Drawdown (%) Proﬁt_koef Stop\n1 −34.61 31 0.91 −1.12 183.27 17.88 0.5 1\n7 −67.61 28 0.84 −2.41 170.27 16.90 0.5 2\n13 −88.61 28 0.81 −3.16 184.27 17.92 0.5 3\n19 −168.61 28 0.69 −6.02 237.71 23.67 0.5 4"
+    }
+   ]
+  },
+  {
+   "paper_id": "d024c572-eeba-4ef5-b223-62767f433a4b",
+   "title": "Do designated market makers provide liquidity during downward extreme price movements?",
+   "similarity": 0.7783,
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "other",
+     "page": 40,
+     "similarity": 0.7783,
+     "content": "-1.27) (-2.29) (-0.95) (-0.00) (4.09)\nRecovery 0.011 -0.042 0.028 -0.015 0.013\n(0.47) (-1.40) (1.44) (-0.59) (0.85)\nBid-ask spread 0.006 -0.007 -0.004 0.003 0.003\n(0.65) (-0.71) (-0.57) (0.27) (0.48)\nLog(euro volume) -0.023 -0.143*** -0.022 0.047** 0.102***\n(-1.29) (-7.61) (-1.14) (2.33) (4.54)\nReturn 0.031 -0.076*** 0.006 0.031** -0.034***\n(1.09) (-3.64) (0.61) (2.15) (-3.26)\n¯R2 0.008 0.070 0.022 0.031 0.039\nNote. We present the results of the V AR in equation ( 9). The model is estimated separately\nfor unsystematic drift burst EPMs in Panel A and systematic ones in Panel B. The dependent\nvariable is the 10-second trading imbalance of the trader category indicated by the column label.\nThe explanatory variables “Pre-event”, “Early drop”, “Interme diate drop”, “Late drop”, and\n“Recovery” refer to phase dummies of a drift burst EPM. “Bid-ask spread” is the quoted spread\n(in percent), “Log(euro volume)” is the log-euro volume, and “Ret urn” is the contemporaneous\nstock return. We also include stock ﬁxed eﬀects. The non-dummy v ariables are standardized\nat the stock level. The coeﬃcient estimates of lagged trading imbalan ces are not reported for\nbrevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust standard errors\nclustered at the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01. nObs\n= 342,032 in Panel A and nObs = 79,404 in Panel B.\n39"
+    },
+    {
+     "section": "other",
+     "page": 63,
+     "similarity": 0.771,
+     "content": "* 0.0 48** -0.042** 0.068*** 0.061**\n(0.09) (1.21) (-1.66) (-6.45) (3.79) (2.72) (-2.65) (3.37) (2.13)\nReturn -0.084*** -0.072*** -0.266*** -0.227*** -0.077*** -0.135*** -0.077*** -0.099*** -0.074***\n(-9.81) (-8.64) (-14.22) (-10.36) (-9.62) (-12.24) (-8.04 ) (-7.32) (-6.60)\n¯R2 0.014 0.013 0.095 0.091 0.041 0.056 0.015 0.053 0.036\nNote. We present the results of the V AR in equation ( 9). The model is estimated separately for unsystematic drift burst\nEPMs in Panel A and systematic ones in Panel B. The dependent varia ble is the 10-second passive trading imbalance of\nthe trader category indicated by the column label. The explanatory variables “Pre-event”, “Early drop”, “Intermediate\ndrop”, “Late drop”, and “Recovery” refer to phase dummies of a drift burst EPM. “Bid-ask spread” is the quoted spread (in\npercent), “Log(euro volume)” is the log-euro volume, and “Retur n” is the contemporaneous stock return. We also include\nstock ﬁxed eﬀects. The non-dummy variables are standardized at the stock level. The coeﬃcient estimates of lagged trading\nimbalances are not reported for brevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust standard\nerrors clustered at the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01. nObs = 342,032 in Panel A\nand nObs = 79,404 in Panel B.\nx"
+    },
+    {
+     "section": "other",
+     "page": 64,
+     "similarity": 0.7707,
+     "content": "-0.18) (2.99) (2.97) (1.52) (-2.20) (-1.41)\nLog(euro Volume) -0.005 -0.016 1.035*** 0.040 0.081 -0.068 0.361*** -0.743*** -0.457**\n(-0.44) (-0.44) (3.58) (0.33) (0.60) (-0.31) (4.89) (-3.61 ) (-2.44)\nReturn 0.006 -0.016 -0.054 -2.049*** 0.104 -0.816 -1.226** * 0.839*** 0.936***\n(0.17) (-0.38) (-0.16) (-7.02) (0.44) (-1.60) (-5.78) (3.1 7) (4.00)\n¯R2 0.058 0.008 0.022 0.087 0.006 0.016 0.053 0.022 0.012\nNote. This table presents coeﬃcient estimates from the V AR in equation ( 12). The model is estimated separately for\nunsystematic drift burst EPMs in Panel A and systematic ones in Pan el B. The dependent variable is the 10-second proﬁt\nand loss (P&L) of the trader category indicated by the column label. “Dummy” equals one for the entire duration of the\ndrift burst EPM (from the beginning of the pre-event until the end of the recovery), zero otherwise, “Bid-ask spread” is the\nquoted spread (in percent), “Log(euro volume)” is the log-euro v olume, and “Return” is the contemporaneous stock return.\nWe also include stock ﬁxed eﬀects. The non-dummy variables are sta ndardized at the stock level. The coeﬃcient estimates\nof the lagged P&L are not reported for brevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust\nstandard errors clustered at the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01. nObs = 342,032 in\nPanel A and nObs = 79,404 in Panel B.\nxi"
+    },
+    {
+     "section": "methodology",
+     "page": 31,
+     "similarity": 0.7704,
+     "content": "minute interval in our sample is deﬁned as follows:\nSP (day,stock)\nm = γ(stock)\nm × min\nu=0,1,...,30\n\n ∑\nt∈[m−u,m]\nst · Vt\n\n , (13)\nwhere m runs over a one-minute equispaced partition of the trading day, γ(stock)\nm is an intraday\nperiodicity factor, while st and Vt are as before. That is, for each time instant m, we compute\nthe signed euro volume over the previous u minutes of trading. Since large sell-side activity may\nsustain for diﬀerent amounts of time, we do the calculation for inter vals ranging from one to\nthirty minutes, matching the build-up from pre-event to trough of a typical drift burst EPM. To\nget a single number for each time point, we take the minimum value, whic h is usually negative\nand reﬂects the cumulative selling pressure. We correct SP (day,stock)\nm for intraday periodicity in\ntrading activity by multiplying it by a factor γ(stock)\nm that is computed as the reciprocal of the\nstock-speciﬁc average value of SP (day,stock)\nm for a ﬁxed interval m, where the average is taken over\nall days in the sample for each stock. This ensures that the ﬁnal nu mber is comparable over\ntime and across stocks.\nFigure\n8 shows the unconditional distribution of SP (day,stock)\nm over the entire sample. As\nexpected, we observe that selling pressure is strongly left-skewe d. Moreover, the distribution\nof SP (day,stock)\nm conditional on a drift burst EPM is centered at the tail of the uncon ditional\ndistribution. This shows that the most extreme values of SP (day,stock)"
+    }
+   ]
+  },
+  {
+   "paper_id": "0c522705-9b64-4835-8fa8-4c2675b89b9f",
+   "title": "High‐Frequency Trading around Large Institutional Orders",
+   "similarity": 0.7766,
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "intro",
+     "page": 18,
+     "similarity": 0.7766,
+     "content": "re close to ﬂat at the end of the day, but not entirely. Part of the position they accumulate within a\nday, they smooth out across weeks or even months. Not mean-reverting entirely to zero is perhaps\nnot surprising, as HFT might hedge their position with correlated assets and obtain a ﬂat position\nin terms of risk . The table further shows that the directionality of institutional investors, on the\nother hand, is much larger across days, weeks and months: 0.99, 0.91, and 0.83, respectively.\n4 HFT Net Flow during the Execution of Institutional Orders\nIn this section, we investigate whether HFTs “lean against the wind” or “go with the wind” while\nan institutional order executes through a series of child orders. We also set up a placebo sample\nto study whether HFT behavior is associated with the presence of the institutional order, or simply\nrelates to the market conditions that prevailed at the time the institution implemented its order.\n14"
+    },
+    {
+     "section": "intro",
+     "page": 20,
+     "similarity": 0.757,
+     "content": "Figure 2 plots the results for buy orders (left panel) and sell orders (right panel). The plots\nshow that HFTs lean against buy orders in the ﬁrst seven hours of execution, since they go short\nfor approximately $20,000. This result is statistically signiﬁcant only in the ﬁrst ﬁve hours, as\nindicated by the solid dots. The right panel shows that HFTs lean against sell orders only in the\nﬁrst two hours. This result is statistically weaker (only signiﬁcant at a 10% signiﬁcance level).\nStrikingly, HFTs turn around and go with the order if it lasts more than seven hours for buys and\nmore than two hours for sells. The result turns statistically signiﬁcant only if the order lasts longer\nthan seven hours. HFT cumulative net ﬂow steadily grows until it plateaus at around $300,000\nwith-wind. It reaches this level after about 20 hours for institutional buys and after 15 hours for\ninstitutional sells.\nOverall it seems that with-wind trading is slightly stronger for sell orders since initial against-\nwind trading is weaker and the large with-wind position is reached earlier. We suspect this is due to\nthe higher execution intensity of sell orders. Indeed, Table 1 reveals that sell orders are 38% larger\nand about an hour shorter, on average. This ﬁnding might not be all that surprising as investors\nmight rationally choose to specialize ( V an Nieuwerburgh and V eldkamp, 2009). As a result, they"
+    },
+    {
+     "section": "results",
+     "page": 32,
+     "similarity": 0.7559,
+     "content": "with-wind ﬂow’s positive association with the information content of orders (PPI) is therefore not\nsimply an artifact of with-wind activity for larger orders. The regression analysis shows that when\nsize is controlled for, the positive association remains.\nIf the institutional order ends in the half hour after the opening of the U.S markets, the OPI is\nsigniﬁcantly lower. This is likely due to higher overall trading activity in this period and improved\nliquidity, as the TPI regression suggests that most of the reduction comes from the transitory com-\nponent.\nTaken together, the ﬁndings in this section are consistent with HFTs back-running on informed\ninstitutional orders. Not only are the orders in our sample largely informed orders, the with-wind\nactivity is strongest for the most informed among them. We caution that this should be taken\nas evidence that there is no predatory trading surrounding orders in general . Predatory trading\nrequires stressed orders (e.g., forced liquidations) and is therefore more likely to surround orders\nby highly leveraged institutions (e.g., hedge funds). Such institutions are not part of our sample,\nwhich consists of orders by two mutual funds, a sovereign wealth fund, and a pension fund.\n28"
+    },
+    {
+     "section": "results",
+     "page": 32,
+     "similarity": 0.7553,
+     "content": "The with-wind variable is deﬁned as HFT cumulative net ﬂow if (in the lifetime of the order) it\ncarries the same sign as the institutional order, and zero otherwise. The against-wind variable is\ndeﬁned analogously, such that total HFT ﬂow equals with-wind ﬂow minus against-wind ﬂow.\nStandard covariates are added as controls.\nThe OPI regressions show that HFT with-wind ﬂow’s coe cient is positive, both when these\nvariables are expressed in relative terms or in dollar terms. Rerunning these regressions for OPI’s\ntwo components separately reveals that PPI is driving this result. Stronger with-wind HFT ﬂow\nis associated with more informed orders in the cross-section. This association is economically\nlarge as a one standard deviation increase in with-wind ﬂow implies a 9.28 basis points higher PPI,\nwhich is high given that the overall PPI average is 5.69 basis points.\nThe regressions further show that the consistently signiﬁcant covariate is order size. Its co-\necient is signiﬁcantly positive for both overall and permanent price impact, and is insigniﬁcant\nfor transitory price impact. This is consistent with institutional investors using their private infor-\nmation strategically, trading larger quantities when having stronger signals. Note further that the\nwith-wind ﬂow’s positive association with the information content of orders (PPI) is therefore not\nsimply an artifact of with-wind activity for larger orders. The regression analysis shows that when"
+    }
+   ]
+  },
+  {
+   "paper_id": "9e94be61-689e-41f9-adf7-f04250017d85",
+   "title": "The Intraday Pattern of Trading Activity, Return Volatility and Liquidity: Evidence from the Emerging Tunisian Stock Exchange",
+   "similarity": 0.7754,
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 8,
+     "similarity": 0.7754,
+     "content": "ng day. At the end of quotation, it achieved a peak that reaches 3,451. Hence, \nthe confirmation of our second hypothesis. Certainly, we ca n say that this result coincides with the results shown on \nthe order-driven market (Bildik (2001)).Second, the trading volume is globally variable in the day. Figure 2 also \nhighlights that the configuration of intraday trading volume is in U and more precisely in W. We notice, however, a \nhigh trading volume over the first ten minutes of the session quotation as well as a strong increase at the close of the \nday. However we find in the middle of the day that the trading volume comes to decrease after the first interval in \norder to increase again until reaching the value 1 at 11:30 am . This persistence of the gr owth of the trading volume \nhas been interrupted and has declined again. Third, figure 3 shows clearly that the intraday behavior of return \nvolatility follows the shape U. We observe that high return volatility exists at the beginning of the session quotation. \nHowever this volatility has declined rapidly and continues to decrease throughout the day in order to pick up again \nin the last ten minutes. The latter result is consistent with the results of Ahn, Bae and Chan (2001).In addition, the \nfigure 4 shows that the quoted spread also follows the U- shaped profile. We notice that the spread is high at the \nbeginning of the market followed by a reduction during the two following intervals. During the trading day, the"
+    },
+    {
+     "section": "methodology",
+     "page": 10,
+     "similarity": 0.768,
+     "content": "www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 \nPublished by Canadian Center of Science and Education 165\nthe opening and closing quotation in the Tunisian stock market, is only due to the information flow, is insufficient. \nSince the previous literature has shown the existence of a very important f actor generating this anomaly. Amihud \nand Mendelson (1987), Stoll Whaley (1990) have highlighted the importance of trading in fixing on the return and \nvolatility. They have shown that the return and the volatility calculated on the basis of price fixing are high during \nthe first minutes and the last minutes of trading. \n5.3 The Empirical Analysis of the Regularities of Intraday Trading Activity, Volatility and Liquidity \nThe graphical analysis has shown the presence of the anomaly of seasonality in the Tunisian stock market. It \ntherefore seemed interesting to adopt and to estimate the sa me methodological approach of Vo (2007) to verify this \nresult. To test the significance of different patterns of liquidity, volatility and trading activity, standardized variables \nare regressed on a set of dummy variab les representing the intraday interval s. The following parameters of the \nmodel are estimated by using OLS. \nܴܦܵ\n௧\n௡\n௞ୀଵ\n௧ ሺ6ሻ \n \n௧\n௡\n௞ୀଵ\n௧ ሺ7ሻ \n \n௧\n௧\n௡\n௞ୀଵ\n௧ ሺ8ሻ \n௧\n௡\n௞ୀଵ\n௧ ሺ9ሻ \n \n௧\n௡\n௞ୀଵ\n௧ ሺ10ሻ \nWhere, SDR୲ ; SDV୲; SDR ୲\nଶ; SDSPR ୲; SDDepth ୲ represent standardized variables of return, volatility, trading"
+    },
+    {
+     "section": "methodology",
+     "page": 10,
+     "similarity": 0.7605,
+     "content": "ܦܵ\n௧\n௡\n௞ୀଵ\n௧ ሺ6ሻ \n \n௧\n௡\n௞ୀଵ\n௧ ሺ7ሻ \n \n௧\n௧\n௡\n௞ୀଵ\n௧ ሺ8ሻ \n௧\n௡\n௞ୀଵ\n௧ ሺ9ሻ \n \n௧\n௡\n௞ୀଵ\n௧ ሺ10ሻ \nWhere, SDR୲ ; SDV୲; SDR ୲\nଶ; SDSPR ୲; SDDepth ୲ represent standardized variables of return, volatility, trading \nvolume , spread and depth in the interval generating t. n is the number of intervals in the trading day with n ranging \nfrom 1 to 24. D\n୲ are dummies variables equal to 1 if the observation t occurs in the interval k, 0 else. In addition, \nour sample is over 30. Above all, we estimate different equations for each stock market using the OLS estimation \nmethod. Thus, we exploit the t-statistics that is consistent against heteroscedasticity and autocorrelation in order to \njustify the significance of estimated parameters. \nThe estimation results are reported in Table 4. We are finding that the return is high at the beginning of the market \nsince αଵ is statistically significant and positive and very s uperior to the other success ive coefficients. But this \ndecreasing trend throughout the day did not last long in order to achieve its high level at the closing of market. This \nresult is translated by an increase of coeffi cient values during the last thirty minutes ( α\nଶସ > αଶଷ > αଶଶ ). Statistical \nsignificance and the positivity of these coefficients absolute ly confirm the result that the return reaches its higher \nlevel at the end of the trading day. It is no surprise from the above that our results maintain the results generated by \ngraphical analysis."
+    },
+    {
+     "section": "methodology",
+     "page": 9,
+     "similarity": 0.7549,
+     "content": "www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 \n ISSN 1916-971X E-ISSN 1916-9728 164\nand it is growing during the last half hour before the closure of negotiations. This showed U-shape in the Tunisian \nstock market is consistent with the proven results on the NYSE by Lee, Mucklow, and Ready (1993) and on the \nParis stock exchange by Biais et al (1995) and the SEH justified by Ahn et al (2001). \nHowever, the question asked here is to know whether our proposed hypotheses in accordance with the theory of \nefficiency have been confirmed or not. In the first stage, the evolutions profiles show that the Tunisian stock market \nis liquid at the beginning of quotation, since we find that the spread and the depth at the best limit are very high \nduring the first 10 minutes in order to decrease during the next 20 minutes. While during the trading day, the \nTunisian stock market is illiquid since the price dimension of liquidity (quoted spread) increased while the quantity \ndimension (the depth at the best limit) is down. But the observation of the profiles confirms the finding of a upward \ntrend of market liquidity during the last 30 minutes of quotations. It is clear that the spread and depth at the best \nlimit are very high at the end of quota tions. This change in liquidity at the Tunisian stock market tends to confirm \nthe presence of anomaly of seasonality."
+    }
+   ]
+  },
+  {
+   "paper_id": "6c5df707-5b4f-4ee7-8d8c-9bdf2aecb055",
+   "title": "Multifractal returns and hierarchical portfolio theory",
+   "similarity": 0.7752,
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "other",
+     "page": 9,
+     "similarity": 0.7752,
+     "content": "in\nthe future by a suitable pre-treatment that ensures the coin cidence of the sampling times. Here,\nwe present results for daily returns on the magnitude covari ance functions for stocks taken from\nthe French CAC40 index (over the period from 1992 to 1999). In Fig. 3(a), we report in dotted\nline the typical behavior of Cij(∆ t) versus ln(∆ t) for two assets of the CAC40 index (CCF and\nMICHELIN). Despite the relatively poor statistical conver gence, one clearly sees a slow decay which\nis compatible with the logarithmic law (33). From the slope a nd the intercept of this curve, one\ngets an estimate of λ2\nij and Tij for these two assets. In solid line, we have plotted the avera ge of Cij\nperformed over all the pairs of assets in the CAC40 index. The logarithmic decay of the magnitude\ncovariance is thus a remarkably stable feature among all pai rs of assets constituting the CAC40. In\nFig. 4(b), we show the histogram of the values of λ2\nij estimated for 253 pairs of stocks belonging to\nthe CAC40 index. Even though our estimates exhibit a large di spersion, one clearly sees that the\ndistribution of λ2\nij is centered around λ2\nij = 0.02. This value, which is very close to the estimates of\nλ2\ni determined in the previous section with the mono-asset anal ysis, can be considered as typical of\nﬁnancial stocks. This is conﬁrmed in Fig. 4 which shows the es timates of λ2\nij versus the estimates\nof Tij for pairs of stocks taken both from the CAC40 and the Dow-Jone s indices."
+    }
+   ]
+  },
+  {
+   "paper_id": "ce32eee8-1982-4bfa-be03-490232a4cb5f",
+   "title": "Overnight-Intraday Mispricing of Chinese Energy Stocks: A View from Financial Anomalies",
+   "similarity": 0.773,
+   "fiche_id": "overnight-intraday-mispricing-of-chinese-energy-W4214609326",
+   "passages": [
+    {
+     "section": "results",
+     "page": 8,
+     "similarity": 0.773,
+     "content": "returns.\nWe measure the turnover as the average daily volume over the last\n12 months followingLee and Swaminathan (2000). Again, Panel A\nof Table 4 and Table 5 report that the turnover premiums are a\ntotally overnight phenomenon in the energy industry and all\nA-shares stocks as there is signi ﬁcant negative expected intraday\nreturn, inconsistent with the result of\nLou et al. (2019) .I n\nparticular, the strongly statistically signi ﬁcant overnight CAPM\nalpha is 2.54% (1.97%) for energy stocks (all A-shares stock), and\nthe corresponding insigniﬁcant intraday CAPM alpha is −1.29%\n(−1.53%) for energy stocks (all A-shares stocks).\nAt last, we measure short-term reversal as 1-month return and\nanalyze this strategy (reversal) that goes long the low past 1-\nmonth return quintile (decile) and short the high turnover\nquintile (decile) for the energy stocks (A-shares stocks). Panel\nAo f Table 4 and Table 5 report that the STR premiums are\ntotally overnight phenomenon in energy industry and all\nA-shares stocks, inconsistent with the result of Lou et al.\n(2019). Speci ﬁcally, the highly signi ﬁcant overnight CAPM\nalpha is 1.45% (1.72%) for energy stocks (all A-shares stocks),\nand the corresponding insigni ﬁcant intraday CAPM alpha is\n−1.29% ( −0.64%) for energy stocks (A-shares stocks).\nExcept the above four risk-relatedﬁnancial anomalies, value and\nprobability anomalies documented in Fama-French ﬁve-factor\nmodel belong to overnight effect for all A-shares stocks. We"
+    },
+    {
+     "section": "methodology",
+     "page": 2,
+     "similarity": 0.757,
+     "content": "gue that the “T+1” trading rule contributes signi ﬁcantly to this\novernight return puzzle. Finally, proﬁts are almost earned entirely\novernight among nine trading strategies in energy industry stocks\nand A-shares stocks, which is sharply in contrast to the results of\nLou et al. (2019) .\nThe organization of this paper is as follows. Section 2 puts\nforward the motivation, a brief summary of energy ﬁnance, and\npotential contributions. Section 3 describes the data and\nmethodology. Section 4 presents the empirical analysis of the\nanomaly strategies at levels of portfolio analysis and Fama-\nMacBeth regression. Section 5 concludes.\n2 MOTIVATION AND CONTRIBUTION\nMotivated by the literature on non-trading hour vs. trading hour\nreturn patterns at individual stock, index stock, and index fund\nlevels, the overnight-intraday effect from a portfolio strategies\nview of Lou et al. (2019) , and the special overnight effect in the\nChinese stock market of Qiao and Dam (2020) , we attempt to\nexamine overnight-intraday trading strategies in the cross-section\nof energy industry stock returns in China. As for the construction\nof trading strategies, we choose the basic ﬁve ﬁnancial anomalies\naccording to the ﬁve-factor model of Fama and French (2015)\nand the “q-factor” model of Hou et al. (2015a), that is, size, value,\nmomentum, reversal, and proﬁtability. In addition, we choose the\nfollowing most in ﬂuential anomalies, named idiosyncratic\nvolatility puzzle, beta, and turnover."
+    }
+   ]
+  },
+  {
+   "paper_id": "364f84b1-b03c-44ba-b016-fc80d950255a",
+   "title": "Predicting the equity market with option-implied variables",
+   "similarity": 0.772,
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "results",
+     "page": 15,
+     "similarity": 0.772,
+     "content": "closest to 30 days. 4 For the empirical tests, we follow Leiss & Nax (2018) and use a 21-day\nmoving average of FH instead of the raw measure.\nGeneralized Measure of Riskiness Based on both Foster & Hart (2009) and Aumann\n& Serrano (2008), Bali et al. (2011) introduce a generalized measure of riskiness ( GMR).\nWe obtainGMR by solving the equation:\n∫ S\nK=0\nfR(K)P (K)dK +\n∫ ∞\nK=S\nfR(K)C(K)dK− rτ\n1 +rτ\n1\nGMR = 0, (17)\nwith\nfR(K) = (1−δ)\nS2GMR 2\n(\n1 +K/S− 1\nGMR\n)δ−2\n. (18)\nFollowing Bali et al. (2011), we setδ =−2. All other variables are as previously deﬁned. We\ncompute the integrals for each trading day as described in the paragraph “Option-Implied\nMoments” using the standardized options with time to maturity of one month.\nIII. Main Results\nBefore discussing our main ﬁndings, it is instructive to look at the summary statistics\nreported in Table I. We can observe a positive market risk premium of around 6 % p.a. The\nrisk premium exhibits a standard deviation of around 16 % p.a. We also notice that the\nsample moments of the VRP and the CRP are consistent with those reported in previous\nworks (Driessen et al., 2009, 2013). In particular, we can see that although positive on\naverage, theVRP is negatively skewed and prone to extreme movements as indicated by its\nhigh kurtosis, suggesting a sign-switching behavior. This observation could carry important\n4For most measures in this study, we rely on the standardized options, provided by OptionMetrics."
+    }
+   ]
+  }
+ ]
+}
