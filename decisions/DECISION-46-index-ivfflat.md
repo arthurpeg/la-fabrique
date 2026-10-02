@@ -24,7 +24,7 @@ sur la petite instance Supabase. Quel index, et à quel prix ?
 
 Migration `007_index_ivfflat.sql` : `chunks_embedding_hnsw` est retiré,
 `chunks_embedding_ivfflat` le remplace (`lists = 150`), et `vector_search` lit
-12 listes (`ivfflat.probes = 12`, posé sur la fonction). Les deux réglages
+12 listes (`ivfflat.probes = 12`, posé par la fonction à chaque appel, Supabase refusant ce réglage dans sa définition). Les deux réglages
 suivent les recommandations de pgvector (`lists` ≈ lignes / 1000 sous le
 million de lignes, `probes` ≈ √`lists`) et sont fixés **avant** tout essai de
 recherche.
@@ -58,4 +58,4 @@ changer d'index plus tard ne périme rien.
 
 | Date | Quoi | Résultat |
 |---|---|---|
-| 2026-10-02 | construction lancée par l'outil Supabase (HTTPS ; le port 5432 est bloqué sur ce réseau) | en cours |
+| 2026-10-02 | construction par l'outil Supabase (HTTPS ; le port 5432 est bloqué sur ce réseau) | valide, 569 Mo, environ 10 min. `set ivfflat.probes` refusé dans la définition de la fonction : posé par `set_config` à chaque appel (`vector_search` passe en plpgsql). Premier dossier (`baltussen-2021-…`) : 8 voisins en 27 s, chargement du modèle compris |
