@@ -49,13 +49,13 @@ Un voisin pertinent sans fiche devient un candidat à ficher : la recherche dit
 aussi **quoi ficher ensuite**, ce que l'ordre de `D33` ne savait faire que par
 mots-clés.
 
-**Ce qui est sacrifié.** Une dépendance au réseau et à l'index HNSW. Sans index,
+**Ce qui est sacrifié.** Une dépendance au réseau et à l'index de similarité. Sans index,
 la recherche reste exacte mais lente. Et la similarité d'un morceau ne prouve
 pas que deux papiers disent la même chose : le dossier propose, il ne relie pas.
 
 ## Ce que ça verrouille
 
-`scripts/voisins.py`, l'index `chunks_embedding_hnsw` (`vectordb/index_hnsw.py`),
+`scripts/voisins.py`, l'index `chunks_embedding_ivfflat` (`vectordb/index_morceaux.py`, `D46`),
 la fonction `vector_search`. Le choix d'un autre modèle d'embedding
 invaliderait les dossiers, pas les fiches.
 

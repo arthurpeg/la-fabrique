@@ -1,6 +1,11 @@
 """Retirer puis reconstruire l'index de similarité des morceaux — sans toucher aux données.
 
-L'index HNSW (`chunks_embedding_hnsw`, migration 001) se met à jour à chaque
+L'index est un IVFFlat (`chunks_embedding_ivfflat`, migration 007, `D46`) : le
+HNSW de la migration 001 ne se construisait pas sur la petite instance. Un
+IVFFlat ne s'adapte pas aux vecteurs ajoutés après lui : après une grosse
+ingestion, le reconstruire.
+
+Historique : le HNSW se mettait à jour à chaque
 embedding écrit. Le 2026-09-30, avec ~90 000 vecteurs déjà indexés, la petite
 instance Supabase n'a plus suivi : un lot de 64 morceaux toutes les ~20 minutes,
 des délais dépassés, des connexions fermées. La pratique pour un remplissage en
@@ -10,11 +15,11 @@ masse : retirer l'index, écrire les vecteurs, le reconstruire en une fois.
 calculée à partir des embeddings stockés ; le retirer laisse intacts papiers,
 morceaux et vecteurs. Sans lui, une recherche par similarité reste exacte, mais
 lente (parcours complet). La reconstruction reprend **la définition de la
-migration 001**, lue dans le fichier, jamais recopiée.
+migration 007**, lue dans le fichier, jamais recopiée.
 
-    python vectordb/index_hnsw.py --etat
-    python vectordb/index_hnsw.py --retirer
-    python vectordb/index_hnsw.py --reconstruire
+    python vectordb/index_morceaux.py --etat
+    python vectordb/index_morceaux.py --retirer
+    python vectordb/index_morceaux.py --reconstruire
 """
 
 from __future__ import annotations
@@ -30,14 +35,14 @@ sys.path.insert(0, str(HERE))
 
 from vector_db import VectorDB  # noqa: E402
 
-NOM = "chunks_embedding_hnsw"
-MIGRATION = HERE / "migrations" / "001_init_vector_db.sql"
+NOM = "chunks_embedding_ivfflat"
+MIGRATION = HERE / "migrations" / "007_index_ivfflat.sql"
 
 
 def definition() -> str:
-    """Le `create index` de la migration 001, tel qu'il y est écrit."""
+    """Le `create index` de la migration 007, tel qu'il y est écrit."""
     sql = MIGRATION.read_text(encoding="utf-8")
-    m = re.search(rf"create index {NOM} on chunks\s+using hnsw[^;]+;", sql)
+    m = re.search(rf"create index if not exists {NOM} on chunks\s+using \w+[^;]+;", sql)
     if not m:
         raise SystemExit(f"définition de {NOM} introuvable dans {MIGRATION.name}")
     return m.group(0)
@@ -50,7 +55,7 @@ def existe(db: VectorDB) -> bool:
 
 
 def main(argv: list[str]) -> int:
-    ap = argparse.ArgumentParser(description="Index HNSW des morceaux")
+    ap = argparse.ArgumentParser(description="Index de similarité des morceaux")
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--etat", action="store_true")
     g.add_argument("--retirer", action="store_true")
@@ -63,7 +68,7 @@ def main(argv: list[str]) -> int:
             cur.execute("set statement_timeout = '180min'")
         if a.etat:
             print(f"{NOM} : {'présent' if existe(db) else 'ABSENT'}")
-            print(f"définition (migration 001) : {definition()}")
+            print(f"définition (migration 007) : {definition()}")
             return 0
         if a.retirer:
             if not existe(db):
