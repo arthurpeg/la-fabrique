@@ -1,0 +1,2932 @@
+Predicting the equity market with option-
+implied variables 
+Article 
+Accepted Version 
+Hollstein, F., Prokopczuk, M., Tharann, B. and Wese Simen, C.
+(2019) Predicting the equity market with option-implied 
+variables. European Journal of Finance, 25 (10). pp. 937-965. 
+ISSN 1466-4364 doi: 10.1080/1351847X.2018.1556176 
+Available at https://centaur.reading.ac.uk/81483/ 
+It is advisable to refer to the publisher’s version if you intend to cite from the 
+work. See Guidance on citing .
+To link to this article DOI: http://dx.doi.org/10.1080/1351847X.2018.1556176 
+Publisher: Taylor and Francis 
+All outputs in CentAUR are protected by Intellectual Property Rights law, 
+including copyright law. Copyright and IPR is retained by the creators or other 
+copyright holders. Terms and conditions for use of this material are defined in 
+the End User Agreement . 
+www.reading.ac.uk/centaur 
+CentAUR 
+Central Archive at the University of Reading
+
+Predicting the Equity Market with Option-Implied
+Variables∗
+Fabian Hollstein†, Marcel Prokopczuk †,‡, Bj¨ orn Tharann,†
+and Chardin Wese Simen ‡
+Abstract
+We comprehensively analyze the predictive power of several option-implied variables
+for monthly S&P 500 excess returns and realized variance. The correlation risk
+premium (CRP ) and the variance risk premium ( VRP ) emerge as strong predictors
+of both excess returns and realized variance. This is true both in- and out-of-sample.
+Our results also reveal that statistical evidence of predictability does not necessarily
+lead to economic gains. However, a timing strategy based on the CRP leads to utility
+gains of more than 5.03 % per annum. Forecast combinations provide stable forecasts
+for both excess returns and realized variance, and add economic value.
+JEL classiﬁcation: G10, G11, G17
+Keywords: Equity Premium, Option-Implied Information, Portfolio Choice,
+aaaaaaaaaiaaaPredictability, Timing Strategies
+∗We are grateful to Chris Adcock (the editor), an anonymous associate editor, two anonymous
+referees, Duygu Zirek (discussant), Steven Clark, and other seminar participants at the Financial
+Management Association Annual Meeting 2017 for valuable comments. We thank Fabian B¨ atje, and
+Maik Dierkes for helpful comments and suggestions. Contact: hollstein@fmt.uni-hannover.de (F.
+Hollstein), prokopczuk@fmt.uni-hannover.de (M. Prokopczuk), tharann@fmt.uni-hannover.de (B. Tharann),
+and c.wese-simen@icmacentre.ac.uk (C. Wese Simen).
+
+ns. Contact: hollstein@fmt.uni-hannover.de (F.
+Hollstein), prokopczuk@fmt.uni-hannover.de (M. Prokopczuk), tharann@fmt.uni-hannover.de (B. Tharann),
+and c.wese-simen@icmacentre.ac.uk (C. Wese Simen).
+†Leibniz University Hannover, Koenigsworther Platz 1, D-30167 Hannover, Germany.
+‡ICMA Centre, Henley Business School, University of Reading, Reading, RG6 6BA, U.K.
+
+I. Introduction
+A growing literature, e.g. Jiang & Tian (2005), Bollerslev et al. (2009), and Driessen
+et al. (2013), documents the predictive power of option-implied variables for equity excess
+returns and realized variance. The growing number of option-implied predictors raises several
+questions: Which variables really forecast market excess returns? Do the variables that
+predict market excess returns also forecast realized variance? Does predictability lead to
+economic gains? These are some of the questions we want to study.
+The main contribution of this paper is to provide a comprehensive analysis of the
+forecasting ability of variables separately proposed in the recent literature on option-implied
+predictors. We perform our analysis following the methodological background of Goyal
+& Welch (2008). Importantly, we do not only analyze return predictability, but consider
+the predictability of variance at the same time. This is important from a portfolio choice
+perspective, since both quantities are needed for a portfolio decision. As such, we do not
+only consider statistical predictability, but also analyze the economic signiﬁcance of return
+and variance predictability. We ﬁnd that several variables, including the correlation risk
+premium (CRP ) and the variance risk premium (VRP ), predict the monthly excess return
+of the S&P 500. This is the case both in- and out-of-sample. We also show that both the
+
+ing the correlation risk
+premium (CRP ) and the variance risk premium (VRP ), predict the monthly excess return
+of the S&P 500. This is the case both in- and out-of-sample. We also show that both the
+CRP and the VRP predict not only the market excess return but also its realized variance.
+On the other hand, while most predictors are based on the option-implied moments of Bakshi
+et al. (2003), we note that the risk-neutral moments themselves have strong predictive power
+only for realized variance but not for the market excess return.
+When studying the economic eﬀects of the documented predictability in the context of
+portfolio choice, we ﬁnd that relative to the agent who assumes that the mean and variance of
+the market return are unpredictable, a mean–variance agent with a risk-aversion coeﬃcient
+of 3 who uses the information content of the CRP would realize utility gains of 5.03 % per
+1
+
+annum (p.a.). Relatedly, we ﬁnd that a return timing strategy based on the VRP leads to
+lower utility gains than those aﬀorded by the strategy based on the recursive mean. This
+indicates that the statistical evidence of predictability of excess returns and realized variance,
+respectively, by theVRP does not always translate into economic gains. We conjecture that
+this result is due to the fact that individual variables lead to a large dispersion in the forecast
+estimation. Forecast combinations instead appear to generate stable forecasts for both excess
+returns and realized variance, and add economic value. Further, we link this result also to
+the sign-switching behavior of the VRP around economically important periods.
+A variable is considered to have predictive power if it passes two tests. First, it has to
+generate statistically signiﬁcant forecasts. In this case the variable contains key information
+about the variation in the market risk premium and the realized variance, respectively.
+Bollerslev et al. (2009) and Drechsler & Yaron (2011) argue that time-varying economic
+uncertainty is captured by the variance risk premium and, thus, aﬀects the variation in the
+market risk premium. Driessen et al. (2009, 2013) state that the time-varying correlation
+risk is linked to economic uncertainty and, thus, also relates to the market price of return
+risk. Second, the variable needs to add economic value. Since the predictability, measured
+
+ing correlation
+risk is linked to economic uncertainty and, thus, also relates to the market price of return
+risk. Second, the variable needs to add economic value. Since the predictability, measured
+by the R2 is, in general, small in magnitude, the question arises whether it is economically
+meaningful. Does an investor obtain an increase in utility by taking the variable into account?
+This aspect is often ignored in the existing literature. Our results show that theCRP emerges
+as the only predictor that passes both tests.
+For robustness, we analyze the predictability of diﬀerent speciﬁcations of the VRP . We
+follow Andersen & Bondarenko (2010), Andersen et al. (2015), and Feunou et al. (2015) and
+decompose the total variance risk premium into the downside and upside components. The
+results show that the upside and downside variance risk premia signiﬁcantly predict excess
+returns and realized variance in-sample and add economic value based on a timing strategy.
+Our work relates to the literature on the predictability of the market excess return
+2
+
+and/or its associated realized variance using option-implied quantities. Bollerslev et al.
+(2009) document the predictive power of the variance risk premium for S&P 500 excess
+returns, and Bollerslev et al. (2014) document similar results for a broad range of
+international equity indices. Pyun (2016) provides evidence of a weak out-of-sample
+performance of the variance risk premium for S&P 500 excess returns. Driessen et al.
+(2009, 2013) show that the correlation risk premium predicts S&P 500 excess returns,
+whereas Cosemans (2011) points out that the correlation risk premium and the systematic
+part of individual variance risk premia drive the predictive power of the variance risk
+premium for market excess returns. Zhou (2013) documents the predictive power of the
+S&P 500 implied correlation index for S&P 500 index returns. Xing et al. (2010) ﬁnd that
+the option-implied smirk contains information about the cross-section of equity returns.
+Cremers & Weinbaum (2010) document that deviations from the put–call parity, measured
+as the diﬀerence in implied volatility between pairs of call and put options of U.S. stocks,
+contain information about the cross-section of stock returns and have predictive power for
+these. Rehman & Vilkov (2012) and Stilger et al. (2016) show that implied skewness of
+individual U.S. stocks has predictive power for future returns. Bali et al. (2011) introduce
+an option-implied generalized measure of riskiness and provide evidence for its predictive
+
+ied skewness of
+individual U.S. stocks has predictive power for future returns. Bali et al. (2011) introduce
+an option-implied generalized measure of riskiness and provide evidence for its predictive
+power for the cross-section of individual stock returns. Bali et al. (2012) and Bali et al.
+(2015) extend the analysis and document the predictive power of the generalized measure
+for economic downturns and future market excess returns. Leiss et al. (2015) and Leiss & Nax
+(2018) examine non-parametric risk-neutral densities from S&P 500 index options. Leiss &
+Nax (2018) provide evidence for the predictive power of an option-implied riskiness measure
+based on Foster & Hart (2009) for future downturns. Bali et al. (2017) document a relation
+between the risk-neutral moments of Bakshi et al. (2003) and expected stock returns.
+Jiang & Tian (2005) and Kourtis et al. (2016) establish the forecasting power of the
+S&P 500 option-implied variance for realized variance. The above mentioned studies use
+3
+
+diﬀerent sample periods and statistical techniques to document their results, thus making
+the interpretation and comparison of the ﬁndings somewhat diﬃcult. We use a common
+sample period and recent developments in the literature on predictability to thoroughly
+analyze all these variables.
+Our study also relates to the literature on the economic value of predictability. Typically,
+the literature analyzes the implications of return predictability for a return timing strategy
+(e.g., Campbell & Thompson, 2008; C ¸ akmaklı & van Dijk, 2016). Similarly, studies on
+realized variance predictability only explore the implications for a volatility/variance timing
+strategy (Fleming et al., 2001). Unlike these studies, we jointly study the impact of return
+and variance timing. This is important because in a mean–variance framework, the optimal
+portfolio weight invested in the risky asset depends on both the expected return and the
+expected realized variance. If a forecasting variable predicts both the market excess return
+and the realized variance, it might be potentially important to account for these two eﬀects
+when computing the optimal weight.
+The remainder of this paper proceeds as follows. Section II. introduces the data and
+explains the construction of the main variables. Section III. presents the main empirical
+results. Section IV. discusses some further results. Section V. provides additional results.
+Finally, Section VI. concludes.
+II. Data and Methodology
+II.A Data
+
+ection III. presents the main empirical
+results. Section IV. discusses some further results. Section V. provides additional results.
+Finally, Section VI. concludes.
+II. Data and Methodology
+II.A Data
+We obtain our data from three distinct sources. First, we retrieve the monthly time
+series of the S&P 500 total return index as well as the corresponding dividend payments
+from the Center for Research in Security Prices (CRSP) database. Second, we obtain S&P
+4
+
+500 index option data from OptionMetrics. The OptionMetrics dataset contains information
+about option contracts available in the market as well as standardized options, both of which
+are useful for our analysis (see Section II.B). Third, we use intraday data on the S&P 500
+index sampled at the 5-minute frequency from Thomson Reuters Tick History (TRTH). In
+sampling the intraday data, we focus on the normal trading hours, i.e. from 09:30 AM to
+04:00 PM Eastern Daylight Time (EDT). Our sample period extends from January 1996
+to December 2014. It is worth pointing out that although the CRSP database covers a
+period starting before 1996, this is not the case for the OptionMetrics and TRTH. Starting
+our sample in January 1996 allows us to guarantee the availability of data from all three
+databases.
+II.B Variables
+Armed with the dataset introduced above, we are now able to construct our main
+variables.
+Market Excess Return We compute the excess return on the S&P 500 index by
+subtracting the riskless rate for the corresponding period from the total return on the equity
+index:
+ERt+1 = 12× log
+(Pt+1
+Pt
+)
+−rft, (1)
+where ERt+1 is the (annualized) monthly excess return on the S&P 500 index at the end of
+montht + 1. Pt+1 andPt denote the total return price index at the end of months t + 1 and
+t, respectively. rft refers to the (annualized) riskless rate observed at the end of month t.1
+Following Goyal & Welch (2008), we use the 1-month T-bill rate to proxy for the riskless
+rate.
+
+t + 1 and
+t, respectively. rft refers to the (annualized) riskless rate observed at the end of month t.1
+Following Goyal & Welch (2008), we use the 1-month T-bill rate to proxy for the riskless
+rate.
+1Throughout this paper, we use the convention that the riskless rate is given the subscript for the time
+when it is observed. Thus, the riskless rate is observed at time t even though it is realized at time t + 1.
+5
+
+Realized Variance In order to estimate the realized variance of the stock market, we
+exploit developments in the literature on high-frequency ﬁnancial econometrics. Andersen
+et al. (2003) show that by sampling data at the intraday level, one can improve the accurate
+measurement of realized variance. Building on this insight, we use intraday prices sampled
+at the 5-minute frequency to compute the realized variance of the asset:
+RVt+1 = 360
+N ×
+
+
+N∑
+i=1
+
+
+m−1∑
+j=1
+log
+(St+ i
+N,j+1
+St+ i
+N,j
+)2
+ + log
+( St+ i
+N,1
+St+i−1
+N ,m
+)2
+, (2)
+where RVt+1 is the realized variance at the end of month t + 1. The ﬁrst term to the
+right of the equality sign simply annualizes the variance estimate, where N is the number of
+days between the end of month t and that of month t + 1. Each day contains m intraday
+observations. St+ i
+N,j+1 and St+ i
+N,j are the spot prices observed on day t + i
+N at times j + 1
+and j, respectively. The last term to the right of the equality sign simply reﬂects the eﬀect
+of overnight returns. In particular, it captures the impact of the return from the end of the
+previous day to the opening of the following day.
+Option-Implied Moments Recent studies document the information content of option-
+implied moments, e.g. Jiang & Tian (2005), Prokopczuk & Wese Simen (2014), and Kourtis
+et al. (2016), for realized variance. We exploit the theoretical results of Bakshi et al. (2003)
+
+tent of option-
+implied moments, e.g. Jiang & Tian (2005), Prokopczuk & Wese Simen (2014), and Kourtis
+et al. (2016), for realized variance. We exploit the theoretical results of Bakshi et al. (2003)
+to construct the risk-neutral (i) variance (VARBKM ), (ii) skewness (SKEW BKM ), and (iii)
+excess kurtosis (EXKURT BKM ):
+VARBKM = erτV−µ2
+τ , (3)
+SKEW BKM = erτW− 3µerτV + 2µ3
+[erτV−µ2]3/2 , (4)
+EXKURT BKM = erτX− 4µerτW + 6erτµ2V− 3µ4
+[erτV−µ2]2 − 3, (5)
+6
+
+wherer denotes the continuously compounded (annualized) interest rate for the period from
+t tot+τ. We use the Ivy curve from OptionMetrics to proxy for the interest rate. Essentially,
+this curve is based on London Interbank Oﬀered Rate (LIBOR) and Eurodollar futures. 2 τ
+indicates the time to expiration of each option, expressed as a fraction of a year. Note that
+all variables are contemporaneously observed. In the expressions above V ,W ,X, and µ are
+deﬁned as follows:
+V =
+∫ S
+K=0
+2(1 + log[S
+K ])
+K2 P (K)dK +
+∫ ∞
+K=S
+2(1− log[K
+S ])
+K2 C(K)dK, (6)
+W =
+∫ ∞
+K=S
+6 log[K
+S ]− 3(log[K
+S ])2
+K2 C(K)dK−
+∫ S
+K=0
+6 log[S
+K ] + 3(log[S
+K ])2
+K2 P (K)dK, (7)
+X =
+∫ ∞
+K=S
+12(log[K
+S ])2 + 4(log[K
+S ])3
+K2 C(K)dK +
+∫ S
+K=0
+12(log[S
+K ])2 + 4(log[S
+K ])3
+K2 P (K)dK, (8)
+µ = erτ− 1− erτ
+2 V− erτ
+6 W− erτ
+24X, (9)
+whereK andS are the strike and spot prices, respectively. C(K) andP (K) denote the call
+and put prices of strike K, respectively. All other variables are as previously deﬁned.
+At the end of each calendar month, we use the OptionMetrics database to extract the
+standardized options data of 1-month maturity, the contemporaneous spot price, and the
+interest rate of corresponding maturity. We retain only out-of-the-money option prices. It is
+worth pointing out that the integrals in the formulas above implicitly assume the existence
+of a wide range of strike prices. Alas, this is not perfectly true in the market. Thus, we follow
+Chang et al.
+
+rth pointing out that the integrals in the formulas above implicitly assume the existence
+of a wide range of strike prices. Alas, this is not perfectly true in the market. Thus, we follow
+Chang et al. (2012) by computing a ﬁne grid of 1,000 equidistant interpolated moneyness
+levels, i.e. K/S, ranging from 1 % to 300 %. For each moneyness level on that grid, we
+interpolate the implied volatility using a spline interpolation method. For moneyness levels
+outside of the moneyness range observed in the market, we extrapolate the implied volatilities
+2We use this interest rate curve to be consistent with the empirical literature on option prices (e.g., Bali
+& Hovakimian, 2009; McGee & McGroarty, 2017). Obviously, one may wonder if our main results hold if
+we substitute the OptionMetrics curve with the term-structure of Treasury rates. The eﬀect on our main
+ﬁndings is negligible. The intuition behind this result is that most of our analysis focuses on options of short
+time to maturity. Because the interest rate is always multiplied by the time to maturity, we ﬁnd that the
+interest rate proxy has very little impact on our results.
+7
+
+(Jiang & Tian, 2005). In practice, this means that if a moneyness level is lower (higher)
+than the lowest (highest) moneyness level available in the market, we simply use the implied
+volatility corresponding to the lowest (highest) level of moneyness available in the market.
+Next, we plug the implied volatilities into the Black & Scholes (1973) option pricing model
+to obtain the corresponding out-of-the-money option prices. Finally, we follow Bali et al.
+(2017) by using a trapezoidal rule to approximate the integrals that appear in the formulas
+above and obtain the risk-neutral moments of 1-month maturity.
+Variance Risk Premium The variance risk premium is deﬁned as the diﬀerence between
+the risk-neutral and physical expectations of variance:
+VRP t =EQ
+t (σ2
+t+1)−EP
+t (σ2
+t+1), (10)
+where Et(·) is the expectation operator conditional on the information available at time t.
+The superscripts Q and P indicate that the expectation is computed under the risk-neutral
+and physical measures, respectively. In order to proxy for the risk-neutral expectation of
+variance, we use VARBKM . This choice is motivated by Du & Kapadia (2012) who show
+that the risk-neutral variance of Bakshi et al. (2003) is robust to jumps.
+While the expression above clearly deﬁnes the variance risk premium, it is of very little
+practical use. The reason for this is that it involves the physical expectation of future
+variance, which is not directly observable. Therefore, we follow the lead of Bollerslev et al.
+
+of very little
+practical use. The reason for this is that it involves the physical expectation of future
+variance, which is not directly observable. Therefore, we follow the lead of Bollerslev et al.
+(2009) and Driessen et al. (2013) in positing a simple random walk model for the future
+variance under the physical measure. That is, we assume that the expectation of the future
+variance under the physical measure equals its most recent realization. Thus, we can compute
+the VRP as follows:
+VRP t =VARBKM
+t −RVt. (11)
+8
+
+Note that all variables are annualized and observed at the end of each calendar month.
+Correlation Risk Premium Driessen et al. (2013) establish the predictive power of the
+correlation risk premium for future aggregate stock returns. The authors observe that the
+equity index is a portfolio of individual equities (Driessen et al., 2009). An upshot of this
+is that the variance of the market index return is equal to the weighted average variance
+of individual stocks and covariance terms. Assuming further that the pairwise correlation
+between diﬀerent stocks is the same for all stocks, they are able to derive the following
+formula:
+ICt =
+EQ
+t [
+∫t+τ
+t σ2
+Ψ,s ds]−∑Θ
+ψ=1ω2
+ψ EQ
+t [
+∫t+τ
+t σ2
+ψ,s ds]
+∑Θ
+ψ=1
+∑
+χ̸=ψωψωχ
+√
+EQ
+t [
+∫t+τ
+t σ2
+ψ,s ds]
+√
+EQ
+t [
+∫t+τ
+t σ2
+χ,s ds]
+, (12)
+where ICt is the implied correlation at time t. Θ denotes the number of stocks in the
+stock market. EQ
+t [
+∫t+τ
+t σ2
+Ψ,s ds] and EQ
+t [
+∫t+τ
+t σ2
+ψ,s ds] are the risk-neutral expected variance
+of the index (Ψ) and of the individual stock ( ψ), respectively. As before, we proxy these
+expectations with the risk-neutral variance of Bakshi et al. (2003).wψ andwχ are the weights
+of stocks ψ and χ in the market index Ψ, respectively.
+The intuition developed above also holds under the physical measure, thus yielding the
+following formula for the realized correlation at time t:
+RCt =
+EP
+t [
+∫t+τ
+t σ2
+Ψ,s ds]−∑Θ
+ψ=1ω2
+ψ EP
+t [
+∫t+τ
+t σ2
+ψ,s ds]
+∑Θ
+ψ=1
+∑
+χ̸=ψωψωχ
+√
+EP
+t [
+∫t+τ
+t σ2
+ψ,s ds]
+√
+EP
+t [
+∫t+τ
+t σ2
+χ,s ds]
+
+he
+following formula for the realized correlation at time t:
+RCt =
+EP
+t [
+∫t+τ
+t σ2
+Ψ,s ds]−∑Θ
+ψ=1ω2
+ψ EP
+t [
+∫t+τ
+t σ2
+ψ,s ds]
+∑Θ
+ψ=1
+∑
+χ̸=ψωψωχ
+√
+EP
+t [
+∫t+τ
+t σ2
+ψ,s ds]
+√
+EP
+t [
+∫t+τ
+t σ2
+χ,s ds]
+, (13)
+whereRCt is the realized correlation at time t. All other variables are as previously deﬁned.
+As before, we use the historical variance computed over the most recent period to proxy for
+the physical expectation of the future variance.
+TheCRP at timet is then deﬁned as the diﬀerence between the risk-neutral and physical
+9
+
+expectations of future correlation, yielding the following result:
+CRPt =ICt−RCt. (14)
+To obtain this variable, we use standardized options (of time to maturity of one month)
+on the S&P 500 index as well as options data on all constituents of the index. All options
+are observed at the end of each calendar month.
+Implied Volatility Smirk Measure Xing et al. (2010) document the predictive power
+of the implied volatility smirk.3 Our construction of this variable broadly mirrors theirs. At
+the end of each calendar month, we retain all S&P 500 index options with positive open
+interest and a time to maturity between 10 and 60 days. We discard all option prices with a
+midquote price below $0.125. We also purge all options with implied volatility outside of the
+interval [3 %; 200 %]. We deﬁne the out-of-the-money put options as the put options with
+a moneyness level between 0.8 and 0.95. Note that by moneyness level, we understand the
+ratio of the strike price over the stock price, i.e. K/S. Relatedly, we deﬁne at-the-money call
+options as call options with a moneyness level between 0.95 and 1.05. The smirk measure is
+simply computed as follows:
+SMIRK t =VOL OTMP
+t −VOL ATMC
+t , (15)
+whereSMIRK t is the smirk measure at time t. VOL OTMP
+t denotes the implied volatility of
+out-of-the-money puts. To be more precise, this is the volume-weighted average of the implied
+volatilities of all out-of-the-money put options. VOL ATMC
+t refers to the volume-weighted
+3Xing et al.
+
+of
+out-of-the-money puts. To be more precise, this is the volume-weighted average of the implied
+volatilities of all out-of-the-money put options. VOL ATMC
+t refers to the volume-weighted
+3Xing et al. (2010) analyze the predictive ability of the implied volatility smirk in the cross-section of
+stock returns. Motivated by the intertemporal capital asset pricing model (ICAPM) of Merton (1973), if
+SMIRK is priced in the cross-section, it also has to predict the investment opportunity set in the time series
+(Maio & Santa-Clara, 2012).
+10
+
+average of all implied volatilities of at-the-money calls at time t.
+Risk-Neutral Riskiness Leiss & Nax (2018) apply the result of Foster & Hart (2009) to
+the risk-neutral density of the S&P 500 index to derive an option-implied riskiness measure.
+We follow Leiss & Nax (2018) and ﬁrst obtain the risk-neutral density of the S&P 500
+using the approach of Figlewski (2010). That is, for the center of the distribution, i.e. the
+moneyness range observed in the market, we interpolate the implied volatilities using a 4th
+order spline with one knot at-the-money, computing the density using the corresponding
+Black & Scholes (1973) option prices. Finally, we parameterize the distributions of the left
+and right tails by separately ﬁtting Generalized Extreme Value (GEV) distributions. Using
+the obtained distribution, we compute the risk-neutral Foster–Hart (FH) riskiness measure
+by solving the following equation:
+∫ ∞
+ST =0
+log(1 +ST−S0
+S0
+FH )f(ST )dST = 0, (16)
+where ST and S0 are the stock prices at expiration and t = 0, respectively. f(ST ) is the
+risk-neutral density at ST . We numerically compute the integral using a trapezoidal rule
+and repeat this procedure on every trading day. Leiss & Nax (2018) remark that in some
+cases, Equation (16) does not have a solution,FH∈ (0, 1), in which case they setFH to 1 if
+the option-implied expected return (
+∫∞
+ST =0
+ST−S0
+S0
+f(ST )dST ) is positive. If the option-implied
+
+n some
+cases, Equation (16) does not have a solution,FH∈ (0, 1), in which case they setFH to 1 if
+the option-implied expected return (
+∫∞
+ST =0
+ST−S0
+S0
+f(ST )dST ) is positive. If the option-implied
+return is negative and Equation (16) does not have a solution, we set FH to 0. FH may be
+interpreted as the fraction of wealth that can be invested in an asset so that no-bankruptcy
+is guaranteed. For this measure, we use data on traded option prices for all options on the
+S&P 500 for maturities between 10 and 50 days, each day picking the time to maturity
+11
+
+closest to 30 days. 4 For the empirical tests, we follow Leiss & Nax (2018) and use a 21-day
+moving average of FH instead of the raw measure.
+Generalized Measure of Riskiness Based on both Foster & Hart (2009) and Aumann
+& Serrano (2008), Bali et al. (2011) introduce a generalized measure of riskiness ( GMR).
+We obtainGMR by solving the equation:
+∫ S
+K=0
+fR(K)P (K)dK +
+∫ ∞
+K=S
+fR(K)C(K)dK− rτ
+1 +rτ
+1
+GMR = 0, (17)
+with
+fR(K) = (1−δ)
+S2GMR 2
+(
+1 +K/S− 1
+GMR
+)δ−2
+. (18)
+Following Bali et al. (2011), we setδ =−2. All other variables are as previously deﬁned. We
+compute the integrals for each trading day as described in the paragraph “Option-Implied
+Moments” using the standardized options with time to maturity of one month.
+III. Main Results
+Before discussing our main ﬁndings, it is instructive to look at the summary statistics
+reported in Table I. We can observe a positive market risk premium of around 6 % p.a. The
+risk premium exhibits a standard deviation of around 16 % p.a. We also notice that the
+sample moments of the VRP and the CRP are consistent with those reported in previous
+works (Driessen et al., 2009, 2013). In particular, we can see that although positive on
+average, theVRP is negatively skewed and prone to extreme movements as indicated by its
+high kurtosis, suggesting a sign-switching behavior. This observation could carry important
+4For most measures in this study, we rely on the standardized options, provided by OptionMetrics.
+
+ed by its
+high kurtosis, suggesting a sign-switching behavior. This observation could carry important
+4For most measures in this study, we rely on the standardized options, provided by OptionMetrics.
+However, these are not suitable to obtain the entire risk-neutral density because they do not provide
+observations for deep out-of-the-money options which are necessary to accurately parametrize the GEV
+distributions.
+12
+
+implications for the predictive ability of this variable. We shall return to this point later.
+The table also reports the AR(1) coeﬃcient of each variable. We notice that the
+autoregressive coeﬃcient of these variables is typically lower than that of the valuation ratios
+such as the (log) dividend to price ratio routinely analyzed in empirical works, e.g. Goyal &
+Welch (2003). This suggests that our analysis does not suﬀer from the statistical issues that
+aﬀect these earlier works. We can also see that the AR(1) coeﬃcient of the realized variance
+is much higher than that of the market risk premium, likely indicating that there might be
+a stronger evidence of predictability in the realized variance series than in the market excess
+returns.
+Table II presents the sample correlation coeﬃcients among all the predictive variables.
+While most variables are only weakly correlated, there is a high correlation between
+SKEW BKM and EXKURT BKM (–0.92). This suggests that these variables contain very
+similar information.
+III.A Return Predictability
+In-Sample Analysis We start by assessing the in-sample predictability of the equity risk
+premium. To do so, we estimate the standard regression model of the month-ahead excess
+return on a constant and the predictive variable(s):
+ERt+1 =β0 +β1Xt +ϵt+1, (19)
+where ERt+1 is the excess return on the market realized at the end of month t + 1. β0
+and β1 are the intercept and slope parameters, respectively. Xt represents the forecasting
+
+=β0 +β1Xt +ϵt+1, (19)
+where ERt+1 is the excess return on the market realized at the end of month t + 1. β0
+and β1 are the intercept and slope parameters, respectively. Xt represents the forecasting
+variable(s) observed at the end of month t. Finally, ϵt+1 is the regression error term at t + 1.
+Table III summarizes the results for each predictive variable. The regression model
+enables us to ascertain whether the equity risk premium is time-varying or constant. Under
+13
+
+the null hypothesis that the future excess return cannot be predicted using Xt, we would
+expect thatβ1 = 0. As a result, the expected market excess return would simply be constant.
+One implication of this is that the best estimate of the future excess return is simply its
+recursive mean. If there is evidence of predictability, we would expect to see that the slope
+loading is statistically signiﬁcant. To avoid a small-sample bias (Stambaugh, 1999) and serial
+correlation in the error terms (Richardson & Stock, 1989), we base our statistical inference
+on the bootstrapped distribution obtained by implementing the framework of Rapach &
+Wohar (2006).5
+We can see that the CRP , GMR, SMIRK , and VRP are statistically signiﬁcant
+predictors in the univariate regressions. This is documented by their t-statistics of 2.76,
+2.09, –2.06, and 4.26, respectively. The positive and signiﬁcant slope estimate related to the
+VRP conﬁrms and updates, using a more recent sample period, the result of Bollerslev et al.
+(2009). It is also consistent with the authors’ intuition that the VRP encodes information
+about time-variations in economic uncertainty. Note also that if, as argued by Driessen et al.
+(2013),CRP accounts for most of theVRP , then one would expect thatCRP predicts future
+excess returns with a positive sign as we ﬁnd in the data, since it has been documented that
+the VRP predicts the market excess return (Bollerslev et al., 2009).
+
+would expect thatCRP predicts future
+excess returns with a positive sign as we ﬁnd in the data, since it has been documented that
+the VRP predicts the market excess return (Bollerslev et al., 2009).
+The result that CRP predicts future returns is consistent with that in Driessen et al.
+(2009, 2013). There is a strong relationship between correlations and returns. It seems that
+correlations between stocks are time-varying and that correlations increase when returns are
+5We estimate the process under the null hypothesis of no predictability, i.e. ERt = a0 + ϵ1,t and
+Xt =b0 +b1 Xt−1 +ϵ2,t, where a0, b0, and b1 are the regression coeﬃcients and ϵ1,t and ϵ2,t are the error
+terms, respectively. We then form a series of error terms and set up our pseudo sample. For the pseudo
+sample, we compute the in-sample and out-of-sample statistics. Finally, we repeat this procedure 1,000
+times. In the case of multiple regressions, we adjust the procedure by taking the multiple variables into
+account and, in-sample, by using the F -statistic rather than the individual t-statistic.
+14
+
+low.6,7 Moreover, the authors document a strong predictive power of IC for future returns,
+supported by a correlation of 0.24 betweenIC andVRP , shown in Table II.8 Pollet & Wilson
+(2010) provide evidence for the predictive power of (average) realized correlations for stock
+returns at a quarterly horizon.
+The result of GMR for predicting future market returns conﬁrms the ﬁndings of Bali
+et al. (2015). The authors ﬁnd that GMR acts as a signiﬁcant positive in-sample predictor
+of future aggregate market returns. The positive sign is consistent with the interpretation of
+GMR as a fundamental measure of risk: higher riskiness is associated with higher aggregate
+excess returns in the future.
+The ﬁnding thatSMIRK predicts future returns with a negative sign extends the results
+of Xing et al. (2010) to the time series of the market excess return. The intuition behind this
+result is simple. An increase in SMIRK implies a stronger demand for out-of-the-money
+put options. This increased demand signals that investors are actively purchasing insurance
+against expected declines in the stock index. The negative slope estimate of SMIRK is
+consistent with this intuition.
+It is also worth comparing the predictive power of individual variables. A cursory look
+at the in-sample R2 reveals that VRP has the highest predictive power for future excess
+returns (R2 = 7.47 %). The second most powerful predictor is the CRP , with an R2 of
+3.28 %.
+
+les. A cursory look
+at the in-sample R2 reveals that VRP has the highest predictive power for future excess
+returns (R2 = 7.47 %). The second most powerful predictor is the CRP , with an R2 of
+3.28 %. While the slope estimate on the VRP is similar to that documented by Bollerslev
+6They show that an increase in market correlations has two main eﬀects. First, diversiﬁcation possibilities
+are lower, thus, investors face limitations in their portfolio formations and suﬀering from a welfare reduction.
+Second, there is a rise in market volatility. One implication is that index options become relatively expensive
+compared to individual options. They represent a hedge against changes in market correlations, thus, also
+against losses due to diversiﬁcation limitations.
+7The use of CRP (and of IC andRC) can be theoretically motivated by the ICAPM of Merton (1973).
+It directly aﬀects future investment opportunities, i.e. investors’ future diversiﬁcation beneﬁts as well as the
+market variance. Moreover, Driessen et al. (2013) argue thatCRP appears to drive the volatility of dividend
+growth, and also the volatility of dividend growth volatility, consistent with the argument of Bollerslev et al.
+(2009) for VRP . One implication is that CRP matters for both return as well as variance predictability.
+8Driessen et al. (2009, 2013) document that IC strictly exceeds RC, indicating the existence of a large
+CRP . Our data support these ﬁndings.
+
+atters for both return as well as variance predictability.
+8Driessen et al. (2009, 2013) document that IC strictly exceeds RC, indicating the existence of a large
+CRP . Our data support these ﬁndings. We observe a mean IC (RC) of 41.66 % (32.25 %), generating a
+mean CRP of 9.41 %.
+15
+
+et al. (2009), it is worth noticing that the predictive power we document at the monthly
+horizon is much higher, indicating that, if anything, the predictive ability of the VRP is
+much stronger in the more recent sample period.
+It is worthwhile to analyze the performance of individual variables over time. Figure 1
+plots the in-sample cumulative diﬀerences in squared forecast errors (CDSFE). 9 We observe
+a similar (in-sample) performance in the case of the CRP and VRP , indicated by a sharp
+increase during the global ﬁnancial crisis in 2008/2009, and a steady rise during the post
+crisis period. The ﬁndings suggest the outperformance of the unrestricted model to the
+restricted model, particularly in times of distress. It seems that investors can exploit the
+information content of both variables in times of high risk-aversion.
+In the case of EXKURT BKM and SKEW BKM , we ﬁnd an increase in performance
+during the global ﬁnancial crisis; however, afterwards there is a steady decline, suggesting
+the superior performance of the restricted model. Both variables appear to have substantial
+predictive power, particularly in crises. The CDFSE plot for GMR indicates that most of
+the predictive power stems from economic downturns.
+SMIRK shows the strongest increase in the CDSFE plot during the global ﬁnancial crisis,
+indicating that investors look for a hedge against a further market downturn, by buying put
+options.
+
+downturns.
+SMIRK shows the strongest increase in the CDSFE plot during the global ﬁnancial crisis,
+indicating that investors look for a hedge against a further market downturn, by buying put
+options. Finally, in the case of VARBKM , we see no strong ﬂuctuations in its CDSFE,
+suggesting a similar performance of both the unrestricted and restricted model. Generally,
+we also ﬁnd a strong increase in the performance after the dot-com bubble in 2001. This is
+true for all variables, except SMIRK .
+To analyze the joint predictive ability of diﬀerent variables, we perform three multiple
+regressions. Due to the high correlation between SKEW BKM and EXKURT BKM , we run
+9Please note that whenever there is a rise of the in-sample (or out-of-sample) performance, the
+unrestricted model outperforms the restricted model, and vice versa. In this case, a variable provides a
+better forecast than the benchmark model.
+16
+
+the regressions also once without the ﬁrst and once without the second variable. 10 In all
+cases we ﬁnd that only SMIRK and VRP retain their statistical signiﬁcance. 11 Overall,
+the adjusted R2 increases to 8.81 %, 8.95 %, and 8.59 % in the ﬁrst, second, and third case,
+respectively.
+Out-of-Sample Results We now turn our focus to the out-of-sample evidence of return
+predictability. We use an initial training window of 5 years to ﬁrst estimate the forecasting
+model presented in Equation (19). Equipped with the parameter estimates and the most
+recent observation of the forecasting variable in the training window, we are able to generate
+the ﬁrst excess return forecast. The following month, we expand the training window by
+one observation month and re-estimate the forecasting model. With the new parameter
+estimates, we forecast the market excess return for the next month. We proceed analogously
+for all months, except the last month of our sample period.
+In order to assess the out-of-sample performance of diﬀerent models, we follow Campbell
+& Thompson (2008) and deﬁne the out-of-sample R2 (R2
+oos) as follows:
+R2
+oos = 1− MSEu
+MSEr
+, (20)
+where MSEu and MSEr are the mean squared errors of the unrestricted and restricted
+models, respectively. The unrestricted model is based on Equation (19). The restricted
+model imposes the null hypothesis that returns are unpredictable, i.e. β1 = 0. Thus the R2
+oos
+
+ed and restricted
+models, respectively. The unrestricted model is based on Equation (19). The restricted
+model imposes the null hypothesis that returns are unpredictable, i.e. β1 = 0. Thus the R2
+oos
+sheds light on the question: How large an improvement in forecast accuracy can one achieve
+by accounting for the predictive power of variable Xt? The higher the R2
+oos the better. A
+10We present the results of the multiple regressions only for return predictability. In the case of realized
+variance predictability, we skip these regressions due to multicollinearity.
+11The CRP does not retain its statistical signiﬁcance in the multiple regressions. It seems that other
+variables, mainly the VRP , capture its information. In-sample multiple regressions have no explanatory
+power for out-of-sample predictability. For further details, wee also refer to the forthcoming out-of-sample
+analysis.
+17
+
+variable has notable predictive power if it exhibits a positive and signiﬁcant R2
+oos, indicating
+an overall outperformance of the predictive variable.
+In order to gauge whether the potential improvement is statistically signiﬁcant, we
+compute the MSE−F statistic of McCracken (2007):
+MSE−F =H×
+(MSEr−MSEu
+MSEu
+)
+, (21)
+whereH denotes the number of out-of-sample forecasts. All other variables are as previously
+deﬁned. Brieﬂy, the null hypothesis is that the restricted model performs at most as well
+as the unrestricted model, i.e. MSEr≤ MSEu. The alternative is that the unrestricted
+model provides smaller forecast errors than the restricted model. As can be seen from the
+last row of Table III, only CRP andVRP yield statistically signiﬁcant improvements in the
+out-of-sample performance relative to the simple recursive mean. This result is noteworthy
+given that Goyal & Welch (2003) argue that the recursive mean is a tough benchmark to beat.
+Overall, these results suggest that the CRP and the VRP contain important information
+about next-month’s market excess returns both in- and out-of-sample. In contrast, the
+multiple regressions do not improve the predictive power out-of-sample. In Figure 1, we
+observe a similar development of the out-of-sample performances as in-sample, except for
+VARBKM , showing a sharp drop during the global ﬁnancial crisis, indicating a superior
+performance of the restricted model. It seems that investors have to rely on the historical
+
+n-sample, except for
+VARBKM , showing a sharp drop during the global ﬁnancial crisis, indicating a superior
+performance of the restricted model. It seems that investors have to rely on the historical
+mean rather than on VARBKM in times of distress.
+III.B Variance Predictability
+We now turn our attention to the predictability of the realized variance. In particular,
+we ask the question: Can any of the forecasting variables be used to predict next-month’s
+realized variance?
+18
+
+In-Sample Using all the sample information, we estimate the following regression model:
+RVt+1 =γ0 +γ1Xt +γ2RVt +ϵt+1, (22)
+whereγ0,γ1, andγ2 are the intercept and slope parameters, respectively. All other variables
+are as previously deﬁned. We include the lag of realized variance, because realized variance
+is a strongly persistent process, indicated by its AR(1) coeﬃcient of 0.63, shown in Table
+I.12 To account for the persistence, we use a ﬁtted AR(1) process as naive benchmark rather
+than the historical mean variance. 13
+Table IV summarizes the results of the in-sample analysis. We notice that the
+variables have predictive power for future realized variance, as evidenced by their statistically
+signiﬁcantR2s.14 This is true for all variables, except FH and GMR. The R2s range from
+40.80 % to 43.03 %. These results are interesting for several reasons. First, they indicate
+that the predictability of realized variance is much stronger than that of excess returns.
+Second, they reveal that CRP , SMIRK , and VRP are able to predict (in-sample) not
+only next-month’s market excess return (see Table III) but also realized variance. Third,
+the risk-neutral variables of Bakshi et al. (2003) that do not predict future excess returns
+matter for realized variance forecasting. For instance,EXKURT BKM predicts next-month’s
+realized variance with a predictive power equal to 41.60 %. GMR appears to predict only
+market returns, whereas FH predicts neither market returns nor realized variance.
+
+KURT BKM predicts next-month’s
+realized variance with a predictive power equal to 41.60 %. GMR appears to predict only
+market returns, whereas FH predicts neither market returns nor realized variance. A likely
+cause for the rather poor performance of the two measures is that both variables exhibit
+clear breakpoints, especially around the ﬁnancial crisis (see the time-series of these variables
+for example in Figure 1 of Bali et al. (2015) as well as Figure 1 of Leiss & Nax (2018)).
+12Since realized variance is strongly persistent, future realized variance is primarily predictable by its
+current value. Ignoring the lag of realized variance allows the other lagged variables to partially capture this
+persistence. In particular VAR BKM andRV are highly correlated. We refer to this point later in Table IV.
+13In Section V.C , we use the historical mean variance as naive benchmark and show the results.
+14Although CRP has a t-statistic of –1.59, this variable generates a statistically signiﬁcant improvement
+in the in-sample R2 of 40.80 %. We also refer to Section V.C .
+19
+
+An implication of this result is that when assessing the information content of a predictive
+variable, it is advisable to investigate whether it predicts not only excess returns but also
+realized variance. We observe that VARBKM and VRP have similar t-statistics and R2s,
+which is not surprising due to the construction of VRP and the used regression model in
+Equation (22).
+Figure 2 shows the CDSFE for all individual variables predicting the next month’s
+realized variance. There is a similar pattern for the variables. We observe a strong
+increase in their performance during the global ﬁnancial crisis in 2008/2009, indicating the
+outperformance of the unrestricted model to the restricted model. It seems that investors
+can exploit the information content of the variables, particularly in times of high variance.
+Out-of-Sample We use the ﬁrst 5 years of observations to initially estimate the model
+parameters (see Equation (22)). Having done this, we then make a forecast for the following
+month. We expand the training window by one observation month and repeat all steps. This
+procedure mirrors that used for the return predictability analysis with the only diﬀerence
+that we assume a ﬁtted AR(1) process as naive benchmark and that we forecast realized
+variance rather than the market excess return. The last row of Table IV shows the R2
+ooss.
+All variables that predict realized variance in-sample are also good predictors out-of-sample.
+TheR2
+
+ealized
+variance rather than the market excess return. The last row of Table IV shows the R2
+ooss.
+All variables that predict realized variance in-sample are also good predictors out-of-sample.
+TheR2
+ooss range from 2.40 % forSKEW BKM to 3.89 % forSMIRK . In Figure 2, we observe
+a similar pattern as in-sample. In particular in times of distress, investors should rely on the
+information content of the predictive variables rather than on the forecast of a ﬁtted AR(1)
+model.
+III.C Portfolio Choice Implications
+We now study the portfolio choice implications of the predictability results reported
+earlier. To do this, we consider an investor with mean–variance preferences. The agent
+20
+
+allocates a fraction ωt of her wealth to the risky portfolio and the remainder, i.e. 1 −ωt, to
+the risk-free asset. The agent’s objective function is:
+max
+wt
+EP
+t
+(
+rp,t+1− γ
+2σ2
+p,t+1
+)
+, (23)
+whereEP
+t (·) is the physical expectation operator.rp,t+1 is the next-period’s (simple) return on
+the investor’s portfolio. γ is the coeﬃcient of relative risk-aversion. σ2
+p,t+1 is the conditional
+variance of the portfolio from t to t + 1. This return is the weighted average of the (simple)
+return on the risky stock and on the risk-free asset. Because our earlier analysis focuses on
+log-returns rather than simple returns, we use a second-order Taylor expansion to express the
+simple return as a function of the log-return and realized variance. 15 Thus, we can express
+the objective function as follows:
+max
+wt
+Et
+(
+Rp,t+1− γ− 1
+2 σ2
+p,t+1
+)
+, (24)
+whereRp,t+1 is the log-return on the portfolio and all other variables are as previously deﬁned.
+Using the ﬁrst-order condition, it is straightforward to derive the optimal weight invested
+in the risky asset (Jordan et al., 2014):
+ωt = Et(ERt+1 + 1
+2RVt+1)
+γEt(RVt+1) = Et(ERt+1)
+γEt(RVt+1) + 1
+2γ. (25)
+The expression above shows that the optimal allocation to the risky asset depends on the
+expected excess return, the risk-aversion parameter, and the expected realized variance. One
+implication of this expression is that, holding everything else constant, the allocation to the
+
+nds on the
+expected excess return, the risk-aversion parameter, and the expected realized variance. One
+implication of this expression is that, holding everything else constant, the allocation to the
+15More precisely, the approximation yields the following relationship:
+Rt≈rt− 1
+2RV t,
+where Rt, rt, and RV t are the log-return, simple return, and realized variance at time t, respectively.
+21
+
+risky stock rises with expected returns. In other words, if realized variance is unpredictable
+and a forecasting variable Xt positively (negatively) predicts excess returns, then the agent
+would invest more (less) in the risky stock as Xt increases. In contrast, if a variable Xt
+positively predicts future variance (and not returns), then the share of wealth invested in
+the risky stock decreases with the variable Xt.
+Note that the preceding discussion focuses only on the predictability of either returns
+or variance and does not explore the case where both moments are predictable by the same
+variable. The share of the position in the stock will be determined by two (potentially
+oﬀsetting) forces, one that increases with the expected excess return and the other that
+decreases with the expected realized variance.
+In light of the preceding discussion, we ﬁnd it interesting to distinguish between three
+cases. The ﬁrst one deals with the case where only excess returns might be predictable. The
+second case allows for the predictability of realized variance alone. The third case deals with
+the possibility that both excess returns and realized variance are predictable by the same
+variableXt.16
+For a given case (ξ) and each calendar month of our out-of-sample window, we compute
+the weight ωt and also the realized return of the portfolio. We impose the restriction that
+whenever the forecast of the market excess return or of the realized variance (or of both) in
+
+w, we compute
+the weight ωt and also the realized return of the portfolio. We impose the restriction that
+whenever the forecast of the market excess return or of the realized variance (or of both) in
+Equation (25) equals zero, we set the portfolio weight equal to 1 /(2γ). Further, following
+Campbell & Thompson (2008) and Jordan et al. (2017), we impose the restriction that ωt
+is bounded from below by 0 and from above by 1.5. Economically, the lower bound implies
+that the agent does not short-sell the risky asset. The upper bound prevents the agent from
+taking on excessive leverage. At the end of the sample period, we compute the certainty
+16To be consistent with Section III.B, we predict realized variance by the variable Xt and the lag of
+realized variance.
+22
+
+equivalent return as follows:
+CER (ξ) = ¯rp− γ
+2σ2
+p, (26)
+where CER (ξ) is the certainty equivalent return associated with strategy ξ. This number is
+expressed in percent per annum. ¯rp is the average (annualized) return on the portfolio. σ2
+p
+is the variance of the portfolio returns.
+Our approach consists in computing the utility gain (∆CER (ξ)), the diﬀerence between
+CER (ξ) and the certainty equivalent return of the naive strategy that assumes that the ﬁrst
+two moments are unpredictable, and thus relies on simple historical averages. We do this for
+each of the three scenarios.
+We also compute the Sharpe Ratio (SR) of each strategy ξ:
+SR(ξ) =
+¯Rp−rf
+σ2
+p
+, (27)
+where ¯Rp is the average log-return on the portfolio. Similar to the certainty equivalent return
+analysis, we compute the improvement in SR by taking the diﬀerence between SR(ξ) and
+theSR linked to the naive strategy that assumes that the market excess return and realized
+variance are unpredictable. We use an approach suggested by Jobson & Korkie (1981), and
+after taking into account the correction suggested by Memmel (2003), we test whether the
+improvement is statistically signiﬁcant.
+Table V reports our results for diﬀerent values of risk-aversion. We can see that
+statistical evidence of excess return predictability does not necessarily imply important
+economic gains. For instance, while the VRP predicts both excess returns and realized
+
+ersion. We can see that
+statistical evidence of excess return predictability does not necessarily imply important
+economic gains. For instance, while the VRP predicts both excess returns and realized
+variance, a timing strategy relying on this variable would have underperformed the naive
+strategy. One possible explanation for this result is the following. Shortly before the crisis
+23
+
+period, the variance risk premium is high (since the historical variance is low). Because the
+VRP predicts future returns with a positive sign, this result implies that an agent should
+hold more (rather than less) stocks. As a result of this increased position, the strategy incurs
+more severe losses as the economy slides into recession. Similarly, as the economy recovers,
+the variance risk premium is low, implying that the agent should hold a small position in
+the stock. Because of this, the agent misses out on the rally in the market. Further, it seems
+that, though VRP predicts both returns and variance individually with a positive sign,
+the joint predictability is associated with large variance, thus generating negative certainty
+equivalent returns.17
+In contrast, one can see that relative to an agent with risk-aversion γ = 3 who assumes
+that the market excess return and the realized variance are unpredictable, the agent who
+exploits the information content of the CRP , would improve her utility by 5.03 % p.a. The
+ﬁnding is consistent with Driessen et al. (2009, 2013) who document that index options
+represent a hedge against changes in market correlations, and also against losses due to
+diversiﬁcation limitations.
+Our results are in line with those of Fleming et al. (2001), who show that volatility
+timing leads to notable utility gains for short-horizon investors. The positive economic value
+generated by the CRP is consistent with the work of Buss et al.
+
+g et al. (2001), who show that volatility
+timing leads to notable utility gains for short-horizon investors. The positive economic value
+generated by the CRP is consistent with the work of Buss et al. (2018), who document
+a positive CER for the market timing strategy based on the CRP . Overall, our ﬁndings
+suggest that investors might earn larger utility gains when taking the predictability of both
+excess returns and realized variance into account.
+Table A1 of the Online Appendix shows the portfolio choice implications taking into
+account turnover and transaction costs. Following DeMiguel et al. (2009), we deﬁne the
+17We refer to Section IV.B for further details.
+24
+
+turnover for strategy ξ as the average sum of the absolute values of the trades, i.e.:
+Turnover = 1
+T−H
+T−H∑
+t=1
+(
+|ω(ξ)
+t+1−ω(ξ)
+t+|
+)
+, (28)
+where T−H is the number of out-of-sample observations and ω(ξ)
+t+ is the portfolio weight
+before rebalancing at t + 1. All other variables are as previously deﬁned. For the benchmark
+strategy, we observe an absolute value of the turnover (Turnoverabs) of 0.0448, which can be
+interpreted as the average percentage of wealth traded in each out-of-sample period. For our
+three strategies, we report the turnover ( Turnover (ξ)
+rel) relative to the benchmark case. We
+notice that all strategies exhibit higher turnovers than the benchmark, indicated by values
+larger than one.
+We follow Balduzzi & Lynch (1999) and include transaction costs of 50 basis points per
+transaction proportional to the asset’s traded size |ω(ξ)
+t+1−ω(ξ)
+t+|. Table A1 of the Online
+Appendix reports the corresponding utility gains and Sharpe Ratios. We observe that
+transaction costs have an impact on the results; however, the results are qualitatively similar.
+An agent who relies on the CRP would still improve her utility by 1.38 % p.a.
+IV. Further Analyses
+IV.A Sign Restriction
+Campbell & Thompson (2008) propose imposing two economically motivated restric-
+tions when studying the question of predictability. The authors suggest setting the slope
+estimate in the out-of-sample analysis equal to zero whenever its sign diﬀers from that of
+the in-sample analysis.
+
+s when studying the question of predictability. The authors suggest setting the slope
+estimate in the out-of-sample analysis equal to zero whenever its sign diﬀers from that of
+the in-sample analysis. They also suggest setting the out-of-sample forecast equal to zero
+whenever its negative. Before discussing our ﬁndings, it is worth emphasizing that the ﬁrst
+constraint is not implementable in real-time. This is because the implementation would
+25
+
+require the agent to know about the sign of the in-sample slope parameter, i.e. to have
+information about future data, thus, introducing a look-ahead bias.
+The ﬁrst set of results in Table VI reports the ﬁndings when imposing the ﬁrst restriction.
+Panel A shows that the main results are similar: the CRP and VRP are the two best
+option-implied predictors for the market excess return. It is worth noticing that imposing
+the restriction has very little eﬀect on the R2
+oos related to the forecasting variables (see Table
+III for comparison). This suggests that the sign of the relationship between the forecasting
+variablesCRP and VRP and future excess returns is relatively stable out-of-sample.
+We also impose the restriction on the slope of the realized variance forecasting regression.
+In other words, we set the slope estimate equal to zero, if the sign of the recursively estimated
+parameter is diﬀerent from that obtained in-sample. 18 Overall, we can see from Panel B of
+Table VI that this restriction has very little impact on our main results.
+The second set of results in Table VI reports the ﬁndings when imposing the second
+restriction. Finally, the last entries of each panel show the results when we jointly impose
+the restrictions (on the sign of the slope and the sign of the return/variance forecast).
+Summarized, in both cases our main results remain unchanged. 19 We also repeat our
+economic value analysis using these economically motivated constraints. Tables VII to IX
+
+return/variance forecast).
+Summarized, in both cases our main results remain unchanged. 19 We also repeat our
+economic value analysis using these economically motivated constraints. Tables VII to IX
+document that imposing the restriction(s) does (do) not aﬀect our main conclusions on the
+economic value of the predictive power of both CRP and VRP .
+18To be consistent with Section III.B, we impose the restriction for both the variable Xt and the lag of
+realized variance.
+19Table A2 of the Online Appendix reports the absolute frequency of how often the restrictions are
+binding. Panel A shows the results for return predictability. We observe that the ﬁrst restriction is not
+binding. This is true for all variables, except FH ,GMR, and VAR BKM , indicated by a frequency of 12, 8,
+and 35. The second restriction is binding more frequently, indicated by frequencies from 7 forGMR to 77 for
+VRP . It seems that the forecast restriction matters more for excess return predictability. Panel B of Table
+A2 shows the frequencies in the case of variance predictability. We ﬁnd that the ﬁrst (second) restriction
+is binding only for CRP , FH , and GMR (EXKURT BKM ) with a frequency of 75, 76, and 3 (3). Lagged
+realized variance appears to be not aﬀected by the (ﬁrst) restriction(s) at all, indicating the persistence of
+that variable. The ﬁndings reveal that the imposition of economically motivated restrictions matters more
+for return rather than variance predictability.
+26
+
+IV.B Forecast Combination
+Rapach et al. (2010) suggest the use of forecast combinations. The pooled forecast
+is the weighted average of all G individual forecasts, where g = 1,...,G , i.e., ˆER
+pool
+t+1 =
+∑G
+g=1xg,tˆERg,t+1 and ˆRV
+pool
+t+1 = ∑G
+g=1xg,tˆRVg,t+1, based on Equation (19) and (22),
+respectively. xg,t is the weight of the individual forecast in the pooled one.
+Following the literature, we use three approaches. Table X shows the out-of-sampleR2s
+of (i) the mean forecast combination, where the weight is simply 1/G forg = 1,...,G , (ii) the
+median forecast combination, where the pooled forecast is just the median of all individual
+forecasts, and (iii) the trimmed mean forecast combination, where xg,t = 0 in the case of the
+individual forecasts with the smallest and largest value, respectively, and xg,t = 1/(G− 2)
+for the remaining forecasts.
+The mean forecast combination exhibits superior performance in the case of return
+predictability (R2
+oos = 1.76 %), whereas the median forecast combination works better in the
+case of variance predictability ( R2
+oos = 4.12 %).20 The ﬁndings are interesting for several
+reasons. First, they support the results of Rapach & Zhou (2013), who argue that forecast
+combinations yield more stable forecasts and increase the forecasting performance. Second,
+the ﬁndings show a substantial increase in the magnitude of the R2
+ooss. In the case of
+return predictability, the mean forecast combination generates anR2
+oos which is substantially
+
+ormance. Second,
+the ﬁndings show a substantial increase in the magnitude of the R2
+ooss. In the case of
+return predictability, the mean forecast combination generates anR2
+oos which is substantially
+larger than for all individual variables, except for VRP .21 The median forecast combination
+outperforms all individual variables, predicting realized variance. Third, the ﬁndings support
+our previous conclusion. It seems that individual predictive variables generate notable
+20Since FH and GMR show an overall weak performance, we additionally compute the forecast
+combinations without these two variables. In that case, the mean forecast combination exhibits a superior
+performance, indicated by an R2
+oos of 3.11 %, whereas the median forecast combination generates an R2
+oos of
+4.83 %.
+21In detail, when using all predictive variables of our sample, the mean forecast combination generates an
+R2
+oos which is similar to all individual variables, except forVRP . However, by excluding FH andGMR, the
+mean forecast combination generates an R2
+oos which is substantially larger than for all individual variables,
+except for VRP .
+27
+
+variance when predicting excess returns and realized variance, respectively.
+Table XI reports the economic value for diﬀerent values of risk-aversion. Compared
+with our previous ﬁndings, all forecast combinations, in particular the median forecast
+combination, generate substantial certainty equivalent returns. For γ = 3, an annualized
+utility gain of 6.73 % (relative to the naive strategy) may be achieved, when both return and
+variance are predicted by the combined forecast. It seems that forecast combinations rather
+than individual variables, generate more stable forecasts, thus, leading to signiﬁcant positive
+utility gains.
+IV.C Predictability of the Sharpe Ratio
+After predicting excess returns and realized variance in isolation, we want to answer the
+question: What predictive power do the variables have, when predicting excess returns and
+realized variance jointly? In doing so, we estimate the following regression model:
+ERt+1√
+RVt+1
+=ϕ0 +ϕ1Xt +ϵt+1, (29)
+where ERt+1√
+RVt+1
+is the Sharpe Ratio, and ϕ0, and ϕ1 are the intercept and slope parameters,
+respectively. All other variables are as previously deﬁned.
+Table XII documents the results for each predictive variable. The regression model
+(29) enables us to assess whether each variable has predictive power, when predicting excess
+returns and realized variance jointly. We ﬁnd that CRP , GMR, SKEW BKM , and VRP
+have predictive power for the future Sharpe Ratios, shown by their statistically signiﬁcant
+
+er, when predicting excess
+returns and realized variance jointly. We ﬁnd that CRP , GMR, SKEW BKM , and VRP
+have predictive power for the future Sharpe Ratios, shown by their statistically signiﬁcant
+t-statistics of 2.43, 1.77, –1.79, and 2.17. A look at the in-sample R2s reveals thatCRP and
+VRP have the highest (in-sample) predictive power of 2.56 % and 2.04 %, respectively.
+Further analysis reveals thatCRP andVRP also contain important information about
+the future Sharpe Ratio out-of-sample, indicated by R2
+ooss of 2.99 % and 1.54 %.
+28
+
+V. Additional Analysis
+To use more information when estimating the realized variance, we follow Corsi (2009)
+and S´ evi (2014) and use the heterogenous autoregressive ( HAR) model. The HAR–RV
+model provides a conditional estimate for realized variance that accounts for diﬀerent trading
+horizons. Further, in the previous analysis, we examine the total variance risk premium.
+However, Andersen & Bondarenko (2010), Andersen et al. (2015), and Feunou et al. (2015)
+show how to decompose the variance risk premium into downside and upside components.
+In the following section, we analyze the predictability of both components separately.
+We follow Andersen & Bondarenko (2010) and Andersen et al. (2015) and use the
+downside and upside model-free implied variance. Following the arguments of Feunou et al.
+(2015), investors dislike increases in the volatility of the underlying, which is associated
+with an increase in the probability of severe losses. Investors hedge against these downward
+movements, thus, we expect that the downside variance risk premium is the main driver of
+the variance risk premium. Further, to get a better estimate for the physical expectation of
+variance, we analogously use the downside and upside realized variance.
+V.A Variables
+Variance Risk Premium based on HAR–RV Model We deﬁne the variance risk
+premium based on theHAR–RV model (VRP HAR) as the diﬀerence between the risk-neutral
+variance (VARBKM ) and the RV , estimated on the basis of the HAR model (RVHAR):
+
+Model We deﬁne the variance risk
+premium based on theHAR–RV model (VRP HAR) as the diﬀerence between the risk-neutral
+variance (VARBKM ) and the RV , estimated on the basis of the HAR model (RVHAR):
+VRP HAR
+t =VARBKM
+t −RVHAR
+t , (30)
+29
+
+where VARBKM
+t is as previously deﬁned. Analogously to Section II.B and using Equation
+(2), we follow Christoﬀersen (2012) and deﬁne
+RVD,t+ i
+N
+≡RVt+ i
+N
+, (31)
+RVW,t+ i
+N
+≡RV(t+ i
+N )−4,t+ i
+N
+=
+[
+RV(t+ i
+N )−4 +RV(t+ i
+N )−3 +RV(t+ i
+N )−2 +RV(t+ i
+N )−1 +RVt+ i
+N
+]
+/ 5,
+(32)
+RVM,t+ i
+N
+≡RV(t+ i
+N )−20,t+ i
+N
+=
+[
+RV(t+ i
+N )−20 +RV(t+ i
+N )−19 +... +RVt+ i
+N
+]
+/ 21 (33)
+as the daily, weakly, and monthly realized variance on day t + i
+N , respectively.22 Further,
+RV(t+ i
+N )+1,(t+ i
+N )+20 is the realized variance over the next 21 days, i.e.:
+RV(t+ i
+N )+1,(t+ i
+N )+20 =
+[
+RV(t+ i
+N )+1 +RV(t+ i
+N )+2 +... +RV(t+ i
+N )+20
+]
+/ 21. (34)
+Finally, to compute RVHAR
+t , we run the following regression:
+RV(t+ i
+N )+1,(t+ i
+N )+20 =φ0 +φDRVD,t+ i
+N
++φWRVW,t+ i
+N
++φMRVM,t+ i
+N
++ϵ(t+ i
+N )+1,(t+ i
+N )+20,
+(35)
+where φ0, φD, φW , and φM are the regression coeﬃcients, and ϵ(t+ i
+N )+1,(t+ i
+N )+20 is the error
+term over the next 21 days. The ﬁtted values are the forecasted RV and represent RVHAR
+t .
+Downside and Upside Variance Risk Premium We deﬁne the downside and upside
+variance risk premium ( VRP DOWN and VRP UP ) as the diﬀerence between the downside
+and upside model-free implied variance (( σQ−
+t )2 and (σQ+
+t )2) and the downside and upside
+22Since we now work with daily rather than intraday data, we follow the common approach and deﬁne
+one month as 21 trading days.
+30
+
+realized variance (RVDOWN and RVUP ), respectively:
+VRP DOWN
+t =
+(
+σQ−
+t
+)2
+−RVDOWN
+t , (36)
+VRP UP
+t =
+(
+σQ+
+t
+)2
+−RVUP
+t . (37)
+To obtain (σQ−
+t )2 and (σQ+
+t )2, we follow Andersen & Bondarenko (2010) and Andersen et al.
+(2015) and use their corridor implied volatility method to decompose the model-free implied
+variance into diﬀerent parts, and deﬁne the model-free implied variance (( σQ
+t )2) as:
+(
+σQ
+t
+)2
+= 2
+∫ ∞
+0
+M(K)
+K2 dK = (σQ−
+t )2 + (σQ+
+t )2, (38)
+where M(K) = min (P (K),C (K)) is the minimum price of the put and call with maturity
+of 1 month and strike K. Consistently, we also compute the grid of 1,000 equidistant
+interpolated moneyness levels of out-of-the money option prices, as described above. Finally,
+to compute (σQ−
+t )2 and (σQ+
+t )2, we assume the threshold Seθ with θ = 0:
+(
+σQ−
+t
+)2
+= 2
+∫ Seθ
+0
+M(K)
+K2 dK, (39)
+(
+σQ+
+t
+)2
+= 2
+∫ ∞
+Seθ
+M(K)
+K2 dK. (40)
+We then use the trapezoidal rule to approximate the integrals, as outlined above.
+Following Barndorﬀ-Nielsen et al. (2010), we decompose the realized variance into the
+upside and downside realized variance for a given threshold κ. Imposing κ = 0, we compute
+RVDOWN
+t (RVUP
+t ) on the basis of Equation (2), however, using only log-returns that are at
+most (least) equal to κ.
+Downside and Upside Variance Risk Premium based on HAR–RV Model We
+deﬁne the downside and upside variance risk premium based on the HAR–RV model
+31
+
+(VRP DOWN,HAR and VRP UP,HAR ) as the diﬀerence between the downside and upside
+model-free implied variance (( σQ−
+t )2 and (σQ+
+t )2) and the downside and upside realized
+variance, estimated on the basis of the HAR model ( RVDOWN,HAR and RVUP,HAR ),
+respectively:
+VRP DOWN,HAR
+t =
+(
+σQ−
+t
+)2
+−RVDOWN,HAR
+t , (41)
+VRP UP,HAR
+t =
+(
+σQ+
+t
+)2
+−RVUP,HAR
+t , (42)
+where (σQ−
+t )2 and (σQ+
+t )2 are as previously deﬁned. To compute RVDOWN,HAR
+t (RVUP,HAR
+t ),
+we follow the steps described above, however, using RVDOWN (RVUP ) instead of RV .
+V.B Results
+Table A3 of the Online Appendix reports the regression results for the diﬀerent
+speciﬁcations predicting the next month’s excess return and realized variance, respectively.
+In Panel A, we observe that all speciﬁcations exhibit an inferior performance in predicting
+excess returns compared to the VRP as proposed by Bollerslev et al. (2009). However,
+we notice that VRP UP , VRP DOWN , and VRP UP,HAR have still (in-sample) signiﬁcant
+predictive power, indicated by t-statistics between 2.47 and 2.17, and in-sample R2s from
+2.65 % to 2.05 %.
+In Panel B of Table A3 of the Online Appendix, we ﬁnd that all speciﬁcations have a
+similar (insigniﬁcant) in-sample predictive power for RV as VRP . We observe noteworthy
+signiﬁcant out-of-sample predictability for VRP HAR (R2
+oos = 3.40 %), VRP DOWN (R2
+oos =
+4.34 %), and VRP UP,HAR (R2
+oos = 4.63 %).
+We now turn our attention to the portfolio choice implications. Table A4 of the Online
+
+mple predictability for VRP HAR (R2
+oos = 3.40 %), VRP DOWN (R2
+oos =
+4.34 %), and VRP UP,HAR (R2
+oos = 4.63 %).
+We now turn our attention to the portfolio choice implications. Table A4 of the Online
+Appendix reports the results of the economic value. For an agent with risk-aversion ofγ = 3,
+we observe thatVRP UP (VRP DOWN ) provides substantial improvements in the utility gain
+32
+
+of 6.74 % p.a. (6.31 % p.a.) and in the Sharpe Ratio of 0.71 (0.59).
+Overall, the results conﬁrm our previous ﬁndings in providing evidence for a stronger
+variance than return predictability. We also observe that VRP DOWN , VRP UP , and
+VRP UP,HAR predict in-sample both returns and realized variance. In addition, we notice that
+VRP HAR, VRP DOWN , and VRP UP,HAR strongly predict realized variance out-of-sample.
+Finally, the results reveal that VRP UP and VRP DOWN provide evidence for generating
+statistically signiﬁcant economic value.
+V.C Alternative Approach of Variance Predictability
+In our main analysis, we included lagged realized variance as an additional predictor
+when predicting realized variance, as it is well known that variance is a persistent process.
+To see whether our results are driven by this choice, we repeat the analysis without including
+lagged realized variance. We now estimate the following regression model for realized
+variance:
+RVt+1 =γ0 +γ1Xt +ϵt+1, (43)
+where all variables are as previously deﬁned. Under the null hypothesis of no predictability,
+the variable Xt has no predictive power for future realized variance. In this case, we
+expect that γ1 = 0, and that the best estimate for future realized variance would be its
+mean. Accordingly, the historical mean variance serves as benchmark model. Using this
+speciﬁcation, we are able to analyze the individual predictive power of variables subject
+to the standard approach in extant literature.
+
+historical mean variance serves as benchmark model. Using this
+speciﬁcation, we are able to analyze the individual predictive power of variables subject
+to the standard approach in extant literature. Tables A5 and A6 of the Online Appendix
+summarize the results of the predictability and economic value analysis.
+In Table A5, we ﬁnd that all variables, except FH , have in-sample predictive power
+for future realized variance. CRP turns out to have signiﬁcant predictive ability, indicated
+by a t-statistic of –3.72. We notice that the in-sample R2s are smaller compared with our
+33
+
+previous results. They range from 3.19 % for SKEW BKM to 38.83 % for VARBKM .
+In the out-of-sample analysis, we observe that in general the variables that predict
+realized variance in-sample are also predictors out-of-sample. All variables, with the
+exception of FH , GMR, and VRP , yield an improvement relative to the recursive mean.
+The reason for the poor behavior of these three variables is likely twofold: FH and GMR
+perform poorly in general and the VRP exhibits a sign-switching behavior as discussed
+previously. The R2
+ooss range from 1.88 % for CRP to 34.65 % for VARBKM . It seems that,
+using the standard methodology, the predictive power of some variables increases, compared
+to our previous results.
+In the economic value analysis, shown in Table A6, we ﬁnd similar results as before.
+It seems that statistical evidence of predictability does not necessarily imply important
+economic gains. One can see that relative to an agent with risk-aversion γ = 3 who assumes
+that the market excess return and the realized variance are unpredictable, the agent who
+exploits the information content of CRP would improve her utility by 4.63 % p.a. Overall,
+the results conﬁrm our previous ﬁndings.
+VI. Conclusion
+This paper comprehensively studies the predictive power of option-implied variables for
+future excess returns and realized variance. A variable is considered to have predictive power
+if it exhibits statistically signiﬁcant forecasting power and also adds economic value. We
+
+variables for
+future excess returns and realized variance. A variable is considered to have predictive power
+if it exhibits statistically signiﬁcant forecasting power and also adds economic value. We
+ﬁnd that the correlation risk premium and the variance risk premium emerge as statistically
+signiﬁcant predictors of both the market excess return and the realized variance. This is
+true both in- and out-of-sample.
+We then investigate the economic value of the documented predictability. Our results
+highlight an important contrast between the two variables. Relative to a naive strategy that
+34
+
+assumes that excess returns and realized variance are unpredictable, the agent who relies
+on the correlation risk premium as a timing signal realizes utility gains of 5.03 % p.a. In
+contrast, the timing strategy that uses the variance risk premium as timing signal yields lower
+certainty equivalent returns than a naive strategy that assumes constant excess returns and
+realized variance. Thus, our analysis shows that statistical evidence of predictability does
+not necessarily translate into economic value. Moreover, we ﬁnd that forecast combinations
+generate stable forecasts for both excess returns and realized variance, and that they add
+substantial economic value.
+We further decompose the total variance risk premium into the downside and upside
+components, and analyze the predictability of diﬀerent versions of the variance risk premium.
+We show that the upside and downside variance risk premia have noteworthy (in-sample)
+predictive power for excess returns and realized variance. Further, a timing strategy provides
+substantial utility gains.
+Future research could analyze the predictive power of option-implied variables for
+speciﬁc industry returns as well as diﬀerent asset classes. Furthermore, we believe that
+it would be interesting to study whether the CRP performs similarly well in predicting
+equity returns in further developed and emerging markets. Finally, it could be interesting to
+
+e, we believe that
+it would be interesting to study whether the CRP performs similarly well in predicting
+equity returns in further developed and emerging markets. Finally, it could be interesting to
+test whether forward-looking option-implied information drives out the predictive power of
+U.S. returns for developed and emerging countries, as documented by Rapach et al. (2013).
+35
+
+Bibliography
+Andersen, T. G., Bollerslev, T., Diebold, F. X., & Labys, P. (2003). Modeling and forecasting
+realized volatility. Econometrica, 71 (2), 579–625.
+Andersen, T. G., & Bondarenko, O. (2010). Dissecting the pricing of equity index volatility.
+Working Paper .
+Andersen, T. G., Bondarenko, O., & Gonzalez-Perez, M. T. (2015). Exploring return
+dynamics via corridor implied volatility. Review of Financial Studies , 28 (10), 2902–2945.
+Aumann, R. J., & Serrano, R. (2008). An economic index of riskiness. Journal of Political
+Economy, 116 (5), 810–836.
+Bakshi, G., Kapadia, N., & Madan, D. (2003). Stock return characteristics, skew laws, and
+the diﬀerential pricing of individual equity options. Review of Financial Studies , 16 (1),
+101–143.
+Balduzzi, P., & Lynch, A. W. (1999). Transaction costs and predictability: Some utility cost
+calculations. Journal of Financial Economics , 52 (1), 47–78.
+Bali, T. G., Cakici, N., & Chabi-Yo, F. (2011). A generalized measure of riskiness.
+Management Science, 57 (8), 1406–1423.
+Bali, T. G., Cakici, N., & Chabi-Yo, F. (2012). Does aggregate riskiness predict future
+economic downturns? Working Paper .
+Bali, T. G., Cakici, N., & Chabi-Yo, F. (2015). A new approach to measuring riskiness in
+the equity market: Implications for the risk premium. Journal of Banking & Finance , 57 ,
+101–117.
+Bali, T. G., & Hovakimian, A. (2009). Volatility spreads and expected stock returns.
+Management Science, 55 (11), 1797–1812.
+Bali, T. G., Hu, J., & Murray, S.
+
+rnal of Banking & Finance , 57 ,
+101–117.
+Bali, T. G., & Hovakimian, A. (2009). Volatility spreads and expected stock returns.
+Management Science, 55 (11), 1797–1812.
+Bali, T. G., Hu, J., & Murray, S. (2017). Option implied volatility, skewness, and kurtosis
+and the cross-section of expected stock returns. Working Paper .
+Barndorﬀ-Nielsen, O. E., Kinnebrock, S., & Shephard, N. (2010). Volatility and time series
+econometrics: Essays in honor of Robert Engle . Oxford University Press.
+Black, F., & Scholes, M. (1973). The pricing of options and corporate liabilities. Journal of
+Political Economy, 81 (3), 637–654.
+Bollerslev, T., Marrone, J., Xu, L., & Zhou, H. (2014). Stock return predictability and
+variance risk premia: Statistical inference and international evidence. Journal of Financial
+and Quantitative Analysis , 49 (3), 633–661.
+Bollerslev, T., Tauchen, G., & Zhou, H. (2009). Expected stock returns and variance risk
+premia. Review of Financial Studies , 22 (11), 4463–4492.
+36
+
+Buss, A., Sch¨ onleber, L., & Vilkov, G. (2018). Expected stock returns and the correlation
+risk premium. Working Paper .
+C ¸ akmaklı, C., & van Dijk, D. (2016). Getting the most out of macroeconomic information
+for predicting excess stock returns. International Journal of Forecasting , 32 (3), 650–668.
+Campbell, J. Y., & Thompson, S. B. (2008). Predicting excess stock returns out of sample:
+Can anything beat the historical average? Review of Financial Studies , 21 (4), 1509–1531.
+Chang, B.-Y., Christoﬀersen, P., Jacobs, K., & Vainberg, G. (2012). Option-implied
+measures of equity risk. Review of Finance , 16 , 385–428.
+Christoﬀersen, P. F. (2012). Elements of ﬁnancial risk management . 2nd Edition. Academic
+Press.
+Corsi, F. (2009). A simple approximate long-memory model of realized volatility. Journal
+of Financial Econometrics , 7 (2), 174–196.
+Cosemans, M. (2011). The pricing of long and short run variance and correlation risk in
+stock returns. Working Paper .
+Cremers, M., & Weinbaum, D. (2010). Deviations from put-call parity and stock return
+predictability. Journal of Financial and Quantitative Finance , 45 (2), 335–367.
+DeMiguel, V., Garlappi, L., & Uppal, R. (2009). Optimal versus naive diversiﬁcation: How
+ineﬃcient is the 1/n portfolio strategy? Review of Financial Studies , 22 (5), 1915–1953.
+Drechsler, I., & Yaron, A. (2011). What’s vol got to do with it. Review of Financial Studies ,
+24 (1), 1–45.
+Driessen, J., Maenhout, P. J., & Vilkov, G. (2009).
+
+Financial Studies , 22 (5), 1915–1953.
+Drechsler, I., & Yaron, A. (2011). What’s vol got to do with it. Review of Financial Studies ,
+24 (1), 1–45.
+Driessen, J., Maenhout, P. J., & Vilkov, G. (2009). The price of correlation risk: Evidence
+from equity options. Journal of Finance , 64 (3), 1377–1406.
+Driessen, J., Maenhout, P. J., & Vilkov, G. (2013). Option-implied correlations and the
+price of correlation risk. Working Paper .
+Du, J., & Kapadia, N. (2012). The tail in the volatility index. Working Paper .
+Feunou, B., Jahan-Parvar, M. R., & Okou, C. (2015). Downside variance risk premium.
+Working Paper .
+Figlewski, S. (2010). Estimating the implied risk neutral density. In T. Bollerslev, J. Russell,
+& M. Watson (Eds.) Volatility and Time Series Econometrics: Essays in Honor of Robert
+Engle. Oxford University Press.
+Fleming, J., Kirby, C., & Ostdiek, B. (2001). The economic value of volatility timing.Journal
+of Finance, 56 (1), 329–352.
+Foster, D. P., & Hart, S. (2009). An operational measure of riskiness. Journal of Political
+Economy, 117 (5), 785–814.
+37
+
+Goyal, A., & Welch, I. (2003). Predicting the equity premium with dividend ratios.
+Management Science, 49 (5), 639–654.
+Goyal, A., & Welch, I. (2008). A comprehensive look at the empirical performance of equity
+premium prediction. Review of Financial Studies , 21 (4), 1455–1508.
+Jiang, G. J., & Tian, Y. S. (2005). The model-free implied volatility and its information
+content. Review of Financial Studies , 18 (4), 1305–1342.
+Jobson, J. D., & Korkie, B. M. (1981). Performance hypothesis testing with the Sharpe and
+Treynor measures. Journal of Finance , 36 (4), 889–908.
+Jordan, S. J., Vivian, A., & Wohar, M. E. (2017). Forecasting market returns: Bagging or
+combining? International Journal of Forecasting , 33 (1), 102–120.
+Jordan, S. J., Vivian, A. J., & Wohar, M. E. (2014). Forecasting returns: New European
+evidence. Journal of Empirical Finance , 26 , 76–95.
+Kourtis, A., Markellos, R. N., & Symeonidis, L. (2016). An international comparison of
+implied, realized, and GARCH volatility forecasts. Journal of Futures Markets , 36 (12),
+1164–1193.
+Leiss, M., & Nax, H. H. (2018). Option-implied objective measures of market risk. Journal
+of Banking & Finance , 88 , 241–249.
+Leiss, M., Nax, H. H., & Sornette, D. (2015). Super-exponential growth expectations and
+the global ﬁnancial crisis. Journal of Economic Dynamics and Control , 55 , 1–13.
+Maio, P., & Santa-Clara, P. (2012). Multifactor models and their consistency with the
+ICAPM. Journal of Financial Economics , 106 (3), 586–613.
+
+. Journal of Economic Dynamics and Control , 55 , 1–13.
+Maio, P., & Santa-Clara, P. (2012). Multifactor models and their consistency with the
+ICAPM. Journal of Financial Economics , 106 (3), 586–613.
+McCracken, M. W. (2007). Asymptotics for out of sample tests of Granger causality. Journal
+of Econometrics, 140 (2), 719–752.
+McGee, R. J., & McGroarty, F. (2017). The risk premium that never was: A fair value
+explanation of the volatility spread. European Journal of Operational Research , 262 (1),
+370–380.
+Memmel, C. (2003). Performance hypothesis testing with the Sharpe ratio. Finance Letters,
+1 (1).
+Merton, R. C. (1973). An intertemporal capital asset pricing model. Econometrica, 41 (5),
+867–887.
+Pollet, J. M., & Wilson, M. (2010). Average correlation and stock market returns. Journal
+of Financial Economics , 96 (3), 364–380.
+Prokopczuk, M., & Wese Simen, C. (2014). The importance of the volatility risk premium
+for volatility forecasting. Journal of Banking & Finance , 40 , 303–320.
+38
+
+Pyun, S. (2016). Variance risk in aggregate stock returns and time-varying return
+predictability. Forthcoming in Journal of Financial Economics .
+Rapach, D. E., Strauss, J. K., & Zhou, G. (2010). Out-of-sample equity premium prediction:
+Combination forecasts and links to the real economy. Review of Financial Studies , 23 (2),
+821–862.
+Rapach, D. E., Strauss, J. K., & Zhou, G. (2013). International stock return predictability:
+What is the role of the united states? Journal of Finance , 68 (4), 1633–1662.
+Rapach, D. E., & Wohar, M. E. (2006). In-sample vs. out-of-sample tests of stock return
+predictability in the context of data mining.Journal of Empirical Finance, 13 (2), 231–247.
+Rapach, D. E., & Zhou, G. (2013). Forecasting stock returns. Handbook of Economic
+Forecasting, 2 (Part A), 328–383.
+Rehman, Z., & Vilkov, G. (2012). Risk-neutral skewness: Return predictability and its
+sources. Working Paper .
+Richardson, M., & Stock, J. H. (1989). Drawing inferences from statistics based on multiyear
+asset returns. Journal of Financial Economics , 25 (2), 323–348.
+S´ evi, B. (2014). Forecasting the volatility of crude oil futures using intraday data.European
+Journal of Operational Research, 235 (3), 643–659.
+Stambaugh, R. F. (1999). Predictive regressions. Journal of Financial Economics , 54 (3),
+375–421.
+Stilger, P. S., Kostakis, A., & Poon, S.-H. (2016). What does risk-neutral skewness tell us
+about future stock returns? Management Science, 63 (6), 1814–1834.
+
+f Financial Economics , 54 (3),
+375–421.
+Stilger, P. S., Kostakis, A., & Poon, S.-H. (2016). What does risk-neutral skewness tell us
+about future stock returns? Management Science, 63 (6), 1814–1834.
+Xing, Y., Zhang, X., & Zhao, R. (2010). What does the individual option volatility smirk tell
+us about future equity returns? Journal of Financial and Quantitative Analysis , 45 (3),
+641–662.
+Zhou, H. (2013). On the predictive power of the implied correlation index. Working Paper .
+39
+
+Figure 1: Return Predictability
+This ﬁgure plots the in- and out-of-sample performances of individual variables. We regress monthly
+excess returns on a constant and the lagged predictive variable. On the ordinate, there are the
+cumulative diﬀerences in squared forecast errors (CDSFE). The in-sample performance is the
+diﬀerence between the cumulative squared demeaned excess return and the cumulative squared
+regression residual, and the out-of-sample performance is the diﬀerence between the cumulative
+squared forecast error from the restricted model and the cumulative squared forecast error from the
+unrestricted model. The grey bars indicate the U.S. recessions, published by the NBER. All data
+are sampled at the monthly frequency and relate to the S&P 500 index.
+(a) CRP
+2000 2005 2010 2015
+−0.5 0.0 0.5 1.0 1.5 2.0
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(b) EXKURT BKM
+2000 2005 2010 2015
+−0.6 −0.4 −0.2 0.0 0.2 0.4
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(c) FH
+2000 2005 2010 2015
+−1.5 −1.0 −0.5 0.0 0.5
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(d) GMR
+2000 2005 2010 2015
+−5 −4 −3 −2 −1 0 1
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(e) SKEW BKM
+2000 2005 2010 2015
+−0.4 −0.2 0.0 0.2 0.4 0.6
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(f) SMIRK
+2000 2005 2010 2015
+−0.5 0.0 0.5 1.0 1.5 2.0
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(g) VARBKM
+2000 2005 2010 2015
+−2.5 −1.5 −0.5 0.0 0.5
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(h) VRP
+2000 2005 2010 2015
+−1 0 1 2 3 4
+Y ear
+
+1.0 1.5 2.0
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(g) VARBKM
+2000 2005 2010 2015
+−2.5 −1.5 −0.5 0.0 0.5
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(h) VRP
+2000 2005 2010 2015
+−1 0 1 2 3 4
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+40
+
+Figure 2: Variance Predictability
+This ﬁgure plots the in- and out-of-sample performances of individual variables. We regress monthly
+realized variance on a constant, the lagged predictive variable, and the lagged realized variance.
+On the ordinate, there are the cumulative diﬀerences in squared forecast errors (CDSFE). The
+in-sample performance is the diﬀerence between the cumulative squared demeaned excess return
+and the cumulative squared regression residual, and the out-of-sample performance is the diﬀerence
+between the cumulative squared forecast error from the restricted model and the cumulative squared
+forecast error from the unrestricted model. The grey bars indicate the U.S. recessions, published by
+the NBER. All data are sampled at the monthly frequency and relate to the S&P 500 index.
+(a) CRP
+2000 2005 2010 2015
+0.000 0.010 0.020 0.030
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(b) EXKURT BKM
+2000 2005 2010 2015
+0.000 0.010 0.020
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(c) FH
+2000 2005 2010 2015
+−0.008 −0.004 0.000
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(d) GMR
+2000 2005 2010 2015
+−0.03 −0.02 −0.01 0.00
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(e) SKEW BKM
+2000 2005 2010 2015
+0.000 0.005 0.010 0.015
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(f) SMIRK
+2000 2005 2010 2015
+0.000 0.010 0.020 0.030
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(g) VARBKM
+2000 2005 2010 2015
+−0.005 0.005 0.015 0.025
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(h) VRP
+
+SMIRK
+2000 2005 2010 2015
+0.000 0.010 0.020 0.030
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(g) VARBKM
+2000 2005 2010 2015
+−0.005 0.005 0.015 0.025
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+(h) VRP
+2000 2005 2010 2015
+−0.005 0.005 0.015 0.025
+Y ear
+CDSFE
+Y ear
+CDSFE
+Y ear
+CDSFE
+IS
+OOS
+41
+
+Table I: Summary Statistics
+This table summarizes key statistics about several variables. CRP denotes the correlation risk
+premium. IC is the implied correlation. RC is the realized correlation. ER is the market excess
+return. EXKURT BKM is the risk-neutral kurtosis of Bakshi et al. (2003). FH is the risk-neutral
+riskiness measure of Leiss & Nax (2018). GMR is the generalized measure of riskiness of Bali
+et al. (2011). RV is the realized variance. SKEW BKM is the risk-neutral skewness of Bakshi
+et al. (2003). SMIRK is the option smirk. VAR BKM is the risk-neutral variance of Bakshi et al.
+(2003). VRP is the variance risk premium computed as the diﬀerence between the risk-neutral
+variance of Bakshi et al. (2003) and the most recent observation of the realized variance. VRP HAR
+denotes the variance risk premium based on the HAR-RV model. VRP DOW N is the downside
+variance risk premium. VRP U P is the upside variance risk premium. VRP DOW N,HAR is the
+downside variance risk premium based on the HAR–RV model. Finally, VRP U P,HAR is the upside
+variance risk premium based on the HAR–RV model. “Mean”, “Std Dev”, “Skew”, and “Kurt”
+denote the mean, standard deviation, skewness, and kurtosis, respectively. The last two columns
+show the AR(1) coeﬃcient and the number of observations, respectively. All data are sampled at
+the monthly frequency and relate to the S&P 500 index.
+Mean Std Dev Skew Kurt AR(1) Nobs
+CRP 0.0941 0.1019 0.1409 3.2970 0.2496 228
+
+d the number of observations, respectively. All data are sampled at
+the monthly frequency and relate to the S&P 500 index.
+Mean Std Dev Skew Kurt AR(1) Nobs
+CRP 0.0941 0.1019 0.1409 3.2970 0.2496 228
+IC 0.4166 0.1403 0.5092 3.1725 0.7621 228
+RC 0.3225 0.1398 0.8731 3.5571 0.5854 228
+ER 0.0591 0.1555 -0.8294 4.4268 0.0900 228
+EXKURT BKM 0.7571 0.2840 0.4887 3.0378 0.7522 228
+FH 0.4302 0.3250 0.0241 1.4467 0.9250 228
+GMR 9.0972 12.5814 2.3413 11.0123 0.8818 228
+RV 0.0317 0.0519 7.3129 75.2277 0.6333 228
+SKEW BKM -0.8698 0.1978 0.2588 3.0325 0.6611 228
+SMIRK 0.1326 0.2522 0.1584 3.4828 0.3299 228
+VAR BKM 0.0474 0.0427 3.3066 18.0518 0.7880 228
+VRP 0.0157 0.0284 -5.0586 61.7528 0.1340 228
+VRP HAR 0.0459 0.0414 3.2330 17.3103 0.7887 228
+VRP DOW N -0.0136 0.0249 -7.5246 79.4665 0.5899 228
+VRP U P -0.0143 0.0244 -7.5439 78.4141 0.6219 228
+VRP DOW N,HAR 0.0016 0.0015 2.7589 13.2030 0.7708 228
+VRP U P,HAR 0.0007 0.0007 1.7649 7.6611 0.5894 228
+42
+
+Table II: Correlation Matrix
+This table reports the correlations among all predictive variables. CRP denotes the correlation risk premium. IC is the implied
+correlation. RC is the realized correlation. ER is the market excess return. EXKURT BKM is the risk-neutral kurtosis of Bakshi
+et al. (2003). FH is the risk-neutral riskiness measure of Leiss & Nax (2018). GMR is the generalized measure of riskiness of Bali
+et al. (2011). RV is the realized variance. SKEW BKM is the risk-neutral skewness of Bakshi et al. (2003). SMIRK is the option
+smirk. VAR BKM is the risk-neutral variance of Bakshi et al. (2003). VRP is the variance risk premium computed as the diﬀerence
+between the risk-neutral variance of Bakshi et al. (2003) and the most recent observation of the realized variance. VRP HAR denotes
+the variance risk premium based on the HAR–RV model. VRP DOW N is the downside variance risk premium. VRP U P is the
+upside variance risk premium. VRP DOW N,HAR is the downside variance risk premium based on the HAR–RV model. Finally,
+VRP U P,HAR is the upside variance risk premium based on the HAR–RV model. All data are sampled at the monthly frequency and
+relate to the S&P 500 index.
+CRP
+IC
+RC
+EXKURTBKM
+FH
+GMR
+SKEWBKM
+SMIRK
+VARBKM
+VRP
+VRPHAR
+VRPDOW N
+VRPU P
+VRPDOW N,HAR
+VRPU P,HAR
+CRP
+IC 0.37
+RC -0.36 0.74
+EXKURT BKM 0.20 0.06 -0.09
+FH -0.10 -0.48 -0.40 -0.17
+GMR 0.09 0.66 0.59 0.07 -0.68
+SKEW BKM -0.22 -0.24 -0.08 -0.92 0.20 -0.19
+SMIRK -0.06 0.31 0.35 -0.02 -0.22 0.36 -0.10
+
+CRP
+IC 0.37
+RC -0.36 0.74
+EXKURT BKM 0.20 0.06 -0.09
+FH -0.10 -0.48 -0.40 -0.17
+GMR 0.09 0.66 0.59 0.07 -0.68
+SKEW BKM -0.22 -0.24 -0.08 -0.92 0.20 -0.19
+SMIRK -0.06 0.31 0.35 -0.02 -0.22 0.36 -0.10
+VAR BKM -0.04 0.54 0.57 -0.38 -0.12 0.43 0.17 0.35
+VRP 0.40 0.24 -0.05 -0.03 -0.01 0.11 0.02 -0.14 -0.02
+VRP HAR -0.04 0.54 0.57 -0.38 -0.12 0.43 0.17 0.35 1.00 -0.01
+VRP DOW N 0.26 -0.30 -0.49 0.29 0.09 -0.29 -0.12 -0.36 -0.82 0.59 -0.81
+VRP U P 0.27 -0.29 -0.48 0.28 0.09 -0.26 -0.13 -0.36 -0.81 0.60 -0.80 0.98
+VRP DOW N,HAR 0.06 0.62 0.58 -0.31 -0.18 0.51 0.09 0.33 0.97 0.17 0.97 -0.68 -0.67
+VRP U P,HAR 0.18 0.44 0.31 -0.46 0.01 0.29 0.32 0.13 0.71 0.60 0.72 -0.24 -0.21 0.79
+43
+
+Table III: Return Predictability
+This table reports the regression results of monthly excess returns on a constant, which we denote by β0, and the lagged predictive
+variable(s). We report the t-statistics in parentheses. Statistical inferences are based on a bootstrapped distribution. The historical
+mean serves as naive benchmark. CRP denotes the correlation risk premium. EXKURT BKM is the risk-neutral kurtosis of Bakshi
+et al. (2003). FH is the risk-neutral riskiness measure of Leiss & Nax (2018). GMR is the generalized measure of riskiness of
+Bali et al. (2011). SKEW BKM is the risk-neutral skewness of Bakshi et al. (2003). SMIRK is the option smirk. VAR BKM is
+the risk-neutral variance of Bakshi et al. (2003). Finally, VRP is the variance risk premium computed as the diﬀerence between
+the risk-neutral variance of Bakshi et al. (2003) and the most recent observation of the realized variance. R2 and R2
+oos are the
+in-sample and out-of-sample R2, respectively. ∗, ∗∗, and ∗∗∗ indicate the signiﬁcance at the 10 %, 5 %, and 1 % signiﬁcance levels,
+respectively. The sample period extends from January 1996 to December 2014. All data are sampled at the monthly frequency and
+relate to the S&P 500 index.
+β0
+-0.032 -0.035 0.129** 0.004 -0.136 0.096** 0.056 -0.023 -0.119 -0.186 -0.219
+(-0.67) (-0.34) (2.16) (0.10) (-0.84) (2.40) (1.05) (-0.59) (-0.77) (-0.97) (-1.03)
+CRP 0.957*** 0.321 0.301 0.306
+(2.76) (0.85) (0.79) (0.80)
+EXKURT BKM 0.123 0.104 -0.138
+(0.96) (0.73) (-0.36)
+
+.219
+(-0.67) (-0.34) (2.16) (0.10) (-0.84) (2.40) (1.05) (-0.59) (-0.77) (-0.97) (-1.03)
+CRP 0.957*** 0.321 0.301 0.306
+(2.76) (0.85) (0.79) (0.80)
+EXKURT BKM 0.123 0.104 -0.138
+(0.96) (0.73) (-0.36)
+FH -0.164 -0.037 -0.040 -0.044
+(-1.49) (-0.25) (-0.27) (-0.29)
+GMR 0.006** 0.006 0.006 0.006
+(2.09) (1.34) (1.28) (1.27)
+SKEW BKM -0.224 -0.179 -0.351
+(-1.22) (-0.93) (-0.68)
+SMIRK -0.290** -0.357** -0.365** -0.370**
+(-2.06) (-2.34) (-2.38) (-2.40)
+VAR BKM 0.028 0.327 0.249 0.048
+(0.03) (0.31) (0.25) (0.04)
+VRP 5.176*** 4.015*** 4.032*** 3.991***
+(4.26) (2.94) (2.96) (2.92)
+R2 3.28*** 0.41 0.97 1.90* 0.66 1.84** 0.00 7.47*** 8.81*** 8.95*** 8.59***
+R2
+oos 2.81*** -1.22 -2.40 -10.29 -0.53 0.07 -5.41 5.50*** -23.14 -23.68 -25.42
+44
+
+Table IV: Variance Predictability
+This table reports the regression results of monthly realized variance on a constant, which we denote
+byγ0, the lagged predictive variable, and the lagged realized variance RV . We report the t-statistics
+in parentheses. Statistical inferences are based on a bootstrapped distribution. The forecast of
+a ﬁtted AR(1) model serves as naive benchmark. CRP denotes the correlation risk premium.
+EXKURT BKM is the risk-neutral kurtosis of Bakshi et al. (2003). FH is the risk-neutral riskiness
+measure of Leiss & Nax (2018). GMR is the generalized measure of riskiness of Bali et al. (2011).
+SKEW BKM is the risk-neutral skewness of Bakshi et al. (2003). SMIRK is the option smirk.
+VAR BKM is the risk-neutral variance of Bakshi et al. (2003). Finally, VRP is the variance risk
+premium computed as the diﬀerence between the risk-neutral variance of Bakshi et al. (2003) and the
+most recent observation of the realized variance. R2 and R2
+oos are the in-sample and out-of-sample
+R2, respectively. ∗, ∗∗, and ∗∗∗ indicate the signiﬁcance at the 10 %, 5 %, and 1 % signiﬁcance
+levels, respectively. The sample period extends from January 1996 to December 2014. All data are
+sampled at the monthly frequency and relate to the S&P 500 index.
+γ0 0.016*** 0.031*** 0.012** 0.011*** 0.035*** 0.010*** 0.002 0.002
+(3.80) (3.57) (2.43) (3.28) (2.78) (2.98) (0.49) (0.49)
+RV 0.612*** 0.596*** 0.633*** 0.631*** 0.621*** 0.585*** 0.374*** 0.750***
+
+γ0 0.016*** 0.031*** 0.012** 0.011*** 0.035*** 0.010*** 0.002 0.002
+(3.80) (3.57) (2.43) (3.28) (2.78) (2.98) (0.49) (0.49)
+RV 0.612*** 0.596*** 0.633*** 0.631*** 0.621*** 0.585*** 0.374*** 0.750***
+(11.51) (11.14) (12.20) (11.66) (12.01) (10.67) (4.06) (12.26)
+CRP -0.043
+(-1.59)
+EXKURTBKM -0.024**
+(-2.37)
+FH 0.000
+(-0.05)
+GMR 0.000
+(0.15)
+SKEWBKM 0.026*
+(1.91)
+SMIRK 0.027**
+(2.40)
+VARBKM 0.376***
+(3.37)
+VRP 0.376***
+(3.37)
+R2 40.80** 41.60** 40.13 40.14 41.09** 41.64** 43.03** 43.03**
+R2
+oos 3.18*** 3.34*** -1.41 -5.42 2.40*** 3.89*** 3.78*** 3.78***
+45
+
+Table V: Economic Value
+This table reports utility gains and Sharpe Ratios for each of the three scenarios. Scenario 1 assumes that the realized variance is
+unpredictable and that the forecasting variable [name in row] only predicts the excess returns. Scenario 2 assumes that the excess
+returns are unpredictable but that the variable [name in row] and the lagged realized variance predict the realized variance. Scenario
+3 implicitly assumes that the excess returns and the realized variance can be predicted by the forecasting variable [name in row],
+and in the latter case, by both the forecasting variable [name in row] and the lagged realized variance. The historical mean return,
+and the forecast of a ﬁtted AR(1) model for realized variance serve as naive benchmarks. ∆CER (1), ∆CER (2), and ∆CER (3) are
+the annualized utility gains relative to a naive strategy that assumes unpredictable excess returns and realized variance, achieved by
+following strategy 1, 2, and 3, respectively. Similarly, ∆SR(1), ∆SR(2), and ∆SR(3) are the annualized improvements in Sharpe
+Ratios achieved by following strategy 1, 2, and 3, respectively. ∗, ∗∗, and ∗∗∗ indicate the signiﬁcance at the 10 %, 5 %, and 1 %
+signiﬁcance levels, respectively. All data are sampled at the monthly frequency and relate to the S&P 500 index.
+Panel A:γ=3
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 5.46 -0.01 5.03 0.46** 0.13 0.39*
+EXKURTBKM 5.39 2.83 6.39 0.51*** 0.29* 0.50**
+FH 1.99 1.50 4.03 0.18 0.12* 0.30**
+
+to the S&P 500 index.
+Panel A:γ=3
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 5.46 -0.01 5.03 0.46** 0.13 0.39*
+EXKURTBKM 5.39 2.83 6.39 0.51*** 0.29* 0.50**
+FH 1.99 1.50 4.03 0.18 0.12* 0.30**
+GMR -3.77 4.67 2.63 -0.12 0.25*** 0.22*
+SKEWBKM 1.86 2.32 3.84 0.16 0.24* 0.30*
+SMIRK 2.96 2.33 3.21 0.30 0.25** 0.27
+VARBKM -7.28 6.39 -4.24 -0.42*** 0.38*** -0.19
+VRP -6.10 7.80 -2.60 -0.41* 0.51*** -0.09
+Panel B:γ=6
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 3.05 -4.27 2.29 0.45** -0.04 0.40*
+EXKURTBKM 3.92 2.42 4.90 0.63*** 0.38** 0.62***
+FH -0.05 -1.38 0.47 0.13 0.02 0.29*
+GMR -8.82 3.00 -2.66 -0.35** 0.21*** 0.11
+SKEWBKM 1.20 1.17 2.48 0.22 0.25** 0.41**
+SMIRK 2.07 0.80 2.26 0.38* 0.22* 0.36
+VARBKM -10.70 5.53 -5.54 -0.60*** 0.49*** -0.24
+VRP -8.49 5.46 -8.16 -0.60*** 0.59*** -0.36
+Panel C:γ=9
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 1.71 -5.26 0.96 0.40* -0.07 0.42*
+EXKURTBKM 2.82 2.11 3.34 0.67*** 0.40*** 0.63**
+FH -0.03 -1.87 -2.55 0.16 0.00 0.14
+GMR -6.87 1.97 -3.71 -0.36** 0.18*** 0.03
+SKEWBKM 0.58 0.87 0.74 0.20 0.24** 0.39*
+SMIRK 1.40 0.50 1.69 0.38* 0.18* 0.40*
+VARBKM -10.28 3.76 -4.09 -0.63*** 0.49*** -0.25
+VRP -8.15 3.72 -7.67 -0.63*** 0.63*** -0.42*
+Panel D:γ=12
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 1.25 -5.88 -0.14 0.40* -0.10 0.41
+EXKURTBKM 2.11 1.75 2.29 0.67*** 0.40*** 0.64**
+FH -0.05 -2.15 -3.87 0.16 -0.03 0.05
+GMR -5.59 1.47 -2.95 -0.37** 0.18*** 0.03
+SKEWBKM 0.44 0.50 -0.14 0.20 0.21** 0.38
+SMIRK 1.05 0.36 1.21 0.38* 0.17* 0.40*
+
+KM 2.11 1.75 2.29 0.67*** 0.40*** 0.64**
+FH -0.05 -2.15 -3.87 0.16 -0.03 0.05
+GMR -5.59 1.47 -2.95 -0.37** 0.18*** 0.03
+SKEWBKM 0.44 0.50 -0.14 0.20 0.21** 0.38
+SMIRK 1.05 0.36 1.21 0.38* 0.17* 0.40*
+VARBKM -8.37 2.80 -3.12 -0.63*** 0.49*** -0.25
+VRP -6.18 2.30 -6.73 -0.63*** 0.60*** -0.44*
+46
+
+Table VI: Out-of-Sample Analysis: Restriction
+This table reports the results of the out-of-sample analysis after imposing economically motivated
+restrictions. We report the MSE-F statistics in parenthesis. CRP denotes the correlation risk
+premium. EXKURT BKM is the risk-neutral kurtosis of Bakshi et al. (2003). FH is the risk-
+neutral riskiness measure of Leiss & Nax (2018). GMR is the generalized measure of riskiness of
+Bali et al. (2011). SKEW BKM is the risk-neutral skewness of Bakshi et al. (2003). SMIRK is
+the option smirk. VAR BKM is the risk-neutral variance of Bakshi et al. (2003). Finally, VRP is
+the variance risk premium computed as the diﬀerence between the risk-neutral variance of Bakshi
+et al. (2003) and the most recent observation of the realized variance. The historical mean return,
+and the forecast of a ﬁtted AR(1) model for realized variance serve as naive benchmarks. “(I)”
+denotes the imposition of the ﬁrst restriction, where we set the slope estimate in the out-of-sample
+analysis equal to zero, whenever its sign diﬀers from that of the in-sample analysis. “(II)” denotes
+the imposition of the second restriction, where we set the forecast equal to zero, whenever it is
+negative. “(I+II)” denotes the joint imposition of both restrictions. R2
+oos is the out-of-sample
+R2. ∗, ∗∗, and ∗∗∗ indicate statistical signiﬁcance at the 10 %, 5 %, and 1 % signiﬁcance levels,
+respectively. All data are sampled at the monthly frequency and relate to the S&P 500 index.
+
+f-sample
+R2. ∗, ∗∗, and ∗∗∗ indicate statistical signiﬁcance at the 10 %, 5 %, and 1 % signiﬁcance levels,
+respectively. All data are sampled at the monthly frequency and relate to the S&P 500 index.
+Panel A: Return Predictability
+CRP
+EXKURT BKM
+FH
+GMR
+SKEW BKM
+SMIRK
+VAR BKM
+VRP
+(I) R2
+oos 2.81*** -1.22 -2.70 -3.27 -0.53 0.07 -3.84 5.50***
+(4.83) (-2.02) (-4.39) (-5.30) (-0.87) (0.12) (-6.18) (9.73)
+(II) R2
+oos 2.69** 0.37 -1.40 -3.69 0.56 0.93 -3.39 4.43***
+(4.61) (0.62) (-2.31) (-5.94) (0.95) (1.57) (-5.48) (7.74)
+(I+II) R2
+oos 2.69** 0.37 -1.38 -3.27 0.56 0.93 -2.95 4.43***
+(4.61) (0.62) (-2.27) (-5.30) (0.95) (1.57) (-4.79) (7.74)
+Panel B: V ariance Predictability
+CRP
+EXKURT BKM
+FH
+GMR
+SKEW BKM
+SMIRK
+VAR BKM
+VRP
+(I) R2
+oos 3.28*** 3.34*** -1.82 -11.23 2.40** 3.89*** 3.78*** 3.78***
+(5.67) (5.77) (-2.98) (-16.87) (4.10) (6.76) (6.57) (6.57)
+(II) R2
+oos 3.18** 3.44*** -1.41 -5.42 2.40** 3.89*** 3.78*** 3.78**
+(5.48) (5.95) (-2.32) (-8.58) (4.10) (6.76) (6.57) (6.57)
+(I+II) R2
+oos 3.28** 3.44** -1.82 -11.23 2.40** 3.89*** 3.78** 3.78**
+(5.67) (5.95) (-2.98) (-16.87) (4.10) (6.76) (6.57) (6.57)
+47
+
+Table VII: Economic Value: Restriction I
+This table reports utility gains and Sharpe Ratios for each of the three scenarios, after imposing the ﬁrst economically motivated
+restriction following Campbell & Thompson (2008). Scenario 1 assumes that the realized variance is unpredictable and that the
+forecasting variable [name in row] only predicts the excess returns. Scenario 2 assumes that the excess returns are unpredictable but
+that the variable [name in row] predicts the variance of market returns. Scenario 3 implicitly assumes that the excess returns and
+the realized variance can be predicted by the forecasting variable [name in row]. The historical mean return, and the forecast of a
+ﬁtted AR(1) model for realized variance serve as naive benchmarks. ∆CER (1), ∆CER (2), and ∆CER (3) are the annualized utility
+gains relative to a strategy that assumes unpredictable excess returns and realized variance, achieved by following strategy 1, 2, and
+3, respectively. Similarly, ∆SR(1), ∆SR(2), and ∆SR(3) are the annualized improvements in Sharpe Ratios achieved by following
+strategy 1, 2, and 3, respectively. ∗, ∗∗, and ∗∗∗ indicate the signiﬁcance at the 10 %, 5 %, and 1 % signiﬁcance levels, respectively.
+All data are sampled at the monthly frequency and relate to the S&P 500 index.
+Panel A:γ=3
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 5.46 6.12 6.87 0.46** 0.54*** 0.60***
+EXKURTBKM 5.39 6.35 8.01 0.51*** 0.61*** 0.76***
+FH 2.08 4.27 6.72 0.18 0.30*** 0.52***
+
+P 500 index.
+Panel A:γ=3
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 5.46 6.12 6.87 0.46** 0.54*** 0.60***
+EXKURTBKM 5.39 6.35 8.01 0.51*** 0.61*** 0.76***
+FH 2.08 4.27 6.72 0.18 0.30*** 0.52***
+GMR -5.94 5.55 3.84 -0.21 0.32*** 0.30**
+SKEWBKM 1.86 6.26 6.88 0.16 0.57*** 0.63***
+SMIRK 2.96 5.00 4.88 0.30 0.55*** 0.52***
+VARBKM -8.81 6.96 -1.53 -0.48*** 0.52*** -0.10
+VRP -6.10 6.96 -4.33 -0.41* 0.55*** -0.35*
+Panel B:γ=6
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 3.05 3.91 5.11 0.45** 0.44*** 0.69***
+EXKURTBKM 3.92 4.58 6.46 0.63*** 0.59*** 0.90***
+FH 0.00 1.64 3.46 0.13 0.19 0.49**
+GMR -9.93 3.32 0.30 -0.41*** 0.29*** 0.16
+SKEWBKM 1.20 4.11 5.60 0.22 0.53*** 0.80***
+SMIRK 2.07 2.91 3.14 0.38* 0.51*** 0.57**
+VARBKM -11.50 4.88 -0.85 -0.63*** 0.66*** -0.08
+VRP -8.49 4.88 -2.80 -0.60*** 0.68*** -0.37*
+Panel C:γ=9
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 1.71 2.61 3.33 0.40* 0.35*** 0.64**
+EXKURTBKM 2.82 3.11 5.17 0.67*** 0.52*** 0.94***
+FH 0.00 0.36 1.07 0.16 0.10 0.34
+GMR -7.61 2.23 0.14 -0.42*** 0.29*** 0.16
+SKEWBKM 0.58 2.84 4.03 0.20 0.47*** 0.80***
+SMIRK 1.40 1.96 2.17 0.38* 0.49*** 0.58***
+VARBKM -10.81 3.26 -0.58 -0.66*** 0.66*** -0.08
+VRP -8.15 3.26 -1.88 -0.63*** 0.68*** -0.37*
+Panel D:γ=12
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 1.25 1.96 2.62 0.40* 0.30*** 0.66**
+EXKURTBKM 2.11 2.35 4.05 0.67*** 0.47*** 0.93***
+FH -0.03 0.22 -0.15 0.16 0.07 0.26
+GMR -6.15 1.68 0.08 -0.42*** 0.29*** 0.16
+SKEWBKM 0.44 2.17 3.14 0.20 0.44*** 0.80***
+
+.96 2.62 0.40* 0.30*** 0.66**
+EXKURTBKM 2.11 2.35 4.05 0.67*** 0.47*** 0.93***
+FH -0.03 0.22 -0.15 0.16 0.07 0.26
+GMR -6.15 1.68 0.08 -0.42*** 0.29*** 0.16
+SKEWBKM 0.44 2.17 3.14 0.20 0.44*** 0.80***
+SMIRK 1.05 1.47 1.63 0.38* 0.49*** 0.58***
+VARBKM -8.77 2.44 -0.44 -0.66*** 0.66*** -0.08
+VRP -6.18 2.44 -1.42 -0.63*** 0.68*** -0.37*
+48
+
+Table VIII: Economic Value: Restriction II
+This table reports utility gains and Sharpe Ratios for each of the three scenarios, after imposing the second economically motivated
+restriction following Campbell & Thompson (2008). Scenario 1 assumes that the realized variance is unpredictable and that the
+forecasting variable [name in row] only predicts the excess returns. Scenario 2 assumes that the excess returns are unpredictable but
+that the variable [name in row] predicts the variance of market returns. Scenario 3 implicitly assumes that the excess returns and
+the realized variance can be predicted by the forecasting variable [name in row]. The historical mean return, and the forecast of a
+ﬁtted AR(1) model for realized variance serve as naive benchmarks. ∆CER (1), ∆CER (2), and ∆CER (3) are the annualized utility
+gains relative to a strategy that assumes unpredictable excess returns and realized variance, achieved by following strategy 1, 2, and
+3, respectively. Similarly, ∆SR(1), ∆SR(2), and ∆SR(3) are the annualized improvements in Sharpe Ratios achieved by following
+strategy 1, 2, and 3, respectively. ∗, ∗∗, and ∗∗∗ indicate the signiﬁcance at the 10 %, 5 %, and 1 % signiﬁcance levels, respectively.
+All data are sampled at the monthly frequency and relate to the S&P 500 index.
+Panel A:γ=3
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 5.46 6.22 6.88 0.46** 0.55*** 0.61***
+EXKURTBKM 5.39 6.35 8.01 0.51*** 0.61*** 0.76***
+FH 1.99 4.68 7.11 0.18 0.32*** 0.56***
+
+P 500 index.
+Panel A:γ=3
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 5.46 6.22 6.88 0.46** 0.55*** 0.61***
+EXKURTBKM 5.39 6.35 8.01 0.51*** 0.61*** 0.76***
+FH 1.99 4.68 7.11 0.18 0.32*** 0.56***
+GMR -3.77 5.55 4.32 -0.12 0.32*** 0.33**
+SKEWBKM 1.86 6.26 6.88 0.16 0.57*** 0.63***
+SMIRK 2.96 5.00 4.88 0.30 0.55*** 0.52***
+VARBKM -7.28 6.96 -1.48 -0.42*** 0.53*** -0.10
+VRP -6.10 6.96 -4.33 -0.41* 0.55*** -0.35*
+Panel B:γ=6
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 3.05 3.81 5.02 0.45** 0.43*** 0.69***
+EXKURTBKM 3.92 4.58 6.46 0.63*** 0.59*** 0.90***
+FH -0.05 2.71 3.75 0.13 0.25*** 0.52**
+GMR -8.82 3.32 0.54 -0.35** 0.29*** 0.18
+SKEWBKM 1.20 4.11 5.60 0.22 0.53*** 0.80***
+SMIRK 2.07 2.91 3.14 0.38* 0.51*** 0.57**
+VARBKM -10.70 4.88 -0.82 -0.60*** 0.67*** -0.07
+VRP -8.49 4.88 -2.80 -0.60*** 0.68*** -0.37*
+Panel C:γ=9
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 1.71 2.54 3.23 0.40* 0.34*** 0.63**
+EXKURTBKM 2.82 3.11 5.17 0.67*** 0.52*** 0.94***
+FH -0.03 1.82 2.42 0.16 0.23*** 0.51**
+GMR -6.87 2.23 0.31 -0.36** 0.29*** 0.18
+SKEWBKM 0.58 2.84 4.03 0.20 0.47*** 0.80***
+SMIRK 1.40 1.96 2.17 0.38* 0.49*** 0.58***
+VARBKM -10.28 3.26 -0.57 -0.63*** 0.67*** -0.07
+VRP -8.15 3.26 -1.88 -0.63*** 0.68*** -0.37*
+Panel D:γ=12
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 1.25 1.91 2.55 0.40* 0.29*** 0.65**
+EXKURTBKM 2.11 2.35 4.05 0.67*** 0.47*** 0.93***
+FH -0.05 1.37 1.76 0.16 0.21*** 0.51**
+GMR -5.59 1.68 0.21 -0.37** 0.29*** 0.18
+
+) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 1.25 1.91 2.55 0.40* 0.29*** 0.65**
+EXKURTBKM 2.11 2.35 4.05 0.67*** 0.47*** 0.93***
+FH -0.05 1.37 1.76 0.16 0.21*** 0.51**
+GMR -5.59 1.68 0.21 -0.37** 0.29*** 0.18
+SKEWBKM 0.44 2.17 3.14 0.20 0.44*** 0.80***
+SMIRK 1.05 1.47 1.63 0.38* 0.49*** 0.58***
+VARBKM -8.37 2.44 -0.43 -0.63*** 0.67*** -0.07
+VRP -6.18 2.44 -1.42 -0.63*** 0.68*** -0.37*
+49
+
+Table IX: Economic Value: Restrictions I and II
+This table reports utility gains and Sharpe Ratios for each of the three scenarios, after imposing both economically motivated
+restrictions following Campbell & Thompson (2008). Scenario 1 assumes that the realized variance is unpredictable and that the
+forecasting variable [name in row] only predicts the excess returns. Scenario 2 assumes that the excess returns are unpredictable but
+that the variable [name in row] predicts the variance of market returns. Scenario 3 implicitly assumes that the excess returns and
+the realized variance can be predicted by the forecasting variable [name in row]. The historical mean return, and the forecast of a
+ﬁtted AR(1) model for realized variance serve as naive benchmarks. ∆CER (1), ∆CER (2), and ∆CER (3) are the annualized utility
+gains relative to a strategy that assumes unpredictable excess returns and realized variance, achieved by following strategy 1, 2, and
+3, respectively. Similarly, ∆SR(1), ∆SR(2), and ∆SR(3) are the annualized improvements in Sharpe Ratios achieved by following
+strategy 1, 2, and 3, respectively. ∗, ∗∗, and ∗∗∗ indicate the signiﬁcance at the 10 %, 5 %, and 1 % signiﬁcance levels, respectively.
+All data are sampled at the monthly frequency and relate to the S&P 500 index.
+Panel A:γ=3
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 5.46 6.12 6.87 0.46** 0.54*** 0.60***
+EXKURTBKM 5.39 6.35 8.01 0.51*** 0.61*** 0.76***
+FH 2.08 4.27 6.72 0.18 0.30*** 0.52***
+
+P 500 index.
+Panel A:γ=3
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 5.46 6.12 6.87 0.46** 0.54*** 0.60***
+EXKURTBKM 5.39 6.35 8.01 0.51*** 0.61*** 0.76***
+FH 2.08 4.27 6.72 0.18 0.30*** 0.52***
+GMR -5.94 5.55 3.84 -0.21 0.32*** 0.30**
+SKEWBKM 1.86 6.26 6.88 0.16 0.57*** 0.63***
+SMIRK 2.96 5.00 4.88 0.30 0.55*** 0.52***
+VARBKM -8.81 6.96 -1.53 -0.48*** 0.52*** -0.10
+VRP -6.10 6.96 -4.33 -0.41* 0.55*** -0.35*
+Panel B:γ=6
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 3.05 3.91 5.11 0.45** 0.44*** 0.69***
+EXKURTBKM 3.92 4.58 6.46 0.63*** 0.59*** 0.90***
+FH 0.00 1.64 3.46 0.13 0.19 0.49**
+GMR -9.93 3.32 0.30 -0.41*** 0.29*** 0.16
+SKEWBKM 1.20 4.11 5.60 0.22 0.53*** 0.80***
+SMIRK 2.07 2.91 3.14 0.38* 0.51*** 0.57**
+VARBKM -11.50 4.88 -0.85 -0.63*** 0.66*** -0.08
+VRP -8.49 4.88 -2.80 -0.60*** 0.68*** -0.37*
+Panel C:γ=9
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 1.71 2.61 3.33 0.40* 0.35*** 0.64**
+EXKURTBKM 2.82 3.11 5.17 0.67*** 0.52*** 0.94***
+FH 0.00 0.36 1.07 0.16 0.10 0.34
+GMR -7.61 2.23 0.14 -0.42*** 0.29*** 0.16
+SKEWBKM 0.58 2.84 4.03 0.20 0.47*** 0.80***
+SMIRK 1.40 1.96 2.17 0.38* 0.49*** 0.58***
+VARBKM -10.81 3.26 -0.58 -0.66*** 0.66*** -0.08
+VRP -8.15 3.26 -1.88 -0.63*** 0.68*** -0.37*
+Panel D:γ=12
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 1.25 1.96 2.62 0.40* 0.30*** 0.66**
+EXKURTBKM 2.11 2.35 4.05 0.67*** 0.47*** 0.93***
+FH -0.03 0.22 -0.15 0.16 0.07 0.26
+GMR -6.15 1.68 0.08 -0.42*** 0.29*** 0.16
+SKEWBKM 0.44 2.17 3.14 0.20 0.44*** 0.80***
+
+.96 2.62 0.40* 0.30*** 0.66**
+EXKURTBKM 2.11 2.35 4.05 0.67*** 0.47*** 0.93***
+FH -0.03 0.22 -0.15 0.16 0.07 0.26
+GMR -6.15 1.68 0.08 -0.42*** 0.29*** 0.16
+SKEWBKM 0.44 2.17 3.14 0.20 0.44*** 0.80***
+SMIRK 1.05 1.47 1.63 0.38* 0.49*** 0.58***
+VARBKM -8.77 2.44 -0.44 -0.66*** 0.66*** -0.08
+VRP -6.18 2.44 -1.42 -0.63*** 0.68*** -0.37*
+50
+
+Table X: Out-of-Sample Analysis: Forecast Combinations
+This table reports the results of the out-of-sample analysis after the use of forecast combinations.
+The mean forecast combination [MeanFC], the median forecast combination [MedianFC], and the
+trimmed mean forecast combination [TrMeanFC] are used as alternative speciﬁcations. We report
+the MSE-F statistics in parenthesis. The historical mean return, and the forecast of a ﬁtted AR(1)
+model for realized variance serve as naive benchmarks. Six forecasting variables are used. CRP
+denotes the correlation risk premium. EXKURT BKM is the risk-neutral kurtosis of Bakshi et al.
+(2003). FH is the risk-neutral riskiness measure of Leiss & Nax (2018). GMR is the generalized
+measure of riskiness of Bali et al. (2011). SKEW BKM is the risk-neutral skewness of Bakshi
+et al. (2003). SMIRK is the option smirk. VAR BKM is the risk-neutral variance of Bakshi
+et al. (2003). Finally, VRP is the variance risk premium computed as the diﬀerence between
+the risk-neutral variance of Bakshi et al. (2003) and the most recent observation of the realized
+variance. R2
+oos is the out-of-sample R2. ∗, ∗∗, and ∗∗∗ indicate statistical signiﬁcance at the 10 %,
+5 %, and 1 % signiﬁcance levels, respectively. All data are sampled at the monthly frequency and
+relate to the S&P 500 index.
+Panel A: Return Predictability
+MeanFC
+MedianFC
+TrMeanFC
+R2
+oos 1.76*** 0.91** 1.36***
+(2.99) (1.54) (2.31)
+Panel B: V ariance Predictability
+MeanFC
+MedianFC
+TrMeanFC
+R2
+
+d
+relate to the S&P 500 index.
+Panel A: Return Predictability
+MeanFC
+MedianFC
+TrMeanFC
+R2
+oos 1.76*** 0.91** 1.36***
+(2.99) (1.54) (2.31)
+Panel B: V ariance Predictability
+MeanFC
+MedianFC
+TrMeanFC
+R2
+oos 2.50*** 4.12*** 3.06***
+(4.28) (7.18) (5.27)
+51
+
+Table XI: Economic Value: Forecast Combinations
+This table reports utility gains and Sharpe Ratios for each of the three scenarios based on forecast
+combinations. Scenario 1 assumes that realized variance is unpredictable and that the forecast
+combination only predicts excess returns. Scenario 2 assumes that excess returns are unpredictable
+but that the forecast combination predicts the variance of market returns. Scenario 3 implicitly
+assumes that excess returns and variance can be predicted by the forecast combination. The
+historical mean return and the forecast of a ﬁtted AR(1) model for realized variance serve as
+naive benchmarks. ∆CER (1), ∆CER (2), and ∆CER (3) are the annualized utility gains relative to
+a strategy that assumes unpredictable excess returns and realized variance, achieved by following
+strategy 1, 2, and 3, respectively. Similarly, ∆SR(1), ∆SR(2), and ∆SR(3) are the annualized
+improvements in Sharpe Ratios achieved by following strategy 1, 2, and 3, respectively. ∗, ∗∗, and
+∗∗∗ indicate the signiﬁcance at the 10 %, 5 %, and 1 % signiﬁcance levels, respectively. All data
+are sampled at the monthly frequency and relate to the S&P 500 index.
+Panel A: Mean F orecast Combination
+∆CER (1) ∆CER (2) ∆CER (3) ∆SR(1) ∆SR(2) ∆SR(3)
+γ = 3 1.21 6.07 5.80 0.11 0.50*** 0.50***
+γ = 6 0.83 3.76 3.76 0.14 0.55*** 0.60***
+γ = 9 0.55 2.52 2.59 0.14 0.54*** 0.62***
+γ = 12 0.41 1.89 1.94 0.14 0.54*** 0.62***
+Panel B: Median F orecast Combination
+
+.21 6.07 5.80 0.11 0.50*** 0.50***
+γ = 6 0.83 3.76 3.76 0.14 0.55*** 0.60***
+γ = 9 0.55 2.52 2.59 0.14 0.54*** 0.62***
+γ = 12 0.41 1.89 1.94 0.14 0.54*** 0.62***
+Panel B: Median F orecast Combination
+∆CER (1) ∆CER (2) ∆CER (3) ∆SR(1) ∆SR(2) ∆SR(3)
+γ = 3 2.00 6.08 6.22 0.18 0.54*** 0.57***
+γ = 6 0.57 3.68 3.85 0.10 0.58*** 0.64***
+γ = 9 0.38 2.46 2.62 0.10 0.57*** 0.65***
+γ = 12 0.28 1.85 1.96 0.10 0.57*** 0.65***
+Panel C: T rimmed Mean F orecast Combination
+∆CER (1) ∆CER (2) ∆CER (3) ∆SR(1) ∆SR(2) ∆SR(3)
+γ = 3 1.63 6.05 5.94 0.14 0.52*** 0.52***
+γ = 6 0.69 3.69 3.80 0.12 0.56*** 0.62***
+γ = 9 0.46 2.47 2.56 0.12 0.56*** 0.62***
+γ = 12 0.34 1.86 1.92 0.12 0.56*** 0.62***
+52
+
+Table XII: Predictability of the Sharpe Ratio
+This table reports the regression results of monthly Sharpe Ratios on a constant, which we denote by ϕ0, and the lagged predictive
+variable(s). We report the t-statistics in parentheses. Statistical inferences are based on a bootstrapped distribution. A ﬁtted AR(1)
+model serves as naive benchmark. CRP denotes the correlation risk premium. EXKURT BKM is the risk-neutral kurtosis of
+Bakshi et al. (2003). FH is the risk-neutral riskiness measure of Leiss & Nax (2018). GMR is the generalized measure of riskiness
+of Bali et al. (2011). SKEW BKM is the risk-neutral skewness of Bakshi et al. (2003). SMIRK is the option smirk. VAR BKM
+is the risk-neutral variance of Bakshi et al. (2003). Finally, VRP is the variance risk premium computed as the diﬀerence between
+the risk-neutral variance of Bakshi et al. (2003) and the most recent observation of the realized variance. R2 and R2
+oos are the
+in-sample and out-of-sample R2, respectively. ∗, ∗∗, and ∗∗∗ indicate the signiﬁcance at the 10 %, 5 %, and 1 % signiﬁcance levels,
+respectively. The sample period extends from January 1996 to December 2014. All data are sampled at the monthly frequency and
+relate to the S&P 500 index.
+ϕ0 0.445 0.076 1.381*** 0.650** -0.776 1.092*** 1.005*** 0.669*** 0.040 -0.563 -0.972
+(1.53) (0.12) (3.87) (2.46) (-0.80) (4.50) (3.12) (2.74) (0.04) (-0.47) (-0.74)
+CRP 5.084** 2.983 2.772 2.829
+(2.43) (1.27) (1.18) (1.20)
+EXKURT BKM 1.125 0.742 -1.711
+
+** 0.669*** 0.040 -0.563 -0.972
+(1.53) (0.12) (3.87) (2.46) (-0.80) (4.50) (3.12) (2.74) (0.04) (-0.47) (-0.74)
+CRP 5.084** 2.983 2.772 2.829
+(2.43) (1.27) (1.18) (1.20)
+EXKURT BKM 1.125 0.742 -1.711
+(1.46) (0.84) (-0.73)
+FH -1.059 -0.319 -0.344 -0.392
+(-1.60) (-0.34) (-0.37) (-0.42)
+GMR 0.030* 0.032 0.030 0.029
+(1.77) (1.17) (1.08) (1.07)
+SKEW BKM -1.958* -1.424 -3.556
+(-1.79) (-1.20) (-1.12)
+SMIRK -1.262 -1.708* -1.781* -1.846*
+(-1.48) (-1.81) (-1.88) (-1.94)
+VAR BKM -1.710 -0.268 -0.609 -3.091
+(-0.34) (-0.04) (-0.10) (-0.44)
+VRP 16.265** 8.439 8.703 8.198
+(2.17) (1.00) (1.03) (0.97)
+R2 2.56** 0.94 1.13 1.38* 1.40* 0.97 0.05 2.04** 3.30* 3.63** 3.42*
+R2
+oos 2.99** -0.50 -0.11 -1.84 0.96 0.24 -0.45 1.54* -14.01 -12.82 -14.81
+53
+
+Predicting the Equity Market with Option-Implied
+Variables
+Fabian Hollstein†, Marcel Prokopczuk †,‡, Bj¨ orn Tharann†, and Chardin
+Wese Simen‡
+Online Appendix
+JEL classiﬁcation: G10, G11, G17
+Keywords: Equity Premium, Option-Implied Information, Portfolio Choice,
+aaaaaaaaaiaaaPredictability, Timing Strategies
+†School of Economics and Management, Leibniz University Hannover, Koenigsworther Platz 1, 30167
+Hannover, Germany.
+‡ICMA Centre, Henley Business School, University of Reading, Reading, RG6 6BA, UK.
+
+Table A1: Economic Value with Turnover and Transaction Costs
+This table reports the turnover, the utility gains, and the Sharpe Ratios for each of the three
+scenarios. Scenario 1 assumes that the realized variance is unpredictable and that the forecasting
+variable [name in column] only predicts the excess returns. Scenario 2 assumes that the excess
+returns are unpredictable but that the variable [name in column] and the lagged realized variance
+predict the realized variance. Scenario 3 implicitly assumes that the excess returns and the realized
+variance can be predicted by the forecasting variable [name in column], and in the latter case, by
+the forecasting variable [name in column] and the lagged realized variance. The historical mean
+return, and the forecast of a ﬁtted AR(1) model for realized variance serve as naive benchmarks.
+Turnover abs is the monthly absolute value of the turnover for the naive strategy. Turnover (i)
+rel
+represents the monthly relative turnover of strategy i related to the benchmark. ∆CER (1),
+∆CER (2), and ∆CER (3) are the annualized utility gains relative to a strategy that assumes
+unpredictable excess returns and realized variance, achieved by following strategy 1, 2, and 3,
+respectively. Similarly, ∆SR(1), ∆SR(2), and ∆SR(3) are the annualized improvements in Sharpe
+Ratios achieved by following strategy 1, 2, and 3, respectively. ∗, ∗∗, and ∗∗∗ indicate the signiﬁcance
+at the 10 %, 5 %, and 1 % signiﬁcance levels, respectively.
+
+e annualized improvements in Sharpe
+Ratios achieved by following strategy 1, 2, and 3, respectively. ∗, ∗∗, and ∗∗∗ indicate the signiﬁcance
+at the 10 %, 5 %, and 1 % signiﬁcance levels, respectively. All data are sampled at the monthly
+frequency and relate to the S&P 500 index.
+Panel A:γ = 3
+CRP EXKURT BKM FH GMR SKEW BKM SMIRK VARBKM VRP
+Turnoverabs 0.0448 0.0448 0.0448 0.0448 0.0448 0.0448 0.0448 0.0448
+Turnover(1)
+rel 12.1906 5.4513 4.5365 3.0830 5.5545 8.9341 2.2193 9.6821
+Turnover(2)
+rel 4.8831 5.5580 1.2842 2.0465 2.9157 2.7424 2.7127 3.9283
+Turnover(3)
+rel 14.6331 8.2202 4.1985 2.0576 6.6146 10.9321 3.4473 11.5826
+∆CER(1) 2.48 4.19 1.03 -4.31 0.64 0.85 -7.62 -8.46
+∆CER(2) -1.03 1.60 1.43 4.39 1.81 1.87 5.94 7.04
+∆CER(3) 1.38 4.46 3.17 2.36 2.33 0.55 -4.91 -5.47
+∆SR(1) 0.21 0.39** 0.12 -0.14 0.06 0.05 -0.43*** -0.57***
+∆SR(2) 0.06 0.20 0.12* 0.24*** 0.21 0.21** 0.36*** 0.47***
+∆SR(3) 0.13 0.36* 0.26** 0.22* 0.20 0.06 -0.22 -0.25
+Panel B:γ = 6
+CRP EXKURT BKM FH GMR SKEW BKM SMIRK VARBKM VRP
+Turnoverabs 0.0247 0.0247 0.0247 0.0247 0.0247 0.0247 0.0247 0.0247
+Turnover(1)
+rel 15.9051 7.0084 5.7696 5.5303 7.0350 9.3238 4.2300 12.5610
+Turnover(2)
+rel 10.6311 10.8603 2.2327 2.5870 6.8986 4.7041 5.8114 9.8254
+Turnover(3)
+rel 25.8225 16.2198 8.4137 5.2987 13.7024 18.2632 5.2006 18.7912
+∆CER(1) 0.88 3.03 -0.79 -9.52 0.30 0.85 -11.25 -10.32
+∆CER(2) -5.70 0.95 -1.58 2.76 0.29 0.26 4.83 4.18
+∆CER(3) -1.36 2.62 -0.68 -3.30 0.64 -0.28 -6.18 -10.91
+
+37 5.2987 13.7024 18.2632 5.2006 18.7912
+∆CER(1) 0.88 3.03 -0.79 -9.52 0.30 0.85 -11.25 -10.32
+∆CER(2) -5.70 0.95 -1.58 2.76 0.29 0.26 4.83 4.18
+∆CER(3) -1.36 2.62 -0.68 -3.30 0.64 -0.28 -6.18 -10.91
+∆SR(1) 0.18 0.49*** 0.07 -0.38*** 0.10 0.10 -0.61*** -0.73***
+∆SR(2) -0.14 0.25 0.02 0.21*** 0.20* 0.16 0.44*** 0.49***
+∆SR(3) 0.12 0.41* 0.22 0.08 0.27 0.06 -0.28 -0.54**
+1
+
+Table A1: Economic Value with Turnover and Transaction Costs
+(continued)
+Panel C:γ = 9
+CRP EXKURT BKM FH GMR SKEW BKM SMIRK VARBKM VRP
+Turnoverabs 0.0151 0.0151 0.0151 0.0151 0.0151 0.0151 0.0151 0.0151
+Turnover(1)
+rel 18.4886 8.8266 7.1716 6.7321 9.2375 10.2124 5.7328 15.0938
+Turnover(2)
+rel 15.6516 16.8364 3.4586 2.6537 10.1848 5.1486 6.6592 17.8674
+Turnover(3)
+rel 36.6566 26.1824 11.1854 7.8807 20.6825 24.7431 5.7841 22.0822
+∆CER(1) 0.15 2.11 -0.62 -7.43 -0.18 0.57 -10.81 -9.58
+∆CER(2) -6.59 0.70 -2.11 1.82 0.03 0.13 3.25 2.20
+∆CER(3) -2.17 1.01 -3.55 -4.35 -1.03 -0.41 -4.53 -9.70
+∆SR(1) 0.13 0.50*** 0.08 -0.40*** 0.07 0.10 -0.65*** -0.74***
+∆SR(2) -0.18 0.25* -0.01 0.18*** 0.18* 0.14 0.44*** 0.49***
+∆SR(3) 0.14 0.39 0.07 -0.01 0.22 0.10 -0.29 -0.59***
+Panel D:γ = 12
+CRP EXKURT BKM FH GMR SKEW BKM SMIRK VARBKM VRP
+Turnoverabs 0.0108 0.0108 0.0108 0.0108 0.0108 0.0108 0.0108 0.0108
+Turnover(1)
+rel 19.5157 9.1852 7.4131 7.4079 10.0488 10.6805 6.4946 15.8094
+Turnover(2)
+rel 18.2998 21.0369 4.5438 2.6821 12.2949 5.3345 6.8723 24.3221
+Turnover(3)
+rel 45.3856 34.0648 12.6527 9.0251 25.9198 27.6275 6.0582 23.5223
+∆CER(1) 0.07 1.58 -0.49 -6.05 -0.17 0.43 -8.86 -7.25
+∆CER(2) -7.04 0.49 -2.40 1.36 -0.24 0.08 2.43 0.77
+∆CER(3) -2.90 0.09 -4.75 -3.49 -1.78 -0.48 -3.45 -8.30
+∆SR(1) 0.12 0.50*** 0.08 -0.41*** 0.07 0.10 -0.65*** -0.75***
+∆SR(2) -0.21 0.25* -0.04 0.18*** 0.14 0.13 0.44*** 0.43**
+∆SR(3) 0.11 0.38 -0.01 -0.01 0.21 0.09 -0.29 -0.59***
+2
+
+Table A2: Out-of-Sample Analysis: Restriction – Frequencies
+This table reports the absolute frequency of how often the economically motivated restrictions
+imposed are binding in the out-of-sample analysis, shown in Table VI. Panel A shows the frequency
+for each individual variable, predicting the next month’s excess return. Panel B shows the frequency
+for each individual variable as well as lagged realized variance, predicting the next month’s realized
+variance. CRP denotes the correlation risk premium. EXKURT BKM is the risk-neutral kurtosis
+of Bakshi et al. (2003). FH is the risk-neutral riskiness measure of Leiss & Nax (2018). GMR is
+the generalized measure of riskiness of Bali et al. (2011). SKEW BKM is the risk-neutral skewness
+of Bakshi et al. (2003). SMIRK is the option smirk. VAR BKM is the risk-neutral variance of
+Bakshi et al. (2003). Finally, VRP is the variance risk premium computed as the diﬀerence
+between the risk-neutral variance of Bakshi et al. (2003) and the most recent observation of the
+realized variance. The historical mean return, and the forecast of a ﬁtted AR(1) model for realized
+variance serve as naive benchmarks. “(I)” denotes the imposition of the ﬁrst restriction, where we
+set the slope estimate in the out-of-sample analysis equal to zero, whenever its sign diﬀers from
+that of the in-sample analysis. “(II)” denotes the imposition of the second restriction, where we
+set the forecast equal to zero, whenever it is negative.
+
+equal to zero, whenever its sign diﬀers from
+that of the in-sample analysis. “(II)” denotes the imposition of the second restriction, where we
+set the forecast equal to zero, whenever it is negative. “(I+II)” denotes the joint imposition of both
+restrictions. “(I+II) (I)” (“(I+II) (II)”) refers to the frequency of the ﬁrst (second) restriction in
+the case of the joint imposition of both restrictions. All data are sampled at the monthly frequency
+and relate to the S&P 500 index.
+Panel A: Return Predictability
+CRP
+EXKURT BKM
+FH
+GMR
+SKEW BKM
+SMIRK
+VAR BKM
+VRP
+(I) 0 0 12 8 0 0 35 0
+(II) 53 32 8 7 29 62 56 77
+(I+II) (I) 0 0 12 8 0 0 35 0
+(I+II) (II) 53 32 9 0 29 62 50 77
+Panel B: V ariance Predictability
+CRP
+EXKURT BKM
+FH
+GMR
+SKEW BKM
+SMIRK
+VAR BKM
+VRP
+(I) 75 0 76 3 0 0 0 0
+(II) 0 3 0 0 0 0 0 0
+(I+II) (I) 75 0 76 3 0 0 0 0
+(I+II) (II) 0 3 0 0 0 0 0 0
+Lagged Realized Variance
+(I) 0 0 0 0 0 0 0 0
+(II) - - - - - - - -
+(I+II) (I) 0 0 0 0 0 0 0 0
+(I+II) (II) - - - - - - - -
+3
+
+Table A3: Return and Variance Predictability of VRP Speciﬁcations
+Panel A of this table reports the regression results of monthly excess returns on a constant, which
+we denote by β0, and the lagged predictive variable. Panel B reports the regression results of
+monthly realized variance on a constant, which we denote by γ0, the lagged predictive variable,
+and the lagged realized variance. Statistical inferences are based on a bootstrapped distribution.
+The historical mean return, and the forecast of a ﬁtted AR(1) model for realized variance serve
+as naive benchmarks. VRP HAR denotes the variance risk premium based on the HAR–RV model.
+VRP DOW N is the downside variance risk premium. VRP U P is the upside variance risk premium.
+VRP DOW N,HAR is the downside variance risk premium based on the HAR–RV model. Finally,
+VRP U P,HAR is the upside variance risk premium based on the HAR–RV model. R2 and R2
+oos are
+the in-sample and out-of-sample R2, respectively. We report the t-statistics in parentheses. ∗, ∗∗,
+and ∗∗∗ indicate the signiﬁcance at the 10 %, 5 %, and 1 % signiﬁcance levels, respectively. The
+sample period extends from January 1996 to December 2014. All data are sampled at the monthly
+frequency and relate to the S&P 500 index.
+Panel A: Return Predictability
+VRP HAR
+VRP DOW N
+VRP U P
+VRP DOW N,HAR
+VRP U P,HAR
+R2 0.00 2.23** 2.65** 0.38 2.05**
+R2
+oos -5.37 -1.13 -2.38 -4.10 -1.25
+t−stat (0.10) (2.26) (2.47) (0.93) (2.17)
+Panel B: V ariance Predictability
+VRP HAR
+VRP DOW N
+
+VRP U P
+VRP DOW N,HAR
+VRP U P,HAR
+R2 0.00 2.23** 2.65** 0.38 2.05**
+R2
+oos -5.37 -1.13 -2.38 -4.10 -1.25
+t−stat (0.10) (2.26) (2.47) (0.93) (2.17)
+Panel B: V ariance Predictability
+VRP HAR
+VRP DOW N
+VRP U P
+VRP DOW N,HAR
+VRP U P,HAR
+R2 42.95 41.03 40.34 41.19 43.94
+R2
+oos 3.40*** 4.34*** -3.46 -4.05 4.63***
+t−stat (3.32) (1.85) (0.89) (2.01) (3.90)
+4
+
+Table A4: Economic Value of VRP Speciﬁcations
+This table reports utility gains and Sharpe Ratios for each of the three scenarios. Scenario
+1 assumes that the realized variance is unpredictable and that the forecasting variable [name
+in column] only predicts the excess returns. Scenario 2 assumes that the excess returns are
+unpredictable but that the variable [name in column] and the lagged realized variance predict
+the realized variance. Scenario 3 implicitly assumes that the excess returns and the realized
+variance can be predicted by the forecasting variable [name in column], and in the latter case,
+by the forecasting variable [name in column] and the lagged realized variance. The historical mean
+return, and the forecast of a ﬁtted AR(1) model for realized variance serve as naive benchmarks.
+∆CER (1), ∆CER (2), and ∆CER (3) are the annualized utility gains relative to a strategy that
+assumes unpredictable excess returns and realized variance, achieved by following strategy 1, 2,
+and 3, respectively. Similarly, ∆SR(1), ∆SR(2), and ∆SR(3) are the annualized improvements in
+Sharpe Ratios achieved by following strategy 1, 2, and 3, respectively. ∗, ∗∗, and ∗∗∗ indicate the
+signiﬁcance at the 10 %, 5 %, and 1 % signiﬁcance levels, respectively. All data are sampled at the
+monthly frequency and relate to the S&P 500 index.
+Panel A:γ = 3
+VRP HAR
+VRP DOW N
+VRP U P
+VRP DOW N,HAR
+VRP U P,HAR
+∆CER(1) -7.41 0.24 2.25 -9.33 -9.25
+∆CER(2) 6.29 7.40 6.73 5.17 5.11
+
+ampled at the
+monthly frequency and relate to the S&P 500 index.
+Panel A:γ = 3
+VRP HAR
+VRP DOW N
+VRP U P
+VRP DOW N,HAR
+VRP U P,HAR
+∆CER(1) -7.41 0.24 2.25 -9.33 -9.25
+∆CER(2) 6.29 7.40 6.73 5.17 5.11
+∆CER(3) -4.36 6.31 6.74 -4.99 -8.24
+∆SR(1) -0.43*** 0.04 0.19** -0.55*** -0.58***
+∆SR(2) 0.38*** 0.69*** 0.71*** 0.37*** 0.40***
+∆SR(3) -0.20 0.59*** 0.71*** -0.29* -0.51**
+Panel B:γ = 6
+VRP HAR
+VRP DOW N
+VRP U P
+VRP DOW N,HAR
+VRP U P,HAR
+∆CER(1) -10.71 -1.91 0.96 -11.09 -10.73
+∆CER(2) 5.47 5.94 5.12 3.70 4.81
+∆CER(3) -6.36 4.47 6.13 -6.32 -8.17
+∆SR(1) -0.60*** -0.12 0.17* -0.64*** -0.69***
+∆SR(2) 0.46*** 0.74*** 0.60*** 0.40*** 0.62***
+∆SR(3) -0.27 0.61** 0.79*** -0.37** -0.59***
+5
+
+Table A4: Economic Value of VRP Speciﬁcations (continued)
+Panel C:γ = 9
+VRP HAR
+VRP DOW N
+VRP U P
+VRP DOW N,HAR
+VRP U P,HAR
+∆CER(1) -10.65 -2.43 0.63 -10.89 -9.83
+∆CER(2) 3.72 4.24 3.21 2.49 4.36
+∆CER(3) -4.72 3.39 4.63 -5.68 -6.97
+∆SR(1) -0.62*** -0.21 0.17* -0.65*** -0.73***
+∆SR(2) 0.47*** 0.67*** 0.45** 0.36*** 0.76***
+∆SR(3) -0.29 0.64** 0.80*** -0.40** -0.60***
+Panel D:γ = 12
+VRP HAR
+VRP DOW N
+VRP U P
+VRP DOW N,HAR
+VRP U P,HAR
+∆CER(1) -8.65 -2.20 0.47 -10.35 -7.82
+∆CER(2) 2.78 3.15 2.25 1.85 3.43
+∆CER(3) -3.60 2.53 3.25 -4.61 -5.49
+∆SR(1) -0.63*** -0.23* 0.17* -0.62*** -0.72***
+∆SR(2) 0.47*** 0.61*** 0.43* 0.34*** 0.80***
+∆SR(3) -0.29 0.65** 0.76** -0.40** -0.59***
+6
+
+Table A5: Variance Predictability: Alternative Approach
+This table reports the regression results of monthly realized variance on a constant, which we denote by γ0, and the lagged predictive
+variable(s). We report the t-statistics in parentheses. Statistical inferences are based on a bootstrapped distribution. The historical
+mean serves as naive benchmark. CRP denotes the correlation risk premium. EXKURT BKM is the risk-neutral kurtosis of Bakshi
+et al. (2003). FH is the risk-neutral riskiness measure of Leiss & Nax (2018). GMR is the generalized measure of riskiness of
+Bali et al. (2011). SKEW BKM is the risk-neutral skewness of Bakshi et al. (2003). SMIRK is the option smirk. VAR BKM is
+the risk-neutral variance of Bakshi et al. (2003). Finally, VRP is the variance risk premium computed as the diﬀerence between
+the risk-neutral variance of Bakshi et al. (2003) and the most recent observation of the realized variance. R2 and R2
+oos are the
+in-sample and out-of-sample R2, respectively. ∗, ∗∗, and ∗∗∗ indicate the signiﬁcance at the 10 %, 5 %, and 1 % signiﬁcance levels,
+respectively. The sample period extends from January 1996 to December 2014. All data are sampled at the monthly frequency and
+relate to the S&P 500 index.
+γ0
+0.043*** 0.074*** 0.036*** 0.025*** 0.073*** 0.022*** -0.004 0.038*** 0.021* 0.025* 0.025
+(9.49) (7.84) (6.28) (5.87) (4.71) (6.09) (-1.00) (9.88) (1.84) (1.75) (1.56)
+CRP -0.123*** -0.074*** -0.073*** -0.073***
+(-3.72) (-2.61) (-2.59) (-2.58)
+
+0.022*** -0.004 0.038*** 0.021* 0.025* 0.025
+(9.49) (7.84) (6.28) (5.87) (4.71) (6.09) (-1.00) (9.88) (1.84) (1.75) (1.56)
+CRP -0.123*** -0.074*** -0.073*** -0.073***
+(-3.72) (-2.61) (-2.59) (-2.58)
+EXKURTBKM -0.057*** -0.010 -0.001
+(-4.78) (-0.91) (-0.05)
+FH -0.010 -0.012 -0.011 -0.011
+(-0.93) (-1.04) (-1.02) (-1.02)
+GMR 0.001*** -0.001* -0.001* -0.001*
+(2.98) (-1.69) (-1.66) (-1.65)
+SKEWBKM 0.047*** 0.014 0.012
+(2.72) (0.96) (0.32)
+SMIRK 0.071*** 0.030*** 0.030*** 0.030***
+(5.53) (2.62) (2.66) (2.64)
+VARBKM 0.756*** 0.720*** 0.731*** 0.729***
+(11.95) (9.15) (9.94) (8.63)
+VRP -0.399*** -0.209** -0.208** -0.208**
+(-3.36) (-2.06) (-2.05) (-2.05)
+R2 5.80*** 9.24*** 0.38 3.79*** 3.19*** 11.97*** 38.83*** 4.79*** 45.69*** 45.71*** 45.47***
+R2
+oos 1.88*** 8.04*** -0.75 -7.12 2.65*** 8.61*** 34.65*** -2.92 5.18*** 4.25*** 0.55***
+7
+
+Table A6: Economic Value: Alternative Approach
+This table reports utility gains and Sharpe Ratios for each of the three scenarios. Scenario 1 assumes that the realized variance is
+unpredictable and that the forecasting variable [name in row] only predicts the excess returns. Scenario 2 assumes that the excess
+returns are unpredictable but that the variable [name in row] predicts the realized variance. Scenario 3 implicitly assumes that the
+excess returns and the realized variance can be predicted by the forecasting variable [name in row]. The historical mean serves as
+naive benchmark for both return and variance predictability. ∆CER (1), ∆CER (2), and ∆CER (3) are the annualized utility gains
+relative to a naive strategy that assumes unpredictable excess returns and realized variance, achieved by following strategy 1, 2, and
+3, respectively. Similarly, ∆SR(1), ∆SR(2), and ∆SR(3) are the annualized improvements in Sharpe Ratios achieved by following
+strategy 1, 2, and 3, respectively. ∗, ∗∗, and ∗∗∗ indicate the signiﬁcance at the 10 %, 5 %, and 1 % signiﬁcance levels, respectively.
+All data are sampled at the monthly frequency and relate to the S&P 500 index.
+Panel A:γ=3
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 5.46 1.63 4.63 0.46** 0.11 0.40*
+EXKURTBKM 5.39 3.69 6.24 0.51*** 0.34*** 0.58***
+FH 1.99 0.01 1.30 0.18 -0.04 0.12
+GMR -3.77 2.46 -0.96 -0.12 0.13*** -0.05
+SKEWBKM 1.86 1.78 3.28 0.16 0.13** 0.29
+SMIRK 2.96 1.47 2.91 0.30 0.14 0.30
+
+EXKURTBKM 5.39 3.69 6.24 0.51*** 0.34*** 0.58***
+FH 1.99 0.01 1.30 0.18 -0.04 0.12
+GMR -3.77 2.46 -0.96 -0.12 0.13*** -0.05
+SKEWBKM 1.86 1.78 3.28 0.16 0.13** 0.29
+SMIRK 2.96 1.47 2.91 0.30 0.14 0.30
+VARBKM -7.28 7.19 -1.65 -0.42*** 0.50*** -0.09
+VRP -6.10 -1.57 -5.43 -0.41* -0.13 -0.41*
+Panel B:γ=6
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 3.05 1.50 2.86 0.45** 0.14* 0.43*
+EXKURTBKM 3.92 3.05 4.83 0.63*** 0.40*** 0.70***
+FH -0.05 0.36 -0.35 0.13 -0.01 0.03
+GMR -8.82 1.62 -1.35 -0.35** 0.13*** -0.10
+SKEWBKM 1.20 1.30 2.36 0.22 0.14** 0.37**
+SMIRK 2.07 1.10 2.13 0.38* 0.14 0.37*
+VARBKM -10.70 5.67 -0.45 -0.60*** 0.71*** 0.02
+VRP -8.49 -0.98 -6.14 -0.60*** -0.12 -0.53**
+Panel C:γ=9
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 1.71 1.04 1.56 0.40* 0.12* 0.38
+EXKURTBKM 2.82 2.27 3.74 0.67*** 0.40*** 0.74***
+FH -0.03 0.26 -0.20 0.16 -0.02 0.07
+GMR -6.87 1.10 -0.93 -0.36** 0.13*** -0.10
+SKEWBKM 0.58 0.88 1.76 0.20 0.13** 0.41**
+SMIRK 1.40 0.75 1.47 0.38* 0.14 0.38*
+VARBKM -10.28 3.94 -0.18 -0.63*** 0.73*** 0.05
+VRP -8.15 -0.65 -6.22 -0.63*** -0.10 -0.58**
+Panel D:γ=12
+∆CER(1) ∆CER(2) ∆CER(3) ∆SR(1) ∆SR(2) ∆SR(3)
+CRP 1.25 0.78 0.87 0.40* 0.10* 0.36
+EXKURTBKM 2.11 1.80 2.93 0.67*** 0.40*** 0.74***
+FH -0.05 0.20 -0.19 0.16 -0.02 0.08
+GMR -5.59 0.83 -0.71 -0.37** 0.13*** -0.10
+SKEWBKM 0.44 0.66 1.35 0.20 0.13** 0.42**
+SMIRK 1.05 0.57 1.10 0.38* 0.14 0.38*
+VARBKM -8.37 2.95 -0.15 -0.63*** 0.73*** 0.05
+VRP -6.18 -0.49 -5.82 -0.63*** -0.10 -0.59**
+8

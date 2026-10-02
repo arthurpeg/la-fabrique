@@ -1,0 +1,235 @@
+{
+  "fiche_id": "synthese-dossier-baltussen-2021-hedging-demand-intraday-momentum",
+  "written": "2026-10-02",
+  "written_by": "claude-opus-5-5-session-synthese-isolee",
+  "source": {
+    "authors": "Synthèse de : Guido Baltussen, Zhi Da, Sten Lammers, Martin Martens ; Min Zhou, Xiaoqun Liu",
+    "title": "Synthèse — momentum intrajournalier de marché : le rendement du reste de la journée prédit celui de la dernière demi-heure (demande de couverture en gamma négatif)",
+    "year": 2022,
+    "source_url": "https://www3.nd.edu/~zda/intramom.pdf",
+    "retrieved": "2026-10-02",
+    "peer_reviewed": false
+  },
+  "claim": "Sur des futures de quatre classes d'actifs (actions, obligations, matières premières, devises), le rendement de la dernière demi-heure avant la clôture (r_LH) est positivement prédit par le rendement du reste de la même journée (r_ROD : de la clôture de la veille jusqu'à 30 minutes avant la clôture). L'effet est fort sur actions et obligations, nettement plus faible sur matières premières et devises. La cause avancée par la graine est la demande de couverture des participants en gamma négatif, concentrée avant la clôture ; la pression de prix étant transitoire, r_LH se retourne sur un à trois jours. Le seul voisin retenu (Zhou et Liu 2022) ne teste pas cette construction : il documente, sur actions chinoises et à l'horizon mensuel, que les composantes nuit et séance d'un rendement portent des dynamiques distinctes, avec un renversement de la séance suivante après une forte composante de nuit — ce qui conforte l'idée de découper la journée, mais pas le signe intrajournalier de la graine.",
+  "universe": {
+    "value": "Celui de la graine : plus de 60 contrats à terme de marchés développés (17 indices actions, 16 obligations d'État, 21 matières premières, 8 devises), barres d'une minute construites depuis des données tick-by-tick (Tick Data LLC), décembre 1974 à mai 2020, contrat le plus liquide roulé quand le volume quotidien du suivant dépasse le sien. Le voisin retenu porte sur un autre univers (74 actions chinoises du secteur de l'énergie et l'ensemble des A-shares, 2001-2019) et n'entre pas dans la construction.",
+    "quoted": [
+      "Using intraday returns on over 60 futures on equities,",
+      "period ranging from December 1974 to May 2020.",
+      "and roll it over when the daily tick volume of the next"
+    ],
+    "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum"
+  },
+  "horizon": {
+    "value": "30 minutes : le score se lit à c-30 (30 minutes avant la clôture retenue du marché) et prédit le rendement des 30 dernières minutes de la même séance (r_LH). La graine teste ensuite un retournement sur 1, 2 et 3 jours, qui sert de contrôle et non de cible.",
+    "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum"
+  },
+  "signal_construction": {
+    "value": "Pour chaque contrat et chaque date t : score = r_ROD,t = P(c-30,t) / P(c,t-1) - 1, rendement d'un achat à la clôture de la veille et d'une vente 30 minutes avant la clôture du jour t, sur les heures 'communes' du marché sous-jacent. Le score se calcule à c-30 avec les seuls prix antérieurs à cet instant ; la cible est r_LH,t = P(c,t) / P(c-30,t) - 1. Signe attendu de la relation : positif. C'est la régression de l'Eq. 7 de la graine (r_LH,t = a + b_ROD * r_ROD,t + e_t) ramenée à un score par instrument et par date ; la stratégie de timing binaire de la graine (long si r_ROD > 0, court sinon) en est le signe. Aucun paramètre ajusté. Seuls choix préalables : les heures d'ouverture et de clôture retenues pour chaque marché (non publiées par la graine, donc null ici) et la règle de roll du contrat le plus liquide. Pas de conditionnement au régime de gamma (NGE) : il relève d'une étape ultérieure.",
+    "quoted": [
+      "If the predictor return is positive, we will earn the last",
+      "and roll it over when the daily tick volume of the next",
+      "r ROD has the highest t-value, 7.29."
+    ],
+    "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum",
+    "score_formula": "r_ROD,t = P(c-30,t) / P(c,t-1) - 1",
+    "target": "r_LH,t, rendement des 30 dernières minutes de la séance t",
+    "expected_sign": "positif",
+    "session_hours": {
+      "value": null,
+      "reason": "La graine retient les heures 'communes' du sous-jacent pour les actions et des pics de volume ailleurs, sans les publier ; aucun voisin retenu ne les donne. À fixer par une décision écrite, instrument par instrument."
+    },
+    "close_anchor": {
+      "value": null,
+      "reason": "La graine montre que la prédictibilité s'arrête à la clôture du marché cash (16:00 ET) et non à celle du future ; l'heure d'ancrage propre à chacun de nos neuf futures n'est donnée par aucun papier."
+    }
+  },
+  "reported_results": [
+    {
+      "name": "equity_pooled_rod_tstat",
+      "value": 7.29,
+      "unit": "t-stat",
+      "quoted": "r ROD has the highest t-value, 7.29.",
+      "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum",
+      "note": "Table 2, Panel A, colonne (3) : régression poolée des futures actions, r_LH sur r_ROD. Erreurs standards groupées temps x marché."
+    },
+    {
+      "name": "equity_pooled_rod_oos_r2_pct",
+      "value": 2.88,
+      "unit": "%",
+      "quoted": "In addition, r ROD has the highest out-of-sample R-squared (R2 OOS), 2.88%. In contrast,",
+      "quoted_source": "OOS ), 2.88%. In contrast,",
+      "quoted_repair": "math_notation",
+      "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum",
+      "note": "R2 hors échantillon de r_ROD, futures actions poolées (Table 2 Panel A, colonne 3)."
+    },
+    {
+      "name": "equity_pooled_onfh_oos_r2_pct",
+      "value": -1.71,
+      "unit": "%",
+      "quoted": "in this extended equity futures index sample, r ONF H has a negative R2 OOS, −1.71%. Interestingly, the R2",
+      "quoted_source": "OOS , −1.71%. Interestingly, the R 2",
+      "quoted_repair": "math_notation",
+      "spelled_out": "−1.71",
+      "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum",
+      "note": "Le prédicteur concurrent r_ONFH (nuit + première demi-heure) fait moins bien que la moyenne historique récursive : c'est ce qui fait retenir r_ROD plutôt que r_ONFH."
+    },
+    {
+      "name": "asset_class_timing_sharpe_min",
+      "value": 0.87,
+      "unit": "Sharpe annualisé",
+      "quoted": "yielding Sharpe ratios between 0.87 and 1.73.",
+      "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum",
+      "note": "Borne basse (devises), portefeuilles 1/N par classe d'actifs. Brut de coûts."
+    },
+    {
+      "name": "asset_class_timing_sharpe_max",
+      "value": 1.73,
+      "unit": "Sharpe annualisé",
+      "quoted": "yielding Sharpe ratios between 0.87 and 1.73.",
+      "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum",
+      "note": "Borne haute (futures d'indices actions). Brut de coûts."
+    },
+    {
+      "name": "equity_contracts_with_positive_significant_oos_r2",
+      "value": 14,
+      "unit": "contrats",
+      "quoted": "14 contracts. In addition,",
+      "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum",
+      "note": "Sur 17 futures d'indices actions (Table B1)."
+    },
+    {
+      "name": "bond_contracts_with_positive_significant_oos_r2",
+      "value": 11,
+      "unit": "contrats",
+      "quoted": "R2 OOS is positive and signiﬁcant for 11 contracts;",
+      "quoted_source": "OOS is positive and signiﬁcant for 11 contracts;",
+      "quoted_repair": "math_notation",
+      "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum",
+      "note": "Sur 16 futures obligataires (Table B2)."
+    },
+    {
+      "name": "commodity_currency_share_of_contracts_significant_oos_r2_pct",
+      "value": 40,
+      "unit": "%",
+      "quoted": "Still, for about 40% to 50%",
+      "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum",
+      "note": "Borne basse de la fourchette 40%-50% des contrats de matières premières et de devises : l'effet y est nettement plus faible."
+    },
+    {
+      "name": "reversal_present_in_all_four_asset_classes",
+      "value": null,
+      "quoted": "In all four markets, we observe reversals, although",
+      "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum",
+      "note": "Contrôle de mécanisme : retournement significatif sur actions, obligations et matières premières, pas sur devises."
+    },
+    {
+      "name": "predictability_stops_at_cash_market_close",
+      "value": null,
+      "quoted": "does not extend to the futures return beyond 4:00pm",
+      "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum",
+      "note": "Table 12 : l'ancrage du signal est la clôture du marché cash, pas la fin de séance du future."
+    },
+    {
+      "name": "no_transaction_costs_in_results",
+      "value": null,
+      "quoted": "Note that we do not consider transaction costs.",
+      "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum",
+      "note": "Tous les résultats de performance de la graine sont bruts."
+    },
+    {
+      "name": "intraday_momentum_absent_when_nge_positive",
+      "value": null,
+      "quoted": "days with positive NGE, however, there is no signiﬁcant",
+      "from_fiche": "baltussen-2021-hedging-demand-intraday-momentum",
+      "note": "Résultat de régime rapporté pour mémoire ; la version retenue n'est PAS conditionnée au NGE."
+    },
+    {
+      "name": "energy_fm_ret_overnight_coef_on_next_intraday",
+      "value": -0.0049,
+      "unit": "coefficient Fama-MacBeth",
+      "quoted": "ret_overnight −0.0028 0.0022** −0.0049*** 0.0070*** 0.0241***",
+      "spelled_out": "−0.0049",
+      "from_fiche": "overnight-intraday-mispricing-of-chinese-energy-W4214609326",
+      "note": "Tableau 6 du voisin : le rendement de nuit du mois passé prédit négativement la séance suivante, sur actions chinoises de l'énergie, à l'horizon mensuel."
+    },
+    {
+      "name": "energy_overnight_sorted_5m1_next_month_intraday_capm_alpha_pct",
+      "value": -2.34,
+      "unit": "% par mois",
+      "quoted": "CAPM (three-factor)-adjusted intraday alpha of −2.34%",
+      "spelled_out": "−2.34",
+      "from_fiche": "overnight-intraday-mispricing-of-chinese-energy-W4214609326",
+      "note": "Renversement en séance d'un portefeuille long-short trié sur la composante de nuit passée ; tri transversal mensuel, pas une prédiction intrajournalière."
+    }
+  ],
+  "what_is_missing": [
+    "Les heures de séance retenues par marché ne sont publiées par aucun papier du dossier, alors que tout le découpage (c-30, clôture de la veille) en dépend.",
+    "L'heure d'ancrage de la clôture (clôture du cash plutôt que du future) n'est documentée que pour le S&P 500 ; aucune valeur pour nos autres futures.",
+    "Aucun coût de transaction, multiplicateur, tick ou frais dans les papiers retenus ; le seul énoncé net de la graine est qualitatif.",
+    "Aucun IC ni corrélation de rang : la graine publie des R2 poolés, des R2 hors échantillon et des Sharpe de timing binaire ; le voisin des alphas de portefeuilles mensuels.",
+    "Aucun voisin ne teste la construction r_ROD -> r_LH : l'accord entre papiers sur cette construction précise repose sur la seule graine.",
+    "Aucun papier ne donne de lag de publication ni de règle de traitement des jours de changement d'heure."
+  ],
+  "transposability": {
+    "what_transfers": [
+      "Le score r_ROD se calcule en OHLCV sur nos neuf futures intraday : deux prix (clôture de la veille, prix à c-30), un rendement, sans donnée extérieure ni paramètre ajusté.",
+      "La construction est sans look-ahead par construction : un Panel ouvert à c-30 suffit, la cible r_LH lui est postérieure.",
+      "Le retournement sur un à trois jours donne un contrôle falsifiable du mécanisme sans donnée supplémentaire."
+    ],
+    "what_does_not_transfer": [
+      "Les Sharpe 0.87-1.73 de la graine viennent de portefeuilles 1/N de 8 à 21 contrats par classe ; avec neuf futures, cette diversification disparaît.",
+      "Le canal causal (NGE d'options, NAV de LETF) exige des données que nous n'avons pas ; la version retenue n'en dépend pas, mais le mécanisme n'est pas vérifiable chez nous.",
+      "Les heures de séance de la graine ne sont pas publiées : nos frontières c-30 et clôture seront nécessairement différentes.",
+      "L'effet est nettement plus faible sur matières premières et devises ; selon la composition de nos neuf futures, la force transposée peut être bien moindre.",
+      "Le voisin retenu porte sur des actions chinoises au comptant, à l'horizon mensuel et en tri transversal, sous une règle T+1 inexistante sur futures : il ne transfère que comme mise en garde sur le découpage nuit/séance.",
+      "Tous les résultats sont bruts de coûts, alors que le signal exige un aller-retour quotidien sur 30 minutes."
+    ],
+    "what_aligns_well": [
+      "Même instrument que le nôtre : des futures lus en intraday sur plusieurs classes d'actifs.",
+      "Un nombre par instrument et par date, exactement la forme attendue par le harnais.",
+      "Le comparatif r_ROD contre r_ONFH de la graine fournit une prédiction de direction pré-enregistrable."
+    ]
+  },
+  "synthesis": {
+    "dossier": "baltussen-2021-hedging-demand-intraday-momentum",
+    "sources": [
+      "baltussen-2021-hedging-demand-intraday-momentum",
+      "overnight-intraday-mispricing-of-chinese-energy-W4214609326"
+    ],
+    "ignored": [
+      "base-289ca991 : skewness risque-neutre des options S&P 500 et illiquidité ; ne prédit aucun rendement intrajournalier, ne décrit aucune construction comparable.",
+      "base-115703c8 : robot de trading sur sur-réactions de court terme (paramètres profit_koef, stop, time_val optimisés) ; le passage n'évoque ni la dernière demi-heure ni la demande de couverture, et ses paramètres sont issus d'une optimisation.",
+      "base-d024c572 : comportement des teneurs de marché désignés pendant les chutes extrêmes de prix, à 10 secondes, sur actions ; autre objet, autre horizon.",
+      "base-0c522705 : flux des HFT autour des ordres institutionnels ; pas de prédiction de la fin de séance par le reste de la journée.",
+      "base-9e94be61 : profil en U du volume, de la volatilité et du spread sur la bourse de Tunis ; saisonnalité inconditionnelle, pas une prédictibilité conditionnelle au rendement de la journée.",
+      "base-6c5df707 : rendements multifractals et théorie hiérarchique de portefeuille ; sans rapport avec le mécanisme.",
+      "base-364f84b1 : prédiction du marché actions par des variables implicites d'options à l'horizon mensuel ; pas de construction intrajournalière."
+    ],
+    "mechanism": "Des participants en gamma négatif (teneurs de marché d'options, ETF à effet de levier) doivent acheter après une hausse et vendre après une baisse, et concentrent cette couverture avant la clôture ; le rendement accumulé depuis la clôture de la veille jusqu'à c-30 se prolonge donc dans la dernière demi-heure, puis se retourne dans les jours suivants.",
+    "agreements": [
+      "Les deux papiers décomposent le rendement clôture-à-clôture en composantes (nuit, séance, ou intervalles plus fins) et trouvent que ces composantes portent des dynamiques prédictives distinctes.",
+      "Les deux constructions sont point-in-time et ne reposent que sur des prix d'ouverture et de clôture d'intervalles.",
+      "Les deux papiers rapportent des résultats bruts de coûts de transaction."
+    ],
+    "disagreements": [
+      "Signe : la graine trouve une relation positive (le rendement depuis la veille, nuit comprise, prolonge la dernière demi-heure), le voisin une relation négative entre la composante de nuit passée et la séance suivante (coefficient Fama-MacBeth −0.0049, alpha de séance −2.34 % par mois). Non tranché ; la version retenue suit le critère 1.",
+      "Marché : futures multi-classes de marchés développés pour la graine, actions chinoises au comptant sous règle T+1 pour le voisin, qui dit lui-même que son motif est l'inverse du motif américain.",
+      "Horizon : 30 minutes de la même séance pour la graine, mois suivant pour le voisin.",
+      "Fenêtre et méthode : la graine prédit en série temporelle par instrument une sous-fenêtre de fin de séance ; le voisin trie transversalement des portefeuilles sur des composantes nuit/séance cumulées sur un mois, avec une frontière nuit/séance définie par l'ouverture et la clôture d'actions au comptant."
+    ],
+    "contributions": [
+      "overnight-intraday-mispricing-of-chinese-energy-W4214609326 : confirme l'intérêt de séparer la composante de nuit de la composante de séance, et fournit un contre-exemple de signe sur un autre marché et un autre horizon ; n'ajoute aucun paramètre à la construction retenue."
+    ],
+    "criteria_applied": [
+      "1. Accord : seule la graine décrit et soutient la construction r_ROD -> r_LH ; le voisin retenu ne décrit pas de construction concurrente sur le même horizon, il tranche donc pour la graine. Parmi les prédicteurs de la graine, r_ROD est celui qu'elle soutient (plus haute t-stat, R2 hors échantillon positif contre négatif pour r_ONFH).",
+      "2. Transposabilité : r_ROD se calcule avec deux prix OHLCV par jour et par future ; la construction du voisin (tri transversal mensuel en quintiles) est impossible sur neuf instruments.",
+      "3. Parcimonie : score continu r_ROD sans paramètre ajusté, plutôt que les régressions multi-prédicteurs (Eq. 6, Eq. 11) ou un conditionnement NGE.",
+      "4. Traçabilité : c-30, la clôture de la veille, la cible des 30 dernières minutes et la règle de roll viennent de la fiche graine ; les heures de séance et l'ancrage de clôture, qu'aucun papier ne donne pour nos instruments, restent null."
+    ],
+    "chosen_from": [
+      "baltussen-2021-hedging-demand-intraday-momentum"
+    ],
+    "why": "r_ROD est la seule construction du dossier qui prédit la dernière demi-heure, celle que la graine soutient contre r_ONFH, et elle se calcule sans paramètre sur nos futures en OHLCV ; le voisin n'apporte qu'une mise en garde de signe sur un autre marché et un autre horizon."
+  }
+}

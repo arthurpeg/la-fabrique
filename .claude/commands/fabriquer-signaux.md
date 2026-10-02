@@ -58,10 +58,20 @@ précisé), dans l'ordre de priorité, sans dépasser 85 % de la fenêtre de
    - **Les fiches vivent dans la base (`D44`)** : toute fiche ou synthèse
      nouvelle, une fois inscrite et jugée verte, se verse par
      `uv run python corpus/fiches_store.py --pousser` (`avancer.py` le fait aussi).
-6. **Consulte `fabrique-critique`** si un groupe finit mal (discordances,
+6. **Combiner un papier et ses voisins (`D47`)** — quand une fiche le mérite,
+   avant sa recette :
+   `uv run python scripts/synthese_dossier.py --prepare <fiche>` (voisins
+   cherchés dans toute la base, textes figés), puis `fabrique-synthese` avec le
+   seul chemin de la consigne, puis `--record` **après sa réponse**, puis
+   `--check`. Un refus se renvoie tel quel, trois essais au plus. La fiche
+   `synthese-dossier-<fiche>` suit ensuite la boucle du point 5. **Si la version
+   retenue vient de la seule graine et qu'aucun voisin n'ajoute de paramètre,
+   de marché ou d'horizon, ne la code pas** : elle referait l'hypothèse de la
+   graine, un test corrélé de plus. Note-le dans le compte rendu.
+7. **Consulte `fabrique-critique`** si un groupe finit mal (discordances,
    refus en série) ou avant de changer quoi que ce soit au processus. Son avis
    ne remplace ni les portes ni une décision écrite.
-7. **Fin de session** : relève le quota avec `--depense` (somme des
+8. **Fin de session** : relève le quota avec `--depense` (somme des
    `subagent_tokens`), `uv run python scripts/verifier_tout.py` doit finir sur
    `TOUT PASSE`, régénère le tableau de bord
    (`uv run python scripts/tableau_de_bord.py`), écris la ligne de

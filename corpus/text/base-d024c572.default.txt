@@ -1,0 +1,2602 @@
+Do designated market makers provide liquidity
+during downward extreme price movements? ∗
+Mario Bellia Kim Christensen Aleksey Kolokolov Loriana Pel izzon
+Roberto Ren` o†
+February, 2025
+Abstract
+We study the trading activity of designated market makers (D MMs) in electronic mar-
+kets using a unique dataset with audit-trail information on trader classiﬁcation. DMMs
+may either adhere to their market-making agreements and oﬀer immediacy during periods
+of heavy selling pressure, or they might lean-with-the-win d to proﬁt from private infor-
+mation. We test these competing theories during extreme (do wnward) price movements,
+which we detect using a novel methodology. We show that DMMs p rovide liquidity when
+the selling pressure is concentrated on a single stock, but c onsume liquidity (leaving liq-
+uidity provision to slower traders) when several stocks are aﬀected.
+JEL classiﬁcation : G10, G14.
+Keywords: Designated market makers (DMMs); extreme price movements (EPMs); high-
+frequency traders (HFTs); liquidity provision.
+∗We thank Giovanni Cespa, Jean-Eduard Colliard, Maria Flora, Thierr y Foucault, John Hendershott, Fabrizio
+Lillo, Katya Malinova, Paolo Pasquariello, Athena Picarelli, Ryan Riordan , Andriy Shkilko, Xavier Vives, Ingrid
+Werner, and seminar participants at the Federal Reserve Board, Washington, Stevens Institute of Technology
+Business School, University of Trento, University of Bolzano, and p articipants at the 31st SNDE Annual Sympo-
+
+r participants at the Federal Reserve Board, Washington, Stevens Institute of Technology
+Business School, University of Trento, University of Bolzano, and p articipants at the 31st SNDE Annual Sympo-
+sium (Padova, 2024); the XX Workshop on Quantitative Finance (Zu rich, 2019); the 46th EF A Annual Meeting
+(Lisbon, 2019); and the 16th Paris December Finance Meeting (Par is, 2018) for valuable comments. We are solely
+responsible for any errors and omissions. Bellia: European Commissio n, Joint Research Centre, and Department
+of Economics, Ca’ Foscari University of Venice, Italy, bellia@unive.it. Christensen: Department of Economics
+and Business Economics, Aarhus University, Denmark, kim@econ.au.dk. Kolokolov: Alliance Manchester Busi-
+ness School, Manchester, UK, and New Economic School, Moscow, R ussia, alexeiuo@gmail.com. Pelizzon:
+Leibniz Institute for Financial Research SAFE, Goethe University, Frankfurt, Germany, and Department of Eco-
+nomics, Ca’ Foscari University of Venice, Italy. pelizzon@safe.uni-frankfurt.de. Ren` o: ESSEC Business
+School, Paris, France, reno@essec.edu. Christensen was funded by a grant from the Independent Resea rch Fund
+Denmark (DFF 1028–00030B). Kolokolov and Pelizzon acknowledge f unding by the Deutsche Forschungsgemein-
+schaft (DFG–329107530). Pelizzon and Ren` o acknowledge fundin g from the Italian Ministry for University and
+Research (MUR–2017RSMPZZ). Pelizzon also is grateful to the Leib niz Institute for Financial Research SAFE,
+
+530). Pelizzon and Ren` o acknowledge fundin g from the Italian Ministry for University and
+Research (MUR–2017RSMPZZ). Pelizzon also is grateful to the Leib niz Institute for Financial Research SAFE,
+funded by the State of Hessen initiative for research, for ﬁnancia l support. Part of this work was carried out
+when Bellia was employed at the SAFE research center and Ren` o was employed at the Department of Economics
+of the University of Verona, Italy. Disclaimer: The views rendered in this paper are strictly those of the authors
+and may not in any circumstance be regarded as stating an oﬃcial po sition of the European Commission.
+†Corresponding author
+arXiv:2602.01817v1 [econ.EM] 2 Feb 2026
+
+1 Introduction
+Market makers facilitate the allocation of wealth and transfer of ris k in ﬁnancial markets, where
+participants may not otherwise be able to immediately locate a counte rparty to take the opposite
+side of a deal. While any intermediary can supply liquidity on a voluntarily b asis, today market
+making is overwhelmingly done by electronic traders, some of whom ma y commit to becoming
+a “designated market maker” (DMM) by entering into a written agre ement with the exchange
+to oﬀer immediacy to its customers.
+1
+In this paper, we study the behavior of such electronic DMMs to exa mine whether they
+act according to their mandate during downward “extreme price mo vements” (EPMs), where
+stocks are selling oﬀ. Rather than maintaining a passive order ﬂow du ring such EPMs, DMMs
+may decide to abstain from providing liquidity in extreme market condit ions, or even switch to
+a “lean-with-the-wind” strategy with aggressive selling activity. Fo r example, Cespa & Vives
+(2025) show that liquidity providers may lean-with-the-wind if the market la cks transparency.
+In these circumstances, the fear of trading against private infor mation overshadows the foreseen
+revenue earned by providing liquidity, which increases market fragilit y. Further explanations for
+opportunistic trading include the backrunning theory of Yang & Zhu (2020) or predatory trading
+of Brunnermeier & Pedersen (2005). Is the incentive economic presented to DMMs suﬃcient to
+
+lanations for
+opportunistic trading include the backrunning theory of Yang & Zhu (2020) or predatory trading
+of Brunnermeier & Pedersen (2005). Is the incentive economic presented to DMMs suﬃcient to
+overcome such eﬀects? Moreover, DMMs often overlap with “high- frequency traders” (HFTs),
+as is also the case in our sample. The literature provides evidence of t he lean-with-the-wind
+behavior of HFTs (e.g., van Kervel & Menkveld 2019 , Korajczyk & Murphy 2019 ). Which of
+these eﬀects prevail for DMMs?
+1The exact role of the DMM and the details of such agreements vary a cross exchanges.
+1
+
+We provide compelling empirical evidence to suggest that the willingnes s of DMMs to supply
+liquidity in such a situation depends on the cross-sectional extent o f the EPM. When it aﬀects
+only a single stock, DMMs stick to their agreement and oﬀer immediacy . However, when it aﬀects
+several stocks, DMMs reverse course and start to consume liquid ity. In their place, traditional
+“slow” traders start to purchase shares, presumably to take ad vantage of the discounted price.
+A policy implication of our study is thus that the compensation scheme oﬀered by the exchange
+is not always a suﬃcient incentive for DMMs to maintain their presence during such adverse
+market conditions, and not even to discourage them from additiona l selling.
+We analyze a unique dataset from the BEDOFIH database. 2 It consists of tick-by-tick order-
+level data on 37 liquid French stocks from the CAC 40 Index and trad ed on NYSE Euronext Paris
+in 2013. The data are stamped with a ﬂag indicating whether a particip ant is a HFT or not, and
+whether the participation falls under a DMM scheme or not—as deter mined by the French market
+authority, Autorit´ e des March´ es Financiers(2017); AMF henceforth. Furthermore, it contains a
+trader category provided by NYSE Euronext (explained in Section 3). This granularity permits
+us to uncover the trading activity of various market participants, including DMMs.
+A distinctive feature of our study is the deﬁnition of EPMs. In this pa per, we rely on the
+
+This granularity permits
+us to uncover the trading activity of various market participants, including DMMs.
+A distinctive feature of our study is the deﬁnition of EPMs. In this pa per, we rely on the
+“drift burst” approach of Christensen et al. (2022), which identiﬁes periods where market prices
+are trending sharply. We investigate in detail the behavior of diﬀere nt trader groups during the
+downward EPMs detected by this statistic. We use only downward EP Ms, because they are
+more likely to be associated with ﬁnancial distress (see Huang & Wang 2009 ). We show that
+drift burst EPMs are mostly originated by proprietary trading from investment banks, or by
+2www.euroﬁdai.org/en/high-frequency-data-bedoﬁh.
+2
+
+their clients trading via sponsored access. 3 This trading is, on average, informed, since it leads
+to a permanent change in the fundamental price.
+In general, our results relate to a vast literature dealing with liquidity provision in electronic
+markets. This literature looks at the behavior of algorithmic trader s, in particular HFTs, and
+broadly suggests that electronic traders enhance both market e ﬃciency (see, e.g., Chaboud et al.
+2014) and market liquidity (see, e.g., Hendershott et al. 2011 , Jones 2013 , Clark-Joseph et al.
+2017, Bessembinder et al. 2020 ).
+However, the beneﬁcial impact of algorithmic trading on market liquid ity has recently been
+challenged. Anand & Venkataraman (2016) show that liquidity provision is highly correlated
+among HFTs, which increases the fragility of the market. They conc lude that DMMs tend to
+mitigate illiquidity when HFTs withdraw synchronously from the market . In our framework,
+DMMs are also HFTs, and we show that DMMs do not always maintain the ir passive order ﬂow
+and actually resort to aggressive selling when downward movements spread across stocks. Thus,
+we provide evidence that the HFT dimension prevails over designated liquidity provision.
+An important closely related paper is Brogaard et al. (2018), who study HFT liquidity pro-
+vision during EPMs. They label a 10-second return as an EPM if it belon gs to the 99 .9th
+percentile of the absolute return distribution or is detected by the Lee & Mykland (2008) jump
+
+liquidity pro-
+vision during EPMs. They label a 10-second return as an EPM if it belon gs to the 99 .9th
+percentile of the absolute return distribution or is detected by the Lee & Mykland (2008) jump
+test.4 Hence, they concentrate on HFTs during high volatility- and jump-b ased EPMs. We
+complement their paper in two directions. First, we look at drift burs t-based EPMs. The drift
+burst EPMs is a largely diﬀerent sample with limited overlap (see Append ix A for an in-depth
+3We refer to “client” when a NYSE Euronext member is granting a coun terparty access to the market via
+an Automated Routing System or a sponsored access.
+4For alternative deﬁnitions of an EPM, see Goldstein & Kavajecz (2004) and Gao & Mizrach (2016).
+3
+
+comparison). This is because the testing procedure is based on the drift term, and thus identi-
+ﬁes directional price moves, while it controls for volatility and exclude s jumps. It allows us to
+extract a sequence of consecutive returns around which the mar ket is directional. This has the
+advantage, important to our analysis, that we can exploit the time s eries dimension of our data,
+such as identifying the peak of an EPM, allowing us to disentangle vario us stages of its develop-
+ment. Moreover, our approach does not require us to ﬁx the dura tion of the EPM in advance.
+Second, we concentrate on DMMs. Brogaard et al. (2018) conclude that HFTs provide liquidity,
+on average, during EPMs, but they switch to the demand side if seve ral stocks are aﬀected.
+Our empirical analysis complements their ﬁndings by disentangling liquid ity provision by trader
+group. We show that the incentive for liquidity provision is not suﬃcien t to prevent DMMs from
+acting as non-designated market maker HFTs, thus casting the co mpensation scheme oﬀered by
+the exchange into doubt.
+The rest of the paper proceeds as follows. In Section 2, we describe the institutional structure
+of NYSE Euronext. In Section 3, we describe the data and presents the trader classiﬁcation.
+In Section 4, we describe the identiﬁcation of drift burst EPMs. The econometr ic approach
+and our empirical results appear in Section 5. We conclude in Section 6. In Appendix A, we
+
+er classiﬁcation.
+In Section 4, we describe the identiﬁcation of drift burst EPMs. The econometr ic approach
+and our empirical results appear in Section 5. We conclude in Section 6. In Appendix A, we
+compare the drift burst EPMs to those detected by Brogaard et al. (2018). Appendix B contains
+supplementary material. In Appendix C, we implement an alternative model to analyze trading
+activity based on Kirilenko et al. (2017), which largely conﬁrms the ﬁndings in the main text.
+4
+
+2 Institutional structure
+2.1 The NYSE Euronext market
+NYSE Euronext operates as an order-driven stock market with a lim it order book. The Paris
+division of the exchange includes all French instruments, including eq uities and derivatives. The
+daily trading schedule for the most liquid stocks is divided into diﬀerent segments. The session
+starts at 7:15 a.m. with a pre-opening phase, followed by an auction a t 9:00 a.m. The main
+trading phase starts at 9:00 a.m. and ends at 5:30 p.m. The daily sched ule is followed by a
+closing auction and a further trading session called “trading-at-las t,” where additional trades
+can be executed at the closing price. In this study, we only look at th e main trading phase,
+where the vast majority of trading activity is concentrated, thus opening and closing activity
+are excluded from our analysis.
+According to the Rule 4403/2 of Rule Book I (
+Euronext 2025), during the continuous trading,
+Euronext has in place a set of trading safeguards that prevents p rice movements outside certain
+thresholds. Speciﬁcally, traded prices are constrained into a “colla r,” deﬁned by a reference price
+plus/minus a percentage price change. If the execution of an orde r causes the breach of the collar,
+two outcomes are possible: 1) the order is partially executed inside t he collar, without halting
+the continuous trading; 2) the trading process is halted, and the m arket is put in “reservation
+mode.” Continuous trading resumes after a new auction.
+
+lly executed inside t he collar, without halting
+the continuous trading; 2) the trading process is halted, and the m arket is put in “reservation
+mode.” Continuous trading resumes after a new auction. None of th e EPMs included in our
+analysis trigger any of these measures. Thus, the collars are ineﬀe ctive against preventing the
+occurrence of our detected events.
+The Euronext group is the second-largest stock exchange in Euro pe (behind the LSE Group)
+5
+
+and ranks ﬁfth globally (the top four being NYSE, NASDAQ, the Japa n Exchange Group, and
+the LSE Group) according to data from the World Federation of Exc hanges and Statista. The
+French branch, Euronext Paris, accounts for approximately 70% of the total market capital-
+ization of the Euronext group, positioning the domestic market as a top 10 stock exchange
+worldwide on a standalone basis. Additionally, the markets exhibit leve ls of HFT activity com-
+parable to those in the United States. In our sample, HFTs account for roughly 80% of the euro
+trading volume. Brogaard (2010) reports that HFTs contribute to 68.5% of the dollar volume
+traded in the U.S. equities market, while Benos & Sagade (2012) ﬁnd a much smaller partici-
+pation in a small sample of U.K. stocks (27% of all trading volume). Menkveld (2014) posits,
+based on several sources, that HFT participation has grown from 30% to 70% in recent years.
+We conclude that the documented results for Euronext Paris ough t to generalise to other limit
+order book markets, especially given the relative size of the market and the signiﬁcance of the
+HFT activity therein. 5
+2.2 The contractual role of DMMs
+The market model of NYSE Euronext Paris relies on the provision of liq uidity by electronic mar-
+ket makers. Since 2011, the NYSE Euronext operates a program c alled Supplemental Liquidity
+Provision (SLP), where electronic traders can agree to post two- sided quotes during the day and
+
+ronic mar-
+ket makers. Since 2011, the NYSE Euronext operates a program c alled Supplemental Liquidity
+Provision (SLP), where electronic traders can agree to post two- sided quotes during the day and
+to provide a minimum passive execution volume. This program, describ ed below, identiﬁes our
+DMMs. The orders sent by DMMs must be electronic, use only their ow n funds, and exclude
+5As of 2013, NYSE Euronext Paris ranks ﬁfth in the world in terms of m arket capitalization based on
+information from the World Federation of Exchanges. Bellia et al. (2025) show that in our sample HFTs account
+for around 82% of the gross turnover.
+6
+
+customer orders. 6 We emphasize that the agreement does not contain any special ince ntive for
+DMMs to provide liquidity during market distress. However, a recent review report by the Eu-
+ropean Securities and Markets Authority (ESMA) is now looking into t his design (see ESMA
+2021).
+The SLP program was introduced in 2012 with the aim of protecting th e market share
+of NYSE Euronext against other trading venues, such as Chi-X Eur ope, BATS Europe, and
+Equiduct. The Flash News of March 26, 2012 ( NYSE-Euronext 2012 ) covers the details of
+the implementation of the scheme, while the Flash News of May 9, 2013 (NYSE-Euronext
+2013) introduces new requirements and also extends the possibility of jo ining the program to
+other market participants starting June 3, 2013. The program init ially required that each ﬁrm
+appointed as an SLP must commit to being present on one or more bas kets of stocks and fulﬁll
+the following three rules: 1) be present at least 95% of the time on bo th sides of the market
+during the continuous trading session; 2) display a minimum volume of a t least 5,000 euros at
+the best limit; and 3) be present at the best limit prices for each assig ned basket of securities,
+with a minimum time presence of 10% for each security. The program w as revised in June 2013
+with signiﬁcant changes to Rule 3. The exchange introduced a minimum passive execution level
+(liquidity provision) of 0.70% in terms of the aggregate monthly volume traded on Chi-X, BATS,
+
+n June 2013
+with signiﬁcant changes to Rule 3. The exchange introduced a minimum passive execution level
+(liquidity provision) of 0.70% in terms of the aggregate monthly volume traded on Chi-X, BATS,
+Turquoise, and NYSE Euronext, a minimum presence time of 25% at th e NYSE Euronext best
+limit for each assigned basket, weight-averaged over the entire ba sket and calendar month, and
+a minimum passive execution level of 0.1%, as well as a minimum presence time of 10%, at
+6In contrast to the NYSE (US) market, the NYSE Euronext Paris do es not have a single DMM for each stock,
+but relies on multiple DMMs that act as non-voluntarily liquidity provider s under a market making agreement
+with the exchange.
+7
+
+the NYSE Euronext best limit during the continuous trading session f or each security, weight-
+averaged over the calendar month.
+If DMMs meet the criteria, the minimum charge when they take liquidity is 0.30 bps and
+the maximum rebate for liquidity provision is 0.20 bps until May 2013, wh ich increased to 0.22
+bps from June 3, 2013. These amounts represent the bounds for fees and rebates. There are
+intermediate levels that can reduce the rebate or increase the fee s up to 0.55 bps per trade,
+depending on the time presence and passive executions. Indeed, 0 .55 bps per trade is the
+standard fee for both taking and providing liquidity. Additionally, the time priority of orders
+at the best limit price is not considered when determining SLP members ’ presence at the inside
+spread: as soon as there is an order at the top of the book ﬂagged as SLP, the presence is
+counted.
+Since August 1, 2012, the French government has imposed a ﬁnanc ial transaction tax (FTT)
+of 20 bps on the purchase of French equities, along with an HFT tax. HFTs can avoid this
+taxation by either not holding inventories or signing an agreement wit h the exchange to perform
+market-making duties. If, after a certain period (2 months in the in itial implementation), SLP
+members do not fulﬁl the requirements or their performance is belo w the commitment, the
+exchange terminates the contract. The member’s activity will then be charged at 0.55 bps per
+
+lementation), SLP
+members do not fulﬁl the requirements or their performance is belo w the commitment, the
+exchange terminates the contract. The member’s activity will then be charged at 0.55 bps per
+order executed, regardless of whether it provides or takes liquidit y. Other discounts for colocation
+and the dedicated data feed infrastructure will also be terminated if a member is excluded from
+the SLP program.
+Overall, with the time presence (95% of the time on both sides of the b ook, at any level) and
+top of the book presence (10% of the time, weighted average acro ss one month), the requirements
+8
+
+provide substantial leeway for DMMs to move their quotes to a lower level or withdraw from
+the market in the case of extreme price movements without incurrin g substantial penalties.
+3 Data description
+The database at our disposal is from the Base Europ´ eenne de Don n´ ees Financi` eres ` a Haute
+Fr´ equence (BEDOFIH). It is composed of tick-by-tick order-level data for 37 liquid stocks that
+are included in the CAC 40 Index in 2013.
+7 We can track the entire history of all orders, from the
+initial submission to the execution or cancellation, with a timestamp at the microsecond level.
+Each trade struck during the main trading phase has a ﬂag indicating the initiator, allowing
+us to identify which trader-account is trading aggressively (deman ding liquidity) and passively
+(supplying liquidity) for the matched order.
+Euronext requires each trader to ﬂag every order in compliance wit h the Rule Book I, ac-
+cording to the following list of possible categories (see NYSE-Euronext 2012 ): orders submitted
+pursuant to the Supplemental Liquidity Provision agreement (MM); own account (OWN) for
+proprietary trading; account of an aﬃliate, or when operating fro m a parent company of the
+Euronext main member (PARENT); 8 account of a third party (CLIENT), when the Euronext
+member grants access to the client via an Automated Routing Syste m or through sponsored
+7Three stocks on the CAC 40 Index are excluded from our analysis: A rcelor Mittal, Gemalto, and Solvay,
+
+ronext
+member grants access to the client via an Automated Routing Syste m or through sponsored
+7Three stocks on the CAC 40 Index are excluded from our analysis: A rcelor Mittal, Gemalto, and Solvay,
+since their main trading venue is not the Paris branch of NYSE Eurone xt.
+8From Rule 3.4 of Rule Book I, the “Relevant Euronext Market Undert aking may consider an application
+from a Member who wishes to obtain direct access to an Euronext Ma rket for its Aﬃliate(s). The Aﬃliates are
+a person who (i) owns 95 per cent or more of the Member; or (ii) is own ed 95 per cent or more by the Member;
+or (iii) is owned 95 per cent or more by a third party who also owns 95 pe r cent or more of the Member.”
+9
+
+access;9 or orders submitted for retail investors only. 10
+An intriguing feature of this database is that individual orders from the stock exchange are
+labelled with a high-frequency trading (HFT) identiﬁcation ﬂag from t he French stock market
+regulator AMF. The classiﬁcation is based on the lifetime of cancelled o rders. A trader is
+classiﬁed with the HFT mark if one of two criteria is met:
+1. The average lifetime of its cancelled orders is less than the averag e lifetime of all orders in
+the book and if it has cancelled at least 100,000 orders during the yea r.
+2. The participant must have cancelled at least 500,000 orders with a lifetime of less than 0.1
+second (i.e., the participant quickly updates the orders in the limit ord er book) and the
+top percentile of the lifetime of its cancelled orders must be less than 500 microseconds
+(i.e., the participant regularly uses fast access to the market).
+The HFTs are further divided into two sub-categories: pure HFT co mpanies, such as Citadel or
+Virtu, and investment banks with HFT activity (named “mixed” by AMF ), such as Goldman
+Sachs. The classiﬁcation is revised yearly, and the groups are mutu ally exclusive.
+[Figure 1 about here.]
+9Euronext members can grant access to the market and the facilitie s like co-location, via a sponsored access,
+according to Rules 3.2 and 3.3 of Rule Book I. However, “All business u ndertaken by a Client via an Automated
+
+grant access to the market and the facilitie s like co-location, via a sponsored access,
+according to Rules 3.2 and 3.3 of Rule Book I. However, “All business u ndertaken by a Client via an Automated
+Order Routing System or via Sponsored Access on an Euronext Mar ket will be done in the name of the Member
+and the Member retains full responsibility for the conduct of all suc h business” (Rule 3201/2).
+10Orders for retail investors are ﬂagged as RLP (Retail Liquidity Pro vider) or RMO (Retail Member Organi-
+sation) and belong to a speciﬁc program designated for them. Euro next member banks and brokers can execute
+their retail orders ﬂow via the Retail Matching Facility (RMF) against new price-improving liquidity provided
+by RLPs. Details about the program are available at https://www.eur onext.com/en/media/4053/download.
+However, the amount of liquidity provided via this channel is not visible in the central limit order book and is
+only accessible to retail clients under the RMO. The amount of trade s and orders categorized with this ﬂag is
+negligible compared to the overall market activity carried out by the remaining trading accounts.
+10
+
+We merge the AMF deﬁnition of HFT with the U.S. Securities and Exchange Commission
+(2014) memorandum, which adds proprietary trading as a typical featur e of HFTs, by grouping
+traders into the following categories (also displayed in Figure 1):
+• Pure HFT companies—according to AMF—are labelled by their trading c lassiﬁcation, as
+PURE-HFT MM, PURE-CLIENT, and PURE-HFT OWN. We remove the ﬂa g “HFT”
+from clients given that the AMF classiﬁcation does not guarantee th at these trades are
+proprietary. The DMMs in this group are PURE-HFT MM.
+• Mixed HFT companies—according to AMF—are labelled IB-HFT MM, IB-C LIENT, IB-
+HFT OWN, and IB-HFT PARENT. Again, we remove the ﬂag “HFT” from the clients.
+We prefer the label “IB” to “MIXED,” because we believe it adds less c onfusion in the
+naming convention of this trader category. The DMMs in this group a re IB-HFT MM.
+• Non-HFTs—according to AMF—are labelled NON-HFT CLIENT and NON- HFT OWN.
+There are no DMMs in this last category.
+We leave out a few trader categories with negligible trading activity (O thers), accounting for
+only 0.56% of total volume. Figure 1 shows that most of the trading activity in our sample is
+due to PURE-HFT MM, IB-HFT MM, IB-CLIENT, and IB-HFT OWN. Tog ether, they account
+for roughly 76% of the total double-counted volume (buy and sell). Non-HFTs account for 18%.
+The rest is divided among PURE-HFT OWN, PURE-CLIENT, IB-HFT PAR ENT, and Others.
+11
+
+4 EPM detection
+The detection of EPMs is based on a recently developed drift burst a pproach proposed by
+Christensen et al. (2022), which supports the notion that an EPM is (relative to the level of
+volatility) a large movement in the price over a short time horizon.
+[Figure 2 about here.]
+To illustrate our approach, we look at an example of a detected even t. In the top panel of
+Figure 2, we report the evolution of the price of Technip on June 25, 2013. A round 11:50 am
+the price starts to decline rapidly until it reaches a minimum a few seco nds after 12:05 pm. The
+return over the 15-minute window is -2.35%. After the crash, the p rice retraces somewhat. This
+is an example of an EPM that takes the form of a so-called “ﬂash cras h”: a large price drop in a
+short time followed by a partial recovery. The intermediate panel s hows the drift burst statistic
+of Christensen et al. (2022). The trough of the test statistic coincides with the trough of the
+price.
+Figure 2 highlights an important diﬀerence between our notion of an EPM comp ared to
+Brogaard et al. (2018). Their detection algorithm consists of extracting—often disconn ected—
+10-second absolute returns exceeding the 99.9th percentile of th e distribution of such returns for
+a stock. However, even though the cumulative price drop is large du ring the drift burst EPM
+displayed in Figure 2, the individual high-frequency returns, charted in the bottom pa nel, are
+
+eturns for
+a stock. However, even though the cumulative price drop is large du ring the drift burst EPM
+displayed in Figure 2, the individual high-frequency returns, charted in the bottom pa nel, are
+typically small and in line with the overall volatility of that day. The large st negative 10-second
+return (-0.25%) occurs inside the volatility cluster before 11:00 am, where the price level did not
+change much in the surrounding 30-minute window, as indicated by th e shaded area. Hence, in
+12
+
+this instance, Brogaard et al. (2018) identify the interval with high volatility (or jumps) before
+the crash. 11
+To explain the mechanics of our EPM identiﬁcation procedure in more d etail, we need a
+minimal amount of notation. We assume that ( pt)t≥0 denotes the log-price process of an asset,
+which evolves according to the dynamic:
+dpt = µtdt + σtdWt + dJt, (1)
+where µt is the drift, σt is the volatility, Wt is a standard Brownian motion, and Jt is a jump
+process. Such a description of the instantaneous price change is s tandard in the continuous-time
+literature. The volatility and jump component are central to Brogaard et al. (2018), while we
+concentrate on the drift.
+Suppose the log-price is observed on [0 , T ] at irregular time points 0 = t0 < t 1 < . . . < t n = T ,
+(pti)n
+i=0. An intuitive estimator of the drift is given by
+ˆµt = 1
+h
+n∑
+i=1
+K
+(
+ti−1 − t
+h
+)
+rti, (2)
+where rti = pti − pti−1, for i = 1 , . . . , n is the discretely sampled log-return on [ ti−1, ti], K is a
+kernel function, and h is a bandwidth.
+11Appendix A provides a broader in-sample comparison of EPMs detected by the d rift burst test statistic with
+those extracted by Brogaard et al. (2018) showing that they largely constitute disjoint sets with limited overla p,
+in line with the example.
+13
+
+Christensen et al. (2022) propose the drift burst test statistic:
+Tt =
+√
+h
+K
+ˆµt
+ˆσt
+, (3)
+where
+ˆσt =
+
+
+
+√
+1
+h
+n∑
+i=1
+K
+(
+ti−1 − t
+h
+)
+r2
+ti (4)
+is an estimator of the volatility and K =
+∫ ∞
+−∞ K 2(x)dx.
+The ratio ˆµt/ˆσt measures the current velocity of the price. In normal markets th e ratio is
+small, as evident from Figure 2 in the morning and afternoon. However, if the price starts to
+trend too fast relative to the volatility (i.e., price changes are direct ional), the ratio becomes
+large, as also evident from Figure 2 during the crash at noon. Christensen et al. (2022) formalize
+this idea by assuming that there exists a “drift burst” time point τdb, where µt → ±∞ as
+t → τdb. They show that at such points the absolute value of the test stat istic diverges to
+inﬁnity. Otherwise, it follows a standard normal distribution. It can therefore be used to
+identify drift burst EPMs when the test statistic is larger than an ap propriate quantile of the
+standard normal distribution. 12
+Christensen et al. (2022) show that the drift burst test statistic is robust to jumps. As ev ident
+from equation (3), it also controls for volatility. Hence, our EPM measure does not ide ntify either
+jumps or large volatility, but only directional price moves. Furtherm ore, the procedure is robust
+12To implement the drift burst test statistic, we set K(x) = exp( −|x|)/BD (x ≤ 0), such that ˆ µt and ˆσt are
+
+arge volatility, but only directional price moves. Furtherm ore, the procedure is robust
+12To implement the drift burst test statistic, we set K(x) = exp( −|x|)/BD (x ≤ 0), such that ˆ µt and ˆσt are
+computed with a left-sided exponential kernel based on backward -looking data to avoid a look-ahead bias. We
+employ a h = 5-minute bandwidth for the mean and a h = 25-minute bandwidth for the volatility. The
+transaction price record is pre-averaged following Jacod et al. (2009) to soften the impact of microstructure
+noise. The volatility estimator is robustiﬁed with a HAC-type correct ion. This is the default choice in the
+MATLAB code made available by Christensen et al. (2022).
+14
+
+to market microstructure frictions, such as bid-ask bounce. Mor eover, extensive Monte Carlo
+simulations in their paper show that the test is correctly sized, so th at for suﬃciently high values
+of the test statistic, the probability of contamination by false posit ives is essentially zero.
+We compute the drift burst statistic every second during the trad ing session, searching for
+downward EPMs after 9:30 am. We exploit the simulation-based algorit hm from Christensen et al.
+(2022) to set a critical value. We follow Brogaard et al. (2018) and use a 99.9% conﬁdence level,
+which implies an average critical value of -4.9. A test statistic below th is barrier is labelled a
+drift burst EPM.
+To calculate the duration of an EPM, we denote by ttrough the time point associated with
+the lowest (most negative) value of the drift burst test statistic d uring a signiﬁcant event. The
+beginning of the EPM, which we call tstart, is identiﬁed as the latest time prior to ttrough that the
+test statistic crosses the barrier -1. The diﬀerence τ = ttrough − tstart is the duration of the event.
+The drift burst EPM is assumed to stop at tend = ttrough + 3τ . The interval from ttrough to tend is
+called the recovery. We further include a pre-event window startin g at time tpre−event = tstart −2τ .
+Our analysis of each EPM is based on price and order information from tpre−event to tend.13
+5 Empirical investigation
+In this section, we ﬁrst present a brief description of the drift bur st EPM sample.
+
+r analysis of each EPM is based on price and order information from tpre−event to tend.13
+5 Empirical investigation
+In this section, we ﬁrst present a brief description of the drift bur st EPM sample. Then, we
+test competing theories about DMM liquidity provision during EPMs usin g a V AR model for
+trading imbalances. Finally, we investigate whether DMM behavior dep ends on the EPMs or
+13Below we normalize the time unit of each drift burst EPM with the avera ge duration across events. That is,
+each trade time (after subtracting tstart) is multiplied by the average duration and divided by the actual durat ion
+of the event. The resulting time unit, still in minutes, is indicated as “a verage elapsed time.”
+15
+
+rather high selling pressure.
+5.1 Anatomy of a drift burst EPM
+Table
+1 reports the descriptive statistics of the 148 identiﬁed downward E PMs extracted with
+the drift burst procedure. Moreover, an overview of each individu al event is available in Table
+B.1 in Appendix B, while in Table B.2, we aggregate them by stock, together with some ﬁrm-
+level information. This reveals that drift burst EPMs occur in 34 of t he 37 CAC 40 Index stocks
+included in our sample. The largest number of EPMs in a single stock is 10 for Alstom, while
+the smallest number is 1 for Legrand. There is no obvious relationship among the number of
+EPMs and the stocks’ market capitalization, volatility, or average r eturn.
+The duration of a drift burst EPM ranges anywhere from a few minut es to three-quarters
+of an hour, with a typical duration of 9 .5 minutes. The price concedes by -1.35%, on average,
+which is an enormous move over such a short time interval. In the larg est drop, which occurred
+in ST Microelectronics on March 12, 2013, the price changed by -5.18 % over 6.5 minutes, while
+during the smallest one, which occurred in Pernod Ricard on October 2, 2013, the price declined
+by -0.37% over 3.1 minutes. Table 1 also shows that while the duration of a drift burst EPM
+represents only 1.87% of the trading day, it accounts for 5.43% of t he daily trading volume,
+nearly 6% of the transaction count, and roughly 21% of the sell-side activity during that day.
+[Table 1 about here.]
+
+only 1.87% of the trading day, it accounts for 5.43% of t he daily trading volume,
+nearly 6% of the transaction count, and roughly 21% of the sell-side activity during that day.
+[Table 1 about here.]
+Figure 3 presents a graphical representation of the temporal placement of the drift burst
+EPMs over the trading day and the year. This shows that the event s are more or less randomly
+16
+
+scattered over time, both intraday and interday, without any ten dency to cluster around speciﬁc
+times. In a couple of cases—visible in the ﬁgure—drift burst EPMs aﬀe ct a large number of
+stocks in the cross-section, namely on April 17, 2013 (with 14 stoc ks involved) and on September
+3, 2013 (with 13 stocks involved). 14,15 In the remainder of the text, we label these 27 events as
+“systematic,” while the rest (121 events) are labelled “unsystemat ic.”16
+[Figure 3 about here.]
+In Figure 4, we plot the average cumulative return for unsystematic and syst ematic drift burst
+EPMs, together with a 10%–90% quantile-band computed across ev ents. This ﬁgure provides a
+qualitative description of the price process during a drift burst EPM . It is consistent with a drift
+burst EPM being partly information-based, as it leads to a permanen t price change. However,
+for systematic events there is also evidence of an ineﬃcient market response due to overshooting.
+[Figure 4 about here.]
+We deﬁne, for each event, the permanent price impact (PPI) as:
+PPI = ptend − ptpre−event. (5)
+14Figure B.1 in Appendix B shows the development of the equity prices for the 37 companies inc luded in our
+sample during these events.
+15On April 17, 2013, the French government announced new auster ity budget measures that morning due
+to a pessimistic revision of GDP growth; see, e.g., https://lexpansion .lexpress.fr/actualite-economique/ce-qu-il-
+faut-retenir-du-nouveau-plan-budgetaire-de-la-france 1404490.html.
+
+s that morning due
+to a pessimistic revision of GDP growth; see, e.g., https://lexpansion .lexpress.fr/actualite-economique/ce-qu-il-
+faut-retenir-du-nouveau-plan-budgetaire-de-la-france 1404490.html. Meanwhile, to our knowledge the event on
+September 3, 2013 cannot be attributed to the release of any sign iﬁcant news. However, crashes in several stocks
+without news can be explained by liquidity spillover ( Cespa & Foucault 2014 ).
+16As evident from Figure 3, there are additional drift burst EPMs aﬀecting more than one sto ck. However,
+we do not label these as systematic, because the number of involve d stocks is rather small (2–4).
+17
+
+That is, the log-return from start to ﬁnish of each event. 17 Furthermore, the downward price
+impact (DPI) of the drift burst EPM is given by
+DPI = pttrough − ptpre−event, (6)
+while the transient price impact (TPI) is:
+TPI = DPI − PPI = pttrough − ptend. (7)
+To understand who contributes to the PPI and TPI, we further su bdivide the drift burst EPM
+(from tstart to ttrough) into three stages with equal duration: early, intermediate, and la te. This
+is also indicated in Figure 4.
+In Panel A of Figure 5, we look at the relation between the PPI and TPI. PPI is mostly
+negative, which is again indicative of informed trading, while TPI is alway s negative (with a
+single exception), which is again indicative of overshooting. The aver age PPI and TPI are both
+highly signiﬁcantly negative, which holds for unsystematic and syste matic drift burst EPMs
+separately. Indeed, on average, TPI is -0.78% for a systematic ev ent, or about half of the PPI,
+and it is -0.33% for an unsystematic event, or roughly one third of th e PPI. Panel B of Figure 5
+includes a scatter of DPI and the duration of the drift burst EPM, w hich shows a strong negative
+association: the longer a drift burst EPM lasts, the more negative is the DPI.
+17Taking the price at a later time point to deﬁne the post-event eﬃcien t price follows the convention in the
+market microstructure literature, e.g., when estimating eﬀective s preads or measuring price discovery, see Glosten
+(1987) or Barclay & Warner (1993).
+
+vent eﬃcien t price follows the convention in the
+market microstructure literature, e.g., when estimating eﬀective s preads or measuring price discovery, see Glosten
+(1987) or Barclay & Warner (1993). As a robustness check, we also employed the closing price at the e nd of the
+day or the next day, as in van Kervel & Menkveld (2019), but this had no discernible eﬀect on the analysis.
+18
+
+[Figure 5 about here.]
+5.2 Trading imbalance
+In this subsection, we investigate the trading behavior of DMMs dur ing drift burst EPMs. We
+provide an empirical answer to the main research question of the pa per: Do DMMs provide
+liquidity, in keeping with their role, or do they follow their “HFT instinct” ? Their behavior is
+synthesised by their trading imbalances (i.e., the net euro amount of their buying and selling
+volume), which we analyze with a V AR model.
+We break the event window of identiﬁed drift burst EPMs into non-ov erlapping 10-second
+intervals, adopting the time frame of
+Brogaard et al. (2018). We then analyze the evolution
+of the trading imbalance of each trader group. We then calculate th e euro volume of a single
+trade t, which is denoted by Vt = Qt · Pt, where Qt is the number of shares traded and Pt is the
+transaction price. The trading imbalance for trader category i over a given period is then:
+T I i
+period =
+∑
+t∈period
+st · Vt, (8)
+where st = +1 for a buy order and st = −1 for a sell order.
+The interpretation is as follows. A negative trading imbalance before the trough means that a
+trader group contributes to the price drop with selling activity (eith er aggressively or passively),
+while a positive trading imbalance after the trough indicates it is helping the price to recover
+(either aggressively or passively).
+18
+18The measure is equivalent to the one employed by Brogaard et al. (2018), except they use the number of
+traded shares, Qt.
+
+es it is helping the price to recover
+(either aggressively or passively).
+18
+18The measure is equivalent to the one employed by Brogaard et al. (2018), except they use the number of
+traded shares, Qt. We further standardize inventories at the stock level to make th em comparable across EPMs.
+19
+
+We estimate a G-dimensional vector autoregression (V AR) for the trading imbalan ce across
+trader categories, which equation-by-equation reads as follows:
+T I i
+j,t = αi
+0 + FEstock +
+5∑
+s=1
+βi
+sDs
+j,t +
+G∑
+g=1
+5∑
+l=1
+γg,lT I g
+j,t−l + αiControlsj,t + ǫi
+j,t, (9)
+where T I i
+j,t denotes the trading imbalance of trader category i, computed for the t-th 10-second
+interval of the j-th event, FE stock are stock ﬁxed eﬀects, G is the number of trader categories,
+Ds
+j,t are dummy variables indicating the stage of the drift burst EPM with s ∈ {pre-event, early
+drop, intermediate drop, late drop, recovery }. For example, Dlate drop
+j,t = 1 if the t-th interval of
+the j-th event belong to the period of the late drop, and is 0 otherwise. W e add ﬁve lagged values
+of the trading imbalances of each trader category g to account for serial correlation. Controls j,t
+include the contemporaneous 10-second return and log-euro volu me, plus the percentage bid-ask
+spread.
+19 ǫi
+j,t is an error term.
+We estimate the model after pooling observations into unsystemat ic and systematic drift
+burst EPMs. The reported standard errors are heteroskedast icity-robust and clustered at the
+stock and date level. In view of the 10-second time interval require d to aggregate the trading
+imbalances, we exclude drift burst EPMs with a duration smaller than 1 00 seconds from the
+regression.
+Table
+2 reports selected coeﬃcient estimates of the V AR system. We rest rict attention to
+
+ading
+imbalances, we exclude drift burst EPMs with a duration smaller than 1 00 seconds from the
+regression.
+Table
+2 reports selected coeﬃcient estimates of the V AR system. We rest rict attention to
+the most active trader categories and group NON-HFT into a single c ategory.20 In Panel A, we
+report estimates for the unsystematic drift burst EPMs. Here, I B-HFT OWN displays signiﬁcant
+19As for the inventories, we standardize non-dummy variables at the stock level to make them more homoge-
+neous.
+20The full version of the table with all trader categories is presented in Table B.3 in Appendix B.
+20
+
+selling activity at the beginning of the event, followed in a later stage b y IB-CLIENT. IB-HFT
+MM supports the market and supplies liquidity in all stages of the drift burst EPM, in agreement
+with their role as DMMs. PURE-HFT MM are also liquidity providers, but t o a lesser degree
+in terms of statistical signiﬁcance. After the trough of the event , NON-HFT starts signiﬁcantly
+buying the market during the partial recovery, arguably to take a dvantage of the discounted
+price.
+In Panel B, we show the results for the systematic drift burst EPM s. The results are striking.
+In line with the above, the coeﬃcients on the early drop dummy and th e intermediate drop
+dummy are negative and statistically signiﬁcant for IB-HFT OWN. How ever, as opposed to the
+above, the estimated coeﬃcient for the late drop dummy is negative and statistically signiﬁcant
+for IB-HFT MM, while the intermediate drop dummy is negative and sta tistically signiﬁcant
+for PURE-HFT MM. By contrast, for NON-HFT, the coeﬃcients are positive and statistically
+signiﬁcant at all stages of the drop. We interpret these results as follows: The inception of
+the drift burst EPM can be associated with selling pressure from IB- HFT OWN (and also IB-
+PARENT as shown in Appendix B). In a systematic event, this is—correctly—interpreted by
+DMMs as informed trading, so both the PURE-HFT MM and, especially, IB-HFT MM start
+to lean-with-the-wind by following suit with opportunistic selling activit y. This is, however, in
+
+ly—interpreted by
+DMMs as informed trading, so both the PURE-HFT MM and, especially, IB-HFT MM start
+to lean-with-the-wind by following suit with opportunistic selling activit y. This is, however, in
+contradiction to their role as DMMs. On the other side, NON-HFT abs orbs some of the selling
+pressure in all stages of the event.
+[Table 2 about here.]
+Figure 6 illustrates the dynamic evolution of the average trading imbalance, c omputed as in
+equation ( 8), during a drift burst EPM. Panel A (Panel B) reports the results for unsystematic
+21
+
+(systematic) events. As a visual benchmark, we add the average cumulative return from Figure 4
+as a grey-colored line. The ﬁgure shows how the selling activity of IB- HFT OWN (together with
+IB-CLIENT in the unsystematic setting) can be associated with the beginning of the downturn.
+This trading is informed, since it shifts the price toward a lower funda mental value. The graph
+further illuminates the diﬀerence in the behavior of PURE-HFT MM and IB-HFT MM.
+[Figure 6 about here.]
+In Figure 7, we show a histogram of the one-minute changes in the trading imbala nces of
+IB-HFT MM, PURE-HFT MM, and IB-HFT OWN during diﬀerent stages o f the drop and
+recovery for systematic drift burst EPMs. 21 The ﬁgure shows that IB-HFT OWN mostly sell
+at the beginning of the drop, whereas IB-HFT MM start selling immedia tely thereafter. In
+particular, IB-HFT MM are always selling in the late drop. In addition, t he ﬁgure shows that
+PURE-HFT MM sell at the intermediate stage. These results provide further support for the
+notion that PURE-HFT MM tend to warehouse limited inventory, since their changes in trading
+imbalances are typically much smaller in magnitude and close to symmetr ic around zero.
+[Figure 7 about here.]
+To corroborate our analysis, we next dissect the trading imbalance into aggressive and passive
+trades (i.e., those trades where the trader group initiated (aggre ssive) or accepted (passive) the
+order).
+
+corroborate our analysis, we next dissect the trading imbalance into aggressive and passive
+trades (i.e., those trades where the trader group initiated (aggre ssive) or accepted (passive) the
+order). Thus, the imbalance of trades initiated ( D = demand) and accepted ( S = supply) by
+21Figure B.2 in Appendix B reports the associated results for unsystematic drift burst EPM s.
+22
+
+trader category i over a period is given by:
+DI i
+period =
+∑
+t∈period
+st · Vt · I(t initiated by i) and SI i
+period =
+∑
+t∈period
+st · Vt · I(t accepted by i),
+(10)
+where I(·) is the indicator function.
+22
+Table 3 provides selected coeﬃcient estimates of the V AR model from equa tion ( 9), where
+we replace trading imbalance as the dependent variable with the aggr essive (left-hand side of the
+table) and passive (right-hand side of the table) trading imbalances .23 Looking at the left-hand
+side with aggressive trading, IB-HFT OWN shows negative and signiﬁc ant coeﬃcients for both
+the early and intermediate drops for both unsystematic and syste matic drift burst EPMs. That
+this activity ﬂows in the direction of the price change follows from the positive and signiﬁcant
+coeﬃcient on Return. In a systematic event, this is followed signiﬁca ntly in the late stage of the
+drop by IB-HFT MM. By contrast, for the passive trades, which ar e in the opposite direction of
+the return, the estimated coeﬃcients show that only for unsyste matic drift burst EPMs do IB-
+HFT MM oﬀer immediacy during all stages. For a systematic event, DM Ms (both PURE-HFT
+MM and IB-HFT MM) do oﬀer immediacy, but only to the buy side, since t he sign in front
+of the coeﬃcients of their passive trades is mostly negative (and sig niﬁcant for the late drop).
+Overall, these results conﬁrm the graphical assessment from Figu re 6. This therefore indicates
+
+front
+of the coeﬃcients of their passive trades is mostly negative (and sig niﬁcant for the late drop).
+Overall, these results conﬁrm the graphical assessment from Figu re 6. This therefore indicates
+that DMMs, even if receiving compensation for providing liquidity, act ually consume it when
+the drift burst EPMs are systematic.
+[Table 3 about here.]
+22Note that T I i
+period = DI i
+period + SI i
+period.
+23The full version of the table with all trader groups is reported in Tab les
+B.4 – B.5 in Appendix B.
+23
+
+Is the behavior of DMMs during drift burst EPMs aﬀected by their pr evious inventory? Is
+it aﬀected by the inventory of other traders? To shed light on this q uestion, we conduct a
+cross-sectional analysis of trading imbalances by estimating the fo llowing regression:
+T I i
+Late,k = αi
+0 + βiT I i
+Intermediate+Early,k +
+∑
+j
+γijT I j
+Intermediate+Early,k + αiControlsk + ǫi
+k, (11)
+where i and j denote trader categories, T I •
+period,k is the trading imbalance of group • for the
+k-th drift burst EPM in a given period, Controls k is a vector of control variables and ǫi
+k is the
+error term.
+The dependent variable in equation (
+11) is the trading imbalance in the late stage of the drift
+burst EPM for DMMs (i.e., i = PURE-HFT MM or IB-HFT MM). We add its lagged value to
+capture serial correlation. We further include the lagged trading im balance from IB-HFT OWN
+and IB-CLIENT (i.e., j = IB-HFT OWN and IB-CLIENT). As in equation ( 9), the control
+variables are the contemporaneous return, log-euro volume, and the average percentage bid-ask
+spread, measured from the start of the drift burst EPM to the be ginning of the late stage. Thus,
+all explanatory variables are lagged in time relative to the dependent variable. We are mostly
+interested in the sign of the γ coeﬃcients. A positive sign means that DMMs start selling in
+the late stage of the drift burst EPM, when other traders were pr eviously selling. This can be
+
+are mostly
+interested in the sign of the γ coeﬃcients. A positive sign means that DMMs start selling in
+the late stage of the drift burst EPM, when other traders were pr eviously selling. This can be
+interpreted as DMMs adapting their trading activity in the lean-with- the-wind direction based
+on observed order ﬂow.
+Table 4 shows the coeﬃcient estimates of equation ( 11). The results support the role of
+PURE-HFT MM and IB-HFT MM as DMMs for unsystematic drift burst E PMs. Here, the
+24
+
+estimated γ coeﬃcients are negative, so capital is ﬂowing from the DMMs toward s competing
+traders. The exception is the liquidity from PURE-HFT MM to IB-CLIE NT, which has a
+positive coeﬃcient estimate, but it is insigniﬁcant. As expected, we o bserve a strong persistence
+in trading imbalances. Moreover, the positive eﬀect of the bid-ask s pread suggests that DMMs
+hold positive (or less negative) trading imbalances in more illiquid stocks , which aligns with the
+function of a market maker during downward price pressure in such stocks. When the drift burst
+EPM is systematic, the outcome is mostly unchanged for PURE-HFT M M, which is consistent
+with the evolution of their trading imbalances in Figure 6. However, it is a completely diﬀerent
+story for IB-HFT MM, who prey on the previous order ﬂow from IB- HFT OWN and IB-CLIENT.
+This in turn leads to negative serial correlation in own trading imbalanc es. Our cross-sectional
+analysis thus corroborates our previous ﬁndings.
+[Table 4 about here.]
+We next examine whether DMMs change their trading behavior during drift burst EPMs com-
+pared to normal times. To perform this investigation, we borrow th e framework of Kirilenko et al.
+(2017), who employ an error correction model to changes in inventory of diﬀerent trader groups.
+They show that HFTs did not alter their behavior during the Flash Cra sh of May 6, 2010. We
+apply their econometric model to the 148 drift burst EPMs in our sam ple. The results of the
+
+trader groups.
+They show that HFTs did not alter their behavior during the Flash Cra sh of May 6, 2010. We
+apply their econometric model to the 148 drift burst EPMs in our sam ple. The results of the
+full analysis are presented in Appendix C, but the main message is in line with our previous
+ﬁndings, namely that DMMs modify their trading activity during syste matic events, but not
+during unsystematic ones.
+[Table 5 about here.]
+25
+
+What motivates the change of strategy of DMMs and their switch to selling during a sys-
+tematic event? If the sudden demand for immediacy is due to private information (some-
+thing we can establish, on average, ex-post), then it is rational fo r DMMs to sell, as postu-
+lated by the back-running theory of Yang & Zhu (2020) or the predatory trading theory of
+Brunnermeier & Pedersen (2005). Support to this hypothesis is provided by Table 5, which
+reports the average proﬁt (in euros) during a drift burst EPM for each trader category, together
+with an estimate of the standard error. The table shows that IB-H FT MM loses a signiﬁcant
+amount of money, on average 2799.72 euros, by oﬀering immediacy d uring an unsystematic drift
+burst EPM. They transfer this money, as expected, to IB-HFT OW N, who trade on information
+by selling at a higher price. It can be argued that DMMs still proﬁt on a verage, since providing
+liquidity in tranquil times should be enough to cover these losses. How ever, if they have the
+option to fulﬁll the requirements of the SLP program without facing large losses, it is perfectly
+rational for them not to provide liquidity during distress. That is wha t they seem to be doing,
+since Table 5 shows that IB-HFT MM avoid losses during systematic events, eﬀec tively passing
+the “hot potato” to slow traders.
+To provide additional insight on this important question, we calculate the proﬁt and loss
+
+s that IB-HFT MM avoid losses during systematic events, eﬀec tively passing
+the “hot potato” to slow traders.
+To provide additional insight on this important question, we calculate the proﬁt and loss
+(P&L) gross of fees and rebates in each 10-second interval as th e monetary gain or loss on (1)
+new trades struck in that window and (2) existing positions from the previous 10-second interval,
+assuming a zero initial inventory at the beginning of each event. The mark-to-market is based
+on the most recent transaction price available at the end of each int erval. We then estimate a
+26
+
+V AR reminiscent to equation ( 9):
+PnLi
+j,t = αi
+0 + FEstock + βiDj,t +
+G∑
+g=1
+5∑
+l=1
+γg,lPnLg
+i,t−l + αiControlsj,t + ǫi
+j,t, (12)
+where PnL i
+j,t is the P&L for trader i in the t-th 10-second interval of the j-th event, FE stock are
+stock ﬁxed eﬀects as before, and Dj,t is a dummy, which is equal to one for the entirety of the
+drift burst EPM (spanning from the beginning of the pre-event unt il the end of the recovery),
+and is zero otherwise. The control variables and lags are as in equat ion (
+9). We primarily look
+at the βi coeﬃcient. A negative value suggests a trader is losing money during a drift burst
+EPM, and vice versa.
+Table 6 reports the output of the estimation. In line with our prior expecta tions, the table
+shows that IB-HFT MM consistently lose money during unsystematic drift burst EPMs. On the
+ﬂip side, PURE-HFT MM actually make a smaller amount, although the lat ter is not statistically
+signiﬁcant. By contrast, during a systematic event, both IB-HFT MM and PURE-HFT MM
+reap substantial proﬁts, which is mainly at the expense of NON-HFT . The other groups earning
+during a systematic event are IB-HFT OWN and, as shown in Appendix B, IB-HFT PARENT,
+which arguably crystallize their private information. Interestingly, IB-CLIENT suﬀers on their
+behalf, albeit to a much smaller extent.
+[Table 6 about here.]
+Note that the compensation from the market making agreement do es not oﬀer much of an
+economic incentive for DMMs in and of itself.
+
+their
+behalf, albeit to a much smaller extent.
+[Table 6 about here.]
+Note that the compensation from the market making agreement do es not oﬀer much of an
+economic incentive for DMMs in and of itself. We estimate the average revenue earned by
+supplying liquidity during a drift burst EPM in our sample to be about 30 e uro and 25 euro for
+27
+
+PURE-HFT MM and IB-HFT MM. 24 Indeed, even if the DMMs had rested passively on the bid
+side in all transactions during the detected drift burst EPMs, the average revenue is a meager
+160 euro, which pales in comparison to the potential losses. This est imate does not include the
+standard gain from market making activity (i.e., the bid-ask spread) , which is absorbed directly
+into the P&L measure in Table 6.
+Nevertheless, DMMs still make proﬁts, even if they suﬀer an occas ional loss during a sys-
+tematic drift burst EPM. We calculate the 2013 cumulative proﬁt for DMMs and ﬁnd that, not
+surprisingly, the DMM business is indeed quite valuable. Their gross pr oﬁts are around 19 mil-
+lion euros at the end of the year, which is split into 13.5 million euros for P URE-HFT MM and
+5.5 million euros for IB-HFT MM. In net terms (including fees), these y early amounts reduce to
+11.6 million euros and 4.9 million euros, respectively. 25
+In essence, the compensation from their liquidity provision during no rmal times appears to
+be large enough to oﬀset such losses. However, if DMMs suspect th e order ﬂow is coming from
+informed trading and they can otherwise meet the requirements of their contractual agreement
+with the exchange without penalties, it is of course perfectly ration al for them to withdraw
+from the market or even switch to a predatory lean-with-the-wind strategy, choosing to pass the
+
+agreement
+with the exchange without penalties, it is of course perfectly ration al for them to withdraw
+from the market or even switch to a predatory lean-with-the-wind strategy, choosing to pass the
+24We estimate these numbers by multiplying for each drift burst EPM th e liquidity supplied by a DMM with
+the relative compensation, which is taken to be 0.20 bps per euro volu me (in 2013, this changed from 0.20 to
+0.22 and back again to 0.20), and then averaging across events.
+25Since we do not observe the activity of individual DMMs, we have to re ly on the aggregate proﬁt proxy of
+all DMMs as a group under the assumption that every DMM fulﬁls their obligations for the calculation of fees
+(i.e., they all pay the lowest fee and receive the highest rebate). In the contractual agreements with SLP and
+DMM, the fees for DMMs are 0.30 bps for taking activity (aggressive trades) and a rebate (i.e., they receive
+a compensation) for liquidity provision (passive trades), which was 0 .20 bps until May 2013, increased up to
+0.22 bps in June 2013, and reverted back to 0.20 as of November 201 3. We compute for all stocks of the CAC
+40 Index the daily gross proﬁt and loss, which is calculated as the tot al amount (in euro) bought minus the
+total amount sold. We assume that a trader starts the day with ze ro inventories, and end-of-day inventories
+are mark-to-market at closing price. Net daily proﬁt and loss include s also the fees for the stocks traded at the
+
+sume that a trader starts the day with ze ro inventories, and end-of-day inventories
+are mark-to-market at closing price. Net daily proﬁt and loss include s also the fees for the stocks traded at the
+auction, which is 0.6 bps for all market participants.
+28
+
+obligation of market making (and the losses) onto slow traders. How ever, even if this behavior
+is rational, it is suboptimal, because it impairs market eﬃciency, since t he combined selling
+pressure temporarily dislocates the market price below its fundame ntal value.
+Summarizing, our results point out the limited willingness of DMMs to pro vide liquidity
+during a drift burst EPM depends on its cross-sectional extent. T hey provide liquidity during
+unsystematic events, but during systematic events PURE-HFT MM and, in particular, IB-HFT
+MM start selling in the late phase. Thus, their role as DMMs loses its eﬀe ctiveness exactly
+when the market needs it the most. The role of liquidity providers is ins tead assumed by more
+traditional slow traders (i.e., NON-HFTs). In conclusion, from a polic y perspective, our results
+trigger a question of the eﬀectiveness of the compensation schem e oﬀered by the exchange.
+5.3 An analysis of extreme selling pressure
+In the previous subsection, we examined the behavior of DMMs durin g the occurrence of high
+selling pressure and drift burst EPMs. In this subsection, we study the behavior of DMM s during
+high selling pressure. To this end, we identify in our sample non-drift b urst time intervals with
+as much—or even more extreme—selling pressure than what we obse rve during a drift burst
+EPM. We contrast the behavior of DMMs with other trader categor ies during such episodes to
+
+ime intervals with
+as much—or even more extreme—selling pressure than what we obse rve during a drift burst
+EPM. We contrast the behavior of DMMs with other trader categor ies during such episodes to
+examine whether the drift burst EPMs are more likely a result of the s elling pressure itself or a
+heterogeneous reaction of DMMs (and other traders) to it.
+We compute an intuitive measure of selling pressure, which for each d ay, stock, and one-
+29
+
+minute interval in our sample is deﬁned as follows:
+SP (day,stock)
+m = γ(stock)
+m × min
+u=0,1,...,30
+
+ ∑
+t∈[m−u,m]
+st · Vt
+
+ , (13)
+where m runs over a one-minute equispaced partition of the trading day, γ(stock)
+m is an intraday
+periodicity factor, while st and Vt are as before. That is, for each time instant m, we compute
+the signed euro volume over the previous u minutes of trading. Since large sell-side activity may
+sustain for diﬀerent amounts of time, we do the calculation for inter vals ranging from one to
+thirty minutes, matching the build-up from pre-event to trough of a typical drift burst EPM. To
+get a single number for each time point, we take the minimum value, whic h is usually negative
+and reﬂects the cumulative selling pressure. We correct SP (day,stock)
+m for intraday periodicity in
+trading activity by multiplying it by a factor γ(stock)
+m that is computed as the reciprocal of the
+stock-speciﬁc average value of SP (day,stock)
+m for a ﬁxed interval m, where the average is taken over
+all days in the sample for each stock. This ensures that the ﬁnal nu mber is comparable over
+time and across stocks.
+Figure
+8 shows the unconditional distribution of SP (day,stock)
+m over the entire sample. As
+expected, we observe that selling pressure is strongly left-skewe d. Moreover, the distribution
+of SP (day,stock)
+m conditional on a drift burst EPM is centered at the tail of the uncon ditional
+distribution. This shows that the most extreme values of SP (day,stock)
+
+. Moreover, the distribution
+of SP (day,stock)
+m conditional on a drift burst EPM is centered at the tail of the uncon ditional
+distribution. This shows that the most extreme values of SP (day,stock)
+m correspond to candidate
+times with potential drift burst EPMs.
+[Figure 8 about here.]
+We extract the 0 .1% of time points with the most extreme selling pressure from the unc on-
+30
+
+ditional distribution of SP (day,stock)
+m . In each of these time points, we compute the change in the
+trading imbalance for each trader group over the time window [ m − u∗, m], where u∗ corresponds
+to the argmax of the minimum value selected in equation ( 13). In Panel A of Figure 9, we
+show a histogram of the trading imbalance for IB-HFT MM, PURE-HFT MM, and NON-HFT
+during extreme selling pressure not identiﬁed as drift burst EPMs. A s a comparison, we show
+the corresponding results for unsystematic and systematic drift burst EPMs in Panel B and
+Panel C, respectively. This ﬁgure can be compared with the one-min ute changes in the trading
+imbalance of IB-HFT MM, PURE-HFT MM, and IB-HFT OWN during diﬀere nt stages of the
+drop and recovery for systematic drift burst EPMs in Figure 7.
+[Figure 9 about here.]
+It is evident that a crucial diﬀerence between the occurrence or n on-occurrence of a drift
+burst EPM lies in the actions of NON-HFT. As shown in Panel A, NON-HF Ts support the
+market with a lot more capital during extreme selling pressure that d oes not overlap with a
+drift burst EPM. Furthermore, even here part of the sell-side act ivity emanates from DMMs
+(the distribution of changes in trading imbalances is heavily skewed to the left for IB-HFT MM
+and—to a lesser extent—for PURE-HFT MM). So again, we observe t hat DMMs do not always
+oﬀer immediacy. The instances in which a drift burst EPM occurs (Pan el B and Panel C),
+
+o the left for IB-HFT MM
+and—to a lesser extent—for PURE-HFT MM). So again, we observe t hat DMMs do not always
+oﬀer immediacy. The instances in which a drift burst EPM occurs (Pan el B and Panel C),
+neither NON-HFTs nor DMMs bring enough money to the table, althou gh NON-HFTs remain
+the primary source of liquidity. These ﬁndings indicate that slow trad ers are preventing a larger
+price drop when selling pressure is extreme. However, in their absen ce (either when they leave
+the order book or their quoted depth is small), a drift burst EPM occ urs. This result reinforces
+31
+
+the view that DMMs are not incentivized enough from the compensat ion scheme oﬀered by the
+exchange to fully support the market with liquidity when it is demanded the most.
+6 Conclusion
+This paper shows that DMMs do not always fulﬁl their role as liquidity pr oviders, despite the
+fact that this is their mandate. They even consume liquidity when it is n eeded the most. We
+apply the novel econometric technique of
+Christensen et al. (2022)—the drift burst hypothesis—
+to detect 148 downward drift burst EPMs, in which market prices ar e being revised sharply lower
+over short time horizons, in the year 2013 of blue-chip companies, w hose shares are traded in
+the French equity market. A unique feature of our database is tha t it allows us to separate the
+trading activity coming from diﬀerent trader groups.
+The results show that DMMs oﬀer immediacy during isolated drift burs t EPMs, as expected,
+but they reverse course and start devouring the limit order book a t the late stage of events that
+aﬀect multiple stocks, thus shifting to a lean-with-the-wind strate gy. This behavior is diﬀerent
+from what DMMs tend do in normal times with a balanced order ﬂow, bu t we argue it is rational.
+Indeed, when a drift burst EPM aﬀects several stocks, DMMs tra nsition from buyer to seller
+as the event is unfolding, probably to avoid big losses in fear that tra ding is informed, which it
+is on average. We thus document DMMs respond in disagreement with the intention of their
+
+to seller
+as the event is unfolding, probably to avoid big losses in fear that tra ding is informed, which it
+is on average. We thus document DMMs respond in disagreement with the intention of their
+contractual market making obligation, which impairs the eﬃcient fun ctioning of the market in
+times of need. Indeed, the collective impact of trading activity leads to a nontrivial, but possibly
+avoidable, overshooting eﬀect. In place of DMMs, the main trader c ategory that helps to stop
+32
+
+the price from dropping in the wake of the signiﬁcant selling pressure , and also aiding with
+the recovery, is NON-HFT, who arguably invests from a fundament al valuation perspective and
+looking to buy at a discount.
+Electronic traders are widely known to oﬀer immediacy with limited net in ventory hovering
+around zero. Hence, the risk-bearing capacity of DMMs, which are strictly electronic in the Paris
+branch of the NYSE Euronext market, may also be exhausted too r apidly during systematic
+market downturns, which can further help to explain their sudden c hange of behavior. In
+view of this, our empirical results also bear an important policy implicat ion in this regard and
+can be informative for a redesign of the market architecture, or a n entirely diﬀerent structure
+(see, e.g., Budish et al. 2015 ), such that DMMs are presented with the right and suﬃcient
+incentives to maintain their presence in the market, despite potent ial mark-to-market losses,
+during widespread stress.
+We recommend an evaluation of the recent MiFID II regulation, which recognizes algorithmic
+liquidity provision as a pivotal instrument to the functioning of ﬁnanc ial markets. It endorses
+automatic liquidity provision by electronic market makers, imposing bin ding agreements between
+the exchange and the trading ﬁrms. We show that this rule, already in place at the NYSE
+Euronext Paris stock exchange, is not suﬃcient to prevent drift b urst EPMs. This suggests that
+
+eements between
+the exchange and the trading ﬁrms. We show that this rule, already in place at the NYSE
+Euronext Paris stock exchange, is not suﬃcient to prevent drift b urst EPMs. This suggests that
+the rule should be revised in light of its objective. A possible solution to this problem is to
+change the compensation scheme. Another option is to change the mechanics of trading halts,
+which do not work as intended during drift burst EPMs, since the latt er never triggered a pause
+in trading during our sample and is thus not associated with “excess v olatility.”
+33
+
+References
+Anand, A. & Venkataraman, K. (2016), ‘Market conditions, fragilit y, and the economics of
+market making’, Journal of Financial Economics 121(2), 327–349.
+Autorit´ e des March´ es Financiers (2017), ‘Study of the behaviou r
+of high-frequency traders on Euronext Paris’. Available at
+https://www.amf-france.org/en/news-publications/publications/reports-research-and-analysi 
+Barclay, M. J. & Warner, J. B. (1993), ‘Stealth trading and volatility : Which trades move
+prices?’, Journal of Financial Economics 34(3), 281–305.
+Bellia, M., Pelizzon, L., Subrahmanyam, M. G. & Yuferova, D. (2025), ‘Market liquidity and
+competition among designated market makers’, Management Science 71(1), 184–201.
+Benos, E. & Sagade, S. (2012), ‘High-frequency trading behaviou r and its impact on market
+quality: Evidence from the UK equity market’. Working paper.
+Bessembinder, H., Hao, J. & Zheng, K. (2020), ‘Liquidity provision co ntracts and market quality:
+Evidence from the New York Stock Exchange’, Review of Financial Studies 33(1), 44–74.
+Brogaard, J. A. (2010), ‘High frequency trading and its impact on m arket quality’. Working
+paper.
+Brogaard, J. A., Carrion, A., Moyaert, T., Riordan, R., Shkilko, A. & S okolov, K. (2018),
+‘High frequency trading and extreme price movements’, Journal of Financial Economics
+128(2), 253–265.
+34
+
+Brunnermeier, M. K. & Pedersen, L. H. (2005), ‘Predatory tradin g’, Journal of Finance
+60(4), 1825–1863.
+Budish, E., Cramton, P. & Smith, J. (2015), ‘The high-frequency tr ading arms race: Frequent
+batch auctions as a market design response’, Quarterly Journal of Economics 130(4), 1547–
+1621.
+Cespa, G. & Foucault, T. (2014), ‘Illiquidity contagion and liquidity cra shes’, Review of Financial
+Studies 27(6), 1615–1660.
+Cespa, G. & Vives, X. (2025), ‘Market opacity and fragility: Why liquid ity evaporates when it
+is most needed’. Working paper.
+Chaboud, A. P., Chiquoine, B., Hjalmarsson, E. & Vega, C. (2014), ‘R ise of the machines:
+Algorithmic trading in the foreign exchange market’, Journal of Finance 69(5), 2045–2084.
+Christensen, K., Oomen, R. C. A. & Ren` o, R. (2022), ‘The drift bur st hypothesis’, Journal of
+Econometrics 227(2), 461–497.
+Clark-Joseph, A. D., Ye, M. & Zi, C. (2017), ‘Designated market mak ers still matter: Evidence
+from two natural experiments’, Journal of Financial Economics 126(3), 652–667.
+ESMA (2021), ‘MiFID II review report on Algorithmic Trading’. Available at
+https://www.esma.europa.eu/sites/default/files/library/esma70-156-4572_mifid_ii_final_repor 
+Euronext (2025), ‘Euronext Rule Book – Book I: Harmonised Rules’. The latest version is
+available at https://www.euronext.com/en/regulation/euronext-regulated-market .
+35
+
+Gao, C. & Mizrach, B. (2016), ‘Market quality breakdowns in equities ’, Journal of Financial
+Markets 28(1), 1–23.
+Glosten, L. R. (1987), ‘Components of the bid-ask spread and the statistical properties of trans-
+action prices’, Journal of Finance 42(5), 1293–1307.
+Goldstein, M. A. & Kavajecz, K. A. (2004), ‘Trading strategies dur ing circuit breakers and
+extreme market movements’, Journal of Financial Markets 7(3), 301–333.
+Hendershott, T., Jones, C. M. & Menkveld, A. J. (2011), ‘Does algo rithmic trading improve
+liquidity?’, Journal of Finance 66(1), 1–33.
+Huang, J. & Wang, J. (2009), ‘Liquidity and market crashes’, Review of Financial Studies
+22(7), 2607–2643.
+Jacod, J., Li, Y., Mykland, P. A., Podolskij, M. & Vetter, M. (2009), ‘M icrostructure noise in
+the continuous case: The pre-averaging approach’, Stochastic Processes and their Applications
+119(7), 2249–2276.
+Jones, C. M. (2013), ‘What do we know about high-frequency trad ing?’. Working paper.
+Kirilenko, A., Kyle, A. S., Samadi, M. & Tuzun, T. (2017), ‘The Flash Cra sh: High frequency
+trading in an electronic market’, Journal of Finance 72(3), 967–998.
+Korajczyk, R. A. & Murphy, D. (2019), ‘High-frequency market m aking to large institutional
+trades’, Review of Financial Studies 32(3), 1034–1067.
+36
+
+Lee, S. S. & Mykland, P. A. (2008), ‘Jumps in ﬁnancial markets: A ne w nonparametric test and
+jump dynamics’, Review of Financial Studies 21(6), 2535–2563.
+Menkveld, A. J. (2014), ‘High-frequency traders and market str ucture’, Financial Review
+49(2), 333–344.
+NYSE-Euronext (2012), ‘Euronext Cash Market, Info Flash of 26 January 2012’. Available at
+https://euronext.com/.
+NYSE-Euronext (2013), ‘Euronext Cash Market, Info Flash of 9 M ay 2013’. Available at
+https://euronext.com/.
+U.S. Securities and Exchange Commission (2014), ‘Equity market str uc-
+ture literature review – Part II: High frequency trading’. Report
+by the staﬀ of the Division of Trading and Markets, available at
+https://www.sec.gov/marketstructure/research/hft_lit_review_march_2014.pdf.
+van Kervel, V. & Menkveld, A. J. (2019), ‘High-frequency trading a round large institutional
+orders’, Journal of Finance 74(3), 1091–1137.
+Yang, L. & Zhu, H. (2020), ‘Back-running: Seeking and hiding funda mental information in order
+ﬂows’, Review of Financial Studies 33(4), 1484–1533.
+37
+
+Table 1: Descriptive statistics of drift burst EPM
+Quantile
+Mean Std. Min Max q0.10 Median q0.90
+Return -1.35 0.80 -5.18 -0.37 -2.42 -1.11 -0.62
+Duration 9.53 8.45 0.07 41.60 2.12 7.32 19.34
+in % 1.87 1.66 0.01 8.16 0.42 1.44 3.81
+Number of trades 582.10 442.32 89.00 2612.00 182.90 452.50 1191.70
+in % 5.99 4.29 1.07 35.98 2.46 5.01 9.66
+Trading volume 4598.60 3789.11 537.53 18268.03 1210.75 3521.45 9530 .02
+in % 5.43 4.06 0.71 34.71 2.02 4.50 9.03
+Signed volume -1276.37 1347.86 -9291.14 1722.17 -2942.18 -1049.13 - 19.78
+in % 21.07 182.75 -667.12 1592.26 -58.15 9.19 64.44
+Note. This table shows descriptive statistics of a drift burst EPM. We calcu late the return (in
+percent), the duration, the number of trades, the euro trading volume (in thousands), and the
+signed volume for each event. We report for each statistic its samp le average, standard deviation,
+minimum value, maximum value, and the 10%, 50% (median), and 90% qua ntile across events.
+The rows starting with “in %” measure the statistic in percent relativ e to the associated number
+computed over the whole trading day.
+38
+
+Table 2: Coeﬃcient estimates from the V AR for trading imbalance
+Panel A: Unsystematic drift burst EPMs
+PURE-HFT MM IB-HFT MM IB-HFT OWN IB-CLIENT NON-HFT
+Pre-event -0.007 0.031** -0.012 -0.019 0.014
+(-0.79) (2.47) (-1.08) (-1.46) (1.22)
+Early drop 0.078* 0.290*** -0.145** -0.020 -0.045
+(1.69) (4.09) (-2.28) (-0.50) (-0.98)
+Intermediate drop -0.025 0.176*** -0.056 -0.084** -0.029
+(-0.74) (3.83) (-1.50) (-2.02) (-0.79)
+Late drop 0.017 0.228*** -0.007 -0.266*** -0.012
+(0.30) (3.38) (-0.10) (-3.47) (-0.20)
+Recovery -0.024** -0.009 -0.018 -0.016 0.041**
+(-2.46) (-0.62) (-0.89) (-0.90) (2.39)
+Bid-ask spread 0.002 0.006 -0.008 0.001 -0.002
+(0.50) (1.20) (-1.45) (0.15) (-0.33)
+Log(euro volume) -0.018** 0.025** 0.008 -0.026* 0.011
+(-2.22) (2.33) (0.63) (-1.83) (0.73)
+Return 0.021* -0.189*** 0.012 0.031*** 0.016*
+(1.78) (-12.06) (1.23) (3.68) (1.83)
+¯R2 0.003 0.057 0.025 0.039 0.020
+Panel B: Systematic drift burst EPMs
+PURE-HFT MM IB-HFT MM IB-HFT OWN IB-CLIENT NON-HFT
+Pre-event 0.015 -0.010 -0.024 0.018 0.017
+(0.80) (-0.39) (-1.27) (1.02) (0.93)
+Early drop -0.053 0.013 -0.155** 0.048 0.177**
+(-0.97) (0.15) (-2.14) (0.55) (2.71)
+Intermediate drop -0.132** -0.162 -0.350*** 0.135 0.472***
+(-2.26) (-1.27) (-3.51) (1.07) (2.89)
+Late drop -0.089 -0.373** -0.086 -0.000 0.543***
+(-1.27) (-2.29) (-0.95) (-0.00) (4.09)
+Recovery 0.011 -0.042 0.028 -0.015 0.013
+(0.47) (-1.40) (1.44) (-0.59) (0.85)
+Bid-ask spread 0.006 -0.007 -0.004 0.003 0.003
+(0.65) (-0.71) (-0.57) (0.27) (0.48)
+
+-1.27) (-2.29) (-0.95) (-0.00) (4.09)
+Recovery 0.011 -0.042 0.028 -0.015 0.013
+(0.47) (-1.40) (1.44) (-0.59) (0.85)
+Bid-ask spread 0.006 -0.007 -0.004 0.003 0.003
+(0.65) (-0.71) (-0.57) (0.27) (0.48)
+Log(euro volume) -0.023 -0.143*** -0.022 0.047** 0.102***
+(-1.29) (-7.61) (-1.14) (2.33) (4.54)
+Return 0.031 -0.076*** 0.006 0.031** -0.034***
+(1.09) (-3.64) (0.61) (2.15) (-3.26)
+¯R2 0.008 0.070 0.022 0.031 0.039
+Note. We present the results of the V AR in equation ( 9). The model is estimated separately
+for unsystematic drift burst EPMs in Panel A and systematic ones in Panel B. The dependent
+variable is the 10-second trading imbalance of the trader category indicated by the column label.
+The explanatory variables “Pre-event”, “Early drop”, “Interme diate drop”, “Late drop”, and
+“Recovery” refer to phase dummies of a drift burst EPM. “Bid-ask spread” is the quoted spread
+(in percent), “Log(euro volume)” is the log-euro volume, and “Ret urn” is the contemporaneous
+stock return. We also include stock ﬁxed eﬀects. The non-dummy v ariables are standardized
+at the stock level. The coeﬃcient estimates of lagged trading imbalan ces are not reported for
+brevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust standard errors
+clustered at the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01. nObs
+= 342,032 in Panel A and nObs = 79,404 in Panel B.
+39
+
+Table 3: Coeﬃcient estimates from the V AR for aggressive and pass ive trading imbalance
+Panel A: Unsystematic drift burst EPMs
+Aggressive Passive
+PURE-HFT MM IB-HFT MM IB-HFT OWN PURE-HFT MM IB-HFT MM IB-HFT OWN
+Pre-event -0.006 0.003 -0.018* -0.006 0.033*** 0.004
+(-0.74) (0.32) (-1.95) (-0.64) (2.67) (0.50)
+Early drop 0.021 -0.037 -0.167*** 0.098** 0.346*** 0.018
+(0.54) (-1.11) (-2.91) (2.53) (4.74) (0.55)
+Intermediate drop 0.011 0.037 -0.058* -0.058* 0.187*** 0.015
+(0.29) (1.12) (-1.67) (-1.93) (3.92) (0.44)
+Late drop 0.055 0.013 -0.065 -0.063 0.238*** 0.094
+(0.99) (0.26) (-0.90) (-1.23) (3.85) (1.61)
+Recovery -0.016 -0.011 -0.036** -0.021** -0.005 0.014
+(-1.46) (-0.78) (-2.44) (-2.60) (-0.32) (0.62)
+Bid-ask spread 0.001 0.006 -0.006 0.001 0.003 -0.004
+(0.16) (1.25) (-1.03) (0.11) (0.58) (-0.49)
+Log(euro volume) -0.020*** -0.013 -0.015* -0.002 0.036*** 0.024**
+(-2.85) (-1.48) (-1.69) (-0.28) (3.97) (2.13)
+Return 0.239*** 0.142*** 0.199*** -0.300*** -0.312*** -0.208***
+(22.13) (12.89) (22.29) (-29.38) (-22.60) (-23.90)
+¯R2 0.054 0.029 0.050 0.082 0.106 0.058
+Panel B: Systematic drift burst EPMs
+Aggressive Passive
+PURE-HFT MM IB-HFT MM IB-HFT OWN PURE-HFT MM IB-HFT MM IB-HFT OWN
+Pre-event 0.047** 0.040* 0.022 -0.033** -0.051 -0.055**
+(2.35) (1.89) (1.45) (-2.21) (-1.67) (-2.18)
+Early drop -0.083* 0.074 -0.188** 0.017 -0.053 0.000
+(-1.86) (0.77) (-2.07) (0.39) (-1.12) (0.00)
+Intermediate drop -0.064 -0.050 -0.355*** -0.101** -0.145 -0.036
+
+1.89) (1.45) (-2.21) (-1.67) (-2.18)
+Early drop -0.083* 0.074 -0.188** 0.017 -0.053 0.000
+(-1.86) (0.77) (-2.07) (0.39) (-1.12) (0.00)
+Intermediate drop -0.064 -0.050 -0.355*** -0.101** -0.145 -0.036
+(-1.27) (-0.41) (-3.74) (-2.10) (-1.64) (-0.79)
+Late drop 0.180** -0.309** -0.074 -0.315*** -0.284** -0.017
+(2.68) (-2.18) (-1.01) (-4.05) (-2.20) (-0.22)
+Recovery 0.010 -0.078*** -0.031** 0.001 -0.003 0.081***
+(0.36) (-2.93) (-2.37) (0.13) (-0.14) (2.92)
+Bid-ask spread 0.018** 0.010 0.011 -0.012 -0.015 -0.020***
+(2.14) (1.08) (1.69) (-1.34) (-1.47) (-3.58)
+Log(euro volume) -0.010 -0.108*** -0.064*** -0.018 -0.089*** 0.04 8**
+(-0.74) (-6.12) (-3.15) (-1.66) (-6.45) (2.71)
+Return 0.248*** 0.178*** 0.117*** -0.266*** -0.227*** -0.135***
+(10.28) (10.69) (11.41) (-14.22) (-10.37) (-12.29)
+¯R2 0.087 0.085 0.041 0.095 0.091 0.056
+Note. We present the results of the V AR in equation ( 9). The model is estimated separately
+for unsystematic drift burst EPMs in Panel A and systematic ones in Panel B. The dependent
+variable is the 10-second trading imbalance, split into aggressive and passive orders, of the trader
+category indicated by the column label. The explanatory variables “P re-event”, “Early drop”,
+“Intermediate drop”, “Late drop”, and “Recovery” refer to ph ase dummies of a drift burst EPM.
+“Bid-ask spread” is the quoted spread (in percent), “Log(euro v olume)” is the log-euro volume,
+and “Return” is the contemporaneous stock return. We also includ e stock ﬁxed eﬀects. The
+
+ft burst EPM.
+“Bid-ask spread” is the quoted spread (in percent), “Log(euro v olume)” is the log-euro volume,
+and “Return” is the contemporaneous stock return. We also includ e stock ﬁxed eﬀects. The
+non-dummy variables are standardized at the stock level. The coeﬃ cient estimates of lagged
+trading imbalances are not reported for brevity. The t-statistics (in parentheses) are based on
+heteroscedasticity-robust standard errors clustered at the s tock and date level. * P -value<0.1;
+**P -value<0.05; *** P -value<0.01. nObs = 342,032 in Panel A and nObs = 79,404 in Panel B.
+40
+
+Table 4: Cross-sectional analysis of DMMs trading imbalance
+Panel A: Unsystematic drift burst EPMs
+PURE-HFT MM IB-HFT MM
+Intercept −0.17 −0.24
+(−0.33) ( −0.61)
+T I i
+Intermediate+Early 0.49 0 .35∗
+(1.56) (1 .86)
+T I IB-HFT OWN
+Intermediate+Early −0.04 −0.06∗
+(−0.79) ( −1.83)
+T I IB-CLIENT
+Intermediate+Early 0.09 −0.08
+(1.44) ( −1.52)
+Log(euro volume) 0 .01 0 .01
+(0.24) (0 .78)
+Bid-ask spread 0 .74 2 .65∗
+(0.54) (1 .72)
+Return −0.06 0 .07∗∗
+(−1.55) (2 .12)
+¯R2 0.134 0 .197
+Panel B: Systematic drift burst EPMs
+PURE-HFT MM IB-HFT MM
+Intercept 0 .95 4 .27∗∗∗
+(0.80) (2 .76)
+T I i
+Intermediate+Early 0.75∗∗∗ −0.64∗∗
+(2.67) ( −2.04)
+T I IB-HFT OWN
+Intermediate+Early −0.23∗ 0.20∗∗
+(−1.87) (2 .12)
+T I IB-CLIENT
+Intermediate+Early −0.25∗∗∗ 0.25∗∗
+(−2.59) (2 .13)
+Log(euro volume) −0.05 −0.22∗∗∗
+(−1.00) ( −3.13)
+Bid-ask spread 1 .75 −0.47
+(0.82) ( −0.14)
+Return −0.13 −0.27
+(−0.84) ( −1.41)
+¯R2 0.539 0 .384
+Note. This table presents coeﬃcient estimates of the cross-sectional r egression in equation
+(11) over unsystematic drift burst EPMs in Panel A and systematic one s in Panel B. The
+dependent variable is the trading imbalance of the DMM in the late stag e of the event, T I i
+Late
+(where either i = PURE-HFT MM or IB-HFT MM). The explanatory variables are calcula ted
+over the combined early and intermediate stage and include the lagge d value of the DMMs
+trading imbalance, T I i
+Intermediate+Early, the trading imbalance of IB-HFT OWN and IB-CLIENT,
+T I IB-HFT OWN
+
+over the combined early and intermediate stage and include the lagge d value of the DMMs
+trading imbalance, T I i
+Intermediate+Early, the trading imbalance of IB-HFT OWN and IB-CLIENT,
+T I IB-HFT OWN
+Intermediate+Early and T I IB-CLIENT
+Intermediate+Early, the log-euro volume, the average bid-ask spread, and
+the return. The t-statistics (in parentheses) are based on heteroscedasticity-r obust standard
+errors. ¯R2 is the adjusted coeﬃcient of determination. * P -value<0.1; ** P -value<0.05; *** P -
+value<0.01. nObs = 121 in Panel A and nObs = 27 in Panel B.
+41
+
+Table 5: Monetary proﬁt during a drift burst EPM
+Systematic Unsystematic
+PURE CLIENT 24 .36 11 .07
+(25.94) (124 .21)
+PURE-HFT MM −377.78 −164.09
+(541.03) (444 .22)
+PURE-HFT OWN −60.17 −27.52
+(108.69) (312 .32)
+IB-CLIENT −1024.37 241 .62
+(889.47) (774 .40)
+IB-HFT MM −75.61 −2799.72∗∗∗
+(959.95) (706 .58)
+IB-HFT OWN 5396 .13∗∗ 2239.13∗
+(2713.46) (1204 .43)
+IB-HFT PARENT −208.34 −423.07∗
+(484.79) (238 .88)
+NON-HFT CLIENT −3164.53 −438.11
+(2250.18) (996 .79)
+NON-HFT OWN −765.22 1375 .07∗∗
+(1457.17) (690 .90)
+Note. This table presents the average monetary proﬁt (in euros) during downward drift burst
+EPMs, divided into systematic and unsystematic events. Standard errors of the average are in
+parentheses.
+42
+
+Table 6: Proﬁt and loss of trading activity
+Panel A: Unsystematic drift burst EPMs
+PURE-HFT MM IB-HFT MM IB-CLIENT IB-HFT OWN NON-HFT
+Dummy 0.124 -0.349*** 0.432*** 0.895** 0.388*
+(0.97) (-2.96) (2.96) (2.54) (1.79)
+Bid-ask spread 0.488** 0.007 0.236 0.730 -0.097
+(2.59) (0.07) (1.21) (1.10) (-0.43)
+Log(euro volume) 0.580*** -0.072 0.131 0.360** -0.502***
+(5.84) (-1.21) (1.29) (2.39) (-3.33)
+Return 0.064 -0.098 -0.988* -0.428 -0.310
+(0.22) (-0.41) (-1.89) (-0.67) (-0.66)
+¯R2 0.012 0.013 0.028 0.012 0.011
+Panel B: Systematic drift burst EPMs
+PURE-HFT MM IB-HFT MM IB-CLIENT IB-HFT OWN NON-HFT
+Dummy 0.929** 0.739** -0.387 1.517*** -1.351*
+(2.08) (2.22) (-1.63) (2.93) (-2.00)
+Bid-ask spread 0.315** -0.028 0.519*** 0.760*** -0.482*
+(2.22) (-0.16) (3.01) (2.94) (-1.91)
+Log(euro volume) 1.047*** 0.047 0.083 -0.056 -1.198***
+(3.58) (0.38) (0.61) (-0.26) (-4.13)
+Return -0.066 -2.056*** 0.102 -0.829 1.782***
+(-0.19) (-6.97) (0.43) (-1.62) (4.42)
+¯R2 0.019 0.086 0.006 0.015 0.023
+Note. This table presents coeﬃcient estimates from the V AR in equation ( 12). The model is
+estimated separately for unsystematic drift burst EPMs in Panel A and systematic ones in Panel
+B. The dependent variable is the 10-second proﬁt and loss (P&L) of the trader category indicated
+by the column label. “Dummy” equals one for the entire duration of th e drift burst EPM (from
+the beginning of the pre-event until the end of the recovery), ze ro otherwise, “Bid-ask spread” is
+
+cated
+by the column label. “Dummy” equals one for the entire duration of th e drift burst EPM (from
+the beginning of the pre-event until the end of the recovery), ze ro otherwise, “Bid-ask spread” is
+the quoted spread (in percent), “Log(euro volume)” is the log-eu ro volume, and “Return” is the
+contemporaneous stock return. We also include stock ﬁxed eﬀect s. The non-dummy variables
+are standardized at the stock level. The coeﬃcient estimates of th e lagged P&L are not reported
+for brevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust standard
+errors clustered at the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01.
+nObs = 342,032 in Panel A and nObs = 79,404 in Panel B.
+43
+
+Figure 1: Trading activity by trader category
+Note. This ﬁgure displays the percentage of total double-counted volum e (buy and sell) for each
+trader group, averaged across stocks in our sample. The catego ry is determined via the account
+ﬂag from the exchange and the AMF ﬂag for HFT.
+44
+
+Figure 2: The price of Technip on June 25, 2013
+Note. In the upper panel, the ﬁgure reports the transaction price of Te chnip on June 25,
+2013. The price is sampled at a 10-second grid. The middle panel repo rts the test statistic
+of Christensen et al. (2022), which detects a drift burst (DB) EPM around noon (as indicated
+by the shaded area around that time). The lower panel shows the a pproach of Brogaard et al.
+(2018). The authors examine the absolute value of 10-second returns a nd detects a volatility-
+based (VB) EPM around 10:30 (as indicated by the shaded area arou nd that time). The dashed
+lines represent 99.9% conﬁdence bands.
+45
+
+Figure 3: Temporal distribution of drift burst EPMs
+09:00 10:00 11:00 12:00 13:00 14:00 15:00 16:00 17:00 18:00
+2013
+2014
+TEC ALOCA TEC+GLE SGO VK CAPLR
+ML VIV ALOLG+ACA BN BNP
+SAN
+ORA RNO AIRACA ORAACGLE CAP ML STMGLE SAFCAP ALO+AIRSAF
+AIRAI+BNP EDFCAP PUBENGIALO+SAF+SU+VK+RNO+DG+AI+VIV+ML+FP+CS+CA+SAN+ENGI ACRI VIV VIV
+SU AIRALO
+CAPCA FP
+CA KER
+ALO VIVALOGLE+SGO
+LG
+EDF
+PUBALO TEC AC AIR
+SANLG VIESAN+LG+SGO+EI RI EI RNOSGO+LG+AIR+AI+SU+DG+BNP+GLE+KER+MC+SAN+CS+FPVIEMC CAPVKBN VKENGI MLKER RI
+ML EI ALO RIALO LG CA
+CA STMSAF CSCS+SGO DGVIE TEC CS+GLERI GLE
+TECSTMORA+VIVCAP AC EIACTEC+ORARNO PUB
+ACVK ACA RNOORA
+Note. In this ﬁgure, we present the timing of the 148 drift burst EPMs ana lyzed in the empirical
+application. On the x-axis, we plot the start of the event (or tstart) with a cross and the time of
+the trough (or ttrough) with a circle connected by a line segment to mark the duration. On th e
+y-axis, we report the time of the year it occurred. The ticker symb ols of the aﬀected stocks are
+shown above the line (see Table B.2 for the company name). A “+” indicates drift burst EPMs
+that overlap.
+46
+
+Figure 4: Average cumulative return during a drift burst EPM
+Start Trough
+Stage
+-2.5
+-2
+-1.5
+-1
+-0.5
+0
+Cumulative return (in %)
+PRE-EVENT
+EARLY
+INTERMEDIATE
+LATE
+RECOVERY
+Average drift burst EPM
+Unsystematic
+Systematic
+10%-90% quantile-band
+Note. This ﬁgure shows the evolution of the cumulative return over an ave rage drift burst EPM,
+and also an unsystematic and systematic one, together with a 10%- 90% quantile-band calculated
+across the combined 148 events. The vertical lines separate the d uration of the drift burst EPM
+from start to through into an early, intermediate, and late stage, as detailed in the main text.
+47
+
+Figure 5: Price impact of a drift burst EPM
+Panel A: PPI vs. TPI. Panel B: DPI vs. duration.
+-6 -5 -4 -3 -2 -1 0 1
+Permanent Price Impact (PPI, in %)
+-2.5
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+1.5
+2
+2.5
+Transient Price Impact (TPI, in %)
+Average PPI:
+Unsystematic = -1.08%
+Systematic = -1.33%
+Average TPI:
+Unsystematic = -0.33%
+Systematic = -0.78%
+Unsystematic
+Systematic
+0 5 10 15 20 25 30 35 40 45
+Duration ( , in minutes)
+-6
+-5
+-4
+-3
+-2
+-1
+0
+Downward Price Impact (DPI, in %)
+Correlation: -0.552
+Unsystematic
+Systematic
+Note. In Panel A, we report a scatter plot of the permanent price impact (PPI, deﬁned in
+equation ( 5)) versus the transient price impact (TPI, deﬁned in equation ( 7)). We also compute
+the associated sample average and standard deviation (in parenth eses) of the log-return, which
+is further divided into unsystematic and systematic drift burst EPM s. In Panel B, we show a
+scatter plot of the downward price impact (DPI, deﬁned in equation (6)) versus the duration of
+the drift burst EPM. The negative correlation implies that the longer a drift burst EPM lasts
+the deeper is the associated price drop.
+48
+
+Figure 6: Dynamic evolution of trading imbalance
+Panel A: Unsystematic Panel B: Systematic
+0 10 20 30 40 50
+Average time (in minutes)
+-0.5
+-0.4
+-0.3
+-0.2
+-0.1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+IB-HFT OWN
+IB-HFT MM
+PURE-HFT MM
+IB CLIENT
+NON-HFT
+0 10 20 30 40 50
+Average time (in minutes)
+-1.5
+-1.0
+-0.5
+0
+0.5
+1.0
+1.5
+2.0
+IB-HFT OWN
+IB-HFT MM
+PURE-HFT MM
+IB CLIENT
+NON-HFT
+Note. The ﬁgure reports the trading imbalance of IB-HFT OWN, IB-HFT MM , PURE-HFT
+MM, IB-CLIENT, and NON-HFT (the sum of NON-HFT CLIENT and NON -HFT OWN)
+during a drift burst EPM. We average over the 121 unsystematic ev ents in Panel A, while Panel
+B holds the results for the 27 systematic events. In the backgrou nd of each ﬁgure, we showcase
+the average cumulative return dynamic from Figure 4 as a visual landmark.
+49
+
+Figure 7: Changes in trading imbalance for a systematic drift burst E PM
+Panel A: IB-HFT OWN Panel B: IB-HFT MM Panel C: PURE-HFT MM
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20Count
+EARLY
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20Count
+EARLY
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20Count
+EARLY
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20Count
+INTERMEDIATE
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20Count
+INTERMEDIATE
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20Count
+INTERMEDIATE
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20Count
+LATE
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20Count
+LATE
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20Count
+LATE
+-2 -1.5 -1 -0.5 0 0.5 1 1.5 2
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20Count
+RECOVERY
+-2 -1.5 -1 -0.5 0 0.5 1 1.5 2
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20Count
+RECOVERY
+-2 -1.5 -1 -0.5 0 0.5 1 1.5 2
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20Count
+RECOVERY
+Note. The ﬁgure depicts a histogram of the empirical distribution of one-m inute changes in
+trading imbalance for IB-HFT OWN (Panel A), IB-HFT MM (Panel B), and PURE-HFT MM
+(Panel C) at diﬀerent stages of a systematic drift burst EPM. A ne gative number means that
+the trader category is collectively selling either via aggressive or pas sive trades, and vice versa.
+50
+
+Figure 8: The distribution of selling pressure
+-15 -10 -5 0 5
+Selling Pressure
+0
+0.5
+1
+Kernel density estimate
+Unconditional
+Drift burst EPM
+Note. We show the unconditional distribution for the measure of selling pre ssure, SP (day,stock)
+m ,
+pooled over each day, stock, and one-minute interval in our sample . We also plot the distribution
+of selling pressure during a drift burst EPM.
+51
+
+Figure 9: Change in trading imbalance during extreme selling pressure
+Panel A: None Panel B: Unsystematic Panel C: Systematic
+Note. We plot the distribution of the change in trading imbalances of IB-HFT MM, PURE-HFT
+MM, and NON-HFT during extreme selling pressure. We extract the 0 .1% of time points with
+the most selling pressure from the unconditional distribution of the SP (day,stock)
+m measure deﬁned
+in ( 13). We split these observations into three mutually exclusive sets, de pending on whether
+they are associated with no drift burst EPM (Panel A), an unsyste matic one (Panel B), or a
+systematic one (Panel C).
+52
+
+Appendices
+A A comparison with volatility-based EPMs
+Brogaard et al. (2018) identify EPMs from a sample of returns calculated over 10-second inter-
+vals. First, they extract the subset of such returns belonging to the 99.9th percentile of the
+10-second absolute return distribution. Second, the calculation is repeated on residuals from a
+return autoregression that controls for ten lagged 10-second r eturns, to capture serial correlation
+induced by microstructure noise, and also incorporates the ten lag ged returns for the market
+index, to correct for systematic risk. Loosely speaking, these te chniques are designed to extract
+high-volatility returns. Third, they employ the jump test statistic o f Lee & Mykland (2008).
+In this appendix, we implement these approaches and compare the o utcome with the drift
+burst EPMs. We denote the ﬁrst and second approach as “return EPMs” and “residual EPMs.”
+We exclude the jump test, because—by construction—the drift bu rst statistic is resistant to the
+price jump component.
+In Table A.1, we compare the negative half of identiﬁed return- and residual-ba sed EPMs
+with the downward drift burst EPMs. On average, for each stock, both volatility- and drift
+burst-based detection label 0.05% of the 10-second intervals as E PMs, which is a mechanical
+eﬀect of the conﬁdence level. However, there is only a modest over lap between the identiﬁed
+EPMs. The return EPMs intersect with 26.35% of drift burst EPMs, w hile the residual EPMs
+
+is a mechanical
+eﬀect of the conﬁdence level. However, there is only a modest over lap between the identiﬁed
+EPMs. The return EPMs intersect with 26.35% of drift burst EPMs, w hile the residual EPMs
+detect a lesser 18.92%. We conclude that the overlap, while not neglig ible, is nevertheless limited.
+Hence, our sample of drift burst EPMs is to a large extent diﬀerent f rom Brogaard et al. (2018).
+Figure A.1 replicates Figure 4 by showing the price evolution in a one-hour interval centered
+i
+
+Table A.1: Comparison of volatility- and drift burst-based EPMs
+EPMs per stock Overlap to drift burst EPMs
+Absolute (#) Fraction (%) Absolute (#) Fraction (%)
+Return EPMs 286.48 0.05 39 26.35
+Residual EPMs 282.19 0.05 28 18.92
+Note. The table reports the average number of EPMs detected for a sing le stock in absolute
+value and as a fraction (in per cent) of the total number of 10-sec ond returns in our sample,
+which is composed of 37 stocks traded on NYSE Euronext Paris that belong to the CAC 40
+Index for the year 2013. It also shows the number of drift burst E PMs that are also detected by
+the return- and residual-based EPM calculation of Brogaard et al. (2018).
+around the identiﬁed negative return EPMs. To get a better impres sion of the dynamic, we
+restrict attention to isolated observations that are not surroun ded by any other return EPMs
+inside the window. As a comparison, we show the return dynamic for a n average drift burst EPM.
+Evidently, return EPMs tend to extract volatility-based returns t hat—while being sampled from
+the left tail of the 10-second return distribution—do not otherwis e lead to persistent changes
+in the fundamental value of the stock before or after the initial de cline. By contrast, Figure
+A.1 strongly supports the conjecture that drift burst EPMs are a diﬀ erent sample that allows
+to extract a sequence of consecutive returns around which the m arket was highly directional.
+ii
+
+Figure A.1: Average cumulative return during volatility- and drift bur st-based EPM
+-30 -20 -10 0 10 20 30
+Average time (in minutes)
+-1.6
+-1.4
+-1.2
+-1
+-0.8
+-0.6
+-0.4
+-0.2
+0
+0.2
+0.4
+Cumulative return (in %)
+return EPM
+10%-90% quantile-band
+drift burst EPM
+Note. This ﬁgure reports the average price evolution in a one-hour window centered around a
+volatility-based EPM. We follow Brogaard et al. (2018) and label each 10-second return at or
+above the 99.9th percentile of distribution of absolute 10-second r eturns as an EPM. The ﬁgure
+is based on the negative half of that sample. We superimpose a 10%-9 0% quantile-band for
+each 10-second interval over the interval. As a comparison, we als o show the average cumulative
+return of a drift burst-based EPM, separately for unsystematic and systematic events.
+iii
+
+B Supplementary material
+This appendix presents information about the sample of drift burst EPMs. Moreover, it contains
+supplemental material relative to the exposition in the main text.
+• Table
+B.1 shows a detailed list of the individual drift burst EPMs in our sample, wh ile in
+Table B.2 these EPMs are grouped by stock.
+• Table B.3 shows estimates of the V AR model in equation ( 9) and is the expanded version
+of Table 2 that includes all trader groups.
+• In Table B.4 – B.5, we break the dependent variable from equation ( 9) into aggressive and
+passive trading imbalances. Otherwise, the estimated equation and the table formatting
+are identical to Table B.3.
+• In Figure B.1, we show the time series of transaction prices for each stock durin g the
+systematic drift burst EPMs detected on April 17, 2013 and Septe mber 3, 2013.
+• Figure B.2 replicates Figure 7 on trading imbalances for unsystematic drift burst EPMs.
+The full versions of the tables that present coeﬃcient estimates f rom the entire list of covari-
+ates included in the V AR model are rather long and are available upon r equest.
+iv
+
+Table B.1: The sample of drift burst EPMs – Individual level
+Date ISIN Name Begin Trough Duration Date ISIN Company Begin Trough Duration
+01/04 FR0000131708 Technip 10:19:27 10:29:29 10:01 07/23 F R0010220475 Alstom 11:18:39 11:22:57 04:18
+01/08 FR0010220475 Alstom 14:47:54 15:03:40 15:46 07/25 FR 0000131708 Technip 11:52:35 12:05:16 12:41
+01/09 FR0000120172 Carrefour 10:07:42 10:25:18 17:36 07/3 1 FR0000120404 Accor 13:59:14 14:03:35 04:21
+01/11 FR0000130809 Soci´ et´ e G´ en´ erale 10:53:06 10:57:3 5 04:30 07/31 NL0000235190 EADS 16:54:15 17:01:15 07:00
+01/11 FR0000131708 Technip 10:39:28 10:54:05 14:37 08/16 F R0000120578 Sanoﬁ Synth´ elabo 15:30:00 15:35:45 05:45
+01/14 FR0000125338 Cap G´ emini 16:45:52 16:52:20 06:28 08/ 20 FR0000120537 Lafarge 9:54:11 10:07:20 13:09
+01/14 FR0000125007 Saint-Gobain 15:21:35 15:27:45 06:10 0 8/23 FR0000124141 Veolia Environnement 14:48:18 14:48:39 00:21
+01/14 FR0000120354 Vallourec 15:48:07 15:52:15 04:08 08/2 7 FR0000120578 Sanoﬁ Synth´ elabo 9:39:30 9:51:30 12:00
+01/15 FR0010307819 Legrand 12:04:25 12:08:24 03:58 08/27 F R0000125007 Saint-Gobain 9:44:07 9:51:35 07:28
+01/22 FR0000127771 Vivendi Universal 13:46:51 13:50:10 03 :19 08/27 FR0000120537 Lafarge 9:44:47 9:51:56 07:09
+01/22 FR0000121261 Michelin 9:54:07 10:06:05 11:58 08/27 F R0000121667 Essilor International 9:44:59 9:51:29 06:30
+01/23 FR0010220475 Alstom 15:59:27 15:59:30 00:04 08/29 FR 0000120693 Pernod Ricard 12:25:04 12:59:15 34:12
+
+elin 9:54:07 10:06:05 11:58 08/27 F R0000121667 Essilor International 9:44:59 9:51:29 06:30
+01/23 FR0010220475 Alstom 15:59:27 15:59:30 00:04 08/29 FR 0000120693 Pernod Ricard 12:25:04 12:59:15 34:12
+01/29 FR0000120537 Lafarge 9:52:51 10:05:06 12:15 08/29 FR 0000121667 Essilor International 15:01:36 15:04:20 02:44
+01/29 FR0000045072 Credit Agricole 10:02:42 10:15:25 12:4 3 09/02 FR0000131906 Renault 16:44:04 16:44:31 00:26
+01/31 FR0000120644 Danone 11:54:52 12:12:21 17:28 09/03 FR 0000121485 Kering 10:52:46 10:54:56 02:10
+02/04 FR0000131104 BNP 14:08:05 14:15:11 07:06 09/03 FR000 0121014 Lvmh Moet 10:52:45 10:54:54 02:09
+02/11 FR0000120578 Sanoﬁ Synth´ elabo 15:31:45 15:36:10 04 :25 09/03 FR0000131104 BNP 10:53:21 10:55:15 01:55
+02/20 FR0000133308 Orange 9:32:28 9:49:00 16:33 09/03 FR00 00130809 Soci´ et´ e G´ en´ erale 10:53:18 10:55:10 01:52
+02/22 FR0000131906 Renault 14:59:51 15:15:05 15:14 09/03 F R0000120628 Axa 10:53:09 10:55:10 02:01
+02/26 NL0000235190 EADS 16:29:03 16:38:35 09:32 09/03 FR00 00125486 Vinci 10:52:56 10:55:14 02:18
+03/01 FR0000045072 Credit Agricole 13:17:21 13:20:15 02:5 4 09/03 FR0000120073 Air Liquide 10:51:15 10:54:55 03:40
+03/06 FR0000133308 Orange 15:22:29 15:24:25 01:56 09/03 FR 0000120578 Sanoﬁ Synth´ elabo 10:52:54 10:54:55 02:01
+03/06 FR0000120404 Accor 15:23:22 15:34:03 10:41 09/03 FR0 000120271 Total 10:53:00 10:54:55 01:55
+
+133308 Orange 15:22:29 15:24:25 01:56 09/03 FR 0000120578 Sanoﬁ Synth´ elabo 10:52:54 10:54:55 02:01
+03/06 FR0000120404 Accor 15:23:22 15:34:03 10:41 09/03 FR0 000120271 Total 10:53:00 10:54:55 01:55
+03/07 FR0000130809 Soci´ et´ e G´ en´ erale 10:42:26 10:49:4 5 07:19 09/03 FR0000125007 Saint-Gobain 10:51:03 10:55:04 04:01
+03/08 FR0000125338 Cap G´ emini 13:59:34 14:10:35 11:01 09/ 03 NL0000235190 EADS 10:52:56 10:54:55 01:59
+03/12 NL0000226223 STMicroelectronics 17:18:25 17:24:55 06:30 09/03 FR0000120537 Lafarge 10:52:40 10:54:59 02:19
+03/12 FR0000121261 Michelin 16:22:32 16:28:04 05:33 09/03 FR0000121972 Schneider 10:52:38 10:55:07 02:29
+03/15 FR0000130809 Soci´ et´ e G´ en´ erale 11:51:19 11:55:1 0 03:52 09/06 FR0000121014 Lvmh Moet 15:39:26 15:47:35 08:0 9
+03/20 FR0000073272 Safran 15:17:00 15:45:28 28:28 09/06 FR 0000124141 Veolia Environnement 15:24:16 15:43:00 18:44
+03/21 FR0000125338 Cap G´ emini 15:15:37 15:33:26 17:49 09/ 09 FR0000125338 Cap G´ emini 16:45:34 17:12:40 27:07
+03/25 FR0010220475 Alstom 16:00:55 16:20:45 19:49 09/10 FR 0000120354 Vallourec 14:47:32 14:50:04 02:32
+03/25 NL0000235190 EADS 16:14:00 16:23:06 09:05 09/16 FR00 00120644 Danone 11:23:54 11:30:20 06:26
+03/26 FR0000073272 Safran 12:50:52 13:06:22 15:30 09/17 FR 0000120354 Vallourec 16:37:51 16:40:15 02:24
+04/04 NL0000235190 EADS 16:19:32 16:29:26 09:54 09/20 FR00 10208488 ENGIE 10:37:10 10:40:05 02:55
+
+/26 FR0000073272 Safran 12:50:52 13:06:22 15:30 09/17 FR 0000120354 Vallourec 16:37:51 16:40:15 02:24
+04/04 NL0000235190 EADS 16:19:32 16:29:26 09:54 09/20 FR00 10208488 ENGIE 10:37:10 10:40:05 02:55
+04/05 FR0000131104 BNP 11:49:35 11:53:15 03:39 09/24 FR000 0121485 Kering 15:37:05 15:44:04 06:58
+04/05 FR0010242511 EDF 14:53:00 14:54:55 01:55 09/24 FR000 0121261 Michelin 15:25:05 15:30:00 04:55
+04/05 FR0000120073 Air Liquide 11:47:43 11:53:20 05:37 09/ 24 FR0000120693 Pernod Ricard 16:18:15 16:25:20 07:05
+04/10 FR0000125338 Cap G´ emini 13:11:55 13:13:52 01:57 10/ 02 FR0000121261 Michelin 14:34:11 14:45:30 11:19
+04/15 FR0000130577 Publicis Groupe SA 14:46:08 14:56:04 09 :56 10/02 FR0000120693 Pernod Ricard 17:21:58 17:25:05 03: 08
+v
+
+04/16 FR0010208488 ENGIE 12:36:04 12:47:55 11:51 10/02 FR0 010220475 Alstom 15:39:45 15:43:00 03:15
+04/17 FR0000131906 Renault 9:30:08 9:51:45 21:37 10/02 FR0 000121667 Essilor International 15:21:32 15:28:50 07:18
+04/17 FR0010220475 Alstom 9:30:01 9:51:26 21:24 10/03 FR00 10220475 Alstom 9:29:40 9:48:00 18:20
+04/17 FR0010208488 ENGIE 9:44:54 9:51:34 06:41 10/09 FR000 0120172 Carrefour 14:01:46 14:05:45 04:00
+04/17 FR0000073272 Safran 9:29:55 9:51:56 22:00 10/09 FR00 00120537 Lafarge 12:30:21 12:38:28 08:07
+04/17 FR0000127771 Vivendi Universal 9:42:54 9:51:24 08:3 0 10/18 FR0000120172 Carrefour 11:23:12 11:34:48 11:35
+04/17 FR0000125486 Vinci 9:30:09 9:51:45 21:36 10/23 NL000 0226223 STMicroelectronics 16:16:06 16:24:16 08:10
+04/17 FR0000120628 Axa 9:42:50 9:51:45 08:56 10/24 FR00000 73272 Safran 14:29:39 14:42:41 13:02
+04/17 FR0000120354 Vallourec 9:30:02 9:51:25 21:23 10/25 F R0000120628 Axa 15:31:14 15:47:16 16:02
+04/17 FR0000120578 Sanoﬁ Synth´ elabo 9:42:55 9:51:30 08:3 5 10/28 FR0000120628 Axa 13:00:01 13:11:11 11:11
+04/17 FR0000120172 Carrefour 9:42:34 9:51:29 08:55 10/28 F R0000125486 Vinci 17:25:06 17:29:35 04:29
+04/17 FR0000120073 Air Liquide 9:41:34 9:51:30 09:56 10/28 FR0000125007 Saint-Gobain 13:02:45 13:15:25 12:39
+04/17 FR0000121261 Michelin 9:42:50 9:51:40 08:50 10/29 FR 0000124141 Veolia Environnement 9:29:59 9:40:05 10:06
+04/17 FR0000120271 Total 9:30:09 9:51:34 21:26 10/30 FR000 0131708 Technip 12:29:41 12:31:48 02:07
+
+121261 Michelin 9:42:50 9:51:40 08:50 10/29 FR 0000124141 Veolia Environnement 9:29:59 9:40:05 10:06
+04/17 FR0000120271 Total 9:30:09 9:51:34 21:26 10/30 FR000 0131708 Technip 12:29:41 12:31:48 02:07
+04/17 FR0000121972 Schneider 9:30:00 9:51:29 21:29 11/05 F R0000120693 Pernod Ricard 14:55:14 15:10:07 14:53
+04/23 FR0000120404 Accor 16:50:24 17:14:07 23:43 11/05 FR0 000130809 Soci´ et´ e G´ en´ erale 14:46:45 14:50:15 03:30
+04/26 FR0000120693 Pernod Ricard 10:18:56 10:27:19 08:23 1 1/05 FR0000120628 Axa 14:40:25 14:48:38 08:13
+04/29 FR0000127771 Vivendi Universal 13:55:11 14:02:29 07 :19 11/07 FR0000130809 Soci´ et´ e G´ en´ erale 16:32:20 16:3 6:35 04:15
+04/30 FR0000127771 Vivendi Universal 15:48:25 15:57:40 09 :15 11/20 FR0000131708 Technip 15:37:23 16:09:40 32:17
+05/07 NL0000235190 EADS 15:46:36 16:01:39 15:03 11/21 NL00 00226223 STMicroelectronics 13:56:25 13:58:30 02:06
+05/07 FR0000121972 Schneider 12:17:56 12:27:00 09:04 11/2 2 FR0000133308 Orange 12:17:19 12:27:59 10:41
+05/10 FR0010220475 Alstom 10:01:03 10:12:20 11:17 11/22 FR 0000127771 Vivendi Universal 12:16:49 12:22:49 06:00
+05/22 FR0000125338 Cap G´ emini 15:44:54 15:47:05 02:11 11/ 25 FR0000125338 Cap G´ emini 10:08:52 10:13:24 04:32
+05/23 FR0000120172 Carrefour 15:46:17 15:48:51 02:34 11/2 6 FR0000120404 Accor 11:49:31 11:59:05 09:34
+05/29 FR0000120271 Total 16:13:10 16:17:20 04:10 11/26 FR0 000121667 Essilor International 16:37:43 16:41:02 03:18
+
+Carrefour 15:46:17 15:48:51 02:34 11/2 6 FR0000120404 Accor 11:49:31 11:59:05 09:34
+05/29 FR0000120271 Total 16:13:10 16:17:20 04:10 11/26 FR0 000121667 Essilor International 16:37:43 16:41:02 03:18
+06/05 FR0000120172 Carrefour 11:23:47 11:26:35 02:48 11/2 7 FR0000120404 Accor 13:27:19 13:47:55 20:36
+06/07 FR0000121485 Kering 12:02:29 12:09:09 06:41 12/03 FR 0000133308 Orange 9:58:45 10:03:55 05:10
+06/14 FR0010220475 Alstom 15:01:31 15:02:23 00:52 12/03 FR 0000131906 Renault 10:09:54 10:13:25 03:30
+06/14 FR0000127771 Vivendi Universal 15:39:05 15:51:09 12 :05 12/03 FR0000131708 Technip 9:53:52 10:03:48 09:56
+06/19 FR0010220475 Alstom 13:08:27 13:10:54 02:27 12/05 FR 0000130577 Publicis Groupe SA 15:31:10 15:43:04 11:55
+06/24 FR0000130809 Soci´ et´ e G´ en´ erale 10:15:26 10:33:2 5 17:59 12/17 FR0000120404 Accor 11:05:41 11:16:16 10:35
+06/24 FR0000125007 Saint-Gobain 10:15:02 10:33:25 18:23 1 2/18 FR0000120354 Vallourec 9:30:00 9:46:41 16:41
+07/01 FR0000120537 Lafarge 16:39:15 16:41:45 02:30 12/19 F R0000045072 Credit Agricole 14:48:57 14:53:20 04:23
+07/11 FR0010242511 EDF 11:13:35 11:18:55 05:20 12/19 FR000 0131906 Renault 16:54:09 17:07:10 13:01
+07/18 FR0000130577 Publicis Groupe SA 13:51:35 13:51:56 00 :21 12/23 FR0000133308 Orange 10:46:27 11:02:27 16:00
+Note. The table reports detailed information about the 148 drift burst EP Ms in our sample. In particular, we report the
+date of occurrence, and the name and ISIN code of the aﬀected s tock.
+
+:27 16:00
+Note. The table reports detailed information about the 148 drift burst EP Ms in our sample. In particular, we report the
+date of occurrence, and the name and ISIN code of the aﬀected s tock. Moreover, we show the time of the beginning and
+trough of each event, and its duration (in mm:ss).
+vi
+
+Table B.2: The sample of drift burst EPMs – Aggregated by stock
+Return (in %) Duration (mm:ss)
+ISIN Name Ticker Market Cap Trades Volume # EPMs Mean Median Std. Mean Median Std.
+FR0000045072 Credit Agricole ACA 23,221 12,774 88 3 -1.13 -0.89 0.47 0 6:40 04:23 05:17
+FR0000073272 Safran SAF 21,064 8,569 60 4 -1.11 -0.98 0.53 19:45 18:4 5 06:56
+FR0000120073 Air Liquide AI 32,047 12,821 128 3 -0.99 -0.99 0.30 06:24 0 5:37 03:12
+FR0000120172 Carrefour CA 20,858 13,152 116 6 -1.53 -1.57 0.74 07:5 5 06:27 05:58
+FR0000120271 Total FP 145,995 26,025 348 3 -1.23 -1.01 0.49 09:10 04 :10 10:40
+FR0000120354 Vallourec VK 5,035 9,902 51 5 -1.18 -0.78 0.60 09:26 04:08 08:57
+FR0000120404 Accor AC 7,822 7,872 49 6 -1.10 -1.07 0.48 13:15 10:38 07 :21
+FR0000120537 Lafarge LG 15,652 11,512 76 6 -1.12 -0.97 0.40 07:35 07 :38 04:37
+FR0000120578 Sanoﬁ Synth´ elabo SAN 101,851 27,238 400 5 -0.94 -0 .87 0.57 06:33 05:45 03:52
+FR0000120628 Axa CS 48,784 19,042 200 5 -1.24 -1.02 0.71 09:16 08:56 0 5:05
+FR0000120644 Danone BN 30,688 14,526 176 2 -1.40 -1.40 0.02 11:57 11 :57 07:49
+FR0000120693 Pernod Ricard RI 21,799 10,385 96 5 -0.88 -0.69 0.59 13 :32 08:23 12:18
+FR0000121014 Lvmh Moet MC 66,353 13,133 200 2 -1.27 -1.27 0.33 05:09 05:09 04:14
+FR0000121261 Michelin ML 14,350 12,618 99 5 -1.50 -1.77 0.72 08:31 08:50 03:13
+FR0000121485 Kering KER 19,395 6,899 83 3 -0.89 -0.84 0.29 05:16 06:41 02:42
+FR0000121667 Essilor International EI 16,592 10,950 86 4 -0.98 -0.9 3 0.15 04:58 04:54 02:17
+
+-1.77 0.72 08:31 08:50 03:13
+FR0000121485 Kering KER 19,395 6,899 83 3 -0.89 -0.84 0.29 05:16 06:41 02:42
+FR0000121667 Essilor International EI 16,592 10,950 86 4 -0.98 -0.9 3 0.15 04:58 04:54 02:17
+FR0000121972 Schneider SU 35,628 16,767 164 3 -1.79 -1.43 1.15 11:01 09:04 09:39
+FR0000124141 Veolia Environnement VIE 6,338 10,989 68 3 -2.46 -2.79 1.21 09:44 10:06 09:12
+FR0000125007 Saint-Gobain SGO 22,193 13,639 116 5 -1.36 -1.34 0.33 0 9:44 07:28 05:47
+FR0000125338 Cap G´ emini CAP 7,876 9,677 61 7 -0.87 -0.87 0.28 10:09 0 6:28 09:20
+FR0000125486 Vinci DG 28,713 14,361 124 3 -1.25 -1.18 0.79 09:28 04:29 10:34
+FR0000127771 Vivendi Universal VIV 25,660 13,320 143 6 -1.39 -1.34 0.66 07:45 07:54 02:59
+FR0000130577 Publicis Groupe SA PUB 13,740 9,466 75 3 -1.52 -1.26 0.54 07:24 09:56 06:11
+FR0000130809 Soci´ et´ e G´ en´ erale GLE 33,722 32,204 317 7 -1.62 -1.52 0.83 06:11 04:15 05:27
+FR0000131104 BNP BNP 70,354 33,015 364 3 -1.14 -1.03 0.28 04:13 03:39 02:38
+FR0000131708 Technip TEC 7,942 10,665 75 6 -1.17 -1.08 0.48 13:36 11:2 1 10:06
+FR0000131906 Renault RNO 17,064 14,722 118 5 -1.57 -1.33 0.88 10:46 1 3:01 08:41
+FR0000133308 Orange ORA 23,630 21,114 167 5 -1.47 -1.25 0.82 10:04 1 0:41 06:28
+FR0010208488 ENGIE ENGI 40,349 13,831 148 3 -2.02 -1.68 0.81 07:09 0 6:41 04:29
+FR0010220475 Alstom ALO 8,126 11,838 81 10 -1.45 -1.47 0.67 09:45 07:4 7 08:29
+FR0010242511 EDF EDF 47,729 9,368 64 2 -1.40 -1.40 0.67 03:37 03:37 02 :25
+
+831 148 3 -2.02 -1.68 0.81 07:09 0 6:41 04:29
+FR0010220475 Alstom ALO 8,126 11,838 81 10 -1.45 -1.47 0.67 09:45 07:4 7 08:29
+FR0010242511 EDF EDF 47,729 9,368 64 2 -1.40 -1.40 0.67 03:37 03:37 02 :25
+FR0010307819 Legrand LR 10,633 6,387 45 1 -1.08 -1.08 03:58 03:58
+NL0000226223 STMicroelectronics STM 7,098 8,668 44 3 -2.60 -1.41 2.1 6 05:35 06:30 03:08
+NL0000235190 EADS AIR 43,550 20,886 212 6 -0.88 -0.96 0.25 08:46 09:1 9 04:15
+Note. We study tick-by-tick order-level data in a sample composed of 37 s tocks that were traded on NYSE Euronext Paris
+in 2013 and are members of the CAC 40 index (we exclude Arcelor Mitta l, Gemalto, and Solvay, because their main trading
+venue is not the Paris branch of NYSE Euronext). The table report s the average daily market capitalization (in million
+euros, from Bloomberg), number of transactions, and trading vo lume (in million euros) of each stock. We apply the test
+statistic of Christensen et al. (2022) to screen for downward drift burst EPMs, which shows 148 drift b urst EPMs aﬀecting
+34 of the 37 included equities. # EPMs is the number of detected even ts in each stock. We report the mean, median, and
+standard deviation of the rate of return (from beginning to troug h) and duration (in mm:ss) of stock-level events.
+vii
+
+Table B.3: Coeﬃcient estimates from the V AR for trading imbalance (f ull version)
+Panel A: Unsystematic drift burst EPMs
+PURE-CLIENTPURE-HFT OWNPURE-HFT MMIB-HFT MMIB-CLIENTIB -HFT OWNIB-HFT PARENTNON-HFT CLIENTNON-HFT OWN
+Pre-event 0.020 0.006 -0.007 0.031** -0.019 -0.012 0.013 0. 027* -0.010
+(1.14) (0.42) (-0.77) (2.46) (-1.47) (-1.07) (1.40) (1.75) (-0.96)
+Early drop -0.002 0.073*** 0.078* 0.290*** -0.020 -0.144** 0.055 0.038 -0.112**
+(-0.04) (3.03) (1.69) (4.10) (-0.50) (-2.27) (1.64) (1.17) (-2.01)
+Intermediate drop 0.193** 0.020 -0.025 0.176*** -0.085** - 0.055 0.102*** 0.013 -0.050
+(2.44) (0.55) (-0.74) (3.86) (-2.03) (-1.47) (3.52) (0.36) (-1.10)
+Late drop 0.113 0.025 0.017 0.227*** -0.267*** -0.006 0.206 *** 0.103* -0.150**
+(1.17) (0.58) (0.30) (3.36) (-3.49) (-0.08) (5.15) (1.78) ( -2.17)
+Recovery 0.006 0.014 -0.024** -0.010 -0.016 -0.018 0.006 0. 054*** -0.009
+(0.34) (1.26) (-2.46) (-0.67) (-0.91) (-0.89) (0.36) (3.41 ) (-0.54)
+Bid-ask spread 0.005 0.012* 0.002 0.006 0.001 -0.008 0.005 - 0.003 -0.001
+(0.86) (1.93) (0.50) (1.20) (0.16) (-1.45) (1.10) (-0.46) ( -0.10)
+Log(euro volume) 0.008 0.004 -0.018** 0.025** -0.026* 0.00 8 -0.019*** 0.016 -0.005
+(1.32) (0.64) (-2.22) (2.33) (-1.83) (0.63) (-2.82) (0.96) (-0.46)
+Return 0.012 0.012 0.021* -0.189*** 0.031*** 0.011 0.023** * 0.002 0.024***
+(1.55) (1.26) (1.78) (-12.05) (3.66) (1.23) (3.01) (0.23) ( 2.99)
+¯R2 0.010 0.006 0.003 0.057 0.039 0.024 0.016 0.020 0.024
+Panel B: Systematic drift burst EPMs
+
+.031*** 0.011 0.023** * 0.002 0.024***
+(1.55) (1.26) (1.78) (-12.05) (3.66) (1.23) (3.01) (0.23) ( 2.99)
+¯R2 0.010 0.006 0.003 0.057 0.039 0.024 0.016 0.020 0.024
+Panel B: Systematic drift burst EPMs
+PURE-CLIENTPURE-HFT OWNPURE-HFT MMIB-HFT MMIB-CLIENTIB -HFT OWNIB-HFT PARENTNON-HFT CLIENTNON-HFT OWN
+Pre-event -0.007 -0.017 0.015 -0.010 0.018 -0.024 -0.011 0. 039* -0.017
+(-0.85) (-0.92) (0.79) (-0.39) (1.00) (-1.28) (-0.66) (1.8 4) (-1.01)
+Early drop -0.012 0.008 -0.059 0.003 0.040 -0.152** 0.009 0. 305*** -0.129
+(-0.52) (0.51) (-1.05) (0.04) (0.46) (-2.07) (0.12) (3.30) (-1.03)
+Intermediate drop 0.038 0.130* -0.136** -0.164 0.131 -0.34 9*** -0.244** 0.455*** 0.154
+(1.66) (1.90) (-2.32) (-1.29) (1.05) (-3.51) (-2.08) (3.08 ) (0.92)
+Late drop 0.082 0.146 -0.088 -0.374** -0.002 -0.087 -0.708* ** 0.490*** 0.227***
+(1.14) (1.26) (-1.27) (-2.27) (-0.02) (-0.97) (-4.59) (3.6 2) (2.82)
+Recovery 0.012 -0.010 0.012 -0.041 -0.015 0.028 -0.044** 0. 016 0.007
+(0.96) (-0.82) (0.49) (-1.38) (-0.58) (1.45) (-2.49) (1.00 ) (0.38)
+Bid-ask spread -0.005 0.005 0.006 -0.007 0.003 -0.003 0.003 -0.006 0.013*
+(-0.92) (0.79) (0.63) (-0.69) (0.26) (-0.53) (0.44) (-0.90 ) (1.83)
+Log(euro volume) 0.010** 0.006 -0.023 -0.143*** 0.047** -0 .022 -0.102*** 0.060** 0.074**
+(2.35) (1.19) (-1.29) (-7.61) (2.33) (-1.13) (-7.34) (2.75 ) (2.68)
+Return -0.000 0.018*** 0.031 -0.076*** 0.030** 0.006 0.054 *** -0.028** -0.020**
+(-0.03) (3.51) (1.09) (-3.64) (2.14) (0.61) (5.11) (-2.58) (-2.10)
+
+1.29) (-7.61) (2.33) (-1.13) (-7.34) (2.75 ) (2.68)
+Return -0.000 0.018*** 0.031 -0.076*** 0.030** 0.006 0.054 *** -0.028** -0.020**
+(-0.03) (3.51) (1.09) (-3.64) (2.14) (0.61) (5.11) (-2.58) (-2.10)
+¯R2 0.041 0.004 0.009 0.070 0.031 0.022 0.029 0.031 0.032
+Note. We present the results of the V AR in equation ( 9). The model is estimated separately for unsystematic drift burst
+EPMs in Panel A and systematic ones in Panel B. The dependent varia ble is the 10-second trading imbalance of the trader
+category indicated by the column label. The explanatory variables “P re-event”, “Early drop”, “Intermediate drop”, “Late
+drop”, and “Recovery” refer to phase dummies of a drift burst EP M. “Bid-ask spread” is the quoted spread (in percent),
+“Log(euro volume)” is the log-euro volume, and “Return” is the con temporaneous stock return. We also include stock ﬁxed
+eﬀects. The non-dummy variables are standardized at the stock le vel. The coeﬃcient estimates of lagged trading imbalances
+are not reported for brevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust standard errors clustered
+at the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01. nObs = 342,032 in Panel A and nObs =
+79,404 in Panel B.
+viii
+
+Table B.4: Coeﬃcient estimates from the V AR for aggressive trading imbalance (full version)
+Panel A: Unsystematic drift burst EPMs
+PURE-CLIENTPURE-HFT OWNPURE-HFT MMIB-HFT MMIB-CLIENTIB -HFT OWNIB-HFT PARENTNON-HFT CLIENTNON-HFT OWN
+Pre-event -0.004 -0.005 -0.006 0.003 -0.024** -0.018* 0.00 4 -0.008 -0.006
+(-0.30) (-0.44) (-0.75) (0.31) (-1.99) (-1.95) (0.37) (-1. 01) (-0.87)
+Early drop -0.011 0.034 0.021 -0.037 -0.082* -0.167*** 0.04 8 -0.067** -0.110**
+(-0.28) (1.27) (0.54) (-1.13) (-1.82) (-2.92) (1.49) (-2.4 2) (-2.62)
+Intermediate drop 0.058* 0.003 0.011 0.037 -0.116*** -0.05 8* 0.083*** -0.054* -0.054
+(1.78) (0.12) (0.29) (1.10) (-2.69) (-1.67) (3.09) (-1.98) (-1.25)
+Late drop 0.019 0.046 0.055 0.012 -0.341*** -0.065 0.189*** -0.188*** -0.166***
+(0.41) (1.17) (0.99) (0.24) (-4.54) (-0.91) (4.69) (-2.73) (-2.79)
+Recovery 0.008 0.010 -0.016 -0.011 -0.023 -0.036** 0.001 0. 036* -0.002
+(0.45) (0.71) (-1.47) (-0.80) (-1.33) (-2.45) (0.07) (1.92 ) (-0.20)
+Bid-ask spread 0.005 0.010 0.001 0.006 0.008 -0.006 0.010* - 0.007 0.004
+(1.14) (1.60) (0.15) (1.26) (1.14) (-1.02) (1.72) (-1.03) ( 0.51)
+Log(euro volume) -0.007 -0.009* -0.020*** -0.013 -0.033** * -0.015* -0.020*** -0.015 -0.014
+(-1.26) (-1.68) (-2.85) (-1.48) (-2.77) (-1.69) (-3.17) (- 1.50) (-1.52)
+Return 0.086*** 0.091*** 0.239*** 0.142*** 0.161*** 0.199 *** 0.113*** 0.173*** 0.117***
+(14.89) (9.12) (22.11) (12.90) (18.90) (22.27) (16.10) (21 .73) (13.17)
+¯R2 0.008 0.010 0.054 0.029 0.049 0.050 0.019 0.035 0.028
+
+91*** 0.239*** 0.142*** 0.161*** 0.199 *** 0.113*** 0.173*** 0.117***
+(14.89) (9.12) (22.11) (12.90) (18.90) (22.27) (16.10) (21 .73) (13.17)
+¯R2 0.008 0.010 0.054 0.029 0.049 0.050 0.019 0.035 0.028
+Panel B: Systematic drift burst EPMs
+PURE-CLIENTPURE-HFT OWNPURE-HFT MMIB-HFT MMIB-CLIENTIB -HFT OWNIB-HFT PARENTNON-HFT CLIENTNON-HFT OWN
+Pre-event 0.017 -0.002 0.047** 0.040* 0.031 0.022 -0.007 0. 036** 0.011
+(1.56) (-0.12) (2.33) (1.90) (1.40) (1.44) (-0.39) (2.19) ( 0.67)
+Early drop -0.003 0.004 -0.086* 0.074 -0.071 -0.188* 0.005 0 .109*** -0.148
+(-0.13) (0.12) (-1.86) (0.76) (-1.03) (-2.03) (0.08) (3.05 ) (-1.00)
+Intermediate drop 0.069 0.102* -0.066 -0.049 -0.021 -0.354 *** -0.278** 0.074 -0.027
+(1.32) (1.92) (-1.29) (-0.40) (-0.52) (-3.76) (-2.30) (1.2 2) (-0.35)
+Late drop 0.117*** 0.203** 0.182** -0.309** -0.109 -0.074 - 0.509*** 0.068 0.209***
+(4.15) (2.49) (2.72) (-2.19) (-1.31) (-1.01) (-3.32) (0.87 ) (3.30)
+Recovery -0.022 -0.023* 0.010 -0.078*** -0.040** -0.031** -0.045** -0.010 -0.034
+(-1.41) (-1.87) (0.35) (-2.92) (-2.53) (-2.34) (-2.62) (-0 .58) (-1.62)
+Bid-ask spread 0.001 0.003 0.018** 0.010 0.007 0.011 0.009 - 0.010 0.021**
+(0.27) (0.37) (2.13) (1.09) (0.64) (1.68) (1.43) (-1.36) (2 .51)
+Log(euro volume) 0.005 -0.000 -0.010 -0.108*** -0.003 -0.0 64*** -0.086*** 0.005 0.043***
+(1.17) (-0.04) (-0.74) (-6.12) (-0.21) (-3.14) (-9.13) (0. 32) (3.29)
+Return 0.073*** 0.074*** 0.248*** 0.178*** 0.125*** 0.117 *** 0.115*** 0.088*** 0.065***
+
+.003 -0.0 64*** -0.086*** 0.005 0.043***
+(1.17) (-0.04) (-0.74) (-6.12) (-0.21) (-3.14) (-9.13) (0. 32) (3.29)
+Return 0.073*** 0.074*** 0.248*** 0.178*** 0.125*** 0.117 *** 0.115*** 0.088*** 0.065***
+(9.45) (10.20) (10.29) (10.70) (6.22) (11.38) (13.38) (9.4 9) (7.40)
+¯R2 0.010 0.013 0.087 0.085 0.042 0.041 0.038 0.019 0.019
+Note. We present the results of the V AR in equation ( 9). The model is estimated separately for unsystematic drift burst
+EPMs in Panel A and systematic ones in Panel B. The dependent varia ble is the 10-second aggressive trading imbalance
+of the trader category indicated by the column label. The explanato ry variables “Pre-event”, “Early drop”, “Intermediate
+drop”, “Late drop”, and “Recovery” refer to phase dummies of a drift burst EPM. “Bid-ask spread” is the quoted spread (in
+percent), “Log(euro volume)” is the log-euro volume, and “Retur n” is the contemporaneous stock return. We also include
+stock ﬁxed eﬀects. The non-dummy variables are standardized at the stock level. The coeﬃcient estimates of lagged trading
+imbalances are not reported for brevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust standard
+errors clustered at the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01. nObs = 342,032 in Panel A
+and nObs = 79,404 in Panel B.
+ix
+
+Table B.5: Coeﬃcient estimates from the V AR for passive trading imba lance (full version)
+Panel A: Unsystematic drift burst EPMs
+PURE-CLIENTPURE-HFT OWNPURE-HFT MMIB-HFT MMIB-CLIENTIB -HFT OWNIB-HFT PARENTNON-HFT CLIENTNON-HFT OWN
+Pre-event 0.021 0.004 -0.006 0.033*** -0.007 0.005 0.018** * 0.038** -0.010
+(1.41) (0.27) (-0.59) (2.68) (-0.65) (0.51) (2.66) (2.30) ( -0.77)
+Early drop 0.009 0.031 0.099** 0.346*** 0.075 0.018 0.038 0. 093*** -0.034
+(0.27) (1.42) (2.54) (4.75) (1.59) (0.56) (1.07) (2.67) (-0 .80)
+Intermediate drop 0.146* 0.008 -0.057* 0.187*** -0.020 0.0 16 0.065** 0.055 -0.008
+(1.82) (0.30) (-1.89) (3.93) (-0.65) (0.45) (2.00) (1.32) ( -0.22)
+Late drop 0.053 -0.015 -0.060 0.239*** -0.003 0.095 0.074** * 0.254*** -0.026
+(0.74) (-0.43) (-1.18) (3.86) (-0.04) (1.63) (2.75) (3.97) (-0.39)
+Recovery -0.005 0.006 -0.021** -0.005 -0.007 0.014 0.011 0. 039*** -0.005
+(-0.63) (0.45) (-2.58) (-0.32) (-0.43) (0.63) (0.98) (3.00 ) (-0.27)
+Bid-ask spread -0.004 0.004 0.001 0.003 -0.006 -0.004 -0.00 3 0.003 -0.007
+(-0.86) (0.89) (0.11) (0.58) (-0.82) (-0.50) (-0.57) (0.52 ) (-1.24)
+Log(euro volume) 0.014*** 0.013** -0.002 0.036*** -0.000 0 .024** -0.008 0.034** 0.008
+(2.66) (2.15) (-0.29) (3.98) (-0.00) (2.13) (-1.01) (2.29) (0.90)
+Return -0.082*** -0.086*** -0.300*** -0.312*** -0.111*** -0.208*** -0.116*** -0.129*** -0.077***
+(-14.40) (-8.43) (-29.38) (-22.59) (-11.40) (-23.90) (-14 .13) (-13.38) (-10.29)
+¯R2 0.009 0.009 0.082 0.106 0.035 0.060 0.023 0.041 0.022
+
+-0.312*** -0.111*** -0.208*** -0.116*** -0.129*** -0.077***
+(-14.40) (-8.43) (-29.38) (-22.59) (-11.40) (-23.90) (-14 .13) (-13.38) (-10.29)
+¯R2 0.009 0.009 0.082 0.106 0.035 0.060 0.023 0.041 0.022
+Panel B: Systematic drift burst EPMs
+PURE-CLIENTPURE-HFT OWNPURE-HFT MMIB-HFT MMIB-CLIENTIB -HFT OWNIB-HFT PARENTNON-HFT CLIENTNON-HFT OWN
+Pre-event -0.031** -0.035* -0.033** -0.051 -0.009 -0.055* * -0.012 0.024 -0.033*
+(-2.30) (-1.97) (-2.21) (-1.67) (-0.59) (-2.17) (-0.80) (1 .05) (-1.74)
+Early drop -0.018 0.004 0.019 -0.053 0.075 0.001 0.038 0.298 ** -0.016
+(-0.52) (0.11) (0.41) (-1.15) (0.84) (0.02) (0.81) (2.70) ( -0.44)
+Intermediate drop -0.044 0.060 -0.100** -0.145 0.165 -0.03 6 -0.018 0.503*** 0.255
+(-0.85) (0.61) (-2.09) (-1.66) (1.09) (-0.77) (-0.36) (3.2 1) (1.38)
+Late drop -0.071 -0.138*** -0.314*** -0.284** 0.051 -0.018 -0.345*** 0.551*** 0.143
+(-1.22) (-3.31) (-4.10) (-2.20) (0.55) (-0.23) (-3.85) (3. 24) (1.48)
+Recovery 0.025 0.011 0.001 -0.003 0.008 0.080*** -0.012 0.0 33 0.040**
+(1.54) (0.62) (0.14) (-0.14) (0.30) (2.92) (-0.63) (1.52) ( 2.14)
+Bid-ask spread -0.001 -0.000 -0.012 -0.014 -0.003 -0.020** * -0.009 0.002 -0.000
+(-0.13) (-0.00) (-1.33) (-1.44) (-0.70) (-3.54) (-1.60) (0 .24) (-0.06)
+Log(euro volume) 0.001 0.010 -0.018 -0.089*** 0.066*** 0.0 48** -0.042** 0.068*** 0.061**
+(0.09) (1.21) (-1.66) (-6.45) (3.79) (2.72) (-2.65) (3.37) (2.13)
+Return -0.084*** -0.072*** -0.266*** -0.227*** -0.077*** -0.135*** -0.077*** -0.099*** -0.074***
+
+* 0.0 48** -0.042** 0.068*** 0.061**
+(0.09) (1.21) (-1.66) (-6.45) (3.79) (2.72) (-2.65) (3.37) (2.13)
+Return -0.084*** -0.072*** -0.266*** -0.227*** -0.077*** -0.135*** -0.077*** -0.099*** -0.074***
+(-9.81) (-8.64) (-14.22) (-10.36) (-9.62) (-12.24) (-8.04 ) (-7.32) (-6.60)
+¯R2 0.014 0.013 0.095 0.091 0.041 0.056 0.015 0.053 0.036
+Note. We present the results of the V AR in equation ( 9). The model is estimated separately for unsystematic drift burst
+EPMs in Panel A and systematic ones in Panel B. The dependent varia ble is the 10-second passive trading imbalance of
+the trader category indicated by the column label. The explanatory variables “Pre-event”, “Early drop”, “Intermediate
+drop”, “Late drop”, and “Recovery” refer to phase dummies of a drift burst EPM. “Bid-ask spread” is the quoted spread (in
+percent), “Log(euro volume)” is the log-euro volume, and “Retur n” is the contemporaneous stock return. We also include
+stock ﬁxed eﬀects. The non-dummy variables are standardized at the stock level. The coeﬃcient estimates of lagged trading
+imbalances are not reported for brevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust standard
+errors clustered at the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01. nObs = 342,032 in Panel A
+and nObs = 79,404 in Panel B.
+x
+
+Table B.6: Proﬁt and loss of trading activity (full version)
+Panel A: Unsystematic drift burst EPMs
+PURE-CLIENTPURE-HFT OWNPURE-HFT MMIB-HFT MMIB-CLIENTIB -HFT OWNIB-HFT PARENTNON-HFT CLIENTNON-HFT OWN
+Dummy -0.013 0.060 0.108 -0.347*** 0.419*** 0.842** -0.145 ** -0.162 0.539***
+(-0.21) (0.76) (0.84) (-2.99) (2.85) (2.35) (-2.54) (-0.99 ) (2.69)
+Bid-ask spread -0.030* 0.092 0.483** 0.005 0.230 0.710 0.05 2 0.022 -0.122
+(-1.76) (1.28) (2.55) (0.05) (1.19) (1.08) (0.83) (0.10) (- 0.74)
+Log(euro Volume) -0.006 0.068 0.581*** -0.073 0.133 0.356* * 0.084** -0.609*** 0.110
+(-0.48) (1.30) (5.82) (-1.23) (1.31) (2.37) (2.56) (-4.04) (1.15)
+Return -0.005 -0.036 0.066 -0.101 -0.986* -0.436 -0.003 0.1 48 -0.451
+(-0.08) (-0.24) (0.22) (-0.42) (-1.88) (-0.69) (-0.02) (0. 32) (-1.59)
+¯R2 0.008 0.011 0.013 0.013 0.029 0.014 0.008 0.018 0.008
+Panel B: Systematic drift burst EPMs
+PURE-CLIENTPURE-HFT OWNPURE-HFT MMIB-HFT MMIB-CLIENTIB -HFT OWNIB-HFT PARENTNON-HFT CLIENTNON-HFT OWN
+Dummy 0.039** 0.013 0.894* 0.729** -0.398 1.514*** 0.803** * -0.964** -0.391
+(2.35) (0.17) (2.05) (2.22) (-1.64) (2.93) (2.86) (-2.31) ( -1.06)
+Bid-ask spread 0.038* -0.057 0.308** -0.030 0.518*** 0.755 *** 0.117 -0.264** -0.217
+(2.02) (-1.53) (2.25) (-0.18) (2.99) (2.97) (1.52) (-2.20) (-1.41)
+Log(euro Volume) -0.005 -0.016 1.035*** 0.040 0.081 -0.068 0.361*** -0.743*** -0.457**
+(-0.44) (-0.44) (3.58) (0.33) (0.60) (-0.31) (4.89) (-3.61 ) (-2.44)
+
+-0.18) (2.99) (2.97) (1.52) (-2.20) (-1.41)
+Log(euro Volume) -0.005 -0.016 1.035*** 0.040 0.081 -0.068 0.361*** -0.743*** -0.457**
+(-0.44) (-0.44) (3.58) (0.33) (0.60) (-0.31) (4.89) (-3.61 ) (-2.44)
+Return 0.006 -0.016 -0.054 -2.049*** 0.104 -0.816 -1.226** * 0.839*** 0.936***
+(0.17) (-0.38) (-0.16) (-7.02) (0.44) (-1.60) (-5.78) (3.1 7) (4.00)
+¯R2 0.058 0.008 0.022 0.087 0.006 0.016 0.053 0.022 0.012
+Note. This table presents coeﬃcient estimates from the V AR in equation ( 12). The model is estimated separately for
+unsystematic drift burst EPMs in Panel A and systematic ones in Pan el B. The dependent variable is the 10-second proﬁt
+and loss (P&L) of the trader category indicated by the column label. “Dummy” equals one for the entire duration of the
+drift burst EPM (from the beginning of the pre-event until the end of the recovery), zero otherwise, “Bid-ask spread” is the
+quoted spread (in percent), “Log(euro volume)” is the log-euro v olume, and “Return” is the contemporaneous stock return.
+We also include stock ﬁxed eﬀects. The non-dummy variables are sta ndardized at the stock level. The coeﬃcient estimates
+of the lagged P&L are not reported for brevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust
+standard errors clustered at the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01. nObs = 342,032 in
+Panel A and nObs = 79,404 in Panel B.
+xi
+
+Figure B.1: Individual stock price changes during systematic drift b urst EPMs
+Panel A: April 17, 2013. Panel B: September 3, 2013.
+09:45 09:50 09:55 10:00
+Time
+-2.5
+-2
+-1.5
+-1
+-0.5
+0
+0.5
+1
+Cumulative return (in %)
+10:50 10:55 11:00 11:05
+Time
+-1.5
+-1
+-0.5
+0
+0.5
+1
+Cumulative return (in %)
+Note. This ﬁgure shows the price evolution of the equities included in our ana lysis during the
+systematic drift bursts EPMs detected on April 17, 2013 (in Panel A) and September 3, 2013
+(in Panel B). We include a 15-minute window spanning the trough.
+xii
+
+Figure B.2: Changes in trading imbalance for an unsystematic drift bu rst EPM
+Panel A: IB-HFT OWN Panel B: IB-HFT MM Panel C: PURE-HFT MM
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90Count
+EARLY
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90Count
+EARLY
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90Count
+EARLY
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90Count
+INTERMEDIATE
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90Count
+INTERMEDIATE
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90Count
+INTERMEDIATE
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90Count
+LATE
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90Count
+LATE
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90Count
+LATE
+-2 -1.5 -1 -0.5 0 0.5 1 1.5 2
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90Count
+RECOVERY
+-2 -1.5 -1 -0.5 0 0.5 1 1.5 2
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90Count
+RECOVERY
+-2 -1.5 -1 -0.5 0 0.5 1 1.5 2
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90Count
+RECOVERY
+Note. The ﬁgure depicts a histogram of the empirical distribution of one-m inute changes in
+trading imbalance for IB-HFT OWN (Panel A), IB-HFT MM (Panel B), and PURE-HFT MM
+(Panel C) at diﬀerent stages of an unsystematic drift burst EPM. A negative number means
+that the trader category is collectively selling either via aggressive o r passive trades, and vice
+versa.
+xiii
+
+C Alternative analysis of trading activity
+In this appendix, we look at the question of whether DMMs change th eir trading activity during
+drift burst EPMs. We rely on
+Kirilenko et al. (2017), who employ an error correction model
+to changes in inventory of diﬀerent trader groups. They show tha t HFTs did not alter their
+behavior during the Flash Crash of May 6, 2010. We arrive at the opp osite conclusion regarding
+DMMs in our sample of drift burst EPMs, which is possibly due to the fac t that we analyze 148
+events instead of a single one.
+The econometric model reads:
+∆yt = α + φ∆yt−1 + δyt−1 +
+3∑
+i=0
+βi∆pt−i
++ DD
+(
+αD + φD∆yt−1 + δDyt−1 +
+3∑
+i=0
+βD
+i ∆pt−i
+)
++ DU
+(
+αU + φU ∆yt−1 + δU yt−1 +
+3∑
+i=0
+βU
+i ∆pt−i
+)
++ εt,
+(C.1)
+where DD is a dummy activated during the drift burst EPM (from tstart to ttrough according to
+the deﬁnitions in the main text), while DU is a dummy activated during the recovery (from
+ttrough to tend), yt is the net inventory of each trader category at time t (measured in million
+euros and assumed to start from zero at the beginning of each day ), ∆ yt is the ﬁrst diﬀerence of
+yt, pt is the log-price at time t (measured as the midpoint of the prevailing bid and ask quote),
+and ∆ pt is the log-return from t − 1 to t.26
+The model allows the slopes on the explanatory variables to shift dur ing the day. We estimate
+26The model is slightly modiﬁed compared to Kirilenko et al. (2017). In particular, we use three 10-second
+
+e model allows the slopes on the explanatory variables to shift dur ing the day. We estimate
+26The model is slightly modiﬁed compared to Kirilenko et al. (2017). In particular, we use three 10-second
+lags (as opposed to 20 one-second lags in their paper), and we regr ess on log-returns (as opposed to price changes
+in their paper) to ensure a greater uniformity across stocks and d ays.
+xiv
+
+equation (C.1) for each day with a drift burst EPM and for each trader category separately. The
+data are recorded on a 10-second grid. A change in trading attitud e during a particular phase
+should thus emerge via signiﬁcant coeﬃcient estimates in front of th e drift burst EPM or recovery
+explanatory variables.
+The average coeﬃcient estimates, together with their associated t-statistics, are reported in
+Tables C.1 – C.2 for unsystematic and systematic events. To compute the t-statistic of the
+average regression coeﬃcient, we assume the individual estimates are independent, but we allow
+for heteroskedasticity with a White correction. Apart from the fa ct that the regression yields
+signiﬁcant coeﬃcients in a lot of instances, below are our key ﬁndings .
+Kirilenko et al. (2017) report a signiﬁcant negative coeﬃcient on the lagged inventory lev el
+in their pre-ﬂash crash period (which is interpreted as an indication o f mean-reversion), but
+no signiﬁcant changes during the ﬂash crash or in its aftermath. In stead, we ﬁnd that mean-
+reversion is much stronger for all trader categories during the dr ift burst EPM and recovery
+compared to the pre-event and post-recovery period. There is o ne exception to this regularity,
+which is the positive but insigniﬁcant coeﬃcient of IB-HFT MM during th e drift burst EPM
+(and also in normal times, where it is signiﬁcant) for systematic even ts, denoting a lack of mean
+reversion.
+
+which is the positive but insigniﬁcant coeﬃcient of IB-HFT MM during th e drift burst EPM
+(and also in normal times, where it is signiﬁcant) for systematic even ts, denoting a lack of mean
+reversion. This observation is consistent with the reported tradin g activity in Panel A of Figure
+6.
+Kirilenko et al. (2017) ﬁnd that HFTs inventory changes are positively related to contem -
+poraneous and lagged price changes for the ﬁrst few seconds of t he ﬂash crash, before turning
+negatively correlated. Furthermore, inventory changes of mark et makers are negatively related
+to contemporaneous price change and positively correlated with lag ged ones. We broadly conﬁrm
+xv
+
+Table C.1: Inventory changes during unsystematic drift burst EPM s
+PURE-HFT PURE-HFT IB-HFT IB-HFT IB NON-HFT NON-HFT
+MM OWN MM OWN CLIENT CLIENT OWN
+Panel A: Outside drift burst EPM
+constant −0.000∗∗∗ 0.000 0 .000∗ 0.000 −0.000∗∗∗ 0.000 0 .000
+(−4.62) (0 .73) (1 .74) (1 .09) ( −4.85) (1 .22) (1 .34)
+∆yt−1 0.004 0 .029∗∗∗ 0.065∗∗∗ 0.091∗∗∗ 0.099∗∗∗ 0.081∗∗∗ 0.080∗∗∗
+(1.15) (3 .73) (15 .01) (19 .59) (13 .81) (14 .70) (8 .35)
+yt−1 −0.002∗∗∗ −0.001 0 .000 0 .000 −0.000 −0.001∗∗∗ −0.000
+(−13.82) ( −1.37) (0 .91) (1 .12) ( −0.77) ( −7.44) ( −1.55)
+∆pt 0.181∗∗∗ 0.002 −0.227∗∗∗ −0.064∗∗ 0.050 −0.107∗∗∗ 0.061∗∗∗
+(11.34) (0 .13) ( −14.12) ( −2.37) (1 .60) ( −3.99) (2 .61)
+∆pt−1 −0.086∗∗∗ −0.020∗∗ 0.030∗∗∗ 0.097∗∗∗ 0.018 −0.054∗∗∗ 0.020
+(−9.13) ( −2.22) (3 .82) (5 .24) (1 .39) ( −2.88) (1 .20)
+∆pt−2 −0.041∗∗∗ −0.008 −0.011∗ 0.003 0 .039∗∗∗ −0.004 0 .004
+(−4.79) ( −1.06) ( −1.75) (0 .13) (3 .81) ( −0.20) (0 .28)
+∆pt−3 −0.050∗∗∗ −0.003 −0.011∗ 0.045∗∗∗ 0.025∗∗ −0.012 −0.006
+(−5.84) ( −0.49) ( −1.74) (2 .93) (2 .34) ( −0.73) ( −0.30)
+Panel B: During drift burst EPM ( DD)
+constant −0.000 0 .000 0 .001∗∗∗ 0.001 0 .003 0 .006∗∗∗ −0.000
+(−0.26) (0 .27) (4 .47) (0 .81) (0 .86) (2 .90) ( −0.21)
+∆yt−1 −0.029∗ −0.063∗∗ −0.076∗∗∗ −0.051∗∗∗ −0.040∗ −0.061∗∗∗ −0.032
+(−1.87) ( −2.08) ( −4.37) ( −3.04) ( −1.85) ( −3.85) ( −1.37)
+yt−1 −0.092∗∗∗ −0.047∗∗∗ −0.040∗∗∗ −0.061∗∗∗ −0.035∗∗∗ −0.027∗∗∗ −0.036∗∗∗
+(−9.86) ( −3.22) ( −7.38) ( −7.68) ( −4.35) ( −3.73) ( −4.88)
+
+(−1.87) ( −2.08) ( −4.37) ( −3.04) ( −1.85) ( −3.85) ( −1.37)
+yt−1 −0.092∗∗∗ −0.047∗∗∗ −0.040∗∗∗ −0.061∗∗∗ −0.035∗∗∗ −0.027∗∗∗ −0.036∗∗∗
+(−9.86) ( −3.22) ( −7.38) ( −7.68) ( −4.35) ( −3.73) ( −4.88)
+∆pt 0.045 0 .012 −0.676∗∗∗ 1.034∗∗∗ 0.076 −0.834∗∗∗ 0.205∗
+(0.47) (0 .14) ( −7.47) (7 .04) (0 .63) ( −4.45) (1 .91)
+∆pt−1 −0.063 0 .068 −0.088 −0.282∗∗ 0.148 0 .001 0 .307∗∗∗
+(−0.91) (1 .40) ( −1.40) ( −2.36) (1 .48) (0 .00) (2 .70)
+∆pt−2 0.014 0 .059 0 .040 0 .085 0 .095 0 .030 −0.084
+(0.25) (1 .49) (0 .79) (0 .80) (1 .06) (0 .28) ( −1.07)
+∆pt−3 0.054 0 .025 −0.113∗∗ −0.164∗ 0.046 −0.045 0 .127∗
+(0.91) (0 .60) ( −2.20) ( −1.74) (0 .59) ( −0.48) (1 .73)
+Panel C: Recovery phase ( DU )
+constant −0.001∗ −0.001∗ 0.003∗∗∗ 0.001 −0.003∗∗ 0.003∗∗∗ −0.001∗∗∗
+(−1.78) ( −1.94) (6 .70) (0 .82) ( −2.35) (2 .96) ( −3.68)
+∆yt−1 −0.019 0 .042∗ −0.043∗∗∗ −0.037∗∗∗ −0.013 −0.022 −0.029
+(−1.60) (1 .66) ( −3.05) ( −2.83) ( −0.82) ( −1.59) ( −1.27)
+yt−1 −0.052∗∗∗ −0.071∗∗∗ −0.054∗∗∗ −0.047∗∗∗ −0.033∗∗∗ −0.036∗∗∗ −0.037∗∗∗
+(−12.37) ( −5.59) ( −9.18) ( −11.21) ( −9.89) ( −8.67) ( −6.37)
+∆pt −0.303∗∗∗ 0.226∗∗ −0.222∗∗∗ 0.167∗ −0.107 0 .424∗∗∗ −0.101
+(−4.99) (2 .10) ( −4.30) (1 .84) ( −1.40) (3 .67) ( −1.45)
+∆pt−1 0.090∗∗ 0.023 −0.058∗ −0.129∗ −0.017 −0.024 0 .006
+(2.31) (0 .24) ( −1.74) ( −1.85) ( −0.26) ( −0.37) (0 .12)
+∆pt−2 0.010 0 .205∗ 0.023 −0.061 0 .123∗∗ −0.052 −0.071
+(0.31) (1 .89) (0 .81) ( −1.10) (2 .14) ( −0.89) ( −1.45)
+∆pt−3 0.086∗∗ 0.167 −0.017 0 .015 −0.069 −0.004 0 .027
+
+.85) ( −0.26) ( −0.37) (0 .12)
+∆pt−2 0.010 0 .205∗ 0.023 −0.061 0 .123∗∗ −0.052 −0.071
+(0.31) (1 .89) (0 .81) ( −1.10) (2 .14) ( −0.89) ( −1.45)
+∆pt−3 0.086∗∗ 0.167 −0.017 0 .015 −0.069 −0.004 0 .027
+(2.02) (1 .29) ( −0.52) (0 .25) ( −1.32) ( −0.05) (0 .50)
+Note. The signiﬁcance of the regression coeﬃcient estimate is evaluated w ith a standard t-
+test assuming independence but adjusted for heteroskedasticit y (in parentheses). * P -value<0.1;
+**P -value<0.05; *** P -value<0.01.
+this with appropriate interpretation of various trader groups. Fo r example, in Kirilenko et al.
+(2017) IB-HFT MM and IB-HFT OWN correspond to market makers, while PU RE-HFT MM
+correspond to HFTs. The main diﬀerence is the signiﬁcant changes f or the price/inventory co-
+xvi
+
+Table C.2: Inventory changes during systematic drift burst EPMs
+PURE-HFT PURE-HFT IB-HFT IB-HFT IB NON-HFT NON-HFT
+MM OWN MM OWN CLIENT CLIENT OWN
+Panel A: Outside drift burst EPM
+constant −0.000∗∗∗ −0.000 0 .000 0 .000∗∗ 0.000 0 .000 −0.000
+(−4.11) ( −1.11) (0 .46) (2 .17) (1 .51) (1 .18) ( −0.13)
+∆yt−1 −0.006 0 .011 0 .060∗∗∗ 0.083∗∗∗ 0.037∗ 0.058∗∗∗ 0.097∗∗∗
+(−0.73) (1 .21) (5 .60) (6 .23) (1 .93) (5 .98) (4 .29)
+yt−1 −0.005∗∗∗ 0.000 0 .000∗∗∗ 0.000 0 .000 −0.000 0 .000
+(−8.43) (0 .20) (5 .16) (0 .08) (1 .56) ( −1.06) (1 .34)
+∆pt −0.036 0 .006 −0.038∗ 0.021 0 .081∗∗∗ 0.025 −0.072∗∗
+(−1.19) (0 .69) ( −1.87) (0 .43) (3 .78) (0 .59) ( −2.35)
+∆pt−1 −0.067∗∗∗ −0.004 0 .040∗∗∗ 0.050∗∗ 0.010 −0.005 −0.030∗
+(−4.35) ( −0.97) (3 .95) (1 .97) (0 .52) ( −0.46) ( −1.92)
+∆pt−2 −0.048∗∗∗ −0.003 0 .012 0 .007 0 .029∗∗∗ 0.019 0 .003
+(−3.73) ( −1.17) (1 .29) (0 .34) (2 .64) (1 .64) (0 .14)
+∆pt−3 −0.038∗∗∗ 0.001 0 .014 −0.006 0 .022∗ 0.009 0 .026
+(−2.82) (0 .23) (1 .47) ( −0.27) (1 .70) (0 .66) (1 .24)
+Panel B: During drift burst EPM ( DD)
+constant 0 .000 −0.000 0 .000 0 .000 −0.000∗ 0.001∗∗∗ 0.000
+(1.02) ( −0.99) (0 .19) (0 .06) ( −1.89) (2 .71) (1 .53)
+∆yt−1 −0.039 −0.043 −0.075∗ −0.020 0 .045 −0.048 −0.010
+(−1.06) ( −1.19) ( −1.77) ( −0.64) (1 .17) ( −1.48) ( −0.19)
+yt−1 −0.089∗∗∗ −0.055∗∗∗ 0.006 −0.060∗∗∗ −0.032∗∗∗ −0.025∗∗∗ −0.017
+(−5.14) ( −2.71) (0 .48) ( −3.25) ( −2.71) ( −2.67) ( −1.51)
+∆pt 0.341∗∗∗ 0.036 0 .119∗∗ −0.019 0 .029 −0.652∗∗∗ −0.397∗
+
+) ( −0.19)
+yt−1 −0.089∗∗∗ −0.055∗∗∗ 0.006 −0.060∗∗∗ −0.032∗∗∗ −0.025∗∗∗ −0.017
+(−5.14) ( −2.71) (0 .48) ( −3.25) ( −2.71) ( −2.67) ( −1.51)
+∆pt 0.341∗∗∗ 0.036 0 .119∗∗ −0.019 0 .029 −0.652∗∗∗ −0.397∗
+(3.50) (0 .90) (2 .05) ( −0.11) (0 .25) ( −4.45) ( −1.65)
+∆pt−1 −0.095 0 .016∗ 0.079∗ 0.128 −0.080 −0.138∗ 0.032
+(−1.27) (1 .76) (1 .88) (1 .07) ( −1.10) ( −1.88) (0 .24)
+∆pt−2 −0.052 0 .020 −0.008 0 .016 0 .050 −0.118 0 .198
+(−0.79) (1 .22) ( −0.17) (0 .09) (0 .61) ( −1.24) (1 .28)
+∆pt−3 −0.038 0 .010 −0.061 0 .211∗ −0.033 −0.039 −0.037
+(−0.74) (0 .98) ( −1.44) (1 .85) ( −0.59) ( −0.56) ( −0.53)
+Panel C: Recovery phase ( DU )
+constant −0.001∗∗∗ −0.000∗∗ −0.001∗∗∗ 0.001 0 .000 0 .001 0 .005∗∗∗
+(−4.67) ( −2.45) ( −4.46) (1 .12) (0 .52) (0 .77) (6 .50)
+∆yt−1 −0.001 −0.013 −0.068∗∗∗ −0.021 0 .002 −0.037 −0.037
+(−0.03) ( −0.52) ( −2.59) ( −0.81) (0 .05) ( −1.20) ( −1.14)
+yt−1 −0.085∗∗∗ −0.036∗∗∗ −0.023∗∗∗ −0.050∗∗∗ −0.059∗∗∗ −0.016∗∗ −0.119∗∗∗
+(−6.42) ( −3.91) ( −4.55) ( −4.61) ( −4.59) ( −2.09) ( −10.76)
+∆pt 0.153∗∗∗ −0.006 −0.052 −0.072 −0.089 −0.062 −0.010
+(2.70) ( −0.60) ( −1.27) ( −0.68) ( −1.47) ( −0.82) ( −0.14)
+∆pt−1 −0.000 0 .010∗ 0.078∗∗∗ −0.055 0 .007 0 .082 −0.101
+(−0.00) (1 .90) (2 .64) ( −0.67) (0 .13) (1 .35) ( −1.18)
+∆pt−2 0.073∗∗ 0.011∗∗ 0.016 0 .012 0 .007 0 .014 −0.056
+(2.00) (2 .22) (0 .66) (0 .15) (0 .19) (0 .26) ( −1.18)
+∆pt−3 0.089∗∗ 0.002 0 .074∗∗∗ −0.077 0 .033 −0.004 −0.147∗∗
+(2.38) (0 .38) (2 .62) ( −0.73) (0 .87) ( −0.08) ( −2.10)
+Note.
+
+0 .007 0 .014 −0.056
+(2.00) (2 .22) (0 .66) (0 .15) (0 .19) (0 .26) ( −1.18)
+∆pt−3 0.089∗∗ 0.002 0 .074∗∗∗ −0.077 0 .033 −0.004 −0.147∗∗
+(2.38) (0 .38) (2 .62) ( −0.73) (0 .87) ( −0.08) ( −2.10)
+Note. The signiﬁcance of the regression coeﬃcient estimate is evaluated w ith a standard t-
+test assuming independence but adjusted for heteroskedasticit y (in parentheses). * P -value<0.1;
+**P -value<0.05; *** P -value<0.01.
+eﬃcients during the drift burst EPM and recovery. While IB-HFT MM in ventories are more
+signiﬁcantly negatively correlated to contemporaneous price chan ges during unsystematic drift
+burst EPMs, signalling a larger inventory absorption, the opposite h olds for systematic events,
+xvii
+
+since they are net sellers (see Figure 6). The slow traders (i.e., NON-HFT CLIENT and NON-
+HFT OWN) exhibit negative correlations of their inventory changes w ith contemporaneous price
+changes during systematic events, consistent with the fact that they act as liquidity providers.
+Summarizing, the analysis of the regression model in equation ( C.1) yields the following
+conclusion. First, it provides further statistical evidence in favor of our results about trading
+imbalances of DMMs, since it also underlines signiﬁcant changes in inven tory management of
+those traders during drift burst EPMs at an alternative frequenc y and with a diﬀerent statistical
+model. Second, the signiﬁcant change in inventory is robust to inter action with prices. That is,
+when price changes are part of the model, the behavior of DMMs still changes during the drift
+burst EPMs compared to normal times, in line with our ﬁndings in the ma in text. In particular,
+the estimated model parameters conﬁrm that DMMs consume liquidit y during systematic events,
+and that the role of liquidity providers is implicitly overtaken by fundam ental players, i.e., NON-
+HFTs.
+xviii

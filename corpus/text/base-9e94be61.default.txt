@@ -1,0 +1,1572 @@
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+ ISSN 1916-971X E-ISSN 1916-9728 156
+The Intraday Pattern of Trading Activity, Return Volatility and Liquidity: 
+Evidence from the Emerging Tunisian Stock Exchange 
+Kais Tissaoui 
+Faculty of Law Sciences, Economic Sciences and Management of Jendouba, BP 8153 
+Elmelga Jendouba, Tunisia 
+The International Finance Group, Tunisia, Manar University 
+Tel: 216-25-700-645 E-mail: kaistissaoui@yahoo.fr 
+ 
+Received: Febriary 10, 2012 Accepted: March 14, 2012 Published: May 1, 2012 
+doi:10.5539/ijef.v4n5p156 URL: http://dx.doi.org/10.5539/ijef.v4n5p156 
+ 
+Abstract 
+The purpose of this paper is to investigate the intraday pattern of trading activity, liquidity and return volatility in the 
+emerging Tunisian Stock Market (TSE) which is an order-driven market using intraday data covering the period 
+October 2008 to June 2009. To achieve this objective, we have applied two methods: the temporal analysis that 
+consists to estimate a dichotomy model for each variable by following the methodological approach of Vo (2007) 
+and the second method is to apply the spectrum analysis by using the Fourier Transform fast (FFT). The results have 
+shown that all identified variables are characterized by notable seasonality justified the rejection of the hypothesis of 
+constancy (H
+0). Both methods have shown the existence a seasonal pattern in U. The reason considered to justify
+
+re characterized by notable seasonality justified the rejection of the hypothesis of 
+constancy (H
+0). Both methods have shown the existence a seasonal pattern in U. The reason considered to justify 
+this intraday behavior is the crucial role played by th e problem of adverse selectio n especially between the two 
+dimensions of liquidity: the spread and depth at the best limit. It should also be noted the effect of inventory 
+management on the optimal allocation of the portfolio. 
+Keywords: Intraday pattern, Trading volume, Liquidity, Return volatility, Intraday data, FFT algorithm, Tunisian 
+stock market. 
+JEL classifications: G12, G14, G15 
+1. Introduction 
+Intraday pattern in stock markets has attracted much research attention. This importance is due to the existence of 
+intraday regularities in stock market that contests the Efficient Markets Hypothesis. To analyze this anomaly, we are 
+forced to focus on the causes generating this behavior. The understanding of these causes has a significant interest in 
+the microstructure theory in order to study the market reaction and the trading activity. Indeed, the obtaining of an 
+efficient market is difficult in this situation since the arrival of new information generates abnormal micro-structural 
+pattern called the “Intraday pattern”. In this context, the researchers have tried to explain the sources of this anomaly
+
+on since the arrival of new information generates abnormal micro-structural 
+pattern called the “Intraday pattern”. In this context, the researchers have tried to explain the sources of this anomaly 
+by concentrating on the effect of information on strategies for insider trading and uninformed trading during the 
+day.This anomaly may affect the market equilibrium. Ho wever, each investor wants to maximize his utility. This 
+objective is legitimate but the question is how to achiev e that? We are facing an enigma difficult to solve because 
+the informed investors involved in the market take adva ntage of their private inform ation when the uninformed 
+intervene cautiously for the liquidity needs. Indeed, the strategic behavior of each investor depends on his position 
+in the market. The literature of microstructure has focuse d on both types of information to explain behavior of 
+intraday stock market. Public information comes on the ma rket in the form "news". De gennaro and Shrieves (1997) 
+have examined the importance of news in explaining the trading strategies of the investors and especially the market 
+volatility. They divided the news into three categories based on Reuters: the macroeconomic news, the economic 
+policies news and the news on interest rates. Cheung and Kwan (1992) presented an exhaustive literature review that 
+focuses on the public information flow on the stock market. Kalev et al (2004) have used specific categories of news
+
+est rates. Cheung and Kwan (1992) presented an exhaustive literature review that 
+focuses on the public information flow on the stock market. Kalev et al (2004) have used specific categories of news 
+to companies listed on ASX as the announcement of results, dividends, changes in shareholding, the capital increase, 
+the change of CEO, reports of accountants. According to Edmonds and Kutan (2002), most studies have examined 
+the importance of public information by claiming that such information was not significant in explaining the 
+variation of stock returns. This insufficiency in the ro le of public information obliged the researchers of the 
+microstructure theory to examine the impact of public info rmation by using the trading volume as a latent variable. 
+Lamoureux and Lastrapes (1990) justified this theoretical approach by the fact that when public information is
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+Published by Canadian Center of Science and Education 157
+disseminated on the stock market, this information is unobservable by investors but motivate them to make 
+transactions purchase or sale, and especially to achieve an optimal allocation of resources in spite of its randomness. 
+Moreover, it is unevenly distributed and interpreted differently. Researchers have identified the role played by the 
+transactions numbers, turnover and news as explicit variables representing the implicit public information. The use 
+of such variables was justified also by Clark (1973), Tauchen and Pitts (1983), Anderson (1996). This focus 
+coincides with two theoretical explanations based mainly on information: the MDH (The mixture of distribution 
+hypothesis) and SIAH (the sequential information arrival hypothesis). 
+However, we must not focus only on public information but also on private information. This concept has 
+represented, according to several analysts, the source of the problem of adverse selection in the stock market. 
+Madhavan et al (1997) reported that the information flow and transactions frictions represented the factors 
+explaining the intraday volatility and liquidity. While Ad mati and Pfleider (1988) and Foster and Viswanathan 
+(1990) attributed the difference in tr ansaction activity, liquidity and volatility to the ability of investors to benefit
+
+nd liquidity. While Ad mati and Pfleider (1988) and Foster and Viswanathan 
+(1990) attributed the difference in tr ansaction activity, liquidity and volatility to the ability of investors to benefit 
+from their private information. Indeed, take advantage of this information is beneficial for informed investors "the 
+insiders" while the possession of private information is considered by the uninformed investors 'liquidity traders' as 
+information risk. According to the theory of asymmetric information, informed investors have private information 
+on the value of quoted companies. This information would put them in a favorable position than other investors. 
+Brockman and Chung (2001) have argued that the presen ce of insiders can reduce market liquidity since these 
+informed investors profit from the private information by including it implicitly in stock prices through their trading 
+activities. This requires the informed investors to respond to this informational disadvantage by reducing trading 
+activity. But, the problem is aggravated when the uninformed investors accept this situation a nd remaining on the 
+market as followers. Indeed, Admati and Pfleider (1988.1989) have proposed, through their theoretical model, a 
+solution that uninformed investors must do their transactions together to minimize monopolistic position of insiders. 
+The strategy of uninformed investors consists to limit their losses by a large proportion with insiders. In addition, if
+
+o their transactions together to minimize monopolistic position of insiders. 
+The strategy of uninformed investors consists to limit their losses by a large proportion with insiders. In addition, if 
+a great part of transaction is realized in the interior of trading day and not at the start or the end of day, the needs 
+liquidity may reduce the insider-information risk. But the adoption of this strategy does not hide many threats which 
+can meet the uninformed because the risk of loss of wealth is very important particularly in the presence of 
+opportunistic insiders who take advantage of their private information. 
+In this study, we use two methods to achieve our objective: the temporal analysis that consists to estimate a 
+dichotomy model for each variable by following the Vo (2007) methodology and the second method is to apply the 
+spectrum analysis by using the Fourier Tr ansform Fast (FFT). Our objective is to examine the intraday behavior of 
+trading activity, return volatility and market liquidity on th e Tunisian stock market in order to see if it has similar 
+intraday patterns observed in other markets. Our empirical investigation is founded on a sample covering, in 
+intraday frequency, 38 stocks continuously quoted on the TSE for the period (October 2008-June 2009). Many 
+questions have been asked leading to reasonable solutions allowing the comprehension of that irregularity: Why
+
+38 stocks continuously quoted on the TSE for the period (October 2008-June 2009). Many 
+questions have been asked leading to reasonable solutions allowing the comprehension of that irregularity: Why 
+does that anomaly exist? What are the causes generating the intraday pattern? Does the shape of the pattern differ 
+from one market to another? Does the existing pattern depend essentially on the periodicities of the information flow? 
+The main finding observed is that both methods have shown the existence of seasonal pattern in U in Tunisian stock 
+maeket. The reason defined to justify this intraday behavi or is the crucial role played by the problem of adverse 
+selection especially between the two dimensions of liquidity: the spread and depth at the best limit. It should also be 
+noted the effect of inventory management on the optimal allocation of the portfolio. This present study also 
+contributes to the related literature in several ways. To the best of our knowledge, our research is the first study that 
+investigated the anomaly of seasonality on the Tunisian stock market after the promulgation of financial security 
+information law since 2005 by the Financial Market Counc il. Second, we have used another dimension measuring 
+liquidity. It is “the depth at the best limit”. This variable is not used in any study on the Tunisian stock market to 
+investigate the anomaly of seasonality. The unexploited of depth does not give a clear idea on the behavior of
+
+he best limit”. This variable is not used in any study on the Tunisian stock market to 
+investigate the anomaly of seasonality. The unexploited of depth does not give a clear idea on the behavior of 
+intraday liquidity.Third, the Fourier Transform fast (FFT) algorithm have never been employed in order to examine 
+the seasonality in the Tunisian context. At last, we noted that a small number of empirical studies have focused on 
+emerging stock markets particularly in countries of Midd le East and North Africa(MENA). Major previous studies 
+concentrated on developed stock markets. 
+The structure of the paper is as follows. Section 2 review s the literature on the relationship between information and 
+intraday pattern. Section 3 provides the theoretical explan ation of intraday seasonnality. Section 4 describes the 
+Tunisia stock market, data used and presents the defin ition of variables of trading activity, return volatility and 
+liquidity. The section 5 presents the methodology used in the paper and the main findings. The paper concludes by 
+summarizing the main conclusions
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+ ISSN 1916-971X E-ISSN 1916-9728 158
+2. The Relationship between Information and Intraday Pattern in Literature 
+The answer to these questions requires firstly the understanding of the relation between the information flow and 
+this microstructural anomaly. "Intraday pattern" is certain ly an anomaly due to its pa rticular micro-structural 
+features. The presence of this issue has motivated the researchs on the sources of this anomaly. However the detailed 
+explanation of this notion obliges us to place it in an enormous quantity of literature. But the majority of the 
+literature derived from developed countr ies, particularly the Un ited States and Canada. Since the 80s, there have 
+been a review articles on microstructure that have tried to analyze the existing patterns in the stock market. Admati 
+and Pfleider (1988) have developed the theoretical foundations of trading pattern on the financial market. The 
+authors have taken advantage enormously from the intraday transaction data since the daily data do not permit to 
+investigate the behavior of the intraday market. They have demonstrated that the profile U characterized the pattern 
+of trading volume and return volatility. That means that trading volume and return volatility are higher at the 
+beginning of trading day and in the end but they are weak during the day. Their results have confirmed the findings
+
+olatility. That means that trading volume and return volatility are higher at the 
+beginning of trading day and in the end but they are weak during the day. Their results have confirmed the findings 
+of Jain and Joh (1986). Wood, Mc Inish and Ord (1985) have tested empirically the existence of a U-pattern using 
+transactions data minute by minute. They argued that the return and return volatility are distinguished at the 
+beginning and the end of the trading day by a U-shaped profile. On the basis of this result, theoretical approach of 
+Admati and Pfleider (1988) consists in understanding the r easons why transactions tend to be concentrated more on 
+specific periods of the day than during other periods, an d especially to know why the patterns of volatility and 
+trading volumes are identical.Microstructure literature was interested enormously in studying the behavior of 
+different intraday micro-stru ctural variables but the first academic res earches have been commenced in a market 
+driven price. This market is very specific since it is char acterized by the presence of market makers. According to 
+Madavan (1992), this market represents a location where the investors may get the price quotations of market 
+makers prior to submission their purchase orders and sales orders. 
+In this case, the market maker acts as an intermediary be tween buyers and sellers with prices determined before 
+quantities. He is regarded as a liquidity supplier in the fi nancial marketplace.
+
+rs. 
+In this case, the market maker acts as an intermediary be tween buyers and sellers with prices determined before 
+quantities. He is regarded as a liquidity supplier in the fi nancial marketplace. Given these specificities related to the 
+mechanisms used to accomplish the transactions and particul arly recent availability of transactional data, quotations 
+and orders issued in numerous markets around the world, Researchers on phenomena intraday stock market have 
+exploited efficiently these conditions in order to confirm that U-pattern was the form most particular in the 
+majority of markets in United states and other developed countries whether for return and volatility, liquidity and 
+trading volume. But the results do not overlook another area that the pattern can take the form L-pattern, Y-pattern, 
+or the opposite case of both forms as they depend largely of the characteristics of structural conditions in markets, 
+mechanisms of transactions and the information flow. 
+For the markets of United States, the study of Wood, Mc Inich and Ord (1985) is considered the first study which 
+was concentrated on the availability for this anomaly as the presence of seasonality in the stock market can 
+contradict the market efficiency. They have shown that trading volume, return, return volatility and liquidity 
+followed a U-pattern. All of these variab les are high at the opening of the tr ading day but they become low during 
+the trading day in order to increase at closing.
+
+return volatility and liquidity 
+followed a U-pattern. All of these variab les are high at the opening of the tr ading day but they become low during 
+the trading day in order to increase at closing. More prec isely the behavior of the ma rket at the opening and the 
+closing is different than within trading day in the NYSE. I ndeed, their article examined empirically the nature of the 
+generating process respecting the features of the transaction size, transaction frequency and transaction interval for 
+the majority of actions in the NYSE. This research was e nhanced by the analysis Pfleider and Admati (1988). These 
+authors have verified the same intraday pattern for the Exxon Company stock during the year 1981. They have 
+based their study on a theoretical model respecting two co mplementary characteristics: the process of information 
+and the number of uninformed investors. The patterns shown in trading volume and return are mainly due to the 
+strategic interaction between insiders and investors need to liquidity. The microstructure analysis has verified the 
+presence of other forms of seasonality other than U-patte rn still in the American context. Amihud and Mendelson 
+(1987) have tried to test the effect of information on the behavior of returns at various times of the transaction day 
+for 30 stocks forming the Dow-Jones. They proved that the returns at the opening are more variable than those at the 
+closing market.
+
+n the behavior of returns at various times of the transaction day 
+for 30 stocks forming the Dow-Jones. They proved that the returns at the opening are more variable than those at the 
+closing market. The same result was confirmed by Stoll and Whaley (1990) for the NYSE stocks. They have also 
+shown a high return volatility at the opening of the NYSE. Within the same context, Cerety and Mulherin (1994) 
+have examined the existence of trans itional character of volatility during the transaction day. They looked that the 
+returns are more volatile at the opening than at the closin g day. For their part, Mc Inich and Wood (1992) have 
+studied the behavior of Bid ask spread within the transaction day depending upon 4 very important factors: the 
+trading activity, risk, information and competition. They found that the behavior of liquidity measure shaped profile 
+follows the reversed J-pattern. Other researchers are also in terested to test the presence of this micro-structural 
+anomaly in the U.S. stock markets such as Harris (1986 ), Mc Inish and Wood (1990), Foster and Viswanathan 
+(1993), Ho and Cheung (1991). All these authors have suppo rted the presence of a seas onal U-pattern of return
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+Published by Canadian Center of Science and Education 159
+volatility within the day. While other researchers have veri fied that the Bid-ask spread (Hashbrouck (1991a, b), and 
+Mc Inich Wood (1992), Foster and Viswanathan (1993), Handa (1992), trading volume (Jain and Joh (1988), Mc 
+Inich and Wood (1989.1990 b)), the number of transaction (Mc Inich and Wood (1989), Chan et al (1995)) follow a 
+U-pattern for the stocks of NYSE. Similarly, Chan, Christe and Schultz (1995) have shown that the bid-ask spread 
+of the stocks comprising the NASDAQ index follows a J-pattern. In other words, it becomes weak during the trading 
+day but it increases again during the closing minutes. This finding confirmed by Chung and Van Ness (2001), the 
+NASDAQ, before and after the reforms in 1997 that have af fected the market. Chan et al (1993) have proved that 
+the intraday bid-ask spread is higher immediately after the opening of mark et to decline enormously over the day 
+and returns to his initial situation at the end of transac tions. That same behavior has characterized the trading 
+volume and return volatility. 
+Other interested authors are still looking for this anomaly in other developed equity ma rkets. Such studies have 
+benefited recently from the availability of the high-frequency data on these price-driven markets. In this context,
+
+ll looking for this anomaly in other developed equity ma rkets. Such studies have 
+benefited recently from the availability of the high-frequency data on these price-driven markets. In this context, 
+Abhyanker et al (1997) contributed to enriching the existing literature by their study on the London Stock Exchange. 
+They showed that the bid-ask spread, trading volume and return volatility are characterized by a seasonal pattern in 
+the form U, but this behavior differs depending on the liq uidity of the stocks. However, the main lesson retained 
+from the study of the intraday pattern in the price driven market was clear because no many countries adopt that 
+transactional structure within their markets. 
+The majority of countries around the world introduced anot her system for trading within their stock markets. This 
+system is characterized by a negligence of the role played by market maker in favor of the investor. In this sense, 
+Madavan (1992) defined an order-driven market like a system in which investor s place their orders in order to be 
+executed by the method of the auction. The flexibility of this organization is mainly due the functioning because it 
+can operate under continuous trading and gives investors the opportunity to submit their purchasing or selling orders 
+for immediate execution against orders on the existing order book with prices determined multilaterally. While a
+
+ing and gives investors the opportunity to submit their purchasing or selling orders 
+for immediate execution against orders on the existing order book with prices determined multilaterally. While a 
+quotation in auction provides an opportunity for investors to submit their orders before the opening in the 
+marketplace to run when the market is op ened with a price determined unilatera lly. In order to understand the role 
+played by the order-driven market, we had to try to distingu ish this market with the price-driven market. Indeed, the 
+order-driven market became more and more used as a suitabl e field to understand the anomalies. According to Ahn, 
+Bae and Chan (2001), all the liquidity is supplied by th e purchase orders and sales rders and not by the market 
+maker. Without forgeting the role played by those or ders as a source of volatility and transaction activity, 
+researchers have exploited the situation enormously in order to show the seasonal pattern of each variable in this 
+order-driven market. 
+In this framework, it is important to examine the info rmational content the order book by concentrating on the 
+structural properties of the stock market . According to Noes and Skjeltorp (2006) , this book represents the heart of 
+the order-driven market through its ability to provide useful information on the liquidity and trading activity. On the 
+developed stock markets as the Paris Bourse, Biais et al (1995) have confirmed the dependence of the pattern with
+
+ability to provide useful information on the liquidity and trading activity. On the 
+developed stock markets as the Paris Bourse, Biais et al (1995) have confirmed the dependence of the pattern with 
+the information effect. For their part, Hamao and Hasbrouck (1995) have concentrated on the stock market in Tokyo 
+(TSE). This market represented one among the largest market in the world given its structural characteristics. This 
+has allowed Lehman and Modest (1994) to investigate the behavior of the bid ask spread the trading volume, 
+transaction and other variables of transactions by confirming the presence of a U-pattern. For his part, Vo (2007) 
+attempted to show the pattern characterizing the liquidity, trading volume and volatility in the stock market (TSE) in 
+the context specified by a dependency between the information flow and the investors. The results shown confirmed 
+the presence of this anomaly in this market as the trad ing volume and the bid ask spread follow a U-pattern while 
+the depth follows an inverted U-pattern . Recently, several researchers have orie nted their microstructure studies on 
+emerging stock markets adopting the order-driven system seen the improvement Technologies in information 
+dissemination. This approach supports the view of Handa et al (1998, p.48) who said: "differently to a price driven 
+market, the provision of liquidity in an order-driven market has received special attention in relation the
+
+ch supports the view of Handa et al (1998, p.48) who said: "differently to a price driven 
+market, the provision of liquidity in an order-driven market has received special attention in relation the 
+microstructure literature."Within this framework it is part of the study of Brockman and Chung (1999) on the stock 
+market in Hong Kong. They made two tests: an intertemporal analysis that allows them to confirm the inverted 
+U-shaped profile of depth. And a cross-sectional analysis that enables them to demonstrate that the depth depends 
+essentially on the adverse selection problem similar to the bid-ask spread. But the inter- temporal analysis appeared 
+as a significant dependence of the behavior of liquidity with other variables such as price level, trading volume and 
+volatility in order to verify that the provision of liquidity is a competitive dimension that will help to identify the 
+best structure of mechanism transaction. Brockman and Chung (1998) also verified that the profile characterizing 
+the Bid ask spread on the Hong Kong stock market is a profile in U. In a context of microstructure marked by a 
+strategic interaction between inside rs and uninformed, Lee, Fok and Li u (2001) have exploited the recent
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+ ISSN 1916-971X E-ISSN 1916-9728 160
+availability of order book data from the stock market in Ta iwan. They have tried to anal yze the pattern of intraday 
+information and liquidity. The results indicated that investors using an investment strategy generating a J-shaped 
+profile for the volume of transaction. Ahn and Cheung (1999) have studied the evolution of the intraday Bid ask 
+spread and depth on the Hong kong stock market They have confirmed the existence of the U-shaped profile of the 
+Bid ask spread and an inverted U-shaped profile of the Bid ask spread.Research in this context also has motivated 
+Ahn, Bae and Chan (2001) to investigate the role played by the order book in order to explain this anomaly on the 
+Hong kong stock market They have focused their study on the empirical relationship between transitional volatility 
+and orders flow depending on the investment strategies of orders by insiders and uninformed investors. The results 
+shown seem to provide a clear explanation of how the placements of orders since investors want to place them at the 
+opening and closing session of trading. By adopting J-pattern according to the pattern of trading volume, the 
+phenomenon of the presence of regularity will be privilege d because it also goes be yond the anomalies on the 
+market efficiency but it also allows considering the micro- structural side of the market.
+
+enomenon of the presence of regularity will be privilege d because it also goes be yond the anomalies on the 
+market efficiency but it also allows considering the micro- structural side of the market. This anomaly has been a 
+famous importance that has also very interested Choe and Shin (1993).These authors have tried to study the stock 
+market in South Korea. They found that the indraday pattern of return of the KSP index (KOSPI) is a U-pattern 
+either throughout the trading day or during the morning session. This anomaly is all the same examined in the 
+context Filanda by Camerton-Forde et al (2007). These au thors have analyzed the intraday liquidity and trading 
+activity, volatility and information. They found that the trans actions of insiders and uninformed are concentrated at 
+the opening and closing of the session transaction which confirms the presence of a U-pattern. In addition, the 
+seasonal anomaly is more and more ex amined by other researchers on other emerging markets like Kalev and Pham 
+(2009) who have exploited the availability of order book data and transactions in Australian market (ASX) for a 
+period from October 2001 to January 2002. They have veri fied that the presence of intraday regularities is clearly 
+higher for the stocks of small or medium sized companies compared to the actions of la rge companies. They verify 
+the exitence of an inverted U-shaped pattern of intraday trading activities and showed that informed traders search to
+
+edium sized companies compared to the actions of la rge companies. They verify 
+the exitence of an inverted U-shaped pattern of intraday trading activities and showed that informed traders search to 
+minimize their transaction costs by the se lection an optimum day of the week in order to trade. Indeed, they also 
+show that informed traders determine the trading strategies depending on the time of day. 
+3. "Intraday Pattern" in the Theory 
+Several theoretical studies have attempted to explain this micro-structural phenomenon whether for a price-driven 
+market or order-driven markets. They provided several theoretical explanations in order to conclude that this 
+anomaly depends essentially on the information.In the financial market; the objective of all investors is to maximize 
+their utility based on trading strategies depending on their possession of the information. This dependence 
+represented the main process generating the micro-structural anomaly. But the availability of high frequency data 
+which has motivated the research in this context. However, this new situation constituted empirically an appropriate 
+ground so that the different patterns ap pear since the study of W ood et al (1985) on the NY SE. In order to achieve 
+an explanation of what is "intraday pattern," the res earchers focused their effort s to address this question 
+theoretically : Why is there this anomaly is she? It seems more interesting to talk deeply as several explanations that
+
+ay pattern," the res earchers focused their effort s to address this question 
+theoretically : Why is there this anomaly is she? It seems more interesting to talk deeply as several explanations that 
+have been used to support our thinking. 
+The first theoretical explanation of Admati and Pfleider (1988). They tried to answer three very important questions: 
+Why were transactions concentrated in specific times of day compared to other times? Why are the returns more 
+volatile in periods and less volatile in other periods? Why do the periods at high trading volume coincide with 
+periods at high return volatility? In this context, they developed a theoretical model based on asymmetric 
+information. This model essentially depends on the rela tionship between informed investors and investors need 
+liquidity. They justified the presence of investor’s liquidity in the market for strategic reasons in order to minimize 
+the monopoly power of insiders since they seek to exploit their private information when uninformed investors make 
+their transactions. Admati and Pfleider (1988) argued that the adoption of these behaviors on the part of insiders and 
+investors need for liquidity can justify the behavior of intraday liquidity, trading volume, return volatility and return. 
+Their theoretical model represented the first theoretical essay explaining the theory "Intraday pattern" in the 
+financial market.
+
+of intraday liquidity, trading volume, return volatility and return. 
+Their theoretical model represented the first theoretical essay explaining the theory "Intraday pattern" in the 
+financial market. Indeed, this theory has shown that all patterns are the result of strategic interaction between 
+insiders and uninformed investors. In addition, their theoretical model is based primarily on investor liquidity needs 
+and their actions in order to identify the different types of patterns. Investors seek the good times to make their 
+transactions when market liquidity is high and transaction co sts are down. This approach is also adopted by insiders 
+who choose to do their transactions when the market is liq uid. This strategic interaction between these two types of 
+investors generates a situation of concentration of transactions at specific times during the trading session. This 
+confirms the theoretical proposition that the trading of insi ders at precise moments reflect the importance of private 
+information. More precisely, the assertion that the increas e in transaction costs depends on the occurrence of the 
+problem of asymmetric information. This group of inform ed and uninformed investors at specific times of trading
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+Published by Canadian Center of Science and Education 161
+day contributes to the development of a theoretical explanation of different types of intraday pattern. These patterns 
+depend mainly on high liquidity and low cost of information asymmetry. 
+Another theoretical explanation has been advanced by Brock and Kleiden (1992) on the reasons of the emergence of 
+seasonality in trading day. They developed a model show ing that the demand for transactions at the opening and 
+closing of the market is high and less elastic than other tim es of trading day. They trie d to answer a very important 
+question: why are transactions bent on opening and closing of the market? They focused their analysis on the 
+necessity to rebalance the portfolio of actions at the opening and closing of the trading session by investors.First, the 
+accumulation of information is made the ni ght after market closure, ie during periods of non-transaction, generating 
+a deviation from the optimal position. This situation obliges investors to increase their transaction at the opening of 
+the market order to arrive at the optimum position and reach equilibrium of their portfolio. Second, before moving to 
+the non-transaction period, the optimal position at the end is different from the optimal position during the trading 
+day, forcing investors to increase their transaction at the end to achieve an optimal position.
+
+ction period, the optimal position at the end is different from the optimal position during the trading 
+day, forcing investors to increase their transaction at the end to achieve an optimal position. Their model shows that 
+the grouping of transactions at the opening and closing for the goal in order to rebalance the portfolio that can lead 
+to U-shaped profile. Kleiden Brock (1992) showed that the occurrence of seasonality in session is caused by the 
+monopoly power of market makers and especially their willingness to have an optimal position at the close of the 
+trading day before receiving informati on during the transaction and also to th e inelastic demand of investors. They 
+developed a model showing that market makers have filled their monopoly and exploit the inelastic demand of 
+investors for making transactions at the opening and closing by increasing the bid ask spread.The main result of 
+Brock and Kleiden (1992) was that seasonality depends main ly on the investor needs to rebalance their optimal 
+positions. However, it should be noted that these authors have inspired their explanation the following lessons: First, 
+the trading volume follows a U-pattern throughout the tr ading day.Second, the trading volume and liquidity are 
+positively correlated due to the relentless demand for liquidity at the opening and closing of the market. In addition, 
+the bid ask spread follows a U-pattern similarly to the tr ading volume. Third, the volatility is not correlated with
+
+ess demand for liquidity at the opening and closing of the market. In addition, 
+the bid ask spread follows a U-pattern similarly to the tr ading volume. Third, the volatility is not correlated with 
+trading volume and liquidity because the information flow is constant and does not follow "intraday pattern». Indeed, 
+with the arrival of new information during the period of non-transaction, the portfolio that is optimal during the 
+closure of the preceding trading day will be suboptimal when the new session will begin. Therefore trading activity 
+increases immediately after the opening since investors can attempt to rebalance their portfolios. 
+4. Description of the Market, the Dataset, Definition of Variables 
+4.1 Presentation of BVMT 
+The Tunisian Stock Exchange is a priv ate organization whose the shareholders are the stock market intermediaries. 
+It is the enterprise that manages the stock market. Its operation is subject to control by the council of Financial 
+Markets (CMF). The BVMT is a centralized market and governed by the orders because the investment can be 
+achieved only through the br okers. Trading of shares takes place th rough quotation system developed by the 
+Euronext group. Purchase orders and sales orders introduced in this system will be confronted depending on the 
+degree of liquidity in two ways: The less liquid stocks ar e quoted according to the au ction mode. The most liquid 
+stocks are quoted according to the continuous mode.
+
+be confronted depending on the 
+degree of liquidity in two ways: The less liquid stocks ar e quoted according to the au ction mode. The most liquid 
+stocks are quoted according to the continuous mode. The BVMT is organized by the Law No. 94-117 of November 
+14
+th, 1994 on the reorganization of the financial market. But this legislation is inadequate for the development of 
+BVMT, which motivated BVMT authorities to modify the Law No. 99-92 of August 17 th, 1999 on the recovery of 
+financial market. In the same context, there is the law No. 2005-96 of October 18 th ,2005 on the strengthening of 
+Financial Security. This law is an extension of the legislative reforms introduced by the financial authorities to 
+strengthen financial transparency in the Tunisian stock ma rket. Besides the legal reforms, there are other reforms in 
+the Tunisian Stock Exchange. These include the introduc tion of an electronic trading system called SUPER-CAC 
+UNIX in October 25
+th, 1996. This system is managed by a central computer which makes the comparison of 
+purchase orders and sales orders. On December 3rd, 2007, the Tunisian Stock Exchange launched the new version of 
+the electronic trading system V900 developed by Atos Euronext. All these reforms have focused on the development 
+of the Tunisian Stock Exchange to enhance the stock market, to increase the trading activity and to restore the 
+investor confidence that will be reflected by the liquidity evolution.
+
+the development 
+of the Tunisian Stock Exchange to enhance the stock market, to increase the trading activity and to restore the 
+investor confidence that will be reflected by the liquidity evolution. The trading day in the Tunisian stock market 
+pre-opens from 9 am to 10 am. During this period, the purchase orders and sales orders are entered without giving 
+effect to the transactions. As soon as the market is open, the system determines an opening price that will be used 
+only to transactions by the opening auction at 10 am. After opening and during the continuous session that lasts from 
+10 am to 2 pm, the introduction of an order in the system can generate an instantaneous transaction when there is an 
+opposite order. 
+4.2 Data 
+In this study, we analyze the intraday behavior of tradi ng activity, volatility and liquidity of stocks in the Tunisian 
+stock market. Our sample includes 38 shares that have a continuous trading for a period of 9 months spanning the 
+beginning of October 2008 to the end of June 2009. It consists of a database composed of two intraday files: a
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+ ISSN 1916-971X E-ISSN 1916-9728 162
+trading file and quotation file. The tran saction file contains intraday trans action prices and quantities next to the 
+code of each stock on the transaction system, the date and transaction time. The second file represents the set of 
+limit orders purchases and sales next to the code of each purchase order and sale order, the date and time entry of the 
+order, the ASK price, the BID price entered by the intermediary stock exchange and the quantity appropriate for 
+each ASK price and BID price. However, it should be noted that the constraints have made our task difficult in order 
+to constitute our final database: at this level, we must me ntion the narrowness of the Tunisian secondary market and 
+especially the problem of illiquidity of certain listed securitie s.The choice of this period in our study is justified by 
+the recovery of Tunindex index in the first half of 2009, of its performance compared to the final quarter of 2008. It 
+was able to achieve its level of September 2008 at the end of April 2009. To attain the final list of our study, we 
+conducted several stages of filtering Initially, the list contai ns 50 stocks However, we exclude 12 shares listed on 
+fixing since at this level, the law of supply and demand is not involved in this quotation type. Table 1 contains the 
+final list of securities in our study.
+
+s However, we exclude 12 shares listed on 
+fixing since at this level, the law of supply and demand is not involved in this quotation type. Table 1 contains the 
+final list of securities in our study. It provides the code and identification name of the 38 shares quoted continuously 
+in the Tunisian stock market as well as the sectors they belong to. In addition, we determined the descriptive 
+statistics of our sample. The details of this descriptive analysis are presented in Table 2.To conduct our research, this 
+table shows that the daily average of trading volume per sessi on during our retained period is about 34 transactions. 
+The average number of transactions traded per day is 17,506 . In addition, it is clear that the number of sale orders 
+exceeds the number of purchase orders. Th e total amount of transactions perfor med during the period of study was 
+121 399 567. The total maximum quantity negotiated is 20163175 (Attijari Bank) while the total minimum quantity 
+negotiated is 119,409 (BTE-ADP). 
+4.3 The Determination of Variables 
+4.3.1 The return : Generally, we begin our analysis by the calculation of Stock return. From the transaction file, we 
+are applying the following formula on the series of transaction prices of 38 securities traded continuously in order to 
+measure geometrically the rate of return . The geometric rate of return is used in our study because several previous
+
+e series of transaction prices of 38 securities traded continuously in order to 
+measure geometrically the rate of return . The geometric rate of return is used in our study because several previous 
+studies have adopted it.This authorizes us to compare our results with those from other studies. 
+R
+୲ ൌ ሾ100 ∗ ሺLnሺP୲ሻ െL nሺP୲ିଵሻሻሿ ( 1 ) 
+with: R୲: Represents the return on stock i in interval t, P୲ : Represents the closing price of stock i in interval t. P୲ିଵ : 
+Represents the closing price of stock i in interval t-1 
+4.3.2 The trading volume: Likewise to the return, the trading volume indicates the number of shares traded on each 
+interval. We can measure it by this formula. The reason for using the natural logarithm is to normalize this variable 
+so as not to fall into fallacious estimates. 
+V୲ ൌ ሾ100 ∗ LnሺNAE୲ሻሿ ( 2 ) 
+With: V୲: Represents the trading volume of stock i in interval t. NAE୲ : NAB: Represents th e number of shares 
+traded for stock i in interval t. 
+4.3.3 The return volatility: To proxy return volatility, th e squared values of intraday stock returns are used. 
+Brailsford (1996) employed the squared as volatility proxies for the Australian stock market. 
+Rଶ ൌ ሾR୲ ∗R ୲ሿ ( 3 ) 
+4.3.4 The quoted spread: The difference between the best of limited price for sale and the best of limited price of 
+purchase represents the quoted spread. 
+QSPR୲ ൌ ሾሺP୆ሻ െ ሺP୅ሻሿ ሺ4ሻ 
+with: 
+ 
+ 
+QSPR
+୲: The quoted spread in the interval t.
+
+between the best of limited price for sale and the best of limited price of 
+purchase represents the quoted spread. 
+QSPR୲ ൌ ሾሺP୆ሻ െ ሺP୅ሻሿ ሺ4ሻ 
+with: 
+ 
+ 
+QSPR
+୲: The quoted spread in the interval t. P୆: The best limit price to buy (BID) of the interval t. P୅ : The best limit 
+price to sell (ASK) of the interval t. 
+4.3.5 The Depth: The depth indicates the quantity available for the purchase and sale, for each price level at a given 
+instant. 
+ DEP୲ ൌ ሺQ୆ ൅Q ୅ሻ
+2 ሺ5ሻ 
+With : DEP୲: Depth in the interval t. Q୆ : The quantity available at the purchase price in the interval t. Q୅ : The 
+quantity available at the selling price in the interval t. Once all the series of all variables are determined, we need to 
+construct a cross-sectional database. To do this, Abhyanker et al (1997) have presented an empirical methodology to 
+achieve this aim. For each time interval t (t = 1 ... .24). We compute the weighted average for all shares i (i = 1...38)
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+Published by Canadian Center of Science and Education 163
+through all the trading sessions j (j = 1 ...184). The study of the seasonal anomaly in the Tunisian stock market will 
+be investigated as soon as the cross-sectional database is created. 
+5. Methodology and Empirical Results 
+Our study is inspired of the Vo (2007) study on the Toronto stock market. At this level, the availability of 
+high-frequency data on the Tunisian stock market especially after the implementation of the Financial Security Law 
+in 2005 motivated us to use this data to analyze profou ndly the seasonal liquidity, volatility and trading activity and 
+especially to study the different co rrelations between the micro structur al aggregates. However, before we 
+implement our methodology, we, first, try to identify the variables necessary to respond to our research questions. 
+The achievement of the importance of intraday analysis of the seasonal anomaly requires the division of trading day 
+in equal intervals of time. The application of this empirical approach of our sample allows us to divide the trading 
+day from 10 am to 2 pm over 24 intervals and retain a samp ling interval of 10 minutes each. Indeed, the analysis of 
+seasonality requires, first of all, the determination and definition of variables in our study. 
+5.1 Testable Hypothesis
+
+and retain a samp ling interval of 10 minutes each. Indeed, the analysis of 
+seasonality requires, first of all, the determination and definition of variables in our study. 
+5.1 Testable Hypothesis 
+In this section, we investigate the intraday behavior of trading activity, volatility and liquidity. To do this, we 
+analyze graphically all variables in order to finalize with the estimation of models. Table 3 refers to the standardized 
+average values for all variables of 38 securities for each time interval during the trading day. To accomplish our 
+detailed analysis of the regularities in the Tunisian stock market, we needed to formulate the following hypotheses. 
+The market efficiency hypothesis considers that the stock prices include all th e information available on the market. 
+Indeed, this hypothesis supports the idea that the variables of liquidity and transactions are constant throughout the 
+trading day. So our approach is based on the following hypothesis: 
+Hypothesis 1: The evolution of variables of trading activity, return volatility and liquidity are constant during the 
+trading day. 
+Hypothesis 2: The evolution of variables of trading activity, return volatility and liquidity are not constant during 
+the trading day. At this level, we w ill attempt to test these hypotheses on the Tunisian stock market in order to 
+analyze the evolution of different variables. It would certainly be interesting to follow an empirical process based 
+upon two paths.
+
+test these hypotheses on the Tunisian stock market in order to 
+analyze the evolution of different variables. It would certainly be interesting to follow an empirical process based 
+upon two paths. 
+5.2 The Graphical Analysis of Intraday Behavior of the Trading Activity, Return Volatility and Liquidity 
+It is therefore appropriate to start with a graphical analysis that is important for viewing the behavior of different 
+variables in the Tunisian stock market. Table 3 presents the cross-sectional average of standardized return, 
+standardized trading volume, Standardized return volatility, standardized quoted spread and standardized depth for 
+each interval of 10 minutes of the trading day. The following figures sh ow the evolution of liquidity and trading 
+activity over time in the Tunisian stock market. 
+From the visualization of different figures, we can observe that the figure 1 displays the intraday movements of 
+return during the trading day. It reveals that the intraday behavior of return follows almost the U-Pattern. During the 
+first minutes of trading, the return attained a high level that is equal to 2,049. This return decreases and varies 
+between -1 and 1 throughout th e trading day. At the end of quotation, it achieved a peak that reaches 3,451. Hence, 
+the confirmation of our second hypothesis. Certainly, we ca n say that this result coincides with the results shown on
+
+ng day. At the end of quotation, it achieved a peak that reaches 3,451. Hence, 
+the confirmation of our second hypothesis. Certainly, we ca n say that this result coincides with the results shown on 
+the order-driven market (Bildik (2001)).Second, the trading volume is globally variable in the day. Figure 2 also 
+highlights that the configuration of intraday trading volume is in U and more precisely in W. We notice, however, a 
+high trading volume over the first ten minutes of the session quotation as well as a strong increase at the close of the 
+day. However we find in the middle of the day that the trading volume comes to decrease after the first interval in 
+order to increase again until reaching the value 1 at 11:30 am . This persistence of the gr owth of the trading volume 
+has been interrupted and has declined again. Third, figure 3 shows clearly that the intraday behavior of return 
+volatility follows the shape U. We observe that high return volatility exists at the beginning of the session quotation. 
+However this volatility has declined rapidly and continues to decrease throughout the day in order to pick up again 
+in the last ten minutes. The latter result is consistent with the results of Ahn, Bae and Chan (2001).In addition, the 
+figure 4 shows that the quoted spread also follows the U- shaped profile. We notice that the spread is high at the 
+beginning of the market followed by a reduction during the two following intervals. During the trading day, the
+
+d spread also follows the U- shaped profile. We notice that the spread is high at the 
+beginning of the market followed by a reduction during the two following intervals. During the trading day, the 
+liquidity has decreased again except a sli ght reduction at the level of interval 15 to regain on the rise to the market 
+close. This finding of U-shap ed profile coincides with the results of C hung et al (1999) on the NYSE and those of 
+Vo (2007) on the TSE. Finally, the visualization of the figure 5 provides information on the intraday behavior of 
+depth. This figure also supports the U-shaped profile. But this profile is different compar ed to the profile of the 
+quoted spread. The depth was high at the beginning of the session, and then decreases throughout the trading day
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+ ISSN 1916-971X E-ISSN 1916-9728 164
+and it is growing during the last half hour before the closure of negotiations. This showed U-shape in the Tunisian 
+stock market is consistent with the proven results on the NYSE by Lee, Mucklow, and Ready (1993) and on the 
+Paris stock exchange by Biais et al (1995) and the SEH justified by Ahn et al (2001). 
+However, the question asked here is to know whether our proposed hypotheses in accordance with the theory of 
+efficiency have been confirmed or not. In the first stage, the evolutions profiles show that the Tunisian stock market 
+is liquid at the beginning of quotation, since we find that the spread and the depth at the best limit are very high 
+during the first 10 minutes in order to decrease during the next 20 minutes. While during the trading day, the 
+Tunisian stock market is illiquid since the price dimension of liquidity (quoted spread) increased while the quantity 
+dimension (the depth at the best limit) is down. But the observation of the profiles confirms the finding of a upward 
+trend of market liquidity during the last 30 minutes of quotations. It is clear that the spread and depth at the best 
+limit are very high at the end of quota tions. This change in liquidity at the Tunisian stock market tends to confirm 
+the presence of anomaly of seasonality.
+
+that the spread and depth at the best 
+limit are very high at the end of quota tions. This change in liquidity at the Tunisian stock market tends to confirm 
+the presence of anomaly of seasonality. 
+In a next phase, we observe an intrad ay evolution very similar of trading activity with that of liquidity. A possible 
+interpretation, consistent with the results obtained here would be that the hypothesis 2 presented above was accepted 
+either for liquidity variables or trading activity variables. These results coincide with the results shown by several 
+empirical studies such as studies of Jain and Joh (1988), Foster and Viswanathan (1993), Jang and Lee (1993) on the 
+NYSE and Chan, Christie and Schultz (1995) on the NASDAQ. For this, the question that arises at this level, why 
+do these patterns exist ? It is necessary to submit briefly th e explanations justifying the presence of this seasonality 
+in liquidity and trading activity in the Tunisian stock market. We will build our analysis on two theoretical 
+foundations: the adverse selection theory and inventory theory. Initially, the simultaneous analysis of the spread and 
+depth will doubtlessly allow us to have a better comprehensive view on the supply of liquidity in the order book. 
+However, the primary objective of investors is to position itself in an optimal way on the market and rebalance their 
+portfolios by increasing the spread and decreasing the depth in order to cope with the risk of adverse selection.
+
+investors is to position itself in an optimal way on the market and rebalance their 
+portfolios by increasing the spread and decreasing the depth in order to cope with the risk of adverse selection. 
+However, our results showed that the spread and the depth have the same behavior at the opening and closing 
+trading. In other words, there is an improving liquidity du ring the first minutes and last-minute of quotation. At the 
+opening, the improving liquidity can be attributed to the intense competition between the agents of limit orders that 
+place orders rapi dly such that they are ex ecuted in order to sear ch the profitable opportun ities although the risk of 
+detention of private information by informed investors is very important. Furthermore, this result does not agree 
+with the hypothesis of asymmetric information that requires an illiquid market at the opening. Whereas at closing we 
+observe an increase of two dimensions of liquidity. This change in the degree of liquidity at the closing might be 
+explained by the need for investors to have an optimal inventory position, and especially to execute them by the 
+price closing .But as from 10:30 a.m. we notice a deterioration in liquidity as investors become more conservative 
+due to the increasing the risk of adverse selection. This prudence is reflected in a higher spread and low depth This 
+transaction strategy adopted by the underwriters to limit orders appears very different to that adopted in other 
+markets.
+
+election. This prudence is reflected in a higher spread and low depth This 
+transaction strategy adopted by the underwriters to limit orders appears very different to that adopted in other 
+markets. 
+In a second step, we are proposing to analyze and explain the dynamics of intraday trading activity. The results have 
+shown that the Tunisian stoc k market is characterized by a concentrati on of trading volume at the opening and 
+closing of the trading session. While inside the trading da y, trading volume has remarkably declined. This U-shaped 
+profile, according to Lee, Fok and Liu (2001), represents a global phenomenon, since several studies have revealed 
+the presence of such intraday behavior as the works of Wood, McInish and Ord (1985), McInish and Wood (1990a), 
+McInish and Wood (1992) and Lockwood and Linn (1990) respectively on the NYSE and the TSE. And the works 
+of Chow, Lee, Liu (1994) and Liu (1994), Ho and Cheung (1991), as well as Ho Cheung and Cheung (1993) 
+respectively on Taiwan stock market and SEHK. Jain and Joh (1988) have justified the high level of trading activity 
+precisely at the opening by the willingness of investors to exploit the collected information the eve and before the 
+opening of the market in order to achieve their transactions. Admati and Pfleiderer (1988) suggest that uninformed 
+investors react together to make transactions to limit the informational advantage of insiders. For their part,
+
+r to achieve their transactions. Admati and Pfleiderer (1988) suggest that uninformed 
+investors react together to make transactions to limit the informational advantage of insiders. For their part, 
+informed investors attempt to exploit their private inform ation and make transactions at the opening before this 
+information becomes public. Brock and Kleidon (1992) provide an important explanation for this anomaly. They 
+show that investors exploit the advent of new information and make transactions at the opening and closing of the 
+market for the objective of rebalancing their portfolios. Next to the profile of trad ing activity, the U-profiles of 
+return and return volatility may be allocated to the in creased important accumulation of information the eve and 
+before the opening of the Tunisian stock market. These results imply that the collected information (public or private) 
+will be immediately and implicitly incorporated into stock prices since the market opening. Our results coincided 
+with the results of Wood et al (1985), Harris (1986), Jain and Joh (1988) on the NYSE, Copeland and Jones (2002) 
+on the Korean market. But it must be mentioned that the attr ibution of high levels of return and return volatility at
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+Published by Canadian Center of Science and Education 165
+the opening and closing quotation in the Tunisian stock market, is only due to the information flow, is insufficient. 
+Since the previous literature has shown the existence of a very important f actor generating this anomaly. Amihud 
+and Mendelson (1987), Stoll Whaley (1990) have highlighted the importance of trading in fixing on the return and 
+volatility. They have shown that the return and the volatility calculated on the basis of price fixing are high during 
+the first minutes and the last minutes of trading. 
+5.3 The Empirical Analysis of the Regularities of Intraday Trading Activity, Volatility and Liquidity 
+The graphical analysis has shown the presence of the anomaly of seasonality in the Tunisian stock market. It 
+therefore seemed interesting to adopt and to estimate the sa me methodological approach of Vo (2007) to verify this 
+result. To test the significance of different patterns of liquidity, volatility and trading activity, standardized variables 
+are regressed on a set of dummy variab les representing the intraday interval s. The following parameters of the 
+model are estimated by using OLS. 
+ܴܦܵ
+௧
+௡
+௞ୀଵ
+௧ ሺ6ሻ 
+ 
+௧
+௡
+௞ୀଵ
+௧ ሺ7ሻ 
+ 
+௧
+௧
+௡
+௞ୀଵ
+௧ ሺ8ሻ 
+௧
+௡
+௞ୀଵ
+௧ ሺ9ሻ 
+ 
+௧
+௡
+௞ୀଵ
+௧ ሺ10ሻ 
+Where, SDR୲ ; SDV୲; SDR ୲
+ଶ; SDSPR ୲; SDDepth ୲ represent standardized variables of return, volatility, trading
+
+ܦܵ
+௧
+௡
+௞ୀଵ
+௧ ሺ6ሻ 
+ 
+௧
+௡
+௞ୀଵ
+௧ ሺ7ሻ 
+ 
+௧
+௧
+௡
+௞ୀଵ
+௧ ሺ8ሻ 
+௧
+௡
+௞ୀଵ
+௧ ሺ9ሻ 
+ 
+௧
+௡
+௞ୀଵ
+௧ ሺ10ሻ 
+Where, SDR୲ ; SDV୲; SDR ୲
+ଶ; SDSPR ୲; SDDepth ୲ represent standardized variables of return, volatility, trading 
+volume , spread and depth in the interval generating t. n is the number of intervals in the trading day with n ranging 
+from 1 to 24. D
+୲ are dummies variables equal to 1 if the observation t occurs in the interval k, 0 else. In addition, 
+our sample is over 30. Above all, we estimate different equations for each stock market using the OLS estimation 
+method. Thus, we exploit the t-statistics that is consistent against heteroscedasticity and autocorrelation in order to 
+justify the significance of estimated parameters. 
+The estimation results are reported in Table 4. We are finding that the return is high at the beginning of the market 
+since αଵ is statistically significant and positive and very s uperior to the other success ive coefficients. But this 
+decreasing trend throughout the day did not last long in order to achieve its high level at the closing of market. This 
+result is translated by an increase of coeffi cient values during the last thirty minutes ( α
+ଶସ > αଶଷ > αଶଶ ). Statistical 
+significance and the positivity of these coefficients absolute ly confirm the result that the return reaches its higher 
+level at the end of the trading day. It is no surprise from the above that our results maintain the results generated by 
+graphical analysis.
+
+ly confirm the result that the return reaches its higher 
+level at the end of the trading day. It is no surprise from the above that our results maintain the results generated by 
+graphical analysis. In addition, we use the unconditional correlation as a measure of the degree of liaison between all 
+the variables in our study. The observation of the uncond itional correlation matrix confirms the presence of a very 
+high positive correlation between the return with other variables (the trading volume (0,99 and 0,98), the return 
+volatility (0,95 and 0,99), the spread (0,80 and 0,99) and the depth (0,64 and 0,97)) respectively during the first three 
+intervals and the last day of trading. For the trading volume we notice that it reaches a high level at the beginning 
+and closing of the market since the results have shown that coefficients α
+ଵ and αଶସ are statistically significant and 
+positive and superior to other dummy coefficients estimated in the model (9). This also confirms the result shown by 
+the graph of the trading volume profile. Similarly to the trading volume, we also observe that the return volatility is 
+significantly high in the first and last minutes of the trading session. This is reflected by the significance and positive 
+coefficients α
+ଵ and αଶସ and more specifically their superiority compared with other coefficients. 
+According to the above, we can mention that there is a positive relationship between trading volume and return
+
+α
+ଵ and αଶସ and more specifically their superiority compared with other coefficients. 
+According to the above, we can mention that there is a positive relationship between trading volume and return 
+volatility during the first minutes and the last minutes of trading day. This finding corresponds to the theoretical
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+ ISSN 1916-971X E-ISSN 1916-9728 166
+proposition of Admati and Pfleiderer (1988) that periods of high trading volume tend to be periods of high return 
+volatility. According to Easley and O'Hara (1992), we can also explain this situation by the fact that a high trading 
+volume represents an indication of the arrival of insiders on the market. This will increas e the risk of transactions 
+with investors and especially the probability of achieving losses and therefore the opportunity to observe high levels 
+of the return volatility during these periods. The analysis is thus clearer regarding the interpretation of the 
+correlation matrix. Indeed, the results have shown the unconditional positive correlation between trading volume 
+and return volatility (0, 96 and 0, 99) respectively for the first and last three intervals during the trading session. 
+For the dimensions of liquidity, the regression results have shown that the spread is characterized by a high level at 
+the opening and closing of the market compared to the inside of the trading day. The values of estimated coefficients 
+confirm our results of a U-shape since we have observed that the coefficient α
+ଵ is statistically insignificant and 
+negative but higher than the coefficients αଶଶ and αଶଷ that are significant. Similarly, the coefficient αଶସ is 
+significant and positive.
+
+ed that the coefficient α
+ଵ is statistically insignificant and 
+negative but higher than the coefficients αଶଶ and αଶଷ that are significant. Similarly, the coefficient αଶସ is 
+significant and positive. It attained a hi gh level compared to the coefficients αଶଶ and αଶଷ. To understand this 
+phenomenon, we can deduce the existence of a direct relationship between the return volatility and the spread for the 
+opening and closing of the market. Foucault (1999) justified this nature of relationship with the demonstration that 
+when the market is volatile, the probability to encounter insiders increases, which w ill increase the losses of the 
+uninformed investors. To resolve this pr oblem, they try to place limit orders to buy at low prices and limit orders to 
+sell at high prices. This investment strategy generates a higher spread. For depth, we have found that the coefficient 
+α
+ଵ is significant and positive. This means that this quantity dimension of liquidity is extremely high during the first 
+minutes of trading. But this increasi ng trend does not long remain in order to decrease during the trading day 
+(αଵ ൐α ଶ > αଷ ൐α ସ > αହ ൐α ଺ > α଻ ൐α ଼ > αଽ ൐α ଵ଴ > αଵହ ൐α ଵ଺ > αଵ଻ ൐α ଵ଼ > αଵଽ>αଶ଴ ൐α ଶଵ). Yet during the 
+last minutes of trading, we noticed that liquidity is characterized by a remarkable increase. This behavior is reflected 
+by the significance and negativity a nd especially the superiority of αଶସ compared to αଶଶ and αଶଷ. The most
+
+iced that liquidity is characterized by a remarkable increase. This behavior is reflected 
+by the significance and negativity a nd especially the superiority of αଶସ compared to αଶଶ and αଶଷ. The most 
+surprising from the above is that although the high level of volatility at the opening and closing of the market, 
+liquidity seekers do not hesitate to increase their spread but in return they retain high levels of the depth at the best 
+limit. Similarly to the trading volume, we also notice, from the unconditional correlation matrix, that there is a 
+positive correlation of the return volatility with the spread (0.94 and 0.99) and depth at the best limit (0.83 and 0.98) 
+respectively during the first three and last intervals of th e transaction day. This result does not coincide with the 
+explanation of Foucault (1999) that the strategic behavior of the Agents of limit orders for these active periods is the 
+increase of the spread and reducing of the depth at the best limit in order to protect against the risks mentioned 
+above. The justification that we can offer is that the need for liquidity and rebalanceing the optimal portfolio 
+requires such applicant’s liquidity to adopt this strategy . We apply reconciliation between intraday behavior of the 
+depth and trading volume. Our results have shown the existence of high level of depth accompanied by a high level 
+of trading volume. This result was confirmed by the pres ence of a very high positive correlation between trading
+
+results have shown the existence of high level of depth accompanied by a high level 
+of trading volume. This result was confirmed by the pres ence of a very high positive correlation between trading 
+volume and the two dimensions of liquidity (the spread (0.82 and 0.98) and depth at the best limit (0.66 and 0.99)) 
+for the first and last half hour of the trading day. We think that this result is different from that shown by Lee et al. 
+(1993), Ye (1995) and Kavajecz (1999). They have proven that during these tr ading periods, the trading volume is 
+characterized by a high concentration when the depth reaches a low level. Indeed, this explanation implies more 
+than the strategic actions of the applicants of liquidity represent the main source to have this type of relationship. In 
+addition, the high level of spread and depth at the beginning and the end of the session shows that investors do not 
+take into consideration the risk of non-execution of their orders whose objective is to have very advantageous 
+position in the market in order face competition with other suppliers of liquidity. Theref ore, the extension of two 
+dimensions of liquidity is verified by the existence of positive unconditional correlation between spread and depth at 
+the best limit. 
+5.4 The Spectral Analysis of the Behavior of Intraday Trading Activity, Return Volatility and Liquidity 
+After having applied the graphical and empirical analysis, the next step consists of applying the spectrum analysis.
+
+is of the Behavior of Intraday Trading Activity, Return Volatility and Liquidity 
+After having applied the graphical and empirical analysis, the next step consists of applying the spectrum analysis. 
+The Fourier series development is founded on the principle that every periodic function of time x(t) can be 
+decomposed into an infinite sum of sines and cosines of which frequencies start at zero and increase in integer 
+multiples of a basic frequency f
+଴ = 1/T, where T is the period of x(t). To account for time series, we decompose the 
+process x(t)in periodic components by adopting the criteria of frequencies. In fact the Fourier transformation is one 
+of the methods frequently used in spectral analysis. The Fourier transformation has already been considered as a 
+particular mathematical case of Laplace transformation. Th is method can automatically detect the seasonality and 
+more specifically to analyze the frequency of the process x(t). In other words, the Fourier transform can be used to 
+diagnose the periodic structures in time series data. It transforms an original function which is often a periodic 
+function into another, which is called the frequency domain representing the original function. According to the 
+Fourier theorem, any time series can be formulated as the sum of sines and cosines of different frequencies and
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+Published by Canadian Center of Science and Education 167
+magnitudes. The Fourier transform allows decomposing a series t X (t=1….n). We can write the Fourier 
+development as follows: 
+௞
+ஶ
+௞ୀଵ
+ሻሻ ሺ11ሻ 
+By knowing the basic frequency and the function x (t), the achievement of a Four ier transform consists in 
+determining all values αk and b kthat make up the series. The Fourier transform adopts another form that can be 
+represented by the following function: 
+ି௜௪௧
+ାஶ
+ିஶ
+ሺ12ሻ 
+The inverse Fourier transformation is as follows: 
+௜௪௧
+ାஶ
+ିஶ
+ሺ13ሻ 
+We had necessary to use Matlab in order to apply the spectrum analysis of the various series. However, the spectrum 
+analysis has allowed us to appreciate the existence of seasona lity and especially to take part in the determination of 
+the appropriate pattern for all variables mentioned above. The application of Fourier transform (FFT) confirms our 
+results proven above. To illustrate this point, we figure the results of the application of spectrum analysis on all 
+variables by graphics with the abscissa and the ordinate respectively the frequency and the magnitude. These 
+specters show clearly the existence of seasonality that is manifested by significant spectral peaks in seasonal 
+frequencies at the opening and closing trading days reflecti ng a seasonal effect which characterizes all variables of 
+liquidity, volatility and trading activity.
+
+nificant spectral peaks in seasonal 
+frequencies at the opening and closing trading days reflecti ng a seasonal effect which characterizes all variables of 
+liquidity, volatility and trading activity. 
+This type of frequential analysis is generally used to prove that a signal has the dominant frequencies: when we 
+represent the spectra, we see that ther e were some significant peaks, indica ting that the signal possesses a certain 
+periodicity in the corresponding frequencies. Figure 6 illust rates the spectrum of the series standardized return. We 
+find that there exists a significant peak at the opening trading day with a magnitude of 5.771 and a frequency of 
+0.001667 KHz and another significant peak at the end of the day with magnitude of 5.771 but frequency of 0.05167 
+kHz. Indeed, the series of return analyzed and presente d two remarkable periodicities when frequencies present a 
+remarkable peak. Similarly, the results illustrated in Figure 7 for the spectrum of standardized trading volume, 
+showed that there were some large fluctuations at the start of trading session with a magnitude of 15,06 and a 
+frequency of 0,001667 KHz and also at the end of trading for a magnitude of 15,06 but the frequency of 0,5167 KHz. 
+The analysis of the frequential evolution of standardized return volatility illustrated in figure 8, indicates that the 
+presented series is characterized by a considerable variability since there is a significant peak at the beginning of the
+
+standardized return volatility illustrated in figure 8, indicates that the 
+presented series is characterized by a considerable variability since there is a significant peak at the beginning of the 
+trading session with a magnitude of 17, 57 and a frequency of 0,001667 KHz and another significant peak at the end 
+of the day with a magnitude 17, 57 and frequency of 0, 5167 KHz. 
+Regarding the dimensions of liquidity, Figure 9 illustrates the spectrum of the standardized quoted spread. We also 
+found that there is a great variability justified by significa nt peak at the opening of trading day with magnitude 18, 
+86 and frequency of 0,001667 KHz and another significant peak at the close of the day with magnitude but a 
+frequencyof 0, 05167 KHz. For the other dimension of liquidity, it is clear from Figure 10, that the spectrum 
+analysis of the depth confirms the existence of significant peak at the opening with a magnitude 31,24 and a 
+frequency of 0,5167 KHz and another significant peak at the close with a magnitude 31,24 and frequency of 0,5167 
+KHz. 
+Finally, our showed results in this study are important in both theoretical and applied implications. On the 
+theoretical level, our study agreed with the theory of microstructure and more precisely with the theoretical 
+explanation of the presence of an anomal y in the financial market by asymmetric information. On the applied level,
+
+agreed with the theory of microstructure and more precisely with the theoretical 
+explanation of the presence of an anomal y in the financial market by asymmetric information. On the applied level, 
+our results can build an appropriate analysis to investors to be able to implement their strategies of speculation. 
+More precisely, speculation is characterized by taking a risky position on a placement to invest on the future 
+evolution of stock in order to accomplish capital gains. Indeed, investors, through their knowledge of the seasonal 
+pattern characterizing trading activity, return volatility and liquidity, may react and achieve transactions for the 
+adequate moments they want. 
+6. Conclusion 
+We have attempted in this paper to clarify the intraday behavior of liquidity, volatility and trading activity in 
+financial markets. The existence of seasonality characterized this behavior which will contradict the hypothesis of 
+market efficiency. The previous literature has shown the ex istence of this micro-struct ural anomaly since the study
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+ ISSN 1916-971X E-ISSN 1916-9728 168
+of Wood, Mc Inish and Ord (1985). The majority of these studies showed that the trading volume, return volatility 
+and liquidity profile follow the U-shaped. All these variables are at the highest le vel at the opening of trading, they 
+decline rapidly to lower levels lower in the middle and then they increase again during the final minutes of trading. 
+We have tried to verify the existence of seasonality in trading activity, volatility and liquidity, and especially to 
+show the reasons for this anomaly in the Tunisian stock ma rket: a market governed by the orders. To achieve this 
+goal, we have used a sample of high-frequency data for a period which runs from October 2008 until June 2009. We 
+have applied two methods: the temporal analysis is to es timate a dichotomic model for each variable by following 
+the methodological approach of Vo (2007) and the second method is to apply the spectrum analysis by using the 
+Fourier Transform fast (FFT). The results have shown that all identified variables are characterized by a notable 
+seasonality justified the rejection of the hypothesis of constancy (H0). Both methods have shown the existence a 
+seasonal pattern in U. The reason cons idered to justify this intraday behavi or is the crucial role played by the
+
+ction of the hypothesis of constancy (H0). Both methods have shown the existence a 
+seasonal pattern in U. The reason cons idered to justify this intraday behavi or is the crucial role played by the 
+problem of adverse selection especially between the two dimensions of liquidity: the spread and the depth at the best 
+limit. We should also note that the effect of inventory management on the optimal allocation of the portfolio. 
+References 
+Abhyankar, A., Ghosh, D., Levin, E., & Limmack, R.J. (1997). Bid-Ask spreads, trading volume and volatility: 
+Intraday evidence from th e London Stock Exchange. Journal of Business Finance and Accounting , 24(3/4). 
+343-362. http://dx.doi.org/10.1111/1468-5957.00108 
+Admati, A.R., & Pfleiderer, P. ( 1988). A Theory of Intraday Patterns: Volume and Price Variability. Review of 
+Financial Studies, 1, 3-40. http://dx.doi.org/10.1093/rfs/1.1.3 
+Admati, A.R., & Pfleiderer, P. (1989). Divide and conquer: a theory of intraday and day-of-the-week effects. Review 
+of Financial Studies, 2, 189-223. http://dx.doi.org/10.1093/rfs/2.2.189 
+Ahn, H., & Cheung, Y-L. (1999). The intraday patterns of the spread and depth in a market without market makers: 
+The Stock Exchange of Hong Kong. Pacific-Basin Finance Journal, 7, 539–556. 
+http://dx.doi.org/10.1016/S0927-538X(99)00023-2 
+Ahn, H., Bae, K., & Chan, K. (2001). Limit orders, depth, and volatility: Evidence from the stock exchange of Hong 
+Kong. Journal of Finance, 56, 767−788.
+
+p://dx.doi.org/10.1016/S0927-538X(99)00023-2 
+Ahn, H., Bae, K., & Chan, K. (2001). Limit orders, depth, and volatility: Evidence from the stock exchange of Hong 
+Kong. Journal of Finance, 56, 767−788. http://dx.doi.org/10.1111/0022-1082.00345 
+Amihud, Y., & Mendelson, H. (1987). Trading mechanisms and stock returns: an empirical investigation. Journal of 
+finance, 42, 533-553. http://dx.doi.org/10.2307/2328369 
+Andersen, T. (1996). Return volatility and trading volume: an information flow interpretation of stochastic volatility. 
+Journal of Finance, 51, 169-204. http://dx.doi.org/10.2307/2329306 
+Barclay, M.J., Litzenberger, R.H., & Wa rner, J.B. (1990). Private information, trading volume, and stock-return 
+variances. Review of Financial Studies, 3, 233-253. http://dx.doi.org/10.1093/rfs/3.2.233 
+Biais, B., Hillion, P., & Spatt, C. (1995). An empirical analysis of the limit order book and the order flow in the 
+Paris bourse. Journal of Finance, 50, 1655−1689. http://dx.doi.org/10.2307/2329330 
+Bildik, R. (2001).Intra-day seasonalities on stock returns : evidence from the Turkish stock market. Emerging 
+Market Review, 2, 387-417. http://dx.doi.org/10.1016/S1566-0141(01)00026-7 
+Brailsford, T. J. (1996) .The empirical relations hip between trading volume, returns and volatility. Accounting and 
+Finance, 
+36, 89–111. http://dx.doi.org/10.1111/j.1467-629X.1996.tb00300.x 
+Brock, W., & Kleidon, A. (1992).
+
+The empirical relations hip between trading volume, returns and volatility. Accounting and 
+Finance, 
+36, 89–111. http://dx.doi.org/10.1111/j.1467-629X.1996.tb00300.x 
+Brock, W., & Kleidon, A. (1992). Periodic market closure and trading volume: A model of intraday bids and asks. 
+Journal of Economic Dynamic and Control, 16, 451−489. http://dx.doi.org/10.1016/0165-1889(92)90045-G 
+Brockman, P., & Chung, D.Y. (1998). Inter- and Intra-day Liquidity Patterns on the Stock Exchange of Hong Kong. 
+Journal of International Financial Markets, Institutions and Money , 8, 279–300. 
+http://dx.doi.org/10.1016/S1042-4431(98)00040-7 
+Brockman, P., & Chung, D.Y. (1999). An Analysis of Depth Behavior in an Electronic, Order-Driven Environment. 
+Journal of Banking and Finance, 23, 1861–1886. http://dx.doi.org/10.1016/S0378-4266(99)00044-8 
+Brockman, P., & Chung, D.Y. (2001). Managerial Timing and Corporate Liquidity: Evidence from Actual Share 
+Repurchases. Journal of Financial Economics, 61, 417-448. http://dx.doi.org/10.1016/S0304-405X(01)00068-X 
+Chan, K. C., Christie, W. G., & Schultz, P. H. (1995). Mark et structure and the intraday pattern of bid-ask spreads 
+for Nasdaq securities. Journal of Business, 68, 35−60. http://dx.doi.org/10.1086/296652
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+Published by Canadian Center of Science and Education 169
+Chan, K., Chung, Y. P., & Johnson, H. (1993). Why Option Prices Lag Stock Prices: A Trading Based Explanation. 
+Journal of Finance, 48,1957-1968. http://dx.doi.org/10.2307/2329075 
+Chen, M., Chow, E. H., Liu, V. W., & Liu, J. Y. J. (199 4). Intraday Stock Returns of Taiwan: An Examination of 
+Transaction Data. National Central University, Working Paper, pp. 1-45. 
+Cheung, S.C., & Kwan, C. Y. (1992). A Note on the Transm ission of Public Information across International Stock 
+Markets. Journal of Banking and Finance, 16, 831-837. http://dx.doi.org/10.1016/0378-4266(92)90011-N 
+Choe, H., & Shin, H. (1993). An Analysis of Interday and Intraday Return Volatility-Evidence from the Korea Stock 
+Exchange. Pacific Basin Finance Journal, 1, 175-188. http://dx.doi.org/10.1016/0927-538X(93)90007-5 
+Chung, D.Y. (2002). The impact of informed tr ading on corporate Liquidity Paul Brockman. Journal of 
+Multinational Financial Management, 12, 239-259. http://dx.doi.org/10.1016/S1042-444X(01)00053-6 
+Chung, K. H., & Van Ness, R. A. (2001). Order handling rules, tick size, and the intraday pattern of bid-ask spreads 
+for Nasdaq stocks. Journal of Financial Markets, 4, 143−161. http://dx.doi.org/10.1016/S1386-4181(00)00021-5 
+Clark, P. K. (1973). A subordinated stochastic pro cess model with finite variance for speculative prices.
+
+Journal of Financial Markets, 4, 143−161. http://dx.doi.org/10.1016/S1386-4181(00)00021-5 
+Clark, P. K. (1973). A subordinated stochastic pro cess model with finite variance for speculative prices. 
+Econometrica, 41, 135-156. http://dx.doi.org/10.2307/1913889 
+Comerton-Forde C., Lau, S. T., & McInish, T. (2007). Opening and closing behavior following the introduction of 
+call auctions in Singapore. Pacific Basin Finance Journal 15(1), 18-35. 
+http://dx.doi.org/10.1016/j.pacfin.2006.04.002 
+Copeland, L., & Jones, S.A. (2002). Intradaily Patterns in the Korean Index Futures Market. Asian Economic 
+Journal,16,153-74. http://dx.doi.org/10.1111/1467-8381.00146 
+Degennaro, R., & Shrieves, R. (1997). Public information releases, private information arrival and volatility in the 
+foreign exchange market. Journal of Empirical Finance , 4, 295–315. 
+http://dx.doi.org/10.1016/S0927-5398(97)00012-1 
+Easley, D., & O'Hara, M. (1992). Time and the process of security price adjustment. Journal of Finance , 47, 
+577−605. http://dx.doi.org/10.2307/2329116 
+Edmonds, R.J., & Kutan, A.M. (2002). Is public information really irrelevant in explaining asset returns? Economics 
+Letters, 76, 223-229. http://dx.doi.org/10.1016/S0165-1765(02)00050-2 
+Foster, F.D., & Viswanathan, S. (1990). A theory of interday variations in volumes, variances, and trading costs in 
+stock markets. Review of Financial Studies, 3, 593-624. http://dx.doi.org/10.1093/rfs/3.4.593 
+Foster, F.D., & Viswanathan, S. (1993).
+
+interday variations in volumes, variances, and trading costs in 
+stock markets. Review of Financial Studies, 3, 593-624. http://dx.doi.org/10.1093/rfs/3.4.593 
+Foster, F.D., & Viswanathan, S. (1993). Variations in trading volume, return volatility, and trading costs: evidence 
+on recent price formation models. Journal of Finance, 48, 187-211. http://dx.doi.org/10.2307/2328886 
+Foucault, T. (1999). Order flow composition and trading costs in a dynamic limit order arket. Journal of Financial 
+Markets, 2, 193−226.http://dx.doi.org/10.1016/S1386-4181(98)00012-3 
+French, K.R., & Roll, R. (1986). Stock return variances: The arrival of information an d the reaction of traders. 
+Journal of Financial Economics, 17, 5-26. http://dx.doi.org/10.1016/0304-405X(86)90004-8 
+Gerety, M.S., & Mulherin, J. H. (1994). Price Formation on Stock Exchanges: The Evolution of Trading Within the 
+Day. Review of Financial Studies, 7, 609-629. http://dx.doi.org/10.1093/rfs/7.3.609 
+Hamao, Y., & Hasbrouck, J. (1995). Se curities trading in the absence of deal ers: Trades and quotes in the Tokyo 
+Stock Exchange. Review of Financial Studies, 8(3), 849−878. http://dx.doi.org/10.1093/rfs/8.3.849 
+Handa, P. (1992). On the supply of liquidity at the New York and American Stock Exchanges. Working paper. New 
+York University. 
+Handa, P., Schwartz, R., & Tiwari, A. (1998). Determinan ts of the bid–ask spread in an order driven market. 
+Working paper, University of Iowa. 
+Harris, L. (1986).
+
+rking paper. New 
+York University. 
+Handa, P., Schwartz, R., & Tiwari, A. (1998). Determinan ts of the bid–ask spread in an order driven market. 
+Working paper, University of Iowa. 
+Harris, L. (1986). A transaction data study of we ekly and intradaily patterns in stock returns. Journal of Financial 
+Economics, 16, 99-117. http://dx.doi.org/10.1016/0304-405X(86)90044-9 
+Hasbrouck, J. (1991a). The summary informativen ess of stock trades: an econometric analysis. Review of Financial 
+Studies, 4, 571-595. http://dx.doi.org/10.1093/rfs/4.3.571 
+Hasbrouck, J. (1991b). Measuring the information content of stock trades. Journal of Finance, 46 , 179-207. 
+http://dx.doi.org/10.2307/2328693
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+ ISSN 1916-971X E-ISSN 1916-9728 170
+Ho, Y.K., & Cheung, Y.L. (1991). Behavior of Intra-daily Stock Return on an Asian Emerging Market±Hong 
+Kong.Applied Economics, 23,957-966. http://dx.doi.org/10.1080/00036849100000044 
+Ho, Y.K., Cheung, Y.L., & Cheung, D.W.W. (1993). Intraday Prices and Trading Volume Relationship in an 
+Emerging Asian Market. Pacific Basin Finance Journal , 1, 203-214. 
+http://dx.doi.org/10.1016/0927-538X(93)90009-7 
+Jain, P., & Joh, G. (1986) . The Dependence between Hourly Prices and Triding Volume. Working Paper , The 
+Wharton School, University of Pennsylvania. 
+Jain, P., & Joh, G. (1988). The Dependence Between Hourly Prices and Trading Volume. Journal of Financial and 
+Quantitative Analysis, 23, 269–284. http://dx.doi.org/10.2307/2331067 
+Jang, H., & J. Lee. (1993) .Intraday Behavior of the Bid-Ask Spread and Related Trading Variables. Working Paper, 
+University of Oklahoma. 
+Kalev PS., & Pham LT (2009). Intraweek a nd intraday trade patterns and dynamics. Pacific Basin Finance Journal, 
+17, 547-564. http://dx.doi.org/10.1016/j.pacfin.2009.05.002 
+Kalev, P.S., Liu, W.M., Pham, P.K., & Jarnecic, E. (2004). Public information arrival and volatility of intraday stock 
+returns.Journal of Banking and Finance, 28, 1441-1467. http://dx.doi.org/10.1016/S0378-4266(03)00126-2 
+Kavajecz, K. A. (1999). A Specialist' s Quoted Depth and Limit Order Book.
+
+ty of intraday stock 
+returns.Journal of Banking and Finance, 28, 1441-1467. http://dx.doi.org/10.1016/S0378-4266(03)00126-2 
+Kavajecz, K. A. (1999). A Specialist' s Quoted Depth and Limit Order Book. Journal of Finance , 54,747-771. 
+http://dx.doi.org/10.1111/0022-1082.00124 
+Lamoureux, C.G., & Lastrapes W. D. (1990). Heteroskedasticity in Stock Return Data Volume versus GARCH 
+Effects. Journal of Finance, 45, 221-229. http://dx.doi.org/10.2307/2328817 
+Lee, C. M., Mucklow, B., & Ready, M. J. (1993). Spreads, depths and the impact of earnings information: an 
+intraday analysis. Review of Financial Studies, 6(2), 345-374. http://dx.doi.org/10.1093/rfs/6.2.345 
+Lee, C., & Ready, M. (1991). Inferring trade direction from intraday data. Journal of Finance , 46, 733–747. 
+http://dx.doi.org/10.2307/2328845 
+Lee, C.M.C. (1990). Information Dissemination and the Sma ll Trader: An Intraday Anal ysis of the Small Trader 
+Response to Announcements of Corporate Earnings and Changes in Dividend Policy. Ph.D. dissertation, Cornell 
+University. 
+Lee, Y-T., Fok R.C.W., & Liu, Y-J. (2001). Explaining Intraday Pattern of Trading Volume from the Order Flow 
+Data. Journal of Business Finance and Accounting, 28(1) and (2). 
+Lehmann, B. N., & Modest, D.M. (1994).Trading and Liquidity on the Tokyo Stock Exchange:A Bird’s Rye View. 
+Journal of Finance, 44, 951-984. 329212 
+Lockwood, L.J., & Linn, S. C. (1990). An examination of market return volatility during overnight and intraday
+
+n the Tokyo Stock Exchange:A Bird’s Rye View. 
+Journal of Finance, 44, 951-984. 329212 
+Lockwood, L.J., & Linn, S. C. (1990). An examination of market return volatility during overnight and intraday 
+periods 1964-1989. Journal of Finance, 45, 591-601. http://dx.doi.org/10.2307/2328672 
+Madhavan, A. (1992). Trading Mechanisms in Stock markets. The Journal of Finance , 47, 607-641 Published by: 
+Blackwell Publishing for the American Finance Association Stable. http://dx.doi.org/10.2307/2329117 
+Madhavan, R, M., & Roomans, M. (1997). Why do Security Prices Change? A Transactions Level Analysis of 
+NYSE Stocks, University of Southern California, July, unpublished. 
+McInish, T.H., & Wood, R.A. (1985). Intraday and Overnight Returns and Day-Of-The-Week Effect. Journal of 
+Financial Research, 8, 119-26. 
+McInish, T.H., & Wood, R.A. (1989). The Dependence of Hourly Volume, Trade Size and Number of Trades on 
+Returns. Working Paper. University of Texas. 
+McInish, T.H., & Wood, R.A. (1990a). A Transaction Data Analysis of the Variability of Common Stock Returns 
+During 1980-1984. Journal of Banking and Finance, 14, 113-129. http://dx.doi.org/10.1016/0378-4266(90)90038-4 
+McInish, T.H., & Wood, R.A. (1990b). An analysis of transactions data for the Toronto Stock Exchange. Journal of 
+Banking and Finance, 14, 458-491. http://dx.doi.org/10.1016/0378-4266(90)90058-A 
+McInish, T.H., & Wood, R.A. (1992). An analysis of intraday patterns in bid/ask spreads for NYSE stocks. Journal
+
+of 
+Banking and Finance, 14, 458-491. http://dx.doi.org/10.1016/0378-4266(90)90058-A 
+McInish, T.H., & Wood, R.A. (1992). An analysis of intraday patterns in bid/ask spreads for NYSE stocks. Journal 
+of Finance, 47, 753−764. http://dx.doi.org/10.2307/2329122 
+Naes, R., & Skjeltorp, J.A. (2006). Order book characteristics and the volume–volatility relation: Empirical 
+evidence from a limit order market. Journal of Financial Markets , 9, 408-432. 
+http://dx.doi.org/10.1016/j.finmar.2006.04.001
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+Published by Canadian Center of Science and Education 171
+Randi, N., & Johannes A.S. (2006). Order book charact eristics and the volume–vola tility relation: Empirical 
+evidence from a limit order market. Journal of Financial Markets, 9, 408–432 
+http://dx.doi.org/10.1016/j.finmar.2006.04.001 
+Stoll, H., & Whaley, R.E. (1990). Stock Market Structure and Volatility. Review of Financial Studies , 3, 37-71. 
+http://dx.doi.org/10.1093/rfs/3.1.37 
+Tauchen, G., & Pitts, M. (1983) .The price vari ability-volume relationship on Speculative markets. Econometrica, 
+51,485-505. http://dx.doi.org/10.2307/1912002 
+Vo, M.T. (2007). Limit orders and the intraday behaviour of market liquidity: Evidence from the Toronto stock 
+exchange. Gobal Finance Journal, 17, 379-396. http://dx.doi.org/10.1016/j.gfj.2006.06.012 
+Wood, R.A., McInish, T.H., & Ord, J.K. (1985). An Investigation of Transaction Data for NYSE Stocks. Journal of 
+Finance, 40, 723-739. http://dx.doi.org/10.2307/2327796 
+Ye, J. (1995). Bid-Ask prices and sizes: The specialist's optimal quotation strategy. Working Paper. University of 
+Southern California.
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+ ISSN 1916-971X E-ISSN 1916-9728 172
+Table 1. The list of shares listed continuously on the Tunisian stock market during the period October 2008 - June 
+2009 
+Code Stock INDUSTRY 
+725001 ADWYA Health 
+340005 AMEN BANK Financials 
+730001 ARTES Consumer services 
+714001 ASSAD Consumer goods 
+360035 ATB Financials 
+470010 ATL Financials 
+160015 ATTIJARI BANK Financials 
+190060 BH Financials 
+180045 BIAT Financials 
+310060 BNA Financials 
+220005 BT Financials 
+130055 BTE-ADP Financials 
+420085 CIL Financials 
+720001 EL WIFACK LEASING Financials 
+665001 ELECTROSTAR Consumer goods 
+721001 ESSOUKNA Industrials 
+713001 GIF Consumer goods 
+644001 MAGASIN GENERAL Consumer services 
+100010 MONOPRIX Consumer services 
+570001 POULINAGROUP HLD Financials 
+110025 SFBT Consumer goods 
+659001 SIAME Industrials 
+400005 SIMPAR Industrials 
+667001 SIPHAT Health 
+718001 SITS Industrials 
+678001 SOMOCER Industrials 
+653001 SOTETEL Telecommunication 
+666001 SOTRAPIL Oil and Gas 
+658001 SOTUMAG Consumer services 
+656001 SOTUVER Industrials 
+140070 SPDIT-SICAF Financials 
+606001 STAR Financials 
+260095 STB Financials 
+727001 TPR Basic Material 
+410020 TUNINVEST-SICAR Financials 
+120040 TUNISAIR Consumer services 
+210090 TUNISIE LEASING Financials 
+390010 UIB Financials
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+Published by Canadian Center of Science and Education 173
+Table 2. Descriptive statistics over the period October 2008 - June 2009 
+Variables Value 
+Number of companies 38 
+Trading days 184 
+Number of transactions 240564 
+Quantities of transactions 121399567 
+Daily Average of the number of transactions by stock 34 
+Total maximum quantity traded for Attijari Bank 20163175 
+T o t a l m i n i m u m q u a n t i t y t r a d e d f o r B T E - A D P 1 1 9 4 0 9 
+Average daily of trading volume by the action 17506 
+Number of purchase orders submitted 170413 
+Quantities of stocks submitted by purchase orders 130262717 
+Number of sale orders submitted 158099 
+Quantities of stocks submitted by sale orders 130616034 
+ 
+Table 3. The standardized average of return, trading volume, return volatility, spread and depth of 38 shares quoted 
+in the Tunisian stock market during the period of October 2008-June 2009. 
+Time Interval Stand return Stand trading volume Stand return volatility Stand quoted spread Stand depth 
+10:00:00-10:10:00 0.8994 3.8556 6.5690 -0.2669 3.2521 
+10:10:00-10:20:00 -0.3397 0.1709 2.1558 -1.0366 3.0942 
+10:20:00-10:30:00 -0.2573 0.2864 0.7928 -1.9360 2.5917 
+10:30:00-10:40:00 -0.4611 0.2675 -0.1478 -1.5782 2.1298 
+10:40:00-10:50:00 -0.4635 0.5032 0.2974 -1.3097 1.9516 
+10:50:00-11:00:00 -0.5281 0.6226 0.2563 -1.2487 1.5843
+
+0.2864 0.7928 -1.9360 2.5917 
+10:30:00-10:40:00 -0.4611 0.2675 -0.1478 -1.5782 2.1298 
+10:40:00-10:50:00 -0.4635 0.5032 0.2974 -1.3097 1.9516 
+10:50:00-11:00:00 -0.5281 0.6226 0.2563 -1.2487 1.5843 
+11:00:00-11:10:00 -0.2454 0.4679 -0.1482 -0.7586 1.1715 
+11:10:00-11:20:00 -0.4800 0.6026 0.0554 -0.8748 1.0153 
+11:20:00-11:30:00 -0.2340 0.8543 -0.1303 -0.5915 0.8403 
+11:30:00-11:40:00 -0.2640 0.3362 -0.4138 -0.5413 0.1713 
+11:40:00-11:50:00 -0.2174 0.5057 -0.3939 -0.3601 0.2582 
+11:50:00-12:00:00 -0.1775 0.1502 -0.6186 -0.1237 -0.0843 
+12:00:00-12:10:00 -0.2285 -0.1036 -0.7242 0.0330 -0.2031 
+12:10:00-12:20:00 0.1890 -0.8539 -0.9079 -0.0724 -0.9182 
+12:20:00-12:30:00 -0.1872 -1.0989 -1.1878 -0.2090 -0.9698 
+12:30:00-12:40:00 0.0289 -0.9780 -0.7344 0.4608 -1.4721 
+12:40:00-12:50:00 -0.0009 -1.5465 -1.0798 0.6596 -1.4800 
+12:50:00-13:00:00 0.0824 -1.5922 -0.6250 0.6435 -1.7698 
+13:00:00-13:10:00 0.0269 -1.4585 -0.9340 0.5848 -2.0680 
+13:10:00-13:20:00 -0.2196 -1.4928 -0.8808 0.7660 -2.2019 
+13:20:00-13:30:00 0.4064 -1.5666 -0.8513 1.3140 -2.4283 
+13:30:00-13:40:00 0.1778 -1.1224 -0.8307 1.5469 -2.1907 
+13:40:00-13:50:00 0.5659 0.3719 -0.3692 1.8643 -1.5452 
+13:50:00-14:00:00 1.9276 2.8180 0.8515 3.0349 -0.7290
+
+www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 
+ ISSN 1916-971X E-ISSN 1916-9728 174
+Table 4. Estimation of different models of the intraday liquidity, volatility of return and trading activity for the 38 
+stocks quoted in the Tunisian stock market during the period of October 2008-June 2009. 
+ Stand return Stand trading volume Stand retu rn volatility Stand quoted spread Stand depth 
+α଴ Coefficient -0,1086 -0,0295 -0,3392 -0,0671 -0,1215 
+ t-statistic -2,1150** -0,6476 -7,4333* -1,6051 -3,7709* 
+αଵ Coefficient 1,0080 2,0049 3,7102 -0,0698 1,7903 
+ t-statistic 8,7793* 19,6436* 36,3517* -0,7468 24,842* 
+αଶ Coefficient -0,2311 0,1554 1,4455 -0,4648 1,7093 
+ t-statistic -2,0128*** 1,5230 14,1635* -4,9693* 23,7180* 
+αଷ Coefficient -0,1487 0,2134 0,7461 -0,9263 1,4515 
+ t-statistic -1,2950 2,0913** 7,3105* -9,9031* 20,1404* 
+αସ Coefficient -0,3525 0,1725 0,2634 -0,7427 1,2144 
+ t-statistic -3,0702* 1,6904** 2,5810** -7,9403* 16,8511* 
+αହ Coefficient -0,3549 0,2772 0,4919 -0,6049 1,1230 
+ t-statistic -3,0909* 2,7162* 4,8199* -6,4675* 15,5829* 
+α଺ Coefficient -0,4195 0,3980 0,4708 -0,5736 0,9345 
+ t-statistic -3,6540* 3,8995* 4,6130* -6,1328* 12,9673* 
+α଻ Coefficient -0,1368 0,2561 0,2632 -0,3221 0,7227 
+ t-statistic -1,1916 2,5096** 2,5788** -3,4439* 10,0284* 
+α଼ Coefficient -0,3714 0,3108 0,3677 -0,3817 0,6425 
+ t-statistic -3,2347* 3,0454* 3,6030* -4,0814* 8,9162* 
+αଽ Coefficient -0,1254 0,4510 0,2724 -0,2363 0,5527
+
+2,5096** 2,5788** -3,4439* 10,0284* 
+α଼ Coefficient -0,3714 0,3108 0,3677 -0,3817 0,6425 
+ t-statistic -3,2347* 3,0454* 3,6030* -4,0814* 8,9162* 
+αଽ Coefficient -0,1254 0,4510 0,2724 -0,2363 0,5527 
+ t-statistic -1,0924 4,4193* 2,6689** -2,5271* 7,6702* 
+αଵ଴ Coefficient -0,1554 0,1710 0,1269 -0,2106 0,2094 
+ t-statistic -1,3539 1,6761 1,2435 -2,2517** 2,9066* 
+αଵହ Coefficient -0,0786 -0,4973 -0,2702 -0,0401 -0,3761 
+ t-statistic -0,6847 -4,8730* -2,6480** -0,4289 -5,2195* 
+αଵ଺ Coefficient 0,1375 -0,4699 -0,0375 0,3036 -0,6339 
+ t-statistic 1,1980 -4,6047* -0,3682 3,2460* -8,7958* 
+αଵ଻ Coefficient 0,1076 -0,7898 -0,2148 0,4056 -0,6379 
+ t-statistic 0,9378 -7,7384* -2,1048 4,3365* -8,8519* 
+αଵ଼ Coefficient 0,1911 -0,8213 0,0185 0,3974 -0,7866 
+ t-statistic 1,6644 -8,0471* 0,1816 4,2485* -10,915* 
+αଵଽ Coefficient 0,1355 -0,7325 -0,1400 0,3672 -0,9396 
+ t-statistic 1,1805 -7,1770* -1,3719 3,9265* -13,038* 
+αଶ଴ Coefficient -0,1110 -0,7356 -0,1127 0,4602 -1,0084 
+ t-statistic -0,9673 -7,2073* -1,1042 4,9205* -13,992* 
+αଶଵ Coefficient 0,5150 -0,7997 -0,0975 0,7414 -1,1245 
+ t-statistic 4,4860* -7,8358* -0,9559 7,9265* -15,604* 
+αଶଶ Coefficient 0,2864 -0,5607 -0,0870 0,8609 -1,0026 
+ t-statistic 2,4945* -5,4945* -0,8525 9,2041* -13,911* 
+αଶଷ Coefficient 0,6745 0,2119 0,1497 1,0238 -0,6714 
+ t-statistic 5,8746* 2,0762** 1,4675 10,9456* -9,3160* 
+αଶସ Coefficient 2,0362 1,4940 0,7762 1,6245 -0,2526 
+ t-statistic 17,733* 14,6381* 7,6056* 17,3673* -3,5049*
+
+745 0,2119 0,1497 1,0238 -0,6714 
+ t-statistic 5,8746* 2,0762** 1,4675 10,9456* -9,3160* 
+αଶସ Coefficient 2,0362 1,4940 0,7762 1,6245 -0,2526 
+ t-statistic 17,733* 14,6381* 7,6056* 17,3673* -3,5049* 
+Notes: *** 10% significance level, ** 5% significance level, * 1% significance level
+
+www.ccsen
+Published b
+Table 5. M
+ 
+All intervals 
+The first three
+intervals 
+The eighteen 
+intervals with
+trading day 
+The last three
+intervals 
+ 
+ 
+ 
+Figure 
+Figure 
+ 
+net.org/ijef 
+by Canadian Cen
+Matrix of uncon
+V
+Stand re
+Stand tra
+Stand re
+Stand qu
+Stand de
+e 
+Stand re
+Stand tra
+Stand re
+Stand qu
+Stand de
+in the 
+Stand re
+Stand tra
+Stand re
+Stand qu
+Stand de
+e 
+Stand re
+Stand tra
+Stand re
+Stand qu
+Stand de
+1. Evolution o
+3. Evolution o
+ I n t
+nter of Science a
+nditional corre
+ariables 
+turn 
+ading volume 
+turn volatility 
+uoted spread 
+epth 
+turn 
+ading volume 
+turn volatility 
+uoted spread 
+epth 
+turn 
+ading volume 
+turn volatility 
+uoted spread 
+epth 
+turn 
+ading volume 
+turn volatility 
+uoted spread 
+epth 
+of intraday stan
+ 
+of intraday stan
+volatility 
+ternational Journ
+and Education
+elation between
+Stand 
+return 
+Stan
+1.0000 
+ 
+ 
+ 
+ 
+1.0000 
+ 
+ 
+ 
+ 
+1.0000 
+ 
+ 
+ 
+ 
+1.0000 
+ 
+ 
+ 
+ 
+ndardized retu
+ndardized retu
+nal of Economic
+n all variables
+nd trading volume
+0.4129 
+1.0000 
+ 
+ 
+ 
+0.9994 
+1.0000 
+ 
+ 
+ 
+-0.7616 
+1.0000 
+ 
+ 
+ 
+0.9851 
+1.0000 
+ 
+ 
+ 
+urn Fig
+urn Fi
+cs and Finance 
+Stand retur
+volatility
+0.3247
+0.7821
+1.0000
+ 
+ 
+0.9590
+0.9675
+1.0000
+ 
+ 
+-0.7346
+0.8342
+1.0000
+ 
+ 
+0.9984
+0.9932
+1.0000
+ 
+ 
+gure 2. Evoluti
+igure 4. Evolut
+ 
+rn Stan d
+spr
+0.7
+-0.
+-0.
+1.
+0
+0.8
+0.8
+0.9
+1.0
+0.8
+-0.
+-0.
+1.
+0
+0.9
+0.9
+0.9
+1.0
+ion of intraday
+ 
+tion of intraday
+V ol. 4, No. 5; M
+d quoted 
+read 
+Stan
+7775 - 0
+1145 0
+1937 0
+0000 - 0
+ 1
+8092 0
+8275 0
+9425 0
+0000 0
+ 1
+8534 - 0
+8609 0
+
+.8
+0.9
+1.0
+0.8
+-0.
+-0.
+1.
+0
+0.9
+0.9
+0.9
+1.0
+ion of intraday
+ 
+tion of intraday
+V ol. 4, No. 5; M
+d quoted 
+read 
+Stan
+7775 - 0
+1145 0
+1937 0
+0000 - 0
+ 1
+8092 0
+8275 0
+9425 0
+0000 0
+ 1
+8534 - 0
+8609 0
+8088 0
+0000 - 0
+ 1
+9999 0
+9836 0
+9979 0
+0000 0
+ 1
+y standardized 
+y standardized
+May 2012 
+175
+nd depth
+0.2703 
+.6688 
+.6760 
+0.7604 
+.0000 
+.6404 
+.6646 
+.8317 
+.9694 
+.0000 
+0.8314 
+.9166 
+.8685 
+0.9716 
+.0000 
+.9704 
+.9974 
+.9824 
+.9683 
+.0000 
+trading volum
+d quoted spread
+me 
+d
+
+Fugu
+Fi
+F
+www.ccsenet.or
+176
+ure 5. Evolution
+igure 7. The tr
+Figure 9. The q
+ 
+ 
+ 
+rg/i j e f 
+ 
+n of intraday s
+rading volume 
+ 
+quoted spread 
+ 
+ I n t e r n a
+ 
+standardized de
+spectrum obta
+spectrum obta
+ 
+ational Journal o
+ 
+epth at best lim
+ained by FFT
+ined by FFT
+of Economics an
+ 
+mit
+F
+Figur
+ 
+F
+nd Finance 
+ 
+Figure 6. The r
+re 8. The return
+Figure 10. The 
+ V o l
+ ISSN 1916-971X
+return spectrum
+n volatility spe
+ 
+depth spectru
+ 
+l. 4, No. 5; May 
+X E-ISSN 191 6
+m obtained by 
+ectrum obtaine
+um obtained by
+2012 
+6-9728 
+ 
+FFT 
+ 
+ed by FFT 
+ 
+y FFT

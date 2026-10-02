@@ -1,0 +1,2990 @@
+TSpace Research Repository tspace.library.utoronto.ca 
+ 
+ 
+Time-Varying Crash Risk Embedded in 
+Index Options: The Role of Stock Market 
+Liquidity 
+ 
+Peter Christoffersen, Bruno Feunou, Yoontae Jeon & Chayawat 
+Ornthanalai 
+ 
+Version Accepted Manuscript 
+ 
+Citation 
+(published version) 
+Christoffersen, P., Feunou, B., Jeon, Y., & Ornthanalai, C. (2021). 
+Time-varying crash risk embedded in index options: The role of stock 
+market liquidity. Review of Finance, 25(4), 1261-1298. 
+ 
+ 
+ 
+DOI https://doi.org/10.1093/rof/rfaa040 
+ 
+ 
+ 
+Publisher’s Statement This article has been accepted for publication in the Review of Finance. 
+Published by Oxford University Press. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+How to cite TSpace items 
+ 
+Always cite the published version, so the author(s) will receive recognition through services that track 
+citation counts, e.g. Scopus. If you need to cite the page number of the author manuscript from TSpace 
+because you cannot access the published version, then cite the TSpace version in addition to the published 
+version using the permanent URI (handle) found on the record page. 
+ 
+This article was made openly accessible by U of T Faculty. 
+Please tell us how this access benefits you. Your story matters.
+
+Time-Varying Crash Risk Embedded in Index Options:
+The Role of Stock Market Liquidity *
+Peter Christoﬀersen Bruno Feunou Yoontae Jeon
+Chayawat Ornthanalai
+Abstract
+We estimate a continuous-time model with dynamic crash probability using the S&P500
+index options and high-frequency information. We ﬁnd that market illiquidity is an im-
+portant factor in explaining the time-varying stock market crash risk embedded in index
+options. While market illiquidity and return volatility play complementary roles in ex-
+plaining the time-varying crash risk, the relative contribution of the volatility factor is
+weakened once we include market illiquidity as an economic variable. Examining the link
+between market illiquidity and option-implied crash risk, we ﬁnd that the availability of
+arbitrage capital and adverse selection facing liquidity providers are economic driving
+forces.
+JEL Classiﬁcation: G01, G12
+Keywords: Market liquidity; Crash risk; Jump intensity; Options; Filtering
+* For helpful comments, we thank Torben Andersen, Sabrina Buti, Liya Chu, Genevi` eve Gauthier, Can-
+lin Li, Tom McCurdy, Andreas Park, Ishita Sen, Fabio Trojani, Miaomiao Yu, and Irina Zviadadze. This
+paper has beneﬁted from comments by conference and seminar participants at the AFA, Bank of Canada,
+CICF, ESSEC, IFSID, LBS Trans-Atlantic Doctoral Conference, NFA, NUS Risk Management Conference,
+NYU Volatility & Derivatives Conference, SOFIE Conference, Rotman School of Management, Santiago Fi-
+
+,
+CICF, ESSEC, IFSID, LBS Trans-Atlantic Doctoral Conference, NFA, NUS Risk Management Conference,
+NYU Volatility & Derivatives Conference, SOFIE Conference, Rotman School of Management, Santiago Fi-
+nance Workshop, and University of Geneva. We would like to thank the Bank of Canada, the Global Risk
+Institute (GRI), the Montreal Institute of Structured Finance and Derivatives (IFSID), and the Social Sci-
+ences and Humanities Research Council (SSHRC) for ﬁnancial support. Peter Christoﬀersen and Chayawat
+Ornthanalai are aﬃliated with the Rotman School of Management, University of Toronto, 105 St. George
+Street, Toronto, ON, Canada, M5S 3E6. Bruno Feunou is aﬃliated with the Bank of Canada, 234 Welling-
+ton Street, Ottawa, ON, K1A 0G9. Yoontae Jeon is aﬃliated with the Ted Rogers School of Management,
+Ryerson University, 55 Dundas Street West, Toronto, ON, Canada, M5G 2C3. Feunou can be reached at
+feun@bankofcanada.ca. Jeon can be reached at yoontae.jeon@ryerson.ca. Ornthanalai can be reached
+at chay.ornthanalai@rotman.utoronto.ca. We are responsible for any inadequacies. Please send your
+correspondence to Chayawat Ornthanalai.
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+1 Introduction
+Market liquidity, deﬁned as the ease with which securities can be bought or sold without
+signiﬁcant price impact, has become an increasing concern in ﬁnancial markets. 1 We ask:
+What is the impact of market liquidity on the volatility and crash probability of the aggregate
+stock market? To answer this question, we estimate a continuous-time model with stochastic
+volatility and dynamic crash probability. The innovation of our model is the introduction of
+market illiquidity as an economic factor driving the dynamics of volatility and jump intensity.
+We measure daily market illiquidity (i.e., lack of market liquidity) as the average eﬀective
+bid-ask spreads of securities constituting the S&P500 index estimated from high-frequency
+trades. This measure is motivated by Goyenko, Holden, and Trzcinka (2009) and can be
+thought of as the average cost of a round-trip trade for stocks in the index. We estimate
+the model during 2003–2016 using daily S&P500 index options, realized spot variance, and
+market illiquidity, and ﬁnd that three-quarter of the time-varying crash probability is related
+to the stock market’s exposure to market illiquidity.
+While there exists some empirical evidence suggesting that crashes in the stock market are
+often driven by market illiquidity, they are typically anecdotal (e.g., “ﬂash crash”) or limited
+to individual stocks.2 This calls into question the economic role of stock market liquidity in the
+dynamic of aggregate stock market.
+
+dity, they are typically anecdotal (e.g., “ﬂash crash”) or limited
+to individual stocks.2 This calls into question the economic role of stock market liquidity in the
+dynamic of aggregate stock market. In relation to this, there is an extensive literature on index
+return models which unanimously agrees that index prices “jump,” where crashes are referred
+to as large negative jumps in index returns that cannot be explained by the current level of
+index return volatility.3 Several studies have advocated that the probability of crashes is time-
+varying and model their arrival rate using as a latent state variable.The common approach is
+to let the jump arrival rate increase with the level of the stock return variance. Although this
+1Chung and Chuwonganant (2014) ﬁnd that regulatory changes in the US market have increased the role of
+non-bank traders in liquidity provision, intensifying the relationship between volatility and market liquidity.
+2Jiang and Yao (2013) ﬁnd that illiquid stocks have higher daily jump returns in the cross-section, and
+Brogaard, Li, and Xia (2016) show that enhanced stock liquidity decreases the ﬁrm’s default risk.
+3For instance, Pan (2002), Maheu and McCurdy (2004), Bates (2006), and Bakshi, Carr, and Wu (2008).
+1
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+modeling approach is parsimonious, it is at odds with the notion that crashes are sudden price
+drops unexplainable by the current volatility level. 4 Importantly, while recent studies agree
+that crash risk is time-varying, they are less explicit on the economic variables driving its
+dynamic. Our study contributes by providing economic underpinnings to models with time-
+varying crash risk, and showing that much of the variation in jump intensity can be explained
+by market trading frictions.
+To motivate our subsequent modeling framework, we apply a predictive regression analysis
+linking our market illiquidity measure to a risk-neutral skewness estimated non-parametrically
+from index option prices. A more negative risk-neutral skewness would imply that the market
+expects a higher probability of large negative returns. We ﬁnd that the risk-neutral skew-
+ness signiﬁcantly becomes more negative with an increase in the level of market illiquidity.
+Importantly, the eﬀect of market illiquidity crowds out the eﬀect of realized diﬀusive vari-
+ance estimated non-parametrically from intraday index returns, suggesting that stock market
+illiquidity is the more robust variable that explains the crash probability embedded in the
+index option prices. We conﬁrm this ﬁnding by running similar daily time-series regressions
+on realized skewness and realized jump variation measures estimated from intra-day returns.
+
+embedded in the
+index option prices. We conﬁrm this ﬁnding by running similar daily time-series regressions
+on realized skewness and realized jump variation measures estimated from intra-day returns.
+In either case, we obtain similar conclusions conﬁrming the robust linkage between market
+illiquidity and crash risk.
+Armed with the evidence above, we estimate a continuous-time model similar to the
+stochastic volatility with jump model (SVJ) studied by Pan (2002) and Bates (2006), among
+others. In this model, the jump arrival rate is aﬃne in return variance. We extend this frame-
+work by letting the time-varying jump intensity dynamic be a function of return variance,
+market illiquidity, and a latent state variable. We estimate the model by extracting informa-
+tion embedded in index options and high-frequency intraday trades. We use the unscented
+4Santa-Clara and Yan (2010) is a notable exception, as they model the jump intensity as a quadratic
+function of state variables. In an aﬃne framework, Andersen, Benzoni, and Lund (2002) and Andersen,
+Fusari, and Todorov (2016) ﬁnd a statistically weak relationship between crash intensity and spot variance.
+2
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Kalman ﬁlter (UKF) to extract daily state variables. This ﬁltering method allows for sequen-
+tial learning in the dynamics of latent jump intensity, variance, and illiquidity processes.
+We refer to the most general model that we study as the stochastic jump with variance
+and illiquidity (SJVI). In this model, the jump intensity dynamic is stochastic and aﬃne in
+the spot variance, the market illiquidity level, and the latent jump-intensity-speciﬁc variable
+designed to capture the omitted risk factor. For comparisons, we estimate two other bench-
+mark models with jump intensity dynamics that are unrelated to the market illiquidity level.
+In all speciﬁcations, we jointly model the spot variance and the market illiquidity as a two-
+factor square-root process. This allows for market illiquidity to impact the spot variance, and
+vice versa. Our estimation results show a strong contemporaneous relationship between the
+spot variance and market illiquidity, which lends support to previous studies that have doc-
+umented a positive relationship between return volatility and trading activity (e.g., Schwert,
+1989; Lamoureux and Lastrapes, 1990; Chae, 2005).
+We ﬁnd that the average jump probability is between 1 and 2.5 per year. When a jump
+occurs, its average size is between−3.1% and−5.4% in daily return units. We ﬁnd strong evi-
+dence that during our sample period, crash risk in the S&P500 index mostly reﬂects investors’
+fear of market illiquidity.
+
+verage size is between−3.1% and−5.4% in daily return units. We ﬁnd strong evi-
+dence that during our sample period, crash risk in the S&P500 index mostly reﬂects investors’
+fear of market illiquidity. We arrive at this conclusion by examining the contribution of mar-
+ket illiquidity to the jump intensity dynamic in the new model and ﬁnd a contemporaneous
+positive relationship with a strong statistical signiﬁcance. On the other hand, the contribu-
+tion of spot variance is modest and substantially decreases when we add market illiquidity as
+an economic covariate in the jump intensity dynamic. This ﬁnding supports our preliminary
+evidence found using regression analysis.
+The relative importance of market illiquidity and market volatility varies across times. We
+ﬁnd that shocks to stock market illiquidity are related to crashes that appear during normal
+times, i.e., “out-of-the-blue,” while shocks to the volatility factor are related to crashes that
+appear during business-cycle downturns. In terms of economic magnitudes, we ﬁnd that
+3
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+market illiquidity explains about three-quarter of the S&P500 index’s crash probability level
+during our sample (77% on average). On the contrary, the contribution of market spot variance
+to the jump intensity dynamic is only about 13%, with the remaining 10% coming from the
+latent jump-intensity-speciﬁc factor. However, during the 12-month period after the Lehman
+Brothers’ collapse in 2008, the market spot variance dominates other factors in explaining the
+time-varying crash probability, with the contribution as high as 70%. We arrive at a similar
+result when looking at how much of the unexpected daily changes in jump intensity can be
+explained by shocks to the market illiquidity and the market spot variance.
+Our results raise important questions regarding the strong connection between market
+illiquidity and time-varying crash risk embedded in index options: What are the economic
+forces leading to the lack of market liquidity which we measure using the aggregate bid-ask
+spread of the stock market? Relatedly, how are these economic drivers related to the time-
+varying crash risk that we infer from index options prices? To answer these questions, we
+draw on intuition from market microstructure theories and examine variables that have been
+shown to signiﬁcantly aﬀect security bid-ask spreads.
+We use a vector autoregressive (VAR) model to identify the economic drivers that pre-
+dict market illiquidity. This approach helps control for endogenous lead-lag eﬀects between
+
+rity bid-ask spreads.
+We use a vector autoregressive (VAR) model to identify the economic drivers that pre-
+dict market illiquidity. This approach helps control for endogenous lead-lag eﬀects between
+potential explanatory variables. We ﬁnd that two variables stand out. The ﬁrst is the noise
+measure of Hu, Pan, and Wang (2013), which is calculated based on errors from ﬁtting U.S.
+Treasury yield curves. This variable is linked to the amount of arbitrage capital available in
+the ﬁnancial markets, which aﬀects the cost of liquidity provisions (Brunnermeier and Peder-
+sen, 2009). The U.S. Treasury market is centrally important to all investors, and intuitively,
+the shortage of arbitrage capital would lead Treasury yields to deviate more freely from the
+curve, resulting in more noise in prices.
+The abnormal order ﬂow observed in the S&P500 E-mini futures contract is the second
+variable that strongly predicts the level of market illiquidity. The E-mini futures market is
+4
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+highly liquid and trades nearly around the clock, enabling it to serve as a competitive venue for
+investors, speculators, and market makers to trade their exposures to the stock market index.
+An imbalance in either direction of trade could alarm liquidity providers that the market is
+dominated by informed traders. 5 As a result, adverse selection arises as the primary concern
+of liquidity providers thereby pressuring them to aggressively widen their quotes (Glosten and
+Milgrom, 1985).
+We show that daily changes in the above two economic variables: the noise measure of
+Hu, Pan, and Wang (2013), and the abnormal order ﬂow in the E-mini futures contract,
+negatively aﬀect the risk-neutral skewness implied by index options prices. For the noise
+measure, our ﬁnding suggests that when liquidity providers face funding constraints, they
+are less willing to deploy arbitrage capital to help keep the relative price of out-of-the-money
+(OTM) put options in line with fundamentals. This makes the price of OTM put options
+relatively more expensive resulting in a more negative option-implied risk-neutral skewness
+which signals a higher probability of crash risk. As for the adverse selection cost, we ﬁnd that
+only the change in sell order ﬂows (i.e., more excessive selling) in the E-mini futures contract
+negatively aﬀects option-implied risk-neutral skewness. This ﬁnding indicates that excessive
+sell order ﬂows raise liquidity providers’ concern that they are trading against investors with
+
+s contract
+negatively aﬀects option-implied risk-neutral skewness. This ﬁnding indicates that excessive
+sell order ﬂows raise liquidity providers’ concern that they are trading against investors with
+informed negative information about the stock market. In response, liquidity providers raise
+their OTM put option quotes in order the reﬂect the cost of providing insurance against a
+potential drop in the index level, leading to a more negative risk-neutral skewness implied by
+index options.
+We verify that our main conclusions hold using various robustness checks. For instance,
+we re-estimate our models using alternative market illiquidity measures including Amihud
+(2002), and the relative eﬀective spreads of S&P500 E-mini futures contract and reach the
+same conclusion.
+5As discussed in the CFTC-SEC Report (2010), the ﬂash crash on May 6, 2010 is widely believed to have
+been precipitated by a large sell order in the E-mini contract.
+5
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+The rest of this paper proceeds as follows. Section 2 describes the data and sample
+selection, and reports preliminary evidence found using regression analyses. Section 3 describes
+the model and estimation procedure. Section 4 discusses estimation results and interpretation
+of our ﬁndings. Section 5 discusses the economic connection between market illiquidity and
+crash risk. Finally, Section 6 concludes.
+2 Data and Preliminary Evidence
+Our sample period goes from January 1, 2003 through April 26, 2016. The decimalization of
+trading at the NYSE began in 2001, which caused a structural shift in stock bid-ask spreads.
+We start our sample in 2003 to allow this regulation change to take full eﬀect.
+2.1 Market Illiquidity
+We construct a time-series measure of market illiquidity at the daily level. We focus on the
+trading friction associated with the cost of participating in the stock market. We measure
+this using eﬀective bid-ask spreads following Goyenko, Holden, and Trzcinka (2009), who ﬁnd
+strong empirical support for using eﬀective bid-ask spreads as a measure of market illiquidity.
+We obtain all transactions recorded on securities constituting the S&P500 index from the
+TAQ database. Then, for each stock i on day t, we calculate the eﬀective spread of its kth
+trade as
+ILQi
+t,k = 2|Si,P
+t,k−Si,M
+t,k|
+Si,M
+t,k
+, (1)
+where Si,P
+t,k is the price of the kth trade of stock i on day t, and Si,M
+t,k is the midpoint of the
+best prevailing bid and ask at the time of the kth trade.
+
+,k = 2|Si,P
+t,k−Si,M
+t,k|
+Si,M
+t,k
+, (1)
+where Si,P
+t,k is the price of the kth trade of stock i on day t, and Si,M
+t,k is the midpoint of the
+best prevailing bid and ask at the time of the kth trade. The daily eﬀective spread of stock
+i on day t is then computed as the dollar-volume weighted average eﬀective spread across all
+6
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+trades during the day 6
+ILQi
+t =
+∑K
+k=1DolVol i
+t,kILQi
+t,k
+∑K
+k=1DolVol i
+t,k
+. (2)
+Lastly, the daily stock market illiquidity measure is the equal-weighted average of the daily
+eﬀective spreads of ﬁrms constituting the S&P500 index: ILQt = 1
+N
+∑N
+i=1ILQi
+t. This is
+approximately equal to the ﬁrst principal component of a given stock illiquidity panel but
+avoids principal component complications arising from unbalanced panels when ﬁrms are
+added or dropped from the S&P500 index. As a robustness check, we also veriﬁed that our
+main results remain virtually similar using the value-weighted average.
+Daily S&P500 cash index returns are plotted in the top panel of Figure 1, while the middle
+panel plots the daily time series of market illiquidity, ILQ. We plot the market illiquidity
+measure by scaling their daily levels by 252, which converts it to annualized terms. The mean
+annualized ILQ measure is 15.91% or equivalently 0 .063% at the daily level. This implies
+that a strategy that involves daily round-trip trades of S&P500 stocks would lose, on average,
+15.91% to bid-ask transaction costs per year. The standard deviation of the annualized market
+illiquidity is 5.96% with an interquartile range of 12.36% and 17.48%. We see that the market
+illiquidity measure rises signiﬁcantly during the sub-prime crisis period but stays relatively
+stable in other periods with occasional spikes.
+2.2 Market Illiquidity and Crash Risk
+
+ee that the market
+illiquidity measure rises signiﬁcantly during the sub-prime crisis period but stays relatively
+stable in other periods with occasional spikes.
+2.2 Market Illiquidity and Crash Risk
+In this section, we provide evidence linking the role of market illiquidity to crash risk embedded
+in index options. If market illiquidity is strongly linked to stock market crash risk, we expect
+ILQt to be negatively related to stock market skewness. We follow the nonparametric method
+6Figure A.1 in the Appendix shows percentiles of daily dollar eﬀective spread distribution for the S&P500
+constituents. For the majority of ﬁrms, their trading cost measured by the dollar eﬀective spread is well above
+one cent, which is the minimum tick size set by the exchanges. This ﬁnding suggests that the eﬀective spread
+measure that we use is not strongly aﬀected by the minimum tick-size rule.
+7
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+developed by Bakshi and Madan (2000) and calculate daily option-implied skewness from S&P
+500 index options. We refer to this measure as risk-neutral skewness, RNSkew. We obtained
+end-of-day S&P500 index option prices from OptionMetrics.RNSkew is calculated from option
+contracts with approximately one month to maturity. Therefore, the measure RNSkewt on
+dayt that we use represents a proxy for investors’ forward-looking risk-neutral expectation of
+stock market crash risk from the end of dayt to dayt+30. We discuss details on the skewness
+measure in Appendix A.
+We examine the impact of market illiquidity on risk-neutral stock market skewness using
+the following regression model:
+∆RNSkewt = β1∆MinRVt +β2∆ILQt +
+p∑
+i=1
+αi∆RNSkewt−i +
+q∑
+j=1
+δjϵt−j +ϵt, (3)
+where ∆ indicates that we are examining the change in daily variables, and ϵt is a normally
+distributed error term. We estimate the model on changes in daily skewness and not on levels
+because RNSkewt is highly persistent with a ﬁrst-order autocorrelation of 0 .98.
+Existing models for index options with time-varying jump intensity often assume that the
+jump arrival is aﬃne in the diﬀusive variance of index return, which allows for the likelihood
+of crashes to increase with the level of stock market volatility. We control for the impact
+of diﬀusive variation in daily index returns using MinRV, which is the jump-robust realized
+variance measure of Andersen, Dobrev, and Schaumburg (2012). It is calculated using one-
+
+rol for the impact
+of diﬀusive variation in daily index returns using MinRV, which is the jump-robust realized
+variance measure of Andersen, Dobrev, and Schaumburg (2012). It is calculated using one-
+minute intraday S&P500 cash index returns obtained from TickData as follows:
+MinRV N
+t = π
+π− 2( N
+N− 1)
+N−1∑
+i=1
+min(|ri,t|,|ri+1,t|)2. (4)
+ri,t for i = 1...N = 450 the one-minute intraday return on day t.
+The regression shown in equation (3) is an autoregressive-moving-average model (ARMA)
+with p-order lags in the autoregressive term and q-order lags in the error term. Although
+8
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+not shown in equation (3), we include daily index returns Return, and day-of-the-week ﬁxed
+eﬀects as control variables. We estimate the model using maximum likelihood.
+Table 1 reports estimation results for four regression speciﬁcations based on the general
+model in equation (3). We choose the ARMA model with p = 2 lags in the autoregressive
+term and q = 1 in the error term. The number of lags is determined by the Ljung-Box test
+corresponding to the most parsimonious model that suﬃciently removes autocorrelation in
+the residuals. Column (1) provides the baseline regression results. It shows that the change
+in risk-neutral skewness is negatively related to the index return and is strongly explained by
+its autoregressive terms. Columns (2) and (3) show that when ∆MinRV and ∆ILQ are sepa-
+rately included in the regression, they load negatively on the change in risk-neutral skewness.
+However, ∆ILQ is the only statistically signiﬁcant variable. The negative and highly signif-
+icant coeﬃcient on ∆ILQ suggests that when the average trading cost in the stock market
+increases, investors’ expectation of market crash risk also increases.
+Column 4 reports results for the full regression model. We observe two striking ﬁndings.
+First, the coeﬃcient on ∆ MinRV switches sign from negative to positive and is signiﬁcant
+at the 10% level. Second, the coeﬃcient on ∆ ILQ remains negative and signiﬁcant but
+substantially increases in terms of magnitude.
+
+on ∆ MinRV switches sign from negative to positive and is signiﬁcant
+at the 10% level. Second, the coeﬃcient on ∆ ILQ remains negative and signiﬁcant but
+substantially increases in terms of magnitude. These results suggest that an increase in ILQ
+are robustly related with a higher probability of stock market risk-neutral skewness, i.e., crash
+risk. The positive coeﬃcient on ∆MinRV , however, shows that an increasing market variance
+is related to a less negatively skewed risk-neutral distribution of daily index returns. As a
+robustness check, we verify this result by replacingMinRV with the total quadratic variation
+(RV ) calculated as the sum of squared one-minute log returns in Table 1 and obtain the same
+conclusion.
+While the results in Table 1 is based on the risk-neutral skewness of the stock market
+implicit in index options, we reach the same conclusion when using the realized skewness
+as well as the realized jump variation constructed from one-minute intraday returns of the
+9
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+S&P500 cash index. To save space, these results are reported in Tables IA.1 and IA.2 of the
+Internet Appendix. Motivated by this model-free evidence, we now develop a continuous-time
+model that allows market illiquidity to act as an economic covariate in explaining time-varying
+volatility and crash risk.
+3 Model and Estimation
+3.1 The SJVI Model
+We begin by specifying the processes governing the log index price, spot variance, spot illiq-
+uidity, and the latent component of jump intensity dynamic under the risk-neutral measure
+(Q). We use St andVt to denote index price and spot variance at time t. We let Lt represent
+the spot market illiquidity, which measures the average cost of trading in the stock market at
+timet, with a higher value indicating a more illiquid market. We include a stochastic process
+Ψt that is designed to capture the latent time-varying jump intensity in index returns. Thus,
+the model consists of four factors that fully describe the return dynamics under Q:
+d log(St) = ( r− 1
+2Vt−µλt)dt +
+√
+Vt(
+√
+1−ρ2dW 1
+t +ρdW 2
+t ) +qtdNt (5)
+[dVt
+dLt
+]
+=
+[ 1 αL
+αV 1
+][
+κV (θV−Vt)dt +ξV
+√VtdW 2
+t
+κL(θL−Lt)dt +ξL
+√LtdW 3
+t
+]
+(6)
+dΨt = κΨ(θΨ− Ψt)dt +ξΨ
+√
+ΨtdW 4
+t, (7)
+wherer denotes the risk-free rate and all Brownian motions dWi
+t , for i = 1 to 4, are indepen-
+dent of each other.
+We assume the latent jump intensity process Ψt in equation (7) follows the standard square-
+root model with long-run mean levels of θΨ. The dynamics of the variance and illiquidity
+
+ent of each other.
+We assume the latent jump intensity process Ψt in equation (7) follows the standard square-
+root model with long-run mean levels of θΨ. The dynamics of the variance and illiquidity
+factors in equation (6) follow extended bivariate Heston (1993) square-root processes that
+each mean-revert to long-term means ofθV andθL. Note that special case where αV =αL = 0
+10
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+corresponds to two independent square-root processes. 7
+The log index price dynamic described in equation (5) follows a standard jump-diﬀusion
+process where qtdNt denotes the jump component. Following the extant literature on index
+return models, we assume that jumps follow a compound Poisson process with intensity λt
+and each individual jump is independent and identically distributed (i.i.d.) normal with the
+jump mean size θ and the jump size standard deviation δ. To ensure the discounted stock
+price is a martingale, we include the jump compensation term µ = e(θ+δ2
+2 )− 1 in equation
+(5). Lastly, to complete the model, we specify the dynamic of the time-varying jump intensity
+λt as follows:
+SJVI model: λt = Ψt +γVVt +γLLt. (8)
+This jump intensity speciﬁcation is motivated by numerical tractability and ease of economic
+interpretation. Equation (8) shows that the time-varying jump arrival rate is determined
+jointly by the levels of spot variance Vt, spot market illiquidity Lt, and state variable Ψ t.
+The latent state variable Ψt is designed to capture the portion of jump intensity dynamic not
+explained by the covariatesVt andLt. For the remainder of the paper, we refer to this general
+speciﬁcation as the SJVI model.
+Equation (6) shows that the evolution of the spot variance depends on its own mean-
+reverting drift, the diﬀusive component, and the market illiquidity process Lt. This spec-
+
+ation as the SJVI model.
+Equation (6) shows that the evolution of the spot variance depends on its own mean-
+reverting drift, the diﬀusive component, and the market illiquidity process Lt. This spec-
+iﬁcation allows for changes in the market spot variance Vt and market illiquidity Lt to be
+contemporaneously related, which is supported by Lamoureux and Lastrapes (1990) who ﬁnd
+that daily trading volume signiﬁcantly explains daily return variance.
+We also note that the variance dynamic that we consider in equation (6) falls under the
+class of two-factor stochastic volatility models, which have been shown to eﬀectively explain
+7Our main conclusions are unaﬀected when estimating a simpler model without feedbacks between the spot
+variance and spot illiquidity, i.e., αV =αL = 0 in equation (6).
+11
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+the term structure of index option prices. 8 Our model diﬀers from the existing two-factor
+volatility literature in that we allow the expected future variance to depend both on the level
+of spot variance, Vt, and spot market illiquidity, Lt.
+It can be shown that the long-run mean of the spot variance and spot illiquidity are still
+given by θV and θL, respectively. Notice that the special case where αL is equal to 0 reduces
+to the Heston (1993) model. The current level of market illiquidity aﬀects the shape of the
+expected term structure of variance as long as αL is diﬀerent than 0, but its impact dissipates
+as the time horizon increases.
+3.2 Benchmark Models
+We consider two nested speciﬁcations of the SJVI model. In the ﬁrst speciﬁcation, we shut
+down the illiquidity channel in the time-varying jump intensity dynamic by setting γL = 0 in
+equation (8). As the result, the probability of observing jumps depends on the level of spot
+variance and the latent state component as follows:
+SJV model: λt = Ψt +γVVt. (9)
+We refer to this as the stochastic jump intensity with variance (SJV) model. When Ψ t is
+constant, it nests the aﬃne jump intensity dynamic, λt = γ0 +γVVt, commonly adopted in
+time-varying jump studies (e.g., Pan, 2002; Bates, 2006).
+The second nested speciﬁcation shuts oﬀ the impact of both market illiquidity and the
+spot variance on the jump probability. That is, we set γV and γL equal to zero in equation
+(8). This yields
+SJ model: λt = Ψt, (10)
+
+speciﬁcation shuts oﬀ the impact of both market illiquidity and the
+spot variance on the jump probability. That is, we set γV and γL equal to zero in equation
+(8). This yields
+SJ model: λt = Ψt, (10)
+8See for examples, Egloﬀ, Leippold, and Wu (2010), and Andersen, Fusari, and Todorov (2015b).
+12
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+We refer to this as the stochastic jump intensity model (SJ). We keep all other aspects of the
+three models that we study identical. This allows us to focus solely on the role of market
+illiquidity and spot variance in assessing time-varying jump risk.
+3.3 Filtering State Variables
+Each of the three models we study contains three latent state variables: Vt, Lt, and Ψt. We
+extract the latent state variables using the square-root unscented Kalman ﬁlter (UKF) of
+Van der Merwe and Wan (2001). We apply the UKF method because the option prices data
+that we ﬁt the models to are non-linear in the state variables.
+The state variables in the ﬁltering equations evolve under the physical probability ( P)
+measure. We therefore need to deﬁne the state variables’ dynamic under the physical measure.
+We apply the commonly used functional form of the price of variance risk to the spot variance
+process, which is given by νV
+√Vt as in Heston (1993). This price of risk speciﬁcation shifts a
+Brownian shock in equation (6) by dW 2,P
+t =dW 2
+t−νV
+√Vtdt, where the superscript P denotes
+that it is evaluated under the physical probability measure. We do not impose risk premiums
+on the Lt and Ψt processes for simplicity and also because the literature has not yet provided
+clear guidance on how to model their risk premiums. As a result, there is no change to these
+two processes from Q to P.
+Applying this transformation, the resulting joint dynamics of variance and illiquidity under
+P can be written as
+
+eir risk premiums. As a result, there is no change to these
+two processes from Q to P.
+Applying this transformation, the resulting joint dynamics of variance and illiquidity under
+P can be written as
+[dVt
+dLt
+]
+=
+[ 1 αL
+αV 1
+][
+κP
+V (θP
+V−Vt)dt +ξV
+√VtdW 2,P
+t
+κL(θL−Lt)dt +ξL
+√LtdW 3
+t
+]
+(11)
+where we have the following parameter mappings κP
+V =κV−νVξV and θP
+V =θVκV/κP
+V .
+We discretize the P-measure state dynamics using the conventional Euler scheme at the
+13
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+daily interval. The discretized state-space system can be written as follows:
+Vt+1 = Vt +κP
+V (θP
+V−Vt)∆t +αLκL(θL−Lt)∆t +ξV
+√
+∆tVtϵ1
+t+1 +αLξL
+√
+∆tLtϵ2
+t+1 (12)
+Lt+1 = Lt +αVκP
+V (θP
+V−Vt)∆t +κL(θL−Lt)∆t +αVξV
+√
+∆tVtϵ1
+t+1 +ξL
+√
+∆tLtϵ2
+t+1(13)
+Ψt+1 = Ψ t +κΨ(θΨ− Ψt)∆t +ξΨ
+√
+∆tΨtϵ3
+t+1, (14)
+where the error terms ϵi
+t+1, for i = 1 to 3, are i.i.d. standard normal. In the above state-space
+system, we set the time step ∆ t = 1/252 to reﬂect the daily discretization interval. To keep
+notation to a minimum, we apply the superscript P only to parameters under the physical
+measure that diﬀer in values from their corresponding risk-neutral parameters.
+We next describe the functional relationships linking the latent state variables to the
+observed data used in the estimation. The ﬁrst observable is the illiquidity measure denoted
+by ILQt, which we introduced earlier in Section 2. The other observables that we use are
+daily at-the-money (ATM) and out-of-the-money (OTM) S&P 500 index options. These three
+sets of observables are used in the measurement equations in the UKF procedure. We write
+the system of measurement equations as follows:
+log(ILQt+1) = log( Et[
+∫ t+1
+t
+Lsds]) +u1
+t+1 (15)
+ATM O
+t+1 = ATM M
+t+1(Vt+1,Lt+1, Ψt+1) +u2
+t+1 (16)
+OTM O
+t+1 = OTM M
+t+1(Vt+1,Lt+1, Ψt+1) +u3
+t+1, (17)
+where measurement errorsui
+t+1, fori = 1 to 3, are independent normal random variables with
+constant variances. The above ﬁltering equations are applied to all trading days from January
+
++u3
+t+1, (17)
+where measurement errorsui
+t+1, fori = 1 to 3, are independent normal random variables with
+constant variances. The above ﬁltering equations are applied to all trading days from January
+1, 2003 to April 26, 2016, resulting in 3,161 observation days.
+The latent spot illiquidity process in the state-space dynamic describes the instantaneous
+level of illiquidity at each moment and not at the aggregated daily level. To ﬁlter Lt from
+14
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+the daily observed market illiquidity measure, we integrate the spot illiquidity process over
+the day as shown in equation (15). Because the spot illiquidity measure is assumed to follow
+a square-root process, its daily integrated value is available in closed form. We use the log
+eﬀective spread in the measurement equation because the empirical distribution of eﬀective
+spreads is close to log-normal.
+We collect two time series of closing mid-price of options quotes that we label ATM and
+OTM. We let ATM denote at-the-money call option that has moneyness, deﬁned as the ratio
+of forward-to-strike price, closest to 1. Similarly, OTM refers to out-of-the-money put option
+that has moneyness closest to 0.95. For both ATM and OTM options, we retain contracts
+that have time-to-maturity closest to 30 calendar days. Figure 2 plots daily Black-Scholes
+option-implied volatilities calculated from the ATM and OTM contracts that we use in our
+study. Following Pan (2002), we use OTM options in the measurement equation as it provides
+the richest information on investors’ expectation of crash probability in the stock market.
+We follow Trolle and Schwartz (2009) and use Black-Scholes vega-weighted price as the
+functional form in the measurement equations for options ﬁtting in equations (16)–(17). This
+method scales the value of options across time making their prices more comparable, which in
+turn facilitates the assumption of the normally distributed errors in the measure equations.
+
+6)–(17). This
+method scales the value of options across time making their prices more comparable, which in
+turn facilitates the assumption of the normally distributed errors in the measure equations.
+Therefore,ATM O
+t+1 andOTM O
+t+1 in equations (16)–(17) represent the scaled ATM and OTM
+option prices observed at the end of day t. Similarly, the variables ATM M
+t+1 and OTM M
+t+1
+denote the model-implied option prices scaled by their market Black-Scholes vega.
+The models that we study fall within the aﬃne jump-diﬀusion framework and the con-
+ditional characteristic function of log stock price is available in exponential aﬃne form. We
+derive the characteristic function in Appendix C. The coeﬃcients in the characteristic function
+are not all available in terms of elementary functions, thus, we solve for them numerically in
+a Ricatti system of equations. We use the Fourier-cosine series expansions method recently
+proposed by Fang and Oosterlee (2009) to numerically evaluate option prices.
+15
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+3.4 Estimation
+We estimate the models by maximizing the log-likelihood function resulting from the UKF
+step. We assume the measurement errors are conditionally normal, therefore, the time t con-
+ditional log-likelihood takes the following form:
+lt(Θ) =−1
+2 log(2π)− 1
+2 log(det|Ωt|)− 1
+2(Yt− ¯Yt)T (Ωt)−1(Yt− ¯Yt), (18)
+where ¯Yt and Ωt denote the ex ante forecasts of the mean and covariance matrix conditional
+on time t− 1 information on observables Yt. We let Θ denote the set of all parameters to be
+estimated.
+In addition to the log-likelihood resulting from the measurement error equations, we follow
+Andersen, Fusari, and Todorov (2015a) and add a penalizing term that compares the ﬁltered
+spot variance component,Vt, to the model-free estimate of spot variance calculated from high-
+frequency data. Incorporating this penalizing term, the conditional log-likelihood function
+that we estimate at time t is
+Lt(Θ) =lt(Θ) +ω log( (
+√
+Vn
+t −
+√
+Vt)2 ), (19)
+where lt(Θ) is given by equation (18), Vn
+t is the realized spot variance computed using one-
+minute grid returns from the S&P 500 index andVt is the ﬁltered spot variance from the UKF
+procedure. We describe the construction of the realized spot variance measure in more detail
+in Appendix B. The realized spot volatility, √Vn
+t , is shown in the bottom panel of Figure 2.
+The tuning parameter ω in equation (19) is set equal to 0 .05 following Andersen, Fusari,
+
+in more detail
+in Appendix B. The realized spot volatility, √Vn
+t , is shown in the bottom panel of Figure 2.
+The tuning parameter ω in equation (19) is set equal to 0 .05 following Andersen, Fusari,
+and Todorov (2015a).9 The model parameters are then estimated by maximizing the sum of
+conditional log-likelihoods over the sample period from January 2, 2003 to April 26, 2016.
+9We verify that our main conclusions are unaﬀected when using a reasonably large range of values for ω.
+16
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+4 Results
+4.1 Maximum likelihood estimates
+Table 2 reports parameter estimates for the three models. The ﬁrst, second, and third columns
+report results for the SJ, SJV and SJVI models, respectively. We report log-likelihood values
+of the three models in the bottom row.
+All parameters reported in Table 2 correspond to risk-neutral measure estimates, with an
+exception ofνV which represents the volatility risk premium. We ﬁnd that parameters govern-
+ing the square-root dynamic of spot variance are well estimated. Their parameter estimates
+are fairly consistent across the models. The correlation estimates of the two Brownian shocks
+in return and spot variance, ρ, are about −0.70, conﬁrming the asymmetric return-variance
+relationship found in the extant literature.
+We ﬁnd the feedback eﬀects between the spot variance and illiquidity are signiﬁcant. This
+is seen from the estimates ofαL andαV . Across the models, the estimates ofαL are about 0.12
+while the estimates of αV are around 0.11. These estimates provides a support for a bivariate
+relationship between market illiquidity and return variance.
+The relationship that we ﬁnd between market illiquidity and return variance lends support
+to previous studies that have documented a strong relationship between return volatility and
+market trading activity. In particular, motivated by the mixture of distribution hypothesis
+(MDH), which conjectures that volatility and volume simultaneously depend on a latent infor-
+
+volatility and
+market trading activity. In particular, motivated by the mixture of distribution hypothesis
+(MDH), which conjectures that volatility and volume simultaneously depend on a latent infor-
+mation process, past research eﬀorts have been devoted to studying the relationship between
+stock return volatility and trading volume (e.g., Tauchen and Pitts, 1983). Nevertheless, the
+ﬁndings in this literature have been mixed and understanding the relationship between infor-
+mation ﬂows and trading activity has been an active research area. For instance, Lamoureux
+and Lastrapes (1990) estimate a GARCH volatility model and ﬁnd that trading volume is the
+main driver of stock return volatility and that past stock return innovations became insignif-
+17
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+icant once trading volume is included in the model. 10 While we ﬁnd that market illiquidity
+signiﬁcantly drives the dynamic of spot variance, its eﬀect does not eliminate the strong per-
+sistence in the variance dynamic. Further, the recent literature agrees that trading volume
+is an inadequate measure of market liquidity (e.g., Jones, 2002; Fleming, 2003). Given the
+availability of intraday trading data, we can more precisely measure market illiquidity using
+eﬀective spreads. Our results estimated using a continuous-time model documenting a strong
+relationship between market illiquidity and return variance therefore contribute to this stream
+of literature.
+The jump-size mean, θ, and the jump-size standard deviation, δ, in Table 2 indicate that
+the jump dynamic that we estimate corresponds to crash risk embedded in index options. The
+estimates of θ are negative and highly signiﬁcant. The average jump mean size in daily index
+return is between−3.1% (SJVI model) and−5.4% (SJ model). Therefore, the jump dynamic
+that we identify corresponds to large drops in daily S&P 500 index returns. We ﬁnd that the
+SJ model has the largest magnitudes of θ and δ.11
+We next examine parameter estimates governing the time-varying jump intensity. First,
+we look at the dynamic of the latent jump-intensity-speciﬁc factor, Ψ t. Table 2 shows the
+magnitude of parameters driving the Ψ t dynamic in the SJ model diﬀers signiﬁcantly from
+those in the other two models.
+
+the dynamic of the latent jump-intensity-speciﬁc factor, Ψ t. Table 2 shows the
+magnitude of parameters driving the Ψ t dynamic in the SJ model diﬀers signiﬁcantly from
+those in the other two models. For instance, the long-run mean θΨ, the mean-reversion speed
+κΨ, and the volatilityξΨ of the jump-intensity-speciﬁc factor are signiﬁcantly larger for the SJ
+model. These ﬁndings are expected because in the SJ model, jump intensity dynamic solely
+depends on the latent state variable Ψ t. Further, these results conﬁrm that the dynamic of
+jump intensity is time-varying and follows a mean-reverting process.
+10In contrast, several studies ﬁnd evidence conﬂicting with the MDH speciﬁcation. These studies include
+Hiemstra and Jones (1994), Lamoureux and Lastrapes (1994), Richardson and Smith (1994), Andersen (1996),
+and Andersen, Bondarenko, Kyle, and Obizhaeva (2016).
+11It is worth noting that we do not need to specify the jump risk premium parameters (i.e., θ under the
+P measure) because the estimation is performed on a panel of index options without using index returns.
+Nevertheless, for completeness, we conducted a sequential estimation exercise under the physical measure in
+Section IA.3 of the Internet Appendix to extract the jump risk premiums by ﬁtting the model to index returns
+and ﬁnd that they are in line with the extant literature.
+18
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Table 2 shows that when we add covariates to the jump intensity dynamic in the SJV
+and SJVI models, the log-likelihood value increases substantially. The improvement is large
+with an increase of about 5% relative to the SJ model. 12 We therefore ﬁnd strong support for
+modeling jump intensity as a function of economic covariates. Looking at the SJV model, we
+ﬁnd the impact of spot variance on jump intensity, γV , is positive and statistically signiﬁcant
+at the 1% level (t-statistic is 5 .40). This ﬁnding is consistent with Pan (2002), Bates (2006),
+and Andersen, Fusari, and Todorov (2015b).
+For the SJVI model, we ﬁnd that when we add the market illiquidity measure to the jump
+intensity speciﬁcation, the estimate of γV substantially decreases in magnitude (by about
+76%). On the other hand, the impact of spot market illiquidity loads very strongly on the
+jump intensity. This ﬁnding shows that the inclusion of market illiquidity as an economic
+covariate signiﬁcantly weakens the relationship between jump intensity and spot variance.
+4.2 Time-Varying Volatility and Crash Risks
+This section discusses the time-series dynamics of market spot volatility and jump inten-
+sity. Table 3 reports descriptive statistics of daily jump intensity λt, spot variance Vt, and
+spot illiquidity Lt levels that we obtained using the UKF from 2003–2016. We ﬁnd that the
+sample moments of daily spot illiquidity are almost identical across the three models. This
+
+variance Vt, and
+spot illiquidity Lt levels that we obtained using the UKF from 2003–2016. We ﬁnd that the
+sample moments of daily spot illiquidity are almost identical across the three models. This
+suggests that its dynamic is well identiﬁed when we extract their information from the daily
+market illiquidity measure ILQt calculated using eﬀective bid-ask spreads.
+Figure 3 plots the daily annualized jump intensity for the three models. The jump intensity
+dynamic of the SJ model is very volatile relative to the other two models. For instance, looking
+at the time-series statistics of λt in Table 3, we ﬁnd the average expected number of jumps
+implied by this model is 0.81 per year, but with a median of 0.45 and a standard deviation of
+1.10. This shows that the distribution of jump intensities ﬁltered from the SJ model is highly
+12Section IA.4 in the Internet Appendix discusses in-sample option ﬁts of the three models that we study.
+19
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+skewed. The average jump intensity implied by the SJ model is slightly less than half of the
+other models, and its jump mean size is larger at θ =−5.9% per jump as shown in Table 2. .
+We ﬁnd the jump intensity dynamic estimated from the SJV and SJVI models have compa-
+rable distributions with means of 2.0 and 2.4 jumps per year, respectively. In these two models,
+the levels of jump intensity are relatively stable before mid-2007, but rise after and peak in
+the fall of 2008. We believe the relatively more stable jump intensity dynamics observed in the
+SJV and SJVI models compared to the SJ model are due to improved identiﬁcation resulting
+from the use of covariates in the jump intensity speciﬁcation. This argument is supported by
+the models’ log-likelihood, which are better than the SJ model.
+We next examine the economic contribution of the spot variance and market illiquidity to
+the jump intensity dynamic. Figure 4 decomposes daily jump intensities ﬁltered from the SJV
+model (top panel) and from the SJVI model (bottom panel) into their respective components.
+For the SJV model, the top panel of Figure 4 shows that the market’s spot variance is the
+main component driving jump intensity dynamic. We ﬁnd that on average, 87% of the jump
+intensity level is explained by its covariation with the market’s spot variance. The time-series
+average of its contribution is about 87%. We ﬁnd the jump-intensity-speciﬁc factor Ψt explains
+the remaining 13%.
+
+evel is explained by its covariation with the market’s spot variance. The time-series
+average of its contribution is about 87%. We ﬁnd the jump-intensity-speciﬁc factor Ψt explains
+the remaining 13%.
+The bottom panel of Figure 4 shows the decomposition of the daily jump intensity from
+the SJVI model. Here, we ﬁnd that the jump intensity dynamic is heavily driven by its co-
+movement with stock market illiquidity. We plot daily percentage contributions of each jump
+intensity component in Figure 5. On average, over our sample period, the market illiquidity
+factor explains about 77% of the jump probability in the SJVI model. In contrast to our
+ﬁndings for the SJV model, we ﬁnd the market’s spot variance explains, on average, only
+13%, with the remaining 10% coming from the jump intensity factor, Ψ t. In other words,
+once we control for market illiquidity as an economic variable driving time-varying crash risk,
+the relative contribution of spot variance signiﬁcantly decreases.
+20
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+4.3 Forecast Error Variance Decomposition
+We perform a forecast error variance decomposition (FEVD) on the jump intensityλτ dynamic
+for the SJVI model. This method helps determine the amount of information each variable
+contributes in explaining changes to the current and future crash probability.
+The error from forecasting the jump intensityλt+τ withτ-period horizon on dayt is deﬁned
+as
+eλ
+t+τ =λt+τ−Et[λt+τ]. (20)
+The idea behind FEVD is to ﬁnd how much of the variation in eλ
+t+τ, i.e., Var t
+[
+eλ
+t+τ
+]
+, can
+be explained by shocks to each state variable driving the jump intensity dynamic. In other
+words, the FEVD asks how much of the unexpected change in the jump intensity is explained
+by shocks to Vt, Lt, and Ψt. We report the FEVD formula in Appendix D.
+In Figure 6, we plot the proportion of forecast error variance explained by innovations to
+the spot variance, Vt, and the spot market illiquidity, Lt, factors. The model parameters are
+obtained from their MLE estimates in Table 3. We do not plot the proportion of forecast
+error variance explained by Ψt because it is trivially small. We plot the proportion of forecast
+error variance explained byVt andLt one day ahead, i.e., τ = 1. These results provide insight
+into the source of information that most importantly impacts unexpected changes in the crash
+probability at the very short horizon.
+We ﬁnd that errors in the short-term forecast of the crash probability are mainly explained
+
+mation that most importantly impacts unexpected changes in the crash
+probability at the very short horizon.
+We ﬁnd that errors in the short-term forecast of the crash probability are mainly explained
+by shocks to the market illiquidity factor, with the exception of the crisis period when shocks
+to the spot variance dominate. This ﬁnding is consistent with the results shown in Figure
+5. In other words, unexpected changes in crash probability at the near horizon are mostly
+explained by shocks to market illiquidity.
+In the Internet Appendix Section IA.5, we examine the impact of shocks to the spot
+volatility Vt and the market illiquidity Lt over longer horizons by looking at the impulse
+21
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+response function of the jump intensity dynamic. We ﬁnd that shocks to Vt andLt are highly
+persistent and drive most of the current and future increase in the probability of crash risk.
+However, the relative importance of Vt and Lt depends on the level of uncertainty in the
+market, with the market illiquidity factor dominating during periods of low volatility.
+4.4 Alternative Iliquidity Measures
+We have so far deﬁned market illiquidity using the aggregate relative eﬀective spread of
+S&P500 constituents. This section tests whether our main conclusions are robust to other
+illiquidity measures. The ﬁrst alternative measure that we use is from Amihud (2002), which is
+one of the most widely used illiquidity proxies in the ﬁnance literature. The advantage of this
+measure is that it is simple to construct and relies on low-frequency data. On each day t, we
+compute the Amihud illiquidity measure for each ﬁrm i in the S&P500 index as a fraction of
+absolute return over dollar trading volume. The daily Amihud market illiquidity measure for
+the stock market is then calculated as an equally-weighted average of the ﬁrm-level Amihud
+illiquidity measure.
+The second alternative measure for market illiquidity that we use is the relative eﬀective
+spreads of S&P500 E-mini futures (“E-mini” for short). Originated by the Chicago Mer-
+cantile Exchange (CME), E-mini contracts are one-ﬁfth the size of the standard S&P500
+futures.
+
+e relative eﬀective
+spreads of S&P500 E-mini futures (“E-mini” for short). Originated by the Chicago Mer-
+cantile Exchange (CME), E-mini contracts are one-ﬁfth the size of the standard S&P500
+futures. They trade on the CME GLOBEX electronic platform almost 24 hours a day, ﬁve
+days a week. Speciﬁcally, On Monday to Thursday, the trading is from 15:30 to 15:15 of
+the next day. All times are reported in Chicago Time. On Sunday, the trading is from 17:00
+to 15:15 the next day. We obtain best-bid-oﬀer (BBO) data for the S&P500 E-mini futures
+from CME DataMine. The ﬁle contains “top-of-the-book” information. Quotes and trades
+are time stamped to the second. This detailed transaction-level information is available from
+November 1, 2004 onwards. As a result, the sample period that we use for this section is from
+November 1, 2004 to April 26, 2016.
+22
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+We follow Andersen and Bondarenko (2015) and use the front month futures contract until
+it reaches 8 days to expiry. This ensures that we use the most actively traded futures contract
+in our analysis. The daily relative eﬀective spreads of the E-mini future contract is calculated
+as the dollar-volume weighted average eﬀective spreads over each day. We deﬁne a trading-day
+to be from 15:30 (or 17:00 for Sunday) after the NYSE market close to 15:15 the next day.
+The minimum tick size for trading E-mini futures is 25 cents. Trades in this market is highly
+liquid, and we ﬁnd that only about 8.1% of all trades are consummated outside the 25-cent
+spread.
+The middle-left panel of Figure 7 plots the illiquidity measure calculated using relative
+eﬀective spreads of S&P500 E-mini futures, while the bottom-left panel plots the Amihud’s
+(2002) measure. For comparison, the top-left panel plots the ILQt measure that we use in the
+main analysis, which is based on aggregate relative eﬀective spreads of S&P500 constituents.
+All illiquidity measures are plotted in annualized term and are normalized to have the same
+sample mean. This normalization does not impact our results because the absolute level does
+not matter for our speciﬁcation.
+Figure 7 shows a great similarity between the illquidity measures calculated using aggregate
+spreads of S&P500 ﬁrms (ILQt) and the spread of E-mini futures (E-miniILQt). The Pearson
+
+our speciﬁcation.
+Figure 7 shows a great similarity between the illquidity measures calculated using aggregate
+spreads of S&P500 ﬁrms (ILQt) and the spread of E-mini futures (E-miniILQt). The Pearson
+correlation between their levels is about 91%, while between their daily changes it is about
+45%. We ﬁnd that the Amihud illiquidity measure is much noisier than the other two measures
+which are calculated from intraday eﬀective spreads. The correlation between ILQt and the
+Amihud measure is about 60% in levels, but only about 8% in daily changes.
+We re-estimate the SJVI model using the two alternative illiquidity measures: E-miniILQt,
+and AmihudILQt. We report the results in Table 4. We ﬁnd the coeﬃcient estimate of γL re-
+mains statistically signiﬁcant in both columns, conﬁrming the important role of stock market
+illiquidity as an economic drivers of the time-varying jump intensity.
+Column (1) of Table 4 shows the magnitude ofγL is the smallest when the Amihud measure
+23
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+is used, with the value of 8 .03 relative to 11 .1 in Column (3) of Table 2 when we use the
+aggregate spread of S&P500 ﬁrms. This ﬁnding is expected due to the noisiness of the Amihud
+measure as shown in Figure 7. Consistent with this observation, we ﬁnd that the dynamic
+of the jump intensity depends more on the market variance under the Amihud illiquidity
+measure, which is seen from the relatively large estimate of γV in Column (1). On the other
+hand, we ﬁnd that all coeﬃcient estimates in Column (2), where the spread of E-mini futures
+is used as the proxy of stock market illiquidity, are very similar to those in Column (3) of
+Table 2.
+The right-column panels of Figure 7 plot the jump intensity ﬁltered from the SJVI model
+using three diﬀerent illiquidity measures. We ﬁnd that these three time series share a similar
+pattern, with the results obtained using the Amihud measure appear slightly noisier.
+Overall, our main conclusion remains qualitatively similar when the two alternative illiq-
+uidity measures are used in the estimation of the SJVI model. That is, the time-varying
+market crash risk embedded in index options is strongly related to the level of stock market
+illiquidity.
+5 Market Illiquidity and Option-implied Crash Risk
+What are the economic drivers behind market illiquidity as captured by ILQt? And, what
+is the channel through which these economic drivers aﬀect option prices? We examine these
+questions in this section.
+
+t are the economic drivers behind market illiquidity as captured by ILQt? And, what
+is the channel through which these economic drivers aﬀect option prices? We examine these
+questions in this section. Guided by market microstructure theories, we start by identify-
+ing economic forces that drive variations in eﬀective spreads of the aggregate stock market.
+Subsequently, we examine the importance of these economic drivers in explaining the stock
+market crash risk that we observe in index option prices.
+24
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+5.1 What drives Stock Market Liquidity?
+We examine three economic forces that have been shown to aﬀect security bid-ask spreads. The
+ﬁrst is the inventory risk (e.g., Amihud and Mendelson, 1980; Ho and Stoll, 1981). Here, theory
+predicts that liquidity is inﬂuenced by inventory concerns caused by an imbalance between
+buyer- and sell-initiated trades. When market makers are faced with a large order imbalance,
+they respond by widening the quoted spreads, resulting in deteriorating market liquidity.
+We calculate daily order imbalance for each security as the number of buyer-initiated trades
+minus the number of seller-initiated trades scaled by the total trading volume, where the direc-
+tion of each trade is assigned using the Lee and Ready (1991) algorithm. Aggregate inventory
+risk in the stock market on day t is then calculated as the average daily order imbalance of
+securities constituting the S&P500 index. We refer to this variable as AggInventoryt. For
+an individual stock, a large order imbalance could be induced by informed trading. However,
+when we average order imbalances across securities to the aggregate level, asymmetric infor-
+mation is unlikely the reason (see Chordia, Roll, and Subrahmanyam (2002)). This suggests
+that ﬂuctuations in the aggregate order imbalance should only aﬀect the stock market liquid-
+ity due to periodic strains in market maker inventories that are consistent with the inventory
+paradigm.
+
+s
+that ﬂuctuations in the aggregate order imbalance should only aﬀect the stock market liquid-
+ity due to periodic strains in market maker inventories that are consistent with the inventory
+paradigm.
+The second economic force driving ﬂuctuations in the level of aggregate stock market
+illiquidity is the availability of arbitrage capital. Brunnermeier and Pedersen (2009) shows
+that in a market where traders participate in liquidity provisions, their ability to do so depends
+on the funding available to them—e.g., arbitrage capital. When the funding available to
+institutional investors and hedge funds is abundant, these traders can readily deploy arbitrage
+capital to eliminate price deviations from fundamental values. This injection of liquidity
+lowers the cost of liquidity provision by traditional liquidity providers (i.e., market makers),
+thus, resulting in tighter bid-ask spreads. In order to measure variations in the daily level of
+arbitrage captial, we use the noise measure of Hu, Pan, and Wang (2013), which has been
+25
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+shown to capture episodes of liquidity crises across the ﬁnancial markets. This measure is
+based on the U.S. Treasury market, which is centrally important to all types of investors.
+When there is a shortage of arbitrage capital, Treasury yields would deviate more from freely
+the model-implied curve, resulting in more noise in prices. We obtain daily time series of the
+noise measure directly from Jun Pan’s website, which is available up to December 2014. 13 We
+refer to this measure as Noiset, which is connected to the level of stock market illiquidity
+through the amount of arbitrage capital available. This measure is annualized by multiplying
+it with 252.
+The third economic force behind stock market liquidity that we examine is adverse selection
+cost. Liquidity providers, in general, revise their securities’ quotes in response to trades
+initiated by informed and uninformed traders. However, when the market is dominated by
+informed traders, adverse selection arises as the primary concern of liquidity providers thereby
+pressuring them to widen their quotes (Glosten and Milgrom, 1985). In order to measure
+the intensity of informed trading at the aggregate level, we look at daily abnormal order
+ﬂows in S&P500 E-mini futures. The S&P500 E-mini futures market is among the most
+liquid worldwide. It trades on an electronic platform nearly around the clock, serving as a
+competitive venue for investors, speculators, and market makers to trade and hedge their
+
+is among the most
+liquid worldwide. It trades on an electronic platform nearly around the clock, serving as a
+competitive venue for investors, speculators, and market makers to trade and hedge their
+exposures to the stock market. Importantly, as concluded in the CFTC-SEC Report (2010),
+the ﬂash crash on May 6, 2010 is believed to have been precipitated by a large sell order in
+the E-mini contract.
+We construct daily abnormal order ﬂow in the E-mini futures market using complete top-
+of-the-book trading records obtained from CME DataMine. There are several advantages to
+this database. The quote updates arrive in pairs, one for the bid and one for the ask. These
+quotes are synchronized and ordered by the sequence variable, which makes it straightforward
+to compare the trade price with the preceding bid and ask. Each trade is consummated
+13http://www.mit.edu/~junpan/
+26
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+at either the preceding bid or ask, which allows us to unambiguously classify a trade as
+buyer-initiated or seller-initiated nearly without errors. 14 We obtain the complete history of
+top-of-the-book data ﬁle for the E-mini contract (1997–2016). However, detailed sequencing
+of trades and quotes in this data ﬁle begins on November 1st, 2004. Therefore, in this section,
+the sample period is from November 1st, 2004 to December 30th, 2014, when the noise measure
+that we obtain from Hu, Pan, and Wang (2013) ends. This provides us with slightly more than
+10 years of tick-by-tick data for the highly active E-mini futures market. Over this period, the
+median number of contracts traded is about 1.6 millions per day, with a median daily dollar
+volume of $ 2.32 billions. The abnormal order ﬂow on day t is calculated as the number of
+buyer initiated contracts minus the number of seller initiated contracts, divided by the total
+trading volume. We refer to this variable as AbOrderFlow t.
+Panel A of Table 5 summarizes the three economic variables that we describe above:
+AggInventory , Noise, and AbOrderFlow . It is worth noting that these three variables are
+sourced from three distinctly diﬀerent markets, which helps eliminate concerns that they are
+related through market-microstructure mechanics. Besides these three variables, we include
+MinRV andVIX in our analysis to control for the strong connection between market volatil-
+ity and market illiquidity.
+
+hrough market-microstructure mechanics. Besides these three variables, we include
+MinRV andVIX in our analysis to control for the strong connection between market volatil-
+ity and market illiquidity.
+Panel B of Table 5 reports the Pearson correlation between various variables. We use
+the absolute values of AbOrderFlow and AggInventory . This is because imbalances in the
+number of trades, whether negative or positive, should positively aﬀect stock market illiquidity.
+We ﬁnd that theILQ measure is positively correlated with aggregate inventory risk, intensity
+of informed trading, shortage in arbitrage capital, and market volatility.
+One challenge with identifying the drivers of stock market illiquidity is the endogenous
+relationship between potential explanatory variables. In order to mitigate this issue, we es-
+timate a vector autoregressive (VAR) model based on the six variables shown in Table 5,
+14Andersen and Bondarenko (2015) provides detailed discussion on the advantage of this data set to construct
+order imbalance measures for the E-mini futures.
+27
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+plus the return of the S&P500 index. Table 6 reports the results. We choose ﬁve lags for
+the VAR model to control for autocorrelation in the residuals up to one week. Increasing
+the number of autoregressive lags does not qualitatively change our conclusion. We include
+year-ﬁxed eﬀects to control for a time trend. We also include day-of-the-week-ﬁxed eﬀects
+because weekly regularities in market liquidity, order imbalance, and volatility are well doc-
+umented. Each column in Table 6 reports estimation results for a diﬀerent VAR speciﬁca-
+tion. For brevity, we only report estimates for the ﬁrst-autoregressive component that explain
+ILQt+1 the next day. Columns (1) to (3) examine the impact of the three economic drivers:
+Noiset,|AggInventoryt|,|AbOrderFlow t|, individually. In these three columns, the VAR
+speciﬁcation consists of ﬁve variables. In Column (4), we report results from estimating the
+VAR model on all seven variables. The Durbin-Watson statistic in each column is close to 2,
+indicating little to no autocorrelations left in the residuals.
+The results in Table 6 show strong and positive coeﬃcient estimates on ILQt, suggesting
+that daily stock market illiquidity depends on its past levels. We ﬁnd that market illiquidity
+increases following a day with negative stock market return. These ﬁndings are consistent
+with the existing literature (e.g., Chordia, Roll, and Subrahmanyam, 2001). We also ﬁnd that
+
+rket illiquidity
+increases following a day with negative stock market return. These ﬁndings are consistent
+with the existing literature (e.g., Chordia, Roll, and Subrahmanyam, 2001). We also ﬁnd that
+theVIX t positively predicts an increase in the stock market illiquidity the next day, which is
+consistent with Nagel (2012) who shows that the VIX index is a strong predictor of the return
+from liquidity provisions. However, we do not ﬁnd that MinRVt signiﬁcantly predicts market
+illiquidity the next day after controlling for the lead-lag relationships through the VAR model.
+We ﬁnd thatNoiset and|AbOrderFlow t| are strong predictors of stock market illiquidity.
+The economic magnitude of their impacts is substantial. Looking at Column (4) in Table 6,
+we ﬁnd that a one-standard-deviation increase in Noiset leads to an about 13% increase in
+ILQt+1, or approximately, a two-cent increase in the annualized round-trip trading cost for
+every dollar investment in the stock market. The economic magnitude of |AbOrderFlow t| is
+about half of the Noiset measure.
+28
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+We do not ﬁnd that|AggInventoryt| has predictive power for stock market illiquidity after
+controlling for the lead-lag relationships associated with return and volatility of the stock mar-
+ket. Columns (3) and (4) both show that coeﬃcients on |AggInventoryt| are not statistically
+signiﬁcant, albeit positive. This ﬁnding is consistent with Chordia, Roll, and Subrahmanyam
+(2002). Their study ﬁnds that the aggregate order imbalance in either direction contempora-
+neously reduces stock market liquidity, but it cannot predict market liquidity after controlling
+for return and volatility. This ﬁnding is also consistent with inventory models of the spread
+(Ho and Stoll, 1981, e.g.), which shows that order imbalances cause a temporary shift in quotes
+but do not aﬀect market liquidity. In other words, the eﬀect of aggregate order imbalances
+on stock market liquidity is transitory in nature.
+In summary, we ﬁnd that the availability of arbitrage capital and the intensity of informed
+trading (i.e., adverse selection cost) are robust drivers of stock market illiquidity. In the next
+section, we examine the importance of these two variables in explaining time-varying crash
+risk that we observe from index option prices.
+5.2 Impact on Option Prices
+This section provides evidence on the channel through which the Noiset and|AbOrderFlow t|
+measures impact the time-varying crash risk that we infer from option prices. We follow our
+
+on Option Prices
+This section provides evidence on the channel through which the Noiset and|AbOrderFlow t|
+measures impact the time-varying crash risk that we infer from option prices. We follow our
+analysis in Section 2.2 and examine whether these two variables can explain the day-to-day
+change in the stock market’s risk-neutral skewness implicit in the S&P500 index options. The
+results are reported in Table 7.
+Column (1) shows the coeﬃcient estimate on ∆ Noiset is negative and signiﬁcant. This
+suggests that when the amount of arbitrage capital in the market decreases, crash risk in the
+stock market increases as indicated by a more negative risk-neutral skewness. The impact
+of daily changes in the noise measure is consistently negative and statistically signiﬁcant in
+Column (2), as well as in Column (4) where we include ∆ ILQt as an explanatory variable.
+29
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+This ﬁnding provides support for “limits to arbitrage” in explaining the relative pricing of
+index options (Shleifer and Vishny, 1997). During periods where liquidity providers face
+funding constraint, they are less willing to deploy arbitrage capital to help keep the relative
+prices of OTM puts to ATM calls in line with fundamental values. As OTM puts become
+increasingly more expensive relative to ATM calls, the risk-neutral skewness implied by index
+options drop, signaling a higher risk-neutral probability of crash risk.
+The results in Column (1) of Table 7 show that the coeﬃcient estimate on ∆|AbOrderFlow t|
+is negative, but not statistically signiﬁcant at conventional levels. This result is based on the
+magnitude of abnormal order ﬂow, regardless of the direction, in the E-mini futures market.
+We further examine the impact of negative order ﬂows and positive order ﬂows separately.
+The results are shown in Columns (2) and (4). We use abnormal order ﬂow on day t to deﬁne
+buy- and sell-order ﬂows as follows:
+BuyOrderFlow t = max (0 ,AbOrderFlow t)
+SellOrderFlow t = − min (0,AbOrderFlow t).
+We ﬁnd a clear pattern in the eﬀect of adverse selection cost on risk-neutral skewness when
+we examine buy and sell order ﬂows separately. The results in Table 7 show that an excessive
+selling pressure in the S&P500 E-mini futures market is related to a more negative risk-neutral
+skewness observed in index option prices. On the other hand, the impact of excessive buying
+
+n excessive
+selling pressure in the S&P500 E-mini futures market is related to a more negative risk-neutral
+skewness observed in index option prices. On the other hand, the impact of excessive buying
+pressure is not statistically signiﬁcant. These ﬁndings suggest that excessive sell orders in the
+E-mini futures market trigger liquidity providers in the options market to revise their quotes
+in order to compensate for the risk of trading against informed traders. In particular, the
+cost of providing insurance against a drop in the index by underwriting OTM puts increases
+when these underwriters (i.e., liquidity providers) detect more excessive selling in the E-mini
+futures market, forcing them to raise the price of OTM puts. This, in turn, leads to a more
+30
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+negative risk-neutral skewness implied by index options.
+Column (4) in Table 7 shows that the coeﬃcient estimates on the change in noise measure
+and the change in sell order ﬂow remain strongly signiﬁcant and with similar magnitudes when
+we include them in a single regression speciﬁcation. We also ﬁnd that the coeﬃcient estimate
+on ∆ILQt is negative in Column (4), however, its magnitude and statistical signiﬁcance are
+weaker than that in Column (3) where the variables ∆ Noiset and ∆SellOrderFlow t are
+excluded. This ﬁnding suggests that some of the explanatory power of the illiquidity measure
+is captured by the noise and sell-order ﬂow measures.
+6 Conclusion
+We estimate a continuous-time model with stochastic volatility and crash probability. We
+introduce market illiquidity as an observable variable to the model by allowing it to aﬀect
+the spot variance and jump risk intensity. We measure the daily stock market illiquidity level
+using volume-weighted intraday bid-ask spreads of all S&P500 securities. We estimate the
+model over 2003–2016 using daily S&P500 index options, realized spot variance and market
+illiquidity measure. Over our sample period, we ﬁnd that about three-quarter of the time-
+varying crash risk level is related to market illiquidity. During quiet periods, the inﬂuence
+of market illiquidity dominates other factors that we examine including the market’s spot
+variance. However, during the 2008-subprime crisis, the spot variance dominates and the
+
+periods, the inﬂuence
+of market illiquidity dominates other factors that we examine including the market’s spot
+variance. However, during the 2008-subprime crisis, the spot variance dominates and the
+contribution of market illiquidity falls to about 30%. We conclude that both the volatility and
+market illiquidity factors play important and complementary roles in the dynamic of time-
+varying crash risk. Finally, we examine the economic forces that lead to the stock market
+illiquidity, which subsequently aﬀects the crash probability implied by index option prices and
+ﬁnd that the shortage of arbitrage capital and adverse selection cost facing liquidity providers
+are key economic drivers.
+31
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+References
+Amaya, D., P. Christoﬀersen, K. Jacobs, and A. Vasquez, 2015, “Does Realized Skewness
+Predict the Cross-section of Equity Returns?,” Journal of Financial Economics , 118(1),
+135–167.
+Amihud, Y., 2002, “Illiquidity and Stock Returns: Cross-Section and Time-Series Eﬀects,”
+Journal of Financial Markets , 5(1), 31–56.
+Amihud, Y., and H. Mendelson, 1980, “Dealership Market: Market-Making with Inventory,”
+Journal of Financial Economics , 8(1), 31 – 53.
+Andersen, T. G., 1996, “Return Volatility and Trading Volume: An Information Flow Inter-
+pretation of Stochastic Volatility,” The Journal of Finance , 51(1), 169–204.
+Andersen, T. G., L. Benzoni, and J. Lund, 2002, “An Empirical Investigation of Continuous-
+Time Equity Return Models,” Journal of Finance , 57, 1239–1284.
+Andersen, T. G., and O. Bondarenko, 2015, “Assessing Measures of Order Flow Toxicity and
+Early Warning Signals for Market Turbulence,” Review of Finance, 19(1), 1–54.
+Andersen, T. G., O. Bondarenko, A. S. Kyle, and A. A. Obizhaeva, 2016, “Intraday Trading
+Invariance in the E-Mini S&P 500 Futures Market,” .
+Andersen, T. G., D. Dobrev, and E. Schaumburg, 2012, “Jump-Robust Volatility Estimation
+Using Nearest Neighbor Truncation,” Journal of Econometrics , 169(1), 75–93.
+Andersen, T. G., N. Fusari, and V. Todorov, 2015a, “Parametric Inference and Dynamic State
+Recovery From Option Panels,” Econometrica, 83(3), 1081–1145.
+, 2015b, “The Risk Premia Embedded in Index Options,” Journal of Financial Eco-
+
+. Todorov, 2015a, “Parametric Inference and Dynamic State
+Recovery From Option Panels,” Econometrica, 83(3), 1081–1145.
+, 2015b, “The Risk Premia Embedded in Index Options,” Journal of Financial Eco-
+nomics, 117(3), 558–584.
+, 2016, “The Pricing of Tail Risk and the Equity Premium: Evidence from International
+Option Markets,” Working paper.
+Bakshi, G., P. Carr, and L. Wu, 2008, “Stochastic Risk Premiums, Stochastic Skewness in
+Currency Options, and Stochastic Discount Factors in International Economies,” Journal
+of Financial Economics , 87(1), 132–156.
+Bakshi, G., and D. Madan, 2000, “Spanning and Derivative Security Valuation,” Journal of
+Financial Economics, 55(2), 205–238.
+Barndorﬀ-Nielsen, O. E., and N. Shephard, 2004, “Power and Bipower Variation with Stochas-
+tic Volatility and Jumps,” Journal of Financial Econometrics , 2(1), 1–37.
+Bates, D., 2006, “Maximum Likelihood Estimation of Latent Aﬃne Processes,” Review of
+Financial Studies, 26(9), 909–965.
+32
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Brogaard, J., D. Li, and Y. Xia, 2016, “Stock Liquidity and Default Risk,”Journal of Financial
+Economics, forthcoming.
+Brunnermeier, M. K., and L. H. Pedersen, 2009, “Market Liquidity and Funding Liquidity,”
+The Review of Financial Studies , 22(6), 2201–2238.
+CFTC-SEC, 2010, Preliminary Findings Regarding the Market Events of May 6, 2010: Report
+of the Staﬀs of the CFTC and SEC to the Joint Advisory Committee on Emerging Regulatory
+Issues. U.S. Commodity Futures Trading Commission.
+Chae, J., 2005, “Trading Volume, Information Asymmetry, and Timing Information,” The
+Journal of Finance , 60(1), 413–442.
+Chordia, T., R. Roll, and A. Subrahmanyam, 2001, “Market Liquidity and Trading Activity,”
+The Journal of Finance , 56(2), 501–530.
+, 2002, “Order Imbalance, Liquidity, and Market Returns,” Journal of Financial Eco-
+nomics, 65(1), 111 – 130.
+Chung, K. H., and C. Chuwonganant, 2014, “Uncertainty, Market Structure, and Liquidity,”
+Journal of Financial Economics , 113(3), 476–499.
+Duﬃe, D., J. Pan, and K. Singleton, 2000, “Transform Analysis and Asset Pricing for Aﬃne
+Jump-diﬀusions,” Econometrica, 68(6), 1343–1376.
+Egloﬀ, D., M. Leippold, and L. Wu, 2010, “The Term Structure of Variance Swap Rates and
+Optimal Variance Swap Investments,” Journal of Financial and Quantitative Analysis , 45,
+1279–1310.
+Fang, F., and C. W. Oosterlee, 2009, “A Novel Pricing Method for European Options Based on
+Fourier-Cosine Series Expansions,” SIAM Journal on Scientiﬁc Computing , 31(2), 826–848.
+
+is , 45,
+1279–1310.
+Fang, F., and C. W. Oosterlee, 2009, “A Novel Pricing Method for European Options Based on
+Fourier-Cosine Series Expansions,” SIAM Journal on Scientiﬁc Computing , 31(2), 826–848.
+Fleming, M. J., 2003, “Measuring Treasury Market Liquidity,” Economic Policy Review, (9),
+83–108.
+Glosten, L. R., and P. R. Milgrom, 1985, “Bid, Ask and Transaction Prices in a Specialist
+Market with Heterogeneously Informed Traders,” Journal of Financial Economics , 14(1),
+71–100.
+Goyenko, R. Y., C. W. Holden, and C. A. Trzcinka, 2009, “Do Liquidity Measures Measure
+Liquidity?,” Journal of Financial Economics , 92(2), 153–181.
+Heston, S., 1993, “A Closed-Form Solution for Options with Stochastic Volatility with Appli-
+cations to Bond and Currency Options,” Review of Financial Studies , 6(2), 327–343.
+Hiemstra, C., and J. D. Jones, 1994, “Testing for Linear and Nonlinear Granger Causality in
+the Stock Price-Volume Relation,” The Journal of Finance , 49(5), 1639–1664.
+33
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Ho, T., and H. R. Stoll, 1981, “Optimal Dealer Pricing under Transactions and Return Un-
+certainty,” Journal of Financial Economics , 9(1), 47–73.
+Hu, G. X., J. Pan, and J. Wang, 2013, “Noise as Information for Illiquidity,” The Journal of
+Finance, 68(6), 2341–2382.
+Huang, X., and G. Tauchen, 2005, “The Relative Contribution of Jumps to Total Price Vari-
+ance,” Journal of Financial Econometrics , 3(4), 456–499.
+Jiang, G. J., and T. Yao, 2013, “Stock Price Jumps and Cross-Sectional Return Predictability,”
+Journal of Financial and Quantitative Analysis , 48, 1519–1544.
+Jones, C. M., 2002, “A Century of Stock Market Liquidity and Trading Costs,” Working
+Paper.
+Kozhan, R., A. Neuberger, and P. Schneider, 2014, “The Skew Risk Premium in the Equity
+Index Market,” Review of Financial Studies , 26(9), 2174–2203.
+Lamoureux, C. G., and W. D. Lastrapes, 1990, “Heteroskedasticity in Stock Return Data:
+Volume Versus GARCH Eﬀects,” Journal of Finance , 45(1), 221–229.
+, 1994, “Endogenous Trading Volume and Momentum in Stock-Return Volatility,”
+Journal of Business & Economic Statistics , 12(2), 253–260.
+Lee, C. M. C., and M. J. Ready, 1991, “Inferring Trade Direction from Intraday Data,” The
+Journal of Finance , 46(2), 733–746.
+Maheu, J., and T. McCurdy, 2004, “News Arrival, Jump Dynamics, and Volatility Compo-
+nents for Individual Stock Returns,” Journal of Finance , 59(2), 755–793.
+Nagel, S., 2012, “Evaporating Liquidity,” The Review of Financial Studies , 25(7), 2005–2039.
+
+Dynamics, and Volatility Compo-
+nents for Individual Stock Returns,” Journal of Finance , 59(2), 755–793.
+Nagel, S., 2012, “Evaporating Liquidity,” The Review of Financial Studies , 25(7), 2005–2039.
+Ornthanalai, C., 2014, “L´ evy Jump Risk: Evidence from Options and Returns,” Journal of
+Financial Economics, 112(1), 69–90.
+Pan, J., 2002, “The Jump-Risk Premia Implicit in Options: Evidence from an Integrated
+Time-Series Study,” Journal of Financial Economics , 63, 3–50.
+Richardson, M., and T. Smith, 1994, “A Direct Test of the Mixture of Distributions Hy-
+pothesis: Measuring the Daily Flow of Information,” Journal of Financial and Quantitative
+Analysis, 29, 101–116.
+Santa-Clara, P., and S. Yan, 2010, “Crashes, Volatility, and the Equity Premium: Lessons
+from S&P 500 Options,” Review of Economics and Statistics , 92(2), 435–451.
+Schwert, G. W., 1989, “Why Does Stock Market Volatility Change Over Time?,” The Journal
+of Finance, 44(5), 1115–1153.
+34
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Shleifer, A., and R. W. Vishny, 1997, “The Limits of Arbitrage,” Journal of Finance , 52(1),
+35–55.
+Tauchen, G., and M. Pitts, 1983, “The Price Variability-Volume Relationship on Speculative
+Markets,” Econometrica, 51(2), 485–505.
+Trolle, A. B., and E. S. Schwartz, 2009, “Unspanned Stochastic Volatility and the Pricing of
+Commodity Derivatives,” Review of Financial Studies , 22(11), 4423–4461.
+Van der Merwe, R., and E. A. Wan, 2001, “The Square-Root Unscented Kalman Filter for
+State and Parameter-Estimation,” in Proceedings. 2001 IEEE International Conference on
+Acoustics, Speech, and Signal Processing, vol. 6, pp. 3461–3464.
+White, H., 1980, “A Heteroskedasticity-Consistent Covariance Matrix Estimator and a Direct
+Test for Heteroskedasticity,” Econometrica, 48(4), 817–838.
+35
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Table 1: ARMA Models for Changes in Risk-Neutral Skewness
+∆RNSkewt
+(1) (2) (3) (4)
+∆MinRVt -0.040 0.388*
+(-0.23) (1.66)
+∆ILQt -0.714** -1.110***
+(-2.33) (-2.87)
+Returnt -0.663*** -0.678*** -0.977*** -0.981***
+(-4.06) (-3.81) (-4.35) (-4.57)
+∆RNSkewt−1 0.472*** 0.471*** 0.465*** 0.466***
+(22.33) (22.23) (21.87) (22.04)
+R2 21.7% 21.7% 21.9% 22.0%
+Notes: We report regression results on daily changes in risk-neutral skewness of S&P500 index
+returns, ∆RSkewt. The sample period is from January 2, 2003 to April 26, 2016. Risk-neutral
+skewness, RSkewt, is calculated from end-of-the-day S&P500 index option prices with ma-
+turity closest to 30 days. We use the nonparametric method of Bakshi and Madan (2000) to
+calculate the 30-day forward-looking risk-neutral skewness measure. The independent vari-
+ables include change in realized variance estimator, ∆ MinRV , from Andersen, Dobrev, and
+Schaumburg (2012); changes in the market illiquidity proxy; ∆ILQ, measured by daily aver-
+aged eﬀective spreads across ﬁrms in the S&P500 constituents; Return, log S&P500 return.
+Each speciﬁcation is estimated using maximum likelihood. We use an ARMA(2,1) structure
+in the regression model, which is determined by the LjungBox test to suﬃciently remove cross-
+correlations in the residuals. We control for seasonality by including the day-of-the-week ﬁxed
+eﬀects. Robust t-statistic is reported in parenthesis below each parameter estimate. ***, **,
+
+ve cross-
+correlations in the residuals. We control for seasonality by including the day-of-the-week ﬁxed
+eﬀects. Robust t-statistic is reported in parenthesis below each parameter estimate. ***, **,
+and * indicate statistical signiﬁcance at the 1%, 5%, and 10% conﬁdence levels, respectively.
+The last row reports the R2 for each regression model.
+36
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Table 2: Maximum Likelihood Estimates: 2003–2016
+(1) SJ Model (2) SJV Model (3) SJVI Model
+λt = Ψt λt = Ψt +γVVt λt = Ψt+γVVt+γLLt
+Parameter Estimate Estimate Estimate
+Panel A. Filtered state dynamics
+κV 4.502 4.032 4.142
+(53.75) (49.21) (54.15)
+θV 0.031 0.029 0.028
+(6.89) (5.39) (8.62)
+ξV 0.289 0.269 0.268
+(5.87) (3.98) (5.35)
+νV -1.743 -1.766 -1.730
+(-22.56) (-15.98) (-7.34)
+κL 2.712 2.548 2.547
+(56.26) (21.10) (42.86)
+θL 0.164 0.159 0.159
+(3.82) (5.60) (5.91)
+ξL 0.180 0.172 0.170
+(3.73) (3.98) (8.08)
+κΨ 4.126 0.887 0.677
+(58.27) (1.59) (3.66)
+θΨ 1.615 0.122 0.102
+(24.42) (0.72) (0.85)
+ξΨ 0.561 0.186 0.204
+(7.01) (0.34) (1.32)
+ρ -0.792 -0.659 -0.681
+(-10.67) (-4.37) (-8.81)
+Panel B. Jump-size parameters
+θ -0.054 -0.032 -0.031
+(-13.13) (-18.79) (-16.68)
+δ 0.037 0.030 0.031
+(8.70) (4.43) (6.09)
+Panel C. Loadings on covariates
+αV 0.123 0.110 0.110
+(3.87) (9.31) (4.25)
+αL 0.117 0.112 0.117
+(5.90) (7.15) (7.94)
+γV 63.004 14.879
+(5.40) (4.91)
+γL 11.079
+(8.39)
+Log-Likelihood: 13,928.86 14,654.12 14,670.55
+Notes: We report MLEs of the three time-varying jump models: SJ, SJV, and SJVI. The sample
+period is from January 2, 2003 to April 26, 2016. Each model is estimated using daily OTM
+and ATM S&P500 index options, averaged eﬀective spreads of S&P500 constituents, and spot
+variance estimated from one-minute high-frequency S&P500 futures data. We maximize the log
+likelihood function in equation (19). The state variables are estimated using the UKF. We report
+
+s, and spot
+variance estimated from one-minute high-frequency S&P500 futures data. We maximize the log
+likelihood function in equation (19). The state variables are estimated using the UKF. We report
+t-statistic calculated using the outer product of the gradient in parenthesis below each parameter
+estimate.
+37
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Table 3: Descriptive Statistics of Filtered Jump Intensities and Spot Variances
+(1) SJ Model (2) SJV Model (3) SJVI Model
+λt = Ψt λt = Ψt +γVVt λt = Ψt+γVVt+γLLt
+Panel A. Jump intensity λt
+Mean 0.8127 2.0224 2.4052
+Median 0.4468 1.0933 2.0631
+Std. Dev. 1.1044 2.9575 1.3521
+25 percentile 0.2078 0.7003 1.7161
+75 percentile 0.9898 2.0753 2.6691
+Panel B. Spot variance Vt
+Mean 0.0229 0.0279 0.0276
+Median 0.0120 0.0126 0.0114
+Std. Dev. 0.0948 0.0461 0.0476
+25 percentile 0.0068 0.0078 0.0067
+75 percentile 0.0233 0.0278 0.0268
+Panel C. Spot illiquidity Lt
+Mean 0.1587 0.1586 0.1586
+Median 0.1481 0.1482 0.1480
+Std. Dev. 0.0579 0.0577 0.0579
+25 percentile 0.1245 0.1245 0.1245
+75 percentile 0.1743 0.1744 0.1742
+Notes: We report descriptive statistics of the ﬁltered jump intensity λt, spot variance Vt,
+and spot illiquidity Lt for the three models: SJ, SJV, and SJVI. The variables are reported
+in annualized terms by multiplying their daily values by 252. We obtain the ﬁltered state
+variables from the UKF step in the MLE estimation. Parameter estimates of the three models
+are reported in Table 2.
+38
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Table 4: Maximum Likelihood Estimates: Alternative Illiquidity Measures
+SJVI Model:λt = Ψt +γVVt +γLLt
+(1) Amihud ILQ (2) E-mini ILQ
+Parameter Estimate Estimate
+Panel A. Filtered state dynamics
+κV 4.286 4.066
+(34.29) (40.07)
+θV 0.028 0.027
+(8.95) (8.11)
+ξV 0.266 0.268
+(4.28) (5.90)
+νv -1.740 -1.726
+(-5.39) (-7.02)
+κL 3.567 2.565
+(70.35) (24.89)
+θL 0.162 0.153
+(6.00) (6.94)
+ξL 0.210 0.170
+(4.57) (5.66)
+κΨ 0.666 0.678
+(2.74) (5.22)
+θΨ 0.153 0.105
+(1.02) (0.88)
+ξΨ 0.186 0.205
+(0.95) (0.97)
+ρ -0.663 -0.689
+(-12.38) (-8.58)
+Panel B. Jump-size parameters
+θ -0.030 -0.031
+(-11.03) (-16.81)
+δ 0.036 0.031
+(9.89) (11.22)
+Panel C. Loadings on covariates
+αV 0.111 0.110
+(5.71) (6.54)
+αL 0.119 0.117
+(7.60) (5.49)
+γV 21.010 14.884
+(4.46) (3.09)
+γL 8.034 9.493
+(2.07) (4.45)
+Notes: We report MLE parameter estimates for the SJVI model estimated using two alternative
+illiquidity measures. In the ﬁrst column, the daily illiquidity measure is calculated following
+Amihud (2002). The daily Amihud illiquidity measure is calculated at the stock level, and
+then aggregated across S&P500 ﬁrms. The second column reports results using relative eﬀective
+spreads of S&P500 E-mini futures as the measure of stock market illiquidity. See Section 4.4
+for more details. T-statistics calculated using the outer product of the gradients are reported in
+parentheses.
+39
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Table 5: Summary Statistics of Selected Variables
+Panel A. Variable Description
+Variable Description Data source Mean Stdev Min Max
+ILQ Aggregate eﬀective spreads NYSE TAQ 0.156 0.061 0.073 0.710
+of S&P 500 ﬁrms
+Noise Arbitrage capital in the Hu, Pan and 0.078 0.080 0.018 0.516
+U.S. Treasury Wang (2013)
+AggInventory Aggregate order imbalance NYSE TAQ 0.010 0.031 −0.096 0.163
+of S&P 500 ﬁrms
+AbOrderFlow Order imbalance of CME 0.002 0.028 -0.102 0.128
+S&P 500 E-mini futures
+MinRV Diﬀusive variance TickData 0.022 0.065 0.001 1.934
+of S&P 500 cash index
+VIX S&P 500 option-implied CBOE 0.199 0.099 0.099 0.809
+volatility
+Panel B. Pearson Correlation Coeﬃcients
+ILQ Noise |AggInventory| | AbOrderFlow| MinRV VIX
+ILQ 1 0.803 0.135 0.034 0.717 0.863
+Noise 1 0.016 −0.065 0.531 0.830
+|AggInventory| 1 0.39 0.051 −0.020
+|AbOrderFlow| 1 −0.086 −0.130
+MinRV 1 0.671
+VIX 1
+Notes: This table summarizes the key variables that we examine in relation to the market
+illiquidity measure, ILQ. Panel A describes the variables, their data source, and report
+descriptive statistics. Panel B reports the Pearson correlations between the six variables. The
+sample period is from November 1, 2004 to December 30, 2014.
+40
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Table 6: Vector Autoregression Model (VAR) on ILQt+1
+Next Day Illiquidity: ILQt+1
+(1) (2) (3) (4)
+ILQt 0.294*** 0.300*** 0.301*** 0.289***
+(12.64) (12.90) (12.92) (12.36)
+Noiset 0.129** 0.129**
+(2.03) (2.02)
+|AggInventoryt| 0.037 0.029
+(1.53) (1.17)
+|AbOrderFlow t| 0.059** 0.052**
+(2.52) (2.13)
+MinRVt -0.009 -0.012 -0.011 -0.006
+(-0.70) (-1.01) (0.31) (-0.49)
+VIX t 0.115*** 0.120*** 0.110** 0.108**
+(2.65) (2.75) (2.54) (2.47)
+Returnt -0.311*** -0.317*** -0.320*** -0.321***
+(-5.23) (-5.35) (-5.52) (-5.35)
+R2 89.3% 89.3% 89.3% 89.4%
+Notes: We report results from estimating a vector autoregressive (VAR) model with ﬁve lags
+based on seven daily time-series variables from November 1, 2004 to December 30, 2014. We
+estimate four diﬀerent VAR speciﬁcations. Each column reports estimation results for a VAR
+speciﬁcation. For brevity, we only report coeﬃcient estimates of the ﬁrst-order autoregressive
+component in the VAR model for the dependent variable of interest, ILQ, which is the aggre-
+gate illiquidity measure. In Columns (1)–(3), ﬁve variables are included in the VAR model.
+In Column (4), all seven variables are included in the VAR model. Noise is the measure
+of Hu, Pan, and Wang (2013), which are the errors from ﬁtting daily U.S. Treasury yield
+curves.|AggInvestory| is the absolute value of aggregate inventory risk of securities in the
+S&P 500 index,|AbOrderFlow t| is the absolute value of abnormal order ﬂow in the S&P500
+E-mini futures contracts.
+
+.|AggInvestory| is the absolute value of aggregate inventory risk of securities in the
+S&P 500 index,|AbOrderFlow t| is the absolute value of abnormal order ﬂow in the S&P500
+E-mini futures contracts. MinRVt is the jump-free variance of S&P500 cash index. VIX is
+the CBOE’s VIX index, and Return represents the log daily return of S&P500 index. See the
+text for more details on these variables. Year-ﬁxed eﬀects and day-of-the-week-ﬁxed eﬀects are
+included but not reported. We report heteroscedasticity-consistent t-statistic in parentheses
+below each parameter estimate. ***, **, and * indicate statistical signiﬁcance at the 1%, 5%,
+and 10% conﬁdence levels, respectively.
+41
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Table 7: Explaining Change in Risk-Neutral Skewness with Illiquidity-related Variables
+Change in Risk-Neutral Skewness: ∆RNSkewt
+(1) (2) (3) (4)
+∆Noiset -2.177** -2.159** -2.101**
+(-2.26) (-2.24) (-2.18)
+∆|AbOrderFlow t| -0.642
+(-1.63)
+∆BuyOrderFlow t -0.445 -0.491
+(-0.99) (-1.09)
+∆SellOrderFlow t -1.164** -1.247**
+(-2.27) (-2.43)
+∆ILQt -1.170*** -0.916**
+(-2.82) (-2.11)
+∆MinRVt 0.151 0.152 0.496* 0.454*
+(0.68) (0.69) (1.88) (1.72)
+Returnt -3.978*** -4.317*** -3.876*** -4.458***
+(-7.94) (-7.59) (-7.75) (-7.79)
+∆RNSkewt−1 0.473*** 0.474*** 0.475*** 0.473***
+(19.95) (20.03) (19.76) (19.80)
+R2 24.91% 25.06% 24.76% 25.24%
+Notes: We report regression results on daily changes in risk-neutral skewness of S&P500
+index returns, ∆RSkewt. The sample period is from November 1, 2004 to December 30, 2014.
+We use an ARMA(2,1) structure in the regression model. Each speciﬁcation is estimated
+using maximum likelihood. We control for seasonality due to the day-of-the-week eﬀect. Risk-
+neutral skewness, RSkewt, on day t is calculated from end-of-the-day S&P 500 index option
+prices with maturity closest to 30 days. We use the nonparametric method of Bakshi and
+Madan (2000) to calculate the 30-day forward-looking risk-neutral skewness measure. The
+independent variables include change in realized variance estimator, ∆ MinRV ; change in
+market illiquidity, ∆ILQ; and log S&P 500 return, Return. In addition, we include two
+
+al skewness measure. The
+independent variables include change in realized variance estimator, ∆ MinRV ; change in
+market illiquidity, ∆ILQ; and log S&P 500 return, Return. In addition, we include two
+variables from Table 6 that are strong predictors of ILQ: change in the noise measure of Hu,
+Pan, and Wang (2013), ∆Noise; and change in the absolute abnormal order ﬂow in S&P500
+E-mini futures, ∆|AbOrderFlow t|. In Columns (3) and (4), we split the abnormal order ﬂow
+into the buy and sell components. We deﬁne BuyOrderFlow t = max(0,AbOrderFlow t), and
+SellOrderFlow t =− min(0,AbOrderFlow t). We report t-statistic in parentheses below each
+parameter estimate. ***, **, and * indicate statistical signiﬁcance at the 1%, 5%, and 10%
+conﬁdence levels, respectively.
+42
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Figure 1: Daily Time Series of Stock Market Variables
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+-0.1
+-0.05
+0
+0.05
+0.1
+S&P 500 Index Return
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+0
+0.2
+0.4
+0.6
+0.8
+Annualized Illiquidity Measure
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+0
+0.2
+0.4
+0.6
+0.8
+1
+Annualized Jump-robust Realized Variance: MinRV
+Notes: This ﬁgure plots four daily time series of selected variables for the S&P500 index. The sample period
+is from January 2, 2003 to April 26, 2016. The top panel plots the daily returns on the S&P500 index.
+In the middle panel, we plot the annualized illiquidity measure calculated as the equally-weighted average
+eﬀective spread of intraday trades across ﬁrms constituting the S&P500 index. The bottom panel plots the
+annualized jump-robust variance, MinR V, estimated using the one-minute grid returns of S&P500 cash index.
+It is calculated following the approach of Andersen, Dobrev, and Schaumburg (2012).
+43
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Figure 2: Implied Volatilities of OTM and ATM Options and Spot Volatility
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+0
+0.2
+0.4
+0.6
+0.8
+Implied Volatilities of OTM Options
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+0
+0.2
+0.4
+0.6
+0.8
+Implied Volatilities of ATM Options
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+0
+0.2
+0.4
+0.6
+0.8
+Annualized Spot Volatilities
+Notes: In the top panel, we plot the daily implied volatility of OTM put options written on the S&P500
+index from January 2, 2003 to April 26, 2016. In the second panel, we plot the implied volatility of ATM
+call options. Both options are chosen to have time to maturity closest to 30 calendar days. OTM options
+are chosen to have forward price-to-strike ratio closest to 0.95 while ATM options have the same ratio being
+closest to 1. The last panel plots the time series of the spot volatility measure constructed using one-minute
+grid of intraday returns at 4:00 p.m. each day, following Andersen, Fusari, and Todorov (2015b).
+44
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Figure 3: Filtered Jump Intensities: λt
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+0
+5
+10
+15
+20 Filtered Annualized Jump Intensity: SJ Model
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+0
+5
+10
+15
+20
+Filtered Annualized Jump Intensity: SJV Model
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+0
+5
+10
+15
+20 Filtered Annualized Jump Intensity: SJVI Model
+Notes: We plot daily annualized jump intensities λt ﬁltered for the three models that we study from January
+2, 2003 to April 26, 2016. The jump intensity speciﬁcations in the three models can be summarized as follows:
+SJ : λt = Ψ t
+SJV : λt = Ψ t +γVVt
+SJVI : λt = Ψ t +γVVt +γLLt.
+The top panel corresponds to the SJ model that has a jump intensity solely driven by a latent jump intensity
+term; the middle panel corresponds to the SJV model that has a jump intensity driven by a latent stochastic
+jump intensity and variance; and the bottom panel corresponds to the SJVI model that has a jump intensity
+driven by a latent stochastic jump intensity, variance, and illiquidity.
+45
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Figure 4: Decomposition of Jump Intensity: SJV vs. SJVI
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+0
+5
+10
+15
+20 Decomposition of Jump Intensity: SJV Model
+Latent
+Variance
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+0
+5
+10
+15
+20 Decomposition of Jump Intensity: SJVI Model
+Latent
+Variance
+Illiquidity
+Notes: We plot the decomposition of the daily annualized jump intensities λt ﬁltered from the SJV model (top
+panel) and the SJVI model (bottom panel) from January 2, 2003 to April 26, 2016. The top panel decomposes
+daily jump intensity dynamics of the SJV model into the portion coming from the latent stochastic jump
+intensity term, Ψt, and the portion that is due to the daily spot variance, γVVt. In the bottom panel, we
+decompose daily jump intensity dynamics of the SJVI model into the portion coming from the latent stochastic
+jump-intensity-speciﬁc term Ψt, the portion that is due to the daily spot variance, γVVt, and the portion that
+is due to daily spot market illiquidity, γLLt.
+46
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Figure 5: Relative Contribution to Jump Intensity for the SJVI Model
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+0
+50
+100 Jump Intensity from Latent Factor (Mean = 10.35%)
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+0
+20
+40
+60
+80
+100 Jump Intensity from Variance (Mean = 12.64%)
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
+0
+50
+100 Jump Intensity from Liquidity (Mean = 77.01%)
+Notes: We plot the breakdown of the daily annualized jump intensity,λt = Ψt +γVVt +γLLt, ﬁltered from the
+SJVI model from January 2, 2003 to April 26, 2016. The top panel plots the percentage contribution coming
+from the latent stochastic jump intensity term, Ψ t/λt. The middle panel plots the contribution coming from
+the variance term, γVVt/λt. The bottom panel plots the contribution from the illiquidity term, γlLt/λt.
+47
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Figure 6: Proportion of Forecast Error Variance (ˆϵλ,t+τ) Explained by Vt and Lt
+2003 2006 2009 2012 2016
+0
+20
+40
+60
+80
+100
+Proportion explained by Vt
+2003 2006 2009 2012 2016
+0
+20
+40
+60
+80
+100
+Proportion explained by Lt
+Notes: This ﬁgure plots the time series of FEVD for the jump intensity λt+τ at the horizon of 1 day. The
+y-axis displays the proportion of the forecast error variance explained by the factors. The forecast error for
+the jump intensity τ days ahead conditional on time t is deﬁned as eλ
+t+τ = λτ−Et[λτ]. We decompose the
+variance of the forecast error Var t
+[
+eλ
+t+τ
+]
+into components associated with shocks to the illiquidity factor Lt
+(bottom panel), and the spot variance Vt (top panel). The contribution of the latent state variable Ψ t in
+the variance eλ
+t+τ is very small and for brevity, is not reported here. All model parameters and ﬁltered state
+variables are taken from the SJVI model estimates in Table 3.
+48
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Figure 7: Alternative Illiquidity Measures
+2005 2006 2007 2008 2009 2010 2011 2012
+0
+0.2
+0.4
+0.6
+0.8
+Aggregte Effective Spread (S&P500): ILQt
+2005 2006 2007 2008 2009 2010 2011 2012
+0
+0.2
+0.4
+0.6
+0.8
+Effective Spread of E-mini Futures: E-mini ILQt
+2005 2006 2007 2008 2009 2010 2011 2012
+0
+0.2
+0.4
+0.6
+0.8
+Amihud Illiquidity Measure: Amihud ILQt
+2005 2006 2007 2008 2009 2010 2011 2012
+0
+5
+10
+15
+20
+Filtered Jump Intensity: ILQt
+2005 2006 2007 2008 2009 2010 2011 2012
+0
+5
+10
+15
+20
+Filtered Jump Intensity: E-mini ILQt
+2005 2006 2007 2008 2009 2010 2011 2012
+0
+5
+10
+15
+20
+Filtered Jump Intensity: Amihud ILQt
+Notes: We plot daily time-series of three market illiquidity measures (left-column panels), and their corre-
+sponding ﬁltered jump intensities (right-column panels) implied by the SJVI model. The sample period is from
+November 1, 2004 to April 26, 2016. Market illiquidity and jump intensity levels are plotted in annualized
+terms. The top two panels plot results for the aggregate eﬀective spread measure ILQt deﬁned in equation
+(1), which is the main illiquidity measure used in the paper. The bottom four panels plot results for the two
+alternative illiquidity measures that we use in our robustness check. The middle two panels plot results for
+the illiquidity measure that is calculate using eﬀective spreads of S&P500 E-mini futures, E-mini ILQt. In
+the bottom panel, we plot results obtained using the Amihud’s (2002) illiquidity measure, Amihud ILQt. We
+
+ty measure that is calculate using eﬀective spreads of S&P500 E-mini futures, E-mini ILQt. In
+the bottom panel, we plot results obtained using the Amihud’s (2002) illiquidity measure, Amihud ILQt. We
+normalize the two alternative illiquidity measures to have the same in-sample mean as the ILQt measures
+that is calculated using aggregate eﬀective spreads of S&P 500 ﬁrms.
+49
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Appendix
+A Risk-Neutral Skewness
+We use the model-free methodology implemented by Bakshi and Madan (2000) and Kozhan,
+Neuberger, and Schneider (2014), among others, to compute risk-neutral skewness. A key
+insight of this approach is that one can replicate any desired payoﬀ by designing a portfolio
+of OTM European call and put options over a continuum of strike prices.
+For an overview of this approach, let S denote the underlying asset value and let G[S]
+denote the payoﬀ at maturity τ for a generic contingent claim written on S. By discounting
+the contingent claim with the risk-free rater, its price can be evaluated under the risk-neutral
+expectation as EQ
+t{e−rτG[S]}. Bakshi and Madan (2000) show that for any twice-continuously
+diﬀerentiable payoﬀ functionG[S] with bounded expectation, the price of this contingent claim
+contract can be spanned according to the formula
+EQ
+t{e−rτG[S]} = e−rτ (G[S]−SGS[S]) +GS[S]St +
+∫ ∞
+S
+GSS[K]C(t,τ ;K)dK
++
+∫ S
+0
+GSS[K]P (t,τ ;K)dK, (21)
+whereGs[S] and Gss[K] represent the ﬁrst and second derivatives of the payoﬀ function G
+evaluated at some asset value S and at the strike price K, respectively. The above equation
+shows that the contingent claim price can be replicated using a portfolio consisting of a risk-
+free bond, an underlying asset, and OTM calls and puts. The integrals in equation (21) can
+be evaluated numerically. We use a cubic spline method to calculate the integrals across
+moneyness.
+
+a risk-
+free bond, an underlying asset, and OTM calls and puts. The integrals in equation (21) can
+be evaluated numerically. We use a cubic spline method to calculate the integrals across
+moneyness.
+To construct higher risk-neutral moments, we focus on the payoﬀ function G with power
+contracts. That is,
+G[S] =
+{ r2
+t,τ the volatility contract
+r3
+t,τ the cubic contract, (22)
+where rt,τ denotes the log-return of asset price S from time t to t +τ. The risk-neutral
+volatility and skewness are then computed as
+Vol Q
+t,τ ={EQ
+t [(rt,τ− EQ
+t [rt,τ])2]}1/2, (23)
+Skew Q
+t,τ = EQ
+t [(rt,τ− EQ
+t [rt,τ])3]
+{EQ
+t [(rt,τ− EQ
+t [rt,τ])2]}3/2. (24)
+We obtain data on S&P 500 index options between 2003 and 2016 from OptionMetrics. We use
+the average of the bid and ask quotes for each option contract and ﬁlter out options with bids
+of $0 as well as those whose average quotes are less than $3 /8. We also ﬁlter out quotes that
+50
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+do not satisfy standard no-arbitrage conditions. Finally, we eliminate in-the-money options
+because they are less liquid than OTM and ATM options. We only estimate the moments
+for days that have at least two OTM call prices and two OTM put prices available. Finally,
+for our maturity of interest, i.e., 30-day, we implement a linear interpolation to calculate the
+corresponding risk-neutral moments.
+B High Frequency Spot Variance
+Following Andersen, Fusari, and Todorov (2015b), we construct a consistent estimator of spot
+variance at the end of each trading day using the one-minute grid of S&P 500 futures returns
+as follows:
+ˆV (n,mn)
+t = n
+mn
+n∑
+i=n−mn+1
+(ri,t)2I(|ri,t|≤ αn−ω). (25)
+We use one-minute-grid returns over 6.5 hours in a trading day, thus resulting in n = 390
+observations. The value of mn is set to be 75% of n for each day. Other tuning parameters
+are set as follows: α = 4√BPVt and ω = 0.49 where BPV denotes the bi-power variation of
+dayt computed using full one-minute grid of returns.
+C Coeﬃcients in the Aﬃne Characteristic Function
+The model that we study is casted in aﬃne framework so that the conditional characteristic
+function is exponential aﬃne in the state variables following Duﬃe, Pan, and Singleton (2000).
+Its functional form is given by
+Et[exp(iφ log(ST ))] = exp ( α(τ) +β0(τ) log(St) +β1(τ)Vt +β2(τ)Lt +β3(τ)Ψt) (26)
+We use the notation τ =T−t for simplicity. The coeﬃcients satisfy the following system of
+
+functional form is given by
+Et[exp(iφ log(ST ))] = exp ( α(τ) +β0(τ) log(St) +β1(τ)Vt +β2(τ)Lt +β3(τ)Ψt) (26)
+We use the notation τ =T−t for simplicity. The coeﬃcients satisfy the following system of
+Ricatti ordinary diﬀerential equations (ODE) with the boundary conditions β0(0) = iφ and
+α(0) =β1(0) =β2(0) =β3(0) = 0
+51
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+dβ0
+dτ = 0
+dα
+dτ = irφ + (κVθV +αLκLθL)β1 + (αVκVθV +κLθL)β2 +κΨθΨβ3
+dβ1
+dτ = 1
+2ξ2
+Vβ2
+1 + (ξVρiφ +αVξ2
+Vβ2−κV )β1 +
+(1
+2α2
+Vξ2
+Vβ2
+2 +αV (ξVρiφ−κL)β2 + 1
+2(iφ)2− (1
+2 +αLξ)iφ +γVθu)
+dβ2
+dτ = 1
+2ξ2
+Lβ2
+2 + (αLξ2
+Lβ1−κL)β2 + (1
+2α2
+Lξ2
+Lβ2
+1−αLκLβ1−γlξiφ +γlθu)
+dβ3
+dτ = 1
+2ξ2
+Ψβ2
+3−κΨβ3 +θu−ξiφ
+where θu = (eθiφ+ 1
+2δ2(iφ)2
+− 1). Equations for β0 and β3 can be solved analytically in terms
+of elementary functions while α, β1, and β2 need to be solved numerically. We employ a
+fourth-order Runge-Kutta method with the step size of ∆ t = 1/252.
+D Forecast Error Variance Decomposition
+In the SJVI model, changes in jump intensity are driven by shocks to the spot illiquidity Lt,
+the latent factor Ψt, and the spot variance Vt. Under the assumption of zero autocorrelation
+in the three shocks, we can approximate the variance in the forecast error, eλ
+t+τ, as:
+Vart[eλ
+t+τ]≈ Vart[eΨ
+t+τ] + [γV γL] Vart
+[
+eV
+t+τ
+eL
+t+τ
+][γVγL
+]
+(27)
+whereeΨ
+t+τ,eV
+t+τ, andeL
+t+τ correspond to the shock associated with the three factors Ψt,Vt, and
+Lt, respectively. After tedious algebra, we can compute the decomposition of forecast error
+variance explained by each factor in closed-form. Speciﬁcally, the proportion of Vart
+[
+eλ
+t+τ
+]
+explained by Vt is
+θV ∆t
+{∑τ−1
+j=0γ′
+VL Φj
+VL
+[
+ξ2
+V αVξ2
+V
+αVξ2
+V α2
+Vξ2
+V
+](
+Φj
+VL
+)′
+γVL
+}
++∆t (Vt−θV )∑τ−1
+j=0
+
+
+
+(
+e′
+1Φτ−j−1
+VL e1
+)
+γ′
+VL Φj
+VL
+[
+ξ2
+V αVξ2
+V
+αVξ2
+V α2
+Vξ2
+V
+](
+Φj
+VL
+)′
+γVL
++
+(
+e′
+2Φτ−j−1
+VL e1
+)
+γ′
+VL Φj
+VL
+[
+α2
+Lξ2
+L αLξ2
+L
+αLξ2
+L ξ2
+L
+](
+Φj
+VL
+
+Φj
+VL
+)′
+γVL
+}
++∆t (Vt−θV )∑τ−1
+j=0
+
+
+
+(
+e′
+1Φτ−j−1
+VL e1
+)
+γ′
+VL Φj
+VL
+[
+ξ2
+V αVξ2
+V
+αVξ2
+V α2
+Vξ2
+V
+](
+Φj
+VL
+)′
+γVL
++
+(
+e′
+2Φτ−j−1
+VL e1
+)
+γ′
+VL Φj
+VL
+[
+α2
+Lξ2
+L αLξ2
+L
+αLξ2
+L ξ2
+L
+](
+Φj
+VL
+)′
+γVL
+
+
+
+Vart
+[
+eλ
+t+τ
+]
+and the proportion of Vart
+[
+eλ
+t+τ
+]
+explained by Lt is
+52
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+θL∆t
+{∑τ−1
+j=0γ′
+VL Φj
+VL
+[
+α2
+Lξ2
+L αLξ2
+L
+αLξ2
+L ξ2
+L
+](
+Φj
+VL
+)′
+γVL
+}
++∆t (Lt−θL)∑τ−1
+j=0
+
+
+
+(
+e′
+1Φτ−j−1
+VL e2
+)
+γ′
+VL Φj
+VL
+[
+ξ2
+V αVξ2
+V
+αVξ2
+V α2
+Vξ2
+V
+](
+Φj
+VL
+)′
+γVL
++
+(
+e′
+2Φτ−j−1
+VL e2
+)
+γ′
+VL Φj
+VL
+[
+α2
+Lξ2
+L αLξ2
+L
+αLξ2
+L ξ2
+L
+](
+Φj
+VL
+)′
+γVL
+
+
+
+Vart
+[
+eλ
+t+τ
+]
+and lastly the proportion of Vart
+[
+eλ
+t+τ
+]
+explained by Ψt is
+∆tξ2
+Ψ
+(
+1−Φ2τ
+Ψ
+1−Φ2
+Ψ
+θΨ + Φτ−1
+Ψ
+1−θτ
+Ψ
+1−θΨ
+(Ψt−θΨ)
+)
+Vart
+[
+eλ
+t+τ
+]
+where we have used the following notation: γVL =
+[γVγL
+]
+, ΦVL =
+[
+1−κP
+V ∆t −αLκL∆t
+−αVκP
+V ∆t 1−κL∆t
+]
+,
+ΦΨ = 1−κΨ∆t, e1 =
+[1
+0
+]
+, and e2 =
+[0
+1
+]
+.
+53
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Figure A.1: Percentiles of Dollar Eﬀective Spread: S&P 500 Constituents
+2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017
+0
+0.02
+0.04
+0.06
+0.08
+0.1
+0.12
+0.14Dollar Effective Spread
+5 Percentile 25 Percentile 50 Percentile 75 Percentile 95 Percentile
+Notes: We plot the 5th, 25th, 50th, 75th, and 95th percentiles of the daily eﬀective spreads
+(in dollars) from the constituents of the S&P 500 index. For the majority of ﬁrms in the S&P
+500 index, trades are executed with an eﬀective spread above one cent, which is the minimum
+tick size in the NYSE. This ﬁnding holds throughout our sample period going from January
+2, 2003 to December 30, 2016.
+54
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Supplementary Internet Appendix to:
+“Time-Varying Crash Risk Embedded in Index Options:
+The Role of Stock Market Liquidity”
+Peter Christoﬀersen Bruno Feunou Yoontae Jeon
+Chayawat Ornthanalai
+0
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+This document contains discussions and additional results that were left out of the main paper
+due to space considerations. In this supplementary appendix, Section IA.1 and section IA.2
+investigate the impact of market illiquidity on realized jump variation and realized skewness
+instead of option-implied skewness. Section IA.3 estimates the risk premiums on our state
+variables implied by the models by ﬁtting them to daily S&P500 index returns. Section IA.4
+examines the in-sample option pricing ﬁts of the three models that we study. Section IA.5
+examines the impact of shocks to the spot volatility and market illiquidity by looking at the
+impulse response funcion. Finally, Section IA.6 analyzes the impact of circuit breakers on the
+jump intensity dynamic.
+IA.1 Realized Variance and Jump Variation
+Following Barndorﬀ-Nielsen and Shephard (2004), we deﬁne daily realized jump variation,
+RJV, as the component of total realized variance RV that is not explained by MinRV. On
+each day, it is calculated as:
+RJVt = max(RVt−MinRVt, 0). (IA.1)
+We can think of RJV as a proxy for jump risk in daily index returns. The mean and standard
+deviation of the MinRV measure over this period are 0.0171 and 0.0489, respectively. For
+the RJV measure, the mean and standard deviation are 0.0029 and 0.0085. The daily index
+return variance is thus mostly diﬀusive. 1
+IA.1.1 Predicting Realized Jumps
+This section provides preliminary evidence on the economic relationship between market illiq-
+
+9 and 0.0085. The daily index
+return variance is thus mostly diﬀusive. 1
+IA.1.1 Predicting Realized Jumps
+This section provides preliminary evidence on the economic relationship between market illiq-
+uidity and jump risk. We estimate a predictive regression model on the realized jump variation
+measure RJV. We examine three variables of interest and their various combinations, namely,
+the market illiquidity measure ILQ, the diﬀusive quadratic variation measure MinRV , and
+the option-implied volatility index VIX. The most general predictive regression speciﬁcation
+is
+RJVt+1 = β0 +β1MinRVt +β2ILQt +β3VIX t +β3Rett +β3RJVt +ϵt+1. (IA.2)
+1This ﬁnding is consistent with Huang and Tauchen (2005) who ﬁnd that jumps account for 7% of stock
+market price variance.
+1
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+We obtain daily VIX levels from the Chicago Board of Options Exchange (CBOE) calculated
+as the 30-day implied volatility level of S&P500 index options. We include lagged log return
+of the S&P 500 ( Ret) and the autoregressive term for RJV as control variables. Year and
+day-of-the-week ﬁxed eﬀects are present in all regression speciﬁcations, but their estimates
+are not reported here to save space.
+Table IA.1 summarizes the regression results for six speciﬁcations based on the general
+model described in equation (IA.2). We report the heteroskedasticity-consistent t-statistic
+(White, 1980) in parentheses below each parameter estimate. Columns (1)–(3) show that when
+each of the three variables enters in the regression model, it appears statistically signiﬁcant
+in predicting the realized jump variation the next day. We ﬁnd that MinRVt, ILQt, and
+VIX t are positive and highly signiﬁcant at the 95% level or higher. These positive coeﬃcients
+conﬁrm the intuition that jumps are more likely to occur following a day of volatile and illiquid
+market conditions. Looking at the size of the coeﬃcients, we ﬁnd that market illiquidity, ILQ,
+is the dominant variable. A one-standard-deviation increase in market illiquidity today would
+increase realized jump variation by 7.8% the next day.
+Columns (4)–(5) report results for combining market illiquidity and the two volatility
+measures. The results show that ILQt is the dominant variable in predicting daily realized
+jump variation.
+
+t day.
+Columns (4)–(5) report results for combining market illiquidity and the two volatility
+measures. The results show that ILQt is the dominant variable in predicting daily realized
+jump variation. When the market illiquidity measure ILQt is added to the regression, the
+coeﬃcient on MinRVt loses statistical signiﬁcance while the coeﬃcient on VIX t still carries
+statistical signiﬁcance at the 95% level. Column (6) reports results for the most general
+speciﬁcation where all independent variables are included. We ﬁnd that the coeﬃcient on
+ILQt decreases by half due to inﬂuences of the two market variance measures. Nevertheless,
+we ﬁnd that ILQt is the only variable that remains statistically signiﬁcant, conﬁrming that
+it is the leading predictor of realized jump variation in the stock market. We emphasize that
+the market illiquidity measure that we use is calculated from eﬀective spreads of 500 ﬁrms
+constituting the S&P500 index while the dependent variable, RJV, is constructed from one-
+minute log returns on the S&P500 cash index. Market illiquidity and realized return jump
+variations are thus not mechanically related. Motivated by this model-free evidence, we now
+develop a continuous-time model that allows market illiquidity to act as an economic covariate
+in explaining time-varying volatility and crash risk.
+IA.2 Realized Skewness Regression
+We ﬁrst examine the impact of market illiquidity on the daily realized skewness measure,
+RSkew.
+
+onomic covariate
+in explaining time-varying volatility and crash risk.
+IA.2 Realized Skewness Regression
+We ﬁrst examine the impact of market illiquidity on the daily realized skewness measure,
+RSkew. Unlike risk-neutral skewness that represents a forward-looking measure of the stock
+2
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+market crash risk, RSkew is calculated using historically observed high-frequency intraday
+index returns. Therefore, a more negative daily realized skewness level would indicate an
+increasing probability that a crash in the stock market has occurred during that trading day.
+We estimate a time-series regression for the change in realized skewness, ∆ RSkewt+1,
+similar to the general model shown in equation (7). However, we use a predictive regression
+model for the change in realized skewness by lagging all independent variables by one day.
+This is because RSkew is calculated from intraday trades observed during the day, which is
+the same data period used for calculating MinRV and ILQ.2 This concern, however, does not
+apply to the risk-neutral skewness regression because RNSkew is calculated using end-of-day
+option prices and is derived from a diﬀerent data source.
+We construct the daily realized skewness measure,RSkew, following the method in Amaya,
+Christoﬀersen, Jacobs, and Vasques (2015), which has been shown to signiﬁcantly predict stock
+returns. This realized skewness is calculated using one-minute log returns of the S&P500 cash
+index as follows:
+RSkewN
+t =
+√
+N∑N
+i=1r3
+i,t
+(RVN
+t )3/2 , (IA.3)
+where N is the number of time intervals in a trading day. As N goes to inﬁnity, the above
+measure converges to the cubic variation of the jump component in the daily return, i.e., the
+diﬀusive component is excluded in its measurement.
+
+vals in a trading day. As N goes to inﬁnity, the above
+measure converges to the cubic variation of the jump component in the daily return, i.e., the
+diﬀusive component is excluded in its measurement.
+Table IA.2 reports four sets of regression results on changes in daily realized skewness. We
+use an ARMA model withp = 1 in the autoregressive term andq = 2 in the error term. These
+lags are determined by the Ljung-Box test. The results shown in Table IA.2 strongly support
+the ﬁndings in Table 2, which are obtained using daily changes in risk-neutral skewness. That
+is, an increase in market illiquidity is negatively related to realized skewness. Column (2) shows
+that the negative coeﬃcient on ∆ MinRV is negligible in magnitude as well as in statistical
+signiﬁcance. However, when both ∆ MinRV and ∆ILQ are added to the regression model,
+the coeﬃcient estimate on ∆ MinRV becomes positive and statistically signiﬁcant. These
+ﬁndings are consistent with the results obtained in Table 2. Therefore, we ﬁnd the eﬀect
+of market illiquidity on crash probability is robust to measuring the stock market crask risk
+using forwarding-looking risk-neutral skewness or historical realized skewness.
+2Our conclusion is unaﬀected when we use a contemporaneous regression instead of a predictive regression.
+3
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+IA.3 Risk Premiums
+Using the risk-neutral parameter estimates in Table 3 and daily ﬁltered states variables
+{ ˆVt, ˆLt, ˆΨt} estimated previously, we infer the risk premium parameters. This is done by esti-
+mating the model on daily S&P500 index returns from 2004–2012, and keeping the parameters
+that are not aﬀected by the change of probability measures ﬁxed. This approach to identify
+risk premiums was also employed in Andersen, Fusari, and Todorov (2015b).
+We assume the conventional form of the pricing kernel that preserves the aﬃne structure
+of the model under the physical measure. The prices of risk associated with the four Brownian
+motions are given by
+dW 1,P
+t = dW 1
+t−ν1
+√
+Vtdt (IA.4)
+dW 2,P
+t = dW 2
+t−νV
+√
+Vtdt (IA.5)
+dW 3,P
+t = dW 3
+t (IA.6)
+dW 4,P
+t = dW 4
+t (IA.7)
+The parameterν1 in equation (IA.4) corresponds to the price of risk parameter for the ﬁrst
+Brownian innovation in the return process. Recall thatνV is the price of risk parameter for the
+volatility innovation that we estimated from options and realized spot variance as part of the
+UKF. Its estimate is reported in Table 3. Recall also that we do not impose any risk premium
+assumptions on the third and fourth Brownian motions corresponding to the illiquidity and
+latent jump intensity innovations, respectively.
+We follow Pan (2002) and assume the diﬀerence between jump distributions under the
+physical and risk-neutral measures derives from the jump-size risk premium, νθ, deﬁned as
+
+innovations, respectively.
+We follow Pan (2002) and assume the diﬀerence between jump distributions under the
+physical and risk-neutral measures derives from the jump-size risk premium, νθ, deﬁned as
+the diﬀerence between jump-size means, θP−θ. The dynamic of the log-stock price under the
+physical probability measure can be written as
+d log(St) = ( r− 1
+2Vt−µPλt + (
+√
+1−ρ2ν1 +ρνv)Vt + (µP−µ)λt)dt +
+√
+Vt(
+√
+1−ρ2dW 1,P
+t +ρdW 2,P
+t ) +qtdN P
+t (IA.8)
+whereµP = exp(θP + 1
+2δ2)−1 is the jump compensator under the physical measure. Comparing
+the P-measure return dynamic in equation (IA.8) to theQ-measure return dynamic in equation
+4
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+(8) shows that the equity risk premium, πt, can be written as
+πt = ( µP−µ)λt + (
+√
+1−ρ2ν1 +ρνV )Vt (IA.9)
+= ( µP−µ)λt +νSVt, (IA.10)
+where we deﬁne νS =
+√
+1−ρ2ν1 +ρνv in equation (IA.10).
+Using the ﬁltered state variables, { ˆVt, ˆLt, ˆΨt}, we apply daily discretization to the return
+process and estimate the risk premium parameters νθ andνS using MLE while ﬁxing all other
+parameters. The estimate for ν1 is then inferred from νS.
+Daily discretization of the physical return process yields
+rt+1≃ (r + (νS− 1
+2) ˆVt−µ ˆλt)∆t +
+√
+ˆVt
+√
+∆tϵt +
+Nt∑
+i=1
+yi,t, (IA.11)
+whereνS =
+√
+1−ρ2ν1 +ρνv, and ϵt is the standard normal innovation. The jump component
+is represented by a compound Poisson process ∑Nt
+i=1yi,t, where Nt is the number of jump
+arrivals with intensity λt on day t, and yi,t is i.i.d. normal with mean θP and variance δ2.
+Conditional on the number of jumps Nt = j, we can write the likelihood as conditionally
+normal, thus, the daily return likelihood can be computed analytically.
+Table IA.3 reports estimation results of the risk premium parameters. Because we let
+the risk-neutral parameters and ﬁltered states be ﬁxed during the estimation procedure, we
+do not report the associated t-statistics as they are not meaningful. Using the estimates
+reported in Table IA.3 and Table 2, we quantify the economic magnitude of each risk premium
+component in terms of annualized excess returns. Equation (IA.10) shows that the equity risk
+premium can be decomposed into two main components.
+
+we quantify the economic magnitude of each risk premium
+component in terms of annualized excess returns. Equation (IA.10) shows that the equity risk
+premium can be decomposed into two main components. The ﬁrst component represents
+the compensation for bearing stock market crash risk, ( µP−µ)λt. The second component
+represents the compensation for bearing stock market diﬀusive return risk and variance risks,
+νSVt. For brevity, we refer to νSVt as diﬀusive risk in the equity risk premium.
+We ﬁrst look at the compensation for bearing stock market diﬀusive risk. This is calculated
+as νS ¯V , where ¯V is the time-series mean of the annualized variance reported in Table 4. We
+estimate the compensation for bearing diﬀusive risk for the SJ, SJV, and SJVI model to be
+10.64%, 6.87%, and 6.66% in annualized excess returns, respectively.
+We next look at the compensation for bearing stock market crash risk. For each model,
+we calculate the long-run jump risk premium level (µP−µ)¯λ, where ¯λ is the annualized time-
+series mean of the jump intensity dynamic reported in Table 4. We estimate the compensation
+5
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+for bearing market crash risk for the SJ, SJV, and SJVI models to be 2 .6%, 2.4%, and 3.1%
+in annualized excess returns, respectively. The jump risk premium estimates implied by the
+models are consistent with prior studies that estimate a time-varying jump risk model on the
+S&P500 index. For instance, Ornthanalai (2014) estimates the jump risk premium implied by
+the compound Poisson jump process over the 1996–2012 period and ﬁnds that its magnitude
+is 4.5% per year. Using index options and returns data from 1989–1996, Pan (2002) ﬁnds that
+the implied jump risk premium is 3 .5% per annum.
+IA.4 Option Fit
+We compare the performance of the SJ, SJV, and SJVI models that we study based on their
+in-sample option ﬁt. We deﬁne in-sample option pricing error as the vega-weighted root mean
+squared error (VWRMSE)
+VWRMSE(ATM) =
+√ 1
+T
+T∑
+t=1
+(ATM O
+t+1− ¯ATM
+M
+t+1)2, (IA.12)
+where ¯ATM
+M
+t+1 denotes the forecast of the vega-weighted ATM option price at time t + 1.
+Option pricing errors for OTM options are computed in a similar way.
+Table IA.4 reports in-sample option pricing errors for the three models. We separate the
+sample into three sub-periods of three years each. We ﬁnd that pricing errors are very similar
+in magnitude between SJV and SJVI models, where the SJV model performs better during the
+crisis period while the SJVI model has lower pricing errors during normal times. An important
+remark is in order regarding the similar option pricing ﬁt between the SJV and SJVI models.
+
+er during the
+crisis period while the SJVI model has lower pricing errors during normal times. An important
+remark is in order regarding the similar option pricing ﬁt between the SJV and SJVI models.
+The loss function used in the estimation procedure is not the option pricing error such as the
+VWRMSE metric. This is because the objective of our estimation is not to minimize option
+pricing errors, but rather to extract and the latent jump and volatility dynamics from option
+prices and linking them to observable covariates (i.e., market illiquidity). As a result, the
+similarity in the pricing errors between the SJV and SJVI models should be interpreted as an
+evidence that adding illiquidity as an observable variable can explain the latent jump intensity
+process while preserving a comparable option pricing ﬁt.
+Table IA.4 shows that the SJ model exhibits large pricing errors in all periods relative to
+the other two models. Thus, the improvement in ﬁtting observed option prices, particularly
+during calm periods, using the SJVI model suggests that its jump intensity speciﬁcation is
+well-suited for capturing the jump intensity dynamic embedded in the index options.
+6
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+IA.5 Impulse Response Function
+We examine the impact of market illiquidity on the current and future crash probability using
+impulse response functions (IRFs). The IRF tells how much the current and future crash
+intensityλt+τ respond to a one-standard-deviation increase in either the spot variance Vt, the
+spot market illiquidity Lt, or the level of latent state variable Ψ t.
+The SJVI model that we propose yields an analytically tractable IRF for the jump intensity.
+We start by expanding the discretized state-space system in equations 12–14, and rewrite it
+in terms of past innovation terms only. This results in the following system of equations:
+[Vt+1
+Lt+1
+]
+=
+[θV
+θL
+]
++
+∞∑
+j=0
+[
+1−κP
+V ∆t −αLκL∆t
+−αVκP
+V ∆t 1−κL∆t
+]j[ 1 αL
+αV 1
+][ηV
+t+1−j
+ηL
+t+1−j
+]
+(IA.13)
+Ψt+1 = θΨ +
+∞∑
+j=0
+(1−κΨ∆t)jηΨ
+t+1−j, (IA.14)
+where ηV
+t+1 =ξV
+√
+∆t√Vtϵ1
+t+1, ηL
+t+1 =ξL
+√
+∆t√Ltϵ2
+t+1, and ηΨ
+t+1 =ξΨ
+√
+∆t√Ψtϵ3
+t+1.
+Plugging the expansions shown in equations (IA.13)–(IA.14) into the jump intensity dy-
+namic, λt+1 = Ψt+1 +γVVt+1 +γLLt+1, we can express λt+1 only in terms of shocks to the
+system as
+λt+1 = θΨ +γVθV +γLθL + (IA.15)
+∞∑
+j=0
+[γV γL]
+[
+1−κP
+V ∆t −αLκL∆t
+−αVκP
+V ∆t 1−κL∆t
+]j[ 1 αL
+αV 1
+][ηV
+t+1−j
+ηL
+t+1−j
+]
++
+∞∑
+j=0
+(1−κΨ∆t)jηΨ
+t+1−j,
+whereηV
+t+1−j,ηL
+t+1−j, andηΨ
+t+1−j represent shocks speciﬁc to the variance, illiquidity, and latent
+factors, respectively. Thus, the impulse response of a speciﬁc shock for τ periods ahead can
+
+1−j,
+whereηV
+t+1−j,ηL
+t+1−j, andηΨ
+t+1−j represent shocks speciﬁc to the variance, illiquidity, and latent
+factors, respectively. Thus, the impulse response of a speciﬁc shock for τ periods ahead can
+be calculated by simply setting j =τ in the coeﬃcient associated with that speciﬁc shock in
+equation (IA.15).
+In Figure IA.1, we consider two dates where the level of spot volatility is relatively high
+or low. The left-hand-side panels plot the IRF on March 11, 2009, with high spot volatility.
+The right-hand-side panels plot the IRF on January 8, 2004, with a low spot volatility.
+Looking at the IRF plots on the day with high volatility (left panels), we ﬁnd that the
+impact of spot volatility dominates. A one-standard-deviation increase in the spot volatility
+7
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Vt translates to an increase of 0.11 in jump intensity on the same day. Importantly, the
+impact of a shock to spot volatility is very persistent with a half life of about two months. A
+one-standard-deviation increase in the market spot illiquidity Lt increases the jump intensity
+by about 0.07. Looking at the impact of a shock to the latent factor Ψ t, we ﬁnd that it is
+trivially small at both the short and long horizons.
+We next look at the IRF plots on the day with low spot volatility. The state variables on
+this day are signiﬁcantly less volatile and therefore the levels of IRF are much lower. On this
+low-volatility day, Figure IA.1 shows that a shock to market illiquidity dominates in term of
+magnitude as well as its lasting impact on the jump intensity. Similar to the day with high
+spot volatility, we ﬁnd that the impact of a one-standard-deviation shock to the latent factor
+Ψt is small. Overall, Figure IA.1 shows that shocks to the spot volatility Vt and the market
+illiquidity Lt are highly persistent and drive most of the current and future increase in the
+probability of crash risk. However, the relative importance of Vt and Lt depends on the level
+of uncertainty in the market.
+IA.6 Circuit Breakers
+Following the ﬂash crash incident on May 6, 2010, the Securities and Exchange Commission
+(SEC) installed “circuit breakers” on 404 NYSE-listed S&P 500 stocks on June 16, 2010 to
+halt trading for ﬁve minutes if any stock experiences more than 10% movement, either up
+
+nd Exchange Commission
+(SEC) installed “circuit breakers” on 404 NYSE-listed S&P 500 stocks on June 16, 2010 to
+halt trading for ﬁve minutes if any stock experiences more than 10% movement, either up
+or down, in a ﬁve-minute period. This new trading rule potentially aﬀects our aggregate
+illiquidity measure constructed from individual ﬁrms’ eﬀective spreads, thereby altering the
+impact of market illiquidity on jump probability. We test whether this change in market-
+trading rules alters our ﬁndings on the inﬂuence of market illiquidity on time-varying crash
+risk.
+We take June 16, 2010 as the date of the exogenous shift in the market-trading structure.
+Speciﬁcally, we divide our sample into two periods, one starting on January 2, 2003 and ending
+on June 15, 2010, and the other starting on June 16, 2010 and ending on April 26, 2016. We
+use the same jump intensity speciﬁcation as in the SJVI model for both subsamples, as below.
+The model parameters are estimated separately, yielding two sets of estimates. We summarize
+the results below. For brevity, we report only coeﬃcient loadings on the covariates in the jump
+intensity dynamic. The t-statistic for each parameter is reported in parentheses underneath
+its estimate.3
+3***, **, and * denote statistical signiﬁcance at the 1, 5, and 10 conﬁdence levels, respectively.
+8
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Before the circuit breaker: λt = Ψt+ 19.74Vt+ 9.55Lt (IA.15)
+(8.92)∗∗∗ (6.00)∗∗∗
+After the circuit breaker: λt = Ψt+ 12.80Vt+ 11.74Lt. (IA.16)
+(1.60) (3 .40)∗∗∗
+We ﬁnd that the coeﬃcient on the market illiquidity factor is larger in latter period, namely
+11.74, relative to the estimate of 9.55 in the earlier period. This suggests that the introduction
+of circuit breakers has not signiﬁcantly changed the impact of market illiquidity on jump
+intensity. Hence, equations (IA.15)–(IA.16) show that the implementation of circuit breakers
+does not materially impact the importance of the market illiquidity channel. Both coeﬃcients
+are statistically signiﬁcant at the 1% level, with a lower t-statistic for the latter period likely
+because of its much smaller sample size. The coeﬃcients on the market spot variance Vt for
+the pre- and post-circuit breaker periods are 19.74 and 12.80, respectively. These magnitudes
+are similar to the estimate of 14 .88 found using the full sample period. In the post circuit
+breaker periods, the impact of Vt is statistically weak, but the sample size is much smaller as
+well. These results therefore conﬁrm the robustness of our estimates in Table 3.
+9
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Table IA.1: Regression Models for Realized Jump Variation (RJV)
+Next Day Realized Jump Variation: RJVt+1
+(1) (2) (3) (4) (5) (6)
+MinRVt 0.068*** 0.041 0.039
+(2.68) (1.57) (1.45)
+ILQt 0.078*** 0.050*** 0.051** 0.032**
+(3.97) (4.26) (2.29) (2.20)
+VIX t 0.042*** 0.019** 0.014
+(4.71) (2.50) (1.60)
+Rett -0.049 -0.051 -0.032 -0.046 -0.041 -0.039
+(-1.02) (-1.02) (-0.66) (-0.97) (-0.81) (-0.80)
+RJVt -0.175 -0.046 0.004 -0.169 -0.042 -0.159
+(-1.13) (-0.62) (0.07) (-1.18) (-0.59) (-1.11)
+Adjusted R2 29.6% 29.9% 29.1% 31.9% 30.4% 32.2%
+Notes: We report estimated coeﬃcients and t-statistics from predictive OLS regressions on
+realized jump variation in daily S&P500 index returns. The sample period is from January
+2, 2003 to December 30, 2016. The dependent variable is the realized jump variation ( RJV )
+calculated using high-frequency intraday trades on S&P 500 cash index. The independent
+variables include lagged realized variance estimator, MinRV, from Andersen, Dobrev, and
+Schaumburg (2012), which measures variations in daily S&P500 index returns that are as-
+sociated with diﬀusive risk; the market illiquidity proxy, ILQ, measured by daily averaged
+eﬀective spreads across ﬁrms in the S&P500 constituents; the option-implied volatility index,
+VIX, obtained from the CBOE; and the log return of S&P500 index. All variables are lagged
+by one day. RJV, MinRV, ES, and VIX are expressed in annualized terms by multiplying their
+daily measure by 252.
+
+X, obtained from the CBOE; and the log return of S&P500 index. All variables are lagged
+by one day. RJV, MinRV, ES, and VIX are expressed in annualized terms by multiplying their
+daily measure by 252. We also include the autoregressive term for RJV in the regression. Year
+and day-of-the week ﬁxed eﬀects are included. Coeﬃcient estimates on the ﬁxed-eﬀect terms
+are not reported here to save space. We report heteroskedasticity-consistent t-statistic in
+parenthesis below each parameter estimate. ***, **, and * indicate statistical signiﬁcance
+at the 1%, 5%, and 10% conﬁdence levels, respectively, based on heterosedasticity-consistent
+t-statistics. Adjusted R-squared for each regression model is reported in the bottom row.
+10
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Table IA.2: ARMA Models for Changes in Realized Skewness
+∆RSkewt+1
+(1) (2) (3) (4)
+∆MinRVt -0.050 0.364**
+(-0.35) (2.06)
+∆ILQt -0.324*** -0.690***
+(-3.01) (-3.36)
+Returnt 0.276 0.038 -0.019 -0.057
+(0.61) (0.95) (-0.61) (-1.56)
+∆RSkewt 0.919*** 0.865*** 0.870*** 0.864***
+(19.13) (20.61) (130.74) (148.93)
+R2 52.6% 52.9% 53.0% 53.1%
+Notes: We report regression results on daily changes in realized skewness of S&P500 index returns, ∆RSkewt+1.
+The sample period is from January 2, 2003 to December 30, 2016. The daily realized skewness measure,RSkew,
+on each trading day is constructed from high-frequency data following the method in Amaya, Christoﬀersen,
+Jacobs, and Vasquez (2015). The independent variables include lagged change in realized variance estimator,
+∆MinRV , from Andersen, Dobrev, and Schaumburg (2012); change in market illiquidity proxy; ∆ILQ, mea-
+sured by daily averaged eﬀective spreads across ﬁrms in the S&P 500 constituents;Return, log S&P 500 return.
+We lag all independent variables by one day because the daily realized skewness measure is calculated from
+intraday trades observed over each day, which overlap with the data period used for constructing the indepen-
+dent variables. Each speciﬁcation is estimated using maximum likelihood. We use an ARMA(1,2) structure
+in the regression model, which is determined by the LjungBox test to suﬃciently remove cross-correlations in
+the residuals. We control for seasonality due to the day-of-the-week eﬀect.
+
+(1,2) structure
+in the regression model, which is determined by the LjungBox test to suﬃciently remove cross-correlations in
+the residuals. We control for seasonality due to the day-of-the-week eﬀect. We report coeﬃcient estimates
+on the autoregressive term. We do not report coeﬃcient estimates on the moving-average error term and
+day-of-the-week ﬁxed eﬀects for brevity. Robust t-statistics are reported in parenthesis below each parameter
+estimate. ***, **, and * indicate statistical signiﬁcance at the 1%, 5%, and 10% conﬁdence levels, respectively.
+The last row reports regression diagnostics based on the R2 metric.
+11
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Table IA.3: Risk Premium Parameters Estimated from Daily Returns: 2003–2016
+(1) SJ Model (2) SJV Model (3) SJVI Model
+λt = Ψt λt = Ψt +γVVt λt = Ψt+γVVt+γLLt
+Parameter Estimate Estimate Estimate
+νs =
+√
+1−ρ2ν1+ρνv 4.648 2.464 2.412
+νθ 0.033 0.012 0.013
+ν1 5.350 1.728 1.686
+Log-Likelihood: 10,121.48 10,250.19 10,297.44
+Notes: We report MLE estimates of the risk premium parameters for the three time-varying jump models: SJ,
+SJV, and SJVI. Each model is ﬁtted to daily S&P500 returns data from January 2, 2003 to April 26, 2016.
+We obtain daily state values Vt,Lt, and Ψt, as well as Q-measure parameters from the ﬁrst-stage estimation
+results reported in Table 3. The parameterνθ is the diﬀerence between jump-size means under the physical and
+risk-neutral measures, i.e.,θP−θ. The parameter ν1 corresponds to the price of risk coeﬃcient associated with
+the Brownian innovation in the return process; see equation (IA.4). To facilitate econometric identiﬁcation,
+we estimateνs =
+√
+1−ρ2ν1 +ρνV from daily returns using MLE and later infer ν1 from its estimate together
+with the value of νV reported in Table 3.
+12
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Table IA.4: Vega-weighted Root Mean Squared Errors from Diﬀerent Models
+(1) SJ Model (2) SJV Model (3) SJVI Model
+λt = Ψt λt = Ψt +γVVt λt = Ψt+γVVt+γLLt
+Panel A. VWRMSE by sub-period for OTM options
+2003–2006 2.32% 2.37% 2.12%
+2007–2011 6.60% 3.45% 3.74%
+2012–2016 3.09% 3.27% 3.06%
+2003–2016 4.65% 3.09% 3.11%
+Panel B. VWRMSE by sub-period for ATM options
+2003–2006 1.57% 1.48% 1.01%
+2007–2011 6.45% 2.78% 2.67%
+2012–2016 1.37% 1.83% 1.46%
+2003–2016 4.23% 2.17% 1.94%
+Notes: We report in-sample ﬁt for the three models: SJ, SJV, and SJVI. The models are estimated
+using MLE. Equation (19) shows the log likelihood function. Panel A reports in-sample option
+pricing errors for OTM and panel B reports the pricing errors for ATM options. Option pricing
+errors are obtained from the measurement equations in the UKF step. The numbers reported are
+vega-weighted root mean squared error (VWRMSE). For ATM options, the VWRMSE is calculated
+as
+VWRMSE(ATM) =
+√ 1
+T
+T∑
+t=1
+(
+ATMO
+t+1− ¯ATMM
+t+1
+)2
+where ¯ATMM
+t+1 denotes the forecast of vega-weighted ATM option price at time t + 1, andATMO
+t+1
+denotes the vega-weighted ATM option price observed in the data. We use option vega reported in the
+Ivey Optionmetrics database to scale option prices, which makes their levels more comparable across
+moneyness and time (Trolle and Schwartz, 2009). The VWRMSE for OTM options is calculated the
+same way.
+13
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Table IA.5: Vega-weighted Root-Mean-Squared Errors from Diﬀerent Illiquidity Measures
+(1) E-mini futures (2) Amihud measure (3) Agg. S&P 500
+E-miniILQt AmihudILQt ILQt
+Panel A. VWRMSE by sub-period for OTM options
+2004–2006 2.38% 2.47% 2.35%
+2007–2011 3.82% 3.72% 3.74%
+2012–2016 3.18% 3.79% 3.06%
+2004–2016 3.36% 3.51% 3.28%
+Panel B. VWRMSE by sub-period for ATM options
+2004–2006 0.93% 1.10% 0.96%
+2007–2011 2.49% 2.94% 2.67%
+2012–2016 1.70% 2.38% 1.46%
+2004–2016 2.00% 2.46% 2.05%
+Notes: We report in-sample ﬁt for the three diﬀerent illiquidity measures: (1) Eﬀective spreads of S&P E-mini
+futures, (2) Amihud’s (2002) measure, and (3) Aggregated eﬀective spreads of S&P500 stocks. The models
+are estimated using MLE. Equation (26) shows the log likelihood function. Panel A reports in-sample option
+pricing errors for OTM and panel B reports the pricing errors for ATM options. Option pricing errors are
+obtained from the measurement equations in the UKF step. The numbers reported are vega-weighted root
+mean squared error (VWRMSE). For ATM options, the VWRMSE is calculated as
+VWRMSE(ATM) =
+√ 1
+T
+T∑
+t=1
+(
+ATMO
+t+1− ¯ATM
+M
+t+1
+)2
+where ¯ATM
+M
+t+1 denotes the ex ante forecast of vega-weighted ATM option price at time t + 1, and ATMO
+t+1
+denotes the vega-weighted ATM option price observed in the data. We use option vega reported in the Ivey
+Optionmetrics database to scale option prices, which makes their levels more comparable across moneyness
+and time (Trolle and Schwartz, 2009).
+
+rved in the data. We use option vega reported in the Ivey
+Optionmetrics database to scale option prices, which makes their levels more comparable across moneyness
+and time (Trolle and Schwartz, 2009). The VWRMSE for OTM options is calculated similarly.
+14
+Electronic copy available at: https://ssrn.com/abstract=2797308
+
+Figure IA.1: Impulse Response Function of λτ: High vs. Low Volatility Days
+0 50 100 150 200 250
+Impulse Response
+0
+0.05
+0.1
+0.15
+High volatility
+One-standard deviation shock to Vt
+0 50 100 150 200 250
+Impulse Response0
+0.05
+0.1
+0.15
+High volatility
+One-standard deviation shock to Lt
+0 50 100 150 200 250
+Impulse Response
+0
+0.05
+0.1
+0.15
+High volatility
+One-standard deviation shock to Ψ t
+0 50 100 150 200 250
+0
+0.02
+0.04
+0.06
+Low volatility
+One-standard deviation shock to Vt
+0 50 100 150 200 250
+0
+0.02
+0.04
+0.06
+Low volatility
+One-standard deviation shock to Lt
+0 50 100 150 200 250
+0
+0.02
+0.04
+0.06
+Low volatility
+One-standard deviation shock to Ψ t
+Notes: This ﬁgure plots the impulse response function (IRF) describing the impact of one-standard-deviation
+shock to Vt, Lt, and Ψt on the jump intensity λt+τ in the τ days ahead. The x-axis displays the horizon τ in
+number of days and the y-axis corresponds to the response of λt+τ. We plot the IRF from two days where the
+spot volatility levels are relatively high (left-column panels) and low (right-column panels). In each column,
+the top, middle, and bottom panels plot the IRF examining the impact of shocks to the spot volatility, spot
+illiquidity, and the latent state variable, respectively. All model parameters and ﬁltered state variables are
+taken from the SJVI model estimates in Table 2. The date with high spot volatility (26 .9%) corresponds to
+March 11, 2009.
+
+variable, respectively. All model parameters and ﬁltered state variables are
+taken from the SJVI model estimates in Table 2. The date with high spot volatility (26 .9%) corresponds to
+March 11, 2009. The date with log spot volatility (9 .2%) corresponds to January 8, 2004.
+15
+Electronic copy available at: https://ssrn.com/abstract=2797308

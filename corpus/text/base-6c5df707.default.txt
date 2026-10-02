@@ -1,0 +1,1789 @@
+arXiv:cond-mat/0008069v2 [cond-mat.stat-mech] 22 Oct 2000
+Multifractal returns and Hierarchical Portfolio Theory ∗
+J.-F. Muzy 1, D. Sornette 2,3, J. Delour 1 and A. Arneodo 1
+1 Centre de Recherche Paul Pascal, CNRS UPR 8641
+Universit´ e de Bordeaux I, Av. Schweitzer, 33600 Pessac, Franc e
+2 Institute of Geophysics and Planetary Physics and Department of Earth and Space Science
+University of California, Los Angeles, California 90095
+3 Laboratoire de Physique de la Mati` ere Condens´ ee
+CNRS UMR6622 and Universit´ e de Nice-Sophia Antipolis
+B.P. 71, Parc Valrose, 06108 Nice Cedex 2, France
+e-mails: sornette@moho.ess.ucla.edu
+First Version: April 1999 This Version: August 2000
+Abstract
+We extend and test empirically the multifractal model of asset retu rns based on a multi-
+plicative cascade of volatilities from large to small time scales. Inspire d by an analogy between
+price dynamics and hydrodynamic turbulence [Ghashghaie et al. , 1996; Arneodo et al. , 1998a],
+it models the time scale dependence of the probability distribution of r eturns in terms of a
+superposition of Gaussian laws, with a log-normal distribution of the Gaussian variances. This
+multifractal description of asset ﬂuctuations is generalized into a m ultivariate framework to ac-
+count simultaneously for correlations across times scales and betw een a basket of assets. The
+reported empirical results show that this extension is pertinent fo r ﬁnancial modelling. Two
+
+ork to ac-
+count simultaneously for correlations across times scales and betw een a basket of assets. The
+reported empirical results show that this extension is pertinent fo r ﬁnancial modelling. Two
+sources of departure from normality are discussed: at large time s cales, the distinction between
+discretely and continuously discounted returns lead to the usual lo g-normal deviation from nor-
+mality; at small time scales, the multiplicative cascade process leads t o multifractality and
+strong deviations from normality. By perturbation expansions, we are able to quantify precisely
+on the cumulants of the distribution of returns, the interplay and c rossover between these two
+mechanisms. The second part of the paper applies this theory to po rtfolio optimisation. Our
+multi-scale description allows us to characterize the portfolio retur n distribution at all time
+scales simultaneously. The portfolio composition is predicted to change with the investmen t
+time horizon (i.e., the time scale) in a way that can be fully determined on ce an adequate mea-
+sure of risk is chosen. We discuss the use of the fourth-order cum ulant and of utility functions.
+While the portfolio volatility can be optimized in some cases for all time ho rizons, the kurtosis
+and higher normalized cumulants cannot be simultaneously optimized. For a ﬁxed investment
+horizon, we study in details the inﬂuence of the number of periods, i.e ., of the number of rebal-
+ancing of the portfolio.
+
+rmalized cumulants cannot be simultaneously optimized. For a ﬁxed investment
+horizon, we study in details the inﬂuence of the number of periods, i.e ., of the number of rebal-
+ancing of the portfolio. For the large risks quantiﬁed by the cumulan ts of order larger than two,
+the number of periods has a non-trivial inﬂuence, in contrast with T obin’s result valid in the
+mean-variance framework. This theory provides a fundamental f ramework for the conﬂicting
+optimization involved in the diﬀerent time horizons and quantiﬁes syst ematically the trade-oﬀs
+for an optimal inter-temporal portfolio optimization.
+∗We are grateful to E. Bacry, U. Frisch and L. Martellini for he lpful discussions.
+
+1 Introduction
+Inspired by an analogy with turbulent cascades in hydrodyna mics comparing the energy ﬂow to an
+information transfer, recent empirical works have shown th at return volatilities exhibit long-range
+correlations organized in a hierarchical way, from large ti me scales to small time scales [Ghashghaie
+et al. , 1996; Arneodo et al. , 1998a; Muzy et al. , 2000; Breymann et al. , 2000]. The Olsen group
+in Zurich discovered independently this phenomenon which t hey called the HARCH eﬀect [M¨ uller
+et al. , 1997; Dacorogna et al. , 1998]: in the foreign exchange market, the coarse-grained volatility
+predicts the ﬁne-grained volatility better than the other w ay around. They also found this eﬀect
+for the implied forward rates derived from Eurofutures cont racts [Ballocchi et al. , 1999].
+The underlying cascade or hierarchical structure provides also a natural explanation and a model
+for the multifractal description of stock market prices doc umented by several authors [Fisher et al. ,
+1997; Mandelbrot, 1997; Vandewalle and Ausloos, 1998; Brac het et al. , 1999; Bershadskii, 1999;
+Ivanova and Ausloos, 1999; Mandelbrot, 1999; Schmitt et al. 1999; Pasquini and Serva, 2000] (see
+however Bouchaud et al. (2000)).
+The ﬁrst purpose of the present paper is to provide additiona l empirical conﬁrmations that such
+hierarchical description accounts very well for the return statistics, especially for the strong lep-
+
+The ﬁrst purpose of the present paper is to provide additiona l empirical conﬁrmations that such
+hierarchical description accounts very well for the return statistics, especially for the strong lep-
+tokurticity of the probability density functions at small s cales and for the volatility serial correla-
+tions. This hierarchical framework shares a crucial advant age with models based on the standard
+geometrical Brownian motions or on L´ evy-stable processes, in that it remains a “scale-free” descrip-
+tion which can thus be applied to any time scale. As we shall se e, this “self-similarity” property
+is interesting for the problem of portfolio optimization, i n particular for the multi-period selection
+problem.
+The portfolio optimization problem consists in ﬁnding the o ptimal diversiﬁcation on a set of possibly
+dependent assets in order to maximize return and minimize ri sk. In its simplest version, one assumes
+a single period horizon for all investors which, together wi th the hypothesis that returns are normally
+distributed, leads to the standard Markowitz’s solution [L evy and Markowitz, 1979; Kroll et al. ,
+1984]. The ﬁrst results in the theory of optimal multi-perio d portfolio selection showed that, within
+the Gaussian hypothesis of return distributions, the inves tor optimal sequence of portfolio through
+time is stationary, with constant proportionate holdings o f each included asset leading to a constant
+expected return and risk per unit invested wealth.
+
+nves tor optimal sequence of portfolio through
+time is stationary, with constant proportionate holdings o f each included asset leading to a constant
+expected return and risk per unit invested wealth. In other w ords, the optimal asset weights in the
+portfolio are time-scale independent. This theorem has bee n criticised as being not true in general
+[Stevens, 1972].
+Many studies have investigated the impact of time horizon on the portfolio selection. Allowing
+for investors with diﬀerent planning horizons, Gressis et al. [1976] have shown that, in absence of
+the riskless security into the portfolio, the single-perio d eﬃcient frontier also provides K periods
+eﬃcient frontiers. However, Gressis et al. [1976] ﬁnd that, with the inclusion of the riskless security ,
+the equivalence among eﬃcient frontiers for diﬀerent horizo ns is no longer valid. Departing from
+the Gaussian model, Arditti and Levy [1975] generalized the mean-variance approach to a three-
+moment eﬃciency analysis and showed that all one-period por tfolios are not necessarily multi-period
+eﬃcient because, even if a stock has a symmetric single-peri od return distribution, its multi-period
+distribution may be highly skewed. A considerable body of re search has explored how portfolio
+composition depends on the investment horizon. It has been s hown that portfolio composition
+indeed depends on the investment horizon and that any simple characterization of the relationship
+
+ortfolio
+composition depends on the investment horizon. It has been s hown that portfolio composition
+indeed depends on the investment horizon and that any simple characterization of the relationship
+is treacherous [Gunthorpe and Levy, 1994; Ferguson and Sima an, 1996]. Using a choice criterion
+that is consistent with the traditional utility approach bu t which is more amenable to a multiperiod
+2
+
+environment, Marshall [1994] has shown that investors shou ld choose progressively less risky single-
+period portfolios as their investment horizons shorten, ev en if they do not become more risk averse,
+both in the presence and in the absence of a riskless asset. Ta ng [1995] examined the eﬀect of
+investment horizon on international portfolio diversiﬁca tion using stock indexes of 11 countries.
+He ﬁnds that correlation coeﬃcients between stock indexes i ncrease in general with an increase in
+the investment horizon, suggesting that diversiﬁcation be neﬁts are reduced. The fact that various
+stock markets are more correlated over a longer investment h orizon may imply that diﬀerent stock
+markets adjust to each other with a delayed pattern. Bierman [1997; 1998] has investigated whether
+the risk of a stock portfolio increases or decreases as the in vestment horizon lengthens and whether
+the portfolio mix depends on the horizon. By moving beyond th e logarithmic utility function and
+by recognizing that diﬀerent investors have diﬀerent risk pre ferences, Bierman [1998] ﬁnds that it
+is possible for stocks to be risky in each time period and to re duce risk by increasing the length
+of the investment horizon. He also ﬁnds that stocks can be rej ected if they are to be held for one
+time period, but can then be accepted if they are to be held for more than one time period. At
+the origin of these results is the fact that “discrete” retur ns r calculated as the ratio of the price
+
+time period, but can then be accepted if they are to be held for more than one time period. At
+the origin of these results is the fact that “discrete” retur ns r calculated as the ratio of the price
+diﬀerence over a given time interval τ over the price are only approximately proportional to τ times
+the continuously discounted return η. The diﬀerence is negligible at short times τ , corresponding
+to the validity of the expansion of eητ = 1 + ητ . At large time scales such that ητ is no more
+small compared to 1, the second-order term in the expansion b ecomes important and eﬀets of
+non-normality in the distribution of r become important. In the present paper, we study another
+additional cause for non-normality, whose strength grows a s short time scales rather than at large
+time scales.
+The paper is organized as follows. In section 2, we recall and make precise the statistical description
+of the ﬂuctuations of the returns of a single asset in terms of the multiplicative cascade model. The
+few parameters involved in this model are then interpreted a nd estimated for a set of high frequency
+time series. Then, we propose an extension of this framework to vector valued, i.e. multivariate
+processes corresponding to a basket of assets in a portfolio . This can be done in a very natural
+way and simple statistical tests are proposed to check for it s relevance. In section 3, we address
+the portfolio problem for such a set of multifractal assets. We ﬁrst discuss the simplest case of
+
+l
+way and simple statistical tests are proposed to check for it s relevance. In section 3, we address
+the portfolio problem for such a set of multifractal assets. We ﬁrst discuss the simplest case of
+uncorrelated assets where the statistical properties of th e portfolio returns can be estimated by
+means of a cumulant expansion. The problem of portfolio opti mization is studied in section 4 using
+the utility function approach and the higher-order cumulan ts of the distribution of portfolio returns.
+A generalisation of the eﬃcient frontier is proposed and stu died as a function of time-scales. Section
+5 presents the application of the correlated multivariate m ultifractal model to the portfolio theory.
+Conclusion and prospects are given in section 6.
+2 Multifractal description of asset returns
+In the following, we show how multifractal statistics can be described in a simple way using only a
+few parameters. This description has been developed both fo r ﬁnance data [Arneodo et al. , 1998a]
+and in the ﬁeld of fully-developed hydrodynamic turbulence [Arneodo et al. , 1998b; 1998c, 1999].
+As mentionned above, the similarity between turbulence and ﬁnance has been suggested by some
+recent studies [Ghashghaie et al. , 1996; Arneodo et al. , 1998a; Muzy et al. , 2000] and relies on the
+concept of multiplicative random cascades: the ﬂuctuation at some ﬁne time scale τ1 is the product
+of the ﬂuctuation at a coarser scale τ2 by a random factor whose law depends only on the scale
+
+n the
+concept of multiplicative random cascades: the ﬂuctuation at some ﬁne time scale τ1 is the product
+of the ﬂuctuation at a coarser scale τ2 by a random factor whose law depends only on the scale
+ratio τ2/τ1. This picture leads to the integral description proposed by B. Castaing and collaborators
+[Castaing et al. , 1990; Chabaud et al. , 1994] which links the probability density function (pdf) o f
+3
+
+ﬂuctuations at scale τ1 to the pdf of ﬂuctuations at scale τ2. Let us now introduce this formalism
+for the pdf’s of asset returns for all time scales.
+2.1 Formulation of the multifractal model of the returns of a single asset
+Let pi(t) be the price of asset i at time t, where time is counted for trading days in multiples of a
+fundamental unit (say days). With the notation ηi(t, τ) = ln
+( pi(t)
+pi(t−τ )
+)
+, the return ri(t, τ) between
+time t − τ and t of asset i is deﬁned as:
+ri(t, τ) = pi(t) − pi(t − τ )
+pi(t − τ ) = eηi(t,τ ) − 1, (1)
+We thus distinguish between the “continuous return” ηi(t, τ) and the “discrete” return ri(t, τ). The
+diﬀerence between them is essentially captured by the second order correction 1
+2 [ηi(t, τ)]2, which
+becomes non-negligible only for large time scales (see belo w).
+We describe the distribution of the variable ηi(t, τ) by using the representation of Castaing et
+al. [1990; Chabaud et al. , 1994] inspired by the above mentionned cascade picture for hydrody-
+namic turbulence. This distribution is represented, for ti me scale τ1, as a weighted sum of dilated
+distributions of the η’s at the intermediate coarser scale τ2 (τ1 ≤ τ2):
+Pi,τ1(ηi − µiτ1) =
+∫ +∞
+−∞
+du e−u Gi,τ2→τ1(u) Pi,τ2(e−u(ηi − µiτ2)) , (2)
+where µiτ is the mean value of ηi at scale τ (it is supposed to be linear with τ consistently with
+experimental observations) and Gi,τ2→τ1(u) is the self-similarity kernel whose shape is assumed to
+depend only on the ratio τ2/τ1.
+
+f ηi at scale τ (it is supposed to be linear with τ consistently with
+experimental observations) and Gi,τ2→τ1(u) is the self-similarity kernel whose shape is assumed to
+depend only on the ratio τ2/τ1. As we shall see below, the exponentials e−u are just convenient ways
+of simplifying the parameterization of the kernel. This mod el (2) can be derived from a cascade
+model according to which η(t, τ1) is written as
+η(t, τ1) = σ(t, τ1)X(t) , (3)
+where X(t) is a τ1-independent Gaussian random variable and the “stochastic volatility” σ(t, τ1) is
+described by a multiplicative cascade [Arneodo et al. , 1998a]:
+σ(t, τ1) = Wτ2→τ1σt,τ2 . (4)
+It is a well-established observation that, at suﬃciently la rge scale, distributions of η become Gaus-
+sian [Campbell et al. , 1997]. Let Ti be such a large scale for which Pi,Ti(ηi − µiTi) is a Gaussian
+N (0, σ2
+Ti ). Then, for τ ≤ Ti, expression (2) can be rewritten as
+Pi,τ (ηi − µiτ ) =
+∫ +∞
+−∞
+du G i,Ti→τ (u) Ni,Ti(ηi − µiTi, e2uσ2
+Ti) . (5)
+Pi,τ (η − µiτ ) is thus a weighted sum of Gaussian distributions and the ker nel Gi,Ti→τ (u) can be
+identiﬁed with the pdf of the logarithm of the multiplicativ e weights u ≡ ln(WTi→τ ) introduced in
+Eq.(4), the standard deviation at scale τ being:
+σi = euσTi . (6)
+Let hi(τ ) and λ2
+i (τ ) be respectively the mean value and the variance of Gi,Ti→τ . We consider the
+simplest possible case, speciﬁcally where Gi,Ti→τ (u) is itself Gaussian:
+Gi,Ti→τ (u) = 1
+√
+2π λ i(τ ) exp
+(
+− (u − hi(τ ))2
+2λi(τ )2
+)
+. (7)
+4
+
+From the semi-group property resulting from the cascade equ ation, Wτ3→τ1 = Wτ3→τ2Wτ2→τ1, and
+using the fact that Gi,τ2→τ1 depends only on the ratio τ2/τ1, it is easy to show that hi(τ ) and λ2
+i (τ )
+are necessarily linear functions of ln( τ ):
+hi(τ ) = ai + hi ln τ , (8)
+[λi(τ )]2 = bi − λ2
+i ln τ , (9)
+where ai, bi, λi and hi are independent of τ . Ti is the coarse scale deﬁned by a vanishing variance
+λ2
+i (Ti) = 0. This time scale Ti is the “integral” scale at which the cascading process of the volatility
+begins. Performing the change of variable u → u − hi(Ti) amounts to keep Eq.(5) unchanged and
+to redeﬁne Eqs (8) and (9) as :
+hi(τ ) = hi ln(τ /Ti) , (10)
+[λi(τ )]2 = −λ2
+i ln(τ /Ti) . (11)
+As shown in the next section, these equations account very we ll for empirical observations.
+Let us note that this description (5) with (7) and (11) contai ns the standard Gaussian random walk
+model of stock market returns as the special case :
+hi = 1
+2 , (12)
+λi = 0 . (13)
+Indeed, for λi → 0, Gi,Ti→τ (u) becomes a delta-function centered on u = hi, i.e. the volatility (6)
+at scale τ is σi = σTieu = σTiehi = σTi
+(
+τ
+Ti
+) 1/2
+, which recovers the standard square-root diﬀusion
+law. In this case, the pdf of asset “continuous” returns Pi,τ (ηi − µiτ ) given by Eq.(5) is Gaussian.
+2.2 Empirical tests
+In order to test the previous formalism empirically, we need to deﬁne estimators for the parameters
+Ti, σ2
+Ti, hi and λ2
+i .
+
+” returns Pi,τ (ηi − µiτ ) given by Eq.(5) is Gaussian.
+2.2 Empirical tests
+In order to test the previous formalism empirically, we need to deﬁne estimators for the parameters
+Ti, σ2
+Ti, hi and λ2
+i . For this purpose, the so-called “structure functions” or q-order moments ⟨ηq
+i (t, τ)⟩
+of the “continuous” returns are very useful quantities (the brackets deﬁne the average with respect
+to a running window along the time series). For the purpose of analyzing data with multiple scales,
+the dependence of ⟨ηq
+i (t, τ)⟩ as a function of time scale τ for various q’s is very rich in information
+[Frisch, 1995]. For the hierarchical model (5) with the Gaus sian ansatz given by Eq.(7), the qth-
+order structure function of the centered variable η′
+i(t, τ) = ηi(t, τ)− µiτ (whose law is denoted using
+prime)
+Mi(q, τ ) = ⟨η′q
+i ⟩ =
+∫ +∞
+−∞
+η′q
+i P ′
+i,τ (η′
+i)dη′
+i , (14)
+can be calculated analytically with the change of variable R = η′
+ie−u:
+Mi(q, τ ) =
+( ∫ +∞
+−∞
+equGi,Ti→τ (u)du
+)( ∫ +∞
+−∞
+RqP ′
+i,Ti(R)dR
+)
+. (15)
+The second factor in the r.h.s. of Eq.(15) is the qth-moment of the distribution at the integral
+scale. All the dependance on the time scale τ is found in the ﬁrst factor that can be computed
+using Eqs (7),(10) and (11):
+∫ +∞
+−∞
+equGi,Ti→τ (u)du =
+( τ
+Ti
+) ζi(q)
+, (16)
+5
+
+with
+ζi(q) = hiq − λ2
+i
+2 q2 . (17)
+We thus get
+Mi(q, τ ) =
+( ∫ +∞
+−∞
+RqP ′
+i,Ti(R)dR
+) ( τ
+Ti
+) ζi(q)
+. (18)
+The dependence of the qth-order moments of “continuous” returns as a function of ti me scale is
+a pure power law, resulting from the logarithmic behavior as a function of time scale of both the
+mean and the variance of the Gaussian self-similarity kerne l (Eqs. (10) and (11)). The exponent
+ζi(q) is related to the cumulant generating function of the kerne l, as shown by Eq.(16). In general,
+the centered moments of odd-orders at the integral scale are vanishing due to the approximate
+symmetric structure of the pdf’s. In particular, the ﬁrst-o rder moment, the centered “continuous”
+return, is zero by deﬁnition. From expression (18), the same property follows for ⟨η′q
+i ⟩. In order to
+measure the power law dependence given by the second term ( τ /Ti)ζ(q) of the r.h.s. of Eq.(18), it
+is convenient to take the absolute value of the “continuous” return and calculate :
+⟨|η′
+i|q⟩ ∝
+( τ
+Ti
+) ζi(q)
+. (19)
+In order to determine the two parameters hi and λi, we measure the “multifractal spectrum” ζi(q)
+by performing a linear ﬁt of ln Mi(q, τ ) as a function of ln τ , for a wide range of values q. The slope
+of the linear ﬁt gives the exponent ζi(q). The slope at the origin of ζi(q) as a function of q provides
+an estimation of the parameter hi. The ﬁt of ζi(q) − hiq then provides a check for the importance
+of the quadratic correction proportional to λ2
+i .
+
+at the origin of ζi(q) as a function of q provides
+an estimation of the parameter hi. The ﬁt of ζi(q) − hiq then provides a check for the importance
+of the quadratic correction proportional to λ2
+i . Recall that, for a Gaussian pdf of “continuous”
+returns, λ2
+i = 0 and the exponents ζi(q) are linear in q. The quadratic dependence, often called
+“multifractal” in the literature [Frisch, 1995], is a signa ture of the multi-scale structure.
+In Fig. 1, we report such an analysis for both the S&P500 index future and Japanese yen/US dollar
+exchange rate time series shown at the top in the two panels (a ). The original intraday series have
+been sampled at a 10 mn rate and seasonal eﬀects on the volatili ty have been removed. One can
+see in Figs 1(b) that the moments Mi(q, τ ) do exhibit the predicted scaling (Eq. (19)) over a large
+range of scales, of which three decades are here shown. The mu ltifractal nature of these series is
+illustrated in Figs 1(c) which shows the ratio Mi(q,τ )
+Mi(1,τ )q for q = 2 , 3, 4 and 5 in log-log coordinates.
+For linear ζi(q) functions, the ratios Mi(q,τ )
+Mi(1,τ )q should be constants as a function of time scales. A
+departure from a constant thus qualiﬁes a multifractal beha vior. The dependence of the exponent
+ζi(q) reported in Figs 1(d) is very well ﬁtted by the parabolic sha pe given by Eq. (17). We ﬁnd
+hi − λ2
+i = 1 /2 to a very good approximation for all assets which, accordin g to Eq. (17), ensures
+that the volatility or variance ⟨η′2
+
+y well ﬁtted by the parabolic sha pe given by Eq. (17). We ﬁnd
+hi − λ2
+i = 1 /2 to a very good approximation for all assets which, accordin g to Eq. (17), ensures
+that the volatility or variance ⟨η′2
+i ⟩ ∼ t as for the standard geometrical Brownian model, i.e. does
+not exhibit an anomalous scaling.
+In order to test for the existence of a cascading process and t o estimate the integral time Ti, we
+refer to [Arneodo et al. , 1998a] where it is shown that, for a cascade process, the cov ariance of the
+logarithms of the ηi’s at all scales should decrease as a logarithmic function. M ore precisely, if one
+deﬁnes the magnitude of asset i at scale τ and time t as ωi(t, τ) = ln( |ηi(t, τ)|), then one should
+have, for ∆ t > τ :
+Ci(∆ t, τ) = Cov( ωi(t + ∆ t, τ), ωi(t, τ)) ≃ −λ2
+i ln( ∆ t
+Ti
+) . (20)
+This behavior is checked for the S&P500 and JPY/USD series in Fig. 2 where we have plotted
+C(∆ t, τ) versus ln(∆ t) with τ = 10mn. The linearity of these plots is reasonably well veriﬁ ed.
+The values of λ2
+i and ln( Ti) can be obtained respectively from the slope and the interce pt of these
+6
+
+Series λ2 T (year) µi (year−1) σ2
+Ti (year−1)
+German Government Bond (F) 0.028 1.2 -1.6 10 −3 1.7 10 −5
+FT-SE 100 Index (F) 0.017 1.1 -3.3 10 −3 7.6 10 −5
+Japanese Yen (F) 0.032 1.0 -1.1 10 −3 3.8 10 −5
+S&P 500 (F) 0.018 4.5 5.7 10 −3 1.8 10 −4
+Japanese Government Bond (F) 0.121 1.3 9.2 10 −4 4.0 10 −6
+Nikkei 225 (F) 0.030 1.5 5.5 10 −3 3.9 10 −5
+French CAC40 (mean) (S) 0.020 1.9 1.2 10 −1 5.6 10 −2
+Dow-Jones (mean) (S) 0.010 1.7 1.7 10 −1 4.6 10 −2
+Table 1: Estimates of the multifractal parameters for intra day (S&P 500 and Japanese Yen futures)
+and daily time series. The values measured at diﬀerent time sc ales are consistent with each other.
+straight lines. In Table 1, we have reported the estimates of the parameters λ2
+i , σ2
+Ti, µi and Ti for
+a set of high frequency future time series and the mean values of those parameters for daily time
+series of stocks composing the Dow Jones Industrial Average index and the french CAC40 index.
+Let us note that the errors on the estimates of Ti can be very large since we get only one estimator
+of ln( Ti). For all series, we have checked that the relationship hi − λ2
+i = 1 /2 is reasonable so we
+have not reported the estimated values of hi. We can remark that the values of λ2
+i are relatively
+close to 0 .02 and the values of Ti are in the range 1 − 2 years. These values can thus be considered
+as representative of market multifractality.
+2.3 The multivariate multifractal model
+
+e relatively
+close to 0 .02 and the values of Ti are in the range 1 − 2 years. These values can thus be considered
+as representative of market multifractality.
+2.3 The multivariate multifractal model
+Up to now, our emphasis has been on the correlation structure within each asset separately. We have
+not investigated the impact of correlations across assets a nd have quantiﬁed only the “diagonal”
+multifractal features as it is the case for uncorrelated ass ets. Since one of the natural applications
+of the characterization of distributions of returns is the q uantiﬁcation and selection of portfolios
+made of a basket of assets, it is important to generalize our f ramework to account for the possible
+existence of inter-asset correlations, in addition to the m ulti-scale time correlations. As it is well-
+known, optimizing a portfolio relies on two eﬀects, the law of large numbers and the possibility
+to counter-act the negative eﬀect of one asset by using (anti- ) correlations. Towards a practical
+implementation of our model, it is thus essential to oﬀer a gen eralization of the multifractal cascade
+model that accounts for the correlations across assets.
+When dealing with Gaussian processes, the lack of independe nce is entirely embodied in the corre-
+lation function. Along this line of thought, we now propose a phenomenological model that extends
+the previous one to the case of correlated assets. We would li ke to generalize Eqs. (5), (7), (8) and
+
+ation function. Along this line of thought, we now propose a phenomenological model that extends
+the previous one to the case of correlated assets. We would li ke to generalize Eqs. (5), (7), (8) and
+(9) to multivariate distributions. In this purpose, let us w rite t⃗ ηthe line vector ( η1, ..., ηN ), where
+the subscript t stands for ‘transpose’, and we suppose that there exists a ti me scale T for which
+the multivariate distribution NN,T (⃗ η,Σ 0) is Gaussian with covariance matrix Σ 0. The multivariate
+Gaussian mixture that generalizes Eq.(5) can be written as
+Pτ (⃗ η− τ ⃗ µ) =
+∫
+dN u G τ (⃗ u) NN,T (⃗ η− T ⃗ µ,D(⃗ u)Σ 0D(⃗ u)) , (21)
+where D(⃗ u) is the diagonal dilation matrix Dij = euiδij and Gτ (⃗ u) is some multivariate probability
+distribution function. This description corresponds to a m ultivariate cascading process where the
+7
+
+multiplicative weights Wτi→τj associated with diﬀerent assets can be correlated. This form (21) is
+the multivariate generalization of (5).
+As in the previous section, let us make a Gaussian ansatz for t he joint law G of the logarithm of
+these weights, i.e.,
+Gτ (⃗ u) = NN (⃗ u− ⃗h(τ ), Λ (τ )) , (22)
+where the mean vector ⃗h(τ ) and the covariance matrix Λ (τ ) are supposed to behave as:
+⃗hi(τ ) = ai + hi ln(τ ) , (23)
+Λ ij(τ ) = −λ2
+ij ln(τ /Tij ) , (24)
+with the “integral times” Tij deﬁned by
+Λ ij(τ = Tij) = 0 . (25)
+Within the cascade model, the times Tij are the time scales at which some cascading process begins.
+If one considers two assets i and j, it seems natural to assume that only two situations occur:
+i/ the cascade on i and j has the same “economic” origin, and then Tii = Tjj = Tij;
+ii/ the cascades on i and j are independent and thus Λ ij(τ ) = 0, but, a priori, Tii ̸= Tjj .
+The N returns ηi can be thus organized by “classes” in such a way that the matri x Λ is a block
+diagonal matrix:
+Λ =
+L⨁
+l=1
+Λ l , (26)
+where L is the number of indenpendent subspaces (cascades) of dimen sion Nl (∑ L
+l=1 Nl = N ). At
+ﬁxed l, one can always redeﬁne Σ 0 such that Eqs. (23) and (24) become :
+⃗hi(τ ) = hi ln(τ /Tl) (27)
+Λ ij(τ ) = −λ2
+ij ln(τ /Tl) for i, j in the bloc l . (28)
+To demonstrate that this multifractal multivariate model i s compatible with the empirical obser-
+vations, we ﬁrst deﬁne an estimator of the elements of the cov ariance matrix Λ . Let us denote
+
+(28)
+To demonstrate that this multifractal multivariate model i s compatible with the empirical obser-
+vations, we ﬁrst deﬁne an estimator of the elements of the cov ariance matrix Λ . Let us denote
+ωi(t, τ) the magnitude, i.e., the logarithm of the “continuous” ret urn η for asset i at scale τ :
+ωi(t, τ) = ln( |ηi(t, τ)|). In the multivariate framework, the structure function at scale τ can be
+extended to order ⃗ p, where ⃗ pis a vector of N values, in the following way:
+⟨|η1(t, τ)|p1 . . . |ηN (t, τ)|pN ⟩ = ⟨e⃗ ω(t,τ ).⃗ p⟩ , (29)
+where ⃗ ω(t, τ) is the vector constructed from the ωi’s at scale τ . Using Eq. (21), the behavior of
+the structure function as a function of τ can be estimated:
+⟨e⃗ ω(t,τ ).⃗ p⟩ = ⟨e⃗ ω(t,T ).⃗ p⟩
+∫
+dN u e ⃗ p.⃗ uGτ (⃗ u) ,
+where G is the kernel quantifying the cascade from the integral scal es to scale τ . Using our
+assumption that G is normal with mean ⃗h(τ ) and covariance Λ (τ ), the characteristic function of
+G, deﬁned as the last term in the previous expression, is
+∫
+dN u e ⃗ p.⃗ uGτ (⃗ u) = e⃗ p.⃗h(τ ) e
+1
+2
+t⃗ p.Λ (τ ).⃗ p.
+8
+
+From the logarithmic behavior in Eqs (23) and (24), one deduc es:
+⟨e⃗ ω(t,τ ).⃗ p⟩ ∼ K⃗ pτ ζ(⃗ p) , (30)
+with
+ζ(⃗ p) = ⃗h.⃗ p+ 1
+2
+t
+⃗ pΛ ⃗ p=
+∑
+i
+pihi − 1
+2
+∑
+i,j
+pipjλ2
+ij . (31)
+The constant K⃗ pdepends on the values of the integral scales Tij, hi, λij and on the multivariate
+distribution at the large integral scales. This power law (3 0) can be explicitely used to estimate
+the values λ2
+ij of the elements of the covariance matrix deﬁned by the kernel G, by using diﬀerent
+set of p’s.
+If one sets pk = 0 for k ̸= i, j, and pi = pj = ǫ → 0 in the expression (30), one can show that the
+covariance between the magnitudes ωi(t, τ) and ωj(t, τ) simply behaves as:
+Cov(ωi(t, τ), ωj (t, τ)) ≃ −λ2
+ij ln(τ ) + Kij , (32)
+where Kij depends on Tij, hi and λij.
+Alternatively, one can test the multivariate cascade ansat z from the behavior of the lagged magni-
+tude covariance: in full analogy with the monovariate case, it should behave as:
+Cij(∆ t) = Cov( ωi(t + ∆ t, τ)ωj(t, τ)) = −λ2
+ij ln(∆ t/Tij) , (33)
+for ∆ t ≥ τ . This equation provides other simple estimators of both λij and Tij.
+We were not able to use intraday data to test these prediction s because the formalism requires
+that the diﬀerent time series should be sampled at the same tim es. This can be alleviated in
+the future by a suitable pre-treatment that ensures the coin cidence of the sampling times. Here,
+we present results for daily returns on the magnitude covari ance functions for stocks taken from
+
+in
+the future by a suitable pre-treatment that ensures the coin cidence of the sampling times. Here,
+we present results for daily returns on the magnitude covari ance functions for stocks taken from
+the French CAC40 index (over the period from 1992 to 1999). In Fig. 3(a), we report in dotted
+line the typical behavior of Cij(∆ t) versus ln(∆ t) for two assets of the CAC40 index (CCF and
+MICHELIN). Despite the relatively poor statistical conver gence, one clearly sees a slow decay which
+is compatible with the logarithmic law (33). From the slope a nd the intercept of this curve, one
+gets an estimate of λ2
+ij and Tij for these two assets. In solid line, we have plotted the avera ge of Cij
+performed over all the pairs of assets in the CAC40 index. The logarithmic decay of the magnitude
+covariance is thus a remarkably stable feature among all pai rs of assets constituting the CAC40. In
+Fig. 4(b), we show the histogram of the values of λ2
+ij estimated for 253 pairs of stocks belonging to
+the CAC40 index. Even though our estimates exhibit a large di spersion, one clearly sees that the
+distribution of λ2
+ij is centered around λ2
+ij = 0.02. This value, which is very close to the estimates of
+λ2
+i determined in the previous section with the mono-asset anal ysis, can be considered as typical of
+ﬁnancial stocks. This is conﬁrmed in Fig. 4 which shows the es timates of λ2
+ij versus the estimates
+of Tij for pairs of stocks taken both from the CAC40 and the Dow-Jone s indices.
+
+ered as typical of
+ﬁnancial stocks. This is conﬁrmed in Fig. 4 which shows the es timates of λ2
+ij versus the estimates
+of Tij for pairs of stocks taken both from the CAC40 and the Dow-Jone s indices. Moreover, one
+sees in Fig. 4 that the integral time scales Tij are clustered around T = 1 − 2 years.
+3 Characterization of the distribution of portfolio return s
+Consider a portfolio with ni shares of asset i whose initial wealth is
+W (0) =
+N∑
+i=1
+nipi(0) . (34)
+9
+
+A time τ later, the wealth has become W (τ ) = ∑ N
+i=1 nipi(τ ) and the wealth variation is
+δτ W ≡ W (τ ) − W (0) =
+N∑
+i=1
+nipi(0)pi(τ ) − pi(0)
+pi(0) = W (0)
+N∑
+i=1
+wi
+(
+eηi(τ ) − 1
+)
+, (35)
+where
+wi = nipi(0)
+∑ N
+j=1 njpj(0) (36)
+is the fraction in capital invested in the ith asset at time 0. Using the deﬁnition (1), this justiﬁes
+to write the return Rτ of the portfolio over a time interval τ as the weighted sum of the returns
+ri(τ ) of the assets i = 1, ..., N over the time interval τ
+Rτ = δτ W
+W (0) =
+N∑
+i=1
+wi ri(τ ) . (37)
+3.1 Cumulants of the variables ηi
+The portfolio is completely characterized by the distribut ion of its returns Rτ for all possible time
+scales τ . When the assets are assumed to be independent, expression ( 37) shows that the pdf of Rτ
+is obtained by the convolution of the pdf’s of the returns ri(τ ) of the individual assets. A standard
+strategy is to calculate the characteristic functions ˆPi(k) of the pdf’s of the returns ri(τ ), from
+which one extracts the cumulants and use their additive prop erties to get the cumulants of the
+distribution of Rτ . In this section 3 and in section 4, we use the model of section s 2.1 and 2.2 of
+independent multifractal assets and turn in section 5 to the case of correlated multifractal assets
+described by the formalism of section 2.3. Let us thus estima te the cumulants of each asset return
+ri(τ ) at scale τ .
+In that purpose, let us compute the cumulants of the “continu ous” returns ηi’s. The characteristic
+
+malism of section 2.3. Let us thus estima te the cumulants of each asset return
+ri(τ ) at scale τ .
+In that purpose, let us compute the cumulants of the “continu ous” returns ηi’s. The characteristic
+function of ηi is obtained from Eq.(5) with Eq.(7) :
+ˆPi,τ (k) =
+∫ +∞
+−∞
+du 1√
+2π λ i(τ ) exp
+(
+− (u − hi(τ ))2
+2λ2
+i (τ )
+)
+exp
+(
+ikµiTi − k2
+2 σ2
+Tie2u
+)
+. (38)
+From this equation, we see that the moment mi
+n(τ ) of order n of the centered variable η′
+i(t, τ) =
+ηi(t, τ) − µiτ can be easily computed
+∂n ˆP
+∂k n |k=0 = mi
+n(Ti)
+∫ +∞
+−∞
+du e nu 1
+√
+2π λ i(τ ) exp
+(
+− (u − hi(τ ))2
+2λ2
+i (τ )
+)
+, (39)
+where mi
+n(Ti) is the n-th moment of the Gaussian law at the integral scale. The integrals in (38)
+and (39) are proportional to the Laplace transform of the nor mal distribution.
+Using Eqs. (10) and (11), we obtain the following expression s for the moments of the centered
+variables η′
+i:
+mi
+2n(τ ) = (2 n − 1)!! σ2n
+Ti
+( τ
+Ti
+) 2(nhi−λ2
+i n2)
+, (40)
+mi
+2n+1(τ ) = 0 . (41)
+10
+
+Expression Eq.(40) is the same as Eq.(18) with (17) for q = 2 n. We can then easily retrieve the
+moments of the (non-centered) variables ηi(t, τ) by using the deﬁnition of η′ and inverting it as
+ηi(t, τ) = η′
+i(t, τ) + µiτ . Thus,
+⟨[ηi(t, τ)]q⟩ = ⟨
+(
+η′
+i(t, τ) + µiτ
+) q⟩ =
+q∑
+j=0
+q!
+(q − j)! j! (µiτ )q−j mi
+j , (42)
+for integer orders q.
+Note that the knowledge of the moments do not allow a unique re construction of the pdf. This is
+related to the fact that the characteristic function of the l ognormal distribution cannot be expanded
+in a Taylor series based on the moments, because the moments g row too fast (as exp
+(
+n2)
+) and lead
+to a diverging series. Holgate [1989] has shown how to make se nse of such expansion by either
+using a ﬁnite Taylor series or resumming formally the diverg ent moment expansion. Using the
+entire function or moment constant method and Hardy’s formu la, one obtains [Holgate, 1989]
+ˆPi,τ (k) = lim s→0
++∞∑
+j=0
+(−1)j
+2j
+k2j
+j! σ2j
+Ti exp
+(
+2j2λi(τ )2
+)
+L
+(
+se4jλi(τ )2)
+, (43)
+where L is the Laplace transform of the lognormal distribution, whi ch is taken at exponentially
+increasingly spaced points. Its fast decay ensures the conv ergence of the series against the rapidly
+diverging moments and a unique characterization of the pdf.
+The ﬁrst six cumulants are linked to the moments as [Ord, 1994 ]:
+c1 = m1 , (44)
+c2 = m2 − m2
+1 , (45)
+c3 = m3 − 3m2m1 + 2m3
+1 , (46)
+c4 = m4 − 4m3m1 − 3m2
+2 + 12m2m2
+1 − 6m4
+1 , (47)
+c5 = m5 − 5m4m1 − 10m3m2 + 20m3m2
+
+ants are linked to the moments as [Ord, 1994 ]:
+c1 = m1 , (44)
+c2 = m2 − m2
+1 , (45)
+c3 = m3 − 3m2m1 + 2m3
+1 , (46)
+c4 = m4 − 4m3m1 − 3m2
+2 + 12m2m2
+1 − 6m4
+1 , (47)
+c5 = m5 − 5m4m1 − 10m3m2 + 20m3m2
+1 + 30m2
+2m1 − 60m2m3
+1 + 24m5
+1 , (48)
+c6 = m6 − 6m5m1 − 15m4m2 + 30m4m2
+1 − 10m2
+3 + 120m3m2m1 − 120m3m3
+1 + 30m3
+2
+−270m2
+2m2
+1 + 360m2m4
+1 − 120m6
+1 . (49)
+Using Eqs (40), (41) and (42), we then determine the six ﬁrst c umulants of ηi. Notice that the
+cumulants of order larger than 1 are invariant with respect t o the translation ηi(t, τ) = η′
+i(t, τ)+ µiτ
+and the centered moments (40), (41) can thus be used directly in expressions (45-49):
+ci
+1(τ ) = τ µi , (50)
+ci
+2(τ ) = σ2
+Ti
+( τ
+Ti
+) 2(hi−λ2
+i )
+, (51)
+ci
+3(τ ) = 0 , (52)
+ci
+4(τ ) = 3 σ4
+Ti
+( τ
+Ti
+) 4(hi−2λ2
+i )(
+1 −
+( τ
+Ti
+) 4λ2
+i
+)
+, (53)
+ci
+5(τ ) = 0 , (54)
+ci
+6(τ ) = 15 σ6
+Ti
+( τ
+Ti
+) 6(hi−3λ2
+i )(
+1 − 3
+( τ
+Ti
+) 8λ2
+i
++ 2
+( τ
+Ti
+) 12λ2
+i
+)
+. (55)
+Expression (50) retrieves the linear dependence of the mean value as a function of the time interval
+τ . This result is independent of the model. Expression (51) sh ows a more interesting structure:
+11
+
+for hi − λ2
+i = 1 /2 we retrieve also a linear dependence of the variance ci
+2(τ ) as a function of time
+scale τ . This linear dependence occurs in absence of or for weak corr elations of the returns. As
+this is a ubiquitous property conﬁrmed by all empirical stud ies [Campbell et al. , 1997; Mantegna
+and Stanley, 2000], this leads to the empirical constraint
+hi − λ2
+i = 1/2, (56)
+which is remarkably well veriﬁed (see Fig. 1).
+We note that, by construction of the superposition (5) of Gau ssian pdf’s, all odd-order cumulants
+(except the ﬁrst cumulant corresponding to the average “con tinuous” return) are zero. The present
+hierarchical model cannot account for possible skewness in the distribution of the “continuous”
+returns η. But as shown in the next section, this does not implies that t he skewness of return
+distribution is zero. A small value of the skewness is indeed observed in empirical studies of data
+sets [Campbell et al. , 1997].
+If one assumes that, for all assets hi ≃ 0.5, then the two sources of statistical non-normality for η,
+i.e. non zero high order cumulants, are according to our mode l the intermittency parameter λi and
+the integral time Ti: “quasi-Gaussian” statistics is recovered if the scale τ is very close to Ti or if
+the intermittency parameter λi is small enough so that the ﬂuctuations of the variances at di ﬀerent
+scales are small. Conversely, the distribution of “continu ous” returns exhibits heavy tails if λi is
+
+intermittency parameter λi is small enough so that the ﬂuctuations of the variances at di ﬀerent
+scales are small. Conversely, the distribution of “continu ous” returns exhibits heavy tails if λi is
+large or if the time scale τ is small compared to integral scale Ti.
+3.2 Portfolio cumulants: perturbation expansion and multi fractal corrections
+to the log-normal portfolio
+In the standard portfolio theory [Markovitz, 1959; Merton, 1990], asset price time series are repre-
+sented by geometric Brownian motions, i.e the statistics of “continuous” returns is exactly Gaussian
+while that of the “discrete” returns can be approximated by G aussian distributions by means of
+an expansion where the small parameter is time measured in ye ar. This results from the deﬁnition
+(1) showing that the diﬀerence between ri(t, τ) and ηi(t, τ) is equal to 1
+2 [ηi(t, τ)]2 to leading order.
+Since the typical magnitude of [ ηi(t, τ)]2 is given by the variance of ηi(t, τ) and since the mean and
+the variance of ηi(t, τ) are both of the order 0.1 τ (see stock examples in Table 1) when the time τ is
+measured in year, ri(t, τ) and ηi(t, τ) are indistinguishable in practice for times τ of the order of or
+smaller than 1 year. An alternative way of saying the same thi ng is that the lognormal distribution
+of ri(t, τ) reduces to its approximate Gaussian representation for ti mes less than or of the order
+of a year. Thus, the smaller the time scale τ , the more precise is the normal approximation for
+
+on
+of ri(t, τ) reduces to its approximate Gaussian representation for ti mes less than or of the order
+of a year. Thus, the smaller the time scale τ , the more precise is the normal approximation for
+ri(t, τ) assuming a perfect Gaussian statistics for ηi(t, τ) and the smaller are high-order cumulants
+of ri(t, τ), since they quantify the departure from normality. This is the classical point of view for
+the existence of non-normal returns as studied in the ﬁnanci al literature. This is equivalent in our
+model to setting the parameters hi = 0.5 and λ2
+i = 0.
+Non-trivial multifractal corrections arise when λ2
+i is not negligible and thus hi departs from 0 .5.
+For the statistical properties of (both “discrete” and “con tinuous”) returns, these multifractal
+corrections to the log-normal picture are stronger at ﬁne sc ales: the ﬁner the scale, the larger the
+values of high order cumulants. With respect to time scales, this phenomenon thus acts in the way
+opposite to the previous eﬀect of the diﬀerence between “discr ete” returns ri(t, τ) and “continuous”
+returns ηi(t, τ). Due to multifractality, we do not expect to observe normal ity for returns at small
+time scales, in contradiction with the standard geometrica l Brownian model.
+To sum up, due to the diﬀerence between “discrete” returns ri(t, τ) and “continuous” returns
+12
+
+ηi(t, τ), normality is expected at small scales while deviations fr om normality is predicted at large
+time scales. Due to multifractality, non-normality is expe cted at small scale and Gaussian statistics
+are predicted at large time scales, beyond the “integral” sc ale. Putting the two eﬀects together,
+non-normality must be the rule at all time scales, with a cros s-over from small to large time scales,
+from non-normality induced by multifractility to non-norm ality induced by the diﬀerence between
+continuous and discrete returns. Thus, we expect high order return cumulants to be non zero both
+at large scales because of the log-normality and also at smal l scales because of multifractality of η.
+Let us now quantify these eﬀects. In this purpose, we compute t he cumulants of the portfolio returns
+using an expansion where the small parameter is τ (measured in year), which takes multifractal
+corrections into account. From Eq.(37), the cumulants C P
+n (τ ) of the portfolio can be expressed in
+terms of the cumulants C i
+n(τ ) of the returns for each individual asset as weighted sums ov er them:
+C P
+1 (τ ) =
+N∑
+i=1
+wi C i
+1(τ ) , (57)
+C P
+n (τ ) =
+N∑
+i=1
+wn
+i C i
+n(τ ) , for n > 1 . (58)
+Using Eqs. (50-56) and from the deﬁnition r(τ ) = eη − 1, after some algebra we ﬁnd, to the leading
+orders in the time expansion,
+C P
+1 (τ ) ≃
+N∑
+i=1
+wiτ (µi + 1
+2 σ2
+i ) , (59)
+C P
+2 (τ ) ≃
+N∑
+i=1
+w2
+i σ2
+i τ , (60)
+C P
+3 (τ ) ≃
+N∑
+i=1
+w3
+i τ 2
+(
+3σ4
+i − 18σ4
+i λ2
+i ln( τ
+Ti
+)
+)
+, (61)
+C P
+
+leading
+orders in the time expansion,
+C P
+1 (τ ) ≃
+N∑
+i=1
+wiτ (µi + 1
+2 σ2
+i ) , (59)
+C P
+2 (τ ) ≃
+N∑
+i=1
+w2
+i σ2
+i τ , (60)
+C P
+3 (τ ) ≃
+N∑
+i=1
+w3
+i τ 2
+(
+3σ4
+i − 18σ4
+i λ2
+i ln( τ
+Ti
+)
+)
+, (61)
+C P
+4 (τ ) ≃
+N∑
+i=1
+w4
+i
+(
+16σ6
+i τ 3 − 12σ4
+i λ2
+i τ 2 ln( τ
+Ti
+)
+)
+, (62)
+C P
+5 (τ ) ≃
+N∑
+i=1
+w5
+i
+(
+125σ8
+i τ 4 − 240σ6
+i λ2
+i τ 3 ln( τ
+Ti
+)
+)
+, (63)
+C P
+6 (τ ) ≃
+N∑
+i=1
+w6
+i
+(
+1296σ10
+i τ 5 + 720σ6
+i λ4
+i τ 3 ln2( τ
+Ti
+)
+)
+, (64)
+where we have set σ2
+i = σ2
+Ti/Ti (in year−1). We can see how the multifractal corrections arise in the
+high order cumulants. Using the typical values µi ∼ σi ∼ λi = 0 .1 and Ti = 1, one can compute,
+according to the value of τ , which term from the log-normal expansion or from the multif ractal
+correction dominates the cumulant. For the ﬁrst two cumulan ts C1 and C2, it can be shown that
+multifracal corrections are always negligible. For the thi rd-order cumulant C3, for time scales larger
+than a few seconds, the multifractal nature of η is not important. However, for cumulants of order
+larger than or equal to 4, the multifractal corrections are v ery important for time scales as large
+as several months: for instance, using the previous values f or the parameters, we ﬁnd that the
+multifractal term is dominating for all times τ smaller than τ ∗ ≈ 6 months.
+From the structure of the cumulants given by Eqs (51,53,55) a nd their generalization to higher
+order, it is easy to show by recurrence that the multifractal correction to the 2 n-th order cumulant
+13
+
+behaves, for n > 1, as
+C P
+2n(τ ) ≃
+N∑
+i=1
+w2n
+i σ2n
+i τ n (−1)n−1 λ2(n−1)
+i lnn−1
+( τ
+Ti
+)
+, (65)
+to leading order. As a consequence, the corrections to the Ga ussian description brought by the
+multifractal model are all the more important than the order of the cumulant is higher, i.e. than
+one looks further in the tail of the return distribution. We r etrieve a common observation that the
+deviations from the Gaussian model are all the more importan t for large risks quantiﬁed by the
+behavior of the tails of the portfolio return distribution [ Sornette, 1998; Sornette et al. , 2000].
+If we neglect the higher order cumulants in the previous expa nsion, we retrieve that the portfolio
+return C P
+1 (τ ) and variance C P
+2 (τ ) are both proportional to time scale τ . Hence, the portfolio
+optimization of the asset weights wi are independent of the investment horizon τ in the absence
+of the riskless asset. This is the well-known result underly ing Gaussian portfolio optimization
+[Markovitz, 1959; Merton, 1990]. In contrast, in the hierar chical model, cumulants of order 4 and
+higher have a diﬀerent dependence on the investment time hori zon τ . This implies that large risks
+exhibit a non-trivial time dependence: it will therefore no t be possible to optimize the asset weights
+wi for all time scales τ simultaneously. This is the novel ingredient captured by ou r hierarchical
+model: a portfolio optimization which is concerned with lar ge risks has to optimize its investment
+
+wi for all time scales τ simultaneously. This is the novel ingredient captured by ou r hierarchical
+model: a portfolio optimization which is concerned with lar ge risks has to optimize its investment
+time horizon in a manner that we are now going to investigate.
+3.3 Excess kurtosis
+The absence of volatility correlations and the validity of t he log-normal model would imply, as
+already said, that the variance λ2
+i of the volatilities vanishes. As seen from expressions (62- 64), all
+cumulants of order n larger than 2 would then be of order σ2(n−1)
+i τ n−1, i.e. very small at small
+time scales, as expected for a Gaussian distribution of retu rns. Actually, for instance for the US
+S&P500 index, there is a residual hierarchical correlation structure, quantiﬁed by h = 0 .518 and
+λ2 = 0.018 and T ≃ 1 year. With these values, we predict an excess kurtosis by us ing Eq. (60) and
+(62) for a single asset (the S&P500 index)
+κ ≡ C4
+C 2
+2
+= 16σ2τ − 12λ2 ln(τ ) . (66)
+This expression makes clear that the size of the variance λ2 ̸= 0 of the volatilities at diﬀerent
+scales quantiﬁes the distance from the log-normal paradigm . The excess kurtosis at small time
+scale is negligible for λ2 = 0. In contrast, in the presence of multifractality ( λ2 ̸= 0), the excess
+kurtosis κ is predicted to be very large at small time scales. The depend ence of the excess kurtosis
+is shown in Fig. 5. This ﬁgure shows that the excess kurtosis g iven by Eq. (66) can be represented
+
+rtosis κ is predicted to be very large at small time scales. The depend ence of the excess kurtosis
+is shown in Fig. 5. This ﬁgure shows that the excess kurtosis g iven by Eq. (66) can be represented
+approximately as a power law decay κ ∼ (τ /T)−0.2 over more than three decade with a small
+exponent ≈ 0.2, in excellent agreement with previous determinations [Da corogna et al. , 1993; Ding
+et al. , 1993; Bouchaud et al. , 2000]. To conﬁrm the relevance of Eq. (66), one thus needs to
+investigate the excess kurtosis for time scales large enoug h as compared to the integral scale T . It
+is important to contrast this decay of the excess kurtosis κ as a function of the time scale τ with
+what one would expect from a model without correlations acro ss scales: in that case, all cumulants
+are linear in τ and κ ∝ 1/τ . The anomalous law (66) is a clear signature of long-range co rrelations
+in the volatilities.
+14
+
+4 Portfolio optimization with time-scale dependent risks
+4.1 The expected utility approach
+Starting the period with initial capital W0 > 0, the investor is assumed to have preferences that are
+rational in the von-Neumann-Morgenstern [1944] sense with respect to the end-of-period distribu-
+tion of wealth W0 + δS. His preferences are therefore representable by a utility f unction u(W0 + δS)
+determined by the wealth variation δS at the end-of-period τ . The expected utility theorem states
+that the investor’s problem is to maximize E[ u(W0 + δS)], where E[ x] denotes the expectation
+operator :
+Eτ [u(W0 + δS)] =
+∫ +∞
+−W0
+dδS u (W0 + δS) P τ
+S (δS) . (67)
+The utility function u(W ) has a positive ﬁrst derivative (wealth is prefered) and a ne gative second
+derivative (risk aversion). Use of the utility maximizatio n in portfolio optimization can be found
+in [Levy and Markowitz, 1979; Kroll et al. , 1984].
+Here, we consider a simple case of a constant absolute measur e of risk aversion −u′′/u′ = a (where
+the primes denote the derivatives), for which u(W ) = − exp(−aW ). With a very good approxima-
+tion for large initial wealths, we can take P τ
+S (δS < −W0) ≃ 0. This gives
+Eτ [u(W0 + δS)] = −e−aW0
+∫ +∞
+−∞
+e−aδS P τ
+S (δS)d(δS) , (68)
+which is nothing but the Fourier transform of the probabilit y distribution function (with imaginary
+argument k):
+Eτ [u(W0 + δS)] = −e−aW0 ˆP τ
+S (k = ia) . (69)
+By deﬁnition of the cumulants, this reads
+Eτ [u(W0 + δS)] = −e−aW0 exp
+(
+−aC P
+1 (τ ) +
++∞∑
+
+abilit y distribution function (with imaginary
+argument k):
+Eτ [u(W0 + δS)] = −e−aW0 ˆP τ
+S (k = ia) . (69)
+By deﬁnition of the cumulants, this reads
+Eτ [u(W0 + δS)] = −e−aW0 exp
+(
+−aC P
+1 (τ ) +
++∞∑
+n=2
+(−a)n
+(n)! C P
+n (τ )
+)
+. (70)
+Maximizing the expected utility E τ [u(W0+δS)] thus amounts to minimizing the argument −aC P
+1 (τ )+∑ +∞
+n=2
+(−a)n
+(n)! C P
+n (τ ) of the second exponential in the r.h.s. of (70) with respect to the weights wi.
+Keeping in mind that the time τ is the small parameter of the problem, we express the optimal
+asset weights wi as equal to the optimal Markowitz results denoted wo
+i (obtained by droping all
+multifractal corrections) plus the multifractal correcti ons. Keeping only the cumulants of order up
+to 4 (this approximation is valid not only in the small time li mit but for a risk aversion a not too
+large). The problem is thus to minimize
+− α
+N∑
+i=1
+wi − a
+N∑
+i=1
+wiτ (µi + 1
+2 σ2
+i ) + a2
+2
+N∑
+i=1
+w2
+i τ σ 2
+i
+− a3
+6
+N∑
+i=1
+w3
+i τ 23σ4
+i + a4
+24
+N∑
+i=1
+w4
+i
+(
+16σ6
+i τ 3 − 12σ4
+i λ2
+i τ 2 ln( τ
+Ti
+)
+)
+(71)
+with respect to the asset weights wi’s. The term α is a Lagrange multiplier ensuring the normal-
+ization ∑ N
+i=1 wi = 1. This optimization amounts to ﬁnding the roots of a third o rder polynomial
+and one can thus obtain closed expressions for the weights wi.
+15
+
+In order to quantify the inﬂuence of multifractal correctio ns and to handle simple expressions, let
+us neglect the corrections due to the diﬀerence between “cont inuous” and “discrete” returns which
+are unimportant at small time scales up to 6 months. In this ap proximation, the problem is to
+minimize
+− α
+N∑
+i=1
+wi − a
+N∑
+i=1
+wiτ µi + + a2
+2
+N∑
+i=1
+w2
+i τ σ 2
+i − a4
+24
+N∑
+i=1
+w4
+i 12σ4
+i λ2
+i τ 2 ln( τ
+Ti
+). (72)
+Then, in absence of the last terms proportional to a4, i.e. for all λ2
+i ’s equal to zero, we get the
+“Markowitz” solution
+wo
+j = aµjτ + α
+a2σ2
+j τ , (73)
+where α is determined from the normalization condition. In the simp le case where σ2
+i = σ2 is the
+same for all assets, this gives
+wo
+j = 1
+N + 1
+aσ2 (µj − ⟨µ⟩) , (74)
+where ⟨µ⟩ is the mean return averaged over all assets: assets with bett er than average returns have
+thus more weight in the portfolio, with a leverage controlle d by the risk σ2.
+Using this solution (73), we get the general solution of the w eights wi up to second order in powers
+of λ2
+i
+wi = wo
+i
+[
+1 + Aiλ2
+i
+]
+, (75)
+where
+Ai = 2a2σ2
+i w0
+i τ ln( τ
+Ti
+) . (76)
+The expression of the weigths valid to ﬁrst-order in the mult ifractal corrections for τ ≤ τ ∗ as a
+function of time horizon τ is then
+wi = w0
+i
+[
+1 + 2a2σ2
+i w0
+i λ2
+i τ ln( τ
+Ti
+)
+]
+. (77)
+Returning to the general solution (75), we see that assets wi th integral time scales Ti ≈ eτ (where
+e ≈ 2.718 is the base of the natural logarithm) will be the most depl eted compared to the Gaussian
+
+eturning to the general solution (75), we see that assets wi th integral time scales Ti ≈ eτ (where
+e ≈ 2.718 is the base of the natural logarithm) will be the most depl eted compared to the Gaussian
+solution, as the factor Ai is negative with a maximum amplitude for τ /Ti = 1 /e. Both for small
+τ /Ti and for τ /Ti approaching τ ∗, the solution is close to the Gaussian solution as it should : small
+τ /Ti do not lead to large absolute risks; τ /Ti ≈ τ ∗ leads to the Gaussian regime τ /Ti = 1 for ηi.
+The worst case occurs for intermediate values of the time hor izon compared to the integral time
+scale. Such stocks will be unfavored in the portfolio select ion.
+This result is actually more general than this section would lead us to believe. This can be seen
+from the structure of the cumulants of order 2 n given by Eq. (65): the dependence in τ /Ti given by(
+τ
+Ti
+) n(
+− ln
+(
+τ
+Ti
+)) n−1
+shows that, for large n, the cumulants are the largest when |(τ /Ti) ln(τ /Ti)|
+is the largest. This is exactly the same term that controls th e corrections to the Gaussian case
+quantiﬁed by the parameters Ai.
+4.2 Eﬃcient frontiers for multi-period portfolio optimiza tion
+As recalled in the introduction, the multiperiod portfolio problem as been addressed by several
+studies. This problem is a natural application of our multi- scale description of returns. The
+16
+
+problem we investigate is to minimize a risk measure represe nted by a cumulant of order 2 n for
+a ﬁxed mean return. For instance, one can choose to minimize t he value of the cumulant C4 at
+ﬁxed mean return C1 (this amounts to ﬁnd the set of wi’s that minimize the pseudo-utility function
+−aC P
+1 + C P
+4 = −a∑ N
+i=1 wiC i
+1 +∑ N
+i=1 w4
+i C i
+4), thus deﬁning the C1 − C4 eﬃcient frontier [Andersen
+and Sornette, 2000]. The previous cumulant perturbative ex pansion at diﬀerent time scales τ allows
+us to estimate the shape of the generalized optimal frontier s for all periods, given a ﬁxed horizon
+Th.
+For the sake of simplicity, we will suppose that all the asset s are characterized by the same integral
+time values Ti = T = 1 year, which is a reasonable value as revealed by the empiri cal analysis of
+section 2. Denoting Th the investment horizon and Np the number of periods, we will consider the
+portfolio returns at scale τ = Th/Np. Moreover, we will explicitely make the so-called “rebalan cing
+assumption”: periodic rebalancing supposes that, at the en d of each period, portfolio composition
+is adjusted in order to restore the original weights. We will assume that doing so the returns
+associated to each period are statistically independent.
+Once again, in order to quantify the inﬂuence of multifracta l corrections and to handle simple ex-
+pressions, we will neglect here the corrections due to the di ﬀerence between “continuous” and
+
+ent.
+Once again, in order to quantify the inﬂuence of multifracta l corrections and to handle simple ex-
+pressions, we will neglect here the corrections due to the di ﬀerence between “continuous” and
+“discrete” returns which are unimportant at small time scal es up to 6 months (above which
+they are dominated by the log-normal corrections). One can e asily show using ri ≃ ηi and the
+“rebalancing assumption” that the cumulants of the portfol io returns for a given multiperiod
+strategy have exactly the same expression as in Eqs. (59)-(6 4) where µiτ and σ2n
+i τ n become
+respectively µiTh and σ2n
+i Thτ (n−1) and the multifractal corrections λ2(n−1)
+i τ n ln(n−1)(τ ) become
+Thλ2(n−1)
+i τ (n−1) ln(n−1)(τ ). Using this rule, it is easy to show that, if one estimates th e risk using
+the variance of portfolio returns, the results are independ ent of the number of periods at ﬁxed
+horizon Th. Fig. 6 represents the standard eﬃcient frontier C P
+1 (Th, τ) as a function of C P
+2 (Th, τ) for
+various τ ’s. As expected, it is clearly apparent that the eﬃcient fron tiers are independent of time
+τ , i.e. of the number of periods. This is nothing but Tobin’s re sult [1965] that the single-period
+minimum variance set and the multi-period minimum variance set are identical.
+In contrast, the generalized eﬃcient frontiers with a risk m easure represented by higher order
+cumulants will involve multifractal corrections and both p ortfolio composition and eﬃcient frontiers
+
+.
+In contrast, the generalized eﬃcient frontiers with a risk m easure represented by higher order
+cumulants will involve multifractal corrections and both p ortfolio composition and eﬃcient frontiers
+will depend on the number of periods. Let us illustrate this r esults for the C P
+4 minimization problem.
+In that case, the optimum weight of asset i can be written for τ ≤ τ ∗ as:
+wi =
+(
+aµi
+−48σ4
+i λ2
+i τ ln( τ
+Ti
+)
+) 1
+3
+, (78)
+where a is the Lagrange parameter associated with the ﬁxed mean retu rn. For a large number of
+periods (i.e. small time scale τ ), assets with small multifractal parameter λ2
+i are prefered. Using
+these weights, Fig. 7 shows the eﬃcient frontiers C P
+1 (Th, τ) as a function of C P
+4 (Th, τ) for various
+periods. We have considered the simplest case of a single ris ky asset with parameters µ for the
+mean return, σ for the standard deviation and λ2 for the multifractal parameter. Denoting µ0 the
+return of the riskless asset, the parametric equation for th e eﬃcient frontier for an horizon Th and
+a number of periods Th/τ is:
+C P
+1 (Th, τ) = µ0Th +
+(
+a(µ − µ0)
+−48σ4λ2τ ln( τ
+T )
+) 1
+3
+(µ − µ0)Th , (79)
+C P
+4 (Th, τ) = −
+(
+a(µ − µ0)
+−48σ4λ2τ ln( τ
+T )
+) 4
+3
+12Thσ2λ2τ ln( τ
+T ). (80)
+17
+
+Fig. 7 exhibits a measurable dependence on the time scale τ , in contrast with the standard mean-
+variance eﬃcient frontier C P
+1 (Th, τ) as a function of C P
+2 (Th, τ). For a ﬁxed risk C P
+4 , the return
+is seen to be increasing at both ends as a function of time scal e τ /T, i.e., for τ /T → 0 and for
+τ /T → τ ∗. There is thus a worst choice for the time-horizon and for the rebalancing of the portfolio,
+approximately given by one ﬁfth of the integral time scale T . For this time scale, the return is
+minimum for a given (large) risk and the risk is maximum for a g iven return. One the other hand
+one can see that the shorter the rebalancing period, the lowe r is the risk for a given return. As
+a matter of facts, the risk is here quantiﬁed by the fourth cum ulant which goes to zero as τ → 0
+(Gaussian statistics). The limiting factor for small τ ’s is then transaction cost. Fig. 8 makes
+more precise this eﬀect by plotting C P
+1 (Th, τ) as a function of τ /T for a given value C P
+4 = 2 of the
+accepted risk.
+5 Distribution of returns of a portfolio of correlated asset s within
+the multifractal multivariate cascade framework
+In order to discuss portfolio optimization in presence of co rrelated assets, let us make the approx-
+imation (valid for τ small enough) that ηi(τ ) ≃ ri(τ ). Moreover, for the sake of simplicity, let us
+assume that the ηi’s are centered, i.e., µi = 0. Using the notations of section 2.3, the characteristic
+
+n (valid for τ small enough) that ηi(τ ) ≃ ri(τ ). Moreover, for the sake of simplicity, let us
+assume that the ηi’s are centered, i.e., µi = 0. Using the notations of section 2.3, the characteristic
+function ˆP (k) of the portfolio R(τ ) can be written as
+ˆPP (k) =
+∫ +∞
+−∞
+dN u NN
+(
+⃗ u− ⃗h(τ ), Λ (τ )
+) ∫ +∞
+−∞
+dN r NN (⃗ r,D(⃗ u)Σ 0D(⃗ u)) eik ⃗ w.⃗ r, (81)
+where we have denoted ⃗ wthe vector of the weights wi. Let us consider the orthogonal matrices Q
+and O that diagonalize respectively the matrices Λ (and thus also the matrix λ2
+ij by virtue of Eq.
+(28), showing that Q is independent of τ ) and Σ 0:
+Λ (τ ) = Qt ˜Λ (τ )Q , (82)
+Σ 0 = Ot0 ˜Σ 0O0 , (83)
+where ˜Λ and ˜Σ 0 are the diagonal matrices formed of the eigenvalues of Λ and Σ 0. Let us set
+⃗ r′ = OD−1(⃗ u)⃗ r. If we denote ⃗ w′ the vector O ⃗ w, the previous equation can be rewritten as:
+ˆPP (k) =
+∫ +∞
+−∞
+dN u NN
+(
+⃗ u− ⃗h(τ ), Λ (τ )
+) ∫ +∞
+−∞
+dN r′
+N∏
+i=1
+N1(r′
+i, σ2
+Ti)eikeui w′
+ir′
+i , (84)
+where σ2
+Ti are the eigenvalues of ˜Σ 0 and N1 is the standard monovariate Gaussian law. After
+calculating the second integral, we obtain the following ex pression for the characteristic function:
+ˆPP (k) =
+∫ +∞
+−∞
+dN u NN
+(
+⃗ u− ⃗h(τ ), Λ (τ )
+)
+e− k2
+2
+∑ N
+i=1 e2ui w′2
+i σ2
+Ti . (85)
+From this equation, one can immediately see that, if all the c ascades are uncorrelated, i.e, Λ
+is diagonal, the characteristic function is the same as in th e case of independent assets where
+the weights wi have been replaced by the weights w′
+
+hat, if all the c ascades are uncorrelated, i.e, Λ
+is diagonal, the characteristic function is the same as in th e case of independent assets where
+the weights wi have been replaced by the weights w′
+i. This is the same situation as in classical
+(Gaussian) portfolio theory where the case of correlated as sets is reduced to the uncorrelated one
+by such a simple change of variable on the weights.
+When the covariance matrix Λ is non trivial, the situation is more complicated. Let us con sider the
+case where each matrix Λ l in the block decomposition (26) is singular, i.e, [ Λ l]ij = λ2
+l . This case
+18
+
+corresponds to the existence of L degrees of freedom in the problem for which one can compute th e
+characteristic function under the form:
+ˆPP (k) =
+∫ +∞
+−∞
+du1...duL
+L∏
+l=1
+N1
+(
+ul − hl ln(τ /Tl)
+λ2
+l ln(τ /Tl)
+)
+e− k2
+2 Nlw′
+lσ2
+Tl
+e2ul
+,
+=
+L∏
+l=1
+( ∫ +∞
+−∞
+dulN1
+(
+ul − hl ln(τ /Tl)
+λ2
+l ln(τ /Tl)
+)
+e− k2
+2 Nlw′
+lσ2
+Tl
+e2ul
+)
+. (86)
+This case corresponds to L independent assets whose integral scale variances are Nlσ2
+Tl.
+Expression (86) is the product of L terms of the form (38) already encountered for the case of a
+single asset in section 3. The moments and cumulants can thus be calculated analytically.
+6 Conclusion
+We have extended a statistical model of price returns and vol atility correlations based on the idea
+of information cascades from large time scales to smaller ti me scales. Empirical tests performed on
+intra-day as well as daily data on the CAC40 and S&P500 indice s, on their constituting stocks as
+well as on bonds and currencies validate satisfactorily the model. The calibration give a robust and
+seemingly consistent value for the two key parameters: the i ntegral time-scale is found in the range
+of one to two years and the variance of the multiplicative ker nel is approximately 0 .02 for all stocks
+and indices that have been investigated. Our results show th at the evidence for multifractality is
+fully consistent with a simple cascade origin, ﬂowing from l arge time-scales to shorter time-scales.
+
+d indices that have been investigated. Our results show th at the evidence for multifractality is
+fully consistent with a simple cascade origin, ﬂowing from l arge time-scales to shorter time-scales.
+The multifractal cascade model oﬀers an intuitive explanati on for the observation that the detection
+of “abnormal” states or crises in the stock market requires a n index constructed over many diﬀerent
+horizon times [Zumbach et al., 2000].
+We have also oﬀered an extension of the cascade model into a mul ti-variate framework to account for
+correlations between assets, in addition to the correlatio ns in time-scales. Future works will exploit
+this novel formalism, in particular for multi-period portf olio characterization and optimization.
+In a second part, we have shown how to characterize the distri bution of returns of a portfolio
+constituted of assets with returns distributed according t o such multifractal cascade distributions.
+In particular, explicit analytical expressions for the ﬁrs t six cumulants are oﬀered. We also show
+that, within a utility approach with a constant absolute mea sure of risk aversion (exponential util-
+ity function), the problem of portfolio optimization amoun ts to maximize a sum over cumulants
+weighted by powers of the risk aversion coeﬃcient. Working i n the space of (return, fourth-order
+cumulant) or of (return, sixth-order cumulant) generalize s the mean-variance approach and under-
+lines the impact of the investor horizon-time.
+
+eﬃcient. Working i n the space of (return, fourth-order
+cumulant) or of (return, sixth-order cumulant) generalize s the mean-variance approach and under-
+lines the impact of the investor horizon-time. The most impo rtant consequence of the theory is that
+the optimal portfolio depends on the time-scale. In additio n, it is not possible to simultaneously
+optimise all the components of risks with respect to the choi ce of the investment time scale. This
+result extends to the investment horizon dimension previou s results obtained from a decomposition
+of the risk into a spectrum from small to large risks quantiﬁe d by the cumulants of the distribution
+of portfolio returns [Sornette et al. , 2000].
+In principle, our portfolio theory allows one to quantify ho w much diversiﬁcation can be obtained
+by buying diﬀerent assets and managing them optimally with re spect to their possibly diﬀer-
+ent integral time scales: indeed, our results suggest that r eallocation of assets in the portfolio
+should be performed with diﬀerent time-horizon depending up on the assets. This is related to the
+19
+
+“time-diversiﬁcation” concept introduced by Martellini [ 2000] for option hedging in the presence of
+transaction costs. A quantiﬁcation and tests of these strat egies will be reported elsewhere.
+20
+
+REFERENCES :
+J.V. Andersen and D. Sornette, Have your cake and eat it too: i ncreasing returns while lowering
+large risks! preprint at http://xxx.lanl.gov/abs/cond-m at/9907217.
+F.D. Arditti and H. Levy, Portfolio eﬃciency analysis in thr ee moments - the multiperiod case,
+Journal of Finance 30, 797-809 (1975).
+A. Arneodo, J.F. Muzy and D. Sornette, “Direct” causal casca de in the stock market, Eur. Phys.
+J. B 2, 277-282 (1998a).
+A. Arneodo, E. Bacry, S. Manneville and J.F. Muzy, Analysis o f random cascades using space-scale
+correlation functions, Phys. Rev. Lett. 80, 708-711 (1998b ).
+A. Arneodo, S. Manneville and J.F. Muzy, Towards log-normal statistics in high Reynolds number
+turbulence, Eur. Phys. J. B 1, 129-140 (1998c).
+A. Arneodo, S. Manneville, J.F. Muzy and S.G. Roux, Revealin g a lognormal cascading process in
+turbulent velocity statistics with wavelet analysis, Phil . Trans. Royal Soc. London Series A 357,
+2415-2438 (1999).
+G. Ballocchi, M. M. Dacorogna and R. Gencay, Intraday statis tical properties of Eurofutures by
+Barbara Piccinato, Derivatives Quarterly 6 (2), 28-44 (199 9).
+A. Bershadskii, Multifractal critical phenomena in traﬃc a nd economic processes, Eur. Phys. J. B
+11, 361-364 (1999).
+H. Bierman, Jr., Portfolio allocation and the investment ho rizon, Journal of Portfolio Management
+23, 51-55 (1997).
+H. Bierman, Jr., A utility approach to the portfolio allocat ion decision and the investment horizon,
+Journal of Portfolio Management 25, 81-87 (1998).
+
+urnal of Portfolio Management
+23, 51-55 (1997).
+H. Bierman, Jr., A utility approach to the portfolio allocat ion decision and the investment horizon,
+Journal of Portfolio Management 25, 81-87 (1998).
+J.-P. Bouchaud, M. Potters and M. Meyer, Apparent multifrac tality in ﬁnancial time series, Eur.
+Phys. J. B 13, 595-599 (2000).
+M.-E. Brachet, E. Taﬂin and J. M. Tcheou, Scaling transforma tion and probability distributions
+for ﬁnancial time series, preprint cond-mat/9905169 (1999 ).
+W. Breymann, S. Ghashghaie and P. Talkner, A stochastic casc ade model for FX dynamics, preprint
+cond-mat/0004179 (2000).
+J.Y. Campbell, A.W. Lo and A.C. MacKinlay, The econometrics of ﬁnancial markets (Princeton
+University Press, Princeton, New Jersey, 1997).
+B. Castaing, Y. Gagne and E.J. Hopﬁnger, Velocity probabili ty density functions of high Reynolds
+number turbulence, Physica D 46, 177-200 (1990).
+B. Chabaud, A. Naert, J. Peinke, F. Chilla and B. Castaing, Tr ansition towards developed turbu-
+lence, Phys. Rev. Lett. 73, 3227-3230 (1994).
+M.M. Dacorogna, U.A. M¨ uller, R.J. Nagler, R.B. Olsen et al. , A geographical model for the daily
+and weekly seasonal volatility in the foreign exchange mark et, Journal of International Money &
+Finance 12, 413-438 (1993).
+M.M. Dacorogna, U.A. M¨ uller, R.B. Olsen and O.V. Pictet, Mo delling short-term volatility with
+GARCH and HARCH models, in “Nonlinear Modelling of High Freq uency Financial Time Series,”
+21
+
+by C. Dunis and B. Zhou (John Wiley & Sons, 1998).
+Z. Ding, C.W.J. Granger and R.F. Engle, A long memory propert y of stock market returns and a
+new model, J. Empirical Finance 1 (1), 83-106 (1993).
+R. Ferguson and Y. Simaan, Portfolio composition and the inv estment horizon revisited, Journal
+of Portfolio Management 22, 62-67 (1996).
+A. Fisher, L. Calvet and B.B. Mandelbrot, Multifractality o f the deutschmark/us dollar exchange
+rate, Cowles Foundation Discussion Paper, 1997.
+U. Frisch, “Turbulence: the legacy of A.N. Kolmogorov” (Cam bridge, New York: Cambridge Uni-
+versity Press, 1995).
+S. Ghashghaie, W. Breymann, J. Peinke, P. Talkner and Y. Dodg e, Turbulent cascades in foreign
+exchange markets, Nature 381, 767-770 (1996).
+N. Gressis, G.C. Philippatos et al., Multiperiod portfolio analysis and the ineﬃciency of the m arket
+portfolio, Journal of Finance 31, 1115-1126 (1976).
+D. Gunthorpe and H. Levy, Portfolio composition and the inve stment horizon, Financial Analysts
+Journal 50, 51-56 (1994).
+P. Holgate, The lognormal characteristic function, Commun . Statist.-Theory Meth. 18, 4539-4548
+(1989).
+K. Ivanova and M. Ausloos, Low q-moment multifractal analys is of Gold price, Dow Jones Industrial
+Average and BGL-USD exchange rate, Eur. Phys. J. B 8, 665-669 (1999); erratum Eur. Phys. J.
+B 12 613 (1999).
+Y. Kroll, H. Levy and H.M. Markowitz, Mean-Variance versus d irect utility maximization, The
+Journal of Finance, vol. XXXIX, N 1, 47-61 (1984).
+H. Levy and H.M.
+
+erratum Eur. Phys. J.
+B 12 613 (1999).
+Y. Kroll, H. Levy and H.M. Markowitz, Mean-Variance versus d irect utility maximization, The
+Journal of Finance, vol. XXXIX, N 1, 47-61 (1984).
+H. Levy and H.M. Markowitz, Approximating expected utility by a function of mean and variance,
+American Economic Review 69, 308-317 (1979).
+B.B. Mandelbrot, Fractals and scaling in ﬁnance : discontin uity, concentration, risk, Selecta volume
+E (with foreword by R.E. Gomory, and contributions by P.H. Co otner et al. ), New York : Springer,
+1997.
+B.B. Mandelbrot, A multifractal walk down Wall Street, Scie ntiﬁc American 280 N2:70-73 (1999
+FEB).
+R.N. Mantegna and H.E. Stanley, An introduction to econophy sics: correlations and complexity in
+ﬁnance (Cambridge, U.K.; New York: Cambridge University Pr ess, 2000).
+H. Markovitz, Portfolio selection : Eﬃcient diversiﬁcatio n of investments (John Wiley and Sons,
+New York, 1959).
+J.F. Marshall, The role of the investment horizon in optimal portfolio sequencing (an intuitive
+demonstration in discrete time), Financial Review 29, 557- 576 (1994).
+L. Martellini, Eﬃcient option replication in the presence o f transaction costs, in press in Review of
+Derivatives Research (2000).
+R. C. Merton, Continuous-time ﬁnance (Blackwell, Cambridg e,1990).
+U.A. M¨ uller, M.M. Dacorogna, R. Dav, R.B. Olsen, O.V. Pictet and J.E. von Weizscker, Volatilities
+22
+
+of diﬀerent time resolutions - Analyzing the dynamics of mark et components, Journal of Empirical
+Finance 4, No. 2-3, 213-240 (1997).
+J.-F. Muzy, J. Delour and E. Bacry, Modelling ﬂuctuations of ﬁnancial time series: from cascade
+process to stochastic volatility model, submitted to Eur. P hys. J. B, preprint cond-mat/0005400
+(2000).
+J.K. Ord, Kendall’s advanced theory of statistics. 6th ed., Edward Arnold, London and Halsted
+Press, New York (1994).
+M. Pasquini and M. Serva, Clustering of volatility as a multi scale phenomenon, Eur. Phys. J. B
+16, 195-201 (2000).
+F. Schmitt, D. Schertzer and S. Lovejoy, Multifractal analy sis of foreign exchange data, preprint.
+Mc Gill University, Montreal (1999).
+D. Sornette, Large deviations and portfolio optimization, Physica A 256, 251-283 (1998).
+D. Sornette, Critical Phenomena in Natural Sciences (Chaos , Fractals, Self-organization and Dis-
+order: Concepts and Tools) 432 pp., 87 ﬁgs., 4 tabs (Springer Series in Synergetics) Date of publi-
+cation: August 2000.
+D. Sornette, P. Simonetti and J.V. Andersen, φq-ﬁeld theory for Portfolio optimization: “fat tails”
+and non-linear correlations, Physics Report 335 (2), 19-92 (2000).
+G.V.G. Stevens, On Tobins multiperiod portfolio theorem. R eview of Economic Studies V39, 461-
+468 (1972).
+G.Y.N. Tang, Eﬀect of investment horizon on international po rtfolio diversiﬁcation, International
+Journal of Management 12, 240-246 (1995).
+J.
+
+eorem. R eview of Economic Studies V39, 461-
+468 (1972).
+G.Y.N. Tang, Eﬀect of investment horizon on international po rtfolio diversiﬁcation, International
+Journal of Management 12, 240-246 (1995).
+J. Tobin, The theory of portfolio selection, in “The Theory o f Interest Rates”, F. Hahn and F.
+Breechling (eds), London: Macmillan (1965).
+N. Vandewalle and M. Ausloos, Multi-aﬃne analysis of typica l currency exchange rates, Eur. Phys.
+J. B 4, 257-261 (1998).
+J. von-Neumann and O. Morgenstern, Theory of games and econo mic behavior (Princeton, Prince-
+ton University Press, 1944).
+G. Zumbach, M. Dacorogna, J. Olsen and R. Olsen, Shock of the n ew, RISK, pp. 110-114 (March
+2000).
+23
+
+Figure 1: (a) the Standard & Poor US index (S&P500) time serie s (left panel) and the Japanese
+Yen time series (right panel) with a sampling time of ten minu tes are shown as a function of
+time over more than one (resp. two) decades. Intraday “seaso nal” eﬀects (large volatility at the
+open and close) are removed before calculating the moments. (b) log 2(M (q, τ )) versus log 2(τ ) for
+q = 1, 2, 3, 4, 5. The slope of these curves provides an estimate of ζ(q). (c) log 2(M (q, τ )/Mq(1, τ))
+versus log 2(τ ) for q = 2 , 3, 4, 5 (top to bottom); deviation from a constant is the signature of
+“multifractality”. (d) ζ(q) spectra for the two analyzed series. As illustrated in the i nsets where the
+linear part of the spectra has been removed, they are almost p erfectly ﬁtted by a pure parabola with
+quadratic coeﬃcient λ2 = 0 .018 (S&P500) and λ2 = 0 .032 (Japanese Yen). We ﬁnd h − λ2 = 1 /2
+to a very good approximation (see text for an explanation).
+24
+
+Figure 2: This ﬁgure shows the autocorrelation function deﬁ ned by Eq. (20) of the “magnitudes”
+ωi(t, τ) = ln( |ηi(t, τ)|) for τ = 10 minutes for the SP&500 ( ◦) and Japanese Yen ( ×). A linear
+regression of these functions versus the logarithm of time l ag ∆ t enables us to evaluate λ2
+i and Ti
+for each time series.
+25
+
+Figure 3: Panel (a) represents in dotted line the magnitude c orrelation function for the pair of
+stocks CCF/MICHELIN of the French CAC40 index. The mean of su ch correlation functions over
+all stock pairs of the CAC40 index is the continuous line. The slope and the intercept of these
+functions allow us to evaluate λ2
+ij and Tij. Panel (b) shows the histogram of λ2
+ij for all index pairs.
+26
+
+Figure 4: ln( Tij) versus λ2
+ij : each circle represents a pair of stocks taken from the Frenc h
+CAC40 index (resp. from the American Dow Jones index for the d arker circles). For both indexes,
+the correlation time-scales and multifractal coeﬃcients a re approximately clustered on the same
+λ2 ≃ 0.02 and T ≃ 1 − 2 years.
+27
+
+Figure 5: Excess kurtosis κ given by the prediction (66) of the multifractal cascade mod el with
+parameters λ2 = 0 .018 and σ2 = 1 .8 10 −4 (see S&P500 data in Table 1) in logarithmic scale as
+a function of τ /T also in logarithmic scale. The decay is not a pure straight li ne but can be
+approximated by one with an average exponent close to 0 .2 for small τ ’s as previously observed
+[Dacorogna et al. , 1993; Ding et al. , 1993; Bouchaud et al. , 2000].
+28
+
+0
+2
+4
+6
+8
+10C2
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+tau/T
+0
+0.2
+0.4
+0.6
+0.8
+1
+C1
+Figure 6: Standard eﬃcient frontier for multiperiod portfo lio: C P
+1 (Th, τ) as a function of C P
+2 (Th, τ)
+for various time-scales τ ’s. Units are arbitrary. The shape of the frontier illustrat es the indepen-
+dence with respect to the time horizon.
+29
+
+0
+2
+4
+6
+8
+10C4 0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+tau/T
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+C1
+Figure 7: Generalized multiperiod eﬃcient frontiers C P
+1 (Th, τ) as a function of C P
+4 (Th, τ) for
+various τ /T’s in the case of a single risky asset. The return of the unrisk y asset has be chosen to be
+µ0 = 0 .05 and the parameters of the risky asset are µ = 0 .15, σ = 0 .1, T = 1 year and λ2 = 0 .02.
+Th is set to 1 year.
+30
+
+Figure 8: Return quantiﬁed by C P
+1 (Th, τ) as a function of the reduced time scale τ /T for a given
+value of C P
+4 = 2. The data are the same as in Fig. 7. One can note that for a giv en risk, return
+is better at very small τ ’s than at very large ones. Moreover, there is a worst horizon for which
+return is minimum.
+31
