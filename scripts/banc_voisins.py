@@ -110,8 +110,9 @@ def classer(morceaux: list[dict], exclus: str, agreg: str) -> list[tuple[str, fl
         xs = sorted(xs, reverse=True)
         if agreg == "max":
             return xs[0]
-        top = xs[:3] + [0.0] * (3 - len(xs[:3]))
-        return sum(top) / 3
+        k = 5 if agreg == "top5" else 3
+        top = xs[:k] + [0.0] * (k - len(xs[:k]))
+        return sum(top) / k
     return sorted(((p, note(xs)) for p, xs in par.items()), key=lambda x: -x[1])
 
 
@@ -139,6 +140,25 @@ def rerang(reranker, requete: str, morceaux: list[dict], ordre: list[str],
     return sorted(par.items(), key=lambda x: -x[1]) + [(p, -1e9) for p in ordre[n:]]
 
 
+def par_centroides(graines_papiers: dict[str, str], n: int = 300) -> dict[str, list[tuple[str, float]]]:
+    """Le papier ENTIER de la graine contre chaque papier : centroïde contre
+    centroïde, comme les arêtes de l'Atlas (`vectordb/graph.py`)."""
+    from vector_db import VectorDB  # noqa: PLC0415
+
+    out = {}
+    with VectorDB.from_env() as db, db.conn.cursor() as c:
+        c.execute("set statement_timeout = '15min'")
+        c.execute("""create temp table cent as
+                     select paper_id, avg(embedding)::vector(768) v from chunks
+                     where embedding is not null group by paper_id""")
+        for g, pid in graines_papiers.items():
+            c.execute("""select b.paper_id, 1 - (a.v <=> b.v) s from cent a, cent b
+                         where a.paper_id = %s and b.paper_id <> a.paper_id
+                         order by a.v <=> b.v limit %s""", (pid, n))
+            out[g] = [(str(r["paper_id"]), float(r["s"])) for r in c.fetchall()]
+    return out
+
+
 def main() -> int:
     from embed_api import Api  # noqa: PLC0415
 
@@ -148,6 +168,9 @@ def main() -> int:
     from fastembed.rerank.cross_encoder import TextCrossEncoder  # noqa: PLC0415
 
     reranker = TextCrossEncoder(model_name="BAAI/bge-reranker-base")
+    lien = {x["fiche_id"]: x["paper_id"] for x in
+            api.appel("GET", "/rest/v1/fiches?select=fiche_id,paper_id&paper_id=not.is.null")}
+    cents = par_centroides({g: lien[g] for g in cand if g in lien})
     methodes = {}
     for g, c in cand.items():
         d, t = c["draws"], c["title"]
@@ -158,9 +181,17 @@ def main() -> int:
                         classer(d["construction+prefixe"], t, "top3")])
         pool = d["mecanisme+prefixe"] + d["construction+prefixe"]
         rr = rerang(reranker, c["queries"]["fiche"], pool, [p for p, _ in multi])
+        rr1 = rerang(reranker, c["queries"]["fiche"], d["fiche"], [p for p, _ in top3])
+        rrm = rerang(reranker, c["queries"]["mecanisme"], d["fiche"], [p for p, _ in top3])
+        top5 = classer(d["fiche"], t, "top5")
+        cen = cents.get(g, [])
         for nom, cl in (("0 actuelle (fiche, max)", base), ("1 fiche, top-3", top3),
                         ("2 fiche + préfixe, top-3", pref), ("3 mécanisme + construction", multi),
-                        ("4 = 3 + reclassement", rr)):
+                        ("4 = 3 + reclassement", rr), ("5 fiche, top-5", top5),
+                        ("6 = 1 + reclassement (fiche)", rr1),
+                        ("7 = 1 + reclassement (mécanisme)", rrm),
+                        ("8 centroïde du papier graine", cen),
+                        ("9 fusion 1 + 8", fusion([top3, cen]) if cen else top3)):
             ordre = [p for p, _ in cl]
             rangs = [ordre.index(x) + 1 if x in ordre else None for x in gold[g]]
             methodes.setdefault(nom, []).append({"seed": g, "ranks": rangs})
