@@ -56,17 +56,34 @@ def premieres_pages(pdf: Path) -> str | None:
             return None
 
 
-def score(pdf: Path, titre: str) -> float | None:
-    """La part des mots du titre présents au début du PDF ; None si illisible."""
-    texte = premieres_pages(pdf)
-    if texte is None:
-        return None
+def titre_principal(titre: str) -> str:
+    """Le titre avant son sous-titre : une version de travail n'a souvent que lui
+    (« Short-Selling Bans around the World », sans « Evidence from the 2007–09 Crisis »)."""
+    return re.split(r"[:?—–]|\s-\s", titre or "")[0]
+
+
+def part(texte: str, titre: str) -> float:
     attendus = mots(titre)
     if not attendus:
         return 1.0
     # Sans espaces aussi : pypdf colle souvent les mots d'un titre en capitales.
     lu, colle = f" {norm(texte)} ", norm(texte).replace(" ", "")
     return sum(1 for m in attendus if f" {m} " in lu or m in colle) / len(attendus)
+
+
+def score(pdf: Path, titre: str) -> float | None:
+    """La part des mots du titre présents au début du PDF ; None si illisible.
+
+    Le meilleur du titre entier et du titre principal, celui-ci seulement s'il
+    garde trois mots au moins : deux mots courants se retrouvent partout."""
+    texte = premieres_pages(pdf)
+    if texte is None:
+        return None
+    s = part(texte, titre)
+    principal = titre_principal(titre)
+    if principal != titre and len(mots(principal)) >= 3:
+        s = max(s, part(texte, principal))
+    return s
 
 
 def porte_son_titre(pdf: Path, titre: str) -> bool:

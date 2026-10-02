@@ -981,3 +981,29 @@ crochet `Stop` commite et pousse tout seul à chaque fin de tour : la référenc
 que je lis au début n'est pas celle que j'interroge à la fin. Corollaire :
 **relever `git rev-parse origin/main` avant toute fusion** et le citer, sans
 quoi le compte rendu désigne un commit que personne ne peut retrouver.
+
+## L33 — Un PDF « trouvé sur la page de dépôt » était souvent celui d'un autre
+
+**Le 2026-10-02.** Le graphe du corpus refait sur 1 942 papiers a montré deux
+paires de papiers aux vecteurs **identiques**. Le livre blanc de Bitcoin servait
+de texte à deux papiers sur les cryptomonnaies, et l'arXiv de « Leverage effect
+in energy futures » à « Commodity futures and market efficiency ». Le
+moissonneur avait bien marqué les doublons par empreinte sha256, mais
+l'ingestion ignorait ce champ. Et dans la paire Kristoufek, il avait désigné à
+tort le **bon** PDF comme doublon.
+
+Un contrôle simple (les mots du titre dans les deux premières pages,
+`corpus/titre_du_pdf.py`) a ensuite montré que le problème était général : la
+recherche de liens prend n'importe quel `.pdf` d'une page de dépôt. Les
+documents ainsi récupérés vont de politiques de protection des données et de
+règlements universitaires à des rapports de l'OMS, et surtout à **des papiers
+cités par le papier visé**. Il y avait aussi des scans et des polices
+indéchiffrables, dont le texte est du bruit.
+
+**La règle.** Un fichier n'est pas un papier parce qu'il a été téléchargé à
+l'endroit attendu. **On vérifie son identité sur son contenu** (le titre au
+début) au téléchargement **et** à l'ingestion. Toute marque posée par une étape
+(`duplicate_of`) doit être lue par les suivantes : un contrôle que personne ne
+lit n'existe pas. Et un graphe de similarité est un détecteur : une similarité
+de 1,000 entre deux titres différents n'est jamais une découverte, c'est une
+panne.
