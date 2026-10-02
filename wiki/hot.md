@@ -46,6 +46,23 @@ python scripts/gate_07.py      # G1 = G2 = G3 = G4 = 0
 python scripts/gate_08.py      # 1 signal, 6/6, aucune retouche
 ```
 
+### La base fait foi, et se cherche par le sens — `D44` à `D46`, 2026-10-01/02
+
+- **Fiches** : les 52 sont dans la table `fiches` (`D44`) ; les dossiers locaux
+  en sont le miroir (`corpus/fiches_store.py --etat | --tirer | --pousser`).
+- **Embeddings** : les 145 356 morceaux sont vectorisés, aucun ne manque.
+- **Index** : `chunks_embedding_ivfflat` (migration 007, `D46`), le HNSW ne se
+  construisant pas sur la petite instance. À reconstruire après une grosse
+  ingestion : `python vectordb/index_morceaux.py --reconstruire`.
+- **Voisins** (`D45`) : `python scripts/voisins.py <fiche_id>` écrit
+  `corpus/dossiers/<fiche_id>.{json,md}`, les papiers proches dans toute la
+  base, sans hiérarchie d'origine. **Reste ouvert** : la synthèse écrite à
+  partir d'un dossier (comment vérifier une citation d'un voisin sans fiche).
+- **Réseau** : le port 5432 est bloqué sur le wifi de l'université ; tout ce
+  qui précède passe par l'API (`SUPABASE_URL`, `SUPABASE_SECRET_KEY`) ou par
+  l'outil MCP Supabase. Ne rien lancer de long dans l'éditeur SQL : il coupe à
+  ~1 min et la mémoire de maintenance y vaut 32 Mo.
+
 ### Trois outils de confort — le 2026-09-30
 
 ```
