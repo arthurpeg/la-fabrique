@@ -1,0 +1,224 @@
+{
+  "fiche_id": "boyarchenko-2023-overnight-drift",
+  "written": "2026-10-03",
+  "written_by": "claude-opus-5-5",
+  "formula": {
+    "statement": "score(t) = RSV_close(t-1) = (contrats a l'achat - contrats a la vente) / (contrats a l'achat + contrats a la vente), sur les trades de l'ES (contrat le plus traite) de 15:15 a 16:15 ET de la seance precedente ; borne dans [-1, 1]. Le rendement predit est le rendement log (mid-quotes) de l'heure 02:00-03:00 ET de la journee de negociation suivante (qui commence a 18:00), via r(t,n) = mu_n + beta_n * RSV_close(t-1) + eps. La relation est negative : RSV_close < 0 predit un rendement positif. Variante conditionnelle BtD : long de 01:30 a 03:30 uniquement si RSV_close(t-1) < 0.",
+    "quoted": "our main proxy for order imbalance in the remaining is relative signed volume, measured as signed volume over total volume",
+    "reason": null
+  },
+  "inputs": [
+    {
+      "name": "es_trades",
+      "description": "trades tick-by-tick de l'ES (prix, taille, horodatage a la milliseconde), contrat le plus traite",
+      "known_at": "a l'horodatage de chaque trade ; agreges sur 15:15-16:15 ET, donc connus a 16:15 ET de la seance t-1",
+      "quoted": "The trades dataset includes the trade price, trade size and trade time."
+    },
+    {
+      "name": "es_top_of_book_quotes",
+      "description": "meilleur bid et meilleur ask (sommet du carnet) les plus recents avant chaque trade, servant a signer le trade (achat = au ask, vente = au bid)",
+      "known_at": "a l'instant du trade (cote la plus recente)",
+      "quoted": "We identify the direction of trades by comparing the trade price to the most recent quoted prices of the top level in the limit order book: buy (sell) orders trade at the best available ask (bid) price."
+    },
+    {
+      "name": "es_mid_quote",
+      "description": "mid-quote du meilleur bid/offer, utilise pour le rendement log cible (02:00-03:00 ET) ; ce n'est pas une entree du score, c'est la cible",
+      "known_at": "a 03:00 ET pour la fin de la fenetre cible",
+      "quoted": "Returns are computed from mid quotes of best bid-offers."
+    },
+    {
+      "name": "vix_close",
+      "description": "niveau de cloture du VIX, variable de conditionnement (double tri, interaction RSV x VIX)",
+      "known_at": "16:15 ET de la seance t-1",
+      "quoted": "the closing level of the VIX sampled at 16:15 each day."
+    }
+  ],
+  "timing": {
+    "statement": "Le score se ferme a 16:15 ET (fin de la fenetre 15:15-16:15) le jour t-1. La journee de negociation t commence a 18:00 ET ; les regressions portent sur les 12 heures 18:00-06:00, et l'heure cible principale est 02:00-03:00 ET. Horodatages UT convertis en ET (avec heure d'ete americaine).",
+    "quoted": "Panel (a) of table V reports point estimates from univariate regressions of hourly realised returns during the overnight session (18:00 – 6:00) on closing imbalances:",
+    "reason": null
+  },
+  "parameters": [
+    {
+      "name": "imbalance_window_start_et_hours",
+      "value": 15.25,
+      "unit": "heures decimales, heure ET",
+      "derived": true,
+      "note": "15:15 ET ecrit en heures decimales (15 + 15/60).",
+      "quoted": "we use the last hour preceding the maintenance (15:15 – 16:15) to measure closing order imbalance"
+    },
+    {
+      "name": "imbalance_window_end_et_hours",
+      "value": 16.25,
+      "unit": "heures decimales, heure ET",
+      "derived": true,
+      "note": "16:15 ET ecrit en heures decimales (16 + 15/60).",
+      "quoted": "we use the last hour preceding the maintenance (15:15 – 16:15) to measure closing order imbalance"
+    },
+    {
+      "name": "trading_day_start_et_hours",
+      "value": 18.0,
+      "unit": "heures decimales, heure ET",
+      "derived": true,
+      "note": "18:00 ET ecrit en heures decimales.",
+      "quoted": "n = 0 and n = N corresponds to 18:00 when a new trading day begins as defined by the CME."
+    },
+    {
+      "name": "target_window_start_et_hours",
+      "value": 2.0,
+      "unit": "heures decimales, heure ET",
+      "derived": true,
+      "note": "2:00 ET ecrit en heures decimales.",
+      "quoted": "long OD: t1 = 2:00 → t2 = 3:00"
+    },
+    {
+      "name": "target_window_end_et_hours",
+      "value": 3.0,
+      "unit": "heures decimales, heure ET",
+      "derived": true,
+      "note": "3:00 ET ecrit en heures decimales.",
+      "quoted": "long OD: t1 = 2:00 → t2 = 3:00"
+    },
+    {
+      "name": "odplus_window_start_et_hours",
+      "value": 1.5,
+      "unit": "heures decimales, heure ET",
+      "derived": true,
+      "note": "1:30 ET ecrit en heures decimales (1 + 30/60).",
+      "quoted": "long OD+: t1 = 1:30 → t2 = 3:30"
+    },
+    {
+      "name": "odplus_window_end_et_hours",
+      "value": 3.5,
+      "unit": "heures decimales, heure ET",
+      "derived": true,
+      "note": "3:30 ET ecrit en heures decimales (3 + 30/60).",
+      "quoted": "long OD+: t1 = 1:30 → t2 = 3:30"
+    },
+    {
+      "name": "btd_rsv_threshold",
+      "value": 0,
+      "unit": "RSV (sans unite)",
+      "quoted": "a dummy variable that takes on a value of ‘1’ if RSV close t−1 < 0 and ‘0’ otherwise"
+    },
+    {
+      "name": "vix_sampling_time_et_hours",
+      "value": 16.25,
+      "unit": "heures decimales, heure ET",
+      "derived": true,
+      "note": "16:15 ET ecrit en heures decimales (16 + 15/60).",
+      "quoted": "the closing level of the VIX sampled at 16:15 each day."
+    },
+    {
+      "name": "rsv_bounds",
+      "value": null,
+      "unit": null,
+      "quoted": "t−1 ∈ [−1, 1]. Thus, a point estimate",
+      "reason": "Pas un parametre libre : RSV est borne par construction dans [-1, 1] ; la citation est donnee pour fixer l'echelle (fraction, pas pourcentage) utilisee dans les regressions."
+    },
+    {
+      "name": "rsv_normalization_window",
+      "value": null,
+      "unit": null,
+      "quoted": null,
+      "reason": "Le papier n'applique aucune normalisation temporelle (z-score, fenetre glissante) au RSV : il est utilise brut, la division par le volume total tenant lieu de normalisation."
+    }
+  ],
+  "ambiguities": [
+    {
+      "question": "Comment classer un trade execute ni au meilleur bid ni au meilleur ask (au milieu du spread, ou a travers plusieurs niveaux) ? Est-il exclu, ou classe par une regle de tick ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Quelle cote est la 'plus recente' lorsque trade et mise a jour de cote partagent la meme milliseconde ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Le comptage se fait-il en nombre de contrats ou en dollars ? Le texte dit contrats, puis dit que SV est 'en unites dollar'.",
+      "resolution": "Nombre de contrats pour la definition ; la mention 'dollar units' reste contradictoire et n'est pas resolue par le papier. Pour RSV, ratio sans unite, la question ne change pas le resultat tant que le meme prix s'applique aux deux cotes.",
+      "quoted": "where # of orders is defined as the number of contracts, t is the day, and i is the period during the day."
+    },
+    {
+      "question": "La fenetre 15:15-16:15 ET reste-t-elle fixe quand la pause de maintenance change d'heure (16:15-16:30 jusqu'en 2012, 17:00-18:00 en 2020) ?",
+      "resolution": "Le papier emploie partout la fenetre fixe 15:15-16:15 ET (tableau III, tableau V), qu'il decrit comme la derniere heure avant la maintenance, sans l'ajuster aux changements d'horaire de la pause.",
+      "quoted": "we use the last hour preceding the maintenance (15:15 – 16:15) to measure closing order imbalance"
+    },
+    {
+      "question": "Que faire des jours ou l'ecart horaire Londres-New York n'est pas de 5 heures (heures d'ete desynchronisees, environ 3 semaines par an) ?",
+      "resolution": "Ils sont exclus des regressions (tableaux V, VI, VII). Ces jours-la, la predictibilite quitte 02:00-03:00 et passe a 04:00-05:00 ET. Le texte dit 'shifts by two hours' alors que l'ecart ne change que d'une heure : incoherence non expliquee.",
+      "quoted": "Days where the time difference between London and New York is different from 5 hours are excluded."
+    },
+    {
+      "question": "Sur les jours a ecart de 4 heures, quelle fenetre cible utiliser ?",
+      "resolution": "04:00-05:00 ET selon le test de decalage, mais l'estimation repose sur moins de 300 jours et est jugee mal mesuree par les auteurs.",
+      "quoted": "Predictability due to an overnight return reversal shifts by two hours to 4:00 – 5:00, which is the first hour of regular trading in London and Frankfurt when the U.S. - EU time difference is 4 hours."
+    },
+    {
+      "question": "Pour la nuit du dimanche au lundi, quel RSV_close(t-1) utiliser : celui du vendredi ? Et le rendement du week-end est-il inclus dans l'heure 02:00-03:00 ?",
+      "resolution": "Le papier dit seulement que le rendement du week-end tombe dans le premier rendement overnight du lundi (heure 18:00-19:00), donc pas dans 02:00-03:00. Il ne dit pas explicitement que t-1 est le vendredi.",
+      "quoted": "Our last observation on Fridays is at 18:00. Our first observation on Sunday is at 18:01. Thus the weekend return is incorporated into the first overnight return on Mondays."
+    },
+    {
+      "question": "Traitement des jours feries, des seances raccourcies (fermeture anticipee avant 16:15) et des nuits sans seance europeenne ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Regle de roulement : a partir de quel critere precis passe-t-on au contrat suivant, et RSV et rendement cible sont-ils pris sur le meme contrat les jours de roulement ?",
+      "resolution": "Seulement 'le contrat le plus traite' ; aucun critere chiffre, aucune regle pour les jours de bascule.",
+      "quoted": "We always use the most traded contract."
+    },
+    {
+      "question": "Comment le prix a 02:00 et a 03:00 est-il echantillonne (derniere mid-quote avant l'instant, premiere apres) ? Rendement log ou simple ?",
+      "resolution": "Rendement log sur mid-quotes pour les regressions ; la strategie (equation 10) utilise un rendement simple (P2 - P1)/P1. La regle d'echantillonnage a l'instant exact n'est pas donnee.",
+      "quoted": "The n-th log return on day t is defined as"
+    },
+    {
+      "question": "Le VIX de conditionnement est-il le niveau ponctuel a 16:15 ou une mesure sur 15:15-16:15 ?",
+      "resolution": "Le texte dit niveau a 16:15 ET ; le tableau VII etiquette la variable 'VIX 15:15-16:15'. Le texte est retenu, la contradiction subsiste.",
+      "quoted": "Testing this, we interact RSV close t with the level of the VIX index sampled at 16:15 ET"
+    },
+    {
+      "question": "Unites dans l'interaction RSV x VIX : RSV en fraction et VIX en points ?",
+      "resolution": "Le calcul d'exemple du papier entre RSV en fraction (-6.55%) et VIX en points (20).",
+      "quoted": "66.39 × (−6.55%) − 5.33 × (−6.55%) × 20 = 2.6 basis points",
+      "quoted_source": "(−6.55%) − 5.33 × (−6.55%) × 20 = 2 .6 basis points",
+      "quoted_repair": "math_notation"
+    },
+    {
+      "question": "Le signal s'utilise-t-il lineairement (beta * RSV) ou seulement du cote negatif (asymetrie, BtD) ?",
+      "resolution": "Le papier presente les deux : regression lineaire (equation 7) et strategie conditionnelle sur RSV_close < 0 ; il note que la relation trie ressemble a une fonction en escalier centree sur zero.",
+      "quoted": "Using RSV close t as a sorting variable the conditional return pattern resembles a step function centered around zero."
+    },
+    {
+      "question": "Sens du signe : un RSV negatif signifie-t-il des vendeurs nets (teneurs de marche longs) ?",
+      "resolution": "Oui : RSV = achats moins ventes ; RSV negatif implique des teneurs de marche longs et un rendement attendu positif.",
+      "quoted": "is defined as buys minus sells so that a negative imbalance implies dealers are long and from equation 2 overnight expected returns should therefore be positive."
+    },
+    {
+      "question": "L'heure ET suit-elle l'heure d'ete americaine (02:00 ET locale) ou un decalage UT fixe ?",
+      "resolution": "Conversion UT vers ET ; le test DST du papier montre que les heures s'entendent en heure locale de New York (avec heure d'ete).",
+      "quoted": "We convert the UT timestamps to U.S. Eastern Time (ET)"
+    },
+    {
+      "question": "Sur quelle periode les resultats de strategie valent-ils ?",
+      "resolution": "2004-2020 seulement, car le spread overnight n'atteint le tick minimum qu'a partir de 2004.",
+      "quoted": "We report findings for the sample period 2004.1 — 2020.12, as after this point the bid-ask spread during the overnight period reached its minimum tick size"
+    },
+    {
+      "question": "Correspondance avec nos fenetres de session : l'heure cible 02:00-03:00 ET tombe a la fin de notre fenetre ASIA (19:00-03:00), et OD+ (01:30-03:30) chevauche ASIA et EUROPE ; le papier, lui, l'appelle ouverture europeenne.",
+      "resolution": null,
+      "quoted": null
+    }
+  ],
+  "market": {
+    "studied": "le contrat future E-mini S&P 500 (ES) du CME GLOBEX, contrat le plus traite, en negociation quasi 24 heures",
+    "quoted": "Our primary data source exploits tick-by-tick data on trades and quotes for the ES contract",
+    "exact_roots": ["ES"],
+    "sessions": ["ASIA", "EUROPE", "US"],
+    "sessions_quoted": "Our sample period with 24 hour trading starts in January 1998 and ends in December 2020.",
+    "sessions_reason": null
+  }
+}
