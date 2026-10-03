@@ -29,9 +29,9 @@
     {
       "name": "daily_volatility_factor",
       "description": "σ_t : facteur de volatilité journalière, estimé par un modèle MA(1)-GARCH(1,1) journalier. Il ne sert qu'au modèle de périodicité de l'annexe B et à la standardisation, pas au motif en U brut",
-      "known_at": null,
+      "known_at": "non précisé par le papier : ni la date de disponibilité (clôture de t-1 ou séance t), ni la fenêtre d'estimation des paramètres GARCH, que le papier estime en une seule passe sur l'échantillon. À traiter comme inconnu, voir les ambiguïtés",
       "quoted": "Given the relative success of the daily MA(1)-GARCH(1, 1) models in explaining the aggregation results for the interdaily frequencies in both markets, this appears to be a natural choice.",
-      "reason": "Le papier ne dit pas si σ_t est la variance conditionnelle connue à la clôture de t-1 ni si les paramètres du GARCH sont estimés sur tout l'échantillon. L'estimation est faite en une seule passe sur toutes les données (voir les ambiguïtés)."
+      "reason": "Le papier ne dit pas si σ_t est la variance conditionnelle connue à la clôture de t-1 ni si les paramètres du GARCH sont estimés sur tout l'échantillon."
     }
   ],
   "timing": {
