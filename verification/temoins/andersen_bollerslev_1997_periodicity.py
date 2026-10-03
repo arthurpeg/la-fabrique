@@ -53,12 +53,14 @@ def _cell_scores(panel, root, window):
     df = pd.DataFrame(
         {"s": sess_code.to_numpy(), "p": pos.to_numpy(), "a": ret.to_numpy()}
     )
-    piv = df.pivot_table(index="s", columns="p", values="a", aggfunc="first")
-    piv = piv.sort_index()
+    # unstack garde les colonnes toutes NaN (pivot_table les supprimait, et
+    # get_indexer rendait -1, qui lisait la derniere colonne : fuite).
+    piv = df.set_index(["s", "p"])["a"].unstack("p").sort_index()
     prof = piv.shift(1).expanding(min_periods=1).mean()
     row = prof.index.get_indexer(df["s"])
     col = prof.columns.get_indexer(df["p"])
     vals = prof.to_numpy()[row, col]
+    vals = np.where((row < 0) | (col < 0), np.nan, vals)
     out = pd.Series(vals, index=closes.index).dropna()
     if len(out) == 0:
         return None

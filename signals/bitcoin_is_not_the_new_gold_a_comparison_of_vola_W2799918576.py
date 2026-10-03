@@ -1,24 +1,26 @@
-"""Klein, Thu & Walther (2018), Bitcoin is not the New Gold.
+"""Klein, Thu & Walther (2018), "Bitcoin is not the New Gold".
 
-Ce papier ne construit AUCUN signal predictif (fiche : `signal_construction`
-et `horizon` valent null). Il decrit des volatilites conditionnelles
-(APARCH/FIAPARCH), des correlations BEKK contemporaines, et un test de
-couverture ex post (poids de variance minimale et VaR calcules sur tout
-l'echantillon : look-ahead par construction, intransposable tel quel).
+Ce que le papier donne : AUCUN signal prédictif. La fiche le dit
+(`signal_construction` = null, `horizon` = null) : tout y est contemporain ou
+ex post (paramètres APARCH/FIAPARCH, corrélations BEKK lissées par un filtre
+bilatéral, seuils de VaR et poids de variance minimale calculés sur
+l'échantillon entier).
 
-Ce qui manquait, et ce qui a ete fait a la place :
-- aucune formule de score, aucun horizon, aucun signe predictif : la seule
-  brique calculable et causale de la recette est l'etape (1), le rendement
-  log x100 (`return_scaling` = 100). Le module la transpose en rendement log
-  x100 de la seance jusqu'a la barre notee, sur les racines que la recette
-  nomme exactement (ES, GC, CL) ;
-- horizon absent de la fiche : aucun nombre n'est ecrit ici, l'ancrage par
-  defaut de `_common.run` est utilise quand l'appelant n'en fournit pas ;
-- BEKK, poids de variance minimale, VaR plein echantillon, lissage de
-  Savitzky-Golay : non codes (parametres non publies ou look-ahead) ;
-- le signe attendu n'est pas donne par le papier : choix declare dans CHOICES.
+Ce qui ne se transpose pas : BEKK (paramètres non publiés, fenêtre
+d'estimation non dite), lissage de Savitzky-Golay (bilatéral, fenêtre non
+donnée), VaR plein échantillon (look-ahead par construction), portefeuille de
+variance minimale ex post, Bitcoin / argent / MSCI (absents de l'univers).
 
-Signal honnetement diminue : il ne code que la part transposable.
+Part transposée, déclarée diminuée : la seule grandeur de base du papier, le
+rendement logarithmique ×100, r = 100 × log(P_t / P_{t-1}), appliqué aux
+seuls sous-jacents que le papier mesure et que l'univers couvre (ES, GC, CL),
+calculé de la première clôture de la séance à la barre notée. Le papier
+n'utilisant que des clôtures journalières sans heure ni fenêtre, aucune
+séance n'est privilégiée.
+
+Paramètres manquants : horizon (null) -> celui du harnais ; séance (null) ->
+toutes les fenêtres ; signe (aucune prévision dans le papier) -> +1 par
+convention, voir CHOICES.
 """
 
 from __future__ import annotations
@@ -36,30 +38,30 @@ PAPER = (
 )
 EXPECTED_SIGN = +1
 CHOICES = (
-    "la fiche dit signal_construction = null (aucun signal predictif) ; j'ai code "
-    "la seule brique causale de la recette, le rendement log x100 (formule etape 1, "
-    "parametre return_scaling = 100), parce que tout le reste (BEKK, poids de "
-    "variance minimale, VaR plein echantillon) est in-sample ou non publie",
-    "la fiche donne des rendements journaliers clot-a-clot ; j'ai pris le rendement "
-    "log x100 de la premiere cloture de la seance a la cloture de la barre notee, "
-    "parce que _common.run ne fournit que les clotures d'une seance et que c'est "
-    "l'equivalent intraday le plus simple, sans nombre nouveau",
-    "horizon = null dans la fiche ; horizon_bars vaut None par defaut dans la "
-    "signature (aucune constante absente de la fiche) : s'il est fourni il est "
-    "transmis a _common.run, sinon _common.run applique son propre defaut",
-    "EXPECTED_SIGN : le papier n'annonce aucun signe predictif ; j'ai choisi +1 "
-    "(continuation du rendement de seance), par defaut et sans appui dans le papier, "
-    "ce qui est une interpretation et non un resultat du papier",
-    "univers : la recette nomme exact_roots ES, GC, CL ; je ne note que ces racines "
-    "(intersection avec les cellules du panel et avec `cells` si fourni)",
-    "sessions = null dans la recette (clot-a-clot couvre 24 h) ; je n'ai filtre "
-    "aucune fenetre : toutes les fenetres des racines retenues sont notees",
-    "barre notee en premiere position de seance, ou cloture non positive ou manquante : "
-    "aucun score (None), plutot qu'un zero fabrique",
-    "l'effet de levier inverse (or, argent, Bitcoin) et le regime de correlation "
-    "or-actions en detresse ne sont pas codes : ils portent sur la volatilite ou "
-    "sur une correlation contemporaine, pas sur un rendement futur, et le regime "
-    "releve d'un hybride, hors du perimetre d'un signal simple",
+    "la fiche dit que le papier ne construit aucun signal (signal_construction = null) ; "
+    "j'ai codé la seule grandeur de base qu'il calcule, le rendement log ×100 "
+    "r = 100 × log(P_t/P_{t-1}), parce que c'est la seule part transposable sans "
+    "estimation plein échantillon ni paramètre inventé",
+    "la fiche travaille en clôtures journalières de clôture à clôture ; j'ai pris le "
+    "rendement de la première clôture de la séance à la clôture de la barre notée, parce "
+    "que le prédicteur de _common.run ne reçoit que les clôtures d'une séance",
+    "la fiche donne exact_roots = ES, GC, CL ; je ne note que ces racines, parce que "
+    "Bitcoin, argent, MSCI World, MSCI EM50 et CRIX n'ont aucun équivalent dans l'univers",
+    "la fiche donne sessions = null ; je note toutes les fenêtres présentes pour ces "
+    "racines, sans en privilégier aucune, faute d'heure de clôture dans le papier",
+    "la fiche donne horizon = null ; j'ai gardé horizon_bars du harnais et l'ancrage "
+    "d'horloge de _common.run, sans nombre nouveau",
+    "le papier ne prétend à aucune prévision, donc aucun signe ; j'ai pris EXPECTED_SIGN = +1, "
+    "le signe de la grandeur elle-même (un rendement bas = la détresse du papier, "
+    "r_t < VaR_q), choix conventionnel et non une affirmation du papier",
+    "le seuil de détresse VaR_q (1 %, 5 %, 10 %) n'est pas codé : calculé sur "
+    "l'échantillon entier dans le papier, il serait du look-ahead, et sa version "
+    "glissante demanderait une fenêtre que le papier ne donne pas",
+    "BEKK, lissage de Savitzky-Golay, APARCH/FIAPARCH et poids de variance minimale ne "
+    "sont pas codés : paramètres non publiés, fenêtres absentes (null dans la recette), "
+    "ou estimation ex post",
+    "une barre à la position 0, ou une clôture non positive ou manquante, ne produit "
+    "aucun score (None) plutôt qu'une valeur remplie",
 )
 
 _ROOTS = ("ES", "GC", "CL")
@@ -82,12 +84,13 @@ def _predictor(closes, position: int):
     return _RETURN_SCALING * math.log(last / first)
 
 
-def scores(panel, cells=None, horizon_bars=None):
+def scores(panel, cells=None, horizon_bars: int = 30):
     """Rend {(root, window): pd.Series}."""
-    available = list(cells) if cells is not None else list(panel.cells())
-    selected = [cell for cell in available if cell[0] in _ROOTS]
-    if not selected:
+    available = list(panel.cells())
+    if cells is None:
+        cells = available
+    retained = [c for c in cells if c in available and c[0] in _ROOTS]
+    if not retained:
         return {}
-    if horizon_bars is None:
-        return _common.run(panel, _predictor, cells=selected)
-    return _common.run(panel, _predictor, cells=selected, horizon_bars=horizon_bars)
+    result = _common.run(panel, _predictor, cells=retained, horizon_bars=horizon_bars)
+    return {k: v for k, v in result.items() if v is not None and len(v) > 0}

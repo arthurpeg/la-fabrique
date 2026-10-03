@@ -58,7 +58,8 @@ CHOICES = (
     "8h35 ; j'ai pris la distance en minutes entieres entre la barre et la "
     "premiere barre de sa seance, ce qui suit l'horloge de la fenetre et "
     "evite la question heure d'ete / heure standard (ambiguite 'central "
-    "standard time' non resolue).",
+    "standard time' non resolue). Une seance dont la premiere barre manque "
+    "decale cette distance ; je ne la corrige pas.",
     "rendement de 5 minutes (bar_minutes = 5) : nos barres sont a 1 minute ; "
     "j'ai pris |log c_t - log c_(t-5 min)| avec les deux barres dans la meme "
     "seance, glissant (non aligne sur une grille de 5 minutes), parce que "
@@ -82,10 +83,15 @@ CHOICES = (
     "debordement de 15 minutes de leur seance sur notre fenetre US est non "
     "resolue ; je n'ajoute ni ne retire aucune barre, la fenetre est celle "
     "du panel.",
+    "aucune valeur n'est rendue tant qu'aucune seance anterieure n'a de |R| a "
+    "la meme position (premiere seance de la cellule) : le predicteur rend "
+    "None plutot qu'une valeur de remplissage.",
 )
 
 
 def _cell_predictor(panel, root, window):
+    """Construit le predicteur d'une cellule, qui ne lit que les seances
+    strictement anterieures a celle qu'il note."""
     closes_all, sessions = _common.cell_bars(panel, root, window)
     if len(closes_all) == 0:
         return None
@@ -93,11 +99,9 @@ def _cell_predictor(panel, root, window):
     logc = pd.Series(np.log(closes_all.to_numpy(dtype=float)), index=idx)
     sess = pd.Series(sessions.to_numpy(), index=idx)
 
-    first = pd.Series(idx, index=idx).groupby(sess.to_numpy()).transform("min")
-    offset = ((idx - pd.DatetimeIndex(first.to_numpy()).tz_localize(None).tz_localize(
-        "UTC").tz_convert(idx.tz)).total_seconds() // 60).astype(int) if False else (
-        (pd.Series(idx, index=idx) - first).dt.total_seconds() // 60
-    ).astype(int)
+    stamps = pd.Series(idx, index=idx)
+    first = stamps.groupby(sess.to_numpy()).transform("min")
+    offset = ((stamps - first).dt.total_seconds() // 60).astype(int)
 
     lag_idx = idx - pd.Timedelta(minutes=5)
     prev = logc.reindex(lag_idx).to_numpy()

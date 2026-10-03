@@ -1,20 +1,23 @@
-"""Klein, Thu & Walther (2018) -- jours de detresse par VaR historique.
+"""Klein, Thu & Walther (2018) -- Bitcoin is not the New Gold.
 
-Le papier est descriptif : aucun signal, BEKK/GARCH estimes sur l'echantillon
-entier, VaR sur l'echantillon entier, Savitzky-Golay bilateral. Rien de cela ne
-se transpose tel quel. Part transposable codee : la VaR empirique q = 1 %, 5 %,
-10 % (le ceil(T*q)-ieme plus petit rendement), rendue point-in-time par un
-quantile en expansion ; le score est la profondeur du rendement courant sous
-ces VaR (positive en detresse).
+Le papier est descriptif : il ne construit aucun score. Ce module code la seule
+part transposable et causale : la profondeur de detresse de la seance, c'est-a-dire
+le rendement log x100 de la cloture de la seance jusqu'a la barre notee
+(r = 100 x log(P_t / P_ouverture)), l'analogue intraday du rendement journalier
+de cloture a cloture dont l'indicateur de detresse 1{r_t < VaR_q} est fait.
 
-Ce qui manque et ce qui est fait a la place : pas de BEKK (parametres non
-publies), pas de poids de variance minimale, pas de croisement actif/indice.
-Le score est calcule sur la cellule elle-meme.
+Ce qui ne se transpose pas : le seuil VaR_q (quantile empirique plein echantillon,
+ex post), les correlations BEKK (parametres non publies, fenetre inconnue),
+les poids de variance minimale, le lissage de Savitzky-Golay (fenetre non donnee),
+l'univers Bitcoin/argent/MSCI. Le seuil VaR n'est pas code : la fiche ne donne
+aucune fenetre glissante, et en inventer une serait un parametre invente.
+Le score est donc le rendement continu brut, sans seuil ni indicateur.
+Ancrage et lecture de l'horloge : deleges a `_common.run`.
 """
 
 from __future__ import annotations
 
-import numpy as np
+import math
 
 from signals import _common
 
@@ -22,46 +25,41 @@ SIGNAL_ID = "bitcoin-is-not-the-new-gold-a-comparison-of-vola-W2799918576"
 HYPOTHESIS = None
 PAPER = (
     "Klein, Thu & Walther (2018), Bitcoin is not the New Gold - A comparison of "
-    "volatility, correlation, and portfolio performance, International Review "
-    "of Financial Analysis"
+    "volatility, correlation, and portfolio performance, International Review of "
+    "Financial Analysis 59, 105-116"
 )
 EXPECTED_SIGN = +1
 
 CHOICES = (
-    "la fiche ne construit aucun signal ; j'ai code seulement la VaR historique des jours de detresse, le reste (BEKK, variance minimale, Savitzky-Golay) n'est ni transposable ni parametre",
-    "la VaR est calculee sur tout l'echantillon dans le papier ; j'ai pris un quantile en expansion, au passe de la barre notee, pour la causalite",
-    "l'historique du quantile est limite a la seance (le predicteur de _common.run ne voit que les clotures d'une seance) : rendements des barres de la seance avant la barre notee",
-    "rendement log x 100 (return_scaling) entre barres successives ; VaR_q = le ceil(n*q/100)-ieme plus petit rendement passe, q = 1, 5, 10 (en %), ceil calcule en entiers",
-    "score continu = somme sur q des ecarts (VaR_q - rendement courant) : positif quand le rendement est sous la VaR (detresse, inegalite stricte du papier), negatif sinon ; continu pour ne pas etre degenere, sans poids invente",
-    "EXPECTED_SIGN = +1 : le papier ne predit rien ; choix par defaut, un score de detresse plus haut est lu comme un rebond plus fort, sans fondement dans la fiche",
-    "cross-asset (or/WTI contre ES) non code : aucune formule de score dans la fiche ; chaque cellule est notee sur elle-meme",
-    "horizon_bars vaut None par defaut : la fiche ne donne aucun horizon (null), on laisse l'ancrage par defaut de _common.run",
-    "pas de lissage (fenetre et degre Savitzky-Golay null), pas de traitement des week-ends ni des jours feries",
+    "la fiche ne construit aucun signal ; j'ai code la profondeur de detresse "
+    "de la seance (100 x log(cloture a la barre / cloture d'ouverture de la seance)), "
+    "parce que c'est le rendement r_t dont depend l'indicateur 1{r_t < VaR_q}.",
+    "le seuil VaR_q (1 %, 5 %, 10 %) est plein echantillon dans le papier ; la recette "
+    "ne donne aucune fenetre glissante, je ne l'ai donc pas code et le score reste "
+    "continu, sans indicateur ni quantile.",
+    "signe attendu +1 : dans le papier l'or monte en detresse (flight-to-quality) et "
+    "la detresse est un rendement negatif ; je lis un score = rendement de seance, "
+    "dont le signe positif signifie que le mouvement de seance se prolonge. Le papier "
+    "n'annonce aucun sens de prediction ; ce choix est le plus simple.",
+    "BEKK, poids de variance minimale, Savitzky-Golay, APARCH/FIAPARCH : non transposables "
+    "(parametres ou fenetres absents, estimation plein echantillon), non codes.",
+    "mise a l'echelle 100 reprise de la recette (return_scaling) ; ancrage, une barre par "
+    "seance, delegues a _common.run avec horizon_bars=30 (la valeur par defaut du contrat, "
+    "aussi la fenetre de 30 jours de la recette).",
+    "la premiere barre de la seance (position 0) n'a pas de rendement : aucun score.",
 )
-
-_NIVEAUX = (1, 5, 10)
-_ECHELLE = 100
 
 
 def _predictor(closes, position):
-    c = np.asarray(closes, dtype=float)[: position + 1]
-    r = _ECHELLE * np.diff(np.log(c))
-    if len(r) < 2:
+    if position <= 0:
         return None
-    courant = r[-1]
-    passe = np.sort(r[:-1])
-    n = len(passe)
-    if not np.isfinite(courant) or not np.all(np.isfinite(passe)):
+    p0 = float(closes.iloc[0])
+    pt = float(closes.iloc[position])
+    if not (p0 > 0 and pt > 0):
         return None
-    score = 0.0
-    for q in _NIVEAUX:
-        k = max(-((-n * q) // _ECHELLE), 1)
-        score += passe[k - 1] - courant
-    return float(score)
+    return 100 * math.log(pt / p0)
 
 
-def scores(panel, cells=None, horizon_bars=None):
+def scores(panel, cells=None, horizon_bars: int = 30):
     """Rend {(root, window): pd.Series}."""
-    if horizon_bars is None:
-        return _common.run(panel, _predictor, cells=cells)
     return _common.run(panel, _predictor, cells=cells, horizon_bars=horizon_bars)

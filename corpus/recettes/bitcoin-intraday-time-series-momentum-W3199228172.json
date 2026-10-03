@@ -1,287 +1,247 @@
 {
   "fiche_id": "bitcoin-intraday-time-series-momentum-W3199228172",
   "written": "2026-10-03",
-  "written_by": "claude-opus-5-5",
+  "written_by": "claude-opus-5-5 (session de recette isolée)",
   "formula": {
-    "statement": "Score principal = r_ONFH,t = p(ouverture+30 min, jour t) / p(clôture 17:00 EST, jour t-1) - 1, où l'ouverture est l'heure fixe de pic de volume propre à chaque plateforme (Table 1). Score secondaire = r_SLH,t = p(clôture-30, t) / p(clôture-60, t) - 1, soit 16:00-16:30 EST. Cible = r_LH,t = p(17:00, t) / p(16:30, t) - 1. Règle de timing : long sur la dernière demi-heure si r_ONFH > 0, short si r_ONFH <= 0 ; version SLH : long si r_SLH < 0, short si r_SLH >= 0 (signe inversé, anti-persistance) ; version combinée : long si r_ONFH > 0 et r_SLH < 0, short si r_ONFH <= 0 et r_SLH >= 0, hors marché sinon.",
-    "quoted": "the first half-hour return using the previous day’s (t-1) close price (c) and the price of 30 minutes",
+    "statement": "Prédicteur principal du papier : r_ONFH,t = p(ouverture+30 min, jour t) / p(clôture 17:00 EST, jour t-1) − 1, signe positif (long sur la dernière demi-heure si r_ONFH > 0, short sinon). Prédicteur secondaire : r_SLH,t = p(clôture−30, t) / p(clôture−60, t) − 1, signe négatif (long si r_SLH < 0, short sinon). Combinaison : long si r_ONFH > 0 et r_SLH < 0, short si r_ONFH ≤ 0 et r_SLH ≥ 0, hors marché sinon. Cible : r_LH,t = p(clôture, t) / p(clôture−30, t) − 1.",
+    "quoted": "we calculate the first half-hour return using the previous day’s (t-1) close price (c) and the price of 30 minutes after opening (o) on day t",
     "reason": null
   },
   "inputs": [
     {
-      "name": "r_onfh",
-      "description": "rendement de la clôture 17:00 EST de la veille (t-1) jusqu'au prix 30 minutes après l'ouverture (pic de volume) du jour t ; agrège la nuit et la première demi-heure",
-      "known_at": "à ouverture+30 min du jour t, soit 9:30 à 10:10 EST selon la plateforme (Table 1)",
-      "quoted": "where 𝑝𝑜+30,𝑡 is the price of first half hour on day t, and 𝑝𝑐,𝑡−1 is the close price  on day t-1."
+      "name": "close_price_prev_day",
+      "description": "prix de clôture conventionnelle du jour t-1, à 17:00 EST (début de la pause de 60 minutes des futures Bitcoin CME)",
+      "known_at": "17:00 EST du jour t-1",
+      "quoted": "The closing time is chosen as 5pm EST as CME Bitcoin futures trading has a 60-minute break each day beginning at 5pm EST."
     },
     {
-      "name": "r_slh",
-      "description": "rendement de l'avant-dernière demi-heure, de clôture-60 à clôture-30 (16:00-16:30 EST)",
-      "known_at": "à 16:30 EST du jour t, début de la demi-heure cible",
-      "quoted": "where 𝑝𝑐−30,𝑡 is the price of the last half hour on day t, 𝑝𝑐−60,𝑡 is the price of the second-to-last"
+      "name": "price_open_plus_30",
+      "description": "prix 30 minutes après l'ouverture conventionnelle du jour t (ouverture = heure du pic de volume de la plateforme, Table 1)",
+      "known_at": "ouverture + 30 minutes du jour t, soit entre 9:30 et 10:10 EST selon la plateforme",
+      "quoted": "is the price of first half hour on day t"
     },
     {
-      "name": "r_lh",
-      "description": "cible : rendement de la dernière demi-heure, 16:30-17:00 EST",
-      "known_at": "à 17:00 EST du jour t (cible, jamais une entrée du score)",
-      "quoted": "the last half-hour return is the return between 4:30pm to 5pm."
+      "name": "opening_time_per_exchange",
+      "description": "heure d'ouverture conventionnelle propre à chaque plateforme, choisie au pic de volume ; fixe sur tout l'échantillon (Table 1)",
+      "known_at": "non dit ; les heures sont données une fois pour tout l'échantillon (choix ex post)",
+      "quoted": "we select opening times of each exchange  when volumes spikes"
     },
     {
-      "name": "exchange_open_time",
-      "description": "heure d'ouverture conventionnelle par plateforme, fixée au pic de volume ; une seule heure par plateforme pour tout l'échantillon",
-      "known_at": "fixée par les auteurs sur l'échantillon entier (choix ex post, règle de détection non chiffrée)",
-      "quoted": "we select opening times of each exchange  when volumes spikes."
+      "name": "price_close_minus_60",
+      "description": "prix au début de l'avant-dernière demi-heure (16:00 EST) du jour t",
+      "known_at": "16:00 EST du jour t",
+      "quoted": "is the price of the second-to-last half hour on day t"
     },
     {
-      "name": "one_minute_prices",
-      "description": "prix BTC/USD agrégés en barres d'une minute à partir des ticks de bitcoincharts",
-      "known_at": "à la clôture de chaque minute (convention de prix dans la minute non précisée)",
-      "quoted": "We then aggregate the tick level data up to the 1-"
+      "name": "price_close_minus_30",
+      "description": "prix au début de la dernière demi-heure (16:30 EST) du jour t ; fin de r_SLH et début de la cible r_LH",
+      "known_at": "16:30 EST du jour t",
+      "quoted": "is the price of the last half hour on day t"
+    },
+    {
+      "name": "close_price_day_t",
+      "description": "prix de clôture conventionnelle du jour t (17:00 EST), fin de la cible r_LH",
+      "known_at": "17:00 EST du jour t (cible, pas entrée du score)",
+      "quoted": "is the close price on day t"
     },
     {
       "name": "first_half_hour_volume",
-      "description": "volume (en BTC) de la première demi-heure, pour le conditionnement par terciles formés par année",
-      "known_at": "à ouverture+30 min pour la valeur du jour ; les bornes de terciles utilisent l'année entière",
-      "quoted": "Therefore we sort the trading days for each year"
+      "description": "volume (en BTC) de la première demi-heure, utilisé seulement pour le conditionnement par terciles",
+      "known_at": "ouverture + 30 minutes du jour t ; mais les terciles sont formés par année entière",
+      "quoted": "we sort the trading days for each year in our sample separately based on the first half hour trading volume"
     },
     {
       "name": "first_half_hour_volatility",
-      "description": "volatilité de la première demi-heure estimée sur les rendements d'une minute, pour le conditionnement par terciles sur tout l'échantillon",
-      "known_at": "à ouverture+30 min pour la valeur du jour ; les bornes de terciles utilisent l'échantillon entier",
-      "quoted": "estimated using one-minute returns, and then all days are split into terciles by their first half hour volatility, low,"
-    },
-    {
-      "name": "cs_spread_first_half_hour",
-      "description": "écart de Corwin-Schultz (high/low) mesuré sur la première demi-heure, valeurs négatives mises à zéro ; sert à l'explication (interaction avec r_ONFH), pas à la stratégie de timing",
-      "known_at": "à ouverture+30 min du jour t",
-      "quoted": "we measure the first half hour spread following Corwin and Schultz (2012)"
+      "description": "volatilité de la première demi-heure à partir de rendements d'une minute, utilisée seulement pour le conditionnement par terciles",
+      "known_at": "ouverture + 30 minutes du jour t ; mais les terciles sont formés sur tout l'échantillon",
+      "quoted": "The first half -hour volatility is estimated using one-minute returns"
     }
   ],
   "timing": {
-    "statement": "Le score r_ONFH est connu à ouverture+30 min (9:30-10:10 EST selon la plateforme) ; r_SLH à 16:30 EST. La position est ouverte au début de la dernière demi-heure (16:30 EST) et fermée à la clôture conventionnelle de 17:00 EST, une fois par jour. Le papier écrit « EST » partout sans traiter l'heure d'été.",
-    "quoted": "We take a long position in the market at the beginning of the last half hour if the timing",
+    "statement": "Le score r_ONFH est connu à ouverture+30 min (≈9:30-10:10 EST) ; r_SLH est connu à 16:30 EST. La position est ouverte au début de la dernière demi-heure (16:30 EST) et fermée à la clôture conventionnelle (17:00 EST), une fois par jour.",
+    "quoted": "We take a long position in the market at the beginning of the last half hour if the timing signal is positive and a short position otherwise.",
     "reason": null
   },
   "parameters": [
     {
-      "name": "first_half_hour_minutes",
+      "name": "first_window_minutes",
       "value": 30,
-      "unit": "minutes",
-      "quoted": "the first half-hour return using the previous day’s (t-1) close price (c) and the price of 30 minutes"
+      "unit": "minutes après l'ouverture",
+      "quoted": "the price of 30 minutes after opening (o) on day t"
     },
     {
-      "name": "close_time_est_hour",
-      "value": 17,
-      "unit": "heure (EST)",
-      "quoted": "The closing time is chosen as 5pm EST as CME",
+      "name": "close_time_est",
+      "value": 5,
+      "unit": "heure (5pm EST = 17:00)",
+      "quoted": "The closing time is chosen as 5pm EST"
+    },
+    {
+      "name": "target_window_start_minute_of_day",
+      "value": 990,
+      "unit": "minutes après minuit, heure EST",
+      "quoted": "the last half-hour return is the return between 4:30pm to 5pm.",
       "derived": true,
-      "note": "5pm EST converti en 17 h ; début de la pause de 60 minutes des futures Bitcoin CME"
+      "note": "4:30pm EST = 16:30 = 16×60+30 = 990 minutes après minuit ; la fenêtre cible dure jusqu'à 5pm (1020 minutes)"
     },
     {
-      "name": "open_time_bitfinex_est_minutes_after_midnight",
+      "name": "opening_time_bitfinex_minute_of_day",
       "value": 545,
-      "unit": "minutes après minuit (EST)",
+      "unit": "minutes après minuit, heure EST",
       "quoted": "Bitfinex BTC/USD 2013-04-02 2020-12-31 18747.49 2827 9:05-17:00",
       "derived": true,
-      "note": "9:05 EST (Table 1) = 9 x 60 + 5 = 545 minutes après minuit"
+      "note": "9:05 EST = 9×60+5 = 545 minutes après minuit"
     },
     {
-      "name": "open_time_bitstamp_est_minutes_after_midnight",
+      "name": "opening_time_bitstamp_minute_of_day",
       "value": 540,
-      "unit": "minutes après minuit (EST)",
+      "unit": "minutes après minuit, heure EST",
       "quoted": "Bitstamp BTC/USD 2013-01-01 2020-12-31 9732.90  2921 9:00-17:00",
       "derived": true,
-      "note": "9:00 EST (Table 1) = 9 x 60 = 540 minutes après minuit"
+      "note": "9:00 EST = 9×60 = 540 minutes après minuit"
     },
     {
-      "name": "open_time_cexio_est_minutes_after_midnight",
+      "name": "opening_time_cexio_minute_of_day",
       "value": 540,
-      "unit": "minutes après minuit (EST)",
+      "unit": "minutes après minuit, heure EST",
       "quoted": "CEX.IO BTC/USD 2014-07-20 2020-12-31 618.02  2356 9:00-17:00",
       "derived": true,
-      "note": "9:00 EST (Table 1) = 9 x 60 = 540 minutes après minuit"
+      "note": "9:00 EST = 9×60 = 540 minutes après minuit"
     },
     {
-      "name": "open_time_coinbase_est_minutes_after_midnight",
+      "name": "opening_time_coinbase_minute_of_day",
       "value": 580,
-      "unit": "minutes après minuit (EST)",
+      "unit": "minutes après minuit, heure EST",
       "quoted": "Coinbase BTC/USD 2014-12-03 2020-12-31 11833.09 2188 9:40-17:00",
       "derived": true,
-      "note": "9:40 EST (Table 1) = 9 x 60 + 40 = 580 minutes après minuit"
+      "note": "9:40 EST = 9×60+40 = 580 minutes après minuit"
     },
     {
-      "name": "open_time_kraken_est_minutes_after_midnight",
+      "name": "opening_time_kraken_minute_of_day",
       "value": 555,
-      "unit": "minutes après minuit (EST)",
+      "unit": "minutes après minuit, heure EST",
       "quoted": "Kraken BTC/USD 2014-01-09 2020-12-31 3667.05  2500 9:15-17:00",
       "derived": true,
-      "note": "9:15 EST (Table 1) = 9 x 60 + 15 = 555 minutes après minuit"
-    },
-    {
-      "name": "target_window_start_est_minutes_after_midnight",
-      "value": 990,
-      "unit": "minutes après minuit (EST)",
-      "quoted": "the last half-hour return is the return between 4:30pm to 5pm.",
-      "derived": true,
-      "note": "4:30pm EST = 16 x 60 + 30 = 990 minutes après minuit"
-    },
-    {
-      "name": "target_window_end_est_minutes_after_midnight",
-      "value": 1020,
-      "unit": "minutes après minuit (EST)",
-      "quoted": "the last half-hour return is the return between 4:30pm to 5pm.",
-      "derived": true,
-      "note": "5pm EST = 17 x 60 = 1020 minutes après minuit"
-    },
-    {
-      "name": "mean_variance_risk_aversion_gamma",
-      "value": 5,
-      "unit": "sans unité",
-      "quoted": "aversion coefficient, which is set at 5 and we impose the portfolio constraint that the weight on"
-    },
-    {
-      "name": "mean_variance_weight_min",
-      "value": -0.5,
-      "unit": "poids",
-      "quoted": "the market must be between -0.5 and 1.5, meaning that the investor is allowed to borrow or short"
-    },
-    {
-      "name": "mean_variance_weight_max",
-      "value": 1.5,
-      "unit": "poids",
-      "quoted": "the market must be between -0.5 and 1.5, meaning that the investor is allowed to borrow or short"
-    },
-    {
-      "name": "conditioning_groups",
-      "value": 3,
-      "unit": "terciles",
-      "quoted": "in our sample separately based on the first half hour trading volume, splitting them into three equal",
-      "derived": true,
-      "note": "« three » écrit en lettres dans le texte"
-    },
-    {
-      "name": "oos_initial_training_window",
-      "value": null,
-      "unit": "jours",
-      "quoted": null,
-      "reason": "le papier dit seulement que la prévision est estimée « through period t–1 » ; la longueur de la fenêtre initiale de la régression récursive n'est pas donnée"
+      "note": "9:15 EST = 9×60+15 = 555 minutes après minuit"
     },
     {
       "name": "volume_spike_detection_rule",
       "value": null,
       "unit": null,
       "quoted": null,
-      "reason": "le papier ne chiffre pas la règle qui identifie le pic de volume ; seules les heures retenues sont données (Table 1)"
+      "reason": "le papier dit choisir l'ouverture « when volumes spikes » sans donner de règle chiffrée (seuil, fenêtre, période d'estimation) ; seules les heures retenues sont publiées"
+    },
+    {
+      "name": "conditioning_terciles",
+      "value": 3,
+      "unit": "groupes",
+      "quoted": "splitting them into three equal groups: low, medium and high volume days",
+      "derived": true,
+      "note": "le papier écrit « three » en toutes lettres"
+    },
+    {
+      "name": "risk_aversion_gamma",
+      "value": 5,
+      "unit": "sans dimension (variante allocation moyenne-variance seulement)",
+      "quoted": "aversion coefficient, which is set at 5 and we impose the portfolio constraint that the weight on the market must be between -0.5 and 1.5"
+    },
+    {
+      "name": "weight_min",
+      "value": -0.5,
+      "unit": "poids sur le marché (variante allocation moyenne-variance seulement)",
+      "quoted": "the market must be between -0.5 and 1.5"
+    },
+    {
+      "name": "weight_max",
+      "value": 1.5,
+      "unit": "poids sur le marché (variante allocation moyenne-variance seulement)",
+      "quoted": "the market must be between -0.5 and 1.5"
+    },
+    {
+      "name": "bar_size",
+      "value": 1,
+      "unit": "minute",
+      "quoted": "We then aggregate the tick level data up to the 1-",
+      "note": "la phrase continue sur la ligne suivante par « minutely level »"
     }
   ],
   "ambiguities": [
     {
-      "question": "Les heures sont-elles en heure d'hiver fixe (EST, UTC-5) toute l'année, ou suivent-elles l'heure de New York (EST/EDT) ? Cela décale toutes les fenêtres d'une heure la moitié de l'année.",
+      "question": "Quel prédicteur du papier sert de score transposé à nos séances — r_ONFH (première demi-heure avec la nuit), r_SLH (avant-dernière demi-heure) ou leur combinaison ? Le papier présente r_ONFH comme son résultat principal (résumé), mais la stratégie r_SLH a un rendement de timing plus élevé (17.32 % contre 7.82 %, Table 5) ; il ne désigne aucun des trois comme le signal à retenir, et ne parle pas d'autres marchés que le bitcoin.",
       "resolution": null,
       "quoted": null
     },
     {
-      "question": "Comment l'heure d'ouverture au « pic de volume » est-elle détectée, et sur quelle période ? Les heures de la Table 1 sont uniques par plateforme et semblent fixées sur tout l'échantillon (choix ex post).",
+      "question": "Quel signe pour chaque prédicteur dans la règle de timing ?",
+      "resolution": "r_ONFH : signe positif (long si r_ONFH > 0, short si ≤ 0). r_SLH : signe négatif (long si r_SLH < 0, short si ≥ 0, anti-persistance). Combinaison : long si r_ONFH > 0 et r_SLH < 0, short si r_ONFH ≤ 0 et r_SLH ≥ 0, sinon hors marché (score 0).",
+      "quoted": "where we go long if the first half hour is positive and second last half hour is negative, and go short when the first half is negative and the second last half hour is positive. Otherwise, we stay out of the market."
+    },
+    {
+      "question": "Le prédicteur « première demi-heure » inclut-il le rendement de nuit (depuis 17:00 EST la veille) ou seulement les 30 minutes après l'ouverture ?",
+      "resolution": "Il inclut la nuit : r_ONFH part de la clôture 17:00 EST de la veille. Le papier décompose ensuite r_ONFH en r_ON (nuit) et r_FH (première demi-heure) en section 5.1 ; r_ON est le meilleur prédicteur (t 5.28 contre 2.09).",
+      "quoted": "Therefore the first half-hour return captures the impact of information released overnight."
+    },
+    {
+      "question": "Où finit r_ONFH : à ouverture+30 min (équation 1, section 5.1) ou à l'ouverture au pic de volume (conclusion : « from 5pm the previous day to volume spikes the next day ») ? Le texte se contredit.",
       "resolution": null,
       "quoted": null
     },
     {
-      "question": "La fin de r_ONFH est-elle à l'ouverture+30 min (équation 1) ou à l'ouverture elle-même (conclusion : « from 5pm the previous day to volume spikes ») ?",
-      "resolution": "L'équation (1) et sa définition fixent la fin à ouverture+30 min ; la phrase de la conclusion est une formulation lâche.",
-      "quoted": "where 𝑝𝑜+30,𝑡 is the price of first half hour on day t, and 𝑝𝑐,𝑡−1 is the close price  on day t-1."
-    },
-    {
-      "question": "Quel prix représente un instant donné (dernier tick de la minute, premier tick, VWAP) ? Le « close price » à 17:00 est-il la dernière transaction avant 17:00 ou la minute 17:00-17:01 ?",
+      "question": "Toutes les heures sont dites « EST » : 17:00 et les heures d'ouverture suivent-elles l'heure d'été (EDT) ou restent-elles fixes en heure d'hiver ? La pause CME suit l'heure locale, ce qui suggère l'heure locale, mais le papier ne le dit pas.",
       "resolution": null,
       "quoted": null
     },
     {
-      "question": "Les week-ends sont-ils inclus ? Le marché trade 7j/7 ; le texte ne dit pas si samedi et dimanche sont des « trading days » (la Table 8 compte 365 ou 366 jours par an, ce qui suggère tous les jours calendaires, sans que le texte l'énonce).",
+      "question": "Quel prix prend-on à un instant donné (dernier prix de la minute, prix de clôture de la barre d'une minute, VWAP) ? Que faire si la minute n'a pas de transaction ?",
       "resolution": null,
       "quoted": null
     },
     {
-      "question": "Que faire d'une demi-heure sans transaction (prix manquant) ?",
-      "resolution": "Seul cas traité : Bitstamp 2011-2012, écarté pour cette raison ; aucune règle générale pour les minutes ou demi-heures vides postérieures.",
-      "quoted": "We therefore discard the trading on Bitstamp in 2011 and 2012."
-    },
-    {
-      "question": "Signe à zéro : que fait la stratégie ONFH quand r_ONFH = 0 ?",
-      "resolution": "Short : l'équation (7) range r_ONFH = 0 avec les valeurs négatives.",
-      "quoted": "−𝑟𝐿𝐻,     𝑖𝑓 𝑟𝑂𝑁𝐹𝐻 ≤ 0."
-    },
-    {
-      "question": "Version combinée : le texte dit « negative » / « positive » (stricts), l'équation (8) dit <= 0 et >= 0. Laquelle s'applique aux zéros ?",
-      "resolution": "L'équation (8) : short si r_ONFH <= 0 et r_SLH >= 0.",
-      "quoted": "−𝑟𝐿𝐻,      𝑖𝑓 𝑟𝑂𝑁𝐹𝐻 ≤ 0 𝑎𝑛𝑑 𝑟𝑆𝐿𝐻 ≥ 0;"
-    },
-    {
-      "question": "Les terciles de volume sont-ils formés point-in-time ou sur l'année calendaire entière (look-ahead dans l'année) ?",
-      "resolution": "Par année calendaire, sur l'année entière, puis réunis entre années : les bornes utilisent des jours futurs de la même année.",
-      "quoted": "The first half hour trading volume per year takes into account the increase in tradin g volume over time"
-    },
-    {
-      "question": "Les terciles de volatilité sont-ils formés point-in-time ?",
-      "resolution": "Non : tri de tous les jours de l'échantillon entier (look-ahead sur toute la période).",
-      "quoted": "we sort all trading days in our sample by the first half hour volatility, splitting them into three groups: low,"
-    },
-    {
-      "question": "Quelle mesure exacte de volatilité de la première demi-heure (écart-type des rendements 1 minute, somme des carrés, valeur absolue) ?",
+      "question": "Traitement des week-ends et jours fériés : le bitcoin traite 7 jours sur 7 ; la Table 8 compte 365/366 jours par an, ce qui laisse penser que tous les jours calendaires sont utilisés, mais le papier ne le dit pas explicitement. Pour nos futures, le « jour t-1 » d'un lundi n'est pas défini par le papier.",
       "resolution": null,
       "quoted": null
     },
     {
-      "question": "Les coefficients et rendements des tables sont dits « annualized » : dans quelle unité sont β_ONFH et β_SLH, et comment l'annualisation s'applique-t-elle à une régression ?",
-      "resolution": null,
-      "quoted": "The returns are annualized where Newey and West (1987) robust t -statistics are in"
-    },
-    {
-      "question": "Le signal est-il calculé et évalué par plateforme puis poolé, et la régression poolée a-t-elle des effets fixes plateforme ? La dépendance entre plateformes cotant le même actif n'est pas traitée.",
-      "resolution": "Régression poolée entre plateformes ; aucune précision sur effets fixes ni correction de dépendance.",
-      "quoted": "Consistent with Baltussen et al. (2021), we"
-    },
-    {
-      "question": "Régression récursive hors échantillon : fenêtre expansive ou glissante, et quelle fenêtre initiale ?",
-      "resolution": "Estimation par plateforme jusqu'à t-1 ; type et longueur initiale de la fenêtre non donnés.",
-      "quoted": "estimated through period t–1 in exchange i, and"
-    },
-    {
-      "question": "Allocation moyenne-variance : σ² est appelé « standard deviation » dans le texte ; est-ce la variance ? Sur quelle fenêtre est-elle estimée, et quel taux sans risque est utilisé ?",
-      "resolution": "Estimés par régressions récursives ; actif sans risque = bons du Trésor, sans précision de série ni de fenêtre.",
-      "quoted": "last half-hour return, both of which are estimated from recursive regressions."
-    },
-    {
-      "question": "Écart de Corwin-Schultz sur la première demi-heure : quelle durée ont les deux « périodes adjacentes » i et i+1 (minutes, quart d'heure) ?",
-      "resolution": "Non précisé ; seule la mise à zéro des valeurs négatives est donnée.",
-      "quoted": "Specifically, we also set negative values of CS estimator to zero."
-    },
-    {
-      "question": "Contradictions texte/table sur les R² : R² combiné 2.12 % (texte) contre 2.32 % (Table 3) ; R²_OOS combiné 1.61 % (texte) contre 1.81 % (Table 3). Lequel est juste ?",
-      "resolution": null,
-      "quoted": "The R2 of 2.12% is very high"
-    },
-    {
-      "question": "Fenêtre alternative « heures US » : 10:00-16:00 EST (texte) ou 9:30-16:00 (légende Table 12) ?",
-      "resolution": null,
-      "quoted": "This table reports the alternative time frame results, where we take 9:30am EST as the open and 4pm as the close,"
-    },
-    {
-      "question": "Comment est défini le « jour t » pour un marché continu (jour calendaire EST de 17:00 à 17:00, ou autre) ? Pour un lundi, la clôture t-1 est-elle celle du dimanche ?",
+      "question": "Les heures d'ouverture par plateforme sont-elles connues ex ante ? Elles sont fixées une fois pour tout l'échantillon, à partir du profil de volume, sans règle ni période d'estimation : choix potentiellement ex post.",
       "resolution": null,
       "quoted": null
     },
     {
-      "question": "Combien de spécifications alternatives (fenêtres, périodes) ont été essayées avant de retenir celle-ci ?",
-      "resolution": "Le papier mentionne d'autres périodes sans les détailler ni les compter.",
-      "quoted": "We have also studied alternative periods and find consistent results."
+      "question": "Les terciles de volume et de volatilité regardent-ils l'avenir ? Volume : terciles formés par année (donc avec l'année entière) ; volatilité : terciles formés sur tout l'échantillon.",
+      "resolution": "Oui, tels que décrits : le volume est trié année par année, la volatilité sur l'ensemble de l'échantillon ; aucune version point-in-time n'est donnée.",
+      "quoted": "we sort all trading days in our sample by the first half hour volatility"
+    },
+    {
+      "question": "Quel estimateur de volatilité de la première demi-heure (écart-type des rendements d'une minute, somme des carrés, autre) ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Pour la variante allocation et le R² hors échantillon : régression récursive en fenêtre croissante ou glissante, avec quelle période initiale ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Fenêtre alternative de la Table 12 : le texte dit 10:00-16:00 EST, la légende de la table dit 9:30-16:00 EST (heures NYSE). Laquelle a été estimée ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Unité des coefficients : les légendes disent les rendements « annualized », ce qui rend β_ONFH (0.968) et β_SLH (−9.778) difficilement comparables en magnitude ; seul le signe est exploitable pour un score.",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "La fenêtre cible du papier (16:30-17:00 EST) et l'avant-dernière demi-heure (16:00-16:30 EST) sont après la clôture actions US à 16:00 : elles tombent hors de notre fenêtre US 09:30-16:00. La transposition de la cible à nos séances n'est pas traitée par le papier.",
+      "resolution": null,
+      "quoted": null
     }
   ],
   "market": {
-    "studied": "Bitcoin au comptant contre dollar (BTC/USD) sur cinq plateformes crypto (Bitfinex, Bitstamp, CEX.IO, Coinbase, Kraken), marché continu 24h/24 et 7j/7 ; robustesse sur BTC/JPY et BTC/KRW. Aucun de nos instruments n'est ce marché.",
+    "studied": "le bitcoin au comptant contre dollar (BTC/USD) sur cinq plateformes crypto (Bitfinex, Bitstamp, CEX.IO, Coinbase, Kraken) ; robustesse sur BTC/JPY et BTC/KRW",
     "quoted": "we select BTC/USD t o examine intraday momentum effects",
     "exact_roots": [],
     "sessions": ["ASIA", "EUROPE", "US"],
-    "sessions_quoted": "trade 24 hours a day, 7 days a week",
-    "sessions_reason": "Les données sont continues sur 24 h ; r_ONFH couvre 17:00 EST la veille jusqu'à 9:30-10:10 EST (nos fenêtres ASIA, EUROPE et le début de US), mais r_SLH et la cible r_LH (16:00-17:00 EST) tombent après la fin de notre fenêtre US (16:00), et la correspondance EST/heure de New York n'est pas précisée par le papier."
+    "sessions_quoted": "our first half-hour return is from 5pm the previous day to volume spikes the next day, and the last half-hour return is the return between 4:30pm to 5pm.",
+    "sessions_reason": null
   }
 }

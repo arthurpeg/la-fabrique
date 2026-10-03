@@ -3,175 +3,223 @@
   "written": "2026-10-03",
   "written_by": "claude-opus-5-5 — session de recette isolée",
   "formula": {
-    "statement": "score = prévision directe de la variance réalisée moyenne des 20 prochains jours (modèle HExp centré) : RV_LR_t + somme sur j dans {1, 5, 25, 125} de beta_j * (ExpRV^j_t - RV_LR_t), où ExpRV^j_t est une EWMA des RV quotidiennes passées de centre de masse j jours, et RV_LR_t la moyenne en expansion des RV quotidiennes jusqu'au jour t. Les beta_j sont estimés par MCO sur fenêtre en expansion (actif par actif, en panel par classe, ou en « Mega » panel sur tous les actifs). Variante HExpGl : ajouter beta_Gl * (ExpGlRV^5_t - RV_LR_t). La sortie est une variance prédite, pas un rendement : le papier ne donne aucune direction de trade.",
-    "quoted": "RV^h_{t+h} − RV^LR_t = ∑_{j=1,5,25,125} β_j (ExpRV^j_t − RV^LR_t) + ϵ_t. (9)",
-    "quoted_source": "∑ j =1,5,25,125 βj (ExpRV j t −RV LR t )+ ϵt. (9)",
+    "statement": "Le score est une PRÉVISION DE VARIANCE, pas un rendement. Modèle HExp centré, prévision directe à h = 20 jours : RV^h_{t+h} − RV^LR_t = Σ_{j∈{1,5,25,125}} β_j (ExpRV^j_t − RV^LR_t) + ε_t, où RV^h_{t+h} est la moyenne des RV quotidiennes des 20 jours suivants, RV^LR_t la moyenne en expansion des RV quotidiennes depuis le début de l'échantillon jusqu'à t, et ExpRV^j_t une EWMA des RV quotidiennes passées (500 retards, poids normalisés, λ = log(1 + 1/CoM)) de centre de masse j jours. La prévision est donc RV^LR_t + Σ β̂_j (ExpRV^j_t − RV^LR_t), les β̂ étant estimés par MCO sur une fenêtre en expansion, de préférence en panel « Mega » (coefficients communs à tous les actifs). Variante HExpGl : ajouter β_Gl (ExpGlRV^5_t − RV^LR_t), EWMA de centre de masse 5 jours du facteur global GlRV.",
+    "quoted": "RV^h_{t+h} − RV^LR_t = Σ_{j=1,5,25,125} β_j (ExpRV^j_t − RV^LR_t) + ϵ_t.",
+    "quoted_source": "RV h t+h −RV LR t = ∑ j =1,5,25,125 βj (ExpRV j t −RV LR t )+ ϵt.",
     "quoted_repair": "math_notation",
     "reason": null
   },
   "inputs": [
     {
-      "name": "daily_rv",
-      "description": "RV quotidienne de l'actif : somme des carrés des rendements log intraday échantillonnés à 5 minutes, moyennée sur les cinq grilles décalées d'une minute, plus le carré du rendement « overnight », pour obtenir une RV de la journée entière. Barres minute = dernière observation avant la fin de chaque minute ; mid-quote (TRTH, Olsen) ou prix de transaction (TDC) ; seules les minutes avec au moins une transaction valide sont gardées.",
-      "known_at": "à la fin de la journée de bourse active de l'actif au jour t (heures délimitées par FinCal et les « liquidity plots », non reproduites)",
+      "name": "minute_bars",
+      "description": "Série continue (contrats roulés) de prix minute : dernière observation avant la fin de chaque minute ; mid-quote pour TRTH et Olsen, prix de transaction pour TickData ; seules les minutes avec au moins une transaction valide sont retenues.",
+      "known_at": "à la fin de chaque minute",
+      "quoted": "We organize the resultant single time series of returns for each asset into minute bars based on the last observation prior to the end of each minute."
+    },
+    {
+      "name": "valid_minute_filter",
+      "description": "Filtre de liquidité : une minute n'est utilisée que si elle contient au moins une transaction valide.",
+      "known_at": "à la fin de chaque minute",
+      "quoted": "we only use the minute bars for which there are at least one valid trade within that minute."
+    },
+    {
+      "name": "price_type",
+      "description": "Mid-quote pour TRTH et Olsen Data ; prix de transaction pour TickData.",
+      "known_at": "à la fin de chaque minute",
+      "quoted": "For the TRTH and OD databases, we use the mid-quote price (average between the bid and ask price)."
+    },
+    {
+      "name": "intraday_rv_5min",
+      "description": "Variance réalisée intraday du jour t : somme des carrés des rendements logarithmiques à 5 minutes sur les heures liquides retenues, moyennée sur les cinq grilles obtenues en démarrant la journée aux cinq premières minutes distinctes.",
+      "known_at": "à la fin de la période liquide du jour t de l'actif",
+      "quoted": "We rely on a common 5-minute sampling frequency for calculating the intraday RV s for all of the assets."
+    },
+    {
+      "name": "subsampling",
+      "description": "Sous-échantillonnage : moyenne des cinq RV journalières obtenues en décalant le départ de la journée d'une minute.",
+      "known_at": "à la fin de la période liquide du jour t",
+      "quoted": "we average the ﬁve different daily RV s obtained by starting the day at the ﬁrst ﬁve unique 1-minute marks."
+    },
+    {
+      "name": "overnight_squared_return",
+      "description": "Rendement « overnight » au carré (entre la fin d'une période liquide et le début de la suivante), ajouté à la RV intraday pour obtenir RV_t sur la journée entière.",
+      "known_at": "à l'ouverture de la période liquide du jour t (le rendement overnight précède la séance du jour t — le papier ne le précise pas formellement)",
       "quoted": "we simply add the corresponding “overnight” squared returns to the daily realized volatilities constructed from the “intraday” squared returns to obtain an RV measure for the whole day."
     },
     {
       "name": "rv_long_run",
-      "description": "RV_LR_t : moyenne en expansion des RV quotidiennes depuis le début de l'échantillon de l'actif jusqu'au jour t inclus.",
-      "known_at": "fin du jour t",
+      "description": "RV^LR_t : moyenne en expansion des RV quotidiennes depuis le début de l'échantillon de l'actif jusqu'au jour t inclus.",
+      "known_at": "à la fin du jour t",
       "quoted": "equal to the expanding sample mean of the daily RV ’s from the start of the sample up until day t."
     },
     {
-      "name": "exp_rv",
-      "description": "ExpRV^CoM_t : EWMA tronquée à 500 retards des RV quotidiennes RV_{t+1-i}, i = 1..500 (donc RV_t incluse), poids e^{-i*lambda} normalisés par leur somme, lambda = log(1 + 1/CoM). Quatre facteurs, CoM = 1, 5, 25, 125 jours.",
-      "known_at": "fin du jour t",
-      "quoted": "we explicitly estimate the relative importance of different EWMA factors constructed from the past daily RV ’s"
+      "name": "exp_rv_factors",
+      "description": "ExpRV^CoM_t : EWMA des RV quotidiennes RV_t, RV_{t−1}, …, RV_{t−499} (500 retards, poids e^{−iλ} normalisés à somme 1), pour CoM = 1, 5, 25, 125.",
+      "known_at": "à la fin du jour t (le premier retard i = 1 porte sur RV_t elle-même)",
+      "quoted": "where we ignore that the sum in (8) only uses the ﬁrst 500 lags to achieve a simple formula"
     },
     {
       "name": "global_rv",
-      "description": "GlRV_t (HExpGl uniquement) : moyenne des RV normalisées (RV_{t,j} / moyenne de RV_j) de tous les actifs j, remise à l'échelle de l'actif i ; construite actif par actif, en décalant d'un jour tout actif dont les heures chevaucheraient la journée de bourse suivante de l'actif i. Entre dans le modèle via ExpGlRV^5_t, EWMA de centre de masse 5 jours.",
-      "known_at": "fin du jour t de l'actif cible, après le décalage d'un jour des actifs dont les heures chevauchent la séance suivante de l'actif cible",
-      "quoted": "we compute the asset-speciﬁc GlRV as the average normalized RV scaled back to the asset’s own level of volatility"
+      "description": "GlRV_t (variante HExpGl seulement) : moyenne sur les J actifs des RV normalisées RV_{t,j}/moyenne_j, remise à l'échelle de l'actif i ; construite actif par actif, en décalant d'un jour tout actif dont les données chevaucheraient les heures de marché du lendemain de l'actif cible.",
+      "known_at": "à la fin du jour t de l'actif cible, après décalage d'un jour des actifs dont les heures chevauchent la séance suivante de l'actif cible",
+      "quoted": "The global risk factor is deﬁned as the average normalized RV s across all assets."
     },
     {
       "name": "target_rv_20d",
-      "description": "Cible d'estimation (pas une entrée du score) : RV^h_{t+h}, moyenne des RV quotidiennes des jours t+1 à t+20, h = 20.",
-      "known_at": "fin du jour t+20 — ne peut servir à l'estimation qu'une fois réalisée",
-      "quoted": "with the realized variance over the forecast horizon h of interest"
+      "description": "Cible (pour l'estimation seulement, jamais une entrée du score) : moyenne des RV quotidiennes des jours t+1 à t+20.",
+      "known_at": "à la fin du jour t+20 — inconnue au moment du score",
+      "quoted": "We will focus our discussion on a 1-month (i.e., 20-day) forecast horizon."
     }
   ],
   "timing": {
-    "statement": "La prévision est formée à la fin du jour t avec les RV jusqu'au jour t inclus, et vise la variance moyenne des jours t+1 à t+20 (prévision directe, non itérée). Hors échantillon, les coefficients sont réestimés sur une fenêtre en expansion « jusqu'à ce point ». Dans l'exercice d'utilité, les positions sont rebalancées à la clôture de chaque jour ouvré. Le papier ne donne ni fuseau ni heure de clôture par actif.",
-    "quoted": "well as out-of-sample forecasts, in which we estimate the models based on an expanding window of the data up to that point in time.",
+    "statement": "Prévision quotidienne : à la fin du jour t, avec les RV jusqu'à RV_t incluse, on prévoit la variance moyenne des 20 jours suivants (prévision directe, pas itérée). Les coefficients sont réestimés sur une fenêtre en expansion « up to that point in time ». Dans l'application d'utilité, les positions sont rebalancées à la clôture de chaque jour ouvré. Le papier ne dit pas si la RV du jour t est disponible avant l'exécution à la clôture de ce même jour t.",
+    "quoted": "out-of-sample forecasts, in which we estimate the models based on an expanding window of the data up to that point in time.",
     "reason": null
   },
   "parameters": [
     {"name": "forecast_horizon_days", "value": 20, "unit": "jours de bourse",
-      "quoted": "In particular, for the “monthly,” or 20-day, forecast that we focus on below,"},
-    {"name": "ewma_center_of_mass_1", "value": 1, "unit": "jours",
-      "quoted": "with λ chosen to equate the center-of-mass to 1, 5, 25, and 125 days, respectively."},
-    {"name": "ewma_center_of_mass_2", "value": 5, "unit": "jours",
-      "quoted": "with λ chosen to equate the center-of-mass to 1, 5, 25, and 125 days, respectively."},
-    {"name": "ewma_center_of_mass_3", "value": 25, "unit": "jours",
-      "quoted": "with λ chosen to equate the center-of-mass to 1, 5, 25, and 125 days, respectively."},
-    {"name": "ewma_center_of_mass_4", "value": 125, "unit": "jours",
-      "quoted": "with λ chosen to equate the center-of-mass to 1, 5, 25, and 125 days, respectively."},
-    {"name": "ewma_decay_from_com", "value": null, "unit": null,
-      "quoted": "we can compute the corresponding rate of decay as λ = log(1+1/CoM )",
-      "reason": "c'est une formule, pas un nombre : lambda = log(1 + 1/CoM)"},
-    {"name": "ewma_lambda_com_125", "value": 0.008, "unit": "taux de décroissance par jour",
-      "quoted": "Hence, we can think of λ = log(1+1/125) = 0.008 as an annual ExpRV risk"},
-    {"name": "ewma_truncation_lags", "value": 500, "unit": "jours",
-      "quoted": "where we ignore that the sum in (8) only uses the ﬁrst 500 lags"},
-    {"name": "global_factor_ewma_center_of_mass", "value": 5, "unit": "jours",
-      "quoted": "the 5-day center-of-mass EWMA of the realizations of the GlRVt global risk"},
-    {"name": "global_factor_lag_days", "value": 1, "unit": "jour",
-      "quoted": "lagging by 1 day any asset that would otherwise create such an overlap."},
+      "quoted": "We will focus our discussion on a 1-month (i.e., 20-day) forecast horizon."},
     {"name": "rv_sampling_minutes", "value": 5, "unit": "minutes",
-      "quoted": "We rely on a common 5-minute sampling frequency for calculating the"},
-    {"name": "rv_subsample_grids", "value": 5, "unit": "grilles décalées d'une minute",
+      "quoted": "We rely on a common 5-minute sampling frequency for calculating the intraday RV s for all of the assets."},
+    {"name": "subsample_grids", "value": 5, "unit": "grilles décalées d'une minute",
       "quoted": "we average the ﬁve different daily RV s obtained by starting the day at the ﬁrst ﬁve unique 1-minute marks.",
       "derived": true,
-      "note": "Le papier écrit le nombre en toutes lettres (« ﬁve ») ; 5 en est la transcription en chiffres, sans aucun calcul."},
-    {"name": "min_history_calendar_years", "value": 1, "unit": "année civile complète",
+      "note": "Le papier écrit le nombre en lettres (« ﬁve ») ; 5 en est la transcription en chiffres, rien n'est calculé."},
+    {"name": "ewma_com_1_days", "value": 1, "unit": "jours",
+      "quoted": "with λ chosen to equate the center-of-mass to 1, 5, 25, and 125 days, respectively."},
+    {"name": "ewma_com_5_days", "value": 5, "unit": "jours",
+      "quoted": "with λ chosen to equate the center-of-mass to 1, 5, 25, and 125 days, respectively."},
+    {"name": "ewma_com_25_days", "value": 25, "unit": "jours",
+      "quoted": "with λ chosen to equate the center-of-mass to 1, 5, 25, and 125 days, respectively."},
+    {"name": "ewma_com_125_days", "value": 125, "unit": "jours",
+      "quoted": "with λ chosen to equate the center-of-mass to 1, 5, 25, and 125 days, respectively."},
+    {"name": "ewma_decay_from_com", "value": null, "unit": null,
+      "quoted": "we can compute the corresponding rate of decay as λ = log(1+1/CoM ).",
+      "reason": "Formule, pas une valeur : λ = log(1 + 1/CoM)."},
+    {"name": "ewma_truncation_lags", "value": 500, "unit": "retards quotidiens",
+      "quoted": "where we ignore that the sum in (8) only uses the ﬁrst 500 lags to achieve a simple formula"},
+    {"name": "global_factor_com_days", "value": 5, "unit": "jours",
+      "quoted": "the 5-day center-of-mass EWMA of the realizations of the GlRVt global risk"},
+    {"name": "min_history_calendar_years", "value": 1, "unit": "année civile complète de RV",
       "quoted": "We require that an asset has at least 1 full calendar year of RV ’s before it is included in the estimation."},
-    {"name": "outlier_filter_pct", "value": 1, "unit": "% d'écart à la médiane",
-      "quoted": "we omit any data point associated with a return more than 1% away from the median centered on that minute bar."},
-    {"name": "outlier_filter_median_window", "value": 3, "unit": "rendements minute",
-      "quoted": "based on the rolling medians of the past three returns",
-      "derived": true,
-      "note": "Le papier écrit le nombre en toutes lettres (« three ») ; 3 en est la transcription en chiffres, sans aucun calcul. La fenêtre est ambiguë (passée ou centrée) : voir les ambiguïtés."},
-    {"name": "roll_omit_last_minutes", "value": 5, "unit": "minutes",
-      "quoted": "Omitting the last 5 minutes of the trading day to avoid any possible end-of-day effects,"},
-    {"name": "estimation_window_length", "value": null, "unit": "jours",
-      "quoted": "in which we estimate the models based on an expanding window of the data up to that point in time.",
-      "reason": "fenêtre en expansion : pas de longueur fixe ; la fréquence de réestimation n'est pas donnée"}
+    {"name": "spike_filter_threshold_pct", "value": 1, "unit": "% d'écart à la médiane",
+      "quoted": "based on the rolling medians of the past three returns, we omit any data point associated with a return more than 1% away from the median centered on that minute bar."},
+    {"name": "max_spread_filter_pct", "value": 1, "unit": "% du bid",
+      "quoted": "The bid-ask spread is greater than 1% of the bid price."},
+    {"name": "volatility_target_annualized_pct", "value": 20, "unit": "% annualisé",
+      "quoted": "optimally targets an annualized volatility of 20%",
+      "note": "Utilisé seulement dans l'application d'utilité (x = 20 % / sqrt(prévision)), pas dans le score."},
+    {"name": "gradual_trading_speed_pct", "value": 15, "unit": "% du chemin vers la cible par jour",
+      "quoted": "positions are only traded 15% toward the zero-cost optimal targets each day.",
+      "note": "Application d'utilité seulement."},
+    {"name": "reestimation_frequency", "value": null, "unit": null, "quoted": null,
+      "reason": "Le papier dit « expanding window of the data up to that point in time » sans dire si les coefficients sont réestimés chaque jour, chaque mois ou autrement."},
+    {"name": "oos_start_date", "value": null, "unit": null, "quoted": null,
+      "reason": "Le papier ne donne pas la date de la première prévision hors échantillon, ni la longueur de la fenêtre initiale d'estimation au-delà de l'exigence d'une année civile de RV par actif."}
   ],
   "ambiguities": [
     {
-      "question": "Dans l'estimation hors échantillon à la date t, quelles observations entrent dans la régression ? La cible RV^20_{t+20} n'est connue qu'en t+20 : seules les paires dont la cible est réalisée (jusqu'à t-20) peuvent être utilisées sans look-ahead. Le papier ne le dit pas ; il ne mentionne le recouvrement que pour les écarts-types.",
+      "question": "À partir de quel historique minimal le modèle émet-il son premier score ?",
+      "resolution": "Le papier exige au moins une année civile complète de RV avant qu'un actif entre dans l'estimation. Il ne dit pas si la même règle conditionne l'émission de la première prévision, ni comment l'EWMA à 500 retards est initialisée quand moins de 500 jours d'historique existent (troncature et renormalisation des poids, ou attente de 500 jours). Ces deux points restent ouverts.",
+      "quoted": "We require that an asset has at least 1 full calendar year of RV ’s before it is included in the estimation."
+    },
+    {
+      "question": "Le score est-il posé une fois par séance (à quel instant) ou à chaque barre ?",
+      "resolution": "Une fois par jour : le modèle est quotidien (RV quotidiennes, prévision variant chaque jour), et l'application rebalance à la clôture de chaque jour ouvré. Le papier ne dit pas à quelle heure exacte la prévision est formée par rapport à la dernière barre de 5 minutes du jour t, ni si l'exécution à la clôture du jour t utilise déjà RV_t (ce qui supposerait d'avoir la barre de clôture avant d'y trader).",
+      "quoted": "the positions fully rebalanced at the close of each business day"
+    },
+    {
+      "question": "La prévision est-elle bien mise à jour chaque jour (et non une fois par mois) ?",
+      "resolution": "Oui : le papier mesure la variation quotidienne des prévisions et une utilité réalisée calculée chaque jour.",
+      "quoted": "looking at the daily change in the in-sample forecasts averaged across all assets"
+    },
+    {
+      "question": "À quelle fréquence les coefficients β sont-ils réestimés dans la fenêtre en expansion ?",
       "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "La régression HExp centrée (équation 9) comporte-t-elle un intercept, ou des effets fixes par actif en panel ?",
+      "resolution": "Non résolu pour HExp : l'équation (9) n'affiche aucun intercept et le texte parle de MCO « standard » ; pour le HAR panel seulement, le papier précise des effets fixes avec β0 propres à chaque actif.",
+      "quoted": "the model is straightforward to estimate by standard OLS on an asset-by-asset basis or panel regression procedures that restrict the beta coefﬁcients to be the same across groups of assets."
+    },
+    {
+      "question": "Quelles observations entrent dans la régression : toutes les dates quotidiennes (cibles à 20 jours qui se chevauchent) ou des dates espacées de 20 jours ?",
+      "resolution": "Données quotidiennes qui se chevauchent.",
       "quoted": "The use of overlapping daily data in the estimation of the models means that the conventional standard errors"
     },
     {
-      "question": "À quelle fréquence les coefficients sont-ils réestimés hors échantillon (chaque jour, chaque mois, chaque année) ?",
-      "resolution": null,
-      "quoted": null
+      "question": "Prévision directe ou itérée ?",
+      "resolution": "Directe : la cible à gauche est la moyenne des RV sur l'horizon.",
+      "quoted": "In the forecasting literature, this approach is commonly referred to as direct as opposed to iterated forecasts."
     },
     {
-      "question": "Qu'est-ce qu'un « jour » pour chaque actif : heures d'ouverture, fuseau, coupure de la journée ? Le papier renvoie à FinCal et à des liquidity plots en GMT sans publier les fenêtres par actif.",
-      "resolution": "Heures déterminées par FinCal (depuis 2000) ou par les liquidity plots, tracés sur 24 heures GMT ; aucune table d'horaires fournie.",
-      "quoted": "one trade in any given minute in the 24-hour day (GMT)"
-    },
-    {
-      "question": "Comment est défini le rendement « overnight » (clôture de la veille à l'ouverture du jour t ? attribué au jour t ou t-1 ?) et comment sont traités les week-ends et jours fériés ?",
-      "resolution": null,
-      "quoted": null
-    },
-    {
-      "question": "Dans la régression en panel (Panel / Mega) du HExp centré, y a-t-il des effets fixes (intercept par actif) ? L'équation (9) n'a pas d'intercept ; pour le HAR centré, le papier parle d'effets fixes.",
-      "resolution": null,
-      "quoted": "we report the results from a ﬁxed effects panel-based estimation of a “centered” version of the model"
-    },
-    {
-      "question": "Quel schéma d'estimation retenir pour le score : individuel, Panel (par classe) ou Mega (tous actifs) ?",
-      "resolution": "Le papier donne la préférence hors échantillon au Mega panel, qui impose des coefficients communs à tous les actifs.",
-      "quoted": "by panel regressions that restrict the coefﬁcients to be the same across all assets."
-    },
-    {
-      "question": "Le « insanity filter » (remplacer toute prévision supérieure au maximum de RV mensuelle observé jusque-là par RV_LR) s'applique-t-il aussi au HExp, ou seulement au HAR et au MIDAS ?",
-      "resolution": null,
-      "quoted": "The HAR and MIDAS models in a few instances produce very large out-of-sample forecasts."
-    },
-    {
-      "question": "Cible : variance ou volatilité ? Le résultat principal prédit la variance ; une variante en racine carrée est mentionnée en annexe.",
-      "resolution": "Résultats principaux et utilité sur la variance.",
+      "question": "Le modèle porte-t-il sur la variance ou sur la volatilité (racine) ?",
+      "resolution": "Variance pour les résultats principaux et l'utilité ; une variante en volatilité figure en annexe A.2.5.",
       "quoted": "we purposely focus on the risk models estimated to forecast the variance."
     },
     {
-      "question": "Normalisation du facteur global : la moyenne RV_j au dénominateur est-elle la moyenne d'échantillon complète (comme dans la Section 2) ou la moyenne en expansion au temps t ? Le texte dit « normalisé à la même moyenne en expansion que l'actif » pour la remise à l'échelle ; la note de la Table 2 parle de moyenne « pondérée » alors que le texte dit « moyenne ».",
-      "resolution": null,
+      "question": "Le « insanity filter » s'applique-t-il au HExp, ou seulement aux HAR et MIDAS ?",
+      "resolution": "Non résolu : le texte motive le filtre par les HAR et MIDAS sans dire s'il est appliqué à tous les modèles.",
+      "quoted": "we replace any forecast that exceeds the maximum RV Mt observed up to that point with RV LRt"
+    },
+    {
+      "question": "Dans GlRV, la moyenne de normalisation de chaque actif j est-elle la moyenne de tout l'échantillon (look-ahead) ou une moyenne en expansion ?",
+      "resolution": "Partiellement résolu : le facteur est remis à la moyenne en expansion de l'actif cible à la date t ; le texte ne dit pas explicitement que les dénominateurs des autres actifs sont aussi en expansion (la section 2.2 parle de moyenne d'échantillon pour les corrélations descriptives).",
       "quoted": "further normalized to have the same time t expanding sample mean as the speciﬁc asset."
     },
     {
-      "question": "Décalage du facteur global : quels actifs décaler d'un jour pour chaque actif cible, et comment suivre les changements d'horaires ?",
-      "resolution": "Décaler d'un jour tout actif dont les heures chevauchent la séance suivante de l'actif cible, jour par jour.",
-      "quoted": "we perform this shifting on a day-by-day basis for each asset."
+      "question": "GlRV est-il une moyenne simple (1/J) ou pondérée des RV normalisées ?",
+      "resolution": "Contradiction non résolue : la formule du texte est une moyenne à poids 1/J, la légende de la Table 2 dit « weighted average » sans donner les poids.",
+      "quoted": "The “Global” volatility factor is constructed as a weighted average of the daily RV s, as further discussed in the main text."
     },
     {
-      "question": "La date de roulement des futures est déterminée ex post sur la liquidité du jour ; est-ce un look-ahead ?",
-      "resolution": "Les auteurs le jugent sans effet car seules des RV journalières sont calculées et la jonction se fait à la fin de la journée ; la règle exige toutefois de connaître la liquidité de toute la journée.",
-      "quoted": "it is possible to determine the occurrence of a roll date ex post and splice return sequences from both the near and the far contracts at the end of the trading day."
+      "question": "Comment décaler les actifs dans GlRV pour éviter le look-ahead de fuseau horaire ?",
+      "resolution": "Décaler d'un jour, actif par actif et jour par jour, tout actif dont les données chevauchent les heures de marché du lendemain de l'actif cible.",
+      "quoted": "we construct the corresponding GlRV so that today’sGlRV does not use any data that overlap with tomorrow’s trading hours for the speciﬁc asset, lagging by 1 day any asset that would otherwise create such an overlap."
     },
     {
-      "question": "Le filtre d'aberrations utilise-t-il une médiane des trois rendements passés ou une médiane centrée (qui lit la minute suivante) ? Le texte dit les deux.",
-      "resolution": null,
-      "quoted": "based on the rolling medians of the past three returns, we omit any data point associated with a return more than 1% away from the median centered on that minute bar."
+      "question": "Le décalage tient-il compte des changements d'horaires de marché ?",
+      "resolution": "Oui, recalculé jour par jour.",
+      "quoted": "To also account for changes in market hours over the sample period, we perform this shifting on a day-by-day basis for each asset."
     },
     {
-      "question": "Comment traiter l'EWMA à 500 retards quand l'historique disponible est plus court (début d'échantillon, minimum d'un an) : renormaliser les poids sur les retards disponibles ou attendre 500 jours ?",
+      "question": "Quelles heures définissent la période « intraday » de chaque instrument, et dans quel fuseau ?",
+      "resolution": "Non résolu par instrument : heures liquides tirées de FinCal (depuis 2000) ou de « liquidity plots » ; les graphiques sont en GMT. Aucune table d'heures par instrument n'est fournie.",
+      "quoted": "we only retain the trading hours for which the liquidity is sufﬁciently high to ensure a reasonable quality of the high-frequency data."
+    },
+    {
+      "question": "Où commence et finit la « journée » (et donc le rendement overnight) pour un marché de change quasi continu ?",
       "resolution": null,
       "quoted": null
     },
     {
-      "question": "Prix utilisé pour les barres minute : mid-quote ou prix de transaction ? Dépend de la source.",
-      "resolution": "Mid-quote pour TRTH et Olsen, prix de transaction pour TDC.",
-      "quoted": "For the TRTH and OD databases, we use the mid-quote price (average between the bid and ask price)."
+      "question": "Le filtre de pics utilise-t-il une médiane des trois rendements PASSÉS ou une médiane CENTRÉE (qui lit la minute suivante) ?",
+      "resolution": "Contradiction interne non résolue : la phrase dit les deux. Sans effet sur un score de fin de journée, mais à trancher si le filtre est appliqué en intrajournalier.",
+      "quoted": "based on the rolling medians of the past three returns, we omit any data point associated with a return more than 1% away from the median centered on that minute bar."
     },
     {
-      "question": "Quel signe ou quelle direction de trade donner au score ? Le papier prédit un risque et l'utilise pour dimensionner une position à volatilité cible, jamais pour prédire un rendement.",
-      "resolution": "Aucune : le papier ne s'occupe que de prévoir la volatilité.",
-      "quoted": "our method exclusively focuses on volatility forecasting."
+      "question": "La date de roulement est-elle connue à l'avance ?",
+      "resolution": "Non : elle est déterminée ex post, à la fin de la journée de roulement (comparaison du nombre de minutes valides du contrat proche et lointain), ce qui suffit pour une RV de fin de journée mais lit l'intégralité de la journée.",
+      "quoted": "it is possible to determine the occurrence of a roll date ex post and splice return sequences from both the near and the far contracts at the end of the trading day."
+    },
+    {
+      "question": "Quel facteur d'annualisation convertit la variance quotidienne prévue en volatilité annualisée (cible 20 %) ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Le paramètre θ2 du MIDAS concurrent est-il choisi hors échantillon ?",
+      "resolution": "Non : plein échantillon, donc look-ahead reconnu ; ne concerne pas HExp.",
+      "quoted": "As a result, our subsequent predictive MIDAS analysis is not truly out-of-sample."
     }
   ],
   "market": {
-    "studied": "Un panel de 58 instruments liquides dans quatre classes : futures sur indices actions mondiaux (dont le S&P 500 E-mini), futures de taux, futures de matières premières (dont le WTI et l'or), et changes au comptant (dont EUR-USD, GBP-USD, USD-JPY, AUD-USD). Le papier mesure sur l'ensemble et par classe.",
+    "studied": "58 actifs : 20 futures de matières premières, 21 futures d'indices actions (marchés développés et émergents), 8 futures de taux de pays développés, 9 taux de change au comptant ; données 1992-2014. Parmi eux, au sens de la Table A1 : US (S&P 500 E-Mini), Crude (WTI) Oil, Gold, Eurozone (EUR-USD), UK (GBP-USD), Japan (USD-JPY), Australia (AUD-USD). Ni le Nasdaq-100 ni le Dow ne figurent dans l'univers.",
     "quoted": "The asset universe comprises global equity index futures (both developed and emerging markets), global developed ﬁxed-income futures, commodity futures, and spot market foreign exchange rates.",
     "exact_roots": ["ES", "CL", "GC", "6E", "6B", "6J", "6A"],
-    "note": "La Table A1 liste parmi les 58 actifs : « US (S&P 500 E-Mini) », « Crude (WTI) Oil », « Gold », « Eurozone (EUR-USD) », « UK (GBP-USD) », « Japan (USD-JPY) », « Australia (AUD-USD) ». Ni le Nasdaq-100 ni le Dow n'y figurent, donc pas de NQ ni de YM. Le change est du comptant Olsen, pas des futures CME. Les résultats publiés sont des moyennes par classe ou sur tous les actifs, pas par instrument.",
-    "sessions": null,
-    "sessions_quoted": null,
-    "sessions_reason": "La RV couvre la journée entière par construction (intraday actif + rendement overnight au carré), mais la fenêtre intraday mesurée diffère selon l'actif et n'est pas publiée : seulement FinCal et des liquidity plots en GMT. Il est donc impossible de rapporter les données à nos fenêtres ASIA / EUROPE / US sans deviner."
+    "sessions": ["ASIA", "EUROPE", "US"],
+    "sessions_quoted": "we simply add the corresponding “overnight” squared returns to the daily realized volatilities constructed from the “intraday” squared returns to obtain an RV measure for the whole day.",
+    "sessions_reason": "La RV couvre la journée entière (intraday liquide + overnight au carré), donc les trois fenêtres ; mais la partie intraday mesurée à 5 minutes ne couvre que les heures liquides de chaque instrument, que le papier ne donne pas instrument par instrument."
   }
 }

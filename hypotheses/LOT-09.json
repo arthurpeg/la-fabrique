@@ -3,13 +3,8 @@
  "declared_at": "2026-09-28",
  "q": 0.1,
  "critere": "trié `oui`, ou `partiel` par transposition d'univers",
- "n": 41,
+ "n": 39,
  "fiches": [
-  {
-   "fiche_id": "andersen-bollerslev-1997-periodicity",
-   "verdict": "oui",
-   "motif": "trié `oui` — calculable en OHLCV seul"
-  },
   {
    "fiche_id": "baltussen-2021-hedging-demand-intraday-momentum",
    "verdict": "oui",
@@ -67,11 +62,6 @@
     "studied": "la grille entière, pré-enregistrée avant D38"
    },
    "horizon": "30min"
-  },
-  {
-   "fiche_id": "bitcoin-is-not-the-new-gold-a-comparison-of-vola-W2799918576",
-   "verdict": "partiel",
-   "motif": "trié `partiel`, transposition d'univers"
   },
   {
    "fiche_id": "bollerslev-2018-risk-everywhere",
@@ -491,6 +481,24 @@
    "fiche_id": "premium-for-heightened-uncertainty-explaining-pr-W3122856157",
    "verdict": "partiel",
    "motif": "trié `partiel`, donnée manquante (« calendrier »)"
+  }
+ ],
+ "ecartees_codage": [
+  {
+   "fiche_id": "andersen-bollerslev-1997-periodicity",
+   "verdict": "oui",
+   "motif": "trié `oui` — calculable en OHLCV seul",
+   "preuve": "concordance",
+   "motif_ecart": "deux tours DISCORDANTS (t1 rho 0,13 couv 0,002 ; t2 rho 0,87 couv 0,002) : les codeurs ne notent pas les memes instants, le papier ne pose aucun score ni instant",
+   "at": "2026-10-03T10:34:47+00:00"
+  },
+  {
+   "fiche_id": "bitcoin-is-not-the-new-gold-a-comparison-of-vola-W2799918576",
+   "verdict": "partiel",
+   "motif": "trié `partiel`, transposition d'univers",
+   "preuve": "concordance",
+   "motif_ecart": "deux tours DISCORDANTS (t1 rho 0,04 couv 0,36 ; t2 rho 1,00 couv 0,36) : les codeurs ne notent pas les memes instruments, le papier ne construit aucun score",
+   "at": "2026-10-03T10:34:50+00:00"
   }
  ]
 }
