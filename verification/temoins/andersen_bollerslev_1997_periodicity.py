@@ -1,18 +1,13 @@
-"""Andersen & Bollerslev (1997) : periodicite intraday de la volatilite.
+"""Andersen & Bollerslev (1997) : profil intra-journalier de |rendement|.
 
-La fiche ne propose AUCUN signal predictif (signal_construction = null) : la
-grandeur du papier est descriptive, la moyenne sur les jours de |R_t,n| par
-intervalle intraday n (motif en U). La part transposable codee ici est ce
-profil : le score d'une barre est la moyenne, sur les SEANCES PASSEES, du
-rendement logarithmique absolu de la meme barre de la journee (meme minute
-d'horloge). Le score est donc la volatilite saisonniere attendue de la barre.
+Le papier ne propose aucun score. Il mesure le profil moyen de |R| par position
+horaire de la seance. Part transposable codee ici : pour chaque barre, la
+moyenne, sur les seances STRICTEMENT anterieures, de |rendement de 5 barres|
+a la meme position dans la seance. Le score est ce profil estime au passe.
 
-Ne se transpose pas et n'est pas code : le modele de Fourier de la section 5 /
-annexe B (non releve par la fiche), le facteur journalier sigma_t du
-MA(1)-GARCH(1,1) (disponibilite et fenetre non donnees), les niveaux en %
-(barres de 5 minutes chez les auteurs, autres chez nous), le correlogramme.
-Manquait : le rang des intervalles du U, la regle de roll, le fuseau ; rien
-n'a ete invente a la place (voir CHOICES).
+Ne se transpose pas / manquait : modele de Fourier (section 5), facteur
+sigma_t (MA(1)-GARCH), fenetre d'estimation, ancre de pose : tous non donnes
+ou non transposables, donc non codes (voir CHOICES).
 """
 
 from __future__ import annotations
@@ -26,66 +21,59 @@ SIGNAL_ID = "andersen-bollerslev-1997-periodicity"
 HYPOTHESIS = None
 PAPER = (
     "Andersen & Bollerslev (1997), Intraday periodicity and volatility "
-    "persistence in financial markets, Journal of Empirical Finance 4(2-3)"
+    "persistence in financial markets, Journal of Empirical Finance"
 )
 EXPECTED_SIGN = +1
 
 CHOICES = (
-    "la fiche ne propose aucun score (signal_construction null) ; j'ai compris que la part transposable est le profil moyen de |R| par intervalle intraday, et je score chaque barre par ce profil estime au passe, parce que c'est la seule grandeur du papier qui se lit comme une prevision (volatilite saisonniere attendue).",
-    "la moyenne du papier est faite en une passe sur tout l'echantillon ; j'ai pris une moyenne en expansion sur les seances strictement anterieures a la seance notee, parce que toute statistique de la serie entiere fuit l'avenir.",
-    "le rendement de la barre notee n'entre pas dans son propre score ; seules les seances precedentes servent, parce qu'une barre est horodatee a son ouverture et que son rendement n'est connu qu'a sa fin.",
-    "l'intervalle n du papier est repere par la minute d'horloge de la barre (heure*60+minute, entiers, dans le fuseau de l'index), parce que les rangs 1 a 80 supposent des barres de 5 minutes que nos donnees n'ont pas ; aucune taille de barre ni nombre d'intervalles n'est code.",
-    "rendement = difference des logarithmes des clotures recollees de _common.cell_bars, au sein d'une seance : le premier rendement de la seance (nuit) n'existe donc pas et rien ne traverse la nuit, comme le papier supprime le premier rendement et les rendements overnight.",
-    "valeur absolue |R| plutot que carre, comme le papier le prefere ; pas de centrage, le papier dit que c'est sans importance (moyenne pratiquement nulle).",
-    "pas de standardisation par sigma_t ni de filtre de Fourier (J=1, P=2 non utilises) : la fiche ne donne ni disponibilite ni fenetre du GARCH, et le modele n'est pas releve.",
-    "le krach 1987, les jours de semaine, les jours feries ne sont pas traites : sans objet pour nos donnees, et le papier ne corrige pas les jours de semaine.",
-    "le score est pose sur toutes les barres ayant au moins une seance passee pour leur minute d'horloge, sans ancrage sur la fin de fenetre, parce que le papier ne pose aucune decision a une date donnee ; horizon_bars est accepte mais ignore, et son defaut est None (et non un nombre) car la fiche ne donne aucun horizon (horizon null) et S5 interdit une constante absente de la fiche.",
-    "EXPECTED_SIGN = +1 : le papier affirme une relation positive (claim.direction positive), un profil de volatilite plus haut annonce des mouvements absolus plus grands ; le signe vaut pour l'amplitude, la fiche n'en donne aucun pour la direction du rendement.",
-    "le score est le niveau brut de la moyenne, sans normalisation entre cellules ni division par la moyenne du profil, parce que la fiche n'en donne pas.",
+    "la fiche ne pose aucun score ; j'ai compris que la part transposable est le profil moyen de |R| par position horaire, et le score est ce profil, parce que c'est la grandeur que le papier mesure",
+    "le profil du papier est moyenne sur tout l'echantillon (futur inclus) ; j'estime au passe : moyenne expansive sur les seances strictement anterieures a la seance de la barre notee, pour la causalite",
+    "la fenetre d'estimation est null dans la recette ; j'ai pris l'expansion complete depuis le debut de l'historique, sans nombre nouveau",
+    "le rendement est celui de 5 barres (bar_minutes = 5) en log-prix des clotures recollees, a l'interieur d'une seance ; je suppose des barres d'une minute comme dit dans la fiche (leurs rendements sont a 5 minutes, les notres a 1 minute)",
+    "la position horaire est le rang de la barre dans sa seance (comptage depuis l'ouverture, causal) ; les 5 premieres barres sans rendement de 5 barres n'ont pas de score, analogue du premier rendement supprime (nuit)",
+    "score_anchor_time est null : je pose un score a chaque barre ayant un profil passe, au lieu d'une ancre par seance, sans _common.run car le profil exige l'historique inter-seances",
+    "signe attendu +1 : un profil de |R| eleve annonce une amplitude de mouvement plus forte (claim direction positive) ; la valeur absolue ne donne pas de direction",
+    "modele de Fourier, sigma_t GARCH, dummies 78-80, traitement des suspensions et du krach de 1987, heure standard ou d'ete : non codes, car non transposables ou null dans la fiche",
+    "|R| plutot que R^2, sans retrait de moyenne, comme la fiche le dit",
+    "toutes les cellules demandees (ou panel.cells()) sont traitees ; la fenetre US 09:30-16:00 est celle du panel, sans les trois dernieres barres post-cloture (resolution null)",
 )
 
 
-def _cell_score(closes: pd.Series, session: pd.Series) -> pd.Series | None:
-    sess = pd.Series(np.asarray(session), index=closes.index)
-    logc = np.log(closes.astype(float))
-    ret = logc.groupby(sess.values).diff().abs()
-
-    idx = closes.index
-    slot = pd.Series(idx.hour * 60 + idx.minute, index=idx)
-
-    frame = pd.DataFrame(
-        {"session": sess.values, "slot": slot.values, "r": ret.values},
-        index=idx,
-    )
-    valid = frame["r"].notna() & frame["session"].notna()
-    if not valid.any():
+def _cell_scores(panel, root, window):
+    closes, sessions = _common.cell_bars(panel, root, window)
+    if len(closes) == 0:
         return None
+    lag = 5  # bar_minutes
+    logc = np.log(closes.astype(float))
+    sess_code, _ = pd.factorize(sessions.to_numpy())  # ordre d'apparition
+    sess_code = pd.Series(sess_code, index=closes.index)
+    pos = sess_code.groupby(sess_code).cumcount()
+    ret = logc.groupby(sess_code).diff(lag).abs()
 
-    order = pd.unique(frame["session"].dropna())
-    table = frame[valid].pivot_table(
-        index="session", columns="slot", values="r", aggfunc="mean"
+    df = pd.DataFrame(
+        {"s": sess_code.to_numpy(), "p": pos.to_numpy(), "a": ret.to_numpy()}
     )
-    table = table.reindex(order)
-    past = table.expanding().mean().shift(1)
-
-    long = past.stack()
-    keys = pd.MultiIndex.from_arrays([frame["session"].values, frame["slot"].values])
-    values = long.reindex(keys).to_numpy()
-    out = pd.Series(values, index=idx, dtype=float).dropna()
-    if out.empty:
+    piv = df.pivot_table(index="s", columns="p", values="a", aggfunc="first")
+    piv = piv.sort_index()
+    prof = piv.shift(1).expanding(min_periods=1).mean()
+    row = prof.index.get_indexer(df["s"])
+    col = prof.columns.get_indexer(df["p"])
+    vals = prof.to_numpy()[row, col]
+    out = pd.Series(vals, index=closes.index).dropna()
+    if len(out) == 0:
         return None
     return out
 
 
-def scores(panel, cells=None, horizon_bars=None):
-    """Rend {(root, window): pd.Series} : profil intraday passe de |R|."""
-    if cells is None:
-        cells = panel.cells()
+def scores(panel, cells=None, horizon_bars: int = 30):
+    """Rend {(root, window): pd.Series} : profil passe de |R| a 5 barres."""
+    wanted = list(cells) if cells is not None else list(panel.cells())
+    available = set(panel.cells())
     result = {}
-    for cell in cells:
-        root, window = cell[0], cell[1]
-        closes, session = _common.cell_bars(panel, root, window)
-        series = _cell_score(closes, session)
-        if series is not None:
-            result[(root, window)] = series
+    for root, window in wanted:
+        if (root, window) not in available:
+            continue
+        s = _cell_scores(panel, root, window)
+        if s is not None:
+            result[(root, window)] = s
     return result

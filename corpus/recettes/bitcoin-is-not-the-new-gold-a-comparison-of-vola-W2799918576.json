@@ -3,196 +3,177 @@
   "written": "2026-10-03",
   "written_by": "claude-opus-5-5 (session de recette isolée)",
   "formula": {
-    "statement": "Le papier ne construit aucun signal prédictif. Son seul objet calculable de bout en bout est le test de couverture ex post : (1) rendements log journaliers ×100 ; (2) covariance conditionnelle H_t d'une paire (actif, indice) par un BEKK-GARCH diagonal (k = 2) sur résidus centrés ; (3) poids w_t du portefeuille de variance minimale à deux actifs, min w_t' H_t w_t sous w_t'1 = 1, à chaque date ; (4) VaR_q historique de l'indice = quantile empirique q (1 %, 5 %, 10 %) des rendements de l'indice sur tout l'échantillon ; (5) jours de détresse t* = {t | r_t(indice) < VaR_q} ; (6) mesure = moyenne des rendements du portefeuille sur les jours t*. Les corrélations conditionnelles BEKK (éventuellement lissées par Savitzky-Golay) servent à la lecture descriptive des régimes, sans formule de score.",
-    "quoted": "With a special focus on distressed times t∗, we calculate the mean of the portfolio",
+    "statement": "Le papier ne construit aucun score prédictif. Les seules grandeurs calculées sont descriptives : (a) un indicateur de détresse journalier, 1{r_t < VaR_q}, où r_t est le rendement log journalier ×100 de l'indice actions (S&P 500, MSCI World, MSCI EM50) et VaR_q le quantile empirique q (1 %, 5 %, 10 %) des rendements de cet indice sur TOUT l'échantillon (le ⌈T×q⌉-ième rendement trié par ordre croissant) ; (b) la corrélation conditionnelle d'une paire (or ou Bitcoin contre un autre actif), tirée d'un BEKK-GARCH diagonal à deux dimensions ; (c) les poids d'un portefeuille de variance minimale à deux actifs, min w_t' H_t w_t sous w_t'1 = 1, H_t venant du BEKK ; (d) le rendement moyen de ce portefeuille sur les jours de détresse, « une sorte d'Expected Shortfall ». Rien n'est posé avant le rendement qu'il est censé expliquer : (a) est contemporain, et le seuil VaR_q utilise l'échantillon entier.",
+    "quoted": "We calculate the historical Value-of-Risk of the S&P 500 or MSCI World over the whole sample period, denoted by VaRq, i.e. we take the empirical quantile q at 1%, 5%, and 10% of the returns rt of that index.",
     "reason": null
   },
   "inputs": [
     {
       "name": "daily_log_return",
-      "description": "rendement log journalier ×100 de chaque série (Bitcoin, or, argent, WTI, S&P 500, MSCI World, MSCI EM50), calculé sur les prix de clôture",
-      "known_at": "à la clôture du jour t (horodatage GMT selon le papier ; heure exacte de clôture de chaque série non précisée)",
-      "quoted": "From daily closing prices, we calculate returns as the natural logarithmic price"
+      "description": "rendement log journalier ×100 de chaque série, calculé de clôture à clôture : r_t = 100 × log(P_t / P_{t−1})",
+      "known_at": "à la clôture du jour t (horodatage GMT ; l'heure exacte de la clôture n'est pas donnée)",
+      "quoted": "rt = 100 × log(Pt/Pt−1)."
     },
     {
-      "name": "conventional_asset_close",
-      "description": "prix de clôture ou points d'indice de chaque séance pour les actifs conventionnels, source Datastream",
-      "known_at": "à la clôture de la séance, horodatage GMT",
-      "quoted": "Data for these assets are obtained from Datastream with GMT timestamp."
+      "name": "conventional_close",
+      "description": "prix de clôture (ou points d'indice) de chaque jour de cotation pour l'or, l'argent, le WTI, le S&P 500, le MSCI World et le MSCI EM50, source Datastream",
+      "known_at": "à la clôture de chaque jour de cotation, horodatage GMT",
+      "quoted": "For conventional assets, we take the closing price or index points of each trading day."
     },
     {
       "name": "bitcoin_end_of_day_price",
-      "description": "prix de fin de journée du Bitcoin, source coindesk.com, jours de semaine seulement",
+      "description": "prix de fin de journée du Bitcoin (coindesk.com), jours de semaine seulement",
       "known_at": "à la fin de la journée GMT",
       "quoted": "For Bitcoin, we retrieve the data from coindesk.com, also with GMT timestamp, and process the price at the end of the day since cryptocurrencies are traded continuously."
     },
     {
+      "name": "index_var_threshold",
+      "description": "quantile empirique q des rendements de l'indice actions, calculé sur toute la période de l'échantillon",
+      "known_at": "seulement à la fin de l'échantillon (seuil ex post, plein échantillon)",
+      "quoted": "We calculate the historical Value-of-Risk of the S&P 500 or MSCI World over the whole sample period"
+    },
+    {
       "name": "bekk_conditional_covariance",
-      "description": "matrice de covariance conditionnelle H_t (2×2) d'un BEKK-GARCH diagonal estimé sur la paire (actif, indice), résidus centrés ; paramètres estimés sur l'échantillon entier et non publiés",
-      "known_at": "la récursion fait dépendre H_t de l'information jusqu'à t−1, mais les paramètres sont estimés sur tout l'échantillon (in-sample)",
-      "quoted": "and apply the BEKK to centralized residuals"
-    },
-    {
-      "name": "min_variance_weight",
-      "description": "poids w_t du portefeuille de variance minimale à deux composantes, recalculé à chaque date à partir de H_t",
-      "known_at": "dérivé de H_t ; le papier ne dit pas explicitement à quel rendement (t ou t+1) le poids w_t est appliqué",
-      "quoted": "are optimized for each point in time of our sample by"
-    },
-    {
-      "name": "index_historical_var",
-      "description": "VaR historique de l'indice : quantile empirique des rendements de l'indice sur l'échantillon entier",
-      "known_at": "seulement en fin d'échantillon (look-ahead par construction)",
-      "quoted": "whole sample period, denoted by VaRq, i.e. we take the empirical quantile q at 1%,"
+      "description": "matrice de covariance conditionnelle H_t (2×2) d'un BEKK-GARCH diagonal estimé sur une paire d'actifs ; sert aux corrélations dynamiques et aux poids de variance minimale",
+      "known_at": "H_t est conditionnelle à l'information en t−1 dans le modèle, mais les paramètres du BEKK sont estimés sans que la fenêtre d'estimation soit dite (vraisemblablement l'échantillon entier, non affirmé)",
+      "quoted": "Based on the BEKK-GARCH framework, we estimate dynamic correlations between the considered assets."
     }
   ],
   "timing": {
-    "statement": "Fréquence journalière, clôture à clôture, jours de semaine synchronisés, horodatage GMT. Aucun instant de décision n'est défini : le test de portefeuille est déclaré ex post, les paramètres BEKK et les seuils de VaR sont calculés sur l'échantillon entier, et le lissage de Savitzky-Golay des corrélations est appliqué a posteriori. Le papier ne dit pas si le poids w_t s'applique au rendement de t ou de t+1.",
-    "quoted": "a ex-post portfolio-based comparison with three steps:",
+    "statement": "Fréquence journalière, de clôture à clôture, horodatages GMT ; Bitcoin pris en fin de journée GMT, actifs conventionnels à leur clôture de jour de cotation. Le papier ne donne pas l'heure des clôtures, ni le décalage entre la fin de journée GMT du Bitcoin et la clôture des indices. Le jour de détresse est défini par le rendement du même jour de l'indice : aucune grandeur n'est posée avant le rendement évalué.",
+    "quoted": "Data for these assets are obtained from Datastream with GMT timestamp.",
     "reason": null
   },
   "parameters": [
     {
-      "name": "return_scaling",
-      "value": 100,
-      "unit": "multiplicateur du log-rendement",
-      "quoted": "rt = 100 × log(Pt/Pt−1)"
-    },
-    {
       "name": "var_quantile_1",
       "value": 1,
-      "unit": "%",
-      "quoted": "we take the empirical quantile q at 1%, 5%, and 10% of the returns rt of that index."
+      "unit": "percent",
+      "quoted": "we take the empirical quantile q at 1%, 5%, and 10% of the returns rt of that index"
     },
     {
       "name": "var_quantile_5",
       "value": 5,
-      "unit": "%",
-      "quoted": "we take the empirical quantile q at 1%, 5%, and 10% of the returns rt of that index."
+      "unit": "percent",
+      "quoted": "we take the empirical quantile q at 1%, 5%, and 10% of the returns rt of that index"
     },
     {
       "name": "var_quantile_10",
       "value": 10,
-      "unit": "%",
-      "quoted": "we take the empirical quantile q at 1%, 5%, and 10% of the returns rt of that index."
+      "unit": "percent",
+      "quoted": "we take the empirical quantile q at 1%, 5%, and 10% of the returns rt of that index"
     },
     {
-      "name": "bekk_dimension_k",
+      "name": "bekk_dimension",
       "value": 2,
-      "unit": "nombre d'actifs par modèle BEKK",
-      "quoted": "and apply the BEKK to centralized residuals",
-      "derived": true,
-      "note": "Le texte dit « by settingk = 2 and apply the BEKK to centralized residuals » (mots collés à l'extraction) ; la citation retenue évite la partie collée, le 2 vient de « settingk = 2 » juste avant."
+      "unit": "assets",
+      "quoted": "we calculate the pairwise correlation between Gold and Bitcoin to other assets by settingk = 2"
     },
     {
-      "name": "fiaparch_truncation_lag",
+      "name": "return_scaling",
+      "value": 100,
+      "unit": "multiplier",
+      "quoted": "rt = 100 × log(Pt/Pt−1)."
+    },
+    {
+      "name": "fiaparch_arch_truncation_lag",
       "value": 1000,
-      "unit": "retards (troncature ARCH(∞))",
+      "unit": "lags",
       "quoted": "We implement an ARCH(∞) truncation lag of 1 000.",
       "derived": true,
-      "note": "Le texte écrit « 1 000 » avec une espace de milliers ; valeur 1000."
+      "note": "le texte écrit « 1 000 » avec une espace de milliers ; la valeur est 1000"
     },
     {
-      "name": "sample_start",
-      "value": null,
-      "unit": "date",
-      "quoted": "time series cover the period from 2011-07-01 to 2017-12-31 and are synchronized.",
-      "reason": "Paramètre de période, pas de signal ; la période est 2011-07-01 à 2017-12-31 (premier rendement le 2 juillet 2011 selon les tableaux), laissé en texte faute de valeur numérique scalaire."
+      "name": "explosive_test_window_days",
+      "value": 30,
+      "unit": "days",
+      "quoted": "on a rolling 30-day window."
     },
     {
       "name": "savitzky_golay_window",
       "value": null,
-      "unit": "jours",
+      "unit": "observations",
       "quoted": null,
-      "reason": "Le papier dit seulement que les corrélations sont lissées par un filtre de Savitzky-Golay, sans fenêtre ni degré polynomial."
+      "reason": "le papier dit seulement que les tracés de corrélation sont lissés par un filtre de Savitzky-Golay, sans fenêtre ni ordre polynomial"
     },
     {
-      "name": "savitzky_golay_polyorder",
+      "name": "bekk_estimation_window",
       "value": null,
-      "unit": "degré",
+      "unit": "days",
       "quoted": null,
-      "reason": "Non donné par le papier."
-    },
-    {
-      "name": "bekk_parameters",
-      "value": null,
-      "unit": null,
-      "quoted": "Parameter estimates for all BEKK combinations in this section are available upon request.",
-      "reason": "Les paramètres BEKK ne sont pas publiés."
+      "reason": "le papier ne dit pas sur quelle fenêtre les paramètres BEKK sont estimés ; il renvoie leurs valeurs « upon request »"
     }
   ],
   "ambiguities": [
     {
-      "question": "Le poids w_t calculé à partir de H_t est-il appliqué au rendement r_t du même jour ou au rendement r_{t+1} ?",
+      "question": "Quelle grandeur causale du papier sert de score transposé — un rendement cumulé de la séance, ou une mesure de queue (VaR, couverture) — sur quelle fenêtre est-elle calculée, et à quels instants est-elle posée ?",
+      "resolution": "Le papier ne pose aucun score. Aucun rendement cumulé de séance n'apparaît : tout est en rendements journaliers de clôture à clôture. La mesure de queue (VaR_q et rendement moyen sous VaR_q) est calculée sur l'échantillon entier et l'indicateur de détresse est contemporain du rendement de l'indice ; la corrélation BEKK n'a ni fenêtre d'estimation déclarée ni instant de pose. Le choix d'une grandeur, d'une fenêtre glissante et d'un instant de pose reste entièrement non résolu par le papier.",
+      "quoted": "a ex-post portfolio-based comparison with three steps"
+    },
+    {
+      "question": "Le seuil VaR_q est-il glissant (point-in-time) ou calculé sur l'échantillon entier ?",
+      "resolution": "Échantillon entier : le ⌈T×q⌉-ième rendement de la liste triée des T rendements de l'indice.",
+      "quoted": "If the index has T returns, the Value-at-Risk is the ⌈T× 0.01⌉-th return in that list."
+    },
+    {
+      "question": "Le jour de détresse est-il défini par une inégalité stricte sur le rendement du même jour de l'indice ?",
+      "resolution": "Oui : t* = {t | r_t < VaR_q}, inégalité stricte, rendement de l'indice au jour t lui-même.",
+      "quoted": "define all points in time t* := {t | r_t < VaR_q} as times where the index is in distress.",
+      "quoted_source": "deﬁne all points in time t∗ :={t|rt < VaRq} as times where the index is in distress.",
+      "quoted_repair": "math_notation"
+    },
+    {
+      "question": "Le rendement du portefeuille au jour t utilise-t-il le poids w_t (même jour) ou w_{t−1} ?",
       "resolution": null,
-      "quoted": "calculated from the dynamic weights wt from step 1."
+      "quoted": null
     },
     {
-      "question": "La covariance H_t est-elle conditionnelle à l'information jusqu'à t−1 ?",
-      "resolution": "Oui dans la spécification (ε_t | F_{t−1} ~ N(0, H_t)), mais les paramètres du BEKK sont estimés sur tout l'échantillon : H_t n'est donc pas point-in-time.",
-      "quoted": "we assume εt|Ft−1∼N (0, Ht)"
+      "question": "Les paramètres BEKK sont-ils estimés sur l'échantillon entier ou en glissant ? (détermine si la corrélation et les poids sont point-in-time)",
+      "resolution": null,
+      "quoted": null
     },
     {
-      "question": "Le seuil de VaR est-il glissant ou calculé sur l'échantillon entier ?",
-      "resolution": "Sur l'échantillon entier (look-ahead par construction).",
-      "quoted": "whole sample period, denoted by VaRq, i.e. we take the empirical quantile q at 1%,"
+      "question": "Fenêtre, ordre et caractère bilatéral du lissage de Savitzky-Golay appliqué aux corrélations",
+      "resolution": null,
+      "quoted": null
     },
     {
-      "question": "Comment le quantile empirique est-il pris (interpolation, rang) ?",
-      "resolution": "Rendements triés par ordre croissant ; la VaR est le ⌈T×q⌉-ième rendement de la liste.",
-      "quoted": "the Value-at-Risk is the ⌈T× 0.01⌉-th return in that list."
+      "question": "À quelle heure exacte sont pris la clôture des actifs conventionnels et le prix de fin de journée du Bitcoin, et comment sont alignés des marchés qui ferment à des heures GMT différentes ?",
+      "resolution": null,
+      "quoted": null
     },
     {
-      "question": "L'inégalité de détresse est-elle stricte (le jour égal à la VaR est-il inclus) ?",
-      "resolution": "Stricte : rendement de l'indice strictement inférieur à la VaR ; le jour dont le rendement est la VaR elle-même est donc exclu.",
-      "quoted": "of the index is smaller than the Value-at-Risk calculated in Panel B of Tab. 6,"
+      "question": "Comment sont traités les week-ends du Bitcoin et les jours fériés des marchés conventionnels ?",
+      "resolution": "Les prix du week-end du Bitcoin sont écartés ; le rendement du lundi couvre donc vendredi → lundi. Le traitement des jours fériés n'est pas précisé (seule l'interpolation de week-end des actifs conventionnels, testée puis écartée, est mentionnée).",
+      "quoted": "Since Bitcoin is also traded on weekends, we only consider the prices during the week to synchronize our dataset."
     },
     {
-      "question": "Les poids négatifs (ventes à découvert) sont-ils autorisés dans le portefeuille de variance minimale ?",
-      "resolution": "Dans les résultats, oui (poids minimaux négatifs au Tableau 6) ; les auteurs écrivent pourtant que la vente à découvert devrait être restreinte avant décembre 2017, sans refaire le calcul sous contrainte.",
+      "question": "Les poids de variance minimale sont-ils contraints à être positifs ?",
+      "resolution": "Non : les poids calculés comprennent des positions courtes, que les auteurs jugent seulement souhaitable de restreindre.",
       "quoted": "For some periods for Gold and for Bitcoin, we obtain short positions"
     },
     {
-      "question": "Les épisodes de détresse des figures (zones bleues) sont-ils les mêmes jours que les jours t* sous la VaR ?",
+      "question": "Les résidus « centralisés » auxquels on applique le BEKK sont-ils de simples rendements démoyennés ou les résidus du modèle AR(1) ?",
       "resolution": null,
-      "quoted": "we identify only two short periods of market distress"
+      "quoted": null
     },
     {
-      "question": "Quelle fenêtre et quel degré pour le lissage de Savitzky-Golay, et le filtre est-il causal ou centré ?",
-      "resolution": null,
-      "quoted": "correlation plots are smoothed with a Savitzky"
+      "question": "Les épisodes de détresse surlignés en bleu dans les figures de corrélation suivent-ils une règle (seuil VaR) ou un repérage visuel ?",
+      "resolution": "Aucune règle n'est donnée pour les figures : les auteurs « identifient » deux épisodes nommés (août 2015, fin 2015/début 2016).",
+      "quoted": "For the S&P 500, we identify only two short periods of market distress"
     },
     {
-      "question": "Comment les week-ends de Bitcoin sont-ils traités ?",
-      "resolution": "Les prix du week-end sont retirés ; le rendement du lundi va du vendredi au lundi. L'interpolation des week-ends pour les actifs conventionnels a été essayée puis écartée.",
-      "quoted": "Since Bitcoin is also traded on weekends, we only consider the prices during the week to synchronize our dataset"
-    },
-    {
-      "question": "Comment sont traités les jours fériés où une seule des places est fermée (synchronisation des séries) ?",
-      "resolution": null,
-      "quoted": "time series cover the period from 2011-07-01 to 2017-12-31 and are synchronized."
-    },
-    {
-      "question": "À quelle heure exacte chaque clôture est-elle prise (clôture du S&P 500 à New York, clôture de l'or Datastream, fin de journée GMT de coindesk) ? Les clôtures sont-elles asynchrones ?",
-      "resolution": null,
-      "quoted": "Data for these assets are obtained from Datastream with GMT timestamp."
-    },
-    {
-      "question": "Quel prix de l'or (fixing de Londres, spot, contrat) est utilisé ?",
-      "resolution": null,
-      "quoted": "Gold and Silver prices in USD per oz"
-    },
-    {
-      "question": "Quelle distribution d'erreurs pour le BEKK, et l'effet de levier dépend-il de ce choix ?",
-      "resolution": "BEKK à erreurs normales ; pour l'APARCH/FIAPARCH, erreurs de Student. Les auteurs indiquent qu'avec des erreurs normales l'effet de levier inverse de Bitcoin disparaît.",
-      "quoted": "When repeating the regression with normally distributed errors, we can conﬁrm and replicate the"
+      "question": "Quelle distribution d'erreurs pour la volatilité univariée, et le résultat (levier inverse du Bitcoin) en dépend-il ?",
+      "resolution": "Student-t ; avec des erreurs normales les auteurs retrouvent l'absence d'effet de Dyhrberg (2016).",
+      "quoted": "When repeating the regression with normally distributed errors, we can conﬁrm and replicate the ﬁndings of Dyhrberg (2016)."
     }
   ],
   "market": {
-    "studied": "Bitcoin (prix coindesk) comparé à l'or et l'argent en USD/oz, au pétrole WTI, au S&P 500, au MSCI World et au MSCI Emerging Markets 50, en données journalières 2011-2017 ; robustesse sur l'indice crypto CRIX. Parmi ces marchés, l'or, le WTI et le S&P 500 sont mesurés directement.",
-    "quoted": "In our analysis, we include a data set of six times series: the cryptocurrency Bitcoin, Gold and Silver prices in USD per oz, crude oil prices for the West Texas Intermediate (WTI), the S&P 500 index, MSCI World and the MSCI Emerging Markets 50 index.",
+    "studied": "Séries journalières de clôture, horodatage GMT, 2011-07-01 à 2017-12-31, jours de semaine : Bitcoin au comptant (coindesk), or et argent au comptant en USD/oz, pétrole brut WTI, indice S&P 500, MSCI World, MSCI Emerging Markets 50. L'or, le WTI et l'indice S&P 500 sont mesurés eux-mêmes (corrélations BEKK, volatilité, portefeuilles or/S&P 500) ; Bitcoin, argent, MSCI World, MSCI EM50 et CRIX ne correspondent à aucun de nos instruments.",
+    "quoted": "Gold and Silver prices in USD per oz, crude oil prices for the West Texas Intermediate (WTI), the S&P 500 index, MSCI World and the MSCI Emerging Markets 50 index.",
     "exact_roots": ["ES", "GC", "CL"],
     "sessions": null,
     "sessions_quoted": null,
-    "sessions_reason": "Rendements journaliers de clôture à clôture, horodatage GMT ; le papier ne précise pas l'heure de clôture de chaque série et un rendement clôture-à-clôture couvre les 24 heures, donc aucune de nos fenêtres en particulier."
+    "sessions_reason": "Le papier n'utilise que des clôtures journalières (Bitcoin en fin de journée GMT) sans donner d'heure de clôture ni de fenêtre intrajournalière ; rien ne permet de dire quelles fenêtres ASIA/EUROPE/US les rendements couvrent."
   }
 }
