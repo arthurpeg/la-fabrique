@@ -112,3 +112,4 @@ propres hypothèses.
 | 2026-10-03 | décision prise et appliquée | `score_signal --check` 27/27 ; Baltussen jugé à 30 barres (source `H05`), six conditions tenues, rien d'inscrit ; concordance de Baltussen toujours valide ; registre 187 → 187 |
 | 2026-10-03 | lecture de la fiche corrigée : la **première** mention fait foi | boyarchenko-2023 était lu « 10h » (600 barres), une mention tardive du texte, au lieu de « Une heure » ; trouvé par la porte 08. Désormais lu 60 barres |
 | 2026-10-03 | `gate_08.py` aligné sur `D34` et `D49` | FRANCHIE, 6/6 (andersen, baltussen, deux bitcoin, bollerslev à 30 barres ; boyarchenko à 60) ; registre 187 → 187 |
+| 2026-10-03 | `avancer.py` corrigé | il déclarait « discordante au dernier tour : à écarter » une fiche CONCORDANTE au tour 2 dont l'hypothèse change l'horizon ; il relance maintenant son double codage. Et `code_signal.py` écrit en UTF-8, le juge ne plante plus sur la console Windows |

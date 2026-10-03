@@ -93,8 +93,10 @@ def main(argv: list[str]) -> int:
     entries = lot["fiches"]
     commencee = mesure_commencee(entries)
     tours = {}
+    dernier = {}  # D49 : un tour CONCORDANT à un autre horizon se refait, il ne s'écarte pas
     for c in lire(CONCORDANCE):
         tours[c["fiche_id"]] = tours.get(c["fiche_id"], 0) + 1
+        dernier[c["fiche_id"]] = c["verdict"]
 
     # 0 — D44 : la base fait foi pour les fiches. On tire celles qu'une autre
     # session a versées, puis on pousse les nouvelles d'ici. Sans réseau, on
@@ -134,7 +136,7 @@ def main(argv: list[str]) -> int:
             bloque.setdefault("recette à faire", []).append(fid)
         elif not (vert_p and vert_t):
             bloque.setdefault("deux codages verts à obtenir", []).append(fid)
-        elif tours.get(fid, 0) >= TOURS_MAX:
+        elif tours.get(fid, 0) >= TOURS_MAX and dernier.get(fid) != "CONCORDANT":
             bloque.setdefault("discordante au dernier tour : à écarter", []).append(fid)
         elif faire:
             rc, out = lancer("scripts/double_codage.py", fid)

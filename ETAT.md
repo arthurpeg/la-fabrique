@@ -391,9 +391,21 @@ traîne dans la recette (`L34`) — signature sans défaut, par décision.~~
 codage appellent le signal à l'horizon de son hypothèse, sinon de sa fiche
 (`scripts/horizon_signal.py`), et un double codage fait à un autre horizon
 que l'hypothèse ne vaut plus pour le lot.
-**Et une question** : le témoin bollerslev a été refusé `S3` sur des écarts de
+~~**Et une question** : le témoin bollerslev a été refusé `S3` sur des écarts de
 1e-12 à 1e-4 (régression mal conditionnée sur clôtures recollées) — bruit
-flottant ou vraie fuite, `S3` ne le distingue pas.
+flottant ou vraie fuite, `S3` ne le distingue pas.~~ **Tranché le 2026-10-03,
+`D50`** : c'était l'arrondi du recollement (prix passés identiques à un facteur
+près). `S3` juge désormais l'écart relativement à l'échelle du score (1e-6), en
+gardant le plancher de 1e-12 ; la porte 05 attrape les quatre tricheurs aux
+mêmes sondes. Bollerslev, rejugé, est vert, mais son tour 2 reste DISCORDANT
+(ρ 0,725, couverture 0,184) : son écart tient, pour la concordance.
+**Constat du 2026-10-03, à trancher par l'opérateur** : andersen, bitcoin-gold
+et bollerslev concordent sur les instants communs (ρ 1,000, 1,000, 0,725) et
+échouent sur la **couverture**. Un codeur note une fois par séance, à l'ancre
+de `_common.run`, l'autre à chaque barre ou sur d'autres cellules. Rendre
+l'ancrage par `_common.run` obligatoire dans la consigne, quand la fiche ne
+dit rien, demanderait une décision (suggestion 3 de `fabrique-critique`) ;
+baisser le seuil de couverture serait `L28`.
 ~~**PANNE ouverte le 2026-10-03 : `verifier_tout.py` rend 1 PANNE, la porte 08.**~~
 **Réparée le même jour (`D49` § Journal)** : la porte juge contre fiche +
 recette, à l'horizon du signal, dans tous les dossiers de fiches — FRANCHIE,

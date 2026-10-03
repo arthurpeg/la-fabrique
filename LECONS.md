@@ -1026,3 +1026,21 @@ juge refuse, la consigne ne doit pas l'imposer. Quand des producteurs isolés
 convergent tous vers le même contournement, c'est l'outillage qui est faux, pas
 eux (`L28`). Ici : une signature sans défaut (`D07` n'en exige aucun) — par
 décision écrite, valable pour les fiches à venir.
+
+## L35 — Un seuil absolu sur un nombre sans échelle confond l'arrondi et la triche
+
+**Le 2026-10-03.** `S3` refusait tout écart de plus de 1e-12 entre le score
+calculé sur le panel complet et celui calculé sur le panel tronqué. Or le
+panel tronqué n'a pas les mêmes roulements futurs : ses prix passés sont les
+mêmes à un facteur près (×0,987 pour 6A), et les rendements diffèrent
+d'environ 1e-15. Un signal honnête qui fait une régression mal conditionnée
+amplifie cet écart jusqu'à 1e-8. Il a été refusé trois fois, la fiche a été
+écartée pour ce motif, et un codeur a fini par passer ses rendements en
+float32 pour franchir le seuil : la soupape de `L28`.
+
+**La règle.** Un seuil de comparaison se fixe **relativement à l'échelle de
+ce qu'on compare**, après avoir mesuré les deux côtés : le bruit des
+honnêtes, et l'écart des tricheurs. Ici, 4e-8 contre 5e-2 laisse dix ordres
+de grandeur de marge (`D50`). Et un résultat qui change avec une convention
+de recollement est d'abord une question sur la donnée, avant d'en être une
+sur le code.

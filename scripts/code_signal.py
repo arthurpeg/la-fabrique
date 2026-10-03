@@ -77,6 +77,7 @@ import argparse
 import datetime as dt
 import hashlib
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -529,7 +530,8 @@ def do_judge(path: Path, fiche: Path | None, sans_donnees: bool) -> int:
     if sans_donnees:
         argv.append("--no-data")
     r = subprocess.run(argv, capture_output=True, text=True,
-                       encoding="utf-8", errors="replace")
+                       encoding="utf-8", errors="replace",
+                       env={**os.environ, "PYTHONIOENCODING": "utf-8"})
     print(r.stdout or r.stderr)
 
     fautes = fautes_choix(path.read_text(encoding="utf-8"))
@@ -544,6 +546,11 @@ def do_judge(path: Path, fiche: Path | None, sans_donnees: bool) -> int:
 
 
 def main(argv: list[str]) -> int:
+    # La console Windows (cp1252) plantait sur la sortie du juge, relayée telle
+    # quelle (vu le 2026-10-03) : on écrit en UTF-8, en remplaçant l'imprimable.
+    for flux in (sys.stdout, sys.stderr):
+        if hasattr(flux, "reconfigure"):
+            flux.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser(description="Le harnais du codeur de signal — D23")
     ap.add_argument("--list", action="store_true", help="les fiches sans signal")
     ap.add_argument("--lot", action="store_true",

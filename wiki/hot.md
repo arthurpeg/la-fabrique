@@ -25,7 +25,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Décision la plus récente** | `decisions/DECISION-49-l-horizon-du-signal.md` (2026-10-03) — un signal se juge et se compare à son horizon (hypothèse, sinon fiche), plus à 30 barres. Avant elle : `decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un |
 | **Tests au registre** | 187 |
 | **Idées abandonnées recensées** | 62 |
-| **Entrées au journal** | 122 |
+| **Entrées au journal** | 123 |
 
 ## Ce qui bloque
 
@@ -116,9 +116,21 @@ traîne dans la recette (`L34`) — signature sans défaut, par décision.~~
 codage appellent le signal à l'horizon de son hypothèse, sinon de sa fiche
 (`scripts/horizon_signal.py`), et un double codage fait à un autre horizon
 que l'hypothèse ne vaut plus pour le lot.
-**Et une question** : le témoin bollerslev a été refusé `S3` sur des écarts de
+~~**Et une question** : le témoin bollerslev a été refusé `S3` sur des écarts de
 1e-12 à 1e-4 (régression mal conditionnée sur clôtures recollées) — bruit
-flottant ou vraie fuite, `S3` ne le distingue pas.
+flottant ou vraie fuite, `S3` ne le distingue pas.~~ **Tranché le 2026-10-03,
+`D50`** : c'était l'arrondi du recollement (prix passés identiques à un facteur
+près). `S3` juge désormais l'écart relativement à l'échelle du score (1e-6), en
+gardant le plancher de 1e-12 ; la porte 05 attrape les quatre tricheurs aux
+mêmes sondes. Bollerslev, rejugé, est vert, mais son tour 2 reste DISCORDANT
+(ρ 0,725, couverture 0,184) : son écart tient, pour la concordance.
+**Constat du 2026-10-03, à trancher par l'opérateur** : andersen, bitcoin-gold
+et bollerslev concordent sur les instants communs (ρ 1,000, 1,000, 0,725) et
+échouent sur la **couverture**. Un codeur note une fois par séance, à l'ancre
+de `_common.run`, l'autre à chaque barre ou sur d'autres cellules. Rendre
+l'ancrage par `_common.run` obligatoire dans la consigne, quand la fiche ne
+dit rien, demanderait une décision (suggestion 3 de `fabrique-critique`) ;
+baisser le seuil de couverture serait `L28`.
 ~~**PANNE ouverte le 2026-10-03 : `verifier_tout.py` rend 1 PANNE, la porte 08.**~~
 **Réparée le même jour (`D49` § Journal)** : la porte juge contre fiche +
 recette, à l'horizon du signal, dans tous les dossiers de fiches — FRANCHIE,
@@ -912,6 +924,7 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-10-03 | `decision` | **`D50` : `S3` juge l'écart relativement à l'échelle du score.** Bruit mesuré : prix passés du panel tronqué identiques à un facteur près, log-rendements à ≤ 8,9e-16 ; honnêtes ≤ 4e-8 en relatif, tricheurs ≥ 5e-2. Tolérance relative 1e-6 + plancher absolu 1e-12 ; porte 05 FRANCHIE, tricheurs attrapés aux mêmes sondes (`L35`). Revue de la journée : `avancer.py` écartait à tort une fiche CONCORDANTE dont l'hypothèse change l'horizon (corrigé) ; plantage UTF-8 du juge sous Windows (corrigé) ; bollerslev rejugé vert, tour 2 DISCORDANT ρ 0,725 couv 0,184 ; andersen, bitcoin-gold et bollerslev échouent sur la couverture (ancrage), pas sur la lecture du papier. Registre 187 → 187. | — |
 | 2026-10-03 | `porte` | **Porte 08 réparée.** `gate_08.py` juge désormais chaque signal produit contre sa fiche (AMORCE, moissonnée, synthèse) augmentée de sa recette valide (`D34`), à l'horizon de `D49` : FRANCHIE, 6/6. En route : `horizon_signal.py` lisait boyarchenko « 10h » (mention tardive) au lieu de « Une heure » — la première mention fait désormais foi. Registre 187 → 187. | — |
 | 2026-10-03 | `decision` | **`D49` : un signal se juge et se compare à son horizon.** Demande de l'opérateur. Le juge et le double codage appelaient tous les signaux à 30 barres, la mesure à l'horizon de l'hypothèse. `scripts/horizon_signal.py` lit l'horizon : hypothèse du lot, sinon champ `horizon` de la fiche, sinon ancrage 30. Signature de la consigne `scores(panel, cells=None, *, horizon_bars: int)` (fin du faux refus `S5`, `L34`). `concordance` refuse un tour fait à un autre horizon que l'hypothèse. Baltussen toujours CONCORDANT (30 barres, `H05`). Juge 27/27, registre 187 → 187. | — |
 | 2026-10-03 | `gardes` | **`verifier_tout.py` : 1 PANNE, porte 08.** `gate_08.py` rejuge `signals/` contre la fiche seule (sans les valeurs de recette de `D34`) et ignore `fiches_harvest/` : andersen et bollerslev tombent en `S5`, les deux bitcoin « aucune fiche ». Signaux non retouchés ; alignement de la porte laissé à l'opérateur (`ETAT.md`). Registre 187 → 187. | — |
@@ -919,7 +932,6 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 | 2026-10-02 | `decision` | **`D48` : un voisin vaut la moyenne de ses trois meilleurs morceaux.** Banc d'essai `scripts/banc_voisins.py` (étalon fixé avant : grappes D39, 21 graines, 38 frères) : rappel à 10 de 0,29 → 0,37 ; reclassement par cross-encodeur sans gain (0,76 s/paire) ; fusion avec les centroïdes 0,37 mais demande une table. Baltussen : voisins désormais du même mécanisme (tug of war overnight/intraday, momentum intraday SPY, patterns intraday). Dossier d'une synthèse figé sous son nom et non re-préparable. | — |
 | 2026-10-02 | `decision` | **`D47` : une hypothèse tirée d'un papier et de ses voisins dans toute la base.** `scripts/synthese_dossier.py --prepare <fiche>` : voisins (`D45`), dossier versionné, texte en base de chaque voisin sans fiche figé dans `corpus/text/base-<id>.default.txt` ; `fabrique-synthese` écrit une fiche `synthese-dossier-<fiche>` ; validateur mécanique (citations à la lettre dans le texte de leur source). Branché dans `/fabriquer-signaux` (étape 6). Premier essai, Baltussen 2021 : valide au premier essai, 1 voisin retenu sur 8, version = celle de la graine → **non codée** (doublon de H02). Limite constatée : voisins proches par le thème, rarement par le mécanisme. | — |
 | 2026-10-02 | `corpus` | **PDF mal attribués : corrigés et gardés (`L33`).** Les vecteurs identiques du graphe venaient de PDF mal attribués : le livre blanc de Bitcoin pour deux papiers (lien de bibliographie PMC), l'arXiv de Kristoufek 2014 pour Kristoufek 2013. Le moissonneur avait marqué les doublons sha256, l'ingestion ne lisait pas `duplicate_of`. Nouveau contrôle `corpus/titre_du_pdf.py` (mots du titre dans les 2 premières pages, seuil 0,6, titre principal accepté) : 110 PDF sur 3 225 refusés (politiques de confidentialité, règlements, papiers cités, scans indéchiffrables). 108 mis de côté dans `corpus/pdf/harvest_refuses/` et passés « inatteignable » avec leur raison ; 2 refus à tort gardés (`title_check_ok`). Base : 19 papiers retirés (15 faux ou illisibles, 3 mal attribués, 1 copie), 2 réintégrés avec le bon PDF (UTIA, PLoS). « Testing for asymmetric… » sans PDF (Springer et PMC refusent le téléchargement automatique). Gardes ajoutées au téléchargement (`harvest.py --fetch`) et à l'ingestion. Aucun papier touché n'avait de fiche ni de verdict de tri. Graphe : 1 925 papiers, similarité max 0,993. Pupitre réduit à la liste des IC ; un clic ouvre la mesure et l'hypothèse qui va avec. | — |
-| 2026-10-02 | `atlas` | **Graphe refait sur toute la base** : 1 942 papiers (51 amorces, 1 891 moissonnés), 4 915 arêtes, top 4 par papier (`vectordb/graph.py` calcule désormais les plus proches dans la requête, au lieu de rapatrier 1,9 million de paires ; U+FFFD retiré des titres). Atlas republié : mise en page par grille (répulsion limitée aux voisins d'écran), plancher de distance et vitesse bornée — sans eux une centaine de papiers partaient à 70 000 px. Pupitre republié relié à la base (port 5432 joignable sur ce réseau). Trouvé : deux paires de papiers aux titres différents et aux vecteurs identiques (similarité 1,000 : « Some comments on Bitcoin market (in)efficiency » / « Testing for asymmetric non-linear… », « Commodity futures and market efficiency » / « Leverage effect in energy futures ») — PDF moissonné probablement faux, à vérifier. | — |
 
 Journal complet : [[log]]
 
