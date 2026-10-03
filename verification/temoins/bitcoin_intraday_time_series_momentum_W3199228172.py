@@ -1,53 +1,62 @@
-"""Shen, Urquhart, Wang (2022) : momentum intraday du Bitcoin.
+"""Shen, Urquhart, Wang (2022) : momentum intraday du bitcoin, part transposable.
 
-Part transposee : le predicteur secondaire r_SLH, anti-persistance de
-l'avant-dernier demi-heure vers la derniere : r_SLH = p(cloture-30) /
-p(cloture-60) - 1. Le papier est long si r_SLH < 0, short sinon : le score est
-donc -r_SLH, et le signe attendu vers le rendement de la fin de fenetre est +1.
-
-Part NON transposee : le predicteur principal r_ONFH (de la cloture 17:00 de la
-veille a ouverture + 30 min). Il est connu en debut de seance alors que
-`_common.run` pose le score a la fin de fenetre, et le predicteur ne recoit que
-les clotures de la seance courante, pas celle de la veille ; l'heure d'ouverture
-au pic de volume (Table 1) est propre a des plateformes crypto. Je ne le code
-pas, plutot que de pretendre. La version combinee en depend aussi : omise.
-Egalement non transposes : regression poolee, R2 OOS, terciles de volume ou de
-volatilite, ecart de Corwin-Schultz, allocation moyenne-variance.
+Transposition declaree :
+- Le predicteur principal r_ONFH exige la cloture du jour t-1 a 17:00 et le prix
+  a ouverture+30 min du jour t : il traverse deux seances. Un predicteur de
+  `_common.run` ne recoit que les clotures d'UNE seance : r_ONFH n'est pas code.
+- Les terciles de volume/volatilite, la regression poolee, le R2 hors echantillon
+  et l'allocation moyenne-variance ne se transposent pas (pas de volume en
+  entree du predicteur, pas d'IC dans le papier) : non codes.
+- Est code le predicteur secondaire r_SLH = p(cloture-30) / p(cloture-60) - 1,
+  evalue a la barre d'ancrage de `_common.run` (au plus `horizon_bars` minutes
+  avant la cloture declaree), soit le debut de la derniere demi-heure.
+  Le prix a cloture-60 est la cloture de la barre situee `horizon_bars` barres
+  avant la barre notee. Le score est r_SLH brut ; le papier lui donne un effet
+  negatif (anti-persistance), d'ou EXPECTED_SIGN = -1.
 """
 
 from __future__ import annotations
-
-import numpy as np
 
 from signals import _common
 
 SIGNAL_ID = "bitcoin-intraday-time-series-momentum-W3199228172"
 HYPOTHESIS = None
-PAPER = "Shen, Urquhart, Wang (2022), Bitcoin intraday time-series momentum, Financial Review"
-EXPECTED_SIGN = +1
-
-CHOICES = (
-    "la fiche donne deux predicteurs (r_ONFH, r_SLH) ; j'ai code seulement r_SLH, car r_ONFH exige la cloture de la veille et un score en debut de seance, ce que le predicteur de _common.run (clotures de la seance courante, ancrage en fin de fenetre) ne permet pas",
-    "la fiche dit long si r_SLH < 0, short sinon ; j'ai compris score = -r_SLH, donc EXPECTED_SIGN = +1 (le score predit positivement le rendement de la fin de fenetre)",
-    "la fiche dit r_SLH = p(cloture-30)/p(cloture-60) - 1 ; j'ai compris, sur des barres d'une minute, le rapport entre la cloture de la barre notee et celle 30 barres plus tot, la barre notee etant a au plus horizon_bars de la cloture de fenetre ; 30 vient de first_half_hour_minutes",
-    "la barre notee est celle choisie par _common.run (premiere a distance de la cloture <= horizon_bars), faute d'heure de cloture EST applicable aux fenetres du panel ; l'heure d'ete et le pic de volume ne sont pas traites",
-    "prix manquant ou non positif ou position < 30 : aucun score (None), sans remplissage",
-    "l'hypothese que les barres sont d'une minute est mienne : le papier agrege en barres d'une minute",
+PAPER = (
+    "Shen, Urquhart, Wang (2022), Bitcoin intraday time-series momentum, "
+    "Financial Review"
 )
-
-_BARS = 30
-
-
-def _predictor(closes, position):
-    if position < _BARS:
-        return None
-    now = closes.iloc[position]
-    before = closes.iloc[position - _BARS]
-    if not (np.isfinite(now) and np.isfinite(before)) or before <= 0:
-        return None
-    return -(float(now) / float(before) - 1)
+EXPECTED_SIGN = -1
+CHOICES = (
+    "la fiche laisse le choix entre r_ONFH, r_SLH et leur combinaison ; j'ai "
+    "retenu r_SLH, parce que r_ONFH demande la cloture de la veille (hors de la "
+    "seance unique que recoit le predicteur) et que r_SLH est calculable "
+    "causalement dans la seance.",
+    "le papier donne un beta_SLH negatif (anti-persistance) ; le score est r_SLH "
+    "brut et EXPECTED_SIGN vaut -1 (long si r_SLH < 0, short sinon).",
+    "r_SLH = p(cloture-30)/p(cloture-60) - 1 : j'ai pris la barre notee comme "
+    "p(cloture-30) (ancrage de _common.run, distance a la cloture au plus "
+    "horizon_bars) et la barre horizon_bars barres plus tot comme p(cloture-60), "
+    "en supposant des barres d'une minute (bar_size = 1) ; aucun nombre nouveau.",
+    "prix = cloture de la barre d'une minute (le papier ne precise pas : dernier "
+    "prix, VWAP) ; minute sans transaction : barre recollee telle que fournie.",
+    "heure d'ete, week-ends, heures d'ouverture par plateforme, detection du "
+    "pic de volume : sans objet pour r_SLH ; l'horloge de la fenetre ancre le "
+    "score, je ne code aucune heure en dur.",
+    "terciles de volume/volatilite, regression poolee, R2 hors echantillon, "
+    "allocation gamma = 5 : non codes (non transposables ou non causaux).",
+)
 
 
 def scores(panel, cells=None, horizon_bars: int = 30):
-    """Rend {(root, window): pd.Series}."""
-    return _common.run(panel, _predictor, cells=cells, horizon_bars=horizon_bars)
+    """Rend {(root, window): pd.Series} de r_SLH a la barre d'ancrage."""
+
+    def predictor(closes, position):
+        if position < horizon_bars:
+            return None
+        now = closes.iloc[position]
+        before = closes.iloc[position - horizon_bars]
+        if not (before > 0) or not (now == now):
+            return None
+        return float(now / before - 1)
+
+    return _common.run(panel, predictor, cells=cells, horizon_bars=horizon_bars)

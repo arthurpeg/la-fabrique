@@ -3,7 +3,7 @@
  "declared_at": "2026-09-28",
  "q": 0.1,
  "critere": "trié `oui`, ou `partiel` par transposition d'univers",
- "n": 39,
+ "n": 36,
  "fiches": [
   {
    "fiche_id": "baltussen-2021-hedging-demand-intraday-momentum",
@@ -33,45 +33,6 @@
     "studied": "la grille entière, pré-enregistrée avant D38"
    },
    "horizon": "30min"
-  },
-  {
-   "fiche_id": "bitcoin-intraday-time-series-momentum-W3199228172",
-   "verdict": "partiel",
-   "motif": "trié `partiel`, transposition d'univers",
-   "ref": "H06",
-   "signal_id": "bitcoin-intraday-time-series-momentum-W3199228172",
-   "universe": {
-    "exact": [
-     "NQ",
-     "ES",
-     "YM",
-     "GC",
-     "CL",
-     "6E",
-     "6B",
-     "6J",
-     "6A"
-    ],
-    "classe": [],
-    "fenetres": [
-     "ASIA",
-     "EUROPE",
-     "US"
-    ],
-    "grille": true,
-    "studied": "la grille entière, pré-enregistrée avant D38"
-   },
-   "horizon": "30min"
-  },
-  {
-   "fiche_id": "bollerslev-2018-risk-everywhere",
-   "verdict": "oui",
-   "motif": "trié `oui` — calculable en OHLCV seul"
-  },
-  {
-   "fiche_id": "boyarchenko-2023-overnight-drift",
-   "verdict": "oui",
-   "motif": "trié `oui` — calculable en OHLCV seul"
   },
   {
    "fiche_id": "corsi-2009-har-realized-volatility",
@@ -499,6 +460,54 @@
    "preuve": "concordance",
    "motif_ecart": "deux tours DISCORDANTS (t1 rho 0,04 couv 0,36 ; t2 rho 1,00 couv 0,36) : les codeurs ne notent pas les memes instruments, le papier ne construit aucun score",
    "at": "2026-10-03T10:34:50+00:00"
+  },
+  {
+   "fiche_id": "bitcoin-intraday-time-series-momentum-W3199228172",
+   "verdict": "partiel",
+   "motif": "trié `partiel`, transposition d'univers",
+   "ref": "H06",
+   "signal_id": "bitcoin-intraday-time-series-momentum-W3199228172",
+   "universe": {
+    "exact": [
+     "NQ",
+     "ES",
+     "YM",
+     "GC",
+     "CL",
+     "6E",
+     "6B",
+     "6J",
+     "6A"
+    ],
+    "classe": [],
+    "fenetres": [
+     "ASIA",
+     "EUROPE",
+     "US"
+    ],
+    "grille": true,
+    "studied": "la grille entière, pré-enregistrée avant D38"
+   },
+   "horizon": "30min",
+   "preuve": "concordance",
+   "motif_ecart": "deux tours DISCORDANTS (t1 rho -0,00 ; t2 rho -0,03, couv 1,00) : le papier ne dit pas quel predicteur (r_ONFH ou r_SLH) transposer",
+   "at": "2026-10-03T10:43:31+00:00"
+  },
+  {
+   "fiche_id": "boyarchenko-2023-overnight-drift",
+   "verdict": "oui",
+   "motif": "trié `oui` — calculable en OHLCV seul",
+   "preuve": "concordance",
+   "motif_ecart": "deux tours DISCORDANTS (t1 rho 0,38 couv 0,35 ; t2 rho 0,44 couv 0,09) : le volume signe au carnet n'existe pas dans nos barres (F61 E3), chaque codeur construit son propre substitut",
+   "at": "2026-10-03T10:48:28+00:00"
+  },
+  {
+   "fiche_id": "bollerslev-2018-risk-everywhere",
+   "verdict": "oui",
+   "motif": "trié `oui` — calculable en OHLCV seul",
+   "preuve": "juge",
+   "motif_ecart": "tour 2 : temoin refuse S3 trois fois (ecarts 1e-12 a 1e-4 sur regression HExp mal conditionnee) ; tour 1 DISCORDANT rho 0,67 couv 0,33",
+   "at": "2026-10-03T10:50:00+00:00"
   }
  ]
 }

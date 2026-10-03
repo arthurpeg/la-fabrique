@@ -1,37 +1,35 @@
-"""Boyarchenko, Larsen et Whelan (2022), « The Overnight Drift ».
+"""Boyarchenko, Larsen et Whelan -- The Overnight Drift (signal transpose).
 
-Ce que dit la fiche : RSV_close = (contrats a l'achat - contrats a la vente) /
-(contrats a l'achat + contrats a la vente), mesure sur la derniere heure avant
-la pause (15:15-16:15 ET), borne dans [-1, 1], predit NEGATIVEMENT le
-rendement de la fenetre ou arrive la vague de liquidite suivante (02:00-03:00
-ET pour l'ES). RSV negatif (desequilibre vendeur, teneurs de marche longs)
-predit un rendement positif.
+Le papier : RSV_close = (contrats achetes - contrats vendus) / (achetes + vendus)
+sur la fenetre fixe 15:15-16:15 ET, l'ES seul, classant chaque trade contre le
+meilleur bid/ask. RSV_close predit NEGATIVEMENT le rendement de l'heure
+02:00-03:00 ET de la nuit suivante.
 
 Ce qui ne se transpose pas, et ce qui a ete fait a la place :
 
-- RSV exige des trades classes acheteur/vendeur par comparaison au sommet du
-  carnet. Le panel ne porte que des barres, et ce module n'en lit que les
-  clotures recollees (`_common.cell_bars` / `_common.run`). RSV n'est donc pas
-  calculable. Substitut declare : une regle de tick a l'echelle de la barre.
-  Chaque barre dont la cloture monte par rapport a la precedente compte comme
-  une unite « a l'achat », chaque barre dont la cloture baisse comme une unite
-  « a la vente », les barres inchangees sont ecartees (cas ambigus). Le score
-  est (hausses - baisses) / (hausses + baisses), borne dans [-1, 1] comme RSV.
-  Ce n'est PAS le signal du papier : c'est un desequilibre directionnel sans
-  volume ni carnet.
-- La fenetre de mesure est « la derniere heure » : ici, l'heure (60 minutes
-  d'horloge) qui se termine a la cloture de la barre notee, ancree par
-  `_common.run` a la fin declaree de la fenetre de seance.
-- L'heure cible 02:00-03:00 ET et la fenetre OD+ ne sont pas codees : c'est le
-  harnais qui choisit le rendement mesure apres la barre notee. La fiche dit
-  elle-meme que coder « 02:00-03:00 » en dur recopierait un resultat, pas un
-  mecanisme.
-- La variante buy-the-dip (seuil RSV < 0), le conditionnement par le VIX de
-  cloture et le double tri en terciles ne sont pas codes : le VIX n'est pas
-  dans le panel, et la variante BtD est une strategie, pas un score continu.
+- La donnee. RSV exige des trades classes acheteur/vendeur (quotes au sommet du
+  carnet). Le panel ne fournit que des barres ; `_common.cell_bars` ne rend que
+  des clotures. RSV n'est donc pas calculable. Substitut declare : le rendement
+  log des clotures sur l'heure d'horloge qui finit a la barre notee, comme proxy
+  du desequilibre d'ordres de fin de seance (un desequilibre vendeur pousse le
+  prix vers le bas). Ce n'est PAS le signal du papier.
+- Les seances. Le papier ne mesure le desequilibre qu'a la cloture americaine.
+  La recette (market.sessions) declare pour l'ES les seances ASIA, EUROPE et US ;
+  le proxy est donc pose sur la derniere heure de chacune des fenetres de l'ES
+  presentes dans le panel, ce qui est une transposition, pas le papier.
+- La fenetre de mesure. Le papier mesure 15:15-16:15 ET ; le score est pose par
+  `_common.run` a la premiere barre a au plus `horizon_bars` de la cloture
+  declaree de la fenetre. La mesure porte sur l'heure qui precede ce point.
+- L'horizon. Le papier predit l'heure 02:00-03:00 ET, environ dix heures apres la
+  mesure. Ce delai n'est pas reproduit ; aucune mecanique maison n'a ete ecrite
+  pour ne pas inventer de constantes d'ancrage.
+- Le conditionnement VIX, les terciles, la strategie BtD (signe < 0) : non codes,
+  le signal continu des regressions du papier est retenu.
 """
 
 from __future__ import annotations
+
+import math
 
 import pandas as pd
 
@@ -40,74 +38,67 @@ from signals import _common
 SIGNAL_ID = "boyarchenko-2023-overnight-drift"
 HYPOTHESIS = None
 PAPER = (
-    "Nina Boyarchenko, Lars C. Larsen and Paul Whelan (2022), "
+    "Boyarchenko, Larsen et Whelan (2022, revision ; fiche_id 2023), "
     "The Overnight Drift, Federal Reserve Bank of New York Staff Reports no. 917"
 )
 EXPECTED_SIGN = -1
-
 CHOICES = (
-    "La fiche definit RSV a partir de trades classes au bid/ask ; le panel n'a "
-    "que des barres et je ne lis que les clotures recollees : j'ai remplace la "
-    "classification par une regle de tick a l'echelle de la barre (cloture en "
-    "hausse = une unite a l'achat, en baisse = une unite a la vente), parce que "
-    "c'est la seule direction de transaction lisible sans carnet ni volume. "
-    "Ce substitut n'est pas le signal du papier.",
-    "Chaque barre pese une unite, et non un nombre de contrats : le volume "
-    "n'est pas expose par l'interface de _common que je connais ; aucun poids "
-    "invente.",
-    "Les barres a cloture inchangee sont ecartees du numerateur et du "
-    "denominateur : la fiche laisse null le traitement des trades ambigus "
-    "(ni au bid ni au ask) ; les ecarter est le choix le plus simple.",
-    "« La derniere heure » (15:15-16:15 ET) : j'ai pris les variations de "
-    "cloture des barres ouvertes dans les 60 minutes d'horloge qui precedent "
-    "et incluent la barre notee, soit une heure qui se termine a la cloture de "
-    "la barre notee ; la base de la premiere variation est la cloture de la "
-    "barre precedente, deja connue.",
-    "L'ancrage a la fin de la fenetre est celui de _common.run (premiere barre "
-    "a au plus horizon_bars de la cloture declaree de la fenetre), et non "
-    "16:15 ET en dur : la fiche ancre la mesure sur « la derniere heure avant "
-    "la pause », que _common.run lit sur l'horloge de la fenetre.",
-    "Instruments et seances : la fiche etudie le seul ES et mesure a la "
-    "cloture US ; sa section transposabilite dit que le motif (desequilibre de "
-    "fin de seance, renversement a l'arrivee de la liquidite suivante) vaut par "
-    "instrument et que RSV, borne, se compare entre instruments. J'applique "
-    "donc le score a toutes les cellules retenues (cells=None : toutes), sans "
-    "filtre de racine ni de seance.",
-    "Signe : le score est le RSV proxy brut, et EXPECTED_SIGN = -1, parce que "
-    "le papier dit qu'un RSV_close negatif predit un rendement positif "
-    "(beta = -17.49 bp par unite de RSV).",
-    "Aucune normalisation temporelle (z-score, fenetre glissante) : la recette "
-    "dit que RSV est utilise brut, la division par le total tenant lieu de "
-    "normalisation.",
-    "Si l'heure ne contient aucune barre en hausse ni en baisse (ou s'il n'y a "
-    "pas de barre precedente dans la seance), aucun score n'est ecrit (None) "
-    "plutot qu'un zero invente.",
-    "Non codes : la variante buy-the-dip (RSV < 0), le conditionnement par le "
-    "VIX de 16:15 (absent du panel), les fenetres cibles 02:00-03:00 et "
-    "01:30-03:30 ET (la cible est choisie par le harnais), l'exclusion des "
-    "jours ou l'ecart Londres-New York differe de cinq heures.",
+    "la fiche definit RSV_close a partir de trades classes contre le meilleur bid/ask ; "
+    "le panel ne donne que des barres (cell_bars ne rend que des clotures), j'ai donc "
+    "remplace RSV par le rendement log des clotures sur l'heure qui finit a la barre "
+    "notee, proxy du desequilibre d'ordres : ce n'est pas le signal du papier",
+    "la fiche donne la fenetre 15:15-16:15 ET (une heure) ; j'ai garde la duree d'une "
+    "heure, lue sur l'horloge en minutes entieres (Timedelta de 60 minutes), et l'ai "
+    "fait finir a la barre notee, parce qu'aucune barre posterieure ne peut etre lue",
+    "la fiche ne dit rien de la barre de reference de l'heure ; j'ai pris la premiere "
+    "cloture de la seance dont l'horodatage est au moins la barre notee moins 60 minutes "
+    "(si la seance a commence moins d'une heure avant, la premiere cloture de la seance)",
+    "la fiche etudie l'ES seul (exact_roots = ['ES']) ; je ne score que la racine ES. "
+    "Le papier ne mesure le desequilibre qu'a la cloture americaine, mais la recette "
+    "declare pour l'ES les seances ASIA, EUROPE et US (market.sessions) : je score toutes "
+    "les fenetres de l'ES presentes dans le panel, la derniere heure de chaque fenetre "
+    "jouant le role de l'heure de cloture. Version precedente limitee a (ES, US), refusee "
+    "par le juge (S4 : une seule cellule soumise, il en faut deux)",
+    "la fiche place la mesure a 16:15 ET et la cible a 02:00-03:00 ET ; j'ai utilise "
+    "_common.run, qui pose le score a la premiere barre a au plus horizon_bars de la "
+    "cloture declaree de la fenetre : l'ancrage et l'horizon ne sont pas ceux du papier",
+    "la fiche dit que RSV_close predit negativement le rendement (beta -17.49) ; le score "
+    "est le proxy brut, non retourne, et EXPECTED_SIGN = -1",
+    "la recette dit rsv_normalization_window = null, RSV employe brut ; aucune "
+    "normalisation, aucun z-score, aucune statistique estimee n'est appliquee",
+    "la fiche donne trois usages (continu, signe < 0 pour BtD, terciles) ; j'ai retenu "
+    "le continu des regressions, le plus simple, sans seuil ni groupe",
+    "le conditionnement VIX a 16:15 n'entre pas dans le signal de base (resolution de la "
+    "fiche) et n'est pas code ; les jours ou l'ecart Londres-New York differe de 5 heures "
+    "ne sont pas exclus, faute de pouvoir le faire sans constantes de calendrier",
+    "cloture non positive ou manquante a l'une des deux bornes, ou moins de deux clotures "
+    "dans l'heure : aucun score (None)",
 )
 
+_ROOT = "ES"
 
-def _rsv_proxy(closes: pd.Series, position: int) -> float | None:
-    """Desequilibre de tick sur l'heure qui se termine a la barre notee.
 
-    Ne lit rien au-dela de `position`."""
-    if position < 1:
-        return None
+def _predictor(closes: pd.Series, position: int) -> float | None:
     seen = closes.iloc[: position + 1]
-    t_end = seen.index[-1]
-    start = t_end - pd.Timedelta(minutes=60)
-    moves = seen.diff()
-    in_hour = moves[seen.index > start].dropna()
-    ups = int((in_hour > 0).sum())
-    downs = int((in_hour < 0).sum())
-    total = ups + downs
-    if total == 0:
+    if len(seen) < 2:
         return None
-    return (ups - downs) / total
+    t = seen.index[-1]
+    start = t - pd.Timedelta(minutes=60)
+    hour = seen[seen.index >= start]
+    if len(hour) < 2:
+        return None
+    first = hour.iloc[0]
+    last = hour.iloc[-1]
+    if pd.isna(first) or pd.isna(last) or first <= 0 or last <= 0:
+        return None
+    return math.log(float(last) / float(first))
 
 
 def scores(panel, cells=None, horizon_bars: int = 30):
-    """Rend {(root, window): pd.Series} du RSV proxy de fin de fenetre."""
-    return _common.run(panel, _rsv_proxy, cells=cells, horizon_bars=horizon_bars)
+    """Rend {(root, window): pd.Series} pour les cellules de la racine ES."""
+    candidates = panel.cells() if cells is None else cells
+    selected = [(root, window) for root, window in candidates if root == _ROOT]
+    if not selected:
+        return {}
+    out = _common.run(panel, _predictor, cells=selected, horizon_bars=horizon_bars)
+    return {key: s for key, s in out.items() if s is not None and len(s) > 0}

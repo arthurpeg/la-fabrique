@@ -1,26 +1,27 @@
 """Shen, Urquhart & Wang (2022), Bitcoin intraday time-series momentum.
 
-Signal principal de la fiche : r_ONFH,t = p(ouverture+30 min, t) / p(cloture, t-1) - 1,
-qui predit positivement le rendement de la derniere demi-heure de la seance.
+Predicteur principal du papier, transpose a nos cellules (root, window) :
 
-Transposition declaree (signal honnetement diminue) :
+    r_ONFH,t = p(ouverture + 30 min, t) / p(cloture, t-1) - 1
 
-- le papier porte sur du BTC au comptant 24h/24 ; nos instruments sont des futures
-  a seances. L'ouverture « au pic de volume » (regle de detection non chiffree,
-  heures fixees ex post sur tout l'echantillon, Table 1) n'a pas d'equivalent :
-  l'ouverture retenue est la premiere barre de la seance que le harnais fournit ;
-- le predicteur ne recoit que les clotures d'UNE seance : la cloture de la veille
-  (p(c, t-1)) n'est pas accessible. Le prix de reference est donc la cloture de la
-  premiere barre de la seance, ce qui ne garde de r_ONFH que sa composante
-  « premiere demi-heure » et perd la composante nocturne, celle que le papier
-  donne pour dominante (t 5.28 contre 2.09) ;
-- la cible (derniere demi-heure de la seance) est celle que `_common.run` mesure :
-  le score est pose a la premiere barre a au plus `horizon_bars` de la cloture
-  declaree de la fenetre, et la valeur par defaut de `horizon_bars` vaut 30,
-  soit la demi-heure du papier sur des barres d'une minute ;
-- ni le predicteur secondaire r_SLH, ni la version combinee, ni l'allocation
-  moyenne-variance, ni le conditionnement par terciles (formes sur l'annee ou
-  l'echantillon entiers, donc avec look-ahead) ne sont codes ici.
+ou la "cloture de la veille" est la derniere cloture de la seance precedente
+de la meme cellule, et "l'ouverture" est la premiere barre de la seance
+courante. Le score est pose par `_common.run` a la premiere barre dont la
+distance a la cloture declaree de la fenetre est au plus `horizon_bars`
+(30 par defaut : le debut de la derniere demi-heure, comme la position du
+papier ouverte a 16:30 et fermee a 17:00). Signe attendu positif : long sur
+la derniere demi-heure si r_ONFH > 0, short sinon.
+
+Ce qui manquait et ce qui a ete fait a la place :
+- la regle de "pic de volume" fixant l'ouverture n'est pas chiffree (null) :
+  l'ouverture est la premiere barre de la seance de la cellule ;
+- la cloture 17:00 EST est propre au bitcoin (pause CME) : elle est remplacee
+  par la cloture declaree de chaque fenetre, via l'ancrage de `_common.run` ;
+- le traitement des week-ends n'est pas dit : t-1 est la seance precedente
+  disponible de la cellule ;
+- le prix a un instant n'est pas precise : cloture de la barre d'une minute ;
+- le predicteur secondaire r_SLH, la combinaison, les terciles de volume et
+  de volatilite et la variante moyenne-variance ne sont pas codes ici.
 """
 
 from __future__ import annotations
@@ -35,75 +36,90 @@ SIGNAL_ID = "bitcoin-intraday-time-series-momentum-W3199228172"
 HYPOTHESIS = None
 PAPER = (
     "Shen, D., Urquhart, A., Wang, P. (2022), Bitcoin intraday time-series "
-    "momentum, Financial Review 57 (2), pp. 319-344"
+    "momentum, Financial Review 57(2), 319-344"
 )
 EXPECTED_SIGN = +1
-
-# recipe.parameters.first_half_hour_minutes
-FIRST_HALF_HOUR_MINUTES = 30
-
 CHOICES = (
-    "La fiche donne trois regles de timing (ONFH, SLH, combinee) ; j'ai code le "
-    "predicteur principal r_ONFH seul, parce que la fiche le designe comme "
-    "« Score principal » et que c'est lui que la transposabilite retient en premier.",
-    "EXPECTED_SIGN = +1 : r_ONFH predit positivement la derniere demi-heure "
-    "(beta_ONFH = 0.968, t 4.38 ; long si r_ONFH > 0).",
-    "Le score est la valeur continue de r_ONFH et non sa regle de timing binaire "
-    "(long si > 0, short si <= 0) : le signe du score porte la meme decision, et "
-    "la valeur garde l'information que la regression du papier exploite.",
-    "La cloture de la veille p(c, t-1) n'est pas lisible par un predicteur qui ne "
-    "recoit qu'une seance ; je l'ai remplacee par la cloture de la premiere barre "
-    "de la seance. Consequence : la composante nocturne de r_ONFH est perdue, il "
-    "ne reste que la premiere demi-heure.",
-    "L'ouverture au « pic de volume » (9:00 a 9:40 EST par plateforme, regle non "
-    "chiffree, fixee ex post) n'a pas d'equivalent sur nos futures ; j'ai pris "
-    "l'ouverture de la seance fournie par le harnais, sans recopier les heures "
-    "crypto de la Table 1 (545, 540, 555, 580 minutes), qui ne concernent pas nos "
-    "instruments.",
-    "Le prix a ouverture+30 min est la cloture de la derniere barre horodatee au "
-    "plus 30 minutes apres l'horodatage de la premiere barre de la seance ; "
-    "comparaison faite sur des Timestamp et un Timedelta en minutes entieres, "
-    "jamais en heures flottantes.",
-    "Si la seance n'a pas encore atteint ouverture+30 min a la barre notee "
-    "(derniere barre lue anterieure a cet instant), aucun score n'est produit "
-    "(None) : la demi-heure d'ouverture n'est pas complete.",
-    "Le score est pose par _common.run (une barre par seance et par cellule, la "
-    "premiere a au plus horizon_bars de la cloture declaree), avec horizon_bars = "
-    "30 par defaut : c'est la derniere demi-heure de la seance, transposition de "
-    "la fenetre cible 16:30-17:00 EST ; la cloture a 17:00 EST (pause CME) n'est "
-    "pas recopiee, la fenetre cible est celle de nos propres horaires.",
-    "Heure d'ete, week-ends, definition du jour t : non traites par le papier ; "
-    "sans objet ici puisque tout se lit a l'interieur d'une seance du harnais.",
-    "Prix d'un instant non precise par le papier (dernier tick, VWAP) : j'ai pris "
-    "les clotures recollees de barre que fournit le harnais.",
-    "Prix nul, manquant ou non fini a l'une des deux bornes : aucun score (None), "
-    "sans remplissage.",
+    "la recette laisse ouvert le choix entre r_ONFH, r_SLH et leur combinaison "
+    "(resolution null) ; j'ai code r_ONFH seul, parce que le resume et la fiche "
+    "le presentent comme le predicteur principal, avec le signe positif que la "
+    "recette lui donne ; r_SLH et la combinaison ne sont pas codes",
+    "r_ONFH inclut la nuit (resolution de la recette) : le point de depart est "
+    "la derniere cloture disponible strictement avant la premiere barre de la "
+    "seance courante, dans les clotures recollees de la meme cellule "
+    "(_common.cell_bars) ; c'est la cloture de la seance precedente, donc "
+    "deja passee au moment du score",
+    "la cloture 17:00 EST du papier (pause CME du bitcoin) ne se transpose pas : "
+    "la cloture de reference est celle de la fenetre de la cellule, et le score "
+    "est pose par _common.run a horizon_bars de cette cloture, soit le debut de "
+    "la derniere demi-heure quand horizon_bars vaut 30",
+    "la regle de detection du pic de volume (ouverture) est null : l'ouverture "
+    "est la premiere barre de la seance de la cellule, sans estimation de profil "
+    "de volume (qui serait d'ailleurs ex post dans le papier)",
+    "fin de r_ONFH : ouverture+30 min (equation 1) plutot qu'au pic de volume "
+    "(conclusion), ambiguite non resolue ; j'ai suivi l'equation 1",
+    "prix a ouverture+30 min : cloture de la barre d'indice "
+    "first_window_minutes / bar_size - 1 (barres d'une minute, horodatees a "
+    "leur ouverture : la 30e barre se clot a ouverture+30 min) ; je suppose des "
+    "barres d'une minute comme la recette, sans le verifier sur le panel",
+    "si la barre ouverture+30 min est posterieure a la barre notee, ou s'il n'y "
+    "a pas de seance precedente, ou si un prix manque ou n'est pas positif, "
+    "aucun score n'est ecrit (None)",
+    "week-ends et jours feries non traites par le papier : t-1 est simplement "
+    "la seance precedente disponible de la cellule, quel que soit l'ecart",
+    "heure d'ete non precisee par le papier : sans objet ici, l'ancrage se fait "
+    "sur l'horloge de la fenetre via _common.run",
+    "score = r_ONFH brut, sans normalisation ni seuil : le papier trade sur le "
+    "signe et la regression lineaire utilise le rendement brut",
+    "conditionnement par terciles de volume / volatilite non code : formes par "
+    "annee ou sur tout l'echantillon dans le papier, donc non point-in-time",
 )
 
+FIRST_WINDOW_MINUTES = 30
+BAR_SIZE_MINUTES = 1
+_OPEN_PLUS_WINDOW_INDEX = FIRST_WINDOW_MINUTES // BAR_SIZE_MINUTES - 1
 
-def _onfh(closes: pd.Series, position: int) -> float | None:
-    """r_ONFH transpose, lu uniquement jusqu'a `position` incluse."""
-    if position < 0 or position >= len(closes):
-        return None
-    seen = closes.iloc[: position + 1]
-    index = seen.index
-    start = index[0]
-    limit = start + pd.Timedelta(minutes=FIRST_HALF_HOUR_MINUTES)
-    if index[-1] < limit:
-        return None
-    within = seen[index <= limit]
-    if len(within) == 0:
-        return None
-    p_ref = float(seen.iloc[0])
-    p_o30 = float(within.iloc[-1])
-    if not (math.isfinite(p_ref) and math.isfinite(p_o30)) or p_ref == 0:
-        return None
-    value = p_o30 / p_ref - 1
-    if not math.isfinite(value):
-        return None
-    return value
+
+def _make_predictor(all_closes: pd.Series):
+    """Predicteur r_ONFH pour une cellule dont on connait les clotures."""
+
+    index = all_closes.index
+
+    def predictor(closes: pd.Series, position: int):
+        if position < _OPEN_PLUS_WINDOW_INDEX:
+            return None
+        if len(closes) <= _OPEN_PLUS_WINDOW_INDEX:
+            return None
+        if not isinstance(closes.index, pd.DatetimeIndex):
+            return None
+        session_start = closes.index[0]
+        i = index.searchsorted(session_start, side="left")
+        if i == 0:
+            return None
+        prev_close = float(all_closes.iloc[i - 1])
+        p_open_window = float(closes.iloc[_OPEN_PLUS_WINDOW_INDEX])
+        if math.isnan(prev_close) or math.isnan(p_open_window):
+            return None
+        if prev_close <= 0:
+            return None
+        return p_open_window / prev_close - 1
+
+    return predictor
 
 
 def scores(panel, cells=None, horizon_bars: int = 30):
-    """Rend {(root, window): pd.Series} du r_ONFH transpose."""
-    return _common.run(panel, _onfh, cells=cells, horizon_bars=horizon_bars)
+    """Rend {(root, window): pd.Series} du score r_ONFH."""
+    selected = list(panel.cells()) if cells is None else list(cells)
+    out = {}
+    for root, window in selected:
+        all_closes, _sessions = _common.cell_bars(panel, root, window)
+        if all_closes is None or len(all_closes) == 0:
+            continue
+        predictor = _make_predictor(all_closes)
+        result = _common.run(
+            panel, predictor, cells=[(root, window)], horizon_bars=horizon_bars
+        )
+        for key, series in result.items():
+            if series is not None and len(series) > 0:
+                out[key] = series
+    return out
