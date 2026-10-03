@@ -390,6 +390,14 @@ traîne dans la recette (`L34`) — signature sans défaut, par décision.
 **Et une question** : le témoin bollerslev a été refusé `S3` sur des écarts de
 1e-12 à 1e-4 (régression mal conditionnée sur clôtures recollées) — bruit
 flottant ou vraie fuite, `S3` ne le distingue pas.
+**PANNE ouverte le 2026-10-03 : `verifier_tout.py` rend 1 PANNE, la porte 08.**
+`scripts/gate_08.py` rejuge tout `signals/` **contre la fiche seule** — sans
+les valeurs de recette que `D34` ajoute à `S5` — et ne cherche pas dans
+`corpus/fiches_harvest/`. Les modules de cette session, verts à
+`code_signal.py --judge`, y tombent : andersen et bollerslev en `S5`, les deux
+bitcoin « aucune fiche de ce nom ». Rien n'est retouché ; aligner la porte 08
+sur `D34` (ou la restreindre aux fiches du jugement d'origine) est une
+décision d'outillage qui revient à l'opérateur.
 
 ```
 python scripts/hypotheses_lot.py --status   # où en est chaque fiche du lot
