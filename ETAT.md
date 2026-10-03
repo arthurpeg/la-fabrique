@@ -129,7 +129,7 @@ puis mesurée — la forme en U de la volatilité intra-journalière est retrouv
 **chaîne de données** et la discipline de mesure, **pas le harnais d'IC**, qui
 reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
-**Décision la plus récente :** `decisions/DECISION-49-l-horizon-du-signal.md` (2026-10-03) — un signal se juge et se compare à son horizon (hypothèse, sinon fiche), plus à 30 barres. Avant elle :
+**Décision la plus récente :** `decisions/DECISION-51-ancrage-obligatoire.md` (2026-10-03) — tout score se pose à l'ancre de `_common.run`. Avant elle, `D50` (S3 relatif à l'échelle du score) et `decisions/DECISION-49-l-horizon-du-signal.md` (2026-10-03) — un signal se juge et se compare à son horizon (hypothèse, sinon fiche), plus à 30 barres. Avant elle :
 `decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un
 **critère, pas un nombre**. `D25` engageait 50 signaux, chiffre écrit quand le
 corpus portait 17 fiches ; il en porte 51 et le moissonné est épuisé. Le lot est
@@ -402,10 +402,13 @@ mêmes sondes. Bollerslev, rejugé, est vert, mais son tour 2 reste DISCORDANT
 **Constat du 2026-10-03, à trancher par l'opérateur** : andersen, bitcoin-gold
 et bollerslev concordent sur les instants communs (ρ 1,000, 1,000, 0,725) et
 échouent sur la **couverture**. Un codeur note une fois par séance, à l'ancre
-de `_common.run`, l'autre à chaque barre ou sur d'autres cellules. Rendre
+de `_common.run`, l'autre à chaque barre ou sur d'autres cellules. ~~Rendre
 l'ancrage par `_common.run` obligatoire dans la consigne, quand la fiche ne
 dit rien, demanderait une décision (suggestion 3 de `fabrique-critique`) ;
-baisser le seuil de couverture serait `L28`.
+baisser le seuil de couverture serait `L28`.~~ **Fait, `D51`** : tout score se
+pose à l'ancre de `_common.run`, vérifié sur les données (`S1`, option
+`--ancrage` du juge). Ça règle le cas andersen (instant), pas les cas
+bitcoin-gold et bollerslev (cellules et séances choisies), qui restent ouverts.
 ~~**PANNE ouverte le 2026-10-03 : `verifier_tout.py` rend 1 PANNE, la porte 08.**~~
 **Réparée le même jour (`D49` § Journal)** : la porte juge contre fiche +
 recette, à l'horizon du signal, dans tous les dossiers de fiches — FRANCHIE,

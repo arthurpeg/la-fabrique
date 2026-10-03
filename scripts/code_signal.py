@@ -253,9 +253,16 @@ def run(panel, predictor, cells=None, horizon_bars: int = 30) -> dict:
     ce qui rend le signal exécutable en direct.\"\"\"
 ```
 
-**Tu n'es pas obligé de t'en servir.** Si la recette de la fiche ne se pose pas
-à la fin d'une fenêtre, écris ta propre mécanique — mais alors chaque constante
-qu'elle porte t'est comptée par `S5`.
+**L'ancrage de `run` est OBLIGATOIRE (`D51`).** Chaque score que rend
+`scores()` tombe à l'ancre de `run` : **une barre par séance et par cellule**,
+à `horizon_bars` de la clôture de la fenêtre. Le juge le vérifie sur les
+données (`S1`) : un score posé à une autre barre — à chaque minute, à une
+heure d'horloge fixe, en début de séance — est refusé. Ce que le papier
+mesure à un autre moment de la séance, ton prédicteur le **lit** dans les
+clôtures de la séance jusqu'à la barre notée ; il ne **pose** pas son score
+ailleurs. Le plus sûr est donc de passer par `run` ; si tu écris ta propre
+mécanique, ses instants doivent être exactement ceux de `run`, et chaque
+constante qu'elle porte t'est comptée par `S5`.
 
 ## Ce qu'on te demande vraiment
 
@@ -526,7 +533,7 @@ def do_judge(path: Path, fiche: Path | None, sans_donnees: bool) -> int:
     # D49 : le signal se juge à l'horizon de son hypothèse, sinon de sa fiche.
     barres, source = horizon_du_signal(fiche_id) if fiche_id else (ANCRAGE_PAR_DEFAUT, "défaut")
     print(f"horizon du jugement : {barres} barres — {source}")
-    argv += ["--horizon-bars", str(barres)]
+    argv += ["--horizon-bars", str(barres), "--ancrage"]  # D51
     if sans_donnees:
         argv.append("--no-data")
     r = subprocess.run(argv, capture_output=True, text=True,
