@@ -68,19 +68,26 @@ def lire_horizon_intraday(valeur, unite: str | None = None) -> str | None:
             return f"{int(valeur)}h"
         return None
     texte = " ".join(str(valeur).split()).lower()
-    if re.search(r"(?:à|a|jusqu.?à|jusqu.?a)\s+la\s+cl[ôo]ture", texte):
-        return "cloture"
-    if "demi-heure" in texte:
-        return "30min"
-    n = re.search(r"(\d+)\s*(?:minutes?|min\b)", texte)
-    if n:
-        return f"{int(n.group(1))}min"
-    n = re.search(r"(\d+)\s*(?:heures?|h\b)", texte)
-    if n:
-        return f"{int(n.group(1))}h"
-    if re.search(r"\bune heure\b", texte):
-        return "1h"
-    return None
+    # La PREMIÈRE mention fait foi : « Une heure. [...] mesuré sur 15:15-16:15 [...]
+    # 10 heures » est un horizon d'une heure (vu sur boyarchenko-2023, lu 10 h
+    # quand les motifs étaient essayés l'un après l'autre).
+    candidats: list[tuple[int, str]] = []
+    m = re.search(r"(?:à|a|jusqu.?à|jusqu.?a)\s+la\s+cl[ôo]ture", texte)
+    if m:
+        candidats.append((m.start(), "cloture"))
+    m = re.search(r"demi-heure", texte)
+    if m:
+        candidats.append((m.start(), "30min"))
+    m = re.search(r"(\d+)\s*(?:minutes?|min\b)", texte)
+    if m:
+        candidats.append((m.start(), f"{int(m.group(1))}min"))
+    m = re.search(r"(\d+)\s*(?:heures?|h\b)", texte)
+    if m:
+        candidats.append((m.start(), f"{int(m.group(1))}h"))
+    m = re.search(r"\bune heure\b", texte)
+    if m:
+        candidats.append((m.start(), "1h"))
+    return min(candidats)[1] if candidats else None
 
 
 def fiche_de(fiche_id: str) -> dict | None:

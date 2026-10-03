@@ -394,7 +394,10 @@ que l'hypothèse ne vaut plus pour le lot.
 **Et une question** : le témoin bollerslev a été refusé `S3` sur des écarts de
 1e-12 à 1e-4 (régression mal conditionnée sur clôtures recollées) — bruit
 flottant ou vraie fuite, `S3` ne le distingue pas.
-**PANNE ouverte le 2026-10-03 : `verifier_tout.py` rend 1 PANNE, la porte 08.**
+~~**PANNE ouverte le 2026-10-03 : `verifier_tout.py` rend 1 PANNE, la porte 08.**~~
+**Réparée le même jour (`D49` § Journal)** : la porte juge contre fiche +
+recette, à l'horizon du signal, dans tous les dossiers de fiches — FRANCHIE,
+6/6. Énoncé d'origine :
 `scripts/gate_08.py` rejuge tout `signals/` **contre la fiche seule** — sans
 les valeurs de recette que `D34` ajoute à `S5` — et ne cherche pas dans
 `corpus/fiches_harvest/`. Les modules de cette session, verts à

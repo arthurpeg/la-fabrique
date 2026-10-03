@@ -96,10 +96,11 @@ propres hypothèses.
 
 ## Ce qui reste ouvert
 
-- **La porte 08** (`gate_08.py`) rejuge `signals/` contre la fiche seule, à
-  30 barres, et ignore `fiches_harvest/` : elle est en panne depuis le
-  2026-10-03 (`ETAT.md`). L'aligner sur `D34` et `D49` est une décision à
-  part.
+- ~~**La porte 08** rejuge `signals/` contre la fiche seule, à 30 barres, et
+  ignore `fiches_harvest/`.~~ **Alignée le même jour** sur demande de
+  l'opérateur. Elle juge chaque signal contre sa fiche (AMORCE, moissonnée ou
+  de synthèse) augmentée de sa recette valide, à l'horizon de `D49`. Résultat :
+  FRANCHIE, 6 signaux sur 6.
 - **Une fiche dont l'hypothèse fixe un autre horizon** que celui jugé au
   codage devra refaire son double codage avant la mesure. Les outils le
   refusent, mais `avancer.py` ne le relance pas encore tout seul.
@@ -109,3 +110,5 @@ propres hypothèses.
 | Date | Quoi | Résultat |
 |---|---|---|
 | 2026-10-03 | décision prise et appliquée | `score_signal --check` 27/27 ; Baltussen jugé à 30 barres (source `H05`), six conditions tenues, rien d'inscrit ; concordance de Baltussen toujours valide ; registre 187 → 187 |
+| 2026-10-03 | lecture de la fiche corrigée : la **première** mention fait foi | boyarchenko-2023 était lu « 10h » (600 barres), une mention tardive du texte, au lieu de « Une heure » ; trouvé par la porte 08. Désormais lu 60 barres |
+| 2026-10-03 | `gate_08.py` aligné sur `D34` et `D49` | FRANCHIE, 6/6 (andersen, baltussen, deux bitcoin, bollerslev à 30 barres ; boyarchenko à 60) ; registre 187 → 187 |

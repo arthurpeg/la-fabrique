@@ -26,6 +26,13 @@ de `D06`, antérieurs aux fiches. Ils ne figurent pas dans
 qui dit ce que le codeur a produit. Les compter gonflerait son bilan d'un travail
 humain.
 
+**Le juge voit ce qu'a vu le codeur (`D34`, `D49`).** Chaque signal se juge
+contre sa fiche — AMORCE, moissonnée ou de synthèse — augmentée de sa recette
+quand elle en a une valide, et à l'horizon de son hypothèse ou de sa fiche.
+Avant le 2026-10-03, la porte jugeait contre `corpus/fiches/` seul, sans
+recette, à 30 barres : elle refusait des signaux que `code_signal.py --judge`
+avait légitimement acceptés.
+
 **AUCUN IC N'EST CALCULÉ ICI**, et le script casse si le registre a bougé.
 
     python scripts/gate_08.py
@@ -44,15 +51,38 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
+sys.path.insert(0, str(REPO / "scripts"))
+
+from code_signal import WORK, fiche_et_recette, fiche_files  # noqa: E402
+from horizon_signal import horizon_du_signal  # noqa: E402
+from recette import recette_valide  # noqa: E402
+
 from harness import registry  # noqa: E402
 
-FICHES = REPO / "corpus" / "fiches"
 PRODUCED = REPO / "signals" / "PRODUCED.json"
 JUGE = REPO / "scripts" / "score_signal.py"
 
 
-def juger(module: Path, fiche: Path, sans_donnees: bool) -> tuple[bool, list[str]]:
-    argv = [sys.executable, str(JUGE), str(module), "--fiche", str(fiche)]
+def fiche_du_juge(signal_id: str) -> tuple[Path | None, str]:
+    """La fiche contre laquelle juger : avec sa recette si elle en a une valide
+    (`D34`), seule sinon (signaux antérieurs à `D34`)."""
+    chemin = fiche_files().get(signal_id)
+    if chemin is None:
+        return None, ""
+    ok, _ = recette_valide(signal_id)
+    if not ok:
+        return chemin, "fiche seule"
+    WORK.mkdir(parents=True, exist_ok=True)
+    f = WORK / f"{signal_id}.fiche-et-recette.json"
+    f.write_text(json.dumps(fiche_et_recette(signal_id), ensure_ascii=False, indent=2),
+                 encoding="utf-8")
+    return f, "fiche + recette"
+
+
+def juger(module: Path, fiche: Path, sans_donnees: bool,
+          horizon_bars: int) -> tuple[bool, list[str]]:
+    argv = [sys.executable, str(JUGE), str(module), "--fiche", str(fiche),
+            "--horizon-bars", str(horizon_bars)]
     if sans_donnees:
         argv.append("--no-data")
     r = subprocess.run(argv, capture_output=True, text=True,
@@ -93,18 +123,20 @@ def main(argv: list[str]) -> int:
     passants, fautes = [], []
     for signal_id, d in sorted(registre.items()):
         module = REPO / d["path"]
-        fiche = FICHES / f"{signal_id}.json"
+        fiche, contre = fiche_du_juge(signal_id)
         if not module.is_file():
             fautes.append(f"{signal_id} : module ABSENT ({d['path']}) — un signal "
                           "produit puis supprimé est une retouche, la plus radicale")
             continue
-        if not fiche.is_file():
+        if fiche is None:
             fautes.append(f"{signal_id} : aucune fiche de ce nom — un signal se juge "
                           "CONTRE la fiche qu'il prétend coder")
             continue
-        ok, verdicts = juger(module, fiche, a.no_data)
+        barres, _ = horizon_du_signal(signal_id)
+        ok, verdicts = juger(module, fiche, a.no_data, barres)
         n = len(d.get("attempts") or [1])
-        print(f"  {'PASSE' if ok else 'REFUSÉ'}  {signal_id}  (essai {n})")
+        print(f"  {'PASSE' if ok else 'REFUSÉ'}  {signal_id}  (essai {n}, {contre}, "
+              f"{barres} barres)")
         for v in verdicts:
             print(f"      {v}")
         if ok:
