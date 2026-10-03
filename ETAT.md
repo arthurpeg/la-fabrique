@@ -372,9 +372,24 @@ Aucun signal n'entre plus dans un lot sans **recette** (`scripts/recette.py`),
 les scores). La boucle complète est dans `scripts/CODAGE-DES-SIGNAUX.md`.
 Porte 09, `measure_lot.py` et `hypotheses_lot.py` l'exigent.
 
-**Lot `LOT-09` : 1 fiche vérifiée sur 41** —
-`baltussen-2021-hedging-demand-intraday-momentum` (ρ 1,000). Les 40 autres
-attendent recette et deux codages ; environ 325 000 tokens par fiche.
+**Lot `LOT-09` : 1 fiche vérifiée sur 36** (le 2026-10-03) —
+`baltussen-2021-hedging-demand-intraday-momentum` (ρ 1,000). **Cinq écartées
+avant mesure le 2026-10-03** : andersen-1997, bitcoin-is-not-the-new-gold,
+bitcoin-intraday, boyarchenko-2023 (concordance, deux tours) et
+bollerslev-2018 (juge). 35 attendent encore recette et deux codages.
+
+**À TRANCHER PAR L'OPÉRATEUR avant de continuer sur des fiches sans signal de
+rendement** (`F62`, avis `fabrique-critique` du 2026-10-03, À AMENDER) :
+`D42` met la transposition dans l'hypothèse, `D34` code à l'aveugle depuis le
+papier ; ces fiches sortent donc par la concordance, à ~650 000 tokens pour
+deux tours. Options, par décision écrite : (a) garder, en connaissant le coût ;
+(b) une étape isolée qui spécifie la transposition (grandeur, ancrage) pour
+les deux codeurs ; (c) un seul tour pour ces fiches. **Et un `todo`** : la
+consigne impose `horizon_bars: int = 30`, que `S5` refuse selon qu'un `30`
+traîne dans la recette (`L34`) — signature sans défaut, par décision.
+**Et une question** : le témoin bollerslev a été refusé `S3` sur des écarts de
+1e-12 à 1e-4 (régression mal conditionnée sur clôtures recollées) — bruit
+flottant ou vraie fuite, `S3` ne le distingue pas.
 
 ```
 python scripts/hypotheses_lot.py --status   # où en est chaque fiche du lot

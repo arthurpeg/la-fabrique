@@ -1007,3 +1007,22 @@ début) au téléchargement **et** à l'ingestion. Toute marque posée par une �
 lit n'existe pas. Et un graphe de similarité est un détecteur : une similarité
 de 1,000 entre deux titres différents n'est jamais une découverte, c'est une
 panne.
+
+## L34 — Une consigne qui impose une constante que le juge refuse dresse les codeurs à la soupape
+
+**Le 2026-10-03.** La consigne de codage impose la signature
+`scores(panel, cells=None, horizon_bars: int = 30)`. Le juge `S5` lit les
+valeurs par défaut dans l'arbre syntaxique et refuse toute constante absente de
+la fiche ou de la liste close — et `30` en a été retiré le 2026-09-23. Sur dix
+codages, **quatre** ont été refusés `S5` sur ce seul `30`, et les quatre sont
+passés en écrivant `horizon_bars=None`, sans que rien de leur signal ne change.
+Ceux dont la recette contenait un `30` par hasard sont passés sans rien voir.
+Le refus ne mesurait donc rien : il dépendait d'un nombre traînant dans le
+papier. Et `None` porte depuis `D43` un autre sens dans le harnais (« jusqu'à
+la clôture ») : un même nom, deux sens (`L30`).
+
+**La règle.** Ce qu'une consigne impose, le juge doit l'accepter, et ce que le
+juge refuse, la consigne ne doit pas l'imposer. Quand des producteurs isolés
+convergent tous vers le même contournement, c'est l'outillage qui est faux, pas
+eux (`L28`). Ici : une signature sans défaut (`D07` n'en exige aucun) — par
+décision écrite, valable pour les fiches à venir.
