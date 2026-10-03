@@ -22,10 +22,10 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 |---|---|
 | **Phase courante** | 09 — premier passage complet sur 30 à 50 papiers |
 | **Dernière porte franchie** | **08**, le 2026-09-23 — `scripts/gate_08.py`. Un signal produit par une session de codage séparée tient les **six conditions de `D23` au premier essai**, et aucun signal produit n'a été retouché à la main. |
-| **Décision la plus récente** | `decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un |
+| **Décision la plus récente** | `decisions/DECISION-49-l-horizon-du-signal.md` (2026-10-03) — un signal se juge et se compare à son horizon (hypothèse, sinon fiche), plus à 30 barres. Avant elle : `decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un |
 | **Tests au registre** | 187 |
 | **Idées abandonnées recensées** | 62 |
-| **Entrées au journal** | 120 |
+| **Entrées au journal** | 121 |
 
 ## Ce qui bloque
 
@@ -109,9 +109,13 @@ rendement** (`F62`, avis `fabrique-critique` du 2026-10-03, À AMENDER) :
 papier ; ces fiches sortent donc par la concordance, à ~650 000 tokens pour
 deux tours. Options, par décision écrite : (a) garder, en connaissant le coût ;
 (b) une étape isolée qui spécifie la transposition (grandeur, ancrage) pour
-les deux codeurs ; (c) un seul tour pour ces fiches. **Et un `todo`** : la
+les deux codeurs ; (c) un seul tour pour ces fiches. ~~**Et un `todo`** : la
 consigne impose `horizon_bars: int = 30`, que `S5` refuse selon qu'un `30`
-traîne dans la recette (`L34`) — signature sans défaut, par décision.
+traîne dans la recette (`L34`) — signature sans défaut, par décision.~~
+**Fait le 2026-10-03, `D49`** : signature sans défaut ; le juge et le double
+codage appellent le signal à l'horizon de son hypothèse, sinon de sa fiche
+(`scripts/horizon_signal.py`), et un double codage fait à un autre horizon
+que l'hypothèse ne vaut plus pour le lot.
 **Et une question** : le témoin bollerslev a été refusé `S3` sur des écarts de
 1e-12 à 1e-4 (régression mal conditionnée sur clôtures recollées) — bruit
 flottant ou vraie fuite, `S3` ne le distingue pas.
@@ -905,6 +909,7 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-10-03 | `decision` | **`D49` : un signal se juge et se compare à son horizon.** Demande de l'opérateur. Le juge et le double codage appelaient tous les signaux à 30 barres, la mesure à l'horizon de l'hypothèse. `scripts/horizon_signal.py` lit l'horizon : hypothèse du lot, sinon champ `horizon` de la fiche, sinon ancrage 30. Signature de la consigne `scores(panel, cells=None, *, horizon_bars: int)` (fin du faux refus `S5`, `L34`). `concordance` refuse un tour fait à un autre horizon que l'hypothèse. Baltussen toujours CONCORDANT (30 barres, `H05`). Juge 27/27, registre 187 → 187. | — |
 | 2026-10-03 | `gardes` | **`verifier_tout.py` : 1 PANNE, porte 08.** `gate_08.py` rejuge `signals/` contre la fiche seule (sans les valeurs de recette de `D34`) et ignore `fiches_harvest/` : andersen et bollerslev tombent en `S5`, les deux bitcoin « aucune fiche ». Signaux non retouchés ; alignement de la porte laissé à l'opérateur (`ETAT.md`). Registre 187 → 187. | — |
 | 2026-10-03 | `codage` | **Cinq fiches du lot 09, zéro vérifiée, cinq écartées avant mesure.** andersen-1997, bitcoin-is-not-the-new-gold, bitcoin-intraday, boyarchenko-2023, bollerslev-2018 : 10 recettes valides (1 à 4 essais), 20 codages, cinq DISCORDANT au tour 1, aucune concordance au tour 2 ; écarts : 4 concordance, 1 juge (témoin bollerslev refusé S3 trois fois, écarts 1e-12). Lot `LOT-09` : n = 36, 9 hypothèses, 35 recettes à faire. `fabrique-critique` À AMENDER : D42 et D34 se contrarient pour les papiers sans signal (`F62`) ; défaut `horizon_bars: int = 30` de la consigne refusé par `S5` (`L34`). ~1,9 M tokens, fenêtre 2 % → 75 %. Aucun IC, registre inchangé. | — |
 | 2026-10-02 | `decision` | **`D48` : un voisin vaut la moyenne de ses trois meilleurs morceaux.** Banc d'essai `scripts/banc_voisins.py` (étalon fixé avant : grappes D39, 21 graines, 38 frères) : rappel à 10 de 0,29 → 0,37 ; reclassement par cross-encodeur sans gain (0,76 s/paire) ; fusion avec les centroïdes 0,37 mais demande une table. Baltussen : voisins désormais du même mécanisme (tug of war overnight/intraday, momentum intraday SPY, patterns intraday). Dossier d'une synthèse figé sous son nom et non re-préparable. | — |
@@ -912,7 +917,6 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 | 2026-10-02 | `corpus` | **PDF mal attribués : corrigés et gardés (`L33`).** Les vecteurs identiques du graphe venaient de PDF mal attribués : le livre blanc de Bitcoin pour deux papiers (lien de bibliographie PMC), l'arXiv de Kristoufek 2014 pour Kristoufek 2013. Le moissonneur avait marqué les doublons sha256, l'ingestion ne lisait pas `duplicate_of`. Nouveau contrôle `corpus/titre_du_pdf.py` (mots du titre dans les 2 premières pages, seuil 0,6, titre principal accepté) : 110 PDF sur 3 225 refusés (politiques de confidentialité, règlements, papiers cités, scans indéchiffrables). 108 mis de côté dans `corpus/pdf/harvest_refuses/` et passés « inatteignable » avec leur raison ; 2 refus à tort gardés (`title_check_ok`). Base : 19 papiers retirés (15 faux ou illisibles, 3 mal attribués, 1 copie), 2 réintégrés avec le bon PDF (UTIA, PLoS). « Testing for asymmetric… » sans PDF (Springer et PMC refusent le téléchargement automatique). Gardes ajoutées au téléchargement (`harvest.py --fetch`) et à l'ingestion. Aucun papier touché n'avait de fiche ni de verdict de tri. Graphe : 1 925 papiers, similarité max 0,993. Pupitre réduit à la liste des IC ; un clic ouvre la mesure et l'hypothèse qui va avec. | — |
 | 2026-10-02 | `atlas` | **Graphe refait sur toute la base** : 1 942 papiers (51 amorces, 1 891 moissonnés), 4 915 arêtes, top 4 par papier (`vectordb/graph.py` calcule désormais les plus proches dans la requête, au lieu de rapatrier 1,9 million de paires ; U+FFFD retiré des titres). Atlas republié : mise en page par grille (répulsion limitée aux voisins d'écran), plancher de distance et vitesse bornée — sans eux une centaine de papiers partaient à 70 000 px. Pupitre republié relié à la base (port 5432 joignable sur ce réseau). Trouvé : deux paires de papiers aux titres différents et aux vecteurs identiques (similarité 1,000 : « Some comments on Bitcoin market (in)efficiency » / « Testing for asymmetric non-linear… », « Commodity futures and market efficiency » / « Leverage effect in energy futures ») — PDF moissonné probablement faux, à vérifier. | — |
 | 2026-10-02 | `base` | **`D45` et `D46`.** Le HNSW des morceaux ne se construisait pas sur la petite instance (32 Mo de mémoire de maintenance, ~5 blocs/min, base saturée, construction morte) ; choix de l'opérateur : **IVFFlat** (migration 007, lists 150, probes 12 posé par `vector_search`), valide en ~10 min via l'outil MCP. `scripts/voisins.py` écrit le dossier des papiers proches dans toute la base, sans hiérarchie d'origine ; essai sur Baltussen 2021 : 8 voisins. `vectordb/index_hnsw.py` devient `index_morceaux.py`. Atlas : hiérarchie « vérifiés / moissonnés, pas pour citer » retirée. Pupitre republié (sans liens aux morceaux : le port 5432 est bloqué sur ce réseau). Reste ouvert : la synthèse à partir d'un dossier, le rappel de l'IVFFlat non mesuré. | — |
-| 2026-10-01 | `decision` | **`D44` : les fiches vivent dans la base.** Table `fiches` (006, RLS sans politique) ; 52 fiches versees, identiques au miroir a l'octet, 49 reliees a leur papier. Le dossier local devient un miroir versionne (`corpus/fiches_store.py --tirer/--pousser`), `avancer.py` tire puis pousse a chaque passage, un conflit n'est jamais ecrase. Embeddings par l'API en cours (~15 000 / 54 200) | registre 187 -> 187. |
 
 Journal complet : [[log]]
 

@@ -123,12 +123,16 @@ def choix(source: str) -> list[str]:
 # Les jugements — qui a passé `D23`, à quelle empreinte
 # ---------------------------------------------------------------------------
 
-def inscrire_jugement(module_path: Path, fiche_id: str, rc: int, choix_ok: bool) -> None:
-    ajouter(JUGEMENTS, {
+def inscrire_jugement(module_path: Path, fiche_id: str, rc: int, choix_ok: bool,
+                      horizon_bars: int | None = None) -> None:
+    ligne = {
         "at": maintenant(), "path": rel(module_path), "fiche_id": fiche_id,
         "sha256_16": empreinte16(module_path), "d23_passed": rc == 0,
         "choices_ok": choix_ok,
-    })
+    }
+    if horizon_bars is not None:
+        ligne["horizon_bars"] = horizon_bars  # D49
+    ajouter(JUGEMENTS, ligne)
 
 
 def jugement_vert(module_path: Path) -> tuple[bool, str]:
@@ -245,4 +249,13 @@ def concordance(fiche_id: str, module_path: Path) -> tuple[bool, str]:
                        f"{c['principal']['sha256_16']}, le module est à {sha}")
     if c["verdict"] != "CONCORDANT":
         return False, f"{fiche_id} : double codage {c['verdict']} (rho {c.get('rho')})"
+    # D49 : la concordance vaut à l'horizon où elle a été mesurée. Les tours
+    # antérieurs à D49 ont tous été faits à 30 barres.
+    from horizon_signal import horizon_du_signal  # noqa: PLC0415
+
+    attendu, source = horizon_du_signal(fiche_id)
+    fait = c.get("horizon_bars", 30)
+    if fait != attendu:
+        return False, (f"{fiche_id} : double codage fait à {fait} barres, l'horizon est "
+                       f"{attendu} ({source}) — refaire le double codage (D49)")
     return True, ""

@@ -129,7 +129,7 @@ puis mesurée — la forme en U de la volatilité intra-journalière est retrouv
 **chaîne de données** et la discipline de mesure, **pas le harnais d'IC**, qui
 reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
-**Décision la plus récente :**
+**Décision la plus récente :** `decisions/DECISION-49-l-horizon-du-signal.md` (2026-10-03) — un signal se juge et se compare à son horizon (hypothèse, sinon fiche), plus à 30 barres. Avant elle :
 `decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un
 **critère, pas un nombre**. `D25` engageait 50 signaux, chiffre écrit quand le
 corpus portait 17 fiches ; il en porte 51 et le moissonné est épuisé. Le lot est
@@ -384,9 +384,13 @@ rendement** (`F62`, avis `fabrique-critique` du 2026-10-03, À AMENDER) :
 papier ; ces fiches sortent donc par la concordance, à ~650 000 tokens pour
 deux tours. Options, par décision écrite : (a) garder, en connaissant le coût ;
 (b) une étape isolée qui spécifie la transposition (grandeur, ancrage) pour
-les deux codeurs ; (c) un seul tour pour ces fiches. **Et un `todo`** : la
+les deux codeurs ; (c) un seul tour pour ces fiches. ~~**Et un `todo`** : la
 consigne impose `horizon_bars: int = 30`, que `S5` refuse selon qu'un `30`
-traîne dans la recette (`L34`) — signature sans défaut, par décision.
+traîne dans la recette (`L34`) — signature sans défaut, par décision.~~
+**Fait le 2026-10-03, `D49`** : signature sans défaut ; le juge et le double
+codage appellent le signal à l'horizon de son hypothèse, sinon de sa fiche
+(`scripts/horizon_signal.py`), et un double codage fait à un autre horizon
+que l'hypothèse ne vaut plus pour le lot.
 **Et une question** : le témoin bollerslev a été refusé `S3` sur des écarts de
 1e-12 à 1e-4 (régression mal conditionnée sur clôtures recollées) — bruit
 flottant ou vraie fuite, `S3` ne le distingue pas.

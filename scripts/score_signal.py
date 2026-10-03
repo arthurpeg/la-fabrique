@@ -261,7 +261,7 @@ def check_s2(module) -> Verdict:
     return v
 
 
-def check_s3(module, panel, scores) -> Verdict:
+def check_s3(module, panel, scores, horizon_bars: int = HORIZON_BARS) -> Verdict:
     v = Verdict("S3", "il est causal")
     if panel is None:
         v.sans_objet = "sans données : le test de causalité demande un panel"
@@ -269,7 +269,7 @@ def check_s3(module, panel, scores) -> Verdict:
     from sandbox import causality
 
     for d in causality.check(module, panel, probes=PROBES,
-                             horizon_bars=HORIZON_BARS, full=scores):
+                             horizon_bars=horizon_bars, full=scores):
         v.fautes.append(str(d))
     return v
 
@@ -356,14 +356,16 @@ def check_s6(module) -> Verdict:
 # Le jugement
 # ---------------------------------------------------------------------------
 
-def juger(module, fiche: dict, panel=None) -> list[Verdict]:
+def juger(module, fiche: dict, panel=None, horizon_bars: int = HORIZON_BARS) -> list[Verdict]:
+    # `D49` : l'horizon est celui de l'hypothèse ou de la fiche, passé par
+    # `code_signal.py --judge` ; 30 n'est que l'ancrage par défaut.
     scores = None
     if panel is not None:
-        scores = module.scores(panel, horizon_bars=HORIZON_BARS)
+        scores = module.scores(panel, horizon_bars=horizon_bars)
     return [
         check_s1(module, scores, panel),
         check_s2(module),
-        check_s3(module, panel, scores),
+        check_s3(module, panel, scores, horizon_bars),
         check_s4(scores),
         check_s5(module, fiche),
         check_s6(module),
@@ -549,6 +551,8 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--check", action="store_true", help="juger le juge")
     ap.add_argument("--no-data", action="store_true",
                     help="S1, S2, S5, S6 seuls — sans panel, donc porte NON franchie")
+    ap.add_argument("--horizon-bars", type=int, default=HORIZON_BARS,
+                    help="l'horizon du signal (D49) ; 30 = l'ancrage par défaut")
     a = ap.parse_args(argv)
 
     if a.check:
@@ -573,7 +577,8 @@ def main(argv: list[str]) -> int:
         # qu'aucun garde n'emprunte n'est pas un chemin vérifié.
         panel = Panel.open(ASOF, slice="pool")
 
-    verdicts = juger(module, fiche, panel)
+    print(f"horizon : {a.horizon_bars} barres (D49)")
+    verdicts = juger(module, fiche, panel, a.horizon_bars)
     print(rendre(verdicts, getattr(module, "SIGNAL_ID", a.module)))
     return 0 if all(v.tenue for v in verdicts) and not any(
         v.sans_objet for v in verdicts) else 1
