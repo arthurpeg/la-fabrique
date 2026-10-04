@@ -93,18 +93,31 @@ def main(argv: list[str]) -> int:
     entries = lot["fiches"]
     commencee = mesure_commencee(entries)
     tours = {}
+    dernier = {}  # D49 : un tour CONCORDANT à un autre horizon se refait, il ne s'écarte pas
     for c in lire(CONCORDANCE):
         tours[c["fiche_id"]] = tours.get(c["fiche_id"], 0) + 1
+        dernier[c["fiche_id"]] = c["verdict"]
+
+    # 0 — D44 : la base fait foi pour les fiches. On tire celles qu'une autre
+    # session a versées, puis on pousse les nouvelles d'ici. Sans réseau, on
+    # continue sur le miroir, et on le dit.
+    if faire:
+        for sens in ("--tirer", "--pousser"):
+            rc, out = lancer("corpus/fiches_store.py", sens)
+            print("  fiches " + (out.splitlines()[-1] if out and rc == 0
+                                 else f"{sens} impossible (réseau ?) : on continue sur le miroir"))
 
     # 1 et 2 — fiche par fiche
     bloque: dict[str, list[str]] = {}
     for e in list(entries):
         fid = e["fiche_id"]
-        if e.get("ref"):
-            continue
+        # D41 : une hypothèse D40 peut précéder le codage ; la fiche passe quand
+        # même par toutes les étapes de codage. Seule une hypothèse qui a
+        # pré-enregistré la grille entière ne s'écarte pas pour son marché.
+        grille = (e.get("universe") or {}).get("grille", False)
         rp = RECETTES / f"{fid}.json"
         u = univers_de(json.loads(rp.read_text(encoding="utf-8"))) if rp.is_file() else None
-        if u is not None and not u["exact"]:
+        if u is not None and not u["exact"] and not grille:
             if commencee:
                 bloque.setdefault("marché absent, mais la mesure a commencé", []).append(fid)
             elif faire:
@@ -114,7 +127,7 @@ def main(argv: list[str]) -> int:
             continue
         p = principal_de(fid)
         if concordance(fid, p)[0]:
-            if u is None:
+            if u is None and not grille:
                 bloque.setdefault("vérifiée, recette sans marché (D38) : refaire la recette",
                                   []).append(fid)
             continue
@@ -123,7 +136,7 @@ def main(argv: list[str]) -> int:
             bloque.setdefault("recette à faire", []).append(fid)
         elif not (vert_p and vert_t):
             bloque.setdefault("deux codages verts à obtenir", []).append(fid)
-        elif tours.get(fid, 0) >= TOURS_MAX:
+        elif tours.get(fid, 0) >= TOURS_MAX and dernier.get(fid) != "CONCORDANT":
             bloque.setdefault("discordante au dernier tour : à écarter", []).append(fid)
         elif faire:
             rc, out = lancer("scripts/double_codage.py", fid)
@@ -132,16 +145,19 @@ def main(argv: list[str]) -> int:
             if rc != 0:
                 bloque.setdefault("discordante : § 2.7 du tutoriel", []).append(fid)
 
-    # 3 — les hypothèses, commitées aussitôt
+    # 3 — relier les hypothèses D40 au lot, et dire celles qui restent à écrire
+    # (D41). Ce script n'écrit aucune hypothèse : elles s'écrivent au format de D40
+    # et se jugent par hypotheses/score_hypothese.py.
     if faire:
-        rc, out = lancer("scripts/hypotheses_lot.py", "--write")
-        ecrites = [x for x in out.splitlines() if "écrite —" in x]
-        for x in ecrites:
-            print(" ", x.strip())
-        if ecrites:
-            commit(f"Hypotheses pre-enregistrees : {len(ecrites)} ecrite(s), avant toute mesure\n\n"
+        rc, out = lancer("scripts/hypotheses_lot.py", "--lier")
+        print("  " + (out.splitlines()[0] if out else ""))
+        if "reliée(s)" in out and not out.startswith("0 "):
+            commit("Lot : hypotheses D40 reliees, avec leur univers, avant toute mesure\n\n"
                    "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
-                   "hypotheses", "verification", "corpus/recettes", "signals")
+                   "hypotheses/LOT-09.json")
+    for e in entries:
+        if not e.get("ref") and concordance(e["fiche_id"], principal_de(e["fiche_id"]))[0]:
+            bloque.setdefault("vérifiée, hypothèse D40 à écrire", []).append(e["fiche_id"])
 
     lot = json.loads(LOT_FILE.read_text(encoding="utf-8"))
     entries = lot["fiches"]

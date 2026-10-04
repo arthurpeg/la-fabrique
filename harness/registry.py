@@ -65,7 +65,7 @@ STAGES = (
 REQUESTED_BY = ("agent", "script", "humain")
 
 TEST_ID = re.compile(r"^T-\d{8}T\d{6}-[0-9a-f]{6}$")
-HORIZON = re.compile(r"^\d+(min|h)$")
+HORIZON = re.compile(r"^(\d+(min|h)|cloture)$")  # D43 : "cloture" = to the close of the window
 CODE_HASH = re.compile(r"^[0-9a-f]{16}$")
 
 
@@ -152,7 +152,7 @@ def open_test(
     if data_slice not in SLICES:
         raise ValueError(f"unknown slice {data_slice!r}; D01 5 left {list(SLICES)}")
     if not HORIZON.match(str(horizon)):
-        raise ValueError(f"unreadable horizon {horizon!r}: expected '30min' or '2h'")
+        raise ValueError(f"unreadable horizon {horizon!r}: expected '30min', '2h' or 'cloture'")
     return Ticket(
         signal_id=signal_id,
         hypothesis_ref=hypothesis_ref,
@@ -229,7 +229,7 @@ def validate_record(record: dict) -> list[str]:
     typed("signal_id", str, lambda v: bool(v.strip()), "is empty")
     typed("stage", str, lambda v: v in STAGES, f"is not one of {list(STAGES)}")
     typed("data_slice", str, lambda v: v in SLICES, f"is not one of {list(SLICES)}")
-    typed("horizon", str, lambda v: bool(HORIZON.match(v)), "is not '<n>min' or '<n>h'")
+    typed("horizon", str, lambda v: bool(HORIZON.match(v)), "is not '<n>min', '<n>h' or 'cloture'")
     typed("requested_by", str, lambda v: v in REQUESTED_BY, f"is not one of {list(REQUESTED_BY)}")
     typed("code_hash", str, lambda v: bool(CODE_HASH.match(v)), "is not 16 hex characters")
     typed("cells", int, lambda v: v >= 0, "is negative")

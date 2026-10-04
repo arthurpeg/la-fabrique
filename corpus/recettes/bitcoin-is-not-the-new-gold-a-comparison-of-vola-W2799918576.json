@@ -1,0 +1,179 @@
+{
+  "fiche_id": "bitcoin-is-not-the-new-gold-a-comparison-of-vola-W2799918576",
+  "written": "2026-10-03",
+  "written_by": "claude-opus-5-5 (session de recette isolée)",
+  "formula": {
+    "statement": "Le papier ne construit aucun score prédictif. Les seules grandeurs calculées sont descriptives : (a) un indicateur de détresse journalier, 1{r_t < VaR_q}, où r_t est le rendement log journalier ×100 de l'indice actions (S&P 500, MSCI World, MSCI EM50) et VaR_q le quantile empirique q (1 %, 5 %, 10 %) des rendements de cet indice sur TOUT l'échantillon (le ⌈T×q⌉-ième rendement trié par ordre croissant) ; (b) la corrélation conditionnelle d'une paire (or ou Bitcoin contre un autre actif), tirée d'un BEKK-GARCH diagonal à deux dimensions ; (c) les poids d'un portefeuille de variance minimale à deux actifs, min w_t' H_t w_t sous w_t'1 = 1, H_t venant du BEKK ; (d) le rendement moyen de ce portefeuille sur les jours de détresse, « une sorte d'Expected Shortfall ». Rien n'est posé avant le rendement qu'il est censé expliquer : (a) est contemporain, et le seuil VaR_q utilise l'échantillon entier.",
+    "quoted": "We calculate the historical Value-of-Risk of the S&P 500 or MSCI World over the whole sample period, denoted by VaRq, i.e. we take the empirical quantile q at 1%, 5%, and 10% of the returns rt of that index.",
+    "reason": null
+  },
+  "inputs": [
+    {
+      "name": "daily_log_return",
+      "description": "rendement log journalier ×100 de chaque série, calculé de clôture à clôture : r_t = 100 × log(P_t / P_{t−1})",
+      "known_at": "à la clôture du jour t (horodatage GMT ; l'heure exacte de la clôture n'est pas donnée)",
+      "quoted": "rt = 100 × log(Pt/Pt−1)."
+    },
+    {
+      "name": "conventional_close",
+      "description": "prix de clôture (ou points d'indice) de chaque jour de cotation pour l'or, l'argent, le WTI, le S&P 500, le MSCI World et le MSCI EM50, source Datastream",
+      "known_at": "à la clôture de chaque jour de cotation, horodatage GMT",
+      "quoted": "For conventional assets, we take the closing price or index points of each trading day."
+    },
+    {
+      "name": "bitcoin_end_of_day_price",
+      "description": "prix de fin de journée du Bitcoin (coindesk.com), jours de semaine seulement",
+      "known_at": "à la fin de la journée GMT",
+      "quoted": "For Bitcoin, we retrieve the data from coindesk.com, also with GMT timestamp, and process the price at the end of the day since cryptocurrencies are traded continuously."
+    },
+    {
+      "name": "index_var_threshold",
+      "description": "quantile empirique q des rendements de l'indice actions, calculé sur toute la période de l'échantillon",
+      "known_at": "seulement à la fin de l'échantillon (seuil ex post, plein échantillon)",
+      "quoted": "We calculate the historical Value-of-Risk of the S&P 500 or MSCI World over the whole sample period"
+    },
+    {
+      "name": "bekk_conditional_covariance",
+      "description": "matrice de covariance conditionnelle H_t (2×2) d'un BEKK-GARCH diagonal estimé sur une paire d'actifs ; sert aux corrélations dynamiques et aux poids de variance minimale",
+      "known_at": "H_t est conditionnelle à l'information en t−1 dans le modèle, mais les paramètres du BEKK sont estimés sans que la fenêtre d'estimation soit dite (vraisemblablement l'échantillon entier, non affirmé)",
+      "quoted": "Based on the BEKK-GARCH framework, we estimate dynamic correlations between the considered assets."
+    }
+  ],
+  "timing": {
+    "statement": "Fréquence journalière, de clôture à clôture, horodatages GMT ; Bitcoin pris en fin de journée GMT, actifs conventionnels à leur clôture de jour de cotation. Le papier ne donne pas l'heure des clôtures, ni le décalage entre la fin de journée GMT du Bitcoin et la clôture des indices. Le jour de détresse est défini par le rendement du même jour de l'indice : aucune grandeur n'est posée avant le rendement évalué.",
+    "quoted": "Data for these assets are obtained from Datastream with GMT timestamp.",
+    "reason": null
+  },
+  "parameters": [
+    {
+      "name": "var_quantile_1",
+      "value": 1,
+      "unit": "percent",
+      "quoted": "we take the empirical quantile q at 1%, 5%, and 10% of the returns rt of that index"
+    },
+    {
+      "name": "var_quantile_5",
+      "value": 5,
+      "unit": "percent",
+      "quoted": "we take the empirical quantile q at 1%, 5%, and 10% of the returns rt of that index"
+    },
+    {
+      "name": "var_quantile_10",
+      "value": 10,
+      "unit": "percent",
+      "quoted": "we take the empirical quantile q at 1%, 5%, and 10% of the returns rt of that index"
+    },
+    {
+      "name": "bekk_dimension",
+      "value": 2,
+      "unit": "assets",
+      "quoted": "we calculate the pairwise correlation between Gold and Bitcoin to other assets by settingk = 2"
+    },
+    {
+      "name": "return_scaling",
+      "value": 100,
+      "unit": "multiplier",
+      "quoted": "rt = 100 × log(Pt/Pt−1)."
+    },
+    {
+      "name": "fiaparch_arch_truncation_lag",
+      "value": 1000,
+      "unit": "lags",
+      "quoted": "We implement an ARCH(∞) truncation lag of 1 000.",
+      "derived": true,
+      "note": "le texte écrit « 1 000 » avec une espace de milliers ; la valeur est 1000"
+    },
+    {
+      "name": "explosive_test_window_days",
+      "value": 30,
+      "unit": "days",
+      "quoted": "on a rolling 30-day window."
+    },
+    {
+      "name": "savitzky_golay_window",
+      "value": null,
+      "unit": "observations",
+      "quoted": null,
+      "reason": "le papier dit seulement que les tracés de corrélation sont lissés par un filtre de Savitzky-Golay, sans fenêtre ni ordre polynomial"
+    },
+    {
+      "name": "bekk_estimation_window",
+      "value": null,
+      "unit": "days",
+      "quoted": null,
+      "reason": "le papier ne dit pas sur quelle fenêtre les paramètres BEKK sont estimés ; il renvoie leurs valeurs « upon request »"
+    }
+  ],
+  "ambiguities": [
+    {
+      "question": "Quelle grandeur causale du papier sert de score transposé — un rendement cumulé de la séance, ou une mesure de queue (VaR, couverture) — sur quelle fenêtre est-elle calculée, et à quels instants est-elle posée ?",
+      "resolution": "Le papier ne pose aucun score. Aucun rendement cumulé de séance n'apparaît : tout est en rendements journaliers de clôture à clôture. La mesure de queue (VaR_q et rendement moyen sous VaR_q) est calculée sur l'échantillon entier et l'indicateur de détresse est contemporain du rendement de l'indice ; la corrélation BEKK n'a ni fenêtre d'estimation déclarée ni instant de pose. Le choix d'une grandeur, d'une fenêtre glissante et d'un instant de pose reste entièrement non résolu par le papier.",
+      "quoted": "a ex-post portfolio-based comparison with three steps"
+    },
+    {
+      "question": "Le seuil VaR_q est-il glissant (point-in-time) ou calculé sur l'échantillon entier ?",
+      "resolution": "Échantillon entier : le ⌈T×q⌉-ième rendement de la liste triée des T rendements de l'indice.",
+      "quoted": "If the index has T returns, the Value-at-Risk is the ⌈T× 0.01⌉-th return in that list."
+    },
+    {
+      "question": "Le jour de détresse est-il défini par une inégalité stricte sur le rendement du même jour de l'indice ?",
+      "resolution": "Oui : t* = {t | r_t < VaR_q}, inégalité stricte, rendement de l'indice au jour t lui-même.",
+      "quoted": "define all points in time t* := {t | r_t < VaR_q} as times where the index is in distress.",
+      "quoted_source": "deﬁne all points in time t∗ :={t|rt < VaRq} as times where the index is in distress.",
+      "quoted_repair": "math_notation"
+    },
+    {
+      "question": "Le rendement du portefeuille au jour t utilise-t-il le poids w_t (même jour) ou w_{t−1} ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Les paramètres BEKK sont-ils estimés sur l'échantillon entier ou en glissant ? (détermine si la corrélation et les poids sont point-in-time)",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Fenêtre, ordre et caractère bilatéral du lissage de Savitzky-Golay appliqué aux corrélations",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "À quelle heure exacte sont pris la clôture des actifs conventionnels et le prix de fin de journée du Bitcoin, et comment sont alignés des marchés qui ferment à des heures GMT différentes ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Comment sont traités les week-ends du Bitcoin et les jours fériés des marchés conventionnels ?",
+      "resolution": "Les prix du week-end du Bitcoin sont écartés ; le rendement du lundi couvre donc vendredi → lundi. Le traitement des jours fériés n'est pas précisé (seule l'interpolation de week-end des actifs conventionnels, testée puis écartée, est mentionnée).",
+      "quoted": "Since Bitcoin is also traded on weekends, we only consider the prices during the week to synchronize our dataset."
+    },
+    {
+      "question": "Les poids de variance minimale sont-ils contraints à être positifs ?",
+      "resolution": "Non : les poids calculés comprennent des positions courtes, que les auteurs jugent seulement souhaitable de restreindre.",
+      "quoted": "For some periods for Gold and for Bitcoin, we obtain short positions"
+    },
+    {
+      "question": "Les résidus « centralisés » auxquels on applique le BEKK sont-ils de simples rendements démoyennés ou les résidus du modèle AR(1) ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Les épisodes de détresse surlignés en bleu dans les figures de corrélation suivent-ils une règle (seuil VaR) ou un repérage visuel ?",
+      "resolution": "Aucune règle n'est donnée pour les figures : les auteurs « identifient » deux épisodes nommés (août 2015, fin 2015/début 2016).",
+      "quoted": "For the S&P 500, we identify only two short periods of market distress"
+    },
+    {
+      "question": "Quelle distribution d'erreurs pour la volatilité univariée, et le résultat (levier inverse du Bitcoin) en dépend-il ?",
+      "resolution": "Student-t ; avec des erreurs normales les auteurs retrouvent l'absence d'effet de Dyhrberg (2016).",
+      "quoted": "When repeating the regression with normally distributed errors, we can conﬁrm and replicate the ﬁndings of Dyhrberg (2016)."
+    }
+  ],
+  "market": {
+    "studied": "Séries journalières de clôture, horodatage GMT, 2011-07-01 à 2017-12-31, jours de semaine : Bitcoin au comptant (coindesk), or et argent au comptant en USD/oz, pétrole brut WTI, indice S&P 500, MSCI World, MSCI Emerging Markets 50. L'or, le WTI et l'indice S&P 500 sont mesurés eux-mêmes (corrélations BEKK, volatilité, portefeuilles or/S&P 500) ; Bitcoin, argent, MSCI World, MSCI EM50 et CRIX ne correspondent à aucun de nos instruments.",
+    "quoted": "Gold and Silver prices in USD per oz, crude oil prices for the West Texas Intermediate (WTI), the S&P 500 index, MSCI World and the MSCI Emerging Markets 50 index.",
+    "exact_roots": ["ES", "GC", "CL"],
+    "sessions": null,
+    "sessions_quoted": null,
+    "sessions_reason": "Le papier n'utilise que des clôtures journalières (Bitcoin en fin de journée GMT) sans donner d'heure de clôture ni de fenêtre intrajournalière ; rien ne permet de dire quelles fenêtres ASIA/EUROPE/US les rendements couvrent."
+  }
+}

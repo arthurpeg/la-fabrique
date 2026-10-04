@@ -52,11 +52,15 @@ from gate_09 import (  # noqa: E402
 
 from harness import registry  # noqa: E402
 
-HORIZON = "30min"
+# D42 : chaque hypothèse est mesurée à SON horizon intraday, déclaré avant la
+# mesure (`horizon` de l'entrée du lot, lu dans « Le domaine » par
+# hypotheses_lot.py). « cloture » — jusqu'à la clôture de la fenêtre — demande au
+# harnais un horizon variable qu'il n'a pas encore : refusé, jamais remplacé.
+HORIZON_CLOTURE = "cloture"
 # L'empreinte du harnais avec lequel le lot sera mesuré. None tant que la
 # décision de harnais groupée (`D26`, `D28`, `D29`) n'est pas prise : elle
 # renseigne cette valeur, et nulle part ailleurs.
-HARNAIS_DU_LOT: str | None = "94b495fa7525d3b8"  # D35, D37
+HARNAIS_DU_LOT: str | None = "bfcfcae68c20a212"  # D35, D37, D43
 
 
 RAPPORTS = REPO / "scripts" / "out" / "rapports"
@@ -117,8 +121,18 @@ def prealables() -> tuple[list[str], list[dict]]:
     registre = registry.read_all()
     fautes += fautes_d34_du_lot(lot, registre, STAGE)
     fautes += fautes_univers(lot)
+    # D40, D41 : chaque hypothèse passe son juge, et la bijection avec le lot tient.
+    sys.path.insert(0, str(REPO / "hypotheses"))
+    import score_hypothese as sh  # noqa: PLC0415
+
+    _, fautes_d40 = sh.juger_ensemble(sh.HYPOTHESES_DIR, sh.fiche_ids_du_lot())
+    fautes += [f"D40 : {f}" for f in fautes_d40]
     for r in lignes_hors_protocole(entries, registre, courant):
         fautes.append(f"{r.get('test_id')} touche déjà le lot hors protocole (D28)")
+    for e in entries:
+        h = e.get("horizon")
+        if not h:
+            fautes.append(f"{e.get('fiche_id')} : pas d'horizon déclaré (D42)")
     a_faire = [e for e in entries
                if not any(est_officielle(r, e, courant) for r in registre)]
     return fautes, a_faire
@@ -146,7 +160,7 @@ def main(argv: list[str]) -> int:
         print("--run exige --je-mesure : chaque mesure dépense un test, et elle est définitive.")
         return 1
 
-    from harness import evaluate
+    from harness import evaluate, horizon_to_bars
     from panel import Panel
 
     panel = Panel.open(asof=ASOF_REQUIRED.replace("+00:00", ""), slice=SLICE_REQUIRED)
@@ -157,8 +171,13 @@ def main(argv: list[str]) -> int:
         # et sur elles seules. Le signal note toute la grille ; on ne garde que
         # l'univers écrit AVANT, jamais une cellule choisie après.
         garder = cellules_de(e["universe"]) & set(panel.cells())
-        scores = {c: s for c, s in module.scores(panel, horizon_bars=30).items() if c in garder}
-        rapport = evaluate(scores, panel, HORIZON,
+        horizon = e["horizon"]
+        # D43 : la clôture est un horizon variable ; le signal pose ses scores à
+        # l'ancrage par défaut, le harnais mesure jusqu'à la clôture de chaque fenêtre.
+        barres = horizon_to_bars(horizon) or 30
+        scores = {c: s for c, s in module.scores(panel, horizon_bars=barres).items()
+                  if c in garder}
+        rapport = evaluate(scores, panel, horizon,
                            signal_id=e["signal_id"], hypothesis_ref=e["ref"], stage=STAGE)
         print(f"  {i}/{len(a_faire)} {e['ref']} {e['signal_id']:<48} "
               f"IC {rapport.ic:+.5f}  t {rapport.t['final']:+.2f}", flush=True)

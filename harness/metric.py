@@ -84,17 +84,32 @@ def forward_returns(
     close: pd.Series,
     session: pd.Series,
     window: pd.Series,
-    horizon_bars: int,
+    horizon_bars: int | None,
 ) -> pd.Series:
     """The return from each bar to `horizon_bars` later, within the same window and session.
 
     The horizon is counted in BARS, not in minutes: 99.4 % of the bars are one
     minute apart, but not all of them. The realised horizon is measured and
     reported beside every IC rather than assumed -- see `cell_ic`.
+
+    `horizon_bars = None` is the horizon "to the close of the window" (D43): the
+    return from each bar to the LAST bar of its own window and session. The last
+    bar has no future inside its window and yields no return.
     """
     key = pd.Series(list(zip(session, window, strict=True)), index=close.index)
-    future = close.groupby(key, sort=False).shift(-horizon_bars)
+    groups = close.groupby(key, sort=False)
+    if horizon_bars is None:
+        last = groups.transform("last")
+        remaining = groups.cumcount(ascending=False)
+        return (last / close - 1.0).where(remaining > 0)
+    future = groups.shift(-horizon_bars)
     return future / close - 1.0
+
+
+def bars_to_close(session: pd.Series, window: pd.Series) -> pd.Series:
+    """For each bar, how many bars remain before the close of its window (D43)."""
+    key = pd.Series(list(zip(session, window, strict=True)), index=session.index)
+    return key.groupby(key, sort=False).cumcount(ascending=False)
 
 
 def realised_horizon(

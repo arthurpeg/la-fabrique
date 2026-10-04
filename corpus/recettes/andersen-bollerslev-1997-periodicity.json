@@ -1,0 +1,194 @@
+{
+  "fiche_id": "andersen-bollerslev-1997-periodicity",
+  "written": "2026-10-03",
+  "written_by": "claude-opus-5-5",
+  "formula": {
+    "statement": "Le papier ne propose aucun score prédictif. L'objet mesuré est le profil intra-journalier de volatilité : pour chaque intervalle de 5 minutes n de la séance (n = 1..80 sur le S&P 500), la moyenne, sur les jours de l'échantillon, du rendement absolu |R_t,n|, où R_t,n est la différence des log-prix de transaction (dernier prix enregistré) du contrat à terme le plus proche entre deux intervalles de 5 minutes consécutifs. En section 5 et annexe B, ce profil est modélisé par une forme de Fourier flexible (s_t,n, normalisée à une moyenne de 1 sur l'échantillon), qui sert à filtrer les rendements (R_t,n / s_t,n) ou à les standardiser (R_t,n / (sigma_t s_t,n)).",
+    "quoted": "The average absolute returns over the 5-minute intervals are depicted in Fig. 2a.",
+    "reason": "Il n'y a pas de formule de signal dans le papier : la citation désigne la grandeur décrite (rendement absolu moyen par intervalle). Les formules (A.3)-(A.4) du filtre périodique sont trop abîmées dans le texte extrait pour être citées utilement."
+  },
+  "inputs": [
+    {
+      "name": "five_minute_log_return",
+      "description": "rendement de 5 minutes du contrat à terme S&P 500, différence des derniers log-prix enregistrés du contrat le plus proche sur deux intervalles de 5 minutes consécutifs",
+      "known_at": "à la fin de l'intervalle de 5 minutes n de la séance t (dernier prix enregistré dans l'intervalle)",
+      "quoted": "The calculation of the returns is based on the last recorded logarithmic prices for the nearby futures contract"
+    },
+    {
+      "name": "absolute_return_profile",
+      "description": "moyenne de |R_t,n| par position horaire n, calculée sur l'ensemble des 991 jours de l'échantillon (passés ET futurs par rapport à un jour donné)",
+      "known_at": "seulement en fin d'échantillon : le papier moyenne sur tout l'échantillon, sans fenêtre glissante ni restriction aux jours passés",
+      "quoted": "The intraday periodic patterns over the eighty 5-minute intraday intervals are depicted in Fig. 1b and Fig. 2b.",
+      "quoted_source": "The intraday periodic patterns over the eighty 5-minute intraday intervals are depicted in Fig. lb and Fig. 2b.",
+      "quoted_repair": "ocr"
+    },
+    {
+      "name": "daily_volatility_factor",
+      "description": "sigma_t, facteur de volatilité journalière estimé par un modèle MA(1)-GARCH(1,1) journalier, utilisé dans la première étape de l'estimation du profil périodique (annexe B) et dans la standardisation",
+      "known_at": "non précisé par le papier ; un GARCH journalier donne une variance conditionnelle connue à la clôture de t-1, mais le papier ne dit pas quelle valeur est utilisée pour le jour t, ni que les paramètres sont estimés hors échantillon",
+      "quoted": "The first step of our procedure involves the determination of the daily volatility factor estimates"
+    }
+  ],
+  "timing": {
+    "statement": "Barres de 5 minutes du contrat S&P 500 au CME : la séance enregistrée va de 8h30 à 15h15 heure de Chicago (le papier écrit « central standard time ») ; le premier rendement 8h30-8h35 (qui contient la nuit) est supprimé, d'où 80 rendements par jour de 8h35 à 15h15 ; les trois derniers rendements (après la clôture du NYSE à 15h00) sont gardés. La période du 15 octobre au 13 novembre 1987 est exclue. Le profil est une moyenne sur tout l'échantillon : aucun instant de pose de score n'existe dans le papier.",
+    "quoted": "Overnight five minute returns have also been deleted, resulting in a total of 80 intraday return observations from 08.35 through 15.15 for each of the 991 days in the sample.",
+    "reason": null
+  },
+  "parameters": [
+    {
+      "name": "bar_minutes",
+      "value": 5,
+      "unit": "minutes",
+      "quoted": "In effect, this is not a 5-minute return, and we therefore delete it in the subsequent analysis."
+    },
+    {
+      "name": "intervals_per_day_sp500",
+      "value": 80,
+      "unit": "intervalles de 5 minutes",
+      "quoted": "Overnight five minute returns have also been deleted, resulting in a total of 80 intraday return observations from 08.35 through 15.15 for each of the 991 days in the sample."
+    },
+    {
+      "name": "sample_days_sp500",
+      "value": 991,
+      "unit": "jours",
+      "quoted": "Overnight five minute returns have also been deleted, resulting in a total of 80 intraday return observations from 08.35 through 15.15 for each of the 991 days in the sample."
+    },
+    {
+      "name": "retained_post_nyse_close_returns",
+      "value": 3,
+      "unit": "rendements de 5 minutes",
+      "derived": true,
+      "note": "Le papier écrit « the last three » en toutes lettres ; 3 en est la transcription.",
+      "quoted": "Although, the New York Stock Exchange closes at 3.00 p.m., we retain the last three 5-minute returns from the futures market in the analysis reported on below."
+    },
+    {
+      "name": "fourier_interaction_terms_J_sp500",
+      "value": 1,
+      "unit": "nombre de termes d'interaction",
+      "quoted": "In contrast, our preferred model, the S & P 500, returns sets J = 1 and P = 2,"
+    },
+    {
+      "name": "fourier_truncation_P_sp500",
+      "value": 2,
+      "unit": "nombre de sinusoïdes",
+      "quoted": "In contrast, our preferred model, the S & P 500, returns sets J = 1 and P = 2,"
+    },
+    {
+      "name": "end_of_day_dummy_first_interval",
+      "value": 78,
+      "unit": "indice d'intervalle",
+      "quoted": "the volatility profile for the last fifteen minutes of trading (intervals 78, 79 and 80) shows an abrupt change"
+    },
+    {
+      "name": "end_of_day_dummy_second_interval",
+      "value": 79,
+      "unit": "indice d'intervalle",
+      "quoted": "the volatility profile for the last fifteen minutes of trading (intervals 78, 79 and 80) shows an abrupt change"
+    },
+    {
+      "name": "end_of_day_dummy_third_interval",
+      "value": 80,
+      "unit": "indice d'intervalle",
+      "quoted": "the volatility profile for the last fifteen minutes of trading (intervals 78, 79 and 80) shows an abrupt change"
+    },
+    {
+      "name": "profile_estimation_window",
+      "value": null,
+      "unit": "jours",
+      "quoted": null,
+      "reason": "Le papier n'utilise aucune fenêtre glissante : le profil moyen et la forme de Fourier sont estimés sur tout l'échantillon. Aucune longueur de fenêtre transposable n'est donnée."
+    },
+    {
+      "name": "score_anchor_time",
+      "value": null,
+      "unit": null,
+      "quoted": null,
+      "reason": "Le papier ne pose aucun score, ni à une ancre par séance, ni à chaque barre."
+    }
+  ],
+  "ambiguities": [
+    {
+      "question": "Le score transposable est-il l'amplitude |R| récente de la barre notée, ou le profil moyen de |R| à la même position horaire estimé sur les séances passées — et à quels instants de la séance un score est-il posé (une ancre par séance, ou chaque barre) ?",
+      "resolution": "Non résolu par le papier. Le papier décrit le profil moyen de |R| par position horaire, moyenné sur TOUT l'échantillon (jours futurs inclus), sans restriction aux séances passées ; il ne pose aucun score, ni par séance ni par barre. Il mentionne que la méthode pourrait servir à prévoir la volatilité intraday, mais ne le fait pas.",
+      "quoted": "This same methodology may also be used directly for prediction of future volatility over different intraday time intervals."
+    },
+    {
+      "question": "Le profil (moyenne par intervalle, ou forme de Fourier s_t,n) est-il estimé uniquement sur le passé ?",
+      "resolution": "Non : l'estimation utilise toute la série temporelle de l'échantillon. Transposé tel quel, le profil regarde l'avenir ; il faudrait l'estimer sur les seules séances antérieures, ce que le papier ne spécifie pas.",
+      "quoted": "is based on a time series regression that include all T intraday returns."
+    },
+    {
+      "question": "La normalisation de s_t,n (moyenne égale à 1) se fait-elle sur tout l'échantillon ?",
+      "resolution": "Oui selon l'annexe B (somme sur tous les jours de l'échantillon), la formule (A.4) étant elle-même abîmée dans le texte extrait.",
+      "quoted": "where [T/N] denotes the number of trading days in the sample"
+    },
+    {
+      "question": "Quelle série journalière sert à estimer sigma_t pour le S&P 500 (futures intraday agrégés, ou indice comptant 1953-1990), et la variance conditionnelle utilisée pour le jour t est-elle connue avant l'ouverture de t ?",
+      "resolution": null,
+      "quoted": "Given the relative success of the daily MA(1)-GARCH(1, 1) models in explaining the aggregation results for the interdaily frequencies in both markets, this appears to be a natural choice."
+    },
+    {
+      "question": "« central standard time » : l'horaire 8h30-15h15 suit-il l'heure d'été de Chicago (CDT en été) ou une heure standard fixe ?",
+      "resolution": null,
+      "quoted": "The price record covers the full trading day in the futures market from 8.30 a.m. (central standard time) to 3.15 p.m."
+    },
+    {
+      "question": "Le premier rendement de la séance (8h30-8h35, qui contient l'information de la nuit) est-il inclus dans le profil ?",
+      "resolution": "Non : il est supprimé ; le profil commence à 8h35.",
+      "quoted": "The first return for the trading day, i.e. from 8:30 to 8:35 a.m., constitutes another unusual time interval."
+    },
+    {
+      "question": "Les rendements après la clôture du marché comptant (15h00-15h15 Chicago) font-ils partie du profil ?",
+      "resolution": "Oui : les trois derniers rendements de 5 minutes sont gardés ; ils montrent une chute puis une remontée propres au marché à terme seul.",
+      "quoted": "The subsequent drop and rise over the last fifteen minutes corresponds to the post cash market trading on the CME"
+    },
+    {
+      "question": "Comment sont traités les intervalles manquants (suspensions de cotation) et la période du krach de 1987 ?",
+      "resolution": "Interpolation linéaire des prix, ce qui donne des rendements identiques sur les intervalles intermédiaires ; la période du 15 octobre au 13 novembre 1987 est exclue.",
+      "quoted": "excluding the period from October 15, 1987 through November 13, 1987"
+    },
+    {
+      "question": "Les suspensions hors krach : que valent les rendements des intervalles manquants ?",
+      "resolution": "Ils sont égaux entre eux, par interpolation linéaire des prix.",
+      "quoted": "In these instances the missing prices were determined by linear interpolation, leading to identical returns over each of the intermediate intervals."
+    },
+    {
+      "question": "Faut-il corriger les effets jour-de-la-semaine et jours fériés ?",
+      "resolution": "Le papier ne les corrige pas.",
+      "quoted": "we explicitly do not make any attempts to correct for the lower frequency interdaily patterns that also exist e.g. day-of-the-week and holiday effects"
+    },
+    {
+      "question": "Rendements absolus ou rendements au carré pour mesurer la volatilité ?",
+      "resolution": "Rendements absolus : les dépendances sont plus marquées pour |R| que pour R².",
+      "quoted": "Consistent with the findings of Granger and Ding (1996), informal investigations reveal that the dynamic dependencies are significantly more pronounced for the absolute as opposed to the squared sample returns."
+    },
+    {
+      "question": "La forme du profil dépend-elle du niveau de volatilité du jour ?",
+      "resolution": "Oui pour le S&P 500 : la branche droite du U monte parfois au-dessus de la gauche (forme en J), surtout les jours de forte volatilité ; d'où J = 1 dans le modèle de Fourier.",
+      "quoted": "Interestingly, this tendency appears to be concentrated on high volatility days."
+    },
+    {
+      "question": "Les rendements sont-ils ajustés de leur moyenne avant d'en prendre la valeur absolue ?",
+      "resolution": "Dans l'annexe B oui (moyenne d'échantillon) ; pour le filtrage non, le papier jugeant la différence immatérielle.",
+      "quoted": "Since the mean return is practically zero, this is immaterial."
+    },
+    {
+      "question": "Les données DM-$ sont-elles à l'heure GMT et couvrent-elles 24 heures ?",
+      "resolution": "Oui pour le change (GMT, 288 intervalles, week-end exclu) ; cela ne concerne pas le S&P 500, et aucun de nos instruments n'est le DM-$.",
+      "quoted": "All 288 intervals during the 24-hour daily trading cycle are used."
+    },
+    {
+      "question": "La fenêtre S&P 500 (8h35-15h15 Chicago, soit 9h35-16h15 New York si le décalage Chicago-New York est d'une heure) déborde de 15 minutes notre fenêtre US 09:30-16:00 : ces trois dernières barres appartiennent-elles à la cellule US ?",
+      "resolution": null,
+      "quoted": null
+    }
+  ],
+  "market": {
+    "studied": "Le contrat à terme sur l'indice S&P 500 au CME (barres de 5 minutes, 1986-1989, séance de jour) ; en parallèle le taux de change Deutsche Mark - dollar au comptant sur le marché interbancaire (1992-1993), qui n'est aucun de nos instruments.",
+    "quoted": "the Standard and Poor's 500 (S&P 500) composite stock index futures contract from January 2, 1986, through December 31, 1989, consisting of a total of 79,280 observations.",
+    "exact_roots": ["ES"],
+    "sessions": ["US"],
+    "sessions_quoted": "The price record covers the full trading day in the futures market from 8.30 a.m. (central standard time) to 3.15 p.m.",
+    "sessions_reason": null
+  }
+}

@@ -39,6 +39,15 @@ import pandas as pd
 
 from panel.panel import Panel
 
+# D50. Un score honnête bouge d'au plus ~4e-8 en relatif entre panel complet et
+# panel tronqué (bruit d'arrondi du recollement, mesuré sur les signaux du
+# 2026-10-03) ; les quatre tricheurs de `tainted.py` bougent de 5 % à 100 %.
+# Au-delà d'un millionième, un score qui change quand seule l'échelle des prix
+# passés change n'est pas reproductible : il est refusé.
+RELATIVE_TOLERANCE = 1e-6
+# Et l'ancien plancher absolu reste : sans lui, un score nul contre 1e-17
+# serait un écart relatif de 100 % dans une cellule dont la médiane vaut 0.
+
 
 @dataclass(frozen=True)
 class Divergence:
@@ -125,11 +134,20 @@ def check(
             left = expected.reindex(shared).to_numpy(dtype=float)
             right = observed.reindex(shared).to_numpy(dtype=float)
             gap = np.abs(left - right)
-            worst = int(np.argmax(gap)) if gap.size else 0
-            if gap.size and gap[worst] > 1e-12:
+            # D50 : l'écart se juge RELATIVEMENT à l'échelle du score. Le panel
+            # tronqué n'a pas les mêmes roulements futurs : ses prix passés sont
+            # les mêmes à un facteur près, et les rendements diffèrent d'environ
+            # 1e-15 en flottants. Un seuil absolu de 1e-12 refusait des signaux
+            # honnêtes dès qu'un calcul mal conditionné amplifiait ce bruit.
+            scale = float(np.nanmedian(np.abs(reference[cell].to_numpy(dtype=float))))
+            room = np.maximum(np.maximum(np.abs(left), np.abs(right)), scale)
+            relative = np.divide(gap, room, out=gap.copy(), where=room > 0)
+            worst = int(np.argmax(relative)) if relative.size else 0
+            if relative.size and relative[worst] > RELATIVE_TOLERANCE and gap[worst] > 1e-12:
                 divergences.append(Divergence(
                     cell, instant, "valeur",
                     f"le score du {shared[worst]} vaut {right[worst]:+.6g} sans le futur "
-                    f"et {left[worst]:+.6g} avec — écart {gap[worst]:.3g}",
+                    f"et {left[worst]:+.6g} avec — écart {gap[worst]:.3g}, "
+                    f"relatif {relative[worst]:.3g} (tolérance {RELATIVE_TOLERANCE:g}, D50)",
                 ))
     return divergences

@@ -40,7 +40,7 @@ input[type=search]:focus-visible,button:focus-visible,.row:focus-visible{outline
 .tile{background:var(--panel);border:1px solid var(--line);border-radius:8px;min-width:0;display:flex;flex-direction:column}
 .tile>header{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:14px 16px 10px;border-bottom:1px solid var(--line)}
 .tile>header h2{font:600 15px/1.2 var(--cond);margin:0;letter-spacing:.02em}
-.tile .body{padding:6px 0;max-height:70vh;overflow:auto}
+.tile .body{padding:6px 0}
 .empty{color:var(--muted);padding:14px 16px;margin:0;max-width:65ch}
 .row{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:9px 16px;border-bottom:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;width:100%;text-align:left;color:inherit;font:inherit}
 .row:hover{background:var(--sunk)}
@@ -110,33 +110,13 @@ a{color:var(--accent)}
   <header class="top">
     <div>
       <h1>Pupitre de la Fabrique</h1>
-      <p class="sub">Les hypothèses écrites avant toute mesure, et les IC que le harnais a inscrits au registre. Cette page recopie, elle ne calcule rien.</p>
+      <p class="sub">Les IC que le harnais a inscrits au registre. Un clic ouvre la mesure et l'hypothèse qui va avec, écrite avant elle. Cette page recopie, elle ne calcule rien.</p>
     </div>
     <div class="tools"><input id="q" type="search" placeholder="Filtrer : H02, momentum, NQ…" aria-label="Filtrer">
       <a class="nav" id="to-atlas" href="https://claude.ai/artifact/B5iiDPZ2227dDejE5azSBW" target="_blank" rel="noopener">Atlas du corpus →</a></div>
   </header>
   <div class="stats" id="stats"></div>
   <div class="mosaic">
-    <section class="tile" aria-labelledby="t-f">
-      <header><h2 id="t-f">Entonnoir de la chaîne</h2><span class="lbl">papier → signal → test</span></header>
-      <div class="funnel" id="funnel"></div>
-    </section>
-    <section class="tile" aria-labelledby="t-c">
-      <header><h2 id="t-c">Compteur de tests</h2><span class="lbl">le compte honnête</span></header>
-      <div class="pad" id="counter"></div>
-    </section>
-    <section class="tile" aria-labelledby="t-h">
-      <header><h2 id="t-h">Hypothèses</h2><span class="lbl" id="n-h"></span></header>
-      <div class="body" id="hyps"></div>
-    </section>
-    <section class="tile" aria-labelledby="t-x">
-      <header><h2 id="t-x">Écartés, périmés, insuffisants</h2><span class="lbl" id="n-x"></span></header>
-      <div class="body" id="exc"></div>
-    </section>
-    <section class="tile" aria-labelledby="t-q">
-      <header><h2 id="t-q">Quota</h2><span class="lbl" id="q-when"></span></header>
-      <div class="gauge" id="quota"></div>
-    </section>
     <section class="tile" aria-labelledby="t-i">
       <header><h2 id="t-i">IC mesurés</h2><span class="lbl" id="n-i"></span></header>
       <div class="body" id="ics"></div>
@@ -182,37 +162,12 @@ function stats() {
     (b.asked ? (b.error ? ' Base de recherche injoignable : morceaux non reliés.' : ' Citations reliées aux morceaux de la base.') : '');
 }
 
-/* ------------------------------------------------------------ hypothèses */
-function etatH(h) {
-  const c = [];
-  if (h.used_by.tests.length) c.push(['mesurée', 'ok']);
-  if (h.concordance) c.push([h.concordance.verdict === 'CONCORDANT' ? 'codage vérifié' : 'discordant',
-                            h.concordance.verdict === 'CONCORDANT' ? 'ok' : 'bad']);
-  if (h.used_by.lot) c.push(['lot 09', '']);
-  if (!h.used_by.tests.length) c.push(['pas encore mesurée', 'warn']);
-  return c;
-}
-function correspondH(h) {
-  if (!filtre) return true;
-  return [h.ref, h.title, h.origin, h.claim, (h.signals || []).join(' '), h.paper?.title]
-    .join(' ').toLowerCase().includes(filtre);
-}
-function listeH() {
-  const hs = DATA.hypotheses.filter(correspondH);
-  $('#n-h').textContent = `${hs.length} · ordre d'écriture`;
-  $('#hyps').innerHTML = hs.length ? hs.map((h, i) => `
-    <button class="row" data-h="${DATA.hypotheses.indexOf(h)}">
-      <span class="ref">${esc(h.ref)}</span>
-      <span class="t" title="${esc(h.title)}">${esc(h.title)}<br><span class="note">${esc(h.written || '')}${h.signals[0] ? ' · ' + esc(h.signals[0]) : ''}</span></span>
-      <span class="chips">${etatH(h).map(([t, k]) => `<span class="chip ${k}">${esc(t)}</span>`).join('')}</span>
-    </button>`).join('') : '<p class="empty">Aucune hypothèse ne correspond au filtre.</p>';
-  document.querySelectorAll('[data-h]').forEach(b => b.onclick = () => ouvrirH(DATA.hypotheses[+b.dataset.h]));
-}
-
 /* ------------------------------------------------------------------ IC */
 function correspondI(r) {
   if (!filtre) return true;
-  return [r.test_id, r.signal_id, r.hypothesis_ref, r.stage].join(' ').toLowerCase().includes(filtre);
+  const h = DATA.hypotheses.find(x => x.ref === r.hypothesis_ref);
+  return [r.test_id, r.signal_id, r.hypothesis_ref, r.stage, h?.title, h?.paper?.title, h?.claim]
+    .join(' ').toLowerCase().includes(filtre);
 }
 function listeI() {
   const rs = DATA.ics.filter(correspondI);
@@ -282,10 +237,10 @@ function ouAQuandH(h) {
   const lignes = WIN.map(w => `<dt>${WIN_FR[w]}</dt><dd class="mono">${esc(DATA.windows[w] || '')} (New York)</dd>`).join('');
   return `<dl class="kv"><dt>Actifs</dt><dd>${ASSETS.join(', ')} — les cellules retenues de la grille (D01 §3)</dd>${lignes}
     <dt>Horizon</dt><dd>${esc(h.horizon || '30 minutes')}</dd><dt>Univers du papier</dt><dd>${esc(h.universe || '—')}</dd></dl>
-    ${nb ? '<p class="note">La répartition actif × fenêtre de chaque mesure est dans la mosaïque des IC.</p>' : ''}`;
+    ${nb ? '<p class="note">La répartition actif × fenêtre de la mesure est plus haut, dans « Par actif et par fenêtre ».</p>' : ''}`;
 }
 
-function ouvrirH(h) {
+function blocsH(h) {
   const p = h.paper || {};
   const papier = p.title ? `<dl class="kv"><dt>Titre</dt><dd>${esc(p.title)}</dd><dt>Auteurs</dt><dd>${esc(p.authors || '—')}</dd>
     <dt>Année</dt><dd>${esc(p.year || '—')}</dd>${p.venue ? `<dt>Revue</dt><dd>${esc(p.venue)}</dd>` : ''}
@@ -310,8 +265,7 @@ function ouvrirH(h) {
   const qui = `<dl class="kv"><dt>Lot</dt><dd>${esc(h.used_by.lot || '—')}</dd><dt>Signal</dt><dd class="mono">${esc(h.signals.join(', ') || '—')}</dd>
     <dt>Module</dt><dd class="mono">${esc(h.module || '—')}</dd><dt>Signe attendu</dt><dd class="mono">${esc(h.expected_sign ?? '—')}</dd>
     <dt>Mesures</dt><dd>${tests.length ? tests.length + ' ligne(s) au registre' : 'aucune'}</dd></dl>`;
-  tiroir(`Hypothèse ${h.ref} · écrite le ${h.written || '—'}`, h.title,
-    sec('Pourquoi — ce que le papier affirme', para(h.claim) || para(h.origin)) +
+  return sec('Pourquoi — ce que le papier affirme', para(h.claim) || para(h.origin)) +
     sec('Le papier', papier) +
     sec('Univers de la mesure', univH(h)) +
     sec('Où et quand', ouAQuandH(h)) +
@@ -322,8 +276,7 @@ function ouvrirH(h) {
     sec(`Passages du papier utilisés (${h.quotes.length})`, cites || '<p class="note">Aucune citation (hypothèse sans fiche).</p>') +
     sec(`Morceaux de la base qui les contiennent (${h.chunks.length})`, morceaux) +
     sec('Qui s\'en sert', qui) +
-    sec('Le texte de l\'hypothèse', `<pre class="wrap">${md(h.markdown)}</pre>`) +
-    sec('Le code du signal', h.code ? `<p class="note">${esc(h.module)} · version actuelle</p><pre>${esc(h.code)}</pre>` : ''));
+    sec('Le texte de l\'hypothèse', `<pre class="wrap">${md(h.markdown)}</pre>`);
 }
 
 function heat(r) {
@@ -407,84 +360,13 @@ function ouvrirI(r) {
     sec('Coûts', couts(r)) +
     (r.report?.warnings?.length ? sec('Avertissements', `<ul class="plain">${r.report.warnings.map(w => `<li>${esc(w)}</li>`).join('')}</ul>`) : '') +
     (r.report?.render ? sec('Le rapport tel que le harnais l\'a rendu', `<pre>${esc(r.report.render)}</pre>`) : '') +
-    sec('Le code du signal', code ? `<p class="note">${esc(code.path)} · ${esc(code.when)}</p><pre>${esc(code.source)}</pre>` : '<p class="note">Module introuvable.</p>'));
-}
-
-/* ------------------------------------------------------------- écartés */
-function listeX() {
-  const xs = (DATA.excluded || []).filter(x => !filtre || [x.kind, x.id, x.why].join(' ').toLowerCase().includes(filtre));
-  $('#n-x').textContent = `${xs.length}`;
-  $('#exc').innerHTML = xs.length ? xs.map(x => `
-    <button class="row" data-x="${DATA.excluded.indexOf(x)}">
-      <span class="kind">${esc(x.kind)}</span>
-      <span class="t" title="${esc(x.id)}">${esc(x.id)}</span><span></span>
-    </button>`).join('') : '<p class="empty">Rien d\'écarté ni de périmé.</p>';
-  document.querySelectorAll('[data-x]').forEach(b => b.onclick = () => {
-    const x = DATA.excluded[+b.dataset.x];
-    tiroir(x.kind, x.id, sec('Pourquoi', para(x.why || 'Raison non écrite.')) +
-      sec('Détail', `<dl class="kv">${Object.entries(x.detail || {}).map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v ?? '—')}</dd>`).join('')}</dl>`));
-  });
-}
-
-/* ------------------------------------------------------------ entonnoir */
-function entonnoir() {
-  const f = DATA.funnel || [];
-  const max = Math.max(...f.map(x => x.n || 0), 1);
-  $('#funnel').innerHTML = f.map(x => {
-    const w = x.n == null ? 0 : Math.max(0.6, Math.log10(1 + x.n) / Math.log10(1 + max) * 100);
-    return `<div class="fstep" title="${esc(x.note || '')}"><span>${esc(x.label)}</span>
-      <span class="track"><i style="left:0;width:${w}%;background:${x.warn ? 'var(--warn)' : 'var(--accent)'}"></i></span>
-      <span class="v">${x.n == null ? '—' : x.n.toLocaleString('fr-FR')}</span></div>`;
-  }).join('') + '<p class="note">Échelle logarithmique : chaque étape se lit, même quand elle est cent fois plus petite que la précédente. Survoler une étape donne sa source.</p>';
-}
-
-/* ------------------------------------------------------ compteur de tests */
-function compteur() {
-  const c = DATA.counter || {};
-  const lignes = Object.entries(c.by_stage || {}).map(([k, v]) =>
-    `<tr><td>${esc(k)}</td><td>${v.counted}</td><td>${v.calibrations}</td><td>${v.stale}</td></tr>`).join('');
-  const bh = c.bh || [];
-  $('#counter').innerHTML = `
-    <dl class="kv"><dt>Tests comptés</dt><dd class="mono"><b>${c.counted ?? '—'}</b> — le dénominateur de la phase 15</dd>
-      <dt>Lignes de calibration</dt><dd class="mono">${c.calibrations ?? '—'} (hors décompte)</dd>
-      <dt>Périmées</dt><dd class="mono">${c.stale ?? '—'} (harnais antérieur, D05)</dd>
-      <dt>Harnais courant</dt><dd class="mono">${esc(DATA.harness)}</dd></dl>
-    <div class="scroll"><table><thead><tr><th>étape</th><th>comptés</th><th>calibr.</th><th>périmés</th></tr></thead><tbody>${lignes}</tbody></table></div>
-    ${bh.length ? `<span class="lbl">Le seuil de chaque lot (Benjamini–Hochberg)</span>
-    <div class="scroll"><table><thead><tr><th>lot</th><th>taille</th><th>hyp. écrites</th><th>t de la meilleure</th><th>t de la dernière</th></tr></thead><tbody>
-    ${bh.map(b => `<tr><td>${esc(b.lot)}</td><td>${b.n}</td><td>${b.written}</td><td>${b.t_first}</td><td>${b.t_last}</td></tr>`).join('')}</tbody></table></div>
-    <p class="note">Il n'y a pas de plafond : de nouvelles hypothèses entrent dans de nouveaux lots. Chaque lot est fermé à sa déclaration, parce que la correction BH n'est valide que sur un ensemble fixé avant la mesure ; plus un lot est grand, plus son premier seuil est sévère. Aucun IC n'est calculé ici : ce sont les seuils de D25, q = 0,10.</p>` : ''}`;
-}
-
-/* ----------------------------------------------------------------- quota */
-function quota() {
-  const qs = DATA.quotas || [];
-  $('#q-when').textContent = `${qs.length} Claude`;
-  if (!qs.length) { $('#quota').innerHTML = '<p class="empty">Aucun relevé. Chaque Claude inscrit le sien : python scripts/quota.py --nom &lt;nom&gt; --fenetre … --semaine …</p>'; return; }
-  const barre = (label, pct, reset) => {
-    const col = pct >= 85 ? 'var(--neg)' : pct >= 60 ? 'var(--warn)' : 'var(--pos)';
-    return `<div class="gline"><span class="lbl">${esc(label)}${reset ? ' · remise à zéro ' + esc(String(reset).replace('T', ' ').slice(0, 16)) + ' UTC' : ''}</span>
-      <span class="track"><i style="left:0;width:${Math.min(100, pct)}%;background:${col}"></i></span>
-      <span class="mono">${pct} % utilisés · ${Math.max(0, 100 - pct)} % restants</span></div>`;
-  };
-  const conv = (q, cle, pct) => {
-    const c = q.calibration?.[cle + '_pct_par_million'];
-    if (!c) return null;
-    const tokens = Math.max(0, 100 - pct) / c * 1e6;
-    return Object.entries(q.costs).map(([k, v]) => `<tr><td>${esc(k)}</td><td>${Math.floor(tokens / v).toLocaleString('fr-FR')}</td></tr>`).join('');
-  };
-  $('#quota').innerHTML = qs.map(q => {
-    const r = q.last;
-    const cf = conv(q, 'fenetre', r.fenetre), cs = conv(q, 'semaine', r.semaine);
-    const table = (cf || cs) ? `<div class="scroll"><table><thead><tr><th>ce qui tient encore</th><th>${cs ? 'cette semaine' : 'fenêtre de 5 h'}</th></tr></thead><tbody>${cs || cf}</tbody></table></div>
-      <p class="note">Conversion mesurée sur ${q.n_releves} relevés : ${q.calibration.semaine_pct_par_million ? q.calibration.semaine_pct_par_million.toFixed(2) + ' % de la semaine par million de tokens' : ''}. Un papier codé = une fiche du lot.</p>`
-      : `<p class="warnbox">Conversion en papiers à calibrer : elle se mesure au premier groupe de travail (relevé avant, relevé après avec --depense). Aucun chiffre n'est supposé.</p>`;
-    return `<div class="gauge" style="padding:0;border-bottom:1px solid var(--line);padding-bottom:12px"><span class="lbl" style="color:var(--ink)">${esc(q.name)} · relevé ${esc((r.at || '').replace('T', ' '))} UTC</span>
-      ${barre('Fenêtre de 5 heures', r.fenetre, r.reset_fenetre)}${barre('Semaine', r.semaine, r.reset_semaine)}${table}</div>`;
-  }).join('') + '<p class="note">Un relevé par compte : les sessions d\'un même compte partagent son quota. Le tutoriel interdit de lancer un groupe au-delà de 85 % de la fenêtre de 5 heures. Les relevés ne se mettent pas à jour seuls.</p>';
+    sec('Le code du signal', code ? `<p class="note">${esc(code.path)} · ${esc(code.when)}</p><pre>${esc(code.source)}</pre>` : '<p class="note">Module introuvable.</p>') +
+    (h ? `<section class="d"><span class="lbl">L'hypothèse qui va avec · écrite le ${esc(h.written || '—')}, avant la mesure</span>
+      <h3 style="margin:0">${esc(h.ref)} — ${esc(h.title)}</h3></section>` + blocsH(h)
+       : sec('L\'hypothèse qui va avec', '<p class="warnbox">Hypothèse introuvable dans hypotheses/.</p>')));
 }
 
 /* ---------------------------------------------------------------- départ */
-$('#q').addEventListener('input', e => { filtre = e.target.value.trim().toLowerCase(); listeH(); listeI(); listeX(); });
-stats(); listeH(); listeI(); listeX(); entonnoir(); compteur(); quota();
+$('#q').addEventListener('input', e => { filtre = e.target.value.trim().toLowerCase(); listeI(); });
+stats(); listeI();
 </script>

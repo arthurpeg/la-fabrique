@@ -161,6 +161,10 @@ fichier entier, à partir de la seule consigne, mêmes règles. » Puis `--recor
 et `--judge` à nouveau. **Trois essais au plus** ; au troisième refus, le
 papier est en échec, avec le dernier verdict, dans le compte rendu.
 
+Une fiche verte **se verse aussitôt dans la base**, qui fait foi (`D44`) :
+
+    uv run python corpus/fiches_store.py --pousser
+
 Une fiche verte passe ensuite à `scripts/CODAGE-DES-SIGNAUX.md` : recette,
 deux codages, double codage (`D34`).
 

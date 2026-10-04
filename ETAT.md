@@ -129,43 +129,7 @@ puis mesurée — la forme en U de la volatilité intra-journalière est retrouv
 **chaîne de données** et la discipline de mesure, **pas le harnais d'IC**, qui
 reste garanti par sa seule calibration à la main (porte 03) — `D13` § Pourquoi.
 
-**Décision la plus récente :**
-`decisions/DECISION-39-hypotheses-de-synthese.md` — une hypothèse peut naître
-de plusieurs papiers, reliés par les embeddings de leurs fiches.
-**Une seule version**, choisie **avant toute mesure** : grappes au-delà d'un
-cosinus de 0,80, et le seuil fixé avant de les lire.
-**Corrigé le 2026-09-30** : ce champ annonçait encore `D36` alors que `D37`, `D38`,
-`D39` — toutes du 2026-09-30 — et `D40` avaient été prises depuis. Le champ est
-recopié tel quel par `wiki/update_hot.py` dans `wiki/hot.md`, qu'une session
-froide lit avant tout le reste : un pointeur faux ici se propage.
-`scripts/grappes.py` vectorise chaque fiche sur son titre, son affirmation, sa
-construction, son univers et son horizon ; les grappes sont les composantes
-connexes au-delà du seuil, **fixé avant de les lire** (88ᵉ centile des
-similarités entre paires, médiane 0,756), recoupées plus haut au-delà de
-6 fiches. **8 grappes sur 51 fiches.** La même sortie donne à chaque fiche ses
-cinq voisines : la mémoire sémantique du critique.
-`scripts/synthese.py` et le sous-agent `fabrique-synthese` : une session isolée
-lit les fiches d'une grappe, **aucun résultat**, et écrit une fiche au schéma de
-`D14` plus un bloc `synthesis`. **Une seule version**, choisie **avant toute
-mesure** dans cet ordre — accord entre papiers, transposabilité à nos neuf
-futures, parcimonie, traçabilité : mesurer des variantes pour garder la
-meilleure serait choisir sur le résultat (invariants III et IV, `D28`), et
-déclarer plusieurs variantes durcirait le seuil de tout le lot.
-Le validateur exige que chaque citation soit recopiée d'une fiche source et se
-retrouve **à la lettre** dans le texte d'au moins un papier source. Ensuite,
-c'est la chaîne ordinaire : `corpus/fiches_synthese/`, la recette sur les textes
-de toutes les sources, le marché (`D38`), les deux codeurs, le double codage
-(`D34`). Première synthèse validée : `synthese-g-a9d7ec`.
-**Une synthèse est un test de plus**, et corrélée à ses sources si elles ont
-aussi leur hypothèse : la matrice de corrélation du lot (`D25`) le mesure.
-**Les trois autres du 2026-09-30, à lire avec elle :** `D37` (contrats micro
-partout où Lucid en propose, frais rapportés au contrat exécuté — harnais
-`94b495fa7525d3b8`), `D38` (chaque hypothèse se mesure sur le marché de son
-papier, un seul test ; un papier dont le marché nous manque est écarté **avant**
-codage), et `D40` (datée du 2026-09-29, arrivée par la fusion du 2026-09-30 :
-ce qu'une hypothèse du lot contient et qui la juge).
-
-**Décision précédente :**
+**Décision la plus récente :** `decisions/DECISION-51-ancrage-obligatoire.md` (2026-10-03) — tout score se pose à l'ancre de `_common.run`. Avant elle, `D50` (S3 relatif à l'échelle du score) et `decisions/DECISION-49-l-horizon-du-signal.md` (2026-10-03) — un signal se juge et se compare à son horizon (hypothèse, sinon fiche), plus à 30 barres. Avant elle :
 `decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un
 **critère, pas un nombre**. `D25` engageait 50 signaux, chiffre écrit quand le
 corpus portait 17 fiches ; il en porte 51 et le moissonné est épuisé. Le lot est
@@ -357,6 +321,23 @@ python scripts/gate_07.py      # G1 = G2 = G3 = G4 = 0
 python scripts/gate_08.py      # 1 signal, 6/6, aucune retouche
 ```
 
+### La base fait foi, et se cherche par le sens — `D44` à `D46`, 2026-10-01/02
+
+- **Fiches** : les 52 sont dans la table `fiches` (`D44`) ; les dossiers locaux
+  en sont le miroir (`corpus/fiches_store.py --etat | --tirer | --pousser`).
+- **Embeddings** : les 145 356 morceaux sont vectorisés, aucun ne manque.
+- **Index** : `chunks_embedding_ivfflat` (migration 007, `D46`), le HNSW ne se
+  construisant pas sur la petite instance. À reconstruire après une grosse
+  ingestion : `python vectordb/index_morceaux.py --reconstruire`.
+- **Voisins** (`D45`) : `python scripts/voisins.py <fiche_id>` écrit
+  `corpus/dossiers/<fiche_id>.{json,md}`, les papiers proches dans toute la
+  base, sans hiérarchie d'origine. **Reste ouvert** : la synthèse écrite à
+  partir d'un dossier (comment vérifier une citation d'un voisin sans fiche).
+- **Réseau** : le port 5432 est bloqué sur le wifi de l'université ; tout ce
+  qui précède passe par l'API (`SUPABASE_URL`, `SUPABASE_SECRET_KEY`) ou par
+  l'outil MCP Supabase. Ne rien lancer de long dans l'éditeur SQL : il coupe à
+  ~1 min et la mémoire de maintenance y vaut 32 Mo.
+
 ### Trois outils de confort — le 2026-09-30
 
 ```
@@ -391,9 +372,54 @@ Aucun signal n'entre plus dans un lot sans **recette** (`scripts/recette.py`),
 les scores). La boucle complète est dans `scripts/CODAGE-DES-SIGNAUX.md`.
 Porte 09, `measure_lot.py` et `hypotheses_lot.py` l'exigent.
 
-**Lot `LOT-09` : 1 fiche vérifiée sur 41** —
-`baltussen-2021-hedging-demand-intraday-momentum` (ρ 1,000). Les 40 autres
-attendent recette et deux codages ; environ 325 000 tokens par fiche.
+**Lot `LOT-09` : 1 fiche vérifiée sur 36** (le 2026-10-03) —
+`baltussen-2021-hedging-demand-intraday-momentum` (ρ 1,000). **Cinq écartées
+avant mesure le 2026-10-03** : andersen-1997, bitcoin-is-not-the-new-gold,
+bitcoin-intraday, boyarchenko-2023 (concordance, deux tours) et
+bollerslev-2018 (juge). 35 attendent encore recette et deux codages.
+
+**À TRANCHER PAR L'OPÉRATEUR avant de continuer sur des fiches sans signal de
+rendement** (`F62`, avis `fabrique-critique` du 2026-10-03, À AMENDER) :
+`D42` met la transposition dans l'hypothèse, `D34` code à l'aveugle depuis le
+papier ; ces fiches sortent donc par la concordance, à ~650 000 tokens pour
+deux tours. Options, par décision écrite : (a) garder, en connaissant le coût ;
+(b) une étape isolée qui spécifie la transposition (grandeur, ancrage) pour
+les deux codeurs ; (c) un seul tour pour ces fiches. ~~**Et un `todo`** : la
+consigne impose `horizon_bars: int = 30`, que `S5` refuse selon qu'un `30`
+traîne dans la recette (`L34`) — signature sans défaut, par décision.~~
+**Fait le 2026-10-03, `D49`** : signature sans défaut ; le juge et le double
+codage appellent le signal à l'horizon de son hypothèse, sinon de sa fiche
+(`scripts/horizon_signal.py`), et un double codage fait à un autre horizon
+que l'hypothèse ne vaut plus pour le lot.
+~~**Et une question** : le témoin bollerslev a été refusé `S3` sur des écarts de
+1e-12 à 1e-4 (régression mal conditionnée sur clôtures recollées) — bruit
+flottant ou vraie fuite, `S3` ne le distingue pas.~~ **Tranché le 2026-10-03,
+`D50`** : c'était l'arrondi du recollement (prix passés identiques à un facteur
+près). `S3` juge désormais l'écart relativement à l'échelle du score (1e-6), en
+gardant le plancher de 1e-12 ; la porte 05 attrape les quatre tricheurs aux
+mêmes sondes. Bollerslev, rejugé, est vert, mais son tour 2 reste DISCORDANT
+(ρ 0,725, couverture 0,184) : son écart tient, pour la concordance.
+**Constat du 2026-10-03, à trancher par l'opérateur** : andersen, bitcoin-gold
+et bollerslev concordent sur les instants communs (ρ 1,000, 1,000, 0,725) et
+échouent sur la **couverture**. Un codeur note une fois par séance, à l'ancre
+de `_common.run`, l'autre à chaque barre ou sur d'autres cellules. ~~Rendre
+l'ancrage par `_common.run` obligatoire dans la consigne, quand la fiche ne
+dit rien, demanderait une décision (suggestion 3 de `fabrique-critique`) ;
+baisser le seuil de couverture serait `L28`.~~ **Fait, `D51`** : tout score se
+pose à l'ancre de `_common.run`, vérifié sur les données (`S1`, option
+`--ancrage` du juge). Ça règle le cas andersen (instant), pas les cas
+bitcoin-gold et bollerslev (cellules et séances choisies), qui restent ouverts.
+~~**PANNE ouverte le 2026-10-03 : `verifier_tout.py` rend 1 PANNE, la porte 08.**~~
+**Réparée le même jour (`D49` § Journal)** : la porte juge contre fiche +
+recette, à l'horizon du signal, dans tous les dossiers de fiches — FRANCHIE,
+6/6. Énoncé d'origine :
+`scripts/gate_08.py` rejuge tout `signals/` **contre la fiche seule** — sans
+les valeurs de recette que `D34` ajoute à `S5` — et ne cherche pas dans
+`corpus/fiches_harvest/`. Les modules de cette session, verts à
+`code_signal.py --judge`, y tombent : andersen et bollerslev en `S5`, les deux
+bitcoin « aucune fiche de ce nom ». Rien n'est retouché ; aligner la porte 08
+sur `D34` (ou la restreindre aux fiches du jugement d'origine) est une
+décision d'outillage qui revient à l'opérateur.
 
 ```
 python scripts/hypotheses_lot.py --status   # où en est chaque fiche du lot

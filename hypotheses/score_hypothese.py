@@ -340,6 +340,8 @@ def juger_ensemble(
         if m and m.group(1) in REFS_AVANT_D33:
             continue  # écrite avant `D40`, hors de son périmètre
         ref, fiche_id, f = juger_fichier(chemin, fiches, signes_signaux)
+        if fiche_id is not None and fiche_id in ecartees_du_lot():
+            continue  # D41 : écartée avant mesure, son hypothèse reste pour mémoire
         if fiche_id is not None and fiche_id not in du_lot:
             fautes.append(
                 f"B1 {chemin.name} : la fiche `{fiche_id}` n'est pas au lot — une "
@@ -370,6 +372,19 @@ def juger_ensemble(
                 "(invariant IV)"
             )
     return liens, fautes
+
+
+def ecartees_du_lot() -> set[str]:
+    """Les fiches sorties du lot AVANT mesure (`D34`, `D38`), écart daté et motivé.
+
+    `D41` : une hypothèse au format de `D40` peut précéder le codage ; si la fiche
+    s'écarte ensuite (codage discordant, marché absent), son hypothèse n'est ni
+    supprimée ni réécrite — elle reste, et ne compte plus dans la bijection `B1`.
+    """
+    if not LOT_FILE.is_file():
+        return set()
+    lot = json.loads(LOT_FILE.read_text(encoding="utf-8"))
+    return {e["fiche_id"] for e in lot.get("ecartees_codage") or []}
 
 
 def fiche_ids_du_lot() -> list[str]:

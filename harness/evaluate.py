@@ -19,22 +19,33 @@ import pandas as pd
 
 from harness import controls, registry
 from harness.costs import costs_for
-from harness.metric import CellIC, cell_ic, forward_returns, record_pooled
+from harness.metric import CellIC, bars_to_close, cell_ic, forward_returns, record_pooled
 from harness.report import ICReport, effective_breadth
 from panel.panel import Panel
 from panel.sessions import session_date, window_labels
 
+# D43 : "to the close of the window" -- a variable horizon, from each scored bar
+# to the last bar of its window and session.
+HORIZON_TO_CLOSE = "cloture"
 
-def horizon_to_bars(horizon: str | int) -> int:
-    """Bars are one minute here, so a horizon in minutes is a horizon in bars."""
+
+def horizon_to_bars(horizon: str | int) -> int | None:
+    """Bars are one minute here, so a horizon in minutes is a horizon in bars.
+
+    `None` for HORIZON_TO_CLOSE: the horizon is not a number of bars, it ends at
+    the close of each window.
+    """
     if isinstance(horizon, int):
         return horizon
     text = str(horizon).strip().lower()
+    if text == HORIZON_TO_CLOSE:
+        return None
     if text.endswith("min"):
         return int(text[:-3])
     if text.endswith("h"):
         return int(text[:-1]) * 60
-    raise ValueError(f"unreadable horizon {horizon!r}: expected '30min', '2h' or a number of bars")
+    raise ValueError(f"unreadable horizon {horizon!r}: expected '30min', '2h', "
+                     f"'{HORIZON_TO_CLOSE}' or a number of bars")
 
 
 def evaluate(
@@ -76,6 +87,12 @@ def evaluate(
     )
 
     cells: list[CellIC] = []
+    # D43 : for the horizon to the close, each cell's horizon is the median number
+    # of bars between its scored bars and the close of their window. The overlap
+    # deflation then uses the LARGEST of those medians -- the direction that
+    # deflates more, never the one that flatters.
+    to_close = bars is None
+    cell_bars: list[int] = []
     # The cell's median RAW price over the evaluated sample: the reference the
     # fees and the slippage are converted to bp at (D35), as the floor was.
     prices: dict[tuple[str, str], float] = {}
@@ -92,10 +109,20 @@ def evaluate(
             prices[(root, window)] = float(raw[mask].median())
             returns = forward_returns(close, sessions[mask], labels[mask], bars)
             aligned = scores[(root, window)].reindex(close.index)
-            measured = cell_ic(aligned, returns, close.index, root, window, bars, ticket)
+            horizon_here = bars
+            if to_close:
+                remaining = bars_to_close(sessions[mask], labels[mask])
+                scored = aligned.dropna().index
+                rest = remaining.reindex(scored).dropna()
+                rest = rest[rest > 0]
+                horizon_here = int(rest.median()) if len(rest) else 1
+                cell_bars.append(horizon_here)
+            measured = cell_ic(aligned, returns, close.index, root, window, horizon_here, ticket)
             if measured is not None:
                 cells.append(measured)
 
+    if to_close:
+        bars = max(cell_bars) if cell_bars else 1
     instruments = len(panel.universe())
     breadth = effective_breadth()
     settled = record_pooled(

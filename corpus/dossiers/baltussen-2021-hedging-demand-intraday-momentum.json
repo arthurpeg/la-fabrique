@@ -1,0 +1,171 @@
+{
+ "generated": "2026-10-02T17:57+00:00",
+ "seed": {
+  "fiche_id": "baltussen-2021-hedging-demand-intraday-momentum",
+  "title": "Hedging demand and market intraday momentum",
+  "representation": "Hedging demand and market intraday momentum \nLe rendement de la derniere demi-heure avant la cloture (r_LH) est positivement predit par le rendement du reste de la meme journee (r_ROD : de la cloture de la veille jusqu'a 30 minutes avant la cloture), sur plus de 60 futures d'actions, d'obligations, de matieres premieres et de devises, de decembre 1974 a mai 2020. Ce predicteur r_ROD bat le predicteur r_ONFH (nuit + premiere demi-heure) de Gao et al. (2018), surtout lorsque les deux sont de signes opposes. La cause avancee est la demande de couverture des participants en gamma negatif (teneurs de marche d'options, ETF a effet de levier), qui doivent acheter quand le prix monte et vendre quand il baisse, et qui concentrent l'essentiel de leur couverture avant la cloture. Corollaire teste : la pression de prix etant transitoire, r_LH se retourne sur les un a trois jours suivants. \nA chaque date t et pour chaque contrat, decouper la journee de negociation en cinq intervalles allant de la cloture du jour t-1 a la cloture du jour t, sur les heures 'communes' du marche sous-jacent : la nuit (ON), la premiere demi-heure (FH), le milieu de journee (M), l'avant-derniere demi-heure (SLH) et la derniere demi-heure (LH). Le signal est le rendement du reste de la journee, r_ROD,t = P(c-30,t) / P(c,t-1) - 1 : le rendement d'un achat a la cloture de la veille et d'une vente 30 minutes avant la cloture du jour t. Il se lit a c-30, n'utilise que des prix anterieurs a cet instant, et predit le rendement des 30 dernieres minutes, r_LH. Il s'evalue de deux manieres : en regression, r_LH,t = a + b_ROD * r_ROD,t + e_t, avec un R2 hors echantillon contre la moyenne historique recursive (fenetre extensible, minimum 500 observations) ; en strategie, par une position binaire prise a c-30 et tenue jusqu'a la cloture, longue si r_ROD,t est positif, courte sinon. Les predicteurs concurrents se construisent sur le meme decoupage : r_ONFH,t = P(o+30,t)/P(c,t-1) - 1, r_M,t = P(c-60,t)/P(o+30,t) - 1, r_SLH,t = P(c-30,t)/P(c-60,t) - 1. Aucun parametre n'est ajuste, aucune donnee exterieure aux prix intraday n'entre dans le calcul ; seules les heures d'ouverture et de cloture retenues pour chaque marche, et la regle de roll du contrat le plus liquide, sont des choix prealables. \n30 minutes"
+ },
+ "model": "BAAI/bge-base-en-v1.5",
+ "neighbors": [
+  {
+   "paper_id": "d024c572-eeba-4ef5-b223-62767f433a4b",
+   "title": "Do designated market makers provide liquidity during downward extreme price movements?",
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "other",
+     "page": 40,
+     "similarity": 0.7783,
+     "content": "-1.27) (-2.29) (-0.95) (-0.00) (4.09)\nRecovery 0.011 -0.042 0.028 -0.015 0.013\n(0.47) (-1.40) (1.44) (-0.59) (0.85)\nBid-ask spread 0.006 -0.007 -0.004 0.003 0.003\n(0.65) (-0.71) (-0.57) (0.27) (0.48)\nLog(euro volume) -0.023 -0.143*** -0.022 0.047** 0.102***\n(-1.29) (-7.61) (-1.14) (2.33) (4.54)\nReturn 0.031 -0.076*** 0.006 0.031** -0.034***\n(1.09) (-3.64) (0.61) (2.15) (-3.26)\n¯R2 0.008 0.070 0.022 0.031 0.039\nNote. We present the results of the V AR in equation ( 9). The model is estimated separately\nfor unsystematic drift burst EPMs in Panel A and systematic ones in Panel B. The dependent\nvariable is the 10-second trading imbalance of the trader category indicated by the column label.\nThe explanatory variables “Pre-event”, “Early drop”, “Interme diate drop”, “Late drop”, and\n“Recovery” refer to phase dummies of a drift burst EPM. “Bid-ask spread” is the quoted spread\n(in percent), “Log(euro volume)” is the log-euro volume, and “Ret urn” is the contemporaneous\nstock return. We also include stock ﬁxed eﬀects. The non-dummy v ariables are standardized\nat the stock level. The coeﬃcient estimates of lagged trading imbalan ces are not reported for\nbrevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust standard errors\nclustered at the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01. nObs\n= 342,032 in Panel A and nObs = 79,404 in Panel B.\n39"
+    },
+    {
+     "section": "other",
+     "page": 63,
+     "similarity": 0.771,
+     "content": "* 0.0 48** -0.042** 0.068*** 0.061**\n(0.09) (1.21) (-1.66) (-6.45) (3.79) (2.72) (-2.65) (3.37) (2.13)\nReturn -0.084*** -0.072*** -0.266*** -0.227*** -0.077*** -0.135*** -0.077*** -0.099*** -0.074***\n(-9.81) (-8.64) (-14.22) (-10.36) (-9.62) (-12.24) (-8.04 ) (-7.32) (-6.60)\n¯R2 0.014 0.013 0.095 0.091 0.041 0.056 0.015 0.053 0.036\nNote. We present the results of the V AR in equation ( 9). The model is estimated separately for unsystematic drift burst\nEPMs in Panel A and systematic ones in Panel B. The dependent varia ble is the 10-second passive trading imbalance of\nthe trader category indicated by the column label. The explanatory variables “Pre-event”, “Early drop”, “Intermediate\ndrop”, “Late drop”, and “Recovery” refer to phase dummies of a drift burst EPM. “Bid-ask spread” is the quoted spread (in\npercent), “Log(euro volume)” is the log-euro volume, and “Retur n” is the contemporaneous stock return. We also include\nstock ﬁxed eﬀects. The non-dummy variables are standardized at the stock level. The coeﬃcient estimates of lagged trading\nimbalances are not reported for brevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust standard\nerrors clustered at the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01. nObs = 342,032 in Panel A\nand nObs = 79,404 in Panel B.\nx"
+    }
+   ],
+   "similarity": 0.7733
+  },
+  {
+   "paper_id": "1a748ab1-5296-4e4d-b245-dddfe8dd4965",
+   "title": "A tug of war: Overnight versus intraday expected returns",
+   "fiche_id": "lou-2019-tug-of-war",
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 3,
+     "similarity": 0.7699,
+     "content": "194 D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 \nwords, a positive risk premium is earned overnight for \nthe side of the trade that might naturally be deemed as \nriskier. Our results thus reveal that these classic asset pric- \ning anomalies are in fact primarily intraday anomalies in \nthe sense that their overnight returns arguably make much \nmore intuitive sense. Unfortunately, our tests are unable to \nlink this cross-sectional variation in average overnight re- \nturns to a formal model of risk, but we hope that this is a \npromising avenue for future research. \nWe next exploit these strategy-speciﬁc tugs of war to \nreveal the relative attractiveness of these strategies going \nforward. We motivate this approach with intuition from \na simple model of limits of arbitrage, based on Gromb \nand Vayanos (2010) , that we provide in the Internet Ap- \npendix. As is typically the case in that class of models, \nsince arbitrageurs are risk-averse, demand by uninformed \ninvestors has price impact and results in abnormal trading \nproﬁts going forward for those arbitrageurs. In particular, \nthe larger the uninformed demand, the larger the abnor- \nmal trading proﬁts for arbitrageurs. \nOur insight is simply that different times of the trad- \ning day will naturally have differing levels of participation \nby arbitrageurs and that these differences should reveal \nthe magnitude of the uninformed trading demand, all else \nequal."
+    },
+    {
+     "section": "results",
+     "page": 21,
+     "similarity": 0.7685,
+     "content": "enerating a tug of war \nfrom intraday to overnight. Speciﬁcally, for those times or \nthose stocks where the institutional holders have a rela- \ntively strong preference to trade against momentum, we \nﬁnd that momentum proﬁts are higher overnight, partially \nrevert intraday, and are larger close-to-close. \nThough our ﬁndings originate from high-frequency de- \ncompositions of returns, they have important repercus- \nsions for investors. For one thing, given the large eco- \nnomic magnitudes of our results, it is possible that trad- \ning strategies going into and out of stocks even at this \nhigh frequency may be proﬁtable after transaction costs \nfor execution-savvy short-term investors. This claim seems \nparticularly likely for trend-following strategies we have \nstudied that invest in highly liquid equity index futures. \nIgnoring that possibility, and focusing on long-term in- \nvestors, institutions trading the anomalies at a lower fre- \nquency can nonetheless beneﬁt from our results by using \nthem to optimally time their orders—at the open vs. close \nof trading, depending on the strategy they are pursuing. \nFinally, our ﬁnding that our tug of war measure can guide \nstrategy timing should be of broad interest to long-horizon \ninvestors exploiting anomalies. \nPerhaps the ultimate beneﬁt of our decomposition ex- \nercise for long-horizon investors and researchers alike is \nto shed light on the causes of these anomalies—to distin- \nguish among, for example, risk-based vs."
+    }
+   ],
+   "similarity": 0.7684
+  },
+  {
+   "paper_id": "9e94be61-689e-41f9-adf7-f04250017d85",
+   "title": "The Intraday Pattern of Trading Activity, Return Volatility and Liquidity: Evidence from the Emerging Tunisian Stock Exchange",
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 8,
+     "similarity": 0.7754,
+     "content": "ng day. At the end of quotation, it achieved a peak that reaches 3,451. Hence, \nthe confirmation of our second hypothesis. Certainly, we ca n say that this result coincides with the results shown on \nthe order-driven market (Bildik (2001)).Second, the trading volume is globally variable in the day. Figure 2 also \nhighlights that the configuration of intraday trading volume is in U and more precisely in W. We notice, however, a \nhigh trading volume over the first ten minutes of the session quotation as well as a strong increase at the close of the \nday. However we find in the middle of the day that the trading volume comes to decrease after the first interval in \norder to increase again until reaching the value 1 at 11:30 am . This persistence of the gr owth of the trading volume \nhas been interrupted and has declined again. Third, figure 3 shows clearly that the intraday behavior of return \nvolatility follows the shape U. We observe that high return volatility exists at the beginning of the session quotation. \nHowever this volatility has declined rapidly and continues to decrease throughout the day in order to pick up again \nin the last ten minutes. The latter result is consistent with the results of Ahn, Bae and Chan (2001).In addition, the \nfigure 4 shows that the quoted spread also follows the U- shaped profile. We notice that the spread is high at the \nbeginning of the market followed by a reduction during the two following intervals. During the trading day, the"
+    },
+    {
+     "section": "methodology",
+     "page": 10,
+     "similarity": 0.768,
+     "content": "www.ccsenet.org/ijef International Journal of Economics and Finance V ol. 4, No. 5; May 2012 \nPublished by Canadian Center of Science and Education 165\nthe opening and closing quotation in the Tunisian stock market, is only due to the information flow, is insufficient. \nSince the previous literature has shown the existence of a very important f actor generating this anomaly. Amihud \nand Mendelson (1987), Stoll Whaley (1990) have highlighted the importance of trading in fixing on the return and \nvolatility. They have shown that the return and the volatility calculated on the basis of price fixing are high during \nthe first minutes and the last minutes of trading. \n5.3 The Empirical Analysis of the Regularities of Intraday Trading Activity, Volatility and Liquidity \nThe graphical analysis has shown the presence of the anomaly of seasonality in the Tunisian stock market. It \ntherefore seemed interesting to adopt and to estimate the sa me methodological approach of Vo (2007) to verify this \nresult. To test the significance of different patterns of liquidity, volatility and trading activity, standardized variables \nare regressed on a set of dummy variab les representing the intraday interval s. The following parameters of the \nmodel are estimated by using OLS. \nܴܦܵ\n௧\n௡\n௞ୀଵ\n௧ ሺ6ሻ \n \n௧\n௡\n௞ୀଵ\n௧ ሺ7ሻ \n \n௧\n௧\n௡\n௞ୀଵ\n௧ ሺ8ሻ \n௧\n௡\n௞ୀଵ\n௧ ሺ9ሻ \n \n௧\n௡\n௞ୀଵ\n௧ ሺ10ሻ \nWhere, SDR୲ ; SDV୲; SDR ୲\nଶ; SDSPR ୲; SDDepth ୲ represent standardized variables of return, volatility, trading"
+    }
+   ],
+   "similarity": 0.768
+  },
+  {
+   "paper_id": "289ca991-e2e4-4876-83ab-97ac36a418b8",
+   "title": "Time-Varying Crash Risk Embedded in Index Options: The Role of Stock Market Liquidity",
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "other",
+     "page": 44,
+     "similarity": 0.7855,
+     "content": "Table 7: Explaining Change in Risk-Neutral Skewness with Illiquidity-related Variables\nChange in Risk-Neutral Skewness: ∆RNSkewt\n(1) (2) (3) (4)\n∆Noiset -2.177** -2.159** -2.101**\n(-2.26) (-2.24) (-2.18)\n∆|AbOrderFlow t| -0.642\n(-1.63)\n∆BuyOrderFlow t -0.445 -0.491\n(-0.99) (-1.09)\n∆SellOrderFlow t -1.164** -1.247**\n(-2.27) (-2.43)\n∆ILQt -1.170*** -0.916**\n(-2.82) (-2.11)\n∆MinRVt 0.151 0.152 0.496* 0.454*\n(0.68) (0.69) (1.88) (1.72)\nReturnt -3.978*** -4.317*** -3.876*** -4.458***\n(-7.94) (-7.59) (-7.75) (-7.79)\n∆RNSkewt−1 0.473*** 0.474*** 0.475*** 0.473***\n(19.95) (20.03) (19.76) (19.80)\nR2 24.91% 25.06% 24.76% 25.24%\nNotes: We report regression results on daily changes in risk-neutral skewness of S&P500\nindex returns, ∆RSkewt. The sample period is from November 1, 2004 to December 30, 2014.\nWe use an ARMA(2,1) structure in the regression model. Each speciﬁcation is estimated\nusing maximum likelihood. We control for seasonality due to the day-of-the-week eﬀect. Risk-\nneutral skewness, RSkewt, on day t is calculated from end-of-the-day S&P 500 index option\nprices with maturity closest to 30 days. We use the nonparametric method of Bakshi and\nMadan (2000) to calculate the 30-day forward-looking risk-neutral skewness measure. The\nindependent variables include change in realized variance estimator, ∆ MinRV ; change in\nmarket illiquidity, ∆ILQ; and log S&P 500 return, Return. In addition, we include two"
+    },
+    {
+     "section": "results",
+     "page": 30,
+     "similarity": 0.7634,
+     "content": "rket illiquidity\nincreases following a day with negative stock market return. These ﬁndings are consistent\nwith the existing literature (e.g., Chordia, Roll, and Subrahmanyam, 2001). We also ﬁnd that\ntheVIX t positively predicts an increase in the stock market illiquidity the next day, which is\nconsistent with Nagel (2012) who shows that the VIX index is a strong predictor of the return\nfrom liquidity provisions. However, we do not ﬁnd that MinRVt signiﬁcantly predicts market\nilliquidity the next day after controlling for the lead-lag relationships through the VAR model.\nWe ﬁnd thatNoiset and|AbOrderFlow t| are strong predictors of stock market illiquidity.\nThe economic magnitude of their impacts is substantial. Looking at Column (4) in Table 6,\nwe ﬁnd that a one-standard-deviation increase in Noiset leads to an about 13% increase in\nILQt+1, or approximately, a two-cent increase in the annualized round-trip trading cost for\nevery dollar investment in the stock market. The economic magnitude of |AbOrderFlow t| is\nabout half of the Noiset measure.\n28\nElectronic copy available at: https://ssrn.com/abstract=2797308"
+    }
+   ],
+   "similarity": 0.7676
+  },
+  {
+   "paper_id": "29bc9d28-aca6-44fa-aaf8-58b4677ff65a",
+   "title": "Paying Attention: Overnight Returns and the Hidden Cost of Buying at the Open",
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "results",
+     "page": 11,
+     "similarity": 0.7718,
+     "content": "ome suggests that smaller\nﬁrms have a tendency for larger positive overnight returns and trading day re-\nversals. In addition, ﬁrm size is negatively correlated with one of our attention\nproxies (VOL\nt−1) and positively correlated with institutional ownership (INST)\nand our 2nd attention proxy (RET AIL NETBUY t−1). This evidence reinforces\nthe need to control for size when we analyze the inﬂuence of institutional owner-\nship or retail investor attention on daily returns in our analysis (see Nagel (2005)).\nD. The Intraday Price Pattern\nThe descriptive statistics in Table 1 raise the question of whether this aver-\nage positive overnight return and negative trading day reversal are due to a high\nopening price, a low closing price, or both. We address this issue by examining\nthe pattern in prices throughout the trading day. For each stock, we collect data on\nintraday midquotes at 30-minute intervals. In addition, we gather the midquotes\nat 5-minute intervals during the ﬁrst and last 30 minutes of the trading day. Then,\nat each 5- or 30-minute interval ( T), we construct the ratio of the midquote at that\ntime to the day’s closing midquote.\n16 We then ﬁnd the average of each intraday\nprice ratio across all stocks every day. Finally, we compute the time-series mean\nof these cross-sectional average price ratios for all days in the sample period.\nFigure 1 plots the intraday pattern in this average ratio of the midquote at"
+    },
+    {
+     "section": "intro",
+     "page": 4,
+     "similarity": 0.766,
+     "content": "rt interest. For this\nsubset, the mean overnight return (trading day reversal) for the ﬁner subsample of\nstocks subject to both high attention and low institutional ownership is +43 ( −45)\nbp per day. Likewise, the analogous results for the abridged sample of NASDAQ\nstocks are +61 ( −70) bp per day.\nThe high opening prices we ﬁnd for stocks subject to high attention and\nlow institutional ownership represent a substantial hidden cost of buying at the\nopen. Our tests are predictive and thus indicate that postponing purchases of these\nstocks from the open until later in the day can avoid these hidden costs. Similarly,\nselling these stocks at the open, rather than later in the day, can lead to major\nimprovements in performance. For example, a mean trading day reversal of 45 bp\nper day accumulates to 112.5% per annum.\nFinally, we investigate whether the magnitude of positive overnight returns\nand negative trading day reversals is exacerbated during periods with high overall\ninvestor sentiment (see Baker and Wurgler (2006), (2007)). We consider 2 time-\nseries proxies that measure variation over time in the level of retail investor senti-\nment. Our 1st measure is the sentiment index of Baker and Wurgler (2006), while\nour 2nd measure is based on market-wide net buying activity by retail investors\nduring the 1st hour of the trading day. We ﬁnd that variation over time in the\nmagnitude of opening price inﬂation, for stocks subject to high attention and low"
+    }
+   ],
+   "similarity": 0.7672
+  },
+  {
+   "paper_id": "8c17f272-b2c7-4a62-af1c-cd32b67a4c20",
+   "title": "Beat the Market: An Effective Intraday Momentum Strategy for S&P500 ETF (SPY)",
+   "fiche_id": "zarattini-2024-beat-the-market-spy",
+   "passages": [
+    {
+     "section": "results",
+     "page": 23,
+     "similarity": 0.7703,
+     "content": "ngth Index (RSI) might\nallow us to gauge whether the market is near the bulk of call strikes or put strikes. To\nexplore this, we propose running a regression analysis between the daily returns of our\nactive momentum portfolio (dependent variable) and the 5-day RSI of SPY (explana-\ntory variable) as of the previous day’s close. We anticipate that a higher RSI indicates\ngreater dealer gamma, suggesting a higher likelihood of intraday mean reversion and,\nconsequently, lower returns for our intraday momentum strategy. Conversely, a lower\nRSI suggests reduced gamma, implying more pronounced intraday trends and potentially\nhigher profitability for the momentum portfolio. By running the following regression 3:\nRetMom,t = α + β × RSI SPY,t−1 + ϵt.\nwe obtain a value of beta of -3.25 with a p-value of 0.001. The results indicate that the\nslope coefficient of the regression is negative and significantly different from zero. This\n3To enhance the readability of the regression results, we expressRetMom,t in basis points. For instance,\na return of 100 basis points is equivalent to a return of 1%.\n23"
+    },
+    {
+     "section": "results",
+     "page": 25,
+     "similarity": 0.7662,
+     "content": "Figure 10: Impact of commissions on total return of intraday momentum strategy.\nfunded with $100,000, we instruct an algorithm to send market orders on SPY for$100,000\njust a few milliseconds before the start of minute HH:MM. The algorithm randomly\ntakes long or short positions. The goal of the study is to evaluate the magnitude of the\nslippage relative to the Open price of minute HH:MM. Mathematically, we evaluate the\ndistribution of the following variable:\nSlippage = Side × (ExecutedP rice− OpenHH :M M)\nAfter executing over 1,000 trades, involving more than $50 million in notional value, the\naverage slippage recorded is approximately $0.001, with a median value even lower at\n$0.0005. We recognize that these figures might rise with an increase in portfolio size,\nyet we remain confident that employing advanced trading techniques can facilitate large\norders without significantly impacting the market. For simplicity and consistency with\nour real-trading analysis, we have chosen to apply a standard slippage rate of $0.001 in\nour backtest.\nTo further assess the sensitivity of our results to varying commission levels and associated\nslippage, we rerun the backtest using a spectrum of commission values. Figure 10 illus-\ntrates how the total return of the intraday momentum strategy fluctuates across different\ncommission levels, offering a more nuanced understanding of how costs impact profitabil-\nity. Given the available diversity in commission structures and order methodologies, we"
+    }
+   ],
+   "similarity": 0.7649
+  },
+  {
+   "paper_id": "6893c92a-5e24-4694-a5f3-1e910d15e2a5",
+   "title": "Intraday patterns in the cross-section of stock returns",
+   "fiche_id": "heston-2010-intraday-periodicity",
+   "passages": [
+    {
+     "section": "other",
+     "page": 6,
+     "similarity": 0.7673,
+     "content": "Lo and MacKinlay (1990)). While this phenomenon does not occ ur in the model of Glosten and Mil-\ngrom (1985), in which the spreads are due solely to adverse se lection caused by informed traders, it\nappears in other models with bid-ask spreads (Roll (1984) an d Glosten and Harris (1988)), specialist\ninventory eﬀects (Stoll (1978)), or other non-adverse selec tion costs associated with market-making.\nHere we study the resilience of stock prices based on the patt ern of autocorrelation over various\nhorizons.\nA. Methodology and Main Results\nOur sample of ﬁrms consists of all New York Stock Exchange (NY SE) listed ﬁrms from January\n2001 through December 2005 that we are able to match with the N YSE Trade and Quotation\n(TAQ) database. We retain only assets whose CRSP share codes are 10 or 11, that is, we discard\ncertiﬁcates, ADRs, shares of beneﬁcial interest, units, co mpanies incorporated outside the U.S.,\nAmericus Trust components, closed-end funds, preferred st ocks, and REITs. The matching yielded\ndata for 1,715 ﬁrms. The period of study is chosen to substant ially overlap the period of deci-\nmalization, the transition to which occurred between Augus t 2000 and January 2001. We use the\nTAQ database to calculate intraday stock returns. For each s tock we calculate returns over half-\nhour intervals. This gives 13 intraday intervals per tradin g day from 9:30 a.m. to 4:00 p.m. This\nexcludes after-hours trading and overnight open-close pri ce movements. Note that settlement on"
+    },
+    {
+     "section": "conclusion",
+     "page": 24,
+     "similarity": 0.7647,
+     "content": "t also\nin returns of common stocks. We study the periodicity of cros s-sectional diﬀerences in returns\nusing half-hour observation intervals in the period from Ja nuary 2001 through December 2005. We\ndocument pronounced intraday return reversals due to bid-a sk bounce, and these reversals last for\nseveral trading days. The market recovers from shocks to dep th in less than 60 minutes. However,\nwe ﬁnd signiﬁcant continuation of returns at intervals that are multiples of a day and this eﬀect\nlasts for at least 40 trading days. This daily periodicity is of the same order of magnitude as current\ninstitutional commission rates and the quoted half-spread .\nChanges in trading volume, order imbalances, and volatilit y exhibit similar patterns, but do\nnot explain the return patterns. The return continuation at daily frequencies is more pronounced\nfor the ﬁrst and last half-hour periods. These eﬀects are not d riven by ﬁrm size, systematic risk\npremia, or inclusion in the S&P 500 index (as a proxy for tradi ng by index funds). The pattern\nis also not driven by particular months of the year, days of th e week, or by turn-of-the-month\neﬀects. The periodicity at the daily frequency is observed wh en we also use bid-to-bid, ask-to-ask,\nor midpoint-to-midpoint returns, which implies that the pe riodicity is not merely due to patterns\nof where transactions prices occur relative to bid and ask pr ices."
+    }
+   ],
+   "similarity": 0.7641
+  },
+  {
+   "paper_id": "67396af3-8d7a-4ce9-8c4c-70cd2ac5d631",
+   "title": "Feedback Trading: The Intraday Case of Retail Derivatives",
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "results",
+     "page": 6,
+     "similarity": 0.7659,
+     "content": "ce, Figure 2b\nshows that the number of calls bought on average exceeds the\nnumber of calls sold in most int ervals of the day. Towards the\nend of the trading day, however, the imbalance decreases and\nturns negative for the interval 17:15 –17:30. Although a\ngradual diurnal decrease in the order flow imbalance is also\nobserved for puts, there is no interval with a negative\nimbalance. This pattern is likely caused by day traders closing\ntheir positions towards the end of the day (Baule, Frijns, and\nTieves 2018).\n4.1.2 | Feedback of Order Flow Intensity\nIn the following, we examine the response of the order flow\nintensities to short ‐term intraday returns of the underlying. We\nconsider the intraday return of the DAX on day\nt within the\n15‐min interval i, as defined above, denoted by INTRAti, . In our\nregression analysis for an order flow measure of interval i,w e\ninclude up to eight lags of DAX returns, that is, 2 h. 16 We also\ninclude recent interday returns of the underlying (Baule and\nBlonski 2012; Schmitz and Weber 2012). In particular, we\nconsider three lags of daily returns, measured from close to\nclose and denoted as\nINTERt k− for k =1 ,2 ,3 , as well as the\novernight return NIGHTt . Furthermore, we include squared\nreturns INTR A INTE R,ti t,\n2 2, and NIGHT t\n2, as controls for\nnonlinear responses.\nIntraday trading activity has been found to increase near round\nnumbers of the underlying (Niederhofer 1965; Bhattacharya,\nHolden, and Jacobsen 2012; Kuo, Lin, and Zhao 2015;"
+    },
+    {
+     "section": "results",
+     "page": 3,
+     "similarity": 0.7644,
+     "content": "investors.\nNoteworthy are differences in terms of the underlying.\nMonthly demand for positive exposure to the underlying\nvia options is positively relate dt op a s tm a r k e tr e t u r n so n l yi f\nthe underlying is a stock and unrelated to past returns if the\nunderlying is an index (Lemmon and Ni 2014). Similarly, the\ndaily aggregate open interest i n US index options is unrelated\nto the trailing 3 ‐month return of the market index (Johnson,\nLiang, and Liu 2018).\nVery few papers analyze feedback trading in bank ‐issued retail\nderivatives. For option ‐like warrants (Schmitz and Weber 2012;\nBaule and Blonski 2012) and knock ‐out warrants (Farkas and\nVáradi 2021), there is evidence that individual investors follow\nnegative feedback trading strategies with respect to recent inter ‐\nday returns of the underlyings. Consistent with stock trading\nbehavior, the feedback turns positive for more distant returns\nand large trades (Schmitz and Weber 2012; Baule and\nBlonski 2012). Differences in whether the underlying is a stock\nor an index are minor (Schmitz and Weber 2012). This paper\nextends the analysis of feedback trading towards the intraday\ncase, covering the response to short ‐term and tick ‐by‐tick\nreturns.\n2.2 | Intraday Trading\nThe second strand of literature related to our paper covers\nintraday trading behavior. This literature focuses on day\ntraders,5 while the relation to past intraday returns is only\nsparse. For institutional day traders, there is consistent evidence"
+    }
+   ],
+   "similarity": 0.7639
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 ---
 type: hub
-updated: 2026-09-30
+updated: 2026-10-04
 status: genere
 sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 ---
@@ -12,7 +12,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 > Toute modification hors du bloc « Prochaines actions » sera perdue.
 > Pour changer ce qui s'affiche ici, édite `wiki/log.md` ou `ETAT.md`.
 
-*Régénérée le 2026-09-30.*
+*Régénérée le 2026-10-04.*
 
 ---
 
@@ -22,10 +22,10 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 |---|---|
 | **Phase courante** | 09 — premier passage complet sur 30 à 50 papiers |
 | **Dernière porte franchie** | **08**, le 2026-09-23 — `scripts/gate_08.py`. Un signal produit par une session de codage séparée tient les **six conditions de `D23` au premier essai**, et aucun signal produit n'a été retouché à la main. |
-| **Décision la plus récente** | `decisions/DECISION-39-hypotheses-de-synthese.md` — une hypothèse peut naître de plusieurs papiers, reliés par les embeddings de leurs fiches. |
-| **Tests au registre** | 181 |
-| **Idées abandonnées recensées** | 61 |
-| **Entrées au journal** | 108 |
+| **Décision la plus récente** | `decisions/DECISION-51-ancrage-obligatoire.md` (2026-10-03) — tout score se pose à l'ancre de `_common.run`. Avant elle, `D50` (S3 relatif à l'échelle du score) et `decisions/DECISION-49-l-horizon-du-signal.md` (2026-10-03) — un signal se juge et se compare à son horizon (hypothèse, sinon fiche), plus à 30 barres. Avant elle : `decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un |
+| **Tests au registre** | 187 |
+| **Idées abandonnées recensées** | 62 |
+| **Entrées au journal** | 124 |
 
 ## Ce qui bloque
 
@@ -45,6 +45,23 @@ Relancer plutôt que recopier (`L21`) :
 python scripts/gate_07.py      # G1 = G2 = G3 = G4 = 0
 python scripts/gate_08.py      # 1 signal, 6/6, aucune retouche
 ```
+
+### La base fait foi, et se cherche par le sens — `D44` à `D46`, 2026-10-01/02
+
+- **Fiches** : les 52 sont dans la table `fiches` (`D44`) ; les dossiers locaux
+  en sont le miroir (`corpus/fiches_store.py --etat | --tirer | --pousser`).
+- **Embeddings** : les 145 356 morceaux sont vectorisés, aucun ne manque.
+- **Index** : `chunks_embedding_ivfflat` (migration 007, `D46`), le HNSW ne se
+  construisant pas sur la petite instance. À reconstruire après une grosse
+  ingestion : `python vectordb/index_morceaux.py --reconstruire`.
+- **Voisins** (`D45`) : `python scripts/voisins.py <fiche_id>` écrit
+  `corpus/dossiers/<fiche_id>.{json,md}`, les papiers proches dans toute la
+  base, sans hiérarchie d'origine. **Reste ouvert** : la synthèse écrite à
+  partir d'un dossier (comment vérifier une citation d'un voisin sans fiche).
+- **Réseau** : le port 5432 est bloqué sur le wifi de l'université ; tout ce
+  qui précède passe par l'API (`SUPABASE_URL`, `SUPABASE_SECRET_KEY`) ou par
+  l'outil MCP Supabase. Ne rien lancer de long dans l'éditeur SQL : il coupe à
+  ~1 min et la mémoire de maintenance y vaut 32 Mo.
 
 ### Trois outils de confort — le 2026-09-30
 
@@ -80,9 +97,54 @@ Aucun signal n'entre plus dans un lot sans **recette** (`scripts/recette.py`),
 les scores). La boucle complète est dans `scripts/CODAGE-DES-SIGNAUX.md`.
 Porte 09, `measure_lot.py` et `hypotheses_lot.py` l'exigent.
 
-**Lot `LOT-09` : 1 fiche vérifiée sur 41** —
-`baltussen-2021-hedging-demand-intraday-momentum` (ρ 1,000). Les 40 autres
-attendent recette et deux codages ; environ 325 000 tokens par fiche.
+**Lot `LOT-09` : 1 fiche vérifiée sur 36** (le 2026-10-03) —
+`baltussen-2021-hedging-demand-intraday-momentum` (ρ 1,000). **Cinq écartées
+avant mesure le 2026-10-03** : andersen-1997, bitcoin-is-not-the-new-gold,
+bitcoin-intraday, boyarchenko-2023 (concordance, deux tours) et
+bollerslev-2018 (juge). 35 attendent encore recette et deux codages.
+
+**À TRANCHER PAR L'OPÉRATEUR avant de continuer sur des fiches sans signal de
+rendement** (`F62`, avis `fabrique-critique` du 2026-10-03, À AMENDER) :
+`D42` met la transposition dans l'hypothèse, `D34` code à l'aveugle depuis le
+papier ; ces fiches sortent donc par la concordance, à ~650 000 tokens pour
+deux tours. Options, par décision écrite : (a) garder, en connaissant le coût ;
+(b) une étape isolée qui spécifie la transposition (grandeur, ancrage) pour
+les deux codeurs ; (c) un seul tour pour ces fiches. ~~**Et un `todo`** : la
+consigne impose `horizon_bars: int = 30`, que `S5` refuse selon qu'un `30`
+traîne dans la recette (`L34`) — signature sans défaut, par décision.~~
+**Fait le 2026-10-03, `D49`** : signature sans défaut ; le juge et le double
+codage appellent le signal à l'horizon de son hypothèse, sinon de sa fiche
+(`scripts/horizon_signal.py`), et un double codage fait à un autre horizon
+que l'hypothèse ne vaut plus pour le lot.
+~~**Et une question** : le témoin bollerslev a été refusé `S3` sur des écarts de
+1e-12 à 1e-4 (régression mal conditionnée sur clôtures recollées) — bruit
+flottant ou vraie fuite, `S3` ne le distingue pas.~~ **Tranché le 2026-10-03,
+`D50`** : c'était l'arrondi du recollement (prix passés identiques à un facteur
+près). `S3` juge désormais l'écart relativement à l'échelle du score (1e-6), en
+gardant le plancher de 1e-12 ; la porte 05 attrape les quatre tricheurs aux
+mêmes sondes. Bollerslev, rejugé, est vert, mais son tour 2 reste DISCORDANT
+(ρ 0,725, couverture 0,184) : son écart tient, pour la concordance.
+**Constat du 2026-10-03, à trancher par l'opérateur** : andersen, bitcoin-gold
+et bollerslev concordent sur les instants communs (ρ 1,000, 1,000, 0,725) et
+échouent sur la **couverture**. Un codeur note une fois par séance, à l'ancre
+de `_common.run`, l'autre à chaque barre ou sur d'autres cellules. ~~Rendre
+l'ancrage par `_common.run` obligatoire dans la consigne, quand la fiche ne
+dit rien, demanderait une décision (suggestion 3 de `fabrique-critique`) ;
+baisser le seuil de couverture serait `L28`.~~ **Fait, `D51`** : tout score se
+pose à l'ancre de `_common.run`, vérifié sur les données (`S1`, option
+`--ancrage` du juge). Ça règle le cas andersen (instant), pas les cas
+bitcoin-gold et bollerslev (cellules et séances choisies), qui restent ouverts.
+~~**PANNE ouverte le 2026-10-03 : `verifier_tout.py` rend 1 PANNE, la porte 08.**~~
+**Réparée le même jour (`D49` § Journal)** : la porte juge contre fiche +
+recette, à l'horizon du signal, dans tous les dossiers de fiches — FRANCHIE,
+6/6. Énoncé d'origine :
+`scripts/gate_08.py` rejuge tout `signals/` **contre la fiche seule** — sans
+les valeurs de recette que `D34` ajoute à `S5` — et ne cherche pas dans
+`corpus/fiches_harvest/`. Les modules de cette session, verts à
+`code_signal.py --judge`, y tombent : andersen et bollerslev en `S5`, les deux
+bitcoin « aucune fiche de ce nom ». Rien n'est retouché ; aligner la porte 08
+sur `D34` (ou la restreindre aux fiches du jugement d'origine) est une
+décision d'outillage qui revient à l'opérateur.
 
 ```
 python scripts/hypotheses_lot.py --status   # où en est chaque fiche du lot
@@ -865,14 +927,14 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
-| 2026-09-30 | `setup` | **DEUX LIGNES DE TRAVAIL FUSIONNÉES, LA DISTANTE FAIT FOI.** Ce poste avait couru 2 commits hors ligne depuis le 2026-09-29 10:25 (base commune `6074caf`) pendant que la ligne distante en produisait 87 : `git pull --ff-only` refusait. Merge, pas rebase — aucun commit réécrit. **Les trois conflits tranchés pour la distante** : `ETAT.md` et `wiki/hot.md` sont les siens, `wiki/log.md` est l'**union** des deux dans l'ordre des dates (106 + 1 = 107 entrées, aucune ligne supprimée). **Les fichiers irremplaçables étaient saufs, vérifié avant de fusionner** : `registry/tests.jsonl` et `LECONS.md` distants contiennent les versions locales en **préfixe exact** (169 → 181 lignes, 30 → 32 leçons) ; `F61` n'existait que localement, `F60` étant le dernier d'`origin`, donc pas de collision | **COLLISION DE NUMÉRO TRANCHÉE : `D33` → `D40`.** Deux décisions différentes portaient `D33`, écrites le même jour sur les deux lignes. La distante le garde (la pertinence de la base) ; celle de ce poste devient `D40` (le format d'une hypothèse et son juge), selon le précédent `D27` → `D36` : note de renumérotation en tête du fichier, et les mentions de « `D33` » dans ce journal, le ledger et l'historique git **ne sont pas retouchées** — append-only. Le résultat est **exactement `origin/main` plus les ajouts locaux** : 19 fichiers, 2 131 insertions, 1 suppression (une reformulation de `wiki/index.md`). **`D40` tient après la fusion** : son juge rend 28 vérifications, 0 échec, et sur le lot réel 41 fiches / 10 hypothèses écrites avec 31 fautes **toutes** de type `B1` — donc `H05`–`H14` passent encore les sept conditions malgré le harnais `94b495fa7525d3b8` postérieur à leur rédaction. **MAIS LA CHAÎNE DISTANTE N'EN VOIT AUCUNE** : `verifier_tout` rapporte « 0/41 hypothèses écrites », parce que `LOT-09.json` est celui d'`origin` et qu'aucune `ref` n'y est inscrite (`score_hypothese.py --lier` n'a jamais tourné). Les deux jeux coexistent sans s'écraser — `hypotheses_lot.py` numérote à partir du plus grand `H*` et ne réécrit jamais un fichier — mais **trois points restent à trancher par l'opérateur**, écrits dans `ETAT.md` : qui juge (`score_hypothese.py`, absent de la liste de `verifier_tout`, ou `hypotheses_lot.py`) ; si le recensement de `NON-ECRITES-09.md` et l'écran de `D38` disent la même chose des 31 fiches ; si `F61` se ferme ou s'amende. **Le lot reste clos** (`D25` `C2`) et aucune mesure ne doit partir avant. **Une panne préexistante trouvée au passage, pas causée par la fusion** : `corpus/tri_en_masse.py --self-check` échoue (« passage 02 inconnu ») — reproduite sur des worktrees de `ce04411` (tip distant d'avant la fusion), `5e541af` et `444457e`, le commit qui crée le fichier : **elle n'a jamais passé**. Registre **181 → 181**, aucun IC calculé. |
-| 2026-09-30 | `outils` | **Tri ordonne par le sens et reaction en chaine.** La file de tri (3 074 papiers) s'ordonne par similarite aux fiches et aux papiers retenus (D39), sans filtrer. `scripts/avancer.py` : apres chaque fiche, tout le deterministe s'enchaine seul (ecarts D38, doubles codages, hypotheses commitees) et, lot complet, matrice + mesure des IC + porte 09 + tableau de bord ; seul arret : correlations negatives (BH/BY, D25). Branche dans /fabriquer-signaux | registre 181 -> 181. |
-| 2026-09-30 | `decision` | **`D39` : hypotheses de synthese.** Grappes de fiches par embeddings (`scripts/grappes.py`, bge-base, cosinus >= 0,80) : 8 grappes sur 51 fiches, et les 5 voisines de chaque fiche (memoire semantique du critique). Synthese isolee (`scripts/synthese.py`, sous-agent `fabrique-synthese`) : une seule version, choisie avant mesure (accord, transposabilite, parcimonie, tracabilite), citations recopiees des fiches sources et verifiees dans leurs textes. Premiere synthese `synthese-g-a9d7ec` valide ; elle entre dans la chaine ordinaire (recette multi-papiers, D38, D34) | registre 181 -> 181. |
-| 2026-09-30 | `outils` | **Commande `/fabriquer-signaux [n]`** (`.claude/commands/`) : une session neuve la tape et orchestre toute la boucle de `CODAGE-DES-SIGNAUX.md` avec les sous-agents du projet, quota releve avant et apres, verifier_tout et tableau de bord en fin de session | registre 181 -> 181. |
-| 2026-09-30 | `outils` | **Sous-agents : savoir-faire et critique.** Chaque sous-agent isole porte les fautes deja payees de son role (codeurs, a l'identique pour ne pas biaiser le double codage : causalite a la barre `L27`, aucune statistique sur la serie entiere, horloge en entiers `L10`, `S5`, CHOICES ; recette et extracteur : bon papier `L20`, citation au caractere, soupapes `L28` ; trieur : univers et donnees). Nouveau `fabrique-critique` (opus, Read/Grep/Glob) : memoire du projet, verdict ACCEPTE/REFUSE/A AMENDER source, controle du chemin qui bifurque ; avis seulement. Skills publics examines (anthropics/skills, shakeebshaan/claude-code-quant-skills, HyperFrequency/skills, liste Snyk) : non installes — ils optimisent sur les donnees et apporteraient des a priori aux sessions isolees ; la liste d'audit de backtest-review est reprise dans le critique. Embeddings relances : 83 228 morceaux | registre 181 -> 181. |
-| 2026-09-30 | `outils` | **Pupitre v3** : pas de plafond (hypotheses ecrites et lots declares, seuil BH de chaque lot) ; quota une ligne par Claude (`scripts/quota.py`, `scripts/out/quota/<nom>.json`), conversion en papiers codes / fiches / papiers tries CALIBREE sur les releves avant/apres chaque groupe (`--depense`), jamais supposee ; les deux tutoriels demandent ces releves | registre 181 -> 181. |
-| 2026-09-30 | `decision` | **`D38` : chaque hypothese se mesure sur le marche de son papier** (actif exact + meme classe du catalogue, fenetres du papier), un seul test ; actif et classe lus a part dans les resultats ; un papier dont le marche nous est absent est ecarte avant codage (`ecarter_du_lot.py --preuve univers`). La recette declare `market` (cite, liste close d'instruments). Pupitre v2 : entonnoir de la chaine, compteur de tests et seuils BH du lot (t ~ 2,81 pour la premiere hypothese a n = 41), quota, mosaique des ecartes / perimes avec leur raison, liens croises avec l'Atlas | registre 181 -> 181. |
-| 2026-09-30 | `outils` | **Tableau de bord `Pupitre de la Fabrique`** (`scripts/tableau_de_bord.py` + `scripts/tableau_de_bord.html`) : mosaique des hypotheses (papier, passages cites, morceaux de la base via `--base`, fenetres, construction, recette, CHOICES, double codage, qui s'en sert, code) et des IC du registre (rapport, actif x fenetre, par annee, couts, code a la date de mesure) ; il recopie, ne calcule rien. `measure_lot.py` garde desormais le rapport d'IC entier (`scripts/out/rapports/<test_id>.json`). Test de bout en bout de l'etape 10 relance sur le harnais `94b495fa7525d3b8` dans une copie : IC identiques au registre, relance sans remesure, porte 09 rend son verdict, `ic_by_year` ecrit | registre 181 -> 181. |
+| 2026-10-03 | `decision` | **`D51` : l'ancrage par `_common.run` est obligatoire.** Demande de l'opérateur. Consigne réécrite ; le juge D34 passe `--ancrage` et refuse en `S1` tout score hors des ancres de `run` (vérifié sur les données). Mesuré avant : 11 modules sur 12 conformes, seul le témoin andersen (6,3 M scores hors ancre) ne l'est pas. Ne règle pas les désaccords de cellules et de séances (bitcoin-gold, bollerslev). Juge 27/27, registre 187 → 187. | — |
+| 2026-10-03 | `decision` | **`D50` : `S3` juge l'écart relativement à l'échelle du score.** Bruit mesuré : prix passés du panel tronqué identiques à un facteur près, log-rendements à ≤ 8,9e-16 ; honnêtes ≤ 4e-8 en relatif, tricheurs ≥ 5e-2. Tolérance relative 1e-6 + plancher absolu 1e-12 ; porte 05 FRANCHIE, tricheurs attrapés aux mêmes sondes (`L35`). Revue de la journée : `avancer.py` écartait à tort une fiche CONCORDANTE dont l'hypothèse change l'horizon (corrigé) ; plantage UTF-8 du juge sous Windows (corrigé) ; bollerslev rejugé vert, tour 2 DISCORDANT ρ 0,725 couv 0,184 ; andersen, bitcoin-gold et bollerslev échouent sur la couverture (ancrage), pas sur la lecture du papier. Registre 187 → 187. | — |
+| 2026-10-03 | `porte` | **Porte 08 réparée.** `gate_08.py` juge désormais chaque signal produit contre sa fiche (AMORCE, moissonnée, synthèse) augmentée de sa recette valide (`D34`), à l'horizon de `D49` : FRANCHIE, 6/6. En route : `horizon_signal.py` lisait boyarchenko « 10h » (mention tardive) au lieu de « Une heure » — la première mention fait désormais foi. Registre 187 → 187. | — |
+| 2026-10-03 | `decision` | **`D49` : un signal se juge et se compare à son horizon.** Demande de l'opérateur. Le juge et le double codage appelaient tous les signaux à 30 barres, la mesure à l'horizon de l'hypothèse. `scripts/horizon_signal.py` lit l'horizon : hypothèse du lot, sinon champ `horizon` de la fiche, sinon ancrage 30. Signature de la consigne `scores(panel, cells=None, *, horizon_bars: int)` (fin du faux refus `S5`, `L34`). `concordance` refuse un tour fait à un autre horizon que l'hypothèse. Baltussen toujours CONCORDANT (30 barres, `H05`). Juge 27/27, registre 187 → 187. | — |
+| 2026-10-03 | `gardes` | **`verifier_tout.py` : 1 PANNE, porte 08.** `gate_08.py` rejuge `signals/` contre la fiche seule (sans les valeurs de recette de `D34`) et ignore `fiches_harvest/` : andersen et bollerslev tombent en `S5`, les deux bitcoin « aucune fiche ». Signaux non retouchés ; alignement de la porte laissé à l'opérateur (`ETAT.md`). Registre 187 → 187. | — |
+| 2026-10-03 | `codage` | **Cinq fiches du lot 09, zéro vérifiée, cinq écartées avant mesure.** andersen-1997, bitcoin-is-not-the-new-gold, bitcoin-intraday, boyarchenko-2023, bollerslev-2018 : 10 recettes valides (1 à 4 essais), 20 codages, cinq DISCORDANT au tour 1, aucune concordance au tour 2 ; écarts : 4 concordance, 1 juge (témoin bollerslev refusé S3 trois fois, écarts 1e-12). Lot `LOT-09` : n = 36, 9 hypothèses, 35 recettes à faire. `fabrique-critique` À AMENDER : D42 et D34 se contrarient pour les papiers sans signal (`F62`) ; défaut `horizon_bars: int = 30` de la consigne refusé par `S5` (`L34`). ~1,9 M tokens, fenêtre 2 % → 75 %. Aucun IC, registre inchangé. | — |
+| 2026-10-02 | `decision` | **`D48` : un voisin vaut la moyenne de ses trois meilleurs morceaux.** Banc d'essai `scripts/banc_voisins.py` (étalon fixé avant : grappes D39, 21 graines, 38 frères) : rappel à 10 de 0,29 → 0,37 ; reclassement par cross-encodeur sans gain (0,76 s/paire) ; fusion avec les centroïdes 0,37 mais demande une table. Baltussen : voisins désormais du même mécanisme (tug of war overnight/intraday, momentum intraday SPY, patterns intraday). Dossier d'une synthèse figé sous son nom et non re-préparable. | — |
+| 2026-10-02 | `decision` | **`D47` : une hypothèse tirée d'un papier et de ses voisins dans toute la base.** `scripts/synthese_dossier.py --prepare <fiche>` : voisins (`D45`), dossier versionné, texte en base de chaque voisin sans fiche figé dans `corpus/text/base-<id>.default.txt` ; `fabrique-synthese` écrit une fiche `synthese-dossier-<fiche>` ; validateur mécanique (citations à la lettre dans le texte de leur source). Branché dans `/fabriquer-signaux` (étape 6). Premier essai, Baltussen 2021 : valide au premier essai, 1 voisin retenu sur 8, version = celle de la graine → **non codée** (doublon de H02). Limite constatée : voisins proches par le thème, rarement par le mécanisme. | — |
 
 Journal complet : [[log]]
 

@@ -54,6 +54,10 @@ import urllib.request
 from datetime import date
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from titre_du_pdf import SEUIL as SEUIL_TITRE  # noqa: E402
+from titre_du_pdf import score as score_du_titre  # noqa: E402
+
 REPO = Path(__file__).resolve().parents[1]
 HARVEST = REPO / "corpus" / "harvest.json"
 CENSUS = REPO / "corpus" / "acquisition.json"
@@ -1252,6 +1256,18 @@ def do_fetch(dry_run: bool) -> int:
                     continue
                 tmp = dest.with_suffix(".part")
                 tmp.write_bytes(body)
+                # Un PDF qui ne porte pas le titre du papier n'est pas ce papier :
+                # un lien de bibliographie ou de politique de confidentialite pris
+                # sur la page de depot (2026-10-02, `corpus/titre_du_pdf.py`).
+                s = score_du_titre(tmp, w.get("title") or "")
+                if s is None or s < SEUIL_TITRE:
+                    tmp.unlink()
+                    w["status"] = "inatteignable"
+                    w["reason"] = "pdf_illisible" if s is None else "pdf_mal_attribue"
+                    w["reason_detail"] = f"le PDF ne porte pas le titre du papier (score {s})"
+                    failed.append((name, w["reason_detail"]))
+                    print(f"  REFUS     | {name} : {w['reason_detail']}")
+                    continue
                 tmp.replace(dest)
                 taken += 1
             except Exception as e:

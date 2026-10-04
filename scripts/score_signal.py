@@ -245,11 +245,32 @@ def texte_de_la_recette(recette) -> str:
 # Les six conditions
 # ---------------------------------------------------------------------------
 
-def check_s1(module, scores, panel) -> Verdict:
+def hors_ancrage(scores, panel, horizon_bars: int) -> list[str]:
+    """`D51` : chaque score tombe à l'ancre de `_common.run` — une barre par
+    séance et par cellule, à `horizon_bars` de la clôture de la fenêtre."""
+    from signals import _common
+
+    ancres = _common.run(panel, lambda closes, position: 0.0, None, horizon_bars)
+    fautes = []
+    for cell, serie in sorted(scores.items()):
+        attendues = ancres.get(cell)
+        hors = serie.index if attendues is None else serie.index.difference(attendues.index)
+        if len(hors):
+            fautes.append(
+                f"{cell} : {len(hors)} score(s) sur {len(serie)} hors de l'ancre de "
+                f"_common.run (à {horizon_bars} barres de la clôture), dès {hors[0]} — "
+                "D51 exige un score par séance, posé à l'ancre"
+            )
+    return fautes
+
+
+def check_s1(module, scores, panel, ancrage: int | None = None) -> Verdict:
     v = Verdict("S1", "le module satisfait le contrat de D07")
     v.fautes.extend(contract.validate_module(module))
     if scores is not None and panel is not None:
         v.fautes.extend(contract.validate_scores(scores, panel))
+        if ancrage is not None:
+            v.fautes.extend(hors_ancrage(scores, panel, ancrage))
     elif not v.fautes:
         v.sans_objet = "sans données : seuls les attributs sont vérifiés"
     return v
@@ -261,7 +282,7 @@ def check_s2(module) -> Verdict:
     return v
 
 
-def check_s3(module, panel, scores) -> Verdict:
+def check_s3(module, panel, scores, horizon_bars: int = HORIZON_BARS) -> Verdict:
     v = Verdict("S3", "il est causal")
     if panel is None:
         v.sans_objet = "sans données : le test de causalité demande un panel"
@@ -269,7 +290,7 @@ def check_s3(module, panel, scores) -> Verdict:
     from sandbox import causality
 
     for d in causality.check(module, panel, probes=PROBES,
-                             horizon_bars=HORIZON_BARS, full=scores):
+                             horizon_bars=horizon_bars, full=scores):
         v.fautes.append(str(d))
     return v
 
@@ -356,14 +377,17 @@ def check_s6(module) -> Verdict:
 # Le jugement
 # ---------------------------------------------------------------------------
 
-def juger(module, fiche: dict, panel=None) -> list[Verdict]:
+def juger(module, fiche: dict, panel=None, horizon_bars: int = HORIZON_BARS,
+          ancrage: bool = False) -> list[Verdict]:
+    # `D49` : l'horizon est celui de l'hypothèse ou de la fiche, passé par
+    # `code_signal.py --judge` ; 30 n'est que l'ancrage par défaut.
     scores = None
     if panel is not None:
-        scores = module.scores(panel, horizon_bars=HORIZON_BARS)
+        scores = module.scores(panel, horizon_bars=horizon_bars)
     return [
-        check_s1(module, scores, panel),
+        check_s1(module, scores, panel, horizon_bars if ancrage else None),
         check_s2(module),
-        check_s3(module, panel, scores),
+        check_s3(module, panel, scores, horizon_bars),
         check_s4(scores),
         check_s5(module, fiche),
         check_s6(module),
@@ -549,6 +573,10 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--check", action="store_true", help="juger le juge")
     ap.add_argument("--no-data", action="store_true",
                     help="S1, S2, S5, S6 seuls — sans panel, donc porte NON franchie")
+    ap.add_argument("--horizon-bars", type=int, default=HORIZON_BARS,
+                    help="l'horizon du signal (D49) ; 30 = l'ancrage par défaut")
+    ap.add_argument("--ancrage", action="store_true",
+                    help="D51 : exiger que chaque score tombe à l'ancre de _common.run")
     a = ap.parse_args(argv)
 
     if a.check:
@@ -573,7 +601,8 @@ def main(argv: list[str]) -> int:
         # qu'aucun garde n'emprunte n'est pas un chemin vérifié.
         panel = Panel.open(ASOF, slice="pool")
 
-    verdicts = juger(module, fiche, panel)
+    print(f"horizon : {a.horizon_bars} barres (D49)")
+    verdicts = juger(module, fiche, panel, a.horizon_bars, a.ancrage)
     print(rendre(verdicts, getattr(module, "SIGNAL_ID", a.module)))
     return 0 if all(v.tenue for v in verdicts) and not any(
         v.sans_objet for v in verdicts) else 1

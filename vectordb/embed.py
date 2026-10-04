@@ -99,12 +99,29 @@ def embed_query(model, texte: str) -> list[float]:
     return next(iter(model.embed([QUERY_PREFIX + texte]))).tolist()
 
 
+HERE = Path(__file__).resolve().parent
+# Le délai de requête par défaut du pooler Supabase ne suffit plus à ~140 000
+# morceaux : le comptage initial le dépassait (2026-09-30). On l'allonge pour la
+# session, et l'index partiel de la migration 004 rend ce comptage immédiat.
+DELAI_REQUETE = "10min"
+
+
+def connecter() -> VectorDB:
+    db = VectorDB.from_env()
+    with db.conn.cursor() as cur:
+        cur.execute(f"set statement_timeout = '{DELAI_REQUETE}'")
+    db.conn.commit()
+    return db
+
+
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description="Embeddings locaux — bge-base-en-v1.5")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--gpu", action="store_true",
                     help="sur la carte graphique, depuis .venv-gpu (voir load_model)")
+    ap.add_argument("--migrer-004", action="store_true",
+                    help="créer l'index partiel des morceaux à vectoriser, puis s'arrêter")
     a = ap.parse_args(argv)
 
     if DEFAULT_DIM != MODEL_DIM:
@@ -112,7 +129,16 @@ def main(argv: list[str]) -> int:
               f"rend {MODEL_DIM}. Aligner la migration et `DEFAULT_DIM`.")
         return 1
 
-    db = VectorDB.from_env()
+    db = connecter()
+    if a.migrer_004:
+        sql = (HERE / "migrations" / "004_chunks_a_vectoriser.sql").read_text(encoding="utf-8")
+        with db.conn.cursor() as cur:
+            cur.execute("set statement_timeout = '60min'")
+            cur.execute(sql)
+        db.conn.commit()
+        print("migration 004 appliquée : index partiel chunks_sans_embedding_idx")
+        db.close()
+        return 0
     try:
         with db.conn.cursor() as cur:
             cur.execute("select count(*) from chunks where embedding is null")
@@ -159,12 +185,16 @@ def main(argv: list[str]) -> int:
                     break
 
                 vecteurs = embed_texts(model, [r["content"] for r in lot])
+                # UNE requête par lot, pas une par morceau : à travers une
+                # connexion lente, chaque aller-retour coûte (skill Supabase,
+                # « batch » ; 2026-10-01). Les vecteurs voyagent en texte et se
+                # convertissent côté base.
                 with db.conn.transaction(), db.conn.cursor() as cur:
-                    cur.executemany(
-                        "update chunks set embedding = %s::vector, "
-                        "embedding_model = %s where id = %s",
-                        [(to_pgvector(v, MODEL_DIM), MODEL, r["id"])
-                         for v, r in zip(vecteurs, lot, strict=True)],
+                    cur.execute(
+                        "update chunks as c set embedding = v.e::vector, embedding_model = %s "
+                        "from unnest(%s::uuid[], %s::text[]) as v(id, e) where c.id = v.id",
+                        (MODEL, [r["id"] for r in lot],
+                         [to_pgvector(v, MODEL_DIM) for v in vecteurs]),
                     )
             except psycopg.OperationalError as e:
                 coupures += 1
@@ -176,7 +206,7 @@ def main(argv: list[str]) -> int:
                       f"reconnexion {coupures}/{MAX_COUPURES}", flush=True)
                 time.sleep(3)
                 db.close()
-                db = VectorDB.from_env()
+                db = connecter()
                 continue
 
             traites += len(lot)

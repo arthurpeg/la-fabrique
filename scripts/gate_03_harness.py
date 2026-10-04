@@ -187,6 +187,37 @@ def main() -> int:
           f"({report_noise.instruments} instruments pour {report_noise.breadth:.2f} paris) ; "
           f"cibles 0,018 et 0,031 présentes")
 
+    # D43 : l'horizon « jusqu'à la clôture de la fenêtre ». Le score parfait est le
+    # rendement jusqu'à la clôture : l'IC doit valoir 1, et une seconde
+    # implémentation, barre par barre, doit retrouver les mêmes rendements.
+    print("4 bis. l'horizon jusqu'à la clôture de la fenêtre (D43)")
+    from harness.metric import bars_to_close  # noqa: PLC0415
+
+    parfait_cloture = {cell: forward_returns(close, sessions, windows, None)
+                       for cell, (close, sessions, windows) in series.items()}
+    rapport_cloture = evaluate(parfait_cloture, panel, "cloture",
+                               signal_id="calibration-cloture", stage="03-calibration")
+    for measured in rapport_cloture.cells:
+        check(abs(measured.ic - 1.0) < 1e-9,
+              f"clôture : {measured.root} x {measured.window} IC {measured.ic:.9f} au lieu de 1")
+    close, sessions, windows = series[("NQ", "US")]
+    auto = forward_returns(close, sessions, windows, None).dropna()
+    reste = bars_to_close(sessions, windows)
+    a_la_main = {}
+    valeurs, sv, wv = close.to_numpy(), sessions.to_numpy(), windows.to_numpy()
+    for i in range(0, len(close), 997):
+        j = i + int(reste.iloc[i])
+        if j > i and sv[j] == sv[i] and wv[j] == wv[i]:
+            a_la_main[close.index[i]] = valeurs[j] / valeurs[i] - 1.0
+    commun = pd.Series(a_la_main).reindex(auto.index).dropna()
+    check(len(commun) > 100 and float((auto.reindex(commun.index) - commun).abs().max()) < 1e-12,
+          "clôture : la seconde implémentation ne retrouve pas les rendements")
+    check(rapport_cloture.horizon == "cloture" and rapport_cloture.horizon_bars > 1,
+          "clôture : le rapport ne porte pas l'horizon ou son nombre de barres")
+    print(f"   IC 1 sur {len(rapport_cloture.cells)} cellules ; "
+          f"{len(commun)} rendements reproduits ; "
+          f"déflation sur {rapport_cloture.horizon_bars} barres (la plus longue médiane)")
+
     print("5. le coût est un plancher étiqueté, et une évaluation = une ligne")
     check(report_perfect.cost_floor_bp > 0, "le plancher de coût est nul ou absent")
     check(

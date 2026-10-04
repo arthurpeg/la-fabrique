@@ -981,3 +981,66 @@ crochet `Stop` commite et pousse tout seul à chaque fin de tour : la référenc
 que je lis au début n'est pas celle que j'interroge à la fin. Corollaire :
 **relever `git rev-parse origin/main` avant toute fusion** et le citer, sans
 quoi le compte rendu désigne un commit que personne ne peut retrouver.
+
+## L33 — Un PDF « trouvé sur la page de dépôt » était souvent celui d'un autre
+
+**Le 2026-10-02.** Le graphe du corpus refait sur 1 942 papiers a montré deux
+paires de papiers aux vecteurs **identiques**. Le livre blanc de Bitcoin servait
+de texte à deux papiers sur les cryptomonnaies, et l'arXiv de « Leverage effect
+in energy futures » à « Commodity futures and market efficiency ». Le
+moissonneur avait bien marqué les doublons par empreinte sha256, mais
+l'ingestion ignorait ce champ. Et dans la paire Kristoufek, il avait désigné à
+tort le **bon** PDF comme doublon.
+
+Un contrôle simple (les mots du titre dans les deux premières pages,
+`corpus/titre_du_pdf.py`) a ensuite montré que le problème était général : la
+recherche de liens prend n'importe quel `.pdf` d'une page de dépôt. Les
+documents ainsi récupérés vont de politiques de protection des données et de
+règlements universitaires à des rapports de l'OMS, et surtout à **des papiers
+cités par le papier visé**. Il y avait aussi des scans et des polices
+indéchiffrables, dont le texte est du bruit.
+
+**La règle.** Un fichier n'est pas un papier parce qu'il a été téléchargé à
+l'endroit attendu. **On vérifie son identité sur son contenu** (le titre au
+début) au téléchargement **et** à l'ingestion. Toute marque posée par une étape
+(`duplicate_of`) doit être lue par les suivantes : un contrôle que personne ne
+lit n'existe pas. Et un graphe de similarité est un détecteur : une similarité
+de 1,000 entre deux titres différents n'est jamais une découverte, c'est une
+panne.
+
+## L34 — Une consigne qui impose une constante que le juge refuse dresse les codeurs à la soupape
+
+**Le 2026-10-03.** La consigne de codage impose la signature
+`scores(panel, cells=None, horizon_bars: int = 30)`. Le juge `S5` lit les
+valeurs par défaut dans l'arbre syntaxique et refuse toute constante absente de
+la fiche ou de la liste close — et `30` en a été retiré le 2026-09-23. Sur dix
+codages, **quatre** ont été refusés `S5` sur ce seul `30`, et les quatre sont
+passés en écrivant `horizon_bars=None`, sans que rien de leur signal ne change.
+Ceux dont la recette contenait un `30` par hasard sont passés sans rien voir.
+Le refus ne mesurait donc rien : il dépendait d'un nombre traînant dans le
+papier. Et `None` porte depuis `D43` un autre sens dans le harnais (« jusqu'à
+la clôture ») : un même nom, deux sens (`L30`).
+
+**La règle.** Ce qu'une consigne impose, le juge doit l'accepter, et ce que le
+juge refuse, la consigne ne doit pas l'imposer. Quand des producteurs isolés
+convergent tous vers le même contournement, c'est l'outillage qui est faux, pas
+eux (`L28`). Ici : une signature sans défaut (`D07` n'en exige aucun) — par
+décision écrite, valable pour les fiches à venir.
+
+## L35 — Un seuil absolu sur un nombre sans échelle confond l'arrondi et la triche
+
+**Le 2026-10-03.** `S3` refusait tout écart de plus de 1e-12 entre le score
+calculé sur le panel complet et celui calculé sur le panel tronqué. Or le
+panel tronqué n'a pas les mêmes roulements futurs : ses prix passés sont les
+mêmes à un facteur près (×0,987 pour 6A), et les rendements diffèrent
+d'environ 1e-15. Un signal honnête qui fait une régression mal conditionnée
+amplifie cet écart jusqu'à 1e-8. Il a été refusé trois fois, la fiche a été
+écartée pour ce motif, et un codeur a fini par passer ses rendements en
+float32 pour franchir le seuil : la soupape de `L28`.
+
+**La règle.** Un seuil de comparaison se fixe **relativement à l'échelle de
+ce qu'on compare**, après avoir mesuré les deux côtés : le bruit des
+honnêtes, et l'écart des tricheurs. Ici, 4e-8 contre 5e-2 laisse dix ordres
+de grandeur de marge (`D50`). Et un résultat qui change avec une convention
+de recollement est d'abord une question sur la donnée, avant d'en être une
+sur le code.

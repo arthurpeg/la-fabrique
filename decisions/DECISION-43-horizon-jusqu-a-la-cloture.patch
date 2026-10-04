@@ -1,0 +1,225 @@
+diff --git a/harness/evaluate.py b/harness/evaluate.py
+index 684840f..2aa5fa9 100644
+--- a/harness/evaluate.py
++++ b/harness/evaluate.py
+@@ -19,22 +19,33 @@ import pandas as pd
+ 
+ from harness import controls, registry
+ from harness.costs import costs_for
+-from harness.metric import CellIC, cell_ic, forward_returns, record_pooled
++from harness.metric import CellIC, bars_to_close, cell_ic, forward_returns, record_pooled
+ from harness.report import ICReport, effective_breadth
+ from panel.panel import Panel
+ from panel.sessions import session_date, window_labels
+ 
++# D43 : "to the close of the window" -- a variable horizon, from each scored bar
++# to the last bar of its window and session.
++HORIZON_TO_CLOSE = "cloture"
+ 
+-def horizon_to_bars(horizon: str | int) -> int:
+-    """Bars are one minute here, so a horizon in minutes is a horizon in bars."""
++
++def horizon_to_bars(horizon: str | int) -> int | None:
++    """Bars are one minute here, so a horizon in minutes is a horizon in bars.
++
++    `None` for HORIZON_TO_CLOSE: the horizon is not a number of bars, it ends at
++    the close of each window.
++    """
+     if isinstance(horizon, int):
+         return horizon
+     text = str(horizon).strip().lower()
++    if text == HORIZON_TO_CLOSE:
++        return None
+     if text.endswith("min"):
+         return int(text[:-3])
+     if text.endswith("h"):
+         return int(text[:-1]) * 60
+-    raise ValueError(f"unreadable horizon {horizon!r}: expected '30min', '2h' or a number of bars")
++    raise ValueError(f"unreadable horizon {horizon!r}: expected '30min', '2h', "
++                     f"'{HORIZON_TO_CLOSE}' or a number of bars")
+ 
+ 
+ def evaluate(
+@@ -76,6 +87,12 @@ def evaluate(
+     )
+ 
+     cells: list[CellIC] = []
++    # D43 : for the horizon to the close, each cell's horizon is the median number
++    # of bars between its scored bars and the close of their window. The overlap
++    # deflation then uses the LARGEST of those medians -- the direction that
++    # deflates more, never the one that flatters.
++    to_close = bars is None
++    cell_bars: list[int] = []
+     # The cell's median RAW price over the evaluated sample: the reference the
+     # fees and the slippage are converted to bp at (D35), as the floor was.
+     prices: dict[tuple[str, str], float] = {}
+@@ -92,10 +109,20 @@ def evaluate(
+             prices[(root, window)] = float(raw[mask].median())
+             returns = forward_returns(close, sessions[mask], labels[mask], bars)
+             aligned = scores[(root, window)].reindex(close.index)
+-            measured = cell_ic(aligned, returns, close.index, root, window, bars, ticket)
++            horizon_here = bars
++            if to_close:
++                remaining = bars_to_close(sessions[mask], labels[mask])
++                scored = aligned.dropna().index
++                rest = remaining.reindex(scored).dropna()
++                rest = rest[rest > 0]
++                horizon_here = int(rest.median()) if len(rest) else 1
++                cell_bars.append(horizon_here)
++            measured = cell_ic(aligned, returns, close.index, root, window, horizon_here, ticket)
+             if measured is not None:
+                 cells.append(measured)
+ 
++    if to_close:
++        bars = max(cell_bars) if cell_bars else 1
+     instruments = len(panel.universe())
+     breadth = effective_breadth()
+     settled = record_pooled(
+diff --git a/harness/metric.py b/harness/metric.py
+index 9711a07..184af64 100644
+--- a/harness/metric.py
++++ b/harness/metric.py
+@@ -84,19 +84,34 @@ def forward_returns(
+     close: pd.Series,
+     session: pd.Series,
+     window: pd.Series,
+-    horizon_bars: int,
++    horizon_bars: int | None,
+ ) -> pd.Series:
+     """The return from each bar to `horizon_bars` later, within the same window and session.
+ 
+     The horizon is counted in BARS, not in minutes: 99.4 % of the bars are one
+     minute apart, but not all of them. The realised horizon is measured and
+     reported beside every IC rather than assumed -- see `cell_ic`.
++
++    `horizon_bars = None` is the horizon "to the close of the window" (D43): the
++    return from each bar to the LAST bar of its own window and session. The last
++    bar has no future inside its window and yields no return.
+     """
+     key = pd.Series(list(zip(session, window, strict=True)), index=close.index)
+-    future = close.groupby(key, sort=False).shift(-horizon_bars)
++    groups = close.groupby(key, sort=False)
++    if horizon_bars is None:
++        last = groups.transform("last")
++        remaining = groups.cumcount(ascending=False)
++        return (last / close - 1.0).where(remaining > 0)
++    future = groups.shift(-horizon_bars)
+     return future / close - 1.0
+ 
+ 
++def bars_to_close(session: pd.Series, window: pd.Series) -> pd.Series:
++    """For each bar, how many bars remain before the close of its window (D43)."""
++    key = pd.Series(list(zip(session, window, strict=True)), index=session.index)
++    return key.groupby(key, sort=False).cumcount(ascending=False)
++
++
+ def realised_horizon(
+     index: pd.DatetimeIndex, starts: pd.DatetimeIndex, horizon_bars: int
+ ) -> tuple[float, float]:
+diff --git a/harness/registry.py b/harness/registry.py
+index 07f3915..16181b3 100644
+--- a/harness/registry.py
++++ b/harness/registry.py
+@@ -65,7 +65,7 @@ STAGES = (
+ REQUESTED_BY = ("agent", "script", "humain")
+ 
+ TEST_ID = re.compile(r"^T-\d{8}T\d{6}-[0-9a-f]{6}$")
+-HORIZON = re.compile(r"^\d+(min|h)$")
++HORIZON = re.compile(r"^(\d+(min|h)|cloture)$")  # D43 : "cloture" = to the close of the window
+ CODE_HASH = re.compile(r"^[0-9a-f]{16}$")
+ 
+ 
+@@ -152,7 +152,7 @@ def open_test(
+     if data_slice not in SLICES:
+         raise ValueError(f"unknown slice {data_slice!r}; D01 5 left {list(SLICES)}")
+     if not HORIZON.match(str(horizon)):
+-        raise ValueError(f"unreadable horizon {horizon!r}: expected '30min' or '2h'")
++        raise ValueError(f"unreadable horizon {horizon!r}: expected '30min', '2h' or 'cloture'")
+     return Ticket(
+         signal_id=signal_id,
+         hypothesis_ref=hypothesis_ref,
+@@ -229,7 +229,7 @@ def validate_record(record: dict) -> list[str]:
+     typed("signal_id", str, lambda v: bool(v.strip()), "is empty")
+     typed("stage", str, lambda v: v in STAGES, f"is not one of {list(STAGES)}")
+     typed("data_slice", str, lambda v: v in SLICES, f"is not one of {list(SLICES)}")
+-    typed("horizon", str, lambda v: bool(HORIZON.match(v)), "is not '<n>min' or '<n>h'")
++    typed("horizon", str, lambda v: bool(HORIZON.match(v)), "is not '<n>min', '<n>h' or 'cloture'")
+     typed("requested_by", str, lambda v: v in REQUESTED_BY, f"is not one of {list(REQUESTED_BY)}")
+     typed("code_hash", str, lambda v: bool(CODE_HASH.match(v)), "is not 16 hex characters")
+     typed("cells", int, lambda v: v >= 0, "is negative")
+diff --git a/scripts/gate_03_harness.py b/scripts/gate_03_harness.py
+index 95877a0..a1915f1 100644
+--- a/scripts/gate_03_harness.py
++++ b/scripts/gate_03_harness.py
+@@ -187,6 +187,37 @@ def main() -> int:
+           f"({report_noise.instruments} instruments pour {report_noise.breadth:.2f} paris) ; "
+           f"cibles 0,018 et 0,031 présentes")
+ 
++    # D43 : l'horizon « jusqu'à la clôture de la fenêtre ». Le score parfait est le
++    # rendement jusqu'à la clôture : l'IC doit valoir 1, et une seconde
++    # implémentation, barre par barre, doit retrouver les mêmes rendements.
++    print("4 bis. l'horizon jusqu'à la clôture de la fenêtre (D43)")
++    from harness.metric import bars_to_close  # noqa: PLC0415
++
++    parfait_cloture = {cell: forward_returns(close, sessions, windows, None)
++                       for cell, (close, sessions, windows) in series.items()}
++    rapport_cloture = evaluate(parfait_cloture, panel, "cloture",
++                               signal_id="calibration-cloture", stage="03-calibration")
++    for measured in rapport_cloture.cells:
++        check(abs(measured.ic - 1.0) < 1e-9,
++              f"clôture : {measured.root} x {measured.window} IC {measured.ic:.9f} au lieu de 1")
++    close, sessions, windows = series[("NQ", "US")]
++    auto = forward_returns(close, sessions, windows, None).dropna()
++    reste = bars_to_close(sessions, windows)
++    a_la_main = {}
++    valeurs, sv, wv = close.to_numpy(), sessions.to_numpy(), windows.to_numpy()
++    for i in range(0, len(close), 997):
++        j = i + int(reste.iloc[i])
++        if j > i and sv[j] == sv[i] and wv[j] == wv[i]:
++            a_la_main[close.index[i]] = valeurs[j] / valeurs[i] - 1.0
++    commun = pd.Series(a_la_main).reindex(auto.index).dropna()
++    check(len(commun) > 100 and float((auto.reindex(commun.index) - commun).abs().max()) < 1e-12,
++          "clôture : la seconde implémentation ne retrouve pas les rendements")
++    check(rapport_cloture.horizon == "cloture" and rapport_cloture.horizon_bars > 1,
++          "clôture : le rapport ne porte pas l'horizon ou son nombre de barres")
++    print(f"   IC 1 sur {len(rapport_cloture.cells)} cellules ; "
++          f"{len(commun)} rendements reproduits ; "
++          f"déflation sur {rapport_cloture.horizon_bars} barres (la plus longue médiane)")
++
+     print("5. le coût est un plancher étiqueté, et une évaluation = une ligne")
+     check(report_perfect.cost_floor_bp > 0, "le plancher de coût est nul ou absent")
+     check(
+diff --git a/scripts/measure_lot.py b/scripts/measure_lot.py
+index 7bfc9a4..40d5fcc 100644
+--- a/scripts/measure_lot.py
++++ b/scripts/measure_lot.py
+@@ -60,7 +60,7 @@ HORIZON_CLOTURE = "cloture"
+ # L'empreinte du harnais avec lequel le lot sera mesuré. None tant que la
+ # décision de harnais groupée (`D26`, `D28`, `D29`) n'est pas prise : elle
+ # renseigne cette valeur, et nulle part ailleurs.
+-HARNAIS_DU_LOT: str | None = "94b495fa7525d3b8"  # D35, D37
++HARNAIS_DU_LOT: str | None = "bfcfcae68c20a212"  # D35, D37, D43
+ 
+ 
+ RAPPORTS = REPO / "scripts" / "out" / "rapports"
+@@ -133,9 +133,6 @@ def prealables() -> tuple[list[str], list[dict]]:
+         h = e.get("horizon")
+         if not h:
+             fautes.append(f"{e.get('fiche_id')} : pas d'horizon déclaré (D42)")
+-        elif h == HORIZON_CLOTURE:
+-            fautes.append(f"{e.get('ref')} : horizon « jusqu'à la clôture de la fenêtre » — "
+-                          "le harnais ne sait pas encore le mesurer (D42)")
+     a_faire = [e for e in entries
+                if not any(est_officielle(r, e, courant) for r in registre)]
+     return fautes, a_faire
+@@ -175,7 +172,9 @@ def main(argv: list[str]) -> int:
+         # l'univers écrit AVANT, jamais une cellule choisie après.
+         garder = cellules_de(e["universe"]) & set(panel.cells())
+         horizon = e["horizon"]
+-        barres = horizon_to_bars(horizon)
++        # D43 : la clôture est un horizon variable ; le signal pose ses scores à
++        # l'ancrage par défaut, le harnais mesure jusqu'à la clôture de chaque fenêtre.
++        barres = horizon_to_bars(horizon) or 30
+         scores = {c: s for c, s in module.scores(panel, horizon_bars=barres).items()
+                   if c in garder}
+         rapport = evaluate(scores, panel, horizon,

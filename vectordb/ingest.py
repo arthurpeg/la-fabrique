@@ -109,6 +109,9 @@ CITATION = re.compile(r"\*\*(?P<authors>[^*]+?)\s*\((?P<year>\d{4})\)\*\*"
 HARVEST = REPO / "corpus" / "harvest.json"
 HARVEST_PDFDIR = REPO / "corpus" / "pdf" / "harvest"
 
+sys.path.insert(0, str(REPO / "corpus"))
+from titre_du_pdf import porte_son_titre  # noqa: E402
+
 
 @dataclass(slots=True)
 class Source:
@@ -344,6 +347,17 @@ def harvest_sources(filtre: str | None = None,
             # Un PDF sur le disque que la moisson ne connaît pas : on ne devine
             # pas ses métadonnées, on le saute en le disant.
             print(f"  ignoré, absent de harvest.json : {pdf.name}")
+            continue
+        # Un doublon repéré par la moisson n'entre pas : son texte est déjà en
+        # base sous un autre nom (2026-10-02 — le contrôle existait, l'ingestion
+        # l'ignorait, et deux paires de papiers avaient les mêmes vecteurs).
+        if w.get("duplicate_of"):
+            print(f"  ignoré, doublon de {w['duplicate_of'].get('file')} : {pdf.name}")
+            continue
+        # Un PDF qui ne porte pas le titre du papier n'est pas ce papier
+        # (`corpus/titre_du_pdf.py`) : un lien de bibliographie pris pour le PDF.
+        if not w.get("title_check_ok") and not porte_son_titre(pdf, w.get("title") or ""):
+            print(f"  ignoré, le PDF ne porte pas son titre : {pdf.name}")
             continue
         # Deja en base : on ne relit pas son PDF (2026-09-29). Sans ce saut,
         # chaque versement relisait des milliers de PDF pour les ecarter a

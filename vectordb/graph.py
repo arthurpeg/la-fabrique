@@ -57,10 +57,12 @@ def fetch(db: VectorDB, top: int) -> dict:
         """, (list(SOURCES),))
         papers = cur.fetchall()
 
-        # Un centroide par papier, puis toutes les paires. 136 papiers font
-        # 9 180 paires : trivial pour Postgres, impensable sur les morceaux.
+        # Un centroide par papier, puis les `top` plus proches de chacun,
+        # calculés dans la base : 1 942 papiers font 1,9 million de paires
+        # (2026-10-02), trop pour les rapatrier toutes.
+        cur.execute("set statement_timeout = '15min'")
         cur.execute("""
-            with cent as (
+            with cent as materialized (
                 select paper_id, avg(embedding)::vector(768) as v
                 from chunks
                 where embedding is not null and paper_id in (
@@ -71,9 +73,16 @@ def fetch(db: VectorDB, top: int) -> dict:
             -- deux `paper_id` et `dict_row` ne garde QUE LA SECONDE : les 231
             -- arêtes sortaient avec la similarité à la place du premier
             -- identifiant, et le graphe entier était faux sans une erreur.
-            select a.paper_id as pa, b.paper_id as pb, 1 - (a.v <=> b.v) as sim
-            from cent a join cent b on a.paper_id < b.paper_id
-        """, (list(SOURCES),))
+            select a.paper_id as pa, k.paper_id as pb, k.sim
+            from cent a
+            cross join lateral (
+                select c.paper_id, 1 - (a.v <=> c.v) as sim
+                from cent c
+                where c.paper_id <> a.paper_id
+                order by a.v <=> c.v
+                limit %s
+            ) k
+        """, (list(SOURCES), top))
         paires = cur.fetchall()
 
         # Quelques extraits par papier, répartis sur les sections plutôt que
@@ -132,9 +141,10 @@ def fetch(db: VectorDB, top: int) -> dict:
     return {
         "papers": [{
             "id": str(p["id"]),
-            "title": p["title"],
+            # Le U+FFFD de pypdf se trouve aussi dans des titres (2026-10-02).
+            "title": (p["title"] or "").replace("�", ""),
             "year": p["year"],
-            "authors": (p["authors"] or [])[:4],
+            "authors": [a.replace("�", "") for a in (p["authors"] or [])[:4]],
             "url": p["pdf_url"],
             "source": p["text_source"],
             "chunks": p["chunks"],

@@ -59,6 +59,7 @@ from codage_verifie import (  # noqa: E402
     temoin_path,
 )
 from code_signal import fiche_files, module_path  # noqa: E402
+from horizon_signal import horizon_du_signal  # noqa: E402
 
 from harness import registry  # noqa: E402
 
@@ -111,8 +112,8 @@ def verdict(res: dict, signe_a: int, signe_b: int) -> tuple[str, list[str]]:
     return ("CONCORDANT" if not motifs else "DISCORDANT"), motifs
 
 
-def scores_de(module, panel) -> dict:
-    return module.scores(panel, horizon_bars=HORIZON_BARS)
+def scores_de(module, panel, horizon_bars: int = HORIZON_BARS) -> dict:
+    return module.scores(panel, horizon_bars=horizon_bars)
 
 
 def afficher(res: dict, v: str, motifs: list[str]) -> None:
@@ -167,7 +168,10 @@ def do_fiche(fiche_id: str) -> int:
     if ma.SIGNAL_ID != mb.SIGNAL_ID:
         raise SystemExit(f"SIGNAL_ID différents : {ma.SIGNAL_ID} contre {mb.SIGNAL_ID}")
     panel = Panel.open(ASOF_CONCORDANCE, slice="pool")
-    res = comparer(scores_de(ma, panel), scores_de(mb, panel))
+    # D49 : les deux codages se comparent à l'horizon de l'hypothèse, sinon de la fiche.
+    barres, source = horizon_du_signal(fiche_id)
+    print(f"horizon : {barres} barres — {source}")
+    res = comparer(scores_de(ma, panel, barres), scores_de(mb, panel, barres))
     v, motifs = verdict(res, ma.EXPECTED_SIGN, mb.EXPECTED_SIGN)
     afficher(res, v, motifs)
 
@@ -184,6 +188,7 @@ def do_fiche(fiche_id: str) -> int:
     ajouter(CONCORDANCE, {
         "at": maintenant(), "fiche_id": fiche_id, "round": len(tours) + 1,
         "asof": ASOF_CONCORDANCE, "slice": "pool", "method": "spearman, pondéré par cellule",
+        "horizon_bars": barres, "horizon_source": source,
         "thresholds": {"rho": SEUIL_RHO, "coverage": SEUIL_COUVERTURE},
         "principal": {"path": rel(principal), "sha256_16": empreinte16(principal),
                       "model": MODELE_PRINCIPAL, "expected_sign": ma.EXPECTED_SIGN,

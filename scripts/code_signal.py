@@ -77,6 +77,7 @@ import argparse
 import datetime as dt
 import hashlib
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -111,6 +112,7 @@ JUGE = REPO / "scripts" / "score_signal.py"
 # NOMME au codeur : une condition à tolérance zéro qu'on ne lui annonce pas est
 # un piège, pas un seuil. La liste fait foi dans `scripts/score_signal.py` ;
 # celle-ci est lue depuis là, jamais recopiée.
+from horizon_signal import ANCRAGE_PAR_DEFAUT, horizon_du_signal  # noqa: E402
 from score_signal import CHAMPS_RECETTE, CONVENTIONS, DU_DEPOT  # noqa: E402
 
 CONSIGNE = """\
@@ -139,9 +141,14 @@ CHOICES = (                    # tes interprétations, une chaîne chacune — D
     "la fiche dit X ; j'ai compris Y, parce que Z",
 )
 
-def scores(panel, cells=None, horizon_bars: int = 30):
+def scores(panel, cells=None, *, horizon_bars: int):
     \"\"\"Rend {{(root, window): pd.Series}}.\"\"\"
 ```
+
+- `horizon_bars` n'a **pas de valeur par défaut** (`D49`) : c'est l'appelant
+  qui le donne — l'horizon de l'hypothèse, sinon celui de la fiche. N'écris
+  aucun nombre à sa place ; si tu passes par `_common.run`, transmets-lui
+  `horizon_bars` tel que tu l'as reçu.
 
 - `EXPECTED_SIGN` dit dans quel sens le papier prétend que le signal prédit.
   Un signal dont on n'attend aucun signe est un signal dont on n'attend rien.
@@ -246,9 +253,16 @@ def run(panel, predictor, cells=None, horizon_bars: int = 30) -> dict:
     ce qui rend le signal exécutable en direct.\"\"\"
 ```
 
-**Tu n'es pas obligé de t'en servir.** Si la recette de la fiche ne se pose pas
-à la fin d'une fenêtre, écris ta propre mécanique — mais alors chaque constante
-qu'elle porte t'est comptée par `S5`.
+**L'ancrage de `run` est OBLIGATOIRE (`D51`).** Chaque score que rend
+`scores()` tombe à l'ancre de `run` : **une barre par séance et par cellule**,
+à `horizon_bars` de la clôture de la fenêtre. Le juge le vérifie sur les
+données (`S1`) : un score posé à une autre barre — à chaque minute, à une
+heure d'horloge fixe, en début de séance — est refusé. Ce que le papier
+mesure à un autre moment de la séance, ton prédicteur le **lit** dans les
+clôtures de la séance jusqu'à la barre notée ; il ne **pose** pas son score
+ailleurs. Le plus sûr est donc de passer par `run` ; si tu écris ta propre
+mécanique, ses instants doivent être exactement ceux de `run`, et chaque
+constante qu'elle porte t'est comptée par `S5`.
 
 ## Ce qu'on te demande vraiment
 
@@ -516,16 +530,21 @@ def do_judge(path: Path, fiche: Path | None, sans_donnees: bool) -> int:
     if not fiche.is_file():
         raise SystemExit(f"fiche introuvable : {fiche}")
     argv = [sys.executable, str(JUGE), str(path), "--fiche", str(fiche)]
+    # D49 : le signal se juge à l'horizon de son hypothèse, sinon de sa fiche.
+    barres, source = horizon_du_signal(fiche_id) if fiche_id else (ANCRAGE_PAR_DEFAUT, "défaut")
+    print(f"horizon du jugement : {barres} barres — {source}")
+    argv += ["--horizon-bars", str(barres), "--ancrage"]  # D51
     if sans_donnees:
         argv.append("--no-data")
     r = subprocess.run(argv, capture_output=True, text=True,
-                       encoding="utf-8", errors="replace")
+                       encoding="utf-8", errors="replace",
+                       env={**os.environ, "PYTHONIOENCODING": "utf-8"})
     print(r.stdout or r.stderr)
 
     fautes = fautes_choix(path.read_text(encoding="utf-8"))
     print("CHOICES (D34) : " + ("déclarés" if not fautes else "REFUSÉ — " + fautes[0]))
     if inscrire:
-        inscrire_jugement(path, fiche_id, r.returncode, not fautes)
+        inscrire_jugement(path, fiche_id, r.returncode, not fautes, barres)
         print("jugement inscrit : verification/jugements.jsonl")
     elif not sans_donnees:
         print("jugé contre une fiche donnée à la main : verdict NON inscrit "
@@ -534,6 +553,11 @@ def do_judge(path: Path, fiche: Path | None, sans_donnees: bool) -> int:
 
 
 def main(argv: list[str]) -> int:
+    # La console Windows (cp1252) plantait sur la sortie du juge, relayée telle
+    # quelle (vu le 2026-10-03) : on écrit en UTF-8, en remplaçant l'imprimable.
+    for flux in (sys.stdout, sys.stderr):
+        if hasattr(flux, "reconfigure"):
+            flux.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser(description="Le harnais du codeur de signal — D23")
     ap.add_argument("--list", action="store_true", help="les fiches sans signal")
     ap.add_argument("--lot", action="store_true",
