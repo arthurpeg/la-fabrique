@@ -1,0 +1,306 @@
+{
+  "fiche_id": "the-impact-of-intraday-momentum-on-stock-returns-W4200303559",
+  "written": "2026-10-04",
+  "written_by": "session de recette isolée — Claude Opus 5",
+  "formula": {
+    "statement": "Le prédicteur est le rendement de la première demi-heure de la séance (IMreturn1), et la cible le rendement de la dernière demi-heure du même jour (IMreturn13 pour le S&P500, IMreturn8 pour le CSI300). La relation est estimée par régression OLS prédictive sur la même séance : IMreturn13,t = α + β·IMreturn1,t + ε (formule 5) ; variante avec l'avant-dernière demi-heure seule (formule 6), et variante conjointe avec les deux prédicteurs (formule 7). Les formules (8), (9), (10) sont les mêmes pour le CSI300 avec IMreturn8 et IMreturn7. Le score exploitable est donc le signe/la valeur du rendement de la première demi-heure, utilisé comme signal de position sur la dernière demi-heure du même jour.",
+    "quoted": "s&p500IMreturn13,t = α + βs&p500IMreturn1,t + ϵt s = 1 …,T (5)",
+    "quoted_source": "s&p500IMreturn 13,t = α + βs&p500IMreturn1,t + + ϵt s = 1 …,T (5)",
+    "quoted_repair": "math_notation",
+    "reason": null
+  },
+  "formula_secondary": {
+    "statement": "Énoncé narratif de l'objet mesuré : prédictibilité du rendement de la dernière demi-heure par celui de la première demi-heure de la même séance.",
+    "quoted": "we examine the intraday momentum of the market, which is based on the predictability of the market’s first half-hour returns based to the market’s final half-hour returns on the same day."
+  },
+  "inputs": [
+    {
+      "name": "first_half_hour_return",
+      "description": "Rendement de la première demi-heure de la séance (IMreturn1). Pour le S&P500 il est mesuré depuis le prix de clôture de la veille (16:00 Eastern Time) jusqu'à 10:00 Eastern Time — il englobe donc le gap overnight et pas seulement 30 minutes de cotation.",
+      "known_at": "à 10:00 Eastern Time du jour t (fin de la première demi-heure telle que le papier la définit)",
+      "quoted": "closing price from 16:00 to 10:00 on Eastern Time and then every half hour starting at 09:30 to 16:00 on Eastern Time."
+    },
+    {
+      "name": "second_last_half_hour_return",
+      "description": "Rendement de l'avant-dernière demi-heure du jour t : la 12e demi-heure pour le S&P500 (IMreturn12), la 7e pour le CSI300 (IMreturn7). Second prédicteur, utilisé seul (formules 6, 9) ou conjointement avec le premier (formules 7, 10).",
+      "known_at": "à 15:30 Eastern Time du jour t pour le S&P500 (fin de la 12e demi-heure), déduit de la grille 09:30–16:00 ; le papier ne donne pas explicitement l'heure de fin de la 12e demi-heure",
+      "quoted": "...and s&p500IMreturn12,t is the second last (12) half-hour return, t is the trading day"
+    },
+    {
+      "name": "last_half_hour_return",
+      "description": "Variable expliquée : rendement de la dernière demi-heure du jour t (IMreturn13 pour le S&P500, IMreturn8 pour le CSI300). C'est la cible de la prédiction, jamais une entrée du signal.",
+      "known_at": "à 16:00 Eastern Time du jour t (15:00 Beijing Time pour le CSI300) — postérieur à la décision",
+      "quoted": "where s&p500IMreturn13,t is the last half-hour"
+    },
+    {
+      "name": "half_hour_prices",
+      "description": "Prix de demi-heure issus de données intraday 1 minute : le prix à la s-ième demi-heure et le prix de la demi-heure précédente. Le papier n'indique pas s'il s'agit du dernier prix de la demi-heure, d'un prix moyen ou d'une autre convention.",
+      "known_at": "à la fin de chaque demi-heure de la séance",
+      "quoted": "Here IMreturns,t is the price at sth half hour, and ps – 1,t is the previous half-hour price"
+    },
+    {
+      "name": "first_half_hour_volatility",
+      "description": "Volatilité de la première demi-heure, servant à ranger les jours de bourse en terciles haut / moyen / bas. La mesure de volatilité n'est jamais définie, ni les seuils de découpage.",
+      "known_at": "à 10:00 Eastern Time pour la volatilité du jour t ; mais le classement en terciles est effectué sur « all trading days in our sample », donc à partir de l'échantillon complet",
+      "quoted": "the trading volatility and trading volume are divided into three parts based on the first half-hour return; high, medium, and low."
+    },
+    {
+      "name": "first_half_hour_volume",
+      "description": "Volume de la première demi-heure, servant lui aussi à ranger les jours en terciles haut / moyen / bas.",
+      "known_at": "à 10:00 Eastern Time pour le volume du jour t ; même réserve que pour la volatilité sur le classement en terciles",
+      "quoted": "Similarly, when the volume is high and low, the first half-hour returns"
+    },
+    {
+      "name": "day_of_week_monday",
+      "description": "Indicateur de séance du lundi : le papier restreint un jeu de régressions aux seuls lundis matin (Tab. 6).",
+      "known_at": "connu d'avance, à l'ouverture de la séance",
+      "quoted": "That is why in the COVID-19 situation, we also only examine the first half-hour returns on Monday morning."
+    },
+    {
+      "name": "index_price_series",
+      "description": "Séries d'indice au comptant : S&P500 acheté chez firstratedata.com, CSI300 via joinquant.com, en barres de 1 minute, du 1er janvier 2020 au 11 septembre 2020.",
+      "known_at": "le papier ne dit rien d'un lag de publication ; données de marché, supposées disponibles en temps réel",
+      "quoted": "...S&P500 from paid sources (firstratedata.com) and the CSI300 from the Shanghai Composite Index (joinquant.com) are extracted from the sample period from January 1, 2020, to September 11, 2020."
+    }
+  ],
+  "timing": {
+    "statement": "Tout se joue dans une seule séance. Pour le S&P500 : la première demi-heure court de la clôture de la veille (16:00 Eastern Time) à 10:00 Eastern Time, les demi-heures suivantes s'enchaînent de 09:30 à 16:00 Eastern Time, pour 13 demi-heures par jour ; la cible est la 13e demi-heure du même jour t. Le signal de la première demi-heure est donc connu à 10:00 ET, et la cible se réalise à 16:00 ET du même jour. Le papier ne dit jamais à quel instant précis la position est ouverte ni à quel prix, ni combien de temps avant 16:00 elle doit l'être ; il dit seulement qu'elle est fermée à la clôture de la séance. Pour le CSI300 les horaires sont 9:30–11:30 et 13:00–15:00 Beijing Time, 8 demi-heures par jour ; aucune conversion en heure de New York n'est donnée.",
+    "quoted": "closing price from 16:00 to 10:00 on Eastern Time and then every half hour starting at 09:30 to 16:00 on Eastern Time.",
+    "reason": null
+  },
+  "parameters": [
+    {
+      "name": "half_hour_interval_minutes",
+      "value": 30,
+      "unit": "minutes",
+      "quoted": "we split the overall market hours by half an hour",
+      "derived": true,
+      "note": "Le papier parle de « half an hour » et de « half-hour returns » ; le chiffre 30 n'apparaît pas dans le texte, il est la conversion directe de « half an hour »."
+    },
+    {
+      "name": "sp500_half_hours_per_day",
+      "value": 13,
+      "unit": "demi-heures par jour",
+      "quoted": "and a total of 13 half hours of period calculated per day."
+    },
+    {
+      "name": "csi300_half_hours_per_day",
+      "value": 8,
+      "unit": "demi-heures par jour",
+      "quoted": "the half-hour returns of Chinese stock markets is only 8 on each trading day"
+    },
+    {
+      "name": "sp500_trading_hours_per_day",
+      "value": 6.5,
+      "unit": "heures",
+      "quoted": "of CSI stock market in a day is 4 hours, with a total of 240 observations, and the daily S&P500 stock trading time is 6.5 hours, with a total of 390 observations."
+    },
+    {
+      "name": "sp500_minute_observations_per_day",
+      "value": 390,
+      "unit": "observations d'une minute",
+      "quoted": "a total of 390 observations. Also, the CSI300"
+    },
+    {
+      "name": "csi300_minute_observations_per_day",
+      "value": 240,
+      "unit": "observations d'une minute",
+      "quoted": "a total of 240 observations, and the daily"
+    },
+    {
+      "name": "data_frequency_minutes",
+      "value": 1,
+      "unit": "minutes",
+      "quoted": "By using intraday data (1 minute), depending on"
+    },
+    {
+      "name": "predictor_index_first",
+      "value": 1,
+      "unit": "indice de demi-heure",
+      "quoted": "s&p500IMreturn1,t is the first half-",
+      "note": "Le texte coupe « first half-hour » en fin de ligne ; la citation s'arrête avant la coupure. Le prédicteur est la demi-heure numéro 1."
+    },
+    {
+      "name": "predictor_index_second_last_sp500",
+      "value": 12,
+      "unit": "indice de demi-heure",
+      "quoted": "second last (12) half-hour return, t is the trading"
+    },
+    {
+      "name": "predictor_index_second_last_csi300",
+      "value": 7,
+      "unit": "indice de demi-heure",
+      "quoted": "second last (7) half-hour return, t is the trading"
+    },
+    {
+      "name": "tercile_groups",
+      "value": 3,
+      "unit": "groupes",
+      "quoted": "Between the COVID-19 crisis, we sort all trading days in our sample into three groups (high, medium and low).",
+      "derived": true,
+      "note": "Le papier écrit « three groups » en mots ; le chiffre 3 n'apparaît pas dans la phrase."
+    },
+    {
+      "name": "tercile_cutoffs",
+      "value": null,
+      "unit": null,
+      "quoted": null,
+      "reason": "Les seuils de découpage des terciles de volatilité et de volume ne sont donnés nulle part dans le papier : seuls les noms « high, medium and low » apparaissent."
+    },
+    {
+      "name": "volatility_measure_definition",
+      "value": null,
+      "unit": null,
+      "quoted": null,
+      "reason": "Le papier emploie « volatility » sans jamais en donner la définition, la fenêtre de calcul ni l'estimateur."
+    },
+    {
+      "name": "newey_west_lags",
+      "value": null,
+      "unit": "retards",
+      "quoted": null,
+      "reason": "Le papier nomme l'estimateur de Newey et West (1987) pour tous les modèles mais ne donne jamais le nombre de retards (« bandwidth ») retenu."
+    },
+    {
+      "name": "significance_levels",
+      "value": null,
+      "unit": "%",
+      "quoted": "and the significant level is at 1%, 5%, or 10% as marked with ***, ** or *.",
+      "reason": "Trois seuils sont annoncés (1 %, 5 %, 10 %) : il n'y a pas une valeur unique à porter ici ; la citation les donne tous les trois."
+    },
+    {
+      "name": "sample_period_start",
+      "value": "January 1, 2020",
+      "unit": "date",
+      "quoted": "the sample period from January 1, 2020, to September 11, 2020.",
+      "note": "Soit 2020-01-01 en ISO."
+    },
+    {
+      "name": "sample_period_end",
+      "value": "September 11, 2020",
+      "unit": "date",
+      "quoted": "the sample period from January 1, 2020, to September 11, 2020.",
+      "note": "Soit 2020-09-11 en ISO."
+    },
+    {
+      "name": "number_of_trading_days",
+      "value": null,
+      "unit": "jours",
+      "quoted": null,
+      "reason": "Le nombre de jours de bourse de l'échantillon, et donc le nombre d'observations de chaque régression, n'est jamais indiqué — pas davantage pour le sous-échantillon des lundis."
+    },
+    {
+      "name": "transaction_costs",
+      "value": null,
+      "unit": null,
+      "quoted": null,
+      "reason": "Aucun coût de transaction, spread ou slippage n'est chiffré ; le papier renvoie seulement à la littérature en affirmant que le momentum intraday « endures after reasonable transaction costs are considered »."
+    }
+  ],
+  "ambiguities": [
+    {
+      "question": "Le rendement de demi-heure est-il logarithmique ou arithmétique ?",
+      "resolution": null,
+      "quoted": null,
+      "reason": "Les formules (1) et (2), qui définissent IMreturn, ne sont pas rendues par l'extraction du PDF : seul le commentaire des symboles subsiste (« Here IMreturns,t is the price at sth half hour, and ps – 1,t is the previous half-hour price »), ce qui ne tranche pas entre log et arithmétique — et qui par ailleurs appelle « price » ce qui est noté comme un rendement."
+    },
+    {
+      "question": "Quel prix représente une demi-heure : le dernier prix de l'intervalle, le premier, une moyenne ?",
+      "resolution": null,
+      "quoted": null,
+      "reason": "Le papier dit seulement « the price at sth half hour » et « the previous half-hour price », sans convention d'échantillonnage, alors que les données sont à la minute."
+    },
+    {
+      "question": "La première demi-heure du S&P500 inclut-elle le gap overnight ?",
+      "resolution": "Oui : le papier mesure la première demi-heure depuis le prix de clôture de la veille à 16:00 jusqu'à 10:00 Eastern Time. Ce « rendement de demi-heure » couvre donc en réalité dix-huit heures de calendrier et contient le gap de nuit.",
+      "quoted": "closing price from 16:00 to 10:00 on Eastern Time and then every half hour starting at 09:30 to 16:00 on Eastern Time."
+    },
+    {
+      "question": "À quel instant exact le signal de la première demi-heure est-il connu — 10:00 ou 09:30 — et les 13 demi-heures se chevauchent-elles ?",
+      "resolution": null,
+      "quoted": null,
+      "reason": "Contradiction interne non résolue : la première demi-heure est dite aller de 16:00 (veille) à 10:00, la seconde « from 10:00 to 16:00 on Eastern Time », et la grille est annoncée « starting at 09:30 to 16:00 » pour 13 demi-heures. Or 09:30–16:00 contient exactement 13 intervalles de trente minutes, dont le premier est 09:30–10:00. Le papier ne dit pas si la première demi-heure (16:00 → 10:00) remplace l'intervalle 09:30–10:00 ou s'y ajoute."
+    },
+    {
+      "question": "À quel instant et à quel prix la position est-elle ouverte, puis fermée ?",
+      "resolution": "Le papier dit seulement que la position est longue si le signal est positif, et que l'on « ferme » à chaque séance ; aucune heure d'entrée, aucun prix d'exécution, aucun délai entre la connaissance du signal et l'entrée ne sont spécifiés.",
+      "quoted": "If the time signal is positive, we will take a long position; otherwise, we will close the market each trading day."
+    },
+    {
+      "question": "Quand le signal est négatif, sort-on du marché ou prend-on une position courte ?",
+      "resolution": "Les deux règles du papier divergent : la règle à un signal dit « otherwise, we will close the market », tandis que la règle à deux signaux (IMreturn1 et IMreturn12 ; IMreturn1 et IMreturn7) dit explicitement « otherwise short position ».",
+      "quoted": "if all returns are positive, we should go long position otherwise short position."
+    },
+    {
+      "question": "Quel signal déclenche la position : la première demi-heure ou la dernière ?",
+      "resolution": null,
+      "quoted": "The present study uses market timing value as a predictive indicator, that is, the first half-hour to second last half-hour timing signal.",
+      "reason": "La section 3.3 décrit ensuite la prise de position comme conditionnée au signe du signal de la *dernière* demi-heure, ce qui est inexploitable (la dernière demi-heure est la cible), alors que toute la méthodologie et les régressions reposent sur la première demi-heure. Le papier ne lève pas la contradiction. La section « Discussion » ajoute une troisième version, inverse : si la première demi-heure est positive, « investors should control the short position »."
+    },
+    {
+      "question": "Les terciles de volatilité et de volume sont-ils calculés sur l'échantillon complet (donc avec de l'information postérieure à la date de décision) ou de façon glissante ?",
+      "resolution": "Le papier trie « all trading days in our sample into three groups », c'est-à-dire sur l'échantillon entier : le classement d'un jour dépend de jours postérieurs. Aucune version glissante ou point-in-time n'est mentionnée.",
+      "quoted": "Between the COVID-19 crisis, we sort all trading days in our sample into three groups (high, medium and low)."
+    },
+    {
+      "question": "Comment la volatilité des terciles est-elle mesurée, et où sont les seuils ?",
+      "resolution": null,
+      "quoted": null,
+      "reason": "Ni la définition de la volatilité (fenêtre, estimateur, intraday ou journalière) ni les bornes des terciles ne sont données. La construction n'est pas reproductible en l'état."
+    },
+    {
+      "question": "Le coefficient 0.314 appartient-il au tercile de volatilité haute ou au tercile moyen ?",
+      "resolution": null,
+      "quoted": "(0.314) is significant with at 10% confidence",
+      "reason": "Contradiction entre le texte et Tab. 5 Panel A : le texte attribue 0.314 à la volatilité haute et le déclare significatif à 10 %, alors que le tableau donne 0.155* (t = 1.75) en colonne « High » et 0.314 sans étoile (t = 0.48) en colonne « Medium ». Le papier ne tranche pas."
+    },
+    {
+      "question": "Le CSI300 est-il significatif en formule (8) ?",
+      "resolution": null,
+      "quoted": "and statistically significant with ℛ2 is 0.005.",
+      "reason": "Contradiction entre le texte, qui dit « statistically significant », et Tab. 1 Panel B, qui donne βIMreturn1 = 0.0207 avec t = (0.84) et aucune étoile."
+    },
+    {
+      "question": "Comment les horaires du CSI300 se convertissent-ils en heure de New York, et sa première demi-heure part-elle aussi de la clôture de la veille ?",
+      "resolution": "Le papier donne les horaires chinois en Beijing Time (9:30–11:30 et 13:00 à 15:00) et dit que le calcul du CSI300 est identique à celui du S&P500, « seul l'intervalle de temps » changeant. Aucune conversion en heure de New York n'est donnée, et le traitement de la pause déjeuner dans la chaîne des demi-heures n'est pas précisé.",
+      "quoted": "Here the CSI300 data calculation is the same as S&P500 data. We only change the time interval"
+    },
+    {
+      "question": "Comment sont traités les jours fériés, les séances écourtées et les lundis fériés ?",
+      "resolution": null,
+      "quoted": null,
+      "reason": "Le papier ne mentionne ni jour férié, ni séance écourtée, ni demi-journée de bourse ; le critère « Monday morning » ne dit rien du cas où le lundi est fermé."
+    },
+    {
+      "question": "Combien d'observations entrent dans chaque régression, en particulier celle du lundi ?",
+      "resolution": null,
+      "quoted": null,
+      "reason": "Aucun nombre d'observations, ni nombre de jours de bourse, n'est rapporté. Le résultat le plus fort du papier (Tab. 6, lundi, R² 0.478, t = 4.11) porte sur un sous-échantillon de taille inconnue."
+    },
+    {
+      "question": "Le nombre de retards de l'estimateur de Newey-West change les t-stats : lequel est utilisé ?",
+      "resolution": "Le papier annonce des t-statistiques robustes de Newey et West (1987) pour tous les modèles, avec des seuils à 1 %, 5 % et 10 %, mais ne donne pas le nombre de retards.",
+      "quoted": "Finally, Newey and West (1987) Robust t-statistics is used here for all regression model cases,"
+    },
+    {
+      "question": "Les diagnostics autorisent-ils la lecture des t-stats annoncées ?",
+      "resolution": null,
+      "quoted": "The insignificant p-value (reported in Tab. 2) indicates that there is no problem with heteroscedasticity and serial correlation in the study models.",
+      "reason": "Le texte lit Tab. 2 à l'envers : le test de Breusch-Pagan/Cook-Weisberg y donne p = 0.0019 (S&P500) et p = 0.0000 (CSI300), et les tests de normalité 0.0000 et 0.0167 — tous rejettent. Seul le test de Breusch-Godfrey ne rejette pas (0.2825 et 0.7521). Le papier ne résout pas la contradiction."
+    },
+    {
+      "question": "Le papier propose-t-il un rendement de stratégie à répliquer ?",
+      "resolution": null,
+      "quoted": null,
+      "reason": "Les formules (11) et (12) censées donner le rendement conditionnel ne sont pas rendues par l'extraction, le texte renvoie de surcroît à des « formulas (12), (13), and (14) » qui n'existent pas, et aucun rendement, Sharpe ou drawdown n'est publié."
+    }
+  ],
+  "market": {
+    "studied": "Deux indices actions au comptant, en données intraday d'une minute, sur janvier–septembre 2020 : le S&P500 (marché américain, séance 9:30–16:00 Eastern Time) et le CSI300 chinois (séance 9:30–11:30 et 13:00–15:00 Beijing Time). Une série temporelle par marché, pas d'univers transversal, pas de futures ni d'actions individuelles.",
+    "quoted": "we investigate the intraday momentum of the S&P500 and CSI300 index data for three primary reasons.",
+    "exact_roots": ["ES"],
+    "sessions": ["US"],
+    "sessions_quoted": "the trading hours of US stock markets are from 9:30 to 16:00 Eastern Time.",
+    "sessions_reason": null
+  }
+}
