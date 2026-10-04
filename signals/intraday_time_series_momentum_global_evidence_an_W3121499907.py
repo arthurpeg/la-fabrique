@@ -18,6 +18,11 @@ intraday : elles supposent seize indices au comptant en devises differentes et
 un investisseur en dollars. Elles ne sont pas codees, et la fiche le dit
 elle-meme dans `transposability.what_does_not_transfer`.
 
+La these du papier est que l'ITSM est un phenomene *general* : la meme regle,
+sans parametre, appliquee marche par marche a tout son univers. Elle est donc
+appliquee ici marche par marche a tout notre univers, chaque cellule mesuree
+separement comme le papier mesure separement chacun de ses seize indices.
+
 Ce qui manquait, et ce qui a ete fait a la place
 ------------------------------------------------
 - `pclose,t-1` (cloture de la veille), denominateur exact de rF_t dans le
@@ -66,6 +71,16 @@ CHOICES = (
     "score brut exactement nul reste nul et ne vote dans aucun sens ; je n'ai "
     "pas transforme le score pour forcer le zero du cote court, ce qui aurait "
     "demande un choix que la fiche ne fait pas pour un score continu.",
+    "Univers : le papier mesure la MEME regle, sans parametre libre, "
+    "separement sur chacun des seize marches de son univers, et sa these est "
+    "precisement la generalite de l'effet (« 12 des 16 marches »). Je "
+    "l'applique donc separement a chaque cellule que l'appelant soumet, sans "
+    "selectionner d'instrument. `recipe.market.exact_roots` = [\"ES\"] et "
+    "`recipe.market.sessions` = [\"US\"] nomment le plus proche analogue de "
+    "l'indice americain, mais s'y restreindre coderait un resultat pays "
+    "isole du papier, non sa these ; et aucune de nos neuf racines n'est un "
+    "indice au comptant, donc aucune n'est l'objet du papier plus qu'une "
+    "autre.",
     "`pclose,t-1` est hors d'atteinte d'un predicteur qui ne voit que sa propre "
     "seance : le denominateur de rF_t est la premiere cloture disponible de la "
     "seance, pas la cloture de la veille. Le rendement mesure donc la premiere "
@@ -96,15 +111,11 @@ CHOICES = (
     "sans poser le score ailleurs, ce qui est refuse. Le predicteur se contente "
     "donc de lire la premiere demi-heure dans les clotures jusqu'a la barre "
     "notee.",
-    "Univers : `recipe.market.exact_roots` vaut [\"ES\"] et "
-    "`recipe.market.sessions` vaut [\"US\"] — le papier n'etudie que des "
-    "indices actions au comptant, et le seul analogue chez nous est l'indice "
-    "actions americain sur sa seance locale (9:30-16:00 Eastern, la seule place "
-    "dont le papier donne l'horaire). Je restreins donc aux cellules de racine "
-    "ES, et parmi elles a la fenetre nommee US si elle existe. Si le panel "
-    "n'offre aucune cellule ES, je ne devine pas un autre nom et je laisse "
-    "passer les cellules demandees telles quelles, le motif de la fiche etant "
-    "declare « directement testable » par instrument.",
+    "La pause dejeuner et l'heterogeneite des horaires (Tokyo) sont signalees "
+    "par la fiche sans consequence tranchee : je ne traite aucune pause a part. "
+    "La premiere barre de la seance telle que la donne le panel sert de debut "
+    "de seance, conformement a la resolution « premier enregistrement du jour "
+    "comme ouverture ».",
     "Les filtres de prix 1.2 / 0.8, l'amorce de cinq ans, le tri en trois "
     "groupes a 30 %, le spread High-Low sur cinq minutes, le facteur 100 "
     "d'echelle des pentes, les 2000 replications bootstrap et les valeurs "
@@ -128,10 +139,6 @@ INTERVAL_MINUTES = 30
 # Arithmetique d'horloge, valeurs du depot et non du papier.
 MINUTES_PER_HOUR = 60
 MINUTES_PER_DAY = 24 * MINUTES_PER_HOUR
-
-# `recipe.market.exact_roots` / `recipe.market.sessions`.
-PAPER_ROOT = "ES"
-PAPER_SESSION = "US"
 
 
 def _first_half_hour_return(closes: pd.Series, position: int) -> float | None:
@@ -166,23 +173,11 @@ def _first_half_hour_return(closes: pd.Series, position: int) -> float | None:
     return float(last / base - 1)
 
 
-def _paper_cells(panel, cells):
-    """Les cellules retenues : racine du papier, et sa fenetre si elle existe."""
-    requested = list(panel.cells()) if cells is None else [tuple(c) for c in cells]
-
-    same_root = [cell for cell in requested if cell[0] == PAPER_ROOT]
-    if not same_root:
-        return requested
-
-    same_session = [cell for cell in same_root if cell[1] == PAPER_SESSION]
-    return same_session if same_session else same_root
-
-
 def scores(panel, cells=None, *, horizon_bars: int):
     """Rend {(root, window): pd.Series} — un score de rF_t par seance."""
     return _common.run(
         panel,
         _first_half_hour_return,
-        _paper_cells(panel, cells),
+        cells,
         horizon_bars=horizon_bars,
     )
