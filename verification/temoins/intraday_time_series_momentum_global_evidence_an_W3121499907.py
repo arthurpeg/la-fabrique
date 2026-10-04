@@ -1,32 +1,29 @@
-"""Intraday time series momentum (Li, Sakkas, Urquhart) -- signal temoin.
+"""Intraday time series momentum (Li, Sakkas, Urquhart) : rendement de la
+premiere demi-heure, gap overnight inclus, comme predicteur de la derniere
+demi-heure de la meme seance.
 
-Le score est rF_t, le rendement de la premiere demi-heure de la seance, rapporte
-a la cloture de la seance precedente (gap overnight inclus) :
+Score = rF_t = pfirst30,t / pclose,t-1 - 1 (le "score brut" de la recette),
+pose a l'ancre de `_common.run` (une barre par seance et par cellule).
 
-    rF_t = pfirst30,t / pclose,t-1 - 1
-
-Le papier prend la position sur la derniere demi-heure selon le SIGNE de rF_t
-(longue si rF_t > 0, courte sinon). Le score rendu est rF_t brut (recette :
-« score = rF_t ») ; le signe est porte par le score, la cible est rL_t.
-
-Lecture causale : le predicteur ne lit que les clotures de la seance jusqu'a la
-position de la barre notee. La cloture de la veille vient de la seance
-precedente, deja entierement passee.
-
-Ce qui ne se transpose pas, ou manque :
-- le papier traite 16 indices au comptant en dollars US ; ici des futures
-  intraday en OHLCV, dans la devise de la cellule, sans conversion ;
-- le papier ne donne pas la regle exacte du « dernier prix des 30 premieres
-  minutes » ; on prend la cloture de la derniere barre ouverte dans les 30
-  premieres minutes ;
-- toute la moitie internationale (portefeuilles globaux, TVC, ACP), la
-  regression predictive, les tris de liquidite et d'information discreteness
-  ne sont pas codes : ils ne sont pas des scores par instrument et par barre ;
-- aucun cout de transaction (le papier n'en donne pas).
+Ce qui ne se transpose pas, et ce qui manquait :
+- les 16 indices au comptant, la conversion en dollars, les 18 portefeuilles
+  globaux, le facteur TVC, l'ACP, les tris par liquidite (Corwin-Schultz) et
+  par information discreteness ne sont pas codes : ce sont des regimes ou des
+  constructions multi-marches, pas le signal de base ;
+- le filtre de prix extremes (1.2 / 0.8 du plus haut / plus bas prix
+  journalier de l'echantillon) exige une statistique sur la serie entiere :
+  il lirait l'avenir, il n'est pas applique ;
+- la cible rL_t (derniere demi-heure) est ce que le harnais mesure ; elle
+  n'est pas calculee ici ;
+- le papier ne dit pas quel champ (open/high/low/last) sert de prix par
+  minute, ni comment traiter les encheres : on prend la cloture de barre.
 """
 
 from __future__ import annotations
 
+import math
+
+import numpy as np
 import pandas as pd
 
 from signals import _common
@@ -40,89 +37,94 @@ PAPER = (
 EXPECTED_SIGN = +1
 
 CHOICES = (
-    "la fiche dit que rF_t est le rendement des 30 premieres minutes rapporte a "
-    "la cloture de la veille ; j'ai code score = rF_t brut (sans normalisation "
-    "par la volatilite, la recette n'en applique aucune), avec la cloture de la "
-    "derniere barre de la seance precedente comme denominateur, parce que le "
-    "papier inclut explicitement le gap overnight",
-    "la fiche donne interval_minutes = 30 ; j'ai pris comme « dernier prix des "
-    "30 premieres minutes » la cloture de la derniere barre dont l'horodatage "
-    "d'ouverture est strictement a moins de 30 minutes de l'ouverture de la "
-    "premiere barre de la seance, car une barre est horodatee a son ouverture",
-    "la fiche ne dit pas ce qui se passe si la barre notee tombe avant la fin des "
-    "30 premieres minutes ; je ne rends alors aucun score (None), plutot que de "
-    "lire une fenetre tronquee",
-    "la fiche donne la regle de signe (long si rF_t > 0, court si rF_t <= 0) "
-    "comme regle de position ; le score rendu est rF_t lui-meme, dont le signe "
-    "porte cette regle, et EXPECTED_SIGN = +1 car rF_t predit positivement rL_t",
-    "la fiche utilise la premiere observation du jour comme ouverture ; j'ai pris "
-    "la premiere barre de la seance de la cellule comme ouverture, et la derniere "
-    "barre de la seance precedente (recollee, via _common.cell_bars) comme "
-    "cloture de la veille ; premiere seance de l'historique sans veille : omise",
-    "la fiche travaille en dollars US sur indices au comptant ; la conversion de "
-    "devise n'est pas faite, les clotures recollees de la cellule sont utilisees "
-    "telles quelles",
-    "la pause dejeuner et l'heterogeneite des horaires ne sont pas traitees (le "
-    "papier ne dit pas comment) : les 30 minutes sont comptees sur l'horloge des "
-    "horodatages des barres",
-    "l'ancrage du score est celui de _common.run, avec horizon_bars transmis tel "
-    "que recu, sans valeur par defaut",
+    "la fiche donne le score brut rF_t (continu) et une regle de signe "
+    "(long si rF_t > 0, court sinon) ; j'ai pose le score continu rF_t, pas "
+    "le signe, parce que la recette l'appelle 'le score brut' et que la "
+    "regression predictive du papier est faite sur rF_t ; le signe se lit "
+    "dans le score (un rF_t exactement nul donne un score nul, la ou la "
+    "regle de trading le rangerait cote court)",
+    "EXPECTED_SIGN = +1 : le papier annonce que la premiere demi-heure "
+    "predit positivement la derniere (pente positive, long si le matin monte)",
+    "la longueur de la premiere demi-heure est 30 minutes (interval_minutes "
+    "de la recette) ; les barres comptees sont celles dont l'ouverture est "
+    "a moins de 30 minutes entieres de la premiere barre de la seance, et le "
+    "'dernier prix' est la cloture de la derniere de ces barres",
+    "l'ouverture de la seance est l'horodatage de la premiere barre de la "
+    "seance, conformement au papier (premiere observation du jour) ; les "
+    "ecarts d'horloge sont compares en minutes entieres",
+    "le dénominateur est la derniere cloture de la seance precedente de la "
+    "meme cellule (cloture recollee de cell_bars), pour inclure le gap "
+    "overnight comme le dit le papier ; une seance sans seance precedente "
+    "dans les donnees n'a pas de score ; 'seance precedente' est la seance "
+    "voisine dans la serie de la cellule, sans calendrier de jours feries",
+    "sur des futures presque continus, le gap overnight n'a pas le sens du "
+    "papier (indices qui ferment) ; je garde la definition du papier "
+    "appliquee a la seance de la cellule, sans la corriger",
+    "si la premiere demi-heure n'est pas entierement ecoulee a la barre "
+    "notee (aucune barre visible au-dela de 30 minutes apres l'ouverture), "
+    "le prédicteur ne rend rien plutot que d'utiliser une fenetre partielle",
+    "le filtre de prix extremes du papier (1.2 et 0.8 du plus haut et plus "
+    "bas prix journalier de l'echantillon) n'est pas applique : il demande "
+    "une statistique sur la serie entiere, donc l'avenir",
+    "les prix sont ceux du panel (pas de conversion en dollars, pas de "
+    "devise locale a traiter) ; aucun cout, aucune taille de position, aucune "
+    "normalisation par la volatilite (parametres null dans la recette)",
+    "horizon_bars est transmis tel quel a _common.run, qui fixe l'ancre "
+    "(une barre par seance et par cellule) ; les regimes (liquidite, "
+    "information discreteness, crise) et le signal croise US ne sont pas "
+    "codes",
 )
 
-INTERVAL_MINUTES = 30
 
-
-def _previous_closes(panel, root, window):
-    """Pour chaque seance, cle = horodatage de sa premiere barre, valeur =
-    derniere cloture de la seance precedente (seances deja terminees)."""
-    closes, sessions = _common.cell_bars(panel, root, window)
+def _previous_closes(closes: pd.Series, sessions: pd.Series) -> dict:
+    """Pour chaque seance, l'horodatage de sa premiere barre -> derniere
+    cloture de la seance precedente (passe seulement)."""
+    ids = sessions.ne(sessions.shift(1)).cumsum()
+    firsts = closes.index.to_series().groupby(ids.values, sort=True).first()
+    lasts = closes.groupby(ids.values, sort=True).last()
     out = {}
-    current = None
-    current_first = None
-    last_close_of_prev = None
-    last_close = None
-    for ts, close, sess in zip(closes.index, closes.to_numpy(), sessions.to_numpy()):
-        if current is None or sess != current:
-            if current is not None:
-                last_close_of_prev = last_close
-            current = sess
-            current_first = ts
-            out[current_first] = last_close_of_prev
-        last_close = close
+    previous = None
+    for key in firsts.index:
+        if previous is not None:
+            out[firsts.loc[key]] = previous
+        previous = lasts.loc[key]
     return out
-
-
-def _make_predictor(prev_by_open):
-    span = pd.Timedelta(minutes=INTERVAL_MINUTES)
-
-    def predictor(closes, position):
-        sub = closes.iloc[: position + 1]
-        if len(sub) == 0:
-            return None
-        start = sub.index[0]
-        inside = (sub.index - start) < span
-        if inside.all():
-            return None
-        first30 = sub[inside].iloc[-1]
-        prev = prev_by_open.get(start)
-        if prev is None or pd.isna(prev) or prev == 0:
-            return None
-        return float(first30 / prev - 1)
-
-    return predictor
 
 
 def scores(panel, cells=None, *, horizon_bars: int):
     """Rend {(root, window): pd.Series}."""
-    if cells is None:
-        cells = list(panel.cells())
-    out = {}
-    for cell in cells:
+    targets = list(panel.cells()) if cells is None else list(cells)
+    result = {}
+    for cell in targets:
         root, window = cell
-        prev_by_open = _previous_closes(panel, root, window)
-        predictor = _make_predictor(prev_by_open)
-        res = _common.run(panel, predictor, cells=[cell], horizon_bars=horizon_bars)
-        for key, series in res.items():
+        closes, sessions = _common.cell_bars(panel, root, window)
+        if len(closes) == 0:
+            continue
+        previous = _previous_closes(closes, sessions)
+        window_len = pd.Timedelta(minutes=30)
+        minute = pd.Timedelta(minutes=1)
+
+        def predictor(session_closes, position, previous=previous):
+            if len(session_closes) == 0 or position < 0:
+                return None
+            opening = session_closes.index[0]
+            prev = previous.get(opening)
+            if prev is None or not math.isfinite(prev) or prev == 0:
+                return None
+            visible = session_closes.iloc[: position + 1]
+            elapsed = (visible.index - opening) // minute
+            inside = np.asarray(elapsed < window_len // minute)
+            if inside.all():
+                return None
+            last_price = visible.iloc[int(inside.sum()) - 1]
+            if not math.isfinite(last_price):
+                return None
+            return float(last_price / prev - 1)
+
+        produced = _common.run(
+            panel, predictor, cells=[cell], horizon_bars=horizon_bars
+        )
+        for key, series in produced.items():
             if series is not None and len(series) > 0:
-                out[key] = series
-    return out
+                result[key] = series
+    return result
