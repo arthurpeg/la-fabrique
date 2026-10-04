@@ -1,76 +1,70 @@
 {
   "fiche_id": "intraday-time-series-momentum-global-evidence-an-W3121499907",
   "written": "2026-10-04",
-  "written_by": "session de recette isolee (Claude Opus 5)",
+  "written_by": "session de recette isolée (claude-opus-5)",
   "formula": {
-    "statement": "Deux objets, le second seul etant le signal tradable. (1) Rendements : rF_t = pfirst30,t / pclose,t-1 - 1 (dernier prix des 30 premieres minutes apres l'ouverture du jour t, rapporte a la cloture du jour t-1 : il inclut donc le gap overnight) et rL_t = pclose,t / plast30,t - 1 (cloture du jour t rapportee au premier prix des 30 dernieres minutes avant la cloture du meme jour t). (2) Signal : score = rF_t, et la position sur la derniere demi-heure est donnee par son signe — longue si rF_t > 0, courte si rF_t <= 0, soit rI,t = rL_t si rF_t > 0 et -rL_t sinon ; toutes les positions sont fermees a la cloture. Aucune normalisation par la volatilite, aucun parametre estime n'entre dans la regle de signe. La regression predictive rL_t = alpha + betaF*rF_t + epsilon_t sert a mesurer la predictibilite (in-sample, puis en fenetre extensible hors echantillon), pas a produire la position de la strategie evaluee en section 3.4.",
+    "statement": "Deux objets. (1) Le score brut est le rendement de la première demi-heure de la séance : rF_t = pfirst30,t / pclose,t-1 − 1, où pfirst30,t est le dernier prix des 30 premières minutes après l'ouverture du jour t et pclose,t-1 la clôture du jour t−1 (le score inclut donc le gap overnight). (2) La règle de trading n'en retient que le signe : position longue sur la dernière demi-heure du même jour si rF_t > 0, position courte si rF_t <= 0, toutes positions fermées à la clôture ; le rendement de la stratégie est rI,t = rL_t si rF_t > 0, −rL_t sinon, avec rL_t = pclose,t / plast30,t − 1. Côté statistique, la relation est estimée par la régression prédictive rL_t = alpha + betaF * rF_t + epsilon_t, par marché.",
     "quoted": "if the ﬁrst half-hour yields a positive return, we take a long position in the last half-hour on the same day; if the ﬁrst half-hour yields a negative return, we take a short position in the last half-hour on the same day. We close all the positions at the market close everyday.",
     "reason": null
   },
   "inputs": [
     {
       "name": "first_half_hour_return",
-      "description": "rF_t, rendement de la premiere demi-heure du jour t : dernier prix des 30 premieres minutes apres l'ouverture, divise par la cloture de la veille, moins 1. C'est le seul predicteur du signal de trading ; il inclut le gap overnight.",
-      "known_at": "a la fin des 30 premieres minutes suivant l'ouverture de la seance du jour t (le prix de reference est la cloture du jour t-1, donc anterieur)",
-      "quoted": "pfirst30,t stands for the last price in the ﬁrst 30 minutes after market open on day t"
-    },
-    {
-      "name": "previous_close_price",
-      "description": "pclose,t-1, prix de cloture du jour t-1, denominateur du rendement de la premiere demi-heure.",
-      "known_at": "a la cloture de la seance precedente (jour t-1)",
-      "quoted": "pclose,t−1 is the closing price on day t− 1"
-    },
-    {
-      "name": "last_half_hour_start_price",
-      "description": "plast30,t, premier prix des 30 dernieres minutes avant la cloture du jour t. Entre dans la cible rL_t, pas dans le score : il est posterieur au signal.",
-      "known_at": "au debut des 30 dernieres minutes avant la cloture du jour t, soit apres la formation du signal",
-      "quoted": "plast30,t is the ﬁrst price in the last 30 minutes before market close on day t"
-    },
-    {
-      "name": "close_price",
-      "description": "pclose,t, prix de cloture du jour t, numerateur de la cible rL_t et moment ou toutes les positions sont fermees.",
-      "known_at": "a la cloture de la seance du jour t",
-      "quoted": "and pclose,t is the closing price on day t."
-    },
-    {
-      "name": "overnight_information",
-      "description": "Le rendement de la premiere demi-heure est volontairement calcule depuis la cloture de la veille, donc il incorpore l'information de la nuit.",
-      "known_at": "a la fin des 30 premieres minutes du jour t",
+      "description": "rF_t, rendement de la première demi-heure du jour t : dernier prix des 30 premières minutes après l'ouverture, rapporté à la clôture de la veille ; il inclut donc le rendement overnight. C'est le seul prédicteur du signal.",
+      "known_at": "à la fin des 30 premières minutes après l'ouverture de la séance du jour t (son dénominateur, la clôture du jour t−1, est connu la veille)",
       "quoted": "Note that for the calculation of the ﬁrst half-hour return we also take the overnight information into account."
     },
     {
-      "name": "minute_bars",
-      "description": "Donnees de cotation a la minute (Thomson Reuters Tick History) : heure, prix d'ouverture, plus haut, plus bas, dernier prix, pour chaque minute de cotation.",
-      "known_at": "a la fin de chaque minute de cotation",
-      "quoted": "high price, low price and last price for every trading minute"
+      "name": "first30_last_price",
+      "description": "pfirst30,t, dernier prix observé dans les 30 premières minutes après l'ouverture du jour t (numérateur de rF_t)",
+      "known_at": "à la fin des 30 premières minutes après l'ouverture du jour t",
+      "quoted": "pfirst30,t stands for the last price in the ﬁrst 30 minutes after market open on day t"
     },
     {
-      "name": "minute_exchange_rate",
-      "description": "Taux de change a la minute servant a convertir les prix d'indices en dollars US (resultats principaux). La source, les heures de cotation du change et le traitement des marches fermes ne sont pas precises.",
-      "known_at": "non precise par le papier au-dela de « contemporaneous », c'est-a-dire la minute consideree",
-      "quoted": "we convert index prices based on the contemporaneous 1-minute exchange rate"
+      "name": "previous_session_close",
+      "description": "pclose,t-1, cours de clôture de la séance précédente (dénominateur de rF_t)",
+      "known_at": "à la clôture de la séance t−1",
+      "quoted": "pclose,t−1 is the closing price on day t− 1"
     },
     {
-      "name": "minute_return_signs_first_half_hour",
-      "description": "Pourcentages de minutes a rendement negatif et positif dans les 30 premieres minutes, servant a construire l'information discreteness ID_t = sign(rF_t) x (%neg_t - %pos_t), variable de conditionnement.",
-      "known_at": "a la fin des 30 premieres minutes du jour t",
-      "quoted": "%negt and %post are the percentage of minutes associated with a negative and positive return within the ﬁrst 30 minutes, respectively"
+      "name": "last30_first_price",
+      "description": "plast30,t, premier prix des 30 dernières minutes avant la clôture du jour t ; c'est le prix d'entrée de la position et le dénominateur de la cible rL_t",
+      "known_at": "au début des 30 dernières minutes avant la clôture du jour t",
+      "quoted": "plast30,t is the ﬁrst price in the last 30 minutes before market close on day t"
     },
     {
-      "name": "five_minute_high_low_prices",
-      "description": "Plus hauts et plus bas sur intervalles de cinq minutes chevauchants dans la premiere demi-heure, servant a estimer le spread High-Low de Corwin et Schultz (2012), variable de conditionnement de liquidite.",
-      "known_at": "a la fin des 30 premieres minutes du jour t (le tri est fait a cet instant)",
-      "quoted": "we pick up the highest and the lowest price from the high, low, and last prices collectively in a ﬁve-minute interval, regardless if we have adequate high/low price information"
+      "name": "session_close_price",
+      "description": "pclose,t, cours de clôture du jour t ; numérateur de la cible rL_t et prix de sortie de la position",
+      "known_at": "à la clôture de la séance t",
+      "quoted": "and pclose,t is the closing price on day t."
+    },
+    {
+      "name": "minute_quote_data",
+      "description": "cotations à la minute des indices boursiers (heure de transaction, prix d'ouverture, plus haut, plus bas, dernier prix) issues de Thomson Reuters Tick History, agrégées en intervalles de 30 minutes non chevauchants",
+      "known_at": "à la fin de chaque minute de la séance, dans les horaires de cotation de la place concernée",
+      "quoted": "The dataset provides information on stock market indices based on the local currency, and consists of information on trading time, open price,...high price, low price and last price for every trading minute."
+    },
+    {
+      "name": "information_discreteness",
+      "description": "ID_t = sign(rF_t) x (%neg_t − %pos_t), où %neg_t et %pos_t sont les proportions de minutes à rendement négatif et positif dans les 30 premières minutes du jour t ; variable de conditionnement (régime), petite valeur = information absorbée continûment",
+      "known_at": "à la fin des 30 premières minutes du jour t (calculée sur les seules minutes de cette fenêtre)",
+      "quoted": "%negt and %post are the percentage of minutes associated with a negative and positive return within the ﬁrst 30 minutes, respectively, on dayt."
+    },
+    {
+      "name": "high_low_liquidity",
+      "description": "mesure de spread percent-cost High-Low de Corwin et Schultz (2012), estimée sur les plus hauts et plus bas de deux périodes consécutives, moyennée sur des intervalles de cinq minutes chevauchants de la première demi-heure ; variable de conditionnement (régime)",
+      "known_at": "à la fin de la première demi-heure de chaque séance (« at the end of the ﬁrst half hour of each day »), c'est-à-dire avant la fenêtre évaluée",
+      "quoted": "we adopt the percent-cost High-Low liquidity measure by Corwin and Schultz (2012) that uses only the high and low prices of two consecutive time periods to estimate the spread."
     },
     {
       "name": "us_first_half_hour_return",
-      "description": "Variante de signal croise : rendement de la premiere demi-heure du marche US utilise pour predire la derniere demi-heure des autres marches, en controlant le rendement local de la premiere demi-heure.",
-      "known_at": "pour les marches non Asie-Pacifique, a la fin des 30 premieres minutes de la seance US du jour t ; pour l'Australie, le Japon et la Nouvelle-Zelande, dont le marche ferme avant l'ouverture US du meme jour calendaire, la premiere demi-heure US du jour t-1",
+      "description": "rF_US,t, rendement de la première demi-heure du marché US, utilisé comme prédicteur croisé de la dernière demi-heure des autres marchés et comme signal du GITSM de Type (3)",
+      "known_at": "à la fin des 30 premières minutes de la séance US du jour t ; pour l'Australie, le Japon et la Nouvelle-Zélande, dont les marchés ferment avant l'ouverture US, c'est la première demi-heure US du jour t−1 qui est utilisée",
       "quoted": "For Australia, Japan, and New Zealand, whose markets close before the US market open on the same calendar day, we use the US ﬁrst half-hour return from the previous day"
     }
   ],
   "timing": {
-    "statement": "Une observation par jour de bourse et par marche. Le score est connu a la fin des 30 premieres minutes suivant l'ouverture de la seance locale ; la position est prise au debut des 30 dernieres minutes avant la cloture de la MEME seance et fermee a la cloture. Predicteur et cible ne se chevauchent pas : le predicteur est entierement anterieur a la fenetre predite. Les fenetres sont definies sur les heures de cotation locales de chaque place (Table 1) ; le papier ne donne l'heure de New York que pour le marche US (9:30-16:00 Eastern Standard Time). Les instants d'ouverture et de cloture effectifs sont pris sur les horodatages observes, pas sur l'horaire officiel. Les tris de conditionnement (liquidite, information discreteness) sont faits a la fin de la premiere demi-heure, donc avant la fenetre predite. Pour les portefeuilles globaux, les poids du jour t+1 sont calcules a la cloture US du jour t, en fenetre extensible.",
+    "statement": "Une observation par séance et par marché. Le prédicteur rF_t est entièrement connu à la fin des 30 premières minutes après l'ouverture (son dénominateur étant la clôture de la veille). La position s'ouvre au début des 30 dernières minutes avant la clôture de la même séance et se ferme à la clôture ; la fenêtre prédite ne chevauche jamais la fenêtre de formation. Les variables de conditionnement (liquidité, ID) sont calculées sur la première demi-heure et le tri est fait « à la fin de la première demi-heure de chaque jour ». Les horaires retenus sont ceux de chaque place, en heure locale (Table 1) ; pour les États-Unis, 9:30AM–4:00PM Eastern Standard Time. L'ouverture et la clôture effectives sont prises comme l'horodatage de la première observation du jour et celui de la dernière observation réellement modifiée.",
     "quoted": "ITSM opens a long (short) position at the beginning of the last half hour if the return during the ﬁrst half hour on the same trading day is positive (negative), and closes the positions at the market close.",
     "reason": null
   },
@@ -79,283 +73,232 @@
       "name": "interval_minutes",
       "value": 30,
       "unit": "minutes",
-      "quoted": "we divide each trading day into 30-minute non-overlapping intervals"
+      "quoted": "we divide each trading day into 30-minute non-overlapping intervals."
     },
     {
-      "name": "intervals_used_per_day",
-      "value": 2,
-      "unit": "intervalles (le premier et le dernier)",
-      "derived": true,
-      "note": "Compte fait par moi a partir de la phrase citee, qui nomme deux intervalles sans donner de chiffre.",
-      "quoted": "we focus only on the ﬁrst and the last half-hour returns due to the heterogeneity of the market setting across countries."
+      "name": "holding_window_minutes",
+      "value": 30,
+      "unit": "minutes",
+      "quoted": "we divide each trading day into 30-minute non-overlapping intervals.",
+      "note": "la fenêtre détenue est « the last half hour » de la séance, soit l'un des intervalles de 30 minutes non chevauchants cités ; le papier ne donne jamais d'autre longueur."
     },
     {
-      "name": "signal_sign_threshold",
+      "name": "signal_threshold",
       "value": 0,
-      "unit": "rendement (seuil du signe)",
-      "quoted": "r^L_t, if r^F_t > 0; −r^L_t, if r^F_t ≤ 0,",
-      "quoted_source": "rL t, if rF t > 0; −rL t, if rF t ≤ 0,",
+      "unit": "rendement de la première demi-heure",
+      "quoted": "rI,t = rL_t, if rF_t > 0; −rL_t, if rF_t ≤ 0",
+      "quoted_source": "t, if rF t > 0; −rL t, if rF t ≤ 0,",
       "quoted_repair": "math_notation",
-      "note": "Equation (6). Le cas rF_t exactement nul tombe dans la branche courte, l'inegalite etant large (<= 0)."
+      "note": "l'équation (6) du papier est rendue à plat par l'extraction (indices et accolade perdus) ; elle place rF_t = 0 du côté court."
     },
     {
-      "name": "slope_scaling",
-      "value": 100,
-      "unit": "facteur d'echelle des pentes rapportees",
-      "quoted": "The slope coeﬃcients are scaled by 100."
-    },
-    {
-      "name": "returns_annualization",
-      "value": null,
-      "unit": null,
-      "quoted": "The returns are annualized and in percentage.",
-      "reason": "Le papier dit que les rendements sont annualises et en pourcentage, mais ne donne aucun nombre de jours de bourse comme parametre : l'hypothese de 252 jours n'apparait qu'en annexe A, pour l'annualisation des moments d'ordre trois et quatre."
+      "name": "number_of_markets",
+      "value": 16,
+      "unit": "marchés développés",
+      "quoted": "By studying 16 developed markets"
     },
     {
       "name": "sample_start",
-      "value": null,
-      "unit": "date de debut d'echantillon",
-      "quoted": "data from Sweden starts 4th October 2005 and therefore we take that as our start date for all countries and the end date is 29th December 2017",
-      "reason": "Le papier donne une date de calendrier, « 4th October 2005 », et non une valeur numerique ; la date exacte est dans la citation."
+      "value": "4th October 2005",
+      "unit": "date",
+      "quoted": "data from Sweden starts 4th October 2005 and therefore we take that as our start date for all countries and the end date is 29th December 2017"
     },
     {
       "name": "sample_end",
-      "value": null,
-      "unit": "date de fin d'echantillon",
-      "quoted": "data from Sweden starts 4th October 2005 and therefore we take that as our start date for all countries and the end date is 29th December 2017",
-      "reason": "Le papier donne une date de calendrier, « 29th December 2017 », et non une valeur numerique ; la date exacte est dans la citation."
-    },
-    {
-      "name": "markets_count",
-      "value": 16,
-      "unit": "marches developpes",
-      "quoted": "By studying 16 developed markets, we show that ITSM is both economically and statistically signiﬁcant around the world."
-    },
-    {
-      "name": "price_filter_upper",
-      "value": 1.2,
-      "unit": "multiple du plus haut prix journalier de l'echantillon",
-      "quoted": "we ﬁlter out extreme prices that are higher (lower) than 1.2 (0.8) of the highest (lowest) daily price over the sample period, recorded on Thomson Reuters Datastream."
-    },
-    {
-      "name": "price_filter_lower",
-      "value": 0.8,
-      "unit": "multiple du plus bas prix journalier de l'echantillon",
-      "quoted": "we ﬁlter out extreme prices that are higher (lower) than 1.2 (0.8) of the highest (lowest) daily price over the sample period, recorded on Thomson Reuters Datastream."
+      "value": "29th December 2017",
+      "unit": "date",
+      "quoted": "data from Sweden starts 4th October 2005 and therefore we take that as our start date for all countries and the end date is 29th December 2017"
     },
     {
       "name": "oos_initial_estimation_years",
       "value": 5,
-      "unit": "annees (2005-2010)",
-      "derived": true,
       "spelled_out": "ﬁve",
-      "note": "Le papier ecrit le nombre en toutes lettres dans la citation (« the ﬁrst ﬁve years (2005-2010) ») ; je n'ai fait que transcrire ce mot en chiffre, aucun calcul.",
-      "quoted": "we use the ﬁrst ﬁve years (2005-2010) of our sample as the initial estimation period and recursively regress Equation 2 on each market by adding one day at a time."
+      "unit": "années",
+      "quoted": "Based on an expanding window approach, we use the ﬁrst ﬁve years (2005-2010) of our sample as the initial estimation period and recursively regress Equation 2 on each market by adding one day at a time.",
+      "note": "le nombre est écrit en mots dans le papier (« ﬁve years ») ; les bornes 2005-2010 figurent dans la citation."
     },
     {
-      "name": "oos_window_increment_days",
-      "value": 1,
-      "unit": "jour ajoute par iteration",
-      "derived": true,
-      "spelled_out": "one day at a time",
-      "note": "Le papier ecrit « adding one day at a time » ; transcription du mot en chiffre, aucun calcul.",
-      "quoted": "we use the ﬁrst ﬁve years (2005-2010) of our sample as the initial estimation period and recursively regress Equation 2 on each market by adding one day at a time."
-    },
-    {
-      "name": "portfolio_weights_estimation_period",
-      "value": null,
-      "unit": "periode d'amorce des poids de portefeuille",
-      "quoted": "we compute the weights based on information from the period 4th October 2005 to 1st October 2010, and invest from 4th October 2010 until the end of the sample period.",
-      "reason": "Le papier donne un intervalle de dates (« 4th October 2005 to 1st October 2010 », investissement a partir du 4th October 2010) et non une valeur numerique ; les dates exactes sont dans la citation."
-    },
-    {
-      "name": "portfolio_weights_sum",
-      "value": 1,
-      "unit": "somme des poids",
-      "derived": true,
-      "spelled_out": "one",
-      "note": "Le papier ecrit « the sum of weights is equally to one » ; transcription du mot en chiffre, aucun calcul.",
-      "quoted": "we impose the constraints that assure the sum of weights is equally to one and short sales are not allowed."
-    },
-    {
-      "name": "weighting_schemes_count",
-      "value": 6,
-      "unit": "schemas de ponderation",
-      "derived": true,
-      "spelled_out": "six",
-      "note": "Le papier ecrit « six portfolio construction techniques » ; transcription du mot en chiffre, aucun calcul.",
-      "quoted": "we employ six portfolio construction techniques using equal, value, inverse-variance (Kirby and Ostdiek (2012)), maximum-diversiﬁcation (Choueifaty and Coignard (2008)), mean-variance and minimum-variance weights."
-    },
-    {
-      "name": "global_portfolios_count",
-      "value": 18,
-      "unit": "portefeuilles globaux",
-      "quoted": "resulting in total 18 global portfolios"
-    },
-    {
-      "name": "conditioning_groups_count",
-      "value": 3,
-      "unit": "groupes de tri",
-      "derived": true,
-      "spelled_out": "three",
-      "note": "Le papier ecrit « we divide the 16 indices into three groups » ; transcription du mot en chiffre, aucun calcul.",
-      "quoted": "we divide the 16 indices into three groups, at the end of the ﬁrst half hour of each day, based on the information discreteness"
-    },
-    {
-      "name": "conditioning_group_size_pct",
+      "name": "sort_group_pct",
       "value": 30,
-      "unit": "% des indices par groupe",
-      "quoted": "then calculate the equally-weighted ITSM return of the top, medium, and bottom 30 percents of the indices."
+      "unit": "% des indices par groupe (haut, moyen, bas)",
+      "quoted": "we sort at the end of the ﬁrst half hour of each day the 16 indices based on their estimated liquidity and then calculate the equally-weighted ITSM return of the top, medium, and bottom 30 percents of the indices."
     },
     {
-      "name": "liquidity_estimation_interval_minutes",
+      "name": "liquidity_subinterval_minutes",
       "value": 5,
-      "unit": "minutes (intervalles chevauchants)",
-      "derived": true,
-      "spelled_out": "ﬁve-minute",
-      "note": "Le papier ecrit « overlapping ﬁve-minute intervals » ; transcription du mot en chiffre, aucun calcul.",
-      "quoted": "the spread in the ﬁrst half hour by averaging the estimates across overlapping ﬁve-minute intervals"
+      "spelled_out": "ﬁve",
+      "unit": "minutes",
+      "quoted": "the spread in the ﬁrst half hour by averaging the estimates across overlapping ﬁve-minute intervals",
+      "note": "le nombre est écrit en mots dans le papier (« ﬁve-minute intervals »)."
     },
     {
-      "name": "financial_crisis_period",
-      "value": null,
-      "unit": "periode de regime (crise financiere)",
-      "quoted": "The ﬁnancial crisis period spans form 2 December 2007 to 30 June 2009",
-      "reason": "Le papier donne un intervalle de dates et non une valeur numerique ; les bornes exactes sont dans la citation, recopiee avec sa coquille (« spans form »)."
+      "name": "price_filter_upper_ratio",
+      "value": 1.2,
+      "unit": "multiple du plus haut prix journalier de l'échantillon",
+      "quoted": "we ﬁlter out extreme prices that are higher (lower) than 1.2 (0.8) of the highest (lowest) daily price over the sample period, recorded on Thomson Reuters Datastream."
     },
     {
-      "name": "bootstrap_replications",
-      "value": 2000,
-      "unit": "replications",
-      "quoted": "Repeating the above process 2000 times leads to 2000 t-statistics"
+      "name": "price_filter_lower_ratio",
+      "value": 0.8,
+      "unit": "multiple du plus bas prix journalier de l'échantillon",
+      "quoted": "we ﬁlter out extreme prices that are higher (lower) than 1.2 (0.8) of the highest (lowest) daily price over the sample period, recorded on Thomson Reuters Datastream."
     },
     {
-      "name": "enc_new_critical_value_first",
-      "value": 1.280,
-      "unit": "valeur critique ENC-NEW",
-      "quoted": "we use 1.280 and 2.085 for 5% and 10% conﬁdence levels, respectively.",
-      "note": "Le papier associe 1.280 au seuil de 5 % et 2.085 au seuil de 10 %, ce qui est vraisemblablement une inversion de sa part ; je recopie l'association telle qu'elle est ecrite."
+      "name": "trading_days_per_year",
+      "value": 252,
+      "unit": "jours de bourse",
+      "quoted": "Under the assumption that there are 252 trading days in a year",
+      "note": "hypothèse utilisée uniquement pour annualiser moyenne, écart-type, skewness et kurtosis (Appendix A)."
     },
     {
-      "name": "enc_new_critical_value_second",
-      "value": 2.085,
-      "unit": "valeur critique ENC-NEW",
-      "quoted": "we use 1.280 and 2.085 for 5% and 10% conﬁdence levels, respectively.",
-      "note": "Seconde valeur critique de Clark et McCracken (2001) utilisee pour le test ENC-NEW, associee dans le texte au seuil de 10 %."
+      "name": "slope_scaling",
+      "value": 100,
+      "unit": "facteur d'échelle des pentes rapportées",
+      "quoted": "The slope coeﬃcients are scaled by 100."
     },
     {
-      "name": "volatility_scaling",
-      "value": null,
-      "unit": null,
-      "quoted": null,
-      "reason": "Le papier n'applique aucune mise a l'echelle par la volatilite : le score est le rendement brut de la premiere demi-heure et la position depend seulement de son signe. Aucune fenetre de volatilite n'existe donc."
+      "name": "portfolio_weight_sum",
+      "value": 1,
+      "spelled_out": "one",
+      "unit": "somme des poids",
+      "quoted": "Finally, we impose the constraints that assure the sum of weights is equally to one and short sales are not allowed.",
+      "note": "contrainte des seules agrégations globales (GITSM) ; le nombre est écrit en mots dans le papier."
     },
     {
       "name": "transaction_costs",
       "value": null,
       "unit": null,
       "quoted": null,
-      "reason": "Aucun cout de transaction, spread paye, slippage ou commission n'est mentionne nulle part dans le papier, alors que la strategie fait un aller-retour par jour et par marche."
+      "reason": "aucune phrase du papier ne mentionne de coût de transaction, de spread payé, de slippage ni de commission ; tous les rendements, alphas et Sharpe sont bruts, alors que la règle fait un aller-retour par séance et par marché."
+    },
+    {
+      "name": "volatility_scaling_window",
+      "value": null,
+      "unit": null,
+      "quoted": null,
+      "reason": "le signal n'est pas normalisé par une volatilité : le papier n'utilise que le niveau et le signe de rF_t, et ne mentionne aucune fenêtre de volatilité pour le score."
+    },
+    {
+      "name": "position_size",
+      "value": null,
+      "unit": null,
+      "quoted": null,
+      "reason": "le papier ne donne aucune taille de position, aucun levier et aucune contrainte de capacité pour la stratégie par pays ; la seule normalisation mentionnée est le doublement du rendement du portefeuille global (« × 2 ») pour la construction du facteur TVC."
     }
   ],
   "ambiguities": [
     {
-      "question": "Que fait-on quand rF_t est exactement nul ? Le signe est-il strictement positif ou large ?",
-      "resolution": "L'equation (6) tranche : position longue si rF_t > 0, position courte si rF_t <= 0. Un rendement nul est donc traite comme un signal negatif.",
-      "quoted": "r^L_t, if r^F_t > 0; −r^L_t, if r^F_t ≤ 0,",
-      "quoted_source": "rL t, if rF t > 0; −rL t, if rF t ≤ 0,",
+      "question": "Le dénominateur du rendement de la première demi-heure (rF_t) est-il la clôture de la séance précédente, ou la première clôture de la séance en cours ?",
+      "resolution": "La clôture de la séance précédente : rF_t = pfirst30,t / pclose,t−1 − 1, où pclose,t−1 est la clôture du jour t−1. Le papier le dit deux fois et insiste sur la conséquence : le rendement de la première demi-heure contient le rendement overnight.",
+      "quoted": "pclose,t−1 is the closing price on day t− 1"
+    },
+    {
+      "question": "Le papier confirme-t-il explicitement que le gap overnight est inclus dans le prédicteur ?",
+      "resolution": "Oui, dans le texte de la section 2.2 et dans la note de la Table 3.",
+      "quoted": "Note that the ﬁrst half-hour return includes the overnight return in order to take into account the impact of information released overnight."
+    },
+    {
+      "question": "Quel signe prend la position quand rF_t vaut exactement zéro ?",
+      "resolution": "Courte : l'équation (6) range rF_t <= 0 du côté court (−rL_t), alors que la prose ne parle que d'un « negative return ». Le cas rF_t = 0 est donc traité comme une vente.",
+      "quoted": "rI,t = rL_t, if rF_t > 0; −rL_t, if rF_t ≤ 0",
+      "quoted_source": "t, if rF t > 0; −rL t, if rF t ≤ 0,",
       "quoted_repair": "math_notation"
     },
     {
-      "question": "Quel prix exact sert de « dernier prix des 30 premieres minutes » et de « premier prix des 30 dernieres minutes » : un prix de transaction, une cotation, le dernier prix de la 30e minute ?",
-      "resolution": "Le papier dit « last price in the ﬁrst 30 minutes » et « ﬁrst price in the last 30 minutes », sur des donnees de cotation a la minute fournissant ouverture, plus haut, plus bas et dernier prix par minute. Il ne precise pas davantage la regle de selection a l'interieur de la minute frontiere, ni s'il s'agit de transactions ou de cotations.",
-      "quoted": "plast30,t is the ﬁrst price in the last 30 minutes before market close on day t"
+      "question": "Quel prix exact sert de pfirst30,t et de plast30,t, et quelles minutes bornent les deux fenêtres (la minute d'ouverture et la minute de clôture sont-elles incluses) ?",
+      "resolution": null,
+      "quoted": null,
+      "reason": "le papier ne définit que « the last price in the ﬁrst 30 minutes after market open » et « the ﬁrst price in the last 30 minutes before market close » ; il ne dit pas lequel des champs disponibles (open, high, low, last) est pris pour chaque minute, ni comment les bornes de minute sont arrondies, ni si la fenêtre de 30 minutes part de l'heure officielle d'ouverture ou du premier horodatage observé."
     },
     {
-      "question": "Les 30 minutes sont-elles comptees sur l'horaire officiel de la place ou sur les observations effectivement presentes ?",
-      "resolution": "Les instants d'ouverture et de cloture sont pris sur les horodatages observes : premier enregistrement du jour comme ouverture, dernier enregistrement effectivement modifie comme cloture — parce que certains flux prolongent la seance avec des valeurs inchangees.",
+      "question": "Quelle heure est retenue comme ouverture et comme clôture, quand les enregistrements dépassent les horaires officiels de la place ?",
+      "resolution": "L'ouverture est l'horodatage de la première observation du jour, la clôture celui de la dernière observation réellement modifiée ; seules les données horodatées dans les horaires de cotation du marché sont utilisées.",
       "quoted": "To address this issue we use the timestamp of the ﬁrst observation on a day as opening time and the timestamp of the last actively changed observation as closing time."
     },
     {
-      "question": "Dans quel fuseau les demi-heures sont-elles definies, et comment les horaires locaux se traduisent-ils en heure de New York ?",
-      "resolution": "Les heures de seance sont donnees en heure locale pour les 16 marches (Table 1) ; la seule indication en heure de New York concerne le marche US. Aucune conversion n'est fournie pour les 15 autres marches, et la Table 1 donne l'heure locale sans nommer de fuseau.",
-      "quoted": "we use data for the US market between 9:30AM and 4:00PM Eastern Standard Time"
+      "question": "Comment sont traitées les enchères de clôture (très présentes en Europe), où le prix de clôture ne se forme pas en continu ?",
+      "resolution": null,
+      "quoted": null,
+      "reason": "le papier ne mentionne nulle part les enchères de clôture ou d'ouverture ; il ne définit la clôture que par l'horodatage de la dernière observation réellement modifiée."
     },
     {
-      "question": "Comment sont traites les jours feries, les jours manquants et le decalage du calendrier entre marches ?",
-      "resolution": "Les jours non cotes et les erreurs d'enregistrement sont supprimes, et le papier reconnait que le nombre de jours disponibles varie d'un pays a l'autre ; il ne dit pas comment les dates sont alignees entre marches pour les portefeuilles globaux ni ce qui est fait d'un jour manquant dans un seul marche.",
+      "question": "Comment la pause déjeuner (Tokyo) et l'hétérogénéité des horaires de séance affectent-elles la définition des demi-heures ?",
+      "resolution": "Le papier n'en tire qu'une conséquence : c'est en raison de cette hétérogénéité qu'il ne retient que la première et la dernière demi-heure, et il signale la pause déjeuner de Tokyo en note. Il ne décrit aucun traitement particulier de cette pause dans le calcul des demi-heures, et ne teste pas son effet.",
+      "quoted": "In this study, we focus only on the ﬁrst and the last half-hour returns due to the heterogeneity of the market setting across countries."
+    },
+    {
+      "question": "La longueur de 30 minutes est-elle justifiée ou testée sur l'échantillon du papier ?",
+      "resolution": "Elle n'est pas testée ici : le papier reprend le constat de Gao et al. (2018) selon lequel la longueur des intervalles n'affecte pas significativement l'effet, et ne retient donc qu'une seule longueur.",
+      "quoted": "Gao et al. (2018) show that the length of the intervals does not signiﬁcantly aﬀect intraday time-series momentum since most news and announcements are released overnight"
+    },
+    {
+      "question": "Les rendements et les pentes sont-ils bruts, en pourcentage, annualisés ?",
+      "resolution": "Les rendements rapportés sont annualisés et en pourcentage, et les pentes des régressions sont multipliées par 100. Aucun coût n'est déduit.",
+      "quoted": "The slope coeﬃcients are scaled by 100."
+    },
+    {
+      "question": "Les prix sont-ils en devise locale ou convertis en dollars, et avec quel taux ?",
+      "resolution": "Les résultats principaux sont en dollars US : les prix d'indices sont convertis au taux de change à la minute contemporain. Les résultats en devise locale, en annexe B, montrent un effet plus fort.",
+      "quoted": "we convert index prices based on the contemporaneous 1-minute exchange rate."
+    },
+    {
+      "question": "D'où vient le taux de change à la minute, quelles sont ses heures de cotation, et que fait-on quand le marché des changes ou l'indice est fermé ?",
+      "resolution": null,
+      "quoted": null,
+      "reason": "le papier ne nomme ni la source du taux de change à la minute, ni ses heures de cotation, ni le traitement des périodes sans cotation ; il indique seulement avoir exclu Hong Kong et Singapour faute de données de change à la minute."
+    },
+    {
+      "question": "Comment les jours fériés et les calendriers non alignés entre marchés sont-ils traités ?",
+      "resolution": "Les jours non négociés sont retirés et le nombre de jours disponibles varie d'un pays à l'autre ; le papier ne décrit aucun alignement de calendrier entre marchés au-delà de ce retrait.",
       "quoted": "Note that the number of available trading days varies from country to country due to diﬀerent holiday systems and data availability limitations."
     },
     {
-      "question": "Comment la pause dejeuner (Tokyo) et l'heterogeneite des horaires affectent-elles la definition des demi-heures ?",
-      "resolution": "Le papier signale l'heterogeneite — NYSE en continu de 09:30 a 16:00, Tokyo de 09:00 a 15:00 avec une heure de pause de 11:30 a 12:30 — et en tire la seule consequence de ne retenir que la premiere et la derniere demi-heure. Il ne dit pas si la pause interrompt le decoupage en intervalles ni si elle affecte la minute de reference.",
-      "quoted": "For instance, New York Stock Exchange operates continuously from 09:30 to 16:00 whereas Tokyo Stock Exchange trades from 09:00 to 15:00 with one hour lunch break from 11:30 to 12:30."
-    },
-    {
-      "question": "Le signal se calcule-t-il sur des prix en devise locale ou convertis en dollars US ?",
-      "resolution": "Les resultats principaux sont en dollars US, par conversion au taux de change contemporain a la minute, du point de vue d'un investisseur en dollars ; les resultats en devise locale sont en annexe B et montrent un effet plus fort. Les deux conventions existent donc dans le papier et ne donnent pas les memes chiffres.",
-      "quoted": "the evidence reported in Table B.1 and B.2 of Appendix B shows stronger intraday time-series momentum eﬀect when using local currency"
-    },
-    {
-      "question": "Comment est traitee l'enchere de cloture, tres presente en Europe : le prix de cloture utilise est-il le prix d'enchere, et la position peut-elle etre fermee a ce prix ?",
+      "question": "Comment sont comptées les minutes à rendement nul dans %neg_t et %pos_t de l'information discreteness ?",
       "resolution": null,
       "quoted": null,
-      "reason": "Le papier ne mentionne jamais les encheres de cloture ni la mecanique d'execution a la cloture ; il dit seulement que les positions sont fermees « at the market close »."
+      "reason": "le papier écarte le cas par hypothèse dans son illustration théorique de l'ID et ne dit jamais comment les minutes à rendement nul sont comptées dans le calcul effectif de %neg_t et %pos_t."
     },
     {
-      "question": "La strategie evaluee utilise-t-elle les coefficients de la regression predictive, ou seulement le signe de rF_t ?",
-      "resolution": "La strategie de market timing n'utilise que le signe de rF_t, sans parametre estime. La regression predictive sert a la mesure statistique, et son evaluation hors echantillon se fait en fenetre extensible amorcee sur cinq ans, un jour ajoute a la fois.",
-      "quoted": "we use the ﬁrst ﬁve years (2005-2010) of our sample as the initial estimation period and recursively regress Equation 2 on each market by adding one day at a time."
+      "question": "Sur quelle fenêtre et sur quels prix la mesure de liquidité High-Low est-elle estimée, et que fait-on quand les plus hauts et plus bas à la minute manquent ?",
+      "resolution": "Le spread est estimé sur la première demi-heure, en moyennant les estimations sur des intervalles de cinq minutes chevauchants ; quand les plus hauts et plus bas manquent, le plus haut et le plus bas sont pris indifféremment parmi les champs high, low et last de l'intervalle de cinq minutes.",
+      "quoted": "we pick up the highest and the lowest price from the high, low, and last prices collectively in a ﬁve-minute interval, regardless if we have adequate high/low price information."
     },
     {
-      "question": "Dans l'evaluation hors echantillon contrainte, quelles restrictions sont imposees aux previsions ?",
-      "resolution": "Deux restrictions dans le Rst.R2 hors echantillon : la pente estimee est mise a zero si elle est negative, puis la prevision du rendement de la derniere demi-heure est mise a zero si elle est negative.",
-      "quoted": "we ﬁrst set the slope coeﬃcient to zero whenever its estimated value is negative"
+      "question": "Quelle séance US sert de prédicteur croisé pour les marchés qui ferment avant l'ouverture américaine ?",
+      "resolution": "La première demi-heure US du jour t pour les marchés non Asie-Pacifique ; celle du jour t−1 pour l'Australie, le Japon et la Nouvelle-Zélande, dont les marchés ferment avant l'ouverture US du même jour calendaire.",
+      "quoted": "For Australia, Japan, and New Zealand, whose markets close before the US market open on the same calendar day, we use the US ﬁrst half-hour return from the previous day"
     },
     {
-      "question": "Les variables de conditionnement sont-elles connues avant la fenetre predite ?",
-      "resolution": "Oui : le tri de liquidite comme celui d'information discreteness se font a la fin de la premiere demi-heure du jour, donc avant la derniere demi-heure evaluee.",
-      "quoted": "we sort at the end of the ﬁrst half hour of each day the 16 indices based on their estimated liquidity"
+      "question": "À quel instant les poids des portefeuilles globaux sont-ils connus, compte tenu des décalages horaires ?",
+      "resolution": "À la clôture du marché US du jour t : le gérant dispose alors des rendements de la dernière demi-heure de tous les pays du jour t et fixe les poids du jour t+1, avant la dernière demi-heure du marché ouvrant le plus tôt (Nouvelle-Zélande). Les poids sont recalculés en fenêtre extensible, un jour ajouté à la fois.",
+      "quoted": "In practice, at the US market close on dayt, a fund manager will have the last half-hour return for all the countries in sample on day t and be able to make decisions on the weights for day t + 1."
     },
     {
-      "question": "Comment l'information discreteness est-elle definie exactement, et quel signe implique un effet plus fort ?",
-      "resolution": "ID_t = sign(rF_t) x (%neg_t - %pos_t) sur les minutes de la premiere demi-heure ; un petit ID signifie une information absorbee continument, et les rendements EW-ITSM croissent de facon monotone du grand vers le petit ID.",
-      "quoted": "IDt = sign(r^F_t) × (%neg_t − %pos_t),",
-      "quoted_source": "IDt =sign(rF t )× (%negt− %post),",
-      "quoted_repair": "math_notation",
-      "note": "La formule est rendue a plat par l'extraction (indices et exposants perdus) ; la chaine cherchee est celle que porte le texte."
+      "question": "Quelle est la pente de la régression en panel : 2.86 (corps du texte) ou 2.68 (ligne Pooled du Panel A de la Table 3) ?",
+      "resolution": null,
+      "quoted": "The coeﬃcient of the ﬁrst half-hour return is 2.86 and statistically signiﬁcantly diﬀerent from zero (t-statistic 7.53).",
+      "reason": "le corps du texte annonce 2.86 alors que la ligne « Pooled » du Panel A de la Table 3 affiche 2.68*** avec la même t-statistique (7.53) ; le papier ne tranche pas et ne signale pas l'écart."
     },
     {
-      "question": "Le facteur variable dans le temps (TVC) regarde-t-il l'avenir, puisque ses deux composantes portent le meme jour ?",
-      "resolution": "Non selon les auteurs : la position nette est calculee sur la premiere demi-heure du jour t, le marche equipondere sur la derniere demi-heure du jour t ; la construction est declaree ex-ante.",
-      "quoted": "This is because NPM t is computed from the ﬁrst half hour of day t whereas EWMt is the equally-weighted global market in the last half hour of day t."
-    },
-    {
-      "question": "Sur quel vehicule la strategie est-elle censee s'executer, puisque les objets mesures sont des indices ?",
-      "resolution": "Aucun vehicule n'est propose : les auteurs ecartent explicitement les ETF pays pour manque de liquidite et d'historique, et ne donnent pas de substitut negociable. Le rendement de la premiere demi-heure inclut par ailleurs un gap overnight non capturable.",
+      "question": "Sur quel véhicule négociable la règle s'exécute-t-elle, puisque les objets mesurés sont des indices ?",
+      "resolution": "Aucun : le papier mesure sur des indices au comptant et écarte explicitement les ETF pays, sans proposer de substitut exécutable.",
       "quoted": "Country-speciﬁc ETFs are available; however they lack liquidity and a long enough history to provide a robust study."
     },
     {
-      "question": "Quels couts de transaction, spreads ou frais sont deduits des rendements, alphas et Sharpe annonces ?",
-      "resolution": null,
-      "quoted": null,
-      "reason": "Le papier ne mentionne aucun cout nulle part : tous les chiffres sont bruts et il n'existe aucune phrase a citer."
+      "question": "Les horaires de séance couverts sont-ils donnés dans un fuseau unique, permettant de situer chaque marché dans une fenêtre de référence ?",
+      "resolution": "Non : seules les heures locales de chaque place sont tabulées (Table 1), et seul le marché US est daté dans un fuseau explicite (9:30AM–4:00PM Eastern Standard Time). Le papier ne convertit pas les horaires des 15 autres marchés dans un fuseau commun ; il ne donne qu'un écart ponctuel (16 heures entre Wellington et New York).",
+      "quoted": "we use only data with a time-stamp during the exchange trading hours for that market."
     },
     {
-      "question": "La longueur de l'intervalle de 30 minutes est-elle testee, et avec quel effet ?",
-      "resolution": "Elle n'est pas testee ici : les auteurs reprennent l'affirmation de Gao et al. (2018) selon laquelle la longueur de l'intervalle n'affecte pas significativement l'effet, et ne retiennent que la premiere et la derniere demi-heure.",
-      "quoted": "that the length of the intervals does not signiﬁcantly aﬀect intraday time-series momentum"
-    },
-    {
-      "question": "Quelle est la pente en panel : 2.86 ou 2.68 ?",
+      "question": "Le papier fournit-il une métrique de type IC ou corrélation de rang, comparable à une sortie de harnais ?",
       "resolution": null,
       "quoted": null,
-      "reason": "Incoherence interne non resolue : le corps du texte annonce une pente de 2.86 avec t = 7.53, tandis que la ligne Pooled du Panel A de la Table 3 affiche 2.68*** avec la meme t-statistique 7.53. Le papier ne tranche pas."
+      "reason": "aucune : l'évidence statistique est donnée en pente de régression, R2 ajusté, R2 hors échantillon, MSPE-adjusted et ENC-NEW, et l'évidence économique en alphas annualisés, ratios de Sharpe et appraisal ratios. Le papier ne calcule aucun IC ni corrélation de rang."
     }
   ],
   "market": {
-    "studied": "Seize indices boursiers au comptant de marches developpes (classification MSCI), cotes a la minute via Thomson Reuters Tick History et convertis en dollars US au taux a la minute : Australie, Autriche, Canada, France, Allemagne, Irlande, Japon, Pays-Bas, Nouvelle-Zelande, Norvege, Portugal, Espagne, Suede, Suisse, Royaume-Uni et Etats-Unis. Chaque marche est mesure separement (regression, Sharpe, alphas), le marche americain etant l'indice S&P 500 (.SPX, 09:30-16:00 selon la Table 1). Aucun future, aucune matiere premiere, aucune devise, aucun ETF : les objets mesures sont les indices eux-memes.",
-    "quoted": "Table 1 tabulates the list of the 16 developed stock market indices employed in this study along with their RICs and trading hours.",
+    "studied": "Les indices boursiers au comptant de 16 marchés développés (classification MSCI), mesurés sur cotations à la minute agrégées en demi-heures : Australie, Autriche, Canada, France, Allemagne, Irlande, Japon, Pays-Bas, Nouvelle-Zélande, Norvège, Portugal, Espagne, Suède, Suisse, Royaume-Uni et États-Unis. Le marché américain est l'indice S&P 500 (.SPX, 09:30-16:00), l'un des 16 marchés mesurés individuellement. Aucun future, aucun ETF, aucune action individuelle, aucune matière première.",
+    "quoted": "We collect 1-minutely quote data from the Thomson Reuters Tick History (TRTH) database of stock market indices",
     "exact_roots": ["ES"],
     "sessions": ["US"],
     "sessions_quoted": "we use data for the US market between 9:30AM and 4:00PM Eastern Standard Time",
