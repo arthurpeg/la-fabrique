@@ -96,6 +96,12 @@
       "quoted": "of CSI stock market in a day is 4 hours, with a total of 240 observations, and the daily S&P500 stock trading time is 6.5 hours, with a total of 390 observations."
     },
     {
+      "name": "csi300_trading_hours_per_day",
+      "value": 4,
+      "unit": "heures",
+      "quoted": "of CSI stock market in a day is 4 hours, with a total of 240 observations, and the daily"
+    },
+    {
       "name": "sp500_minute_observations_per_day",
       "value": 390,
       "unit": "observations d'une minute",
@@ -148,7 +154,7 @@
       "reason": "Les seuils de découpage des terciles de volatilité et de volume ne sont donnés nulle part dans le papier : seuls les noms « high, medium and low » apparaissent."
     },
     {
-      "name": "volatility_measure_definition",
+      "name": "volatility_measure_window",
       "value": null,
       "unit": null,
       "quoted": null,
@@ -166,21 +172,22 @@
       "value": null,
       "unit": "%",
       "quoted": "and the significant level is at 1%, 5%, or 10% as marked with ***, ** or *.",
-      "reason": "Trois seuils sont annoncés (1 %, 5 %, 10 %) : il n'y a pas une valeur unique à porter ici ; la citation les donne tous les trois."
+      "reason": "Trois seuils sont annoncés (1 %, 5 %, 10 %) : il n'y a pas une valeur numérique unique à porter ici ; la citation les donne tous les trois."
     },
     {
-      "name": "sample_period_start",
-      "value": "January 1, 2020",
-      "unit": "date",
+      "name": "sample_period_year",
+      "value": 2020,
+      "unit": "année",
       "quoted": "the sample period from January 1, 2020, to September 11, 2020.",
-      "note": "Soit 2020-01-01 en ISO."
+      "note": "L'échantillon tient entièrement dans l'année 2020 : début January 1, 2020 (2020-01-01), fin September 11, 2020 (2020-09-11), telles que citées. Les dates elles-mêmes ne sont pas des nombres et vivent donc ici, dans la citation et cette note."
     },
     {
-      "name": "sample_period_end",
-      "value": "September 11, 2020",
-      "unit": "date",
+      "name": "sample_period_length_months",
+      "value": 8.5,
+      "unit": "mois",
       "quoted": "the sample period from January 1, 2020, to September 11, 2020.",
-      "note": "Soit 2020-09-11 en ISO."
+      "derived": true,
+      "note": "Durée calculée par moi de January 1, 2020 à September 11, 2020, soit environ 8,5 mois. Le papier ne donne aucune durée, il dit seulement « Our database period has a short and in-sample »."
     },
     {
       "name": "number_of_trading_days",
