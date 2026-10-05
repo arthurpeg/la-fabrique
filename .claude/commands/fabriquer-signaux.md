@@ -64,10 +64,11 @@ précisé), dans l'ordre de priorité, sans dépasser 85 % de la fenêtre de
    cherchés dans toute la base, textes figés), puis `fabrique-synthese` avec le
    seul chemin de la consigne, puis `--record` **après sa réponse**, puis
    `--check`. Un refus se renvoie tel quel, trois essais au plus. La fiche
-   `synthese-dossier-<fiche>` suit ensuite la boucle du point 5. **Si la version
-   retenue vient de la seule graine et qu'aucun voisin n'ajoute de paramètre,
-   de marché ou d'horizon, ne la code pas** : elle referait l'hypothèse de la
-   graine, un test corrélé de plus. Note-le dans le compte rendu.
+   `synthese-dossier-<fiche>` suit ensuite la boucle du point 5, **seulement si
+   `code_signal.py --list` la propose** : le validateur exige un rôle pour chaque
+   voisin (`complete`, `confirme`, `contredit`, `deja_teste`, `hors_sujet`), et
+   une synthèse dont l'apport est `aucun` n'est pas codée (`D52`). `--prepare`
+   refuse une graine déjà graine ou source d'une autre synthèse.
 7. **Consulte `fabrique-critique`** si un groupe finit mal (discordances,
    refus en série) ou avant de changer quoi que ce soit au processus. Son avis
    ne remplace ni les portes ni une décision écrite.

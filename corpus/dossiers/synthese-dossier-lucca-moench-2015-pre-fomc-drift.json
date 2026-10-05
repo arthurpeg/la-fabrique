@@ -1,0 +1,337 @@
+{
+ "generated": "2026-10-05T12:07+00:00",
+ "seed": {
+  "fiche_id": "lucca-moench-2015-pre-fomc-drift",
+  "title": "The Pre-FOMC Announcement Drift",
+  "hypothesis": null,
+  "representation": "The Pre-FOMC Announcement Drift \nLe « signal » est un indicateur de calendrier, pas un score continu : une variable muette valant 1 quand une annonce programmée du FOMC doit être publiée dans les 24 heures suivantes, 0 sinon. Elle est régressée sur le rendement en excès du SPX, avec ou sans constante, écarts-types de Huber-White. Le calendrier des réunions programmées est public à l'avance (feuilles d'information de la presse avant septembre 2001, site du Board ensuite), donc connaissable ex ante. Les conditionnements testés en section 3.8 ajoutent des variables retardées : pente de la courbe des taux (deuxième composante principale des taux zéro-coupon 1-5 ans, retardée de deux jours), niveau du VIX à la clôture deux jours avant la réunion, et moyenne des huit derniers rendements pre-FOMC (MA8). Les contrôles de volatilité et de liquidité sont décomposés en niveau retardé et innovation par des AR(1). \n24 heures : de 14h00 ET la veille d'une annonce programmée du FOMC à 14h00 ET le jour de l'annonce, soit environ quinze minutes avant la publication du communiqué. Avant 1994, l'horizon est le rendement close-to-close du jour de la réunion programmée.",
+  "dossier_of": "synthese-dossier-lucca-moench-2015-pre-fomc-drift"
+ },
+ "model": "BAAI/bge-base-en-v1.5",
+ "neighbors": [
+  {
+   "paper_id": "e3bef5e1-b350-4a7b-9187-cd6e6336ec4d",
+   "title": "The disappearing pre-FOMC announcement drift",
+   "fiche_id": "kurov-2021-disappearing-pre-fomc-drift",
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 4,
+     "similarity": 0.8263,
+     "content": "uncertainty in anticipation of the scheduled announcement and its impact. They show that\nit is resolution of the second type of risk before the announcement that causes the positive\npre-announcement drift. 3 Our paper builds on this literature by showing that the pre-\nFOMC drift documented by LM and BGM has declined in not only announcements without\npress conferences but also announcements with press conferences and its disappearance is\nassociated with a declining market uncertainty.\nA concurrent Ben Dor and Rosa (2019) study ﬁnds no pre-FOMC drift from April 2011\nto December 2017 similarly to BGM. Our analysis diﬀers in two ways. Following BGM,\nwe distinguish between announcements with and without press conferences (in contrast to\ncombining all announcements as in Ben Dor and Rosa (2019)) and we use a pre-FOMC\nwindow starting at the stock market open of the previous day (in contrast to a 24-hour\npre-FOMC window in Ben Dor and Rosa (2019)). This allows us to show that the behavior\nof the pre-FOMC returns has changed: the drift initially remained in announcements with\npress conferences even after the end of the LM period, but it has weakened since January\n2016 whereas Ben Dor and Rosa (2019) do not ﬁnd any change in the pre-FOMC drift after\n2015. It also allows us to test the possible explanation of reduced uncertainty.\n2 Analysis\nOur data and method follow LM and BGM. There are 131 scheduled FOMC meetings from\nSeptember 1994 to March 2011, the LM period."
+    },
+    {
+     "section": "methodology",
+     "page": 6,
+     "similarity": 0.825,
+     "content": "[Table 1 about here.]\nFocusing on announcement days, we compute average cumulative returns over a three-\nday window around the FOMC announcements (from the day before the announcement\nto the day after the announcement). The top panel of Figure 1 shows the period from\nSeptember 1994 to March 2011, replicating the LM result: a large positive drift in the 24\nhours before announcements. The bottom panel shows the period from April 2011 when the\npress conferences started to September 2017, replicating Figure 3 in BGM. There are 27 and\n25 announcements with and without press conferences, respectively. The drift exists only in\nannouncements with press conferences and begins at the stock market open of the previous\nday, earlier than during the LM period.\n[Figure 1 about here.]\nFocusing on announcements with press conferences, Figure 2 extends the post-LM pe-\nriod to December 2019. We split the post-LM period in half. The ﬁrst half comprises\n20 announcements from April 2011 to December 2015, and the second half comprises 20\nannouncements from January 2016 to December 2019. This coincides with the zero lower\nbound (ZLB) liftoﬀ in December 2015. 9 The top panel shows the ﬁrst half of the sample.\nConsistent with BGM, there is a pre-FOMC drift. The bottom panel shows the second half\nof the sample. In contrast to the top panel, there is no evidence of a signiﬁcant pre-FOMC\ndrift. Due to the limited sample size, we conﬁrm that the conﬁdence bands constructed"
+    },
+    {
+     "section": "methodology",
+     "page": 9,
+     "similarity": 0.8119,
+     "content": "3.1 Reduced Uncertainty\nWe proceed in two steps. In the ﬁrst step, we analyze whether the drift before the FOMC\nmeetings with press conferences diﬀers between the period before the ZLB liftoﬀ and the\nperiod after the ZLB liftoﬀ. We estimate an ordinary least squares (OLS) event-study\nregression for announcements with press conferences from April 2011 to December 2019\nwhere we regress the pre-FOMC returns (measured as in Table 2) on an indicator variable\nequal to one after the ZLB liftoﬀ:\nRett =β0 +β1PostZLB t +ϵt (1)\nThe ﬁrst speciﬁcation in Table 3 shows the results. The post-ZLB indicator variable is\nnegative and statistically signiﬁcant at 5% level. In addition, the sum of β0 and β1 (not\nreported in Table 3), which measures the mean pre-FOMC drift after the ZLB liftoﬀ, is not\nstatistically signiﬁcant. This indicates that for meetings accompanied by press conferences\nthe pre-FOMC drift in the period before the ZLB liftoﬀ diﬀers from the pre-FOMC drift in\nthe period after the ZLB liftoﬀ; in particular, the drift is lower after the ZLB liftoﬀ than\nbefore the ZLB liftoﬀ. 11\n[Table 3 about here.]\nIn the second step, we investigate whether uncertainty might have played a role in this\nchange in the pre-FOMC drift. Following Gu et al. (2018), we use the VIX implied volatility\nindex as a measure of uncertainty about market conditions. We note that the average VIX is\n17.7 and 14.7 before and after the ZLB liftoﬀ, respectively, and this diﬀerence is signiﬁcant"
+    },
+    {
+     "section": "methodology",
+     "page": 8,
+     "similarity": 0.8088,
+     "content": "during the LM period in Table 1. In contrast, the mean pre-FOMC return in the second\nhalf of the sample (January 2016 to December 2019) is 0.092. We conduct a test to ﬁnd\nout whether the central tendencies in the two halves of the sample are equal. We use the\nWilcoxon rank-sum test and reject the null hypothesis of equal central tendency at 1% level.\nThis suggests that the pre-FOMC return distributions diﬀer between the two periods.\nFurthermore, the mean of returns computed from the previous day’s open on non-\nannouncement days during the January 2016 to December 2019 period (in the ﬁfth column\nof Table 2) is 0.054. To ﬁnd out whether the central tendencies on days with announcements\naccompanied by press conferences and on non-announcement days are equal, we again use\nthe Wilcoxon rank-sum test. We cannot reject the null hypothesis of equal central tendency\nat conventional signiﬁcance levels. This suggests that stock returns do not tend to be higher\nbefore FOMC announcements that have press conferences relative to days that do not have\nFOMC announcements. Together, these two tests suggest that the pre-FOMC drift has\nweakened for announcements with press conferences since January 2016.\n[Table 2 about here.]\n3 Potential Explanation\nMcLean and Pontiﬀ (2016) show evidence of return predictability disappearing after the\npredictability was discovered by academic researchers. This mechanism does not seem to be"
+    }
+   ],
+   "similarity": 0.8211
+  },
+  {
+   "paper_id": "d9e2bf38-d1d9-436c-a3e7-d02b3b48f382",
+   "title": "Premium for heightened uncertainty: Explaining pre-announcement market returns",
+   "fiche_id": "premium-for-heightened-uncertainty-explaining-pr-W3122856157",
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "conclusion",
+     "page": 46,
+     "similarity": 0.811,
+     "content": "decline in VIX on day 0. The statistical signiﬁcance of these coeﬃcients is borderline, but\nthe signs are the same as those of pre-scheduled announcements.\nBy comparison, we run the same regression on normal days which are not scheduled NFP,\nISM, GDP and FOMC announcement days and not associated with heightened VIX days.\nThe coeﬃcient is 0.33 and statistically insigniﬁcant for return; −0.02 and marginal signiﬁ-\ncant for ∆VIX. On normal days, which do not bring heightened uncertainty to the market\nby construction, the predicative power of VIX buildup is much weaker in both statistical\nsigniﬁcance and economic magnitudes.\n6 Conclusion\nWe ﬁnd that the U.S. stock market earns a large overnight return right before important\nmacroeconomic announcements, including NFP, ISM, and GDP, with no increase in con-\nventional risk measures. The large pre-announcement returns are qualitatively and quan-\ntitatively similar to the pre-FOMC announcement drift documented by Lucca and Moench\n(2015). Moreover, for all four macroeconomic announcements, the pre-announcement return-\nto-variance ratio far exceeds the post-announcement counterparts, strongly suggesting that\ndistinct types of risk premia are realized around the announcement window.\nTo explain this common pattern, we propose a two-risk model in which, in addition to\nthe directional news risk itself, uncertainty about the magnitude of its market impact is the\nsecond risk."
+    },
+    {
+     "section": "results",
+     "page": 10,
+     "similarity": 0.8087,
+     "content": "the leakage of the\nactual announcement itself as the only relevant information cannot be the full explanation\nof the pre-announcement drift. In a paper subsequent to ours, Laarits (2020) proposes an\nadditional state variable for the economy (good or bad), whose revelation before the an-\nnouncement yields the pre-FOMC return. Like in our model, this state variable introduces a\nsecond source of risk. However, unlike ours, his model does not fully explore its implications\nfor the joint intertemporal behavior of return and risk around the announcement. Moreover,\nwhile his focus is on the pre-FOMC drift alone, our model addresses the pre-announcement\nreturn common to all important macroeconomic announcements.\nThe fact that VIX emerges as a measure for impact uncertainty in our model connects\nour paper to the rich literature on the dynamic relationship between return, variance, and\nVIX. Generally, in the presence of multiple risks, VIX can merge as an instrument for risks\nin addition to the directional payoﬀ risk, which can be captured by return variance. 10 The\n9In standard rational expectations settings, He and Wang (1995) and Jiang, Pan, and Qiu (2019) show\nthat informed trading can lead to pre-announcement realization of the risk premium as private information\ngets incorporated into the price. However, as shown in Bernile, Hu, and Tang (2016) and Kurov, Sancetta,\nStrasser, and Wolfe (2019), evidence on informed trading, if any, is only detected 30 minutes before macroe-"
+    },
+    {
+     "section": "results",
+     "page": 26,
+     "similarity": 0.8076,
+     "content": "cating their low\nimpact uncertainty. Indeed, lining up the macro announcements by their pre-announcement\nreturns, the ranking is consistent with the relative importance of the announcements, both in-\ntuitively perceived by market participants and empirically documented by prior literature.16\nFrom this perspective, our results add discipline as well as richness to the literature that\nfocuses mostly on the pre-FOMC drift. More importantly, we add a theoretical foundation\nto the unusual risk-and-return tradeoﬀ surrounding the announcements that has puzzled the\nliterature on pre-FOMC drift.\nTo further illustrate the return patterns before the releases of the non-FOMC macroeco-\nnomic indicators, Figure 1 plots the average cumulative return of the E-mini S&P500 index\nfutures, minute by minute, during the pre-announcement window. 17 For NFP, ISM, and\nGDP, there is a clear upward drift of the E-mini S&P500 index futures prices hours ahead of\n15Our calculation of the pre-announcement returns for FOMC is lower than those reported in Lucca and\nMoench (2015) for two reasons. First, our pre-announcement window starts from 4 pm on the previous day,\nshorter than the 24-hours window used by Lucca and Moench (2015), excluding the small price run-up from\n2 pm to 4 pm on the day prior to the announcement. Second, we updated the sample period of Lucca and\nMoench (2015) to include the post-2011 pre-FOMC returns, which are on average smaller because of the\nunusual monetary policy post 2008."
+    },
+    {
+     "section": "results",
+     "page": 7,
+     "similarity": 0.7938,
+     "content": "post-announcement period. 6 This result, robust with and without FOMC as part of the\nmacroeconomic announcements as well as over diﬀerent subperiods, also contradicts the\nexplanation that information leakage with only the news risk might be behind the large pre-\nannouncement return. In the context of our setting, having only one news risk, regardless of\nleakage, cannot explain the diﬀering return-to-variance ratios across the two time periods.\nResolution of impact uncertainty: One important implication of our model is that\nthe pre-announcement return arises out of the resolution of heightened uncertainty, which\ncan be captured by the reduction in VIX during the pre-announcement period. Explor-\ning this connection, we use the pre-announcement reduction in VIX to sort announcement\ndays into groups of high and low resolution of uncertainty. As predicted by the model,\nwe ﬁnd signiﬁcantly larger pre-announcement returns for the high group and insigniﬁcant\nand negative pre-announcement returns for the low group. Given the well-known negative\ncorrelation between market returns and changes in variance, we further double-sort an-\nnouncement days using pre-announcement reductions in VIX as well as variance, and ﬁnd\nthe result to be driven by VIX. Speciﬁcally, using the macroeconomic announcements of\nNFP, ISM, GDP, and FOMC, we ﬁnd that days of high reduction in VIX are associated\nwith large pre-announcement returns, averaged at 76.6 bps and 64.8 bps, respectively, for"
+    }
+   ],
+   "similarity": 0.8091
+  },
+  {
+   "paper_id": "9b7bc0b4-b79a-42ff-8929-55bf944607d4",
+   "title": "The Fed and the stock market: A tale of sentiment states",
+   "fiche_id": null,
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 12,
+     "similarity": 0.8047,
+     "content": "y orthog-\nonalized sentiment index, We then re-estimate the baseline model using the new sentiment-waning dummy ( SHDB\nt )u pt o\nDecember 2007, to match the sample to the bear market measure endpoint. The results show that accounting for the role\nof bear markets, through the new orthogonalization scheme, does not affect our main conclusions. The estimates are very\nclose to those from the baseline analysis, and the relationship between stock market returns and FFR shocks is statistically\nsigniﬁcant only during sentiment-waning phases. Hence, overall, our ﬁndings point out the distinct and important role of\nsentiment-waning phases, which is not subsumed by controlling for bear markets.\n4.3.3. Pre-announcement effect, information leakage and the role of unscheduled meetings\nLucca and Moench (2015) document large average returns in the U.S. stock market in anticipation of monetary policy\ndecisions made at scheduled FOMC meetings. FOMC statements are typically scheduled to be released in the afternoon. Thus,\nthe daily returns on FOMC meeting days incorporate a pre-announcement window, implying that our results may be con-\nfounded by the pre-FOMC announcement drift. To rule out such effects, we turn to intraday data and calculate the stock mar-\nket return, proxied by the S&P500 index, over a short period surrounding the FOMC announcement. Speciﬁcally, we start by\nconsidering a 30-min window, commencing 10 min before the FOMC announcement and ending 20 min after it: (-10, 20)."
+    },
+    {
+     "section": "methodology",
+     "page": 11,
+     "similarity": 0.7979,
+     "content": "table presents OLS estimates with\nHuber–White heteroscedasticity-consistent standard errors, over FOMC announcement days, of the following model: DVRPt =b0 +b1 ð1 /C0 SH\nt ÞDiu\nt +b2 SH\nt Diu\nt +et ,\nwhere DVRPt denotes the daily change in the S&P 500 Variance Risk Premium (VRP). Diu\nt denotes the unexpected FFR changes. SH\nt is a dummy variable that is\nequal to 1 (0) if the FOMC meeting occurred during a year that starts with high (low) sentiment level. A year is deﬁned as starting with high (low) sentime nt if\nthe sentiment proxy at the end (December) of the previous year is above (below) the full sample mean value. Panel B of this table replaces SH\nt in the above\nequation with SHD\nt , a dummy variable that is equal to 1 if the FOMC meeting occurred during a year when sentiment starts at high level but then declines, and 0\notherwise. A year is deﬁned as of high at the start but then decreasing sentiment if the sentiment proxy at the end (December) of the previous year exceed s the\nfull sample mean value and the sentiment proxy at the end of that year is lower than at the end of the previous year. The sentiment proxy is the U.S. Consume r\nConﬁdence index. The sample period includes scheduled and unscheduled FOMC meetings over June 1989 - December 2008, with the exception of the 17\nSeptember 2001 and 22 January 2008 unscheduled meetings. Standard errors are reported in parentheses. *, **, *** indicate statistical signiﬁcance a t the 10%, 5%\nand 1% level, respectively."
+    },
+    {
+     "section": "methodology",
+     "page": 14,
+     "similarity": 0.7914,
+     "content": "Table 8\nIntraday response of stock market returns to FFR surprises conditional upon the state of investor sentiment - role of pre-announcement effect, infor mation leakage, unscheduled meetings and Fed\ninformation. Panel A of this table presents OLS estimates with Huber–White heteroscedasticity-consistent standard errors, over FOMC announcement days, of the f ollowing model: Rt =b0 +b1 ð1 /C0 SH\nt ÞDiu\nt +b2 SH\nt Diu\nt +et ,\nwhere Rt and Diu\nt denote log returns on the S&P500 index and unexpected FFR changes, respectively. Both aforementioned variables are measured using intraday data and windows surrounding FOMC announcements.\nWhen the embargo period is included, the relevant windows is: 30-min (-10,20). When the embargo period is excluded, the relevant windows is 21-min (-1 ,20). SH\nt is a dummy variable that is equal to 1 (0) if the FOMC\nmeeting occurred during a year that starts with high (low) sentiment level. A year is deﬁned as starting with high (low) sentiment if the sentiment prox y at the end (December) of the previous year is above (below) the\nfull sample mean value. Panel B of this table replaces SH\nt in the above equation with SHD\nt , a dummy variable that is equal to 1 if the FOMC meeting occurred during a year when sentiment starts at high level but then\ndeclines, and 0 otherwise."
+    },
+    {
+     "section": "methodology",
+     "page": 10,
+     "similarity": 0.7886,
+     "content": "estimates with Huber–White heteroscedasticity-consistent standard errors, over FOMC announcement days, of the following model: Rt =b0\n+b1 ð1 /C0 SH\nt ÞDi\nun\nt + b2 ð1 /C0 SH\nt ÞDi\nup\nt +b3 SH\nt Di\nun\nt +b4 SH\nt Di\nup\nt +et , where Rt ; Di\nun\nt and Di\nup\nt\ndenote CRSP value-weighted market returns, negative unexpected FFR changes\nand positive unexpected FFR changes, respectively. Negative FFR surprises are calculated as Di\nun\nt ¼ Di\nu\nt\nDn\nt , where Dn\nt is a dummy variable that is equal to 1 if\nDiu\nt < 0, and 0 otherwise. Positive FFR surprises are calculated as Diup\nt ¼ Diu\nt\nDp\nt , where Dp\nt is a dummy variable that is equal to 1 if Diu\nt > 0, and 0 otherwise. SH\nt is a\ndummy variable that is equal to 1 (0) if the FOMC meeting occurred during a year that starts with high (low) sentiment level. A year is deﬁned as starting w ith\nhigh (low) sentiment if the sentiment proxy at the end (December) of the previous year is above (below) the full sample mean value. In Panel B we replace SH\nt in\nthe above equation with SHD\nt , a dummy variable that is equal to 1 if the FOMC meeting occurred during a year when sentiment starts at high level but then\ndeclines, and 0 otherwise. A year is deﬁned as of high at the start but then decreasing sentiment if the sentiment proxy at the end (December) of the previ ous\nyear exceeds the full sample mean value and the sentiment proxy at the end of that year is lower than at the end of the previous year. The sentiment proxy is\nthe U.S."
+    }
+   ],
+   "similarity": 0.798
+  },
+  {
+   "paper_id": "a7f2298e-d85d-4145-8025-2001c3b225f0",
+   "title": "Price Drift Before U.S. Macroeconomic News: Private Information about Public Announcements?",
+   "fiche_id": null,
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 11,
+     "similarity": 0.7991,
+     "content": "value of this joint test. 19 Based on\nthis p-value, 20 of the 30 announcements have a price impact that is statistically\nsigniﬁcant at the 5% level, and as expected, all announcements with signiﬁcant\npreannouncement drift in both markets fall in this category.\nTo quantify the relevance of the preannouncement price drift, we compare it\nto the total price impact of a given announcement. We measure the total impact\nagain by the price change from 30 minutes before to 5 minutes after the ofﬁcial\nrelease time. Table 4 shows the preannouncement price drift as a proportion of\nthe total price change, sorted by the ratio obtained for the stock market. We divide\ntheγm coefﬁcients from Table 2 by the corresponding˜γm coefﬁcients from Table 3\nand present the ratios in columns 3 and 6. All values are positive and below 100%.\nThis means that the early signal is informative but noisy. It is either not always\npresent or imperfect. The ratio ranges from 30% in the ISM Manufacturing In-\ndex announcement to 67% in the pending home sales announcement, indicating\nthat the preannouncement price move is a substantial proportion of the total price\nmove. The mean ratio is 49% in the stock market and 36% in the bond market.\nTherefore, failing to account for the preannouncement effect substantially under-\nestimates the total impact of these macroeconomic announcements on ﬁnancial\nmarkets.\n17Focusing on a small subset of announcements with high intrinsic value (Gilbert, Scotti, Strasser,"
+    },
+    {
+     "section": "methodology",
+     "page": 13,
+     "similarity": 0.7956,
+     "content": "Kurov, Sancetta, Strasser, and Wolfe 461\nto generate a preannouncement drift of this magnitude. In Appendix A, we de-\nrive a condition on the relative precision and surprise size of early signals and\nofﬁcial release under which the impact of the early signals exceeds the impact of\nthe ofﬁcial release. The appendix presents an example without prior public infor-\nmation, in which an early signal with one-half of the precision and two-thirds of\nthe surprise generates the same price impact as the news at the ofﬁcial release it-\nself. Earlier information can get more attention than later information and thus has\na larger price impact even if the later information is “ofﬁcial” and more precise.\nTo illustrate our ﬁndings graphically, we present CAR graphs. We classify\neach event based on whether the surprise has a positive or negative effect on the\nstock and bond markets using the coefﬁcients in Table 3. Following Bernile et al.\n(2016), we invert the sign of returns for negative surprises.20 CARs are then calcu-\nlated in the[t−60min, t+60min] window for each of the “drift” and “no-drift”\ncategories based on Tables 2 and 3: In the stock market, there are 4 drift and\n16 no-drift announcements, and in the bond market, there are 9 drift and 11 no-\ndrift announcements.21 The CARs in Figure 1 reveal what happens around these\nannouncements. In the no-drift announcements in Graph A, a signiﬁcant price ad-\njustment does not occur until after the release time. In the drift announcements"
+    },
+    {
+     "section": "methodology",
+     "page": 11,
+     "similarity": 0.7944,
+     "content": "Kurov, Sancetta, Strasser, and Wolfe 459\nannouncements. The results show that preannouncement informed trading is\nlimited to neither corporate announcements (Campbell et al. (2009), Kaniel et al.\n(2012)) nor FOMC announcements (Bernile et al. (2016)).\nThe full set of macroeconomic announcements is vast. Most announcements,\nhowever, contain information of only secondary importance. These announce-\nments have a negligible effect on the market and thus no meaningful proﬁt po-\ntential for informed traders. 17 To limit the analysis to the set of relevant, that is,\nmarket-moving, announcements we use the sum of the coefﬁcients on lagged,\ncontemporaneous, and lead surprises, ˜γm≡∑K\nk=−1γm,k, as a test criterion. This\nsum corresponds to the window spanning from 30 minutes before to 5 minutes\nafter the ofﬁcial release time. 18 We identify the set of market-moving announce-\nments by testing the null hypothesis that surprises have no effect in each market\nthat is,˜γm=0. The two middle columns of Table 3 present, analogous to Table 2,\nthe results of this t-test on˜γm separately for the stock and bond markets. The last\ncolumn tests the hypothesis that the sums in these 2 markets are jointly differ-\nent from 0. The results are sorted by the p-value of this joint test. 19 Based on\nthis p-value, 20 of the 30 announcements have a price impact that is statistically\nsigniﬁcant at the 5% level, and as expected, all announcements with signiﬁcant"
+    },
+    {
+     "section": "intro",
+     "page": 2,
+     "similarity": 0.7862,
+     "content": "er, if the preannouncement\ndrift is gradual (which is the case in our data), it will not be detected in such small\nincrements.\nSecond, we use a longer preannouncement interval than other studies. An-\ndersen, Bollerslev, Diebold, and Vega (2007), for example, include 10 minutes\nbefore the release time. For the sample period from 1998 to 2002, they ﬁnd that\nglobal stock, bond, and foreign exchange markets react to announcements only\nafter their release time. We show that a preannouncement interval of at least 30\nminutes is necessary to capture the price drift.\nThird, we include a larger set of announcements. Instead of handpicking\nannouncements, we start with essentially all macroeconomic announcements\nthat academic research and/or the ﬁnancial press consider relevant. We expand\nthe largest set of announcements among previous seminal studies (Andersen,\nBollerslev, Diebold, and Vega (2003), (2007)) by 7 additional announcements\nthat are frequently discussed in the ﬁnancial press. Although the resulting set of\nDownloaded from \nhttps://www.cambridge.org/core\n. \nipmc cnrs\n, on \n22 Sep 2026 at 09:17:51\n, subject to the Cambridge Core terms of use, available at \nhttps://www.cambridge.org/core/terms\n. \nhttps://doi.org/10.1017/S0022109018000625"
+    }
+   ],
+   "similarity": 0.7964
+  },
+  {
+   "paper_id": "53e0f935-b290-4ac4-b4b7-a82db05f1444",
+   "title": "Informed and Strategic Order Flow in the Bond Markets",
+   "fiche_id": null,
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 45,
+     "similarity": 0.7953,
+     "content": "Table 7. Public Signal Noise and Market Liquidity\nIn this table we report estimates of the f ollowing regression model (Eq. (14)):\nrt = a + λsnhSptDnht + λsnlSptDnlt + λsnmSpt(1 − Dnht − Dnlt)+\nXN\ni=0\nλpnhiΩ∗\nt−iDnht\n+\nXN\ni=0\nλpnliΩ∗\nt−iDnlt +\nXN\ni=0\nλpnmiΩ∗\nt−i(1 − Dnht − Dnlt)+\nXN\ni=1\nβirt−i + εt,\nwhere rt =( yt − yt−1) × 100 is the daily change in bond yields, Ω∗\nt is the unanticipated order ﬂow (deﬁn e di nS e c t i o n4 ) ,Dnht (Dnlt)i sad u m m y\nvariable equal to one on days with high (low) public signal noise (de ﬁned in Section 3.2.3 using news rev isions), and zero otherwise, and N =5 .\nWe estimate Eq. (14) just for Nonfarm Payroll, Industrial Production, and C apacity Utilization, since no other revisions (from RTDS) are available.\nR2\nsa is the adjusted R2 using public news as the only explanatory variable. R2\nfn h a (R2\nfn l a)i st h ea d j u s t e dR2 of using contemporaneous order ﬂow\nalone in high (low) public signal noise days. R2\na is the adjusted R2 of the fully speci ﬁed model above. A “ ∗ ”, “ ∗∗ ”, or “ ∗∗∗ ” indicate signi ﬁcance\nat the 10%, 5%, or 1% level, respectively, using the Newey-West standard errors reported below each coe ﬃcient estimate (s.e.).\n43"
+    },
+    {
+     "section": "methodology",
+     "page": 43,
+     "similarity": 0.7953,
+     "content": "Table 6. Public Signals and Market Liquidity\nIn this table we report estimates of the f ollowing regression model (Eq. (14)):\nrt = a +\nXP\nj=1\nλsj Sjt +\nXN\ni=0\nλphiΩ∗\nt−iDht +\nXN\ni=0\nλpliΩ∗\nt−iDlt\n+\nXN\ni=0\nλpmiΩ∗\nt−i(1 − Dht − Dlt)+\nXN\ni=1\nβirt−i + εt,\nwhere rt =( yt − yt−1) × 100 is the daily change in bond yields, Ω∗\nt is unanticipated order ﬂow (de ﬁn e di nS e c t i o n4 ) ,Dht (Dlt)i sad u m m y\nvariable equal to one on days with high (low) dispersion of beliefs (de ﬁn e di nS e c t i o n3 . 2 . 2 ) ,a n dz e r oo t h e r w i s e ,a n dN =5 . W ee s t i m a t et h e\nabove equation using only announcement days (de ﬁned in Section 4.2). The coe ﬃcient λsp is the estimated price impact of the Nonfarm Payroll\nannouncement ( P =1 ) or the average estimated impact across either the “in ﬂuential” (P =7 )o ra l l( P =1 8 ) macroeconomic announcements\nfor which the standard deviation across professional forecasters is available (i.e., those underlined in Table 2). R2\nfh a (R2\nfla )i st h ea d j u s t e dR2\nconditional on high (low) dispersion days and only using Ω∗\nt , R2\nfa is the unconditional adjusted R2 using only Ω∗\nt ,a n d R2\na is the adjusted R2 of\nthe fully speci ﬁed regression above. A “ ∗ ”, “ ∗∗ ”, or “ ∗∗∗ ” indicate signi ﬁcance at the 10%, 5%, or 1% level, respectively, using the Newey-West\nstandard errors reported below each coe ﬃcient estimate (s.e.).\n41"
+    },
+    {
+     "section": "results",
+     "page": 22,
+     "similarity": 0.7907,
+     "content": "4.2 Announcement Days\nWhen we introduce a public signal in the model (Proposition 2), market liquidity increases\n(Corollary 2), because the presence of a trade-free source of information and more aggressive\ntrading by the speculators mitigates the adverse selection risk for the market-makers. In our\nempirical analysis, this translates into observing a negative diﬀerence (since we work with yields)\nbetween λ (of Eq. (1)) and λ\np (of Eq. (3)) in the following regression:\nrt = a +\nXN\ni=0\nλiΩ∗\nt−i(1 − DPt )+\nXN\ni=0\nλpiΩ∗\nt−iDPt +\nXN\ni=1\nβirt−i + εt,( 1 2 )\nwhere DPt is a dummy variable equal to one if either the Nonfarm Payroll Employment report\n(P =1 ), any of the 7 inﬂuential announcements listed in Section 3.2.2 ( P =7 ), or any of\nthe 18 announcements underlined in T able 2 ( P =1 8 ) is released on day t and equal to zero\notherwise. As in Eq. (11), we set N =5 to assess the relevance of permanent (i.e., information)\nversus temporary (i.e., inventory control) e ﬀects of unanticipated order ﬂow on yield changes.\nW e estimate Eq. (12) for each announcement typeP =1 , 7,o r 18 and either two-year, ﬁve-year,\nor ten-year bond yield changes, and report the resulting estimates in Table 5.\nConsistent with Table 4, the evidence in Table 5 indicates that, even during announcement\ndays, both the contemporaneous and cumulative impact of unanticipated order ﬂow on yield\nchanges (λp0 and P5\ni=0 λpi, respectively) are negative and statistically signi ﬁcant (often at the\n1% level)."
+    },
+    {
+     "section": "methodology",
+     "page": 25,
+     "similarity": 0.7888,
+     "content": "nerally more\nsigniﬁcant when their noise is lower (columns λ\nsnm and λsnl). Accordingly, we also ﬁnd that (i)\nthe coe ﬃcients measuring the contemporaneous and permanent impact of unanticipated order\nﬂow on bond yield changes are generally insigni ﬁcant on announcement days when the public\nsignal noise is low (columns λpnl0 and P5\ni=0 λpnli in Table 7), and (ii) the adjusted R2 of order\nﬂow alone is generally higher on days with high public signal noise ( Dnht =1 )t h a no nd a y s\nwith low public signal noise ( Dnlt =1 ), i.e., R2\nfn h a >R 2\nfn l a; yet, these di ﬀerences are not large.\nThese results suggest that the impact of the release of macroeconomic data on the process of\nprice formation in the U.S. Treasury market is decreasing in the quality of the public signals, as\nargued in the model of Section 2.2, albeit not importantly so.\nFinally, we amend all the regression models speci ﬁed above to account for the potential\nomitted variable biases described in Section 4.1.1. Many of these biases are in fact more likely\nto arise when analyzing the impact of both information heterogeneity and public signal noise\non market liquidity during announcement days. For example, the number of informed market\nparticipants is likely to be endogenously higher during announcement days regardless of their\ndispersion of beliefs, if they expect the Treasury bond market to be more liquid then (e.g.,\nChowdhry and Nanda, 1991). In addition, as observed in Section 3.2.3, public signal noise may"
+    }
+   ],
+   "similarity": 0.7938
+  },
+  {
+   "paper_id": "d9999e65-c6db-4e29-9d38-42a68d44e1ff",
+   "title": "Micro effects of macro announcements: real-time price discovery in foreign exchange",
+   "fiche_id": "andersen-2003-micro-effects-macro-announcements",
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "other",
+     "page": 5,
+     "similarity": 0.8088,
+     "content": "leased during the next week, and reported the median forecasts from the survey. Numerous in/bullet6 uential studies, from early work such as Thomas J. Urich and Paul Wachtel (1984) through recent work such as Balduzzi et al. (2001), have veri/bullet5 ed that the MMS expecta- tions contain valuable information about the forecasted variable, and in most cases are unbi- ased and less variable than those produced from extrapolative benchmarks such as ARMA models.Table 1 provides a brief description of salient aspects of U.S. and German economic news announcements. We show the total number of observations in our news sample, the agency reporting each announcement, and the time of the announcement release. Note that U.S. an- nouncements times are known in advance, whereas only the day for the German announce- ments are known in advance but their timing within the day is variable and unknown a priori. The target Fed funds rate deserves special mention. The Federal Open Market Commit- tee’ s (FOMC) announcement of the federal funds rate target, although likely producing im- portant news, is nonstandard and hence is not typically examined. It is nonstandard because prior to February 1994 it was not announced; instead, the FOMC signaledthe target rate, but did not state it explicitly, through open market operations performed from 11:30 to 11:35 A.M. Eastern time on the day of the FOMC meeting."
+    },
+    {
+     "section": "other",
+     "page": 5,
+     "similarity": 0.7878,
+     "content": "ot announced; instead, the FOMC signaledthe target rate, but did not state it explicitly, through open market operations performed from 11:30 to 11:35 A.M. Eastern time on the day of the FOMC meeting. In February 1994, the FOMC began to an- nounce changes in the target rate on meeting days, albeit at irregular times, and from 1995 onward it announced the target rate on meeting days regularly at 2:15 P.M. Eastern time, as described in Kenneth N. Kuttner (2001). To assess the effects of FOMC news, we need to know announcement days and times, as well as the market’ s expected Fed funds rate target and the announced (or signaled) value. Determination of announcement days and times is relatively straightforward. We collected the irregular 1994 announcement times from Reuters. 3Before1994we use an 11:30 A.M. Eastern announcement time, and after March, 1995 we use a 2:15 P.M. \nannouncement time. 4Determination of market ex- pectations is similarly straightforward: we use MMS survey data on expected federal fund rate targets from January 1992 to December 1998. 5The announcements themselves are trickier to construct, due to the pre-1994 FOMC secrecy; we use the announcement data constructed by Michael W. Brandt et al. (2001), kindly pro- vided by Kenneth Kavajecz. In Figure 2 we show the pattern of U.S. release dates throughout the month. 6Thisisofpotential importance, because there is some re- dundancy across indicators."
+    },
+    {
+     "section": "other",
+     "page": 17,
+     "similarity": 0.7733,
+     "content": "y equation (2), in line with earlier results for bond mar- kets such as Fleming and Remolona (1997, 1999). News effects are still important, how- ever, in both conditional mean and variance dynamics.\nTABLE3—RETURNANDVOLATILITYNEWSRESPONSECOEFFICIENTS Announcement Pound/$Yen/$DM/$CHF/$Euro/$Contemporaneous Return Response, bk0Nonfarm payroll employment 0.092*0.072*0.159*0.115*0.081*Durable goods orders 0.055*0.029*0.084*0.083*0.041*Trade balance 0.083*0.115*0.142*0.131*0.084*Initial unemployment claims 20.010*20.009*20.018*20.024*20.017*Contemporaneous Volatility Response, bk0Nonfarm payroll employment 0.058*0.053*0.084*0.077*0.058*Durable goods orders 0.017*0.010*0.027*0.018*0.018*Trade balance 0.023*0.040*0.034*0.031*0.026*Initial unemployment claims 0.003*0.004*0.010*0.010*0.005*Cumulative Volatility Response, ¥j950J9 bkj9Nonfarm payroll employment 0.356*0.328*0.519*0.476*0.356*Durable goods orders 0.106*0.060*0.163*0.114*0.108*Trade balance 0.139*0.244*0.210*0.191*0.161*Initial unemployment claims 0.021*0.023*0.059*0.060*0.033*Notes:We estimate the exchange-rate conditional mean model (1), Rt5b01¥i51I biRt2i1¥k51K¥j50J bkjSk,t2j1«t,and we report estimates of the contemporaneous response of exchange-rate returns to news, bk0. We also estimate the disturbance volatility model (2), z«ˆtz5c1csˆd~t!\n2881Ok51\nKOj950\nJ9bk j9zSk,t2j9z1XOq51\nQXdqcosXq2pt288D1fqsinXq2pt288DD1Or51\nROj050\nJ0grj0Dr,t2j0D1ut,"
+    },
+    {
+     "section": "other",
+     "page": 13,
+     "similarity": 0.7702,
+     "content": "g) around the announcement times, hence resulting in smaller news effects around the an- nouncements, ultimately producing a more grad- ual adjustment, perhaps for a few hours after the announcements. Alternatively, greater prean- nouncement leakage in Germany may result in adjustments taking place gradually in the days prior to the actual announcement. Most of the explanatory power of the ex- change-rate conditional mean model (1) comes from the lagged values of the dependent vari- able and the contemporaneous news announce- ment. Hence, although 58 percent of the days in our sample contain a news announcement, to a good approximation the news predicts only the direction and magnitude of the exchange-rate movement during the 5-minute post-release in- tervals, which correspond to only two-tenths of one percent of the sample observations. To fo- cus on the importance of news during announce- ment periods, we now estimate the model (3) Rt5bkSkt1«t,whereRtis the 5-minute return from time ttotimet11andSktis the standardized news corresponding to announcement k(k51,...,41)attimet, and the estimates are based on only those observations ( Rt,Skt) such that an announcement was made at time t.We show the estimation results in Table 2, which contains a number of noteworthy fea- tures. First, news on many of the fundamentals exerts a signi/bullet5 cant in/bullet6 uence on exchange rates."
+    }
+   ],
+   "similarity": 0.79
+  },
+  {
+   "paper_id": "d024c572-eeba-4ef5-b223-62767f433a4b",
+   "title": "Do designated market makers provide liquidity during downward extreme price movements?",
+   "fiche_id": null,
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "other",
+     "page": 62,
+     "similarity": 0.7855,
+     "content": ".003 -0.0 64*** -0.086*** 0.005 0.043***\n(1.17) (-0.04) (-0.74) (-6.12) (-0.21) (-3.14) (-9.13) (0. 32) (3.29)\nReturn 0.073*** 0.074*** 0.248*** 0.178*** 0.125*** 0.117 *** 0.115*** 0.088*** 0.065***\n(9.45) (10.20) (10.29) (10.70) (6.22) (11.38) (13.38) (9.4 9) (7.40)\n¯R2 0.010 0.013 0.087 0.085 0.042 0.041 0.038 0.019 0.019\nNote. We present the results of the V AR in equation ( 9). The model is estimated separately for unsystematic drift burst\nEPMs in Panel A and systematic ones in Panel B. The dependent varia ble is the 10-second aggressive trading imbalance\nof the trader category indicated by the column label. The explanato ry variables “Pre-event”, “Early drop”, “Intermediate\ndrop”, “Late drop”, and “Recovery” refer to phase dummies of a drift burst EPM. “Bid-ask spread” is the quoted spread (in\npercent), “Log(euro volume)” is the log-euro volume, and “Retur n” is the contemporaneous stock return. We also include\nstock ﬁxed eﬀects. The non-dummy variables are standardized at the stock level. The coeﬃcient estimates of lagged trading\nimbalances are not reported for brevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust standard\nerrors clustered at the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01. nObs = 342,032 in Panel A\nand nObs = 79,404 in Panel B.\nix"
+    },
+    {
+     "section": "other",
+     "page": 63,
+     "similarity": 0.7855,
+     "content": "* 0.0 48** -0.042** 0.068*** 0.061**\n(0.09) (1.21) (-1.66) (-6.45) (3.79) (2.72) (-2.65) (3.37) (2.13)\nReturn -0.084*** -0.072*** -0.266*** -0.227*** -0.077*** -0.135*** -0.077*** -0.099*** -0.074***\n(-9.81) (-8.64) (-14.22) (-10.36) (-9.62) (-12.24) (-8.04 ) (-7.32) (-6.60)\n¯R2 0.014 0.013 0.095 0.091 0.041 0.056 0.015 0.053 0.036\nNote. We present the results of the V AR in equation ( 9). The model is estimated separately for unsystematic drift burst\nEPMs in Panel A and systematic ones in Panel B. The dependent varia ble is the 10-second passive trading imbalance of\nthe trader category indicated by the column label. The explanatory variables “Pre-event”, “Early drop”, “Intermediate\ndrop”, “Late drop”, and “Recovery” refer to phase dummies of a drift burst EPM. “Bid-ask spread” is the quoted spread (in\npercent), “Log(euro volume)” is the log-euro volume, and “Retur n” is the contemporaneous stock return. We also include\nstock ﬁxed eﬀects. The non-dummy variables are standardized at the stock level. The coeﬃcient estimates of lagged trading\nimbalances are not reported for brevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust standard\nerrors clustered at the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01. nObs = 342,032 in Panel A\nand nObs = 79,404 in Panel B.\nx"
+    },
+    {
+     "section": "other",
+     "page": 61,
+     "similarity": 0.7842,
+     "content": "1.29) (-7.61) (2.33) (-1.13) (-7.34) (2.75 ) (2.68)\nReturn -0.000 0.018*** 0.031 -0.076*** 0.030** 0.006 0.054 *** -0.028** -0.020**\n(-0.03) (3.51) (1.09) (-3.64) (2.14) (0.61) (5.11) (-2.58) (-2.10)\n¯R2 0.041 0.004 0.009 0.070 0.031 0.022 0.029 0.031 0.032\nNote. We present the results of the V AR in equation ( 9). The model is estimated separately for unsystematic drift burst\nEPMs in Panel A and systematic ones in Panel B. The dependent varia ble is the 10-second trading imbalance of the trader\ncategory indicated by the column label. The explanatory variables “P re-event”, “Early drop”, “Intermediate drop”, “Late\ndrop”, and “Recovery” refer to phase dummies of a drift burst EP M. “Bid-ask spread” is the quoted spread (in percent),\n“Log(euro volume)” is the log-euro volume, and “Return” is the con temporaneous stock return. We also include stock ﬁxed\neﬀects. The non-dummy variables are standardized at the stock le vel. The coeﬃcient estimates of lagged trading imbalances\nare not reported for brevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust standard errors clustered\nat the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01. nObs = 342,032 in Panel A and nObs =\n79,404 in Panel B.\nviii"
+    },
+    {
+     "section": "other",
+     "page": 64,
+     "similarity": 0.7803,
+     "content": "-0.18) (2.99) (2.97) (1.52) (-2.20) (-1.41)\nLog(euro Volume) -0.005 -0.016 1.035*** 0.040 0.081 -0.068 0.361*** -0.743*** -0.457**\n(-0.44) (-0.44) (3.58) (0.33) (0.60) (-0.31) (4.89) (-3.61 ) (-2.44)\nReturn 0.006 -0.016 -0.054 -2.049*** 0.104 -0.816 -1.226** * 0.839*** 0.936***\n(0.17) (-0.38) (-0.16) (-7.02) (0.44) (-1.60) (-5.78) (3.1 7) (4.00)\n¯R2 0.058 0.008 0.022 0.087 0.006 0.016 0.053 0.022 0.012\nNote. This table presents coeﬃcient estimates from the V AR in equation ( 12). The model is estimated separately for\nunsystematic drift burst EPMs in Panel A and systematic ones in Pan el B. The dependent variable is the 10-second proﬁt\nand loss (P&L) of the trader category indicated by the column label. “Dummy” equals one for the entire duration of the\ndrift burst EPM (from the beginning of the pre-event until the end of the recovery), zero otherwise, “Bid-ask spread” is the\nquoted spread (in percent), “Log(euro volume)” is the log-euro v olume, and “Return” is the contemporaneous stock return.\nWe also include stock ﬁxed eﬀects. The non-dummy variables are sta ndardized at the stock level. The coeﬃcient estimates\nof the lagged P&L are not reported for brevity. The t-statistics (in parentheses) are based on heteroscedasticity-r obust\nstandard errors clustered at the stock and date level. * P -value<0.1; ** P -value<0.05; *** P -value<0.01. nObs = 342,032 in\nPanel A and nObs = 79,404 in Panel B.\nxi"
+    }
+   ],
+   "similarity": 0.7851
+  },
+  {
+   "paper_id": "f94a74c7-f3d8-4b6c-9eb8-db822ec41e48",
+   "title": "Information Shocks, Liquidity Shocks, Jumps, and Price Discovery: Evidence from the U.S. Treasury Market",
+   "fiche_id": null,
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "results",
+     "page": 18,
+     "similarity": 0.7876,
+     "content": "UNCEMENT)= f (α +βDPTHSHKDPTHSHKt−1(9)\n+βHIDSHKHIDSHKt−1 +βSPRDSHKSPRDSHKt−1 +βOF|OFt−1|\n+βOB|OBt−1| +βVOLAVOLAt−1),\nwhere P(·) denotes the probability that a jump occurs, which ex post takes a value\nof 1 when there is a jump at the announcement time t, and 0 otherwise. To keep the\nanalysis clean, only announcement days with a single jump at the announcement\ntime are included. The 1st set of columns in Table 6 reports the estimation results\nof the above model for 2-, 5-, and 10-year notes. Results for the 3-year note and\nthe 30-year bond are similar and not reported for brevity. The null hypothesis\nthat the coefﬁcients of all liquidity variables are jointly 0 is strongly rejected for\nall maturities. In particular, realized volatility is signiﬁcant at the 1% level, and\nshocks to spread and shocks to overall market depth are signiﬁcant at the 10%\nlevel for all 5 maturities.\nNext, we estimate a similar model with only information shocks to examine\nhow well announcement surprises explain jumps:\nP(JUMP\nt|ANNOUNCEMENT)= f (α +ΣJ\nj=1γj|SURj,t|),(10)\nwhere|SURj,t| is the absolute value of the standardized announcement surprise for\nnews item j, where j = 1, 2,..., J. Note that while liquidity shocks are measured\nduring the preannouncement period, announcement surprise is only available at\nthe time of announcement. Since we have more than 30 prescheduled announce-\nments, it is infeasible to include all of them in the estimation. Based on Table 5,"
+    },
+    {
+     "section": "results",
+     "page": 11,
+     "similarity": 0.772,
+     "content": "t of the\n120 jumps at the 2-year maturity, about 60% have concurrent jumps at the 3-year\nmaturity. We note that here we simply document whether jumps across maturities\nare close to each other in time. The issue of co-jumps is formally examined in\nDungey et al. and Lahaye et al. (2011). Dungey et al. examine co-jumps across\nmaturities using the eSpeed data. Lahaye et al. examine co-jumps across asset\nmarkets.\nB. Jumps and Macroeconomic News Announcements\nWe further examine how often jumps are associated with prescheduled news\nannouncements. A jump is identiﬁed as associated with a news announcement if\nit is within 10 minutes of prescheduled announcement time. With a 10-minute\nwindow, we allow for potential errors (such as recording errors) in announcement\ntime.\nTable 4 indicates that a large majority of jumps occurs during the time of\nannouncement. For example, more than 90% of jumps of the 2-year note occur\nduring prescheduled announcements. The results of other notes are similar except\nfor the 30-year bond, which has a higher proportion of jumps outside announce-\nment times. Panels C and D report the frequency of concurrent jumps across ma-\nturities. As expected, for jumps occurring at announcement times the frequency\nof concurrent jumps is higher.\nThe left-hand column of Figure 1 plots the distribution of the jump frequency\nthroughout the day for the most liquid 2-, 5-, and 10-year notes. The frequency"
+    },
+    {
+     "section": "methodology",
+     "page": 7,
+     "similarity": 0.7712,
+     "content": "ral Open Market Committee (FOMC) minutes, ISM ser-\nvice, NY Empire State Index, Chicago Purchasing Managers Index (PMI), ex-\nisting home sales, Philadelphia Fed Index, and the ADP National Employment\nReport sponsored by Automatic Data Processing, Inc. In addition to presched-\nuled news announcements, we also collect the release times of auction results for\n2-, 3-, 5-, and 10-year notes. Last, we collect the release of the testimony of the\nSemiannual Monetary Policy Report and Economic Outlook. The full list of an-\nnouncements can be found in Table 2. Following Balduzzi et al. and Andersen,\nBollerslev, Diebold, and V ega (2007), the standardized announcement surprise is\ndeﬁned as\nSUR\nk,t = Ak,t− Ek,t\nˆσk\n,(3)\nwhere Ak,t is the actual announcement, E k,t is the median forecast for news k on\nday t, and ˆσk is the standard deviation of A k,t− Ek,t, t = 1, 2,..., T.\nB. Jump T est\nA number of statistical tests have been proposed in recent literature to detect\nwhether there are jumps in asset prices. For instance, A ¨ıt-Sahalia (2002) exploits\nthe restrictions on the transition density of diffusion processes to assess the like-\nlihood of jumps. Carr and Wu (2003) make use of the decay of the time value of\nan option with respect to the option’s maturity. Barndorff-Nielsen and Shephard\n(2004), (2006) propose a bipower variation (BPV) measure to separate the jump\nvariance and the diffusive variance. Lee and Mykland (2008) exploit the proper-"
+    },
+    {
+     "section": "results",
+     "page": 3,
+     "similarity": 0.7614,
+     "content": "Jiang, Lo, and Verdelhan 529\npayrolls, retail sales, producer price index, consumer conﬁdence, and the Institute\nfor Supply Management (ISM) index. It also includes announcements that have\nbeen considered less important and thus largely omitted in previous studies, for\nexample, the NY Empire State Index (a regional economic indicator published by\nthe Federal Reserve Bank of New Y ork). Overall, we ﬁnd that a large number of\njumps occur during prescheduled macroeconomic news announcements. For ex-\nample, about 90% of jumps in the 2-year note prices occur within 10 minutes of\nprescheduled news announcement times.\nWhile a majority of jumps occurs at prescheduled news announcement times,\nfurther analysis shows that information shocks, constructed from news announce-\nment surprises, have limited power in explaining jumps in bond prices. We ﬁnd\nthat preannouncement liquidity shocks also play an important role in bond price\njumps. In our analysis, we use several measures constructed from the BrokerTec\ndata to capture liquidity shocks. They include the bid-ask spread, trading volume,\nand various measures of market depth. Similar to Fleming and Remolona (1999),\nwe document stylized preannouncement effects in the U.S. Treasury market. In\nparticular, there is generally a widening of the bid-ask spread and a sharp drop in\nmarket depth prior to a news announcement. More importantly, we ﬁnd that the\nwidening of the spread and the drop in market depth during the preannouncement"
+    }
+   ],
+   "similarity": 0.7769
+  },
+  {
+   "paper_id": "d45a3215-8301-4777-a81d-6bea2d79f281",
+   "title": "The overnight drift",
+   "fiche_id": "boyarchenko-2023-overnight-drift",
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "other",
+     "page": 69,
+     "similarity": 0.7937,
+     "content": "is economically large and marginally significantly\npositive between 4:00 - 5:00 consistent with central bank announcement premium. The FOMC\ndummy is large but insignificant.\n[Insert table A.14 here]\nSummarizing, we fail to detect a relationship between the overnight drift and ( i) earnings an-\nnouncements that are released after the close of the cash market, during Asian hours, or ( ii)\novernight news from Asian or European central bank or macro announcements; thus, it is unlikely\nthat the overnight drift is driven by risk compensation related to announcement premia.\nC.3. Resolution of Uncertainty\nThe results directly above suggest that the overnight drift is unlikely to be related to an information\neffect. Recent literature (see e.g. Ai and Bansal (2018) for the theoretical argument and Hu, Pan,\nWang, and Zhu (2019) for suggestive empirical evidence), however, has argued that resolution\nuncertainty, as measured by changes in the VIX, ahead of macroeconomic announcements could\nexplain the pre-announcement drift of Lucca and Moench (2015). More recently, in work subsequent\nto ours, Bondarenko and Muravyev (2020) postulate uncertainty resolution at the open of European\nmarkets as a possible explanation for the central empirical result of our paper (figure 2).\nTo investigate this hypothesis, we consider changes in volatility by computing intraday and\novernight VIX futures ( V X) returns. Indeed, investors wanting to manage volatility risks around"
+    },
+    {
+     "section": "other",
+     "page": 69,
+     "similarity": 0.7754,
+     "content": "day. Thus, Japanese and European macro announcements are contemporaneous with the overnight\nreturn, while U.S. announcements occur subsequent to the overnight returns. The regression we\nestimate is\nrH\nt,n = an + bn\n1 1 U.K. + bn\n2 1 EU + bn\n3 1 JP + bn\n4 1 U.S. + εn\nt , (A.38)\nwhere 1 i is a macro or central bank announcement dummy for country i.\nPanel (a) of table A.14 reports estimates for macro announcements. The intercept during the\nOD hour (2:00–3:00) is estimated to be 1.52 bps with a t-statistic of 5.98, i.e. the drift is present on\nnon-announcement days and thus not driven by macro announcements. Furthermore, none of the\nannouncement dummies are statistically different from the non-announcement days in this hour.\nThe U.K. macro dummy is economically large and significant negative at the 10% level at 3:00\n(which is 8:00 in London). More generally, we fail to detect an announcement effect in any of\nthe overnight hours. U.S. announcements occur at 8:30 and indeed we see a large positive return\nof 3.22 bps with a t-statistics of 2.29. Panel (b) of table A.14 reports estimates for central bank\nannouncements. Again, the intercept is unaffected at 2:00-3:00 and we obtain an estimate of 1.40\nbps with a t-statistic of 6.52. The BoE dummy is economically large and marginally significantly\npositive between 4:00 - 5:00 consistent with central bank announcement premium. The FOMC\ndummy is large but insignificant.\n[Insert table A.14 here]"
+    },
+    {
+     "section": "other",
+     "page": 59,
+     "similarity": 0.7528,
+     "content": "of the week, the 2:00 - 3:00 return is positive and significant at the 1% level and the magnitude of\nthe returns is also quite similar.\nPanel (b) of Table A.5, on the other hand, shows that the OP returns are always negative but\nonly statistically significant on Thursdays and Fridays with mean returns equal to −2.10 and −3.03\nbasis points per hour per day, with t-statistics equal to −2.02 and −2.76, respectively. Figure\nA.10 reports three pieces of suggestive evidence as to why the OP occurs only on Thursdays and\nFridays: Firstly, we observe more U.S. macro announcements released at 8:30 on Thursdays and\nFridays. Generally, we experience large positive returns leading up to announcements, as has been\ndocumented in the literature (Savor and Wilson (2013)). We conjecture that (short-lived) price-\nreversals following the macro announcements partly explain the negative opening returns. Secondly,\nwe do not observe many FOMC announcements on Thursdays and Fridays and we also know that\nreturns typically are positive in the hours leading up to FOMC announcements which subsequently\ndo not revert Lucca and Moench (2015). Thirdly, we observe most negative earnings announcements\ndays are Thursdays and Fridays. In summary, while OP returns is concentrated in the final days\nof the week, OD returns are systematically positive and significant in each day of the week.\n\u0002\nInsert figure A.3 and A.10 and table A.5 here\n\u0003\nB.2. Month of the year"
+    }
+   ],
+   "similarity": 0.774
+  },
+  {
+   "paper_id": "8d27d746-a7c3-4d90-88eb-42393e8cccb4",
+   "title": "Exchange Rates and Monetary Policy Uncertainty",
+   "fiche_id": null,
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "other",
+     "page": 3,
+     "similarity": 0.7744,
+     "content": "Announcements by the Federal Open Market Committee (FOMC) are among the most highly\nanticipated events by investors around the world. These announcements, which occur regularly at\npre-speciﬁed dates, serve as the Federal Reserve’s main channel for communicating its monetary\npolicy decisions to the market. Given the close link between currency markets and monetary\npolicy, it is only natural to expect that FOMC announcements can have large impacts on exchange\nrates. The active nature of the currency markets (with a daily turnover of over 5 trillion U.S.\ndollars), coupled with high market concentration and the participants’ ability to operate with high\nleverage ratios means that even small price movements in this market can potentially translate into\neconomically signiﬁcant eﬀects.\nIn this paper, we document that announcements by the FOMC have an economically and\nstatistically signiﬁcant impact on the excess returns of a host of diﬀerent currencies vis-` a-vis the\nU.S. dollar. By relying on high-frequency data, we document that a trading strategy that is short\nthe U.S. dollar and long other currencies exhibits signiﬁcantly larger average excess returns on days\nwith scheduled FOMC announcements compared to all other days. We also document that the\nexcess returns earned on announcement days (i) consist of a pre- as well as a post-announcement\ncomponent; (ii) are higher for currencies with higher interest rate diﬀerentials vis-` a-vis the U.S.;"
+    },
+    {
+     "section": "other",
+     "page": 13,
+     "similarity": 0.7728,
+     "content": "of R1 and the foreign currency’s excess returns between t = 1 and t = 2.\nPROPOSITION 3: An interest rate reduction by the Federal Reserve increases the foreign cur-\nrency’s expected post-announcement excess returns, that is,∂E1[φ2]/∂R1< 0. Moreover, ∂2E1[φ2]/∂R1∂σR <\n0.\nThus, not only the foreign currency exhibits higher excess returns on announcement days relative\nto non-announcement days, but also that announcement day returns are higher if, ex post, the Fed\nadopts a policy of monetary easing. The juxtaposition of Propositions 1 and 3 also illustrates that\nthe composition of announcement day returns is driven by two related, but distinct factors. First,\nthe mere possibility of a change in interest rates in the U.S. results in higher monetary policy\nuncertainty and, hence, higher excess returns. Second, given that the policy announcement may\nresult in an actual change in interest rates, the foreign currency’s post-announcement returns also\nadjust in response to the adopted policy.\nII. Data\nWe work with tick-by-tick high-frequency data that runs from January 1, 1994 to December\n31, 2013. There are eight scheduled FOMC meetings in one year. This leaves us with 160 FOMC\nannouncement days and 4,512 trading days with no scheduled FOMC announcements. We exclude\nfrom our sample the 10 days in which the FOMC made a surprise announcement following an\nunscheduled meeting.\nHigh-Frequency Currency Data: The high-frequency spot exchange rate data for Australia, Canada,"
+    },
+    {
+     "section": "other",
+     "page": 21,
+     "similarity": 0.7725,
+     "content": "cally signiﬁcant for all portfolios witht-statistics ranging between 4.45 and 5.29. These results thus\nindicate that, consistent with the predictions of Proposition 3, the adoption of an expansionary\npolicy by the Fed increases the spread between announcement and non-announcement day returns.\nB.1. Pre- and Post-Announcement Returns\nOne of the key predictions of our model is that currency excess returns consist of pre- and post-\nannouncement components. To test this prediction and explore the intra-day patterns of returns,\nwe decompose daily returns by sampling the data at 215pm and 4pm and calculate currency returns\nover two non-overlapping time windows: (i) from 4pm on any given day to 215pm the following\nday and (ii) from 215pm to 4pm on the same day. We then separately regress the returns earned\nover each time window on an announcement dummy in a regression akin to (6). With some abuse\nof terminology, we refer to the 4pm–215pm and 215pm–4pm time windows as the pre- and post-\nannouncement windows, respectively.\n[T able IV\nhere]\nThe results are summarized in Table IV, where Panels B and C report the corresponding\nnumbers for pre- and post-announcement windows, respectively. As a reference, we also reproduce\nin Panel A the results of our baseline regression for the entire day (from Table III). The positive and\nsigniﬁcant estimates for the announcement dummy indicate that, except for pf1’s returns during the"
+    },
+    {
+     "section": "other",
+     "page": 41,
+     "similarity": 0.7671,
+     "content": "11Annualized Sharpe ratios are obtained by adjusting daily values for the yearly frequency of\nFOMC announcements (eight out of 252 trading days). Thus, the adjustment factors for an-\nnouncement and non-announcement day Sharpe ratios are\n√\n8 and\n√\n244, respectively.\n12We perform the same set of exercises for individual currencies, ﬁnding a similar pattern. The\ndetails are provided in the online appendix.\n13The remaining countries have either a very short history or a small number of scheduled an-\nnouncements, making any meaningful statistical analysis impossible. For example, Bank of Canada\nonly started a ﬁxed announcement schedule from 2001 onwards and Norges Bank only met once\nper year until 2007.\n14In contrast, Brusa, Savor, and Wilson (2016) document that there are no eﬀects on global\nstock market indices from announcements by central banks other than the Fed, arguing that the\nFed exerts a unique impact on global equity prices.\n15See Kuttner (2014) for an excellent overview of Japan’s monetary policy.\n16We choose these macroeconomic variables as they are more likely to be linked to monetary\npolicy. In unreported results, we also check for other important macroeconomic news announce-\nments such as initial claims for unemployment insurance, the Institute for Supply Management’s\nmanufacturing index, and housing starts. We do not ﬁnd any signiﬁcant results.\n39"
+    }
+   ],
+   "similarity": 0.7732
+  }
+ ]
+}

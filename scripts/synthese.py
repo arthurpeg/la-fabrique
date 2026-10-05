@@ -154,6 +154,15 @@ def do_prepare(gid: str) -> int:
     if manquantes:
         raise SystemExit(f"fiches introuvables : {manquantes}")
     sid = sid_de(gid)
+    # D52 : une fiche déjà graine ou source d'une autre synthèse n'en refait pas une.
+    for f in sorted(DOSSIER.glob("synthese-*.json")):
+        if f.stem == sid:
+            continue
+        syn = json.loads(f.read_text(encoding="utf-8")).get("synthesis") or {}
+        pris = set(g["members"]) & {syn.get("dossier"), *(syn.get("sources") or [])}
+        if pris:
+            raise SystemExit(f"{sorted(pris)} déjà dans {f.stem} : une seconde synthèse "
+                             "referait la même hypothèse (D52)")
     blocs = []
     for m in g["members"]:
         blocs.append(f"### `{m}`\n\n```json\n{ff[m].read_text(encoding='utf-8')}\n```\n")

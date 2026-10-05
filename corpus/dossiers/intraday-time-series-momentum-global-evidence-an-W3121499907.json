@@ -1,0 +1,222 @@
+{
+ "generated": "2026-10-05T12:05+00:00",
+ "seed": {
+  "fiche_id": "intraday-time-series-momentum-global-evidence-an-W3121499907",
+  "title": "Intraday time series momentum: global evidence and links to market characteristics",
+  "hypothesis": "H09",
+  "representation": "Intraday time series momentum: global evidence and links to market characteristics \nLe momentum temporel intrajournalier (ITSM) documenté par Gao et al. (2018) sur les ETF américains est un phénomène international : le rendement de la première demi-heure de la séance prédit positivement le rendement de la dernière demi-heure, dans 12 des 16 marchés développés étudiés. L'effet est plus fort en crise et en récession, plus fort quand la liquidité est faible et quand l'information est absorbée continûment ; il est exploitable par une stratégie de market timing dont les alphas contre des stratégies passives sont significatifs, et davantage encore en portefeuille global. La rentabilité du portefeuille global n'est pas captée par les facteurs actions globaux mais est expliquée à ~73 % par un facteur de position nette variable dans le temps (TVC), lui-même dû au market timing plus qu'à la sélection d'indices. \nDeux objets distincts. (1) Signal statistique : régression prédictive par marché rL_t = alpha + beta_F * rF_t + epsilon_t, avec rF_t = pfirst30,t / pclose,t-1 − 1 (dernier prix des 30 premières minutes rapporté à la clôture de la veille, donc incluant l'overnight) et rL_t = pclose,t / plast30,t − 1 (clôture rapportée au premier prix des 30 dernières minutes). (2) Signal de trading : règle de signe — position longue sur la dernière demi-heure si rF_t > 0, position courte si rF_t <= 0, toutes positions fermées à la clôture ; rI,t = rL_t si rF_t > 0, −rL_t sinon. Variantes : signal donné par la première demi-heure US appliqué aux autres marchés ; agrégations globales (18 portefeuilles = 3 types de base x 6 pondérations : equally-weighted, value-weighted, inverse-variance, maximum-diversification, mean-variance, minimum-variance), poids estimés en fenêtre extensible avec cinq ans d'amorce, somme des poids à 1 et vente à découvert interdite au niveau des poids. \n16 indices boursiers de marchés développés (classification MSCI) : Australie (ASX 200), Autriche (ATX), Canada (S&P/TSX), France (CAC 40), Allemagne (DAX), Irlande (ISEQ), Japon (Nikkei 225), Pays-Bas (AEX), Nouvelle-Zélande (NZX 50), Norvège (OSEAX), Portugal (PSI 20), Espagne (IBEX 35), Suède (OMXSPI), Suisse (SMI), Royaume-Uni (FTSE 100), États-Unis (S&P 500). Données de cotation à la minute issues de Thomson Reuters Tick History, agrégées en intervalles de 30 minutes non chevauchants ; prix convertis en dollars US au taux de change 1-minute contemporain (résultats en devise locale en annexe B). Période du 4 octobre 2005 au 29 décembre 2017. Belgique, Danemark, Finlande, Israël et Italie exclus faute de données liquides ; Hong Kong et Singapour exclus faute de change à la minute. Actions au comptant via indices — aucun future, aucune matière première, aucun ETF. \nintrajournalier, même séance : le prédicteur est le rendement des 30 premières minutes (incluant le gap overnight), la cible le rendement des 30 dernières minutes avant la clôture du même jour ; une observation par jour de bourse et par marché"
+ },
+ "model": "BAAI/bge-base-en-v1.5",
+ "neighbors": [
+  {
+   "paper_id": "9cabf734-e412-4f3e-b92f-0e1fe3e313eb",
+   "title": "Intraday time‐series momentum: Evidence from China",
+   "fiche_id": null,
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "intro",
+     "page": 5,
+     "similarity": 0.8572,
+     "content": "4 \n \nstrong performance using time-series momentum strategies, in particular, during the 2008 \nglobal financial crisis (Baltas & Kosowski, 2013), piquing the interest of market practitioners \nand academic scholars, alike. This provides strong motivation, from both an academic and \nmarket practitioner perspective, to study the intraday time-series momentum effect in \ncommodity markets. \nMost existing cross-sectional and time-series momentum studies are based on inter-day \ntrading. However, driven by technological developments and enhanced data availability in \nrecent years, intraday high frequency momentum strategies, such as those that we consider, can \nnow be examined. For instance, Kang (2005) uses two thousand NYSE stocks, documenting \nan intraday cross-sectional momentum strategy that generates winners and losers according to \ntheir hourly returns, and compares their performance over a given trading day. The results \nsuggest that winners outperform losers for about one and a half hours, with a subsequent \nreversal observed for large stocks. Small stocks, on the other hand, tend to continue their \nmomentum effect throughout the day. Venter (2009) also follows the winner/loser ranking \nmethod to study intraday cross-sectional momentum on Johannesburg Stock Exchange stocks, \narguing that a cross-sectional momentum effect can be uncovered within a day. Furthermore, \nGao et al. (2018) and Sun et al. (2016) utilize the time-series momentum approach of \nMoskowitz et al."
+    },
+    {
+     "section": "other",
+     "page": 3,
+     "similarity": 0.8472,
+     "content": "2 \n \n \nIntraday Time-series Momentum: Evidence from China \n \n \nAbstract \nThis study conducts an investigation of intraday time-series momentum across four Chinese commodity \nfutures contracts: copper, steel, soybean, and soybean meal. Our results indicate that the first half-hour \nreturn positively predicts the last half-hour return across all four futures. Furthermore, in metals markets, \nwe find that first trading sessions with high volume or volatility are associated with the strongest \nintraday time-series momentum dynamics. Based on this, we propose an intraday momentum informed \ntrading strategy that earns a return in excess of standard always long and buy-and-hold benchmarks. \nJEL: G12, G13, G15 \nKeywords: Intraday Predictability; Time-Series; Momentum."
+    }
+   ],
+   "similarity": 0.8495
+  },
+  {
+   "paper_id": "8c17f272-b2c7-4a62-af1c-cd32b67a4c20",
+   "title": "Beat the Market: An Effective Intraday Momentum Strategy for S&P500 ETF (SPY)",
+   "fiche_id": "zarattini-2024-beat-the-market-spy",
+   "hypothesis": "H13",
+   "passages": [
+    {
+     "section": "conclusion",
+     "page": 26,
+     "similarity": 0.8563,
+     "content": "5 Conclusion\nIn conclusion, this paper delves into the realm of intraday momentum trading strategies,\nbuilding upon the foundational work laid by Jegadeesh and Titman’s momentum effect.\nThrough empirical analysis and rigorous backtesting, we demonstrate the profitability\nand viability of implementing intraday momentum strategies within the context of the\nSPY ETF, tracking the S&P 500 index.\nOur findings reveal that a simple intraday momentum strategy, initiated upon indica-\ntions of abnormal demand/supply imbalance in intraday price action and incorporating\ndynamic trailing stops, yields substantial returns over the period from 2007 to early 2024.\nThe intraday momentum portfolio achieves a remarkable total return of 1,985%, with an\nannualized return of 19.6%, and a Sharpe Ratio of 1.33, underscoring its robustness and\npotential as a trading approach.\nMoreover, we have conducted extensive statistical tests to assess the impact of different\nmarket volatility regimes and dealer gamma imbalances on the strategy’s profitability.\nAdditionally, our analysis of day-of-the-week effects and performance against well-known\ntechnical patterns provide further insights into the behavior of intraday momentum strate-\ngies under various market conditions.\nThis study contributes to the ongoing discourse on market anomalies and the practical\napplications of momentum trading, particularly in intraday contexts. By extending Je-"
+    },
+    {
+     "section": "conclusion",
+     "page": 26,
+     "similarity": 0.8481,
+     "content": "various market conditions.\nThis study contributes to the ongoing discourse on market anomalies and the practical\napplications of momentum trading, particularly in intraday contexts. By extending Je-\ngadeesh and Titman’s momentum framework to intraday trading, we provide valuable\ninsights for traders operating in fast-paced intraday markets. Our research underscores\nthe persistent nature of momentum effects within shorter time frames and highlights op-\nportunities for profitable trading strategies in today’s dynamic trading landscape.\nIn summary, the results offer compelling evidence supporting the efficacy of intraday\nmomentum strategies, further enriching our understanding of market dynamics and of-\nfering actionable insights for market participants seeking to capitalize on short-term price\nmovements.\n26"
+    }
+   ],
+   "similarity": 0.8489
+  },
+  {
+   "paper_id": "5ad30fc1-2e3e-4f99-9b3e-38414c8bfc41",
+   "title": "Investor clientele and intraday patterns in the cross section of stock returns",
+   "fiche_id": "investor-clientele-and-intraday-patterns-in-the-W4401073178",
+   "hypothesis": "H10",
+   "passages": [
+    {
+     "section": "results",
+     "page": 9,
+     "similarity": 0.85,
+     "content": "Gao et al. 2018).\nThe remainder of this paper is organized as follows. In Sect.  2, we dicuss the related \nliterature. Section 3 discusses the data and methodology. Section  4 provides the empirical \nfindings and the discussion. Finally, Sect. 5 offers a conclusion to the paper.\n2 Literature review\nOur study is linked to two strands of literature. The first strand of literature is based on \nstudies which attempt to study evidence linked to momentum patterns documented in the \nUS and the non-US markets.The interest in momentum studies stems from the fact that \nmomentum strategy profits could be as high as 12% in the US and Europe as reported by \nChui et al. (2010). Heston and Sadka (2008) initially found that seasonality exists for indi-\nvidual stocks in the cross-section of returns for the same calendar month for a period of up \nto twenty years. Heston and Sadka (2010) find that a stock that outperforms the broader \nmarket in a particular month continues to outperform in that same particular month over \nthe next 5 years and provide international evidence of the pattern in Canada, Japan and 12 \nEuropean markets. Li et al. (2018) study the Heston and Sadka (2008) seasonality pattern \nfor 42 advanced and emerging markets between 1995 to 2013 and conclude that return"
+    },
+    {
+     "section": "methodology",
+     "page": 12,
+     "similarity": 0.8443,
+     "content": "J. Chen et al.\nThis study intends to answer several unanswered questions not previously examined by \nresearchers. In doing so, we intend to make several important contributions to the exist-\ning body of literature. First, we examine if the HKS (2010) momentum pattern found for \nthe US also exists in non-US markets. This question is particularly important as previous \nstudies such as Heston and Sadka (2010) and Chui et al. (2010) have explained that any \ninternational evidence on the existence and profitability of a momentum effect serves as a \nrobustness check to the existence of the momentum pattern within the United States as well \nas providing an opportunity to study the pattern in light of country-specific characteristics.\nThe second major contribution we make is provide evidence on the impact of investor \nclientele on intraday momentum patterns. Our study provides complementary evidence to \nthe findings by Chui et al. (2022) who demonstrate that B-shares of dual listed firms dem-\nonstrate stronger momentum patterns over the long horizon. However, our study uses the \nHKS (2010) intraday momentum pattern to study the impact of investor clientele. Moreo-\nver, we also use dual listed A- and H-shares and an exogenous shock to investor composi-\ntion stemming from inclusion of some A-shares in the MSCI index.\nThe third contribution that comes to light is that we show that price limits and day trad-"
+    }
+   ],
+   "similarity": 0.8461
+  },
+  {
+   "paper_id": "1a748ab1-5296-4e4d-b245-dddfe8dd4965",
+   "title": "A tug of war: Overnight versus intraday expected returns",
+   "fiche_id": "lou-2019-tug-of-war",
+   "hypothesis": "H11",
+   "passages": [
+    {
+     "section": "results",
+     "page": 20,
+     "similarity": 0.8501,
+     "content": "atistically \nsigniﬁcant. Speciﬁcally, the overnight component increases \nby 0.57% ( t -statistic of 3.13) and the intraday component \ndecreases by 0.52% ( t -statistic of −2 . 78 ). This difference- \nin-difference test is consistent with our conjecture that we \nshould expect momentum to be more of an overnight phe- \nnomenon among stocks with a larger institutional pres- \nence. 23 \nWe also extend our industry momentum results to non- \nUS markets. Our focus is on four market regions (North \nAmerica, Europe, Asia, and Africa) to ensure reasonably \nlarge industry cross-sections. We ﬁnd strong evidence that \nindustry momentum is an overnight phenomenon. Ap- \npendix Table A8 Panel B shows that across these four re- \ngions, the average monthly close-to-close return is 1.01% \nper month ( t -statistic of 2.67) with 0.90% ( t -statistic of \n3.35) accruing overnight. \nEvidence from pre-1962 US markets. Open prices are also \navailable from CRSP, sourced from the Wall Street Jour- \nnal , for the 36-year period of 1927–1962. Of course, these \nprices do not have the nice feature of the VWAP approach \nused in the rest of our analysis in that they do not nec- \nessarily represent traded prices. Nevertheless, this sam- \nple provides a potentially useful placebo test of our hy- \npothesis that institutional ownership is responsible for the \novernight momentum pattern, as institutional ownership \n23 Though the equal-weight average intraday component is statistically"
+    },
+    {
+     "section": "results",
+     "page": 21,
+     "similarity": 0.8436,
+     "content": "212 D. Lou, C. Polk and S. Skouras / Journal of Financial Economics 134 (2019) 192–213 \nwas very low for all but the largest stocks. Indeed, Blume \nand Keim (2017) indicate that institutions, roughly speak- \ning, held only 5% of equity during most of this time. Con- \nsistent with that observation, Panel A of Appendix Table \nA9 shows that for this sample, momentum is primarily an \nintraday phenomenon. Momentum has a monthly three- \nfactor alpha of 1.45% ( t -statistic of 4.43). The intraday com- \nponent is 1.03% ( t -statistic of 3.43), while the overnight \ncomponent is insigniﬁcant from zero (point estimate of \n0.21% with a t -statistic of 0.97). \nIn the spirit of our international tests, we also ex- \namine whether the overnight component becomes more \nimportant for large-cap stocks in the 1927–1962 sample. \nAppendix Table A9 Panel B shows that this is the case. \nSpeciﬁcally, we ﬁnd that large-cap momentum has a \nmonthly three-factor alpha of 1.39% ( t -statistic of 4.74). \nThe intraday component is still large at 0.95% ( t -statistic \nof 3.51). However, now the overnight component is sta- \ntistically signiﬁcant from zero (point estimate of 0.34% \nwith a t -statistic of 2.05). In summary, though we have \nless faith in the pre-1963 open price data, we do ﬁnd that \nthe results using those data are broadly consistent with \nthe view that institutional investors play an important \nrole in understanding why momentum is an overnight \nphenomenon in the 1993–2013 sample. \n5."
+    }
+   ],
+   "similarity": 0.8457
+  },
+  {
+   "paper_id": "756c4b18-2bf5-4b22-b297-0d27a69f5739",
+   "title": "Time-Series Momentum in a Small European Stock Market: Evidence from a New Historical Financial Dataset",
+   "fiche_id": null,
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 5,
+     "similarity": 0.8493,
+     "content": "Scientific Annals of Economics and Business, 2023, Volume 70, Issue 3, pp. 335-352 339 \n \nMore recently, Lobão and Azeredo (2018) confirmed that the Por tuguese stock market \nexhibited significant levels of momentum in the period 1988 -2015, and that momentum \nstrategies can be combined with value strategies to increase investors' profits. \nOur paper adds to this limited body of evidence by examining the exist ence of time -\nseries momentum in an understudied market using a novel and still unexplored historical \nfinancial dataset. Thus, the hypothesis being tested in our study is that there is time -series \nmomentum (i.e., return continuation) in the Portuguese stock market. \n \n3. DATA AND METHODOLOGY \n \n3.1 Data \n \nIn this empirical study, we consider the Portuguese stock index and the risk-free interest \nrate for Portugal from January 1900 to December 2020. For the period 1900 -2013, we used \nthe database with weekly frequency created by Mata et al. (2017). This new dataset covers \nthe period January 1900 -1974 and 1978-2013 since the stock market in Portugal w as closed \nfor about three years following the Carnation Revolution in 25 April 1974. The main source \nof numerical data of Mata et al. (2017) is the collection of Daily Bulletins published by the \nLisbon Stock Exchange for the period December 1899 – December 1987, available in the \nDocumentation Centre of the Lisbon Exchange. The data provided by Mata et al. (2017),"
+    },
+    {
+     "section": "other",
+     "page": 1,
+     "similarity": 0.844,
+     "content": "Scientific Annals of Economics and Business \n70 (3), 2023, 335-352 \nDOI: 10.47743/saeb-2023-0021 \n \n \nTime-Series Momentum in a Small European Stock Market: \nEvidence from a New Historical Financial Dataset \nJúlio Lobão*, Ana Rosário** \n \nAbstract: In this paper, we examine the Portuguese stock market for indication of time -series \nmomentum effects using a new historical financial dataset that covers about 120 years of data. We find \nstrong time-series momentum effects that cannot be explained by conventional risk factors. The positive \nreturn continuation seems to last for a period of 12 months, being heavily concentrated at the first month. \nAt longer investment horizons, returns tend to mean-revert. The market exhibited significant time-series \nmomentum for all look-back and holding periods of 12 months or less. A strategy with a 1-month look-\nback period and a 12 -month holding period is shown to be the most profitable yielding a Sharpe ratio \nroughly 5.4 times that generated by a passive strategy. Time-series momentum strategies tend to perform \nbest during extreme up-market periods and deliver the worst returns during down markets. This suggests \nthat the strategy may not offer significant diversification benefits. Our findings add to the evidence that \ntime-series momentum effects are not a produc t of data mining and are difficult to reconcile with the \nassertion that stock markets follow a random walk."
+    }
+   ],
+   "similarity": 0.8454
+  },
+  {
+   "paper_id": "a0b6608d-111c-46b6-8955-9ee1dbb87cb4",
+   "title": "Market intraday momentum: APAC evidence",
+   "fiche_id": null,
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 2,
+     "similarity": 0.8516,
+     "content": "Pacific-Basin Finance Journal 80 (2023) 102086\n2\ninsights on the IMOM effect. This study complements and extends the recent international study on intraday momentum by Li et al. \n(2021), who show that intraday momentum is prevalent in 16 developed markets.\n1 \nWe first utilise the US data to replicate and validate our empirical methods, and our results are largely consistent with those of Gao \net al. (2018). We also confirm the role volatility and trading volume play in IMOM. Finally, the IMOM effect remains robust during the \nCOVID-19 crisis period in the US market. Having confirmed the validity of our approach based on the US market, we then examine the \nETFs from the selected APAC markets. We document the IMOM effect in China, Japan, and South Korea. Both the first half-hour and the \nsecond-to-last half-hour returns significantly predict the last half-hour return in China and Japan, which is similar to the US evidence. \nIn South Korea, the IMOM effect is relatively weak, since the first half-hour return only marginally predicts the last half-hour return. \nThe IMOM effect is not observed in Hong Kong SAR or Singapore over the whole sample. \nWhen the first half-hour trading volume is controlled for, there is no evidence that the IMOM effect increases with the first half-hour \ntrading volume in the APAC markets. The IMOM effect is found to be stronger in the medium-volume group in China, and in high- and \nlow-volume groups in Japan."
+    },
+    {
+     "section": "intro",
+     "page": 1,
+     "similarity": 0.8448,
+     "content": "Pacific-Basin Finance Journal 80 (2023) 102086\nAvailable online 4 July 2023\n0927-538X/© 2023 The Authors. Published by Elsevier B.V. This is an open access article under the CC BY-NC-ND license\n(http://creativecommons.org/licenses/by-nc-nd/4.0/).\nMarket intraday momentum: APAC evidence \nManapon Limkriangkrai\na , *\n, Daniel Chai\nb\n, Gaoping Zheng\nb \na\nDepartment of Banking & Finance, Monash University, Melbourne, VIC, Australia \nb\nSchool of Economics, Finance & Marketing, RMIT University, Melbourne, VIC, Australia \nARTICLE INFO \nJEL classification: \nG11 \nG14 \nG17 \nKeywords: \nIntraday momentum \nReturn predictability \nAsia-Pacific (APAC) markets \nCOVID crisis \nABSTRACT \nThis study examines the market intraday momentum, where the first half-hour return predicts the \nlast half-hour return, in exchange-traded funds (ETFs) from the selected Asia-Pacific (APAC) \nmarkets including China, Hong Kong SAR, Japan, Singapore and South Korea. Intraday mo -\nmentum is mainly evident in China and Japan. There is weak evidence of the momentum effect in \nSouth Korea, while Hong Kong SAR and Singapore appear to have no intraday momentum. When \nboth volatility and trading volume are considered, it is found that volatility has a stronger in -\nfluence on intraday momentum than trading volume in the APAC markets. Finally, we show that \nthe intraday momentum effect is weaker in the COVID-19 crisis period for the APAC markets that \nexhibit intraday momentum."
+    }
+   ],
+   "similarity": 0.8424
+  },
+  {
+   "paper_id": "997bc72a-5846-4aeb-a9f3-59b58f577aaa",
+   "title": "Hedging demand and market intraday momentum",
+   "fiche_id": "baltussen-2021-hedging-demand-intraday-momentum",
+   "hypothesis": "H05",
+   "passages": [
+    {
+     "section": "results",
+     "page": 9,
+     "similarity": 0.8475,
+     "content": "regate up to time- \nseries intraday seasonality at the market level. One possi- \nble explanation is that the former effect is cross-sectional, \nhence largely ignoring general market movements, while \nthe latter is a time-series effect that especially captures \ngeneral market movements. More importantly, including \nr LH t−1 hardly changes the conclusions regarding market in- \ntraday momentum we reached in Table 2 . Coeﬃcients on \nr ROD in Table 4 are almost identical to those in Table 2 . We \nhave conﬁrmed (unreported for the sake of brevity) that \nthese results remain similar even when 5 up to 40 lags of \nr LH are included. In other words, market intraday momen- \ntum seems distinct from intraday seasonality in the cross- \nsection. The results further support the negative gamma \nhedging channel in which only intraday returns during \nday- t should matter. \n3.4. Intraday momentum over time \nIn this section, we show the pooled regression results \nfor the subsamples: 1974–1999 and 20 0 0–2020. Table 5 \nshows the results for equity index (Panel A), government \nbond (Panel B), commodity (Panel C), and currency futures \n(Panel D). The results are similar in the ﬁrst and second \nhalf of our sample. In addition to r ONF H , r M and r SLH also \npredict returns in the last half hour. As a result, r ROD gen- \nerally has a higher adjusted R 2 than r ONF H in both subsam- \nples. Results also conﬁrm that r ROD wins the direct horse \nrace against r ONF H in both subsamples, especially when"
+    },
+    {
+     "section": "intro",
+     "page": 4,
+     "similarity": 0.8418,
+     "content": "In subsequent \nwork, Barbon and Buraschi (2020) show that gamma hedg- \ning also drives intraday momentum and reversal patterns \nin individual stocks throughout the trading day. Further, \nHeston et al. (2010) ﬁnd evidence of intraday return sea- \nsonality in the cross-section of stocks: returns continue \nduring the same half-hour intervals as in previous trad- \ning days, lasting from 1 to up to 40 trading days. While \nthese studies focus on individual stocks and their options, \nour paper focuses on indices across a broad range of asset \nclasses. 4 We also ﬁnd market intraday momentum to be \ndistinct from intraday return seasonality, with r ROD contin- \nuing to predict r LH even after controlling for r LH from pre- \nvious days. \n4 In addition, several studies utilize intraday price data to exam- \nine intraday volatility ( Chang et al., 1995 ) or the eﬃciency of volatil- \nity estimators. Examples include Bollerslev et al. (20 0 0) , Martens and \nVan Dijk (2007) , and Bollerslev et al. (2018) . \nOur results reveal that hedging demand coming from \noptions and LETFs ampliﬁes price changes and affects mar- \nket return dynamics over several days. Several other recent \nstudies link the rise in indexing products (like ETFs) to side \neffects such as the ampliﬁcation of fundamental shocks \n( Hong et al., 2012 ), excessive co-movement ( Barberis et al., \n20 05; Greenwood, 20 05; Greenwood, 20 08; Da and Shive, \n2018 ), a deterioration of the ﬁrm’s information envi-"
+    }
+   ],
+   "similarity": 0.8407
+  },
+  {
+   "paper_id": "20c459eb-088a-4127-adba-51f13644ed71",
+   "title": "Intraday periodicity and volatility persistence in financial markets",
+   "fiche_id": "andersen-bollerslev-1997-periodicity",
+   "hypothesis": "H04",
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 4,
+     "similarity": 0.8452,
+     "content": "persistence at the various sampling frequencies are contrasted \nto the theoretical aggregation results. Our estimation strategy for characterizing the \nintraday periodicity is presented in Section 5. A relatively simple model that \nallows for a direct interaction between the level of the daily volatility and the \nshape of the intradaily pattern provides a close fit to the average intradaily \nvolatility patterns for both return series, with the interaction effect being less \nsignificant for the foreign exchange market. The corresponding time series proper- \nties of the filtered returns obtained by extracting the estimated volatility patterns \nfrom the raw series is also explored. Estimation results for these returns are much \nmore in line with the theoretical predictions. Moreover, this analysis strongly \nsuggests that several distinct component processes affect the volatility dynamics. \nThis finding may help shed new light on the long-memory feature in low \nfrequency return volatility documented by a number of recent studies. Section 6 \ncontains concluding remarks. Details regarding the construction of the 5-minute \nforeign exchange and equity returns employed throughout and the flexible non- \nparametric procedure used in the estimation of the intraday periodicity are \ncontained in the appendices. \n2. Intraday return periodicity \nOur primary data set consists of 5-minute returns for the Deutschemark-U.S.$"
+    },
+    {
+     "section": "conclusion",
+     "page": 36,
+     "similarity": 0.8404,
+     "content": "r form, is a necessary require- \nment for discovery of the salient intraday volatility features. Moreover, adjusting \nfor the pronounced periodic structure appears critical in uncovering the complex \nlink between the short- and long-run return components, which may help to \nexplain the apparent conflict between the long-memory volatility characteristics \nobserved in interday data and the rapid short-run decay associated with news \narrivals in intraday data. More directly, however, our findings have immediate and \nimportant implications for a large range of issues in the rapidly growing literature \nusing very high frequency financial data. Examples include investigations into the \nlead-lag relationship among returns and volatility both within and across different \nmarkets, the effect of cross listings of securities, the fundamental determinants \nbehind the volatility clustering phenomenon, the development of real time trading \nand investment strategies and the evaluation of continuous option valuation and \nhedging decisions. Only future research will reveal the extent of the biases induced \ninto these studies by the neglect of intraday periodic components. \nAcknowledgements \nWe would like to thank Richard T. Bailie, the editor, an anonymous referee, \nDominique Guillaume, Robert J. Hodrick, Charles Jones, Stephen J. Taylor, \nKenneth F. Wallis, along with seminar participants at the Olsen and Associates \nResearch Institute for Applied Economics, the workshop on 'Market Micro"
+    }
+   ],
+   "similarity": 0.8405
+  },
+  {
+   "paper_id": "f7aba4a7-4af1-476a-a288-f3ced14f1f56",
+   "title": "High-frequency dynamics of the Vietnam stock market",
+   "fiche_id": null,
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "conclusion",
+     "page": 8,
+     "similarity": 0.8484,
+     "content": "VNU Journal of Economics and Business, Vol. 5, No. 2 (2025) 51-59 58 \n5. Conclusion and implications \nThis study investigates the high -frequency \ndynamics of the VNINDEX by utilizing 1 -\nminute data to examine intraday volatility \npatterns, market efficiency, and the volume -\nprice relationship. The intraday volatility pattern \nreveals a modified U -shape with a p ronounced \npeak at 13:00 –14:00, elevated volatility at \nopening and pre -break, a midday trough and a \ndecline toward close, reflecting distinct periods \nof information assimilation and liquidity \nfluctuations. Market efficiency tests further \nunderscore ineffici encies and indicate \nsignificant positive serial dependence at short \nlags and negative dependence at medium lags, \nwhile rejecting the random walk hypothesis. \nComplementing these findings, the volume -\nprice analysis highlights a sharp contrast in \ndynamics: Re turns exhibit strong momentum \nand volume changes display clustering. \nThe findings of the paper have several \nimplications for market participants. Traders can \nexploit momentum opportunities during volatile \nhours for 5-10 minute trend-following, leverage \nthe midday trough for low -risk strategies, and \nuse volume persistence fo r liquidity timing, \nthough its weak predictive power limits its role \nas a price signal. Portfolio managers face \nheightened volatility risks at peak hours, \nnecessitating dynamic risk controls, while \nregulators may consider enhancing market depth"
+    },
+    {
+     "section": "results",
+     "page": 4,
+     "similarity": 0.8324,
+     "content": "as volume \nanticipating price jumps or price momentum \ninfluencing subsequent volume—consistent with \nprior high -frequency studies (Easley et al., \n1996). This short horizon reflects the fast-paced \nnature of intraday trading, where longer lags \nmight dilute relevant dynamics with noise or \nirrelevant historical effects. \n The VAR(2) model, with two lags, is \nspecified as: \n[\n𝑟𝑡\n𝑡\n]= [\n𝑐𝑟\n𝑐\n] + ∑ [ 𝑟,𝑖\n𝑟,𝑖\n 𝑟,𝑖\n,𝑖\n]2\n𝑖=1 [\n𝑟𝑡−𝑖\n𝑡−𝑖\n] + [\n𝑟,𝑡\n,𝑡\n] \nwhere 𝑟𝑡 is the return, 𝑡 is the log volume \nchange, c terms are constants, ϕ terms are \ncoefficients, and ϵ terms are errors. The model \nestimates bidirectional influences of whether \nvolume leads returns (information -driven \ntrading) or vice versa (momentum effects). IRFs \nare plotted to illustrate how a shock in one \nvariable affects the other over 10 minutes, \nproviding dynamic insights. \nVolatility analysis \nTo examine the hourly volatility pattern of \nthe VNINDEX, we compute RV as the sum of \nsquared returns over five trading-hour intervals: \n09:00-10:00, 10:00 -11:00, 11:00 -11:30, 13:00 -\n14:00, and 14:00 -15:00. By aggregating RV \nacross days and averaging by hour, we uncover \ndistinct intraday trends, contributing to the \nunderstanding of volatility dynamics in \nVietnam’s emerging equity market. \nTo characterize intraday volatility patterns, \nwe compute hourly RV as the sum of squared \nreturns over one hour interval, as: \nRVh =√∑ 𝑟𝑡𝑖\n2𝑀\n𝑖=1 \n where h denotes each trading hour (e.g.,"
+    }
+   ],
+   "similarity": 0.8377
+  },
+  {
+   "paper_id": "4c73d3be-04bc-4b66-9e21-3ee28cc56dd1",
+   "title": "Market volatility and momentum",
+   "fiche_id": null,
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "conclusion",
+     "page": 22,
+     "similarity": 0.8407,
+     "content": "85%, 5.5%, and 2.79%, which are all below the corresponding market returns.\nStimulated by the impressive 2008-2009 episode, we investigate whether market volatility\nhas explanatory power for momentum. We carry out various tests and the results indicate\nthat there exists a robust link between market volatility and momentum. Extending the\nwork of CGH, CS and ACJP, our ﬁndings show that time-series predictability of momentum\nraises three challenging issues. First, market volatility and market state complement each\nother, and jointly they provide a robust empirical characterization of the time-variation in\nmomentum proﬁts. Their predictive power can be exploited to enhance the momentum\nproﬁtability. However, the challenge is how to convincingly explain why these variables\nforecast momentum. It is hard, for example, to imagine that a rational fundamentals-\nbased theory can fully account for the sheer magnitude of the loser reversal in early 2009.\n19\nElectronic copy available at: https://ssrn.com/abstract=1342719"
+    },
+    {
+     "section": "intro",
+     "page": 12,
+     "similarity": 0.8393,
+     "content": "2.2. Time-V ariation in Momentum Proﬁts\nWhat characterizes time-variation in momentum proﬁts? In this subsection, we present tests\nthat aim at this issue. W e proceed in three steps. First, we evaluate the economic and sta-\ntistical signiﬁcance of the link between market volatility and momentum. Next, we examine\nthe robustness of market volatility in the presence of market state and macroeconomic vari-\nables of CGH and CS. Finally, we check whether the time-series predictability is symmetric\nbetween the winner and loser portfolios.\n2.2.1. Predictive Power of Market V olatility\nW e start with a two-way sort. All the months in the sample period are sorted into four\nsubsets, depending whether the market state is positive or negative and whether the market\nvolatility is high or low. A month is in a negative (positive) market state if the lagged\nthree-year market return is negative (positive). A month is of high (low) volatility if the\nlagged 12-month volatility is larger (smaller) than the annualized lagged 36-month volatility.\nO v e rt h ef u l ls a m p l ep e r i o d ,t h e r ea r e8 2 9m o n t h si np o s i t i v em a r k e ts t a t e s ,a n d3 5 8( 4 7 1 )\nof them are of high (low) volatility. There are 131 months in negative market states, with\n75 (56) of them being of high (low) volatility.\nTable 1 presents results from the two-way sort. For the full sample period, the average\nmonthly momentum payoﬀ is 0.79%. The average payo ﬀs over the subsets show that both"
+    }
+   ],
+   "similarity": 0.8361
+  }
+ ]
+}

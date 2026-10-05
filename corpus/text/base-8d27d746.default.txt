@@ -1,0 +1,1970 @@
+Philippe Mueller, Alireza Tahbaz-Salehi and Andrea Vedolin 
+Exchange rates and monetary policy 
+uncertainty 
+ 
+Article (Accepted version) 
+(Refereed) 
+ 
+ 
+ 
+Original citation: Muelller, Philippe, Tahbaz-Salehi, Alireza and Vedolin, 
+Andrea (2017) Exchange rates and monetary policy uncertainty. The Journal of Finance . ISSN 
+0022-1082 
+ 
+DOI: 10.1111/jofi.12499 
+ 
+ 
+© 2017 American Finance Association 
+ 
+This version available at: http://eprints.lse.ac.uk/77256/ 
+Available in LSE Research Online: May 2017 
+ 
+LSE ha s developed LSE Research Online so that users may access research output of the 
+School. Copyright © and Moral Rights for the papers on this site are retained by the individual 
+authors and/or other copyright owners. Users may download and/or print one copy of any 
+article(s) in LSE Research Online to facilitate their private study or for non-commercial research. 
+You may not engage in further distribution of the material or use it for any profit-making activities 
+or any commercial gain. You may freely distribu te the URL ( http://eprints.lse.ac.uk) of the LSE 
+Research Online website. 
+ 
+This document is the author’s final accepted version of the journal article. There may be 
+differences between this version and the publishe d version. You are advised to consult th e 
+publisher’s version if you wish to cite from it.
+
+Exchange Rates and Monetary Policy Uncertainty
+PHILIPPE MUELLER, ALIREZA TAHBAZ-SALEHI, AND ANDREA VEDOLIN ∗
+ABSTRACT
+We document that a trading strategy that is short the U.S. dollar and long other currencies exhibits
+signiﬁcantly larger excess returns on days with scheduled Federal Open Market Committee (FOMC)
+announcements. We also show that these excess returns (i) are higher for currencies with higher
+interest rate diﬀerentials vis-` a-vis the U.S.; (ii) increase with uncertainty about monetary policy;
+and (iii) increase further when the Federal Reserve adopts a policy of monetary easing. We interpret
+these excess returns as a compensation for monetary policy uncertainty within a parsimonious model
+of constrained ﬁnanciers who intermediate global demand for currencies.
+∗Mueller and Vedolin are with the London School of Economics. Tahbaz-Salehi is with Columbia University. The
+authors thank the Editor, Ken Singleton, an Associate Editor and two anonymous referees for very helpful comments
+and suggestions. We are also grateful for comments received from Daron Acemoglu, Gianluca Benigno, Andrea
+Buraschi, Mike Chernov, Pasquale Della Corte, Marco Di Maggio, Jack Favilukis, Fabio Fornari, Thomas Gilbert,
+Christian Julliard, Roman Kozhan, Matteo Maggiori, Emi Nakamura, Ricardo Reis, H´ el` ene Rey, Maik Schmeling,
+Ali Shourideh, Vania Stavrakeva, Christian Wagner, Jonathan Wright, Stephen Zeldes, and Irina Zviadadze, as well
+
+n Kozhan, Matteo Maggiori, Emi Nakamura, Ricardo Reis, H´ el` ene Rey, Maik Schmeling,
+Ali Shourideh, Vania Stavrakeva, Christian Wagner, Jonathan Wright, Stephen Zeldes, and Irina Zviadadze, as well
+as from seminar participants at Columbia Business School, Federal Reserve Bank of San Francisco, London Business
+School, London School of Economics, NOVA Lisbon, Swiss National Bank, University of Bangor, University of British
+Columbia (Sauder), University of St. Gallen, University of York, University of Zurich, Society of Economic Dynamics
+Annual Meeting (Toulouse), Tel Aviv Finance Conference, ECB Workshop on “Financial Determinants of Exchange
+Rates,” Imperial Hedge Fund Conference, and the UCL workshop on the “Impact of Uncertainty Shocks on the Global
+Economy.” We gratefully acknowledge ﬁnancial support from the Systemic Risk Centre at LSE. Vedolin gratefully
+acknowledges ﬁnancial support from the Economic and Social Research Council (Grant ES/K002309/1). We have
+read the Journal of Finance ’s disclosure policy and have no conﬂicts of interest to disclose. All errors are our own.
+
+Announcements by the Federal Open Market Committee (FOMC) are among the most highly
+anticipated events by investors around the world. These announcements, which occur regularly at
+pre-speciﬁed dates, serve as the Federal Reserve’s main channel for communicating its monetary
+policy decisions to the market. Given the close link between currency markets and monetary
+policy, it is only natural to expect that FOMC announcements can have large impacts on exchange
+rates. The active nature of the currency markets (with a daily turnover of over 5 trillion U.S.
+dollars), coupled with high market concentration and the participants’ ability to operate with high
+leverage ratios means that even small price movements in this market can potentially translate into
+economically signiﬁcant eﬀects.
+In this paper, we document that announcements by the FOMC have an economically and
+statistically signiﬁcant impact on the excess returns of a host of diﬀerent currencies vis-` a-vis the
+U.S. dollar. By relying on high-frequency data, we document that a trading strategy that is short
+the U.S. dollar and long other currencies exhibits signiﬁcantly larger average excess returns on days
+with scheduled FOMC announcements compared to all other days. We also document that the
+excess returns earned on announcement days (i) consist of a pre- as well as a post-announcement
+component; (ii) are higher for currencies with higher interest rate diﬀerentials vis-` a-vis the U.S.;
+
+excess returns earned on announcement days (i) consist of a pre- as well as a post-announcement
+component; (ii) are higher for currencies with higher interest rate diﬀerentials vis-` a-vis the U.S.;
+(iii) increase with market participants’ uncertainty about monetary policy; and (iv) are higher when
+the Federal Reserve adopts a policy of monetary easing.
+We interpret these ﬁndings through the lens of a parsimonious model of exchange rate deter-
+mination in the spirit of Gabaix and Maggiori (2015), in which constrained ﬁnanciers with short
+investment horizons intermediate global demand for currencies. These ﬁnanciers can actively en-
+gage in currency trading, but have a downward-sloping demand for risk-taking, which limits their
+risk-bearing capacity. Such a limit can arise for a variety of reasons, such as value-at-risk con-
+straints or agency problems. Crucially, in addition to the “fundamental risk” in global demand for
+and supply of currencies, ﬁnanciers in our model also face “monetary policy uncertainty” due to
+potential future changes in interest rates.
+Using this framework, we show that an increase in uncertainty regarding future interest rates in
+the U.S. results in higher excess returns for other currencies: the ﬁnanciers are willing to engage in
+currency trading and to bear this extra risk only if they are compensated accordingly with higher
+returns. As such, all else equal, an increase in monetary policy uncertainty due to an upcoming
+1
+
+FOMC announcement results in the depreciation of foreign currencies against the U.S. dollar,
+coupled with an expected appreciation in the future. We also establish that the increase in excess
+returns in response to monetary policy uncertainty is higher for currencies with larger interest rate
+diﬀerentials vis-` a-vis the U.S. This is due to the fact that even though an increase in the interest
+rate diﬀerential induces an exchange rate adjustment, ﬁnanciers’ risk-bearing constraints all but
+ensure that this adjustment does not oﬀset the increase in the interest rate diﬀerential one-for-one,
+thus resulting in higher excess returns.
+The fact that higher currency excess returns are meant to compensate ﬁnanciers for the un-
+certainty in monetary policy means that such returns are materialized irrespective of the interest
+rates set by the Fed upon the announcement. We thus interpret the impact of monetary policy
+uncertainty on currency excess returns as a “pre-announcement” eﬀect. However, the actual real-
+ization of the monetary policy shock also impacts the foreign currencies’ excess returns by aﬀecting
+the ﬁnanciers’ balance sheets, leading to what we call a “post-announcement” eﬀect. Indeed, we
+show that our model predicts that an ex post adoption of an expansionary monetary policy (cor-
+responding to an interest rate reduction by the Fed) further increases foreign currencies’ excess
+returns.
+
+ow that our model predicts that an ex post adoption of an expansionary monetary policy (cor-
+responding to an interest rate reduction by the Fed) further increases foreign currencies’ excess
+returns.
+We empirically study currency risk premia around announcement days by relying on 20 years
+of high-frequency data from 1994 to 2013 for the ten most traded currencies. We ﬁnd that, in
+line with our theoretical model, a simple trading strategy that is short the U.S. dollar and long
+the other currencies yields signiﬁcantly higher returns on announcement days compared to non-
+announcement days. We also document that returns earned on the eight announcement days
+account for a signiﬁcant fraction of the currencies’ yearly excess returns. Notably, the large increase
+in average excess returns on announcement days is not accompanied by an equally large increase
+in realized risk, resulting in signiﬁcantly higher Sharpe ratios on announcement days.
+Since investors do not typically trade only in individual currencies but rather go long and short
+portfolios of currencies simultaneously, we also test our model’s predictions for currency portfolios
+sorted based on the interest rate diﬀerential vis-` a-vis the U.S. Our empirical results indicate that
+excess returns earned on announcement days are larger for currency portfolios with higher interest
+rates, an observation consistent with our model. In particular, we ﬁnd that a portfolio consisting
+
+t
+excess returns earned on announcement days are larger for currency portfolios with higher interest
+rates, an observation consistent with our model. In particular, we ﬁnd that a portfolio consisting
+of currencies with low interest rates earns an average daily return of 5 .19 basis points (bps) during
+2
+
+days when the Federal Reserve makes an announcement, compared to an average of −0.51bps on
+all other days. This diﬀerence becomes larger (and highly statistically signiﬁcant) for the portfolio
+consisting of high interest rate currencies, with a daily return of 14 .47bps on announcement days
+compared to 1.73bps on non-announcement days.
+Our explanation for the large returns earned on announcement days is that they reﬂect a
+premium for heightened uncertainty about monetary policy. Using diﬀerent proxies for monetary
+policy uncertainty, we ﬁnd that an increase in market participants’ uncertainty is indeed associated
+with higher returns on FOMC announcement days.
+We then study the intra-day pattern of returns in further detail by decomposing currency
+returns into their pre- and post-announcement components. To this end, we split the day into
+two non-overlapping time windows that fall before and after the exact time of the announcement.
+We ﬁnd that returns earned over both windows are larger on announcement days compared to the
+corresponding windows on non-announcement days. We also test our model’s prediction regarding
+the relationship between the returns earned during the post-announcement window and the stance
+of monetary policy by stratifying our sample into easing and tightening periods depending on the
+policy adopted by the Fed. Using a monetary policy indicator constructed from high-frequency data
+
+ance
+of monetary policy by stratifying our sample into easing and tightening periods depending on the
+policy adopted by the Fed. Using a monetary policy indicator constructed from high-frequency data
+on various interest rate futures, we ﬁnd that, in line with our model’s prediction, post-announcement
+returns are higher when the Federal Reserve adopts an expansionary policy.
+The observation that the stance of monetary policy and the interest rate diﬀerentials are tightly
+linked to currency excess returns means that trading strategies that take these factors into account
+should exhibit higher returns compared to the simpler strategies that do not. We leverage these
+observations to construct trading strategies that improve upon the simple strategy that always
+shorts the U.S. dollar along two dimensions. First, using the observation that post-announcement
+returns are lower after the adoption of a contractionary monetary policy, we reverse the simple
+strategy’s position right after the announcement in response to a tightening, while leaving the posi-
+tion unchanged in response to an easing. Second, given that currency excess returns increase with
+the interest rate diﬀerential, we restrict this trading strategy to currencies that exhibit a positive
+interest rate diﬀerential vis-` a-vis the U.S. These adjustments indeed result in more economically
+and statistically signiﬁcant returns on announcement days, increasing the simple trading strategy’s
+
+interest rate diﬀerential vis-` a-vis the U.S. These adjustments indeed result in more economically
+and statistically signiﬁcant returns on announcement days, increasing the simple trading strategy’s
+announcement day returns from 10 .77 to 20.54bps (with a t-statistic of 4 .17), coupled with an
+3
+
+equally signiﬁcant increase in the Sharpe ratio from 0.51 to 0.93.
+We then test whether announcements by the Federal Reserve exert a unique impact on exchange
+rates, or whether similar patterns can be observed for other central bank announcements. For
+instance, anecdotal evidence suggests that one of the largest one-day depreciations of the Japanese
+yen in recent years coincides with the Bank of Japan’s announcement of an expansion of its asset-
+purchase program (Ramage and Albanese (2015)). To test this hypothesis, we collect the exact
+timing of monetary policy announcements for the diﬀerent countries in our sample and perform
+an empirical exercise similar to the one outlined above by measuring the excess returns of interest
+rate-sorted portfolios vis-` a-vis the corresponding currencies. Using data between 1998 and 2013,
+we ﬁnd that announcements by the Bank of Japan lead to a pattern that is virtually identical to
+that of FOMC announcements. We ﬁnd no signiﬁcant eﬀects for the rest of the central banks in
+our sample.
+We conclude the paper by running a series of robustness checks. First, we repeat the analysis
+for truncated data to ensure that our results are not driven by outliers in the sample. Second, to
+overcome concerns regarding the sample size, we compute small-sample standard errors through
+a bootstrap exercise. In another bootstrap exercise, we sample randomly from the distribution
+
+. Second, to
+overcome concerns regarding the sample size, we compute small-sample standard errors through
+a bootstrap exercise. In another bootstrap exercise, we sample randomly from the distribution
+of non-announcement returns to test whether we can generate returns similar in size to those ob-
+served on announcement dates. These exercises all indicate the robustness of our main empirical
+ﬁndings. We also show that announcement day returns remain signiﬁcant and highly proﬁtable
+(with annualized Sharpe ratios of up to 0.8) even when transaction costs are taken into account
+by adjusting for bid-ask spreads. Finally, we document the unique role of monetary policy an-
+nouncements on currency returns by showing that the signiﬁcant diﬀerence between announcement
+and non-announcement day returns observed for FOMC announcements is not shared by other
+macroeconomic announcements.
+Our paper belongs to the growing literature that documents sizable responses of various asset
+classes to macroeconomic announcements. For instance, H¨ ordahl, Remolona, and Valente (2015)
+study high-frequency movements in bond yields around macroeconomic announcements and docu-
+ment strong movements not only in yields but also in bond risk premia. Similarly, Jones, Lamont,
+and Lumsdaine (1998) study realized bond excess returns around macroeconomic news releases
+about inﬂation and the labor market; Savor and Wilson (2013) focus on (unconditional) excess eq-
+4
+
+uity returns in response to inﬂation, labor market, and FOMC releases; Beber and Brandt (2006)
+use Treasury futures options to assess how the state price density changes around macroeconomic
+announcements; and Savor and Wilson (2014) document that systematic market risk prices risky
+assets (including foreign exchange portfolios) well on announcement days. Most recently, Lucca and
+Moench (2015) study S&P500 index returns ahead of scheduled FOMC announcements and ﬁnd
+that announcement day returns are due to a pre-announcement drift rather than returns earned at
+the announcement.1
+Even though closely related, our paper departs from this literature along several important
+dimensions. First, in contrast to Lucca and Moench (2015) who ﬁnd that returns in the equity
+market are earned entirely in the 24-hour window before the announcement, we document that
+currency excess returns span the entire announcement day and consist of a pre- as well as a post-
+announcement component. Second, we ﬁnd that the post-announcement returns are tightly linked
+to the content of the announcement, with an expansionary (contractionary) policy associated with
+higher (lower) returns. Finally, we provide a theoretical framework that interprets the documented
+pre- and post-announcement excess returns as, respectively, a compensation for intermediaries’
+exposure to monetary policy uncertainty prior to the announcement and the ex post impact of the
+monetary policy shock on their balance sheets.
+
+rns as, respectively, a compensation for intermediaries’
+exposure to monetary policy uncertainty prior to the announcement and the ex post impact of the
+monetary policy shock on their balance sheets.
+Our paper is also related to the theoretical asset pricing literature that studies the interplay of
+market frictions and exchange rates. For example, in the context of a model of the international
+banking system, Bruno and Shin (2015) show that local currency appreciation results in lower
+credit risk and, hence, expanded bank lending capacity. Our theoretical framework is most closely
+related to the recent work of Gabaix and Maggiori (2015) who present a model of exchange rate
+determination based on capital ﬂows in imperfect ﬁnancial markets. They show that, in the presence
+of intermediation frictions, shocks to ﬁnanciers’ risk-bearing capacity aﬀect the level and volatility
+of exchange rates. Given our diﬀerent focus, we depart from the framework of Gabaix and Maggiori
+(2015) by studying a model in which ﬁnanciers may be uncertain about the future path of monetary
+policy and show that such uncertainty plays a ﬁrst-order role in determining currency excess returns
+on central bank announcement days.
+Finally, our paper contributes to the literature linking exchange rates to monetary policy. For
+example, Eichenbaum and Evans (1995), Faust and Rogers (2003), Scholl and Uhlig (2008), Rogers,
+5
+
+Scotti, and Wright (2016), and Stavrakeva and Tang (2015) among others, study the eﬀect of mone-
+tary policy shocks extracted from high-frequency data on exchange rates in a vector autoregression
+framework. Diﬀerent from these papers, we are mainly interested in the intra-daily return patterns
+on announcement and non-announcement days, with a focus on documenting the role of monetary
+policy in shaping these patterns.
+Outline: The rest of the paper is organized as follows. In the next section, we formulate a model
+of exchange rate determination around central bank announcement days. Section II describes
+the data on which we base our analysis. Our main empirical ﬁndings are presented in Section
+III. Section IV concludes. All proofs and derivations are presented in the Appendix. An Online
+Appendix provides additional empirical results and robustness checks.
+I. Theoretical Framework
+In this section, we present a parsimonious model of exchange rate determination in the spirit
+of Gabaix and Maggiori (2015), which forms the basis of our analysis. As the main ingredient of
+our model, we assume that market participants are uncertain about the future stance of monetary
+policy prior to central bank announcements.
+A. Model
+Consider a discrete-time economy that lasts for three periods, t = 0, 1, 2. The economy consists
+of two countries, each populated by a unit mass of investors and with its own currency. For
+
+.
+A. Model
+Consider a discrete-time economy that lasts for three periods, t = 0, 1, 2. The economy consists
+of two countries, each populated by a unit mass of investors and with its own currency. For
+expositional simplicity, we refer to one of the countries as the United States and to its currency as
+the dollar.
+Investors in each country can trade a one-period, nominal risk-free bond that is denominated
+in their respective domestic currency. We use Rt andR∗
+t to denote the interest rates in the United
+States and the foreign country between periods t and t + 1, respectively. We assume that the
+interest rate in the U.S. is smaller than that of the foreign country in all periods. The exchange
+rate et is deﬁned as the quantity of dollars that can be bought by one unit of the foreign currency
+at time t.
+6
+
+At any given period, investors in each country have a downward-sloping demand for assets
+denominated in the other country’s currency. Such demand may arise due to various reasons, such
+as trade or portfolio ﬂows. We assume that U.S. investors have a time t demand of ft/et for assets
+denominated in the foreign currency, which they fund by an oﬀsetting position −ft in dollars. We
+assume that ft is drawn independently over time from a common continuous distribution function
+G(·) with bounded support [ f, ¯f], where f > 0. Similarly, foreign investors have a time t demand
+ofdtet for dollar-denominated assets, funded by the oﬀsetting position−dt in their currency, where
+we assume that dt =d> 0 is constant over time.
+In addition to the investors, the economy is populated by a unit mass of identical, risk-neutral
+ﬁnanciers, who can trade in the domestic bonds of both countries. As such, the ﬁnanciers’ main
+role is to act as intermediaries between investors in the two countries by taking the other side of
+their currency demands, at a proﬁt. The representative ﬁnancier enters the market with no capital
+of her own and takes a time t∈{0, 1} position of −Qt in dollars, funded by Qt/et units of the
+foreign currency.
+The representative ﬁnancier unwinds this position at the end of period t + 1. Consequently, her
+proﬁt (expressed in dollars) at the end of the period is given by
+Vt+1 =
+(et+1
+et
+R∗
+t−Rt
+)
+Qt, (1)
+where recall that Rt and R∗
+t denote the interest rates in the U.S.
+
+period t + 1. Consequently, her
+proﬁt (expressed in dollars) at the end of the period is given by
+Vt+1 =
+(et+1
+et
+R∗
+t−Rt
+)
+Qt, (1)
+where recall that Rt and R∗
+t denote the interest rates in the U.S. and the foreign country, respec-
+tively.
+As our main point of departure from the framework of Gabaix and Maggiori (2015), we assume
+that in addition to the “fundamental risk” in demand and supply of currencies — captured in our
+model by the uncertainty in the realization of ft’s — the ﬁnanciers also face “monetary policy
+uncertainty” due to potential future changes in interest rates. We model the presence of this latter
+kind of uncertainty by assuming that, when taking their positions at t = 0, the ﬁnanciers are
+uncertain about the interest rate in the U.S. between t = 1 and t = 2. More speciﬁcally, we
+assume that log(R1) is a random variable drawn att = 1 independently from (f0,f 1,f 2) with mean
+E0[log(R1)] = log(R0) and standard deviation σR.2 Thus, σR serves as a natural proxy for the
+extent of U.S. monetary policy uncertainty. In particular, σR > 0 naturally corresponds to an
+7
+
+FOMC announcement day, on which market participants are uncertain about the future stance of
+monetary policy. On the other hand, σR = 0 corresponds to a “normal” day with no scheduled
+monetary policy announcements. On such days, market participants are certain that the interest
+rate will remain unchanged throughout the day, in which case R1 = R0 with probability one. To
+simplify the derivations, we assume that the interest rate in the foreign country is deterministic and
+constant, that is, R∗
+0 =R∗
+1 =R∗. Finally, throughout the paper, we assume that the interest rate
+diﬀerential between the two currencies is large enough at all times, and in particular R∗f
+> Rtf
+fort∈{ 0, 1}. This assumption serves as a simple suﬃcient condition for the ﬁnanciers to short the
+dollar in equilibrium, that is, Qt≥ 0.
+An immediate implication of equation (1) is that whenever the uncovered interest rate parity
+(UIP) condition is not satisﬁed (i.e., when Et[R∗
+tet+1/et−Rt]̸= 0), the representative ﬁnancier
+wants to take inﬁnitely large positions unless some friction limits her ability to do so. We model the
+presence of such intermediation frictions by assuming that the representative ﬁnancier is subject to a
+value-at-risk constraint, whereby the likelihood that she makes negative proﬁts cannot exceed some
+small αt< 1.3,4 The representative ﬁnancier thus faces the following problem at time t∈{ 0, 1}:
+max
+Qt
+Et[Vt+1]
+s.t. Pt(Vt+1≤−ϵ)≤αt,
+(2)
+
+e likelihood that she makes negative proﬁts cannot exceed some
+small αt< 1.3,4 The representative ﬁnancier thus faces the following problem at time t∈{ 0, 1}:
+max
+Qt
+Et[Vt+1]
+s.t. Pt(Vt+1≤−ϵ)≤αt,
+(2)
+where ϵ is some positive number arbitrarily close to zero. 5
+The presence of the value-at-risk constraint eﬀectively limits the “risk-bearing capacity” of the
+ﬁnanciers. When αt is close to 1, the representative ﬁnancier is essentially unconstrained and can
+take arbitrarily large currency positions. However, if αt is small, the constraint in (2) is tightened
+whenever the ﬁnancier faces higher risk (for example, due to an increase in the anticipated volatility
+of future exchange rates or interest rates). In this sense, the value-at-risk constraint induces a
+downward-sloping demand curve for risk-taking by the ﬁnanciers. 6
+The competitive equilibrium of the economy described above is deﬁned in a straightforward
+manner. It consists of the tuple (e 0,e 1,e 2,Q 0,Q 1) of exchange rates and currency positions such
+that (i) the representative ﬁnancier chooses Qt in order to maximize her expected proﬁt, taking
+8
+
+the exchange rates as given; and (ii) the net demand for dollars is equal to zero in all periods:
+de0−f0−Q0 = 0 (3)
+de1−f1 +R0Q0−Q1 = 0 (4)
+de2−f2 +R1Q1 = 0, (5)
+where recall that, whenever σR > 0, the realization of R1 becomes known at t = 1.
+B. Monetary Policy Uncertainty
+We start our analysis by characterizing how uncertainty about the future stance of monetary
+policy in the U.S. impacts the foreign currency’s (log) excess returns, deﬁned as φ =φ1 +φ2, where
+φt+1 = log(R∗)− log(Rt) + log(et+1)− log(et)
+captures the foreign currency’s excess returns between periodst andt+1. Note that Et[φt+1] = 0 is
+equivalent to the satisfaction of UIP between periodst andt+1. Since monetary policy uncertainty
+is resolved at t = 1, we can naturally interpret φ1 and φ2 as, respectively, the foreign currency’s
+pre- and post-announcement excess returns. We have the following result:
+PROPOSITION 1: An increase in monetary policy uncertainty in the U.S. increases the foreign
+currency’s expected excess returns, that is, ∂E0[φ]/∂σR > 0.
+This proposition thus establishes that the foreign currency’s excess returns are higher on FOMC
+announcement days compared to days with no scheduled announcements. The intuition underlying
+this result is that on announcement days, the ﬁnanciers are uncertain about the interest rate at
+which they will have to reﬁnance their position, exposing them to a risk that is above and beyond the
+usual fundamental risk they face on non-announcement days when σR = 0.
+
+about the interest rate at
+which they will have to reﬁnance their position, exposing them to a risk that is above and beyond the
+usual fundamental risk they face on non-announcement days when σR = 0. Given their downward-
+sloping demand for risk-taking induced by the value-at-risk constraint, the ﬁnanciers are willing to
+bear this extra risk only if they are compensated accordingly with higher returns. Put diﬀerently,
+the higher σR faced by the ﬁnanciers on announcement days tightens their value-at-risk constraint
+in (2), thus limiting their ability to short the dollar. Consequently, for currency markets to clear,
+the foreign currency has to depreciate at t = 0, coupled with an expected appreciation at t = 2,
+9
+
+thus increasing excess returns.
+Our next result determines the relationship between the foreign currency’s excess returns and
+the interest rate diﬀerential between the two countries.
+PROPOSITION 2: The foreign currency’s expected excess return increases in the foreign country’s
+interest rate, that is, ∂E0[φ]/∂R∗ > 0. Furthermore, the increase in excess returns in response
+to higher monetary policy uncertainty is larger for currencies with higher interest rates, that is,
+∂2E0[φ]/∂R∗∂σR > 0.
+The ﬁrst part of the above result establishes that a higher interest rate diﬀerential between the
+two countries leads to larger (expected) excess returns on the foreign currency position. This is
+due to the fact that a higher interest rate diﬀerential between the two countries makes shorting
+the dollar more attractive for the ﬁnanciers, inducing them to take larger positions in equilibrium.
+This increase in the position size results in an equilibrium exchange rate adjustment. However, due
+to ﬁnanciers’ limited risk-bearing capacity, the adjustment in exchange rates does not oﬀset the
+increase in interest rate diﬀerential one-for-one, thus resulting in higher excess returns.
+More importantly, however, the second part of Proposition 2 establishes that the impact of
+monetary policy uncertainty on excess returns (characterized in Proposition 1) is not the same
+for all currencies. Rather, returns that are earned in compensation for higher monetary policy
+
+impact of
+monetary policy uncertainty on excess returns (characterized in Proposition 1) is not the same
+for all currencies. Rather, returns that are earned in compensation for higher monetary policy
+uncertainty are larger for currencies with higher interest rates. The model thus predicts that not
+only the foreign currency earns higher excess returns on FOMC announcement days relative to non-
+announcement days, but also that the diﬀerence between announcement and non-announcement
+day returns increases with the country’s interest rate diﬀerential vis-` a-vis the United States.
+C. Monetary Policy Shock
+Our focus thus far was on the impact of monetary policy uncertainty on excess returns. Indeed,
+the fact that this uncertainty is resolved at t = 1 means that the eﬀects characterized in our
+previous results work through ﬁnanciers’ t = 0 expectations about future interest rates. As our
+next result, we show that in addition to these expectations-driven eﬀects, the actual realization of
+the monetary policy shock also has an impact on the foreign currency’s excess returns. We capture
+this so called “post-announcement eﬀect” by characterizing the relationship between the realization
+10
+
+of R1 and the foreign currency’s excess returns between t = 1 and t = 2.
+PROPOSITION 3: An interest rate reduction by the Federal Reserve increases the foreign cur-
+rency’s expected post-announcement excess returns, that is,∂E1[φ2]/∂R1< 0. Moreover, ∂2E1[φ2]/∂R1∂σR <
+0.
+Thus, not only the foreign currency exhibits higher excess returns on announcement days relative
+to non-announcement days, but also that announcement day returns are higher if, ex post, the Fed
+adopts a policy of monetary easing. The juxtaposition of Propositions 1 and 3 also illustrates that
+the composition of announcement day returns is driven by two related, but distinct factors. First,
+the mere possibility of a change in interest rates in the U.S. results in higher monetary policy
+uncertainty and, hence, higher excess returns. Second, given that the policy announcement may
+result in an actual change in interest rates, the foreign currency’s post-announcement returns also
+adjust in response to the adopted policy.
+II. Data
+We work with tick-by-tick high-frequency data that runs from January 1, 1994 to December
+31, 2013. There are eight scheduled FOMC meetings in one year. This leaves us with 160 FOMC
+announcement days and 4,512 trading days with no scheduled FOMC announcements. We exclude
+from our sample the 10 days in which the FOMC made a surprise announcement following an
+unscheduled meeting.
+High-Frequency Currency Data: The high-frequency spot exchange rate data for Australia, Canada,
+
+our sample the 10 days in which the FOMC made a surprise announcement following an
+unscheduled meeting.
+High-Frequency Currency Data: The high-frequency spot exchange rate data for Australia, Canada,
+Euro, Japan, New Zealand, Norway, Sweden, Switzerland, and the UK, all vis-` a-vis the U.S. dollar,
+are from Olsen & Associates. 7 We focus on these so called “G10” currencies as they are the most
+heavily traded (Bank for International Settlements (2015)). The raw data consists of all interbank
+bid and ask indicative quotes for the exchange rates to the nearest even second. After ﬁltering the
+data for outliers, the log price at each ﬁve-minute tick is obtained by linearly interpolating from
+the average of the log bid and log ask quotes for the two closest ticks. 8 We then calculate daily
+currency returns by sampling the data at 4pm Eastern Time (ET).
+Spot and Forward Data: The log excess return of purchasing a foreign currency in the forward
+11
+
+market and then selling it in the spot market after one month is given byrxt+1 =fwt−st+1, wherest
+andfwt denote the spot and forward rates in logs, respectively. The excess return can also be stated
+as the log forward discount minus the change in the spot rate: rxt+1 =fwt−st−∆st+1. Note that
+since covered interest rate parity (CIP) holds at daily and lower frequencies, the forward discount
+is equal to the interest rate diﬀerential, that is, fwt−st≈ r∗
+t−rt, where r∗ and r respectively
+denote the foreign and domestic nominal risk-free rates over the maturity of the contract.
+To calculate currency excess returns, we combine our high-frequency spot data with the daily
+data for spot exchange rates and one-month forward rates (versus the U.S. dollar) obtained from
+BBI and WM/Reuters (via Datastream). More speciﬁcally, we use the change in exchange rates
+from the high-frequency data and combine it with an appropriately scaled forward discount that is
+extracted from the daily data assuming that the interest is earned linearly over the length of the
+contract.
+Volatilities: To obtain measures for intra-day realized volatility, we ﬁrst calculate spot FX changes
+sampled at ﬁve-minute intervals and obtain the realized variance over a rolling one-hour window as
+the respective sum of squared changes. We then calculate realized volatility by taking the square
+root of realized variance.
+FOMC Announcements: For a high-frequency analysis, it is important to know exactly when FOMC
+
+of squared changes. We then calculate realized volatility by taking the square
+root of realized variance.
+FOMC Announcements: For a high-frequency analysis, it is important to know exactly when FOMC
+decisions become known to market participants. Unlike other macroeconomic announcements that
+are released at very precise times, FOMC announcements are usually made around, but not precisely
+at, 215pm ET. We follow Fleming and Piazzesi (2005) and collect precise announcement times
+from the Bloomberg newswire, though, with some abuse of terminology, we use 215pm and the
+announcement time interchangeably.
+Monetary Policy Indicator: To obtain an indicator for monetary policy shocks, we follow G¨ urkaynak,
+Sack, and Swanson (2005) and Nakamura and Steinsson (2015) and construct a composite mea-
+sure of changes in fed funds and Eurodollar futures with horizons up to one year over a 30-minute
+window around FOMC announcements. This composite measure, which we refer to as the “mon-
+etary policy indicator” or MPI, is the ﬁrst principal component of unanticipated changes in the
+following ﬁve interest rates: the federal funds rate immediately following the FOMC meeting, the
+expected federal funds rate immediately following the next FOMC meeting, and expected 3-month
+Eurodollar interest rates at horizons of two, three, and four quarters.
+12
+
+Uncertainty Indices: As our benchmark index for market participants’ uncertainty about monetary
+policy, we use the implied volatility index extracted from one-month options on 30-year Treasury
+futures (akin to the VIX), which we refer to as Treasury Implied Volatility or TIV (Choi, Mueller,
+and Vedolin (2016)). As part of our robustness analysis, we also proxy policy uncertainty with the
+economic policy uncertainty index of Baker, Bloom, and Davis (2016).
+Finally, we proxy market participants’ appetite for risk and intermediaries’ risk-bearing capacity
+by the VIX index of implied volatility from S&P500 options (Pan and Singleton (2008), Adrian and
+Shin (2010), Miranda-Agrippino and Rey (2015)), as well as the average ﬁve-year CDS spread of
+Citibank, JPMorgan, Bank of America, and Goldman Sachs, available from Markit. These banks,
+which are the four largest U.S.-based banks trading in the FX market, hold around 34% of the
+market share.
+III. Empirical Analysis
+This section contains our main empirical results, where we document that returns to a trading
+strategy that is short the U.S. dollar and long other currencies are on average larger on FOMC
+announcement days compared to all other days. We also show that the diﬀerence between an-
+nouncement and non-announcement day returns (i) is larger for currencies with larger interest rate
+diﬀerentials vis-` a-vis the U.S.; (ii) increases with various proxies of monetary policy uncertainty;
+
+uncement and non-announcement day returns (i) is larger for currencies with larger interest rate
+diﬀerentials vis-` a-vis the U.S.; (ii) increases with various proxies of monetary policy uncertainty;
+and (iii) increases when the Federal Reserve adopts an expansionary monetary policy.
+A. Announcement vs. non-Announcement Day Returns
+Individual Currencies: We begin our empirical investigation by documenting the returns of
+individual currencies on days with and without scheduled FOMC announcements. Table I presents
+the summary statistics of daily excess returns of the nine currencies in our sample (in bps) vis-` a-vis
+the U.S. dollar for the entire sample (Panel A), days without FOMC announcements (Panel B),
+and days with scheduled announcements (Panel C). The returns are sampled at 4pm ET, which
+corresponds to the closing time of the stock market in New York. 9
+[T able I
+here]
+There are several noteworthy observations. First, focusing on the entire sample in Panel A
+indicates that, except for the New Zealand dollar, daily returns are on average not statistically
+13
+
+diﬀerent from zero. Summary statistics for non-announcement days, detailed in Panel B, exhibit a
+similar pattern: average returns are not statistically diﬀerent from zero for any of the currencies.
+Panel C, however, indicates that announcement day returns are not only statistically diﬀerent
+from zero for most of the currencies, but are also signiﬁcantly larger than non-announcement day
+returns. For example, the average daily return of the Australian dollar (AUD) on announcement
+days is 17.28bps compared to 1 .16bps on non-announcement days, amounting to a statistically
+signiﬁcant diﬀerence of 16.12bps (with a t-statistic of 2.51). In fact, as the bottom row of Table
+I illustrates, except for the Japanese yen and the Norwegian krona, diﬀerences in announcement
+and non-announcement day returns are signiﬁcant for all other currencies, an observation that is
+consistent with our model’s prediction in Proposition 1. This pattern can also be seen in Figure 1,
+which plots the currencies’ average daily returns on announcement and non-announcement days.
+[Figure 1
+here]
+Second, our results indicate that most of the currency excess returns earned on announcement
+days are due to changes in exchange rates as opposed to the interest rate diﬀerential. In particular,
+line ∆s in Panel C, which denotes the daily return that is earned as a consequence of changes in
+the foreign exchange, shows that almost the entire return on announcement days is attributable to
+the exchange rate change.
+
+hich denotes the daily return that is earned as a consequence of changes in
+the foreign exchange, shows that almost the entire return on announcement days is attributable to
+the exchange rate change.
+Third, we note that the diﬀerence between announcement and non-announcement day returns
+is larger for currencies that have higher interest rate diﬀerentials vis-` a-vis the U.S. For example,
+the diﬀerence between announcement and non-announcement day returns for the Australian and
+New Zealand dollars, two typical investment currencies, is, respectively, 16 .12 and 13.92bps, both
+of which are statistically diﬀerent from zero. In contrast, the diﬀerence between announcement
+and non-announcement day returns for the Japanese yen, a typical funding currency, is statistically
+insigniﬁcant. This ﬁnding is in line with our model’s prediction in Proposition 2, according to
+which currencies with larger interest rate diﬀerentials vis-` a-vis the U.S. should exhibit larger excess
+returns on announcement days relative to non-announcement days. We explore this issue in further
+detail in what follows.
+[Figure 2
+here]
+We end this discussion by noting that, according to our model, currency excess returns are
+closely related to exchange rate volatility (via the tightness of ﬁnanciers’ risk constraint). To test
+for this relationship, we plot the daily movement of average realized volatility of the currencies’
+exchange rates on announcement and non-announcement days in Figure 2.
+
+ers’ risk constraint). To test
+for this relationship, we plot the daily movement of average realized volatility of the currencies’
+exchange rates on announcement and non-announcement days in Figure 2. As the ﬁgure indicates,
+14
+
+throughout most of the day, realized volatility on announcement days is low and indistinguishable
+from the realized volatility at corresponding times on non-announcement days. However, realized
+volatility spikes considerably for all currencies around the time of the announcement. Indeed,
+performing anF -test on the data from a one-hour window straddling the time of the announcement
+indicates that, for all currencies, exchange rate volatility on announcement days is larger than on
+non-announcement days (with p-values that are virtually equal to zero).
+Currency Portfolios: In the remainder of this section, we focus our attention on currency
+portfolios, as most traders do not invest in single currencies. In particular, in order to diversify
+away idiosyncratic currency risks, many traders take a long position in a number of high-interest
+rate currencies while shorting currencies with low interest rates (Pedersen (2015)).
+Motivated by our earlier observation that currencies of countries with a positive interest rate
+diﬀerential vis-` a-vis the U.S. exhibit larger returns on announcement days, we construct currency
+portfolios that are sorted on their forward discount, as is customary in the literature (see, for ex-
+ample, Lustig and Verdelhan (2007) and Lustig, Roussanov, and Verdelhan (2011), among others).
+To this end, we allocate currencies into three portfolios based on their observed forward discounts
+
+ex-
+ample, Lustig and Verdelhan (2007) and Lustig, Roussanov, and Verdelhan (2011), among others).
+To this end, we allocate currencies into three portfolios based on their observed forward discounts
+fwt−st, or, equivalently, their interest rate diﬀerentials at the end of each month t.10 Portfolios
+are ranked in increasing interest rate order, with pf1 and pf3 denoting the portfolios consisting of
+the three currencies with the lowest and highest interest rates, respectively. We calculate daily
+log excess returns of individual currencies using the daily interest rate diﬀerentials and daily log
+exchange rate changes, assuming that the interest rate diﬀerential is earned linearly over the month.
+Portfolio returns are then calculated as the average of the currency excess returns in each portfolio
+as in Lustig et al. (2011). Table II presents the resulting summary statistics, with dol denoting the
+portfolio that is short the U.S. dollar and long all other currencies.
+[T able II
+and
+Figure 3
+here]
+Panel A of Table II presents summary statistics for average returns over our entire sample. These
+results conﬁrm the well-known empirical pattern that, when averaged over all days, low interest
+rate currencies earn lower average returns than high interest rate currencies: in our sample, the low
+interest rate portfolio, pf1, earns a daily return of −0.31bps (with a t-statistic of−0.39), whereas
+
+e currencies earn lower average returns than high interest rate currencies: in our sample, the low
+interest rate portfolio, pf1, earns a daily return of −0.31bps (with a t-statistic of−0.39), whereas
+the high interest rate portfolio, pf3, earns an average daily return of 2 .18bps (with a t-statistic of
+2.31). The dol portfolio has a daily return of 0 .84bps, which is statistically insigniﬁcant (with a
+15
+
+t-statistic of 1.14). Panel A also indicates that corresponding annualized Sharpe ratios are larger
+for high interest rate currencies: while pf1 only generates an annualized Sharpe ratio of −0.09, pf3
+has a Sharpe ratio of 0.54.
+Next, we compare the currency portfolios’ returns on announcement and non-announcement
+days, as documented in Panels B and C of Table II and depicted in Figure 3. The key observa-
+tion is that, in line with the model’s prediction in Propositions 1 and 2, the diﬀerence between
+announcement and non-announcement day returns is positive and increasing in the interest rate
+diﬀerential. For instance, the average daily return on the low interest rate portfolio is 5 .19bps on
+announcement days compared to −0.51bps on non-announcement days. This 5 .70bps diﬀerence
+is positive but not statistically signiﬁcant (with a t-statistic of 1.31). However, the average daily
+return of the high interest rate currency portfolio grows from 1 .73bps on non-announcement days
+to 14.47bps on announcement days, a 12 .74bps diﬀerence that is signiﬁcantly diﬀerent from zero
+(with at-statistic of 2.45). We also note that unlike the unconditional average taken over the entire
+sample (as presented in Panel A of Table II), the dol portfolio features a large and statistically
+signiﬁcant return on announcement days (10.77bps, with a t-statistic of 2.27), whereas the return
+on non-announcement days is insigniﬁcant, with a t-statistic of 0.64. The diﬀerence of 10 .30bps
+
+ally
+signiﬁcant return on announcement days (10.77bps, with a t-statistic of 2.27), whereas the return
+on non-announcement days is insigniﬁcant, with a t-statistic of 0.64. The diﬀerence of 10 .30bps
+between the announcement and non-announcement day returns is highly statistically diﬀerent from
+zero with a t-statistic of 2.55.
+These observations illustrate that a sizable portion of the currency portfolios’ average yearly
+returns is earned on FOMC announcement days. For instance, the average yearly return on the high
+interest rate portfolio is 252×2.183 = 550bps, of which 21% (or 8×14.465 = 116bps) is earned on the
+eight FOMC announcement days. For the dol portfolio, we ﬁnd that 41% of the entire annual return
+is earned on announcement days. Notably, this large increase in average returns on announcement
+days is not accompanied by an equally large increase in realized risk, as annualized Sharpe ratios
+are signiﬁcantly larger on announcement days. 11 We also note that even though announcement
+day Sharpe ratios are comparable to those of some of the established currency trading strategies,
+it is well-known that carry trades feature negative skewness (Brunnermeier, Nagel, and Pedersen
+(2008) Jurek (2014) Daniel, Hodrick, and Lu (2016)). In contrast, the relatively high Sharpe ratios
+of pf3 and dol on announcement days are accompanied by returns that are positively skewed.
+16
+
+B. Time-Series Analysis
+We continue our investigation of currency excess returns around FOMC announcements by
+taking a time-series perspective. This approach enables us to test our model’s theoretical predictions
+in further detail and study the potential determinants of announcement day returns more formally.
+We start by documenting how monetary policy uncertainty and the realization of monetary
+policy shocks shape currency excess returns on announcement days. As our benchmark regression,
+we regress each currency portfolio’s excess returns on a dummy variable that takes the value of one
+on announcement days and zero otherwise:
+rxt+1 =α0 +α1× Announcement Dummyt +ϵt+1. (6)
+In this regression, the intercept α0 measures the corresponding portfolio’s mean return on non-
+announcement days, while α1 measures the spread between announcement and non-announcement
+days’ mean returns.
+[T able III
+here]
+The results, reported in Panel A of Table III, mirror those in Table II, with positive coeﬃcients
+for the announcement dummy for all portfolios. Furthermore, except for the low interest rate
+portfolio, the spread between announcement and non-announcement day returns is signiﬁcant for
+all portfolios, with α1 = 12.72 (t-statistic of 2.45) for the high interest rate portfolio. The estimates
+for the intercept α0 are not signiﬁcant except for pf3, implying that there is little return to be
+earned on non-announcement days. Similarly, for the dol portfolio, the announcement dummy
+
+estimates
+for the intercept α0 are not signiﬁcant except for pf3, implying that there is little return to be
+earned on non-announcement days. Similarly, for the dol portfolio, the announcement dummy
+(α1 = 10.28) is statistically signiﬁcant whereas the intercept is not. These results thus conﬁrm
+our model’s main prediction that currency excess returns are on average higher on announcement
+days. Also recall that according to our model, the diﬀerence between announcement and non-
+announcement day returns should increase with the currency portfolios’ interest rate diﬀerential
+vis-` a-vis the U.S. (Proposition 2). Indeed, we ﬁnd that the estimated coeﬃcients increase from 5.69
+for pf1 to 12.72 for pf3.
+Next, we turn to testing our model’s other prediction that larger currency excess returns on
+announcement days are in response to the presence of monetary policy uncertainty (Proposition 1).
+To check whether higher announcement day returns are indeed associated with higher monetary
+policy uncertainty, we regress currency excess returns on the announcement dummy interacted
+17
+
+with the (standardized) implied volatility index TIV, which serves as a proxy for monetary policy
+uncertainty:
+rxt+1 =α0 +α1× Ann Dummyt +α2× TIVt +α3× Ann Dummyt× TIVt +ϵt+1. (7)
+In this regression, we are mainly interested in coeﬃcient α3, which measures the additional return
+one can earn on announcement days relative to non-announcement days as TIV increases. The re-
+sults are reported in Panel B of Table III. We ﬁnd that all estimated coeﬃcients for the interaction
+term are statistically signiﬁcant at the 1% level and carry the expected positive sign, indicat-
+ing that higher uncertainty is indeed associated with a larger spread between announcement and
+non-announcement day excess returns. Interestingly, monetary policy uncertainty does not seem
+to matter for currency returns outside of announcement days as manifested by the insigniﬁcant
+estimates for α2.
+Finally, we test for the relationship between currency excess returns and the realization of the
+monetary policy shock at the announcement. Recall that according to Proposition 3, the diﬀerence
+between returns on announcement and non-announcement days should increase (decrease) if the
+Fed adopts a policy of monetary easing (tightening). To test for this prediction, we regress currency
+returns on the announcement dummy interacted with the monetary policy indicator of Nakamura
+and Steinsson (2015). This indicator, which we refer to as MPI, is obtained by extracting the
+
+ress currency
+returns on the announcement dummy interacted with the monetary policy indicator of Nakamura
+and Steinsson (2015). This indicator, which we refer to as MPI, is obtained by extracting the
+principal component of changes in various interest rate futures, with a positive value corresponding
+to an expansionary change in policy. Our rationale for relying on such an indicator, as opposed to
+the change in the federal funds rate announced by the FOMC, is twofold. First, within our sample
+of 160 announcements, the federal funds rate was changed on only 52 occasions (corresponding
+to 30 and 22 rate hikes and reductions, respectively), thus leaving us with too small of a sample.
+In contrast, by relying on the MPI, we can identify, respectively, 59 and 101 episodes of easing
+and tightening of policy. Second, given its overnight nature, changes in the federal funds rate are
+incapable of capturing any longer term changes in (expected) interest rates as a result of the FOMC
+announcement. In contrast, such potential changes are better reﬂected in the MPI due to its longer
+horizon nature.
+Panel C of Table III reports the results. Estimated coeﬃcients are positive and highly statisti-
+18
+
+cally signiﬁcant for all portfolios witht-statistics ranging between 4.45 and 5.29. These results thus
+indicate that, consistent with the predictions of Proposition 3, the adoption of an expansionary
+policy by the Fed increases the spread between announcement and non-announcement day returns.
+B.1. Pre- and Post-Announcement Returns
+One of the key predictions of our model is that currency excess returns consist of pre- and post-
+announcement components. To test this prediction and explore the intra-day patterns of returns,
+we decompose daily returns by sampling the data at 215pm and 4pm and calculate currency returns
+over two non-overlapping time windows: (i) from 4pm on any given day to 215pm the following
+day and (ii) from 215pm to 4pm on the same day. We then separately regress the returns earned
+over each time window on an announcement dummy in a regression akin to (6). With some abuse
+of terminology, we refer to the 4pm–215pm and 215pm–4pm time windows as the pre- and post-
+announcement windows, respectively.
+[T able IV
+here]
+The results are summarized in Table IV, where Panels B and C report the corresponding
+numbers for pre- and post-announcement windows, respectively. As a reference, we also reproduce
+in Panel A the results of our baseline regression for the entire day (from Table III). The positive and
+signiﬁcant estimates for the announcement dummy indicate that, except for pf1’s returns during the
+
+Panel A the results of our baseline regression for the entire day (from Table III). The positive and
+signiﬁcant estimates for the announcement dummy indicate that, except for pf1’s returns during the
+pre-announcement window, the pre- and post-announcement components of all portfolios are larger
+on announcement days compared to the corresponding windows on non-announcement days (at the
+10% level). For instance, the estimated coeﬃcients for the dol portfolio over the pre-announcement
+window indicates 7.89bps higher returns on announcement days compared to the same time window
+on all other days (with an associated t-statistic of 2.02). Similarly, the returns of the dol portfolio
+during the post-announcement window of 215pm–4pm are 2.39bps ( t-statistic of 2.32) higher on
+announcement days than on non-announcement days.
+Comparing the three panels of Table IV side-by-side also provides a clear decomposition of the
+portfolios’ daily returns earned over the two time windows. For instance, focusing on pf3, the table
+illustrates that (when compared to non-announcement days) out of the 12.72bps additional returns
+earned on announcement days, 9.48bps are earned over the pre-announcement window, with the
+remaining 3.24bps earned over the post-announcement window.
+19
+
+B.2. Pre-Announcement Returns and Monetary Policy Uncertainty
+Recall from Section I that, according to our model, the excess returns earned prior to the
+announcement are in response to the presence of higher monetary policy uncertainty on announce-
+ment days. We test for this prediction by re-running regression (7) while replacing the entire day
+returns as the left-hand side variable with the returns earned over the pre-announcement window
+(4pm–215pm). The results are presented in Table V. Similar to the results for the full day returns
+reported in Panel B of Table III, the estimated coeﬃcient for the announcement dummy interacted
+with TIV (which serves as our proxy for monetary policy uncertainty) is positive and signiﬁcant for
+all portfolios (with t-statistics ranging from 2.24 to 3.45). Furthermore, as reﬂected by the insignif-
+icant estimates for TIV, we ﬁnd that monetary policy uncertainty does not matter for currency
+returns on non-announcement days.
+[T able V
+here]
+B.3. Post-Announcement Returns and the Monetary Policy Shock
+Besides the decomposition of returns into their pre- and post-announcement components, our
+model also predicts that returns over the post-announcement window are tightly linked to the
+realization of the monetary policy shock at the announcement. In particular, recall from Proposition
+3 that the adoption of a policy of monetary easing should result in a further increase in excess returns
+after the announcement.
+
+olicy shock at the announcement. In particular, recall from Proposition
+3 that the adoption of a policy of monetary easing should result in a further increase in excess returns
+after the announcement. We explore the determinants of post-announcement returns by formally
+testing this relationship in our sample.
+[Figure 4
+here]
+As a ﬁrst exercise, we restrict our attention to announcement days only and calculate average
+returns during the post-announcement window conditional on whether the monetary shock was
+expansionary or contractionary. In particular, we divide announcement days into two separate cat-
+egories conditional on the sign of our monetary policy indicator, with a positive MPI corresponding
+to a policy of monetary easing. Figure 4 presents the results. As the ﬁgure indicates, returns
+over the post-announcement window are positive and signiﬁcant for all portfolios whenever the Fed
+adopts a policy of monetary easing (with returns ranging from 18 .33bps with a t-statistic of 3.90
+for pf1 to 24.32bps with a t-statistic of 4.30 for pf3). We also ﬁnd that returns are negative and
+signiﬁcant during tightening periods with returns ranging from −6.55bps to −8.46bps. Thus, in
+20
+
+line with our theoretical model, we can conclude that an expansionary policy results in positive
+returns post-announcement, whereas a contractionary policy leads to negative average returns.
+In a second exercise, we study how the realization of monetary policy shock impacts the diﬀer-
+ence between announcement and non-announcement day returns over the post-announcement win-
+dow. To this end, we regress the currency portfolios’ returns earned over the post-announcement
+window on the announcement dummy interacted with the MPI, akin to the results presented in
+Panel C of Table III for the entire day. The results are reported in Table VI, where all estimated
+coeﬃcients are positive and highly statistically diﬀerent from zero. Thus, in line with our model’s
+prediction, we ﬁnd that the diﬀerence between announcement and non-announcement day returns
+over the post-announcement window is higher the more expansionary the adopted policy is. 12
+[T able VI
+here]
+C. Trading Strategies
+Our results thus far illustrate that a simple trading strategy that is short the U.S. dollar and
+long other currencies (i) exhibits high excess returns on FOMC announcement days; (ii) earns
+higher returns if the interest rate diﬀerential is larger; and (iii) results in larger returns over the
+post-announcement window if the Federal Reserve adopts a policy of monetary easing.
+Taken together, these observations imply that the simple trading strategies we have thus far
+
+arger returns over the
+post-announcement window if the Federal Reserve adopts a policy of monetary easing.
+Taken together, these observations imply that the simple trading strategies we have thus far
+focused on can be improved along two dimensions. First, the fact that the stance of monetary
+policy at the announcement is tightly linked to the post-announcement returns means that a trading
+strategy that responds accordingly to the content of the announcement should exhibit higher returns
+compared to the simpler strategies that do not. One such strategy, which we label S1, shorts the
+U.S. dollar and goes long all other currencies at 4pm the day before the announcement and keeps the
+portfolio until 4pm on the day of the announcement if the Federal Reserve adopts an expansionary
+policy. If, however, the Federal Reserve tightens the policy, the strategy reverses the trade right
+after the announcement by going long the U.S. dollar and shorting the basket of all other currencies.
+Second, the observation that the interest rate diﬀerential plays a key role in determining an-
+nouncement day returns means that S1 can be further improved if we only apply the strategy to
+currencies of countries that have a positive interest rate diﬀerential vis-` a-vis the U.S., a strategy
+that we label S2.
+21
+
+The summary statistics for announcement day returns of these trading strategies are presented
+in Table VII. We note that average returns are indeed larger than those reported in Table II: S1 and
+S2 generate average returns of 19.49 and 22.54bps, respectively, compared to 14 .47 and 10.77bps
+for pf3 and dol portfolios. Furthermore, these returns are not only highly statistically signiﬁcant
+(as indicated by the correspondingt-statistics), but also exhibit very large Sharpe ratios, increasing
+from approximately 0.5 for pf3 and dol to over 0 .9 for either of the improved currency strategies.
+These Sharpe ratios are of similar orders of magnitude as the dollar carry strategy of Lustig,
+Roussanov, and Verdelhan (2014) for an extended dataset of currencies, which exploits the time
+variation in interest rate diﬀerentials vis-` a-vis the U.S. However, in addition to the high returns
+and large Sharpe ratios obtained on announcement days, the improved strategies S1 and S2 also
+exhibit positive skewness, a feature that is in contrast with the negative skewness observed for most
+of the well-known currency trading strategies (Daniel et al. (2016)).
+Finally, comparing announcement day returns in the FX market to their counterparts in the
+equity market suggests that even though the former are smaller on average, the two are quite
+similar in terms of Sharpe ratios. In particular, we calculate pre-announcement returns in the
+
+arts in the
+equity market suggests that even though the former are smaller on average, the two are quite
+similar in terms of Sharpe ratios. In particular, we calculate pre-announcement returns in the
+equity market as in Lucca and Moench (2015) for an extended dataset ending in 2013 and ﬁnd an
+average daily return of approximately 40bps with an associated annualized Sharpe ratio of 1 .04.
+While announcement returns in the FX market are smaller — the average return for S2 is 22bps —
+the currency strategies exhibit Sharpe ratios that are comparable to the ones in the equity market.
+[T able VII
+here]
+D. Announcements by Other Central Banks
+One natural question is whether announcements by other central banks have implications for
+currency returns that are similar to the patterns we document for FOMC announcements. To
+answer this question, we collect announcement dates for the central banks of Australia, England,
+Japan, New Zealand, and Switzerland either from Bloomberg (if available) or from the webpages
+of the corresponding central banks. 13 Next we re-base all exchange rates into the local currency of
+interest, assuming there are no violations of triangular arbitrage. We then build three portfolios
+based on interest rate diﬀerentials vis-` a-vis the respective country and re-run the same exercise as
+we did for FOMC announcements. We do not ﬁnd any signiﬁcant eﬀects for other central bank
+22
+
+announcements except for the Bank of Japan. 14 In what follows, we ﬁrst discuss Japan’s monetary
+policy in more detail and then present the results.
+The Bank of Japan (BoJ) Policy Board meets once or twice a month for two days to discuss
+economic developments inside and outside of the country. During these Monetary Policy Meetings,
+the members produce a guideline for money market operations in inter-meeting periods, which is
+written in terms of a target for the uncollateralized overnight call rate (the policy interest rate
+that corresponds to the federal funds rate in the U.S.). This is the base rate that is charged when
+banks that are part of the system provide one another with loans with a short maturity, usually
+a maturity of one day (overnight). The uncollateralized call rate was lowered to virtually zero in
+February/March 1999, and with the exception of a brief interest rate increase in the fall of 2000,
+the rate has since remained at the zero lower bound.
+The monetary policy decisions are announced right after the meeting with the minutes released
+about a month later. It is important to note that in addition to setting the interest rate, BoJ’s
+monetary policy announcements entail two other measures: (i) setting the target (reserves) of
+commercial banks at the BoJ in excess of required reserves; and (ii) setting the size of outright
+purchases of long-term government bonds, private equity, and debt, such as asset-backed securities.
+
+f
+commercial banks at the BoJ in excess of required reserves; and (ii) setting the size of outright
+purchases of long-term government bonds, private equity, and debt, such as asset-backed securities.
+These announcements also include the BoJ’s collective outlook on the economy as well as guidance
+about future monetary policy decisions. 15
+[T a-
+ble VIII
+here]
+Monetary Policy Meeting dates are available from the webpage of Bank of Japan since 1998.
+Spring 1998 coincides with the year the BoJ gained independence from the government in its policy
+making decisions and member appointments. To test for announcement day eﬀects, we re-base
+all exchange rates vis-` a-vis the Japanese yen and sort the currencies into three diﬀerent portfolios
+based on their interest rate diﬀerentials. The results are presented in Table VIII.
+The ﬁndings are strikingly similar to the ones for the Federal Reserve. On days with a BoJ
+announcement, the average daily return on the low interest rate portfolio is 12 .47bps, compared
+to−0.04bps on non-announcement days. This 12 .51bps is signiﬁcantly diﬀerent from zero, with
+a t-statistic of 2 .20. For the high interest rate currency portfolio, the average announcement
+day return is 17.59bps compared to 2.82bps on non-announcement days; a 14 .77bps diﬀerence
+that is signiﬁcantly diﬀerent from zero (t-statistic of 2.27). In a pattern mirroring that of the
+FOMC announcements, the large increases in average returns on BoJ announcement days is not
+23
+
+accompanied by an equally large increase in realized risk, as annualized Sharpe ratios are large and
+economically signiﬁcant, ranging from 1.07 for pf1 to 1 .32 for pf3.
+These observations indicate that similar to the results for the U.S., a sizable portion of the
+portfolios’ average yearly returns is earned on the BoJ announcement days. For instance, the
+average yearly return on pf3 is 3 .34× 252 = 842bps of which 31% (or 15 × 17.59 = 264bps) are
+earned on the 15 announcement days. Similarly, for the portfolio that is long all currencies and
+short the Japanese yen (reported in the last column in Table VIII), announcement day returns
+account for 49% of the annualized premium (14 .70bps× 15/1.80bps× 252).
+We end this discussion by noting that the similarity between the results for the BoJ and the
+FOMC should not be considered surprising, as the Japanese yen serves as one of the most prominent
+funding currencies. In fact, this similarity is in line with our model’s prediction, according to which
+a higher interest rate diﬀerential between the funding and investment currencies leads to a larger
+diﬀerence between returns on announcement and non-announcement days.
+E. Robustness
+We conclude this section by running several robustness checks. First, we redo our analysis by
+using alternative proxies for market participants’ uncertainty about monetary policy. Second, we
+check the impact of transaction costs on the returns. Third, we repeat the analysis for truncated
+
+s by
+using alternative proxies for market participants’ uncertainty about monetary policy. Second, we
+check the impact of transaction costs on the returns. Third, we repeat the analysis for truncated
+data to ensure that our results are not driven by outliers in the sample. Fourth, in a pair of
+bootstrap exercises, we compute small-sample standard errors (to overcome concerns about sample
+size) and sample randomly from the distribution of non-announcement returns (to test whether
+one can generate returns similar in size to those observed on announcement dates). Finally, we
+check whether other macroeconomic announcements result in similarly large returns as the ones
+documented for FOMC announcements.
+E.1. Alternative Measures of Uncertainty
+As our ﬁrst set of robustness checks, we verify that the positive relationship between monetary
+policy uncertainty and currency excess returns on announcement days we documented above is not
+driven by our speciﬁc choice of uncertainty measure.
+In Table IX, we summarize the estimated coeﬃcients from re-running regression (7) using an
+24
+
+alternative measure of policy uncertainty: Baker et al.’s (2016) economic policy uncertainty index
+(EPU). As the table suggests, similar to our results in Panel B of Table III, the estimated coeﬃcients
+on the interaction term (that is, α3 in equation (7)) are positive and mostly signiﬁcant.
+To test our model’s prediction that excess returns increase with exchange rate volatility, we
+regress portfolio excess returns on the announcement dummy interacted with the realized exchange
+rate volatility sampled from the high-frequency data at 215pm. The estimated coeﬃcients, also
+presented in Table IX, are all positive and highly signiﬁcant, as expected.
+Finally, we regress each portfolio’s excess returns on the announcement dummy interacted
+with the VIX index of implied volatility of S&P500 options, which serves as a proxy for market
+participants’ aversion to risk (Pan and Singleton (2008), Adrian and Shin (2010)). As expected, the
+corresponding coeﬃcients are all positive and signiﬁcant. We also replicate this exercise, replacing
+VIX with the average CDS spreads of the four largest U.S.-based banks active in the FX market.
+The positive and signiﬁcant coeﬃcients on the interaction term documented in Table IX indicate
+that excess returns increase when spreads widen.
+[T able IX
+here]
+E.2. T ransaction Costs
+To account for possible transaction costs, we construct the portfolios’ net returns on announce-
+ment days by adjusting for bid-ask spreads.
+
+hen spreads widen.
+[T able IX
+here]
+E.2. T ransaction Costs
+To account for possible transaction costs, we construct the portfolios’ net returns on announce-
+ment days by adjusting for bid-ask spreads. The net excess return of a currency that enters a
+portfolio at t and exits at t + 1 is computed as rxlong
+t+1 = fw bid
+t −sask
+t+1 for a long position and
+rxshort
+t+1 =−fw ask
+t +sbid
+t+1 for a short position.
+The results are reported in Table X. As the table indicates, even though mean returns are
+lower than those reported in Panel C of Table II, our results remain qualitatively the same: mean
+returns are increasing in interest rate diﬀerentials and are signiﬁcant for all portfolios except for pf1
+(as illustrated by asymptotic t-statistics as well as bootstrap conﬁdence intervals). For instance,
+average announcement day returns for pf2 and pf3 are 9.67bps and 12.24bps, respectively, both of
+which are statistically signiﬁcant at the 5% level. As expected, the average returns of the improved
+trading strategies S1 and S2 are even higher and more statistically signiﬁcant.
+[T able X
+here]
+25
+
+E.3. T runcated Data
+Given that currency returns occasionally experience large crashes and some announcements are
+more anticipated than others, one may suspect that our results are driven by a few outliers. To test
+for the sensitivity of our results to such outliers, we study announcement and non-announcement
+day returns after discarding the top and bottom percentiles of the data. The results are reported
+in Table XI. We ﬁnd virtually no distinction between the means and standard deviations of trun-
+cated and non-truncated samples (reported in Table II) across interest rate-sorted portfolios, thus
+indicating that our results are not driven by a few outliers.
+[T able XI
+here]
+E.4. Bootstrapped Standard Errors and Random Sampling
+Bootstrapped standard errors: A natural concern for the results reported in Table III is
+that, due to the small number of announcement days (160 in our sample), asymptotic theory may
+not provide a good approximation for the distribution of the estimates. We address this concern
+with a bootstrap exercise, in which we compute the small-sample standard errors and conﬁdence
+intervals of the point estimates in our baseline regression. In particular, we draw with replacement
+from the empirical distribution of returns on all days, run regression (6), and store the estimated
+coeﬃcients for each portfolio. The resulting distributions have means that are virtually the same
+
+t
+from the empirical distribution of returns on all days, run regression (6), and store the estimated
+coeﬃcients for each portfolio. The resulting distributions have means that are virtually the same
+as the estimated coeﬃcients for α1 reported in Panel A of Table III, with bootstrapped conﬁdence
+intervals that never encompass zero, except for pf1.
+Random Sampling from non-Announcement Day Distribution: In another bootstrap ex-
+ercise, we assess the likelihood of observing an average return as large as average announcement day
+returns in a sample drawn from the empirical distribution of returns on all other days. More specif-
+ically, we draw with replacement a time-series with length equal to the number of announcement
+days (160) from the empirical distribution of non-announcement day returns. Table XII reports
+the associated likelihoods for the entire day and the pre- and post-announcement windows. It is
+evident that, except for the total and pre-announcement returns of pf1, all values are below 5%,
+indicating that the likelihood of earning equally large returns on non-announcement days as on an-
+nouncement days is small. The table also illustrates that this pattern remains unchanged whether
+26
+
+or not transactions costs are taken into account.
+[T able XII
+here]
+E.5. Other Macroeconomic Announcements
+Are other macroeconomic announcements able to generate equally large returns as those earned
+on FOMC announcement days? To answer this question, we consider three major U.S. macroe-
+conomic news releases: total non-farm payroll employment, the Producer Price Index, and the
+Consumer Price Index, all published by the Bureau of Labor Statistics (BLS). 16 We build the
+corresponding announcement day dummy variables and re-run regression (6) for each of these an-
+nouncements separately.
+[T a-
+ble XIII
+here]
+The results are reported in Table XIII. As the table indicates, the diﬀerence between announce-
+ment and non-announcement day returns is never statistically diﬀerent from zero for any of the
+announcements or interest rate-sorted portfolios. This evidence thus suggests that monetary policy
+announcements by the Federal Reserve have a unique impact on currency returns that is not shared
+by other macroeconomic announcements.
+IV. Conclusions
+In this paper we document that returns to a strategy that is short the U.S. dollar and long other
+currencies are on average an order of magnitude larger on days that the FOMC makes a monetary
+policy announcement compared to non-announcement days. This diﬀerence is increasing in the
+forward discount of the currency and becomes larger when the Fed adopts a policy of monetary
+easing.
+
+monetary
+policy announcement compared to non-announcement days. This diﬀerence is increasing in the
+forward discount of the currency and becomes larger when the Fed adopts a policy of monetary
+easing. Moreover, using diﬀerent proxies of monetary policy uncertainty, we ﬁnd that currency
+returns increase when uncertainty is higher.
+We interpret these observations through the lens of a minimalistic model of exchange rate
+determination in imperfect ﬁnancial markets. Exchange rates in our model are determined by the
+risk-bearing capacity of ﬁnanciers who intermediate global demand for currencies. Within this
+framework, we show that an increase in monetary policy uncertainty due to an impending FOMC
+announcement increases foreign currencies’ excess returns as a compensation to ﬁnanciers who
+bear this extra risk. We also show that, consistent with our empirical results, these risk premia are
+27
+
+increasing in the foreign currency’s interest rate diﬀerential vis-` a-vis the U.S. Finally, our model
+predicts that the actual realization of the monetary policy shock at the announcement impacts
+currency excess returns, with an expansionary (contractionary) policy resulting in higher (lower)
+returns, a prediction that is in line with what we document empirically.
+28
+
+Proofs and Derivations
+Throughout the proofs, we use G to denote the common cumulative distribution function of ft,
+while using F to denote the standardized (i.e., demeaned and normalized) distribution of log( R1).
+For notational simplicity, we useH to denote the distribution of f1 +R−1
+1 G−1(α1). Note that this
+distribution can be explicitly expressed in terms of F and G.
+LEMMA 1: The representative ﬁnancier’s equilibrium positions are given by
+Q0 = R∗2H−1(α0)−R0f0(1 +R∗)
+R0
+(
+1 +R∗ +R∗2) (1)
+Q1 = R∗G−1(α1) +R1(R0Q0−f1)
+R1(R∗ + 1) , (2)
+whereH(x) = P(f1 +R−1
+1 G−1(α1)≤x).
+Proof. Recall from (2) that at periodt∈{ 0, 1}, the representative ﬁnancier maximizes her expected
+proﬁts Et[Vt+1], subject to the value-at-risk constraint Pt(Vt+1 ≤ −ϵ) ≤ αt, while taking the
+exchange rates as given. Suppose that R∗Et[et+1] > Rtet, a statement that we will verify later.
+Under this assumption, the ﬁnancier chooses as large of a Qt as possible. At the same time, it
+is immediate that increasing Qt tightens the ﬁnancier’s value-at-risk constraint, which means that
+the constraint has to bind in equilibrium. Thus, as ϵ→ 0, we have
+Pt (R∗et+1≤Rtet) =αt. (3)
+Setting t = 1 and replacing for the exchange rates in the above equation from the market clearing
+conditions (4) and (5) implies that
+P (f2≤R1Q1 +R1(f1 +Q1−R0Q0)/R∗) =α1.
+Replacing the left-hand side of the above equation with G(R1Q1 +R1(f1 +Q1−R0Q0)/R∗) and
+solving forQ1 leads to (2).
+
+et clearing
+conditions (4) and (5) implies that
+P (f2≤R1Q1 +R1(f1 +Q1−R0Q0)/R∗) =α1.
+Replacing the left-hand side of the above equation with G(R1Q1 +R1(f1 +Q1−R0Q0)/R∗) and
+solving forQ1 leads to (2). To verify thatQ1 is indeed positive, note thatR∗G−1(α1)≥R∗f≥R1f1.
+Thus,Q1 is positive as long as Q0 is positive, which we verify below.
+To obtain the expression forQ0 in equation (1), set t = 0 in (3), replace Q1 from (2) in terms of
+29
+
+Q0, and substitute for e0 and e1 from the market clearing conditions (3) and (4). Following these
+steps implies that
+P
+(
+f1 +R−1
+1 G−1(α1)≤R0Q0 +R0(R∗ + 1)(f0 +Q0)/R∗2
+)
+=α0.
+Replacing the left-hand side of the above equation withH
+(
+R0Q0 +R0(R∗ + 1)(f0 +Q0)/R∗2)
+and
+solving for Q0 thus leads to (1). To verify that Q0≥ 0, note that H−1(0)≥ f(1 + 1/R∗), which
+alongside the assumption that R∗f >R tf guarantees that R∗2H−1(α0)>R 0f0(1 +R∗).
+The proof is complete once we verify that ∆ t =R∗Et[et+1]−Rtet is indeed positive in equilib-
+rium. Replacing for e1, e2, Q0, and Q1 from equations (4), (5), (1), and (2) implies that
+∆1 =R∗E1[e2]−R1e1 =R∗d−1
+(
+E1[f2]−G−1(α1)
+)
+. (4)
+It is immediate that the right-hand side of the above equality is positive for small enough values of
+α1. In fact, it is simply suﬃcient for α1 to be smaller than G(E[f2]) = P(f2≤ E1[f2]). Similarly,
+replacing for e0 and e1, from the market clearing conditions (3) and (4) implies that
+∆0 =R∗E0[e1]−R0e0 = R∗2d−1
+R∗ + 1
+(
+E0[f1] + E0[R−1
+1 ]G−1(α1)−H−1(α0)
+)
+, (5)
+which is positive for small enough values of α0, thus completing the proof.
+LEMMA 2: Q0 and Q1 are decreasing in σR.
+Proof. Recall from equation (2) that Q1 is increasing in Q0, which is itself increasing in H−1(α0),
+as is evident from (1). Therefore, it is suﬃcient to prove that H−1(α0) is decreasing in σR.
+To this end, letF (r) denote the probability that log(R1) isr standard deviations above its mean;
+
+H−1(α0),
+as is evident from (1). Therefore, it is suﬃcient to prove that H−1(α0) is decreasing in σR.
+To this end, letF (r) denote the probability that log(R1) isr standard deviations above its mean;
+that is, F (r) = P(logR1≤ logR0 +rσR), where recall that by assumption, E0[log(R1)] = log(R0).
+Therefore, if ˜F (x) = P(R−1
+1 ≤x) denotes the cumulative distribution function of R−1
+1 , we have
+˜F (x) = P (logR1≥− logx) = 1−F
+(−1
+σR
+log (R0x)
+)
+. (6)
+30
+
+On the other hand, the fact that R1 and f2 are independent implies that
+H(x) = P(f1 +R−1
+1 G−1(α1)≤x) =
+∫ min{f,x}
+f
+˜F
+( x−y
+G−1(α1)
+)
+dG(y).
+Setting x =H−1(α0) and using (6) to replace ˜F in terms of F , we obtain
+∫ min{H −1(α0),f}
+f
+[
+1−F
+( 1
+σR
+log
+( G−1(α1)
+R0(H−1(α0)−y)
+))]
+dG(y) =α0. (7)
+Diﬀerentiating both sides with respect to σR and using the Leibniz integral rule leads to
+∫ min{H −1(α0),f}
+f
+∂
+∂σR
+F
+( 1
+σR
+log
+( G−1(α1)
+R0(H−1(α0)−y)
+))
+dG(y) = 0, (8)
+for all σR, where recall that even though H−1(α0) depends on the extent of monetary policy
+uncertainty,α0 is a ﬁxed parameter of the model that is independent of σR.
+Now, suppose that H−1(α0) is increasing in σR for some constellation of parameters. Under
+such an assumption, the integrand in (8) would be negative, as a higher σR would only decrease
+1
+σR
+log
+(
+G−1(α1)
+R0(H −1(α0)−y)
+)
+. But this violates equation (8), which requires the integral to be equal to
+zero. Therefore, H−1(α0) is decreasing in σR for all σR.
+Proof of Proposition 1 Recall that the foreign currency’s total expected excess return is given
+by
+E0[φ] = 2 log(R∗)− E0[log(R1)]− log(R0) + E0[log(e2)]− log(e0)
+= 2 log(R∗)− 2 log(R0) + E0[log(f2−R1Q1)]− log(f0 +Q0)
+where we are replacing for e0 and e2 from the market clearing conditions (3) and (5) and using
+the fact that E0[log(R1)] = log(R0). On the other hand, recall from Lemma 2 that Q0 and Q1 are
+decreasing in σR, thus implying that the right-hand side of the above expression is increasing in
+σR.
+31
+
+Proof of Proposition 2 Market clearing conditions (3) and (5) imply that the foreign currency’s
+total excess returns are given by
+φ = log
+(R∗2(f2−R1Q1)
+R1R0(f0 +Q0)
+)
+.
+Replacing for Q0 and Q1 from (1) and (2) leads to
+φ = log
+(
+1 + R∗2 +R∗ + 1
+R0f0 +H−1(α0)
+(f2−G−1(α1)
+R1
++ f1 +R−1
+1 G−1(α1)−H−1(α0)
+R∗ + 1
+))
+,
+thus implying that
+E0[φ] = R∗2 +R∗ + 1
+R0f0 +H−1(α0)
+(
+E0[R−1
+1 ]
+(
+E0[f2]−G−1(α1)
+)
++ E0[f1] + E0[R−1
+1 ]G−1(α1)−H−1(α0)
+R∗ + 1
+)
+up to a ﬁrst-order approximation. Now the fact that ∆ 0 = E0[f1] + E0[R−1
+1 ]G−1(α1)−H−1(α0)
+and ∆1 = E0[f2]−G−1(α1) given in (5) and (4) are positive guarantees that E0[φ] is increasing in
+R∗. In particular,
+∂E0[φ]
+∂R∗ = ∆1(2R∗ + 1)E0[R−1
+1 ]
+R0f0 +H−1(α0) + ∆0R∗2(R∗ + 2)
+(R∗ + 1)2(R0f0 +H−1(α0)), (9)
+which is always positive.
+To prove the second statement, note that the ﬁrst term on the right-hand side of (9) is decreasing
+in H−1(α0), which is itself decreasing in σR (as proved in Lemma 2). Consequently, the ﬁrst-term
+on the right-hand side of (9) is increasing in σR. As for the second term, note that its denominator
+is increasing in H−1(α0), whereas ∆ 0 deﬁned in (5) is decreasing in H−1(α0). As a result, the
+second term on the right-hand side of (9) is also decreasing in H−1(α0) and hence increasing in
+σR. Taken together, these observations imply that ∂2E0[φ]/∂R∗∂σR is positive.
+Proof of Proposition 3 Recall that, by deﬁnition, φ2 = log(R∗e2)− log(R1e1). Replacing for
+
+−1(α0) and hence increasing in
+σR. Taken together, these observations imply that ∂2E0[φ]/∂R∗∂σR is positive.
+Proof of Proposition 3 Recall that, by deﬁnition, φ2 = log(R∗e2)− log(R1e1). Replacing for
+e1 and e2 from the market clearing conditions (4) and (5) implies that
+φ2 = log
+(
+1 + (R∗ + 1)(f2−G−1(α1))
+G−1(α1) +R1(f1−R0Q0)
+)
+,
+32
+
+where we are also using (2) to replace Q1 in terms of Q0. Therefore,
+E1[φ2] = (R∗ + 1)(E1[f2]−G−1(α1))
+G−1(α1) +R1(f1−R0Q0) (10)
+up to a ﬁrst-order approximation. Recall from the proof of Lemma 1 that ∆ 1 = E1[f2]−G−1(α1)
+is positive. Therefore, E1[φ2] is decreasing in R1 as long as f1 > R0Q0. To verify this inequality,
+note that
+f1−R0Q0 = 1
+R∗2 +R∗ + 1
+(
+f1(R∗2 +R∗ + 1) +R0f0(1 +R∗)−R∗2H−1(α0)
+)
+,
+where we are using equation (1). It is now immediate that the right-hand side of the above equation
+is positive for small enough values of α0, thus establishing E1[φ2] is decreasing in R1.
+To prove the second statement, note that (10) implies
+∂E1[φ2]
+∂R1
+= (R∗ + 1)(E1[f2]−G−1(α1))(R0Q0−f1)
+(G−1(α1) +R1f1−R1R0Q0)2 .
+Furthermore, recall from Lemma 2 that Q0 is decreasing in σR. Therefore, it is immediate that
+increasing σR reduces the numerator while increasing the denominator, thus implying that the
+right-hand side of the above equality is decreasing in σR.
+33
+
+REFERENCES
+Adrian, Tobias, and Hyun Song Shin, 2010, Liquidity and Leverage, Journal of Financial Interme-
+diation 19, 418–437.
+Adrian, Tobias, and Hyun Song Shin, 2014, Procyclical Leverage and Value-at-Risk, Review of
+Financial Studies 27, 373–403.
+Andersen, Torben G., Tim Bollerslev, Francis X. Diebold, and Clara Vega, 2003, Micro Eﬀects of
+Macro Announcements: Real Time Price Discovery in Foreign Exchange, American Economic
+Review 93, 38–62.
+Baker, Scott R., Nicholas Bloom, and Steven J. Davis, 2016, Measuring Economic Policy Uncer-
+tainty, Quarterly Journal of Economics (forthcoming).
+Bank for International Settlements, 2015, Triennial Central Bank Survey of Foreign Exchange and
+Derivatives Market Activity in 2013, http://www.bis.org/publ/rpfx13.htm.
+Beber, Alessandro, and Michael W. Brandt, 2006, The Eﬀect of Macroeconomic News on Beliefs and
+Preferences: Evidence from the Options Market, Journal of Monetary Economics 53, 1997–2039.
+Brunnermeier, Markus, Stefan Nagel, and Lasse H. Pedersen, 2008, Carry Trades and Currency
+Crashes, in Daron Acemoglu, Kenneth Rogoﬀ, and Michael Woodford, eds., NBER Macroeco-
+nomics Annual , volume 23, 313–348 (University of Chicago Press).
+Bruno, Valentina, and Hyun Song Shin, 2015, Cross-Border Banking and Global Liquidity, Review
+of Economic Studies 82, 535–564.
+Brusa, Francesca, Pavel Savor, and Mungo Wilson, 2016, One Central Bank to Rule Them All,
+Working Paper, Oxford University.
+
+order Banking and Global Liquidity, Review
+of Economic Studies 82, 535–564.
+Brusa, Francesca, Pavel Savor, and Mungo Wilson, 2016, One Central Bank to Rule Them All,
+Working Paper, Oxford University.
+Choi, Hoyong, Philippe Mueller, and Andrea Vedolin, 2016, Bond Variance Risk Premiums, forth-
+coming, Review of Finance .
+Daniel, Kent, Robert J. Hodrick, and Zhongjin Lu, 2016, The Carry Trade: Risks and Drawdowns,
+Columbia Business School Research Paper No. 14-35.
+34
+
+Eichenbaum, Martin, and Charles L. Evans, 1995, Some Empirical Evidence on the Eﬀects of
+Shocks to Monetary Policy on Exchange Rates, Quarterly Journal of Economics 110, 975–1009.
+Faust, Jon, and John H. Rogers, 2003, Monetary Policy’s Role in Exchange Rate Behavior, Journal
+of Monetary Economics 50, 1403–1424.
+Fleming, Michael J., and Monika Piazzesi, 2005, Monetary Policy Tick-by-Tick, Working Paper,
+Federal Reserve Bank of New York.
+Fleming, Michael J., and Eli M. Remolona, 1999, Price Formation and Liquidity in the U.S.
+Treasury Market: The Response to Public Information, Journal of Finance 54, 1901–1915.
+Gabaix, Xavier, and Matteo Maggiori, 2015, International Liquidity and Exchange Rate Dynamics,
+Quarterly Journal of Economics 130, 1369–1420.
+G¨ urkaynak, Refet S., Brian Sack, and Eric Swanson, 2005, Do Actions Speak Louder than Words?
+The Response of Asset Prices to Monetary Policy Actions and Statements, International Journal
+of Central Banking 1, 55–93.
+H¨ ordahl, Peter, Eli M. Remolona, and Giorgio Valente, 2015, Expectations and Risk Premia at
+8:30AM: Macroeconomic Announcements and the Yield Curve, Bank of International Settlements
+Working Paper No. 527.
+Jones, Charles M., Owen Lamont, and Robin L. Lumsdaine, 1998, Macroeconomic News and Bond
+Market Volatility, Journal of Financial Economics 47, 315–337.
+Jurek, Jakub W., 2014, Crash-Neutral Currency Carry Trades , Journal of Financial Economics
+113, 325–347.
+
+8, Macroeconomic News and Bond
+Market Volatility, Journal of Financial Economics 47, 315–337.
+Jurek, Jakub W., 2014, Crash-Neutral Currency Carry Trades , Journal of Financial Economics
+113, 325–347.
+Kuttner, Kenneth N., 2014, Monetary Policy during Japan’s Great Recession: From Self-Induced
+Paralysis to Rooseveltian Resolve, PIIE Brieﬁngs 14-4, Peterson Institute for International Eco-
+nomics.
+Lucca, David O., and Emanuel Moench, 2015, The Pre-FOMC Announcement Drift, Journal of
+Finance 70, 329–371.
+35
+
+Lustig, Hanno, Nick Roussanov, and Adrien Verdelhan, 2011, Common Risk Factors in Currency
+Markets, Review of Financial Studies 24, 3731–3777.
+Lustig, Hanno, Nick Roussanov, and Adrien Verdelhan, 2014, Countercyclical Currency Risk Pre-
+mia, Journal of Financial Economics 111, 527–553.
+Lustig, Hanno, and Adrien Verdelhan, 2007, The Cross Section of Foreign Currency Risk Premia
+and Consumption Growth Risk, American Economic Review 97, 89–117.
+Miranda-Agrippino, Silvia, and H´ el` ene Rey, 2015, World Asset Markets and the Global Financial
+Cycle, NBER Working Paper No. 21722.
+Nakamura, Emi, and J´ on Steinsson, 2015, High Frequency Identiﬁcation of Monetary Non-
+Neutrality, NBER Working Paper No. 19260.
+Neely, Christopher J., 2011, A Survey of Announcement Eﬀects on Foreign Exchange Volatility and
+Jumps, Federal Reserve Bank of St. Louis Review 93, 361–407.
+Newey, Whitney K., and Kenneth D. West, 1987, A Simple, Positive Semi-deﬁnite, Heteroskedas-
+ticity and Autocorrelation Consistent Covariance Matrix, Econometrica 55, 703 – 708.
+Pan, Jun, and Kenneth J. Singleton, 2008, Default and Recovery Implicit in the Term Structure of
+Sovereign CDS Spreads, Journal of Finance 63, 2345–2384.
+Pedersen, Lasse Heje, 2015, Eﬀeciently Ineﬃcient, Princeton University Press.
+Ramage, James, and Chiara Albanese, 2015, Currency-Trading Volumes Jump; Global Monetary-
+Policy Shifts Seen Creating Opportunities for Traders, Wall Street Journal, January 27.
+
+ton University Press.
+Ramage, James, and Chiara Albanese, 2015, Currency-Trading Volumes Jump; Global Monetary-
+Policy Shifts Seen Creating Opportunities for Traders, Wall Street Journal, January 27.
+Rogers, John H., Chiara Scotti, and Jonathan H. Wright, 2016, Unconventional Monetary Policy
+and International Risk Premia, Board of Governors of the Federal Reserve System International
+Finance Discussion Paper No. 1172.
+Savor, Pavel, and Mungo Wilson, 2013, How Much Do Investors Care About Macroeconomic Risk?
+Evidence From Scheduled Economic Announcements, Journal of Financial and Quantitative
+Analysis 48, 343–375.
+36
+
+Savor, Pavel, and Mungo Wilson, 2014, Asset Pricing: A Tale of Two Days, Journal of Financial
+Economics 113, 171–201.
+Scholl, Almuth, and Harald Uhlig, 2008, New Evidence on the Puzzles: Results from Agnostic
+Identiﬁcation on Monetary Policy and Exchange Rates, Journal of International Economics 76,
+1–13.
+Stavrakeva, Vania, and Jenny Tang, 2015, Exchange Rates and Monetary Policy, FRB of Boston
+Working Paper No. 15-16.
+37
+
+Notes
+1In parallel, a large empirical literature, going back to Fleming and Remolona (1999), studies
+the impact of monetary policy announcements on second moments in foreign exchange markets.
+The main ﬁnding of this literature is that policy surprises increase realized exchange rate volatility.
+See Neely (2011) for a survey of this literature.
+2The assumption that R1 andft are drawn independently is made in the interest of tractability.
+Assessing the actual extent of comovements between these variables requires additional empirical
+work that is beyond the scope of this paper.
+3Formally, in proving our main results, we consider the case in which αt→ 0.
+4Adrian and Shin (2014) show that value-at-risk constraints similar to the one in our model can
+emerge as a result of a standard contracting framework with risk-shifting moral hazard.
+5The assumption that ϵ is arbitrarily close (but not exactly equal) to zero is made for technical
+reasons and has no bearing on our results. In fact, we present our main results assuming that
+ϵ→ 0.
+6Gabaix and Maggiori (2015) consider an alternative speciﬁcation of the model with a diﬀerent
+constraint, whereby the ﬁnanciers are subject to a limited commitment friction that intensiﬁes
+with the complexity of their balance sheets. Since both our value-at-risk constraint and the limited
+commitment constraint of Gabaix and Maggiori induce downward-sloping demand for risk-taking
+
+nsiﬁes
+with the complexity of their balance sheets. Since both our value-at-risk constraint and the limited
+commitment constraint of Gabaix and Maggiori induce downward-sloping demand for risk-taking
+by the ﬁnanciers, they have similar implications for exchange rates and currency excess returns.
+7We use the Deutsche mark instead of the euro prior to the latter’s introduction in January
+1999.
+8We follow the literature and take ﬁve-minute intervals as opposed to higher frequencies, in
+order to mitigate the eﬀect of spurious serial correlation stemming from microstructure noise.
+9Benchmark exchange rates available through Datastream are sampled at 4pm London time. In
+order to cover the most active trading period prior to the announcement, we instead focus on 4pm
+ET, which is when the market closes in New York. We verify that the Datastream data and our
+high-frequency data when sampled at 4pm London time are virtually identical.
+10Recall that since covered interest rate parity holds at daily and lower frequencies, the forward
+discount is equal to the interest rate diﬀerential.
+38
+
+11Annualized Sharpe ratios are obtained by adjusting daily values for the yearly frequency of
+FOMC announcements (eight out of 252 trading days). Thus, the adjustment factors for an-
+nouncement and non-announcement day Sharpe ratios are
+√
+8 and
+√
+244, respectively.
+12We perform the same set of exercises for individual currencies, ﬁnding a similar pattern. The
+details are provided in the online appendix.
+13The remaining countries have either a very short history or a small number of scheduled an-
+nouncements, making any meaningful statistical analysis impossible. For example, Bank of Canada
+only started a ﬁxed announcement schedule from 2001 onwards and Norges Bank only met once
+per year until 2007.
+14In contrast, Brusa, Savor, and Wilson (2016) document that there are no eﬀects on global
+stock market indices from announcements by central banks other than the Fed, arguing that the
+Fed exerts a unique impact on global equity prices.
+15See Kuttner (2014) for an excellent overview of Japan’s monetary policy.
+16We choose these macroeconomic variables as they are more likely to be linked to monetary
+policy. In unreported results, we also check for other important macroeconomic news announce-
+ments such as initial claims for unemployment insurance, the Institute for Supply Management’s
+manufacturing index, and housing starts. We do not ﬁnd any signiﬁcant results.
+39
+
+AUD CAD CHF EUR GBP JPY NOK NZD SEK
+daily bps
+-5
+0
+5
+10
+15
+20
+ann
+non ann
+(2.94)(1.69)(2.51)
+(-0.59)
+(1.11) (1.64)(1.96)(3.96) (2.19)
+Figure 1. Currency Returns on Announcement and non-Announcement Days. The
+ﬁgure plots average announcement and non-announcement day returns for the currencies in our
+sample vis-` a-vis the U.S. dollar. The numbers in parentheses report the t-statistics for the tests
+of diﬀerence in mean returns between announcement and non-announcement days. The data runs
+from January 1, 1994 to December 31, 2013.
+40
+
+0800 0930 1100 1415 1600
+0.1
+0.15
+0.2
+0.25
+AUD
+ann
+non-ann
+0800 0930 1100 1415 1600
+0.05
+0.1
+0.15
+CAD
+0800 0930 1100 1415 1600
+0.05
+0.1
+0.15
+0.2
+0.25
+CHF
+0800 0930 1100 1415 1600
+0.05
+0.1
+0.15
+0.2
+0.25
+EUR
+0800 0930 1100 1415 1600
+0.05
+0.1
+0.15
+0.2
+GBP
+0800 0930 1100 1415 1600
+0.05
+0.1
+0.15
+0.2
+0.25
+JPY
+0800 0930 1100 1415 1600
+0.1
+0.15
+0.2
+0.25
+NOK
+0800 0930 1100 1415 1600
+0.1
+0.15
+0.2
+0.25
+NZD
+0800 0930 1100 1415 1600
+0.1
+0.15
+0.2
+0.25
+SEK
+Figure 2. F oreign Exchange Realized V olatility . This ﬁgure plots average realized exchange
+rate volatility on FOMC announcement days (solid curve) and all other days (dashed curve). Real-
+ized volatilities are calculated from data sampled at ﬁve-minute frequency over a one-hour window
+and are annualized. The data runs from January 1, 1994 to December 31, 2013.
+41
+
+pf1 pf2 pf3 dol
+daily bps
+-2
+0
+2
+4
+6
+8
+10
+12
+14
+ann
+non ann
+(2.90)
+(2.45) (2.55)
+(1.31)
+Figure 3. Currency Portfolio Returns on Announcement and non-Announcement
+Days. The ﬁgure plots average announcement and non-announcement day returns for portfo-
+lios sorted according to interest rate diﬀerentials vis-` a-vis the U.S., with pf1 (pf3) denoting the
+portfolio with the lowest (highest) interest rate diﬀerential. dol denotes the portfolio that is short
+the U.S. dollar and long all other currencies. The numbers in parentheses report the t-statistics for
+the tests of diﬀerence in mean returns between announcement and non-announcement days. The
+data runs from January 1, 1994 to December 31, 2013.
+pf1 pf2 pf3 dol
+daily bps
+-10
+-5
+0
+5
+10
+15
+20
+25
+easing
+tightening
+(-2.32)
+(3.90)
+(4.37)
+(4.30)
+(4.48)
+(-2.56)
+(-2.22)
+(-2.77)
+Figure 4. Post-Announcement Returns F ollowing Monetary Easing and Tightening.
+This ﬁgure plots average announcement day returns over the post-announcement window (215pm–
+4pm) conditional on the sign of the realized monetary policy shock at the announcement. Monetary
+easing and tightening are deﬁned using Nakamura and Steinsson’s (2015) indicator of monetary
+policy shock. The numbers in parentheses report the t-statistics for the test of zero mean. The
+data runs from January 1, 1994 to December 31, 2013.
+42
+
+T able I. Summary Statistics of Individual Currency Returns
+This table reports summary statistics for individual currency returns for the entire sample (Panel A), non-
+announcement days (Panel B), and FOMC announcement days (Panel C). “∆ s” represents the return earned from
+the change in the foreign exchange and “SR” is the Sharpe ratio. All numbers are expressed in daily bps except for
+Sharpe ratios, which are annualized, taking into account the annual frequency of FOMC announcements (8/252).
+“diﬀ” indicates the diﬀerence between announcement and non-announcement day returns in basis points (bps), with
+the corresponding t-statistic for a test of diﬀerence in means between announcement and non-announcement days re-
+ported in parentheses. Returns are sampled from 4pm to 4pm ET and cover the period January 1, 1994 to December
+31, 2013.
+AUD CAD CHF EUR GBP JPY NOK NZD SEK
+Panel A: Entire Sample ( n = 4,672)
+mean 1.715 0.978 0.221 0.299 0.610 -1.088 0.935 2.222 0.977
+t-stat (1.47) (1.31) (0.21) (0.32) (0.74) (-1.05) (0.86) (1.92) (0.87)
+∆s 0.897 0.959 0.991 0.516 0.249 0.104 0.529 1.155 0.886
+skewness -0.354 -0.054 -0.291 0.015 -0.524 0.528 -0.140 -0.354 -0.076
+kurtosis 12.311 8.164 9.934 4.706 8.265 9.097 6.137 6.720 5.790
+SR 0.341 0.304 0.049 0.073 0.173 -0.243 0.199 0.445 0.203
+Panel B: Non-Announcement Days ( n = 4,512)
+mean 1.163 0.421 -0.108 -0.050 0.155 -0.973 0.706 1.745 0.641
+t-stat (0.98) (0.56) (-0.10) (-0.05) (0.19) (-0.92) (0.64) (1.49) (0.56)
+
+43 0.199 0.445 0.203
+Panel B: Non-Announcement Days ( n = 4,512)
+mean 1.163 0.421 -0.108 -0.050 0.155 -0.973 0.706 1.745 0.641
+t-stat (0.98) (0.56) (-0.10) (-0.05) (0.19) (-0.92) (0.64) (1.49) (0.56)
+∆s 0.345 0.402 0.661 0.167 -0.206 0.217 0.299 0.679 0.551
+skewness -0.439 -0.250 -0.422 -0.049 -0.595 0.524 -0.162 -0.435 -0.133
+kurtosis 12.479 6.977 9.821 4.507 8.324 9.234 6.169 6.597 5.578
+SR 0.229 0.130 -0.024 -0.012 0.043 -0.214 0.148 0.346 0.131
+Panel C: Announcement Days (n = 160)
+mean 17.283 16.692 9.507 10.136 13.452 -4.325 7.365 15.666 10.431
+t-stat (2.43) (3.31) (1.38) (1.86) (2.79) (-0.77) (1.20) (2.22) (1.77)
+∆s 16.451 16.672 10.309 10.376 13.082 -3.074 7.011 14.581 10.328
+skewness 1.183 2.435 1.537 1.451 0.898 0.660 0.408 1.139 1.671
+kurtosis 8.218 18.220 9.441 8.164 6.106 5.188 5.183 7.808 11.615
+SR 0.544 0.740 0.307 0.416 0.623 -0.173 0.269 0.497 0.396
+diﬀ 16.120 16.271 9.615 10.186 13.297 -3.351 6.659 13.920 9.789
+(2.51) (3.96) (1.69) (1.96) (2.94) (-0.59) (1.11) (2.19) (1.64)
+43
+
+T able II. Summary Statistics of Currency Portfolio Returns
+This table reports summary statistics of currency portfolios for the entire sample (Panel A), non-announcement
+days (Panel B), and FOMC announcement days (Panel C). Portfolios are sorted according to their interest rate
+diﬀerentials, with pf1 (pf3) denoting the portfolio with the lowest (highest) interest rate diﬀerential vis-` a-vis the
+U.S. “dol” denotes the portfolio that is short the U.S. dollar and long all other currencies. “∆s” represents the
+return earned from the change in the foreign exchange and “SR” is the Sharpe ratio. All numbers are expressed
+in daily bps except for Sharpe ratios, which are annualized, taking into account the annual frequency of FOMC
+announcements (8/252). “diﬀ” indicates the diﬀerence between announcement and non-announcement day returns
+in basis points (bps), with the corresponding t-statistic for a test of diﬀerence in means between announcement and
+non-announcement days reported in parentheses. Returns are sampled from 4pm to 4pm ET and cover the period
+January 1, 1994 to December 31, 2013.
+pf1 pf2 pf3 dol
+Panel A: Entire Sample ( n = 4,672)
+mean -0.307 0.638 2.183 0.838
+t-stat (-0.39) (0.82) (2.31) (1.14)
+skewness 0.226 -0.028 -0.366 0.017
+kurtosis 6.059 6.980 8.695 5.874
+SR -0.090 0.189 0.537 0.265
+Panel B: Non-Announcement Days ( n = 4,512)
+mean -0.509 0.194 1.730 0.472
+t-stat (-0.64) (0.24) (1.81) (0.64)
+skewness 0.156 -0.115 -0.461 -0.100
+kurtosis 5.941 6.711 8.629 5.471
+
+90 0.189 0.537 0.265
+Panel B: Non-Announcement Days ( n = 4,512)
+mean -0.509 0.194 1.730 0.472
+t-stat (-0.64) (0.24) (1.81) (0.64)
+skewness 0.156 -0.115 -0.461 -0.100
+kurtosis 5.941 6.711 8.629 5.471
+SR -0.148 0.057 0.421 0.148
+Panel C: Announcement Days (n = 160)
+mean 5.187 12.656 14.465 10.769
+t-stat (1.06) (2.65) (2.49) (2.27)
+skewness 1.489 1.545 1.305 1.756
+kurtosis 7.235 10.174 8.384 9.621
+SR 0.238 0.593 0.556 0.508
+diﬀ 5.696 12.462 12.735 10.298
+(1.31) (2.90) (2.45) (2.55)
+44
+
+T able III. Currency Portfolio Returns Time-Series Regressions
+This table reports the results of time-series regressions of interest rate-sorted currency portfolios. The dependent
+variable is the portfolios’ excess returns from 4pm to 4pm ET. The announcement dummy takes the value of one on
+days when the FOMC makes an announcement and zero otherwise. “TIV” is the standardized (that is, demeaned and
+scaled by the corresponding sample standard deviation) Treasury Implied Volatility index extracted from one-month
+options on 30-year Treasury futures. “MPI” is Nakamura and Steinsson’s (2015) indicator of monetary policy shock.
+Data runs from January 1, 1994 to December 31, 2013. Numbers in parentheses denote Newey and West (1987)
+t-statistics.
+pf1 pf2 pf3 dol
+Panel A: Baseline Regression
+constant -0.502 0.212 1.747 0.486
+(-0.62) (0.27) (1.82) (0.65)
+announcement dummy 5.689 12.444 12.718 10.283
+(1.31) (2.89) (2.45) (2.55)
+Adj. R2 0.02% 0.16% 0.11% 0.12%
+Panel B: Monetary Policy Uncertainty
+constant -0.504 0.215 1.750 0.487
+(-0.63) (0.27) (1.83) (0.65)
+announcement dummy 6.818 13.669 14.662 11.716
+(1.56) (3.16) (2.82) (2.90)
+TIV 0.436 -0.718 -0.814 -0.365
+(0.54) (-0.90) (-0.85) (-0.49)
+TIV × announcement dummy 10.896 13.054 20.384 14.778
+(2.47) (3.00) (3.88) (3.62)
+Adj. R2 0.12% 0.31% 0.39% 0.36%
+Panel C: Monetary Policy Shock
+constant -0.502 0.212 1.747 0.486
+(-0.62) (0.27) (1.82) (0.65)
+announcement dummy 7.059 13.736 14.369 11.721
+(1.62) (3.19) (2.77) (2.91)
+
+Adj. R2 0.12% 0.31% 0.39% 0.36%
+Panel C: Monetary Policy Shock
+constant -0.502 0.212 1.747 0.486
+(-0.62) (0.27) (1.82) (0.65)
+announcement dummy 7.059 13.736 14.369 11.721
+(1.62) (3.19) (2.77) (2.91)
+MPI × announcement dummy 3.888 3.667 4.688 4.081
+(4.66) (4.45) (4.72) (5.29)
+Adj. R2 0.46% 0.56% 0.56% 0.69%
+45
+
+T able IV. Pre- and Post-Announcement Returns
+This table reports the results of time-series regressions of interest rate-sorted currency portfolios for diﬀerent time
+windows. The dependent variable is the portfolios’ excess returns from 4pm to 4pm (Panel A), from 4pm to 215pm
+(Panel B), and from 215pm to 4pm (Panel C). The announcement dummy takes the value of one on days when the
+FOMC makes an announcement and zero otherwise. Data runs from January 1, 1994 to December 31, 2013. Numbers
+in parentheses denote Newey and West (1987) t-statistics.
+pf1 pf2 pf3 dol
+Panel A: Entire Day (4pm–4pm)
+constant -0.502 0.212 1.747 0.486
+(-0.62) (0.27) (1.82) (0.65)
+announcement dummy 5.689 12.444 12.718 10.283
+(1.31) (2.89) (2.45) (2.55)
+Adj. R2 0.02% 0.16% 0.11% 0.12%
+Panel B: Pre-Announcement Window (4pm–215pm)
+constant -0.613 -0.457 1.360 0.135
+(-0.77) (-0.59) (1.48) (0.19)
+announcement dummy 3.806 10.415 9.484 7.894
+(0.89) (2.49) (1.91) (2.02)
+Adj. R2 0.00% 0.11% 0.06% 0.07%
+Panel C: Post-Announcement Window (215pm–4pm)
+constant 0.111 0.673 0.391 0.394
+(0.61) (3.43) (1.40) (2.07)
+announcement dummy 1.881 2.028 3.237 2.387
+(1.90) (1.92) (2.15) (2.32)
+Adj. R2 0.06% 0.06% 0.08% 0.09%
+46
+
+T able V. Monetary Policy Uncertainty and Pre-Announcement Returns
+This table reports the results of time-series regressions of interest rate-sorted currency portfolios for the pre-
+announcement window. The dependent variable is the portfolios’ excess returns from 4pm to 215pm. The an-
+nouncement dummy takes the value of one on days when the FOMC makes an announcement and zero otherwise.
+“TIV” is the standardized Treasury Implied Volatility index extracted from one-month options on 30-year Treasury
+futures. Data runs from January 1, 1994 to December 31, 2013. Numbers in parentheses denote Newey and West
+(1987) t-statistics.
+pf1 pf2 pf3 dol
+constant -0.614 -0.453 1.363 0.136
+(-0.77) (-0.59) (1.49) (0.19)
+announcement dummy 4.822 11.397 11.114 9.106
+(1.12) (2.71) (2.23) (2.32)
+TIV 0.473 -1.133 -0.914 -0.503
+(0.60) (-1.46) (-1.00) (-0.70)
+TIV × announcement dummy 9.723 11.048 17.337 12.698
+(2.24) (2.60) (3.45) (3.21)
+Adj. R2 0.08% 0.23% 0.27% 0.24%
+47
+
+T able VI. Monetary Policy Shock and Post-Announcement Returns
+This table reports the results of time-series regressions of interest rate-sorted currency portfolios for the post-
+announcement window. The dependent variable is the portfolios’ excess returns from 215pm to 4pm. The an-
+nouncement dummy takes the value of one on days when the FOMC makes an announcement and zero otherwise.
+“MPI” is Nakamura and Steinsson’s (2015) indicator of monetary policy shock. Data runs from January 1, 1994 to
+December 31, 2013. Numbers in parentheses denote Newey and West (1987) t-statistics.
+pf1 pf2 pf3 dol
+constant 0.111 0.673 0.391 0.394
+(0.62) (3.48) (1.42) (2.11)
+announcement dummy 2.792 2.848 4.186 3.280
+(2.87) (2.72) (2.80) (3.24)
+MPI × announcement dummy 2.586 2.327 2.695 2.536
+(13.88) (11.61) (9.42) (13.07)
+Adj. R2 4.00% 2.84% 1.92% 3.60%
+T able VII. Summary Statistics for Currency Strategies
+This table reports summary statistics of currency returns on announcement days for two currency strategies. Strategy
+“S1” shorts the U.S. dollar and goes long the other currencies at 4pm the day before the announcement. It then
+continues the trading strategy post-announcement in case of monetary easing, whereas it goes long in the U.S. dollar
+and short in the other currencies after the announcement in case of monetary tightening. “S2” is the same strategy
+but only using currencies that exhibit a positive interest rate diﬀerential vis-` a-vis the United States. The sample
+
+after the announcement in case of monetary tightening. “S2” is the same strategy
+but only using currencies that exhibit a positive interest rate diﬀerential vis-` a-vis the United States. The sample
+covers January 1, 1994 to December 31, 2013. All numbers are expressed in daily returns (in bps) except for Sharpe
+ratios, which are annualized.
+S1 S2
+mean 19.485 22.538
+t-stat (4.11) (4.17)
+skewness 1.759 1.612
+kurtosis 8.762 8.293
+SR 0.920 0.933
+48
+
+T able VIII. Announcements by the Bank of Japan
+This table reports summary statistics of currency portfolios for the entire sample (Panel A), days without an an-
+nouncement by the BoJ (Panel B), and BoJ announcement days (Panel C). Announcement days are when the BoJ
+releases its interest rate decisions. Portfolios are sorted according to their interest rate diﬀerentials, with pf1 (pf3)
+denoting the portfolio with the lowest (highest) interest rate diﬀerential vis-` a-vis Japan. “jpy” denotes the portfolio
+that is short the Japanese yen and long all other currencies. “SR” is the Sharpe ratio. All numbers are expressed
+in daily bps except for Sharpe ratios, which are annualized, taking into account the annual frequency of BoJ an-
+nouncements (15/252). “diﬀ” indicates the diﬀerence between announcement and non-announcement day returns in
+basis points (bps), with the corresponding t-statistic for a test of diﬀerence in means between announcement and
+non-announcement days reported in parentheses.
+pf1 pf2 pf3 jpy
+Panel A: Entire Sample ( n = 3,997)
+mean 0.410 1.657 3.340 1.802
+t-stat (0.39) (1.47) (2.58) (1.64)
+skewness -0.498 -0.663 -0.593 -0.641
+kurtosis 8.246 10.138 11.572 10.438
+SR 0.088 0.330 0.579 0.369
+Panel B: Non-Announcement Days ( n = 3,765)
+mean -0.039 1.191 2.823 1.325
+t-stat (-0.05) (1.32) (2.71) (1.50)
+skewness -0.512 -0.684 -0.619 -0.663
+kurtosis 8.427 10.361 11.737 10.641
+SR -0.008 0.230 0.474 0.263
+Panel C: Announcement Days (n = 232)
+
+-0.039 1.191 2.823 1.325
+t-stat (-0.05) (1.32) (2.71) (1.50)
+skewness -0.512 -0.684 -0.619 -0.663
+kurtosis 8.427 10.361 11.737 10.641
+SR -0.008 0.230 0.474 0.263
+Panel C: Announcement Days (n = 232)
+mean 12.467 14.040 17.592 14.699
+t-stat (2.23) (2.37) (2.76) (2.60)
+skewness -0.159 -0.157 0.265 -0.062
+kurtosis 3.849 4.508 5.860 4.895
+SR 1.067 1.133 1.320 1.242
+diﬀ 12.506 12.849 14.769 13.375
+(2.20) (2.13) (2.27) (2.32)
+49
+
+T able IX. Alternative Measures of Uncertainty
+This table reports the results of time-series regressions of interest rate-sorted currency portfolios on various explana-
+tory variables akin to equation (7). “pf1” and “pf3” denote the portfolios with the lowest and highest interest rate
+diﬀerential vis-` a-vis the U.S., respectively. “dol” denotes the portfolio that is short the U.S. dollar and long all other
+currencies. The dependent variable is the portfolios’ excess returns from 4pm to 4pm ET. The announcement dummy
+takes the value of one on days when the FOMC makes an announcement and zero otherwise. “EPU” is the economic
+policy uncertainty index of Baker et al. (2016); “RV” is realized exchange rate volatility measured over a two-hour
+window around the time of an FOMC announcement; “VIX” is S&P500 implied volatility; and “CDS” is the average
+ﬁve-year CDS spread of Citibank, JPMorgan, Bank of America, and Goldman Sachs. “EPU”, “RV”, “VIX”, and
+“CDS” are demeaned and scaled by their respective sample standard deviations. Data runs from January 1, 1994 to
+December 31, 2013 for all regressions except for the CDS regressions which run from April 1, 2001 to December 31,
+2010. Newey and West (1987) t-statistics are in parentheses.
+RV CDS
+pf1 pf2 pf3 dol pf1 pf2 pf3 dol
+constant -0.712 -0.047 1.405 0.215 0.579 0.936 2.870 1.462
+(-0.86) (-0.06) (1.34) (0.27) (0.60) (0.86) (2.08) (1.43)
+announcement dummy 6.849 13.614 14.330 11.598 10.075 18.339 19.059 15.824
+
+pf3 dol
+constant -0.712 -0.047 1.405 0.215 0.579 0.936 2.870 1.462
+(-0.86) (-0.06) (1.34) (0.27) (0.60) (0.86) (2.08) (1.43)
+announcement dummy 6.849 13.614 14.330 11.598 10.075 18.339 19.059 15.824
+(1.54) (2.95) (2.53) (2.69) (1.93) (3.12) (2.56) (2.87)
+uncertainty index -0.311 -3.306 -3.999 -2.538 -1.578 -2.096 -1.905 -1.860
+(-0.38) (-3.86) (-3.81) (-3.18) (-1.63) (-1.92) (-1.38) (-1.82)
+uncertainty index × 18.161 23.713 32.490 24.788 8.206 11.943 17.680 12.610
+announcement dummy (4.17) (5.25) (5.87) (5.88) (1.54) (1.99) (2.33) (2.25)
+Adj. R2 0.41% 1.00% 1.08% 1.03% 0.17% 0.44% 0.33% 0.41%
+VIX EPU
+pf1 pf2 pf3 dol pf1 pf2 pf3 dol
+constant -0.506 0.211 1.731 0.479 -0.506 0.203 1.737 0.478
+(-0.63) (0.27) (1.81) (0.64) (-0.63) (0.26) (1.81) (0.64)
+announcement dummy 5.931 12.677 13.045 10.551 2.837 9.978 9.811 7.542
+(1.36) (2.96) (2.53) (2.63) (0.62) (2.21) (1.80) (1.78)
+uncertainty index -0.835 -4.184 -5.861 -3.627 0.043 -0.374 0.611 0.094
+(-1.04) (-5.28) (-6.14) (-4.88) (0.05) (-0.46) (0.63) (0.12)
+uncertainty index × 17.900 20.845 28.113 22.286 6.530 6.073 6.106 6.236
+announcement dummy (4.10) (4.84) (5.42) (5.52) (1.94) (1.83) (1.53) (2.00)
+Adj. R2 0.33% 1.03% 1.27% 1.05% 0.06% 0.19% 0.14% 0.17%
+50
+
+T able X. Currency Portfolio Returns Net T ransaction Costs on Announcement Days
+This table reports summary statistics of currency portfolio returns on announcement days net of transaction costs.
+Portfolios are sorted according to their interest rate diﬀerentials, with “pf1” and “pf3” denoting the portfolio with
+the lowest and highest interest rate diﬀerential vis-` a-vis the U.S., respectively. “dol” denotes the portfolio that is
+short the U.S. dollar and long all other currencies. “S1” and “S2” are the improved trading strategies constructed in
+Subsection III.C. “bootstrap CI” indicates the 95% bootstrapped conﬁdence interval. “SR” is the Sharpe ratio. All
+numbers are expressed in daily bps except for Sharpe ratios, which are annualized, taking into account the annual
+frequency of FOMC announcements (8/252). Returns are sampled from 4pm to 4pm ET and cover the period January
+1, 1994 to December 31, 2013.
+pf1 pf2 pf3 dol S1 S2
+mean 2.129 9.671 12.246 8.015 15.708 19.154
+t-stat (0.44) (2.02) (2.10) (1.69) (3.29) (3.50)
+bootstrap CI [-7.16 , 11.97] [0.75 , 19.37] [1.13 , 23.83] [0.07 , 17.58] [6.83 , 25.35] [8.85 , 30.40]
+skewness 1.490 1.544 1.306 1.761 1.750 1.571
+kurtosis 7.183 10.101 8.307 9.567 8.655 8.038
+SR 0.097 0.451 0.470 0.377 0.735 0.783
+51
+
+T able XI. Summary Statistics for Currency Portfolio Returns for T runcated Data
+This table reports summary statistics of currency portfolios for non-announcement (Panel A) and announcement
+days (Panel B) for a truncated sample after removing the the bottom and top 1% of the sample. Portfolios are
+sorted according to their interest rate diﬀerentials, with “pf1” and “pf3” denoting the portfolio with the lowest and
+highest interest rate diﬀerential vis-` a-vis the U.S., respectively. “dol” denotes the portfolio that is short the U.S.
+dollar and long all other currencies. “SR” is the Sharpe ratio. All numbers are expressed in daily bps except for
+Sharpe ratios, which are annualized, taking into account the annual frequency of FOMC announcements (8/252).
+“diﬀ” indicates the diﬀerence between announcement and non-announcement day returns in basis points (bps), with
+the corresponding t-statistic for a test of diﬀerence in means between announcement and non-announcement days
+reported in parentheses. Returns are sampled from 4pm to 4pm ET and cover the period January 1, 1994 to December
+31, 2013.
+pf1 pf2 pf3 dol
+Panel A: Non-Announcement Days ( n = 4, 421)
+mean -0.508 0.202 1.947 0.537
+t-stat (-0.67) (0.27) (2.22) (0.77)
+skewness 0.131 -0.136 -0.193 -0.034
+kurtosis 3.280 3.533 4.088 3.485
+SR -0.156 0.063 0.516 0.179
+Panel B: Announcement Days ( n = 157)
+mean 4.817 13.387 13.520 10.800
+t-stat (1.00) (2.94) (2.45) (2.35)
+skewness 1.361 1.230 1.262 1.705
+
+kurtosis 3.280 3.533 4.088 3.485
+SR -0.156 0.063 0.516 0.179
+Panel B: Announcement Days ( n = 157)
+mean 4.817 13.387 13.520 10.800
+t-stat (1.00) (2.94) (2.45) (2.35)
+skewness 1.361 1.230 1.262 1.705
+kurtosis 6.617 7.582 7.116 8.869
+SR 0.224 0.657 0.549 0.525
+diﬀ 5.325 13.185 11.573 10.262
+(1.29) (3.26) (2.43) (2.69)
+T able XII. Bootstrap Exercise for Currency Portfolios
+This table reports the likelihood of observing an average return as large as average announcement day returns in a
+sample drawn from the empirical distribution of returns on non-announcement days. Portfolios are sorted according
+to their interest rate diﬀerentials, with “pf1” and “pf3” denoting the portfolio with the lowest and highest interest
+rate diﬀerential vis-` a-vis the U.S., respectively. “dol” denotes the portfolio that is short the U.S. dollar and long all
+other currencies. “entire day”, “pre-ann”, and “post-ann” correspond to 4pm–4pm, 4pm–215pm, and 215pm–4pm
+time windows, respectively. Data runs from January 1, 1994 to December 31, 2013.
+Before Transaction Costs Ex Transaction Costs
+pf1 pf2 pf3 dol pf1 pf2 pf3 dol
+entire day 9.13% 0.16% 0.58% 0.46% 9.31% 0.16% 0.58% 0.48%
+pre-ann. 18.48% 0.56% 2.48% 2.00% 18.41% 0.56% 2.48% 2.07%
+post-ann. 1.53% 2.05% 1.19% 0.60% 2.48% 3.05% 1.37% 0.88%
+52
+
+T able XIII. Currency Portfolio Returns for Other Macroeconomic Announcements
+This table reports excess returns on announcement and non-announcement days for non-farm payroll employment,
+CPI, and PPI. Portfolios are sorted according to their interest rate diﬀerential, with pf1 (pf3) denoting the portfolio
+with the lowest (highest) interest rate diﬀerential vis-` a-vis the United States. “dol” denotes the portfolio that is
+short the U.S. dollar and long all other currencies. “diﬀ” indicates the diﬀerence between announcement and non-
+announcement day returns in basis points (bps), with the corresponding t-statistic for a test of diﬀerence in means
+between announcement and non-announcement days reported in parentheses. The sample covers January 1, 1994 to
+December 31, 2013.
+Non-Farm Payroll Consumer Price Index Producer Price Index
+pf1 pf2 pf3 dol pf1 pf2 pf3 dol pf1 pf2 pf3 dol
+Ann. -6.523 1.824 4.783 0.028 2.220 2.316 3.292 2.609 3.708 5.311 6.861 5.293
+(-1.60) (0.46) (1.12) (0.01) (0.56) (0.59) (0.66) (0.68) (1.00) (1.62) (1.75) (1.66)
+Non. -0.386 0.497 2.459 0.857 -0.336 0.818 2.351 0.945 -0.446 0.478 2.127 0.719
+(-0.47) (0.62) (2.54) (1.14) (-0.41) (1.02) (2.43) (1.25) (-0.55) (0.59) (2.20) (0.96)
+diﬀ -6.137 1.327 2.324 -0.829 2.556 1.498 0.940 1.665 4.154 4.833 4.734 4.574
+(-1.48) (0.33) (0.53) (-0.22) (0.63) (0.38) (0.19) (0.43) (1.10) (1.43) (1.17) (1.40)
+53

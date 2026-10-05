@@ -1,0 +1,211 @@
+{
+ "generated": "2026-10-05T12:03+00:00",
+ "seed": {
+  "fiche_id": "corsi-2009-har-realized-volatility",
+  "title": "A Simple Approximate Long-Memory Model of Realized Volatility",
+  "representation": "A Simple Approximate Long-Memory Model of Realized Volatility \nLa volatilite realisee d'un actif se modelise par une cascade additive de trois composantes de volatilite attachees a trois horizons de marche (jour, semaine, mois), ce qui donne une simple regression lineaire de la RV du jour suivant sur les RV passees moyennees a un jour, une semaine et un mois (modele HAR-RV). Bien que ce processus soit formellement a memoire courte et sans integration fractionnaire, il reproduit la persistance, les queues epaisses et l'auto-similarite observees, et prevoit la volatilite aussi bien qu'un ARFIMA — mieux que des AR courts — a horizon un jour, une semaine et deux semaines, avec seulement quatre parametres estimes par MCO. \nModele HAR-RV en cascade. Estimer la volatilite realisee quotidienne RV(d) ; en former les moyennes hebdomadaire RV(w) (cinq dernieres RV quotidiennes) et mensuelle RV(m) (22 jours ouvres) ; regresser par MCO RV(d)_{t+1d} = c + beta_d*RV(d)_t + beta_w*RV(w)_t + beta_m*RV(m)_t, dont les trois regresseurs sont entierement observes en t. La sortie est une PREVISION DE VOLATILITE, pas un score signe sur un rendement. \n1 jour (modele et estimation) ; evaluation hors echantillon a 1 jour, 1 semaine et 2 semaines"
+ },
+ "model": "BAAI/bge-base-en-v1.5",
+ "neighbors": [
+  {
+   "paper_id": "7a66c694-6a65-4175-82a6-12c9de8979fe",
+   "title": "Long memory dynamics for multivariate dependence under heavy tails",
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 29,
+     "similarity": 0.8761,
+     "content": "long range dependence in volatility; see Maasoumi and McAleer (2008) for more discussion.\nThe persistence of the volatility processes can also be inferred from the estimates of the\nautoregressive coeﬃcient that are all larger than 0.99 for the short memory formulations.\nThe estimates of d(h) for the diﬀerent models and diﬀerent series are between 0.43 and 0.75;\nthey are statistically diﬀerent from zero and from unity based on conventional signiﬁcance\nlevels. This ﬁnding implies that innovations have a long-term eﬀect on future volatility\nlevels. The AIC criterion suggests that in most cases the volatility is best described by\nthe non-stationary but mean-reverting fractionally integrated process. Conﬁrmation of this\nﬁnding is given by the reported MAE values in the last column of Table 2. It shows that\nthe FIGAS+L model is most precise for all four equities. This ﬁnding is also consistent\nwith earlier studies in which a similar degree of long memory in volatility is found for these\nequities. In addition, we ﬁnd convincing evidence for a leverage eﬀect; the estimates of γ\nare statistically signiﬁcant for all equities. The degrees of freedom parameter ν is estimated\nin the range between 7.5 and 12.5; the tail shapes of the equity series are quite similar.\nIn Figure 1 we present the model-based volatility estimate of σt together with TRV 1/2\nt .\nThe realised measure is more jagged than the model-based volatilities but similar patterns\ncan be detected."
+    },
+    {
+     "section": "methodology",
+     "page": 7,
+     "similarity": 0.8684,
+     "content": "for long memory models where the impact of innovations on future values dissipates at a\nslow hyperbolic rate.\nWe conduct both a Monte Carlo study and an empirical study to illustrate the merits\nof the new model. In the Monte Carlo study, we show that our new fractionally integrated\nmodel outperforms short memory alternatives in terms of accuracy when the copula dynamics\nexhibit a slow rate of decay. In the empirical study, we analyze high-frequency tick-by-tick\ndata from the Trade and Quote (TAQ) database over a long period from January 1993 to\nMay 2010. We construct realised measures as benchmarks for evaluating the forecast quality\nof diﬀerent dynamic copula models at a daily frequency. In accordance with earlier studies\nwe ﬁnd evidence of long memory in the volatility of these series. Long memory features also\nappear important for the dynamic Student’s t copula. However, whereas the long memory\nproperties are comparable across the volatilities of the diﬀerent series, the degree of long\nmemory for the correlations diﬀers substantially between diﬀerent pairs of equities. Also,\nthe long memory properties of the correlations and volatilities are substantially diﬀerent.\nThese ﬁndings underline the need for a ﬂexible modeling framework that accounts for these\nempirical features.\nThe remainder of the paper is organized as follows. In Section 2 we introduce our long\nmemory model for volatility and dependence. In Section 3 we conduct a Monte Carlo study to"
+    }
+   ],
+   "similarity": 0.8695
+  },
+  {
+   "paper_id": "d04488f8-359c-4682-b485-d017ead45e77",
+   "title": "Improving realised volatility forecast for emerging markets",
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "other",
+     "page": 42,
+     "similarity": 0.8721,
+     "content": "998) Long memory in continuous-time stochastic volatility models. Math Financ\n8(4):291–323\nCorsi F (2009) A simple approximate long-memory model of realized volatility. J Financ Economet\n7(2):174–196\nDegiannakis S, Livada A (2016) Evaluation of realized volatility predictions from models with leptokur-\ntically and asymmetrically distributed forecast errors. J Appl Stat 43(5):871–892\nDi-Giorgi G, Salas R, Avaria R, Ubal C, Rosas H, Torres R (2023) V olatility forecasting using deep recurrent\nneural networks as garch models. Comput Stat 1–27\nDickey DA, Fuller W A (1979) Distribution of the estimators for autoregressive time series with a unit root.\nJ Am Stat Assoc 74(366a):427–431\nDwarika N, Moores-Pitt P , Chifurira R (2021) V olatility dynamics and the risk-return relationship in South\nAfrica: a Garch approach. Invest Manag Financ Innov 18(2):106–117\nEngle R (2002) New frontiers for arch models. J Appl Economet 17(5):425–446\nEngle RF (1982) Autoregressive conditional heteroscedasticity with estimates of the variance of united\nkingdom inﬂation. J Econo Soc 100:987–1007\nEngle RF, Ng VK (1993) Measuring and testing the impact of news on volatility. J Financ 48(5):1749–1778\nGatheral J, Jaisson T, Rosenbaum M (2018) V olatility is rough. Quant Financ 18(6):933–949\n123"
+    },
+    {
+     "section": "methodology",
+     "page": 4,
+     "similarity": 0.872,
+     "content": "Journal of Economics and Finance\n(GJR-GARCH) by Glosten et al. ( 1993) and the Asymmetric GARCH (AGARCH)\nmodel of Engle and Ng ( 1993), have been developed. These GARCH-type models\ncapture certain stylized features, which are empirical irregularities observed in vari-\nous ﬁnancial markets, but they do not explicitly incorporate long-memory in volatility.\nWhen ﬁnancial volatility demonstrates a long-memory feature, it means that previous\nvolatility levels have a persistent inﬂuence on future volatility. This resulted in the cre-\nation of the Fractional Integrated GARCH (FIGARCH) model by Baillie et al. ( 1996)\nas well as the Fractional ARIMA-GARCH (FARIMA-GARCH) model (see Ling and\nLi (1997) and Beran and Feng ( 2001)).\nThe Realised GARCH model, developed by Hansen et al. ( 2012), expands on the\nGARCH modelling framework by enabling the incorporation of rich information in\nrealised volatility (RV). This is done in an effort to gather more precise and timely\ndata regarding volatility dynamics. The limitations of traditional GARCH-type models\nwithout RV are addressed by this approach. The realised GARCH model (henceforth\nrealGARCH model) also overcomes the shortcoming of the GARCH-X model (Engle\n2002), which is that a model for RV is not speciﬁed. This suggests that we are unable\nto predict volatility using the model more than one day in advance.\nAnother family of models that is well-suited to account for long-memory in volatil-"
+    }
+   ],
+   "similarity": 0.8664
+  },
+  {
+   "paper_id": "9958bfbe-95bb-4b50-b62b-ab1715bed9db",
+   "title": "Heterogeneous Information Arrivals and Return Volatility Dynamics: Uncovering the Long-Run in High Frequency Returns",
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "intro",
+     "page": 17,
+     "similarity": 0.8734,
+     "content": "emory\ncharacteristics, This suggests that the aggregation argument behind the long-n.m dependence in Vt\nis somewhat more general than portrayed above. Indeed, Lin ( 1991) and Granger and Ding (1996a)\nshow that the so-called Generalized Integrated class of models, discussed by Granger\nmay arise through the aggregation of a closely related component type structure. 20\n4. ESTIMATING LONG-MEMORY IN VOLATILITY\nThe theoretical framework developed in the previous section builds on the idea that\n(1987, 1988),\nthe aggregate\nmarket volatili~ represents the manifestation of numerous heterogeneous information arrival\nprocesses; some with short-run volatility dependencies, others possessing more highly persistent\nvolatility patterns. As time passes the short-run processes decay significantly, while the more highly\npersistent processes remain influential. Hence, while sudden bursts of volatility typically will possess\nboth short-run and long-inn components, the short-run decay stands out most clearly over the\n19 NO~lCe~hat~hi~~On~tmctloncloselymirrorsthe spirit, if not the struCtUR, of the arbitrage Pricing theow of ‘Oss\n(1976).\n20 A related method for use in the simulation of fractional Gaussian noise has been proposed by Mandelbrot and Wallis\n(1969) and Mandelbrot (1971).\n15"
+    },
+    {
+     "section": "intro",
+     "page": 4,
+     "similarity": 0.8489,
+     "content": "some of the most important and readily identifiable macroeconomic announcements. Furthermore,\nthe volatility process is shown to exhibit the kind of long-memory dependencies implied by the\ntheoretical aggregation of such multiple individual component processes. This interpretation of\nvolatility is further underscored by the fact that the corresponding estimates for the fractional orders\nof integration for the absolute returns remain remarkably stable across all of the intradaily sampling\nfrequencies.\nAlthough these empirical findings consistently point to the presence of long-memory, the\npronounced intradaily volatili~ patterns, known to exist in most financial markets, severely\ncomplicate any further direct analysis of the long-run volatility dependencies. However, by low-pass\nfiltering the absolute intradaily returns, thus annihilating any cyclical behavior with a periodicity of\nless than one day, we demonstrate how it is possible to uncover the salient long-run volatility\ndynamics using standard correlation based measures. Specifically, whereas the autocorrelogram for\nthe raw absolute intradaily returns periodically turn negative, the autocorrelograrn for the low-pass\nfiltered absolute intradaily returns display a striking hyperbolic rate of decay. Consequently, these\nfiltered returns constitute an ideal basis for more comprehensive analyses of the important volatili~\ndeterminants, as illustrated by our estimation of the amouncement effects associated with the"
+    }
+   ],
+   "similarity": 0.8561
+  },
+  {
+   "paper_id": "a3cd8002-68a2-4b79-bab0-a0e6f27bcca7",
+   "title": "Precious metals under the microscope: a high-frequency analysis",
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 23,
+     "similarity": 0.8738,
+     "content": "MA) models exte nded with the\ninclusion of periodic explanatory mean variables. We estimate these t wo models on the\nPQS mean and on the squared OF values. While for the PQS the models r epresent the\nmost appropriate speciﬁcations, for the OF we ﬁnd that the direct modeling of the levels\nwas not satisfactory, and thus decided to analyze the squared OF , a proxy of the volatility,\nthus sharing similar features. The SARFIMA is a special case of the m ultifactor GARMA\nmodel. Similar to the most general model, it provides periodic behavior coupled with\nlong memory. The SARFIMA model is given as follows:\nΦ( L)(1 − LS)d(yt − µ −\nq∑\nj=1\n(\nγjcos\n( 2πjt\n24\n)\n+ φjsin\n( 2πjt\n24\n))\n) = Θ( L)ǫt, (7)\nwhere ǫt is a white noise with variance σ2\nǫ . The autoregressive and moving average poly-\nnomials Φ( L) and Θ( L) satisfy the usual restrictions for stationarity and invertibility,\nwhereas the memory parameter d gives a stationary model if its value is below 0 .5. The\nseasonal long-memory behavior inﬂuences the observed variable yt in deviation from its\nunconditional mean µ and from a deterministic periodic behavior captured by the q har-\nmonics. The relation between SARFIMA and GARMA is given by the follow ing decom-\nposition of the seasonal long-memory ﬁlter\n(1 − LS) =\n(\n1 − 2cos (ω0) L + L2) 1\n2\n[ S− 1∏\nj=1\n(\n1 − 2cos (ωj) L + L2)\n]\n(\n1 − 2cos (ωs) L + L2) 1\n2 ,\n(8)\nwhere ω0 = 1 and ωs = − 1 . The previous decomposition takes into account the roots of\nthe polynomial\n(\n1 − LS)"
+    },
+    {
+     "section": "intro",
+     "page": 19,
+     "similarity": 0.8455,
+     "content": "ing to long\nmemory EGARCH speciﬁcations, as in Bollerslev and Mikkelsen (1996). However, the\nintroduction of long memory in the conditional variance equation fur ther increases the\nmodel’s complexity. We thus prefer to specify the variance dynamic f ollowing a HAR-type\nstructure (e.g. Corsi (2009)).\nWe suggest the estimation of the following EGARCHX-HAR(P,O,Q) mode l. This spec-\niﬁcation approximates the long-memory behavior reproducing the v olatility persistence\nterms of the HAR model of Corsi (2009). Whereas in the HAR model the auto-regressive\ndynamic is associated with the target period of diﬀerent market ope rators (daily, weekly,\nand monthly), in our speciﬁcation the volatility evolves according to t erms related to\ndaily and intradaily periods: the day, the half-day, etc. Depending o n the frequency of\nthe time series, we include sums of past volatilities or shocks over diﬀe rent horizons; for\nhourly data we consider periods equal to the day, 24 hours, the ha lf-day, 12 hours, and to\n6 and 3 hours. The EGARCHX-HAR(P,O,Q) is characterised by the follo wing equation:\nln\n(\nσ2\nt\n)\n= ω+\n∑\nj=1,3,6,12,24\nβj\nj\n(\nln\n(\nσ2\nt− j\n)\n+ ... + ln\n(\nσ2\nt− 1\n))\n+\n+\n∑\nj=1,3,6,12,24\nαj\nj (εt− 1 + ... + εt− j) +\n∑\nj=1,3,6,12,24\nθj\nj (|εt− 1|+ ... + |εt− j|) +\n+\nq∑\nj=1\n(\nγjcos\n( 2πjt\n24\n)\n+ φjsin\n( 2πjt\n24\n))\n.\n(4)\n17"
+    }
+   ],
+   "similarity": 0.8538
+  },
+  {
+   "paper_id": "03af06fa-a30e-4791-a98f-ae068ec86a1a",
+   "title": "Volatility Is Rough",
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 24,
+     "similarity": 0.8589,
+     "content": "is misspeciﬁed .\nWith the same model parameters as in Section 3.4, we simulate our model\nover 3,500 days, which corresponds to the size of our dataset. Consider ﬁrst\nthe procedure in [3], where the authors test for long memory in the volatility\nby studying the scaling behavior of the quantity\nV (t) = Var\n[∫ t\n0\nσ2\nsds\n]\nwith respect tot. In the model they consider, if V (t) behaves asymptotically\nas t2−γ with γ < 1, then the autocorrelation function of the log-volatility\nshould behave as t−γ. Figure 4.1 presents the graph of the logarithm of the\nempirical counterpart of V (t) against the logarithm of t, on the S&P data\nand within our simulation framework.\nFigure 4.1: Empirical counterpart of log( V (t)) as a function of log( t) on\nS&P (above) and simulation (below).\nWe note from Figure 4.1 that both our simulated model and market data lead\nto very similar graphs, close to straight lines with slope 1.86. Accordingly,\nin the setting of [3], we would deduce power law behavior of the autocor-\nrelation function with exponent 0 .14 and therefore long memory. Thus, if\nthe data are generated by a model like the RFSV model, one can easily be\nwrongly convinced that the volatility time series exhibits long memory.\n24"
+    },
+    {
+     "section": "other",
+     "page": 31,
+     "similarity": 0.8507,
+     "content": "time series. First we found that the distributions of increments of log-\nvolatility are approximately Gaussian, consistent with many prior studies.\nSecondly, we established the monofractal scaling relationship\nE [| log(σ∆)− log(σ0)|q] =Kqνq ∆qH, (7.1)\nwhere H can be seen as a measure of smoothness characteristic of the un-\nderlying volatility process; typically, 0 .06 < H <0.2. The simple scaling\nrelationship (7.1) naturally suggests that log-volatility may be modeled us-\ning fractional Brownian motion.\nThe resulting Rough Fractional Stochastic Volatility (RFSV) model turns\nout to be formally almost identical to the FSV model of Comte and Renault\n[16], with one major diﬀerence: In the FSV model, H >1/2 to ensure long\nmemory whereas in the RFSV model H < 1/2, typically, H≈ 0.1. More-\nover, in the FSV model, the mean reversion coeﬃcient α has to be large\ncompared to 1/T to ensure a decaying volatility skew; in the RFSV model,\nthe volatility skew decays naturally just like the observed volatility skew,\nα≪ 1/T and indeed for time scales of practical interest, we may proceed\nas if α were exactly zero.\nWe further showed that applying standard statistical estimators to volatility\ntime series simulated with the RFSV model would lead us to erroneously\ndeduce the presence of long memory, with parameters similar to those found\nin prior studies. Despite that volatility in the RFSV model (or in the data)\nis not long memory, we can therefore explain why long memory of volatility"
+    }
+   ],
+   "similarity": 0.8531
+  },
+  {
+   "paper_id": "c3dd0d03-6a33-4564-8dc4-ac5f4f9a56e6",
+   "title": "Good volatility, bad volatility: signed jumps and the persistence of volatility",
+   "fiche_id": "patton-sheppard-2015-good-volatility-bad-volatility",
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 5,
+     "similarity": 0.8677,
+     "content": "continuous component\nof volatility produces large correlations in RV, BV , RS\n+, and\nRS−. The correlation between RS+ and RS−, at around 80%,\nis markedly lower than the correlation between these and\neither RV or BV , indicating that there is novel information in\nthis decomposition.\nC. Model Estimation and Inference\nWe analyze the empirical features of these new measures\nof volatility using the popular heterogeneous autoregression\n(HAR) model (see Corsi, 2009, and Müller et al., 1997).\nHARs are parsimonious restricted versions of high-order\nautoregressions. The standard HAR in the realized variance\nliterature regresses realized variance on three terms: the past\n1-day, 5-day, and 22-day average realized variances. To ease\ninterpretation, we use a numerically identical reparameteri-\nzation where the second term consists of only the realized\nvariances between lags 2 and 5, and the third term consists\nof only the realized variances between lag 6 and 22,\n¯y\nh,t+h = μ + φd yt + φw\n(\n1\n4\n4∑\ni=1\nyt−i\n)\n+ φm\n(\n1\n17\n21∑\ni=5\nyt−i\n)\n+ ϵt+h (12)\nwhere y denotes the volatility measure (e.g., RV, BV ), and\n¯yh,t+h = 1\nh\n∑ h\ni=1 yt+i is the h-day average cumulative volatil-\nity.11 Throughout the paper, we use¯yw,t to indicate the average\nvalue over lags 2 to 5 and ¯ym,t to denote the average value\nbetween lags 6 and 22. We estimate the model above for\nforecast horizons ranging from h = 1 to 66 days.\n11 In the online appendix, we present results where the h-day ahead daily"
+    },
+    {
+     "section": "results",
+     "page": 6,
+     "similarity": 0.8454,
+     "content": "variable is theh-day ahead daily volatility. These\ntables reveal that, as expected, much, but not all, of the predictive power in\nthe model for cumulative realized variance occurs at short horizons.\nwhich is computed using the WLS parameter estimates and\nthe original, unmodiﬁed data.\nA. Decomposing Recent Quadratic V ariation\nGiven the exact decomposition of RV into RS+ and RS−,\nwe extend equation (15) to obtain a direct test of whether\nsigned realized variance is informative for future volatility.\nHere, we decompose only the most recent volatility ( RV\nt),\nand in the online appendix, we present results and analysis\nwhen all three volatility terms are decomposed. Applying this\ndecomposition produces the speciﬁcation\nRVh,t+h = μ + φ+\nd RS+\nt + φ−\nd RS−\nt + φwRVw,t\n+ φmRVm,t + ϵt+h. (16)\nThe panel speciﬁcation of the above model includes ﬁxed\neffects but is otherwise identical. Note that if the decompo-\nsition of RV into RS\n+ and RS− added no information, we\nwould expect to ﬁnd φ+\nd = φ−\nd = φd .\nOur ﬁrst new empirical results using realized semivari-\nances are presented in the second row of each panel of tables\n2A and 2B. In the models for the SPDR (table 2A), we ﬁnd\nthat the coefﬁcient on negative semivariance is larger and\nmore signiﬁcant than that on positive semivariance for all\nhorizons. In fact, the coefﬁcient on positive semivariance\nis not signiﬁcantly different from 0 for h = 1, 5 and 22,\nwhile it is small and signiﬁcantly negative for h = 66. The"
+    }
+   ],
+   "similarity": 0.8516
+  },
+  {
+   "paper_id": "ff3086c2-482e-4612-969a-71b5d31fca82",
+   "title": "ON THE LOG PERIODOGRAM REGRESSION ESTIMATOR OF THE MEMORY PARAMETER IN LONG MEMORY STOCHASTIC VOLATILITY MODELS",
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "intro",
+     "page": 1,
+     "similarity": 0.8708,
+     "content": "ON THE LOG PERIODOGRAM\nREGRESSION ESTIMATOR\nOF THE MEMORY PARAMETER\nIN LONG MEMORY STOCHASTIC\nVOLATILITY MODELS\nROOOHHHIIITTT S. D EEEOOOAAANNNDDD CLLLIIIFFFFFFOOORRRDDD M. HUUURRRVVVIIICCCHHH\nNew York University\nWe consider semiparametric estimation of the memory parameter in a long mem-\nory stochastic volatility model + We study the estimator based on a log peri-\nodogram regression as originally proposed by Geweke and Porter-Hudak ~1983,\nJournal of Time Series Analysis 4, 221–238!+ Expressions for the asymptotic bias\nand variance of the estimator are obtained, and the asymptotic distribution is shown\nto be the same as that obtained in recent literature for a Gaussian long memory\nseries+ The theoretical result does not require omission of a block of frequencies\nnear the origin + We show that this ability to use the lowest frequencies is partic-\nularly desirable in the context of the long memory stochastic volatility model +\n1. INTRODUCTION\nThere is a rapidly expanding empirical literature that has found evidence of\nslowly decaying auto-correlations in the volatility of financial time series + This\nliterature includes Ding , Granger, and Engle ~1993!, de Lima and Crato ~1993!,\nBollerslev and Mikkelsen ~1996!, Lobato and Savin ~1996!, and Breidt , Crato,\nand de Lima ~1998! for stock returns ; Lobato ~1999!, Andersen and Bollerslev\n~1997a, 1997b!, and Henry and Payne ~1998! for foreign exchange rates + One"
+    },
+    {
+     "section": "intro",
+     "page": 7,
+     "similarity": 0.8433,
+     "content": "periodicity and volatility persistence in financial\nmarkets+ Journal of Empirical Finance 4, 115–158+\nBaillie, R+, T+ Bollerslev, &H + Mikkelsen ~1996! Fractionally integrated generalized autoregres-\nsive conditional heteroscedasticity + Journal of Econometrics 74, 3–30+\nBollerslev, T+ ~1986! Generalized autoregressive conditional heteroscedasticity + Journal of Econo-\nmetrics 31, 307–327+\nBollerslev, T+ &H + Mikkelsen ~1996! Modelling and pricing long memory in stock market volatil-\nity+ Journal of Econometrics 73, 151–184+\nBreidt, F+J+, N+ Crato, &P + De Lima ~1998! The detection and estimation of long memory in sto-\nchastic volatility + Journal of Econometrics 83, 325–348+\nCourant, R+ &F + John ~1965! Introduction to Calculus and Analysis + New York: Wiley+\nde Lima, P+ &N + Crato ~1993! Long range dependence in the conditional variance of stock returns +\nProceedings of the Business and Economics Statistics Section , Joint Statistical Meetings +\nDing, Z+, C+W+J+ Granger, &R + Engle ~1993! A long memory property of stock market returns and\na new model + Journal of Empirical Finance 1, 83–106+\nDunsmuir, W+ ~1979! A central limit theorem for parameter estimation in stationary vector time\nseries and its application to models for a signal observed with noise + Annals of Statistics 7,\n490–506 +\nTable 2. Theoretical standard errors followed by approximate standard errors\nbased on standard regression theory\nm 5 n0+3 m 5 n0+4 m 5 n0+5 m 5 n0+5, Trunc\nSE1 0+178 0 +113 0 +073 0 +074"
+    }
+   ],
+   "similarity": 0.8504
+  },
+  {
+   "paper_id": "e8430453-9251-4aa2-9f43-0c7abfef049c",
+   "title": "An International Comparison of Implied, Realized, and GARCH Volatility Forecasts",
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 8,
+     "similarity": 0.8559,
+     "content": "8 \n \nproduce out-of-sample volatility forecasts, we estimate the above model on a rolling basis using \na window of 800 observations and construct k-step ahead forecasts in a recursive manner.2 \n \n2.2.6 Heterogeneous Autoregressive Model Forecasts (HAR) \nThe literature hig hlights the importance of long memory for modelling and forecasting \nvolatility (Comte and Renault, 1998; Areal and Taylor, 2002; Andersen et al., 2003; Deo et al., \n2006). Alas, many of the conventional long memory models, such as the Fractional Integrated \nGARCH (FIGARCH), present significant estimation and computational difficulties. To \novercome such issues, we adopt the Heterogeneous Autoregressive (HAR) model introduced \nby Corsi (2009). This is relatively straightforward to estimate and can capture known stylized \nfacts of financial data, such as long memory and fat tails. \n In the HAR setting, realized volatility over the next k days is modeled as an affine function \nof past realized volatilities computed over three different horizons: \n 𝑅𝑉𝑡:𝑡+𝑘 = 𝜔 + 𝛽𝑑 𝑅𝑉𝑡 + 𝛽𝑤 𝑅𝑉𝑡−5:𝑡 + 𝛽𝑚𝑅𝑉𝑡−22:𝑡 + 𝑒𝑡+𝑘 (6) \nTo be consistent with the application of the GJR-GARCH model, we estimate the above model \nusing a rolling sample of the 800 most recent observations. We then use the parameter estimates \nto forecast the volatility of equity returns over horizons of 1, 5 and 22 business days, \nrespectively. \n3. Information Content of Volatility Forecasts \n \n3.1 Univariate Regressions"
+    },
+    {
+     "section": "methodology",
+     "page": 10,
+     "similarity": 0.8506,
+     "content": "10 \n \nvolatility models. Apart from the relative importance of two competing volatility forecasts, \nencompassing regressions can detect whether a volatility forecast subsumes all the information \nincluded in another forecast.3 \nTable 4 presents aggregate results for daily and weekly encompassing regressions, namely, \nthe average intercept and slope as well as the average 𝑅̅2 coefficient across the thirteen indices. \nExtensive results for daily and weekly forecasts are not reported , as they indicate that all \nforecasting models contain information about future volatility with statistically significant \ncoefficients at the 5% level. We find that all models explain a large fraction of the variation in \nrealized volatility, since the average 𝑅̅2 values range between 70.7% (74.2%) and 72.7% (75%) \nat the daily (weekly) forecast horizon. \nMore interesting results emerge from the monthly encompassing regressions presented in \nTable 5. First, focusing on the fourth column of the table (labeled “LRE+C-MFIV”) reveals \nthat the corrected model-free implied volatility subsumes all information contained in lagged \nrealized volatility. The coefficients of C-MFIV are all highly significant and lie between 0.70 \nand 0.99. In contrast, the raw MFIV is not significantly superior to lagged realized volatility. \nThis result confirms the importance of accounting for the volatility risk premium for volatility \nforecasting."
+    }
+   ],
+   "similarity": 0.8485
+  },
+  {
+   "paper_id": "077cbda2-bb63-4b44-a3d1-fd993bb042b8",
+   "title": "Intraday Stochastic Volatility in Discrete Price Changes: The Dynamic Skellam Model",
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 14,
+     "similarity": 0.8569,
+     "content": "1502 S.J.KOOPMAN,R.LIT,ANDA.LUCAS\nhigh-frequency volatility dynamics, it may provide an interest-\ning and complementary alternative to realized volatility mea-\nsures and kernels of Barndorff-Nielsen and Shephard (2001,\n2002)andAndersenetal.( 2001).\nSupplementaryMaterials\nThesupplementaryappendixcontainsthefollowingappendices:\nAppendixA-ModifiedSkellamdistributionoftypeI\nAppendixB-MomentsoftheMSKII(i,j,k)distribution\nAppendix C - Simulation study\nAppendixD-MonteCarlolikelihoodandparameterestimation\nAppendixE-Intradailytimeseriesofpricechangesin2012\nAcknowledgments\nThe authors thank István Barra, Asger Lunde, and Albert J.\nMenkveld for their comments on an earlier draft. The authors\nalso thank the two referees, the associate editor, and the editor\nwhose many insightful suggestions have helped us to reshape\nandimprovethearticleconsiderably.\nFunding\nLitandLucasacknowledgethefinancialsupportoftheDutchNationalSci-\nence Foundation (NWO grant VICI453-09-005). Koopman acknowledges\nsupportfromCREATES,AarhusUniversity,Denmark,fundedbytheDan-\nish National Research Foundation, (DNRF78).\nReferences\nAbramowitz,M.,andStegun,I.A.(1972), HandbookofMathematicalFunc-\ntions,NewYork:DoverPublications.[ 1493]\nAït-Sahalia,Y.,Mykland,P.A.,andZhang,L.(2011),“UltraHighFrequency\nVolatility Estimation With Dependent Microstructure Noise,”Journal\nof Econometrics,160,160–175.[ 1497]\nAlzaid,A.,andOmair,M.A.(2010),“OnthePoissonDifferenceDistribu-"
+    },
+    {
+     "section": "methodology",
+     "page": 6,
+     "similarity": 0.8447,
+     "content": ",..., nandndenotingthelengthofthetimeseries,wemodel\nthe possible serial dependence iny1,..., yn on the basis of a\nSkellam model with dynamic stochastic processes for the mean\nμt and/or the varianceσ2\nt . The dynamic MSKII model can be\nspecifiedby\nYt|μt,σ 2\nt ∼ MSKII\n(\n−1,1,0;μt,σ 2\nt ,γ\n)\n, t = 1,..., n.\n(6)\nHence,weassumethattheserialdependencein Yt isaccounted\nfor by the time variation inμt and σ2\nt only. In other words,\nconditional onμt and σ2\nt , Yt i sn o ts u b j e c tt oo t h e rd y n a m i c\nprocesses.\nIn accordance with other analyses of high-frequency stock\nreturns,thesamplemeaninpricechangesforasufficientlylarge\nsamplesizeistypicallyclosetozero;see,forexample,Andersen\nandBollerslev( 1997).Hence,wesetthemeanoftheSkellamdis-\ntributiontozero, μ = 0,andfocusonthemodelingofstochastic\nvolatility σ2\nt using the conditional observation density (6)w i t h\npmf (3)fo rYt.\nThe model specification for the dynamic variance, or the\nstochasticvolatility,isbasedonthelinkfunction\nσ2\nt = s(θt ) = exp(θt ), t = 1,..., n, (7)\nwherescalar θt representslog-volatility,suchthat σ2\nt > 0forany\nθt ∈ R. The dynamic signal process accommodates the salient\nfeaturesofintradayvolatilitybythedecomposition\nθt = c +st + αt,α t+1 = φαt + ηt,η t ∼ NID\n(\n0,σ 2\nη (t)\n)\n,\n(8)\nfor t = 1,..., n,w h e r et h ec o n s t a n tc represents the overall\ndaily log-volatility,st reflects the seasonal variation in intraday\nvolatility levels, and the autoregressive componentαt captures"
+    }
+   ],
+   "similarity": 0.8479
+  },
+  {
+   "paper_id": "c72acb41-94b2-49e1-aa81-e74cca7faa34",
+   "title": "Nonlinear Features of Realized FX Volatility",
+   "fiche_id": null,
+   "passages": [
+    {
+     "section": "results",
+     "page": 4,
+     "similarity": 0.8507,
+     "content": "Nonlinear Features of Realized FX Volatility*\nMaJohn M. Maheu†, Thomas H. McCurdy‡\nRésumé / Abstract\nDans cet article, nous étudions les caract éristiques nonlin éaires de la\ndynamique de la volatilité des taux de change à l'aide d'estimations de la volatilit é\nquotidienne bas ées sur la somme du carr é des rendements intraquotidiens. Les\nerreurs de mesure commises en utilisant la volatilit é r éalisée pour mesurer la\nvolatilité latente ex post font en sorte que les mod èles standards de s éries\nchronologiques de la variance conditionnelle deviennent des variantes d'un\nmodèle ARMAX. Nous explorons des alternatives nonlin éaires à ces\nspécifications lin éaires en utilisant un processus doublement stochastique, avec\nmixage d épendant de la dur ée. Ce processus peut capter des changements\nimportants et abrupts dans le niveau de la volatilité, de même qu'une persistence et\nune variance de la volatilit é variant dans le temps. Nos r ésultats influent sur la\nprécision des prévisions, la couverture et l'évaluation des produits dérivés.\nThis paper investigates nonlinear features of FX volatility dynamics using\nestimates of daily volatility based on the sum of intraday squared returns.\nMeasurement errors associated with using realized volatility to measure ex post\nlatent volatility imply that standard time series models of the conditional variance\nbecome variants of an ARMAX model. We explore nonlinear departures from"
+    },
+    {
+     "section": "results",
+     "page": 4,
+     "similarity": 0.8467,
+     "content": "ing realized volatility to measure ex post\nlatent volatility imply that standard time series models of the conditional variance\nbecome variants of an ARMAX model. We explore nonlinear departures from\nthese linear specifications using a doubly stochastic process under duration-\ndependent mixing. This process can capture large abrupt changes in the level of\nvolatility, time varying persistence, and time-varying variance of volatility. The\nresults have implications for forecast precision, hedging, and pricing of\nderivatives.\nMots Clés : Données à haute fréquence, volatilité réalisée, demi-Markov\nKeywords: High-frequency data, realized volatility, semi-Markov\nJEL : G150, C220\n \n* Corresponding Author: Thomas H. McCurdy, CIRANO, 2020 University Street, 25 th floor, Montr éal, Qc, Canada\nH3A 2A5 Tel.: (514) 985-4000 Fax: (514) 985-4039 email: tmccurdy@mgmt.utoronto.ca\nWe are grateful to Olsen and Associates (Zurich) for providing the intraday exchange rate quotations and to the\nSocial Sciences and Humanities Research Council of Canada for financial support. We also thank Torben G.\nAndersen, Mark Cassano, Peter Christoffersen, Frank Diebold, Jin-Chuan Duan, John Galbraith, Ren é Garcia, Nour\nMeddahi, Paul Michaud, Adrian Pagan, Éric Renault, Marcel Rindisbacher, Jeffrey Russell, Ilias Tsiakas, as well as\nparticipants at the Canadian Econometrics Study Group, the NBER Summer Institute 2000 (Forecasting & Empirical"
+    }
+   ],
+   "similarity": 0.8478
+  }
+ ]
+}

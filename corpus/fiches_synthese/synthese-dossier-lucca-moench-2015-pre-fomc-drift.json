@@ -1,0 +1,309 @@
+{
+  "fiche_id": "synthese-dossier-lucca-moench-2015-pre-fomc-drift",
+  "written": "2026-10-05",
+  "written_by": "synthese-isolee-claude-opus-5-5",
+  "source": {
+    "authors": "Synthèse de : David O. Lucca, Emanuel Moench ; Alexander Kurov, Marketa Halova Wolfe, Thomas Gilbert ; Grace Xing Hu, Jun Pan, Jiang Wang, Haoxiang Zhu ; auteurs de « Exchange Rates and Monetary Policy Uncertainty » (base-8d27d746, non nommés dans la consigne)",
+    "title": "Synthèse — dérive des actions dans la fenêtre qui précède une annonce programmée du FOMC (pre-FOMC drift)",
+    "year": 2021,
+    "year_note": "Année la plus récente parmi les sources datées : Kurov, Wolfe, Gilbert (2021). L'année de base-8d27d746 n'est pas donnée dans la consigne (ses données vont jusqu'à décembre 2013) ; elle n'est pas inventée.",
+    "source_url": "https://www.newyorkfed.org/medialibrary/media/research/staff_reports/sr512.pdf",
+    "retrieved": "2026-10-05",
+    "peer_reviewed": false
+  },
+  "claim": {
+    "statement": "Un indice actions américain gagne en moyenne un rendement positif dans la fenêtre d'environ 24 heures qui se termine juste avant la publication d'une annonce programmée du FOMC, sans rendement à l'annonce ni après sur l'indice actions (Lucca-Moench, 1994-2011). Le même motif est retrouvé sur les futures S&P 500 avec une fenêtre plus courte (Hu et al., 1994-2018) et, sur les devises contre dollar, sous la forme d'un excès de rendement des jours d'annonce FOMC avec une composante pré-annonce (base-8d27d746, 1994-2013). Deux sources trouvent en revanche que l'effet FOMC a disparu sur la période récente : non significatif sur 2012-2018 (Hu et al.) et indistinguable des jours ordinaires depuis janvier 2016 (Kurov et al.).",
+    "quoted": "We document large average excess returns on U.S. equities in anticipation of monetary policy",
+    "from_fiche": "lucca-moench-2015-pre-fomc-drift"
+  },
+  "universe": {
+    "primary": "Future d'indice actions américain (le papier graine mesure l'indice SPX comptant et affirme que l'E-mini S&P500 a des rendements pre-FOMC quasi identiques ; Kurov et al. et Hu et al. mesurent directement les futures S&P 500). Événements : réunions programmées du FOMC uniquement, environ huit par an.",
+    "secondary": [
+      "Devises contre dollar américain, sens « short USD / long autre devise » : documenté par le seul voisin base-8d27d746 (données haute fréquence 1994-2013, 160 jours d'annonce FOMC). Extension de marché du même indicateur de calendrier, non retenue dans la construction principale faute d'un second papier qui la soutienne.",
+      "Exclus a priori par le papier graine : Treasuries, future fed funds, Eurodollar, où aucun effet n'est trouvé."
+    ],
+    "quoted": "period from 2 pm on the day before a scheduled FOMC announcement until 2 pm on the day",
+    "from_fiche": "lucca-moench-2015-pre-fomc-drift"
+  },
+  "horizon": {
+    "value": "Une fenêtre d'événement de 24 heures se terminant 15 minutes avant l'heure de publication du communiqué du FOMC ; environ huit fenêtres par an. Pas d'horizon glissant.",
+    "unit": "hours",
+    "quoted": [
+      "period from 2 pm on the day before a scheduled FOMC announcement until 2 pm on the day",
+      "ln(Pt/Pt−1). Following LM, we initially focus on the return in 24 hours ending 15 minutes"
+    ],
+    "from_fiche": [
+      "lucca-moench-2015-pre-fomc-drift",
+      "kurov-2021-disappearing-pre-fomc-drift"
+    ]
+  },
+  "signal_construction": {
+    "value": "Indicateur de calendrier binaire, sans transformation de prix : score = +1 sur un future d'indice actions pendant les 24 heures qui se terminent 15 minutes avant l'heure de publication d'une annonce programmée du FOMC, 0 sinon (réunions non programmées exclues). Le rendement prédit est le log-rendement du future sur cette même fenêtre ; la position est fermée avant l'annonce, donc sans connaître son contenu. L'heure de publication doit être fixée réunion par réunion : 14h15 ET de septembre 1994 à mars 2011 (graine), puis variable, et 14h00 ET depuis mars 2013 selon Kurov et al. ; au-delà de décembre 2019, aucune source de ce dossier ne la donne (null, entrée todo). Aucun conditionnement de régime (VIX, pente, conférence de presse, ZLB) n'est retenu : ce sont des étapes ultérieures.",
+    "quoted": [
+      "is equal to one on scheduled pre-FOMC announcement windows and zero otherwise. In alternative",
+      "ln(Pt/Pt−1). Following LM, we initially focus on the return in 24 hours ending 15 minutes",
+      "and at 2:00 pm since March 2013"
+    ],
+    "from_fiche": [
+      "lucca-moench-2015-pre-fomc-drift",
+      "kurov-2021-disappearing-pre-fomc-drift"
+    ],
+    "parameters": {
+      "window_length_hours": {"value": 24, "cited_by": "lucca-moench-2015-pre-fomc-drift, kurov-2021-disappearing-pre-fomc-drift"},
+      "exit_offset_before_announcement_minutes": {"value": 15, "cited_by": "kurov-2021-disappearing-pre-fomc-drift (le papier graine : environ quinze minutes avant la publication)"},
+      "announcement_time_after_2019": {"value": null, "reason": "aucune source du dossier ne donne l'heure de publication après décembre 2019 ; elle doit être établie point-in-time, réunion par réunion"},
+      "sign": {"value": "long", "cited_by": "lucca-moench-2015-pre-fomc-drift"}
+    }
+  },
+  "reported_results": [
+    {
+      "name": "pre_fomc_24h_excess_return_bp_post1994",
+      "value": 49,
+      "unit": "bp",
+      "quoted": "average been 49 basis points, with a t-statistic of more than 4.5 based on Huber-White standard",
+      "from_fiche": "lucca-moench-2015-pre-fomc-drift",
+      "note": "SPX, fenêtre 2pm-2pm, 131 réunions de septembre 1994 à mars 2011."
+    },
+    {
+      "name": "pre_fomc_24h_t_stat_post1994",
+      "value": 4.5,
+      "unit": "t-stat",
+      "quoted": "average been 49 basis points, with a t-statistic of more than 4.5 based on Huber-White standard",
+      "from_fiche": "lucca-moench-2015-pre-fomc-drift"
+    },
+    {
+      "name": "n_pre_fomc_observations_post1994",
+      "value": 131,
+      "unit": "observations",
+      "quoted": "98 of the 131 pre-FOMC announcement returns are positive in our sample",
+      "from_fiche": "lucca-moench-2015-pre-fomc-drift"
+    },
+    {
+      "name": "sharpe_ratio_2pm_to_2pm_post1994",
+      "value": 1.14,
+      "unit": "Sharpe annualisé",
+      "quoted": "would have earned a large annualized Sharpe ratio of 1.14 as reported in the Table",
+      "from_fiche": "lucca-moench-2015-pre-fomc-drift",
+      "note": "Brut de coûts, sur indice comptant."
+    },
+    {
+      "name": "announcement_to_close_return_post1994",
+      "value": null,
+      "quoted": "right before the announcement until the market close is essentially zero",
+      "from_fiche": "lucca-moench-2015-pre-fomc-drift"
+    },
+    {
+      "name": "no_effect_in_fixed_income",
+      "value": null,
+      "quoted": "we find no such effect in U.S. Treasury securities and",
+      "from_fiche": "lucca-moench-2015-pre-fomc-drift"
+    },
+    {
+      "name": "emini_tracks_cash_index",
+      "value": null,
+      "quoted": "the SPX very closely and exhibits almost identical pre-FOMC announcement returns as the cash",
+      "from_fiche": "lucca-moench-2015-pre-fomc-drift"
+    },
+    {
+      "name": "announcement_time_changed_after_sample",
+      "value": null,
+      "quoted": "Since April 2011, the time of the release has varied between 12:30 pm and",
+      "from_fiche": "lucca-moench-2015-pre-fomc-drift"
+    },
+    {
+      "name": "drift_disappeared_after_2015",
+      "value": null,
+      "quoted": "essentially disappeared after 2015 in both announcements accompanied by press",
+      "from_fiche": "kurov-2021-disappearing-pre-fomc-drift"
+    },
+    {
+      "name": "mean_pre_fomc_return_with_pc_2016_2019_pct",
+      "value": 0.092,
+      "unit": "%",
+      "quoted": "(January 2016 to December 2019) is 0.092",
+      "from_fiche": "kurov-2021-disappearing-pre-fomc-drift",
+      "note": "Futures S&P 500, fenêtre de l'ouverture de la veille à 15 minutes avant l'annonce, 20 annonces avec conférence de presse."
+    },
+    {
+      "name": "wilcoxon_pc_vs_non_announcement_2016_2019_not_rejected",
+      "value": null,
+      "quoted": "We cannot reject the null hypothesis of equal central tendency",
+      "from_fiche": "kurov-2021-disappearing-pre-fomc-drift",
+      "note": "Depuis janvier 2016, les jours d'annonce ne se distinguent plus des jours ordinaires."
+    },
+    {
+      "name": "post_lm_pre_fomc_mean_log_return_pct",
+      "value": 0.047,
+      "unit": "%",
+      "quoted": "Mean 0.492 0.009 0.047 0.038",
+      "quoted_source": "Mean 0 .492 0 .009 0.047 0 .038",
+      "quoted_repair": "table",
+      "from_fiche": "kurov-2021-disappearing-pre-fomc-drift",
+      "note": "Table 1 : 0.047 est la moyenne pré-FOMC d'avril 2011 à décembre 2019, contre 0.038 les jours sans annonce."
+    },
+    {
+      "name": "announcement_time_since_march_2013",
+      "value": null,
+      "quoted": "and at 2:00 pm since March 2013",
+      "from_fiche": "kurov-2021-disappearing-pre-fomc-drift",
+      "note": "Heure ET de l'annonce ; sert à caler la fin de fenêtre sur notre pool jusqu'en décembre 2019."
+    },
+    {
+      "name": "fomc_pre_announcement_return_bps",
+      "value": 27.14,
+      "unit": "bp par événement",
+      "quoted": "announcement returns associated with FOMC, with an average value of 27.14 basis points per",
+      "from_fiche": "premium-for-heightened-uncertainty-explaining-pr-W3122856157",
+      "note": "Futures S&P 500, fenêtre 16h veille → 5 minutes avant l'annonce, septembre 1994 – mai 2018."
+    },
+    {
+      "name": "fomc_pre_announcement_return_2012_2018_bps",
+      "value": 3.96,
+      "unit": "bp par événement",
+      "quoted": "3.96 basis points for the FOMC announcements",
+      "from_fiche": "premium-for-heightened-uncertainty-explaining-pr-W3122856157",
+      "note": "Non significatif selon la fiche voisine : l'effet pré-FOMC a disparu après 2011."
+    },
+    {
+      "name": "window_difference_vs_lucca_moench",
+      "value": null,
+      "quoted": "First, our pre-announcement window starts from 4 pm on the previous day, shorter than the 24-hours window used by Lucca and Moench (2015), excluding the small price run-up from 2 pm to 4 pm on the day prior to the announcement.",
+      "from_fiche": "premium-for-heightened-uncertainty-explaining-pr-W3122856157",
+      "note": "Passage cité dans la consigne (note 15 du papier)."
+    },
+    {
+      "name": "fx_short_usd_excess_return_fomc_days",
+      "value": null,
+      "quoted": "a trading strategy that is short the U.S. dollar and long other currencies exhibits signiﬁcantly larger average excess returns on days with scheduled FOMC announcements compared to all other days",
+      "from_fiche": "base-8d27d746",
+      "note": "Passage cité dans la consigne. Extension du motif aux devises contre dollar."
+    },
+    {
+      "name": "fx_pre_announcement_window",
+      "value": null,
+      "quoted": "we decompose daily returns by sampling the data at 215pm and 4pm and calculate currency returns over two non-overlapping time windows: (i) from 4pm on any given day to 215pm the following day and (ii) from 215pm to 4pm on the same day.",
+      "from_fiche": "base-8d27d746",
+      "note": "Passage cité dans la consigne. Fenêtre pré-annonce 16h → 14h15 le lendemain sur les devises."
+    },
+    {
+      "name": "fx_n_fomc_announcement_days",
+      "value": 160,
+      "unit": "jours d'annonce",
+      "quoted": "There are eight scheduled FOMC meetings in one year. This leaves us with 160 FOMC announcement days and 4,512 trading days with no scheduled FOMC announcements.",
+      "from_fiche": "base-8d27d746",
+      "note": "Passage cité dans la consigne ; janvier 1994 – décembre 2013, réunions non programmées exclues."
+    }
+  ],
+  "what_is_missing": [
+    "Aucune source ne donne l'heure de publication du FOMC après décembre 2019 : sur la fin de notre pool (2020-2023), elle est null et doit faire l'objet d'une entrée todo.",
+    "Aucun coût de transaction dans aucune des sources : tous les rendements et Sharpe sont bruts.",
+    "Aucune source ne mesure l'effet sur un future autre que le S&P 500 (indices actions non américains seulement en close-to-close au comptant dans la graine ; devises au comptant dans base-8d27d746).",
+    "Aucun IC, aucune métrique transversale : toutes les sources mesurent une moyenne de rendement d'événement.",
+    "Aucune donnée postérieure à 2019 sur l'existence de l'effet ; les deux sources qui couvrent la période récente le trouvent absent.",
+    "Les auteurs et l'année de base-8d27d746 ne figurent pas dans la consigne ; seuls trois passages en sont disponibles."
+  ],
+  "transposability": {
+    "what_transfers": "L'indicateur de calendrier : il ne dépend que de la date et de l'heure publiques des réunions programmées du FOMC, connues à l'avance, et se calcule sur des barres intraday OHLCV d'un future d'indice actions (la fenêtre de 24 heures se terminant 15 minutes avant l'annonce se lit sur des barres de session étendue). La position se ferme avant l'annonce : la règle est sans look-ahead par construction. Le voisin base-8d27d746 indique que le même calendrier porte aussi un excès de rendement sur les devises contre dollar, dans le sens short USD.",
+    "what_does_not_transfer": [
+      "La métrique : un indicateur binaire identique pour tous les instruments à une date donnée n'a pas de dispersion transversale ; il ne produit pas d'IC transversal sans être reformulé.",
+      "La taille d'échantillon : environ huit événements par an, soit de l'ordre de soixante-quatre sur notre pool 2016-2023.",
+      "La période : Kurov et al. trouvent l'effet indistinguable de zéro depuis janvier 2016 et Hu et al. le trouvent non significatif sur 2012-2018 ; notre pool tombe entièrement dans la période où l'effet est rapporté absent.",
+      "L'horloge : l'heure de publication a changé après mars 2011 ; elle n'est donnée par les sources que jusqu'en décembre 2019 et doit être cataloguée point-in-time, réunion par réunion.",
+      "L'univers : les Treasuries, futures de taux courts et Eurodollar sont écartés par la graine ; les matières premières ne sont testées par aucune source.",
+      "Les coûts : aucun multiplicateur, tick ni frais n'est donné, et aucune source ne chiffre la stratégie nette."
+    ],
+    "what_aligns_well": "La granularité intraday (fenêtres de quelques heures, mesurées sur futures S&P 500 par deux des sources) correspond à notre univers, et le déclencheur est une donnée point-in-time par nature : un calendrier publié à l'avance."
+  },
+  "synthesis": {
+    "dossier": "lucca-moench-2015-pre-fomc-drift",
+    "roles": {
+      "kurov-2021-disappearing-pre-fomc-drift": {
+        "role": "contredit",
+        "why": "Même mécanisme et même instrument (futures S&P 500), mais trouve que le drift a essentiellement disparu après 2015, les jours d'annonce ne se distinguant plus des jours ordinaires depuis janvier 2016. Il fournit aussi la fenêtre de 24 heures se terminant 15 minutes avant l'annonce et l'heure de publication depuis mars 2013, utilisées dans la construction."
+      },
+      "premium-for-heightened-uncertainty-explaining-pr-W3122856157": {
+        "role": "contredit",
+        "why": "Retrouve le drift pré-FOMC sur futures S&P 500 sur 1994-2018 (27.14 bp), mais le trouve non significatif sur 2012-2018 (3.96 bp) : l'effet est absent sur la période récente."
+      },
+      "base-9b7bc0b4": {
+        "role": "hors_sujet",
+        "why": "Étudie la réaction des actions aux surprises de taux des fed funds conditionnellement au sentiment, autour de l'annonce ; le pre-FOMC drift n'y est qu'un facteur de confusion à écarter."
+      },
+      "base-a7f2298e": {
+        "role": "hors_sujet",
+        "why": "Dérive de prix dans les 30 minutes avant des annonces macro, dont le sens suit celui de la surprise (information privée) : mécanisme directionnel conditionné à la surprise, pas un rendement positif inconditionnel avant le FOMC."
+      },
+      "base-53e0f935": {
+        "role": "hors_sujet",
+        "why": "Flux d'ordres et liquidité sur le marché obligataire les jours d'annonce ; aucun rendement pré-annonce étudié."
+      },
+      "andersen-2003-micro-effects-macro-announcements": {
+        "role": "hors_sujet",
+        "why": "Réaction contemporaine des devises à la surprise macro dans les 5 minutes après publication ; rien sur la fenêtre pré-annonce."
+      },
+      "base-d024c572": {
+        "role": "hors_sujet",
+        "why": "Teneurs de marché désignés pendant des mouvements de prix extrêmes sur actions ; aucun lien avec les annonces du FOMC."
+      },
+      "base-f94a74c7": {
+        "role": "hors_sujet",
+        "why": "Sauts de prix des Treasuries aux heures d'annonces et chocs de liquidité pré-annonce ; ne mesure pas de rendement directionnel pré-annonce."
+      },
+      "boyarchenko-2023-overnight-drift": {
+        "role": "hors_sujet",
+        "why": "Drift overnight 02:00-03:00 ET expliqué par l'inventaire des teneurs de marché ; les auteurs écartent explicitement une explication par les annonces, la muette FOMC y étant non significative."
+      },
+      "base-8d27d746": {
+        "role": "complete",
+        "why": "Même mécanisme (excès de rendement lié au calendrier des annonces programmées du FOMC, avec une composante pré-annonce), sur un marché que la graine ne teste pas : les devises contre dollar, sens short USD, fenêtre pré-annonce 16h → 14h15."
+      }
+    },
+    "apport": "nouveau",
+    "sources": [
+      "lucca-moench-2015-pre-fomc-drift",
+      "kurov-2021-disappearing-pre-fomc-drift",
+      "premium-for-heightened-uncertainty-explaining-pr-W3122856157",
+      "base-8d27d746"
+    ],
+    "ignored": [
+      "base-9b7bc0b4 : réaction aux surprises de taux selon le sentiment ; le drift n'y est qu'un confondant",
+      "base-a7f2298e : dérive informée de 30 minutes dans le sens de la surprise macro, mécanisme différent",
+      "base-53e0f935 : flux d'ordres obligataire, aucun rendement pré-annonce",
+      "andersen-2003-micro-effects-macro-announcements : réaction post-publication aux surprises sur devises",
+      "base-d024c572 : teneurs de marché et mouvements extrêmes, sans rapport avec le FOMC",
+      "base-f94a74c7 : sauts des Treasuries aux annonces et liquidité, pas de rendement pré-annonce",
+      "boyarchenko-2023-overnight-drift : drift overnight d'inventaire, explicitement non lié aux annonces"
+    ],
+    "mechanism": "Un actif sensible à la politique monétaire américaine gagne un rendement positif dans la fenêtre qui précède la publication d'une décision programmée du FOMC, avant que le contenu de la décision soit connu ; Hu et al. et Kurov et al. l'attribuent à une prime de résolution d'incertitude, la graine le laisse inexpliqué.",
+    "agreements": [
+      "Le signal est un indicateur de calendrier sur les réunions programmées du FOMC, sans donnée de marché autre que le prix (graine, Kurov et al., Hu et al., base-8d27d746).",
+      "La fenêtre se ferme avant la publication de l'annonce (graine, Kurov et al., Hu et al.).",
+      "Sur les futures/indice S&P 500, l'effet est positif et significatif sur la période 1994-2011 (graine, Kurov et al., Hu et al.).",
+      "Le sens est long l'actif risqué avant l'annonce (graine, Kurov et al., Hu et al. ; short USD pour base-8d27d746)."
+    ],
+    "disagreements": [
+      "Période : la graine (1994-2011) trouve un effet fort ; Hu et al. le trouvent non significatif sur 2012-2018 et Kurov et al. indistinguable de zéro depuis janvier 2016. Le désaccord porte sur l'existence de l'effet sur notre pool, pas sur son signe.",
+      "Fenêtre : 14h00 veille → 14h00 jour J (graine) ; ouverture actions de la veille → 15 minutes avant l'annonce, avec la variante 24 heures (Kurov et al.) ; 16h veille → 5 minutes avant (Hu et al.) ; 16h → 14h15 (base-8d27d746).",
+      "Marché : la graine ne trouve aucun effet sur le revenu fixe et ne teste pas les devises ; base-8d27d746 trouve un effet sur les devises contre dollar.",
+      "Composante post-annonce : nulle sur l'indice actions selon la graine ; base-8d27d746 décrit des rendements de jour d'annonce composés d'une partie pré- et d'une partie post-annonce sur les devises.",
+      "Ampleur : 49 bp par événement (graine, 2pm-2pm, 1994-2011) contre 27.14 bp (Hu et al., 16h veille → ann−5min, 1994-2018), écart que Hu et al. attribuent à la fenêtre plus courte et à la période post-2011.",
+      "Conditionnement : Kurov et al. ne trouvent de drift post-2011 que pour les annonces avec conférence de presse, distinction absente de la graine (toutes ses réunions en sont dépourvues) ; non retenue ici car c'est un régime."
+    ],
+    "contributions": [
+      "base-8d27d746 : un second marché pour le même indicateur, les devises contre dollar dans le sens short USD, avec une fenêtre pré-annonce 16h → 14h15 et 160 jours d'annonce sur 1994-2013.",
+      "kurov-2021-disappearing-pre-fomc-drift (contredit) : l'heure de publication depuis mars 2013 (14h00 ET) et la variante 24 heures se terminant 15 minutes avant l'annonce, ainsi que le constat d'absence d'effet depuis 2016.",
+      "premium-for-heightened-uncertainty-explaining-pr-W3122856157 (contredit) : mesure directe sur futures S&P 500 jusqu'en 2018 et constat d'absence de l'effet FOMC sur 2012-2018."
+    ],
+    "criteria_applied": [
+      "1. Accord : quatre sources décrivent la même construction (indicateur de calendrier FOMC, long avant l'annonce, sortie avant publication) ; la fenêtre de 24 heures se terminant juste avant l'annonce est celle de la graine et la variante explicite de Kurov et al. — c'est la fenêtre la plus partagée. La contradiction sur la période n'est pas un désaccord de signe ; elle est écrite et non tranchée.",
+      "2. Transposabilité : la fenêtre se calcule sur barres OHLCV d'un future d'indice actions à partir du seul calendrier ; l'extension devises de base-8d27d746 demande en plus le sens de chaque instrument contre le dollar et ne repose que sur un papier, elle reste en univers secondaire.",
+      "3. Parcimonie : deux paramètres (longueur 24 h, sortie 15 minutes avant l'annonce), sans filtre de conférence de presse, de ZLB, de VIX ni de pente, qui sont des régimes.",
+      "4. Traçabilité : 24 heures et 15 minutes sont cités (graine, Kurov et al.) ; l'heure d'annonce est citée jusqu'en 2019 (Kurov et al.) et laissée null au-delà."
+    ],
+    "chosen_from": [
+      "lucca-moench-2015-pre-fomc-drift",
+      "kurov-2021-disappearing-pre-fomc-drift"
+    ],
+    "why": "L'indicateur de calendrier sur 24 heures se terminant 15 minutes avant l'annonce est la construction que le plus de sources décrivent, la plus simple et entièrement citée ; les sources récentes qui la contredisent sur la période sont consignées comme désaccord, pas utilisées pour modifier le signal."
+  }
+}

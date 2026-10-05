@@ -43,6 +43,19 @@ DOSSIERS = REPO / "corpus" / "dossiers"
 TEXT = REPO / "corpus" / "text"
 PASSAGES = 4  # passages par voisin montrés à la synthèse
 
+# D52 : ce que la synthèse dit de CHAQUE voisin, dans une liste fermée. C'est la
+# logique imposée à l'agent : il ne retient pas un voisin parce qu'il est proche,
+# il dit ce qu'il apporte, ou pourquoi il ne sert pas.
+ROLES = {
+    "complete": "apporte à la graine ce qu'elle n'a pas : un paramètre, un marché, un horizon,"
+                " une étape de construction — cité",
+    "confirme": "décrit le même mécanisme, sans rien ajouter à la construction",
+    "contredit": "trouve l'effet inverse, ou son absence, sur un marché ou un horizon",
+    "deja_teste": "a déjà sa propre hypothèse, et la synthèse ne ferait que la refaire",
+    "hors_sujet": "proche par les mots, pas par le mécanisme",
+}
+GARDES = ("complete", "confirme", "contredit")  # les rôles qui font une source
+
 
 def sid_de(graine: str) -> str:
     return f"synthese-dossier-{graine}"
@@ -78,6 +91,17 @@ def figer_texte(api, paper_id: str, ident: str) -> Path:
     return out
 
 
+def deja_utilises() -> dict[str, str]:
+    """Chaque papier déjà graine ou source d'une synthèse, et laquelle."""
+    out = {}
+    for f in sorted(DOSSIER.glob("synthese-*.json")):
+        syn = json.loads(f.read_text(encoding="utf-8")).get("synthesis") or {}
+        for s in [syn.get("dossier"), *(syn.get("sources") or [])]:
+            if s:
+                out.setdefault(s, f.stem)
+    return out
+
+
 def sources_du_dossier(d: dict) -> dict[str, dict]:
     """Chaque source possible de la synthèse : la graine, puis chaque voisin."""
     out = {d["seed"]["fiche_id"]: {"kind": "graine", "title": d["seed"]["title"]}}
@@ -110,9 +134,27 @@ critères ci-dessous l'imposent.
 
 Tu **n'empiles pas** des signaux distincts, et tu **ne conditionnes pas** le
 signal à un régime (« seulement les jours de forte volatilité ») : les régimes
-et les combinaisons sont des étapes à part, plus tard dans la chaîne. Un
-voisin sans rapport réel avec la graine — la similarité du texte ne prouve pas
-qu'il dit la même chose — **s'ignore**, et tu le dis dans `ignored`.
+et les combinaisons sont des étapes à part, plus tard dans la chaîne.
+
+## La logique, voisin par voisin — obligatoire
+
+Pour **chaque** voisin, sans en sauter un, tu donnes **un rôle et un seul**,
+dans cette liste fermée, avec sa raison :
+
+{roles}
+
+Dans cet ordre de questions : décrit-il le **même mécanisme** que la graine
+(sinon `hors_sujet` — la similarité d'un texte ne prouve rien) ? A-t-il **déjà
+son hypothèse** (marqué « déjà testé » ci-dessous) et la synthèse ne ferait-elle
+que la refaire (`deja_teste`) ? Trouve-t-il l'effet **inverse ou absent**
+(`contredit`) ? Apporte-t-il **un élément cité que la graine n'a pas**
+(`complete`) ? Sinon, il `confirme`.
+
+Puis tu déclares l'**apport** de la synthèse : `nouveau` si au moins un voisin
+`complete` la graine, `aucun` sinon. **Une synthèse sans apport n'est pas un
+échec** : c'est le constat que la graine se suffit, et elle ne sera pas codée.
+Ne force jamais un rôle `complete` pour avoir un apport.
+{graine_testee}
 
 ## Ce que tu rends
 
@@ -137,8 +179,10 @@ ci-dessous (section SCHÉMA), avec ces règles propres à une synthèse :
 ```json
 "synthesis": {{
   "dossier": "{graine}",
-  "sources": ["{graine}", "<identifiant d'un voisin retenu>", "..."],
-  "ignored": ["<identifiant d'un voisin écarté> : <pourquoi>"],
+  "roles": {{"<identifiant de CHAQUE voisin>": {{"role": "<rôle>", "why": "<raison>"}}}},
+  "apport": "nouveau | aucun",
+  "sources": ["{graine}", "<chaque voisin complete, confirme ou contredit>"],
+  "ignored": ["<chaque voisin hors_sujet ou deja_teste> : <pourquoi>"],
   "mechanism": "<le mécanisme commun, en tes mots>",
   "agreements": ["<ce sur quoi les papiers s'accordent>"],
   "disagreements": ["<ce sur quoi ils divergent : fenêtre, marché, signe, horizon…>"],
@@ -149,7 +193,10 @@ ci-dessous (section SCHÉMA), avec ces règles propres à une synthèse :
 }}
 ```
 
-`sources` contient toujours la graine et au moins un voisin.
+`sources` contient la graine et **exactement** les voisins `complete`,
+`confirme` ou `contredit`. Chaque voisin `complete` a au moins un résultat cité
+dans `reported_results` (son `from_fiche`) : ce qu'il apporte se lit dans son
+texte.
 
 ## Comment choisir la version — dans cet ordre, et rien d'autre
 
@@ -196,6 +243,10 @@ def do_prepare(graine: str, n_voisins: int) -> int:
     if (DOSSIER / f"{sid}.json").is_file():
         raise SystemExit(f"{sid} existe déjà : son dossier est figé. Une synthèse se refait "
                          "par une décision écrite, pas en réécrivant ce contre quoi on la juge.")
+    utilises = deja_utilises()
+    if graine in utilises:
+        raise SystemExit(f"{graine} est déjà graine ou source de {utilises[graine]} : une "
+                         "seconde synthèse referait la même hypothèse (D52)")
     d = chercher(graine, n_voisins, PASSAGES)
     # Le dossier d'une synthèse est figé sous le nom de la synthèse : `voisins.py`
     # peut réécrire le dossier d'exploration, jamais celui contre lequel on juge.
@@ -212,17 +263,29 @@ def do_prepare(graine: str, n_voisins: int) -> int:
             ident = base_id(v["paper_id"])
             figer_texte(api, v["paper_id"], ident)
             corps = ""
+        marques = []
+        if v.get("hypothesis"):
+            marques.append(f"**déjà testé** : ce papier a sa propre hypothèse, {v['hypothesis']}")
+        if ident in utilises:
+            marques.append(f"**déjà source** de la synthèse `{utilises[ident]}`")
+        marque = "".join(f"> {m}\n" for m in marques) + ("\n" if marques else "")
         passages = "\n\n".join(
             f"> *{p['section']}, page {p['page']}, similarité {p['similarity']:.3f}*\n>\n> "
             + " ".join(p["content"].split()) for p in v["passages"])
         blocs.append(f"### [{ident}] {v['title']}\n\nSimilarité {v['similarity']:.3f}.\n\n"
-                     f"{corps}Ses passages les plus proches de la graine :\n\n{passages}\n")
+                     f"{marque}{corps}Ses passages les plus proches de la graine :\n\n"
+                     f"{passages}\n")
     WORK.mkdir(parents=True, exist_ok=True)
     out = WORK / f"{sid}.md"
     out.write_text(CONSIGNE.format(
         n=len(d["neighbors"]), graine=graine, sid=sid, today=date.today().isoformat(),
         chemin=(DOSSIER / f"{sid}.json").relative_to(REPO).as_posix(),
         criteres="\n".join(f"{i}. {c}" for i, c in enumerate(CRITERES, 1)),
+        roles="\n".join(f"- `{k}` : {v}" for k, v in ROLES.items()),
+        graine_testee=(f"\n**La graine a déjà son hypothèse, {d['seed']['hypothesis']}.** Une "
+                       "synthèse dont la version est celle de la graine, sans voisin `complete`, "
+                       "la referait : son apport est alors `aucun`.\n"
+                       if d["seed"].get("hypothesis") else ""),
         schema=SCHEMA.read_text(encoding="utf-8"),
         fiche_graine=ff[graine].read_text(encoding="utf-8"), voisins="\n".join(blocs)),
         encoding="utf-8")
@@ -262,18 +325,43 @@ def valider(path: Path) -> list[str]:
     if fiche.get("fiche_id") != sid_de(graine) or path.stem != sid_de(graine):
         fautes.append(f"fiche_id et nom de fichier doivent valoir {sid_de(graine)}")
     sources = syn.get("sources") or []
-    if graine not in sources or len(sources) < 2:
-        fautes.append("`sources` contient la graine et au moins un voisin")
     hors = [s for s in sources if s not in possibles]
     if hors:
         fautes.append(f"sources hors du dossier : {hors}")
+    # D52 : chaque voisin a son rôle, et les sources s'en déduisent.
+    roles = syn.get("roles")
+    voisins = {k for k, v in possibles.items() if v["kind"] != "graine"}
+    if not isinstance(roles, dict):
+        fautes.append("synthesis.roles absent : chaque voisin reçoit un rôle (D52)")
+        roles = {}
+    if set(roles) != voisins:
+        fautes.append(f"rôles manquants {sorted(voisins - set(roles))} ou en trop "
+                      f"{sorted(set(roles) - voisins)}")
+    for k, r in roles.items():
+        if (not isinstance(r, dict) or r.get("role") not in ROLES
+                or not str(r.get("why") or "").strip()):
+            fautes.append(f"rôle de {k} : un de {sorted(ROLES)}, avec sa raison")
+    def de_role(*noms: str) -> set[str]:
+        return {k for k, r in roles.items() if isinstance(r, dict) and r.get("role") in noms}
+    if roles and set(sources) != {graine} | de_role(*GARDES):
+        fautes.append("`sources` = la graine + les voisins complete, confirme ou contredit")
+    completes = de_role("complete")
+    apport = syn.get("apport")
+    if apport not in ("nouveau", "aucun"):
+        fautes.append("synthesis.apport : `nouveau` ou `aucun`")
+    elif (apport == "nouveau") != bool(completes):
+        fautes.append("apport `nouveau` si et seulement si un voisin `complete` la graine")
+    cites = {r.get("from_fiche") for r in fiche.get("reported_results") or []
+             if isinstance(r, dict)}
+    for k in sorted(completes - cites):
+        fautes.append(f"{k} est `complete` sans aucun résultat cité de son texte")
     choisies = syn.get("chosen_from") or []
     if not choisies or any(c not in sources for c in choisies):
         fautes.append("`chosen_from` doit nommer au moins une source de la synthèse")
     for cle in ("mechanism", "why"):
         if not str(syn.get(cle) or "").strip():
             fautes.append(f"synthesis.{cle} vide")
-    for cle in ("agreements", "disagreements", "criteria_applied", "contributions"):
+    for cle in ("agreements", "disagreements", "criteria_applied"):
         if not isinstance(syn.get(cle), list) or not syn.get(cle):
             fautes.append(f"synthesis.{cle} doit être une liste non vide")
     for i, r in enumerate(fiche.get("reported_results") or []):

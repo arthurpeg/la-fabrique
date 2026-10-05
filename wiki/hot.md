@@ -1,6 +1,6 @@
 ---
 type: hub
-updated: 2026-10-04
+updated: 2026-10-05
 status: genere
 sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 ---
@@ -12,7 +12,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 > Toute modification hors du bloc « Prochaines actions » sera perdue.
 > Pour changer ce qui s'affiche ici, édite `wiki/log.md` ou `ETAT.md`.
 
-*Régénérée le 2026-10-04.*
+*Régénérée le 2026-10-05.*
 
 ---
 
@@ -25,7 +25,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Décision la plus récente** | `decisions/DECISION-51-ancrage-obligatoire.md` (2026-10-03) — tout score se pose à l'ancre de `_common.run`. Avant elle, `D50` (S3 relatif à l'échelle du score) et `decisions/DECISION-49-l-horizon-du-signal.md` (2026-10-03) — un signal se juge et se compare à son horizon (hypothèse, sinon fiche), plus à 30 barres. Avant elle : `decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un |
 | **Tests au registre** | 187 |
 | **Idées abandonnées recensées** | 62 |
-| **Entrées au journal** | 124 |
+| **Entrées au journal** | 125 |
 
 ## Ce qui bloque
 
@@ -927,6 +927,7 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-10-05 | `decision` | **`D52` : la synthèse dit le rôle de chaque voisin, et ne refait jamais un test.** Audit à la demande de l'opérateur : voisins déjà testés invisibles (5/10 sur l'ITSM mondial), graine écartée par son seul titre exact, synthèses qui se recoupent, logique de l'agent non imposée. Corrigé : `voisins.py` (même papier par identifiant ou Jaccard ≥ 0,85, copies dédoublonnées, `hypothesis` par voisin) ; `synthese_dossier.py` (rôles fermés complete/confirme/contredit/deja_teste/hors_sujet exigés par le validateur, `apport` nouveau ⇔ un `complete` cité, refus des graines déjà utilisées) ; `synthese.py` (même garde) ; `code_signal.py --list` (synthèse codable seulement si valide et apport nouveau). Essai Lucca-Moench : valide, 1 complete (devises), 2 contredit (Kurov, Hu : effet disparu sur la période récente), 7 hors_sujet justifiés ; Baltussen (sans rôles) désormais non codable. | — |
 | 2026-10-03 | `decision` | **`D51` : l'ancrage par `_common.run` est obligatoire.** Demande de l'opérateur. Consigne réécrite ; le juge D34 passe `--ancrage` et refuse en `S1` tout score hors des ancres de `run` (vérifié sur les données). Mesuré avant : 11 modules sur 12 conformes, seul le témoin andersen (6,3 M scores hors ancre) ne l'est pas. Ne règle pas les désaccords de cellules et de séances (bitcoin-gold, bollerslev). Juge 27/27, registre 187 → 187. | — |
 | 2026-10-03 | `decision` | **`D50` : `S3` juge l'écart relativement à l'échelle du score.** Bruit mesuré : prix passés du panel tronqué identiques à un facteur près, log-rendements à ≤ 8,9e-16 ; honnêtes ≤ 4e-8 en relatif, tricheurs ≥ 5e-2. Tolérance relative 1e-6 + plancher absolu 1e-12 ; porte 05 FRANCHIE, tricheurs attrapés aux mêmes sondes (`L35`). Revue de la journée : `avancer.py` écartait à tort une fiche CONCORDANTE dont l'hypothèse change l'horizon (corrigé) ; plantage UTF-8 du juge sous Windows (corrigé) ; bollerslev rejugé vert, tour 2 DISCORDANT ρ 0,725 couv 0,184 ; andersen, bitcoin-gold et bollerslev échouent sur la couverture (ancrage), pas sur la lecture du papier. Registre 187 → 187. | — |
 | 2026-10-03 | `porte` | **Porte 08 réparée.** `gate_08.py` juge désormais chaque signal produit contre sa fiche (AMORCE, moissonnée, synthèse) augmentée de sa recette valide (`D34`), à l'horizon de `D49` : FRANCHIE, 6/6. En route : `horizon_signal.py` lisait boyarchenko « 10h » (mention tardive) au lieu de « Une heure » — la première mention fait désormais foi. Registre 187 → 187. | — |
@@ -934,7 +935,6 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 | 2026-10-03 | `gardes` | **`verifier_tout.py` : 1 PANNE, porte 08.** `gate_08.py` rejuge `signals/` contre la fiche seule (sans les valeurs de recette de `D34`) et ignore `fiches_harvest/` : andersen et bollerslev tombent en `S5`, les deux bitcoin « aucune fiche ». Signaux non retouchés ; alignement de la porte laissé à l'opérateur (`ETAT.md`). Registre 187 → 187. | — |
 | 2026-10-03 | `codage` | **Cinq fiches du lot 09, zéro vérifiée, cinq écartées avant mesure.** andersen-1997, bitcoin-is-not-the-new-gold, bitcoin-intraday, boyarchenko-2023, bollerslev-2018 : 10 recettes valides (1 à 4 essais), 20 codages, cinq DISCORDANT au tour 1, aucune concordance au tour 2 ; écarts : 4 concordance, 1 juge (témoin bollerslev refusé S3 trois fois, écarts 1e-12). Lot `LOT-09` : n = 36, 9 hypothèses, 35 recettes à faire. `fabrique-critique` À AMENDER : D42 et D34 se contrarient pour les papiers sans signal (`F62`) ; défaut `horizon_bars: int = 30` de la consigne refusé par `S5` (`L34`). ~1,9 M tokens, fenêtre 2 % → 75 %. Aucun IC, registre inchangé. | — |
 | 2026-10-02 | `decision` | **`D48` : un voisin vaut la moyenne de ses trois meilleurs morceaux.** Banc d'essai `scripts/banc_voisins.py` (étalon fixé avant : grappes D39, 21 graines, 38 frères) : rappel à 10 de 0,29 → 0,37 ; reclassement par cross-encodeur sans gain (0,76 s/paire) ; fusion avec les centroïdes 0,37 mais demande une table. Baltussen : voisins désormais du même mécanisme (tug of war overnight/intraday, momentum intraday SPY, patterns intraday). Dossier d'une synthèse figé sous son nom et non re-préparable. | — |
-| 2026-10-02 | `decision` | **`D47` : une hypothèse tirée d'un papier et de ses voisins dans toute la base.** `scripts/synthese_dossier.py --prepare <fiche>` : voisins (`D45`), dossier versionné, texte en base de chaque voisin sans fiche figé dans `corpus/text/base-<id>.default.txt` ; `fabrique-synthese` écrit une fiche `synthese-dossier-<fiche>` ; validateur mécanique (citations à la lettre dans le texte de leur source). Branché dans `/fabriquer-signaux` (étape 6). Premier essai, Baltussen 2021 : valide au premier essai, 1 voisin retenu sur 8, version = celle de la graine → **non codée** (doublon de H02). Limite constatée : voisins proches par le thème, rarement par le mécanisme. | — |
 
 Journal complet : [[log]]
 

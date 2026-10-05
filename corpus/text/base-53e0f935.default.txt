@@ -1,0 +1,2753 @@
+Board of Governors of the Federal Reserve System
+International Finance Discussion Papers
+Number 874
+September 2006
+Informed and Strategic Order Flow in the Bond Markets
+Paolo Pasquariello and Clara Vega
+NOTE: International Finance Discussion Papers are preliminary materials circulated to stimulate discussion
+and critical comment. References in publications to International Finance Discussion Papers (other than an
+acknowledgment that the writer has had access to unpublished material) should be cleared with the author
+or authors. Recent IFDPs are available on the Web at www.federalreserve.gov/pubs/ifdp/.
+
+Informed and Strategic Order Flow in the Bond Markets
+Paolo Pasquariello and Clara Vega*
+Abstract
+We study the role played by private and public info rmation in the process of price formation in the U.S.
+Treasury bond market. To guide our analysis, we develop a parsimonious model of speculative trading in the
+presence of two realistic market frictions – info rmation heterogeneity and imperfect competition among
+informed traders – and a public signal. We test its equilibrium implications by analyzing the response of two-
+year, five-year, and ten-year U.S. bond yields to order flow and real-time U.S. macroeconomic news. We find
+strong evidence of informational effects in the U.S. Treasury bond market: unanticipated order flow has a
+significant and permanent imp act on daily bond yield chang es during both announcement and non-
+announcement days. Our analysis further shows that, consistent with our stylized model, the contemporaneous
+correlation between order flow and yield changes is higher when the dispersion of beliefs among market
+participants is high and public announcements are noisy.
+JEL Classification: E44; G14
+Keywords: Treasury Bond Markets; Macroeconomic News Announcements; Strategic Trading; Market
+Microstructure; Order Flow; Real-Time Data; Expectations; Dispersion of Beliefs
+* Pasquariello is affiliated with the department of Finance at the Ross School of Business at University of
+
+ing; Market
+Microstructure; Order Flow; Real-Time Data; Expectations; Dispersion of Beliefs
+* Pasquariello is affiliated with the department of Finance at the Ross School of Business at University of
+Michigan and Vega is affiliated with the Board of Governors of the Federal Reserve Systemthe and the
+University of Rochester Simon School of Business. Please address comments to the authors via email at
+ppasquar@bus.umich.edu
+ and vega@simon.rochester.edu. We benefitted from the comments of Sreedhar
+Bharath, Michael Brandt, Michael Fleming, Clifton Green, Nejat Seyhun, Guojun Wu, Kathy Yuan, and other
+participants in seminars at the 2005 European Finance Association meetings in Moscow, the 2006 Bank of
+Canada Fixed Income Markets conference in Otta wa, Federal Reserve Board of Governors, George
+Washington University, the University of Maryland, the University of Michigan, the University of Rochester,
+and the University of Utah. The views in this paper are solely the responsibility of the authors and should not
+be interpreted as reflecting the views of the Board of Governors of the Federal Reserve System or of any
+other person associated with the Federal Reserve System.
+
+1 Introduction
+Identifying the causes of daily asset price movements remains a puzzling issue in ﬁnance. In a
+frictionless market, asset prices should immediately adjust to public news surprises. Hence, we
+should observe price jumps only during announcement times. However, asset prices ﬂuctuate
+signiﬁcantly during non-announcement days as well. This fact has motivated the introduction
+of various market frictions to better explain the behavior of asset prices. One possible friction
+is asymmetric information.
+1 When sophisticated agents trade, their private information is (par-
+tially) revealed to the market, via order ﬂow, causing revisions in asset prices even in the absence
+of public announcements.
+The goal of this paper is to theoretically identify and empirically measure the e ﬀect of these
+two complementary mechanisms responsible for daily price changes: aggregation of public news
+and aggregation of order ﬂow. In particular, we assess the relevance of each mechanism condi-
+tional on the dispersion of beliefs among traders and the public signals’ noise.
+To guide our analysis, we develop a parsimonious model of speculative trading in the spirit
+of Kyle (1985). The model builds upon two realisti c market frictions: information heterogeneity
+and imperfect competition among informed trader s (henceforth, speculators). In this setting,
+more diverse information among speculators leads to lower equilibrium market liquidity, since
+
+terogeneity
+and imperfect competition among informed trader s (henceforth, speculators). In this setting,
+more diverse information among speculators leads to lower equilibrium market liquidity, since
+their trading activity is more cautious than if they were homogeneously informed, thus making
+the market-makers more vulnerable to adverse selection. W e then introduce a public signal
+and derive equilibrium prices and trading strategies on announcement and non-announcement
+days. The contribution of the model is twofold. To our knowledge, it provides a novel theoretical
+analysis of the relationship between the trading activity of heterogeneously informed, imperfectly
+competitive speculators, the availability and quality of public information, and market liquidity.
+Furthermore, its analytically tractable closed-form solution, in terms of elementary functions,
+generates several explicit and empirically testable implications on the nature of that relationship.
+2
+1 According to Goodhart and O’Hara (1997, p. 102), “one pu zzle in the study of asset markets, either nationally
+or internationally, is that so little of the movements in such markets can be ascribed to identi ﬁed public ‘news’.
+In domestic (equity) markets this ﬁnding is often attributed to private infor mation being revealed.” This friction
+has been recently studied by Brandt and Kavajecz ( 2004) and Green (2004) in the U.S. Treasury bond market,
+
+kets this ﬁnding is often attributed to private infor mation being revealed.” This friction
+has been recently studied by Brandt and Kavajecz ( 2004) and Green (2004) in the U.S. Treasury bond market,
+by Andersen and Bollerslev (1998) and Evans and Lyo ns (2002, 2003, 2004) in the foreign exchange market, by
+Berry and Howe (1994) in the U.S. stock market, and by Br enner, Pasquariello, and Subrahmanyam (2005) in
+the U.S. corporate bond market, among others.
+2 Foster and Viswanathan (1996) and Back, Cao, and Willard (2000) extend Kyle (1985) to analyze the impact
+of competition among heterogeneously informed traders on market liquidity and price volatility in discrete-time
+and continuous-time models of intraday trading, resp ectively. Foster and Viswanathan (1993) show that, when
+the beliefs of perfectly informed traders are represented by elliptically contoured distributions, price volatility
+and trading volume depend on the surprise component of public information. Yet, neither model’s equilibrium
+is in closed-form, except the (analytically intractabl e) inverse incomplete gamma function in Back et al. (2000).
+Hence, their implications are sensitive to the chosen cal ibration parameters. Further, neither model, by its
+dynamic nature, generates unambiguous comparative sta tics for the impact of information heterogeneity or the
+1
+
+In particular, we show that the availability of a public signal improves market liquidity (the more
+so the lower that signal’s volatility) since its presence reduces the adverse selection risk for the
+market-makers and mitigates the quasi-monopolistic behavior of the speculators.
+This model is not asset-speci ﬁc, i.e., it applies to stock, bond, and foreign exchange markets.
+In this study, we test its implications for the U.S. government bond market for three reasons.
+First, Treasury market data contains signed trades; thus, we do not need to rely on algorithms
+(e.g., Lee and Ready, 1991) that add measurement error to our estimates of order ﬂow. Second,
+government bond markets represent the simplest trading environment to analyze price changes
+while avoiding omitted variable biases. For example, most theories predict an unambiguous link
+between macroeconomic fundamentals and bond yield changes, with unexpected increases in real
+activity and in ﬂation raising bond yields (e.g., Fleming and Remolona, 1997; Balduzzi, Elton,
+and Green, 2001, among others). In contrast, the link between macroeconomic fundamentals and
+the stock market is less clear (e.g., Andersen, Bollerslev, Diebold, and Vega, 2004; Boyd, Hu,
+and Jagannathan, 2005). Third, the market for Treasury securities is interesting in itself since it
+is among the largest, most liquid U.S. ﬁnancial markets.
+Our empirical results strongly support the main implications of our model. During non-
+
+r Treasury securities is interesting in itself since it
+is among the largest, most liquid U.S. ﬁnancial markets.
+Our empirical results strongly support the main implications of our model. During non-
+announcement days, adverse selection costs of unanticipated order ﬂow are higher when the
+dispersion of beliefs – measured by the standard deviation of professional forecasts of macroe-
+conomic news releases – is high. For instance, we estimate that a one standard deviation shock
+to abnormal order ﬂow decreases two-year, ﬁve-year, and ten-year bond yields by 7.19, 10.04,
+and 6.84 basis points, respectively, on high dispersion days compared to 4.08, 4.07,a n d 2.86
+basis points on low dispersion days. These di ﬀerences are economically and statistically signif-
+icant. Consistently, these higher adverse selection costs translate into higher contemporaneous
+correlation between order ﬂow changes and bond yield changes. For example, the adjusted R
+2 of
+regressing daily ﬁve-year Treasury bond yield changes on unanticipated order ﬂow is 41.38% on
+high dispersion days compared to 9.65% on low dispersion days. Intuitively, when information
+heterogeneity is high, the speculators’ quasi-monopolistic trading behavior leads to a “cautious”
+equilibrium where changes in unanticipated order ﬂow have a greater impact on bond yields.
+The release of a public signal, a trade-free source of information about fundamentals, induces
+
+a “cautious”
+equilibrium where changes in unanticipated order ﬂow have a greater impact on bond yields.
+The release of a public signal, a trade-free source of information about fundamentals, induces
+the speculators to trade more aggressively on their private information. Accordingly, weﬁnd that
+the correlation between unanticipated order ﬂow and day-to-day bond yield changes is lower
+during announcement days. For example, comparing non-announcement days with Nonfarm
+Payroll Employment release dates, the explanatory power of order ﬂow decreases from 15.31%
+to 6.47%, 21.03% to 19.61%,a n d 6.74% to 3.59% for the two-year, ﬁve-year, and ten-year bonds,
+respectively. Yet, when both the dispersion of beliefs and the noise of the public signal –
+measured as the absolute di ﬀerence between the actual announcement and its last revision –
+a r eh i g h ,t h ei m p o r t a n c eo fo r d e rﬂow in setting bond prices increases. All of the above results
+availability of public information on market liquidity. F inally, neither model can be easily generalized to allow
+for both a public signal of the traded asset’s payo ﬀ and less than perfectly correlated private information.
+2
+
+are robust to alternative measures of the dispersion of beliefs among market participants, as well
+as to di ﬀerent regression speci ﬁcations and the inclusion of di ﬀerent control variables. Lastly,
+our evidence cannot be attributed to transient inventory or portfolio rebalancing considerations,
+since the unanticipated government bond order ﬂow has a permanent impact on yield changes
+during both announcement and non-announcement days in the sample.
+Our paper is most closely related to two recent studies of order ﬂow in the U.S. Treasury mar-
+ket. Brandt and Kavajecz (2004) ﬁnd that order ﬂow accounts for up to 26% of the variation in
+yields on days without major macroeconomic announcements. Green (2004) examines the e ﬀect
+of order ﬂow on intraday bond price changes surrounding U.S. macroeconomic news announce-
+ments. W e extend both studies by identifying a theoretical and empirical link between the price
+discovery role of order ﬂow and the degree of information heterogeneity among investors and the
+quality of macroeconomic data releases. In particular, we document important e ﬀects of both
+dispersion of beliefs and public signal noise on the correlation between daily bond yield changes
+and order ﬂow during announcement and non-announcement days. This evidence complements
+the weak e ﬀects reported by Green (2004) over thirty-minute intervals around news releases.
+Since the econometrician does not observe the precise arrival time of private information signals,
+
+lements
+the weak e ﬀects reported by Green (2004) over thirty-minute intervals around news releases.
+Since the econometrician does not observe the precise arrival time of private information signals,
+narrowing the estimation window may lead to underestimating the e ﬀect of dispersion of beliefs
+on market liquidity.
+3
+Our work also belongs to the literature bridging the gap between asset pricing and market
+microstructure. Evans and Lyons (2003) ﬁnd that signed order ﬂow is a good predictor of
+subsequent exchange rate movements; Brandt and Kavajecz (2004) show that this is true for
+bond market movements; Easley, Hvidkjaer, and O’Hara (2002) argue that the probability of
+informed trading (PIN), a function of order ﬂow, is a priced ﬁrm characteristic in stock returns.
+These studies enhance our understanding of the determinants of asset price movements, but do
+not provide any evidence on the determinants of orderﬂow. Evans and Lyons (2004) address this
+issue by showing that foreign exchange order ﬂow predicts future macroeconomic surprises, i.e.,
+it conveys information about fundamentals. W e go a step further in linking the impact of order
+ﬂow on bond prices to macroeconomic uncertainty (public signal noise) and the heterogeneity of
+beliefs about real shocks.
+We proceed as follows. In Section 2, we construct a stylized model of trading to guide our
+empirical analysis. In Section 3, we describe th e data. In Section 4, we present the empirical
+results. W e conclude in Section 5.
+
+In Section 2, we construct a stylized model of trading to guide our
+empirical analysis. In Section 3, we describe th e data. In Section 4, we present the empirical
+results. W e conclude in Section 5.
+3 For instance, heterogeneously informed investors ma y not trade immediately after public news are released
+but instead wait to preserve (and explo it) their informational advantage as long (and as much) as possible, as in
+Foster and Viswanathan (1996).
+3
+
+2T h e o r e t i c a l M o d e l
+In this section we motivate our investigation of the impact of the dispersion of beliefs among
+sophisticated market participants and the release of macroeconomic news on the informational
+role of trading. W eﬁrst describe a one-shot version of the multi-period model of trading of Foster
+and Viswanathan (1996) and derive closed-form solutions for the equilibrium market depth and
+trading volume. Then, we enrich the model by introducing a public signal and consider its
+implications for the equilibrium price and trading strategies. All proofs are in the Appendix
+unless otherwise noted.
+2.1 Benchmark: No Public Signal
+The basic model is a two-date, one-period eco nomy in which a single risky asset is exchanged.
+Trading occurs only at the end of the period ( t =1 ), after which the asset payo ﬀ, a normally
+distributed random variable v with mean zero and variance σ2
+v,i sr e a l i z e d . T h ee c o n o m yi s
+populated by three types of risk-neutral traders: a discrete number ( M) of informed traders
+(that we label speculators), liquidity traders, an d perfectly competitive market-makers (MMs).
+All traders know the structure of the economy and the decision process leading to order ﬂow and
+prices.
+At time t =0 there is neither information asymmetry aboutv nor trading. Sometime between
+t =0 and t =1 , each speculator k receives a private and noisy signal of v, Svk .W e a s s u m e
+
+w and
+prices.
+At time t =0 there is neither information asymmetry aboutv nor trading. Sometime between
+t =0 and t =1 , each speculator k receives a private and noisy signal of v, Svk .W e a s s u m e
+that the resulting signal vector Sv is drawn from a multivariate normal distribution (MND) with
+mean zero and covariance matrix Σs such that var (Svk )= σ2
+s and cov (Svk ,S vj )= σss.W e a l s o
+impose that the speculators together know the liquidation value of the risky asset: PM
+k=1 Svk = v;
+therefore, cov (v, Svk )= σ2
+v
+M . This speci ﬁcation makes the total amount of information available to
+the speculators independent from the correlation of their private signals, albeit still implying the
+most general information structure up to rescaling by a constant (see Foster and Viswanathan,
+1996).
+These assumptions imply that δ
+k ≡ E (v|Svk )= σ2
+v
+Mσ2s
+Svk and E (δj |δk)= γδk,w h e r eγ = σss
+σ2s
+is the correlation between any two private information endowments δk and δj .A s i n F o s t e r
+and Viswanathan (1996), we parametrize the degree of diversity among speculators’ signals by
+requiring that σ
+2
+s − σss = χ ≥ 0. This restriction ensures that Σs is positive de ﬁnite. If χ =0 ,
+then speculators’ private information is homogeneous: All speculators receive the same signal
+Svk = v
+M such that σ2
+s = σss = σ2
+v
+M2 and γ =1 .I f χ = σ2
+v
+M , then speculators’ information is
+heterogeneous: σ2
+s = χ, σss =0 ,a n d γ =0 . Otherwise, speculators’ signals are only partially
+
+l
+Svk = v
+M such that σ2
+s = σss = σ2
+v
+M2 and γ =1 .I f χ = σ2
+v
+M , then speculators’ information is
+heterogeneous: σ2
+s = χ, σss =0 ,a n d γ =0 . Otherwise, speculators’ signals are only partially
+correlated: Indeed, γ ∈ (0, 1) if χ ∈
+³
+0, σ2
+v
+M
+´
+and γ ∈
+¡
+− 1
+M−1 , 0
+¢
+if χ > σ2
+v
+M .4
+4 The assumption that the total amount of information available to speculators is ﬁxed (PM
+k=1 Svk = v) implies
+that σ2
+s = σ2
+v +M(M−1)χ
+M2 and σss = σ2
+v −Mχ
+M2 , hence γ = σ2
+v −Mχ
+σ2v +M(M−1)χ . Further, the absolute bound to the largest
+4
+
+At time t =1 , both speculators and liquidity traders submit their orders to the MMs, before
+the equilibrium price p1 has been set. W e de ﬁne the market order of the kth speculator to be
+xk.T h u s , h e r p r oﬁti sg i v e nb yπk (xk,p 1)=( v − p1) xk. Liquidity traders generate a random,
+normally distributed demand u, with mean zero and variance σ2
+u. For simplicity, we assume that
+u is independent from all other random variables. MMs do not receive any information, but
+observe the aggregate order ﬂow ω1 = PM
+k=1 xk + u from all market participants and set the
+market-clearing price p1 = p1 (ω1).
+2.1.1 Equilibrium
+Consistently with Kyle (1985), we deﬁne a Bayesian Nash equilibrium as a set of M +1 functions
+x1 (·) ,... ,x M (·),a n d p1 (·) such that the following two conditions hold:
+1. Proﬁt maximization: xk (Svk )=a r g m a xE (πk|Svk );
+2. Semi-strong market eﬃciency: p1 (ω1)= E (v|ω1).
+W e restrict our attention to linear equilibria. W e ﬁrst conjecture general linear functions
+for the pricing rule and speculators’ demands. W e then solve for their parameters satisfying
+conditions 1 and 2. Finally, we show that these parameters and those functions represent a
+rational expectations equilibrium. The following proposition accomplishes this task.
+Proposition 1 There exists a unique linear equilibrium given by the price function
+p
+1 = λω1 (1)
+and by the kth speculator’s demand strategy
+xk = λ−1
+2+( M − 1) γ δk, (2)
+where λ = σ2
+v
+σuσs
+√
+M[2+(M−1)γ] > 0.
+
+n 1 There exists a unique linear equilibrium given by the price function
+p
+1 = λω1 (1)
+and by the kth speculator’s demand strategy
+xk = λ−1
+2+( M − 1) γ δk, (2)
+where λ = σ2
+v
+σuσs
+√
+M[2+(M−1)γ] > 0.
+The optimal trading strategy of each speculator depends on the information she receives
+about the asset payo ﬀ (v) and on the depth of the market ( λ−1). If M =1 ,E q s . ( 1 )a n d
+(2) reduce to the well-known equilibrium of Kyle (1985). The speculators, albeit risk-neutral,
+exploit their private information cautiously (|x
+k| < ∞), to avoid dissipating their informational
+advantage with their trades. Thus, the equilibrium market liquidity in p1 reﬂects MMs’ attempt
+to be compensated for the losses they anticipate from trading with speculators, as it a ﬀects their
+proﬁts from liquidity trading.
+negative private signal correlation γ compatible with a positive de ﬁnite Σs,
+¯¯¯− 1
+M−1
+¯¯¯, is a decreasing function of
+M .
+5
+
+2.1.2 T estable Implications
+The intuition behind the parsimonious equilibrium of Eqs. (1) and (2) is similar to that in
+the multi-period models of Foster and Viswan athan (1996) and Back et al. (2000). Yet, its
+closed-form solution (in Proposition 1) translates that intuition into unambiguous predictions
+on the impact of information heterogeneity on market depth.
+5 The optimal market orders xk
+depend on the number of speculators ( M) and the correlation among their information endow-
+ments (γ). The intensity of competition among speculators a ﬀects their ability to maintain the
+informativeness of the order ﬂow as low as possible. A greater number of speculators trade more
+aggressively – i.e., their aggregate amount of trading is higher – since (imperfect) competition
+among them precludes any collusive trading strategy. For instance, when M> 1 speculators
+are homogeneously informed (γ =1 ), then x
+k = σu
+σv
+√
+M v, which implies that the ﬁnite diﬀerence
+4Mxk =( M +1 ) xk − Mxk = σu
+σv
+³√
+M +1 −
+√
+M
+´
+v> 0. This behavior reduces the adverse
+selection problem for the MMs, thus leading to greater market liquidity (lower λ).
+The heterogeneity of speculators’ signals attenuates their trading aggressiveness. When in-
+formation is less correlated ( γ closer to zero), each speculator has some monopoly power on her
+signal, because at least part of it is known exclusively to her. Hence, as a group, they trade
+
+hen in-
+formation is less correlated ( γ closer to zero), each speculator has some monopoly power on her
+signal, because at least part of it is known exclusively to her. Hence, as a group, they trade
+more cautiously – i.e., their aggregate amount of trading is lower – to reveal less of their
+own information endowments δ
+k. For example, when M> 1 speculators are he terogeneously
+informed (γ =0 ), then xk = σu
+σv
+Svk , which implies that PM
+k=1 xk = σu
+σv
+v< σuM
+σv
+√
+M v, i.e., lower than
+the aggregate amount of trading by M> 1 homogeneously informed speculators ( γ =1 )b u t
+identical to the trade of a monopolistic speculator ( M =1 ). This “quasi-monopolistic” behavior
+makes the MMs more vulnerable to adverse selection, thus the market less liquid (higherλ). The
+following corollary summarizes the ﬁrst set of empirical implications of our model.
+Corollary 1 Equilibrium market liquidity is increasing in the number of speculators and decreas-
+ing in the heterogeneity of their information endowments.
+To gain further insight on this result, we construct a simple numerical example by setting
+σv = σu =1 . W e then vary the parameter χ to study the liquidity of this market with respect
+to a broad range of sig nal correlations γ (from very highly negative to very highly positive)
+when M =1 , 2,a n d 4. By construction, both the private signals’ variance ( σ2
+s)a n dc o v a r i a n c e
+(σss) change with χ and M, yet the total amount of information available to the speculators is
+
+en M =1 , 2,a n d 4. By construction, both the private signals’ variance ( σ2
+s)a n dc o v a r i a n c e
+(σss) change with χ and M, yet the total amount of information available to the speculators is
+unchanged. W e plot the resulting λ in Figure 1A. Multiple, perfectly heterogeneously informed
+speculators (γ =0 ) collectively trade as cautiously as a monopolist speculator. Under these
+circumstances, adverse selection is at its highest, and market liquidity at its lowest ( λ = σv
+2σu ).
+A greater number of competing speculators improves market depth, but signi ﬁcantly so only
+if accompanied by more correlated private signals. However, ceteris paribus, the improvement
+5 This contrasts with the numerical examples of the dynamics of market depth reported in Foster and
+Viswanathan (1996, Figure 1C) and Back et al. (2000, Figure 3A).
+6
+
+in market liquidity is more pronounced (and informed trading less cautious) when speculators’
+private signals are negatively correlated. When γ < 0, each speculator expects her competitors’
+trades to be negatively correlated to her own (pushing p1 against her signal), hence trading on
+it to be more pro ﬁtable.
+2.2 Extension: A Public Signal
+W e now extend the basic model of Section 2.1 by providing each player with an additional,
+common source of information about the risky asset before trading takes place. According to Kim
+and Verrecchia (1994, p. 43), “public disclosure has received little explicit attention in theoretical
+m o d e l sw h o s em a j o rf o c u si su n d e r s t a n d i n gm a r k e tl i q u i d i t y . ”
+6 More speciﬁcally, we assume that,
+sometime between t =0 and t =1 , both the speculators and the MMs also observe a public
+and noisy signal Sp of the asset payoﬀ v. This signal is normally distributed with mean zero and
+variance σ2
+p > σ2
+v.W e c a n t h i n k o fSp as any surprise public announcement (e.g., macroeconomic
+news) released simultaneously to all market participants. W e further impose thatcov (Sp,v )= σ2
+v,
+so that the parameter σ2
+p controls for the quality of the public signal and cov (Sp,S vk )= σ2
+v
+M .T h e
+private information endowment of each speculator is then given byδ∗
+k ≡ E (v|Svk ,S p)−E (v|Sp)=
+αSvk + βSp,w h e r e α =
+Mσ2
+v (σ2
+p
+−σ2
+v )
+σ2p[σ2v +M(M−1)χ]−σ4v
+> 0 and β = −
+σ4
+v (σ2
+p
+−σ2
+v )
+σ2p{[σ2v +M(M−1)χ]−σ4v } < 0.T h u s ,
+
+h speculator is then given byδ∗
+k ≡ E (v|Svk ,S p)−E (v|Sp)=
+αSvk + βSp,w h e r e α =
+Mσ2
+v (σ2
+p
+−σ2
+v )
+σ2p[σ2v +M(M−1)χ]−σ4v
+> 0 and β = −
+σ4
+v (σ2
+p
+−σ2
+v )
+σ2p{[σ2v +M(M−1)χ]−σ4v } < 0.T h u s ,
+E
+¡
+δ∗
+j |δ∗
+k
+¢
+= E
+¡
+δ∗
+j |Svk ,S p
+¢
+= γpδ∗
+k,w h e r eγp =
+Mα2σss+2αβσ2
+v +Mβ2σ2
+p
+Mα2σ2s +2αβσ2v +Mβ2σ2p
+≤ γ.
+2.2.1 Equilibrium
+Again we search for linear equilibria. The following proposition summarizes our results.
+Proposition 2 There exists a unique linear equilibrium given by the price function
+p1 = λpω1 + λsSp (3)
+and by the kth speculator’s demand strategy
+xk = λ−1
+p
+2+( M − 1) γp
+δ∗
+k, (4)
+where λp =
+α
+1
+2 σv (σ2
+p−σ2
+v )
+1
+2
+σuσp[2+(M−1)γp] > 0 and λs = σ2
+v
+σ2p
+.
+6 Admati and P ﬂeiderer (1988) and Foster and Viswanathan (1990) consider dynamic models of intraday
+trading in which the private information of either perfect ly competitive insiders or a monopolistic insider is either
+fully or partially revealed by the end of the trading period. McKelvey and Page (1990) provide experimental
+evidence that individuals make inferences from publicly av ailable information using Bayesian updating. Diamond
+and Verrecchia (1991) argue that the disclosure of public information may reduce the volatility of the order ﬂow,
+leading some market makers to exit. Kim and Verrecchi a (1994) show that, in the absence of better informed
+agents but in the presence of better information processo rs with homogeneous priors, the arrival of a public signal
+
+s to exit. Kim and Verrecchi a (1994) show that, in the absence of better informed
+agents but in the presence of better information processo rs with homogeneous priors, the arrival of a public signal
+leads to greater information asymm etry and lower market liquidity.
+7
+
+The optimal trading strategy of each speculator in Eq. (4) mirrors that of Proposition 1
+(Eq. (2)), yet it now depends only on δ∗
+k, the truly private – hence less correlated ( γp ≤ γ)–
+component of speculator k’s original private signal (Svk ) in the presence of a public signal of v.
+Hence, the MMs’ belief update aboutv stemming from Sp makes speculators’ private information
+less valuable. The resulting equilibrium price p1 in Eq. (3) can be rewritten as
+p1 = α
+2+( M − 1) γp
+v + λpu +
+·
+λs + Mβ
+2+( M − 1) γp
+¸
+Sp.( 5 )
+According to Eq. (5), the public signal impacts p1 through two channels that (in the spirit of
+Evans and Lyons, 2003) we call direct, related to MMs’ belief updating process ( λs > 0), and
+indirect, via the speculators’ trading activity ( β < 0). Since λs
+£
+2+( M − 1) γp
+¤
+> −Mβ > 0,
+the former always dominates the latter. Therefore, public news always enter the equilibrium
+price with the “right” sign.
+2.2.2 Additional T estable Implications
+Foster and Viswanathan (1993) generalize the t rading model of Kyle (1985) to distributions
+of the elliptically contoured class (ECC) and show that, in the presence of a discrete number
+of identically informed traders, the unexpected realization of a public signal has no impact on
+market liquidity regardless of the ECC used. This is the case for the equilibrium of Proposition
+2 as well.
+7 Nonetheless, Proposition 2 allows us to study the impact of the availability of noisy
+
+on
+market liquidity regardless of the ECC used. This is the case for the equilibrium of Proposition
+2 as well.
+7 Nonetheless, Proposition 2 allows us to study the impact of the availability of noisy
+public information on equilibrium market depth in the presence of imperfectly competitive and
+heterogeneously informed speculators. To our knowledge, this analysis is novel to the ﬁnancial
+literature. W e start with the following result.
+Corollary 2 The availability of a public signal of v increases equilibrium market liquidity.
+The availability of the public signal Sp reduces the adverse selection risk for the MMs, thus
+increasing the depth of this stylized market, for two reasons. First, the public signal represents
+an additional, trade-free source of information about v. Second, speculators have to trade more
+aggressively to extract rents from their private information. In Figure 1B we plot the ensuing
+gain in liquidity, λ − λ
+p, as a function of private signal correlations γ when the public signal’s
+noise σp =1 .25, i.e., by varying χ and M (so σ2
+s and σss as well, but not the total amount
+of information available to the speculators) as in Figure 1A. The increase in market depth is
+greater when γ is negative and the number of speculators ( M) is high. In those circumstances,
+the availability of a public signal reinforces speculators’ existing incentives to place market orders
+on their private signals S
+vk more aggressively. However, greaterσ2
+
+igh. In those circumstances,
+the availability of a public signal reinforces speculators’ existing incentives to place market orders
+on their private signals S
+vk more aggressively. However, greaterσ2
+p, ceteris paribus, increases λp,
+since the poorer quality of Sp (lower information-to-noise ratioσ2
+v
+σ2p
+) induces the MMs to rely more
+heavily on ω1 to set market-clearing prices, hence the speculators to trade less aggressively.
+7 Speciﬁcally, it can be shown that the one-shot equilibrium in Foster and Viswanathan (1993, Proposition 1)
+is a special case of our Proposition 2 when private signal correlations γ =1 for any ECC.
+8
+
+Remark 1 (The increase in) market liquidity is decreasing in the volatility of the public signal.
+In the presence of a public signal, information heterogeneity among speculators plays a more
+ambiguous role on market liquidity. If the volatility of the public signal is low, heterogeneously
+informed (thus more cautious) speculators put less weight on their private signals S
+vk (lower
+α in δ∗
+k) and more weight on the public signal Sp (higher β in δ∗
+k) when updating their beliefs
+than homogeneously informed (thus more aggressive) speculators. Hence, the ensuing trading
+behavior leads to less adverse selection risk for the MMs (lower λ
+p). Vice versa, when σp is high,
+speculators rely more heavily on their private signals, but more cautiously so if gamma is low,
+leading to lower equilibrium market depth (higher λ
+p), as in Corollary 1.
+Remark 2 Information heterogeneity decreases market liquidity only when the volatility of the
+public signal is “high.”
+The volatility of the public signal Sp also a ﬀects its direct impact ( λs) on the equilibrium
+price of Eq. (3). Everything else equal, the poorer is the quality of the public signal (higher σp),
+the more the speculators rely on their private signals Svk (see Remark 1) and the MMs rely on
+the aggregate order ﬂow ω1 to infer the asset payo ﬀ v. Consequently, the MMs put less weight
+on Sp and more weight on ω1 in setting the market-clearing price p1, toward the benchmark of
+Eq. (1): limσp→∞ λs =0 and limσp→∞ λp = λ.
+
+infer the asset payo ﬀ v. Consequently, the MMs put less weight
+on Sp and more weight on ω1 in setting the market-clearing price p1, toward the benchmark of
+Eq. (1): limσp→∞ λs =0 and limσp→∞ λp = λ.
+Corollary 3 The sensitivity of the equilibrium price to the public signal is decreasing in that
+signal’s volatility.
+3D a t a D e s c r i p t i o n
+W e test the implications of the model presented in the previous section using U.S. Treasury
+bond market data and U.S. macroeconomic announcements. As mentioned in Section 1, this
+choice is motivated not only by the quality and availability of data on U.S. government bond
+transactions, but also by the clear theoretical link between macroeconomic fundamentals and
+bond yield changes.
+3.1 Bond Market Data
+W e use intraday U.S. Treasury bond yields, quotes, transactions, and signed trades for the
+most recently issued, “on-the-run,” two-year, ﬁve-year, and ten-year Treasury notes. W e use
+these “on-the-run” notes because, according to Fleming (1997), Brandt and Kavajecz (2004),
+and Goldreich, Hanke, and Nath (2005), those are the securities with the greatest liquidity
+and where the majority of informed trading ta kes place. W e are interested in studying the
+informational role of bond trading related to m acroeconomic fundamentals. Therefore, we focus
+9
+
+on the intermediate to long maturities, since these are the most responsive to macroeconomic
+aggregates (e.g., Balduzzi et al., 2001). Consistently, when we perform the analysis that follows
+on the remaining “on-the-run” and “o ﬀ-the-run” Treasury securities in our database, we ﬁnd
+that (i) the resulting inference for the former is weaker than the one described in the paper, and
+(ii) order ﬂow has no impact on yield changes for the latter. These results are available upon
+request from the authors.
+We o b t a i n t he da t a f r o m Gov PX, aﬁrm that collects quote and trade information from six of
+the seven main interdealer brokers (with the notable exception of Cantor Fitzgerald).
+8 Fleming
+(1997) argues that these six brokers account for approximately two-thirds of the interdealer-
+broker market, which in turn translates into approximately 45% of the trading volume in the
+secondary market for Treasury securities. Our sample includes every transaction taking place
+during “regular trading hours,” from 7:30 a.m. to 5:00 p.m. Eastern Standard Time (EST),
+between January 2, 1992 and December 29, 2000. GovPX stopped recording intraday volume
+afterward. Strictly speaking, the U.S. Treasury market is open 24 hours a day; yet, 95% of
+the trading volume occurs duri ng those hours. Thus, to remove ﬂuctuations in bond yields due
+to illiquidity, we ignore trades outside that narrower interval. Finally, the data contains some
+
+, 95% of
+the trading volume occurs duri ng those hours. Thus, to remove ﬂuctuations in bond yields due
+to illiquidity, we ignore trades outside that narrower interval. Finally, the data contains some
+interdealer brokers’ posting errors not previously ﬁltered out by GovPX. W e eliminate these
+errors following the procedure described in Fleming’s (2003) appendix.
+W e report summary statistics for the daily raw yield and transaction data in Table 1. Bond
+yields are in percentage, i.e., were multiplied by 100; bond yield changes are in basis points,
+i.e., were multiplied by 10, 000. Not surprisingly, mean Treasury bond yields are increasing with
+maturity and display large positive ﬁrst-order autocorrelation ( ρ (1) > 0). Mean daily yield
+changes are small or zero; yet, their sample variability suggests that economically important
+ﬂuctuations of the yield curve took place over the sample period. Five-year Treasury notes are
+characterized by the largest mean daily number of transactions (roughly 614), hence by the
+highest liquidity, consistent with the ﬁndings of Fleming (2003), among others.
+W e also compare (but do not report here for economy of space) daily bond yield changes during
+days when one of the most closely observed U.S. macroeconomic announcement, the Nonfarm
+Payroll Employment report, is released to daily bond yield changes during non-announcement
+days.
+9 Bond yield changes are clearly more volatile on days when the Payroll numbers are
+
+ement, the Nonfarm
+Payroll Employment report, is released to daily bond yield changes during non-announcement
+days.
+9 Bond yield changes are clearly more volatile on days when the Payroll numbers are
+announced, but yield changes during non-announcement days are economically signi ﬁcant as
+well. These dynamics, together with the poor performance of public macroeconomic surprises in
+8 In our sample period (1992 to 2000), the major interdealer brokers in the U.S. Treasury market are Cantor
+Fitzgerald Inc., Garban Ltd., Hilliard Farber & Co. Inc., Liberty Brokerage Inc., RMJ Securities Corp., and
+Tullet and Tokyo Securities Inc. Cantor Fitzgerald’s share of the interdealer Treasury market is about 30% over
+our sample period (Goldreich et al., 2005). Nevertheless, Cantor Fitzgerald is a dominant player only in the “long
+end” of the Treasury yield curve, which we do not study in depth in this paper.
+9 Andersen and Bollerslev (1998), among others, refer to the Nonfarm Payroll report as the “king” of announce-
+ments because of the signi ﬁcant sensitivity of most asset markets to its release.
+10
+
+explaining ﬂuctuations in bond yields on non-announcement days, further motivate our study of
+the price discovery role of order ﬂow when no public news arrive to the bond market.
+3.2 Macroeconomic Data
+3.2.1 Expected and Announced Fundamentals
+W e use the International Money Market Services (MMS) Inc. real-time data on the expectations
+and realizations of 25 of the most relevant U.S. macroeconomic fundamentals to estimate an-
+nouncement surprises. Table 2 provides a brief description of the most salient characteristics of
+U.S. economic news announcements in our sample: the total number of observations, the agency
+reporting each announcement, the time of the announcement release, and whether the standard
+deviation across professional forecasts is available. Fleming and Remolona (1997) and Andersen,
+Bollerslev, Diebold, and Vega (2003) discuss the main properties of MMS forecasts; Balduzzi et
+al. (2001) show that these forecasts are not stale and unbiased.
+We d eﬁne announcement surprises as the di ﬀerence between announcement realizations and
+their corresponding expectations. More speci ﬁcally, since units of measurement vary across
+macroeconomic variables, we standardize the resulting surprises by dividing each of them by
+their sample standard deviation. The standardized news associated with the macroeconomic
+indicator j at time t is therefore computed as
+S
+jt = Ajt − Ejt
+bσj
+,( 6 )
+where Ajt is the announced value of indicator j, Ejt is its MMS median forecast, as a proxy
+
+ssociated with the macroeconomic
+indicator j at time t is therefore computed as
+S
+jt = Ajt − Ejt
+bσj
+,( 6 )
+where Ajt is the announced value of indicator j, Ejt is its MMS median forecast, as a proxy
+for its market expected value, and bσj is the sample standard deviation of Ajt − Ejt .E q .( 6 )
+facilitates meaningful comparisons of responses of diﬀerent bond yield changes to diﬀerent pieces
+of news. Operationally, we estimate those responses by regressing bond yield changes on news.
+However, sincebσ
+j is constant for any indicatorj, the standardization aﬀects neither the statistical
+signiﬁcance of response estimates nor the ﬁt of the regressions.
+3.2.2 Information Heterogeneity
+W e use the MMS standard deviation across professional forecasts as a measure of dispersion
+of beliefs across sophisticated investors. This measure of information heterogeneity is widely
+adopted in the literature on investors’ reaction to information releases in the stock market (e.g.,
+Diether, Malloy, and Scherbina, 2002; Kallberg and Pasquariello, 2004); Green (2004) recently
+uses it in a bond market context. As indicated in Table 2, this variable is only available for 18
+of the 25 macroeconomic news in our sample.
+Overall, the dispersion of beliefs is large (e.g., roughly 22% on average of the mean absolute
+monthly Nonfarm Payroll report), time-varying,and positively correlated across macroeconomic
+11
+
+announcements. To conserve space, we do not show the correlation matrix of all the announce-
+ments, but only report (in Table 2) the pairwise correlation between each announcement and
+arguably the most important of them, the Nonfar m Payroll report (e.g., Andersen and Boller-
+slev, 1998; Andersen et al., 2004 ; Brenner et al., 2005). This correlation is positive, albeit not
+statistically signiﬁcant for most of the announcements. Thus, dispersion of beliefs in Nonfarm
+Payroll forecasts is not necessarily a good measure of information heterogeneity about the state
+of the economy, which is ultimately what we are interested in. This motivates us to construct
+three alternative measures of dispersion of beliefs during announcement and non-announcement
+days: one based exclusively on the Payroll announcement, another based on 7 “inﬂuential” an-
+nouncements (deﬁned below), and the last one based on the 18 announcements for which the
+standard deviation of professional forecasts is available (i.e., those underlined in Table 2).
+The use of the MMS database to calculate monthly measures of dispersion of beliefs raises
+two issues: (i) the announcements in Table 2 are released at di ﬀerent frequencies and (ii) the
+standard deviation of professional forecasts only measures heterogenous beliefs at the time of
+the announcement. W e address these issues by assuming that the dispersion of beliefs remains
+constant between announcements.
+
+f professional forecasts only measures heterogenous beliefs at the time of
+the announcement. W e address these issues by assuming that the dispersion of beliefs remains
+constant between announcements. This assumption is empirically justi ﬁed since the ﬁrst order
+autocorrelation in the standard deviation of professional forecasts ( ρ (1) in Table 2) is positive
+and mostly statistically signiﬁcant. Hence, if the dispersion of beliefs across investors is high in
+one month (week or quarter), it is likely to remain high in the next month (week or quarter).
+To convert weekly and quarterly dispersions to a monthly frequency we use the following
+procedure. For the single weekly announcement in the sample, Initial Unemployment Claims, we
+average the dispersion of beliefs across four weeks. For the three quarterly announcements in the
+sample, GDP Advance, Preliminary, and Final, we assume that the dispersion of beliefs in the
+ﬁrst month of the quarter is constant throughout the quarter. The dispersion of beliefs of monthly
+announcements is instead left unchanged and assumed to be constant between announcements.
+W e then deﬁne our monthly proxy for the aggregate degree of information heterogeneity about
+macroeconomic fundamentals as a weighted sum of monthly dispersions across announcements,
+SSD
+Pt =
+XP
+j=1
+SDjt − bµ(SDjt )
+bσ(SDjt ) ,( 7 )
+where SDjt is the standard deviation of announcementj across professional forecasts andbµ(SDjt )
+
+ted sum of monthly dispersions across announcements,
+SSD
+Pt =
+XP
+j=1
+SDjt − bµ(SDjt )
+bσ(SDjt ) ,( 7 )
+where SDjt is the standard deviation of announcementj across professional forecasts andbµ(SDjt )
+and bσ(SDjt ) are its sample mean and standard deviation, respectively. P is equal to 1 when we
+only use the Nonfarm Payroll Employment to compute our measure of dispersion of beliefs. P
+is equal to 7 when we use the following “in ﬂuential” macroeconomic announcements: Nonfarm
+Payroll Employment, Retail Sales, New Home Sales, Consumer Conﬁdence Index, NAPM Index,
+Index of Leading Indicators, and Initial Unemployment Claims.10 Lastly, P is equal to 18 when
+10 In unreported analysis, we show that these announcements represent the most important information events
+in the U.S. Treasury Market, i.e., the only ones having a statistically signi ﬁcant impact on day-to-day bond yield
+changes, consistent with Fleming a nd Remolona (1997), among others.
+12
+
+we use all the announcements for which the measure SSDPt is available in our sample (i.e., those
+underlined in Table 2). The standardization in Eq. (7) is necessary because, as we mentioned
+earlier, units of measurement diﬀer across economic variables.
+W e use the monthly dispersion estimates from these three methodologies to classify days in
+which the corresponding monthly variable SSDPt is above (below) the top (bottom) 70th (30th )
+percentile of its empirical distribution as days with high (low) information heterogeneity. The
+resulting time series of high ( +1)a n dl o w(−1) dispersion days are positively correlated: Their
+correlations (not reported here) range from 0.37 (between the Payroll-based series, P =1 ,a n d
+the series constructed with the in ﬂuential announcements, P =7 )t o 0.70 (between the series
+using all announcements,P =1 8, and the one based only on the inﬂuential news releases,P =7 ).
+Finally, we report in Table 3 the di ﬀerences in the mean daily number of transactions ( NT
+t)
+in the two, ﬁve, and ten-year Treasury bond markets across days with high ( bh)a n dl o w( bl)
+dispersion of beliefs measured with the three alternative methods described above. The corre-
+sponding t statistics are computed using Newey-W est standard errors, because Table 1 shows that
+the number of daily transactions is positively autocorrelated. Consistent with Gri ﬃth, Smith,
+Turnbull, and White (2000) and Ranaldo (2004), among others (but also with the spirit of the
+
+shows that
+the number of daily transactions is positively autocorrelated. Consistent with Gri ﬃth, Smith,
+Turnbull, and White (2000) and Ranaldo (2004), among others (but also with the spirit of the
+model of Section 2), we interpret a big (small) number of daily transactions as a proxy for a high
+(low) degree of trading aggressiveness. The ensuing diﬀerences are economically and statistically
+signiﬁcant: fewer transactions take place in high dispersion days than in low dispersion days
+(i.e., b
+h − bl < 0). Consistently, Spearman correlations between NTt and either SSD1t, SSD7t,
+or SSD18t (not reported here) are always negative for all maturities and mostly statistically sig-
+niﬁcant. This evidence provides support for the ba sic intuition of our model and gives us further
+conﬁdence in the heterogeneity proxies of Eq. (7), since it suggests that, in the government bond
+market, periods of greater dispersion of beliefs among market participants are accompanied by
+more cautious speculative trading activity, as argued in Section 2.1.1.
+3.2.3 News or Noise?
+The U.S. government often revises previously re leased macroeconomic information. Aruoba
+(2004) identiﬁes these data revisions as either “informative,” i.e., due to newly available infor-
+mation, or “uninformative,” i.e., due to de ﬁnitional changes (such as changes in the base-year
+or changes in seasonal weights). In this paper, we use the former revisions to measure public
+signal noise.
+
+ion, or “uninformative,” i.e., due to de ﬁnitional changes (such as changes in the base-year
+or changes in seasonal weights). In this paper, we use the former revisions to measure public
+signal noise. Speciﬁcally, we use the Federal Reserve Bank of Philadelphia “Real Time Data Set”
+(RTDS), which records not only real-time macroeconomic announcements but also their subse-
+quent revisions.
+11 Of the 18 announcements in Table 2 for which MMS forecasts are available, the
+RDTS contains monthly data on Capacity Utilization, Industrial Production, and Nonfarm Pay-
+roll Employment report. The only variable undergoing “uninformative” changes over the sample
+11 See Croushore and Stark (1999, 2001) for details of this da tabase and examples of empirical applications.
+The database is publicly available on the internet at http://www.phil.frb.org/econ/forecast/reaindex.html.
+13
+
+period is Industrial Production, whose base-year was revised in February 1998. According to
+extant literature (e.g., Mork, 1987; Faust, Rogers, and W right, 2003; Aruoba, 2004), (i) the ﬁnal
+published revision of each actual announcement represents the most accurate measure for the
+corresponding macroeconomic variable, and (ii) those revisions should be interpreted as noise,
+for they are predictable (based on past information).
+12 Hence, we measure public news noise as
+the di ﬀerence between each initial announcement and its last revision. Since what matters in
+our model is the magnitude of the noise ( σ2
+p of Section 2.2), not its direction, we use the absolute
+v a l u eo ft h i sd iﬀerence in our empirical analysis.
+Consistent with Aruoba (2004), the resulting time series of simple and absolute macroeco-
+nomic data revisions – i.e., the simple and absolute di ﬀerences between the real-time announce-
+ment and the ﬁnal revision for Capacity Utilization, Industrial Production, and Nonfarm Payroll
+Employment – display a few spikes and are often negative, revealing a tendency for the gov-
+ernment to be overly conservative in its initial announcements. Interestingly, the absolute value
+of the measurement error tends to be positively correlated with the volatility of the underlying
+announcement, with correlations (not reported here) varying between a low of 0.18 (Industrial
+Production) and a high of 0.52 ( N o n f a r mP a y r o l l ) .
+
+ated with the volatility of the underlying
+announcement, with correlations (not reported here) varying between a low of 0.18 (Industrial
+Production) and a high of 0.52 ( N o n f a r mP a y r o l l ) . T h i ss u g g e s t st h a tt h em e a s u r e m e n te r r o ri s
+related to macroeconomic uncertainty. In our theoretical model,σ
+2
+p arises from either uncertainty
+about the macroeconomy or the quality of the public signal. In the ensuing empirical analysis,
+we consider both possibilities.
+4 Empirical Analysis
+The model of Section 2 generates several implications that we now test in this section. In the
+database described in Section 3, we are able to directly observe price changes,Pt −Pt−1,a sap r o x y
+for p1, public news surprises Sjt ,a sap r o x yf o r Sp, and aggregate order ﬂow Ωt,a sap r o x yf o r
+ω1. Yet, in our setting, it is only the unexpected portion of aggregate order ﬂow that aﬀects the
+equilibrium prices of Eqs. (1) and (3). 13 Furthermore,ω1 i sa s s u m e dt od e p e n do n l yo ni n f o r m e d
+and liquidity trading. Yet, in reality, many additional microstructure imperfections can cause
+lagged e ﬀects in the observed order ﬂow (see Hasbrouck, 2004). Therefore, to implement our
+model, we estimate Ω
+∗
+t , the unanticipated portion of aggregate order ﬂow.
+12 Much of this evidence stems from the analysis of either GDP or the RTDS variables listed above. The evidence
+is more controversial for money stock announcements.
+
+ted portion of aggregate order ﬂow.
+12 Much of this evidence stems from the analysis of either GDP or the RTDS variables listed above. The evidence
+is more controversial for money stock announcements. For instance, Mankiw, Runkle, and Shapiro (1984) and
+Mork (1990) ﬁnd that the preliminary growth rates of several Federal Reserve’s money aggregates are not e ﬃcient
+predictors of the growth rates of ﬁnally-revised data. Yet, according to Kavajecz and Collins (1995), the bias
+in preliminary monetary data may be attributed either to the speci ﬁc seasonal adjustment procedure used by
+the Federal Reserve or to a di ﬀerent temporal aggregation than for ﬁnally-revised, not-seasonally adjusted data.
+Monetary aggregates are not included in our database.
+13 Indeed, the distributional assumptions in Section 2.1 imply that E (ω1)=0 in both Propositions 1 and 2.
+14
+
+For that purpose, we use the linear autoregressive model of Hasbrouck (1991),
+xtin = ax + b(L)rtin + c(L)xtin + v(x)tin ,( 8 )
+where xtin is the half-hour net order ﬂow in the market (purchases take a +1 and sales take a
+−1)f o ri n t e r v a ltin, rtin is the half-hour quote revision, and b(L) and c(L) are polynomials in
+the lag operator. W e estimate Eq. (8) separately for two-year, ﬁve-year, and ten-year Treasury
+notes using 19 lags (one day) because they are su ﬃcient to eliminate all the serial correlation in
+the data. The results that follow are robust to di ﬀerent lag-length polynomials.14 As previously
+mentioned, we focus on daily horizons, for narrower intervals (e.g., as in Green, 2004) may lead to
+underestimate the impact of information heterogeneity on investors’ trading activity. Therefore,
+we compute aggregate unanticipated (or “abnormal”) net order ﬂow over each day t by simply
+summing the 19 residuals of Eq. (8) within each day, Ω∗
+t = P19
+tin=1 v(x)t−1+ tin
+19
+,a sap r o x yf o rω1.
+As shown in Table 1, this procedure successfully eliminates the ﬁrst-order autocorrelation in the
+aggregate raw order ﬂow series Ωt.
+GovPX calculates bond yields using transaction prices, so there is a mechanical inverse rela-
+tion between the two quantities. To be consistent with the term-structure literature, we estimate
+the impact of unanticipated order ﬂow and public information arrivals on daily yield changes
+(rt =( yt − yt−1) × 100) rather than on price changes.
+
+tent with the term-structure literature, we estimate
+the impact of unanticipated order ﬂow and public information arrivals on daily yield changes
+(rt =( yt − yt−1) × 100) rather than on price changes. Nonetheless, our results are robust to ei-
+ther speciﬁcation. W e translate the equilibrium prices of Propositions 1 and 2 into the following
+estimable equations:
+rt = a + λΩ∗
+t + εt (9)
+when no public signal is released (Eq. (1)), and
+rt = ap + λpΩ∗
+t + λsj Sjt + εpt (10)
+when a public signal Sjt becomes available to all market participants on day t (Eq. (3)). Ac-
+cording to our model, we expect λ and λp to be negative, while, according to the Lucas (1982)
+model, we expect λsj to be positive for positive real activity and in ﬂationary shocks.
+Even in the absence of the information e ﬀects of our model, inventory considerations ( ﬁrst
+formalized by Garman, 1976) may explain, either in full or in part, any signi ﬁcant correlation
+between price changes and order ﬂow. Yield changes may in fact react to net order ﬂow imbal-
+ances, to compensate market participants for providing liquidity, even when the orderﬂow has no
+14 Our results are also robust to di ﬀerent speci ﬁcations of Eq. (8). For example, we sample bond yields each
+time there is a transaction, rather than at thirty-minut e intervals. We also sample bond yields at an “optimal”
+frequency determined according to the procedure of Ba ndi and Russell (2005). The evidence presented below is
+
+tion, rather than at thirty-minut e intervals. We also sample bond yields at an “optimal”
+frequency determined according to the procedure of Ba ndi and Russell (2005). The evidence presented below is
+qualitatively and quantitatively similar to that obtained using these alternative sampling procedures, as well as
+using the aggregate raw (rathe r than unanticipated) order ﬂow, Ωt. The robustness of our results re ﬂects the
+fact that aggregate unanticipated order ﬂow, Ω∗
+t , is very closely related to Ωt. Indeed, regardless of the selected
+speciﬁcation, the resulting R2 from Eq. (8) are lower than 4%.
+15
+
+information content. To assess the relevance of this alternative hypothesis, we follow Hasbrouck
+(1991) and include lagged values of unanticipated order ﬂow and yield changes in both Eqs. (9)
+and (10). As in Hasbrouck (1991), we assume the permanent impact of trades is due to informa-
+tion shocks and the transitory impact is due to noninformation (e.g., liquidity) shocks. Hence,
+negative and signiﬁcant estimates for λ and λ
+p are driven by transitory inventory control eﬀects
+when accompanied by a positive and signi ﬁcant impact of lagged unanticipated net order ﬂow
+on yield changes. In other words, signi ﬁcant contemporaneous order ﬂow e ﬀects are transient
+if they are later reversed. On the other hand, negative and signi ﬁcant estimates for λ and λp
+are driven by permanent information e ﬀects (consistent with our model) when accompanied by
+negative and signi ﬁcant, or statistically insigni ﬁcant, impact of lagged unanticipated net order
+ﬂow on yield changes.
+4.1 Non-Announcement Days
+W e start by estimating Eq. (9) across non-announcement days and then testing the main im-
+plication of Proposition 1, namely that market liquidity ( λ−1) is decreasing in the heterogeneity
+of speculators’ information endowments. First, we de ﬁne non-announcement days consistently
+with our procedures to measure such heterogeneity (in Section 3.2.2). When P =1 ,w ed e -
+ﬁne non-announcement days as all trading Fridays in the sample in which no Nonfarm Payroll
+
+days consistently
+with our procedures to measure such heterogeneity (in Section 3.2.2). When P =1 ,w ed e -
+ﬁne non-announcement days as all trading Fridays in the sample in which no Nonfarm Payroll
+Employment report is released, to control for potential day-of-the-week e ﬀects. When P =7
+or 18,w ed e ﬁne non-announcement days as all trading days when none of the corresponding
+announcements (either the inﬂuential ones or those underlined in Table 2) take place. W e then
+test Corollary 1 by amending Eq. (9) as follows:
+rt = a +
+XN
+i=0
+λhiΩ∗
+t−iDht +
+XN
+i=0
+λliΩ∗
+t−iDlt (11)
++
+XN
+i=0
+λmiΩ∗
+t−i(1 − Dht − Dlt)+
+XN
+i=1
+βirt−i + εt,
+where Dht (Dlt) is a dummy variable equal to one on non-announcement days with high (low)
+heterogeneity of beliefs, as de ﬁned in Section 3.2.2, and equal to zero otherwise. Motivated by
+the discussion above, we estimate both the contemporaneous and lagged eﬀects of unanticipated
+order ﬂow on yield changes. Speci ﬁcally, we deﬁne the impact of order ﬂow on yield changes as
+permanent (i.e., driven by information eﬀects) when lasting for at least ﬁve trading days. Hence,
+we set N =5 in Eq. (11). 15 W e report the resulting estimates in Table 4 using the three proxies
+for information heterogeneity, P =1 , P =7 ,a n d P =1 8. Since higher dispersion days are also
+associated with more volatile bond yields, the standard errors are adjusted for heteroskedasticity.
+
+ies
+for information heterogeneity, P =1 , P =7 ,a n d P =1 8. Since higher dispersion days are also
+associated with more volatile bond yields, the standard errors are adjusted for heteroskedasticity.
+W e also correct for serial correlation, given the mild, though statistically signi ﬁcant, ﬁrst-order
+autocorrelation in daily bond yield changes.
+15 Nonetheless, the inference that follows is robust to smaller or bigger values for N .
+16
+
+The results in Table 4 provide strong evidence for information e ﬀects of order ﬂow on bond
+yield changes and no evidence for inventory control eﬀects. For all maturities and nearly all mea-
+sures of dispersion of beliefs, the estimated contemporaneous correlation between unanticipated
+order ﬂow and yield changes (λ0)i sn e g a t i v ea n ds i g n iﬁcant. The coeﬃcients for one-period lagged
+unanticipated order ﬂow (λ1), not reported here, are instead often negative, always statistically
+insigniﬁcant at the 5% level, and about ten times smaller in magnitude than the contemporane-
+ous coeﬃcients λ0. Lastly, the resulting cumulated impact of unanticipated order ﬂow on yield
+changes (P5
+i=0 λi in T able 4) is mostly statistically signi ﬁcant, albeit more weakly so on non-
+announcement days with low heterogeneity of beliefs. In other words, we ﬁnd no evidence that
+the impact of unanticipated U.S. Treasury bond order ﬂow on yield changes is reversed in the
+next ﬁve trading days, except in correspondence with low dispersion of beliefs about Nonfarm
+Payroll announcements (P =1 ).
+T h er e s u l t si nT a b l e4a l s op r o v i d es t r o n ge v i d e n c ei nf a v o ro fC o r o l l a r y1 ,e s p e c i a l l yf o r
+the ﬁve-year bond, the most liquid U.S. Treasury note. Regardless of whether we use only
+the Nonfarm Payroll announcement to measure dispersion of beliefs or whether we aggregate
+
+p e c i a l l yf o r
+the ﬁve-year bond, the most liquid U.S. Treasury note. Regardless of whether we use only
+the Nonfarm Payroll announcement to measure dispersion of beliefs or whether we aggregate
+dispersion of beliefs across macroeconomic announcements, we cannot reject the null hypothesis
+that λ
+h0 −λl0 < 0. This evidence is consistent with the basic intuition of the benchmark model of
+Section 2.1: In the absence of a public signal, greater information heterogeneity among investors
+translates into greater adverse selection risk for the market-makers, hence into lower market
+liquidity (|λh0| > |λl0|).
+The increase in adverse selection costs in correspondence with high dispersion of beliefs among
+market participants is not only statistically but also economically signiﬁcant. For example, when
+classifying trading days according to SSD1t (i.e., only with respect to the volatility of Nonfarm
+Payroll forecasts), we ﬁnd that a one standard deviation shock to unanticipated order ﬂow in
+ﬁve-year bonds decreases their yields by10.03 b a s i sp o i n t so nh i g hd i s p e r s i o nd a y s(Dht =1 )a n d
+just 4.06 basis points on low dispersion days ( Dlt =1 ), as compared to a daily yield change one
+standard deviation from its mean of roughly 6.4 b a s i sp o i n t s( i nT a b l e1 )o v e rt h ee n t i r es a m p l e .
+Consistently, the correlation between dailyﬁve-year bond yield changes and unanticipated daily
+
+n from its mean of roughly 6.4 b a s i sp o i n t s( i nT a b l e1 )o v e rt h ee n t i r es a m p l e .
+Consistently, the correlation between dailyﬁve-year bond yield changes and unanticipated daily
+net order ﬂow (the adjusted R2 of the above regression) is much greater during high dispersion
+days (R2
+ha =4 1.38%) than during low dispersion days ( R2
+la =9 .65%).
+We a l s oﬁnd evidence in favor of Corollary 1 in the two-year bond market, although only when
+we use the dispersion of analysts’ forecasts about Nonfarm Payroll Employment ( P =1 )a n d
+Inﬂuential announcements (P =7 )a sp r o x i e sf o ri n f o r m a t i o nh e t er o g e n e i t y ,a n di nt h et e n - y e a r
+bond market when we use the Nonfarm Payroll announcement alone. This may be due to the
+fact that not all macroeconomic announcements are equally important ex ante, thus making the
+aggregate dispersion of beliefs across announcements a noisy measure of such heterogeneity. W e
+explore this issue in greater depth in Section 4.2.
+17
+
+4.1.1 Omitted V ariable Biases
+In the model of Section 2, equilibrium market liquidity ( λ−1 and λ−1
+p ) is a function of several
+parameters beyond the one determining the intensity of information heterogeneity among spec-
+ulators (χ). For example, in the benchmark equilibrium with no public signal (Proposition 1),
+λ also depends on the intensity of noise trading ( σ
+2
+u), the number of informed traders ( M), and
+the volatility of the intrinsic value of the asset ( σ2
+v). The regression model of Eq. (11), whose
+estimates are reported in Table 4, does not explicitly control for any of these parameters. These
+o m i s s i o n sh a v et h ep o t e n t i a lt ob i a so u ri n f e r e n c e .
+To begin with, in our model the parameters σ2
+u, σ2
+v,a n d M are unrelated to the dispersion of
+beliefs. If this were true, the estimation of Eq. (11) would in principle be unbiased. Nevertheless,
+omitted variable biases may arise from relaxing some of the model’s most stringent assumptions.
+For example, if we allowed for endogenous entry of informed traders, the equilibrium number of
+market participants might be correlated with their dispersion of beliefs, since the latter would
+aﬀect investors’ potential proﬁts from trading. In addition, misspeci ﬁcation biases may arise
+from the intertemporal dynamics of either speculators’ participation, intensity of noise trading,
+or fundamental uncertainty. It is di ﬃcult to control for these variables. In this section, we do
+
+ise
+from the intertemporal dynamics of either speculators’ participation, intensity of noise trading,
+or fundamental uncertainty. It is di ﬃcult to control for these variables. In this section, we do
+our best to gauge the robustness of the results presented above to their inclusion. The analysis
+that follows indicates that these results are indeed robust.
+Speciﬁcally, we conduct several robustness checks. First, the inclusion of lagged unantici-
+pated order ﬂow in Eq. (11) allows us to assess the relevance of any transient, noninformation
+eﬀect (hence not just inventory control e ﬀects but also those due to noise trading, σ
+2
+u)o nt h e
+relationship between trades and price changes (see Hasbrouck, 1991). As previously mentioned,
+the estimation of Eq. (11) in Table 4 indicates that the impact of unanticipated government
+bond order ﬂow on yield changes is permanent, i.e., cannot be explained by transitory noise
+eﬀects. Alternatively, we determine the importance of noise trading by computing order ﬂow
+and yield changes over disjoint intervals of each day in our sample, as in Brandt and Kavajecz
+(2004), rather than concurrently. In particular, we aggregate unanticipated order ﬂow in the
+morning (from 7:30 a.m. to 12:00 p.m.), labeled as time t, and average yields from 12:00 p.m.
+until the end of each trading day (5:00 p.m.), labeled as time t +1 . W e then regress bond yield
+changes at time t +1 on unanticipated order ﬂow at time t. This procedure not only prevents
+
+2:00 p.m.
+until the end of each trading day (5:00 p.m.), labeled as time t +1 . W e then regress bond yield
+changes at time t +1 on unanticipated order ﬂow at time t. This procedure not only prevents
+non-synchronous measurement errors (as argued by Brandt and Kavajecz, 2004) but also allows
+us to identify the long run or permanent e ﬀect of order ﬂow on prices. The resulting estimates
+of market liquidity, not reported here, are qualitatively similar to those from Eq. (11) presented
+in T able 4.
+W e also control for the number of informed traders ( M) and the volatility of the intrinsic
+value of the asset ( σ
+2
+v). W e do so by including in Eq. (11) additional variables capturing the
+interaction between (i.e., the product of): (i) order ﬂow and daily realized volatility,16 (ii) order
+16 We estimate realized volatility applying the procedure of Andersen, Bollerslev, Diebold, and Labys (2003) to
+18
+
+ﬂow and the number of transactions, and (iii) order ﬂow and a weight linearly increasing as
+the announcement date approaches. 17 In our model, the degree of information heterogeneity
+aﬀects both equilibrium price volatility and the aggressiveness of informed trading (proxied by
+the number of transactions, as in Section 3.2.2). Depending on the strength of these e ﬀects, the
+inclusion of those cross terms in Eq. (11) may reduce the statistical signi ﬁcance of the relation
+between market liquidity and dispersion of beliefs. Instead, we ﬁnd no evidence that order ﬂow
+interacts with either the number of transactions or the proximity to the announcement date. The
+product of order ﬂow and daily realized volatility is statistically signi ﬁcant only in the ﬁve-year
+Treasury bond market.18 This is not surprising, since we expect informed investors to be more
+active in the most liquid trading venues (e.g., Chowdhry and Nanda, 1991), as so the ﬁve-year
+bond market is generally deemed (e.g., Fleming, 2003). It is therefore possible that our proxy
+for realized volatility is successfully capturing the time-varying participation of informed traders
+only in the market where such participation is probably most important. Nonetheless, neither
+the economic nor the statistical signi ﬁcance of the dispersion of beliefs dummies in Table 4 are
+aﬀected by the inclusion of these interaction terms in Eq. (11).
+
+most important. Nonetheless, neither
+the economic nor the statistical signi ﬁcance of the dispersion of beliefs dummies in Table 4 are
+aﬀected by the inclusion of these interaction terms in Eq. (11).
+Lastly, we control for variables outside our model that might spuriously a ﬀect our results.
+For example, Treasury auction dates might have a liquidity eﬀect on the secondary bond market.
+Thus, if our proxies for dispersion of beliefs were spuriously correlated with auction dates, an
+additional omitted variable bias might arise. W e account for this eventuality by including the
+interaction between order ﬂow and dummies for these dates in Eq. (11).
+19 The liquidity of U.S.
+Treasury bonds may also be a ﬀected by their repurchase agreement (repo) rates, i.e., by their
+specialness. According to Moulton (2004), the relative repo specialness of on-the-run Treasury
+securities (such as those in our database) generallyincreases in proximity of auction dates. Hence,
+the inclusion of auction dummies in Eq. (11) may control for spurious liquidity shocks induced
+by time-varying specialness as well. Similarly, we include day-of-the-week and annual e ﬀects to
+control for weekly seasonality and temporal trends in the order ﬂow and/or the dispersion of
+beliefs. None of these e ﬀects are statistically signiﬁcant.
+yield mid-quotes sampled at an “optimal” frequenc y determined according to Bandi and Russel (2005).
+
+he order ﬂow and/or the dispersion of
+beliefs. None of these e ﬀects are statistically signiﬁcant.
+yield mid-quotes sampled at an “optimal” frequenc y determined according to Bandi and Russel (2005).
+17 Presumably, the number of informed traders might increase as the public announcement date approaches.
+We do not include this product term when measuring dispersion of beliefs only with forecasts of Nonfarm Payroll
+announcements (i.e., SSD
+1t), since then we only use the Fridays before the announcement dates to control for
+potential day-of-the-week e ﬀects.
+18 The resulting adjusted R2 from the introduction of this cross term in Eq. (8) for ﬁve-year bond yield
+diﬀerentials increases from 23.30%, 20.31%,a n d 19.40% (i.e., R2
+a of Table 4) to 30.05%, 23.18%,a n d 23.22%
+when measuring the dispersion of beliefs with the standard deviation of professional forecasts of Nonfarm Payroll
+(P =1 ), “inﬂuential” (P =7 ), and all available macroeconomic news announcements ( P =1 8), respectively.
+19 The history of auction dates we use in the analys is is available on the U.S. Treasury website, at
+http://www.publicdebt.treas.gov/of/ofaicqry.htm.
+19
+
+4.2 Announcement Days
+When we introduce a public signal in the model (Proposition 2), market liquidity increases
+(Corollary 2), because the presence of a trade-free source of information and more aggressive
+trading by the speculators mitigates the adverse selection risk for the market-makers. In our
+empirical analysis, this translates into observing a negative diﬀerence (since we work with yields)
+between λ (of Eq. (1)) and λ
+p (of Eq. (3)) in the following regression:
+rt = a +
+XN
+i=0
+λiΩ∗
+t−i(1 − DPt )+
+XN
+i=0
+λpiΩ∗
+t−iDPt +
+XN
+i=1
+βirt−i + εt,( 1 2 )
+where DPt is a dummy variable equal to one if either the Nonfarm Payroll Employment report
+(P =1 ), any of the 7 inﬂuential announcements listed in Section 3.2.2 ( P =7 ), or any of
+the 18 announcements underlined in T able 2 ( P =1 8 ) is released on day t and equal to zero
+otherwise. As in Eq. (11), we set N =5 to assess the relevance of permanent (i.e., information)
+versus temporary (i.e., inventory control) e ﬀects of unanticipated order ﬂow on yield changes.
+W e estimate Eq. (12) for each announcement typeP =1 , 7,o r 18 and either two-year, ﬁve-year,
+or ten-year bond yield changes, and report the resulting estimates in Table 5.
+Consistent with Table 4, the evidence in Table 5 indicates that, even during announcement
+days, both the contemporaneous and cumulative impact of unanticipated order ﬂow on yield
+changes (λp0 and P5
+i=0 λpi, respectively) are negative and statistically signi ﬁcant (often at the
+1% level).
+
+days, both the contemporaneous and cumulative impact of unanticipated order ﬂow on yield
+changes (λp0 and P5
+i=0 λpi, respectively) are negative and statistically signi ﬁcant (often at the
+1% level). Hence, the correlation between unanticipated order ﬂow and yield changes during
+announcement days does not appear to be driven by inventory control eﬀects. Table 5 also shows
+that, in most cases, the di ﬀerence between λ0 and λp0 is not statistically signi ﬁcant (except for
+the ﬁve-year Treasury notes when P =1 or 7). Our model suggests that this would be the case
+if the public news surprises in our sample ( Sp in Eq. (3)) were noisy, since limσp→∞ λp = λ.Y e t ,
+our model (Corollary 3) also implies that noisy public signals should have little or no impact
+on price changes (i.e., lim
+σp→∞ λs =0 as well). This interpretation, although intriguing, is not
+exhaustive since in unreported analysis we ﬁnd that seven of the macroeconomic news releases in
+our sample (the “inﬂuential” ones) do have a statistically signiﬁcant impact on day-to-day bond
+yield changes between 1992 and 2000 (i.e., at least some λs are statistically signiﬁcant).
+An alternative interpretation of the statistically indistinguishable estimates for λ and λp in
+Table 5 is that the release of public macroeconomic signals may increase investors’ information
+heterogeneity (as argued in Kim and Verrecchia, 1994, 1997), hence compensating the reduction
+
+and λp in
+Table 5 is that the release of public macroeconomic signals may increase investors’ information
+heterogeneity (as argued in Kim and Verrecchia, 1994, 1997), hence compensating the reduction
+in adverse selection costs due to the availability of trade-free sources of information (as in our
+model). This interpretation is consistent with the evidence reported by Green (2004), who ﬁnds
+that the estimated half-hour price impact of order ﬂow in the Treasury bond market is actually
+higher during the thirty-minute interval immediately after an announcement than during the
+thirty-minute interval immediately before the announcement or on non-announcement days.
+However, the analysis of both the estimated correlation between bond yield changes and
+unanticipated net order ﬂow and the average cumulative impact of the latter on the former
+20
+
+provides stronger support for Corollary 2. Indeed, the adjusted R2 of Eq. (12) is always higher
+for non-announcement days than for announcement days (i.e., R2
+f >R 2
+fp in Table 5), with the
+sole exception of ﬁve-year notes when P =7 . Furthermore, the impact of unanticipated order
+ﬂow in either the two-year or the ten-year Treasury notes on the corresponding yield changes
+is permanent during non-announcement days (statistically signi ﬁcant P5
+i=0 λi in Table 5), but
+only transitory during Nonfarm Payroll announcement days (statistically insigni ﬁcant P5
+i=0 λpi
+in Table 5). This suggests that dealers rely more heavily on unanticipated order ﬂow to set bond
+prices during non-announcement days than on announcement days, consistent with our model
+and the ﬁndings in Brandt and Kavajecz (2004).
+O v e r a l l ,t h ee v i d e n c er e p o r t e di nT a b l e5i n d i c a t e s( a l b e i tn o ta ss t r o n g l ya si nS e c t i o n4 . 1 )
+that the release of public signals does not increase (and occasionally reduces) adverse selection
+costs and does not impair (and occasionally improves) market liquidity. Nonetheless, both the
+above discussion and the comparative statics of Figure 1B also indicate that any such liquidity
+gain may crucially depend on the quality of the public signal (σ
+2
+p)a n do nt h ed e g r e eo fi n f o r m a t i o n
+heterogeneity among market participants ( γ). W e explore these issues next, starting with the
+latter.
+
+pend on the quality of the public signal (σ
+2
+p)a n do nt h ed e g r e eo fi n f o r m a t i o n
+heterogeneity among market participants ( γ). W e explore these issues next, starting with the
+latter.
+4.2.1 Heterogeneous Information on Announcement Days
+In this section, we analyze the e ﬀect of information heterogeneity on market liquidity during
+announcement days. For that purpose, we estimate the following representation of Eq. (10):
+rt = a +
+XP
+j=1
+λsj Sjt +
+XN
+i=0
+λphiΩ∗
+t−iDht +
+XN
+i=0
+λpliΩ∗
+t−iDlt (13)
++
+XN
+i=0
+λpmiΩ∗
+t−i(1 − Dht − Dlt)+
+XN
+i=1
+βirt−i + εt,
+where Dht (Dlt) is the high (low) dispersion of beliefs dummy de ﬁned in Section 4.1, to account
+f o rm u l t i p l es i g n a l sa r r i v i n go nt h es a m ed a y ,a n dN =5 . W e report the resulting estimates in
+Table 6, and assess their signi ﬁcance after correcting the standard errors for heteroskedasticity
+and serial correlation.
+According to our model (Remark 2), greater dispersion of beliefs among speculators reduces
+market liquidity during announcement days (i.e., λph0 − λpl0 < 0 in Eq. (13)) only when the
+public signal is noisy, since the latter induces those heterogeneously informed speculators to use
+cautiously their private signals, thus increasing adverse selection risks for the market-makers.
+Vice versa, if the quality of the public signal is high ( σ
+2
+p is low), more heterogeneously informed
+speculators display their caution by relying less on their private signals (and more on the public
+
+ce versa, if the quality of the public signal is high ( σ
+2
+p is low), more heterogeneously informed
+speculators display their caution by relying less on their private signals (and more on the public
+signal) in their trading activity, thus lowering the perceived adverse selections risk for the market-
+makers and improving market liquidity (i.e., λ
+ph0 − λpl0 > 0 in Eq. (13)).
+Table 6 reveals that the di ﬀerence between λph0 and λpl0 is always negative and, in most
+cases, both economically and statistically signiﬁcant. For instance, when we measure dispersion of
+21
+
+beliefs using the Nonfarm Payroll announcement, a one standard deviation shock to unanticipated
+order ﬂow decreases ten-year bond yields by 9.62 basis points during high dispersion days, while
+it increases bond yields by 3.06 basis points during low dispersion days. This evidence suggests
+that the dispersion of beliefs among market participants has an important impact on Treasury
+bond market liquidity, in the direction predicted by our model, even in the presence of public
+signals of macroeconomic fundamentals. This evidence is also (indirectly) consistent with the
+conjecture made in Section 4.2 that public signal noise is “su ﬃciently” high in our sample. In
+Section 4.2.3 below, we gauge more explicitly the potential role of public signal noise on market
+liquidity.
+W e now turn to the impact of public signals on yield changes. According to the extended
+model of Section 2.2, a public signal can induce price (and yield) changes through two channels
+that, in the spirit of Evans and Lyons (2003), we call direct (through market-makers’ belief
+updating process) and indirect (through speculators’ trades in the orderﬂow). Yet, in the model,
+the direct channel is always more important than the indirect one. The evidence presented in
+Tabl e 6 conﬁrms this latter result: The adjusted R
+2 of the fully speci ﬁed regressions of Eq. (13),
+i.e., including both the unanticipated order ﬂow and the public signal(s), R2
+a,i sb e t w e e n2 and
+
+e 6 conﬁrms this latter result: The adjusted R
+2 of the fully speci ﬁed regressions of Eq. (13),
+i.e., including both the unanticipated order ﬂow and the public signal(s), R2
+a,i sb e t w e e n2 and
+84 times bigger than the adjusted R2 of the regressions estimated using only unanticipated order
+ﬂow, R2
+fa .
+4.2.2 Public Signal Noise
+Many of the results in Section 4.2.1 above are generally weaker in correspondence with the
+aggregate proxies for information heterogeneity described in Eq. (7). In particular, the relevance
+of public signals for bond yield changes (i.e., the di ﬀerence between R2
+a and R2
+fa in Table 6)
+is declining in P , the number of announcements used in the analysis. This may be explained
+by a potentially mistaken classi ﬁcation of certain macroeconomic releases as important public
+announcements. Indeed, both Eq. (7) and the corresponding classi ﬁcation of announcement
+days implicitly assume that all U.S. macroeconomic news releases listed in Table 2 are equally
+important. However, the literature (e.g., Fleming and Remolona, 1997) suggests that not all
+public information may be equally relevant ex ante to participants in the U.S. Treasury bond
+markets.
+This can be due to several factors: The dispersion of beliefs might be higher for certain
+announcements than for others, some announcements may not reveal any useful information to
+p r i c eb o n d s( i . e . ,t h ed a y si nw h i c ht h e yo c c u ra r eeﬀectively non-announcement days), or some
+
+ments than for others, some announcements may not reveal any useful information to
+p r i c eb o n d s( i . e . ,t h ed a y si nw h i c ht h e yo c c u ra r eeﬀectively non-announcement days), or some
+announcements might be noisier than others. According to our model, the availability of a public
+signal of higher (lower) quality implies a higher (lower) impact of order ﬂow on equilibrium price
+changes during announcement days. In this section, we examine the e ﬀect of public signal noise
+directly.
+Speciﬁcally, Remark 1 and Corollary 3 state that adverse selection costs are higher and the
+22
+
+price reaction to public announcement surprises is lower when the public signal noise is high.
+Intuitively, when the public signal is noisy, the market-makers rely more heavily on the order
+ﬂow than on the public signal, thus requiring greater compensation for providing liquidity. The
+evidence in Table 7 supports this claim. There we report estimates of the following equation:
+rt = a + λsnhSptDnht + λsnlSptDnlt + λsnmSpt(1 − Dnht − Dnlt)+
+XN
+i=0
+λpnhiΩ∗
+t−iDnht +
+XN
+i=0
+λpnliΩ∗
+t−iDnlt + (14)
+XN
+i=0
+λpnmiΩ∗
+t−i(1 − Dnht − Dnlt)+
+XN
+i=1
+βirt−i + εt,
+where Dnht (Dnlt)i sad u m m yv a r i a b l ee q u a lt oo n eo na n n o u n c e m e n td a y sw i t hh i g h( l o w )
+public signal noise, de ﬁned in Section 3.2.3 as the absolute value of the di ﬀerence between the
+actual announcement minus the last revision of the announcement being on the top (bottom)
+70th (30th) percentile of their empirical distribution, and equal to zero otherwise, and N =5 .
+W e limit our analysis to Nonfarm Payroll, Industrial Production, and Capacity Utilization news
+releases, since those are the only announcements in our MMS database for which RTDS revision
+data is available.
+Table 7 shows that the impact of these public signals on bond yield changes is generally more
+signiﬁcant when their noise is lower (columns λ
+snm and λsnl). Accordingly, we also ﬁnd that (i)
+the coe ﬃcients measuring the contemporaneous and permanent impact of unanticipated order
+
+nerally more
+signiﬁcant when their noise is lower (columns λ
+snm and λsnl). Accordingly, we also ﬁnd that (i)
+the coe ﬃcients measuring the contemporaneous and permanent impact of unanticipated order
+ﬂow on bond yield changes are generally insigni ﬁcant on announcement days when the public
+signal noise is low (columns λpnl0 and P5
+i=0 λpnli in Table 7), and (ii) the adjusted R2 of order
+ﬂow alone is generally higher on days with high public signal noise ( Dnht =1 )t h a no nd a y s
+with low public signal noise ( Dnlt =1 ), i.e., R2
+fn h a >R 2
+fn l a; yet, these di ﬀerences are not large.
+These results suggest that the impact of the release of macroeconomic data on the process of
+price formation in the U.S. Treasury market is decreasing in the quality of the public signals, as
+argued in the model of Section 2.2, albeit not importantly so.
+Finally, we amend all the regression models speci ﬁed above to account for the potential
+omitted variable biases described in Section 4.1.1. Many of these biases are in fact more likely
+to arise when analyzing the impact of both information heterogeneity and public signal noise
+on market liquidity during announcement days. For example, the number of informed market
+participants is likely to be endogenously higher during announcement days regardless of their
+dispersion of beliefs, if they expect the Treasury bond market to be more liquid then (e.g.,
+Chowdhry and Nanda, 1991). In addition, as observed in Section 3.2.3, public signal noise may
+
+ess of their
+dispersion of beliefs, if they expect the Treasury bond market to be more liquid then (e.g.,
+Chowdhry and Nanda, 1991). In addition, as observed in Section 3.2.3, public signal noise may
+stem not only from the signal’s intrinsic quality but also from fundamental uncertainty (σ
+2
+v in our
+model), which aﬀects market liquidity directly as well (Proposition 2). Yet, we ﬁnd that all our
+conclusions are robust to the inclusion of the sam e control variables employed for our analysis of
+non-announcement days.
+23
+
+5 Conclusions and F uture Research
+The main goal of this paper is to deepen our understanding of the links between daily bond yield
+movements, news about fundamentals, and order ﬂow conditional on the investors’ dispersion
+of beliefs and the public signals’ noise. To that end, we theoretically identify and empirically
+document important news and order ﬂow e ﬀects in the U.S. Treasury bond market. To guide
+our analysis, we develop a parsimonious model of speculative trading in the presence of asym-
+metric sharing of information among imperfectly competitive traders and a public signal of the
+terminal value of the traded asset. W e then test its equilibrium implications by studying the
+relation between daily two-year, ﬁve-year, and ten-year U.S. Treasury bond yield changes and
+unanticipated order ﬂow and real-time U.S. macroeconomic news releases.
+Our evidence suggests that announcement and order ﬂow surprises produce conditional, per-
+sistent mean jumps, i.e., that the process of price formation in the bond market is linked to
+information about fundamentals and agents’ beliefs. The nature of this linkage is sensitive to
+the intensity of investors’ dispersion of beliefs and the noise of the public announcement (albeit
+more weakly so). In particular, and consistent with our model, unanticipated order ﬂow is more
+highly correlated with bond yield changes when the dispersion of beliefs across informed traders
+is high and the public announcement is noisy.
+
+nsistent with our model, unanticipated order ﬂow is more
+highly correlated with bond yield changes when the dispersion of beliefs across informed traders
+is high and the public announcement is noisy.
+These ﬁndings allow us to draw several implications for future research. Existing term struc-
+ture models are notorious for their poor out-of-sample forecast performance (e.g., Du ﬀee, 2002).
+Recently, Diebold and Li (2003) use a variation of the Nelson and Siegel (1987) exponential
+components framework to forecast yield curve movements at short and long horizons, ﬁnding
+encouraging results at short horizons. W e show here that U.S. Treasury bond order ﬂow is
+contemporaneously correlated with daily yield changes and that the signi ﬁcance of this relation
+depends on the degree of information heterogenei ty about macroeconomic fundamentals among
+market participants. In future work, we intend to include order ﬂow information to forecast the
+term structure.
+Our results also indicate that day-to-day bond yield changes and order ﬂow are most sensi-
+tive to Nonfarm Payroll Employment announcements. Nominal bond yields depend on future
+inﬂation and future capital productivity, hence naturally react to employment announcement
+surprises. Previous studies observe that Nonfarm Payroll Employment is the ﬁrst news release
+for a given month (e.g., Fleming and Remolona, 1997; Andersen et al., 2003). However, our
+
+ent announcement
+surprises. Previous studies observe that Nonfarm Payroll Employment is the ﬁrst news release
+for a given month (e.g., Fleming and Remolona, 1997; Andersen et al., 2003). However, our
+analysis implicitly accounts for the timing of the announcements, by focusing exclusively on
+their surprise content. Hence, the importance of this announcement should depend on its pre-
+dictive power. Yet, to the best of our knowledge, no study has shown that the Nonfarm Payroll
+Employment is the best predictor for future activity and in ﬂation out of the 25 macroeconomic
+announcements in our sample.
+20 Thus, we suspect that its importance goes beyond its predictive
+20 The NBER’s Business Cycle Dating Committee mentions that no single macroeconomic variable is the most
+important predictor of recessions and expansions (e.g., see http://www.nber.org/cycles/recessions.html). The
+24
+
+power for real activity. Morris and Shin (2002) provide an interesting theoretical explanation for
+this overreactionto Nonfarm Payroll news. They argue that bond yields will be most reactive to
+the types of news emphasized by the press. In their model, this overreaction to news is rational
+and reﬂects the coordination role of public information. W e look forward to future research that
+further investigates this possibility.
+6 Appendix
+P r o o fo fP r o p o s i t i o n1 .As noted in Section 2.1.1, the proof is by construction. W e
+start by guessing that equilibrium p1 and xk are given by p1 = A0 + A1ω1 and xk = B0 + B1Svk ,
+respectively, where A1 > 0. Those expressions and the de ﬁnition of ω1 imply that, for the kth
+speculator,
+E (p1|Svk )= A0 + A1xk + A1B0 (M − 1) + A1B1 (M − 1) γSvk .( A - 1 )
+Using Eq. (A-1), the ﬁrst order condition of the maximization of the kth speculator’s expected
+proﬁt E(πk|Svk ) is given by
+ψSvk − A0 − (M +1 ) A1B0 − 2A1B1Svk − (M − 1) A1B1γSvk =0 ,( A - 2 )
+where ψ = σ2
+v
+Mσ2s
+. The second order condition is satis ﬁed, since 2A1 > 0.F o r E q .( A - 2 ) t o b e
+true, it must be that
+A0 =( M +1 ) A1B0 (A-3)
+2A1B1 = ψ − (M − 1) A1B1γ.( A - 4 )
+The distributional assumptions of Section 2.1 imply that the orderﬂow ω1 is normally distributed
+with mean E (ω1)= MB0 and variance var (ω1)= σ2
+u +B2
+1 σ2
+v
+.S i n c ecov (v, ω1)= B1σ2
+v, it ensues
+that
+E (v|ω1)= B1σ2
+v
+σ2u + B2
+1 σ2v
+(ω1 − MB0) .( A - 5 )
+
+he orderﬂow ω1 is normally distributed
+with mean E (ω1)= MB0 and variance var (ω1)= σ2
+u +B2
+1 σ2
+v
+.S i n c ecov (v, ω1)= B1σ2
+v, it ensues
+that
+E (v|ω1)= B1σ2
+v
+σ2u + B2
+1 σ2v
+(ω1 − MB0) .( A - 5 )
+According to the de ﬁnition of a Bayesian-Nash equilibrium in this economy (Section 2.1.1),
+p1 = E (v|ω1). Therefore, our conjecture for p1 implies that
+A0 = −A1MB0 (A-6)
+A1 = B1σ2
+v
+σ2u + B2
+1 σ2v
+.( A - 7 )
+committee takes into account real GDP, real income, empl oyment, industrial production, and wholesale and retail
+sales to determine whether the U.S. is in a recession or in an expansion. When running a horse race between
+macroeconomic variables and ﬁnancial variables to predict the busines s cycle, Estrella and Mishkin (1998) do not
+even consider Nonfarm Payroll announcements.
+25
+
+The expressions for A0, A1, B0,a n d B1 in Proposition 1 must solve the system made of Eqs.
+(A-3), (A-4), (A-6), and (A-7) to represent a linear equilibrium. De ﬁning A1B0 from Eq. (A-3)
+and plugging it into Eq. (A-6) leads us to A0 =0 . Thus, it must be that B0 =0 to satisfy Eq.
+(A-3). W e are left with the task of ﬁnding A1 and B1.S o l v i n g E q .( A - 4 ) f o rA1,w eo b t a i n
+A1 = ψ
+B1 [2 + (M − 1) γ].( A - 8 )
+W e then equate Eq. (A-8) to Eq. (A-7) to get A2
+1 = σ2v ψ[2+(M−1)γ−ψ]
+σ2u[2+(M−1)γ]2 . This expression implies that
+A1 = σv ψ
+1
+2
+σu[2+(M−1)γ] ,w h e r eψ
+1
+2 = σv
+σs
+√
+M is the unique square root of ψ,s i n c e2+( M − 1) γ − ψ =1
+and ψ > 0. Substituting the solution for A1 into Eq. (A-8) leads to B1 = σuψ
+1
+2
+σv
+.B o t hλ and Eq.
+(2) then ensue from the de ﬁnitions of δk = ψSvk and ψ. Finally, we observe that Proposition 1 is
+equivalent to a symmetric Cournot equilibrium with M speculators. Therefore, the “backward
+reaction mapping” introduced by Novshek (1984) to ﬁnd n-ﬁrm Cournot equilibria proves that,
+given any linear pricing rule, the symmetric linear strategies xk of Eq. (2) indeed represent the
+unique Bayesian Nash equilibrium of the Bayesian game among speculators.
+Proof of Corollary 1. Market liquidity is increasing in the number of speculators since,
+in correspondence with the same γ,t h e ﬁnite di ﬀerence ∆λ = λ (at M +1 ) − λ (at M)=
+σ2
+v
+√M+1[σ2
+v +(M+1)Mχ]
+1
+2
+σu[σ2v (M+2)+(M+1)Mχ] −
+σ2
+v
+√
+M[σ2
+v
++M(M−1)χ]
+1
+2
+
+he number of speculators since,
+in correspondence with the same γ,t h e ﬁnite di ﬀerence ∆λ = λ (at M +1 ) − λ (at M)=
+σ2
+v
+√M+1[σ2
+v +(M+1)Mχ]
+1
+2
+σu[σ2v (M+2)+(M+1)Mχ] −
+σ2
+v
+√
+M[σ2
+v
++M(M−1)χ]
+1
+2
+σu[σ2v (M+1)+M(M−1)χ] =0 only when speculators’ information is heteroge-
+neous (χ (at M +1 )= σ2
+v
+M+1 and χ (at M)= σ2
+v
+M such that γ =0 ) and always negative otherwise.
+Moreover, limM→∞ λ =0 . Market liquidity is decreasing in the heterogeneity of speculators’ Svk
+since λ =
+σ2
+v
+√
+M[σ2
+v
++M(M−1)χ]
+1
+2
+σu[σ2v (M+1)+M(M−1)χ] is a concave function of χ with its maximum at χ = σ2
+v
+M , i.e., when
+σss =0 . Indeed, ∂λ
+∂χ = −
+M
+3
+2 (M−1)2σ2
+v (Mχ−σ2
+v )
+2σu[σ2v +M(M−1)χ]
+1
+2 [σ2v (M+1)+M(M−1)χ]2 ,i m p l y i n gt h a t∂λ
+∂χ > 0 for χ < σ2
+v
+M
+(i.e., when γ > 0), ∂λ
+∂χ < 0 for χ > σ2
+v
+M (i.e., when γ < 0), and ﬁnally ∂λ
+∂χ =0 for χ = σ2
+v
+M (i.e., when
+γ =0 ).
+Proof of Proposition 2. This proof is similar to the proof of Proposition 1 above, hence
+we only sketch its outline. Here we start by guessing that equilibrium p1 and xk are given by p1 =
+A0 + A1ω1 + A2Sp and xk = B0 + B1Svk + B2Sp, respectively, where A1 > 0. Since the de ﬁnition
+of δ∗
+k implies that E(v|Svk ,S p)= αSvk +
+³
+β + σ2
+v
+σ2p
+´
+Sp and E(Svj |Svk ,S p)= γpSvk +
+¡
+γp − 1
+¢ β
+α Sp,
+those expressions lead to the following ﬁrst order condition of the maximization of E(πk|Svk ,S p):
+αSvk +
+µ
+β + σ2
+v
+σ2p
+¶
+Sp − (M − 1) A1B1γpSvk − 2A1B1Svk − (M +1 ) A1B0 (A-9)
+−A0 − (M +1 ) A1B2Sp − (M − 1) A1B1
+¡
+γp − 1
+¢ β
+
+e following ﬁrst order condition of the maximization of E(πk|Svk ,S p):
+αSvk +
+µ
+β + σ2
+v
+σ2p
+¶
+Sp − (M − 1) A1B1γpSvk − 2A1B1Svk − (M +1 ) A1B0 (A-9)
+−A0 − (M +1 ) A1B2Sp − (M − 1) A1B1
+¡
+γp − 1
+¢ β
+αSp − A2Sp =0 .
+26
+
+F o rE q . ( A - 9 )t ob et r u e ,i tm u s tb et h a t
+−A0 =( M +1 ) A1B0 (A-10)
+2A1B1 = α − (M − 1) A1B1γp (A-11)
+A2 = − (M +1 ) A1B2 + β + σ2
+v
+σ2p
+− (M − 1) A1B1
+¡
+γp − 1
+¢ β
+α (A-12)
+The distributional assumptions of Section 2.1 imply that
+E (v|ω1,S p)= B1σ2
+v
+¡
+σ2
+p − σ2
+v
+¢
+σ2uσ2
+p
++ B2
+1 σ2v
+¡
+σ2p − σ2v
+¢ (ω1 − MB0) (A-13)
++σ2
+v
+£
+σ2
+u − MB1B2
+¡
+σ2
+p − σ2
+v
+¢¤
+σ2uσ2
+p
++ B2
+1 σ2v
+¡
+σ2p − σ2v
+¢ Sp.
+Since p1 = E (v|ω1) in equilibrium, our conjecture for p1 implies that
+A0 = −A1MB0 (A-14)
+A1 = B1σ2
+v
+¡
+σ2
+p − σ2
+v
+¢
+σ2uσ2
+p
++ B2
+1 σ2v
+¡
+σ2p − σ2v
+¢ (A-15)
+A2 = σ2
+v
+£
+σ2
+u − MB1B2
+¡
+σ2
+p − σ2
+v
+¢¤
+σ2uσ2
+p
++ B2
+1 σ2v
+¡
+σ2p − σ2v
+¢ .( A - 1 6 )
+The expressions for A0, A1, A2, B0, B1,a n d B2 in Proposition 2 must solve the system made
+of Eqs. (A-10), (A-11), (A-12), (A-14), (A-15), and (A-16) to represent a linear equilibrium.
+First, we solve Eq. (A-11) for A
+1 and equate the ensuing expression to Eq. (A-15) to get
+A2
+1 =
+ασ2
+v (σ2
+p
+−σ2
+v )
+σ2uσ2
+p
+[2+(M−1)γp]
+2 ,s i n c e2+( M − 1) γp − α =1 . T h i si m p l i e st h a tA1 =
+α
+1
+2 σv (σ2
+p−σ2
+v )
+1
+2
+σuσp[2+(M−1)γp] >
+0,w h e r e α
+1
+2 and
+¡
+σ2
+p − σ2
+v
+¢1
+2 are the unique square roots of α and
+¡
+σ2
+p − σ2
+v
+¢
+, respectively,
+since α > 0 and σ2
+p > σ2
+v. Substituting this expression into Eq. (A-11) implies that B1 =
+ασuσp
+£
+ασ2
+v
+¡
+σ2
+p − σ2
+v
+¢¤− 1
+2 . Substituting the solution for B1 into Eq. (A-16), plugging both the
+resulting expression for A2 and the solution for A1 into Eq. (A-12), and solving for B2 leads to
+
+σp
+£
+ασ2
+v
+¡
+σ2
+p − σ2
+v
+¢¤− 1
+2 . Substituting the solution for B1 into Eq. (A-16), plugging both the
+resulting expression for A2 and the solution for A1 into Eq. (A-12), and solving for B2 leads to
+B2 = B1
+β
+α .R e p l a c i n gB1 and B2 in Eq. (A-16) with their solutions above and α and β with their
+deﬁnitions in Section 2.2 gives A2 = σ2
+v
+σ2p
+.F i n a l l y , d eﬁning A1B0 from Eq. (A-14) and plugging
+it into Eq. (A-10) leads to A0 =0 and B0 =0 . Eq. (4) then ensues from the de ﬁnition of
+δ∗
+k = αSvk + βSp.
+Proof of Corollary 2. To prove this statement, we compare λ and λp under all possible
+scenarios for M and γ.W h e n M =1 , λ = σv
+2σu
+> λp = σv
+2σuσp
+¡
+σ2
+p − σ2
+v
+¢1
+2 since σ2
+p > σ2
+v.A l o n g
+the same lines, when M> 1 and χ =0 (γ =1 ), λ =
+√
+Mσv
+(M+1)σu
+> λp =
+√
+Mσv
+(M+1)σuσp
+¡
+σ2
+p − σ2
+v
+¢1
+2 .
+When M> 1 and χ = σ2v
+M (γ =0 ), λ = σv
+2σu
+> λp =
+√
+Mσv
+σuσp
+¡
+σ2
+p − σ2
+v
+¢ (Mσ2p−σ2v )
+1
+2
+2Mσ2p−(M+1)σ2v
+since σ2
+p > σ2
+v
+27
+
+implies that 3Mσ4
+vσ2
+p
+(M +2 ) < σ2
+v
+¡
+4Mσ4
+v + σ2
+vσ2
+p
++4 M2σ4
+p
+¢
+. Finally, it can be shown that,
+when M> 1 and χ ∈
+³
+0, σ2v
+M
+´
+(γ ∈ (0, 1))o r χ > σ2v
+M (γ ∈
+¡
+− 1
+M−1 , 0
+¢
+), λ =
+σ2v
+√
+M[σ2
+v
++M(M−1)χ]
+1
+2
+σu[σ2v (M+1)+M(M−1)χ] >
+λp =
+α
+1
+2 σv (σ2p−σ2v )
+1
+2
+σuσp[2+(M−1)γp] where γp =
+σ2p(σ2
+v
+−Mχ)−σ4v
+σ2p[σ2v +M(M−1)χ]−σ4v
+and α =
+Mσ2v (σ2
+p
+−σ2v )
+σ2p[σ2v +M(M−1)χ]−σ4v
+. In addition,
+limM→∞ λ − λp =0 , since both variables converge to zero at the limit.
+Proof of Remark 1. W e prove this remark under all possible scenarios for M and
+γ.W h e n M =1 , ∂λp
+∂σp
+= σ3v
+2σ2pσu
+¡
+σ2
+p − σ2
+v
+¢− 1
+2 > 0 since σ2
+p > σ2
+v.W h e n M> 1 and χ =
+0 (γ =1 ), ∂λp
+∂σp
+=
+√
+Mσ3v
+(M+1)σ2pσu
+¡
+σ2
+p − σ2
+v
+¢− 1
+2 > 0.W h e n M> 1 and χ = σ2v
+M (γ =0 ), ∂λp
+∂σp
+=
+√
+Mσ3v [σ4
+v
+(M+1)+σ2p(σ2
+v
++2M2σ2p−5Mσ2v )]
+σ2pσu[2σ2p−(M+1)σ2v ]
+2
+¡
+Mσ2
+p − σ2
+v
+¢− 1
+2 since σ4
+v (M +1 )+ σ2
+p
+¡
+σ2
+v +2 M2σ2
+p
+¢
+> −5Mσ2
+v.
+When M> 1 and χ ∈
+³
+0, σ2v
+M
+´
+(γ ∈ (0, 1))o r χ > σ2v
+M (γ ∈
+¡
+− 1
+M−1 , 0
+¢
+), it can be shown that
+∂λp
+∂σp
+yields a positive function of σp, σv, M,a n d χ under the assumptions of Sections 2.1 and 2.2.
+Finally, in all of the above scenarios, limσp→∞ λp = λ.
+Proof of Remark 2. We p r ove t hi s r e ma r k byﬁrst comparing the equilibrium λp
+when either γ =1 (χ =0 )o r γ =0 (χ = σ2
+v
+M ). If speculators’ signals are perfectly cor-
+related, then λp =
+√
+Mσv
+(M+1)σuσp
+¡
+σ2
+p − σ2
+v
+¢1
+2 ; if speculators’ private signals are uncorrelated, then
+λp =
+√
+Mσv
+σuσp
+¡
+σ2
+p − σ2
+v
+¢ (Mσ2
+p−σ2
+
+). If speculators’ signals are perfectly cor-
+related, then λp =
+√
+Mσv
+(M+1)σuσp
+¡
+σ2
+p − σ2
+v
+¢1
+2 ; if speculators’ private signals are uncorrelated, then
+λp =
+√
+Mσv
+σuσp
+¡
+σ2
+p − σ2
+v
+¢ (Mσ2
+p−σ2
+v )
+1
+2
+2Mσ2p−(M+1)σ2v
+. It then follows that it exists a unique σ2∗
+p > σ2
+v > 0 such
+that λp >
+√
+Mσv
+(M+1)σuσp
+¡
+σ2
+p − σ2
+v
+¢1
+2 if σ2
+p > σ2∗
+p ,g i v e nb yσ2∗
+p = M+1
+M σ2
+v. More generally, it can be
+s h o w nt h a ti te x i s t sau n i q u eχ∗ =
+³
+1 − σ2
+v
+σ2p
+´
+σ2
+v
+M < σ2
+v
+M (i.e., γ∗ = σ2
+v
+σ2pM−(M−1)σ2v
+> 0) such that
+∂λp
+∂χ ≥ 0 for χ ≤ χ∗ (i.e., ∂λp
+∂γ ≤ 0 for γ ≥ γ∗) and negative (i.e., ∂λp
+∂γ > 0) otherwise. Hence, λp is
+negatively related to γ ∈ [0, 1] for large σ2
+p and positively related to γ ∈ [0, 1] for small σ2
+p,s i n c e
+limσp→∞ γ∗ =0 and limσp→σv γ∗ =1 , while λp is always positively related to γ ∈
+¡
+− 1
+M−1 , 0
+¢
+for
+any σ2
+p.
+Proof of Corollary 3. The statement of the corollary follows from ∂λs
+∂σp
+= −2σ2
+v
+σ3p
+< 0 for
+any M and γ.F u r t h e r m o r e ,limσp→∞ λs =0 .
+References
+[1] Admati, A., and P ﬂeiderer, P., 1988, A Theory of Intra day Trading Patterns: Volume and
+Price Variability,Review of Financial Studies,1 ,3 - 4 0 .
+[2] Andersen, T., and Bollerslev, T., 1998, Deutsche Mark-Dollar Volatility: Intraday Activ-
+ity Patterns, Macroeconomic Announcements, and Longer Run Dependencies, Journal of
+Finance, 53, 219-265.
+28
+
+[3] Andersen, T., Bollerslev, T., Diebold, F., and Labys, P., 2003, Modeling and Forecasting
+Realized Volatility,Econometrica, 71, 579-626.
+[4] Andersen, T., Bollerslev, T., Diebold, F., and Vega, C., 2003, Micro E ﬀects of Macro An-
+nouncements: Real-Time Price Discovery in Foreign Exchange,American Economic Review,
+93, 38-62.
+[5] Andersen, T., Bollerslev, T., Diebold, F., and Vega, C., 2004, Real-Time Price Discovery in
+Stock, Bond, and Foreign Exchange Markets, W orking Paper, Northwestern University.
+[6] Aruoba, B., 2004, Empirical Properties of M acroeconomic Revisions, W orking Paper, Uni-
+versity of Pennsylvania.
+[7] Back, K., Cao, H., and Willard, G., 2000, Imperfect Competition Among Informed Traders,
+Journal of Finance, 55, 2117-2155.
+[8] Balduzzi, P., Elton, E., and Green, C., 2001, Economic News and Bond Prices: Evidence
+From the U.S. Treasury Market, Journal of Financial and Quantitative Analysis , 36, 523-
+543.
+[9] Bandi, F., and Russell, J., 2005, Separating Microstructure Noise from Volatility, Journal
+of Financial Economics,f o r t h c o m i n g .
+[10] Berry, T., Howe, K., 1994, Public Information Arrival, Journal of Finance, 49, 1331-1346.
+[11] Boyd, J., Hu, J., and Jagannathan, R., 2005, The Stock Market’s Reaction to Unemployment
+News: Why Bad News Is Usually Good For Stocks, Journal of Finance, 60, 649-672.
+[12] Brandt, M., and Kavajecz, K., 2004, Price Discovery in the U.S. Treasury Market: The
+
+et’s Reaction to Unemployment
+News: Why Bad News Is Usually Good For Stocks, Journal of Finance, 60, 649-672.
+[12] Brandt, M., and Kavajecz, K., 2004, Price Discovery in the U.S. Treasury Market: The
+Impact of Order Flow and Liquidity on the Yield Curve, Journal of Finance, 59, 2623-2654.
+[13] Brenner, M., Pasquariello, P., and Subra hmanyam, M., 2005, Financial Markets and the
+Macro Economy, W orking Paper, Ross School of Business, University of Michigan.
+[14] Chowdhry, B., and Nanda, V., 1991, Multimarket Trading and Market Liquidity, Review of
+Financial Studies,4 ,4 8 3 - 5 1 1 .
+[15] Croushore, D., and Stark, T., 1999, A Real-Time Data Set of Macroeconomists: Does the
+Data Vintage Matter? Federal Reserve Bank of Philadelphia W orking Paper No. 99-21.
+[16] Croushore, D., and Stark, T., 2001, A R eal-Time Data Set of Macroeconomists, Journal of
+Econometrics, 105, 111-130.
+[17] Diamond, D., and V errecchia, R., 1991, Disclosure, Liquidity, and the Cost of Capital,
+Journal of Finance, 46, 1325-1359.
+29
+
+[18] Diebold, F., and Li, C., 2003, Forecasting the Term Structure of Government Bond Yields,
+Journal of Econometrics,f o r t h c o m i n g .
+[19] Diether, K., Malloy, C., and Scherbina, A., 2002, Di ﬀerences of Opinion and the Cross
+Section of Stock Returns, Journal of Finance, 57, 2113-2141.
+[20] Du ﬀee, G., 2002, Term Premia and Interest Rate Forecasts in A ﬃne Models, Journal of
+Finance, 57, 405-443.
+[21] Easley, D., Hvidkjaer, S., and O’Hara, M., 2002, Is Information Risk a Determinant of Asset
+Returns? Journal of Finance, 57, 2185-2221.
+[22] Estrella, A., and Mishkin, F., 1998, Predicting U.S. Recessions: Financial Variables as
+Leading Indicators, Review of Economics and Statistics, 80, 45-61.
+[23] Evans, M., and Lyons, R., 2002, Order Flow and Exchange Rate Dynamics, Journal of
+Political Economy,1 1 0 ,1 7 0 - 1 8 0 .
+[24] Evans, M., and Lyons, R., 2003, How is Macro News Transmitted to Exchange Rates, NBER
+W orking Paper No. 9433.
+[25] Evans, M., and Lyons, R., 2004, Exchange Rate Fundamentals and Order Flow, W orking
+Paper, Haas School of Business, University of California at Berkeley.
+[26] Faust, J., Rogers, J., and W right, J., 2003, News and Noise in G-7 GDP Announcements,
+Journal of Money, Credit and Banking ,f o r t h c o m i n g .
+[27] Fleming, M., 1997, The Round-the-Clock Market of U.S. Treasury Securities, Economic
+Policy Review, Federal Reserve Bank of New York, 3, 9-32.
+
+f Money, Credit and Banking ,f o r t h c o m i n g .
+[27] Fleming, M., 1997, The Round-the-Clock Market of U.S. Treasury Securities, Economic
+Policy Review, Federal Reserve Bank of New York, 3, 9-32.
+[28] Fleming, M., 2003, Measuring Treasury Market Liquidity, Economic Policy Review, Federal
+Reserve Bank of New York, 83-108.
+[29] Fleming, M., and Remolona, E., 1997, What Moves the Bond Market? Economic Policy
+Review, Federal Reserve Bank of New York, 31-50.
+[30] Fleming, M., and Remolona, E., 1999, Price Formation and Liquidity in the U.S. Treasury
+Market: The Response to Public Information, Journal of Finance, 54, 1901-1915.
+[31] Foster, F., and Viswanathan, S., 1990, A Theory of the Interday Variations in Volume,
+Variance, and Trading Costs in Securities Markets,Review of Financial Studies,3 ,5 9 3 - 6 2 4 .
+[32] Foster, F., and Viswanathan, S., 1993, The E ﬀect of Public Information and Competition
+on Trading Volume and Price Volatility, Review of Financial Studies,6 ,2 3 - 5 6 .
+30
+
+[33] Foster, F., and Viswanathan, S., 1996, Strategic Trading When Agents Forecast the Fore-
+casts of Others, Journal of Finance, 51, 1437-1478.
+[34] Garman, Mark B., 1976, Market Microstructure, Journal of Financial Economics ,3 ,2 5 7 -
+275.
+[35] Goldreich, D., Hanke, B., and Nath, P., 2005, The Price of Future Liquidity: Time-Varying
+Liquidity in the U.S. Treasury Market, Review of Finance,f o r t h c o m i n g .
+[36] Goodhart, C., and O’Hara, M., 1997, High Frequency Data in Financial Markets: Issues
+and Applications, Journal of Empirical Finance,4 ,7 3 - 1 1 4 .
+[37] Green, C., 2004, Economic News and the Impact of Trading on Bond Prices, Journal of
+Finance, 59, 1201-1233.
+[38] Gri ﬃths, M., Smith, B., Turnbull, D., and White, R., 2000, The Costs and the Determinants
+of Order Aggressiveness, Journal of Financial Economics, 56, 65—88.
+[39] Hasbrouck, J., 1991, Measuring The Information Content of Stock Trades, Journal of Fi-
+nance, 46, 179-207.
+[40] Hasbrouck, J., 2003, Intraday Price Formation in U.S. Equity Index Markets, Journal of
+Finance, 58, 2375-2399.
+[41] Hasbrouck, J., 2004, Economic and Statistical Perspectives on the Dynamics of Trade in
+Securities Markets, Teaching Notes, Stern School of Business, New York University.
+[42] Kallberg, J., and Pasquariello, P., 2004, T ime-Series and Cross-Sectional Excess Comove-
+ment in Stock Indexes, W orking Paper, Ross School of Business at University of Michigan.
+
+rk University.
+[42] Kallberg, J., and Pasquariello, P., 2004, T ime-Series and Cross-Sectional Excess Comove-
+ment in Stock Indexes, W orking Paper, Ross School of Business at University of Michigan.
+[43] Kavajecz, K., and Collins, S., 1995, Rationality of Preliminary Money Stock Estimates,
+Review of Economics and Statistics, 77, 32-41.
+[44] Kim., O., and Verrecchia, R., 1994, Market Liquidity and Volume around Earnings An-
+nouncements, Journal of Accounting and Economics, 17, 41-67.
+[45] Kim., O., and Verrecchia, R., 1997, Pre-Announcement and Event-Period Private Informa-
+tion, Journal of Accounting and Economics, 24, 395-419.
+[46] Koski, J., and Michaely, R., 2000, Prices, Liquidity, and the Information Content of Trades,
+Review of Financial Studies, 13, 659-696.
+[47] Kuttner, K., 2001, Monetary Policy Surprises and Interest Rates: Evidence from the Fed
+Funds Futures Market,Journal of Monetary Economics, 47, 523-544.
+31
+
+[48] Kyle, A., 1985, Continuous A uctions and Insider Trading, Econometrica, 53, 1315-1335.
+[49] Lee, C., and Ready, M., 1991, Inferring Trade Direction from Intraday Data, Journal of
+Finance, 46, 733-746.
+[50] Lucas, R., 1982, Interest Rates and Currency Prices in a Two-Country W orld, Journal of
+Monetary Economics, 10, 335-359.
+[51] Mankiw, N., Runkle, D., and Shapiro, M., 1984, Are Preliminary Announcements of the
+Money Stock Rational Forecasts?, Journal of Monetary Economics, 14, 15-27.
+[52] McKelvey, R., Page, T., 1990, Public and Private Information: An Experimental Study of
+Information Pooling, Econometrica, 58, 1321-1339.
+[53] Moulton, P., 2004, Relative Repo Specialness in U.S. Treasuries, Journal of Fixed Income ,
+14, 40-47.
+[54] Mork, K., 1987, Ain’t Behavin’: Forecast Errors and Measurement Errors in Early GNP
+Estimates, Journal of Business and Economic Statistics ,5 ,1 6 5 - 1 7 5 .
+[55] Mork, K., 1990, Forecastable Money-Growth Revisions: A Closer Look at the Data, Cana-
+dian Journal of Economics, 23, 593-616.
+[56] Morris, S., and Shin, H., 2002, Social Value of Public Information, American Economic
+Review, 92, 1521-1534.
+[57] Novshek, W., 1984, Finding All n-Firm Cournot Equilibria,International Economic Review,
+25, 61-70.
+[58] Ranaldo, A., 2004, Order Aggressiveness in Limit Order Book Markets, Journal of Financial
+Markets,7 ,5 3 - 7 4 .
+[59] Zarnowitz, V., and Lambros, L., 1987, Consensus and Uncertainty in Economic Prediction,
+
+o, A., 2004, Order Aggressiveness in Limit Order Book Markets, Journal of Financial
+Markets,7 ,5 3 - 7 4 .
+[59] Zarnowitz, V., and Lambros, L., 1987, Consensus and Uncertainty in Economic Prediction,
+Journal of Political Economy, 95, 591-621.
+32
+
+Table 1. GovPX Transaction Data: Summary Statistics
+In this table we report the mean, standard deviation, maximum, minimum, and ﬁrst-order autocorrelation
+coeﬃcient ( ρ(1)) for the following variables: Two-year, ﬁve-year and ten-year on-the-run daily yields (in per-
+centage, i.e., multiplied by 100), daily yield changes (in b asis points, i.e., multiplied by 10,000), number of buys,
+number of sells, daily net order ﬂow Ωt (number of buys minus number of sells), daily abnormal order ﬂow, and
+the daily number of transactions. The daily abnormal, or unanticipated order ﬂow (de ﬁn e di nS e c t i o n4a sΩ∗
+t )
+is computed by aggregating over each day t all half-hour intraday residuals from the estimation of the linear
+autoregressive model of Hasbrouck (1991) in Eq. (8). The data source is GovPX. Our sample period starts in
+January 2, 1992 and ends in December 29, 2000, for a total of 2,246 daily observations.
+Mean Stdev. Max. Min. ρ(1)
+Two-Year
+Daily Yield×100 5.49 0.89 7.73 3.70 0.998
+Daily Yield Change ×10, 000 0.05 6.10 35.10 -31.10 0.041
+Number of Buys 202.07 80.00 604 25 0.559
+Number of Sells 170.77 69.89 640 17 0.533
+Order Flow 31.30 37.38 204 -89 0.088
+Abnormal Order Flow 0.00 33.74 187.58 -102.49 0.032
+Number of Transactions 372.84 145.50 1244 44 0.578
+Five-Year
+Daily Yield×100 5.97 0.74 7.90 3.98 0.996
+Daily Yield Change ×10, 000 -0.01 6.39 35.10 -29.30 0.044
+Number of Buys 324.70 127.36 816 34 0.633
+Number of Sells 289.41 114.47 737 33 0.631
+
+.578
+Five-Year
+Daily Yield×100 5.97 0.74 7.90 3.98 0.996
+Daily Yield Change ×10, 000 -0.01 6.39 35.10 -29.30 0.044
+Number of Buys 324.70 127.36 816 34 0.633
+Number of Sells 289.41 114.47 737 33 0.631
+Order Flow 35.29 49.53 278 -127 0.128
+Abnormal Order Flow 0.00 47.85 262.72 -129.44 -0.007
+Number of Transactions 614.11 237.05 1423 88 0.654
+Ten-Year
+Daily Yield×100 6.26 0.74 8.03 4.16 0.997
+Daily Yield Change ×10, 000 -0.04 5.99 33.60 -23.00 0.044
+Number of Buys 281.70 109.03 693 34 0.710
+Number of Sells 260.55 102.44 553 22 0.692
+Order Flow 21.14 36.45 153 -105 0.160
+Abnormal Order Flow 0.00 40.29 142.98 -105.38 0.038
+Number of Transactions 542.25 208.41 1246 73 0.718
+33
+
+Table 2. Macroeconomic News Announcements and Dispersion of Beliefs
+In this table we report the number of observations, source, and release time for the 25 U.S. macroeconomic
+announcements in our sample. We also report summary stati stics for the corresponding standard deviation across
+professional forecasts, our proxy for dispersion of belie fs among market participants, whenever available. Specif-
+ically, we report the mean, standard deviation, Spearman rank correlation with the Nonfarm Payroll standard
+deviation (
+ρ(Payroll)), and the ﬁrst-order autocorrelation coe ﬃcient ( ρ(1)) for each series SDjt .A “ ∗ ”, “
+∗∗ ”, or “ ∗∗∗ ” indicate the latter two measures’ signi ﬁcance at 10%, 5%, or 1% level, respectively. The release
+time in the table, in Eastern St andard Time (EST, with Daylight savings time starting on the ﬁrst Sunday of
+April and ending on the last Sunday of October), is constant throughout the sample except in the following
+circumstances: In 01/94, the personal i ncome announcement time moved from 10:00 a.m. to 8:30 a.m.; beginning
+in 01/96, consumer credit was released regularly at 3:00 p.m. while prior to this date, its release times varied; in
+12/93, the personal consumption expenditures announceme nt time moved from 10:00 a.m. to 8:30 a.m.; whenever
+GDP is released on the same day as durable goods orders, the durable goods orders announcement is moved to
+
+nal consumption expenditures announceme nt time moved from 10:00 a.m. to 8:30 a.m.; whenever
+GDP is released on the same day as durable goods orders, the durable goods orders announcement is moved to
+10:00 a.m.; on 07/96 the durable goods orders announcement was released at 9:00 a.m.; in 01/97, the business
+inventory announcement was moved from 10:00 a.m. to 8:30 a.m.; beginning in 3/28/94, the fed funds rate was
+released regularly at 2:15 p.m., while prior to this date , the release times varied. The sources for the MMS data
+are: Bureau of Labor Statistics (BLS), Bureau of the Ce nsus (BC), Bureau of Economic Analysis (BEA), Federal
+Reserve Board (FRB), National Association of Purcha sing Managers (NAPM), Conference Board (CB), Finan-
+cial Management O ﬃce (FMO), and Employment and Training Administration (ETA). The standard deviation
+across professional forecasts of Capacity Utilization, P ersonal Income, Consumer Credit, Personal Consumption
+Expenditures, Business Inventories, Government Budget, and Target Federal Funds Rate (announcements 7, 8,
+9, 11, 15, 16, and 24) is not available.
+34
+
+Tabl e 2 (Continued).
+Obs. Source Time Mean Stdev. ρ(Pa y r o l l) ρ(1)
+Quarterly Announcements
+1- GDP Advance 36 BEA 8:30 0.480 0.170 0.162 ∗ -0.181
+2- GDP Preliminary 34 BEA 8:30 0.313 0.178 0.014 0.192
+3- GDP Final 35 BEA 8:30 0.128 0.051 0.083 0.250
+Monthly Announcements
+Real Activity
+4- Nonfarm Payroll 108 BLS 8:30 41.814 14.212 1.000 0.424 ∗∗∗
+5- Retail Sales 108 BC 8:30 0.302 0.158 0.109 0.047
+6- Industrial Production 107 FRB 9:15 0.183 0.135 0.236
+∗∗ 0.358∗∗∗
+7- Capacity Utilization 107 FRB 9:15 n.a. n.a. n.a. n.a.
+8- Personal Income 105 BEA 10:00/8:30 n.a. n.a. n.a. n.a.
+9- Consumer Credit 108 FRB 15:00 n.a. n.a. n.a. n.a.
+Consumption
+10- New Home Sales 106 BC 10:00 19.270 10.235 0.151 0.099
+11- Pers. Cons. Exp. 107 BEA 10:00/8:30 n.a. n.a. n.a. n.a.
+Investment
+12- Durable Goods Orders 106 BC 8:30/9:00/10:00 1.034 0.333 0.077 0.412 ∗∗∗
+13- Factory Orders 105 BC 10:00 0.587 0.577 0.219 ∗∗ 0.015
+14- Construction Spending 105 BC 10:00 0.499 0.253 0.176 ∗ 0.192∗∗∗
+15- Business Inventories 106 BC 10:00/8:30 n.a. n.a. n.a. n.a.
+Government Purchases
+16- Government Budget 107 FMO 14:00 n.a. n.a. n.a. n.a.
+Net Exports
+17- Trade Balance 107 BEA 8:30 0.790 0.851 0.122 0.018
+Prices
+18- Producer Price Index 108 BLS 8:30 0.130 0.049 0.186 ∗ 0.287∗∗∗
+19- Consumer Price Index 107 BLS 8:30 0.086 0.051 0.146 0.221 ∗∗
+Forward-Looking
+20- Consumer Conf. Index 106 CB 10:00 1.646 0.609 0.079 0.230 ∗∗
+21- NAPM Index 107 NAPM 10:00 0.961 0.303 0.242 ∗∗ 0.382∗∗∗
+
+nsumer Price Index 107 BLS 8:30 0.086 0.051 0.146 0.221 ∗∗
+Forward-Looking
+20- Consumer Conf. Index 106 CB 10:00 1.646 0.609 0.079 0.230 ∗∗
+21- NAPM Index 107 NAPM 10:00 0.961 0.303 0.242 ∗∗ 0.382∗∗∗
+22- Housing Starts 106 BC 8:30 0.045 0.038 0.160 0.246 ∗∗∗
+23- Index of Leading Ind. 108 CB 8:30 0.202 0.137 0.134 0.480 ∗∗∗
+Six-Week Announcements
+24- Target Fed Funds Rate 71 FRB 14:15 n.a. n.a. n.a. n.a.
+Weekly Announcements
+25- Initial Unemp. Claims 459 ETA 8:30 7.973 5.440 0.069 0.578 ∗∗∗
+35
+
+Table 3. Dispersion of Beliefs and Traders Aggressiveness
+In this table we report estimates of the following equation:
+NTt = bhDht + blDlt + bm(1 − Dht − Dlt)+ εt,
+where NTt is the number of transactions on day t, Dht (Dlt) is a dummy variable equal to one on days with
+high (low) dispersion of beliefs de ﬁned as the forecasts’ standard deviation to be on the top (bottom) 70 th
+(30th) percentile of its empirical distribution, and zero otherwise. We measure the degree of heterogeneity
+of beliefs in a given month using three di ﬀerent methodologies. First, we only use the standard deviation of
+forecasts of the Nonfarm Payroll Employment report. S econd, we aggregate the standard deviation of forecasts
+across seven “inﬂuential” macroeconomic announcements: Nonfarm Payroll Employment, Retail Sales, New Home
+Sales, Consumer Conﬁdence Index, NAPM Index, Index of Leading Indicators, and Initial Unemployment Claims.
+Third, we aggregate the forecasts’ standard deviation a cross all available macroeconomic news announcements
+underlined in Table 2. R2
+a is the adjusted R2. All reported coe ﬃcient estimates for bh, bm,a n d bl are statistically
+signiﬁcant at the 1% level. A “ ∗ ”, “ ∗∗ ”, or “ ∗∗∗ ” indicate signiﬁcance of the di ﬀerence bh − bl at the 10%, 5%,
+or 1% level, respectively, using the Newey-West standard errors reported below each coe ﬃcient estimate (s.e.).
+Announcement bh bm bl bh − bl R2
+a
+Two-Year
+Nonfarm Payroll Employment 366.687 362.978 374.983 -8.296 86.05%
+s.e.
+
+, using the Newey-West standard errors reported below each coe ﬃcient estimate (s.e.).
+Announcement bh bm bl bh − bl R2
+a
+Two-Year
+Nonfarm Payroll Employment 366.687 362.978 374.983 -8.296 86.05%
+s.e. 5.729 4.811 5.773 8.133
+Inﬂuential Announcements 317.836 372.472 409.360 -91.524 ∗∗∗ 86.80%
+s.e. 5.596 4.684 5.665 7.963
+All Announcements 321.120 362.468 421.500 -100.38 ∗∗∗ 86.95%
+s.e. 5.543 4.655 5.659 7.921
+Five-Year
+Nonfarm Payroll Employment 603.503 570.535 648.080 -44.576 ∗∗∗ 85.73%
+s.e. 9.475 7.958 9.541 13.447
+Inﬂuential Announcements 562.774 626.650 599.127 -36.353 ∗∗∗ 85.54%
+s.e. 9.617 8.044 9.721 13.675
+All Announcements 534.212 607.237 657.696 -123.484 ∗∗∗ 85.91%
+s.e. 9.459 7.937 9.642 13.507
+Ten-Year
+Nonfarm Payroll Employment 530.563 505.908 570.922 -40.359 ∗∗∗ 85.56%
+s.e. 8.353 7.015 8.411 11.854
+Inﬂuential Announcements 496.024 554.288 527.157 -31.132 ∗∗∗ 85.55%
+s.e. 8.490 7.096 8.576 12.068
+All Announcements 452.617 546.248 584.260 -131.643 ∗∗∗ 86.20%
+s.e. 8.266 6.931 8.420 11.799
+36
+
+Table 4. Market Liquidity on Non-announcement Days
+In this table we report estimates of the f ollowing regression model (Eq. (11)):
+rt = a +
+XN
+i=0
+λhiΩ∗
+t−iDht +
+XN
+i=0
+λliΩ∗
+t−iDlt +
+XN
+i=0
+λmiΩ∗
+t−i(1 − Dht − Dlt)+
+XN
+i=1
+βirt−i + εt,
+where rt =( yt −yt−1)×100 is the daily change in bond yields, Ω∗
+t is unanticipated order ﬂow (deﬁned in Section 4), Dht (Dlt) is a dummy variable
+equal to one on non-announcement days (de ﬁned in Section 4.1) with high (low) dispersion of beliefs, de ﬁned as the forecasts’ standard deviation to
+be on the top (bottom) 70 th (30th) percentile of its empirical distribution, and zero otherwise, and N =5 . We measure the dispersion of beliefs
+in each trading day of a given month using three di ﬀerent methodologies. In the ﬁrst, we only use the standard deviation of professional forecasts
+of the Nonfarm Payroll Employment report. In the second, we aggr egate the standard deviations of forecasts of seven “in ﬂuential” macroeconomic
+announcements (listed in Section 3.2.2). In the third, we aggregate the sta ndard deviations of forecasts across all macroeconomic news announcemen ts
+for which the standard deviation across professional forecasters is available (underlined in Table 2). R2
+ha (R2
+la)i st h ea d j u s t e dR2 conditional on
+high (low) dispersion days, while R2
+a is the adjusted R2 including all observations. A “ ∗ ”, “ ∗∗ ”, or “ ∗∗∗ ” indicate signi ﬁcance at the 10%, 5%,
+
+(R2
+la)i st h ea d j u s t e dR2 conditional on
+high (low) dispersion days, while R2
+a is the adjusted R2 including all observations. A “ ∗ ”, “ ∗∗ ”, or “ ∗∗∗ ” indicate signi ﬁcance at the 10%, 5%,
+or 1% level, respectively, using the Newey-West standard errors reported below each coe ﬃcient estimate (s.e.).
+37
+
+Tabl e 4 (Continued).
+Announcement λh0 λm0 λl0 λh0 − λl0
+P5
+i=0 λhi
+P5
+i=0 λmi
+P5
+i=0 λli R2
+ha R2
+la R2
+a
+Two-Year
+Nonfarm Payroll -0.213 ∗∗∗ -0.182∗∗∗ -0.121∗∗∗ -0.092∗∗∗ -0.161∗∗ -0.182∗∗∗ -0.072 28.54% 6.66% 21.69%
+s.e. 0.033 0.025 0.034 0.048 0.067 0.050 0.056
+Inﬂuential -0.140 ∗∗∗ -0.108∗∗∗ -0.080∗∗∗ -0.060∗∗∗ -0.106∗∗∗ -0.096∗∗∗ -0.049∗∗ 14.61% 10.65% 15.52%
+s.e. 0.016 0.010 0.010 0.019 0.031 0.022 0.022
+All -0.122 ∗∗∗ -0.093∗∗∗ -0.098∗∗∗ -0.024 -0.152 ∗∗∗ -0.086∗∗∗ -0.086∗∗∗ 15.46% 16.92% 15.83%
+s.e. 0.017 0.012 0.014 0.022 0.032 0.024 0.027
+Five-Year
+Nonfarm Payroll -0.210 ∗∗∗ -0.153∗∗∗ -0.085∗∗∗ -0.125∗∗∗ -0.285∗∗∗ -0.136∗∗∗ 0.019 41.38% 9.65% 23.30%
+s.e. 0.029 0.022 0.027 0.040 0.078 0.049 0.062
+Inﬂuential -0.151 ∗∗∗ -0.122∗∗∗ -0.087∗∗∗ -0.064∗∗∗ -0.142∗∗∗ -0.106∗∗∗ -0.050∗∗ 19.14% 11.97% 20.31%
+s.e. 0.014 0.010 0.010 0.018 0.036 0.022 0.025
+All -0.155 ∗∗∗ -0.097∗∗∗ -0.102∗∗∗ -0.053∗∗∗ -0.167∗∗∗ -0.079∗∗∗ -0.083∗∗∗ 21.37% 18.76% 19.40%
+s.e. 0.017 0.012 0.013 0.022 0.041 0.027 0.029
+Ten-Year
+Nonfarm Payroll -0.170 ∗∗∗ -0.129∗∗∗ -0.071 -0.099 -0.192 ∗∗ -0.269∗∗∗ -0.017 15.10% 1.02% 10.29%
+s.e. 0.043 0.032 0.043 0.061 0.093 0.058 0.079
+Inﬂuential -0.081 ∗∗∗ -0.093∗∗∗ -0.079∗∗∗ -0.002 -0.075 ∗∗ -0.109∗∗∗ -0.053 2.83% 4.72% 6.05%
+s.e. 0.018 0.013 0.013 0.025 0.035 0.027 0.042
+All -0.075 ∗∗∗ -0.086∗∗∗ -0.071∗∗∗ -0.004 -0.109 ∗∗ -0.119∗∗∗ -0.097∗∗ 3.82% 4.43% 6.16%
+s.e. 0.023 0.017 0.019 0.029 0.053 0.033 0.038
+38
+
+Table 5. Market Liquidity in Announcement and Non-announcement Days
+In this table we report estimates of the f ollowing regression model (Eq. (12)):
+rt = a +
+XN
+i=0
+λiΩ∗
+t−i(1 − DPt )+
+XN
+i=0
+λpiΩ∗
+t−iDPt +
+XN
+i=1
+βirt−i + εt,
+where rt =( yt − yt−1) × 100 is the daily change in bond yields, Ω∗
+t is unanticipated order ﬂow (de ﬁn e di nS e c t i o n4 ) ,DPt is a dummy variable
+equal to one if either the Nonfarm Payroll Employment report ( P =1 ), any of the seven “in ﬂuential” announcements listed in Section 3.2.2 ( P =7 ),
+or any of the announcements for which the standard devia tion across professional forecasters is available ( P =1 8, underlined in Table 2) is released
+on day t and equal to zero otherwise, and N =5 . R2
+f (R2
+fp )i st h ea d j u s t e dR2 from the estimation of Eq. (12) over just non-announcement
+(announcement) days, while R2
+a is the adjusted R2 from the estimation of the fully speci ﬁed regression above. A “ ∗ ”, “ ∗∗ ”, or “ ∗∗∗ ” indicate
+signiﬁcance at the 10%, 5%, or 1% level, respectively, using the Newey-West standard errors reported below each coe ﬃcient estimate (s.e.).
+39
+
+Tabl e 5 (Continued).
+Announcement λ0 λp0 λ0 − λp0
+P5
+i=0 λi
+P5
+i=0 λpi R2
+f R2
+fp R2
+a
+Two-Year
+Nonfarm Payroll -0.108 ∗∗∗ -0.087∗∗∗ -0.021 -0.131 ∗∗∗ -0.013 15.31% 6.47% 14.72%
+s.e. 0.021 0.027 0.034 0.041 0.064
+Inﬂuential -0.103 ∗∗∗ -0.112∗∗∗ 0.009 -0.075 ∗∗∗ -0.059∗∗∗ 15.34% 12.29% 13.98%
+s.e. 0.008 0.008 0.011 0.016 0.019
+All -0.102 ∗∗∗ -0.109∗∗∗ 0.007 -0.096 ∗∗∗ -0.059∗∗∗ 16.00% 13.24% 13.99%
+s.e. 0.011 0.006 0.013 0.023 0.015
+Five-Year
+Nonfarm Payroll -0.124 ∗∗∗ -0.168∗∗∗ 0.044∗∗ -0.121∗∗∗ -0.242∗∗∗ 21.03% 19.61% 21.37%
+s.e. 0.017 0.025 0.019 0.043 0.062
+Inﬂuential -0.117 ∗∗∗ -0.137∗∗∗ 0.020∗ -0.095∗∗∗ -0.137∗∗∗ 19.88% 20.88% 20.76%
+s.e. 0.007 0.008 0.011 0.017 0.020
+All -0.115 ∗∗∗ -0.131∗∗∗ 0.016 -0.107 ∗∗∗ -0.115∗∗∗ 20.29% 20.48% 20.70%
+s.e. 0.011 0.006 0.012 0.024 0.016
+Ten-Year
+Nonfarm Payroll -0.087 ∗∗∗ -0.053∗ -0.034 -0.181 ∗∗∗ -0.020 6.74% 3.59% 7.07%
+s.e. 0.025 0.030 0.048 0.049 0.088
+Inﬂuential -0.086 ∗∗∗ -0.086∗∗∗ 0.000 -0.083 ∗∗∗ -0.086∗∗∗ 6.73% 5.73% 6.52%
+s.e. 0.010 0.011 0.015 0.021 0.026
+All -0.077 ∗∗∗ -0.090∗∗∗ 0.013 -0.103 ∗∗∗ -0.076∗∗∗ 7.08% 5.99% 6.49%
+s.e. 0.014 0.009 0.017 0.030 0.019
+40
+
+Table 6. Public Signals and Market Liquidity
+In this table we report estimates of the f ollowing regression model (Eq. (14)):
+rt = a +
+XP
+j=1
+λsj Sjt +
+XN
+i=0
+λphiΩ∗
+t−iDht +
+XN
+i=0
+λpliΩ∗
+t−iDlt
++
+XN
+i=0
+λpmiΩ∗
+t−i(1 − Dht − Dlt)+
+XN
+i=1
+βirt−i + εt,
+where rt =( yt − yt−1) × 100 is the daily change in bond yields, Ω∗
+t is unanticipated order ﬂow (de ﬁn e di nS e c t i o n4 ) ,Dht (Dlt)i sad u m m y
+variable equal to one on days with high (low) dispersion of beliefs (de ﬁn e di nS e c t i o n3 . 2 . 2 ) ,a n dz e r oo t h e r w i s e ,a n dN =5 . W ee s t i m a t et h e
+above equation using only announcement days (de ﬁned in Section 4.2). The coe ﬃcient λsp is the estimated price impact of the Nonfarm Payroll
+announcement ( P =1 ) or the average estimated impact across either the “in ﬂuential” (P =7 )o ra l l( P =1 8 ) macroeconomic announcements
+for which the standard deviation across professional forecasters is available (i.e., those underlined in Table 2). R2
+fh a (R2
+fla )i st h ea d j u s t e dR2
+conditional on high (low) dispersion days and only using Ω∗
+t , R2
+fa is the unconditional adjusted R2 using only Ω∗
+t ,a n d R2
+a is the adjusted R2 of
+the fully speci ﬁed regression above. A “ ∗ ”, “ ∗∗ ”, or “ ∗∗∗ ” indicate signi ﬁcance at the 10%, 5%, or 1% level, respectively, using the Newey-West
+standard errors reported below each coe ﬃcient estimate (s.e.).
+41
+
+Tabl e 6 (Continued).
+Announcement λsp λph0 λpm0 λpl0 λph0 − λpl0
+P5
+i=0 λphi
+P5
+i=0 λpmi
+P5
+i=0 λpli R2
+fh a R2
+fla R2
+fa R2
+a
+Two-Year
+Nonfarm Pay. 6.279 ∗∗∗ -0.141∗∗ -0.117∗∗ -0.116 -0.025 ∗ 0.087 -0.301 ∗∗∗ -0.055 7.81% -8.04% 8.51% 40.87%
+s.e. 0.883 0.060 0.047 0.092 0.014 0.151 0.113 0.176
+Inﬂuential 2.805 ∗∗∗ -0.179∗∗∗ -0.08∗∗∗ -0.106∗∗∗ -0.073∗∗∗ -0.152∗∗∗ -0.063∗∗ -0.040 15.86% 9.57% 13.54% 30.27%
+s.e. 0.322 0.019 0.012 0.016 0.024 0.047 0.031 0.036
+All 1.490 ∗∗∗ -0.165∗∗∗ -0.092∗∗∗ -0.093∗∗∗ -0.072∗∗∗ -0.130∗∗∗ -0.030 -0.055 ∗∗ 16.65% 14.50% 13.79% 26.70%
+s.e. 0.196 0.015 0.010 0.012 0.020 0.034 0.026 0.027
+Five-Year
+Nonfarm Pay. 6.028 ∗∗∗ -0.220∗∗∗ -0.179∗∗∗ -0.117∗∗ -0.103∗∗∗ -0.209 -0.253 ∗∗∗ -0.087 11.45% -4.37% 14.46% 46.68%
+s.e. 0.855 0.065 0.042 0.049 0.034 0.161 0.097 0.138
+Inﬂuential 2.670 ∗∗∗ -0.184∗∗∗ -0.111∗∗∗ -0.124∗∗∗ -0.060∗∗∗ -0.202∗∗∗ -0.129∗∗∗ -0.083∗∗ 24.16% 15.27% 21.45% 34.00%
+s.e. 0.318 0.017 0.012 0.015 0.023 0.048 0.030 0.038
+All 1.259 ∗∗∗ -0.183∗∗∗ -0.111∗∗∗ -0.124∗∗∗ -0.059∗∗∗ -0.192∗∗∗ -0.100∗∗∗ -0.083∗∗∗ 23.94% 24.78% 21.83% 31.27%
+s.e. 0.194 0.014 0.010 0.012 0.019 0.039 0.025 0.027
+Ten-Year
+Nonfarm Pay. 4.195 ∗∗∗ -0.239∗∗ -0.017 0.076 -0.315 ∗∗ -0.157 0.040 0.109 -10.27% -3.53% 0.26% 22.81%
+s.e. 0.815 0.097 0.081 0.105 0.143 0.206 0.178 0.224
+Inﬂuential 2.445 ∗∗∗ -0.103∗∗∗ -0.068∗∗∗ -0.072∗∗∗ -0.031 -0.130 ∗∗ -0.064∗ -0.038 3.55% 5.33% 5.58% 16.95%
+s.e. 0.329 0.024 0.018 0.023 0.033 0.062 0.039 0.057
+
+97 0.081 0.105 0.143 0.206 0.178 0.224
+Inﬂuential 2.445 ∗∗∗ -0.103∗∗∗ -0.068∗∗∗ -0.072∗∗∗ -0.031 -0.130 ∗∗ -0.064∗ -0.038 3.55% 5.33% 5.58% 16.95%
+s.e. 0.329 0.024 0.018 0.023 0.033 0.062 0.039 0.057
+All 1.329 ∗∗∗ -0.117∗∗∗ -0.079∗∗∗ -0.068∗∗∗ -0.049∗∗ -0.120∗∗ -0.070∗∗ -0.014 4.26% 6.71% 6.31% 15.04%
+s.e. 0.199 0.021 0.014 0.018 0.021 0.051 0.032 0.037
+42
+
+Table 7. Public Signal Noise and Market Liquidity
+In this table we report estimates of the f ollowing regression model (Eq. (14)):
+rt = a + λsnhSptDnht + λsnlSptDnlt + λsnmSpt(1 − Dnht − Dnlt)+
+XN
+i=0
+λpnhiΩ∗
+t−iDnht
++
+XN
+i=0
+λpnliΩ∗
+t−iDnlt +
+XN
+i=0
+λpnmiΩ∗
+t−i(1 − Dnht − Dnlt)+
+XN
+i=1
+βirt−i + εt,
+where rt =( yt − yt−1) × 100 is the daily change in bond yields, Ω∗
+t is the unanticipated order ﬂow (deﬁn e di nS e c t i o n4 ) ,Dnht (Dnlt)i sad u m m y
+variable equal to one on days with high (low) public signal noise (de ﬁned in Section 3.2.3 using news rev isions), and zero otherwise, and N =5 .
+We estimate Eq. (14) just for Nonfarm Payroll, Industrial Production, and C apacity Utilization, since no other revisions (from RTDS) are available.
+R2
+sa is the adjusted R2 using public news as the only explanatory variable. R2
+fn h a (R2
+fn l a)i st h ea d j u s t e dR2 of using contemporaneous order ﬂow
+alone in high (low) public signal noise days. R2
+a is the adjusted R2 of the fully speci ﬁed model above. A “ ∗ ”, “ ∗∗ ”, or “ ∗∗∗ ” indicate signi ﬁcance
+at the 10%, 5%, or 1% level, respectively, using the Newey-West standard errors reported below each coe ﬃcient estimate (s.e.).
+43
+
+Tabl e 7 (Continued).
+Ann. λsnh λsnm λsnl λpnh0 λpnm0 λpnl0
+P5
+i=0 λpnhi
+P5
+i=0 λpnmi
+P5
+i=0 λpnli R2
+sa R2
+fn h a R2
+fn l a R2
+a
+Two-Year
+Non. P. 6.861 ∗∗∗ 7.569∗∗∗ 5.205∗∗∗ -0.132∗ -0.164∗∗∗ -0.108∗ -0.105 -0.378 ∗∗∗ 0.041 32.67% 39.24% 39.00% 46.88%
+s.e. 1.678 1.288 1.609 0.067 0.050 0.062 0.191 0.140 0.152
+In. P. 1.672 ∗ 1.468 0.820 -0.075 ∗ -0.106∗∗∗ -0.130∗∗ 0.037 0.154 ∗ -0.008 2.38% 10.93% 9.50% 23.40%
+s.e. 0.916 1.035 1.337 0.043 0.034 0.058 0.092 0.090 0.116
+Cap. U. 1.643 1.399 2.123 -0.072 -0.092 ∗∗∗ -0.097 0.113 0.075 0.052 9.01% 18.20% 18.80% 25.73%
+s.e. 1.011 0.866 1.521 0.045 0.030 0.069 0.105 0.070 0.114
+Five-Year
+Non. P. 5.959 ∗∗∗ 5.513∗∗∗ 4.267∗∗∗ -0.196∗∗∗ -0.212∗∗∗ -0.210∗∗∗ -0.411∗∗ -0.343∗∗∗ -0.290∗∗∗ 26.77% 39.16% 38.21% 51.06%
+s.e. 1.580 1.202 1.546 0.052 0.053 0.052 0.158 0.131 0.111
+Ind P. 1.251 0.233 0.916 -0.099 ∗∗ -0.157∗∗∗ -0.122∗ -0.035 0.048 -0.096 2.44% 22.80% 20.82% 23.05%
+s.e. 0.963 1.125 1.597 0.043 0.034 0.067 0.113 0.094 0.138
+Cap. U. 1.466 0.152 1.956 -0.128 ∗∗ -0.152∗∗∗ -0.085 -0.053 0.065 -0.135 7.66% 27.80% 24.85% 28.06%
+s.e. 0.904 0.962 1.588 0.053 0.031 0.063 0.106 0.085 0.163
+Ten-Year
+Non. P. 3.702 ∗∗ 3.165∗∗ 4.225∗∗ -0.139 -0.078 0.036 -0.566 ∗∗ 0.267 0.116 20.88% 21.29% 19.84% 27.62%
+s.e. 1.648 1.209 1.615 0.101 0.087 0.085 0.220 0.182 0.183
+Ind. P. 0.281 2.025 ∗ 1.940 0.059 -0.117 -0.131 ∗ 0.020 -0.071 0.036 3.70% 5.47% 7.69% -0.96%
+s.e. 0.991 1.084 1.538 0.077 0.073 0.078 0.142 0.11 0.143
+Cap. U.
+
+.615 0.101 0.087 0.085 0.220 0.182 0.183
+Ind. P. 0.281 2.025 ∗ 1.940 0.059 -0.117 -0.131 ∗ 0.020 -0.071 0.036 3.70% 5.47% 7.69% -0.96%
+s.e. 0.991 1.084 1.538 0.077 0.073 0.078 0.142 0.11 0.143
+Cap. U. 1.365 1.174 2.456 ∗ -0.013 -0.057 -0.148 ∗∗ 0.013 -0.022 -0.09 8.15% 7.44% 10.64% 6.03%
+s.e. 0.994 1.008 1.443 0.089 0.058 0.074 0.137 0.103 0.135
+44
+
+Figure 1. Equilibrium without and with a Public Signal
+In this ﬁgure we plot the market liquidity parameter de ﬁn e di nP r o p o s i t i o n1 ,λ = σ2v
+σuσs
+√
+M[2+(M−1)γ] in Figure 1A, and the di ﬀerence between
+the sensitivity of the equilibrium price to the order ﬂow in the absence and in the presence of a public signal Sp, λ − λp in Figure 1B, as a function of
+the degree of correlation of the speculators’ signals, γ, in the presence of M =1 , 2,o r 4 speculators, when σ2
+v = σ2
+u =1 . According to Proposition
+1, λ = σ2
+v
+σuσs
+√
+M[2+(M−1)γ] , while λp =
+α
+1
+2 σv (σ2
+p−σ2
+v )
+1
+2
+σuσp[2+(M−1)γp] in Proposition 2, where γp =
+σ2
+p(σ2
+v
+−Mχ)−σ4
+v
+σ2p[σ2v +M(M−1)χ]−σ4v
+and α =
+Mσ2
+v (σ2
+p
+−σ2
+v )
+σ2p[σ2v +M(M−1)χ]−σ4v
+.S i n c e
+σ2
+s = σ2
+v +M(M−1)χ
+M2 , σss = σ2
+v −Mχ
+M2 ,a n d γ = σ2
+v −Mχ
+σ2v +M(M−1)χ , the range of correlations compatible with a positive de ﬁnite Σs is obtained by varying
+the parameter χ = σ2
+s − σss within the interval [0, 10] when M =2 ,a n dt h ei n t e r v a l[0, 5] when M =4 .
+A) λ B) λ − λp
+0.2
+0.25
+0.3
+0.35
+0.4
+0.45
+0.5
+0.55
+-1 -0.75 -0.5 -0.25 0 0.25 0.5 0.75 1
+gamma
+lambda
+M = 1
+M = 2
+M = 4
+0.14
+0.16
+0.18
+0.20
+0.22
+0.24
+0.26
+-1 -0.75 -0.5 -0.25 0 0.25 0.5 0.75 1
+gamma
+lambda - lambda_p
+M = 1
+M = 2
+M = 4
+45

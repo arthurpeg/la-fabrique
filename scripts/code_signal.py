@@ -361,6 +361,17 @@ def do_list(lot: bool = False) -> int:
 
     codees = [fid for fid in toutes if fid in existants]
     todo = [fid for fid in toutes if fid not in existants]
+    # D52 : une synthèse de dossier ne se code que valide ET avec un apport.
+    # Sans apport, elle referait l'hypothèse de sa graine : un test corrélé pour rien.
+    non_codables = {}
+    for fid in [f for f in todo if f.startswith("synthese-dossier-")]:
+        from synthese_dossier import valider  # noqa: PLC0415
+
+        fautes = valider(FICHES_SYNTHESE / f"{fid}.json")
+        apport = (toutes[fid].get("synthesis") or {}).get("apport")
+        if fautes or apport != "nouveau":
+            non_codables[fid] = fautes[0] if fautes else f"apport « {apport} »"
+    todo = [fid for fid in todo if fid not in non_codables]
     # Un signal qui ne répond à aucune fiche : les trois étalons de `D06`,
     # écrits à la main avant que les fiches existent. Ils ne sont PAS la sortie
     # du codeur, et les compter comme telle gonflerait son bilan.
@@ -371,6 +382,10 @@ def do_list(lot: bool = False) -> int:
     print(f"  a coder              : {len(todo)}")
     for fid in todo:
         print(f"      {fid}")
+    if non_codables:
+        print(f"  synthèses NON codables : {len(non_codables)} (D52)")
+        for fid, why in sorted(non_codables.items()):
+            print(f"      {fid} — {why}")
     if orphelins:
         print(f"\nsignaux SANS FICHE     : {len(orphelins)} — ecrits a la main, `D06`.")
         print("  Ce ne sont PAS des sorties du codeur, et ils ne comptent pas pour la porte.")

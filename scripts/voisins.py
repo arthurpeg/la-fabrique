@@ -42,6 +42,34 @@ def norm_titre(t: str) -> str:
     return re.sub(r"[^a-zA-Z0-9]+", " ", t or "").lower().strip()
 
 
+def meme_papier(a: str, b: str) -> bool:
+    """Deux titres du même papier : une version de travail, une coquille, une
+    ponctuation. Jaccard des mots d'au moins trois lettres, au-delà de 0,85 :
+    « Intraday time-series momentum: Evidence from China » et « Intraday time
+    series momentum: Global evidence » restent DEUX papiers (D52)."""
+    ma = {m for m in norm_titre(a).split() if len(m) >= 3}
+    mb = {m for m in norm_titre(b).split() if len(m) >= 3}
+    return bool(ma and mb) and len(ma & mb) / len(ma | mb) >= 0.85
+
+
+def hypotheses_par_fiche() -> dict[str, str]:
+    """Les fiches qui ont déjà leur hypothèse : le lot figé, puis les H*.md
+    qui citent une fiche. Un voisin déjà testé ne doit pas revenir en test."""
+    out = {}
+    lot = REPO / "hypotheses" / "LOT-09.json"
+    if lot.is_file():
+        for e in json.loads(lot.read_text(encoding="utf-8"))["fiches"]:
+            if e.get("ref"):
+                out[e["fiche_id"]] = e["ref"]
+    ids = set(fiche_files())
+    for h in sorted((REPO / "hypotheses").glob("H*.md")):
+        texte = h.read_text(encoding="utf-8")
+        for fid in ids:
+            if fid in texte:
+                out.setdefault(fid, h.name.split("-")[0])
+    return out
+
+
 def vecteur(texte: str) -> str:
     from fastembed import TextEmbedding  # noqa: PLC0415
     from vector_db import to_pgvector  # noqa: PLC0415
@@ -67,14 +95,18 @@ def chercher(fiche_id: str, n_voisins: int, n_passages: int) -> dict:
     lignes = api.appel("GET", "/rest/v1/fiches?select=fiche_id,paper_id&paper_id=not.is.null")
     for r in lignes or []:
         fiches_par_papier[r["paper_id"]] = r["fiche_id"]
+    papier_graine = {p for p, f in fiches_par_papier.items() if f == fiche_id}
+    testees = hypotheses_par_fiche()
 
     voisins: dict[str, dict] = {}
     for m in sorted(morceaux, key=lambda m: -m["similarity"]):
-        if norm_titre(m["title"]) == norm_titre(titre_graine):
-            continue  # le papier graine lui-même
+        # Le papier graine lui-même, par son identifiant ou sous un autre titre.
+        if m["paper_id"] in papier_graine or meme_papier(m["title"], titre_graine):
+            continue
+        fid = fiches_par_papier.get(m["paper_id"])
         v = voisins.setdefault(m["paper_id"], {
-            "paper_id": m["paper_id"], "title": m["title"],
-            "fiche_id": fiches_par_papier.get(m["paper_id"]), "passages": [], "_s": []})
+            "paper_id": m["paper_id"], "title": m["title"], "fiche_id": fid,
+            "hypothesis": testees.get(fid), "passages": [], "_s": []})
         v["_s"].append(m["similarity"])
         if len(v["passages"]) < n_passages:
             v["passages"].append({"section": m["section"], "page": m["page"],
@@ -86,9 +118,16 @@ def chercher(fiche_id: str, n_voisins: int, n_passages: int) -> dict:
     # 0,29 (meilleur morceau seul) à 0,37.
     for v in voisins.values():
         v["similarity"] = round(sum(v.pop("_s")[:TOP]) / TOP, 4)
-    classes = sorted(voisins.values(), key=lambda v: -v["similarity"])[:n_voisins]
+    # Deux copies d'un même papier parmi les voisins : on garde la mieux notée.
+    classes: list[dict] = []
+    for v in sorted(voisins.values(), key=lambda v: -v["similarity"]):
+        if not any(meme_papier(v["title"], w["title"]) for w in classes):
+            classes.append(v)
+        if len(classes) == n_voisins:
+            break
     return {"generated": datetime.now(UTC).isoformat(timespec="minutes"),
             "seed": {"fiche_id": fiche_id, "title": titre_graine,
+                     "hypothesis": testees.get(fiche_id),
                      "representation": representation(fiche)},
             "model": MODELE, "neighbors": classes}
 
@@ -104,6 +143,8 @@ def ecrire(d: dict, nom: str | None = None) -> Path:
               f"({d['model']}), le {d['generated']}.", ""]
     for i, v in enumerate(d["neighbors"], 1):
         etat = f"fiche `{v['fiche_id']}`" if v["fiche_id"] else "pas encore de fiche"
+        if v.get("hypothesis"):
+            etat += f", **déjà testée ({v['hypothesis']})**"
         lignes += [f"## {i}. {v['title']}", "", f"Similarité {v['similarity']:.3f} · {etat}", ""]
         for p in v["passages"]:
             lignes += [f"> *{p['section']}, similarité {p['similarity']:.3f}* — "
@@ -123,7 +164,9 @@ def main(argv: list[str]) -> int:
     chemin = ecrire(d)
     print(f"{len(d['neighbors'])} voisin(s) pour {a.fiche_id} :")
     for v in d["neighbors"]:
-        etat = "fiché" if v["fiche_id"] else "      "
+        etat = (f"testé {v['hypothesis']}" if v.get("hypothesis")
+                else "fiché" if v["fiche_id"] else "")
+        etat = f"{etat:<9}"
         print(f"  {v['similarity']:.3f} {etat} {v['title'][:85]}")
     print(f"dossier : {chemin.relative_to(REPO).as_posix()}")
     return 0
