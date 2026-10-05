@@ -53,20 +53,23 @@ def meme_papier(a: str, b: str) -> bool:
 
 
 def hypotheses_par_fiche() -> dict[str, str]:
-    """Les fiches qui ont déjà leur hypothèse : le lot figé, puis les H*.md
-    qui citent une fiche. Un voisin déjà testé ne doit pas revenir en test."""
+    """Les fiches qui ont déjà leur hypothèse : le lot figé, puis chaque H*.md par
+    la fiche qu'il DÉCLARE (`**fiche :** `<id>``, `D40`) ou dont il cite le
+    chemin (`corpus/fiches…/<id>.json`, avant `D40`). Jamais par une recherche de
+    nom dans le texte : `lucca-moench-2015-…` est contenu dans
+    `synthese-dossier-lucca-moench-2015-…` (D52, défaut 8)."""
     out = {}
     lot = REPO / "hypotheses" / "LOT-09.json"
     if lot.is_file():
         for e in json.loads(lot.read_text(encoding="utf-8"))["fiches"]:
             if e.get("ref"):
                 out[e["fiche_id"]] = e["ref"]
-    ids = set(fiche_files())
+    declaree = re.compile(r"\*\*fiche :\*\*\s*`([A-Za-z0-9-]+)`")
+    chemin = re.compile(r"corpus/fiches(?:_harvest|_synthese)?/([A-Za-z0-9-]+)\.json")
     for h in sorted((REPO / "hypotheses").glob("H*.md")):
         texte = h.read_text(encoding="utf-8")
-        for fid in ids:
-            if fid in texte:
-                out.setdefault(fid, h.name.split("-")[0])
+        for fid in declaree.findall(texte) + chemin.findall(texte):
+            out.setdefault(fid, h.name.split("-")[0])
     return out
 
 

@@ -92,15 +92,54 @@ def figer_texte(api, paper_id: str, ident: str) -> Path:
     return out
 
 
-def deja_utilises() -> dict[str, str]:
-    """Chaque papier déjà graine ou source d'une synthèse, et laquelle."""
-    out = {}
-    for f in sorted(DOSSIER.glob("synthese-*.json")):
+def liens() -> dict[str, str]:
+    """`fiche_id` -> identifiant du papier en base (table `fiches`, D44)."""
+    from embed_api import Api  # noqa: PLC0415
+
+    return {x["fiche_id"]: x["paper_id"] for x in Api().appel(
+        "GET", "/rest/v1/fiches?select=fiche_id,paper_id&paper_id=not.is.null") or []}
+
+
+def compte(f: Path) -> bool:
+    """Une synthèse ne retient ses papiers que si elle peut devenir un test :
+    valide, et, pour un dossier, avec un apport `nouveau` (D52, défaut 6). Une
+    synthèse refusée ou sans apport ne sera jamais codée ; elle ne bloque rien."""
+    if f.stem.startswith("synthese-dossier-"):
         syn = json.loads(f.read_text(encoding="utf-8")).get("synthesis") or {}
-        for s in [syn.get("dossier"), *(syn.get("sources") or [])]:
-            if s:
-                out.setdefault(s, f.stem)
+        return syn.get("apport") == "nouveau" and not valider(f)
+    from synthese import valider as valider_grappe  # noqa: PLC0415
+
+    return not valider_grappe(f)
+
+
+def deja_utilises(lien: dict[str, str] | None = None) -> dict[str, str]:
+    """Chaque papier déjà graine ou source d'une synthèse qui compte, et laquelle.
+
+    Deux clés par papier : son identifiant dans la synthèse (`fiche_id` ou
+    `base-…`), et `paper:<id en base>`. La seconde survit au jour où un voisin
+    `base-…` reçoit sa fiche et change d'identifiant (D52, défaut 7)."""
+    lien = lien if lien is not None else liens()
+    out: dict[str, str] = {}
+    for f in sorted(DOSSIER.glob("synthese-*.json")):
+        if not compte(f):
+            continue
+        syn = json.loads(f.read_text(encoding="utf-8")).get("synthesis") or {}
+        papier = dict(lien)
+        fige = DOSSIERS / f"{f.stem}.json"
+        if fige.is_file():
+            for v in json.loads(fige.read_text(encoding="utf-8"))["neighbors"]:
+                papier[v["fiche_id"] or base_id(v["paper_id"])] = v["paper_id"]
+        for ident in [syn.get("dossier"), *(syn.get("sources") or [])]:
+            if not ident:
+                continue
+            out.setdefault(ident, f.stem)
+            if papier.get(ident):
+                out.setdefault(f"paper:{papier[ident]}", f.stem)
     return out
+
+
+def utilise_par(utilises: dict[str, str], ident: str, paper_id: str | None) -> str | None:
+    return utilises.get(ident) or (utilises.get(f"paper:{paper_id}") if paper_id else None)
 
 
 def sources_du_dossier(d: dict) -> dict[str, dict]:
@@ -294,10 +333,11 @@ def gardes_de_graine(graine: str, ff: dict[str, Path]) -> None:
     if (DOSSIER / f"{sid}.json").is_file():
         raise SystemExit(f"{sid} existe déjà : son dossier est figé. Une synthèse se refait "
                          "par une décision écrite, pas en réécrivant ce contre quoi on la juge.")
-    utilises = deja_utilises()
-    if graine in utilises:
-        raise SystemExit(f"{graine} est déjà graine ou source de {utilises[graine]} : une "
-                         "seconde synthèse referait la même hypothèse (D52)")
+    lien = liens()
+    deja = utilise_par(deja_utilises(lien), graine, lien.get(graine))
+    if deja:
+        raise SystemExit(f"{graine} est déjà graine ou source de {deja} : une seconde "
+                         "synthèse referait la même hypothèse (D52)")
 
 
 def do_candidats(graine: str, n: int) -> int:
@@ -387,8 +427,9 @@ def do_prepare(graine: str) -> int:
         marques = []
         if v.get("hypothesis"):
             marques.append(f"**déjà testé** : ce papier a sa propre hypothèse, {v['hypothesis']}")
-        if ident in utilises:
-            marques.append(f"**déjà source** de la synthèse `{utilises[ident]}`")
+        deja = utilise_par(utilises, ident, v["paper_id"])
+        if deja:
+            marques.append(f"**déjà source** de la synthèse `{deja}`")
         marque = "".join(f"> {m}\n" for m in marques) + ("\n" if marques else "")
         passages = "\n\n".join(
             f"> *{p['section']}, page {p['page']}, similarité {p['similarity']:.3f}*\n>\n> "
