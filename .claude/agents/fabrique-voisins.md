@@ -25,6 +25,9 @@ recherche sémantique. **C'est ta seule source.**
   méthode, ou une conclusion inverse restent `meme`.
 - Le même thème, le même marché ou la même méthode ne suffisent **pas**. La
   proximité du texte ne prouve rien : c'est elle que tu corriges.
+- Le **début du papier** (son résumé) dit ce qu'il étudie ; un passage isolé
+  peut tromper. Une **revue de littérature** n'est `meme` que si elle est
+  consacrée au mécanisme de la graine.
 - En cas de doute réel, `autre`. Ne garde jamais un candidat pour en avoir.
 - Tu écris le tableau JSON, et rien d'autre, avec l'outil Write, à
   l'emplacement que la consigne indique.

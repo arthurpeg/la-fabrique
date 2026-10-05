@@ -275,6 +275,7 @@ papier ne dit reste `null`, avec sa raison.
 
 
 CANDIDATS = 30  # candidats montrés au trieur (D53)
+DEBUT = 1500  # caractères du début de chaque candidat (titre, résumé) montrés au trieur
 
 CONSIGNE_TRI = """\
 # Consigne de tri des voisins — La Fabrique, `D53`
@@ -301,7 +302,11 @@ Pour **chaque** candidat ci-dessous, dans l'ordre, réponds :
 - `autre` : il partage le thème, le marché ou la méthode, mais pas le
   mécanisme (« même sujet, autre effet »), ou il n'a pas de rapport.
 
-Juge sur le titre et les passages, rien d'autre. En cas de doute réel, `autre`.
+Juge sur le titre, le début du papier (son résumé) et les passages, rien
+d'autre. **Le résumé dit ce que le papier étudie ; un passage peut tromper.**
+Une **revue de littérature** n'est `meme` que si elle est consacrée au mécanisme
+de la graine, pas si celui-ci n'est qu'un de ses sujets. En cas de doute réel,
+`autre`.
 
 ## Ce que tu rends
 
@@ -356,11 +361,20 @@ def do_candidats(graine: str, n: int) -> int:
     fiche = json.loads(ff[graine].read_text(encoding="utf-8"))
     mecanisme = "\n\n".join(x for x in (texte(fiche.get("claim")),
                                          texte(fiche.get("signal_construction"))) if x)
+    from embed_api import Api  # noqa: PLC0415
+
+    api = Api()
     blocs = []
     for v in d["neighbors"]:
+        # Le début du papier (titre, résumé) en plus des deux passages : deux passages
+        # seuls ont trompé le trieur (« Cryptoasset factor models », revue du 2026-10-05).
+        debut = api.appel("GET", f"/rest/v1/chunks?select=content&paper_id=eq.{v['paper_id']}"
+                                 "&order=ordinal&limit=3") or []
+        debut = " ".join(" ".join(c["content"].split()) for c in debut)[:DEBUT]
         ps = "\n\n".join(f"> *{p['section']}* — " + " ".join(p["content"].split())[:900]
                          for p in v["passages"][:2])
-        blocs.append(f"### {v['cid']} — {v['title']}\n\n{ps}\n")
+        blocs.append(f"### {v['cid']} — {v['title']}\n\n**Début du papier :** {debut}\n\n"
+                     f"**Passages les plus proches de la graine :**\n\n{ps}\n")
     WORK.mkdir(parents=True, exist_ok=True)
     f_consigne.write_text(CONSIGNE_TRI.format(
         titre=d["seed"]["title"], mecanisme=mecanisme, chemin=f_labels.as_posix(),
