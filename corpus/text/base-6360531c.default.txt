@@ -1,0 +1,1681 @@
+Cryptoasset Factor Models
+Zura Kakushadze§† 1
+§ Quantigic® Solutions LLC
+1127 High Ridge Road #135, Stamford, CT 06905 2
+† Free University of Tbilisi, Business School & School of Physics
+240, David Agmashenebeli Alley, Tbilisi, 0159, Georgia
+(September 6, 2018)
+Abstract
+We propose factor models for the cross-section of daily cryptoasset returns
+and provide source code for data downloads, computing risk factors and back-
+testing them out-of-sample. In “cryptoassets” we include all cryptocurrencies
+and a host of various other digital assets (coins and tokens) for which ex-
+change market data is available. Based on our empirical analysis, we identify
+the leading factor that appears to strongly contribute into daily cryptoasset
+returns. Our results suggest that cross-sectional statistical arbitrage trading
+may be possible for cryptoassets subject to eﬃcient executions and shorting.
+1 Zura Kakushadze, Ph.D., is the President and CEO of Quantigic ® Solutions LLC, and a Full
+Professor at Free University of Tbilisi. Email: zura@quantigic.com
+2 DISCLAIMER: This address is used by the corresponding author for no purpose other than
+to indicate his professional aﬃliation as is customary in publications. In particular, the contents
+of this paper are not intended as an investment, legal, tax or any other such advice, and in no
+way represent views of Quantigic® Solutions LLC, the website www.quantigic.com or any of their
+other aﬃliates.
+arXiv:1811.07860v2 [q-fin.PM] 27 Feb 2019
+
+1 Introduction
+Crytoassets3 have a sizable (albeit highly volatile) total market capitalization mea-
+suring in hundreds of billions of dollars. Superﬂuously, there is also a sizable number
+of these cryptoassets, edging toward 2,000 as of this writing. The question we ask
+– and, at least to a some degree, answer – in this note is this: Are there common
+(risk) factors underlying the cross-section of cryptoasset returns?
+There are no evident “fundamentals” for cryptoassets based on which one could
+attempt to build “fundamental” long-horizon factors for cryptoassets akin to value,
+growth, etc., for stocks.4 However, even for stocks, on short horizons (e.g., overnight
+returns) in some sense things become simpler as the longer-horizon “fundamentals”
+(again, such as value and growth) are no longer relevant [Kakushadze and Liew,
+2015]. This underlies the construction of the 4-factor model of [Kakushadze, 2015]
+for equity returns on short-horizons. It is therefore natural to extend the ideas set
+forth in [Kakushadze, 2015] to cryptoassets, to wit, to daily open-to-close returns.
+And this is precisely what this note does. We consider 4(+) factors, to wit, cap
+(or size, based on market cap), mom (momentum), hlv (based on average intraday
+volatility), and vol (or liquidity, based on average daily dollar volume). By running
+out-of-sample Fama-MacBeth regressions [Fama and MacBeth, 1973] and computing
+annualized t-statistic from the time series of the corresponding regression coeﬃcients,
+
+daily dollar volume). By running
+out-of-sample Fama-MacBeth regressions [Fama and MacBeth, 1973] and computing
+annualized t-statistic from the time series of the corresponding regression coeﬃcients,
+we conclude that vol is not a good predictor (with a possible exception of the previous
+day’s volume). One possible explanation is that cryptoassets on average trade much
+less in comparison to their market caps (low “turnover”), so vol does not actually
+meaningfully measure liquidity. The other three factors cap, mom and hlv do add
+value, with mom leading by a large margin. In fact, momentum from the day before
+the previous day is also predictive. The sign of the mom regression coeﬃcient is
+negative, which indicates a mean-reversion eﬀect in cryptoasset daily returns. 5
+3 By “cryptoassets” here we mean digital cryptography-based assets such as cryptocurrencies
+(e.g., Bitcoin), as well as the plethora of various other digital “coins” and “tokens” (minable as
+well as non-minable) that have arisen in the recent years. For our speciﬁc purposes here, all digital
+assets that have data on https://coinmarketcap.com a priori are included in “cryptoassets”.
+4 For some literature on long-horizon factors for equities, see, e.g., [Amihud, 2002], [Ang et al ,
+2006], [Anson, 2013], [Asness, 1995], [Asness et al, 2001], [Asness, Porter and Stevens, 2000], [Banz,
+1981], [Basu, 1977], [Carhart, 1997], [Fama and French, 1992], [Fama and French, 1993], [Fama and
+
+006], [Anson, 2013], [Asness, 1995], [Asness et al, 2001], [Asness, Porter and Stevens, 2000], [Banz,
+1981], [Basu, 1977], [Carhart, 1997], [Fama and French, 1992], [Fama and French, 1993], [Fama and
+French, 1996], [Haugen, 1995], [Jegadeesh and Titman, 1993], [Lakonishok, Shleifer and Vishny,
+1994], [Liew and Vassalou, 2000], [P´ astor and Stambaugh, 2003], [Scholes and Williams, 1977].
+5 To our knowledge, our analysis here is the ﬁrst of its kind. For some cryptoasset investment
+and trading related literature, see, e.g., [Alessandretti et al , 2018], [Amjad and Shah, 2017], [Baek
+and Elbeck, 2014], [Bariviera et al , 2017], [Bouoiyour et al , 2016], [Bouri et al , 2017], [Brandvold
+et al, 2015], [Bri` ere, Oosterlinck and Szafarz, 2015], [Cheah and Fry, 2015], [Cheung, Roca and Su,
+2015], [Ciaian, Rajcaniova and Kancs, 2015], [Colianni, Rosales and Signorotti, 2015], [Donier and
+Bouchaud, 2015], [Dyhrberg, 2015], [Eisl, Gasser and Weinmayer, 2015], [Gajardo, Kristjanpoller
+and Minutolo, 2018], [Garcia and Schweitzer, 2015], [Georgoula et al , 2015], [Harvey, 2016], [Jiang
+and Liang, 2017], [Kim et al , 2016], [Kristoufek, 2015], [Lee, Guo and Wang, 2018], [Li et al ,
+2018], [Liew, Li and Budav´ ari, 2018], [Nakano, Takahashi and Takahashi, 2018], [Ortisi, 2016], [Shah
+and Zhang, 2014], [Van Alstyne, 2014], [Wang and Vergne, 2017].
+1
+
+The remainder of this note is organized as follows. In Section 2 we describe the
+data, deﬁne our factors, and discuss the results of our regressions. Section 3 brieﬂy
+concludes with some comments. Appendix A gives R source code for data downloads
+and running factor regressions. 6 Tables and ﬁgures summarize our results.
+2 Factors
+2.1 Setup and Data
+Unlike stocks, barring any special circumstances such as unexpected halts in trading,
+cryptoassets trade continuously, 24/7. So, while there are notions of “open” and
+“close” for cryptoassets, their meanings are diﬀerent from those for stocks. For our
+purposes here, again, barring any special circumstances, “open” on any given day
+means the price right after midnight (UTC time), while “close” on any given day
+means the price right before midnight (UTC time). In this regard, absent trading
+halts, the open on a given day is very close to the close of the previous day. The high
+and low prices then have the usual meaning within the 24 hour window between the
+open and the close. And the volume is the dollar volume traded in said 24 hour
+interval. All the prices are also measured in dollars, as is the market cap. We use
+index i = 1,...,N to label N diﬀerent cryptoassets cross-sectionally, and index
+s = 0, 1, 2,... to denote the dates, with s = 0 corresponding to the most recent
+date in the time series. So: P C
+is (or, equivalently, P C
+i,s) is the close price for the
+cryptoasset labeled by i on the day labeled by s; P O
+
+the dates, with s = 0 corresponding to the most recent
+date in the time series. So: P C
+is (or, equivalently, P C
+i,s) is the close price for the
+cryptoasset labeled by i on the day labeled by s; P O
+is is the open price; P H
+is is the
+high price; P L
+is is the low price; Vis is the dollar volume; Cis is the market cap. All
+our data was freely downloaded from https://coinmarketcap.com (see below).
+Next, we deﬁne our daily returns as open-to-close intraday returns:
+Ris = ln
+(
+P C
+is/P O
+is
+)
+(1)
+The use of the log-return (or “continuously compounded” return) is intentional here.
+For small values it is approximately the same as the standard (“single-period”)
+return deﬁned as
+˜Ris =P C
+is/P O
+is− 1 (2)
+However, cryptoassets can be very volatile, on average, much more so than stocks,
+and log-returns “smooth out” the outliers somewhat, so below we use Ris.
+Unlike with stocks, there are no “dividends” to worry about for cryptoassets,
+to wit, in terms of adjusting prices for dividends. However, an issuer can split its
+cryptoasset. Thus, Xaurum had a forward split 8000-to-1 on August 23, 2016, so its
+price decreased accordingly. Unfortunately, https://coinmarketcap.com does not
+adjust historical prices for splits, and there does not appear to be a simple source to
+6 The source code given in Appendix A hereof is not written to be “fancy” or optimized for
+speed or in any other way. Its sole purpose is to illustrate the algorithms described in the main
+
+source to
+6 The source code given in Appendix A hereof is not written to be “fancy” or optimized for
+speed or in any other way. Its sole purpose is to illustrate the algorithms described in the main
+text in a simple-to-understand fashion. Some important legalese is relegated to Appendix B.
+2
+
+look up historical splits data. Fortunately, for the purposes of analyzing our factor
+models here, such splits are immaterial as all our factors are deﬁned such that they
+are unaﬀected by splits. Note that market cap and dollar volume are unaﬀected,
+only prices are. However, in our factor deﬁnitions for any given day we only use
+ratios of intraday prices, which therefore are also unaﬀected. In this paper, the only
+place where splits become important is when we plot price weighted indexes, and
+we account for the aforesaid Xaurum split there (see below).
+2.2 Factor Model
+The factor model is of the form
+Ris =
+K∑
+A=1
+βiAs fAs +εis (3)
+Here K is the number of risk factors, fAs are the K factor returns, εis are the
+residuals, and βiAs are the factor loadings. We include the intercept in βiAs, so for
+a given date s, the N×K matrix βiAs contains a column equal the unit N-vector,
+which we will take to be the ﬁrst column in βiAs. Below, instead of using the index
+A, we will denote each column by β{name}
+is , where {name} stands for the name by
+which we refer to the corresponding factor: “int” for the intercept, “cap” for size,
+“mom” for momentum, “hlv” for intraday high and low based volatility, and “vol”
+for volume. These are direct analogs of the short-horizon factors for stocks deﬁned
+in [Kakushadze, 2015]. We also consider another binary factor (dummy variable),
+which we refer to as “mnbl”, based on whether the cryptoasset is minable.
+
+f the short-horizon factors for stocks deﬁned
+in [Kakushadze, 2015]. We also consider another binary factor (dummy variable),
+which we refer to as “mnbl”, based on whether the cryptoasset is minable.
+To determine whether a given factor adds value, as in [Fama and MacBeth, 1973],
+we use annualized t-statistic τA for each factor, which can be computed using the
+daily returns fAs as follows:
+τA =
+√
+365 f A
+σA
+(4)
+f A = 1
+T
+T∑
+r=1
+fA,t+r (5)
+σ2
+A = 1
+T− 1
+T∑
+r=1
+[
+fA,t+r−f A
+]2
+(6)
+Here t is the beginning of the period for which the t-statistic is computed, and
+T is the length of said period. Throughout, all time quantities are measured in
+days. Also, the annualization factor 7 is
+√
+365 (as opposed to
+√
+252 for stocks) as
+cryptoassets trade 24/7. The meaning of τA is that it is the annualized Sharpe
+ratio [Sharpe, 1994] based on the time series of the corresponding factor returns fAs
+7Note that t-statistic is a horizon-dependent quantity; it scales as the square root of the horizon.
+3
+
+(without subtracting any “benchmark” return from the mean return f A). So, in the
+“zeroth approximation”, τA above 3 would indicate that the corresponding factor is
+a relevant predictor, and τA below 2 would indicate that it is a poor predictor.
+2.2.1 Intercept
+The intercept plays the role of the “market beta”:
+βint
+is ≡ 1 (7)
+Neutrality w.r.t. βint
+is is dollar neutrality, which is approximate market neutrality.
+2.2.2 Cap (Size)
+Size is the natural logarithm of the market cap 8
+βcap
+is = ln (Ci,s+1) (8)
+So, on date s we use the previous day’s market cap, which is 100% out-of-sample.
+2.2.3 Momentum
+There are various ways to deﬁne the momentum factor loading. For our purposes
+here, we will deﬁne it as the previous day’s open-to-close return:
+βmom
+is =Ri,s+1 (9)
+Again, this deﬁnition is 100% out-of-sample. Below we will also analyze momenta
+(which we refer to as mom1, mom2, . . . ) deﬁned using the days prior to the previous
+day:
+βmom1
+is =Ri,s+2 (10)
+βmom2
+is =Ri,s+3 (11)
+... (12)
+2.2.4 Intraday Volatility
+There are various ways to deﬁne the intraday volatility factor. Below we will use
+the following simple deﬁnition: 9
+βhlv
+is = 1
+2 ln (Uis) (13)
+Uis = 1
+dhlv
+dhlv∑
+r=1
+(
+P H
+i,s+r−P L
+i,s+r
+P C
+i,s+r
+)2
+(14)
+8 In [Kakushadze, 2015] for stock returns the log of the price was used instead as the market
+cap is the price times the shares outstanding, and the latter change negligibly on short horizons.
+
+2
+(14)
+8 In [Kakushadze, 2015] for stock returns the log of the price was used instead as the market
+cap is the price times the shares outstanding, and the latter change negligibly on short horizons.
+The same generally holds for cryptoassets, so we could use the price instead of the market cap.
+However, considering the split adjustment issues mentioned above, it is simpler to use market cap.
+9 For alternative deﬁnitions, see [Kakushadze, 2015].
+4
+
+Averaging over the previous dhlv days (which is done 100% out-of-sample) is neces-
+sary to smooth out the noise. Since here we are dealing with a variance-like quantity
+(as opposed to a correlation-like quantity), looking backdhlv days does not introduce
+out-of-sample instabilities associated with correlations and time series based betas.
+Below we use the values dhlv = 20, 15, 10, 5. Also, note that (13) is the logarithmic
+intraday volatility. This is because, as is generally the case with volatility, the intra-
+day volatility itself (without taking the log) has a skewed, long-tailed distribution for
+higher-end values, and, among other things, as a factor it would adversely interfere
+with the intercept and also result in unnaturally skewed regression residuals εis.
+2.2.5 Volume
+For stocks, the average daily dollar volume is a measure of liquidity. For cryptoassets
+the situation is murkier (see below). Nonetheless, following [Kakushadze, 2015] we
+deﬁne the volume factor loading as follows:
+βvol
+is = ln
+(
+V is
+)
+(15)
+V is = 1
+dvol
+dvol∑
+r=1
+Vi,s+r (16)
+Recall that Vis is the daily dollar volume, so V is is the average daily dollar volume
+over thedvol days immediately preceding the day labeled by s (so it is 100% out-of-
+sample). Below we use the values dvol = 20, 15, 10, 5, 3, 1. For dvol = 1 we have the
+previous day’s dollar volume. The reason for including it will become clear below.
+2.2.6 “Is-Minable” Dummy
+Some cryptoassets are minable and some are not.
+
+0, 15, 10, 5, 3, 1. For dvol = 1 we have the
+previous day’s dollar volume. The reason for including it will become clear below.
+2.2.6 “Is-Minable” Dummy
+Some cryptoassets are minable and some are not. Therefore, it is natural to consider
+a binary factor loading deﬁned as follows (notwithstanding that a priori it is not
+clear why it would have an impact on daily returns):
+βmnbl
+is =
+{
+1 if minable
+0 if not minable (17)
+This factor loading is independent of the time index s and only depends on i.
+2.3 Estimation Period and Universe
+We downloaded10 the data from https://coinmarketcap.com for all cryptoassets
+as of August 19, 2018 (so the most recent date in the data is August 18, 2018),
+whose number was 1,855. Out of those, 1,851 had downloadable data, albeit for
+many various ﬁelds were populated with “?”, which we converted into NAs. Despite
+10 R source code for data downloads and running factor regressions is given in Appendix A.
+5
+
+a seemingly large number of cryptoassets, the useful data going back any reasonable
+number of days only exists for a fraction of them. In order to be able to run our
+regressions (see below), we only kept cryptoassets with non-NA price (open, close,
+high, low), volume and market cap data, with an additional ﬁlter that no null volume
+was allowed either (to avoid contamination by stale prices). There were only 362
+cryptoassets with such properties starting August 18, 2018 (inclusive) and going
+back 365 + 20 + 1 days (i.e., 1 year “padded” with additional 21 days to be able to
+compute 20-day moving averages out-of-sample), 129 cryptoassets when the ﬁlters
+were applied to 2×365+20+1 days (i.e., 2 years “padded” with additional 21 days),
+and only 66 cryptoassets when the ﬁlters were applied to 3× 365 + 20 + 1 days (i.e.,
+3 years “padded” with additional 21 days). 11 So, the cross-section is pretty “thin”,
+nowhere near as rich as for stocks. However, we must work with what we have.
+2.4 Regressions and Results
+So, we run regressions of the daily returns Ris over the loadings βiAs (computed
+as above) for various periods and their subperiods described above and in Tables 1
+through 18. Tables 1 through 10 include int (intercept), cap (size), mom (momen-
+tum), hlv (intraday volatility) and vol (volume), for various values of dhlv and dvol.
+From these tables it appears that the average daily dollar volume for dvol > 1 is a
+poor predictor.
+
+, mom (momen-
+tum), hlv (intraday volatility) and vol (volume), for various values of dhlv and dvol.
+From these tables it appears that the average daily dollar volume for dvol > 1 is a
+poor predictor. For dvol = 1 (i.e., the previous day’s dollar volume) the results are
+at best mixed and certainly not ground-shaking. While it is possible that the pre-
+vious day’s volume adds value, it might do so more eﬃciently as an additional ﬁlter
+(when, e.g., deﬁning a trading signal) as opposed to a stand-alone factor. Tables
+11 and 12, which exclude vol and include only int, cap, mom and hlv, appear to
+support this conclusion. Further, hlv appears to be rather stable w.r.t. the choice
+of dhlv. The mom factor leads by a large margin in all periods (see Tables 11 and
+12). The cap and hlv factors appear to work well except in the ﬁrst year (meaning,
+going back in time from August 18, 2018, so this is the most recent 1-year period)
+for the smaller universes based on 129 and 66 cryptoassets (see above). However,
+these factors work much better for the same period for the larger universe based
+on 362 cryptoassets (see above), which subsumes the aforesaid smaller universes.
+Therefore, the most likely explanation would appear to be that this is due to the
+smallness of the cross-sectional samples for these smaller universes. Further, the hlv
+factor appears to be the weakest among cap, mom and hlv. However, removing hlv
+
+ear to be that this is due to the
+smallness of the cross-sectional samples for these smaller universes. Further, the hlv
+factor appears to be the weakest among cap, mom and hlv. However, removing hlv
+worsens the results (see Table 13), as does removing the intercept (see Table 14). 12
+Considering how strong the mom factor is, it is natural to also look at momenta
+from days prior to the previous day, i.e., mom1, mom2, . . . (deﬁned above). Tables
+11 Actually, 2 cryptoassets had apparently “artifact” stale prices in the second and third year
+(looking back), so they had to be excluded from the corresponding regressions (see below).
+12 The intercept has variable t-statistic across various periods and universes, including changing
+its sign. However, this is not surprising as the intercept plays the role of the “market beta”, which
+is expected to be highly variable on general grounds, as it is for stocks as well as other assets.
+6
+
+15 and 16 suggest that mom1 indeed appears to be a good predictor. Going beyond
+mom1 (see Table 17, which also includes mom2, mom3 and mom4) unsurprisingly
+gives mixed results as any eﬀect from momentum is expected to decay with time.
+Note that the regression coeﬃcients for the momenta are negative, which suggests a
+substantial mean-reversion eﬀect in the aforesaid cryptoasset returns. Including the
+dummy variable mnbl deﬁned above does not appear to add value (see Table 18).
+2.5 “Sanity Check”
+Considering the “ﬂukes” in the performance of cap and hlv during the most recent
+1-year period for smaller universes (see above), it makes sense to get at least a
+superﬁcial visual conﬁrmation that nothing utterly “odd” happened with those uni-
+verses during that period. A simple thing to do here is to look at the performance of
+“market indexes” built based on the aforesaid 362, 129 and 66 cryptoasset universes.
+Thus, we can construct the following indexes (among myriad others):
+I cap
+s =γcap
+N∑
+i=1
+Cis (18)
+I prc
+s =γprc
+N∑
+i=1
+˜P C
+is (19)
+Here I cap
+s is a market cap weighted index for the universe of N cryptoassets, and
+the normalization coeﬃcient γcap is ﬁxed such that I cap
+s equals 1 for the value of s
+corresponding to the earliest date in the time period for which I cap
+s is constructed.
+The price weighted indexI prc
+s is constructed similarly, except that the prices ˜P C
+is are
+obtained from the closing prices P C
+is by adjusting for splits. In our case we only had
+
+s is constructed.
+The price weighted indexI prc
+s is constructed similarly, except that the prices ˜P C
+is are
+obtained from the closing prices P C
+is by adjusting for splits. In our case we only had
+to adjust for the Xaurum split mentioned above. The results are plotted in Figures
+1 through 6. There appears to be nothing “peculiar” about these market indexes
+for the most recent 1-year period and the aforesaid smaller universes, except for
+the spike in the price weighted index in Figure 1. However, this spike is due to a
+single cryptoasset called 42-coin, which is highly priced with a small market cap.
+Incidently, this is a good example of why price weighted indexes can be misleading.
+3 Concluding Remarks
+Despite the superﬂuous ubiquity of cryptoassets, the amount of cross-sectionally
+available data is still limited as for most cryptoassets it simply does not go far
+back enough. Cryptoassets come and go, many coins and tokens disappear a short
+while after issuance, and many are perceived as being scams to raise a quick buck
+and run with the unsuspecting or uninformed investors’ money. This is still a very
+young ﬁeld despite Bitcoin having being around for over 9 years, so the kind of
+analyses performed in [Kakushadze, 2015] on 2,000, 3,000 and even 4,000 stock
+7
+
+tickers going back 5 years is simply impossible for cryptoassets at this nascent stage
+in their development. It might take another 5-10 years to collect that kind of data,
+depending on their survival rate – and assuming the whole ﬁeld does not disappear
+due to regulatory or some other (less foreseeable) issues. 13 Only time will tell.
+Nonetheless, it is pleasant to observe that the 3 short-horizon factors discussed
+in [Kakushadze, 2015] for stocks, to wit, cap (size), mom (momentum) and hlv
+(intraday volatility) work well for cryptoassets as well. The fact that vol (volume)
+does not seem to add value for cryptoassets (at least beyond the previous day’s
+volume) is not necessarily surprising as volume is not directional. In fact, on its
+own it is not a good predictor for stocks either and only works when combined
+with the other factors. One possible explanation for why vol does not add value
+for cryptoassets is that it is less evident how well vol describes actual liquidity
+in cryptoasset markets considering a very diﬀerent (from stocks) fee structure and
+executions. Thus, one way to quantify and see the diﬀerence between cryptoassets
+and stocks (as it relates to volume) is to compare their respective cross-sections of
+ratios of, say, the 20-day average daily dollar volume to the market cap, which is a
+measure of average daily “turnover”. For the 362 cryptoasset universe (see above)
+as of August 18, 2018, the cross-sectional summary of this ratio is as follows: Min =
+
+e to the market cap, which is a
+measure of average daily “turnover”. For the 362 cryptoasset universe (see above)
+as of August 18, 2018, the cross-sectional summary of this ratio is as follows: Min =
+2.00×10−10, 1st Quartile = 6.87×10−7, Median = 3.03×10−6, Mean = 3.16×10−5,
+3rd Quartile = 1.44× 10−5, Max = 2.71× 10−3. For stocks, for the universe of the
+500 highest market cap stocks as of (a randomly chosen date) August 31, 2010, that
+summary reads: Min = 1.05×10−5, 1st Quartile = 6.09×10−3, Median = 8.57×10−3,
+Mean = 1.05×10−2, 3rd Quartile = 1.25×10−2, Max = 1.08×10−1. The bottom line
+is that on relative basis (i.e., based on the average daily “turnover”) cryptoassets
+do not trade anywhere near as much as stocks, so it is not that surprising that the
+volume is not a good predictor for cryptoassets.
+The fact that momentum dominates as a factor for cryptoasset returns means
+that on short horizons the market is strongly mean-reverting (cross-sectionally).
+This in turn implies that if one could short a large cross-section of cryptoassets and
+trade them on short horizons cost-eﬀectively, one might be able to trade a cross-
+sectional dollar-neutral mean-reversion statistical arbitrage strategy with cryptoas-
+sets, along the lines of similar strategies for stocks – perhaps one day soon.
+A R Source Code: Downloads and Regressions
+In this appendix we give R (R Project for Statistical Computing, https://www.
+
+sets, along the lines of similar strategies for stocks – perhaps one day soon.
+A R Source Code: Downloads and Regressions
+In this appendix we give R (R Project for Statistical Computing, https://www.
+r-project.org/) source code for downloading cryptoasset data and running fac-
+tor regressions discussed in the main text. The code is straightforward and self-
+explanatory. The ﬁrst function is crypto.data(), which downloads the names,
+13 Thus, as this note was being ﬁnalized, the cryptoasset market had yet another crash on
+September 5, 2018 on the news that Goldman Sachs reportedly is putting on hold its plans for a
+cryptocurrency trading desk [Campbell and Chaparro, 2018]. Also see Figure 7.
+8
+
+symbols, market caps and various other data for all cryptoassets available at any
+given time from https://coinmarketcap.com and outputs said data in the ﬁle
+crypto.cap.txt. Among other things, in the column labeled URL, this ﬁle contains
+strings that are used onhttps://coinmarketcap.com for historical data downloads,
+which are not the same as symbols (or names). In fact, oddly, there can be cases
+where two diﬀerent cryptoassets have the same symbol, so symbols are not unique
+diﬀerentiators. The function crypto.data() internally calls three auxiliary functions
+shared.get.webpage(), shared.parse.html() and shared.write.table(). These
+auxiliary functions are given in [Kakushadze and Yu, 2017] (which is freely download-
+able) with the names sec.get.webpage(), sec.parse.html(), sec.write.table().
+The second function crypto.hist.prc(date) (which also uses the aforesaid 3
+auxiliary functions) downloads data for all cryptoassets in the ﬁle crypto.cap.txt.
+There can be a few names for which the data is bad, which are skipped and the cor-
+responding ﬁelds from the 11th column (labeled URL) of the ﬁle crypto.cap.txt
+are written in the ﬁle crypto.bad.txt. The historical data for the rest of the
+names is written into tab-delimited text ﬁles (one ﬁle per name) in the directory
+CryptoHistData. The sole input date (which is in the format yyyymmdd) of the func-
+tion crypto.hist.prc(date) corresponds to the date as of which to download the
+data.
+
+e ﬁle per name) in the directory
+CryptoHistData. The sole input date (which is in the format yyyymmdd) of the func-
+tion crypto.hist.prc(date) corresponds to the date as of which to download the
+data. This can be modiﬁed, e.g., to include the speciﬁc lookback date through which
+to do download the historical data. As-is, this function downloads all available (on
+https://coinmarketcap.com) historical data starting with date and going back in
+time (so the lookbacks are name-dependent).
+The third function crypto.prc.files() aggregates the data stored in the indi-
+vidual ﬁles in the directory CryptoHistData by data type (close, open, high, low,
+volume, market cap). It reads the ﬁle crypto.bad.txt to skip the names therein and
+generates tab-delimited text ﬁles with N rows and d columns, where N is the num-
+ber of all names excepting those in crypto.bad.txt, and d is the number of days
+for which there is data for the ﬁrst name in crypto.cap.txt, which is the oldest
+cryptoasset Bitcoin (as the names in crypto.cap.txt are ranked by market cap, and
+Bitcoin has the largest one). These ﬁles are cr.prc.txt (close price), cr.open.txt
+(open price), cr.high.txt (high price), cr.low.txt (low price), cr.vol.txt (dollar
+volume), and cr.cap.txt (market cap). The function also generates two single-
+column text ﬁles cr.name.txt (names of the cryptoassets in the same order as all
+the other ﬁles), and cr.mnbl.txt (1 if the name is minable, otherwise 0). All missing
+
+ction also generates two single-
+column text ﬁles cr.name.txt (names of the cryptoassets in the same order as all
+the other ﬁles), and cr.mnbl.txt (1 if the name is minable, otherwise 0). All missing
+data (including all ﬁelds with “?”) is populated with NAs.
+The fourth and last function crypto.prc() reads the aforesaid aggregated data
+ﬁles, constructs factor loadings internally referred to as av (average daily dollar vol-
+ume), size (market cap), mom (momentum) and its delayed variations mom1 through
+mom4, hlv (intraday volatility), as well as mnbl (the “is-minable” dummy), and runs
+regressions, which include int (intercept) and are used for computing the annu-
+alized t-statistic based on the time series of regression coeﬃcients. The inputs of
+crypto.prc() are days (the length of the selection period used in ﬁxing the cryp-
+toasset universe by applying the aforesaid non-NA data and non-zero volume ﬁlters,
+9
+
+which period is further “padded” – see below), back (the length of the skip period,
+i.e., how many days to skip in the selection period before the lookback period),
+lookback (the length of the lookback period over which the regression is run), d.r
+(the extra “padding” added to the selection period plus one day, so the moving
+averages can be computed out-of-sample; we take d.r = 20 ), d.v (the same as dvol
+deﬁned in Section 2), and d.i (the same as dhlv deﬁned in Section 2). Thus, for
+instance, in Table 9 we have days = 3 * 365 (so with d.r = 20 the “padded” selec-
+tion period contains 1116 = 3×365+20+1 days), back = 365 , and lookback = 365 .
+Therefore, the regressions are run over 365 days by skipping the most recent 365
+days, starting with the 366th day in the time series and going back in time (i.e., over
+the 2nd year in the 3-year time series, lookingback). The function crypto.prc() also
+constructs and plots market cap and price weighted indexes based on the universes
+and periods over which the regressions are run.
+crypto.data <- function ()
+{
+require(XML)
+require(httr)
+url <- "https://coinmarketcap.com/all/views/all/"
+z <- x <- shared.get.webpage(url)
+x <- shared.parse.html(x, keyword = "table")
+u <- c(x[22:28])
+for(i in 1:length(u))
+{
+u1 <- grep(u[i], x)
+x <- x[-u1]
+}
+u1 <- grep("[*]", x)
+x1 <- x[-u1]
+hdr <- c("Rank", "Name", "Symbol", "MktCap", "Price",
+"Supply", "Volume", "Ch1h", "Ch24h", "Ch7d",
+"URL", "Minable")
+x1 <- x1[-(1:10)]
+
+<- grep(u[i], x)
+x <- x[-u1]
+}
+u1 <- grep("[*]", x)
+x1 <- x[-u1]
+hdr <- c("Rank", "Name", "Symbol", "MktCap", "Price",
+"Supply", "Volume", "Ch1h", "Ch24h", "Ch7d",
+"URL", "Minable")
+x1 <- x1[-(1:10)]
+x1 <- matrix(x1, length(x1)/11, 11, byrow = T)
+x1 <- x1[, -2]
+x1 <- gsub(",", "", x1)
+x1 <- gsub(" \\$", "", x1)
+x1 <- gsub("%", "", x1)
+x1 <- cbind(x1, rep("", nrow(x1)), rep("Y", nrow(x1)))
+y <- grep("currency-symbol visible-xs", z)
+z1 <- z[y]
+y <- grep("link-secondary", z1)
+10
+
+z1 <- z1[y]
+y <- grep("href", z1)
+z1 <- z1[y]
+y <- grep("currencies", z1)
+z1 <- z1[y]
+if(length(z1) != nrow(x1))
+stop("ERROR")
+x <- x[-(1:10)]
+for(i in 1:length(z1))
+{
+u <- unlist(strsplit(z1[i], "/"))[3]
+x1[i, 11] <- u
+u1 <- grep("[*]", x[1:11])
+if(length(u1) > 0)
+{
+x1[i, 12] <- "N"
+x <- x[-(1:12)]
+}
+else
+x <- x[-(1:11)]
+}
+x1 <- rbind(hdr, x1)
+shared.write.table(x1, "crypto.cap.txt", T)
+}
+crypto.hist.prc <- function (date)
+{
+require(XML)
+require(httr)
+x <- read.delim("crypto.cap.txt", header = T)
+x <- as.matrix(x)
+univ <- x[, 11]
+for(i in 1:length(univ))
+{
+url <- paste("https://coinmarketcap.com/currencies/",
+univ[i],
+"/historical-data/?start=20000101&end=", date, sep = "")
+x <- shared.get.webpage(url)
+x <- shared.parse.html(x, keyword = "table")
+n <- length(x)/7
+if(n < 1 | trunc(n) != n)
+11
+
+{
+write(univ[i], "crypto.bad.txt", append = T)
+next
+}
+x <- matrix(x, length(x)/7, 7, byrow = T)
+x[1, ] <- c("Date", "Open", "High", "Low",
+"Close", "Volume", "MktCap")
+file <- paste("CryptoHistData/", univ[i], ".txt", sep = "")
+shared.write.table(x, file, T)
+}
+}
+crypto.prc.files <- function ()
+{
+match.univ <- function (univ1, univ2)
+{
+good <- match(univ1, univ2, nomatch = 0)
+univ <- univ2[good]
+return(univ)
+}
+read.file <- function(file, header = T)
+{
+x <- read.delim(file, header = header)
+x <- as.matrix(x)
+x <- gsub(",", "", x)
+return(x)
+}
+x <- read.file("crypto.cap.txt")
+univ <- x[, 11]
+mnbl <- x[, 12]
+name <- x[, 2]
+bad <- readLines("crypto.bad.txt")
+take <- is.na(match(univ, bad))
+mnbl <- mnbl[take]
+name <- name[take]
+mnbl[mnbl == "Y"] <- 1
+mnbl[mnbl == "N"] <- 0
+univ <- univ[take]
+shared.write.table(mnbl, file = "cr.mnbl.txt", T)
+shared.write.table(name, file = "cr.name.txt", T)
+n <- length(univ)
+12
+
+for(i in 1:n)
+{
+x <- read.file(paste("CryptoHistData/", univ[i],
+".txt", sep = ""))
+if(i == 1)
+{
+dates <- x[, "Date"]
+d <- length(dates)
+prc <- matrix(NA, n, d)
+cap <- matrix(NA, n, d)
+high <- matrix(NA, n, d)
+low <- matrix(NA, n, d)
+vol <- matrix(NA, n, d)
+open <- matrix(NA, n, d)
+dimnames(prc)[[2]] <- dates
+dimnames(cap)[[2]] <- dates
+dimnames(high)[[2]] <- dates
+dimnames(low)[[2]] <- dates
+dimnames(vol)[[2]] <- dates
+dimnames(open)[[2]] <- dates
+prc[1, ] <- x[1:d, "Close"]
+cap[1, ] <- x[1:d, "MktCap"]
+high[1, ] <- x[1:d, "High"]
+low[1, ] <- x[1:d, "Low"]
+vol[1, ] <- x[1:d, "Volume"]
+open[1, ] <- x[1:d, "Open"]
+}
+else
+{
+dates1 <- x[, "Date"]
+dates1 <- match.univ(dates, dates1)
+prc[i, dates1] <- x[1:length(dates1), "Close"]
+cap[i, dates1] <- x[1:length(dates1), "MktCap"]
+high[i, dates1] <- x[1:length(dates1), "High"]
+low[i, dates1] <- x[1:length(dates1), "Low"]
+vol[i, dates1] <- x[1:length(dates1), "Volume"]
+open[i, dates1] <- x[1:length(dates1), "Open"]
+}
+}
+mode(prc) <- "numeric"
+mode(cap) <- "numeric"
+mode(high) <- "numeric"
+mode(low) <- "numeric"
+13
+
+mode(vol) <- "numeric"
+mode(open) <- "numeric"
+shared.write.table(prc, file = "cr.prc.txt", T)
+shared.write.table(cap, file = "cr.cap.txt", T)
+shared.write.table(high, file = "cr.high.txt", T)
+shared.write.table(low, file = "cr.low.txt", T)
+shared.write.table(vol, file = "cr.vol.txt", T)
+shared.write.table(open, file = "cr.open.txt", T)
+}
+crypto.prc <- function (days = 365, back = 0,
+lookback = days, d.r = 20, d.v = 20, d.i = 20)
+{
+calc.ix <- function(z, days)
+{
+ix <- colSums(z[, 1:days])
+ix <- ix[days:1]
+ix <- ix / ix[1]
+return(ix)
+}
+read.prc <- function(file, header = F, make.numeric = T)
+{
+x <- read.delim(file, header = header)
+x <- as.matrix(x)
+if(make.numeric)
+mode(x) <- "numeric"
+return(x)
+}
+calc.mv.avg <- function(x, days, d.r)
+{
+if(d.r == 1)
+return(x[, 1:days])
+y <- matrix(0, nrow(x), days)
+for(i in 1:days)
+y[, i] <- rowMeans(x[, i:(i + d.r - 1)], na.rm = T)
+return(y)
+}
+prc <- read.prc("cr.prc.txt")
+cap <- read.prc("cr.cap.txt")
+14
+
+high <- read.prc("cr.high.txt")
+low <- read.prc("cr.low.txt")
+vol <- read.prc("cr.vol.txt")
+open <- read.prc("cr.open.txt")
+mnbl <- read.prc("cr.mnbl.txt")
+name <- read.prc("cr.name.txt", make.numeric = F)
+d <- days + d.r + 1
+prc <- prc[, 1:d]
+cap <- cap[, 1:d]
+high <- high[, 1:d]
+low <- low[, 1:d]
+vol <- vol[, 1:d]
+open <- open[, 1:d]
+take <- rowSums(is.na(prc)) == 0 & rowSums(is.na(cap)) == 0 &
+rowSums(is.na(high)) == 0 & rowSums(is.na(low)) == 0 &
+rowSums(is.na(vol)) == 0 & rowSums(is.na(open)) == 0 &
+rowSums(vol == 0) == 0
+ret <- log(prc[take, -d] / prc[take, -1])
+prc <- prc[take, -1]
+cap <- cap[take, -1]
+high <- high[take, -1]
+low <- low[take, -1]
+vol <- vol[take, -1]
+open <- open[take, -1]
+mnbl <- mnbl[take, 1]
+name <- name[take, 1]
+if(back > 0)
+{
+ret <- ret[, (back + 1):ncol(ret)]
+prc <- prc[, (back + 1):ncol(prc)]
+cap <- cap[, (back + 1):ncol(cap)]
+high <- high[, (back + 1):ncol(high)]
+low <- low[, (back + 1):ncol(low)]
+vol <- vol[, (back + 1):ncol(vol)]
+open <- open[, (back + 1):ncol(open)]
+}
+days <- lookback
+av <- log(calc.mv.avg(vol, days, d.v))
+hlv <- (high - low)^2 / prc^2
+hlv <- 0.5 * log(calc.mv.avg(hlv, days, d.i))
+take <- rowSums(!is.finite(hlv)) == 0
+15
+
+av <- av[take, ]
+hlv <- hlv[take, ]
+mom <- log(prc / open)[take, 1:days]
+mom1 <- log(prc / open)[take, 1:days + 1]
+mom2 <- log(prc / open)[take, 1:days + 2]
+mom3 <- log(prc / open)[take, 1:days + 3]
+mom4 <- log(prc / open)[take, 1:days + 4]
+size <- log(cap)[take, 1:days]
+ret <- ret[take, 1:days]
+mnbl <- mnbl[take]
+name <- name[take]
+for(i in 1:days)
+{
+flm <- cbind(size[, i], mom[, i], hlv[, i], av[, i])
+if(i == 1)
+fac <- matrix(NA, ncol(flm) + 1, days)
+reg <- lm(ret[, i] flm)
+fac[, i] <- coefficients(reg)
+}
+t.stat <- sqrt(365) * rowMeans(fac) / apply(fac, 1, sd)
+t.stat <- round(t.stat, 2)
+prc <- prc[take, ]
+cap <- cap[take, ]
+y <- prc[name == "Xaurum", ]
+prc[name == "Xaurum", y > 1] <-
+prc[name == "Xaurum", y > 1] / 8000
+ix.cap <- calc.ix(cap, days)
+ix.prc <- calc.ix(prc, days)
+plot(1:length(ix.cap), ix.cap, type = "l",
+col = "green", xlab = "days", ylab = "index value",
+ylim = c(min(c(ix.cap, ix.prc)) - .5,
+max(c(ix.cap, ix.prc)) + .5))
+lines(1:length(ix.prc), ix.prc, col = "blue")
+return(t.stat)
+}
+B DISCLAIMERS
+Wherever the context so requires, the masculine gender includes the feminine and/or
+neuter, and the singular form includes the plural and vice versa. The author of this
+16
+
+paper (“Author”) and his aﬃliates including without limitation Quantigic ® Solu-
+tions LLC (“Author’s Aﬃliates” or “his Aﬃliates”) make no implied or express
+warranties or any other representations whatsoever, including without limitation
+implied warranties of merchantability and ﬁtness for a particular purpose, in con-
+nection with or with regard to the content of this paper including without limitation
+any code or algorithms contained herein (“Content”).
+The reader may use the Content solely at his/her/its own risk and the reader
+shall have no claims whatsoever against the Author or his Aﬃliates and the Author
+and his Aﬃliates shall have no liability whatsoever to the reader or any third party
+whatsoever for any loss, expense, opportunity cost, damages or any other adverse
+eﬀects whatsoever relating to or arising from the use of the Content by the reader
+including without any limitation whatsoever: any direct, indirect, incidental, spe-
+cial, consequential or any other damages incurred by the reader, however caused
+and under any theory of liability; any loss of proﬁt (whether incurred directly or
+indirectly), any loss of goodwill or reputation, any loss of data suﬀered, cost of pro-
+curement of substitute goods or services, or any other tangible or intangible loss;
+any reliance placed by the reader on the completeness, accuracy or existence of the
+Content or any other eﬀect of using the Content; and any and all other adversities
+
+her tangible or intangible loss;
+any reliance placed by the reader on the completeness, accuracy or existence of the
+Content or any other eﬀect of using the Content; and any and all other adversities
+or negative eﬀects the reader might encounter in using the Content irrespective of
+whether the Author or his Aﬃliates is or are or should have been aware of such
+adversities or negative eﬀects.
+The R code included in Appendix A hereof is part of the copyrighted R code
+of Quantigic® Solutions LLC and is provided herein with the express permission of
+Quantigic® Solutions LLC. The copyright owner retains all rights, title and interest
+in and to its copyrighted source code included in Appendix A hereof and any and
+all copyrights therefor.
+References
+Alessandretti, L., ElBahrawy, A., Aiello, L.M. and Baronchelli, A. (2018) Ma-
+chine Learning the Cryptocurrency Market. Working Paper. Available online:
+https://arxiv.org/pdf/1805.08550.pdf.
+Amihud, Y. (2002) Illiquidity and stock returns: cross-section and time-series
+eﬀects. Journal of Financial Markets 5(1): 31-56.
+Amjad, M.J. and Shah, D. (2017) Trading Bitcoin and Online Time Series Pre-
+diction. Working Paper. Available online: http://proceedings.mlr.press/
+v55/amjad16.pdf.
+Ang, A., Hodrick, R., Xing, Y. and Zhang, X. (2006) The Cross-Section of
+Volatility and Expected Returns. Journal of Finance 61(1): 259-299.
+17
+
+Anson, M. (2013) Performance Measurement in Private Equity: The Impact of
+FAS 157 on the Lagged Beta Eﬀect. Journal of Private Equity 17(1): 29-44.
+Asness, C.S. (1995) The Power of Past Stock Returns to Explain Future Stock
+Returns. Working Paper (unpublished). New York, NY: Goldman Sachs Asset
+Management.
+Asness, C., Krail, R.J. and Liew, J.M. (2001) Do Hedge Funds Hedge? Journal
+of Portfolio Management 28(1): 6-19.
+Asness, C.S., Porter, R.B. and Stevens, R.L. (2000) Predicting Stock Returns
+Using Industry-Relative Firm Characteristics.Working Paper. Available online:
+https://ssrn.com/abstract=213872.
+Baek, C. and Elbeck, M. (2014) Bitcoins as an Investment or Speculative Ve-
+hicle? A First Look. Applied Economics Letters 22(1): 30-34.
+Banz, R. (1981) The relationship between return and market value of common
+stocks. Journal of Financial Economics 9(1): 3-18.
+Bariviera, A.F., Basgall, M.J., Hasperu´ e, W. and Naiouf, M. (2017) Some styl-
+ized facts of the Bitcoin market. Physica A: Statistical Mechanics and its Ap-
+plications 484: 82-90.
+Basu, S. (1977) The investment performance of common stocks in relation to
+their price to earnings ratios: A test of the eﬃcient market hypothesis. Journal
+of Finance 32(3): 663-682.
+Bouoiyour, J., Selmi, R., Tiwari, A.K. and Olayeni, O.R. (2016) What drives
+Bitcoin price? Economics Bulletin 36(2): 843-850.
+Bouri, E., Moln´ ar, P., Azzi, G., Roubaud, D. and Hagfors, L.I. (2017) On the
+
+your, J., Selmi, R., Tiwari, A.K. and Olayeni, O.R. (2016) What drives
+Bitcoin price? Economics Bulletin 36(2): 843-850.
+Bouri, E., Moln´ ar, P., Azzi, G., Roubaud, D. and Hagfors, L.I. (2017) On the
+hedge and safe haven properties of Bitcoin: Is it really more than a diversiﬁer?
+Finance Research Letters 20: 192-198.
+Brandvold, M., Moln´ ar, P., Vagstad, K. and Valstad, O.C.A. (2015) Price dis-
+covery on Bitcoin exchanges. Journal of International Financial Markets, In-
+stitutions and Money 36: 18-35.
+Bri` ere, M., Oosterlinck, K. and Szafarz, A. (2015) Virtual currency, tangible
+return: Portfolio diversiﬁcation with bitcoin. Journal of Asset Management
+16(6): 365-373.
+Campbell, D. and Chaparro, F. (2018) Goldman Sachs is ditching near-
+term plans to open a bitcoin trading desk, instead focusing on a key
+business for driving Wall Street investment in crypto. Business Insider
+(September 5, 2018). Available online: https://www.businessinsider.com/
+goldman-sachs-retreats-from-launching-crypto-trading-desk-2018-9 .
+18
+
+Carhart, M.M. (1997) Persistence in mutual fund performance. Journal of Fi-
+nance 52(1): 57-82.
+Cheah, E.T. and Fry, J. (2015) Speculative Bubbles in Bitcoin markets? An
+Empirical Investigation into the Fundamental Value of Bitcoin.Economics Let-
+ters 130: 32-36.
+Cheung, A., Roca, E. and Su, J.-J. (2015) Crypto-currency Bubbles: an Appli-
+cation of the Phillips-Shi-Yu (2013) Methodology on Mt. Gox Bitcoin Prices.
+Applied Economics 47(23): 2348-2358.
+Ciaian, P., Rajcaniova, M. and Kancs, D. (2015) The economics of BitCoin
+price formation. Applied Economics 48(19): 1799-1815.
+Colianni, S., Rosales, S. and Signorotti, M. (2015) Algorithmic Trading of Cryp-
+tocurrency Based on Twitter Sentiment Analysis. Working Paper. Available
+online: http://cs229.stanford.edu/proj2015/029_report.pdf.
+Donier, J. and Bouchaud, J.-P. (2015) Why Do Markets Crash? Bitcoin Data
+Oﬀers Unprecedented Insights. PLoS ONE 10(10): e0139356.
+Dyhrberg, A.H. (2015) Bitcoin, gold and the dollar – a GARCH volatility anal-
+ysis. Finance Research Letters 16: 85-92.
+Eisl, A., Gasser, S. and Weinmayer, K. (2015) Caveat Emptor: Does Bitcoin
+Improve Portfolio Diversiﬁcation? Working Paper. Available online: https:
+//ssrn.com/abstract=2408997.
+Gajardo, G., Kristjanpoller, W.D. and Minutolo, M. (2018) Does Bitcoin ex-
+hibit the same asymmetric multifractal cross-correlations with crude oil, gold
+and DJIA as the Euro, Great British Pound and Yen? Chaos, Solitons &
+Fractals 109: 195-205.
+Garcia, D. and Schweitzer, F.
+
+hibit the same asymmetric multifractal cross-correlations with crude oil, gold
+and DJIA as the Euro, Great British Pound and Yen? Chaos, Solitons &
+Fractals 109: 195-205.
+Garcia, D. and Schweitzer, F. (2015) Social signals and algorithmic trading of
+Bitcoin. Royal Society Open Science 2(9): 150288.
+Georgoula, I., Pournarakis, D., Bilanakos, C., Sotiropoulos, D. and Giaglis,
+G.M. (2015) Using Time-Series and Sentiment Analysis to Detect the Determi-
+nants of Bitcoin Prices. Working Paper. Available online: https://ssrn.com/
+abstract=2607167.
+Fama, E.F. and French, K.R. (1992) The Cross-Section of Expected Stock Re-
+turns. Journal of Finance 47(2): 427-465.
+Fama, E.F. and French, K.R. (1993) Common Risk Factors in the Returns on
+Stocks and Bonds. Journal of Financial Economics 33(1): 3-56.
+19
+
+Fama, E.F. and French, K.R. (1996) Multifactor Explanations of Asset Pricing
+Anomalies. Journal of Finance 51(1): 55-84.
+Fama, E.F. and MacBeth, J.D. (1973) Risk, Return and Equilibrium: Empirical
+Tests. Journal of Political Economy 81(3): 607-636.
+Harvey, C.R. (2016) Cryptoﬁnance. Working Paper. Available online: https:
+//ssrn.com/abstract=2438299.
+Haugen, R.A. (1995) The New Finance: The Case Against Eﬃcient Markets.
+Upper Saddle River, NJ: Prentice Hall.
+Jegadeesh, N. and Titman, S. (1993) Returns to Buying Winners and Selling
+Losers: Implications for Stock Market Eﬃciency. Journal of Finance 48(1):
+65-91.
+Jiang, Z. and Liang, J. (2017) Cryptocurrency Portfolio Management with Deep
+Reinforcement Learning. Working Paper. Available online: https://arxiv.
+org/pdf/1612.01277.pdf.
+Kakushadze, Z. (2015) 4-Factor Model for Overnight Returns. Wilmott
+Magazine 2015(79): 56-62. Available online: https://ssrn.com/abstract=
+2511874.
+Kakushadze, Z. and Liew, J.K-S. (2015) Custom v. Standardized Risk Models.
+Risks 3(2): 112-138. Available online: https://ssrn.com/abstract=2493379.
+Kakushadze, Z. and Yu, W. Open Source Fundamental Industry Classiﬁcation.
+Data 2(2): 20. Available online: https://ssrn.com/abstract=2954300.
+Kim, Y.B., Kim, J.G., Kim, W., Im, J.H., Kim, T.H., Kang, S.J. and Kim,
+C.H. (2016) Predicting Fluctuations in Cryptocurrency Transactions Based on
+User Comments and Replies. PLoS ONE 11(8): e0161197.
+Kristoufek, L.
+
+J.G., Kim, W., Im, J.H., Kim, T.H., Kang, S.J. and Kim,
+C.H. (2016) Predicting Fluctuations in Cryptocurrency Transactions Based on
+User Comments and Replies. PLoS ONE 11(8): e0161197.
+Kristoufek, L. (2015) What Are the Main Drivers of the Bitcoin Price? Evidence
+from Wavelet Coherence Analysis. PLoS ONE 10(4): e0123923.
+Lakonishok, J., Shleifer, A. and Vishny, R.W. (1994) Contrarian investment,
+extrapolation, and risk. Journal of Finance 49(5): 1541-1578.
+Lee, D.K.C., Guo, L. and Wang, Y. (2018) Cryptocurrency: A New Investment
+Opportunity? Journal of Alternative Investments 20(3): 16-40.
+Li, T.R., Chamrajnagar, A.S., Fong, X.R., Rizik, N.R. and Fu, F. (2018)
+Sentiment-Based Prediction of Alternative Cryptocurrency Price Fluctuations
+Using Gradient Boosting Tree Model. Working Paper. Available online: https:
+//arxiv.org/pdf/1805.00558.pdf.
+20
+
+Liew, J.K.-S., Li, R.Z. and Budav´ ari, T. (2018) Crypto-Currency Investing
+Examined. Working Paper. Available online: https://ssrn.com/abstract=
+3157926.
+Liew, J. and Vassalou, M. (2000) Can Book-to-Market, Size and Momentum be
+Risk Factors that Predict Economic Growth? Journal of Financial Economics
+57(2): 221-245.
+Nakano, M., Takahashi, A. and Takahashi, S. (2018) Bitcoin Technical Trading
+With Artiﬁcial Neural Network. Working Paper. Available online: https://
+ssrn.com/abstract=3128726.
+Ortisi, M. (2016) Bitcoin Market Volatility Analysis Using Grand Canonical
+Minority Game. Ledger 1: 111-118.
+P´ astor, L’. and Stambaugh, R.F. (2003) Liquidity Risk and Expected Stock
+Returns. Journal of Political Economy 111(3): 642-685.
+Scholes, M. and Williams, J. (1977) Estimating Betas from Nonsynchronous
+Data. Journal of Financial Economics 5(3): 309-327.
+Shah, D. and Zhang, K. (2014) Bayesian regression and Bitcoin.Working Paper.
+Available online: https://arxiv.org/pdf/1410.1231.pdf.
+Sharpe, W.F. (1994) The Sharpe Ratio.Journal of Portfolio Management 21(1):
+49-58.
+Van Alstyne, M. (2014) Why Bitcoin has value. Communications of the ACM
+57(5): 30-32.
+Wang, S. and Vergne, J.-P. (2017) Buzz factor or innovation potential: What
+explains cryptocurrencies returns? PLoS ONE 12(1): e0169556.
+21
+
+Table 1: Results for regressions (3) with int (intercept) plus 4 factors cap, mom,
+hlv and vol deﬁned in Section 2 (along with parameters dvol anddhlv). The universe
+is based on cryptoassets with historical data with non-NA close, high, low, open,
+volume and market cap, and nonzero volume for a lookback of 386 = 365 + 20 + 1
+days from August 18, 2018 (inclusive). This universe consists of 362 cryptoassets.
+The regressions are run over 365 days starting with the most recent date in the time
+series and going back in time. The t-statistic (t-stat) is annualized, by multiplying
+the daily t-statistic by
+√
+365. The same notations are used in the remainder of the
+tables below.
+dvol dhlv t-stat:int t-stat:cap t-stat:mom t-stat:hlv t-stat:vol
+20 20 2.66 -3.68 -34.2 -2.48 1.22
+20 15 2.59 -3.73 -34.17 -2.71 1.15
+20 10 2.54 -3.67 -34.18 -2.58 1.1
+20 5 2.51 -3.71 -34.19 -2.46 1.16
+15 20 2.59 -3.54 -34.19 -2.47 1.06
+15 15 2.56 -3.61 -34.16 -2.71 1.08
+15 10 2.52 -3.55 -34.17 -2.58 1.03
+15 5 2.47 -3.58 -34.18 -2.46 1.08
+10 20 2.53 -3.38 -34.17 -2.43 0.84
+10 15 2.51 -3.46 -34.15 -2.67 0.89
+10 10 2.52 -3.42 -34.18 -2.56 0.94
+10 5 2.49 -3.48 -34.19 -2.46 1
+5 20 2.36 -3.07 -34.14 -2.4 0.48
+5 15 2.34 -3.15 -34.12 -2.62 0.53
+5 10 2.36 -3.13 -34.15 -2.51 0.61
+5 5 2.42 -3.21 -34.19 -2.42 0.85
+3 20 2.23 -2.87 -34.06 -2.42 0.27
+3 15 2.21 -2.95 -34.04 -2.64 0.31
+3 10 2.22 -2.92 -34.08 -2.53 0.38
+3 5 2.27 -3 -34.12 -2.43 0.63
+1 20 3.47 -5.1 -33.98 -2.27 2.6
+1 15 3.44 -5.17 -33.96 -2.52 2.6
+
+85
+3 20 2.23 -2.87 -34.06 -2.42 0.27
+3 15 2.21 -2.95 -34.04 -2.64 0.31
+3 10 2.22 -2.92 -34.08 -2.53 0.38
+3 5 2.27 -3 -34.12 -2.43 0.63
+1 20 3.47 -5.1 -33.98 -2.27 2.6
+1 15 3.44 -5.17 -33.96 -2.52 2.6
+1 10 3.43 -5.11 -34 -2.46 2.63
+1 5 3.5 -5.24 -34.06 -2.44 2.87
+22
+
+Table 2: Results for regressions (3) with int (intercept) plus 4 factors cap, mom,
+hlv and vol deﬁned in Section 2 (along with parameters dvol anddhlv). The universe
+is based on cryptoassets with historical data with non-NA close, high, low, open,
+volume and market cap, and nonzero volume for a lookback of 751 = 2×365+20+1
+days from August 18, 2018 (inclusive). This universe consists of 127 cryptoassets
+(after eliminating 2 cryptoassets with apparently “artifact” stale prices; however,
+these stale prices occur prior to the most recent year in the time series, so these 2
+cryptoassets are kept when the regressions are run only over said year, which is the
+case in some of the other tables). The regressions are run over 730 = 2 × 365 days
+starting with the most recent date in the time series and going back in time (i.e.,
+over the 2 years in the 2-year time series).
+dvol dhlv t-stat:int t-stat:cap t-stat:mom t-stat:hlv t-stat:vol
+20 20 1.83 -1.45 -16.87 -2.72 -0.06
+20 15 1.81 -1.45 -16.84 -2.7 -0.07
+20 10 1.69 -1.48 -16.79 -3.23 -0.14
+20 5 1.54 -1.37 -16.75 -3.16 -0.26
+15 20 1.84 -1.45 -16.89 -2.71 -0.1
+15 15 1.86 -1.49 -16.85 -2.67 -0.01
+15 10 1.74 -1.53 -16.81 -3.19 -0.07
+15 5 1.58 -1.44 -16.76 -3.15 -0.19
+10 20 1.8 -1.39 -16.89 -2.69 -0.2
+10 15 1.83 -1.44 -16.85 -2.63 -0.09
+10 10 1.78 -1.55 -16.8 -3.11 0.03
+10 5 1.65 -1.49 -16.76 -3.09 -0.08
+5 20 1.68 -1.29 -16.85 -2.69 -0.38
+5 15 1.72 -1.36 -16.82 -2.63 -0.25
+5 10 1.68 -1.48 -16.77 -3.08 -0.11
+5 5 1.71 -1.61 -16.72 -3.04 0.12
+
+.78 -1.55 -16.8 -3.11 0.03
+10 5 1.65 -1.49 -16.76 -3.09 -0.08
+5 20 1.68 -1.29 -16.85 -2.69 -0.38
+5 15 1.72 -1.36 -16.82 -2.63 -0.25
+5 10 1.68 -1.48 -16.77 -3.08 -0.11
+5 5 1.71 -1.61 -16.72 -3.04 0.12
+3 20 1.49 -1 -16.77 -2.63 -0.64
+3 15 1.53 -1.06 -16.73 -2.54 -0.54
+3 10 1.48 -1.16 -16.69 -2.98 -0.42
+3 5 1.51 -1.29 -16.66 -2.93 -0.19
+1 20 2.29 -2.26 -16.72 -2.8 0.75
+1 15 2.31 -2.28 -16.69 -2.73 0.84
+1 10 2.26 -2.37 -16.66 -3.18 0.94
+1 5 2.3 -2.55 -16.63 -3.2 1.16
+23
+
+Table 3: Results for regressions (3) with int (intercept) plus 4 factors cap, mom,
+hlv and vol deﬁned in Section 2 (along with parameters dvol anddhlv). The universe
+is based on cryptoassets with historical data with non-NA close, high, low, open,
+volume and market cap, and nonzero volume for a lookback of 751 = 2×365+20+1
+days from August 18, 2018 (inclusive). This universe consists of 129 cryptoassets.
+The regressions are run over 365 days starting with the most recent date in the time
+series and going back in time (i.e., over the 1st year in the 2-year time series).
+dvol dhlv t-stat:int t-stat:cap t-stat:mom t-stat:hlv t-stat:vol
+20 20 -0.39 0.18 -17.17 -1.01 -0.67
+20 15 -0.36 0.19 -17.04 -0.96 -0.69
+20 10 -0.35 0.01 -17 -1.55 -0.66
+20 5 -0.35 0.04 -16.99 -1.6 -0.71
+15 20 -0.42 0.21 -17.16 -0.99 -0.71
+15 15 -0.37 0.2 -17.06 -0.89 -0.69
+15 10 -0.34 0.01 -17.01 -1.49 -0.64
+15 5 -0.35 0.03 -17 -1.56 -0.68
+10 20 -0.58 0.48 -17.15 -0.98 -1.03
+10 15 -0.53 0.48 -17.05 -0.87 -1
+10 10 -0.47 0.22 -17.05 -1.41 -0.87
+10 5 -0.47 0.24 -17.03 -1.51 -0.91
+5 20 -0.82 0.79 -17.08 -1 -1.38
+5 15 -0.76 0.76 -16.98 -0.9 -1.33
+5 10 -0.71 0.5 -16.99 -1.43 -1.18
+5 5 -0.67 0.47 -17.07 -1.39 -1.09
+3 20 -1.04 1.15 -16.98 -1.02 -1.79
+3 15 -0.99 1.13 -16.88 -0.91 -1.74
+3 10 -0.95 0.89 -16.89 -1.42 -1.6
+3 5 -0.9 0.85 -16.98 -1.34 -1.49
+1 20 -0.28 0.09 -16.69 -1.12 -0.69
+1 15 -0.21 0.05 -16.59 -1.03 -0.64
+1 10 -0.18 -0.17 -16.6 -1.57 -0.53
+1 5 -0.13 -0.24 -16.67 -1.57 -0.43
+24
+
+Table 4: Results for regressions (3) with int (intercept) plus 4 factors cap, mom,
+hlv and vol deﬁned in Section 2 (along with parameters dvol anddhlv). The universe
+is based on cryptoassets with historical data with non-NA close, high, low, open,
+volume and market cap, and nonzero volume for a lookback of 751 = 2×365+20+1
+days from August 18, 2018 (inclusive). This universe consists of 127 cryptoassets
+(after eliminating 2 cryptoassets with apparently “artifact” stale prices). The re-
+gressions are run over 365 days by skipping 365 most recent days, starting with the
+366th day in the time series and going back in time (i.e., over the 2nd year in the
+2-year time series).
+dvol dhlv t-stat:int t-stat:cap t-stat:mom t-stat:hlv t-stat:vol
+20 20 4.39 -2.43 -15.37 -2.84 0.37
+20 15 4.3 -2.43 -15.43 -2.86 0.38
+20 10 4.22 -2.36 -15.4 -2.96 0.19
+20 5 4.04 -2.28 -15.33 -2.9 0.09
+15 20 4.43 -2.42 -15.38 -2.83 0.28
+15 15 4.34 -2.44 -15.44 -2.83 0.41
+15 10 4.28 -2.38 -15.41 -2.92 0.23
+15 5 4.12 -2.33 -15.34 -2.89 0.12
+10 20 4.54 -2.58 -15.38 -2.87 0.4
+10 15 4.44 -2.61 -15.44 -2.88 0.54
+10 10 4.36 -2.53 -15.41 -2.88 0.53
+10 5 4.27 -2.52 -15.34 -2.86 0.45
+5 20 4.62 -2.81 -15.39 -2.95 0.49
+5 15 4.54 -2.83 -15.46 -2.94 0.64
+5 10 4.48 -2.77 -15.42 -2.93 0.65
+5 5 4.5 -2.86 -15.34 -2.89 0.88
+3 20 4.43 -2.64 -15.33 -2.97 0.38
+3 15 4.35 -2.65 -15.4 -2.93 0.51
+3 10 4.3 -2.59 -15.36 -2.9 0.51
+3 5 4.32 -2.68 -15.29 -2.87 0.73
+1 20 5.38 -4 -15.36 -3.03 2.07
+1 15 5.26 -3.94 -15.44 -2.97 2.15
+
+88
+3 20 4.43 -2.64 -15.33 -2.97 0.38
+3 15 4.35 -2.65 -15.4 -2.93 0.51
+3 10 4.3 -2.59 -15.36 -2.9 0.51
+3 5 4.32 -2.68 -15.29 -2.87 0.73
+1 20 5.38 -4 -15.36 -3.03 2.07
+1 15 5.26 -3.94 -15.44 -2.97 2.15
+1 10 5.22 -3.91 -15.41 -2.98 2.16
+1 5 5.31 -4.11 -15.36 -3.02 2.39
+25
+
+Table 5: Results for regressions (3) with int (intercept) plus 4 factors cap, mom, hlv
+and vol deﬁned in Section 2 (along with parameters dvol and dhlv). The universe is
+based on cryptoassets with historical data with non-NA close, high, low, open, vol-
+ume and market cap, and nonzero volume for a lookback of 1116 = 3× 365 + 20 + 1
+days from August 18, 2018 (inclusive). This universe consists of 64 cryptoassets
+(after eliminating 2 cryptoassets with apparently “artifact” stale prices). The re-
+gressions are run over 1095 = 3× 365 days starting with the most recent date in the
+time series and going back in time (i.e., over the 3 years in the 3-year time series).
+dvol dhlv t-stat:int t-stat:cap t-stat:mom t-stat:hlv t-stat:vol
+20 20 1.38 -1.02 -12.64 -1.87 -0.15
+20 15 1.36 -1.07 -12.64 -1.96 -0.15
+20 10 1.32 -1.05 -12.62 -2.17 -0.21
+20 5 1.26 -1.12 -12.58 -2.31 -0.24
+15 20 1.44 -1.12 -12.68 -1.89 -0.08
+15 15 1.46 -1.2 -12.67 -1.94 -0.01
+15 10 1.43 -1.2 -12.66 -2.15 -0.05
+15 5 1.38 -1.3 -12.62 -2.3 -0.06
+10 20 1.33 -0.92 -12.67 -1.83 -0.28
+10 15 1.35 -1 -12.65 -1.86 -0.21
+10 10 1.37 -1.03 -12.63 -2.04 -0.18
+10 5 1.34 -1.19 -12.59 -2.26 -0.16
+5 20 1.19 -0.75 -12.75 -1.82 -0.44
+5 15 1.21 -0.82 -12.72 -1.83 -0.37
+5 10 1.23 -0.87 -12.68 -2 -0.33
+5 5 1.31 -1.11 -12.61 -2.12 -0.14
+3 20 1.09 -0.56 -12.74 -1.73 -0.6
+3 15 1.1 -0.61 -12.7 -1.71 -0.55
+3 10 1.12 -0.65 -12.67 -1.87 -0.51
+3 5 1.2 -0.89 -12.6 -1.99 -0.32
+1 20 1.78 -1.72 -12.63 -1.94 0.57
+1 15 1.79 -1.8 -12.62 -1.92 0.64
+
+20 1.09 -0.56 -12.74 -1.73 -0.6
+3 15 1.1 -0.61 -12.7 -1.71 -0.55
+3 10 1.12 -0.65 -12.67 -1.87 -0.51
+3 5 1.2 -0.89 -12.6 -1.99 -0.32
+1 20 1.78 -1.72 -12.63 -1.94 0.57
+1 15 1.79 -1.8 -12.62 -1.92 0.64
+1 10 1.8 -1.83 -12.6 -2.11 0.69
+1 5 1.86 -2.04 -12.55 -2.22 0.84
+26
+
+Table 6: Results for regressions (3) with int (intercept) plus 4 factors cap, mom, hlv
+and vol deﬁned in Section 2 (along with parameters dvol and dhlv). The universe is
+based on cryptoassets with historical data with non-NA close, high, low, open, vol-
+ume and market cap, and nonzero volume for a lookback of 1116 = 3× 365 + 20 + 1
+days from August 18, 2018 (inclusive). This universe consists of 64 cryptoassets
+(after eliminating 2 cryptoassets with apparently “artifact” stale prices). The re-
+gressions are run over 730 = 2× 365 days starting with the most recent date in the
+time series and going back in time (i.e., over the 1st and 2nd years in the 3-year
+time series).
+dvol dhlv t-stat:int t-stat:cap t-stat:mom t-stat:hlv t-stat:vol
+20 20 0.61 -0.38 -11.89 -2.2 -0.65
+20 15 0.59 -0.43 -11.86 -2.29 -0.64
+20 10 0.53 -0.39 -11.81 -2.63 -0.72
+20 5 0.44 -0.4 -11.71 -2.7 -0.8
+15 20 0.67 -0.47 -11.95 -2.22 -0.57
+15 15 0.7 -0.57 -11.89 -2.24 -0.49
+15 10 0.64 -0.55 -11.86 -2.58 -0.55
+15 5 0.55 -0.58 -11.76 -2.67 -0.62
+10 20 0.59 -0.31 -11.92 -2.17 -0.75
+10 15 0.63 -0.4 -11.86 -2.16 -0.67
+10 10 0.62 -0.44 -11.81 -2.44 -0.62
+10 5 0.53 -0.51 -11.71 -2.61 -0.68
+5 20 0.48 -0.17 -11.95 -2.17 -0.87
+5 15 0.51 -0.25 -11.88 -2.14 -0.79
+5 10 0.51 -0.31 -11.81 -2.42 -0.73
+5 5 0.55 -0.5 -11.69 -2.43 -0.57
+3 20 0.32 0.11 -11.92 -2.08 -1.15
+3 15 0.35 0.07 -11.84 -2 -1.1
+3 10 0.35 0.02 -11.78 -2.27 -1.05
+3 5 0.39 -0.16 -11.66 -2.27 -0.89
+1 20 0.88 -0.86 -11.7 -2.31 -0.17
+
+5 5 0.55 -0.5 -11.69 -2.43 -0.57
+3 20 0.32 0.11 -11.92 -2.08 -1.15
+3 15 0.35 0.07 -11.84 -2 -1.1
+3 10 0.35 0.02 -11.78 -2.27 -1.05
+3 5 0.39 -0.16 -11.66 -2.27 -0.89
+1 20 0.88 -0.86 -11.7 -2.31 -0.17
+1 15 0.92 -0.95 -11.64 -2.25 -0.08
+1 10 0.91 -0.99 -11.59 -2.53 -0.04
+1 5 0.93 -1.13 -11.48 -2.5 0.09
+27
+
+Table 7: Results for regressions (3) with int (intercept) plus 4 factors cap, mom, hlv
+and vol deﬁned in Section 2 (along with parameters dvol and dhlv). The universe is
+based on cryptoassets with historical data with non-NA close, high, low, open, vol-
+ume and market cap, and nonzero volume for a lookback of 1116 = 3× 365 + 20 + 1
+days from August 18, 2018 (inclusive). This universe consists of 64 cryptoassets
+(after eliminating 2 cryptoassets with apparently “artifact” stale prices). The re-
+gressions are run over 730 = 2 × 365 days by skipping the most recent 365 days,
+starting with the 366th day in the time series and going back in time (i.e., over the
+2nd and 3rd years in the 3-year time series).
+dvol dhlv t-stat:int t-stat:cap t-stat:mom t-stat:hlv t-stat:vol
+20 20 3.16 -2.06 -12.97 -1.7 0.57
+20 15 3.14 -2.08 -13 -1.69 0.58
+20 10 3.09 -2.03 -12.94 -1.73 0.49
+20 5 3.09 -2.24 -12.94 -1.98 0.53
+15 20 3.27 -2.23 -13.03 -1.76 0.7
+15 15 3.26 -2.26 -13.05 -1.74 0.75
+15 10 3.22 -2.22 -13 -1.76 0.68
+15 5 3.23 -2.46 -13 -2.02 0.73
+10 20 3.13 -2.06 -13.06 -1.72 0.53
+10 15 3.13 -2.08 -13.06 -1.69 0.57
+10 10 3.11 -2.04 -13 -1.68 0.54
+10 5 3.19 -2.34 -13 -1.99 0.64
+5 20 2.92 -1.87 -13.18 -1.69 0.38
+5 15 2.92 -1.9 -13.19 -1.64 0.42
+5 10 2.9 -1.85 -13.12 -1.59 0.39
+5 5 3.06 -2.18 -13.06 -1.89 0.62
+3 20 2.87 -1.82 -13.22 -1.61 0.36
+3 15 2.86 -1.84 -13.23 -1.56 0.4
+3 10 2.84 -1.78 -13.15 -1.49 0.37
+3 5 2.98 -2.09 -13.1 -1.81 0.59
+1 20 3.88 -3.3 -13.26 -1.8 1.85
+
+9
+5 5 3.06 -2.18 -13.06 -1.89 0.62
+3 20 2.87 -1.82 -13.22 -1.61 0.36
+3 15 2.86 -1.84 -13.23 -1.56 0.4
+3 10 2.84 -1.78 -13.15 -1.49 0.37
+3 5 2.98 -2.09 -13.1 -1.81 0.59
+1 20 3.88 -3.3 -13.26 -1.8 1.85
+1 15 3.88 -3.33 -13.28 -1.73 1.91
+1 10 3.85 -3.28 -13.22 -1.73 1.9
+1 5 3.97 -3.57 -13.18 -2.03 2.08
+28
+
+Table 8: Results for regressions (3) with int (intercept) plus 4 factors cap, mom,
+hlv and vol deﬁned in Section 2 (along with parameters dvol anddhlv). The universe
+is based on cryptoassets with historical data with non-NA close, high, low, open,
+volume and market cap, and nonzero volume for a lookback of 1116 = 3×365+20+1
+days from August 18, 2018 (inclusive). This universe consists of 66 cryptoassets.
+The regressions are run over 365 days starting with the most recent date in the time
+series and going back in time (i.e., over the 1st year in the 3-year time series).
+dvol dhlv t-stat:int t-stat:cap t-stat:mom t-stat:hlv t-stat:vol
+20 20 -1.34 1.45 -10.55 -0.29 -1.74
+20 15 -1.29 1.44 -10.53 -0.33 -1.77
+20 10 -1.24 1.4 -10.59 -0.64 -1.81
+20 5 -1.19 1.37 -10.69 -0.73 -1.75
+15 20 -1.4 1.53 -10.52 -0.29 -1.82
+15 15 -1.32 1.45 -10.53 -0.27 -1.76
+15 10 -1.26 1.39 -10.59 -0.57 -1.78
+15 5 -1.2 1.35 -10.68 -0.68 -1.71
+10 20 -1.53 1.73 -10.48 -0.3 -2.05
+10 15 -1.44 1.63 -10.5 -0.27 -1.98
+10 10 -1.4 1.56 -10.58 -0.51 -1.98
+10 5 -1.35 1.55 -10.67 -0.64 -1.94
+5 20 -1.65 1.85 -10.46 -0.37 -2.2
+5 15 -1.54 1.73 -10.48 -0.33 -2.11
+5 10 -1.49 1.63 -10.57 -0.59 -2.07
+5 5 -1.49 1.62 -10.71 -0.53 -1.99
+3 20 -1.84 2.16 -10.4 -0.41 -2.55
+3 15 -1.74 2.06 -10.41 -0.36 -2.47
+3 10 -1.68 1.93 -10.5 -0.63 -2.42
+3 5 -1.65 1.88 -10.65 -0.53 -2.27
+1 20 -1.4 1.6 -10.09 -0.43 -1.9
+1 15 -1.28 1.47 -10.12 -0.4 -1.81
+1 10 -1.21 1.33 -10.2 -0.69 -1.75
+1 5 -1.14 1.25 -10.34 -0.61 -1.59
+29
+
+Table 9: Results for regressions (3) with int (intercept) plus 4 factors cap, mom, hlv
+and vol deﬁned in Section 2 (along with parameters dvol and dhlv). The universe is
+based on cryptoassets with historical data with non-NA close, high, low, open, vol-
+ume and market cap, and nonzero volume for a lookback of 1116 = 3× 365 + 20 + 1
+days from August 18, 2018 (inclusive). This universe consists of 64 cryptoassets
+(after eliminating 2 cryptoassets with apparently “artifact” stale prices). The re-
+gressions are run over 365 days by skipping the most recent 365 days, starting with
+the 366th day in the time series and going back in time (i.e., over the 2nd year in
+the 3-year time series).
+dvol dhlv t-stat:int t-stat:cap t-stat:mom t-stat:hlv t-stat:vol
+20 20 2.95 -1.71 -11.81 -2.25 0.25
+20 15 2.94 -1.72 -11.79 -2.15 0.27
+20 10 2.82 -1.62 -11.65 -2.29 0.14
+20 5 2.8 -1.83 -11.57 -2.5 0.15
+15 20 3.1 -1.92 -11.91 -2.34 0.42
+15 15 3.1 -1.94 -11.87 -2.2 0.48
+15 10 2.99 -1.86 -11.74 -2.32 0.36
+15 5 2.97 -2.07 -11.67 -2.52 0.37
+10 20 3.01 -1.8 -11.93 -2.32 0.31
+10 15 3.01 -1.8 -11.88 -2.16 0.35
+10 10 2.95 -1.75 -11.74 -2.2 0.31
+10 5 2.98 -2.02 -11.65 -2.48 0.34
+5 20 2.83 -1.67 -12.03 -2.3 0.25
+5 15 2.83 -1.68 -11.98 -2.12 0.29
+5 10 2.75 -1.6 -11.83 -2.11 0.23
+5 5 2.87 -1.9 -11.67 -2.33 0.44
+3 20 2.74 -1.55 -12.06 -2.24 0.13
+3 15 2.74 -1.56 -12.01 -2.05 0.18
+3 10 2.65 -1.45 -11.86 -2 0.09
+3 5 2.74 -1.72 -11.7 -2.22 0.29
+1 20 3.69 -2.9 -12.02 -2.46 1.48
+1 15 3.71 -2.93 -11.98 -2.25 1.56
+
+4
+3 20 2.74 -1.55 -12.06 -2.24 0.13
+3 15 2.74 -1.56 -12.01 -2.05 0.18
+3 10 2.65 -1.45 -11.86 -2 0.09
+3 5 2.74 -1.72 -11.7 -2.22 0.29
+1 20 3.69 -2.9 -12.02 -2.46 1.48
+1 15 3.71 -2.93 -11.98 -2.25 1.56
+1 10 3.62 -2.87 -11.82 -2.27 1.51
+1 5 3.69 -3.1 -11.68 -2.41 1.66
+30
+
+Table 10: Results for regressions (3) with int (intercept) plus 4 factors cap, mom, hlv
+and vol deﬁned in Section 2 (along with parameters dvol and dhlv). The universe is
+based on cryptoassets with historical data with non-NA close, high, low, open, vol-
+ume and market cap, and nonzero volume for a lookback of 1116 = 3× 365 + 20 + 1
+days from August 18, 2018 (inclusive). This universe consists of 64 cryptoassets
+(after eliminating 2 cryptoassets with apparently “artifact” stale prices). The re-
+gressions are run over 365 days by skipping the most recent 730 = 2 × 365 days,
+starting with the 731st day in the time series and going back in time (i.e., over the
+3rd year in the 3-year time series).
+dvol dhlv t-stat:int t-stat:cap t-stat:mom t-stat:hlv t-stat:vol
+20 20 3.53 -2.62 -14.15 -1.04 1.02
+20 15 3.48 -2.64 -14.23 -1.13 1
+20 10 3.53 -2.64 -14.26 -1.05 0.98
+20 5 3.54 -2.82 -14.35 -1.33 1.03
+15 20 3.56 -2.73 -14.17 -1.06 1.1
+15 15 3.55 -2.76 -14.25 -1.18 1.13
+15 10 3.61 -2.77 -14.28 -1.08 1.12
+15 5 3.65 -2.98 -14.37 -1.39 1.2
+10 20 3.38 -2.5 -14.2 -0.99 0.86
+10 15 3.36 -2.53 -14.27 -1.12 0.89
+10 10 3.41 -2.49 -14.28 -1.05 0.87
+10 5 3.52 -2.8 -14.38 -1.38 1.05
+5 20 3.13 -2.26 -14.35 -0.94 0.58
+5 15 3.11 -2.29 -14.43 -1.06 0.61
+5 10 3.18 -2.28 -14.44 -0.97 0.63
+5 5 3.39 -2.63 -14.49 -1.35 0.88
+3 20 3.11 -2.27 -14.4 -0.86 0.68
+3 15 3.08 -2.29 -14.47 -0.97 0.7
+3 10 3.14 -2.3 -14.48 -0.88 0.76
+3 5 3.35 -2.64 -14.53 -1.3 1
+1 20 4.24 -4.05 -14.53 -1 2.42
+
+97 0.63
+5 5 3.39 -2.63 -14.49 -1.35 0.88
+3 20 3.11 -2.27 -14.4 -0.86 0.68
+3 15 3.08 -2.29 -14.47 -0.97 0.7
+3 10 3.14 -2.3 -14.48 -0.88 0.76
+3 5 3.35 -2.64 -14.53 -1.3 1
+1 20 4.24 -4.05 -14.53 -1 2.42
+1 15 4.19 -4.05 -14.61 -1.11 2.44
+1 10 4.24 -3.98 -14.66 -1.08 2.5
+1 5 4.43 -4.35 -14.76 -1.55 2.75
+31
+
+Table 11: Results for regressions (3) with int (intercept) plus 3 factors cap, mom and
+hlv deﬁned in Section 2 (along with dhlv). The period over which the regressions
+are run is the same as in the table shown in the ﬁrst column below (where the
+corresponding cryptoasset universe is also deﬁned).
+period dhlv t-stat:int t-stat:cap t-stat:mom t-stat:hlv
+Table 1 20 2.07 -4.22 -34.11 -2.54
+Table 1 15 2 -4.31 -34.08 -2.79
+Table 1 10 1.97 -4.21 -34.09 -2.69
+Table 1 5 1.88 -4.04 -34.09 -2.56
+Table 2 20 2.42 -3.87 -16.76 -2.95
+Table 2 15 2.4 -3.81 -16.72 -2.94
+Table 2 10 2.24 -3.87 -16.68 -3.38
+Table 2 5 2.09 -3.82 -16.63 -3.27
+Table 3 20 -0.09 -0.98 -16.89 -1.1
+Table 3 15 -0.05 -1.02 -16.76 -1.06
+Table 3 10 -0.08 -1.38 -16.74 -1.66
+Table 3 5 -0.06 -1.42 -16.76 -1.68
+Table 4 20 5.68 -5.77 -15.34 -3.22
+Table 4 15 5.6 -5.66 -15.41 -3.22
+Table 4 10 5.38 -5.6 -15.37 -3.24
+Table 4 5 5.05 -5.44 -15.3 -3.1
+32
+
+Table 12: Table 11 continued. Results for regressions (3) with int (intercept) plus
+3 factors cap, mom and hlv deﬁned in Section 2 (along with dhlv). The period over
+which the regressions are run is the same as in the table shown in the ﬁrst column
+below (where the corresponding cryptoasset universe is also deﬁned).
+period dhlv t-stat:int t-stat:cap t-stat:mom t-stat:hlv
+Table 5 20 1.9 -3.3 -12.57 -2.38
+Table 5 15 1.86 -3.35 -12.57 -2.42
+Table 5 10 1.86 -3.37 -12.5 -2.56
+Table 5 5 1.75 -3.55 -12.44 -2.63
+Table 6 20 1.27 -3.05 -11.81 -2.81
+Table 6 15 1.24 -3.09 -11.76 -2.84
+Table 6 10 1.21 -3.11 -11.64 -3.08
+Table 6 5 1.08 -3.22 -11.52 -3.03
+Table 7 20 3.71 -4.03 -13.02 -2.06
+Table 7 15 3.68 -4.06 -13.04 -2.01
+Table 7 10 3.62 -4.06 -12.95 -2.04
+Table 7 5 3.5 -4.28 -12.93 -2.17
+Table 8 20 -0.28 -0.31 -10.32 -0.42
+Table 8 15 -0.19 -0.48 -10.32 -0.47
+Table 8 10 -0.11 -0.75 -10.37 -0.75
+Table 8 5 -0.13 -0.82 -10.44 -0.83
+Table 9 20 3.72 -4.24 -11.92 -2.67
+Table 9 15 3.7 -4.21 -11.88 -2.54
+Table 9 10 3.55 -4.22 -11.67 -2.67
+Table 9 5 3.39 -4.34 -11.57 -2.62
+Table 10 20 3.82 -3.81 -14.12 -1.32
+Table 10 15 3.77 -3.89 -14.2 -1.37
+Table 10 10 3.82 -3.89 -14.24 -1.29
+Table 10 5 3.8 -4.22 -14.32 -1.62
+33
+
+Table 13: Results for regressions (3) with int (intercept) plus 2 factors cap and mom
+deﬁned in Section 2. The period over which the regressions are run is the same as
+in the table shown in the ﬁrst column below (where the corresponding cryptoasset
+universe is also deﬁned).
+period t-stat:int t-stat:cap t-stat:mom
+Table 1 1.81 -3.01 -33.63
+Table 2 2.2 -2.14 -16.5
+Table 3 0.13 -0.48 -16.16
+Table 4 4.77 -3.95 -15.11
+Table 5 2 -1.98 -12.22
+Table 6 1.45 -1.31 -11.44
+Table 7 3.34 -2.92 -12.67
+Table 8 0.24 -0.54 -9.8
+Table 9 3.28 -2.5 -11.56
+Table 10 3.47 -3.44 -13.78
+Table 14: Results for regressions (3) without int (intercept) and with 3 factors cap,
+mom and hlv deﬁned in Section 2 (along with dhlv) for dhlv = 5. The period over
+which the regressions are run is the same as in the table shown in the ﬁrst column
+below (where the corresponding cryptoasset universe is also deﬁned).
+period t-stat:cap t-stat:mom t-stat:hlv
+Table 1 -2.28 -33.23 -2.23
+Table 2 -1.75 -16.33 -3.24
+Table 3 -1.36 -16.47 -1.7
+Table 4 -0.93 -15.03 -2.94
+Table 5 -1.34 -12.24 -2.58
+Table 6 -1.67 -11.29 -3
+Table 7 -0.81 -12.75 -2.3
+Table 8 -0.35 -10.08 -0.51
+Table 9 -0.96 -11.38 -2.89
+Table 10 -0.66 -14.15 -1.56
+34
+
+Table 15: Results for regressions (3) with int (intercept) plus 4 factors cap, mom,
+mom1 and hlv deﬁned in Section 2 (along with dhlv). The period over which the
+regressions are run is the same as in the table shown in the ﬁrst column below (where
+the corresponding cryptoasset universe is also deﬁned).
+period dhlv t-stat:int t-stat:cap t-stat:mom t-stat:mom1 t-stat:hlv
+Table 1 20 1.69 -3.79 -35.89 -15.24 -2.32
+Table 1 15 1.63 -3.85 -35.85 -15.2 -2.54
+Table 1 10 1.62 -3.73 -35.86 -15.19 -2.37
+Table 1 5 1.53 -3.48 -35.84 -15.13 -2.06
+Table 2 20 2.21 -3.25 -18.05 -8.04 -2.47
+Table 2 15 2.2 -3.18 -18 -8.02 -2.43
+Table 2 10 2.03 -3.21 -17.96 -7.98 -2.83
+Table 2 5 1.89 -3.08 -17.9 -7.79 -2.52
+Table 3 20 -0.64 -0.32 -19.77 -9.46 -1.04
+Table 3 15 -0.61 -0.28 -19.63 -9.41 -0.94
+Table 3 10 -0.66 -0.64 -19.62 -9.43 -1.58
+Table 3 5 -0.67 -0.54 -19.63 -9.26 -1.46
+Table 4 20 5.49 -4.88 -16.54 -7.93 -2.33
+Table 4 15 5.43 -4.83 -16.59 -7.91 -2.34
+Table 4 10 5.2 -4.74 -16.54 -7.87 -2.31
+Table 4 5 4.86 -4.53 -16.45 -7.69 -2.02
+35
+
+Table 16: Table 15 continued. Results for regressions (3) with int (intercept) plus 4
+factors cap, mom, mom1 and hlv deﬁned in Section 2 (along with dhlv). The period
+over which the regressions are run is the same as in the table shown in the ﬁrst
+column below (where the corresponding cryptoasset universe is also deﬁned).
+period dhlv t-stat:int t-stat:cap t-stat:mom t-stat:mom1 t-stat:hlv
+Table 5 20 1.86 -3.27 -13.4 -5.47 -2.37
+Table 5 15 1.83 -3.32 -13.38 -5.45 -2.41
+Table 5 10 1.78 -3.28 -13.28 -5.38 -2.54
+Table 5 5 1.61 -3.39 -13.23 -5.2 -2.56
+Table 6 20 1.2 -2.92 -12.44 -4.97 -2.73
+Table 6 15 1.17 -2.95 -12.39 -4.95 -2.75
+Table 6 10 1.1 -2.98 -12.25 -4.87 -3.03
+Table 6 5 0.89 -2.96 -12.15 -4.65 -2.94
+Table 7 20 3.73 -4.09 -14.01 -5.95 -2.13
+Table 7 15 3.7 -4.11 -14.03 -5.94 -2.11
+Table 7 10 3.57 -4.04 -13.91 -5.89 -2.14
+Table 7 5 3.38 -4.19 -13.88 -5.76 -2.25
+Table 8 20 -0.6 0.11 -11.67 -6.06 -0.44
+Table 8 15 -0.49 0.01 -11.63 -6.03 -0.42
+Table 8 10 -0.4 -0.25 -11.68 -5.96 -0.71
+Table 8 5 -0.49 -0.18 -11.84 -6.02 -0.78
+Table 9 20 3.71 -4.19 -12.68 -5.43 -2.69
+Table 9 15 3.68 -4.15 -12.67 -5.42 -2.57
+Table 9 10 3.46 -4.17 -12.46 -5.36 -2.81
+Table 9 5 3.14 -4.14 -12.37 -5.2 -2.77
+Table 10 20 3.91 -3.99 -15.39 -6.59 -1.46
+Table 10 15 3.86 -4.08 -15.43 -6.57 -1.55
+Table 10 10 3.87 -3.91 -15.4 -6.55 -1.3
+Table 10 5 3.87 -4.27 -15.45 -6.42 -1.6
+36
+
+Table 17: Results for regressions (3) with int (intercept) plus 7 factors cap, mom,
+mom1, mom2, mom3, mom4 and hlv deﬁned in Section 2 (along with dhlv) for
+dhlv = 5. The period over which the regressions are run is the same as in the table
+shown in the ﬁrst column below (where the corresponding cryptoasset universe is
+also deﬁned). The remaining columns show the corresponding t-stat.
+period int cap mom mom1 mom2 mom3 mom4 hlv
+Table 1 0.95 -2.43 -37.16 -18.9 -10.61 -4.45 -3.97 -1.06
+Table 2 1.47 -2.55 -18.26 -8.54 -4.63 -0.54 -0.65 -2.29
+Table 3 -0.84 -0.09 -21.06 -10.45 -5.63 -2.03 -0.82 -1.08
+Table 4 4.41 -3.61 -16.51 -8.14 -3.76 -0.9 -1.51 -1.56
+Table 5 1.23 -2.83 -13.36 -5.59 -2.58 -0.8 -0.72 -2.38
+Table 6 0.44 -2.56 -12.11 -4.96 -1.86 -0.56 -0.37 -2.93
+Table 7 3.11 -3.28 -13.99 -6.18 -2.92 -1.41 -1.79 -1.49
+Table 8 -0.66 -0.92 -13.17 -6.68 -2.15 -1.62 0.66 -1.76
+Table 9 2.83 -3.2 -12.12 -5.53 -1.89 -1.59 -2.07 -1.97
+Table 10 3.61 -3.37 -15.99 -6.99 -4.05 -1.24 -1.48 -0.83
+Table 18: Results for regressions (3) with int (intercept) plus 4 factors cap, mom,
+hlv and mnbl deﬁned in Section 2 (along with dhlv) for dhlv = 5. The period over
+which the regressions are run is the same as in the table shown in the ﬁrst column
+below (where the corresponding cryptoasset universe is also deﬁned).
+period t-stat:int t-stat:cap t-stat:mom t-stat:hlv t-stat:mnbl
+Table 1 1.88 -4.09 -34.19 -2.53 0.01
+Table 2 2.25 -4.04 -16.67 -3.32 -0.88
+Table 3 -0.13 -1.41 -16.74 -1.67 0.23
+
+iverse is also deﬁned).
+period t-stat:int t-stat:cap t-stat:mom t-stat:hlv t-stat:mnbl
+Table 1 1.88 -4.09 -34.19 -2.53 0.01
+Table 2 2.25 -4.04 -16.67 -3.32 -0.88
+Table 3 -0.13 -1.41 -16.74 -1.67 0.23
+Table 4 5.17 -5.8 -15.37 -3.22 -1.5
+Table 5 2.04 -3.68 -12.43 -2.61 -1.18
+Table 6 1.27 -3.28 -11.53 -2.97 -0.74
+Table 7 3.74 -4.39 -12.93 -2.21 -1.37
+Table 8 -0.06 -0.79 -10.4 -0.76 -0.22
+Table 9 3.41 -4.34 -11.63 -2.62 -0.77
+Table 10 4.38 -4.46 -14.26 -1.72 -2.01
+37
+
+0 100 200 300
+0 2 4 6 8 10
+days
+index value
+Figure 1: The market cap weighted index (bottom) and price weighted index (top)
+for the same 1-year period and cryptoasset universe as in Table 1. Both indexes are
+normalized to 1 on the ﬁrst day of the period. The spike in the price weighted index
+is due to a high-priced cryptoasset (42-coin) with a small market cap.
+38
+
+0 100 200 300
+1 2 3 4 5
+days
+index value
+Figure 2: The market cap weighted index (top) and price weighted index (bottom)
+for the same 1-year period and cryptoasset universe as in Table 3. Both indexes are
+normalized to 1 on the ﬁrst day of the period.
+39
+
+0 100 200 300
+2 4 6 8 10
+days
+index value
+Figure 3: The market cap weighted index (top) and price weighted index (bottom)
+for the same 1-year period and cryptoasset universe as in Table 4. Both indexes are
+normalized to 1 on the ﬁrst day of the period.
+40
+
+0 100 200 300
+1 2 3 4 5 6
+days
+index value
+Figure 4: The market cap weighted index (top) and price weighted index (bottom)
+for the same 1-year period and cryptoasset universe as in Table 8. Both indexes are
+normalized to 1 on the ﬁrst day of the period.
+41
+
+0 100 200 300
+2 4 6 8
+days
+index value
+Figure 5: The market cap weighted index (top) and price weighted index (bottom)
+for the same 1-year period and cryptoasset universe as in Table 9. Both indexes are
+normalized to 1 on the ﬁrst day of the period.
+42
+
+0 100 200 300
+0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0
+days
+index value
+Figure 6: The market cap weighted index (top) and price weighted index (bottom)
+for the same 1-year period and cryptoasset universe as in Table 10. Both indexes
+are normalized to 1 on the ﬁrst day of the period.
+43
+
+Figure 7: The Bitcoin price drop (along with the broad cryptoasset market) on
+September 5, 2018. This snapshot was generated using an interactive chart on
+https://www.coinbase.com.
+44

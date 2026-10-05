@@ -1,0 +1,255 @@
+{
+  "fiche_id": "synthese-dossier-cryptocurrencies-and-momentum-W2930793690",
+  "written": "2026-10-05",
+  "written_by": "session-synthese-isolee-2026-10-05",
+  "source": {
+    "authors": "Synthèse de : Grobys, Klaus; Sapkota, Niranjan (graine) ; Wiest, T. (base-37208ab8) ; auteurs de base-1c20497d, base-3ece5eb7, base-098351f5, base-96a85ab2 non donnés dans la consigne",
+    "title": "Synthèse — momentum en série temporelle (signe du rendement cumulé passé) et son absence en cryptomonnaies à l'horizon mensuel",
+    "year": 2022,
+    "year_note": "Seule la graine porte une année (2019). base-37208ab8 cite Liu et al. (2022) et Zhang (2022), base-3ece5eb7 cite Jia et al. (2022) : ces voisins sont donc au moins de 2022. 2022 est une borne inférieure déduite de ces citations, pas une année lue dans la consigne.",
+    "source_url": "https://osuva.uwasa.fi/bitstreams/ffee5cb1-92a8-443e-a117-cbaacd8a1028/download",
+    "retrieved": "2026-10-05",
+    "peer_reviewed": false
+  },
+  "claim": {
+    "value": "Selon la graine, le momentum en série temporelle (position = signe du rendement cumulé des K derniers mois, K = 12, 6, 1, détention d'un mois) ne produit pas de gain significatif sur 143 cryptomonnaies Proof-of-Work en mensuel, 2014-2018 ; seul un renversement à un mois (1-0-1 tronqué, en coupe) est significatif. Les voisins retenus ne confirment pas cette absence au-delà du mensuel crypto : ils trouvent un momentum significatif aux fréquences journalière et hebdomadaire en crypto, sur les actions japonaises (formation 6 mois) et, d'après une revue, dans les futures sur matières premières. L'hypothèse testable est donc celle de la graine, avec son signe disputé.",
+    "quoted": [
+      "findingsdonotindicateanyevidenceofsignificantmomentumpayoffs,supportingtheviewthatthe",
+      "Wefindthatmomentumisinsignificantinthe2014–2018sampleperiod."
+    ]
+  },
+  "universe": {
+    "value": "Graine : toutes les cryptomonnaies Proof-of-Work cotées avant le 31/12/2014 sur coinmarketcap.com, soit 143 ; en moyenne 89 investissables par mois. Voisins : Bitcoin, Ripple, Ethereum (base-96a85ab2) ; un panier de cryptomonnaies en terciles de capitalisation (base-1c20497d) ; actions japonaises (base-098351f5) ; futures sur matières premières, selon la revue base-37208ab8. Le TSMOM retenu se calcule instrument par instrument, donc sur un univers quelconque, dont nos neuf futures.",
+    "quoted": [
+      "Ourdatacontainallcryptocurrenciesthat",
+      "incorporatedthe Proof-of-Workmechanismandstartedtrading",
+      "30cryptocurrenciesexhibitingthehighestmarketcapitalizations."
+    ]
+  },
+  "horizon": {
+    "value": "1 mois (détention d'un mois, rééquilibrage au début de chaque mois), selon la graine. Les voisins divergent : jour et semaine (base-96a85ab2), trois semaines (base-1c20497d), 6 mois de détention et aussi 3, 9 et 12 mois (base-098351f5).",
+    "quoted": [
+      "Theportfoliosareheldonemonthahead.This n-m-hstrategy,",
+      "1993), was updated and rebalanced at the beginning of each"
+    ]
+  },
+  "signal_construction": {
+    "value": "TSMOM selon Moskowitz et al. (2012), tel que la graine l'applique : pour chaque instrument, score = signe du rendement cumulé des K = 6 derniers mois, calculé au début du mois ; position longue si le signe est positif, courte sinon ; détenue un mois, jusqu'au rééquilibrage suivant. Un seul paramètre, K = 6 : c'est la fenêtre de formation qu'utilisent aussi base-098351f5 (« conventional 6-month formation ») et la littérature Jegadeesh-Titman citée par base-37208ab8. La version en coupe par quintiles est écartée, faute d'actifs (neuf instruments). La troncature des rendements extrêmes et le conditionnement par état de marché (base-098351f5) sont écartés aussi : le premier est un choix d'évaluation, le second un régime.",
+    "quoted": [
+      "positionwhenthesignofthecumulativepast K-monthreturnis",
+      "we used the conventional 6-month formation and 6- month holding periods for both CS and TS strategies"
+    ],
+    "parameters": {
+      "K_months": 6,
+      "holding_months": 1,
+      "sampling": "mensuel",
+      "score": "signe du rendement cumulé passé"
+    }
+  },
+  "reported_results": [
+    {
+      "name": "xs_mom_untrimmed_all_none_significant",
+      "value": null,
+      "quoted": "that none of the untrimmed momentum strategies generated",
+      "from_fiche": "cryptocurrencies-and-momentum-W2930793690",
+      "note": "Table 1 de la graine, 143 cryptos : aucune stratégie non tronquée n'est significative."
+    },
+    {
+      "name": "tsmom_avg_payoff_K12_K6",
+      "value": 17.71,
+      "quoted": "Theaveragepayoffsare17.71,18.22and",
+      "spelled_out": "17.71",
+      "from_fiche": "cryptocurrencies-and-momentum-W2930793690",
+      "note": "TSMOM K = 12 : 17.71 ; K = 6 : 18.22 ; K = 1 : 3.94. Unité non écrite dans la phrase."
+    },
+    {
+      "name": "tsmom_tstats_K12_K6_K1",
+      "value": 1.65,
+      "quoted": "statisticsof1.65,1.84,and0.41indictingthatthestrategiesdo",
+      "spelled_out": "1.65",
+      "from_fiche": "cryptocurrencies-and-momentum-W2930793690",
+      "note": "t-stats 1.65 (K=12), 1.84 (K=6), 0.41 (K=1) : aucun n'est significatif à 5 %."
+    },
+    {
+      "name": "xs_rev_1_0_1_trimmed_WminusL_all_monthly_pct",
+      "value": -14.87,
+      "unit": "% par mois",
+      "quoted": "1-0-1a −14.87**",
+      "spelled_out": "−14.87",
+      "from_fiche": "cryptocurrencies-and-momentum-W2930793690",
+      "note": "Seul résultat significatif de la graine, négatif : un renversement à un mois."
+    },
+    {
+      "name": "avg_investable_cryptos_per_month",
+      "value": 89,
+      "quoted": "143cryptocurrencies.Onaverage,wecouldinvestin89cryp-",
+      "from_fiche": "cryptocurrencies-and-momentum-W2930793690"
+    },
+    {
+      "name": "tsmom_daily_weekly_significant_three_cryptos",
+      "value": null,
+      "quoted": "we show that there is signiﬁcant time-series cryptocurrency momentum at the daily and weekly frequencies for all three cryptocurrencies.",
+      "from_fiche": "base-96a85ab2",
+      "note": "Contredit l'absence de momentum de la graine, mais à des horizons plus courts que le mois."
+    },
+    {
+      "name": "btc_daily_one_sd_return_predicts_next_day_pct",
+      "value": 0.33,
+      "unit": "% de rendement journalier le lendemain",
+      "quoted": "a one-standard-deviation increase in the current day’s Bitcoin return predicts a 0.33 percent increase in the daily return over the next day",
+      "from_fiche": "base-96a85ab2"
+    },
+    {
+      "name": "crypto_momentum_factor_three_week",
+      "value": null,
+      "quoted": "We construct the momentum factor (CMOM) using the three-week momentum.",
+      "from_fiche": "base-1c20497d",
+      "note": "Facteur hebdomadaire, terciles pondérés par la capitalisation."
+    },
+    {
+      "name": "crypto_long_short_alphas_remain_significant",
+      "value": null,
+      "quoted": "The alphas for all of the zero-investment long-short strategies remain signiﬁcant.",
+      "from_fiche": "base-1c20497d",
+      "note": "Ces stratégies comprennent les stratégies de rendement passé r 1,0 à r 4,0 (Table A.5)."
+    },
+    {
+      "name": "r_1_0_mean_return",
+      "value": 0.041,
+      "quoted": "r 1,0 Mean 0.041*** (3.719)",
+      "from_fiche": "base-1c20497d",
+      "note": "Table A.5 : moyenne de la stratégie de rendement passé r 1,0, significative à 1 % (t 3.719)."
+    },
+    {
+      "name": "japan_six_month_formation_holding",
+      "value": 6,
+      "unit": "mois",
+      "quoted": "we used the conventional 6-month formation and 6- month holding periods for both CS and TS strategies",
+      "from_fiche": "base-098351f5"
+    },
+    {
+      "name": "japan_ts_momentum_significant_same_state",
+      "value": null,
+      "quoted": "we find large and significant TS momentum returns when the market continues in the same state",
+      "from_fiche": "base-098351f5",
+      "note": "Actions japonaises ; résultat conditionné à l'état du marché (régime), non repris dans la construction."
+    },
+    {
+      "name": "review_grobys_sapkota_no_momentum",
+      "value": null,
+      "quoted": "The findings, in contrary to earlier studies, do not indicate any evidence of significant momentum payoffs.",
+      "from_fiche": "base-3ece5eb7",
+      "note": "Revue de littérature qui résume la graine."
+    },
+    {
+      "name": "review_kosc_short_term_contrarian",
+      "value": null,
+      "quoted": "The empirical results show a clear and significant dominance of the short-term contrarian effect over both momentum effect and the benchmark portfolios.",
+      "from_fiche": "base-3ece5eb7",
+      "note": "Kosc et al. (2019), cité par la revue : il va dans le sens du renversement court terme de la graine."
+    },
+    {
+      "name": "review_momentum_commodity_futures",
+      "value": null,
+      "quoted": "Positive momentum effects have also been found in commodity futures (Miffre and Rallis 2007)",
+      "from_fiche": "base-37208ab8"
+    },
+    {
+      "name": "review_momentum_cryptocurrencies",
+      "value": null,
+      "quoted": "most recently in cryptocurrencies (Liu et al. 2022)",
+      "from_fiche": "base-37208ab8"
+    }
+  ],
+  "what_is_missing": [
+    "aucun coût de transaction, spread ni frais n'est modélisé dans la graine",
+    "l'unité des gains TSMOM de la graine (17.71, 18.22, 3.94) n'est pas écrite",
+    "aucun IC ni corrélation de rang, ni dans la graine ni dans les passages voisins",
+    "les passages voisins ne donnent ni les auteurs ni l'année de quatre des voisins retenus",
+    "la définition exacte de la stratégie TS de base-098351f5 (signe ou niveau du rendement passé) n'est pas dans les passages",
+    "aucun papier ne donne de TSMOM sur des futures intraday ; le seul indice sur des futures (matières premières) vient d'une revue, sans chiffre",
+    "le biais de survie n'est pas discuté dans la graine"
+  ],
+  "transposability": {
+    "what_transfers": "Le TSMOM se définit instrument par instrument : signe du rendement cumulé des 6 derniers mois, calculable à partir des clôtures OHLCV de chacun de nos neuf futures, sans données externes et sans coupe transversale.",
+    "what_does_not_transfer": [
+      "la fréquence mensuelle et la formation à 6 mois donnent peu d'observations indépendantes sur le pool 2016-2023, et rien d'intraday",
+      "l'univers de la graine (143 cryptos au comptant) et ses amplitudes (écarts-types de 100 % par mois et plus) n'ont rien à voir avec des futures",
+      "la version en coupe par quintiles exige des dizaines d'actifs : impossible avec neuf instruments",
+      "la métrique : rendements moyens de portefeuilles et t-stats, pas un IC",
+      "le conditionnement par état de marché de base-098351f5 est un régime et ne fait pas partie du signal"
+    ],
+    "what_aligns_well": "Le score est une fonction pure de prix passés, connue au rééquilibrage, sans risque de look-ahead. Le désaccord sur l'horizon (rien en mensuel crypto, du momentum en journalier ou hebdomadaire) est exactement ce qu'un rapport d'IC peut vérifier sur nos données."
+  },
+  "synthesis": {
+    "dossier": "cryptocurrencies-and-momentum-W2930793690",
+    "roles": {
+      "base-1c20497d": {
+        "role": "contredit",
+        "why": "Même mécanisme (momentum de rendement passé en cryptomonnaies), mais il trouve des stratégies de rendement passé significatives à l'horizon de quelques semaines (r 1,0 : 0.041***, facteur à trois semaines), là où la graine ne trouve aucun momentum significatif en mensuel."
+      },
+      "base-3ece5eb7": {
+        "role": "confirme",
+        "why": "Revue de littérature sur le momentum crypto : elle résume la graine (pas de momentum significatif) et cite Kosc et al. sur la dominance du contrarien court terme, ce qui va dans le sens du renversement de la graine. Elle n'ajoute rien à la construction."
+      },
+      "bitcoin-intraday-time-series-momentum-W3199228172": {
+        "role": "deja_teste",
+        "why": "A déjà sa propre hypothèse (H06). C'est un momentum intraday de demi-heure sur BTC, et la synthèse ne ferait que la refaire."
+      },
+      "base-098351f5": {
+        "role": "contredit",
+        "why": "Momentum CS et TS sur actions japonaises, formation de 6 mois : il trouve des rendements de momentum larges et significatifs (quand l'état du marché persiste), à l'opposé de l'absence trouvée par la graine. Il n'ajoute pas de paramètre que la graine n'ait pas : K = 6 y est déjà, et le conditionnement par état est un régime."
+      },
+      "base-96a85ab2": {
+        "role": "contredit",
+        "why": "TSMOM en cryptomonnaies (Bitcoin, Ripple, Ethereum) : significatif aux fréquences journalière et hebdomadaire, alors que la graine ne trouve pas de TSMOM significatif en mensuel."
+      },
+      "base-6360531c": {
+        "role": "hors_sujet",
+        "why": "Les passages ne sont que des tableaux de t-stats de régressions factorielles (cap, mom, hlv, vol) sur des cryptoactifs. Le facteur mom n'y est pas défini et aucune stratégie momentum n'y est décrite : impossible d'établir que c'est le même mécanisme, ni d'en lire le signe."
+      },
+      "base-37208ab8": {
+        "role": "contredit",
+        "why": "Revue du momentum : elle rapporte un momentum positif dans les cryptomonnaies (Liu et al. 2022) et dans les futures sur matières premières, à l'opposé de l'absence trouvée par la graine. Elle n'ajoute pas de paramètre cité absent de la graine."
+      }
+    },
+    "apport": "aucun",
+    "sources": [
+      "cryptocurrencies-and-momentum-W2930793690",
+      "base-1c20497d",
+      "base-3ece5eb7",
+      "base-098351f5",
+      "base-96a85ab2",
+      "base-37208ab8"
+    ],
+    "ignored": [
+      "bitcoin-intraday-time-series-momentum-W3199228172 : deja_teste, a sa propre hypothèse H06 (momentum intraday de demi-heure sur BTC)",
+      "base-6360531c : hors_sujet, tableaux de régressions factorielles où le facteur mom n'est pas défini ; aucune stratégie momentum décrite"
+    ],
+    "mechanism": "Le rendement passé d'un actif sur une fenêtre de formation prédirait le signe de son rendement suivant (momentum en série temporelle). La graine teste ce mécanisme en mensuel sur des cryptomonnaies et ne le trouve pas.",
+    "agreements": [
+      "tous les papiers retenus construisent le score à partir du rendement passé de l'actif",
+      "la fenêtre de formation de 6 mois est commune à la graine (6-1-1, K = 6), à base-098351f5 et à la littérature Jegadeesh-Titman résumée par base-37208ab8",
+      "un effet contrarien à court terme existe en crypto selon la graine (1-0-1 tronqué) et selon Kosc et al., cité par base-3ece5eb7"
+    ],
+    "disagreements": [
+      "signe et présence de l'effet : la graine ne trouve aucun momentum significatif en crypto en mensuel ; base-96a85ab2, base-1c20497d et la revue base-37208ab8 trouvent ou rapportent un momentum positif significatif en crypto",
+      "signe à court terme : la graine (1-0-1 tronqué négatif) et Kosc et al. (cités par base-3ece5eb7) trouvent un renversement, alors que base-96a85ab2 (journalier, hebdomadaire) et base-1c20497d (une à quatre semaines) trouvent un momentum positif",
+      "horizon : un mois de détention pour la graine ; jour et semaine pour base-96a85ab2 ; trois semaines pour base-1c20497d ; 6 mois (et 3, 9, 12) pour base-098351f5",
+      "marché : cryptomonnaies (graine, base-96a85ab2, base-1c20497d), actions japonaises (base-098351f5), futures sur matières premières selon la revue base-37208ab8",
+      "pondération : la graine pondère également ; base-1c20497d pondère par la capitalisation, en terciles",
+      "conditionnalité : base-098351f5 trouve le momentum significatif quand l'état du marché persiste et négatif aux transitions ; la graine teste sans condition"
+    ],
+    "contributions": [],
+    "criteria_applied": [
+      "1. accord : le score fondé sur le rendement passé est commun à tous les papiers retenus. Le TSMOM est soutenu par la graine, base-96a85ab2 et base-098351f5, et la fenêtre de 6 mois par la graine, base-098351f5 et base-37208ab8 ; d'où K = 6",
+      "2. transposabilité : le TSMOM se calcule instrument par instrument sur nos neuf futures, alors que la coupe par quintiles exige des dizaines d'actifs. On retient donc le TSMOM, pas la coupe",
+      "3. parcimonie : un seul K et une seule détention (1 mois, celle de la graine), sans troncature ni variante 4-2",
+      "4. traçabilité : K = 6 est cité dans la graine (6-1-1, TSMOM K = 6) et dans base-098351f5, la détention d'un mois dans la graine"
+    ],
+    "chosen_from": [
+      "cryptocurrencies-and-momentum-W2930793690"
+    ],
+    "why": "Le TSMOM de la graine, avec K = 6, est la construction sur laquelle le plus de papiers s'accordent, et la seule de la famille qui se calcule sur neuf instruments. Aucun voisin n'apporte d'élément de construction cité qui manque à la graine : l'apport est nul, et le désaccord de signe et d'horizon est consigné sans être tranché."
+  }
+}

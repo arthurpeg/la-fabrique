@@ -125,6 +125,15 @@ def chercher(fiche_id: str, n_voisins: int, n_passages: int) -> dict:
             classes.append(v)
         if len(classes) == n_voisins:
             break
+    # L'année et les auteurs de chaque voisin, lus en base : sans eux, une synthèse
+    # devrait les deviner (D53, essai du 2026-10-05).
+    if classes:
+        ids = ",".join(v["paper_id"] for v in classes)
+        meta = {r["id"]: r for r in api.appel(
+            "GET", f"/rest/v1/papers?select=id,year,authors&id=in.({ids})") or []}
+        for v in classes:
+            m = meta.get(v["paper_id"]) or {}
+            v["year"], v["authors"] = m.get("year"), (m.get("authors") or [])[:6]
     return {"generated": datetime.now(UTC).isoformat(timespec="minutes"),
             "seed": {"fiche_id": fiche_id, "title": titre_graine,
                      "hypothesis": testees.get(fiche_id),

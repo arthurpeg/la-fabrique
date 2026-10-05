@@ -1,0 +1,1103 @@
+Financial Markets and Portfolio Management (2023) 37:95–114
+https://doi.org/10.1007/s11408-022-00417-8
+Momentum: what do we know 30 years after Jegadeesh
+and Titman’s seminal paper?
+Tobias Wiest 1
+Accepted: 20 June 2022 / Published online: 2 August 2022
+© The Author(s) 2022
+Abstract
+For over 30 years, extensive research has found corroborating evidence that past win-
+ners continue to yield higher returns than past losers. This momentum effect is robust
+across various asset classes and across the globe and presents perhaps the most perva-
+sive contradiction of the efﬁcient market hypothesis. This article reviews three strands
+of literature on momentum. First, I outline the construction of momentum strategies,
+emphasizing improvements and alternatives such as time-series momentum, residual
+momentum, and risk-managed momentum. Second, I summarize the most prominent
+behavioral-based and risk-based explanations for the origin of momentum. Finally, I
+present in detail the ﬁndings on commonality in stock momentum, namely on industry
+and factor momentum.
+Keywords Momentum · Asset pricing · Factor momentum · Industry momentum ·
+Commonalities · Residual momentum · Behavioral ﬁnance
+JEL Classiﬁcation G11 · G12 · G40
+1 Introduction: momentum everywhere
+In their seminal paper, Jegadeesh and Titman ( 1993) highlight that equity trading
+strategies that buy past winners and sell past losers yield positive returns. The exis-
+
+duction: momentum everywhere
+In their seminal paper, Jegadeesh and Titman ( 1993) highlight that equity trading
+strategies that buy past winners and sell past losers yield positive returns. The exis-
+tence of momentum, a continuation of (relative) performance of the past into the future,
+has had a profound impact both on the investment and on the academic landscape. For
+investors, momentum presents a robust, variable, and proﬁtable investment strategy
+that has found widespread implementation by active mutual funds, hedge funds, and
+passive ETFs. For ﬁnancial research, momentum presents a striking contradiction to
+B Tobias Wiest
+tobias.wiest@unisg.ch
+1 Swiss Institute of Banking and Finance, University of St. Gallen, Unterer Graben 21, 9000 St. Gallen,
+Switzerland
+123
+
+96 T. Wiest
+the weak form efﬁcient market hypothesis of Fama ( 1970). As depicted in Fig. 1,t h e
+contradiction is exacerbated by a myriad of studies that ﬁnd momentum in a vast num-
+ber of asset classes other than stocks and in various geographical regions. Rouwenhorst
+(1998) applies the approach of Jegadeesh and Titman (1993) to 12 European countries
+and ﬁnds stock momentum in a similar magnitude as in the USA. Carhart ( 1997) ﬁnds
+persistence in relative mutual fund performance. A momentum strategy going long
+in funds with the best performance and short in funds with the worst performance
+over the previous year yields a monthly return of 0.67%. Positive momentum effects
+have also been found in commodity futures (Miffre and Rallis 2007), in corporate
+bonds (Jostova et al. 2013), and most recently in cryptocurrencies (Liu et al. 2022).
+Asness et al. ( 2013) further highlight that momentum is everywhere by construct-
+ing proﬁtable momentum strategies for US equities, UK equities, European equities,
+government bonds, currencies, and commodity futures.
+This literature review aims to provide a comprehensive overview of momentum by
+summarizing the highest quality research on the topic. Forty-seven out of the 60 cited
+papers have been published in theJournal of Finance,t h eReview of Financial Studies,
+or the Journal of Financial Economics.
+First, I outline the general cross-sectional momentum strategy of Jegadeesh and
+
+s have been published in theJournal of Finance,t h eReview of Financial Studies,
+or the Journal of Financial Economics.
+First, I outline the general cross-sectional momentum strategy of Jegadeesh and
+Titman (1993) and highlight the potential sources of returns of such strategies using
+the return composition of Lewellen ( 2002). These include positive autocorrelation in
+stock returns, negative cross-correlation, and dispersion in stocks’ expected returns.
+Further, I list several alternative construction methods that improve momentum proﬁts.
+Moskowitz et al. ( 2012) propose a time-series momentum strategy that is a pure bet
+on assets’ own return continuation rather than relative performance. In what they call
+residual momentum, Blitz et al. ( 2011) ﬁnd that adjusting raw returns by their risk
+factor exposure enhances momentum proﬁts. Novy-Marx ( 2012) boosts momentum
+proﬁts by setting the look-back period to an intermediate horizon, and Daniel and
+Moskowitz (2016) do so by scaling the position in momentum by its ex ante inverse
+volatility.
+Second, I summarize two strands of literature that examine the origin of momentum
+proﬁts: behavioral-based explanations and risk-based explanations. Behavior-based
+explanations assume that ﬁrm-speciﬁc momentum stems from biases or irrationality
+in investors. Early studies propose models in which serial correlation in stock returns is
+driven either by a delayed overreaction to news (Daniel et al. 1998), initial underreac-
+
+es or irrationality
+in investors. Early studies propose models in which serial correlation in stock returns is
+driven either by a delayed overreaction to news (Daniel et al. 1998), initial underreac-
+tion (Barberis et al. 1998), or both (Hong and Stein 1999). George and Hwang (2004)
+and Grinblatt and Han ( 2005) argue that anchoring biases and a disposition effect are
+responsible for momentum effects. Risk-based explanations seek to unify momentum,
+the efﬁcient market hypothesis, and risk-based asset pricing models. There are two
+ways for a momentum strategy to be risky. First, past outperformance of winners was
+due to higher risk exposure, which is persistent in the future. Second, winners have
+gotten riskier due to their past outperformance. Johnson (2002) and Sagi and Seasholes
+(2007) argue for the second channel by highlighting an increase in growth rate risk
+after a positive performance.
+Lastly, I present the more recent literature studying the co-movement of momentum
+effects in individual assets. Models explaining momentum with uncorrelated ﬁrm-
+speciﬁc effects miss that due to diversiﬁcation, such momentum would present a near-
+123
+
+Momentum: what do we know 30 years after Jegadeesh and… 97
+012345
+0.0 0.5 1.0 1.5 2.0
+t-statistic
+Average monthly return (%)
+0.95
+0.41
+0.880.85
+0.67
+1.22
+0.59
+U.S. Equity (Jegadeesh, 1993)
+U.S. Equity (French, 2022)
+European Equity (French, 2022)
+AP ex. JP Equity (French, 2022)
+Mutual Funds (Carhart, 1997)
+Commodity Futures (Miﬀre, 2007)
+Corporate Bonds (Jostova, 2013)
+Fig. 1 Average monthly momentum proﬁts across regions and asset classes. This ﬁgure depicts average
+monthly returns and t-statistics of momentum strategies reported by previous studies or calculated from data
+provided by Kenneth French. The studies’ sample periods are as follows: Jegadeesh and Titman ( 1993):
+January 1965–December 1989, Carhart ( 1997): January 1963–December 1993, Miffre and Rallis ( 2007):
+March 1979–July 1985, Jostova et al. ( 2013): January 1973–June 2011, and Liu et al. ( 2022): January
+2014–July 2020. The data from Kenneth French’s website are obtained for the period from November 1990
+to December 2021
+arbitrage opportunity and would likely not have persisted over decades. Moskowitz
+and Grinblatt ( 1999) construct a proﬁtable industry momentum strategy that is not
+only proﬁtable both in the short and intermediate term but largely explains stock
+momentum. They also document that the serial correlation in monthly industry returns
+is strongest in the ﬁrst order. More recently, Grobys and Kolari ( 2020) argue for
+
+term but largely explains stock
+momentum. They also document that the serial correlation in monthly industry returns
+is strongest in the ﬁrst order. More recently, Grobys and Kolari ( 2020) argue for
+multiple independent forms of industry momentum after ﬁnding that strategies with
+a 1-month and 6-month formation period are only weakly correlated. Finally, Ehsani
+and Linnainmaa ( 2022a), Gupta and Kelly ( 2019), and Arnott et al. ( 2021) provide
+consistent evidence that factor portfolios exhibit momentum. Ehsani and Linnainmaa
+(2022a) ﬁnd that stock momentum is fully spanned by factor momentum, especially
+by momentum found in the factors’ highest eigenvalue principal components. Further,
+by constructing momentum-neutral factors, the authors show that factor momentum
+drives stock momentum and not vice versa. Arnott et al. (2021) highlights that industry
+momentum is driven by factor momentum.
+2 Outlining momentum
+2.1 General approach
+Return continuation documented by Jegadeesh and Titman ( 1993) contrasts with ear-
+lier research of De Bondt and Thaler ( 1985) and Jegadeesh ( 1990). De Bondt and
+Thaler ( 1985) ﬁnd that stocks that have performed poorly over the last 3–5 years
+123
+
+98 T. Wiest
+achieve better returns than stocks that performed well over the next 3–5 years. They
+argue that this results from an overreaction of investors to new information, and the
+subsequent returns are due to a reversal to the true ﬁrm value. Jegadeesh ( 1990) high-
+lights short-term reversals in stock returns and proposes that this is due to corrections
+after periods of low liquidity and price pressures in which stock price movements tend
+to be exacerbated.
+Jegadeesh and Titman (1993) construct a cross-sectional momentum strategy whose
+underlying approach has been used and adapted by a myriad of follow-up papers on
+momentum. First, for each month, they calculate cumulative stock returns over a so-
+called look-back or formation period, which is usually between 3 and 12 months.
+Second, they use these returns to sort stocks into decile portfolios and calculate
+equal-weighted portfolio returns over the holding period. Finally, the cross-sectional
+momentum strategy return is the return of the highest past return portfolio minus lowest
+past return portfolio. It is common to skip 1 month between the formation and holding
+period to isolate momentum from the short-term reversal effect (e.g., Jegadeesh and
+Titman (1993), Carhart (1997)o rA s n e s se ta l .(2013)). Jegadeesh and Titman (1993)
+ﬁnd that momentum yields signiﬁcant and positive returns across all combinations of
+3-, 6-, 9-, and 12-month formation and holding periods.
+
+)o rA s n e s se ta l .(2013)). Jegadeesh and Titman (1993)
+ﬁnd that momentum yields signiﬁcant and positive returns across all combinations of
+3-, 6-, 9-, and 12-month formation and holding periods.
+To illustrate the potential sources of momentum, Lewellen ( 2002) decomposes the
+expected return of a cross-sectional momentum strategy with a 1-month formation
+and a 1-month holding period. The weight of each of N stocks is given by:
+w
+i,t = 1
+N (ri,t−1 − rm.t−1) (1)
+where rm,t−1 is the return of a equal-weighted market portfolio in month t − 1. The
+zero-cost strategy is thus long in past winners and short past losers. The expected proﬁt
+can be written as:
+E[π mom
+i,t ]= N − 1
+N 2 tr (/Omega1)− 1
+N 2 [ι′/Omega1ι− tr (/Omega1)]+ σ 2
+μ (2)
+where /Omega1is the 1-month autocovariance matrix of returns and σ 2
+μ is the cross-sectional
+variance of expected returns. The decomposition reveals three different sources of
+momentum. First, momentum arises when stocks are positively autocorrelated: a high
+return today predicts a high return tomorrow. Second, negative cross-serial correlations
+also contribute to momentum proﬁts. In that case, a stock’s high past return predicts
+other stocks’ low future returns. Third, momentum can be proﬁtable because stocks
+have different expected returns that are persistent over time. A stock with high (low)
+return expectations will likely have higher (lower) realized returns in the future. In
+
+proﬁtable because stocks
+have different expected returns that are persistent over time. A stock with high (low)
+return expectations will likely have higher (lower) realized returns in the future. In
+such a case, there is no need for time-series predictability to proﬁt from momentum.
+2.2 Alternatives and improvements
+Moskowitz et al. (2012) defer from the standard cross-sectional momentum approach
+and instead test for time-series momentum. After scaling returns of various developed
+123
+
+Momentum: what do we know 30 years after Jegadeesh and… 99
+market equity indices, commodities, currencies, and government bond futures by an
+ex ante volatility estimate, they ﬁnd that from 1965 to 2009, past 12-month returns
+positively predict next month’s returns. Within a pooled panel regression, the β on
+past returns is positive and statistically signiﬁcant with a t-statistic of over 5. A trading
+strategy that goes long (short) when past returns are positive (negative) produces
+statistically positive mean returns at the 5% level for 52 of the 58 assets. The equal-
+weighted time-series momentum returns over all assets are robust to various risk
+adjustments and to the returns of a cross-sectional stock momentum strategy. The
+proﬁts are not only higher than cross-sectional momentum proﬁts but also able to
+fully explain them. Moskowitz et al. ( 2012) show that this is due to positive cross-
+asset serial correlation, therefore reducing cross-sectional momentum proﬁts, as shown
+in Eq. 2.
+However, more recent studies question the results of Moskowitz et al. (2012). Goyal
+and Jegadeesh ( 2018) argue that the better performance of time-series momentum is
+due to higher leverage. Cross-sectional momentum is a zero-cost strategy, whereas
+time-series momentum is usually net long as past returns are more often positive
+than negative. After scaling the cross-sectional strategy by adding an investment into
+a market portfolio equal to the net position of the time-series momentum strategy,
+
+turns are more often positive
+than negative. After scaling the cross-sectional strategy by adding an investment into
+a market portfolio equal to the net position of the time-series momentum strategy,
+both strategies perform similarly for individual stocks. The leveraged cross-sectional
+strategy outperforms for international asset class portfolios. The underperformance
+of the time-series strategy is largely due to the volatility scaling, leading to a huge
+position in bonds that usually exhibit low volatility and low excess returns. Huang
+et al. ( 2020) criticize the pooled regression approach in Moskowitz et al. ( 2012)t o
+determine autocovariance because it ignores differences in mean returns across asset
+classes. After regressing each asset separately on its past 12-month returns, only 8
+out of 55 slope coefﬁcients are signiﬁcant on the 10% level. Further, they show that a
+strategy that goes long if the unconditional mean of past returns is positive produces
+similar proﬁts as the strategy based on past 12-month returns. This suggests that proﬁts
+are not due to the predictability of returns but due to differences in expected returns.
+Blitz et al. ( 2011) ﬁnd that a raw return momentum strategy based on past 12-
+month returns, excluding the most recent month, has time-varying factor exposure.
+They create a residual momentum strategy by adjusting raw returns with the three risk
+factors of Fama and French ( 1993) and then sorting on residuals. Due to the reduced
+
+ime-varying factor exposure.
+They create a residual momentum strategy by adjusting raw returns with the three risk
+factors of Fama and French ( 1993) and then sorting on residuals. Due to the reduced
+factor exposure, the volatility of the residual momentum strategy is almost reduced by
+half compared to the raw momentum strategy, boosting the annual Sharpe ratio from
+0.45 to 0.90.
+Instead of the usual 12-month minus the most recent month formation period,
+Novy-Marx (2012) sorts returns from t-12 to t-7 to create an intermediate momentum
+strategy. From 1927 to 2010, the intermediate momentum strategy produces monthly
+proﬁts of 1.20%, much higher than a t-6 to t-2 momentum strategy that produces
+0.67%. The intermediate momentum returns are robust even after controlling for the
+risk factors of Fama and French ( 1993) (size and value) Carhart ( 1997) (momentum).
+Daniel and Moskowitz ( 2016) tackle the issue that momentum crashes in times
+of high market volatility when markets rebound after bear markets. They formulate a
+dynamic momentum strategy whose position is scaled proportionally to its conditional
+Sharpe ratio. Conditional expected returns take into account the negative effects of high
+123
+
+100 T. Wiest
+Time
+Value
+positive information event
+delayed
+overreaction
+long-term
+reversal
+stock price
+fundamental value
+a Delayed Overreaction
+Time
+Value
+b Initial Underreaction
+positive information event
+initial
+underreaction
+fundamental value
+stock price
+Fig. 2 This ﬁgure sketches the stock price movement (red) after a positive information event in relation to
+its fundamental value (grey) for a the delayed overreaction models and b the initial underreaction models
+market volatility and past market declines. Conditional variance is estimated using a
+GJR GARCH model. From 1934 to 2013, the dynamic momentum strategy produces
+a Sharpe ratio of 1 .20, therefore almost doubling the Sharpe ratio of 0 .68 of the
+standard zero-cost momentum strategy. The results of Daniel and Moskowitz ( 2016)
+are consistent with those of Barroso and Santa-Clara ( 2015) and Moreira and Muir
+(2017), who show that scaling by realized volatility signiﬁcantly improves momentum
+strategies.
+3 Explanations for momentum
+As shown, the literature generally agrees that momentum exists, is persistent, and spans
+a variety of asset classes and countries. However, the origin of this perhaps strongest
+contradiction to the weak form of Fama ( 1970)’s efﬁcient market hypothesis is still
+hotly debated. The two main strands of literature trying to explain momentum differ
+in the rationality assumption in investors. Risk-based explanations treat investors as
+
+t market hypothesis is still
+hotly debated. The two main strands of literature trying to explain momentum differ
+in the rationality assumption in investors. Risk-based explanations treat investors as
+rational and momentum proﬁts compensate for risks that arise from trading momen-
+tum. Behavioral explanations suggest that investors exhibit certain biases that inﬂuence
+their trading behavior and drive stock prices away from their fundamental value.
+3.1 Behavioral explanations
+Behavioral models for momentum usually assume serial correlation of individual stock
+returns. This serial correlation is driven by investors’ biases and the inability to instan-
+taneously and correctly price new information. Generally, studies have emphasized
+underreaction, overreaction, and disposition effects as drivers of momentum.
+Daniel et al. ( 1998) argue that momentum stems from investors’ biased self-
+attribution and overconﬁdence. In their model, investors ﬁrst trade stocks based on
+signals gathered from their research. If a public signal later conﬁrms the private sig-
+nal, overconﬁdence increases. If a positive public information event occurs after a buy
+123
+
+Momentum: what do we know 30 years after Jegadeesh and… 101
+based on private information, investors attribute the success to their skill and further
+drive the price up. If a public signal disagrees with the buy, they discard the signal as
+external noise and do not readjust their price expectation. Therefore, as depicted in
+Fig. 1a, on average public signals will drive prices away from fundamental values in
+the direction of their private signal. Public information will gradually reverse stock
+prices to their fundamental value in the long term. The delayed overreaction model of
+Daniel et al. ( 1998) is consistent with medium-term positive autocovariance in stock
+returns found by Jegadeesh and Titman ( 1993) and long-term reversals found by De
+Bondt and Thaler ( 1985).
+As depicted in Fig. 1b, initial underreaction to information can also cause momen-
+tum. New information is not fully incorporated into stock prices, driving them away
+from their fundamental value. Barberis et al. ( 1998) argue that conservatism bias—an
+under-weighing of new information—drives the initial underreaction. While investors
+update their posteriors in the right direction when faced with new evidence, they do
+not do so in the same magnitude as a rational Bayesian benchmark. The subsequent
+price adjustments to the stock’s intrinsic value produce positive autocovariance and
+thus momentum in stock returns.
+Unifying under- and overreaction theories, Hong and Stein ( 1999) introduce
+
+equent
+price adjustments to the stock’s intrinsic value produce positive autocovariance and
+thus momentum in stock returns.
+Unifying under- and overreaction theories, Hong and Stein ( 1999) introduce
+a model with two types of investors—“news-watchers” and "momentum-traders".
+News-watchers estimate stock prices based on news they privately observe but not
+based on past or current prices. Momentum-traders, on the other hand, condition their
+stock forecasts only on past and current prices. Private signals diffuse only gradu-
+ally across the news-watchers, leading to initial underreaction. Momentum traders
+chase past performance, thereby accelerating the initial price reaction to the point
+of overreaction. Interestingly, Hong and Stein ( 1999) do not rely on any irrational-
+ity assumptions—both actors act rationally within the boundaries of their respective
+subset of available information.
+Much literature has since come forward to corroborate the models of Daniel et al.
+(1998) and Hong and Stein (1999) with empirical evidence. In support of Daniel et al.
+(1998), Chui et al. (2010) capture cross-country differences in self-attribution bias and
+overconﬁdence with the individualism index of Hofstede ( 2001), which they argue is
+positively related to these attributes. The authors ﬁnd that proﬁtability of momentum
+in a country is positively related to individualism: average monthly momentum returns
+are 0.60% higher in countries that rank in the top 30% based on individualism than in
+
+at proﬁtability of momentum
+in a country is positively related to individualism: average monthly momentum returns
+are 0.60% higher in countries that rank in the top 30% based on individualism than in
+countries that rank in the bottom 30%. More recently, Hillert et al. ( 2014) corroborate
+the overreaction model of Daniel et al. (1998) by constructing a ﬁrm-speciﬁc measure
+for excess media coverage that controls for ﬁrm size, analyst coverage, and stock index
+memberships. Arguing that newspapers act as a source for investors’ private signals,
+the authors show that monthly momentum proﬁts are three times higher (1.02% vs.
+0.33%) when using the subset of stocks in the highest quintile of media coverage than
+when using stocks in the lowest quintile. They further provide evidence for Daniel et al.
+(1998) and Chui et al. (2010) by demonstrating that this spread increases for stocks with
+higher uncertainty, which overconﬁdent investors favor, and in highly individualistic
+states. Finally, in line with the overreaction models, the media momentum proﬁts
+reverse in the long run.
+123
+
+102 T. Wiest
+Hong et al. ( 2000) show that momentum is mostly driven by small ﬁrms, and
+after controlling for ﬁrm size, that momentum works better when analyst coverage
+is low. Arguing that information travels more slowly for smaller and less covered
+ﬁrms, they thus provide supporting evidence for the hypothesis of Hong and Stein
+(1999) that the initial underreaction to news is due to the slow, gradual diffusion
+of information. Similarly, Zhang ( 2006) shows that momentum effects increase with
+information uncertainty. They ﬁnd that the degree to which good (bad) news predicts
+high (low) future returns is higher for small and young ﬁrms, for ﬁrms with high
+cash ﬂow volatility, for ﬁrms with low analyst coverage and high analyst forecast
+dispersion, and for stocks with high return volatility. More recently, Antoniou et al.
+(2013) ﬁnd that a 6-month momentum strategy produces average monthly returns
+of 2.00% when investor sentiment is high but only 0.34% when investor sentiment
+is low. The authors argue that investors’ slow diffusion of information in Hong and
+Stein (1999) is exacerbated by cognitive dissonance that arises from information that
+contradicts their level of optimism. In good times, bad news for loser stocks will
+diffuse more slowly than in pessimistic times, resulting in subsequent negative returns
+for loser stocks. Antoniou et al. (2013) show that this effect is more pronounced when
+
+ws for loser stocks will
+diffuse more slowly than in pessimistic times, resulting in subsequent negative returns
+for loser stocks. Antoniou et al. (2013) show that this effect is more pronounced when
+severe short-selling constraints limit arbitrageurs’ ability to push down loser stocks to
+their intrinsic value.
+Finally, Cooper et al. (2004) ﬁnd that the success of momentum depends on the state
+of the market. From 1929 to 1995, if the market was up over the last 3 years, momentum
+produced a mean monthly return of 0.93%, otherwise only −0.37%. They link their
+results to Daniel et al. (1998)’s assumption of investor overconﬁdence. Since investors
+are long in equities on aggregate and due to their self-attribution bias, an up-market
+state will lead to a higher increase in conﬁdence and thus to higher overreactions and
+momentum. Additionally, in line with overreaction theory, Cooper et al. ( 2004) ﬁnd
+reversal of momentum proﬁts in the long term.
+Novy-Marx (2012) ﬁnds evidence against the positive short-term autocorrelation
+predicted by underreaction and overreaction models. He shows that the predictive
+power of past returns is only inherent in the intermediate horizon. Sorting on past 12-
+to 7-month returns produces larger proﬁts than standard momentum and generates
+alpha even after controlling for risk factors of Fama and French ( 1993) and for the
+momentum factor of Carhart ( 1997). Additionally, stocks winning in the short term
+
+standard momentum and generates
+alpha even after controlling for risk factors of Fama and French ( 1993) and for the
+momentum factor of Carhart ( 1997). Additionally, stocks winning in the short term
+but losing in the intermediate term signiﬁcantly underperform stocks losing in the
+short term but winning in the intermediate term, providing further evidence against
+the short-term continuation of stock price movements predicted by Daniel et al. (1998)
+and Hong and Stein ( 1999).
+Alternatively, George and Hwang ( 2004) explain momentum with an anchoring
+bias, where investors’ decisions are inﬂuenced by or driven towards a certain reference
+point. The anchor in their study is a stock’s 52-week high price, which most newspapers
+reporting on the stock market publish. The authors propose that for stocks near their
+52-week high, new positive information is at ﬁrst only partially incorporated into
+prices because traders are reluctant to cross the anchoring point. Similarly, bad news
+does not—to the extent that would be warranted—drive down prices of stocks that are
+already far away from their 52-week high. To create a momentum strategy, George and
+Hwang (2004) rank stocks based on their distance to the 52-week high price and go
+123
+
+Momentum: what do we know 30 years after Jegadeesh and… 103
+long (short) in the 30% stocks with the lowest (highest) distance. After controlling for
+size and skipping a month between ranking and holding period, returns of the 52-week
+strategy are about twice as large as the standard momentum strategy, indicating that
+not past returns but price levels are important predictors for the cross-section of future
+returns.
+Grinblatt and Han ( 2005) propose that a disposition effect in investors drives
+momentum. Per prospect theory, because of a kink at a reference point in his utility
+function, an investor is risk-averse after gaining on his reference point and risk-seeking
+after suffering losses. The reference point in the case of the stock market is the aver-
+age buying price. Thus, the model predicts that after positive news and a stock price
+increase, there is excess selling pressure on the stock, while after negative news,
+investors tend to hold on to the stock for too long. Grinblatt and Han ( 2005) calculate
+the reference point by calculating a probability-weighted average of past prices, where
+the probabilities are based on past turnover and measure the likelihood that a stock
+was purchased in the respective period. They ﬁnd that returns of a momentum strategy
+sorting on the distance to the reference point can fully explain standard momentum
+based on past returns.
+3.2 Risk-based explanations
+
+e respective period. They ﬁnd that returns of a momentum strategy
+sorting on the distance to the reference point can fully explain standard momentum
+based on past returns.
+3.2 Risk-based explanations
+Contrary to behavioral explanations, risk-based explanations test potential sources of
+momentum without having to leave the sphere of rational investors and Fama (1970)’s
+efﬁcient market hypothesis. Instead, momentum proﬁts are considered to be com-
+pensation for risk. Risk-based models make sense of the decade-long persistence of
+momentum. While there is room for rational investors to proﬁt from near-arbitrage
+in the behavioral model and to neutralize any momentum effects, there are no proﬁts
+without additional risk in the realm of risk-based models. In the Abritrage Pricing
+Theory of Ross ( 1976) stocks’ expected excess returns are a linear combination of
+expected returns of priced risk factors μ
+f
+t multiplied by the stocks’ exposures to the
+respective risk factors β f :
+μi =
+F∑
+i=1
+β f μ f (3)
+A stock momentum strategy can be risky in two ways.
+First, higher (lower) returns in the cross-section of past returns are due to relatively
+higher (lower) risk exposure, and the relative risk exposure is persistent in the future.
+A dispersion in risk exposures leads to dispersion in expected returns, σ 2
+μ, thus pro-
+ducing momentum proﬁts through the third channel of Lewellen ( 2002)’s momentum
+decomposition illustrated in Eq. 2. Conrad and Kaul ( 1998) ﬁnd high importance of
+σ 2
+
+pected returns, σ 2
+μ, thus pro-
+ducing momentum proﬁts through the third channel of Lewellen ( 2002)’s momentum
+decomposition illustrated in Eq. 2. Conrad and Kaul ( 1998) ﬁnd high importance of
+σ 2
+μ for momentum. They document that the cross-sectional dispersion of mean returns
+contributed to 539% of proﬁts of a momentum strategy with a 12-month look-back
+period. There are three drawbacks to Conrad and Kaul ( 1998)’s hypothesis. First,
+Jegadeesh and Titman ( 2002) ﬁnd that the ﬁndings of Conrad and Kaul ( 1998)a r e
+mainly due to small sample biases. Some expected returns are calculated with less
+123
+
+104 T. Wiest
+than 12 months of data, resulting in unreasonable ex ante estimates for stock returns,
+with both negative values and values above 100%. Second, constant expected returns
+cannot explain long-term reversals in stock prices. Third, if higher expected returns
+are due to higher risk exposure, then APT risk factor models should be able to explain
+momentum proﬁts. Suppose, for example, the winner portfolio outperformed the loser
+portfolio because of higher past market-risk exposure, and the differences in expo-
+sure are persistent. In that case, the momentum strategy should inhibit positive market
+betas. However, both Jegadeesh and Titman (1993) and Grundy and Martin (2001) ﬁnd
+that momentum proﬁts are robust to market-risk adjustments, and Fama and French
+(1996) ﬁnd that even their three-factor model is unable to explain momentum proﬁts.
+More recently, however, Kelly et al. ( 2021) ﬁnd conditional factor exposures help to
+explain momentum proﬁts. Whereas a traditional based on past t-2 to t-12 month raw
+returns delivers annual proﬁts of 8.3%, a residual momentum strategy where returns
+are adjusted using conditional factor exposures only delivers 4.4%. Instead of using
+rolling-window regressions or higher-frequency data to estimate their conditional β
+f
+t ,
+they estimate them as a function of time-varying and observable ﬁrm characteristics.
+Second, the riskiness of stocks might increase with positive returns and drop with
+negative returns.
+
+tional β
+f
+t ,
+they estimate them as a function of time-varying and observable ﬁrm characteristics.
+Second, the riskiness of stocks might increase with positive returns and drop with
+negative returns. In a single ﬁrm model, Johnson ( 2002) shows that changes in stock
+prices in response to growth rate changes are highly convex. Therefore, growth rate
+risk, which is assumed to be positively priced in the stochastic discount factor, rises
+with the level of growth rates. If starting levels of growth rates are similar between
+winner stocks and loser stocks, and if then some positive (negative) returns among
+the winner (loser) portfolio are due to a positive (negative) growth rate shock, then
+momentum is implicitly a sort on growth rates. Momentum is therefore a compensation
+for higher growth rate risk.
+Berk et al. ( 1999) ﬁnd a way to unify short-term negative and longer-term positive
+autocorrelation in stock returns within a rational model. The authors determine a
+ﬁrm’s value as the sum of discounted cash ﬂows of the current asset base and the
+value of its growth options. When ﬁrms realize an attractive investment into a low-risk
+project, the ﬁrm value increases sharply. However, the expected return lowers with
+the decrease in riskiness, thereby generating short-term return reversals. On the other
+hand, if project turnover is slow, the ﬁrm’s asset base, systematic risk, and expected
+returns are persistent, generating return momentum, particularly over the horizon of
+
+urn reversals. On the other
+hand, if project turnover is slow, the ﬁrm’s asset base, systematic risk, and expected
+returns are persistent, generating return momentum, particularly over the horizon of
+its projects’ life cycle.
+Similarly, Sagi and Seasholes (2007) document that momentum is stronger in high
+book-to-market ﬁrms because these ﬁrms have better growth options. After good
+news on growth opportunities, both ﬁrm value and the fraction of ﬁrm value in growth
+options rise. Because these growth options are riskier than the steady-revenue pro-
+ducing existing assets, the ﬁrm on aggregate becomes riskier, and investors demand
+a higher expected return as compensation. Pástor and Stambaugh ( 2003) construct a
+market-wide liquidity measure as an equal-weighted average of stocks’ liquidity. They
+measure liquidity as the order volume-induced return reversals from 1 day to the next.
+After sorting on stocks’ sensitivity to market liquidity, they ﬁnd that liquidity risk is
+priced in the cross-section of returns. Importantly for risk-based explanations, this
+liquidity risk factor explains 50% of momentum returns. Avramov et al. ( 2007) ﬁnd
+123
+
+Momentum: what do we know 30 years after Jegadeesh and… 105
+that low credit rating ﬁrms largely drive momentum proﬁts. They create momentum
+strategies with a 6-month holding period using equal-weighted portfolios sorted on
+past 7-month returns but skipping the most recent month. After excluding ﬁrms with
+an S&P rating below BB, momentum effects become insigniﬁcant. On the other hand,
+sorts including only stocks with a rating of B or lower produce statistically signiﬁcant
+proﬁts of 3.74% per month.
+4 Commonalities in momentum
+Behavior-based explanations for momentum argue that past winners outperform past
+losers based on individual stock mispricing due to underreactions or overreactions.
+However, if such ﬁrm-speciﬁc effects are uncorrelated, rational investors could proﬁt
+from near-arbitrage as systematic risks would be diversiﬁed away in a broad long-short
+momentum portfolio (Moskowitz and Grinblatt1999). Additionally, ﬁrm-speciﬁc mis-
+pricing does not answer the question as to why the past winner and loser stocks co-move
+in the future and why the momentum factor should be priced and load on the stochas-
+tic discount factor. As John Cochrane noted in his presidential address: "why should
+all the momentum stocks then rise and fall together the next month, just as if they
+are exposed to a pervasive, systematic risk?" [p.1075]Cochrane ( 2011). To determine
+whether momentum is due to mispricing or due to systematic risk, a new strand of lit-
+
+next month, just as if they
+are exposed to a pervasive, systematic risk?" [p.1075]Cochrane ( 2011). To determine
+whether momentum is due to mispricing or due to systematic risk, a new strand of lit-
+erature analyzes momentum in portfolios that capture the factor structures underlying
+individual stocks. Moskowitz and Grinblatt ( 1999) ﬁnds positive returns for a strat-
+egy sorting on past industry returns due to positive serial autocovariances of industry
+factors. More recently, Gupta and Kelly ( 2019), Arnott et al. ( 2021), and Ehsani and
+Linnainmaa (2022b) ﬁnd momentum in factor returns used to explain the cross-section
+of stock returns due to serial autocovariances of risk factors.
+4.1 Industry momentum
+Moskowitz and Grinblatt ( 1999) construct 20 value-weighted industry portfolios and
+employ a strategy that invests equally in the top three industries while shorting the
+bottom three industries based on their past 6 months’ returns. With a holding period
+of 6 months, this strategy achieves an average return of 0.43% from July 1963 to July
+1995. After ﬁnding negligible factor serial correlation, ﬁrm-speciﬁc serial correlation,
+and cross-sectional dispersion of industry mean returns—three components that could
+produce industry momentum proﬁts—the authors conclude that industry momentum is
+due to positive serial correlation in industry returns. Further, Moskowitz and Grinblatt
+(1999) subtract industry returns from stock returns and then sort on the industry-
+
+e that industry momentum is
+due to positive serial correlation in industry returns. Further, Moskowitz and Grinblatt
+(1999) subtract industry returns from stock returns and then sort on the industry-
+adjusted 6-month returns. The resulting momentum strategy produces only 0.13% per
+month compared to 0.43% of a momentum strategy based on raw stock returns. These
+results provide evidence that stock momentum is at least partly driven by industry
+momentum. However, the study shows that industry momentum is most proﬁtable
+with a 1-month look-back and 1-month holding period. This ﬁnding is in stark contrast
+to the short-term reversals in stocks found by Jegadeesh ( 1990). Grundy and Martin
+123
+
+106 T. Wiest
+(2001) also construct a momentum strategy based on value-weighted industry returns
+but include a 1-month interval between the formation and the investment period.
+For the same sample period as Moskowitz and Grinblatt ( 1999), proﬁts decrease to
+an insigniﬁcant 0.16% per month. After highlighting the importance of the 1-month
+autocovariance in industry returns, the authors conclude that it is too early to proclaim
+industry momentum as the main source of stock momentum.
+Hoberg and Phillips ( 2018) rely on text-based network industry classiﬁcations
+(TNIC) instead of ﬁxed industry classiﬁcations. The authors collect public ﬁrms’
+product descriptions stated in 10-K reports ﬁled with the SEC. After analyzing these
+texts, each ﬁrm is assigned its own set of distinct competitors based on product sim-
+ilarity (Hoberg and Phillips 2016). Hoberg and Phillips ( 2018) ﬁnd that while return
+shocks to peers classiﬁed by public industry classiﬁcations transmit to a ﬁrm within 1–
+2 months, return shocks to peers classiﬁed by TNIC take up to 12 months. Additionally,
+they ﬁnd that industry momentum proﬁts are stronger following shocks to companies
+whose similarity is less visible to investors. This stronger form of industry momentum
+is robust to the criticism of Grundy and Martin (2001) that short-term autocovariances
+heavily drive momentum in industry returns. The fact that momentum is stronger and
+
+ger form of industry momentum
+is robust to the criticism of Grundy and Martin (2001) that short-term autocovariances
+heavily drive momentum in industry returns. The fact that momentum is stronger and
+longer-lasting after shocks to less visible industry peers provides evidence for the the-
+ory of Barberis et al. ( 1998) and Hong and Stein ( 1999) that momentum stems from
+inattention or slow-moving information.
+With a longer sample from July 1926 to February 2018 and with more granu-
+lar industry classiﬁcations—48 industries instead of 20—Grobys and Kolari ( 2020)
+investigate industry momentum based on the ideas of Moskowitz and Grinblatt (1999).
+The authors construct three different industry momentum strategies. The ﬁrst strategy
+(1–0–1) is long in the quintile of industries with the highest return over the previous
+month and short in the quintile of industries with the lowest return. The other two
+strategies (6–1–1) and (12–1–1) are based on compounded industry returns over the
+last 6 and 12 months but skipping the most recent month. The three strategies pro-
+duce mean monthly returns of 0.62% (1–0–1), 0.57% (6–1–1), and 0.80% (12–1–1),
+respectively. The correlation of only 0.14 between the (1–0–1) and the (12–1–1) strat-
+egy is fairly low, suggesting that there are multiple independent forms of industry
+momentum and that not only the ﬁrst-order autocorrelation in industry-returns drives
+industry momentum. Although returns of the (1–0–1) strategy signiﬁcantly load on
+
+ple independent forms of industry
+momentum and that not only the ﬁrst-order autocorrelation in industry-returns drives
+industry momentum. Although returns of the (1–0–1) strategy signiﬁcantly load on
+a market risk factor ( −), on the Fama and French ( 1993)S M B( −) and HML ( +)
+factors, as well as on the (6–1–1) ( +) strategy, a statistically signiﬁcant monthly α of
+0.56% remains.
+Further, Grobys and Kolari ( 2020) built on the studies of Barroso and Santa-Clara
+(2015) and Moreira and Muir (2017) to improve stock momentum strategies by scaling
+the (1–0–1) strategy based on its realized volatility of daily returns over the previ-
+ous month. The strategy is scaled down when volatility is high and scaled up when
+volatility is low. Like Moreira and Muir ( 2017), Grobys and Kolari ( 2020) consider
+leverage-constrained volatility-managed strategies by limiting the up-scaling factor to
+1 and 1.5. The unconstrained strategy achieves mean monthly returns of 1.16%, while
+the leveraged constrained strategies produce monthly returns of 0.64% and 0.90%.
+Notably, the original (1–0–1) strategy exhibited a negative skewness of−0.47, whereas
+the volatility-managed strategies do not exhibit skewness risk. The improved returns
+123
+
+Momentum: what do we know 30 years after Jegadeesh and… 107
+cannot be explained by additional exposure to the original strategy or to the Fama
+and French ( 1993) risk factors. Grobys and Kolari ( 2020) also test whether industry
+momentum exhibits the same optionality as stock momentum. As discussed in chapter
+2.2, stock momentum strategies behave similarly to a short call option at the end of
+bear markets (Daniel and Moskowitz 2016). The authors ﬁnd that all of their three
+industry momentum strategies do not exhibit optionality effects. The strategies’ returns
+do not load negatively on an interaction term of an ex ante bear market indicator, an
+contemporaneous up-market indicator, and a value-weighted market factor. Lewellen
+et al. ( 2010) ﬁnd that standard factor models such as the three-factor model of Fama
+and French (1993) poorly explain the cross-section of industry returns. For this reason,
+Grobys and Kolari ( 2020) include the industry momentum strategies to estimate the
+stochastic discount factor to price industry portfolios. They ﬁnd that the inclusion of
+the (1–0–1) strategy into the pricing kernel reduces pricing errors on a 5% signiﬁcance
+level, while the other two strategies are not useful for pricing industry portfolios.
+In a recent study, Ali and Hirshleifer (2020) propose the number of shared analysts
+between ﬁrms as a reﬁned measure to capture ﬁrm connections. For any ﬁrm, the
+
+eful for pricing industry portfolios.
+In a recent study, Ali and Hirshleifer (2020) propose the number of shared analysts
+between ﬁrms as a reﬁned measure to capture ﬁrm connections. For any ﬁrm, the
+portfolio of connected ﬁrms (CF) is constructed as a linear combination of ﬁrms that
+share at least one analyst with the ﬁrm. The number of pairwise shared analysts gives
+the weights of each connected ﬁrm. The authors ﬁnd that the contemporaneous rela-
+tion between a ﬁrm’s and its CFs’ sales growth is stronger than the relation between
+a ﬁrm’s and its industry’s sales growth, providing evidence that their shared analyst
+measure captures fundamental similarities between ﬁrms better than an industry clas-
+siﬁcation. Stocks are sorted into quintiles based on their CFs’ past month return to
+construct a momentum strategy. Depending on whether quintile returns are calculated
+with value- or equal-weighting, the momentum strategy produces monthly 4-factor
+alphas of 0.89% and 1.81%. In spanning tests, Ali and Hirshleifer ( 2020) ﬁnd that
+after controlling for CF momentum, none of industry, geographic, customer, supplier
+industry, or technology momentum delivers signiﬁcant 4-factor alphas. Notably, none
+of the other momentum strategies can explain CF momentum returns. The authors con-
+clude that there is only one dominating spillover effect driving momentum, namely
+the one that arises because analysts with limited attention only slowly transmit new
+
+mentum returns. The authors con-
+clude that there is only one dominating spillover effect driving momentum, namely
+the one that arises because analysts with limited attention only slowly transmit new
+information from one ﬁrm that they cover to the others.
+Related to research on industry momentum is style momentum. Chou et al. ( 2019)
+construct a momentum strategy not based on industry classiﬁcation but on stocks’
+co-movement with an investment style. They build their hypothesis on a study by
+Barberis and Shleifer ( 2003) who show in a model that investors’ style chasing can
+lead to positive autocorrelation of style returns. The authors focus on a ﬁrm’s asset
+growth as the investment style, because it negatively predicts future returns (Cooper
+et al. 2008), it is a familiar measure to investors, and it is priced in the cross-section of
+stock returns (Fama and French 2015). Portfolio sorts are constructed by ﬁrst splitting
+stocks into three groups based on their 12-month past return, and then splitting each
+group by three based on the stocks’ beta to the asset growth style returns. With a
+holding period of 6 months, the momentum strategy constructed from the lowest style
+beta stocks produces a mean monthly return of 0.14%. In contrast, the momentum
+strategy constructed from the highest style beta stocks produces a mean return of
+0.60%. The difference of 0.46% is statistically signiﬁcant at the 1% level.
+123
+
+108 T. Wiest
+Additionally, Chou et al. ( 2019) construct a momentum strategy from 25 value-
+weighted portfolios sorted by asset growth and size. The strategy goes long (short)
+in the seven portfolios with the highest (lowest) past 12-month return. The average
+monthly returns to this strategy are 0.76% for a 3-month holding period and 0.48% for
+a 12-month holding period. Finally, the authors ﬁnd that the style momentum strategy
+returns are higher than those of a stock momentum strategy, they remain signiﬁcant
+after adjusting for the Fama-French risk factors, and they are not due to higher risk
+exposure to the investment factor itself. Due to the absence of such risk-based explana-
+tions for the style momentum proﬁts, Chou et al. (2019) turn to behavioral explanations.
+They propose that investors under-react to style performance when stocks are stable
+in their style because their attention is limited to stocks changing styles. They provide
+evidence for this hypothesis by showing that a style momentum strategy limited to
+stocks that change between the 25 asset growth-size portfolios within 2 years prior
+to portfolio formation achieves considerable lower returns than an identical strategy
+limited to stocks that do not change style (0.31% versus 0.60%).
+4.2 Factor momentum
+Several studies have recently documented momentum in a broad set of factor portfolios.
+Ehsani and Linnainmaa ( 2022a) show that if stock returns are a linear combination
+of factor returns as shown in Eq.
+
+eral studies have recently documented momentum in a broad set of factor portfolios.
+Ehsani and Linnainmaa ( 2022a) show that if stock returns are a linear combination
+of factor returns as shown in Eq. 3, then a cross-sectional momentum strategy of N
+stocks can be decomposed as follows:
+E[π
+mom
+i,t ]=
+F∑
+f =1
+[cov(r f
+−t, r f
+t )σ 2
+β f ]
+  
+factor autocovariances
++
+F∑
+f =1
+F∑
+g̸= f
+[cov(r f
+−t, r g
+t )cov(β f ,β g)]
+  
+factor cross-serial covariances
++ 1
+N
+N∑
+i=1
+[cov(ϵi,−t,ϵi,t)]
+  
+autocovariances in residuals
++ σ 2
+η
+variation in mean returns
+(4)
+where σ 2
+β f and σ 2
+η are the cross-sectional variances of factor exposures and uncon-
+ditional expected stock returns. Four channels drive factor momentum: positive
+autocovariance in factor returns that is ampliﬁed by dispersion in stocks’ exposures
+to the respective factor, cross-serial autocovariance between factors, autocovariance
+in returns not explained by factor exposure, and cross-sectional dispersion in stocks’
+mean returns.
+Gupta and Kelly (2019) highlight the importance of the ﬁrst channel with a sample
+of 65 characteristics-based factor portfolios constructed by bivariate sorts, ﬁrst on size
+and then on the characteristic. They show that factors exhibit time-series momentum.
+Forty-nine of 65 have a statistically signiﬁcant positive ﬁrst-order autoregressive slope
+coefﬁcient on the 5% level. Further, they construct a time-series momentum strategy
+
+bit time-series momentum.
+Forty-nine of 65 have a statistically signiﬁcant positive ﬁrst-order autoregressive slope
+coefﬁcient on the 5% level. Further, they construct a time-series momentum strategy
+that goes long (short) in a factor if its return over the look-back period is positive
+(negative). The absolute exposure is determined by the magnitude of past returns and
+123
+
+Momentum: what do we know 30 years after Jegadeesh and… 109
+the longer-term volatility but is limited to − 2 and 2, respectively. Strategies based on
+1-month past returns produce positive and signiﬁcant alphas over the original factor
+returns for 47 factors. A time-series-factor momentum strategy that combines all 65
+factors yields an annual Sharpe ratio of 0.84. Returns are robust to controls for the
+Fama and French ( 2015) risk factors, static factor returns, stock momentum, industry
+momentum and short-term reversals. Factor momentum also outperforms standard
+stock momentum in an international sample including Europe, Canada, and Paciﬁc-
+Asia. Stock momentum can party explain factor momentum when the look-back period
+is 1 year skipping the most recent month, but not for when the look-back period is the
+most recent month. While stock returns reverse over 1 month, factor momentum works
+best with that look-back period. The authors conclude that if factor momentum was
+capturing stock-level momentum, one would expect it to exhibit short-term reversals.
+Zhang (2022) also documents time-series factor momentum in two factors explain-
+ing the cross-section of currency returns: dollar and carry. The dollar factor is the
+average excess returns of foreign currencies over the US dollar. The carry factor is a
+long-short portfolio based on the currencies’ forward discount. A strategy that com-
+bines the two time-series momentum strategies outperforms usual time-series and
+
+e US dollar. The carry factor is a
+long-short portfolio based on the currencies’ forward discount. A strategy that com-
+bines the two time-series momentum strategies outperforms usual time-series and
+cross-sectional momentum strategies in currencies and fully spans them.
+Ehsani and Linnainmaa ( 2022a) shed light on the ﬁrst channel of factor momen-
+tum: positive autocovariance in factor returns. They highlight that out of 20 factors, the
+average monthly return after a year of positive returns is 51 bps, and after a year of neg-
+ative returns, it is only 6 bps. Next, Ehsani and Linnainmaa (2022a) show that a model
+of sentiment investors proposed by Kozak et al. ( 2018) can explain autocorrelation in
+factors. The crux of the model is that sentiment-driven investors inhibit demand for
+stocks in excess of a rational investor. If sentiment is sufﬁciently persistent, then the
+excess demand produces persistence in factor returns. The autocovariance of principal
+components of the matrix of asset cash ﬂows is given by:
+cov( PC
+k
+t , PC k
+t+1) = λ2
+kβ2
+k c0σ 2[(1 + R2
+f )φ − R f − R f φ2] (5)
+where R f is the risk-free rate plus 1, c0 is a constant that relates to the magnitude
+in which sentiment-investor demand drives returns, σ 2 is the variance in sentiment-
+investor demand, βk captures how well investor-demand in excess of rational demand
+lines up with the kth eigenvector of the decomposition of the covariance matrix of
+returns and λ is the eigenvalue of PC k .
+
+r demand, βk captures how well investor-demand in excess of rational demand
+lines up with the kth eigenvector of the decomposition of the covariance matrix of
+returns and λ is the eigenvalue of PC k . There are two key takeaways from this equa-
+tion. First, sentiment must be extremely persistent for the autocovariance to be positive.
+For a risk-free monthly rate of 0.39%, the threshold is φ> 0.996. Second, for sig-
+niﬁcant autocovariances, irrational demand of sentiment-driven investors must line
+up with high eigenvalue principal components ( λ2
+kβ2
+k ). This is consistent with risk-
+based explanations: factor momentum still exists because arbitrageurs would have to
+carry high systematic risks. Further, Ehsani and Linnainmaa ( 2022a) hypothesize that
+factor momentum must be concentrated in the highest eigenvalue principal compo-
+nents. They ﬁnd this in an expanded sample of 47 factors by constructing a time-series
+momentum strategy from the ten dominant principal components. The returns of this
+strategy explain most of the momentum in lower eigenvalue principal components
+in the ﬁrst half of the sample period from 1973 to 2019, and all of it in the second
+123
+
+110 T. Wiest
+half. Further, factor momentum subsumes cross-sectional stock momentum, industry
+momentum, industry-adjusted momentum and intermediate horizon momentum. The
+authors construct momentum-neutral factors to highlight that stock momentum stems
+from factor momentum and not vice versa. Stock weights to construct factor portfolios
+are updated by minimizing the change to the original weights while orthogonalizing
+the weights to past returns. When constructing momentum strategies, such factors do
+not beneﬁt from stock momentum and achieve even higher alphas than the original
+ones. Finally, Ehsani and Linnainmaa (2022a) address the conﬂicting ﬁndings of, e.g.,
+Blitz et al. ( 2011) that residual return momentum strategies perform better than raw
+return strategies. Such results suggest that ﬁrm-speciﬁc effects drive momentum, not
+exposures to factors with serial correlation. Ehsani and Linnainmaa (2022a) show that
+residual momentum strategies proﬁt from omitted factor momentum. If omitted fac-
+tors are more strongly autocorrelated than those used to adjust stock returns, residual
+momentum yields better performance than stock momentum.
+Arnott et al. ( 2021) connect stock momentum, factor momentum, and industry
+momentum. With a sample of 43 US equity factor portfolios from 196 to 2020, they
+construct a cross-sectional factor momentum strategy that is long in above-median
+return factors and short below-median return factors over the look-back period. They
+
+ortfolios from 196 to 2020, they
+construct a cross-sectional factor momentum strategy that is long in above-median
+return factors and short below-median return factors over the look-back period. They
+highlight in two ways that factor momentum subsumes industry momentum. First,
+momentum found in industry-neutral factors fully explains industry momentum. The
+industry-neutral strategy is constructed by subtracting industry means from the stock
+characteristics such that the factors are roughly exposed equally to the various indus-
+tries. Second, Arnott et al. ( 2021) construct industry-mimicking portfolios as a linear
+combination of factors, where the industries’ factor exposures give the weights. These
+portfolios contain no industry-speciﬁc information but capture industries’ systemic
+risks. Even mimicking portfolios built from a small set of factors exhibit similar
+momentum as industry portfolios and subsume industry momentum as the number of
+factors increases.
+Additionally, Arnott et al. (2021) ﬁnd that momentum in the three highest eigenvalue
+principal components of industry-neutral factors subsumes all industry momentum.
+They connect these results with the argumentation of Ehsani and Linnainmaa (2022a).
+There cannot be idiosyncratic stock or industry momentum, as it would not be con-
+sistent with the existence of rational arbitrageurs. Only systematic factors can have
+pricing effects; therefore, momentum concentrates in the high eigenvalue principal
+
+entum, as it would not be con-
+sistent with the existence of rational arbitrageurs. Only systematic factors can have
+pricing effects; therefore, momentum concentrates in the high eigenvalue principal
+components where arbitrageurs ﬁnd it risky to trade against it.
+While Ehsani and Linnainmaa ( 2022a) and Arnott et al. ( 2021) ﬁnd consistent evi-
+dence that 1-year stock momentum is largely driven by factor momentum, it remains
+an open question why stock returns reverse in the short-term, whereas monthly fac-
+tor returns exhibit strong positive ﬁrst-order autocorrelation. In a follow-up working
+paper, Ehsani and Linnainmaa (2022b) propose that residual momentum has additional
+components other than ﬁrm-speciﬁc momentum, namely omitted factor momentum
+and a betting-against-beta effect. The betting-against-beta effect stems from too ﬂat
+security factor lines and can be illustrated with the example of CAPM residuals. If
+the security market line is too ﬂat, high beta stocks earn negative alpha and low beta
+stocks earn positive alphas. Sorting by CAPM residuals is thus equal to a betting-
+against-beta sort. Ehsani and Linnainmaa ( 2022b) remove the betting-against beta
+123
+
+Momentum: what do we know 30 years after Jegadeesh and… 111
+effect by orthogonalizing the short-term stock residuals to the long-term betting against
+beta effect. This is done by regressing stock returns on factors over a time period
+over which returns display no momentum or reversals to estimate long-term alphas
+attributed to the betting-against-beta effect. After, they run a cross-sectional regression
+of short-term residuals on the long-term alphas. The residuals of this regression are the
+beta-neutral residuals. A momentum strategy sorting on these beta-neutral residuals
+yields an annual Sharpe ratio of 1.23, more than double the Sharpe ratio of 0.59 of
+a standard residual momentum strategy. Further, the beta-neutral strategies are less
+correlated to factor momentum. After analyzing autocorrelations of different order in
+factor returns and beta neutral residuals, the authors conclude that short-term rever-
+sal effects are purely ﬁrm-speciﬁc. In contrast, ﬁrm-speciﬁc momentum and factor
+momentum create the intermediate momentum effect.
+5 Conclusion
+Overall, there is general agreement in academia that momentum strategies yield robust
+and signiﬁcant proﬁts across various asset classes and around the globe. Moreover,
+the proﬁts are robust to standard risk-factor adjustments and can be enhanced by
+various changes in the construction methodology. Improvements include isolating
+ﬁrm-speciﬁc returns from factor-exposure, scaling position with the inverse of ex ante
+
+justments and can be enhanced by
+various changes in the construction methodology. Improvements include isolating
+ﬁrm-speciﬁc returns from factor-exposure, scaling position with the inverse of ex ante
+volatility, or lagging the formation period to calculate past returns.
+However, the origin of momentum is still debated. While both risk-based and
+behavioral-based models provide reasonable arguments for the existence of ﬁrm-
+speciﬁc momentum, new ﬁndings on the existence of industry momentum and factor
+momentum lack theoretical foundation.
+Another open question is the extent to which momentum in stocks is driven
+by an exposure to systematic risk factors or to industry factors, which themselves
+exhibit serial correlation. Ehsani and Linnainmaa ( 2022a) and Arnott et al. ( 2021)
+ﬁnd that factor momentum subsumes both stock momentum and industry momentum.
+Nonetheless, because factor returns exhibit strong ﬁrst-order autocorrelation, a pure
+factor-driven stock momentum conﬂicts with short-term reversals.
+To provide answers, future research faces the difﬁcult task of isolating ﬁrm-speciﬁc
+returns from returns that arise from factor risk exposure. This is even more demanding
+in light of a vast zoo of potentially priced risk factors, and in light of time-varying
+factor exposures.
+To summarize, momentum was one of the most prominent topics in ﬁnancial
+research over the last three decades, and recent ﬁndings on the commonality in momen-
+
+n light of time-varying
+factor exposures.
+To summarize, momentum was one of the most prominent topics in ﬁnancial
+research over the last three decades, and recent ﬁndings on the commonality in momen-
+tum effects present fruitful grounds for future prominence.
+Acknowledgements The author thanks an anonymous referee as well as Prof. Dr. Manuel Ammann, Prof.
+Dr. Markus Schmid, and discussants at the “Topics in Asset Management” PhD seminar of the University
+of St. Gallen for their helpful suggestions.
+Funding Open access funding provided by University of St.Gallen
+123
+
+112 T. Wiest
+Open Access This article is licensed under a Creative Commons Attribution 4.0 International License, which
+permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give
+appropriate credit to the original author(s) and the source, provide a link to the Creative Commons licence,
+and indicate if changes were made. The images or other third party material in this article are included
+in the article’s Creative Commons licence, unless indicated otherwise in a credit line to the material. If
+material is not included in the article’s Creative Commons licence and your intended use is not permitted
+by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the
+copyright holder. To view a copy of this licence, visit http://creativecommons.org/licenses/by/4.0/ .
+References
+Ali, U., Hirshleifer, D.: Shared analyst coverage: unifying momentum spillover effects. J. Financ. Econ.
+136(3), 649–675 (2020)
+Antoniou, C., Doukas, J.A., Subrahmanyam, A.: Cognitive dissonance, sentiment, and momentum. J. Financ.
+Quant. Anal. 48(1), 245–275 (2013)
+Arnott, R. D., Clements, M., Kalesnik, V ., Linnainmaa, J.T.: Factor momentum. Working Paper (2021)
+Asness, C.S., Moskowitz, T.J., Pedersen, L.H.: V alue and momentum everywhere. J. Finance68(3), 929–985
+(2013)
+Avramov, D., Chordia, T., Jostova, G., Philipov, A.: Momentum and credit rating. J. Finance 62(5), 2503–
+2520 (2007)
+
+., Pedersen, L.H.: V alue and momentum everywhere. J. Finance68(3), 929–985
+(2013)
+Avramov, D., Chordia, T., Jostova, G., Philipov, A.: Momentum and credit rating. J. Finance 62(5), 2503–
+2520 (2007)
+Barberis, N., Shleifer, A.: Style investing. J. Financ. Econ. 68(2), 161–199 (2003)
+Barberis, N., Shleifer, A., Vishny, R.: A model of investor sentiment. J. Financ. Econ.49(3), 307–343 (1998)
+Barroso, P ., Santa-Clara, P .: Momentum has its moments. J. Financ. Econ. 116(1), 111–120 (2015)
+Berk, J.B., Green, R.C., Naik, V .: Optimal investment, growth options, and security returns. J. Finance
+54(5), 1553–1607 (1999)
+Blitz, D., Huij, J., Martens, M.: Residual momentum. J. Empir. Financ. 18(3), 506–521 (2011)
+Carhart, M.M.: On persistence in mutual fund performance. J. Finance 52(1), 57–82 (1997)
+Chou, P .-H., Ko, K.-C., Y ang, N.-T.: Asset growth, style investing, and momentum. J. Bank. Finance 98,
+108–124 (2019)
+Chui, A.C., Titman, S., Wei, K.J.: Individualism and momentum around the world. J. Finance65(1), 361–392
+(2010)
+Cochrane, J.H.: Presidential address: discount rates. J. Finance 66(4), 1047–1108 (2011)
+Conrad, J., Kaul, G.: An anatomy of trading strategies. Rev. Financ. Stud. 11(3), 489–519 (1998)
+Cooper, M.J., Gulen, H., Schill, M.J.: Asset growth and the cross-section of stock returns. J. Finance 63(4),
+1609–1651 (2008)
+Cooper, M.J., Gutierrez, R.C., Jr., Hameed, A.: Market states and momentum. J. Finance 59(3), 1345–1365
+(2004)
+
+Asset growth and the cross-section of stock returns. J. Finance 63(4),
+1609–1651 (2008)
+Cooper, M.J., Gutierrez, R.C., Jr., Hameed, A.: Market states and momentum. J. Finance 59(3), 1345–1365
+(2004)
+Daniel, K., Hirshleifer, D., Subrahmanyam, A.: Investor psychology and security market under-and over-
+reactions. J. Finance 53(6), 1839–1885 (1998)
+Daniel, K., Moskowitz, T.J.: Momentum crashes. J. Financ. Econ. 122(2), 221–247 (2016)
+De Bondt, W.F., Thaler, R.: Does the stock market overreact? J. Finance 40(3), 793–805 (1985)
+Ehsani, S., Linnainmaa, J.T.: Factor momentum and the momentum factor. J. Finance 77(3), 1877–919
+(2022)
+Ehsani, S., Linnainmaa, J.T.: What does residual momentum tell us about ﬁrm-speciﬁc momentum? Working
+Paper (2022b)
+Fama, E.F.: Efﬁcient capital markets: a review of theory and empirical work. J. Finance 25(2), 383–417
+(1970)
+Fama, E.F., French, K.R.: Common risk factors in the returns on stocks and bonds. J. Financ. Econ. 33(1),
+3–56 (1993)
+Fama, E.F., French, K.R.: Multifactor explanations of asset pricing anomalies. J. Finance 51(1), 55–84
+(1996)
+Fama, E.F., French, K.R.: A ﬁve-factor asset pricing model. J. Financ. Econ. 116(1), 1–22 (2015)
+George, T.J., Hwang, C.-Y .: The 52-week high and momentum investing. J. Finance 59(5), 2145–2176
+(2004)
+123
+
+Momentum: what do we know 30 years after Jegadeesh and… 113
+Goyal, A., Jegadeesh, N.: Cross-sectional and time-series tests of return predictability: what is the difference?
+Rev. Financ. Stud. 31(5), 1784–1824 (2018)
+Grinblatt, M., Han, B.: Prospect theory, mental accounting, and momentum. J. Financ. Econ.78(2), 311–339
+(2005)
+Grobys, K., Kolari, J.: On industry momentum strategies. J. Financ. Res. 43(1), 95–119 (2020)
+Grundy, B.D., Martin, J.S.M.: Understanding the nature of the risks and the source of the rewards to
+momentum investing. Rev. Financ. Stud. 14(1), 29–78 (2001)
+Gupta, T., Kelly, B.: Factor momentum everywhere. J. Portf. Manag. 45(3), 13–36 (2019)
+Hillert, A., Jacobs, H., Müller, S.: Media makes momentum. Rev. Financ. Stud. 27(12), 3467–3501 (2014)
+Hoberg, G., Phillips, G.: Text-based network industries and endogenous product differentiation. J. Polit.
+Econ. 124(5), 1423–1465 (2016)
+Hoberg, G., Phillips, G.M.: Text-based industry momentum. J. Financ. Quant. Anal. 53(6), 2355–2388
+(2018)
+Hofstede, G.: Culture’s Consequences: Comparing V alues, Behaviors, Institutions and Organizations Across
+Nations. Sage Publications, Beverly Hills (2001)
+Hong, H., Lim, T., Stein, J.C.: Bad news travels slowly: size, analyst coverage, and the proﬁtability of
+momentum strategies. J. Finance 55(1), 265–295 (2000)
+Hong, H., Stein, J.C.: A uniﬁed theory of underreaction, momentum trading, and overreaction in asset
+markets. J. Finance 54(6), 2143–2184 (1999)
+
+momentum strategies. J. Finance 55(1), 265–295 (2000)
+Hong, H., Stein, J.C.: A uniﬁed theory of underreaction, momentum trading, and overreaction in asset
+markets. J. Finance 54(6), 2143–2184 (1999)
+Huang, D., Li, J., Wang, L., Zhou, G.: Time series momentum: is it there? J. Financ. Econ. 135(3), 774–794
+(2020)
+Jegadeesh, N.: Evidence of predictable behavior of security returns. J. Finance 45(3), 881–898 (1990)
+Jegadeesh, N., Titman, S.: Returns to buying winners and selling losers: implications for stock market
+efﬁciency. J. Finance 48(1), 65–91 (1993)
+Jegadeesh, N., Titman, S.: Cross-sectional and time-series determinants of momentum returns. Rev. Financ.
+Stud. 15(1), 143–157 (2002)
+Johnson, T.C.: Rational momentum effects. J. Finance 57(2), 585–608 (2002)
+Jostova, G., Nikolova, S., Philipov, A., Stahel, C.W.: Momentum in corporate bond returns. Rev. Financ.
+Stud. 26(7), 1649–1693 (2013)
+Kelly, B.T., Moskowitz, T.J., Pruitt, S.: Understanding momentum and reversal. J. Financ. Econ. 140(3),
+726–743 (2021)
+Kozak, S., Nagel, S., Santosh, S.: Interpreting factor models. J. Finance 73(3), 1183–1223 (2018)
+Lewellen, J.: Momentum and autocorrelation in stock returns. Rev. Financ. Stud. 15(2), 533–564 (2002)
+Lewellen, J., Nagel, S., Shanken, J.: A skeptical appraisal of asset pricing tests. J. Financ. Econ. 96(2),
+175–194 (2010)
+Liu, Y ., Tsyvinski, A., Wu, X.: Common risk factors in cryptocurrency. J. Finance77(2), 1133–1177 (2022)
+
+ken, J.: A skeptical appraisal of asset pricing tests. J. Financ. Econ. 96(2),
+175–194 (2010)
+Liu, Y ., Tsyvinski, A., Wu, X.: Common risk factors in cryptocurrency. J. Finance77(2), 1133–1177 (2022)
+Miffre, J., Rallis, G.: Momentum strategies in commodity futures markets. J. Bank. Finance 31(6), 1863–
+1886 (2007)
+Moreira, A., Muir, T.: V olatility-managed portfolios. J. Finance 72(4), 1611–1644 (2017)
+Moskowitz, T.J., Grinblatt, M.: Do industries explain momentum? J. Finance 54(4), 1249–1290 (1999)
+Moskowitz, T.J., Ooi, Y .H., Pedersen, L.H.: Time series momentum. J. Financ. Econ. 104(2), 228–250
+(2012)
+Novy-Marx, R.: Is momentum really momentum? J. Financ. Econ. 103(3), 429–453 (2012)
+Pástor, L., Stambaugh, R.F.: Liquidity risk and expected stock returns. J. Polit. Econ. 111(3), 642–685
+(2003)
+Ross, S.A.: The arbitrage theory of capital asset pricing. J. Econ. Theory 13, 341–360 (1976)
+Rouwenhorst, K.G.: International momentum strategies. J. Finance 53(1), 267–284 (1998)
+Sagi, J.S., Seasholes, M.S.: Firm-speciﬁc attributes and the cross-section of momentum. J. Financ. Econ.
+84(2), 389–434 (2007)
+Zhang, S.: Dissecting currency momentum. J. Financ. Econ. 144(1), 154–173 (2022)
+Zhang, X.F.: Information uncertainty and stock returns. J. Finance 61(1), 105–137 (2006)
+Publisher’s Note Springer Nature remains neutral with regard to jurisdictional claims in published maps
+and institutional afﬁliations.
+
+uncertainty and stock returns. J. Finance 61(1), 105–137 (2006)
+Publisher’s Note Springer Nature remains neutral with regard to jurisdictional claims in published maps
+and institutional afﬁliations.
+Tobias Wiest is currently a PhD candidate and research assistant at the School of Finance of the Uni-
+versity of St. Gallen, Switzerland. His research interests are empirical asset pricing and mutual funds
+123
+
+114 T. Wiest
+with a special focus on equity factors and derivatives. Mr. Wiest holds a Master’s degree in Banking and
+Finance from the University of St. Gallen and a Bachelor’s degree in Global Business Management from
+the University of Augsburg. He gained practical experience through internships at UBS, Assenagon Asset
+Management, and PricewaterhouseCoopers.
+123

@@ -58,17 +58,24 @@ précisé), dans l'ordre de priorité, sans dépasser 85 % de la fenêtre de
    - **Les fiches vivent dans la base (`D44`)** : toute fiche ou synthèse
      nouvelle, une fois inscrite et jugée verte, se verse par
      `uv run python corpus/fiches_store.py --pousser` (`avancer.py` le fait aussi).
-6. **Combiner un papier et ses voisins (`D47`)** — quand une fiche le mérite,
-   avant sa recette :
-   `uv run python scripts/synthese_dossier.py --prepare <fiche>` (voisins
-   cherchés dans toute la base, textes figés), puis `fabrique-synthese` avec le
-   seul chemin de la consigne, puis `--record` **après sa réponse**, puis
-   `--check`. Un refus se renvoie tel quel, trois essais au plus. La fiche
-   `synthese-dossier-<fiche>` suit ensuite la boucle du point 5, **seulement si
-   `code_signal.py --list` la propose** : le validateur exige un rôle pour chaque
-   voisin (`complete`, `confirme`, `contredit`, `deja_teste`, `hors_sujet`), et
-   une synthèse dont l'apport est `aucun` n'est pas codée (`D52`). `--prepare`
-   refuse une graine déjà graine ou source d'une autre synthèse.
+6. **Combiner un papier et ses voisins (`D47`, `D52`, `D53`)** — quand une fiche
+   le mérite, avant sa recette, dans cet ordre :
+   - `uv run python scripts/synthese_dossier.py --candidats <fiche>` : 30
+     candidats cherchés dans toute la base ;
+   - `fabrique-voisins` avec le seul chemin de la consigne de tri : il garde
+     les candidats du même mécanisme (`meme`) ;
+   - `uv run python scripts/synthese_dossier.py --prepare <fiche>` : le dossier
+     des seuls voisins `meme`, textes figés. **S'il n'en reste aucun, pas de
+     synthèse** : note-le et passe ;
+   - `fabrique-synthese` avec le seul chemin de la consigne de synthèse, puis
+     `--record` **après sa réponse**, puis `--check`. Un refus se renvoie tel
+     quel, trois essais au plus.
+
+   La fiche `synthese-dossier-<fiche>` suit ensuite la boucle du point 5,
+   **seulement si `code_signal.py --list` la propose** : chaque voisin a un rôle
+   (`complete`, `confirme`, `contredit`, `deja_teste`, `hors_sujet`), et une
+   synthèse dont l'apport est `aucun` n'est pas codée. Une graine déjà graine ou
+   source d'une autre synthèse est refusée.
 7. **Consulte `fabrique-critique`** si un groupe finit mal (discordances,
    refus en série) ou avant de changer quoi que ce soit au processus. Son avis
    ne remplace ni les portes ni une décision écrite.

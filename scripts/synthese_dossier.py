@@ -17,7 +17,8 @@ changement. Un voisin fiché garde ses propres extractions.
 La fiche rendue entre ensuite dans la chaîne ordinaire : recette, deux codeurs,
 double codage, hypothèse, lot.
 
-    python scripts/synthese_dossier.py --prepare <fiche_graine> [--voisins 8]
+    python scripts/synthese_dossier.py --candidats <fiche_graine> [--n 30]   # puis fabrique-voisins
+    python scripts/synthese_dossier.py --prepare <fiche_graine>   # puis fabrique-synthese
     python scripts/synthese_dossier.py --record <fiche de synthèse>
     python scripts/synthese_dossier.py --check  <fiche de synthèse>
     python scripts/synthese_dossier.py --status
@@ -117,8 +118,9 @@ CONSIGNE = """\
 # Consigne de synthèse d'un dossier — La Fabrique, `D47`
 
 Tu écris **une fiche de synthèse** à partir d'un **papier graine** et de {n}
-papiers **voisins**, trouvés par le sens dans toute notre base de papiers
-(cosinus de leurs passages au mécanisme de la graine). Tu n'as accès qu'à ce
+papiers **voisins**, trouvés par le sens dans toute notre base de papiers,
+puis retenus par un trieur isolé comme décrivant **le même mécanisme** (`D53`).
+Le trieur peut se tromper : le rôle `hors_sujet` reste possible. Tu n'as accès qu'à ce
 fichier. **Tu ne connais aucun résultat obtenu sur nos données, et tu ne dois
 pas en chercher** : la version que tu retiens se choisit sur ce que disent les
 papiers, jamais sur ce qui « marcherait ».
@@ -232,11 +234,60 @@ papier ne dit reste `null`, avec sa raison.
 """
 
 
-def do_prepare(graine: str, n_voisins: int) -> int:
-    from embed_api import Api  # noqa: PLC0415
-    from voisins import chercher, ecrire  # noqa: PLC0415
 
-    ff = fiches()
+CANDIDATS = 30  # candidats montrés au trieur (D53)
+
+CONSIGNE_TRI = """\
+# Consigne de tri des voisins — La Fabrique, `D53`
+
+Tu es un trieur isolé. Ta seule source est ce fichier. Ne lis aucun autre
+fichier, aucune commande, aucun accès web.
+
+## Le papier graine
+
+**{titre}**
+
+Son mécanisme, tel que sa fiche le décrit :
+
+{mecanisme}
+
+## Ta tâche
+
+Pour **chaque** candidat ci-dessous, dans l'ordre, réponds :
+
+- `meme` : il étudie **le même mécanisme économique** que la graine (la même
+  cause qui produit le même type de mouvement de prix), même sur un autre
+  marché, une autre période ou avec une autre méthode — y compris s'il
+  conclut que l'effet n'existe pas ou s'inverse ;
+- `autre` : il partage le thème, le marché ou la méthode, mais pas le
+  mécanisme (« même sujet, autre effet »), ou il n'a pas de rapport.
+
+Juge sur le titre et les passages, rien d'autre. En cas de doute réel, `autre`.
+
+## Ce que tu rends
+
+Écris avec l'outil Write, à `{chemin}`, un tableau JSON et rien d'autre :
+
+```json
+[{{"id": "c01", "label": "meme", "why": "<une phrase>"}}, ...]
+```
+
+Un objet par candidat, aucun omis. Réponds en une ligne : le chemin écrit et le
+compte meme / autre.
+
+## Les candidats
+
+{candidats}
+"""
+
+
+def tri_de(graine: str) -> tuple[Path, Path, Path]:
+    """Les candidats, la consigne du trieur, ses étiquettes."""
+    return (DOSSIERS / f"tri-{graine}.json", WORK / f"tri-{graine}.md",
+            DOSSIERS / f"tri-{graine}.labels.json")
+
+
+def gardes_de_graine(graine: str, ff: dict[str, Path]) -> None:
     if graine not in ff:
         raise SystemExit(f"fiche graine inconnue : {graine}")
     sid = sid_de(graine)
@@ -247,7 +298,77 @@ def do_prepare(graine: str, n_voisins: int) -> int:
     if graine in utilises:
         raise SystemExit(f"{graine} est déjà graine ou source de {utilises[graine]} : une "
                          "seconde synthèse referait la même hypothèse (D52)")
-    d = chercher(graine, n_voisins, PASSAGES)
+
+
+def do_candidats(graine: str, n: int) -> int:
+    """Étape 1 (D53) : les candidats de la recherche, et la consigne du trieur."""
+    from grappes import texte  # noqa: PLC0415
+    from voisins import chercher  # noqa: PLC0415
+
+    ff = fiches()
+    gardes_de_graine(graine, ff)
+    d = chercher(graine, n, PASSAGES)
+    for i, v in enumerate(d["neighbors"], 1):
+        v["cid"] = f"c{i:02d}"
+    f_tri, f_consigne, f_labels = tri_de(graine)
+    DOSSIERS.mkdir(parents=True, exist_ok=True)
+    f_tri.write_text(json.dumps(d, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    fiche = json.loads(ff[graine].read_text(encoding="utf-8"))
+    mecanisme = "\n\n".join(x for x in (texte(fiche.get("claim")),
+                                         texte(fiche.get("signal_construction"))) if x)
+    blocs = []
+    for v in d["neighbors"]:
+        ps = "\n\n".join(f"> *{p['section']}* — " + " ".join(p["content"].split())[:900]
+                         for p in v["passages"][:2])
+        blocs.append(f"### {v['cid']} — {v['title']}\n\n{ps}\n")
+    WORK.mkdir(parents=True, exist_ok=True)
+    f_consigne.write_text(CONSIGNE_TRI.format(
+        titre=d["seed"]["title"], mecanisme=mecanisme, chemin=f_labels.as_posix(),
+        candidats="\n".join(blocs)), encoding="utf-8")
+    print(f"candidats       : {f_tri.relative_to(REPO).as_posix()} ({len(d['neighbors'])})")
+    print(f"consigne de tri : {f_consigne.relative_to(REPO).as_posix()}")
+    print(f"étiquettes      : {f_labels.relative_to(REPO).as_posix()}  (fabrique-voisins)")
+    return 0
+
+
+def voisins_tries(graine: str) -> dict:
+    """Étape 2 (D53) : les seuls candidats que le trieur a jugés du même mécanisme."""
+    f_tri, _, f_labels = tri_de(graine)
+    if not f_tri.is_file() or not f_labels.is_file():
+        raise SystemExit(f"tri absent pour {graine} : `--candidats {graine}`, puis le trieur "
+                         "`fabrique-voisins`, avant `--prepare`")
+    d = json.loads(f_tri.read_text(encoding="utf-8"))
+    labels = json.loads(f_labels.read_text(encoding="utf-8"))
+    par_id = {x.get("id"): x for x in labels if isinstance(x, dict)}
+    cids = [v["cid"] for v in d["neighbors"]]
+    fautes = [c for c in cids if c not in par_id
+              or par_id[c].get("label") not in ("meme", "autre")
+              or not str(par_id[c].get("why") or "").strip()]
+    if fautes or set(par_id) != set(cids):
+        ecart = fautes or sorted(set(par_id) ^ set(cids))
+        raise SystemExit(f"étiquettes incomplètes ou hors liste : {ecart} — renvoyer la "
+                         "consigne au trieur")
+    gardes = [v for v in d["neighbors"] if par_id[v["cid"]]["label"] == "meme"]
+    d["triage"] = {"candidates": len(cids), "kept": len(gardes),
+                   "labels": f_labels.relative_to(REPO).as_posix()}
+    d["neighbors"] = gardes
+    return d
+
+
+def do_prepare(graine: str) -> int:
+    """Étape 3 : le dossier des voisins retenus par le tri, et la consigne de synthèse."""
+    from embed_api import Api  # noqa: PLC0415
+    from voisins import ecrire  # noqa: PLC0415
+
+    ff = fiches()
+    gardes_de_graine(graine, ff)
+    sid = sid_de(graine)
+    utilises = deja_utilises()
+    d = voisins_tries(graine)
+    if not d["neighbors"]:
+        print(f"{graine} : aucun des {d['triage']['candidates']} candidats ne décrit le même "
+              "mécanisme. La base n'a pas de voisin pour cette graine : pas de synthèse (D53).")
+        return 1
     # Le dossier d'une synthèse est figé sous le nom de la synthèse : `voisins.py`
     # peut réécrire le dossier d'exploration, jamais celui contre lequel on juge.
     d["seed"]["dossier_of"] = sid_de(graine)
@@ -272,7 +393,10 @@ def do_prepare(graine: str, n_voisins: int) -> int:
         passages = "\n\n".join(
             f"> *{p['section']}, page {p['page']}, similarité {p['similarity']:.3f}*\n>\n> "
             + " ".join(p["content"].split()) for p in v["passages"])
-        blocs.append(f"### [{ident}] {v['title']}\n\nSimilarité {v['similarity']:.3f}.\n\n"
+        auteurs = ", ".join(v.get("authors") or []) or "auteurs non renseignés en base"
+        annee = v.get("year") or "année non renseignée en base"
+        blocs.append(f"### [{ident}] {v['title']}\n\n{auteurs} ({annee}). "
+                     f"Similarité {v['similarity']:.3f}.\n\n"
                      f"{marque}{corps}Ses passages les plus proches de la graine :\n\n"
                      f"{passages}\n")
     WORK.mkdir(parents=True, exist_ok=True)
@@ -410,14 +534,17 @@ def do_status() -> int:
 
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description="La synthèse d'un dossier de voisins — D47")
+    ap.add_argument("--candidats", metavar="FICHE_GRAINE")
+    ap.add_argument("--n", type=int, default=CANDIDATS)
     ap.add_argument("--prepare", metavar="FICHE_GRAINE")
-    ap.add_argument("--voisins", type=int, default=8)
     ap.add_argument("--record", type=Path)
     ap.add_argument("--check", type=Path)
     ap.add_argument("--status", action="store_true")
     a = ap.parse_args(argv)
+    if a.candidats:
+        return do_candidats(a.candidats, a.n)
     if a.prepare:
-        return do_prepare(a.prepare, a.voisins)
+        return do_prepare(a.prepare)
     if a.record:
         return do_record(a.record)
     if a.check:
