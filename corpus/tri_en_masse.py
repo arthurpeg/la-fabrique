@@ -73,7 +73,22 @@ def deja_tries() -> set[str]:
     return titres
 
 
-def population(semantique: bool = False) -> list[dict]:
+def titres_en_base() -> set[str]:
+    """Les titres des papiers moissonnés en texte intégral dans la base (`D44`), par l'API."""
+    sys.path.insert(0, str(REPO / "vectordb"))
+    from embed_api import Api  # noqa: PLC0415
+
+    api, out, debut = Api(), set(), 0
+    while True:
+        lot = api.appel("GET", "/rest/v1/papers?select=title&text_source=eq.harvest"
+                               f"&order=id&offset={debut}&limit=1000") or []
+        out |= {norm(x["title"]) for x in lot}
+        if len(lot) < 1000:
+            return out
+        debut += 1000
+
+
+def population(semantique: bool = False, seulement: set[str] | None = None) -> list[dict]:
     works = lire_json(HARVEST, {}).get("works", [])
     faits = deja_tries()
     retires = set()
@@ -86,7 +101,8 @@ def population(semantique: bool = False) -> list[dict]:
     for w in works:
         t = norm(w["title"])
         if (w.get("duplicate_of") or not w.get("pdf") or t in faits or t in vus
-                or not (REPO / w["pdf"]).is_file()):
+                or not (REPO / w["pdf"]).is_file()
+                or (seulement is not None and t not in seulement)):
             continue
         vus.add(t)
         out.append({**w, "_pertinent": t not in retires, "_priorite": None})
@@ -163,12 +179,15 @@ def do_status() -> int:
     return 0
 
 
-def do_preparer(lots: int, taille: int, semantique: bool = True) -> int:
+def do_preparer(lots: int, taille: int, semantique: bool = True, base: bool = False) -> int:
     ouverts = [p for p in passages() if not p.get("verse")]
     if ouverts:
         raise SystemExit(f"le passage {ouverts[0]['passage']} est encore ouvert : "
                          f"`--verser {ouverts[0]['passage']}` d'abord")
-    pop = population(semantique=semantique)[: lots * taille]
+    # 2026-10-06 : `--base` ne garde que les papiers déjà en texte intégral dans la
+    # base, ceux que la recherche des voisins voit (choix de l'opérateur).
+    pop = population(semantique=semantique,
+                     seulement=titres_en_base() if base else None)[: lots * taille]
     if not pop:
         print("rien à trier")
         return 0
@@ -288,7 +307,7 @@ def self_check() -> int:
                   "authors": ["Test"], "year": 2000, "abstract": "Texte fabrique.",
                   "pdf": None, "_pertinent": True, "_priorite": None} for i in range(5)]
 
-    def population_de_test(semantique: bool = False) -> list[dict]:
+    def population_de_test(semantique: bool = False, seulement=None) -> list[dict]:
         faits = deja_tries()
         return [w for w in fabriques if norm(w["title"]) not in faits]
 
@@ -341,12 +360,14 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--preparer", action="store_true")
     ap.add_argument("--lots", type=int, default=5, help="avec --preparer : nombre de lots")
     ap.add_argument("--taille", type=int, default=TAILLE_LOT)
+    ap.add_argument("--base", action="store_true",
+                    help="avec --preparer : seulement les papiers en texte intégral dans la base")
     ap.add_argument("--verser", metavar="NN")
     a = ap.parse_args(argv)
     if a.self_check:
         return self_check()
     if a.preparer:
-        return do_preparer(a.lots, a.taille)
+        return do_preparer(a.lots, a.taille, base=a.base)
     if a.verser:
         return do_verser(a.verser)
     return do_status()

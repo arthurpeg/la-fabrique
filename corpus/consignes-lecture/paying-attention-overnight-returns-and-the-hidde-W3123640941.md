@@ -1,0 +1,1960 @@
+# Consigne de lecture unique — La Fabrique, `D55`
+
+Tu lis **une seule fois** le texte d'un papier académique, en fin de consigne,
+et tu écris **deux fichiers, dans cet ordre** :
+
+1. **la fiche** du papier, selon la PARTIE 1 ;
+2. **sa recette**, selon la PARTIE 2. La recette complète la fiche que tu viens
+   d'écrire.
+
+Chaque fichier a ses propres règles et son propre contrôle automatique. Les
+deux exigent la même chose : chaque citation recopiée **à la lettre** du texte,
+et `null` avec sa raison pour tout ce que le papier ne dit pas. **N'invente
+jamais une valeur.**
+
+Écris la fiche d'abord, en entier, avec l'outil Write. Écris ensuite la recette.
+Réponds en une ligne : les deux chemins écrits, le nombre de résultats cités
+dans la fiche et le nombre d'ambiguïtés relevées dans la recette.
+
+---
+
+# PARTIE 1 — LA FICHE
+
+# Consigne d'extraction — phase 09 de La Fabrique
+
+Tu produis **une fiche JSON** à partir du texte d'un papier académique, et de
+rien d'autre. Tu n'as pas accès au reste du projet, et c'est voulu : une fiche
+écrite de mémoire ou d'après un résumé serait sans valeur.
+
+## Ce que tu rends
+
+Un **seul objet JSON**, rien avant, rien après, écrit à `corpus/fiches_harvest/paying-attention-overnight-returns-and-the-hidde-W3123640941.json`. Pas de bloc de code, pas de
+commentaire. Il suit le schéma reproduit ci-dessous, section « SCHÉMA ».
+
+## Les règles qui font rejeter une fiche
+
+1. **Chaque citation (`quoted`) doit se retrouver MOT POUR MOT dans le texte
+   fourni.** Copie-la, ne la reformule pas, ne corrige pas sa ponctuation, ne
+   remplace pas « at least » par « >= ». Un seul caractère qui diffère et la
+   fiche est refusée.
+2. **Chaque `value` numérique doit figurer dans sa propre citation**, sauf si tu
+   déclares `"derived": true` (nombre que TU as calculé, avec une `note` disant
+   comment) ou `"spelled_out": "<le mot>"` (le papier écrit le nombre en toutes
+   lettres).
+3. **Si le texte fourni est visiblement abîmé** là où la page serait claire —
+   scan corrompu, symbole mathématique perdu, tableau mis à plat — mets la chaîne
+   ABÎMÉE, telle quelle, dans `quoted_source`, une version lisible dans `quoted`,
+   et le motif dans `quoted_repair` parmi `ocr`, `math_notation`, `table`.
+   N'invente pas d'autre motif.
+4. **N'invente jamais une valeur.** Ce que le papier ne dit pas vaut `null`, avec
+   une `reason`. Un `null` est bruyant, une valeur plausible est indétectable.
+5. **`transposability.what_does_not_transfer` ne peut pas être vide.** Notre
+   univers est de neuf futures intraday ; un papier dont tout transfère n'a pas
+   été lu avec attention.
+
+## Ce qu'on te demande vraiment
+
+Pas un résumé. **Ce que le papier affirme, ce qu'il a mesuré, et ce qui en
+survivrait chez nous.** Une fiche fidèle mais creuse passe les contrôles et ne
+sert à rien : préfère trois résultats qui portent des chiffres à dix qui n'en
+portent pas.
+
+---
+
+## SCHÉMA
+
+# Le schéma de fiche
+
+Ce que doit contenir un fichier de `corpus/fiches/`, et ce que
+`corpus/validate_fiches.py` refuse. Établi par
+`decisions/DECISION-14-schema-de-fiche.md`.
+
+Une **fiche** est le JSON structuré extrait d'un papier. Sa définition n'est pas
+inventée ici : elle est dans `CLAUDE.md` § Le vocabulaire, et ce fichier ne fait
+que la rendre exécutable.
+
+---
+
+## Les huit champs
+
+Six viennent de la constitution, deux de la pratique.
+
+| Champ | Origine | Obligatoire |
+|---|---|---|
+| `claim` | constitution — *hypothèse* | oui |
+| `universe` | constitution — *univers* | oui |
+| `horizon` | constitution — *horizon* | oui, `null` accepté **avec raison** |
+| `signal_construction` | constitution — *construction du signal* | oui, `null` accepté **avec raison** |
+| `reported_results` | constitution — *résultats annoncés* | oui |
+| `what_is_missing` | constitution — *ce qui manque* | oui |
+| `source` | pratique — d'où ça vient | oui |
+| `transposability` | pratique — ce qui en survit chez nous | oui |
+
+Plus l'identité : `fiche_id`, `written`, `written_by`.
+
+Des champs supplémentaires sont **autorisés**. Un papier peut porter des choses
+qu'aucun schéma ne prévoit — un modèle de coûts, une structure de validation, un
+critère d'acceptation propre à l'auteur. Le schéma fixe un plancher, pas un
+plafond.
+
+---
+
+## `source` — la provenance, au sens de `D09`
+
+```json
+"source": {
+  "authors": "…",
+  "title": "…",
+  "year": 1997,
+  "source_url": "https://…",
+  "pdf": "corpus/pdf/…",
+  "retrieved": "AAAA-MM-JJ",
+  "peer_reviewed": true,
+  "amorce_entry": 11
+}
+```
+
+`authors`, `title`, `year`, `source_url` et `retrieved` sont exigés.
+`peer_reviewed` est un booléen : un préprint non arbitré n'est pas une revue à
+comité de lecture, et la distinction a déjà servi.
+
+---
+
+## `reported_results` — une liste, et chaque entrée porte sa citation
+
+C'est ici que `D09` s'étend aux fiches. **Un résultat recopié d'un papier est une
+valeur externe** : rien dans le dépôt ne peut la contredire.
+
+> [!warning] **Les exemples de ce document sont FABRIQUÉS.** Ils citent un papier
+> qui n'existe pas. C'est `L17` : un gabarit rempli avec des cas réels distribue
+> les réponses qu'il prétend cacher, et ce document est lu par l'extracteur.
+> Corrigé le 2026-09-21 ; les exemples portaient jusque-là le contenu réel d'une
+> fiche de référence.
+
+```json
+"reported_results": [
+  {
+    "name": "afternoon_spread_bp",
+    "value": 3.4,
+    "unit": "bp",
+    "quoted": "the average effective spread widens to 3.4 basis points after 14:00",
+    "note": "Sur leur échantillon d'actions, pas sur des futures."
+  }
+]
+```
+
+`name` et `quoted` sont exigés pour chaque entrée. `value` peut être `null` quand
+le résultat est qualitatif.
+
+**Le contrôle qui mord.** Quand `value` est un nombre, le validateur vérifie
+qu'il **se retrouve dans `quoted`**, séparateurs ôtés — la même fonction
+`value_in_quote` que le catalogue, celle que `scripts/check_provenance.py` a
+prise en défaut sur `12500` contre `12,500,000`. Ce qui est attrapé n'est pas la
+source absente, qui se voit, mais la **faute de recopie**, qui ne se voit pas.
+
+Un nombre **dérivé** par nous — un rapport entre deux niveaux que les auteurs
+citent séparément, par exemple — n'a pas à figurer dans la citation : il porte
+`"derived": true`, et le contrôle numérique est alors levé. Le `note` doit dire
+comment il a été obtenu.
+
+**Et un nombre écrit en toutes lettres.** Un papier peut écrire « *Seven of the
+strategies fail* » : il n'y a aucun chiffre à retrouver. L'entrée porte alors
+`"spelled_out": "Seven"`, et le validateur vérifie que **le mot** est dans la
+citation. Ce qu'il ne vérifie pas — que « Seven » vaut 7 — reste un geste
+humain, et le champ existe pour le **nommer** plutôt que pour le cacher derrière
+`derived`, qui signifierait à tort qu'un calcul a eu lieu.
+
+**Et quand le TEXTE EXTRAIT ne dit pas ce que le papier dit.** Un PDF scanné, une
+notation mathématique perdue, un tableau mis à plat : le texte où `quoted` est
+cherchée peut être abîmé là où la page est claire. L'entrée porte alors **deux**
+chaînes :
+
+```json
+{
+  "name": "afternoon_spread_bp",
+  "value": 3.4,
+  "quoted": "the average effective spread widens to 3.4 basis points after 14:00",
+  "quoted_source": "the average effective spread widens to 3.4 basis p0ints after 14:00",
+  "quoted_repair": "ocr"
+}
+```
+
+`quoted` reste ce que le papier dit ; `quoted_source` est ce que le **texte**
+porte, mot pour mot, et c'est elle qui est cherchée et qui fait foi pour le
+contrôle numérique. `quoted_repair` dit **pourquoi** les deux diffèrent, dans une
+liste **close** :
+
+| Motif | Quand |
+|---|---|
+| `ocr` | le PDF est un scan et son texte est corrompu |
+| `math_notation` | le papier écrit un symbole que l'extraction ne rend pas |
+| `table` | la citation vient d'un tableau, lu en cellules par l'extraction |
+
+**Ce que cela n'autorise pas, et c'est l'essentiel.** Il faut toujours **une
+chaîne présente à la lettre** dans le texte. Une réparation déplace ce qui est
+cherché, jamais ce qui est exigé. **Une paraphrase ne fournit aucune chaîne et
+reste une faute** : si la phrase du papier ne dit pas exactement ce qu'on
+voudrait lui faire dire, on cite ce qu'elle dit, ou on ne cite pas.
+
+Un motif hors de la liste, un `quoted_source` sans motif, un motif sans
+`quoted_source` : le validateur refuse les trois.
+
+**Et quand l'extraction disloque LE NOMBRE LUI-MÊME.** Le cas ci-dessus suppose
+un texte abîmé *autour* d'un chiffre intact. Il arrive que le chiffre soit la
+victime : `pypdf` rend `−3.02` par `−3 . 02` quand le papier l'écrit en
+italique, et `T = 496,512` par `T51,724z2885496,512` quand il colle une égalité
+entière. Aucune comparaison numérique ne peut plus aboutir, alors même que
+`quoted_source` est bien présente à la lettre.
+
+L'entrée porte alors, **en plus** de la réparation, un `spelled_out` qui donne
+le nombre **tel que la citation l'écrit** :
+
+```json
+{
+  "name": "overnight_sorted_hedge_intraday_3f_alpha_monthly_pct",
+  "value": -3.02,
+  "quoted": "alpha of −3.02% per month with a t-statistic of −9.74)",
+  "quoted_source": "alpha of −3 . 02% per month with a t -statistic of −9 . 74 )",
+  "quoted_repair": "math_notation",
+  "spelled_out": "−3 . 02"
+}
+```
+
+C'est la règle 4 appliquée telle qu'elle est écrite — *« une `value` numérique
+introuvable dans sa `quoted`, sauf `derived: true` ou `spelled_out` »* — et non
+une exception nouvelle. Le champ avait été décrit pour les nombres **en
+toutes lettres** ; sa fonction est plus générale, et c'est celle-ci : **nommer
+le geste humain qui relie une `value` à une citation où aucune machine ne la
+reconnaît.**
+
+**Ce que cela n'affaiblit pas.** `spelled_out` doit toujours se retrouver à la
+lettre dans la citation, laquelle doit toujours se retrouver à la lettre dans le
+texte. Un extracteur qui voudrait loger un chiffre inventé devrait donc
+fabriquer une chaîne réellement présente dans le PDF — ce qui est exactement ce
+que `F2` interdit.
+
+**Ce que cela ne vérifie pas**, et qui reste un geste humain nommé : que
+`−3 . 02` *vaille* `-3.02`. Comme pour « Seven » et 7, le champ existe pour
+**montrer** cette lecture, pas pour la garantir. Quand le décodage n'est pas
+évident, la `note` le rend vérifiable : pour Andersen (2003), l'extraction rend
+`=` par `5` et `'` par `9`, ce que confirment quatre occurrences indépendantes
+du même papier — `K541`, `P53`, `p(J9)50`, `J9512`.
+
+---
+
+## `horizon` et `signal_construction` — `null` se justifie
+
+```json
+"horizon": {"value": null, "reason": "le papier ne prédit rien ; il décrit une propriété des données"}
+```
+
+Un `null` nu est refusé. C'est la règle du catalogue (`CLAUDE.md` § Les
+interdits) appliquée ici : l'inconnu s'écrit, il ne se tait pas.
+
+---
+
+## `signal_construction` — la forme attendue quand il n'est pas `null`
+
+C'est un **objet**, comme `universe` et `horizon` : une `value` en prose, et
+ses `quoted`.
+
+```json
+"signal_construction": {
+  "value": "Score = (clôture de la première demi-heure − ouverture de séance) / ouverture, calculé à l'ouverture + 30 min, appliqué dans le même sens à la dernière demi-heure.",
+  "quoted": ["we define the first half-hour return as", "predicts the last half-hour return"]
+}
+```
+
+**C'est la faute la plus fréquente du corpus, et de loin.** Au moins **sept
+extracteurs indépendants**, appartenant à **trois familles de modèles
+différentes**, ont écrit à la place un objet structuré de leur invention —
+`{"sampling": …, "components": […], "model": …}` — **sans la clé `value`**, que
+le schéma exige et que le validateur refuse.
+
+Aucun de ces extracteurs n'avait vu les fautes des autres. Sept fois la même
+erreur n'est pas sept inattentions : **c'est cette section qui manquait.** Le
+schéma ne montrait que le cas `null` ci-dessus, jamais la forme normale.
+
+Des sous-clés supplémentaires restent **autorisées** si elles éclairent la
+construction. `value` doit être là.
+
+---
+
+## `what_is_missing` — une liste
+
+```json
+"what_is_missing": [
+  "aucun multiplicateur de contrat, aucun frais",
+  "la fenêtre horaire est donnée en heure locale, sans fuseau nommé",
+  "le critère de sélection des jours n'est pas chiffré"
+]
+```
+
+Une **liste de chaînes**, comme `transposability.what_does_not_transfer`. Ce
+qui manque au papier s'énumère ; une prose continue se lit moins bien et se
+compte mal.
+
+---
+
+## `transposability` — ce qui en survit chez nous
+
+Trois sous-champs, tous exigés :
+
+- `what_transfers` — ce qui vaut sur neuf futures intraday ;
+- `what_does_not_transfer` — une **liste**, non vide ; un papier dont *tout*
+  transfère n'a pas été lu avec assez d'attention ;
+- `what_aligns_well` — ce qui, au contraire, tombe juste.
+
+**Pourquoi c'est obligatoire.** C'est ce champ qui a déjà fait écarter une cible
+de réplication — sa métrique était un rendement net par trade, la nôtre un IC —
+et qui en a cadré une autre, dont seul le motif transférait. Une fiche sans lui
+dit ce qu'un papier affirme, pas ce qu'il vaut ici. Les cas sont dans
+`decisions/`, pas ici : ce document est lu par l'extracteur.
+
+---
+
+## Ce que le validateur refuse
+
+    python corpus/validate_fiches.py
+
+1. un champ obligatoire absent ;
+2. `horizon` ou `signal_construction` à `null` **sans** `reason` ;
+3. une entrée de `reported_results` sans `name` ou sans `quoted` ;
+4. une `value` numérique **introuvable** dans sa `quoted`, sauf `derived: true`
+   ou `spelled_out` — et `spelled_out` doit alors se retrouver dans la citation ;
+5. `what_does_not_transfer` vide ;
+6. un `source` incomplet, un `source_url` qui n'est pas une URL, un `retrieved`
+   mal daté ;
+7. un `fiche_id` qui ne correspond pas au nom du fichier.
+
+`corpus/check_fiches_guard.py` le montre en train de refuser, sur des fiches
+délibérément fautives — même discipline que `scripts/check_provenance.py`. **Un
+garde qui n'a jamais rien refusé est un garde que personne n'a testé.**
+
+---
+
+## Ce que ce schéma ne dit pas
+
+Le **triage** — décider qu'un papier est implémentable — n'est pas ici. C'est
+l'autre moitié de la porte 07, et elle exige un seuil chiffré écrit avant mesure
+(`L06` : *un compte juste n'est pas un compte de choses justes*).
+
+
+---
+
+## IDENTITÉ DE LA FICHE
+
+- `fiche_id` : `paying-attention-overnight-returns-and-the-hidde-W3123640941`
+- `source.pdf` : `corpus/pdf/paying-attention-overnight-returns-and-the-hidde-W3123640941.pdf`
+- `source.source_url` : `https://www.cambridge.org/core/services/aop-cambridge-core/content/view/F9AAD159B512C651F09D5D52011D88E0/S0022109012000270a.pdf/div-class-title-paying-attention-overnight-returns-and-the-hidden-cost-of-buying-at-the-open-div.pdf`
+- `source.retrieved` : `2026-09-22`
+- `written_by` : le nom de la session qui extrait
+- `written` : `2026-10-06`
+
+---
+
+# PARTIE 2 — LA RECETTE
+
+La fiche que tu complètes est celle que tu viens d'écrire en PARTIE 1.
+
+# Consigne de recette — La Fabrique, `D34`
+
+Tu complètes **une fiche** de papier académique par sa **recette** : la formule,
+les entrées, le timing, les paramètres et les ambiguïtés du signal, **cités mot
+pour mot** dans le texte du papier. Un codeur lira ta recette et rien d'autre du
+papier : ce que tu n'écris pas, il devra le deviner ; ce que tu inventes, il le
+codera.
+
+## Ce que tu rends
+
+Un **seul fichier JSON**, écrit à `corpus/recettes/paying-attention-overnight-returns-and-the-hidde-W3123640941.json`. Rien d'autre.
+
+## Le format
+
+Exemple **fabriqué** — il cite un papier qui n'existe pas (`L17`) :
+
+```json
+{
+  "fiche_id": "paying-attention-overnight-returns-and-the-hidde-W3123640941",
+  "written": "AAAA-MM-JJ",
+  "written_by": "<modèle>",
+  "formula": {
+    "statement": "score = rendement de l'ouverture à la barre notée, divisé par sa volatilité",
+    "quoted": "we scale the return since the open by its trailing volatility",
+    "reason": null
+  },
+  "inputs": [
+    {"name": "open_return", "description": "rendement depuis l'ouverture de la séance",
+      "known_at": "à la clôture de la barre notée", "quoted": "the return since the open"}
+  ],
+  "timing": {
+    "statement": "le score se pose 45 minutes avant la clôture",
+    "quoted": "the signal is formed 45 minutes before the close",
+    "reason": null
+  },
+  "parameters": [
+    {"name": "formation_minutes", "value": 45, "unit": "minutes",
+      "quoted": "the signal is formed 45 minutes before the close"},
+    {"name": "volatility_window_days", "value": null, "unit": "days",
+      "quoted": null, "reason": "le papier dit « trailing » sans donner la longueur"}
+  ],
+  "ambiguities": [
+    {"question": "la volatilité est-elle calculée sur les rendements journaliers ou intraday ?",
+      "resolution": null, "quoted": null}
+  ],
+  "market": {
+    "studied": "le contrat à terme sur l'indice S&P 500, séance régulière",
+    "quoted": "we use one-minute prices of the S&P 500 index futures",
+    "exact_roots": ["ES"],
+    "sessions": ["US"],
+    "sessions_quoted": "from the 9:30 open to the 16:00 close",
+    "sessions_reason": null
+  }
+}
+```
+
+## Les règles, vérifiées par une machine
+
+- **`quoted`** est une phrase du papier, **à la lettre**, ou un extrait coupé
+  par `...`. Une paraphrase est refusée. Le contrôle cherche la chaîne dans le
+  texte ci-dessous, casse et espaces repliés.
+- **Si le texte extrait abîme la phrase** (formule mathématique mal rendue,
+  tableau mis à plat, scan) : écris la phrase telle que le papier la dit dans
+  `quoted`, telle que le texte la porte dans `quoted_source`, et le motif dans
+  `quoted_repair`, parmi `math_notation`, `ocr`, `table`. C'est `quoted_source` qui est cherchée.
+- **Chaque `value` numérique se retrouve dans sa citation.** Un nombre que tu as
+  calculé toi-même porte `"derived": true` et un `note` qui dit comment.
+- **Tout ce que le papier ne dit pas est `null`**, avec `reason` non vide.
+  **N'invente jamais une valeur plausible** : c'est un interdit constitutionnel
+  du projet. Un `null` est bruyant, une valeur inventée est invisible.
+- `formula`, `timing` et au moins une entrée sont exigés. `quoted` peut y être
+  `null`, avec sa raison.
+- **Les ambiguïtés sont le cœur du travail.** Chaque question dont la réponse
+  change le calcul — une fenêtre, une normalisation, un traitement des jours
+  fériés, un signe — s'écrit ici, avec la réponse du papier si elle existe
+  (`resolution` et `quoted`), ou `null` s'il n'en donne pas.
+- **`market` dit sur quel marché le papier mesure** (`D38`) — c'est lui qui
+  fixe les cellules de la mesure, avant tout résultat :
+  - `studied` : le marché, en tes mots ; `quoted` : la phrase du papier qui le
+    nomme, à la lettre ;
+  - `exact_roots` : parmi **nos** instruments, ceux qui sont **ce marché même**
+    ou son équivalent direct — et eux seuls :
+    - `ES` : E-mini S&P 500 (l'indice S&P 500, ses contrats, le SPY)
+    - `NQ` : E-mini Nasdaq-100 (l'indice Nasdaq-100, ses contrats, le QQQ)
+    - `YM` : E-mini Dow (le Dow Jones Industrial Average, ses contrats, le DIA)
+    - `GC` : l'or (contrat COMEX, or au comptant)
+    - `CL` : le pétrole brut WTI (contrat NYMEX)
+    - `6E` : l'euro contre dollar (EUR/USD)
+    - `6B` : la livre contre dollar (GBP/USD)
+    - `6J` : le yen contre dollar (USD/JPY, JPY/USD)
+    - `6A` : le dollar australien contre dollar (AUD/USD)
+    Des actions individuelles, un indice étranger (Chine, Moyen-Orient…), le
+    bitcoin, des obligations : **aucun** de nos instruments n'est ce marché,
+    `exact_roots` vaut `[]`, et c'est une réponse valable. Ne rapproche pas
+    « par ressemblance » : la classe est ajoutée par le code, pas par toi ;
+  - `sessions` : nos fenêtres (heure de New York) que les données du papier
+    couvrent — `ASIA` 19:00–03:00, `EUROPE` 03:00–09:30, `US` 09:30–16:00 —
+    avec `sessions_quoted` ; ou `null` avec `sessions_reason` si le papier ne
+    le dit pas.
+
+## Ce que tu ne fais pas
+
+Tu ne codes rien, tu ne mesures rien, tu ne juges pas si l'idée est bonne. Tu
+dis **ce que le papier dit**, et où il se tait.
+
+---
+
+## LE TEXTE DU PAPIER (pour les deux parties)
+
+JOURNAL OF FINANCIAL AND QUANTITATIVE ANALYSIS Vol. 47, No. 4, Aug. 2012, pp. 715–741
+COPYRIGHT 2012, MICHAEL G. FOSTER SCHOOL OF BUSINESS, UNIVERSITY OF WASHINGTON, SEATTLE, WA 98195
+doi:10.1017/S0022109012000270
+Paying Attention: Overnight Returns and the
+Hidden Cost of Buying at the Open
+Henk Berkman, Paul D. Koch, Laura Tuttle, and
+Ying Jenny Zhang∗
+Abstract
+We ﬁnd a strong tendency for positive returns during the overnight period followed by
+reversals during the trading day. This behavior is driven by an opening price that is high
+relative to intraday prices. It is concentrated among stocks that have recently attracted the
+attention of retail investors, it is more pronounced for stocks that are difﬁcult to value and
+costly to arbitrage, and it is greater during periods of high overall retail investor sentiment.
+The additional implicit transaction costs for retail traders who buy high-attention stocks
+near the open frequently exceed the effective half spread.
+I. Introduction
+Behavioral ﬁnance theories assume that individual investors are subject to
+sentiment that makes them willing to trade at prices not justiﬁed by fundamen-
+tals. Moreover, sentiment-driven retail traders tend to act as a group, trading the
+same stocks at the same time and in the same direction. Because trading against
+these investors can be costly and risky, the collective price impact of their trading
+can be substantial, and sentiment-based trading can cause prices to deviate from
+fundamental value for long periods of time.
+1
+∗Berkman, h.berkman@auckland.ac.nz, Business School, University of Auckland, 12 Grafton
+Rd, Auckland, New Zealand; Koch, pkoch@ku.edu, School of Business, University of Kansas,
+Summerﬁeld Hall, Lawrence, KS 66045; Tuttle, ltuttle@aus.edu, School of Business and Manage-
+ment, American University of Sharjah, PO Box 26666, Sharjah, United Arab Emirates; and Zhang,
+yjennyzhang@missouristate.edu, College of Business Administration, Missouri State University,
+901 S National Ave, Springﬁeld, MO 65897. We thank an anonymous referee, Chris Anderson, Audra
+Boone, Stephen Brown (the editor), Bob DeY oung, Laura Field, Ben Jacobsen, Kelly Welch, Jide
+Wintoki, and seminar participants at the University of Auckland, Massey University, the University of
+Kansas, the 2009 New Zealand Finance Colloquium, the Securities and Exchange Commission, and
+the national conferences of the Financial Management Association and the Eastern Finance Associa-
+tion for their helpful comments on earlier drafts. We thank Jeff Harris, Frank Hatheway, and NASDAQ
+OMX for access to proprietary data. We also thank Xin Zhao for excellent research assistance. In ad-
+dition, Koch acknowledges support from the University of Auckland and Massey University, where
+he served as a visiting professor while conducting this research. Tuttle acknowledges research support
+from the Commodity Futures Trading Commission, where she served as a visiting economist.
+1For theoretical work in this area, see De Long, Shleifer, Summers, and Waldmann (1990) and
+Shleifer and Vishny (1997). Kumar and Lee (2006) provide empirical evidence that herding by retail
+715
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+716 Journal of Financial and Quantitative Analysis
+Barber and Odean (2008) contribute to this literature by theorizing that retail
+investors herd into attention-grabbing stocks. They observe that retail investors
+who want to buy face a different search problem than those who want to sell.
+When retail investors want to buy, they must select from thousands of stocks.
+Odean (1999) and Barber and Odean (2008) hypothesize that individual investors
+manage this problem by limiting their search to stocks that have recently attracted
+their attention. However, when retail investors want to sell, their decision of which
+stock to sell is normally limited to the small set of stocks they own, since retail
+investors typically do not sell short. Consistent with this theory, Barber and Odean
+show that individual investors are net buyers on the next trading day following
+days with high absolute returns, which is one of their proxies for attention.
+We extend the theory of Barber and Odean (2008) to develop several pre-
+dictions with regard to intraday patterns in retail order ﬂow and price formation.
+Our 1st prediction is that an attention-triggering event on day t will lead to retail
+buying near the open on day t + 1, because the open is the 1st opportunity since
+the previous close for retail investors to buy these high-attention stocks.
+2 Second,
+we hypothesize that this attention-driven retail buying pressure results in opening
+prices that are high relative to prices during the rest of the trading day, especially
+for stocks that are difﬁcult to value and costly to arbitrage. Finally, we expect that
+the impact of attention on opening prices is greater during periods of high overall
+retail investor sentiment.
+We test these predictions for the 3,000 largest U.S. stocks over the period
+from 1996 to 2008. In preliminary analysis, we examine quote midpoints at the
+open and close, and we ﬁnd signiﬁcant positive mean overnight returns of +10
+basis points (bp) per day, along with negative trading day reversals of −7b p
+per day. We then explore whether these overall tendencies are due to a high
+opening price, a low closing price, or both. Consistent with our theory of attention-
+based overpricing at the open, we ﬁnd that the opening price is high relative to
+subsequent intraday prices, while there is no tendency for the closing price to
+decline further below intraday prices.
+3
+These descriptive results are consistent with evidence in two papers that
+were developed simultaneously with ours. Branch and Ma (2008) ﬁnd a negative
+correlation between the overnight return and the subsequent trading day return.
+They suggest that this tendency may relate to the microstructure of how special-
+ists and market makers behave at the open. Cliff, Cooper, and Gulen (2008) ﬁnd
+evidence that the U.S. equity premium over the last decade is solely due to posi-
+tive overnight returns. They observe that evidence of systematic negative daytime
+reversals “present(s) a serious challenge to traditional asset pricing models from
+traders helps to explain returns for stocks with high retail concentration that are also difﬁcult to arbi-
+trage. Barber, Odean, and Zhu (2009) show that stocks bought by retail investors underperform stocks
+sold by retail investors over the following year. Baker and Wurgler (2006) ﬁnd that, after periods of
+high (low) sentiment, stocks that are difﬁcult to value and costly to arbitrage earn low (high) returns.
+2There is an after-hours market and a pre-open on electronic communication networks (ECNs),
+but high costs and other impediments to trading deter retail investors, so that professional traders
+dominate these markets (see Barclay and Hendershott (2003), (2004)).
+3Reliance on midquotes ensures that our results are not due to bid-ask bounce. Trade prices yield
+similar results.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+Berkman, Koch, Tuttle, and Zhang 717
+the standpoint that these models do not predict negative average returns.” Both of
+these studies join our work to emphasize that this behavior represents a surprising
+new anomaly, and they call for further efforts to ﬁnd an explanation. We extend
+the analysis and show that our theory of attention-triggered retail buying at the
+start of the trading day offers a unifying explanation for this behavior.
+Empirical analysis of our theory requires a proxy for the level of retail
+investor attention at the start of the typical trading day. We use two size-adjusted
+market-based variables from the previous day. First, following Barber and Odean
+(2008), we consider the squared return yesterday as a proxy for news that could
+attract the attention of retail investors today.
+4 Second, motivated by the main result
+in Barber and Odean that individual investors are net buyers of attention-grabbing
+stocks, we use actual net buying by individual investors all day yesterday as a
+percent of total volume to proxy for retail attention at the start of trading today.
+We obtain this 2nd proxy using proprietary data on the intraday trading
+activity of retail investors, for an abridged sample of NASDAQ stocks during
+1997–2001.
+5 These data also enable measurement of the intensity of net buying
+by retail investors near the open, relative to that during the rest of the trading
+day. Consistent with our 1st hypothesis, we ﬁnd that i) the intensity of retail buy-
+ing near the open is signiﬁcantly greater for high-attention stocks than for low-
+attention stocks, and ii) the intensity of retail buying of high-attention stocks is
+signiﬁcantly greater during the 1st hour than it is during the rest of the trading
+day.
+We next examine the implications of these intraday patterns in net retail buy-
+ing for price formation at the open. When we analyze our main sample of the
+3,000 largest U.S. stocks during 1996–2008, we ﬁnd that the subsample of high-
+attention stocks has a signiﬁcant mean overnight return (trading day reversal) of
++13 ( −13) bp per day. In contrast, the analogous results for the subsample of
+low-attention stocks are much smaller, at only +3 ( −3) bp per day. When we
+examine the abridged sample of NASDAQ stocks during 1997–2001, the mean
+overnight return (trading day reversal) for high-attention stocks is larger in magni-
+tude, at +26 (−27) bp per day. Once again, the analogous results for low-attention
+NASDAQ stocks during this period are much smaller, at +4 ( −12) bp per day.
+Importantly, the average 24-hour (close-to-close) return is never signiﬁcantly dif-
+ferent from 0 for any subsample examined. Together, these results support our
+2nd hypothesis, indicating a signiﬁcant price impact of attention-triggered retail
+buying pressure at the open, which is only a short-term intraday phenomenon.
+Based on behavioral ﬁnance theories, we expect that stock prices may deviate
+further from fundamentals if the stock is more difﬁcult to value and more costly
+to arbitrage.
+6 We test this hypothesis by extending our analysis in two ways. First,
+we consider the role of institutional ownership in concert with our proxies for
+4In addition to absolute returns yesterday, Barber and Odean (2008) consider contemporaneous
+daily volume as an alternative measure of retail attention. We have also used share turnover yesterday
+to proxy for retail investor attention at today’s open, and we ﬁnd robust results.
+5We are grateful to Jeff Harris, Frank Hatheway, and NASDAQ OMX for providing these propri-
+etary data. See Grifﬁn, Harris, and Topaloglu (2003) for details about the data.
+6For example, see Baker and Wurgler (2006) and Kumar and Lee (2006).
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+718 Journal of Financial and Quantitative Analysis
+retail attention. Stocks with low institutional holdings have a high concentration
+of retail investors and are difﬁcult to short sell. 7 Thus, for these stocks, we expect
+greater upward price pressure at the open on days following news that attracts the
+attention of retail investors. Our results support this prediction. Now the subset
+of our main sample of stocks subject to both high attention and low institutional
+ownership has a larger mean overnight return (trading day reversal), at +17 ( −17)
+bp per day. Similarly, the analogous stratiﬁcation from our abridged sample of
+NASDAQ stocks also has a larger mean overnight return (trading day reversal), at
++34 (−42) bp per day. In contrast, the subsample that is least prone to overpricing
+at the open, with low attention and high institutional ownership, has overnight
+returns and trading day reversals that lack economic or statistical signiﬁcance.
+Second, we show that these overnight return patterns increase in magnitude
+for ﬁner subsamples of stocks that are more difﬁcult to value and more costly
+to arbitrage. We analyze a subset of the main sample that includes only ﬁrms
+with high recent volatility, high transaction costs, and high short interest. For this
+subset, the mean overnight return (trading day reversal) for the ﬁner subsample of
+stocks subject to both high attention and low institutional ownership is +43 ( −45)
+bp per day. Likewise, the analogous results for the abridged sample of NASDAQ
+stocks are +61 ( −70) bp per day.
+The high opening prices we ﬁnd for stocks subject to high attention and
+low institutional ownership represent a substantial hidden cost of buying at the
+open. Our tests are predictive and thus indicate that postponing purchases of these
+stocks from the open until later in the day can avoid these hidden costs. Similarly,
+selling these stocks at the open, rather than later in the day, can lead to major
+improvements in performance. For example, a mean trading day reversal of 45 bp
+per day accumulates to 112.5% per annum.
+Finally, we investigate whether the magnitude of positive overnight returns
+and negative trading day reversals is exacerbated during periods with high overall
+investor sentiment (see Baker and Wurgler (2006), (2007)). We consider 2 time-
+series proxies that measure variation over time in the level of retail investor senti-
+ment. Our 1st measure is the sentiment index of Baker and Wurgler (2006), while
+our 2nd measure is based on market-wide net buying activity by retail investors
+during the 1st hour of the trading day. We ﬁnd that variation over time in the
+magnitude of opening price inﬂation, for stocks subject to high attention and low
+institutional holdings, is signiﬁcantly related to both of these time-series indices
+of market sentiment. For example, mean overnight returns and trading day rever-
+sals are more than twice as large during months with high versus low sentiment.
+In addition, during periods of high investor sentiment, this opening price inﬂation
+can be twice the magnitude of the effective half spread. This evidence establishes
+that the behavior of overnight returns and trading day reversals documented in
+this study is both economically and statistically signiﬁcant.
+7Kumar and Lee (2006) show that retail trading is negatively correlated with institutional own-
+ership. In addition, a large body of work uses low institutional ownership to proxy for binding short
+sale constraints (e.g., see Almazan, Brown, Carlson, and Chapman (2004), Asquith, Pathak, and Ritter
+(2005), Berkman, Dimitrov, Jain, Koch, and Tice (2009), D’Avolio (2002), Nagel (2005), and Ofek,
+Richardson, and Whitelaw (2004)).
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+Berkman, Koch, Tuttle, and Zhang 719
+Our results are robust when we apply this portfolio approach using market-
+adjusted returns, median returns, or trade prices to measure returns, and when we
+exclude low-price stocks. This behavior is also ubiquitous across small and large
+stocks, NASDAQ and NYSE stocks, growth and value stocks, and momentum
+winners and losers, although there is a larger mean overnight return and trading
+day reversal for small stocks, NASDAQ stocks, growth stocks, and momentum
+losers. We also ﬁnd that these patterns are largest on Mondays, but they also
+appear on the other days of the week. In addition, these results appear in all
+subperiods. Finally, we ﬁnd similar results and conclusions when we apply an
+alternative Fama-MacBeth (1973) regression approach.
+This article proceeds as follows: Section II describes our sample selection
+and variable construction. Section III reports descriptive statistics. Section IV
+presents the main empirical analysis. Section V analyzes the time-series relation
+between overall market sentiment and the magnitude of opening price inﬂation.
+Section VI provides robustness tests, and Section VII summarizes and concludes.
+II. Sample Selection and Variable Construction
+A. Sample Selection and Daily Return Measures
+Our main sample includes the 3,000 largest U.S. ﬁrms, according to their
+market capitalization on July 1 of each year over the period from 1996 to 2008.
+We also apply our analysis to an abridged sample for which proprietary data on
+intraday retail trading were obtained from NASDAQ OMX. These proprietary
+data describe each trade for NASDAQ stocks during the period from 1997 to 2001,
+and they include the identity of market participants on each side of the trade. For
+this abridged sample, we follow the procedures in Grifﬁn et al. (2003) and classify
+both sides of all trades as originating from an individual or an institution based on
+the market participants involved in the trade.
+We calculate daily returns using quotations from TAQ.
+8 The opening price on
+day t (OPENt) is the midpoint of the 1st valid bid and ask quotes after 9:30 AM.9
+The closing price on day t (CLOSEt) is the midpoint of the last valid bid and
+ask quotes before 4:00 PM.10 We adjust these daily opening and closing prices for
+8TAQ’s consolidated quotation ﬁle is an aggregation of quotes within each market venue. It
+represents a set of “top of book” records for each venue. In order to identify market-wide best
+prices, we calculate an inside market across all venues. For the NYSE, this calculation almost never
+improves upon the NYSE specialist’s price. However, in NASDAQ issues, ECNs often improve on the
+NASDAQ’s reported best price.
+9By “the ﬁrst valid quotes” we mean the 1st quotes after 9:30 AM for which there is nonzero trade
+size on both the bid and the ask. For NYSE issues, selection of the open is straightforward, since the
+opening cross is easily identiﬁed and begins the trading day. For NASDAQ issues, selection of the
+open is not so straightforward. Although technically the NASDAQ opens at 9:30
+AM, it is often several
+minutes before valid market-maker quotes appear. If the midquote precisely at 9:30 AM is used as the
+open, these quotes will often be ﬂagged as “closed” by the market participant, or they may have 0
+size associated with the prices. In either case, the price does not represent a ﬁrm commitment to trade.
+This behavior of the NASDAQ open motivates our choice of the 1st valid quotes after 9:30
+AM as the
+opening quotes. Our results are robust when we take the midquote precisely at 9:30 AM as the open.
+10Occasionally, the ﬁnal quotes before 4:00 PM have zero shares available to trade on one or both
+sides, or the quote is ﬂagged as closed. For this reason, we select the last valid quote before 4:00 PM.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+720 Journal of Financial and Quantitative Analysis
+stock splits and dividends, before computing daily returns. 11 Returns are mea-
+sured as the log of the price relative over each time frame considered:
+24-Hour, Open-to-Open Return = OTOt = log(OPENt/OPENt−1);
+24-Hour, Close-to-Close Return = CTCt = log(CLOSEt/CLOSEt−1);
+Overnight, Close-to-Open Return = CTOt = log(OPENt/CLOSEt−1);
+Trading Day, Open-to-Close Return = OTCt = log(CLOSEt/OPENt).
+Note that CTC t = CTOt +O T Ct. Finally, consistent with prior work, we screen
+the data for errors and extreme observations. 12
+B. Variable Construction
+For each stock, we estimate 2 proxies for the level of attention by retail
+investors at the start of the trading day. Our 1st proxy is the square of yester-
+day’s close-to-close return (VOL
+t−1). This measure is motivated by Barber and
+Odean (2008), who use the absolute return yesterday to proxy for news that could
+attract the attention of retail investors, and who ﬁnd that increases in this mea-
+sure are associated with increases in net retail buying throughout today. Our 2nd
+proxy is net shares bought by individual investors yesterday, as a percent of total
+daily share volume (RET
+AIL NETBUY t−1). This measure is also motivated by
+the results in Barber and Odean. Their ﬁnding that individual investors are net
+buyers of attention-grabbing stocks suggests that stocks with high net retail buy-
+ing have (almost by deﬁnition) attracted the attention of retail investors.
+We also use the abridged sample of NASDAQ stocks over the period from
+1997 to 2001 to compute 3 measures of the intensity of net buying by retail
+investors near the day’s open:
+NetBuy Open t = the mean proportion of stocks on day t for which
+the 1st trade of the day is a purchase by a retail
+investor, minus 0.5;
+NetBuy 15Min it = (Net Retail Buy V olume in 1st 15 min)/
+(Total Retail V olume in 1st 15 min);
+NetBuy DIFF it = [(Net Retail V olume in 1st hour) − (Net Retail
+V olume in last 5.5 hours / 5.5)]/(shares outstanding);
+11On days when a cash dividend or a stock split becomes effective at the open, we adjust the TAQ
+data on opening and closing prices using Center for Research in Security Prices (CRSP) data on the
+amount of the cash dividend or the multiple of the stock split. The adjusted opening and closing prices
+are then used to compute each daily return measure.
+12Quotes are dropped from our analysis if their “mode” designation indicates that they are not
+normal quotes, or if the reported ask price is greater than 1.5 times the reported bid price. In addition,
+we omit the daily return if i) the bid-ask spread at the open or close is negative, ii) the opening or
+closing spread is greater than $5.00 or 30% of the midpoint quote, iii) the effective half spread is
+greater than $2.50 or 15% of the midpoint quote, or iv) the daily open is more than 25% greater (or
+less) than both the previous close and the subsequent close. We also drop all daily returns for a ﬁrm if
+daily quotes are missing for more than 25% of all trading days for that ﬁrm.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+Berkman, Koch, Tuttle, and Zhang 721
+where Net Retail Buy V olume it = the net number of shares of stock i
+bought by retail investors over
+each time frame, on day t;
+and Total Retail V olume
+it = the total number of shares of stock i
+traded by retail investors over
+each time frame, on day t.
+The 1st variable deﬁned previously measures the “net” tendency for the 1st trade
+of the day to be a purchase by a retail investor. The next variable reﬂects the ﬂow
+of net purchase volume by retail investors as a percent of total retail share vol-
+ume over the ﬁrst 15 minutes of the trading day. The last variable captures the
+difference between the rate of net retail buying during the 1st hour and the hourly
+rate of net retail buying during the rest of the trading day, as a percent of shares
+outstanding.
+13
+Next, following Asquith et al. (2005), we consider 2 proxies for short sale
+constraints: institutional ownership and relative short interest. Data on institu-
+tional holdings are from CDA Spectrum 13F ﬁlings. Each quarter, we compute
+the percentage institutional ownership (INST
+t) for every ﬁrm as aggregate shares
+held by institutions scaled by shares outstanding. If a stock is available in CRSP
+but has no information on institutional holdings, we assume that the stock has zero
+institutional ownership (see Asquith et al. (2005), Gompers and Metrick (2001),
+and Nagel (2005)). Our 2nd proxy for short sale constraints is relative short in-
+terest (RSI
+t), measured by the total number of shares sold short as a percent of
+shares outstanding, using monthly data on short interest from the NYSE and the
+NASDAQ.
+Finally, we use 3 measures of transaction costs: the percentage spread at the
+open (SPR(OPEN)
+t) and at the close (SPR(CLOSE)t) and the percentage effective
+half spread (SPREAD t).14
+III. Descriptive Statistics and Intraday Price Patterns
+A. Descriptive Statistics for Overnight Returns and Trading Day Returns
+In Panel A of Table 1, we report the mean and median values for overnight
+returns, trading day returns, and 24-hour returns across all ﬁrms and days in the
+sample. Note that the average number of ﬁrms each day varies from 2,447 to 2,604
+across the different measures of daily returns considered. This number is less than
+the 3,000 largest U.S. stocks used as the initial sample, because daily opening or
+13We have also analyzed net retail buy volume over the 1st minute and the ﬁrst 5 minutes of the
+trading day. Analysis of these variables yields similar results to the measures deﬁned here.
+14For every trade, the percentage effective half spread is deﬁned as the absolute difference between
+the trade price and the quote midpoint, as a percent of the quote midpoint. Trades are matched to
+quotes with a lag of 1 second and then averaged to get the day’s percentage effective half spread. Our
+choice of a 1-second lag is taken from the NASDAQ Economic Research Ofﬁce, which argues that
+this lag is optimal to match trades and quotes in its automated electronic system. Our results are not
+affected by this choice (see Lee and Ready (1991), Bessembinder (2003)).
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+722 Journal of Financial and Quantitative Analysis
+closing quotes are sometimes invalid or unavailable for some of the smaller stocks
+(see footnote 12 for details of our screening procedure).
+Standard t-tests applied to these mean returns could be biased due to cross-
+correlation of daily returns across ﬁrms on the same date (Bernard (1987)). In
+our analysis we adjust our standard errors for this possibility. Speciﬁcally, for
+each of the 3,268 trading days in our 13-year sample period, we ﬁrst compute
+the cross-sectional mean (or median) overnight and trading day returns across all
+stocks in the sample. We then compute the time-series average of these cross-
+sectional mean (or median) returns across all trading days in the sample period.
+The corresponding t-statistics are based on the standard errors of the time-series
+mean returns.
+Results on the left side of Panel A in Table 1 indicate a signiﬁcant positive
+mean overnight return (CTO) of approximately +10 bp per day, and a signiﬁcant
+negative trading day reversal (OTC) of −7 bp per day, when averaged across all
+ﬁrms and days. As a result, the mean return on a strategy that is long the sample
+stocks during the overnight period and short the same stocks during the subse-
+quent trading day (DIFF) would be +17 bp per day, before deducting transaction
+costs. On the other hand, when we subtract the average bid-ask spread at the daily
+TABLE 1
+Descriptive Statistics and Correlations across Variables
+We apply our analysis to 2 major samples. Our main analysis is applied to the subsample of the 3,000 largest U.S. stocks
+each year with nonmissing TAQ data on quotes, over the 13-year period 1996–2008. We also analyze an abridged sam-
+ple of all NASDAQ ﬁrms for which data on intraday retail trading activity are available, over the period 1997–2001. The
+focus of this study is on percentage overnight and trading day returns, measured as 100 × the log of the price relative
+using quote midpoints at the open and the close: CTO = close-to-open (overnight) return and OTC = open-to-close
+(trading day) return. We also analyze the difference between overnight and trading day returns (DIFF = CTO− OTC),
+as well as this same difference after deducting transaction costs measured as the average spread at the day’s open and
+close: DIFF − TC = DIFF− [SPR(OPEN) + SPR(CLOSE)] / 2. In addition, we examine daily returns measured over the
+24-hour periods from close-to-close and from open-to-open: CTC and OTO. We consider 2 alternative proxies for retail
+investor attention: i) VOL t−1 = the squared 24-hour (close-to-close) return yesterday, and ii) RETAIL NETBUY t−1 =
+the net number of shares bought by retail investors yesterday, as a percent of total share volume. Next, we compute
+3 measures of the intensity of net retail buying near the open: NetBuy Open = the mean proportion of stocks each day
+for which the 1st trade of the day is a purchase by a Retail Trader, minus 0.5; NetBuy 15Min = (Net Retail Buy Volume)
+/ (Total Retail Share Volume), over the ﬁrst 15 minutes of the trading day; NetBuy Diff = [(Net Retail Buy Volume in 1st
+Hour)− (Net Retail Buy Volume in Last 5.5 Hours / 5.5)] / (shares outstanding). The last measure deﬁned above represents
+the difference between the hourly rate of net buying by retail investors during the 1st hour of trading and the analogous
+hourly rate during the rest of the trading day, as a percent of shares outstanding. We also consider 2 proxies for short sale
+constraints and 3 measures of transaction costs. Our 2 proxies for short sale constraints are i) the percent of institutional
+ownership (INST), and ii) relative short interest (RSI), measured as the number of shares sold short each month divided by
+shares outstanding. Our 3 measures of daily transaction costs include i) the bid-ask spread as a percent of the quote mid-
+point at the open (SPR(OPEN)), ii) the analogous percent spread at the close (SPR(CLOSE)), and iii) the daily effective half
+spread (SPREAD). Finally, ﬁrm size (SIZE) is proxied by daily market capitalization. The descriptive statistics in Panels A
+and B are calculated by ﬁrst computing the cross-sectional mean (or median) each day, and then averaging these means
+(or medians) across all days in the sample period. The standard deviation of the time-series average across daily means
+is then used to construct the
+t-test for each statistic in Panels A and B. Similarly, the Spearman correlations in Panel C
+are calculated by ﬁrst computing the cross-sectional correlation each day, and then averaging these correlations across
+all days in the sample. Once again, the standard deviation of the time-series average correlation is used to construct the
+t-test for each average correlation in Panel C. * and ** indicate signiﬁcance at the 5% and 1% levels, respectively.
+Panel A. Descriptive Statistics for Overnight (Close-to-Open) Returns, Trading Day (Open-to-Close) Returns, and
+24-Hour Returns
+Overnight and Trading Day Returns 24-Hour Returns
+CTO OTC DIFF DIFF – TC CTC OTO
+Mean (%) 0.098 −0.066 0.165 −0.708 0.031 0.028
+Median (%) 0.045 −0.061 0.108 −0.618 −0.016 −0.027
+T (H0 : Mean = 0) 5.2** −3.3** 6.1** −24.8** 1.1 1.2
+Avg. no. of ﬁrms per day 2,447 2,460 2,447 2,383 2,447 2,604
+(continued on next page)
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+Berkman, Koch, Tuttle, and Zhang 723
+TABLE 1 (continued)
+Descriptive Statistics and Correlations across Variables
+Proxies for Attention Net Retail Buying Near the Open Short Sale Constraints Transaction Costs Firm Size
+1st 1st (1st Hour –
+Trade 15-Min Rest)
+RETAIL NetBuy NetBuy NetBuy SPR SPR
+VOL
+t−1 NETBUY
+t−1 Open 15Min DIFF INST RSI (OPEN) (CLOSE) SPREAD SIZE ($000)
+Panel B. Descriptive Statistics for Attention, Net Retail Buying Near the Day’s Open, Short Sale Constraints, Transaction Costs, and Firm
+Size
+Mean (%) 0.127 0.000 0.004 0.024 0.025 0.520 0.038 1.057 0.619 0.173 5,210,818
+Median (%) 0.059 0.136 0.052 0.038 0.004 0.532 0.022 0.724 0.407 0.123 1,109,367T (H0: Mean = 0) 31.3** −0.3 3.4** 15.4** 26.2** 214.6** 101.1** 83.6** 68.3** 81.1** 175.8**
+Avg. no. of ﬁrms per day 2,602 401 161 310 400 2,681 2,681 2,616 2,619 2,463 2,534Panel C. Spearman
+Correlations
+VOL
+t−1 1.000
+RETAIL NETBUY
+t−1 0.062** 1.000
+NetBuy Open 0.002 0.038** 1.000
+NetBuy 15Min 0.004** 0.085** 0.465** 1.000
+NetBuy DIFF 0.027** 0.051** 0.135** 0.369** 1.000
+INST 0.082** 0.004** 0.006** 0.010** 0.025** 1.000
+RSI 0.358** 0.044** 0.006** 0.003 0.034** 0.390** 1.000
+SPR(OPEN) 0.173** −0.027** −0.006** −0.009** −0.043** −0.136** −0.073** 1.000
+SPR(CLOSE) 0.158** −0.025** −0.005** −0.007** −0.044** −0.189** −0.126** 0.465** 1.000
+SPREAD 0.332** −0.021** −0.001 −0.008** −0.052** −0.283** −0.084** 0.569** 0.570** 1.000
+SIZE −0.223** 0.030** 0.001 0.009** 0.051** 0.163** 0.008 −0.563** −0.531** −0.705** 1.000
+CTO 0.055** 0.058** 0.038** 0.028** 0.016** −0.011** 0.020** 0.021** 0.006** 0.020** −0.017**
+OTC −0.044** −0.020** 0.000 −0.006** 0.051** 0.009** −0.023** −0.005** −0.018** −0.024** 0.029**
+DIFF 0.056** 0.037** 0.011** 0.011** −0.045** −0.011** 0.027** 0.009** 0.017** 0.025** −0.028**
+DIFF – TC 0.000 0.037** 0.010** 0.011** −0.040** 0.040** 0.061** −0.203** −0.166** −0.134** 0.119**
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+724 Journal of Financial and Quantitative Analysis
+open and close, we obtain a signiﬁcant negative mean difference after transaction
+costs (DIFF – TC) of −71 bp. Note that the median value of the overnight return
+in Panel A of Table 1 (CTO) is somewhat smaller than the mean, while the me-
+dian trading day return in Panel A (OTC) is approximately the same as the mean.
+Finally, the 24-hour return (i.e., the sum of CTO and OTC) is close to 3 bp per
+day, which corresponds to around 8% per annum.
+B. Descriptive Statistics for the Main Variables
+Panel B of Table 1 provides descriptive statistics for the main variables in
+the study. First consider our 2 proxies for retail attention. The average squared
+close-to-close return (VOL
+t−1) is 0.127%, while the mean daily retail net buying
+(RETAIL NETBUY t−1) is not signiﬁcantly different from 0. The latter result in-
+dicates that, during the 1997–2001 sample period, there was no substantive shift
+in ownership of NASDAQ stocks between retail and institutional investors.
+Next we present 3 measures of the intensity of retail net buying near the day’s
+open (NetBuy Open, NetBuy 15Min, and NetBuy DIFF). These mean values are
+signiﬁcantly positive, indicating that retail investors tend to be net buyers of stocks
+at the open, and during the ﬁrst 15 minutes of the trading day. In addition, the rate
+of net retail buying in the 1st hour is signiﬁcantly greater than the analogous
+hourly rate over the rest of the trading day.
+Finally, consider our measures of short sale constraints and transaction costs.
+We ﬁnd that mean institutional ownership (INST) is 52% of shares outstanding.
+This number is higher than the 34% reported in Nagel (2005), because our sample
+is limited to larger ﬁrms. Relative short interest averages 3.8% of shares outstand-
+ing across all stocks and days in the sample, similar to that reported in Asquith
+et al. (2005). The average spread at the open is 1.06% of the quote midpoint, while
+the average spread at the close is 0.62%, and the mean effective half spread is
+0.17%. Finally, the average ﬁrm has a market capitalization of $5.21 billion. Note
+that the medians for several variables in Panel B are smaller than their correspond-
+ing means, indicating some degree of positive skewness for these ﬁrm attributes.
+C. Correlations across the Main Variables
+In Panel C of Table 1 we report the average Spearman correlation across each
+pair of variables.
+15 These correlations are generally consistent with our expecta-
+tions. First, note that our 2 proxies for retail investor attention have a signiﬁcant
+positive correlation of 6%. Second, both proxies are positively correlated with our
+measures of net retail buying pressure near the open. Third, both attention mea-
+sures are positively correlated with the overnight return (CTO), and negatively
+correlated with the trading day return (OTC). All of this evidence is consistent
+with an upwardly biased opening price for stocks that are subject to higher atten-
+tion by retail investors.
+15Spearman correlations are applied to reduce the inﬂuence of outliers. Pearson correlations yield
+similar results.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+Berkman, Koch, Tuttle, and Zhang 725
+Fourth, consider the association between our proxies for short sale con-
+straints and stock returns during the overnight period versus the trading day period.
+The percent of institutional ownership (INST) is signiﬁcantly and negatively cor-
+related with the overnight return (CTO) and positively correlated with the trading
+day return (OTC), while the opposite tendencies are apparent for RSI. This out-
+come suggests that stocks subject to more binding short sale constraints (i.e., with
+lower institutional ownership or higher short interest) tend to have larger overnight
+returns and trading day reversals. This result is also consistent with predictions
+based on our theory of attention-based overpricing at the open.
+Fifth, the spread measures are positively correlated with the overnight return
+and negatively correlated with the trading day return, indicating a tendency for
+larger overnight returns and trading day reversals for stocks with higher transac-
+tion costs. In addition, the spread measures are negatively correlated with ﬁrm
+size and institutional holdings, as expected.
+Finally, ﬁrm size is negatively related to overnight returns (OTC) and pos-
+itively related to trading day returns (CTO). This outcome suggests that smaller
+ﬁrms have a tendency for larger positive overnight returns and trading day re-
+versals. In addition, ﬁrm size is negatively correlated with one of our attention
+proxies (VOL
+t−1) and positively correlated with institutional ownership (INST)
+and our 2nd attention proxy (RET AIL NETBUY t−1). This evidence reinforces
+the need to control for size when we analyze the inﬂuence of institutional owner-
+ship or retail investor attention on daily returns in our analysis (see Nagel (2005)).
+D. The Intraday Price Pattern
+The descriptive statistics in Table 1 raise the question of whether this aver-
+age positive overnight return and negative trading day reversal are due to a high
+opening price, a low closing price, or both. We address this issue by examining
+the pattern in prices throughout the trading day. For each stock, we collect data on
+intraday midquotes at 30-minute intervals. In addition, we gather the midquotes
+at 5-minute intervals during the ﬁrst and last 30 minutes of the trading day. Then,
+at each 5- or 30-minute interval ( T), we construct the ratio of the midquote at that
+time to the day’s closing midquote.
+16 We then ﬁnd the average of each intraday
+price ratio across all stocks every day. Finally, we compute the time-series mean
+of these cross-sectional average price ratios for all days in the sample period.
+Figure 1 plots the intraday pattern in this average ratio of the midquote at
+each intraday time T to the closing midquote, across all stocks and days in the
+sample, along with the 95% conﬁdence interval about a ratio of 1. Note that this
+conﬁdence interval collapses to 0 at the close, when the price ratio equals 1 for
+all ﬁrms. This intraday price pattern reveals that, on average, the opening price is
+signiﬁcantly higher than the closing price by approximately 8 bp (i.e., the opening
+price ratio = 1.0008). After the open, the price declines during the ﬁrst 60 minutes
+of trading to within the 95% conﬁdence interval about 1 and then levels off during
+16We choose the closing price to scale intraday price ratios because our main analysis focuses on
+open-to-close and close-to-open returns. Scaling by the average midquote between 11 AM and 3 PM
+yields similar results.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+726 Journal of Financial and Quantitative Analysis
+FIGURE 1
+Intraday Price Pattern: Ratio of Midquote at Intraday Time (T ) to the Closing Midquote
+across the 3,000 Largest U.S. Stocks and All Days (1996–2008)
+This intraday price pattern traces out the ratio of the midquote at different times ( T) during the trading day, relative to
+the closing midquote. These intraday price ratios are computed for each stock at 5-minute intervals over the ﬁrst and last
+30 minutes of the trading day, and at 30-minute intervals over the rest of the trading day. First, for each day we average
+this price ratio at every intraday time (
+T ) across all stocks in the sample. Second, we compute the time-series mean of
+these daily cross-sectional averages across all days in the sample period. The 95% conﬁdence interval about a ratio of
+1.0 is constructed using the standard error of the time-series mean across all days, at each time ( T ).
+the middle of the day, before rising somewhat during the last few minutes of
+trading. This intraday pattern is consistent with the implications of our attention-
+based explanation, indicating that prices near the open tend to be high relative to
+subsequent intraday prices.
+17
+IV. Main Empirical Tests
+A. Investor Attention and the Intensity of Net Retail Buying Near
+the Open
+Our 1st hypothesis is that high-attention days are followed by high net retail
+buying at the start of the next trading day. We test this hypothesis by comparing
+our 3 measures of the intensity of net retail buying near the open (NetBuy Open,
+NetBuy 15Min, and NetBuy DIFF) across portfolios partitioned by our proxies
+for attention, while controlling for ﬁrm size. These results appear in the ﬁrst
+3 columns of Table 2.
+In this approach we consider each trading day as a separate event. For each
+day, we control for ﬁrm size by initially sorting all ﬁrms into size terciles, based on
+the ﬁrm’s mean market capitalization over the previous 20 trading days.
+18 Then,
+within each size tercile, we form 3 ﬁner portfolios by independently sorting based
+on each proxy for attention: VOL
+t−1 or RETAIL NETBUY t−1. Our size-adjusted
+17In tests not reported here, we investigate whether overnight liquidity risk can explain these
+overnight return patterns, in the spirit of Acharya and Pedersen (2005) and Pastor and Stambaugh
+(2003). According to this theory, investors are willing to pay less at the daily close for stocks subject
+to greater overnight liquidity risk, measured by a stock’s sensitivity to overnight changes in market liq-
+uidity. We ﬁnd no evidence that stocks with greater overnight liquidity risk have lower closing prices,
+or greater overnight returns.
+18Results are robust when we do not control for size in this partitioning scheme.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+Berkman, Koch, Tuttle, and Zhang 727
+TABLE 2
+Net Retail Buying Near the Open of the Trading Day, Overnight Returns, Trading Day
+Returns, and 24-Hour Returns across Portfolios Sorted by Our 2 Proxies for Retail Investor
+Attention: Return Volatility and Net Retail Buying Y esterday
+Columns 1 and 2 of Table 2 present information about the intensity of net retail buying at the open and during the ﬁrst
+15 minutes of the trading day, respectively:
+(Column 1) NetBuy Open = the mean proportion of stocks each day for which the 1st trade of the day is a
+purchase by a Retail Trader, minus 0.5.
+(Column 2) NetBuy 15Min = (Net Retail Buy Volume) / (Total Retail Share Volume), over the ﬁrst 15 minutes
+of the trading day.
+In column 3 we report the difference between the hourly rate of net buying by retail investors during the 1st hour of trading
+and the analogous hourly rate during the rest of the trading day, as a percent of shares outstanding. This measure is
+deﬁned as follows:
+(Column 3) NetBuy DIFF = [(Net Retail Buy Volume in 1st Hour)
+− (Net Retail Buy Volume in Last 5.5 Hours / 5.5)] / (shares outstanding).
+In columns 4–6, we give the mean returns over 3 time frames: overnight (close-to-open (CTO)), trading day (open-to-close
+(OTC)), and 24 hours (close-to-close (CTC)). We report all of these measures for a 3 × 1 scheme of portfolios where
+stocks are partitioned each day into terciles by the level of retail investor attention. For every portfolio, we ﬁrst compute
+the mean value of each measure across ﬁrms every day, and then average these cross-sectional means across all days
+in the sample. * and ** indicate signiﬁcance at the 5% and 1% levels, respectively.
+aThese measures of net retail buying
+near the open are computed for all NASDAQ stocks (1997–2001).
+Panel A. Using Return Volatility Yesterday (VOL t−1 ) to Proxy for Retail Investor Attention: 3,000 Largest U.S. Stocks
+(1997–2001)
+12 3 4 5 6
+NetBuy Open a NetBuy 15Min a NetBuy DIFF a Overnight Trading Day 24-Hour
+Attention 1st Trade 1st 15-Min (1st Hour – Rest) CTO OTC CTC
+Low −0.003 0.018** 0.014 0.030** −0.030 0.000
+Medium 0.002 0.022** 0.021 0.040** −0.050* 0.000
+High 0.012** 0.030** 0.045** 0.130** −0.130** 0.010
+High− Low 0.015 0.012 0.031 0.110 −0.100 0.010
+t-statistic 6.2** 4.3** 10.9** 7.7** −3.1** 0.1
+Panel B. Using Retail Net Buying Yesterday (RETAIL NETBUY t−1 ) to Proxy for Retail Investor Attention: NASDAQ
+Stocks (1997–2001)
+12 3 4 5 6
+NetBuy Open NetBuy 15Min NetBuy DIFF Overnight Trading Day 24-Hour
+Attention 1st Trade 1st 15-Min (1st Hour – Rest) CTO OTC CTC
+Low −0.017** −0.034** −0.004** 0.040* −0.120* −0.080
+Medium 0.004* 0.024** 0.020** 0.160** −0.160** 0.000
+High 0.024** 0.079** 0.060** 0.260** −0.270** 0.000
+High− Low 0.041 0.113 0.064 0.220 −0.150 0.070
+t-statistic 18.8** 37.4** 24.3** 6.8** −2.1* 0.7
+high-attention portfolio each day thus contains the top 1/3 of stocks by either atten-
+tion proxy, within each size tercile. We then compute the cross-sectional means of
+our 3 measures of the intensity of net retail buying near the open, for each portfo-
+lio based on low, medium, or high size-adjusted retail investor attention. Finally,
+we average these cross-sectional means across all days in the sample period. The
+t-statistics are based on the Newey-West (1987) adjusted standard errors of the
+time-series means.
+The ﬁrst 3 columns in Panel A of Table 2 present our 3 measures of the
+average intensity of net retail buying near the open, for portfolios based on low,
+medium, or high attention, where the level of retail investor attention is proxied
+by return volatility yesterday (VOL
+t−1). The ﬁrst 3 columns of Panel B present
+the analogous results using net retail buying yesterday (RET AIL NETBUY t−1)
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+728 Journal of Financial and Quantitative Analysis
+to proxy for attention. In both Panels A and B, all 3 measures are signiﬁcantly
+positive for the subsample of high-attention stocks. Furthermore, the difference
+of means across portfolios with high versus low attention is always signiﬁcantly
+positive at the 1% level. Together, these results conﬁrm our 1st hypothesis, in-
+dicating that i) the intensity of retail buying near the open of the trading day is
+signiﬁcantly greater for high-attention stocks than for low-attention stocks, and
+ii) the intensity of retail buying of high-attention stocks is signiﬁcantly greater
+during the 1st hour than it is during the rest of the trading day.
+19
+B. Investor Attention and Overnight and Trading Day Returns
+Our 2nd hypothesis predicts that this attention-triggered retail buying pres-
+sure at the open should result in opening prices that are high relative to prices
+during the rest of the trading day. We test this hypothesis by comparing the
+overnight and trading day returns across portfolios based on low, medium, or
+high attention. Results appear in the next 2 columns of Table 2.
+Panels A and B of Table 2 both reveal a strong tendency for positive mean
+overnight returns and negative trading day reversals, which increase in magni-
+tude and signiﬁcance as we consider stocks subject to higher levels of attention.
+In Panel A, when we analyze the main sample of the 3,000 largest U.S. stocks,
+we ﬁnd that the mean overnight return (trading day reversal) for the high-attention
+portfolio is +13 bp (−13 bp) per day. In contrast, the analogous results for the sub-
+sample of low-attention stocks in Panel A are much smaller, at only +3 ( −3) bp
+per day. In Panel B, when we analyze the abridged sample of NASDAQ stocks, the
+analogous results for the high-attention portfolio are larger in magnitude, averag-
+ing +26 ( −27) bp per day. Once again, the subsample of low-attention NASDAQ
+stocks in Panel B has much smaller means, at +4 ( −12) bp per day. In both panels,
+the mean difference t-test indicates that the overnight return (trading day reversal)
+is signiﬁcantly larger for the portfolio of stocks subject to high retail attention.
+Finally, it is noteworthy that the mean 24-hour close-to-close return in the
+last column of Table 2 is not signiﬁcantly different from 0 for any portfolio in
+Panels A or B. This result indicates that the signiﬁcant overnight return patterns
+in Panels A and B represent a temporary mispricing at the open, which tends to
+be corrected during the course of the typical trading day.
+C. Investor Attention, Overnight and Trading Day Returns, and
+Institutional Ownership
+In this section we consider the role of institutional ownership in concert with
+our proxies for retail investor attention. Stocks with low institutional ownership
+necessarily have a high concentration of retail investors and are also difﬁcult
+to short sell. For these stocks, we expect greater upward price pressure at the
+open on days following news that attracts the attention of retail investors (prox-
+ied by yesterday’s return volatility or net retail buying). We test this hypothesis
+19Using net retail buy volume over the 1st minute or the ﬁrst 5 minutes of the trading day yields
+robust results.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+Berkman, Koch, Tuttle, and Zhang 729
+by expanding our portfolio approach to compare average overnight and trading
+day returns across portfolios of ﬁrms that are independently partitioned along 2
+dimensions (the level of retail investor attention and institutional ownership),
+while controlling for ﬁrm size.
+As before, we control for ﬁrm size by initially sorting all ﬁrms into terciles
+based on the ﬁrm’s mean market capitalization over the previous 20 days. Then,
+within each size tercile, we form 3 ﬁner portfolios by independently sorting based
+on i) the percentage of institutional ownership at the end of the previous quar-
+ter (INST) or ii) each proxy for retail attention yesterday (VOL
+t−1 or RETAIL
+NETBUYt−1). This procedure results in a 3 × 3 scheme of portfolios, sorted by
+size-adjusted institutional ownership and each proxy for retail attention.
+Results are provided in Table 3. Panel A analyzes the main sample and uses
+yesterday’s squared return (VOL t−1) to proxy for retail investor attention at the
+open. This panel presents three 3 × 3 schemes of double-sorted portfolios that
+provide the mean overnight returns, trading day returns, and 24-hour returns,
+respectively. On average, there are 261 stocks in each of the 9 portfolios within
+every double-sorted partitioning scheme in Panel A.
+First, consider the mean overnight returns (CTO) from the left 3 × 3 scheme
+in Panel A of Table 3. All portfolios in this scheme have positive mean overnight
+TABLE 3
+Overnight Returns, Trading Day Returns, and 24-Hour Returns across Portfolios
+Double-Sorted by Proxies for Retail Investor Attention Y esterday and InstitutionalOwnership
+Table 3 reports mean overnight returns (close-to-open (CTO)), trading day returns (open-to-close (OTC)), and 24-hour
+returns (close-to-close (CTC)) for a 3 × 3 scheme of portfolios partitioned each day into terciles along 2 dimensions.
+The portfolios in each row are sorted according to a low, medium, or high level of retail investor attention yesterday; the
+columns are sorted by institutional ownership in the previous quarter. In Panel A we proxy retail investor attention using
+stock return volatility lagged 1 day. In Panel B we use the net number of shares bought by retail investors all day yesterday,
+as a percent of total share volume. For every portfolio in each 3 × 3 scheme, we ﬁrst compute the mean return across
+ﬁrms every day, and we then average these cross-sectional means across all days in the sample period. * and ** indicate
+statistical signiﬁcance at the 5% and 1% levels, respectively.
+a On average, there are 261 ﬁrms in the portfolio for each cell
+of these 3× 3 partitioning schemes. bOn average, there are 90 ﬁrms in the portfolio for each cell of these 3 × 3 partitioning
+schemes.
+Panel A. Using Stock Return Volatility Yesterday to Proxy for Retail Investor Attention: 3,000 Largest
+U.S. Stocks (1996–2008) a
+Retail Investor Attention Overnight Return (CTO%) Trading Day Return (OTC%) 24-Hour Return (CTC%)
+Stock Return Volatility Institutional Ownership Institutional Ownership Institutional Ownership
+Yesterday Low Medium High Low Medium High Low Medium High
+Low 0.03** 0.02** 0.02** −0.03* −0.03 −0.03 0.00 0.00 0.00
+Medium 0.05** 0.04** 0.04** −0.06** −0.04 −0.04 −0.01 0.01 0.00
+High 0.17** 0.13** 0.10** −0.17** −0.12** −0.09** 0.00 0.01 0.01
+High− Low 0.13 0.11 0.08 −0.13 −0.09 −0.07 0.00 0.02 0.01
+t-statistic 8.9** 7.7** 5.8** −4.0** −2.7** −2.0* 0.0 0.4 0.3
+Panel B. Using Net Retail Buying Yesterday to Proxy for Retail Investor Attention: NASDAQ Stocks (1997–2001) b
+Retail Investor Attention Overnight Return (CTO%) Trading Day Return (OTC%) 24-Hour Return (CTC%)
+Net Retail Buying Institutional Ownership Institutional Ownership Institutional Ownership
+Yesterday Low Medium High Low Medium High Low Medium High
+Low 0.09** 0.06* 0.02 −0.19** −0.15** −0.09 −0.09 −0.09 −0.07
+Medium 0.23** 0.18** 0.13** −0.28** −0.21** −0.10 −0.06 −0.03 0.02
+High 0.34** 0.31** 0.24** −0.42** −0.30** −0.22** −0.08 0.01 0.02
+High− Low 0.24 0.25 0.22 −0.23 −0.15 −0.13 0.01 0.10 0.09
+t-statistic 6.4** 7.1** 6.5** −2.9** −2.0* −1.7 0.1 1.1 1.0
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+730 Journal of Financial and Quantitative Analysis
+returns, whose magnitudes increase with the level of retail investor attention. The
+bottom row of portfolios contains the largest means in this scheme, indicating
+that stocks with high retail attention tend to have the largest overnight returns.
+The mean difference t-test at the bottom of every column indicates that stocks
+with high retail attention signiﬁcantly outperform stocks with low retail attention
+during the overnight period, conditional on institutional ownership. In addition,
+the left column of each scheme contains the largest element in every row, indicat-
+ing that stocks with low institutional ownership tend to have the largest overnight
+returns. Finally, the bottom left corner cell contains stocks that are most prone to
+overpricing at the open, as they are subject to both high retail attention and low
+institutional ownership. The stocks in this cell have the largest mean overnight re-
+turn, which averages +17 bp per day. In contrast, the top right corner cell contains
+stocks that are least prone to overpricing at the open, with low retail attention
+and high institutional ownership. The stocks in this cell have the smallest mean
+overnight return, at only +2 bp per day.
+Second, consider the trading day returns (OTC) from the middle 3×3 scheme
+in Panel A of Table 3. All portfolios in this scheme have negative mean trading day
+reversals, whose magnitudes increase with the level of retail attention. However,
+these mean trading day reversals are only signiﬁcant for portfolios in the bot-
+tom row, among stocks with high attention, or in the left column, among stocks
+with low institutional ownership. Here the mean difference t-test for every column
+shows that stocks with high retail attention signiﬁcantly underperform stocks with
+low attention during the trading day. In addition, the bottom left corner cell now
+contains the largest negative mean trading day reversal in the scheme, at −17 bp
+per day, while the top right corner cell contains the smallest negative trading day
+reversal, at only −3 bp per day.
+Third, the last 3 × 3 scheme in Panel A of Table 3 reinforces the result
+from the last column of Table 2, showing that attention-based overpricing at the
+open is a short-term intraday phenomenon. Even for the most overpriced stocks
+(subject to high retail attention and low institutional holdings), the signiﬁcant
+price inﬂation at the open is completely reversed during the trading day, so that
+the mean close-to-close return is not signiﬁcantly different from 0.
+Next consider the results in Panel B of Table 3, which analyze the abridged
+sample of NASDAQ stocks during 1997–2001 and use net retail buying yesterday
+to proxy for attention. These results are consistent with those in Panel A, although
+the price inﬂation at the open is substantially larger in magnitude for the abridged
+sample. In the ﬁrst 3 × 3 scheme of Panel B, the mean overnight return for stocks
+most prone to overpricing at the open (i.e., the bottom left corner cell) is now
++34 bp per day. This result contrasts with the top right corner cell, which contains
+the smallest mean overnight return, at only 2 bp per day. Similarly, in the second
+3 × 3 scheme of Panel B, the mean trading day reversal for the bottom left corner
+cell is −42 bp, but it is only −9 bp for the top right corner cell. Once again, the
+third 3 × 3 scheme of Panel B contains mean 24-hour returns that are smaller in
+magnitude and never signiﬁcantly different from 0.
+One likely reason for the stronger intraday price pattern for the abridged
+sample of NASDAQ stocks during 1997–2001, in Panel B of Table 3, is that this
+period represents a time of high investor sentiment (e.g., see Baker and Wurgler
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+Berkman, Koch, Tuttle, and Zhang 731
+(2006) and Section V). Furthermore, NASDAQ stocks as a group tend to have
+lower institutional ownership and are generally more volatile, more difﬁcult to
+value, and more costly to arbitrage. We investigate these issues next.
+D. Stocks that Are Difﬁcult to Value and Costly to Arbitrage
+This section further addresses our 2nd hypothesis by examining the relation
+between overpricing at the open and variables that proxy for the difﬁculty in valu-
+ing a stock, and the costs of arbitrage. Both of these attributes of a stock are likely
+to exacerbate the extent of overpricing at the open found in Table 3 (see Baker
+and Wurgler (2006), Kumar and Lee (2006)). To this end, Table 4 reproduces the
+analysis in each panel of Table 3, after restricting the samples used in Table 3 to
+focus on ﬁner subsamples of stocks each day that are harder to value and more
+costly to arbitrage: i) We limit the sample to the 50% of ﬁrms each day with the
+highest return volatility over the previous 20 trading days, to represent stocks that
+are hard to value;
+20 ii) we narrow this focus by considering the 50% of the hard-
+to-value ﬁrms in i) with the highest mean effective half spread over the previous
+20 trading days;
+21 and iii) we further conﬁne the sample each day to the 20% of
+the hard-to-value, high-transaction-cost ﬁrms in ii) with the highest relative short
+interest during the previous month.
+22
+Panel A of Table 4 presents the results after applying all 3 restrictions above
+on the main sample, using volatility yesterday (VOL t−1) to proxy for retail in-
+vestor attention. Panel B presents the analogous results for the abridged sample,
+using net retail buying yesterday (RET
+AIL NETBUY t−1) to proxy for attention.
+First consider the results in Panel A of Table 4. After applying restrictions
+i)–iii) on the main sample, there are an average of 13 stocks within every double-
+sorted portfolio each day. The resulting 3 × 3 schemes in Panel A follow the same
+pattern as those in Table 3, although the positive overnight returns and negative
+trading day reversals are much larger in magnitude, as predicted. In particular, the
+bottom left corner cell of the 1st (2nd) 3 × 3 scheme in Panel A now reveals a
+mean overnight return (trading day reversal) of +43 ( −45) bp.
+Second, Panel B of Table 4 presents the analogous results for the abridged
+sample of NASDAQ stocks over the period from 1997 to 2001. After applying re-
+strictions i)–iii) on the abridged sample, there are now an average of 5 ﬁrms within
+every double-sorted portfolio each day. The resulting 3 × 3 schemes in Panel B
+follow the same pattern, although the positive overnight returns and negative trad-
+ing day reversals are much larger. In particular, the bottom left corner cell of the
+20Baker and Wurgler (2006) argue that recent volatility is a good proxy for the difﬁculty in valuing
+stocks. We have also used the ﬁrm’s book-to-market (B/M) ratio from the previous quarter as an
+alternative measure of this aspect of a stock. Results are consistent with those using return volatility
+over the past month and are summarized in Table 5. We also note that stocks with high volatility are
+costly to sell short, due to potential margin calls. Thus, high volatility also represents a potential limit
+to arbitrage.
+21Sadka and Scherbina (2007) propose that high transaction costs act as an additional limit to
+arbitrage, and they document that such stocks underperform over time.
+22Asquith et al. (2005) argue that stocks with both low institutional ownership and high short
+interest are subject to more binding short sale constraints.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+732 Journal of Financial and Quantitative Analysis
+TABLE 4
+Overnight Returns, Trading Day Returns, and 24-Hour Returns across Double-Sorted
+Portfolios, for Subsamples of Stocks Each Day that Are Hard to Value, with High
+Transaction Costs, and with High Short Interest
+Table 4 follows the same format as Table 3. Panel A uses yesterday’s return volatility to proxy for retail investor attention, in
+order to analyze the subsample of stocks each day i) that are hard to value (i.e., the 50% of stocks with the highest return
+volatility over the past 20 days), ii) with high transaction costs (i.e., the 50% of stocks in i) with the highest effective half
+spread), and iii) with high short interest (i.e., the 20% of stocks in ii) with the highest relative short interest). Panel B provides
+analogous results using yesterday’s net retail buying to proxy for retail attention. * and ** indicate statistical signiﬁcance at
+the 5% and 1% levels, respectively.
+a On average, there are 13 ﬁrms in the portfolio for each cell of these 3 × 3 partitioning
+schemes. b On average, there are 5 ﬁrms in the portfolio for each cell of these 3 × 3 partitioning schemes.
+Panel A. Using Stock Return Volatility Yesterday to Proxy for Retail Investor Attention: 3,000 Largest
+U.S. Stocks (1996–2008) a
+Retail Investor Attention Overnight Return (CTO%) Trading Day Return (OTC%) 24-Hour Return (CTC%)
+Stock Return Volatility Institutional Ownership Institutional Ownership Institutional Ownership
+Yesterday Low Medium High Low Medium High Low Medium High
+Low 0.15** 0.07 0.12** −0.33** −0.27** −0.18** −0.19** −0.20** −0.07
+Medium 0.22** 0.19** 0.14** −0.35** −0.24** −0.19** −0.13** −0.06 −0.05
+High 0.43** 0.39** 0.29** −0.45** −0.35** −0.30** −0.02 0.04 −0.01
+High− Low 0.28 0.32 0.18 −0.12 −0.08 −0.12 0.16 0.24 0.06
+t-statistic 8.6** 6.4** 6.0** −1.8 −1.1 −1.8 2.2* 2.7** 0.8
+Panel B. Using Net Retail Buying Yesterday to Proxy for Retail Investor Attention: NASDAQ Stocks (1997–2001) b
+Retail Investor Attention Overnight Return (CTO%) Trading Day Return (OTC%) 24-Hour Return (CTC%)
+Net Retail Buying Institutional Ownership Institutional Ownership Institutional Ownership
+Yesterday Low Medium High Low Medium High Low Medium High
+Low 0.35** 0.27** 0.10 −0.43** −0.47** −0.24* −0.08 −0.20 −0.14
+Medium 0.47** 0.46** 0.27** −0.71** −0.61** −0.43** −0.24 −0.15 −0.15
+High 0.61** 0.65** 0.49** −0.70** −0.67** −0.52** −0.09 −0.02 −0.03
+High− Low 0.26 0.38 0.39 −0.27 −0.20 −0.28 −0.01 0.18 0.11
+t-statistic 3.3** 4.8** 5.0** −1.8 −1.2 −1.9 −0.1 1.0 0.7
+1st (2nd) 3 × 3 scheme in Panel B now reveals a mean overnight return (trading
+day reversal) of +61 ( −70) bp per day.
+Together, the results in Table 4 reinforce the view that high-attention ﬁrms
+have positive overnight returns and trading day reversals that are larger in mag-
+nitude when the ﬁrm is more difﬁcult to value, transaction costs are higher, and
+short sale constraints are more binding. This evidence provides further support
+for our theory of attention-based overpricing at the open.
+23
+V. Variation over Time in Overpricing at the Open: The Role
+of Sentiment
+The previous sections establish that, for a large group of stocks subject to
+high attention and low institutional holdings, the opening price tends to be very
+high relative to intraday prices. In this section we examine how the magnitude
+23In tests not reported here, we have reproduced this analysis for each stage of this progression to
+ﬁner subsamples of stocks that are more difﬁcult to value and more costly to arbitrage, after applying
+each restriction, i)–iii), in turn. At each stage, the 3 × 3 schemes reveal progressively larger overnight
+returns and trading day reversals. Results are available from the authors.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+Berkman, Koch, Tuttle, and Zhang 733
+of this opening price inﬂation changes through time, and whether any such time
+variation in this overpricing is related to changes in investor sentiment.
+This analysis requires a time-series measure that tracks the level of retail
+investor sentiment over time. We examine 2 alternative proxies. Our 1st measure is
+the sentiment index in Baker and Wurgler (2006), (2007). This sentiment measure
+is a composite index based on the 1st principal component of 6 sentiment proxies,
+orthogonalized with respect to several macroeconomic conditions. The Baker-
+Wurgler (2006) sentiment index is available on a monthly basis from the start of
+our sample period to the end of 2007.
+24
+Our 2nd measure is the actual net buying activity of retail investors during
+the 1st hour of the trading day, as a percent of shares outstanding, averaged across
+all stocks and days during the month. This measure is motivated by the results in
+Table 2, which indicate that net retail buying near the day’s open is an effective
+proxy for cross-sectional differences in retail investor sentiment based on atten-
+tion. We refer to this measure as our retail sentiment index. The available data on
+net retail buying enable measurement of this sentiment index on a monthly basis
+for the abridged sample of NASDAQ stocks over the period from 1997 to 2001.
+Our tests in this section are designed to establish whether monthly varia-
+tion in these 2 proxies for retail investor sentiment can explain variation through
+time in the extent to which opening prices are pushed above “fundamental” values
+(i.e., values during the rest of the trading day). In order to measure the extent of
+opening price inﬂation during a given month, we ﬁrst calculate daily overnight
+and trading day returns for groups of stocks classiﬁed using the same proce-
+dures as before. That is, for each day we compute the mean overnight and trading
+day returns for the 3 × 3 scheme of portfolios sorted along 2 dimensions: size-
+adjusted institutional ownership and retail investor attention yesterday. Next, for
+each month, we calculate the mean daily overnight and trading day returns to
+measure the average daily performance of each portfolio during the overnight
+and trading day periods, respectively, throughout that month. Thus, our monthly
+overnight (trading day) return measure for each portfolio, CTO
+m (OTCm), con-
+tains the mean of daily overnight (trading day) returns during each month ( m).
+We then examine the monthly performance of a zero-cost hedge portfolio
+that is long the stocks that are most subject to inﬂation of opening prices (i.e., the
+bottom left corner portfolio in the 3 × 3 scheme) and short the stocks that are least
+subject to inﬂation of opening prices (i.e., the top right corner portfolio). That
+is, each day this hedge portfolio is long stocks with low institutional holdings
+and high attention (bottom left corner), and short stocks with high institutional
+ownership and low attention (top right corner). The monthly mean trading day
+(open-to-close) return on this hedge portfolio represents the extent to which the
+opening price exceeds the close, for stocks most prone to opening price inﬂation
+relative to stocks least prone to this overpricing. Likewise, this monthly average
+trading day return on the hedge portfolio provides one measure of changes over
+time in market-wide hidden costs associated with the tendency for retail investors
+to buy attention-grabbing stocks at the open (rather than the close).
+24For details, see Baker and Wurgler (2006). Their monthly sentiment index can be downloaded
+from Jeffrey Wurgler’s Web site (www.stern.nyu.edu/∼jwurgler).
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+734 Journal of Financial and Quantitative Analysis
+Figure 2 plots the evolution over the period from 1996 to 2009, of several
+variables that measure retail investor sentiment, the extent of overpricing at the
+open, and transaction costs. First, we plot in Figure 2 movements in the Baker-
+Wurgler (2006) sentiment index over this period. Second, we also plot the average
+return on the hedge portfolio during the overnight and trading day periods, respec-
+tively, using yesterday’s return squared as the attention proxy. Finally, we plot the
+daily average (negative value of the) effective half spread for the subsample of
+stocks most sensitive to price inﬂation at the open (i.e., stocks with low institu-
+tional ownership and high attention).
+25
+FIGURE 2
+Retail Investor Sentiment, Overnight Returns, and Transaction Costs (1996–2009)
+Figure 2 presents the evolution over the period from 1996 to 2009, of several variables that measure retail investor sentiment,
+the extent of overpricing at the open, and transaction costs. First, we report quarterly averages of the monthly “Baker-
+Wurgler (2006) Sentiment Index.” Next, for each quarter, “Overnight Returns” plots the average daily overnight (close-to-
+open) return of a zero-cost hedge portfolio that is long stocks with low institutional holdings and high attention (i.e., the
+bottom left corner of the 3 × 3 scheme in Table 3), and short stocks with high institutional ownership and low attention
+(i.e., top right corner of the scheme). “Trading Day Returns” plots the average trading day (open-to-close) return on the
+same hedge portfolio. We also plot the average daily “Effective Half Spread” for the subsample of stocks that are most
+sensitive to price inﬂation at the open (i.e., stocks in the bottom left corner of the scheme, with high attention and low
+institutional ownership). Returns and spread are in percentage points.
+Figure 3 presents the analogous information using our retail sentiment in-
+dex, for the abridged sample of NASDAQ stocks over the period from 1997 to
+2001. In this ﬁgure we compile the returns on the hedge portfolio using yes-
+terday’s net retail buying as our proxy for attention. For comparison, we also
+plot the Baker-Wurgler (2006) sentiment index and the (negative value of the)
+25For clarity, we divide the Baker-Wurgler (2006) sentiment index by 2 and report quarterly aver-
+ages of all variables.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+Berkman, Koch, Tuttle, and Zhang 735
+FIGURE 3
+Retail Investor Sentiment, Overnight Returns, and Transaction Costs (1997–2002)
+Figure 3 presents the evolution over the period from 1997 to 2002, of several variables that measure retail investor sentiment,
+the extent of overpricing at the open, and transaction costs. We report quarterly averages of the monthly “Baker-Wurgler
+(2006) Sentiment Index” and the quarterly average of the “Retail Investor Sentiment Index” (deﬁned as the actual net
+buying activity by retail investors during the 1st hour of the trading day, as a percent of shares outstanding, averaged
+across all stocks and all days during the quarter). For each quarter, “Overnight Return” plots the average daily overnight
+(close-to-open) return of a zero-cost hedge portfolio that is long stocks with low institutional holdings and high attention
+(i.e., bottom left corner of the 3× 3 scheme in Table 3), and short stocks with high institutional ownership and low attention
+(i.e., top right corner of the scheme). “Trading Day Return” plots the average trading day (open-to-close) return on the
+same hedge portfolio. We also plot the average daily “Effective Half Spread” for the subsample of stocks that are most
+sensitive to price inﬂation at the open (i.e., stocks in the bottom left corner of the scheme, with high attention and low
+institutional ownership). Returns and spread are in percentage points.
+mean effective half spread for the portfolio of stocks most subject to opening
+price inﬂation. 26
+First consider the information in Figure 2. This plot reveals that overnight
+returns on the hedge portfolio are positively related to the Baker-Wurgler (2006)
+sentiment index (correlation is 0.30, p-value is 0.001), while trading day returns
+are negatively related to this index (correlation is −0.33, p-value is 0.001). Simi-
+larly, we ﬁnd that the retail sentiment index in Figure 3 has a correlation of 0.47
+( p-value is 0.001) with overnight returns on the hedge portfolio, and a correlation
+of −0.51 ( p-value is 0.001) with trading day returns on the hedge portfolio. Fur-
+thermore, in Figure 3 the Baker-Wurgler (2006) index is highly correlated with
+the retail sentiment index. Based on the 60 months for which we have data on
+both indices, we ﬁnd a correlation of 0.77 ( p-value is 0.001).
+It is noteworthy that the positive overnight returns on the hedge portfolio in
+Figures 2 and 3 become very large just prior to the technology crash in March of
+2000 and remain positive throughout 2001. In comparison, the negative trading
+day reversals on the hedge portfolio become even larger as this crash develops.
+26Here we divide the Baker-Wurgler (2006) sentiment index by 2, multiply the retail sentiment
+index by 10, and report quarterly averages of the variables.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+736 Journal of Financial and Quantitative Analysis
+Apparently, the bulk of the 2000 correction in stocks most subject to opening
+price inﬂation occurred during the trading day. 27
+Figures 2 and 3 also plot the average effective half spread for the subsample
+of stocks most prone to price inﬂation at the open (i.e., those subject to high
+attention and low institutional ownership). For comparison purposes, the negative
+value of this measure of transaction costs is plotted alongside the trading day
+(open-to-close) return of the hedge portfolio. Once again, we regard this trading
+day return on the hedge portfolio as a measure of the implicit cost of buying at
+the open (rather than the close) those stocks most prone to opening price inﬂation.
+Both Figures 2 and 3 show that this implicit cost of buying at the open is similar in
+magnitude to the effective half spread for much of the sample period. Moreover,
+in times of high investor sentiment, this mean trading day reversal can be more
+than twice the size of the effective half spread.
+The major practical implication of this analysis is that retail traders incur a
+substantial hidden transaction cost when they buy attention-grabbing stocks at the
+open of the next trading day, because their herding behavior results in inﬂated
+opening prices. The plots reveal that, over long periods, this implicit transaction
+cost is similar in magnitude to the effective half spread.
+VI. Robustness Tests
+A. Alternative Portfolio Approaches
+In Panel A of Table 5, we apply the main analysis from our portfolio ap-
+proach of Table 3, but we base this analysis on alternative return measures, various
+subsamples of stocks, or different time periods. For each test, the 4 columns on
+the left side of Table 5 report results based on the main sample of the 3,000
+largest U.S. stocks over the period from 1996 to 2008, where the level of re-
+tail investor attention is proxied by return volatility yesterday (VOL
+t−1). The
+right 4 columns present the analogous results based on the abridged sample of
+NASDAQ stocks over the period from 1997 to 2001, using retail net buying
+yesterday (RET
+AIL NETBUY t−1) to proxy for attention.
+For brevity, in all of these robustness tests we only present the mean returns
+for the 2 extreme corner portfolios of every 3 × 3 scheme, for stocks with low
+institutional holdings and high attention (bottom left corner) and for stocks with
+high institutional holdings and low attention (top right corner). The base case
+provided at the top of Table 5 reproduces the results for these 2 corner portfolios
+from Table 3. In every subsequent robustness test (row) of Panel A, we change
+only one aspect of the analysis to facilitate comparison with the base case.
+The series of tests in Panel A of Table 5 reveals that our results are ro-
+bust when we use market-adjusted returns, median returns, or trade prices to
+27We also note that the Baker-Wurgler (2006) sentiment index in Figures 2 and 3 peaks a few
+months after March 2000, and after the peak of our retail investor sentiment index in Figure 3. This
+delay in the peak of the Baker-Wurgler (2006) index may be due to their use of a 12-month lag for 3
+of the 6 components in their index. They argue that combining these lagged values for 3 of their series
+with current values of the other 3 series best captures annual variation in the 6 series (see Baker and
+Wurgler (2006), (2007)).
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+Berkman, Koch, Tuttle, and Zhang 737
+TABLE 5
+Robustness Tests: Alternative Portfolio Approaches and Regression Analysis
+For every robustness test in Panel A of Table 5, we reproduce the portfolio approach from Table 3, but we change some
+aspect of the analysis. For brevity, we present only the 2 cells in each 3× 3 scheme that are subject to the greatest and least
+forces behind overpricing at the open: the bottom left corner cell and the top right corner cell. The base case reproduces
+these 2 corner cells from the 3 × 3 schemes in Table 3. In each subsequent test (row) of Panel A, we change only one
+aspect of the analysis to facilitate comparison with the base case. Panel B provides the results of Fama-MacBeth (1973)
+regression analysis. First, for each day in the sample period we estimate the cross-sectional regression model in equation
+(1) for overnight returns (CTO) or for trading day returns (OTC). Second, we compute the time-series mean coefﬁcients
+across all days in the sample period. * and ** indicate statistical signiﬁcance at the 5% and 1% levels, respectively.
+a Results
+based on trade prices using VOL t−1 are computed over the sample period 1996–2004. bFor the NASDAQ stocks in the
+right 4 columns, cutoffs of market capitalization for small and large stock quintiles are based on the stratiﬁcation each day
+using the 3,000 largest U.S. stocks. cFor the NASDAQ stocks in the right 4 columns, cutoffs of book-to-market (B/M) for
+growth and value stock quintiles are based on the stratiﬁcation each day using the 3,000 largest U.S. stocks. d Data on
+RETAIL NETBUY t−1 are unavailable before 1997, so the entries in this row for this proxy are for 1997–2000. e Data on
+RETAIL NETBUY t−1 are unavailable after 2001, so the entries in this row using this proxy are for 2001 only.
+Panel A. Portfolio Approach: Alternative Return Measures and Subsamples
+Bottom Left and Top Right Corner Cells in Each 3 × 3 Matrix
+Sample: 3,000 Largest U.S. Stocks (1996–2008) NASDAQ Stocks (1997–2001)
+Attention Proxy: VOL t−1 RETAIL NETBUY t−1
+Return Measure: CTO(%) OTC(%) CTO(%) OTC(%)
+Bottom Top Bottom Top Bottom Top Bottom Top
+Cell in 3× 3 Matrix: Left Right Left Right Left Right Left Right
+Base Case (Table 3) 0.17 0.02 −0.17 −0.03 0.34 0.02 −0.42 −0.09
+Newey-West t-Ratio 11.9** 3.5** −5.6** −1.3 11.3** 1.0 −6.8** −1.8
+1. Using market-adjusted 0.12 −0.03 −0.18 −0.03 0.24 −0.07 −0.42 −0.09
+abnormal returns 14.1** −4.2** −10.1** −3.5** 12.3** −5.6** −9.8** −3.0**
+2. Using trade prices a 0.17 0.02 −0.17 −0.01 0.33 0.00 −0.41 −0.08
+to measure returns 10.1** 2.7** −4.8** −0.3 11.0** 0.2 −6.8** −1.4
+3. Using median return 0.09 0.02 −0.16 −0.04 0.20 0.01 −0.42 −0.11
+across stocks each day 9.2** 3.4** −6.5** −2.5* 9.5** 0.8 −8.7** −2.5*
+4. No low-price stocks 0.13 0.02 −0.13 −0.02 0.30 0.02 −0.37 −0.09
+(with price <$5) 9.4** 2.9** −4.5** −1.1 10.0** 0.8 −6.0** −1.7
+5. NASDAQ stocks 0.28 0.03 −0.27 −0.07 0.34 0.02 −0.42 −0.09
+13.9** 3.6** −7.1** −2.5* 11.3** 1.0 −6.8** −1.8
+6. NYSE stocks 0.09 0.01 −0.07 −0.01 — — — —
+6.0** 0.8 −3.1** −0 . 7 ————
+7. Small stock quintile b 0.29 0.07 −0.19 −0.05 0.45 0.07 −0.39 −0.08
+18.3** 8.6** −5.3** −2.1* 13.8** 3.3** −5.9** −1.4
+8. Large stock quintile b 0.09 0.01 −0.11 0.00 0.32 0.07 −0.37 −0.21
+5.1** 1.5 −3.9** 0.2 6.8** 1.9 −4.2** −2.9**
+9. Growth stocks 0.20 0.03 −0.23 −0.04 0.37 0.04 −0.46 −0.14
+(low quintile, B/M) c 9.8** 3.4** −6.0** −1.5 8.6** 1.2 −5.5** −1.9
+10. Value stocks 0.13 0.04 −0.09 −0.03 0.23 −0.01 −0.24 −0.01
+(high quintile, B/M) c 9.5** 4.7** −3.0** −1.5 6.2** −0.3 −3.5** −0.2
+11. Momentum losers 0.32 0.06 −0.31 −0.08 0.48 0.09 −0.61 −0.17
+(low quintile, 6-mo. return) 14.7** 6.2** −8.0** −3.0** 12.5** 3.2** −7.9** −2.7**
+12. Momentum winners 0.14 0.03 −0.13 −0.04 0.26 0.02 −0.25 −0.12
+(high quintile, 6-mo. return) 9.0** 3.4** −4.0** −1.7 8.5** 1.3 −3.8** −1.9
+13. Mondays 0.20 0.04 −0.35 −0.11 0.37 0.05 −0.66 −0.30
+5.8** 3.0** −5.4** −2.6** 5.4** 1.0 −4.8** −2.7**
+14. Other weekdays 0.16 0.02 −0.12 −0.01 0.33 0.02 −0.36 −0.04
+10.3** 2.5* −3.8** −0.2 9.9** 0.7 −5.6** −0.8
+15. 1996–2000d 0.25 0.04 −0.24 −0.03 0.37 0.05 −0.46 −0.12
+10.2** 4.1** −5.0** −1.4 11.4** 2.2* −6.9** −2.2*
+16. 2001–2004e 0.16 0.00 −0.22 0.01 0.17 −0.11 −0.21 0.03
+6.4** 0.3 −4.1** 0.5 2.5* −2.2* −1.4 0.3
+17. 2005–2008 0.13 0.03 −0.16 −0.07 — — — —
+5.2** 2.0* −2.7** −1 . 5 ————
+(continued on next page)
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+738 Journal of Financial and Quantitative Analysis
+TABLE 5 (continued)
+Robustness Tests: Alternative Portfolio Approaches and Regression Analysis
+Panel B. Fama-MacBeth Regression Analysis of Model (1)
+Sample: 3,000 Largest U.S. Stocks (1996–2008) NASDAQ Stocks (1997–2001)
+Attention Proxy: VOL t−1 RETAIL NETBUY t−1
+Dependent Variable: CTO(%) OTC(%) CTO(%) OTC(%)
+Attention 0.179 −0.272 0.218 −0.178
+4.8** −9.0** 15.5** −6.0**
+Institutional ownership −0.035 0.093 −0.113 0.335
+−2.5* 4.4** −4.0** 3.8**
+Firm size 0.024 0.159 0.010 0.309
+0.7 11.9** 0.3 8.5**
+Avg. no. of ﬁrms per day 2,342 2,342 1,013 1,005
+Avg. adj. R2 0.045 0.045 0.021 0.015
+measure returns, and when we exclude low-price stocks. This behavior is also
+ubiquitous across NASDAQ and NYSE stocks, small and large stocks, growth
+and value stocks, and momentum winners and losers, although there is a larger
+mean overnight return and trading day reversal for small stocks, NASDAQ stocks,
+growth stocks, and momentum losers. We also ﬁnd that these patterns are larger in
+magnitude on Mondays, but they are also present on the other days of the week. In
+addition, these results appear in all subperiods, though they decline in magnitude
+over time, perhaps due to regulatory changes and technological advances, such as
+decimalization in 2001 and the subsequent expansion of algorithmic trading.
+B. Fama-MacBeth Regression Analysis
+In this section we examine whether our results are robust to alternative
+methodology, by applying regression analysis based on the following model:
+28
+CTOit (OTCit)= a0 + a1 A TTENTIONit + a2 INSTit + a3 SIZEit +εit,(1)
+where A TTENTION it = each proxy for retail investor attention
+(VOLt−1 or RETAIL NETBUY t−1),
+INSTit = the ﬁrm’s percentage institutional ownership from
+the previous quarter,
+SIZEit = the ﬁrm’s mean market capitalization over the
+previous 20 trading days.
+In this analysis, the dependent variables are winsorized to eliminate outliers
+beyond 1% in the tails. In addition, the independent variables are replaced with
+28We have also included the ﬁrm’s effective half spread and relative short interest in model (1),
+with robust results.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+Berkman, Koch, Tuttle, and Zhang 739
+their decile ranks, adjusted to range between −0.5 and +0.5. This rank regression
+approach attenuates the inﬂuence of outliers. 29
+First, for every day ( t) in the sample period, we estimate model (1) for the
+cross section of stocks ( i), using each dependent variable (CTO or OTC). Second,
+we compute the time-series mean coefﬁcients across all days ( t) in the sample
+period. The standard errors of these Fama-MacBeth (1973) mean coefﬁcients are
+used to construct the t-ratios.
+Results appear in Panel B of Table 5. They show that the overnight return is
+positively related to each proxy for retail investor attention yesterday, and nega-
+tively related to the ﬁrm’s institutional ownership. Likewise, the trading day re-
+versal is negatively associated with each attention proxy and positively related to
+institutional ownership. Consistent with our theory of attention-based overpricing
+at the open, these results imply a larger overnight return and trading day reversal
+for stocks that are subject to higher levels of retail investor attention yesterday,
+along with greater limits to arbitrage embodied in lower institutional ownership.
+These results also reveal that smaller ﬁrms tend to have a larger trading day rever-
+sal. We conclude that our evidence and its implications are not dependent upon
+the research methodology applied.
+VII. Summary and Conclusions
+This paper investigates the role of attention as a potential source of retail
+investor sentiment, and examines whether attention-based retail trading causes
+prices to temporarily deviate from fundamental values at the open of the typical
+trading day. We show that high-attention days for individual stocks are followed
+by high net retail buying at the start of the next trading day. Moreover, this in-
+creased retail buying pressure results in opening prices that tend to be high relative
+to prices during the rest of the trading day. Furthermore, we ﬁnd that these pre-
+dictable intraday price patterns are more pronounced for stocks that are difﬁcult
+to value and costly to arbitrage, and they are larger in magnitude during periods
+of high investor sentiment.
+This study is the ﬁrst to examine intraday patterns in retail trading and price
+formation in relation to investor sentiment, proxied by retail investor attention. By
+investigating our theory of attention-based overpricing at the open, we uncover
+and help resolve a heretofore unexplained intraday price anomaly: Stocks that
+have recently attracted the attention of retail investors have a strong tendency for
+net retail buying at the open, which leads to high opening prices and positive
+returns during the overnight period, followed by reversals during the subsequent
+trading day.
+Our results should be of interest to investors and regulators alike. During
+periods of high investor sentiment, a strategy of selling high-attention stocks at
+the open and delaying purchases until later in the trading day can yield signiﬁ-
+cant improvements to performance. This evidence shows that some retail investors
+bear substantive hidden costs, through their penchant for buying stocks at inﬂated
+29Similar results are obtained when the analysis is applied to the original data.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+740 Journal of Financial and Quantitative Analysis
+prices during the 1st hour of trading following high-attention days. During pe-
+riods of high investor sentiment, for example, the implicit costs of buying high-
+attention stocks at the start of the day can be twice the effective half spread. The
+1st step toward reducing this hidden cost of buying high-attention stocks at the
+open is to enhance awareness among retail traders of the potentially detrimental
+price impact of such trading activity.
+References
+Acharya, V . V ., and L. H. Pedersen. “Asset Pricing with Liquidity Risk.” Journal of Financial Eco-
+nomics, 77 (2005), 375–410.
+Almazan, A.; K. C. Brown; M. Carlson; and D. A. Chapman. “Why Constrain Y our Mutual Fund
+Manager?” Journal of Financial Economics, 73 (2004), 289–321.
+Asquith, P .; P . A. Pathak; and J. R. Ritter. “Short Interest, Institutional Ownership, and Stock Returns.”
+Journal of Financial Economics, 78 (2005), 243–276.
+Baker, M., and J. Wurgler. “Investor Sentiment and the Cross-Section of Stock Returns.” Journal of
+Finance, 4 (2006), 1645–1680.
+Baker, M., and J. Wurgler. “Investor Sentiment in the Stock Market.” Journal of Economic Perspec-
+tives, 21 (2007), 129–152.
+Barber, B. M., and T. Odean. “All that Glitters: The Effect of Attention and News on the Buying
+Behavior of Individual and Institutional Investors.” Review of Financial Studies , 21 (2008), 785–
+818.
+Barber, B. M.; T. Odean; and N. Zhu. “Do Retail Trades Move Markets?” Review of Financial Studies,
+22 (2009), 151–186.
+Barclay, M. J., and T. Hendershott. “Price Discovery and Trading After Hours.” Review of Financial
+Studies, 16 (2003), 1041–1073.
+Barclay, M. J., and T. Hendershott. “Liquidity Externalities and Adverse Selection: Evidence from
+Trading After Hours.” Journal of Finance, 59 (2004), 681–710.
+Berkman, H.; V . Dimitrov; P . C. Jain; P . D. Koch; and S. Tice. “Sell on the News: Differences
+of Opinion, Short Sale Constraints, and Returns around Earnings Announcements.” Journal of
+Financial Economics, 92 (2009), 376–399.
+Bernard, V . L. “Cross-Sectional Dependence and Problems in Inference in Market-Based Accounting
+Research.” Journal of Accounting Research, 25 (1987), l–48.
+Bessembinder, H. “Issues in Assessing Trade Execution Costs.” Journal of Financial Markets ,
+6 (2003), 233–257.
+Branch, B., and A. Ma. “The Overnight Return, One More Anomaly.” Working Paper, University of
+Massachusetts, available at http://ssrn.com/abstract =937997 (2008).
+Cliff, M.; M. Cooper; and H. Gulen. “Return Differences between Trading and Non-Trading Hours:
+Like Night and Day.” Working Paper, University of Utah, available at http://papers.ssrn.com/sol3/
+papers.cfm?abstract id =1004081#PaperDownload (2008).
+D’Avolio, G. “The Market for Borrowing Stock.” Journal of Financial Economics , 66 (2002),
+271–306.
+De Long, J. B.; A. Shleifer; L. H. Summers; and R. J. Waldmann. “Noise Trader Risk in Financial
+Markets.” Journal of Political Economy, 98 (1990), 703–738.
+Fama, E. F., and J. D. MacBeth. “Risk, Return, and Equilibrium: Empirical Tests.” Journal of Political
+Economy, 81 (1973), 607–636.
+Gompers, P . A., and A. Metrick. “Institutional Investors and Equity Prices.” Quarterly Journal of
+Economics, 116 (2001), 229–259.
+Grifﬁn, J. M.; J. H. Harris; and S. Topaloglu. “The Dynamics of Institutional and Individual Trading.”
+Journal of Finance, 58 (2003), 2285–2320.
+Kumar, A., and C. M. C. Lee. “Retail Investor Sentiment and Return Comovements.” Journal of
+Finance, 61 (2006), 2451–2486.
+Lee, C. M. C., and M. J. Ready. “Inferring Trade Direction from Intraday Data.” Journal of Finance,
+46 (1991), 733–746.
+Nagel, S. “Short Sales, Institutional Investors and the Cross-Section of Stock Returns.” Journal of
+Financial Economics, 78 (2005), 277–309.
+Newey, W. K., and K. D. West. “A Simple, Positive Semi-Deﬁnite Heteroskedasticity and Autocorre-
+lation Consistent Covariance Matrix.” Econometrica, 55 (1987), 703–708.
+Odean, T. “Do Investors Trade Too Much?” American Economic Review, 89 (1999), 1279–1298.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270
+Berkman, Koch, Tuttle, and Zhang 741
+Ofek, E.; M. Richardson; and R. F. Whitelaw. “Limited Arbitrage and Short Sales Restrictions: Evi-
+dence from the Options Markets.” Journal of Financial Economics, 74 (2004), 305–342.
+Pastor, L., and R. F. Stambaugh. “Liquidity Risk and Expected Stock Returns.” Journal of Political
+Economy, 111 (2003), 642–685.
+Sadka, R., and A. Scherbina. “Analyst Disagreement, Mispricing, and Liquidity.” Journal of Finance,
+62 (2007), 2367–2403.
+Shleifer, A., and R. W. Vishny. “The Limits of Arbitrage.” Journal of Finance, 52 (1997), 35–55.
+Downloaded from 
+https://www.cambridge.org/core
+. 
+ipmc cnrs
+, on 
+22 Sep 2026 at 07:09:50
+, subject to the Cambridge Core terms of use, available at 
+https://www.cambridge.org/core/terms
+. 
+https://doi.org/10.1017/S0022109012000270

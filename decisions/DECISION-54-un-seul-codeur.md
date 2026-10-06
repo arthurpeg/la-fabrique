@@ -17,7 +17,7 @@ journaux de `verification/` et du wiki (2026-10-06) :
 | Agent | Utilisation | Résultat | Verdict |
 |---|---|---|---|
 | `fabrique-temoin` (second codeur) | 8 fiches, 24 essais (jusqu'à 6) | **2 concordances sur 9 fiches** (14 tours). 7 bloquées, 5 écartées du lot sans mesure. Désaccords surtout d'ambiguïtés de recette et d'outillage (`L34`, `L35`), aucune erreur de code avérée. Une session : 1,28 M tokens pour 2 fiches | **supprimé** |
-| `fabrique-trieur` (PDF moissonnés) | 119 papiers | 10 `oui` (8 %), inactif depuis le 2026-09-30 | gardé : seule porte d'entrée des 3 225 PDF |
+| `fabrique-trieur` (PDF moissonnés) | 119 papiers | 10 `oui` (8 %), inactif depuis le 2026-09-30 | gardé : **à peine utilisé, pas inutile** — 119 papiers triés sur 3 117 PDF, dont 1 925 en texte intégral dans la base (corrigé le 2026-10-06 : la première version disait « 3 225 PDF », le compte d'un contrôle local, pas celui de la base) |
 | `fabrique-synthese` | 4 synthèses | 1 codable | gardé : l'étape voulue par l'opérateur |
 | `fabrique-critique` | 2 avis | 2 erreurs évitées (conflit `D42`/`D34`, seuil BH abaissé à tort) | gardé, coût minime |
 | `fabrique-recette` | 8 fiches, 27 essais | empêche toute constante inventée (`S5`) | gardé |
@@ -85,5 +85,6 @@ n'arrive jamais.
 
 - Si une erreur subtile de codage apparaît un jour (un signal mesuré qui ne
   fait pas ce que la fiche dit), cette décision se rouvre.
-- `fabrique-trieur` : à remplacer ou à relancer quand il faudra de nouvelles
-  graines.
+- **Le vrai goulot n'est pas le codage, c'est l'entrée** : 55 fiches pour 1 925
+  papiers en texte intégral, 2 987 PDF jamais triés. La recherche des voisins
+  fouille toute la base, mais les graines ne viennent que des 55 fiches.

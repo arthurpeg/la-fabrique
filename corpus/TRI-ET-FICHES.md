@@ -8,7 +8,7 @@ tricher. La suite — de la fiche au signal vérifié — est
 `scripts/CODAGE-DES-SIGNAUX.md`.
 
 **Le rôle de la session qui lit ce fichier : orchestrer.** Elle prépare les
-consignes, lance des **sessions séparées** (trieurs, extracteurs), fait juger,
+consignes, lance des **sessions séparées** (trieurs, lecteurs), fait juger,
 et tient le compte. **Elle ne rend jamais elle-même un verdict de tri, et
 n'écrit jamais une fiche.**
 
@@ -40,7 +40,7 @@ de l'invariant I : **l'IA propose, le code déterministe tranche.**
 
 ## 0 bis. Les sous-agents du projet — à utiliser en priorité
 
-`fabrique-trieur` (sonnet) et `fabrique-extracteur` (opus), définis dans
+`fabrique-trieur` (sonnet) et `fabrique-lecteur` (opus), définis dans
 `.claude/agents/`, portent leurs règles d'isolement et n'ont que Read et Write.
 Lance-les avec **le seul chemin de la consigne** comme message. Une session
 ouverte avant leur création ne les voit pas : emploie alors `general-purpose`
@@ -120,55 +120,45 @@ en mode `layout` seul n'empêche pas de ficher.
 
 ---
 
-## 4. L'extraction des fiches
+## 4. La fiche et sa recette, en une seule lecture (`D55`)
 
 ### 4.1 Préparer
 
-    uv run python corpus/extract_fiche_harvest.py --prepare <fiche_id>
+    uv run python corpus/lecture_unique.py --prepare <fiche_id>
 
-La consigne est écrite dans `corpus/consignes_harvest/<fiche_id>.md` : le schéma
-de fiche (`D14`), l'identité de la fiche et le texte entier du papier.
+La consigne est écrite dans `corpus/consignes-lecture/<fiche_id>.md`. Elle
+contient le schéma de fiche (`D14`), le format de la recette (`D34`), l'identité
+de la fiche et **le texte entier du papier, une seule fois**.
 
-### 4.2 Lancer l'extracteur — isolé
+### 4.2 Lancer le lecteur — isolé
 
-Une session `Agent` par papier (type `general-purpose`, `model: "opus"`, au
-premier plan), par groupes de 5 en parallèle, avec **mot pour mot** :
+Une session `fabrique-lecteur` par papier, par groupes de 5 en parallèle, avec
+**le seul chemin de la consigne** comme message. Elle lit le papier une fois et
+écrit la fiche (`corpus/fiches_harvest/<fiche_id>.json`) puis la recette
+(`corpus/recettes/<fiche_id>.json`). Elle remplace l'ancien extracteur, qui
+écrivait la fiche seule et laissait la recette relire tout le papier.
 
-> Tu es un extracteur de fiche isolé. Ta seule source est ce fichier :
->
-> `C:\Users\Mathis\Documents\la-fabrique\corpus\consignes_harvest\<fiche_id>.md`
->
-> Lis-le EN ENTIER (par morceaux avec l'outil Read). Ne lis AUCUN autre fichier
-> du dépôt — jamais `corpus/fiches/`, `corpus/fiches_harvest/`, `signals/`,
-> `hypotheses/`, `decisions/` — aucune commande shell, aucune recherche, aucun
-> accès web. Chaque citation est recopiée À LA LETTRE du texte ; ce que le
-> papier ne dit pas est null avec sa raison — n'invente jamais une valeur.
-> Écris la fiche JSON (et rien d'autre) avec l'outil Write dans :
-> `C:\Users\Mathis\Documents\la-fabrique\corpus\fiches_harvest\<fiche_id>.json`
-> Réponds en une ligne : le chemin écrit et le nombre de résultats cités.
+### 4.3 Figer, puis juger — dans cet ordre, pour chacun des deux fichiers
 
-### 4.3 Figer, puis juger — dans cet ordre
-
-**Seulement après la réponse de la session** (figer un fichier qu'elle écrit
-encore inscrit un état intermédiaire) :
+**Seulement après la réponse de la session** :
 
     uv run python corpus/extract_fiche_harvest.py --record corpus/fiches_harvest/<fiche_id>.json
-    uv run python corpus/extract_fiche_harvest.py --judge corpus/fiches_harvest/<fiche_id>.json
+    uv run python corpus/extract_fiche_harvest.py --judge  corpus/fiches_harvest/<fiche_id>.json
+    uv run python scripts/recette.py --record corpus/recettes/<fiche_id>.json
+    uv run python scripts/recette.py --check  corpus/recettes/<fiche_id>.json
 
-Cinq conditions (`D16`, `F1`–`F5`), à tolérance zéro. Un refus se renvoie **tel
-quel**, par `SendMessage`, à la même session : « Corrige en réécrivant le
-fichier entier, à partir de la seule consigne, mêmes règles. » Puis `--record`
-et `--judge` à nouveau. **Trois essais au plus** ; au troisième refus, le
-papier est en échec, avec le dernier verdict, dans le compte rendu.
+Cinq conditions pour la fiche (`D16`, `F1`–`F5`), à tolérance zéro, et le
+contrôle de la recette. Un refus se renvoie **tel quel**, par `SendMessage`, à
+la même session, en nommant le fichier refusé : « Corrige en réécrivant ce
+fichier entier, à partir de la seule consigne, mêmes règles. » **Trois essais
+au plus** par fichier.
 
 Une fiche verte **se verse aussitôt dans la base**, qui fait foi (`D44`) :
 
     uv run python corpus/fiches_store.py --pousser
 
-Une fiche verte passe ensuite à `scripts/CODAGE-DES-SIGNAUX.md` : recette,
-deux codages, double codage (`D34`).
-
----
+Elle passe ensuite, recette déjà faite, au codage
+(`scripts/CODAGE-DES-SIGNAUX.md` § 3.4).
 
 ## 5. Ce que tu n'as PAS le droit de faire
 

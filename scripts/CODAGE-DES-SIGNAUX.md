@@ -71,10 +71,10 @@ d'autre. Ils n'ont que Read et Write : ils ne peuvent pas fouiller le dépôt.
 |---|---|---|---|
 | trier les voisins | `fabrique-voisins` | sonnet | les étiquettes `meme` / `autre` |
 | synthèse | `fabrique-synthese` | opus | une fiche de synthèse |
-| recette | `fabrique-recette` | opus | la recette citée |
+| recette d'une fiche existante | `fabrique-recette` | opus | la recette citée |
 | codage | `fabrique-codeur` | opus | le module de signal |
 | (corpus) tri des PDF | `fabrique-trieur` | sonnet | verdicts `oui` / `partiel` / `non` |
-| (corpus) extraction | `fabrique-extracteur` | opus | une fiche |
+| (corpus) fiche et recette, une lecture | `fabrique-lecteur` | opus | la fiche puis sa recette (`D55`) |
 
 Et, **hors de la boucle isolée**, `fabrique-critique` (opus, lecture seule, avec
 la mémoire du projet). Consulte-le avant de changer quoi que ce soit au
