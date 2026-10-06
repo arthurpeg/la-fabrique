@@ -137,8 +137,14 @@ def do_report() -> int:
     return 0
 
 
-def do_fetch() -> int:
+def do_fetch(seulement: str | None = None) -> int:
     selection = retenus()
+    if seulement:
+        # 2026-10-06 : promouvoir UN papier retenu (son id de verdict), pas toute la
+        # sélection — pour essayer la chaîne sur un seul avant de la lancer sur tous.
+        selection = [v for v in selection if v["id"] == seulement]
+        if not selection:
+            raise SystemExit(f"{seulement} n'est pas un papier retenu (oui ou partiel)")
     data = harvest.load()
     apparies, manquants = matcher(selection, data)
     if manquants:
@@ -296,10 +302,11 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--report", action="store_true")
     ap.add_argument("--fetch", action="store_true")
     ap.add_argument("--flip-text-source", action="store_true")
+    ap.add_argument("--seulement", metavar="ID", help="avec --fetch : un seul papier retenu")
     a = ap.parse_args(argv)
 
     if a.fetch:
-        return do_fetch()
+        return do_fetch(a.seulement)
     if a.flip_text_source:
         return do_flip_text_source()
     return do_report()

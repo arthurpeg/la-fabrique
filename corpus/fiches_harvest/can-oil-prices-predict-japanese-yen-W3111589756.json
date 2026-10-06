@@ -1,0 +1,135 @@
+{
+  "fiche_id": "can-oil-prices-predict-japanese-yen-W3111589756",
+  "written": "2026-10-06",
+  "written_by": "claude-opus-5-5 (lecteur isolé, consigne D55)",
+  "source": {
+    "authors": "Neluka Devpura",
+    "title": "Can Oil Prices Predict Japanese Yen?",
+    "year": 2020,
+    "source_url": "https://a-e-l.scholasticahq.com/article/17964.pdf",
+    "pdf": "corpus/pdf/can-oil-prices-predict-japanese-yen-W3111589756.pdf",
+    "retrieved": "2026-09-30",
+    "peer_reviewed": true,
+    "journal": "Asian Economics Letters",
+    "doi": "10.46557/001c.17964"
+  },
+  "claim": {
+    "value": "Le prix du future WTI 1 mois prédirait le rendement horaire du yen contre dollar, et cette prédictibilité se serait renforcée pendant le COVID-19. Le papier conclut au contraire que la prédictibilité est limitée (environ 6 % du temps, uniquement en mars 2020) et qu'il n'existe pas de relation de prédictibilité variable dans le temps ; la relation dominante est négative.",
+    "quoted": [
+      "Our hypo thesis is that the predic tability relation-",
+      "We find limited evidence that oil prices predict the Yen. There is no time-varying predictability relationship.",
+      "we discover the negative relationship is dominant o verall, particularly dur-"
+    ]
+  },
+  "universe": {
+    "value": "Deux séries : le yen japonais contre dollar US (variable expliquée, en rendement log en pourcentage) et le prix du future WTI 1 mois (prédicteur). Données horaires, 17 heures par jour (01:00 à 17:00, fuseau non nommé), du 01/07/2019 au 04/09/2020 (format jour/mois), 5270 observations ; sous-échantillons pré-COVID (01/07/2019 au 30/12/2019) et COVID (31/12/2019 au 04/09/2020).",
+    "quoted": [
+      "In this paper, we examine the relationship between Japanese Yen (vis-à-vis the US dollar)",
+      "Hourly data span 17 hours per day and cover the period 01/07/2019 to 04/09/2020.",
+      "17-hour per day, from 01:00am to 17:00pm.",
+      "Observations 5270 5270 2227 2227 3043 3043"
+    ]
+  },
+  "horizon": {
+    "value": "Une heure (une observation horaire), au sens de la régression prédictive sur données horaires ; l'équation elle-même est perdue à l'extraction, si bien que le décalage exact du prédicteur n'est pas lisible dans le texte.",
+    "quoted": [
+      "We then increase the sample by one observation (by one-hour)"
+    ]
+  },
+  "signal_construction": {
+    "value": "Régression prédictive de Westerlund et Narayan (2012, 2015) estimée par MCO : rendement log en pourcentage du yen expliqué par le prix du future WTI 1 mois (en niveau, d'après la légende), avec un terme supplémentaire contrôlant la persistance et l'endogénéité du pétrole ; chaque variable est divisée par son écart-type pour contrôler l'hétéroscédasticité. Estimation récursive à fenêtre croissante : les premiers 50 % de l'échantillon forment la première fenêtre, puis on ajoute une heure à la fois jusqu'à la fin ; robustesse avec 25 %. Le résultat est la série des coefficients du pétrole et de leurs t-stat, jugés significatifs au-delà de ±1.96. Ce n'est pas un signal de trading : aucune règle de position n'est définie.",
+    "quoted": [
+      "We emplo y the W esterlund and Narayan (2012, 2015)",
+      "in order to control for persistency and endogeneity of the oil variable",
+      "we divide each variable by its corresponding standard deviation",
+      "the c oefficients are estimated using the Ordinary Least Squares method",
+      "is based on using the first 50% of the sample as the first estimation windo w and c ontinue recursive estimation by e xpanding the windo w b y an hour thereaf ter until the sample is e xhausted.",
+      "1.96 is to identify the significance of the"
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "full_sample_share_of_time_oil_predicts_yen_pct",
+      "value": 6,
+      "unit": "% du temps",
+      "quoted": "for the full sample, the oil price predicts Yen only about 6% of the time",
+      "note": "Part des estimations récursives (fenêtre initiale 50 %) où le coefficient du pétrole est significatif à 5 %."
+    },
+    {
+      "name": "conclusion_share_of_sample_oil_predicts_yen_pct",
+      "value": 6,
+      "unit": "% de l'échantillon",
+      "quoted": "in only about 6% of the sample",
+      "note": "Même résultat, formulé en conclusion, avec la fenêtre initiale de 50 %."
+    },
+    {
+      "name": "predictability_only_in_march_2020",
+      "value": null,
+      "unit": null,
+      "quoted": "W e notice that only in the month of March 2020 oil prices predict Yen.",
+      "note": "Qualitatif. Seul épisode significatif ; confirmé par la robustesse à fenêtre initiale de 25 %."
+    },
+    {
+      "name": "sign_negative_from_mid_march_2020",
+      "value": null,
+      "unit": null,
+      "quoted": "from mid-March 2020 the sign is negative throughout",
+      "note": "Qualitatif : le coefficient récursif du pétrole est négatif à partir de mi-mars 2020 ; la direction est instable avant."
+    },
+    {
+      "name": "pre_covid_tstat_max",
+      "value": 1.2,
+      "unit": "t-stat",
+      "quoted": "-statistics range from 0 to 1.2",
+      "note": "Pré-COVID : t-stat entre 0 et 1.2, positives, donc jamais significatives. Le 't' de 't-statistics' est perdu à l'extraction ; la citation reprend le texte tel quel."
+    },
+    {
+      "name": "no_predictability_post_march_2020",
+      "value": null,
+      "unit": null,
+      "quoted": "P ost-March 2020, there is no e vidence of any predictability.",
+      "note": "Qualitatif."
+    },
+    {
+      "name": "full_sample_observations",
+      "value": 5270,
+      "unit": "observations horaires",
+      "quoted": "Observations 5270 5270 2227 2227 3043 3043",
+      "note": "Ligne du tableau 1 : plein échantillon 5270, pré-COVID 2227, COVID 3043 (colonnes JPY puis oil)."
+    },
+    {
+      "name": "oil_price_minimum_usd",
+      "value": -7.65,
+      "unit": "USD par baril",
+      "quoted": "Minimum 102.06 -7.65 105.12 50.60 102.06 -7.65",
+      "note": "Ligne du tableau 1 : le prix du future WTI 1 mois descend à -7.65 dans l'échantillon COVID (prix négatif d'avril 2020), ce qui interdit un log du prix."
+    },
+    {
+      "name": "yen_hourly_log_return_std_pct_covid",
+      "value": 0.135,
+      "unit": "% par heure",
+      "quoted": "Std. Dev. 0.085 0.135",
+      "note": "Tableau 1, panel D : écart-type du rendement horaire log en % du yen, 0.085 pré-COVID et 0.135 COVID."
+    }
+  ],
+  "what_is_missing": [
+    "les équations (1) et (2) sont perdues à l'extraction : le décalage exact du prédicteur pétrole et la forme du terme de contrôle de persistance ne sont pas lisibles",
+    "le fuseau horaire de la fenêtre 01:00 à 17:00 n'est pas nommé, ni la source des données",
+    "la règle de roulement du future WTI 1 mois n'est pas décrite",
+    "aucune mesure de prévision hors échantillon (R2 hors échantillon, IC, rendement de stratégie) : seulement des t-stat récursives in-sample",
+    "les écarts-types de normalisation semblent calculés sur l'échantillon entier, ce qui n'est pas dit explicitement",
+    "les résultats de robustesse à 25 % ne sont pas montrés",
+    "aucun coût, aucune règle de position, aucun horizon de détention"
+  ],
+  "transposability": {
+    "what_transfers": "L'idée d'une relation retardée pétrole vers yen sur barres horaires est mesurable chez nous avec CL et 6J en OHLCV intraday ; le cadre récursif à fenêtre croissante est compatible avec un walk-forward.",
+    "what_does_not_transfer": [
+      "le résultat principal est négatif : prédictibilité dans environ 6 % du temps, concentrée sur mars 2020 ; il n'y a pas d'effet à répliquer, seulement une absence d'effet",
+      "échantillon de 14 mois (07/2019 à 09/2020), dominé par l'épisode COVID et le prix négatif du WTI, hors de proportion avec notre pool 2016-2023",
+      "la mesure est une t-stat in-sample récursive, pas un IC hors échantillon ni un rendement de stratégie",
+      "le prédicteur est le prix en niveau (normalisé par un écart-type sur l'échantillon), pas un rendement : transposé tel quel, il porterait du look-ahead et de la non-stationnarité",
+      "fenêtre de 17 heures par jour sans fuseau : impossible de la caler sur nos sessions ASIA/EUROPE/US"
+    ],
+    "what_aligns_well": "Les deux marchés étudiés sont exactement deux de nos instruments (CL et 6J), à fréquence horaire, donc la transposition des données ne demande aucun proxy ; le papier sert surtout de prior négatif pour un signal croisé CL vers 6J."
+  }
+}

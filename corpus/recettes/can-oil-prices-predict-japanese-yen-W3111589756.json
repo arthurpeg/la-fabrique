@@ -1,0 +1,150 @@
+{
+  "fiche_id": "can-oil-prices-predict-japanese-yen-W3111589756",
+  "written": "2026-10-06",
+  "written_by": "claude-opus-5-5 (lecteur isolé, consigne D55)",
+  "formula": {
+    "statement": "Régression prédictive de Westerlund et Narayan (2012, 2015), par MCO : r_JPY(t) = alpha + beta * oil(.) + terme de contrôle de persistance/endogénéité du pétrole + erreur, où r_JPY est le rendement log en pourcentage du yen contre dollar et oil le prix du future WTI 1 mois ; chaque variable est divisée par son écart-type. Le « score » du papier est le coefficient beta (et sa t-stat) réestimé récursivement ; le score prédictif implicite est le signe de beta multiplié par oil. La forme exacte de l'équation (décalage de oil, forme du terme de contrôle) est perdue à l'extraction.",
+    "quoted": "We emplo y the W esterlund and Narayan (2012, 2015) predictive regression model that examines the null hypoth-",
+    "reason": "Les équations (1) et (2) ne sont pas rendues par le texte extrait : seuls les mots qui les entourent subsistent."
+  },
+  "inputs": [
+    {
+      "name": "jpy_log_pct_return",
+      "description": "rendement log en pourcentage, horaire, du yen contre dollar US (variable expliquée)",
+      "known_at": "à la clôture de la barre horaire t (variable à prédire)",
+      "quoted": "We calculate the natural log perc entage returns of the Yen as:"
+    },
+    {
+      "name": "wti_1m_futures_price",
+      "description": "prix du future WTI 1 mois, en niveau d'après les légendes, utilisé comme proxy du prix du pétrole (prédicteur)",
+      "known_at": "à la clôture de la barre horaire précédente si la régression est prédictive au sens usuel ; le décalage n'est pas lisible dans le texte",
+      "quoted": "is the WTI 1-month oil futures price, and  is the disturbance term"
+    },
+    {
+      "name": "persistency_control_term",
+      "description": "terme ajouté pour contrôler la persistance et l'endogénéité du pétrole ; sa forme n'est pas lisible",
+      "known_at": null,
+      "reason": "l'équation est perdue à l'extraction",
+      "quoted": "in order to control for persistency and endogeneity of the oil variable"
+    },
+    {
+      "name": "variable_standard_deviation",
+      "description": "écart-type de chaque variable, par lequel elle est divisée",
+      "known_at": "non dit : probablement sur l'échantillon entier, ce qui serait du look-ahead",
+      "quoted": "we divide each variable by its corresponding standard deviation"
+    }
+  ],
+  "timing": {
+    "statement": "Barres horaires, 17 heures par jour de 01:00 à 17:00 (fuseau non nommé). Estimation récursive : première fenêtre = premiers 50 % de l'échantillon, puis extension d'une heure à la fois jusqu'à épuisement de l'échantillon.",
+    "quoted": "17-hour per day, from 01:00am to 17:00pm.",
+    "reason": null
+  },
+  "parameters": [
+    {
+      "name": "recursive_step",
+      "value": null,
+      "unit": "observation horaire",
+      "quoted": "We then increase the sample by one observation (by one-hour)",
+      "reason": "le pas est d'une observation (une heure), écrit en toutes lettres"
+    },
+    {
+      "name": "hours_per_day",
+      "value": 17,
+      "unit": "heures",
+      "quoted": "Hourly data span 17 hours per day and cover the period 01/07/2019 to 04/09/2020."
+    },
+    {
+      "name": "initial_in_sample_fraction_pct",
+      "value": 50,
+      "unit": "% de l'échantillon",
+      "quoted": "is based on using the first 50% of the sample as the first estimation windo w"
+    },
+    {
+      "name": "robustness_initial_in_sample_fraction_pct",
+      "value": 25,
+      "unit": "% de l'échantillon",
+      "quoted": "results to the in-sample window choice by setting it to 25% of the data."
+    },
+    {
+      "name": "significance_threshold_tstat",
+      "value": 1.96,
+      "unit": "t-stat",
+      "quoted": "1.96 is to identify the significance of the"
+    },
+    {
+      "name": "full_sample_observations",
+      "value": 5270,
+      "unit": "observations horaires",
+      "quoted": "Observations 5270 5270 2227 2227 3043 3043"
+    },
+    {
+      "name": "predictor_lag_hours",
+      "value": null,
+      "unit": "heures",
+      "quoted": null,
+      "reason": "l'équation est perdue à l'extraction ; le texte ne dit pas en mots le décalage du prédicteur"
+    },
+    {
+      "name": "std_normalisation_window",
+      "value": null,
+      "unit": null,
+      "quoted": null,
+      "reason": "le papier dit « its corresponding standard deviation » sans dire sur quelle fenêtre"
+    }
+  ],
+  "ambiguities": [
+    {
+      "question": "Le pétrole entre-t-il en niveau de prix ou en rendement, et décalé de combien d'heures ?",
+      "resolution": "Les légendes le décrivent comme le prix du future, sans parler de rendement ; le décalage reste illisible. Le prix descend à -7.65 dans l'échantillon, ce qui exclut un log du prix.",
+      "quoted": "is the WTI 1-month oil futures price"
+    },
+    {
+      "question": "Quelle est la forme du terme de contrôle de persistance et d'endogénéité ?",
+      "resolution": null,
+      "quoted": "In this regression, we include  in order to control"
+    },
+    {
+      "question": "L'écart-type de normalisation est-il calculé sur tout l'échantillon, sur la fenêtre récursive, ou glissant ? Un calcul sur l'échantillon entier regarderait l'avenir.",
+      "resolution": null,
+      "quoted": "we divide each variable by its corresponding standard deviation"
+    },
+    {
+      "question": "Dans quel fuseau horaire se trouve la fenêtre 01:00 à 17:00, et quelle est la source des données ?",
+      "resolution": null,
+      "quoted": "17-hour per day, from 01:00am to 17:00pm."
+    },
+    {
+      "question": "Comment le future WTI 1 mois est-il roulé (date, ajustement) ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Les rendements du yen franchissent-ils le trou entre 17:00 et 01:00 et les week-ends (rendement de nuit compté comme une barre) ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Que mesure exactement « 6% of the time » : la part des estimations récursives avec |t| > 1.96, sur la seule partie hors fenêtre initiale ?",
+      "resolution": null,
+      "quoted": "for the full sample, the oil price predicts Yen only about 6% of the time"
+    },
+    {
+      "question": "Format des dates : jour/mois/année ?",
+      "resolution": "Oui, le 30/12/2019 l'impose ; 04/09/2020 est donc le 4 septembre 2020.",
+      "quoted": "(01/07/2019 to 30/12/2019)"
+    },
+    {
+      "question": "Les sous-échantillons pré-COVID et COVID sont-ils estimés séparément, chacun avec sa propre fenêtre initiale de 50 % ?",
+      "resolution": null,
+      "quoted": null
+    }
+  ],
+  "market": {
+    "studied": "Le yen japonais contre dollar US (USD/JPY) comme variable expliquée, et le future WTI 1 mois comme prédicteur, en données horaires",
+    "quoted": "In this paper, we examine the relationship between Japanese Yen (vis-à-vis the US dollar) and the crude oil futures price.",
+    "exact_roots": ["6J", "CL"],
+    "sessions": null,
+    "sessions_quoted": "17-hour per day, from 01:00am to 17:00pm.",
+    "sessions_reason": "La fenêtre 01:00 à 17:00 est donnée sans fuseau horaire : impossible de la rapporter à l'heure de New York et donc à nos sessions ASIA/EUROPE/US."
+  }
+}
