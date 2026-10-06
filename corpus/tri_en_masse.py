@@ -179,6 +179,11 @@ def do_status() -> int:
     return 0
 
 
+def ident(w: dict) -> str:
+    """L'identifiant montré au trieur : OpenAlex, sinon le DOI, sinon le titre normalisé."""
+    return w.get("openalex_id") or w.get("doi") or f"titre:{norm(w['title'])[:60]}"
+
+
 def do_preparer(lots: int, taille: int, semantique: bool = True, base: bool = False) -> int:
     ouverts = [p for p in passages() if not p.get("verse")]
     if ouverts:
@@ -201,7 +206,7 @@ def do_preparer(lots: int, taille: int, semantique: bool = True, base: bool = Fa
             auteurs = ", ".join((w.get("authors") or [])[:4]) or "auteurs inconnus"
             debut = debut_du_papier(w) or ("AUCUN TEXTE EXTRAIT — juge sur le titre seul, "
                                            "et dis-le dans la raison.")
-            blocs.append(f"### id `{w['openalex_id']}`\n\n**{w['title']}** — {auteurs}, "
+            blocs.append(f"### id `{ident(w)}`\n\n**{w['title']}** — {auteurs}, "
                          f"{w.get('year') or 'année inconnue'}\n\n> {debut}\n")
         texte = CONSIGNE.format(lot=n, total=len(groupes), papiers="\n".join(blocs))
         texte += (f"\n---\n\nÉcris ton tableau JSON avec l'outil Write dans "
@@ -212,7 +217,7 @@ def do_preparer(lots: int, taille: int, semantique: bool = True, base: bool = Fa
         "passage": numero, "prepared": date.today().isoformat(), "lots": len(groupes),
         "taille": taille, "verse": False,
         "order": "similarité sémantique aux fiches et aux papiers retenus (D39)",
-        "papiers": [{"id": w["openalex_id"], "title": w["title"], "lot": i // taille + 1,
+        "papiers": [{"id": ident(w), "title": w["title"], "lot": i // taille + 1,
                      "pertinent_d33": w["_pertinent"], "priority": w["_priorite"]}
                     for i, w in enumerate(pop)],
     }, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
@@ -230,7 +235,9 @@ def do_verser(numero: str) -> int:
         raise SystemExit(f"passage {numero} inconnu")
     if p.get("verse"):
         raise SystemExit(f"le passage {numero} est déjà versé")
-    attendus = {x["id"]: x for x in p["papiers"]}
+    # str() : un travail moissonné sans identifiant OpenAlex était noté `None`, que le
+    # trieur recopie en texte (« None ») ; la clé se compare donc en texte (2026-10-06).
+    attendus = {str(x["id"]): x for x in p["papiers"]}
     lus: dict[str, dict] = {}
     fautes: list[str] = []
     for n in range(1, p["lots"] + 1):
