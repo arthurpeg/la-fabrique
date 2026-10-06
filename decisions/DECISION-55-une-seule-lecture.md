@@ -56,3 +56,4 @@ chaque citation de la recette est encore vérifiée à la lettre dans le texte.
 | Date | Quoi | Résultat |
 |---|---|---|
 | 2026-10-06 | passage 02 du tri, 150 papiers de la base | 2 `oui`, 30 `partiel`, 118 `non` ; 148 317 tokens ; 5 trieurs de sévérité égale |
+| 2026-10-06 | tri de la base terminé, passages 02-14 | 1 874 papiers en texte intégral de la base, tous triés : 15 oui, 259 partiel, 1 600 non. Aucun papier retiré de la base (consigne de l'opérateur : le tri juge, il ne supprime ni ne met à l'écart). Rendement décroissant avec l'ordre sémantique : 2 oui au passage 02, 0 à partir du 09 sauf 11 et 12 (1 chacun). Défaut corrigé : un travail sans identifiant OpenAlex (noté None) bloquait le versement (clé comparée en texte, DOI ou titre en repli) |
