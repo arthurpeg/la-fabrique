@@ -36,12 +36,12 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 
 from codage_verifie import (  # noqa: E402
-    CONCORDANCE,
     JUGEMENTS,
     RECETTES,
     choix,
     lire,
     univers_de,
+    verifie,
 )
 
 HYP = REPO / "hypotheses"
@@ -198,9 +198,6 @@ def citations_de(fiche: dict | None, recette: dict | None) -> list[dict]:
 
 def hypotheses(registre: list[dict], lot: dict, mods: dict, base: Base) -> list[dict]:
     lot_par_ref = {e["ref"]: e for e in lot.get("fiches", []) if e.get("ref")}
-    concord = {}
-    for c in lire(CONCORDANCE):
-        concord[c["fiche_id"]] = c
     out = []
     fichiers = sorted(HYP.glob("H*.md"), key=lambda p: int(re.match(r"H(\d+)", p.name).group(1)))
     for p in fichiers:
@@ -233,7 +230,7 @@ def hypotheses(registre: list[dict], lot: dict, mods: dict, base: Base) -> list[
         recette = lire_json(RECETTES / f"{fiche_id}.json") if fiche_id else None
         mod = module_de(signaux[0], mods) if signaux else None
         src = mod.read_text(encoding="utf-8") if mod else None
-        concordance = concord.get(fiche_id) if fiche_id else None
+        verif = verifie(fiche_id) if fiche_id else None
         cites = citations_de(fiche, recette)
         source = (fiche or {}).get("source") or {}
         out.append({
@@ -264,9 +261,7 @@ def hypotheses(registre: list[dict], lot: dict, mods: dict, base: Base) -> list[
             "quotes": cites,
             "chunks": base.morceaux(source.get("title") or "", [c["quoted"] for c in cites]),
             "measured_universe": (entree or {}).get("universe") or univers_de(recette or {}),
-            "concordance": ({k: concordance.get(k) for k in
-                             ("verdict", "rho", "coverage", "round", "at")}
-                            if concordance else None),
+            "verification": ({"ok": verif[0], "why": verif[1]} if verif else None),
             "used_by": {"lot": "LOT-09 (D36)" if entree else None,
                         "tests": [r["test_id"] for r in lignes]},
         })
@@ -361,7 +356,6 @@ def entonnoir(lot: dict, reg: list[dict]) -> list[dict]:
     fiches = sum(len(list(d.glob("*.json"))) for d in FICHES)
     entrees = [e for x in tous_les_lots() for e in x.get("fiches", [])]
     ids = {e["fiche_id"] for e in entrees}
-    concord = {c["fiche_id"]: c["verdict"] for c in lire(CONCORDANCE)}
     mesures = {r["signal_id"] for r in reg if r.get("stage") == "09-passage"}
     etapes = [
         ("papiers moissonnés", len(works), "corpus/harvest.json, doublons compris"),
@@ -378,8 +372,8 @@ def entonnoir(lot: dict, reg: list[dict]) -> list[dict]:
         ("recette valide", sum(1 for i in ids if (RECETTES / f"{i}.json").is_file()), "D34"),
         ("signal codé", sum(1 for i in ids
                             if (REPO / "signals" / (i.replace("-", "_") + ".py")).is_file()), ""),
-        ("codage vérifié", sum(1 for i in ids if concord.get(i) == "CONCORDANT"),
-         "double codage concordant, D34"),
+        ("codage vérifié", sum(1 for i in ids if verifie(i)[0]),
+         "juge D23 vert et CHOICES, D34 révisée par D54"),
         ("hypothèse écrite", sum(1 for e in entrees if e.get("ref")), "étape 8"),
         ("mesurée", sum(1 for e in entrees if e.get("signal_id") in mesures), "étape 10"),
     ]
@@ -452,8 +446,7 @@ def rassembler(avec_base: bool) -> dict:
         "windows": fenetres(),
         "clock": "America/New_York",
         "lots": len(tous_les_lots()),
-        "verified": sum(1 for c in {c["fiche_id"]: c for c in lire(CONCORDANCE)}.values()
-                        if c["verdict"] == "CONCORDANT"),
+        "verified": sum(1 for e in (lot.get("fiches") or []) if verifie(e["fiche_id"])[0]),
         "judgements": len(lire(JUGEMENTS)),
         "base": {"asked": avec_base, "error": base.erreur},
         "hypotheses": hypotheses(reg, lot, mods, base),

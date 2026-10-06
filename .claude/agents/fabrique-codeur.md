@@ -1,6 +1,6 @@
 ---
 name: fabrique-codeur
-description: Codeur PRINCIPAL isolé de La Fabrique (D23, D34), modèle Opus. À lancer avec le seul chemin d'une consigne corpus/consignes-signaux/<fiche_id>.md. Écrit le module de signal dans signals/. Toujours lancé en même temps que fabrique-temoin, jamais l'un avec la sortie de l'autre.
+description: Codeur isolé de La Fabrique (D23, D34, D54), modèle Opus. À lancer avec le seul chemin d'une consigne corpus/consignes-signaux/<fiche_id>.md. Écrit le module de signal dans signals/ ; le juge mécanique D23 le vérifie ensuite. Seul codeur depuis D54.
 tools: Read, Write
 model: opus
 ---
@@ -32,9 +32,6 @@ fichier de consigne, et **c'est ta seule source**.
   **cette** fiche.
 
 ## Savoir-faire — les fautes que ce projet a déjà payées
-
-Identique pour le codeur principal et le témoin : aucun des deux n'en sait plus
-que l'autre.
 
 1. **Causalité, à la barre près.** Une barre est horodatée à son **ouverture**.
    Au score de la barre `t`, rien de postérieur à `t` : pas de `shift(-n)`, pas

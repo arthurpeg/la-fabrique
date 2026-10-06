@@ -321,6 +321,18 @@ python scripts/gate_07.py      # G1 = G2 = G3 = G4 = 0
 python scripts/gate_08.py      # 1 signal, 6/6, aucune retouche
 ```
 
+### Un seul codeur — `D54`, 2026-10-06
+
+Le double codage et le second codeur (`fabrique-temoin`) sont supprimés :
+2 concordances sur 9 fiches, 7 bloquées, aucune erreur de code avérée (`L36`).
+Une entrée du lot est vérifiée quand son module passe le juge `D23` et porte
+des `CHOICES` (`codage_verifie.verifie`). Les ambiguïtés de recette se
+traitent par `recette.py --precisions`, une fois (`CODAGE-DES-SIGNAUX.md`
+§ 3.4). **Lot `LOT-09` : n = 41**, les 5 fiches écartées pour discordance y
+sont revenues, avant toute mesure ; elles passent par le § 3.4 avant leur
+hypothèse. La chaîne complète, du papier à l'IC, est dans
+`scripts/CODAGE-DES-SIGNAUX.md` ; on la lance par `/fabriquer-signaux`.
+
 ### La base fait foi, et se cherche par le sens — `D44` à `D46`, 2026-10-01/02
 
 - **Fiches** : les 52 sont dans la table `fiches` (`D44`) ; les dossiers locaux

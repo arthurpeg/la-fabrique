@@ -66,7 +66,6 @@ ETATS = [
     ("lot : matrice de corrélation", "scripts/lot_correlations.py --check"),
     ("lot : mesure", "scripts/measure_lot.py --check"),
     ("lot : hypothèses", "scripts/hypotheses_lot.py --status"),
-    ("double codage", "scripts/double_codage.py --status"),
 ]
 RESEAU = [("base de recherche", "vectordb/embed.py --dry-run"),
           ("fiches : base et miroir d'accord (D44)", "corpus/fiches_store.py --etat")]

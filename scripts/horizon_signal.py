@@ -1,7 +1,7 @@
 """L'horizon auquel un signal se juge et se compare — `D49`.
 
-Avant `D49`, le juge (`score_signal.py`) et le double codage
-(`double_codage.py`) appelaient tous les signaux à `horizon_bars = 30`, quelle
+Avant `D49`, le juge (`score_signal.py`) et le double codage (supprimé depuis
+par `D54`) appelaient tous les signaux à `horizon_bars = 30`, quelle
 que soit la fiche, pendant que la mesure (`measure_lot.py`) les appelle à
 l'horizon de leur hypothèse. Un signal concordant à 30 barres ne l'est pas
 forcément à 15 minutes ou à la clôture.
@@ -19,8 +19,7 @@ L'horizon se lit, dans cet ordre :
 à l'ancrage par défaut, exactement comme `measure_lot.py` le fait (`D43`).
 
 La source est toujours rendue avec le nombre : un horizon mal lu dans le texte
-libre d'une fiche se voit, et `codage_verifie.concordance` refuse un double
-codage fait à un autre horizon que celui de l'hypothèse.
+libre d'une fiche se voit.
 """
 
 from __future__ import annotations

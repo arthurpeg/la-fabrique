@@ -256,11 +256,11 @@ function blocsH(h) {
   const cites = h.quotes.length ? h.quotes.map(q => `<blockquote><small>${esc(q.from)}${q.name ? ' · ' + esc(q.name) : ''}${q.value != null ? ' · ' + esc(q.value) + ' ' + esc(q.unit || '') : ''}</small>« ${esc(q.quoted)} »</blockquote>`).join('') : '';
   const morceaux = h.chunks.length ? h.chunks.map(c => `<blockquote><small>morceau n° ${esc(c.ordinal)} · section ${esc(c.section)} · ${esc(c.source)}</small>${esc(c.content)}</blockquote>`).join('')
     : `<p class="note">${DATA.base?.asked ? (DATA.base.error ? 'Base injoignable à la génération.' : 'Aucun morceau de la base ne contient ces passages mot pour mot.') : 'Page générée sans la base : relancer avec --base pour relier les citations aux morceaux.'}</p>`;
-  const cc = h.concordance;
-  const conc = cc ? `<dl class="kv"><dt>Verdict</dt><dd><span class="chip ${cc.verdict === 'CONCORDANT' ? 'ok' : 'bad'}">${esc(cc.verdict)}</span></dd>
-    <dt>ρ des scores</dt><dd class="mono">${cc.rho == null ? '—' : Number(cc.rho).toFixed(3)} (seuil 0,70)</dd>
-    <dt>Couverture</dt><dd class="mono">${cc.coverage == null ? '—' : Number(cc.coverage).toFixed(3)} (seuil 0,80)</dd><dt>Tour</dt><dd>${esc(cc.round)}</dd></dl>`
-    : (h.used_by.lot ? '<p class="note">Pas encore de double codage (D34).</p>' : '<p class="note">Hypothèse antérieure à D34 : signal écrit à la main, sans double codage.</p>');
+  const vf = h.verification;
+  const conc = vf ? `<dl class="kv"><dt>Juge D23 et CHOICES</dt><dd><span class="chip ${vf.ok ? 'ok' : 'bad'}">${vf.ok ? 'vert' : 'à reprendre'}</span></dd>
+    ${vf.ok ? '' : `<dt>Pourquoi</dt><dd>${esc(vf.why)}</dd>`}</dl>
+    <p class="note">Un seul codeur depuis D54 : le juge mécanique vérifie la causalité, le contrat, les constantes citées et les choix écrits.</p>`
+    : '<p class="note">Hypothèse antérieure à D34 : signal écrit à la main.</p>';
   const tests = h.used_by.tests;
   const qui = `<dl class="kv"><dt>Lot</dt><dd>${esc(h.used_by.lot || '—')}</dd><dt>Signal</dt><dd class="mono">${esc(h.signals.join(', ') || '—')}</dd>
     <dt>Module</dt><dd class="mono">${esc(h.module || '—')}</dd><dt>Signe attendu</dt><dd class="mono">${esc(h.expected_sign ?? '—')}</dd>
@@ -272,7 +272,7 @@ function blocsH(h) {
     sec('Comment — la construction', para(h.construction) + recette) +
     sec('Ce qui se transpose, et ce qui ne se transpose pas', (h.transfers ? `<p><b>Se transpose :</b> ${esc(h.transfers)}</p>` : '') + (h.does_not_transfer ? `<p><b>Ne se transpose pas :</b> ${esc(h.does_not_transfer)}</p>` : '')) +
     sec('Choix du codeur (CHOICES)', h.choices.length ? `<ul class="plain">${h.choices.map(c => `<li>${esc(c)}</li>`).join('')}</ul>` : '<p class="note">Aucun CHOICES déclaré.</p>') +
-    sec('Double codage', conc) +
+    sec('Vérification du codage', conc) +
     sec(`Passages du papier utilisés (${h.quotes.length})`, cites || '<p class="note">Aucune citation (hypothèse sans fiche).</p>') +
     sec(`Morceaux de la base qui les contiennent (${h.chunks.length})`, morceaux) +
     sec('Qui s\'en sert', qui) +

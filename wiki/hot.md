@@ -1,6 +1,6 @@
 ---
 type: hub
-updated: 2026-10-05
+updated: 2026-10-06
 status: genere
 sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 ---
@@ -12,7 +12,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 > Toute modification hors du bloc « Prochaines actions » sera perdue.
 > Pour changer ce qui s'affiche ici, édite `wiki/log.md` ou `ETAT.md`.
 
-*Régénérée le 2026-10-05.*
+*Régénérée le 2026-10-06.*
 
 ---
 
@@ -25,7 +25,7 @@ sources: [wiki/log.md, ETAT.md, registry/tests.jsonl]
 | **Décision la plus récente** | `decisions/DECISION-51-ancrage-obligatoire.md` (2026-10-03) — tout score se pose à l'ancre de `_common.run`. Avant elle, `D50` (S3 relatif à l'échelle du score) et `decisions/DECISION-49-l-horizon-du-signal.md` (2026-10-03) — un signal se juge et se compare à son horizon (hypothèse, sinon fiche), plus à 30 barres. Avant elle : `decisions/DECISION-36-le-lot-de-la-phase-09.md` (ex-`D27`, renumérotée le 2026-09-30) — le lot de la phase 09 est un |
 | **Tests au registre** | 187 |
 | **Idées abandonnées recensées** | 62 |
-| **Entrées au journal** | 128 |
+| **Entrées au journal** | 129 |
 
 ## Ce qui bloque
 
@@ -45,6 +45,18 @@ Relancer plutôt que recopier (`L21`) :
 python scripts/gate_07.py      # G1 = G2 = G3 = G4 = 0
 python scripts/gate_08.py      # 1 signal, 6/6, aucune retouche
 ```
+
+### Un seul codeur — `D54`, 2026-10-06
+
+Le double codage et le second codeur (`fabrique-temoin`) sont supprimés :
+2 concordances sur 9 fiches, 7 bloquées, aucune erreur de code avérée (`L36`).
+Une entrée du lot est vérifiée quand son module passe le juge `D23` et porte
+des `CHOICES` (`codage_verifie.verifie`). Les ambiguïtés de recette se
+traitent par `recette.py --precisions`, une fois (`CODAGE-DES-SIGNAUX.md`
+§ 3.4). **Lot `LOT-09` : n = 41**, les 5 fiches écartées pour discordance y
+sont revenues, avant toute mesure ; elles passent par le § 3.4 avant leur
+hypothèse. La chaîne complète, du papier à l'IC, est dans
+`scripts/CODAGE-DES-SIGNAUX.md` ; on la lance par `/fabriquer-signaux`.
 
 ### La base fait foi, et se cherche par le sens — `D44` à `D46`, 2026-10-01/02
 
@@ -927,6 +939,7 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 
 | Date | Type | Ce qui s'est passé | Résultat |
 |---|---|---|---|
+| 2026-10-06 | `decision` | **`D54` : un seul codeur.** Bilan mesuré des 8 agents (registres de production, journaux, wiki) : le second codeur `fabrique-temoin` rendait 2 concordances sur 9 fiches, en bloquait 7 et en avait fait écarter 5 sans mesure, sans erreur de code avérée ; supprimé avec `double_codage.py` et `verification/temoins/`. Les 7 autres agents gardés, chiffres à l'appui (critique : 2 avis, 2 erreurs évitées ; trieur faible mais seule entrée du corpus). Règle du lot : module principal vert au juge D23 + CHOICES (`codage_verifie.verifie`). Les ambiguïtés que le double codage révélait passent par la recette (`--precisions`, une fois). 5 fiches réintégrées au lot (n 36 → 41, aucune mesure faite). Technique de création réécrite : `scripts/CODAGE-DES-SIGNAUX.md`, `/fabriquer-signaux`. Leçon `L36`. | — |
 | 2026-10-05 | `controle` | **Tri des voisins (`D53`) contrôlé par Opus à l'aveugle** (l'opérateur m'a délégué ce jugement) : 31 candidats, accord 77 % (trieur réel 10/12), erreurs dans les deux sens (3 gardés, 4 rejetés à tort), aucune grossière. Corrigé : le trieur voit le début de chaque papier (résumé) en plus des deux passages, et les revues générales ne comptent plus. Page de vérification humaine laissée en place, facultative. | — |
 | 2026-10-05 | `correction` | **`D52`, défauts 6, 7, 8.** Une synthèse refusée ou sans apport ne bloque plus ses papiers (15 → 7 bloqués) ; les papiers utilisés sont suivis aussi par leur identifiant en base, qui survit à une fiche ultérieure ; « déjà testé » se lit dans la fiche déclarée de chaque hypothèse, plus par recherche de nom. Même règle pour `synthese.py`. | — |
 | 2026-10-05 | `decision` | **`D53` : les voisins sont triés par un juge isolé avant la synthèse.** Banc de précision (6 graines, 5 variantes, 135 candidats mis en commun, juges Sonnet à l'aveugle) : précision à 10 de 0,17 à 0,23 pour toutes les variantes de recherche (sections, mécanisme seul, cross-encodeur) — l'embedding rapproche des thèmes, pas des mécanismes ; la base n'a que 1 à 6 voisins du même mécanisme par graine. Nouvelle étape : `--candidats` (30) → `fabrique-voisins` (meme/autre) → `--prepare` sur les seuls `meme`, aucune synthèse s'il n'en reste pas. Essai crypto momentum : 7/30 gardés, synthèse valide avec 1 hors_sujet sur 7 (contre 7/10), apport aucun → non codée. Le dossier porte désormais l'année et les auteurs des voisins (l'agent en avait déduit une). | — |
@@ -934,7 +947,6 @@ d'un pouce : c'est `F47`, et `D20` la date plutôt que de la rouvrir.
 | 2026-10-03 | `decision` | **`D51` : l'ancrage par `_common.run` est obligatoire.** Demande de l'opérateur. Consigne réécrite ; le juge D34 passe `--ancrage` et refuse en `S1` tout score hors des ancres de `run` (vérifié sur les données). Mesuré avant : 11 modules sur 12 conformes, seul le témoin andersen (6,3 M scores hors ancre) ne l'est pas. Ne règle pas les désaccords de cellules et de séances (bitcoin-gold, bollerslev). Juge 27/27, registre 187 → 187. | — |
 | 2026-10-03 | `decision` | **`D50` : `S3` juge l'écart relativement à l'échelle du score.** Bruit mesuré : prix passés du panel tronqué identiques à un facteur près, log-rendements à ≤ 8,9e-16 ; honnêtes ≤ 4e-8 en relatif, tricheurs ≥ 5e-2. Tolérance relative 1e-6 + plancher absolu 1e-12 ; porte 05 FRANCHIE, tricheurs attrapés aux mêmes sondes (`L35`). Revue de la journée : `avancer.py` écartait à tort une fiche CONCORDANTE dont l'hypothèse change l'horizon (corrigé) ; plantage UTF-8 du juge sous Windows (corrigé) ; bollerslev rejugé vert, tour 2 DISCORDANT ρ 0,725 couv 0,184 ; andersen, bitcoin-gold et bollerslev échouent sur la couverture (ancrage), pas sur la lecture du papier. Registre 187 → 187. | — |
 | 2026-10-03 | `porte` | **Porte 08 réparée.** `gate_08.py` juge désormais chaque signal produit contre sa fiche (AMORCE, moissonnée, synthèse) augmentée de sa recette valide (`D34`), à l'horizon de `D49` : FRANCHIE, 6/6. En route : `horizon_signal.py` lisait boyarchenko « 10h » (mention tardive) au lieu de « Une heure » — la première mention fait désormais foi. Registre 187 → 187. | — |
-| 2026-10-03 | `decision` | **`D49` : un signal se juge et se compare à son horizon.** Demande de l'opérateur. Le juge et le double codage appelaient tous les signaux à 30 barres, la mesure à l'horizon de l'hypothèse. `scripts/horizon_signal.py` lit l'horizon : hypothèse du lot, sinon champ `horizon` de la fiche, sinon ancrage 30. Signature de la consigne `scores(panel, cells=None, *, horizon_bars: int)` (fin du faux refus `S5`, `L34`). `concordance` refuse un tour fait à un autre horizon que l'hypothèse. Baltussen toujours CONCORDANT (30 barres, `H05`). Juge 27/27, registre 187 → 187. | — |
 
 Journal complet : [[log]]
 

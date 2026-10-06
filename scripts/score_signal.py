@@ -345,10 +345,8 @@ def check_s6(module) -> Verdict:
     qui la viderait de son sens.
     """
     v = Verdict("S6", "zéro retouche manuelle depuis la production")
-    # Le registre de production est celui du DOSSIER du module : `signals/`
-    # pour le codage principal, `verification/temoins/` pour le témoin de
-    # `D34`, qui porte le même SIGNAL_ID et le même nom de fichier. Un registre
-    # unique confondrait les deux et casserait `S6` à tort.
+    # Le registre de production est celui du DOSSIER du module (`signals/` ;
+    # le dossier du témoin de `D34` a été supprimé par `D54`).
     fichier = getattr(module, "__file__", None)
     produced = Path(fichier).resolve().parent / "PRODUCED.json" if fichier else PRODUCED
     if not produced.is_file():

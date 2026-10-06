@@ -1,8 +1,8 @@
 """Écarter une fiche du lot avant sa mesure — `D34` § Quand le codage échoue.
 
-Une fiche dont le codage ne se vérifie pas — double codage discordant après
-`TOURS_MAX` tours, juge `D23` refusé trois fois, ou recette impossible — ne peut
-pas être mesurée : un IC mort n'y distinguerait pas l'idée du codeur. Elle sort
+Une fiche dont le codage ne se vérifie pas — juge `D23` refusé trois fois, ou
+recette impossible (le double codage est supprimé par `D54`) — ne peut pas être
+mesurée : un IC mort n'y distinguerait pas l'idée du codeur. Elle sort
 du lot, **avant toute mesure**, et la sortie est écrite dans le lot même :
 
 - l'entrée passe de `fiches` à `ecartees_codage`, avec son motif, sa preuve et
@@ -13,7 +13,6 @@ du lot, **avant toute mesure**, et la sortie est écrite dans le lot même :
 c'est choisir le lot sur son résultat (`D28`). La porte 09 le revérifie par les
 dates (`codage_verifie.fautes_d34_du_lot`).
 
-    python scripts/ecarter_du_lot.py <fiche_id> --preuve concordance --motif "…"
     python scripts/ecarter_du_lot.py <fiche_id> --preuve juge --motif "…"
     python scripts/ecarter_du_lot.py <fiche_id> --preuve recette --motif "…"
     python scripts/ecarter_du_lot.py <fiche_id> --preuve univers --motif "…"   # D38
@@ -31,20 +30,16 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 
 from codage_verifie import (  # noqa: E402
-    CONCORDANCE,
     RECETTES,
-    TOURS_MAX,
-    concordance,
-    lire,
     maintenant,
-    principal_de,
     univers_de,
+    verifie,
 )
 from gate_09 import LOT_FILE, STAGE  # noqa: E402
 
 from harness import registry  # noqa: E402
 
-PREUVES = ("concordance", "juge", "recette", "univers")
+PREUVES = ("juge", "recette", "univers")  # "concordance" close par D54
 
 
 def main(argv: list[str]) -> int:
@@ -61,10 +56,9 @@ def main(argv: list[str]) -> int:
         raise SystemExit(f"{a.fiche_id} n'est pas dans le lot")
     # D41 : une hypothèse au format D40 peut précéder le codage ; avoir une `ref` ne
     # dit donc plus que le codage a réussi. On décide sur le codage lui-même.
-    if a.preuve in ("concordance", "juge") and concordance(a.fiche_id,
-                                                           principal_de(a.fiche_id))[0]:
-        raise SystemExit(f"{a.fiche_id} a un double codage CONCORDANT : elle ne s'écarte pas "
-                         "pour son codage")
+    if a.preuve == "juge" and verifie(a.fiche_id)[0]:
+        raise SystemExit(f"{a.fiche_id} a un codage jugé vert : elle ne s'écarte pas pour "
+                         "son codage")
     if a.preuve == "univers" and (cible.get("universe") or {}).get("grille"):
         raise SystemExit(f"{a.fiche_id} : son hypothèse {cible.get('ref')} a pré-enregistré la "
                          "grille entière avant D38 ; elle se mesure comme elle a été écrite")
@@ -74,11 +68,6 @@ def main(argv: list[str]) -> int:
     if mesures:
         raise SystemExit(f"la mesure du lot a commencé ({len(mesures)} ligne(s) au stage "
                          f"{STAGE}) : plus aucune fiche ne s'écarte (D28, D34)")
-    if a.preuve == "concordance":
-        tours = [c for c in lire(CONCORDANCE) if c["fiche_id"] == a.fiche_id]
-        if len(tours) < TOURS_MAX or any(c["verdict"] == "CONCORDANT" for c in tours[-1:]):
-            raise SystemExit(f"preuve insuffisante : {len(tours)} tour(s) inscrit(s), il en "
-                             f"faut {TOURS_MAX} discordants")
     if a.preuve == "univers":
         # D38 : le marché du papier n'est aucun de nos instruments, et c'est la
         # recette — citée, validée — qui le dit, pas l'orchestrateur.

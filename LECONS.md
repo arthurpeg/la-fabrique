@@ -1044,3 +1044,20 @@ honnêtes, et l'écart des tricheurs. Ici, 4e-8 contre 5e-2 laisse dix ordres
 de grandeur de marge (`D50`). Et un résultat qui change avec une convention
 de recollement est d'abord une question sur la donnée, avant d'en être une
 sur le code.
+
+## L36 — Un contrôle qui bloque presque tout sans trouver d'erreur mesure autre chose que ce qu'il croit
+
+**Le 2026-10-06.** Le double codage (`D34`) faisait coder chaque fiche par deux
+modèles isolés et exigeait des scores concordants. Sur neuf fiches, il a rendu
+deux concordances, bloqué les sept autres, et fait écarter cinq fiches du lot
+sans qu'aucune soit mesurée. Relus, les désaccords venaient presque tous de ce
+que le papier ne tranchait pas : le prédicteur à transposer, les instants à
+noter, le dénominateur d'un rendement. Il y avait aussi l'outillage (`L34`,
+`L35`). Aucune erreur de code n'a été établie. Le contrôle mesurait
+l'**ambiguïté des papiers**, pas la fidélité du codeur, et la payait deux fois
+le prix d'un codage, à chaque tour.
+
+**La règle.** Avant de garder un contrôle, compter ce qu'il **attrape** contre
+ce qu'il **bloque** et ce qu'il **coûte**, sur ses propres registres. Un
+défaut se traite là où il naît : une ambiguïté dans la recette, par une
+question ciblée (`D54`), pas en doublant tout ce qui vient après.

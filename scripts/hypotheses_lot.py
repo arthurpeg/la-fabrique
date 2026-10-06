@@ -36,7 +36,7 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "hypotheses"))
 
-from codage_verifie import RECETTES, concordance, principal_de, univers_de  # noqa: E402
+from codage_verifie import RECETTES, univers_de, verifie  # noqa: E402
 from gate_09 import LOT_FILE  # noqa: E402
 
 HYP_DIR = REPO / "hypotheses"
@@ -123,7 +123,7 @@ def do_status() -> int:
     for e in lot["fiches"]:
         fid = e["fiche_id"]
         ref = liens.get(fid)
-        verif = "vérifiée" if concordance(fid, principal_de(fid))[0] else "non vérifiée"
+        verif = "vérifiée" if verifie(fid)[0] else "non vérifiée"
         if not ref:
             etat = "hypothèse D40 à écrire"
         elif e.get("ref") == ref and e.get("universe"):

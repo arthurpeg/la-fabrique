@@ -1,21 +1,23 @@
 """Le codage vérifié — ce que `D34` ajoute au codeur de `D23`, en un seul endroit.
 
 `D23` juge UN codage contre sa fiche : il attrape le grossier (contrat, imports,
-look-ahead, dégénérescence, constante inventée) et laisse passer le subtil — un
-signal fidèle à une lecture fausse ou partielle de la fiche. `D34` ferme ce
-trou par trois gestes, avant toute mesure :
+look-ahead, dégénérescence, constante inventée). `D34` y ajoute, avant toute
+mesure :
 
 1. **la recette** (`scripts/recette.py`) : la formule, les entrées, le timing
    et chaque paramètre du papier, cités mot pour mot, ou `null` avec raison ;
 2. **les choix écrits** : chaque module produit déclare `CHOICES`, les
-   interprétations que son codeur a dû faire ;
-3. **le double codage** (`scripts/double_codage.py`) : deux codeurs isolés, de
-   deux modèles différents, codent la même fiche ; leurs SCORES doivent
-   concorder.
+   interprétations que son codeur a dû faire.
 
-Ce module porte les seuils, les chemins et les vérifications partagées. **Aucun
-IC n'est calculé ici, ni nulle part dans `D34`** : on compare des scores entre
-eux, jamais un score à un rendement futur.
+**Le double codage (un second codeur, `fabrique-temoin`) est supprimé par
+`D54`** : sur neuf fiches, deux concordances, sept fiches bloquées, et des
+désaccords venus surtout d'ambiguïtés de recette, que la recette doit
+trancher, pas un second code. Un signal entre dans un lot quand son module
+principal passe le juge `D23` et porte des `CHOICES` bien formés, à son
+empreinte actuelle (`verifie`).
+
+Ce module porte les chemins et les vérifications partagées. **Aucun IC n'est
+calculé ici.**
 """
 
 from __future__ import annotations
@@ -28,20 +30,9 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 
-# Les seuils de `D34`, fixés AVANT toute mesure du lot. Les changer est une
-# décision écrite, et ne peut se faire qu'avant la première mesure (`D28`).
-SEUIL_RHO = 0.70          # concordance des scores, Spearman pondéré par cellule
-SEUIL_COUVERTURE = 0.80   # part des (cellule, instant) notés par les deux codeurs
-MIN_PAIRES = 30           # sous ce nombre, une cellule ne dit rien
-ASOF_CONCORDANCE = "2018-06-15 20:00"  # l'instant du juge D23, pas celui de la mesure
-MODELE_PRINCIPAL = "opus"
-MODELE_TEMOIN = "sonnet"
-TOURS_MAX = 2             # tours de concordance avant d'écarter la fiche
-
 VERIF = REPO / "verification"
-TEMOINS = VERIF / "temoins"
 JUGEMENTS = VERIF / "jugements.jsonl"
-CONCORDANCE = VERIF / "concordance.jsonl"
+CONCORDANCE = VERIF / "concordance.jsonl"  # archive du double codage, close par D54
 RECETTES = REPO / "corpus" / "recettes"
 
 
@@ -68,11 +59,6 @@ def lire(path: Path) -> list[dict]:
 
 def rel(path: Path) -> str:
     return path.resolve().relative_to(REPO).as_posix()
-
-
-def temoin_path(module_path: Path) -> Path:
-    """Le témoin d'un module de `signals/` porte le même nom, dans `verification/`."""
-    return TEMOINS / module_path.name
 
 
 # ---------------------------------------------------------------------------
@@ -153,10 +139,6 @@ def jugement_vert(module_path: Path) -> tuple[bool, str]:
 
 
 # ---------------------------------------------------------------------------
-# La concordance — le verdict qui ouvre le lot
-# ---------------------------------------------------------------------------
-
-# ---------------------------------------------------------------------------
 # L'univers d'une hypothèse — D38
 # ---------------------------------------------------------------------------
 
@@ -209,11 +191,17 @@ def principal_de(fiche_id: str) -> Path:
     return REPO / "signals" / (fiche_id.replace("-", "_") + ".py")
 
 
-def fautes_d34_du_lot(lot: dict, registre: list[dict], stage: str) -> list[str]:
-    """Ce que `D34` exige d'un lot, pour la porte 09 et la mesure.
+def verifie(fiche_id: str) -> tuple[bool, str]:
+    """Le module principal d'une fiche passe-t-il le juge `D23` et `CHOICES`, à son
+    empreinte actuelle ? C'est la seule condition de codage d'un lot depuis `D54`."""
+    ok, pourquoi = jugement_vert(principal_de(fiche_id))
+    return ok, "" if ok else f"{fiche_id} : {pourquoi}"
 
-    1. chaque entrée a un double codage CONCORDANT, à l'empreinte actuelle de
-       son module principal ;
+
+def fautes_d34_du_lot(lot: dict, registre: list[dict], stage: str) -> list[str]:
+    """Ce que `D34` (révisée par `D54`) exige d'un lot, pour la porte 09 et la mesure.
+
+    1. chaque entrée a un module principal jugé vert, à son empreinte actuelle ;
     2. chaque fiche écartée l'a été AVANT la première mesure du lot — écarter
        après avoir vu un IC serait choisir le lot sur son résultat (`D28`).
     """
@@ -221,9 +209,9 @@ def fautes_d34_du_lot(lot: dict, registre: list[dict], stage: str) -> list[str]:
     entries = lot.get("fiches") or lot.get("hypotheses") or []
     for e in entries:
         fid = e.get("fiche_id") or e.get("signal_id")
-        ok, pourquoi = concordance(fid, principal_de(fid))
+        ok, pourquoi = verifie(fid)
         if not ok:
-            fautes.append(f"{pourquoi} (D34)")
+            fautes.append(f"{pourquoi} (D34, D54)")
     ids = ({e.get("signal_id") for e in entries} | {e.get("fiche_id") for e in entries}
            | {x.get("fiche_id") for x in lot.get("ecartees_codage") or []}) - {None}
     mesures = sorted(r["timestamp"] for r in registre
@@ -233,29 +221,3 @@ def fautes_d34_du_lot(lot: dict, registre: list[dict], stage: str) -> list[str]:
             fautes.append(f"{x.get('fiche_id')} écartée le {x.get('at')}, APRÈS la première "
                           f"mesure du lot ({mesures[0]}) — D34 l'interdit")
     return fautes
-
-
-def concordance(fiche_id: str, module_path: Path) -> tuple[bool, str]:
-    """Le module principal a-t-il un verdict CONCORDANT, à son empreinte actuelle ?"""
-    if not module_path.is_file():
-        return False, f"{fiche_id} : module {module_path.name} absent"
-    sha = empreinte16(module_path)
-    lignes = [c for c in lire(CONCORDANCE) if c["fiche_id"] == fiche_id]
-    if not lignes:
-        return False, f"{fiche_id} : aucun double codage (D34)"
-    c = lignes[-1]
-    if c["principal"]["sha256_16"] != sha:
-        return False, (f"{fiche_id} : le dernier double codage portait sur "
-                       f"{c['principal']['sha256_16']}, le module est à {sha}")
-    if c["verdict"] != "CONCORDANT":
-        return False, f"{fiche_id} : double codage {c['verdict']} (rho {c.get('rho')})"
-    # D49 : la concordance vaut à l'horizon où elle a été mesurée. Les tours
-    # antérieurs à D49 ont tous été faits à 30 barres.
-    from horizon_signal import horizon_du_signal  # noqa: PLC0415
-
-    attendu, source = horizon_du_signal(fiche_id)
-    fait = c.get("horizon_bars", 30)
-    if fait != attendu:
-        return False, (f"{fiche_id} : double codage fait à {fait} barres, l'horizon est "
-                       f"{attendu} ({source}) — refaire le double codage (D49)")
-    return True, ""

@@ -1,14 +1,15 @@
 """La réaction en chaîne : tout ce qui ne demande plus d'IA se fait tout seul.
 
-Après chaque passage d'un sous-agent (recette, codeurs), l'orchestrateur lance
+Après chaque passage d'un sous-agent (recette, codeur), l'orchestrateur lance
 ce script. Il fait, dans l'ordre, **chaque étape déterministe qui est prête**,
 et dit ce qui bloque le reste :
 
 1. une fiche dont la recette déclare un marché absent de notre univers
    s'écarte du lot (`D38`, preuve `univers`) — tant que la mesure n'a pas
    commencé ;
-2. une fiche dont les deux codages sont verts et sans verdict de concordance à
-   leur empreinte passe au double codage (`D34`) ;
+2. une fiche dont le module principal est jugé vert (`D23`, `CHOICES`) à son
+   empreinte actuelle est vérifiée (`D34`, révisée par `D54` : plus de double
+   codage) ;
 3. les hypothèses des fiches vérifiées s'écrivent (étape 8) **et se commitent
    aussitôt** : la date du commit prouve qu'elles précèdent le résultat ;
 4. **quand le lot est complet** — chaque entrée a son hypothèse, ou a été
@@ -43,15 +44,10 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 
 from codage_verifie import (  # noqa: E402
-    CONCORDANCE,
     RECETTES,
-    TOURS_MAX,
-    concordance,
-    jugement_vert,
-    lire,
     principal_de,
-    temoin_path,
     univers_de,
+    verifie,
 )
 from gate_09 import CORR_FILE, LOT_FILE, STAGE  # noqa: E402
 
@@ -92,11 +88,6 @@ def main(argv: list[str]) -> int:
     lot = json.loads(LOT_FILE.read_text(encoding="utf-8"))
     entries = lot["fiches"]
     commencee = mesure_commencee(entries)
-    tours = {}
-    dernier = {}  # D49 : un tour CONCORDANT à un autre horizon se refait, il ne s'écarte pas
-    for c in lire(CONCORDANCE):
-        tours[c["fiche_id"]] = tours.get(c["fiche_id"], 0) + 1
-        dernier[c["fiche_id"]] = c["verdict"]
 
     # 0 — D44 : la base fait foi pour les fiches. On tire celles qu'une autre
     # session a versées, puis on pousse les nouvelles d'ici. Sans réseau, on
@@ -125,25 +116,17 @@ def main(argv: list[str]) -> int:
                                  "--motif", f"marché du papier absent : {u['studied']}")
                 print(f"  écartée (D38) : {fid}" if rc == 0 else f"  écart refusé : {fid} — {out}")
             continue
-        p = principal_de(fid)
-        if concordance(fid, p)[0]:
+        if verifie(fid)[0]:
             if u is None and not grille:
                 bloque.setdefault("vérifiée, recette sans marché (D38) : refaire la recette",
                                   []).append(fid)
             continue
-        vert_p, vert_t = jugement_vert(p)[0], jugement_vert(temoin_path(p))[0]
-        if not (rp.is_file()):
+        if not rp.is_file():
             bloque.setdefault("recette à faire", []).append(fid)
-        elif not (vert_p and vert_t):
-            bloque.setdefault("deux codages verts à obtenir", []).append(fid)
-        elif tours.get(fid, 0) >= TOURS_MAX and dernier.get(fid) != "CONCORDANT":
-            bloque.setdefault("discordante au dernier tour : à écarter", []).append(fid)
-        elif faire:
-            rc, out = lancer("scripts/double_codage.py", fid)
-            verdict = "CONCORDANT" if rc == 0 else "DISCORDANT ou refusé"
-            print(f"  double codage : {fid} — {verdict}")
-            if rc != 0:
-                bloque.setdefault("discordante : § 2.7 du tutoriel", []).append(fid)
+        elif not principal_de(fid).is_file():
+            bloque.setdefault("à coder (fabrique-codeur)", []).append(fid)
+        else:
+            bloque.setdefault("codage refusé par le juge : renvoyer au codeur", []).append(fid)
 
     # 3 — relier les hypothèses D40 au lot, et dire celles qui restent à écrire
     # (D41). Ce script n'écrit aucune hypothèse : elles s'écrivent au format de D40
@@ -156,7 +139,7 @@ def main(argv: list[str]) -> int:
                    "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
                    "hypotheses/LOT-09.json")
     for e in entries:
-        if not e.get("ref") and concordance(e["fiche_id"], principal_de(e["fiche_id"]))[0]:
+        if not e.get("ref") and verifie(e["fiche_id"])[0]:
             bloque.setdefault("vérifiée, hypothèse D40 à écrire", []).append(e["fiche_id"])
 
     lot = json.loads(LOT_FILE.read_text(encoding="utf-8"))

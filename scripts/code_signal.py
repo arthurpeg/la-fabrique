@@ -50,7 +50,6 @@ humain, postérieur, et `D23` ne le lui délègue pas.
 
     python scripts/code_signal.py --list
     python scripts/code_signal.py --prepare <fiche_id>
-    python scripts/code_signal.py --prepare <fiche_id> --temoin # le second codeur, D34
     python scripts/code_signal.py --record <module.py>          # fige S6
     python scripts/code_signal.py --judge <module.py>           # D23 + CHOICES (D34)
 
@@ -64,11 +63,10 @@ les citations de la recette, jamais sa prose.
 **Les choix écrits.** Chaque module déclare `CHOICES`, les interprétations que
 son codeur a faites. `--judge` refuse un module qui n'en déclare pas.
 
-**Le témoin.** `--prepare --temoin` écrit la consigne du second codeur, d'un
-autre modèle, qui code la même fiche dans `verification/temoins/`, avec son
-propre registre de production. Les deux codages sont ensuite comparés par
-`scripts/double_codage.py`. Chaque `--judge` est inscrit dans
-`verification/jugements.jsonl`, que le double codage exige.
+**Un seul codeur (`D54`).** Le second codeur et le double codage sont
+supprimés. Chaque `--judge` est inscrit dans `verification/jugements.jsonl` :
+c'est ce jugement, vert à l'empreinte actuelle du module, qui fait entrer le
+signal dans un lot (`codage_verifie.verifie`).
 """
 
 from __future__ import annotations
@@ -88,10 +86,8 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 
 from codage_verifie import (  # noqa: E402
-    TEMOINS,
     fautes_choix,
     inscrire_jugement,
-    temoin_path,
 )
 
 from sandbox import contract, scan  # noqa: E402
@@ -414,7 +410,7 @@ def fiche_et_recette(fiche_id: str) -> dict:
     return fiche
 
 
-def do_prepare(fiche_id: str, temoin: bool = False) -> int:
+def do_prepare(fiche_id: str) -> int:
     toutes = fiches()
     if fiche_id not in toutes:
         raise SystemExit(
@@ -422,7 +418,7 @@ def do_prepare(fiche_id: str, temoin: bool = False) -> int:
             f"connues : {', '.join(sorted(toutes))}"
         )
     fiche = fiche_et_recette(fiche_id)
-    chemin = temoin_path(module_path(fiche_id)) if temoin else module_path(fiche_id)
+    chemin = module_path(fiche_id)
 
     WORK.mkdir(parents=True, exist_ok=True)
     texte = CONSIGNE.format(
@@ -434,7 +430,7 @@ def do_prepare(fiche_id: str, temoin: bool = False) -> int:
         du_depot=", ".join(f"`{v:g}` ({r})" for v, r in sorted(DU_DEPOT.items())),
         fiche=json.dumps(fiche, ensure_ascii=False, indent=2),
     )
-    out = WORK / f"{fiche_id}{'.temoin' if temoin else ''}.md"
+    out = WORK / f"{fiche_id}.md"
     out.write_text(texte, encoding="utf-8")
 
     print(f"consigne ecrite : {out.relative_to(REPO)}  ({out.stat().st_size / 1000:.0f} ko)")
@@ -475,10 +471,9 @@ def enregistrer(path: Path) -> dict:
     if not signal_id:
         raise SystemExit(f"{path.name} ne declare pas de SIGNAL_ID — `S1` le refuserait")
 
-    # Le registre du DOSSIER : `signals/` pour le principal, `verification/
-    # temoins/` pour le témoin de `D34`, qui porte le même SIGNAL_ID.
-    if path.parent not in (SIGNALS.resolve(), TEMOINS.resolve()):
-        raise SystemExit(f"{path} : un signal vit dans signals/ ou verification/temoins/")
+    # Le registre du dossier `signals/` (le témoin de `D34` est supprimé par `D54`).
+    if path.parent != SIGNALS.resolve():
+        raise SystemExit(f"{path} : un signal vit dans signals/")
     produced = path.parent / "PRODUCED.json"
     registre = json.loads(produced.read_text(encoding="utf-8")) if produced.is_file() else {}
     ligne = registre.get(signal_id) or {"attempts": []}
@@ -580,8 +575,6 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--fiche-path", metavar="FICHE_ID",
                     help="le chemin de la fiche, pour --judge --fiche")
     ap.add_argument("--prepare", metavar="FICHE_ID", help="ecrire la consigne")
-    ap.add_argument("--temoin", action="store_true",
-                    help="avec --prepare : la consigne du second codeur (D34)")
     ap.add_argument("--record", type=Path, metavar="MODULE", help="figer S6")
     ap.add_argument("--judge", type=Path, metavar="MODULE")
     ap.add_argument("--fiche", type=Path, metavar="FICHE.json")
@@ -595,7 +588,7 @@ def main(argv: list[str]) -> int:
     if a.list:
         return do_list(a.lot)
     if a.prepare:
-        return do_prepare(a.prepare, a.temoin)
+        return do_prepare(a.prepare)
     if a.record:
         return do_record(a.record)
     if a.judge:

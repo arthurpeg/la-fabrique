@@ -37,7 +37,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 
-from codage_verifie import CONCORDANCE, RECETTES, lire, principal_de  # noqa: E402
+from codage_verifie import RECETTES, principal_de, verifie  # noqa: E402
 
 CORPUS = REPO / "corpus"
 OUT = REPO / "scripts" / "out" / "statut_papiers.json"
@@ -53,9 +53,8 @@ ETAPES = [
     ("à promouvoir", "en cours", "promouvoir (corpus/promote_harvest.py)"),
     ("à ficher", "en cours", "ficher (extract_fiche_harvest.py)"),
     ("à mettre en recette", "en cours", "recette (scripts/recette.py)"),
-    ("à coder", "en cours", "deux codages (CODAGE-DES-SIGNAUX.md)"),
-    ("à comparer", "en cours", "double codage (scripts/double_codage.py)"),
-    ("discordant", "en cours", "recette précisée, puis deux codages neufs (§ 2.7)"),
+    ("à coder", "en cours", "un codage (CODAGE-DES-SIGNAUX.md)"),
+    ("codage refusé", "en cours", "renvoyer au codeur le verdict du juge (D23)"),
     ("vérifié, hors lot", "en cours", "entrer dans un lot"),
     ("vérifié, en lot", "en cours", "hypothèse, matrice, mesure (étapes 8-10)"),
     ("écarté du lot", "fini", "—"),
@@ -74,8 +73,7 @@ def charger(nom: str, defaut):
     return json.loads(p.read_text(encoding="utf-8")) if p.is_file() else defaut
 
 
-def aval_de_la_fiche(fiche_id: str, lot: dict, mesures: set[str],
-                     concordance: dict[str, str]) -> str:
+def aval_de_la_fiche(fiche_id: str, lot: dict, mesures: set[str]) -> str:
     """L'étape d'un papier qui a sa fiche."""
     dans_lot = {e["fiche_id"] for e in lot.get("fiches", [])}
     ecartees = {e["fiche_id"] for e in lot.get("ecartees_codage", [])}
@@ -83,15 +81,12 @@ def aval_de_la_fiche(fiche_id: str, lot: dict, mesures: set[str],
         return "mesuré"
     if fiche_id in ecartees:
         return "écarté du lot"
-    verdict = concordance.get(fiche_id)
-    if verdict == "CONCORDANT":
+    if verifie(fiche_id)[0]:
         return "vérifié, en lot" if fiche_id in dans_lot else "vérifié, hors lot"
-    if verdict == "DISCORDANT":
-        return "discordant"
     if not (RECETTES / f"{fiche_id}.json").is_file():
         return "à mettre en recette"
     if principal_de(fiche_id).is_file():
-        return "à comparer"
+        return "codage refusé"
     return "à coder"
 
 
@@ -101,7 +96,6 @@ def bilan() -> list[dict]:
     promus = {p["openalex_id"] for p in charger("harvest_promoted.json", [])}
     lot_path = REPO / "hypotheses" / "LOT-09.json"
     lot = json.loads(lot_path.read_text(encoding="utf-8")) if lot_path.is_file() else {}
-    concordance = {c["fiche_id"]: c["verdict"] for c in lire(CONCORDANCE)}
     registre = [json.loads(x) for x in
                 (REPO / "registry" / "tests.jsonl").read_text(encoding="utf-8").splitlines()
                 if x.strip()]
@@ -125,7 +119,7 @@ def bilan() -> list[dict]:
         if w.get("duplicate_of"):
             etape = "doublon"
         elif oid in fiches_h:
-            etape = aval_de_la_fiche(fiches_h[oid], lot, mesures, concordance)
+            etape = aval_de_la_fiche(fiches_h[oid], lot, mesures)
         elif oid in promus:
             etape = "à ficher"
         elif w["status"] == "inatteignable":
@@ -149,7 +143,7 @@ def bilan() -> list[dict]:
                       if json.loads(f.read_text(encoding="utf-8"))["source"]
                       .get("amorce_entry") == e["entry"]), None)
         if fiche:
-            etape = aval_de_la_fiche(fiche, lot, mesures, concordance)
+            etape = aval_de_la_fiche(fiche, lot, mesures)
         elif e["status"] == "inatteignable":
             etape = "inatteignable"
         else:

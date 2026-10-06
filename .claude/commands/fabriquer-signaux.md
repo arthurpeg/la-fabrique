@@ -1,11 +1,12 @@
 ---
-description: Lance la fabrication de signaux de La Fabrique, du début à la fin, en orchestrant les sous-agents isolés (recette, deux codeurs, double codage), aussi loin que le quota le permet.
+description: Lance la création de signaux de La Fabrique, du papier à l'IC, en orchestrant les sous-agents isolés (voisins, synthèse, recette, codeur) aussi loin que le quota le permet.
 argument-hint: "[nombre de fiches, 5 par défaut]"
 ---
 
-Tu es la session qui **orchestre** la fabrication de signaux de La Fabrique. Tu ne
-codes rien toi-même et tu n'écris aucune recette : tu lances des sous-agents
-isolés, tu fais juger, tu tiens le compte.
+Tu es la session qui **orchestre** la création de signaux de La Fabrique. Tu
+n'écris ni recette, ni synthèse, ni signal : tu lances des sous-agents isolés,
+le code les juge, tu tiens le compte. Tu écris seulement les hypothèses
+(`D40`), que le code juge aussi.
 
 Objectif de cette session : traiter **$ARGUMENTS** fiches (5 si rien n'est
 précisé), dans l'ordre de priorité, sans dépasser 85 % de la fenêtre de
@@ -13,85 +14,62 @@ précisé), dans l'ordre de priorité, sans dépasser 85 % de la fenêtre de
 
 ## Dans cet ordre, sans en sauter
 
-1. **Démarrage** — suis la séquence de `CLAUDE.md` : `wiki/index.md`,
+1. **Démarrage** : suis la séquence de `CLAUDE.md` (`wiki/index.md`,
    `wiki/Failed Ideas/ledger.md` en entier, `wiki/hot.md`, `ETAT.md`,
-   `LECONS.md`, la décision la plus récente.
-2. **Lis `scripts/CODAGE-DES-SIGNAUX.md` en entier.** C'est la procédure qui fait
-   foi ; ce qui suit n'en est que le résumé.
-3. **Relève le quota** (outil d'usage de l'application) et inscris-le :
-   `uv run python scripts/quota.py --nom <compte> --fenetre … --semaine … --reset-fenetre … --reset-semaine …`.
-   Au-delà de 85 % de la fenêtre de 5 heures, arrête-toi et dis-le.
+   `LECONS.md`, la décision la plus récente).
+2. **Lis `scripts/CODAGE-DES-SIGNAUX.md` en entier.** C'est la procédure qui
+   fait foi ; ce qui suit n'en est que le résumé.
+3. **Relève le quota** et inscris-le avec `scripts/quota.py`. Au-delà de 85 % de
+   la fenêtre de 5 heures, arrête-toi et dis-le.
 4. **Choisis les fiches** : `uv run python scripts/code_signal.py --list --lot`
-   d'abord, puis `--list`. Écarte d'emblée celles qui ont déjà un double codage
-   CONCORDANT (`uv run python scripts/double_codage.py --status`).
-5. **Pour chaque fiche**, la boucle du tutoriel, avec les sous-agents du projet
-   (`subagent_type`) et **le seul chemin de la consigne** comme message :
-   - recette : `scripts/recette.py --prepare`, puis `fabrique-recette`, puis
-     `--record` **après sa réponse**, puis `--check` ;
-   - marché : si `exact_roots` est vide, `scripts/ecarter_du_lot.py --preuve univers`
-     et fiche suivante — ne code pas (`D38`) ;
-   - consignes : `scripts/code_signal.py --prepare <id>` et `--prepare <id> --temoin` ;
-   - `fabrique-codeur` et `fabrique-temoin` **dans le même message**, en parallèle ;
-   - `--record` puis `--judge` pour chacun ; un refus se renvoie tel quel à la
-     même session par `SendMessage`, trois essais au plus ;
-   - `scripts/double_codage.py <id>` ; si DISCORDANT, la procédure § 2.7.
-   - **Après chaque fiche**, lance la réaction en chaîne :
-     `uv run python scripts/avancer.py`. Elle fait seule tout ce qui ne demande
-     plus d'IA : écarts pour marché absent, doubles codages prêts, hypothèses
-     écrites et commitées — et, **dès que le lot est complet**, la matrice de
-     corrélation, **la mesure des IC**, la porte 09 et le tableau de bord. Si
-     elle s'arrête sur des corrélations négatives (choix BH ou BY, `D25`),
+   d'abord, puis `--list`. `uv run python scripts/avancer.py --etat` dit ce qui
+   bloque le lot.
+5. **Pour chaque fiche**, avec les sous-agents du projet et **le seul chemin de
+   la consigne** comme message :
+   - **voisins (facultatif, `D53`)** : `synthese_dossier.py --candidats <id>`,
+     puis `fabrique-voisins`, puis `--prepare <id>`. S'il ne reste aucun voisin
+     du même mécanisme, pas de synthèse. Sinon, `fabrique-synthese`, puis
+     `--record` et `--check`. La synthèse ne se code que si `--list` la propose
+     (apport `nouveau`, `D52`) ;
+   - **recette** : `recette.py --prepare`, puis `fabrique-recette`, puis
+     `--record` **après sa réponse**, puis `--check`. Si `exact_roots` est vide,
+     `ecarter_du_lot.py --preuve univers` et fiche suivante (`D38`) ;
+   - **codage** : `code_signal.py --prepare`, puis `fabrique-codeur`, puis
+     `--record` et `--judge`. Un refus se renvoie tel quel au même codeur, trois
+     essais au plus. **Un seul codeur (`D54`)** : un module vert est vérifié ;
+   - **ambiguïtés** : lis les `CHOICES` du module vert. Un choix qui tranche une
+     ambiguïté que la recette laissait ouverte fait refaire la recette **une
+     fois**, avec `--precisions "<question neutre>"`, par une session neuve ;
+     recode si elle tranche autrement ;
+   - **hypothèse** : quand `avancer.py` dit « vérifiée, hypothèse D40 à écrire »,
+     écris-la au format de `D40` (modèle `hypotheses/H05-*.md`), avec le
+     paragraphe de `hypotheses_lot.py --domaine <id>`, **le signe** et **un
+     horizon intraday** (`D42`). Puis `hypotheses/score_hypothese.py`, commite
+     aussitôt. Chaque fiche a son hypothèse, transposée si le papier ne prédit
+     pas de rendement ;
+   - **après chaque fiche** : `uv run python scripts/avancer.py`. Il écarte,
+     relie, verse les fiches dans la base, et, **dès que le lot est complet**,
+     lance les corrélations, **la mesure des IC**, la porte 09 et le tableau de
+     bord. S'il s'arrête sur des corrélations négatives (BH ou BY, `D25`),
      arrête-toi et demande à l'opérateur.
-   - **Chaque fiche a son hypothèse (`D42`)**, sans exception : aucune ne
-     s'écarte parce qu'elle « ne prédit pas de rendement ». Pour un tel papier,
-     transpose son idée en une prédiction intraday sur nos contrats — **le
-     signe** (monte / baisse) et **l'horizon intraday** déclaré dans « Le domaine »
-     (`**Horizon :**` 15 minutes, 2 heures, ou jusqu'à la clôture de la fenêtre) —
-     et dis dans « Ce qui n'est pas affirmé ici » que c'est une transposition.
-   - **Hypothèse** : si `avancer.py` signale « vérifiée, hypothèse D40 à écrire »,
-     écris-la toi-même **au format de `D40`** (prends `hypotheses/H05-*.md` comme
-     modèle), avec dans « Le domaine » le paragraphe que donne
-     `uv run python scripts/hypotheses_lot.py --domaine <fiche_id>` ; puis
-     `uv run python hypotheses/score_hypothese.py` (sept conditions), commite
-     aussitôt, et relance `avancer.py`, qui la relie au lot (`D41`). Tu
-     n'écris jamais une hypothèse pour une fiche qui en a déjà une.
-   - **Les fiches vivent dans la base (`D44`)** : toute fiche ou synthèse
-     nouvelle, une fois inscrite et jugée verte, se verse par
-     `uv run python corpus/fiches_store.py --pousser` (`avancer.py` le fait aussi).
-6. **Combiner un papier et ses voisins (`D47`, `D52`, `D53`)** — quand une fiche
-   le mérite, avant sa recette, dans cet ordre :
-   - `uv run python scripts/synthese_dossier.py --candidats <fiche>` : 30
-     candidats cherchés dans toute la base ;
-   - `fabrique-voisins` avec le seul chemin de la consigne de tri : il garde
-     les candidats du même mécanisme (`meme`) ;
-   - `uv run python scripts/synthese_dossier.py --prepare <fiche>` : le dossier
-     des seuls voisins `meme`, textes figés. **S'il n'en reste aucun, pas de
-     synthèse** : note-le et passe ;
-   - `fabrique-synthese` avec le seul chemin de la consigne de synthèse, puis
-     `--record` **après sa réponse**, puis `--check`. Un refus se renvoie tel
-     quel, trois essais au plus.
-
-   La fiche `synthese-dossier-<fiche>` suit ensuite la boucle du point 5,
-   **seulement si `code_signal.py --list` la propose** : chaque voisin a un rôle
-   (`complete`, `confirme`, `contredit`, `deja_teste`, `hors_sujet`), et une
-   synthèse dont l'apport est `aucun` n'est pas codée. Une graine déjà graine ou
-   source d'une autre synthèse est refusée.
-7. **Consulte `fabrique-critique`** si un groupe finit mal (discordances,
-   refus en série) ou avant de changer quoi que ce soit au processus. Son avis
-   ne remplace ni les portes ni une décision écrite.
-8. **Fin de session** : relève le quota avec `--depense` (somme des
-   `subagent_tokens`), `uv run python scripts/verifier_tout.py` doit finir sur
-   `TOUT PASSE`, régénère le tableau de bord
-   (`uv run python scripts/tableau_de_bord.py`), écris la ligne de
-   `wiki/log.md`, mets `ETAT.md` à jour, commite et pousse.
+6. **Consulte `fabrique-critique`** si un groupe finit mal, ou avant de changer
+   quoi que ce soit au processus. Son avis ne remplace ni les portes ni une
+   décision écrite.
+7. **Fin de session** :
+   - relève le quota avec `--depense` ;
+   - `scripts/verifier_tout.py` doit finir sur `TOUT PASSE` ;
+   - régénère le tableau de bord (`scripts/tableau_de_bord.py --base`) ;
+   - écris la ligne de `wiki/log.md` et mets `ETAT.md` à jour ;
+   - commite et pousse.
 
 ## Ce que tu ne fais jamais
 
-Aucune ligne de signal ou de recette écrite par toi. Aucun IC, aucune mesure,
-aucune porte 03, 04 ou 06. Rien d'autre que le chemin de sa consigne donné à une
-session isolée. Aucune modification du harnais, du registre, d'une hypothèse ou
-d'un lot hors des outils prévus. Jamais la tranche `holdout`.
+Aucune ligne de signal, de recette ou de synthèse écrite par toi. Aucun IC à la
+main, aucune porte 03, 04 ou 06. Rien d'autre que le chemin de sa consigne
+donné à un sous-agent. Aucune modification du harnais, du registre, d'une
+hypothèse existante ou d'un lot hors des outils prévus. Jamais la tranche
+`holdout`.
 
-Si les sous-agents `fabrique-*` sont introuvables (session ouverte avant leur
-création), arrête-toi et dis de rouvrir une session, plutôt que de les
-remplacer par des sessions génériques sans leurs règles.
+Si un sous-agent `fabrique-*` est introuvable (session ouverte avant sa
+création), arrête-toi et dis de rouvrir une session, plutôt que de le remplacer
+par une session générique sans ses règles.
