@@ -49,7 +49,7 @@ CONSIGNE = """\
 Tu es un lecteur isolé. Ta seule source est ce fichier : ne lis aucun autre
 fichier, aucune commande, aucun accès web.
 
-Pour **chaque** papier ci-dessous (titre et début du texte), rends :
+Pour **chaque** papier ci-dessous (titre, résumé et conclusion), rends :
 
 - `mecanisme` : **une phrase de 15 mots au plus**, en français, qui dit **la
   cause et l'effet sur le prix** — par exemple « le rendement de la première
@@ -102,6 +102,49 @@ def retenus() -> list[dict]:
     return out
 
 
+RESUME = 1500  # caractères du résumé, puis de la conclusion, montrés au lecteur
+
+
+def textes_en_base(titres: list[str]) -> dict[str, str]:
+    """Le résumé et la conclusion de chaque papier, lus dans la base.
+
+    Le 2026-10-06, la première lecture ne montrait que 1 100 caractères des deux
+    premières pages du PDF (page de garde, remerciements) : 2 effets chiffrés
+    sur 307. Le résultat d'un papier se lit dans son résumé et sa conclusion.
+    """
+    sys.path.insert(0, str(REPO / "vectordb"))
+    from embed_api import Api  # noqa: PLC0415
+
+    api, ids, debut = Api(), {}, 0
+    while True:
+        lot = api.appel("GET", "/rest/v1/papers?select=id,title&text_source=neq.abstract"
+                               f"&order=id&offset={debut}&limit=1000") or []
+        ids.update({tri.norm(x["title"]): x["id"] for x in lot})
+        if len(lot) < 1000:
+            break
+        debut += 1000
+    out = {}
+    for t in titres:
+        pid = ids.get(tri.norm(t))
+        if not pid:
+            continue
+        tete = " ".join(" ".join(c["content"].split()) for c in api.appel(
+            "GET", f"/rest/v1/chunks?select=content&paper_id=eq.{pid}&order=ordinal&limit=4")
+            or [])
+        i = tete.lower().find("abstract")
+        resume = tete[i:] if i >= 0 else tete
+        concl = api.appel("GET", f"/rest/v1/chunks?select=content&paper_id=eq.{pid}"
+                                 "&section=eq.conclusion&order=ordinal&limit=2") or []
+        if not concl:
+            concl = list(reversed(api.appel(
+                "GET", f"/rest/v1/chunks?select=content&paper_id=eq.{pid}"
+                       "&order=ordinal.desc&limit=2") or []))
+        fin = " ".join(" ".join(c["content"].split()) for c in concl)
+        out[tri.norm(t)] = (f"**Résumé ou début :** {resume[:RESUME]}\n\n"
+                            f"**Conclusion :** {fin[:RESUME]}")
+    return out
+
+
 def lots() -> list[Path]:
     return sorted(WORK.glob("lot-*.md"))
 
@@ -116,9 +159,11 @@ def do_preparer() -> int:
     for f in lots():
         f.unlink()
     groupes = [pop[i:i + TAILLE] for i in range(0, len(pop), TAILLE)]
+    textes = textes_en_base([r["title"] for r in pop])
     for n, g in enumerate(groupes, 1):
-        blocs = [f"### id `{r['id']}`\n\n**{r['title']}**\n\n> "
-                 + (tri.debut_du_papier(r["work"]) or "AUCUN TEXTE — juge sur le titre seul.")
+        blocs = [f"### id `{r['id']}`\n\n**{r['title']}**\n\n"
+                 + (textes.get(tri.norm(r["title"])) or "> " + (
+                     tri.debut_du_papier(r["work"]) or "AUCUN TEXTE — juge sur le titre seul."))
                  + "\n" for r in g]
         chemin = WORK / f"lot-{n:02d}.json"
         (WORK / f"lot-{n:02d}.md").write_text(CONSIGNE.format(
