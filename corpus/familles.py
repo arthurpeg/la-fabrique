@@ -12,8 +12,8 @@ composante de 194 papiers sur 308).
    du chiffre s'il y en a un.
 2. `--verser` : contrôle mécanique (chaque papier une fois, valeurs dans la liste
    fermée) puis ajout à `corpus/familles_lectures.json`.
-3. `--classer` : le code vectorise les mécanismes (le modèle de la base), relie
-   ceux dont le cosinus dépasse `SEUIL`, et classe les familles par promesse :
+3. `--classer` : le code vectorise les mécanismes (le modèle de la base), forme
+   des familles dont **chaque paire** dépasse `SEUIL` (lien complet), et classe les familles par promesse :
    nombre de papiers à effet positif chiffré, puis nombre de `oui`, puis taille.
    Sortie : `scripts/out/familles.json`.
 
@@ -217,22 +217,19 @@ def do_classer() -> int:
             if not x["mecanisme"].lower().startswith("pas de mécanisme")]
     m = np.array(list(TextEmbedding(model_name=tri.MODELE).embed([x["mecanisme"] for x in lect])))
     m = m / np.linalg.norm(m, axis=1, keepdims=True)
-    sim = m @ m.T
-    parent = list(range(len(lect)))
+    # Lien complet : chaque paire d'une famille dépasse SEUIL. Le lien simple
+    # (union-find, premier classement du 2026-10-07) enchaînait de proche en proche
+    # et fondait 61 mécanismes sans rapport en une seule famille.
+    from scipy.cluster.hierarchy import fcluster, linkage  # noqa: PLC0415
+    from scipy.spatial.distance import squareform  # noqa: PLC0415
 
-    def racine(i: int) -> int:
-        while parent[i] != i:
-            parent[i] = parent[parent[i]]
-            i = parent[i]
-        return i
-
-    for i in range(len(lect)):
-        for j in range(i + 1, len(lect)):
-            if sim[i, j] >= SEUIL:
-                parent[racine(i)] = racine(j)
+    dist = np.clip(1.0 - m @ m.T, 0.0, None)
+    np.fill_diagonal(dist, 0.0)
+    etiquettes = fcluster(linkage(squareform(dist, checks=False), method="complete"),
+                          t=1.0 - SEUIL, criterion="distance")
     groupes: dict[int, list[dict]] = {}
-    for i, x in enumerate(lect):
-        groupes.setdefault(racine(i), []).append(x)
+    for e, x in zip(etiquettes, lect, strict=True):
+        groupes.setdefault(int(e), []).append(x)
     familles = []
     for membres in groupes.values():
         if len(membres) < 2:
