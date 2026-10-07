@@ -1,0 +1,1195 @@
+# Consigne de lecture unique — La Fabrique, `D55`
+
+Tu lis **une seule fois** le texte d'un papier académique, en fin de consigne,
+et tu écris **deux fichiers, dans cet ordre** :
+
+1. **la fiche** du papier, selon la PARTIE 1 ;
+2. **sa recette**, selon la PARTIE 2. La recette complète la fiche que tu viens
+   d'écrire.
+
+Chaque fichier a ses propres règles et son propre contrôle automatique. Les
+deux exigent la même chose : chaque citation recopiée **à la lettre** du texte,
+et `null` avec sa raison pour tout ce que le papier ne dit pas. **N'invente
+jamais une valeur.**
+
+Écris la fiche d'abord, en entier, avec l'outil Write. Écris ensuite la recette.
+Réponds en une ligne : les deux chemins écrits, le nombre de résultats cités
+dans la fiche et le nombre d'ambiguïtés relevées dans la recette.
+
+---
+
+# PARTIE 1 — LA FICHE
+
+# Consigne d'extraction — phase 09 de La Fabrique
+
+Tu produis **une fiche JSON** à partir du texte d'un papier académique, et de
+rien d'autre. Tu n'as pas accès au reste du projet, et c'est voulu : une fiche
+écrite de mémoire ou d'après un résumé serait sans valeur.
+
+## Ce que tu rends
+
+Un **seul objet JSON**, rien avant, rien après, écrit à `corpus/fiches_harvest/assessing-the-profitability-of-timely-opening-ra-W2911858053.json`. Pas de bloc de code, pas de
+commentaire. Il suit le schéma reproduit ci-dessous, section « SCHÉMA ».
+
+## Les règles qui font rejeter une fiche
+
+1. **Chaque citation (`quoted`) doit se retrouver MOT POUR MOT dans le texte
+   fourni.** Copie-la, ne la reformule pas, ne corrige pas sa ponctuation, ne
+   remplace pas « at least » par « >= ». Un seul caractère qui diffère et la
+   fiche est refusée.
+2. **Chaque `value` numérique doit figurer dans sa propre citation**, sauf si tu
+   déclares `"derived": true` (nombre que TU as calculé, avec une `note` disant
+   comment) ou `"spelled_out": "<le mot>"` (le papier écrit le nombre en toutes
+   lettres).
+3. **Si le texte fourni est visiblement abîmé** là où la page serait claire —
+   scan corrompu, symbole mathématique perdu, tableau mis à plat — mets la chaîne
+   ABÎMÉE, telle quelle, dans `quoted_source`, une version lisible dans `quoted`,
+   et le motif dans `quoted_repair` parmi `ocr`, `math_notation`, `table`.
+   N'invente pas d'autre motif.
+4. **N'invente jamais une valeur.** Ce que le papier ne dit pas vaut `null`, avec
+   une `reason`. Un `null` est bruyant, une valeur plausible est indétectable.
+5. **`transposability.what_does_not_transfer` ne peut pas être vide.** Notre
+   univers est de neuf futures intraday ; un papier dont tout transfère n'a pas
+   été lu avec attention.
+
+## Ce qu'on te demande vraiment
+
+Pas un résumé. **Ce que le papier affirme, ce qu'il a mesuré, et ce qui en
+survivrait chez nous.** Une fiche fidèle mais creuse passe les contrôles et ne
+sert à rien : préfère trois résultats qui portent des chiffres à dix qui n'en
+portent pas.
+
+---
+
+## SCHÉMA
+
+# Le schéma de fiche
+
+Ce que doit contenir un fichier de `corpus/fiches/`, et ce que
+`corpus/validate_fiches.py` refuse. Établi par
+`decisions/DECISION-14-schema-de-fiche.md`.
+
+Une **fiche** est le JSON structuré extrait d'un papier. Sa définition n'est pas
+inventée ici : elle est dans `CLAUDE.md` § Le vocabulaire, et ce fichier ne fait
+que la rendre exécutable.
+
+---
+
+## Les huit champs
+
+Six viennent de la constitution, deux de la pratique.
+
+| Champ | Origine | Obligatoire |
+|---|---|---|
+| `claim` | constitution — *hypothèse* | oui |
+| `universe` | constitution — *univers* | oui |
+| `horizon` | constitution — *horizon* | oui, `null` accepté **avec raison** |
+| `signal_construction` | constitution — *construction du signal* | oui, `null` accepté **avec raison** |
+| `reported_results` | constitution — *résultats annoncés* | oui |
+| `what_is_missing` | constitution — *ce qui manque* | oui |
+| `source` | pratique — d'où ça vient | oui |
+| `transposability` | pratique — ce qui en survit chez nous | oui |
+
+Plus l'identité : `fiche_id`, `written`, `written_by`.
+
+Des champs supplémentaires sont **autorisés**. Un papier peut porter des choses
+qu'aucun schéma ne prévoit — un modèle de coûts, une structure de validation, un
+critère d'acceptation propre à l'auteur. Le schéma fixe un plancher, pas un
+plafond.
+
+---
+
+## `source` — la provenance, au sens de `D09`
+
+```json
+"source": {
+  "authors": "…",
+  "title": "…",
+  "year": 1997,
+  "source_url": "https://…",
+  "pdf": "corpus/pdf/…",
+  "retrieved": "AAAA-MM-JJ",
+  "peer_reviewed": true,
+  "amorce_entry": 11
+}
+```
+
+`authors`, `title`, `year`, `source_url` et `retrieved` sont exigés.
+`peer_reviewed` est un booléen : un préprint non arbitré n'est pas une revue à
+comité de lecture, et la distinction a déjà servi.
+
+---
+
+## `reported_results` — une liste, et chaque entrée porte sa citation
+
+C'est ici que `D09` s'étend aux fiches. **Un résultat recopié d'un papier est une
+valeur externe** : rien dans le dépôt ne peut la contredire.
+
+> [!warning] **Les exemples de ce document sont FABRIQUÉS.** Ils citent un papier
+> qui n'existe pas. C'est `L17` : un gabarit rempli avec des cas réels distribue
+> les réponses qu'il prétend cacher, et ce document est lu par l'extracteur.
+> Corrigé le 2026-09-21 ; les exemples portaient jusque-là le contenu réel d'une
+> fiche de référence.
+
+```json
+"reported_results": [
+  {
+    "name": "afternoon_spread_bp",
+    "value": 3.4,
+    "unit": "bp",
+    "quoted": "the average effective spread widens to 3.4 basis points after 14:00",
+    "note": "Sur leur échantillon d'actions, pas sur des futures."
+  }
+]
+```
+
+`name` et `quoted` sont exigés pour chaque entrée. `value` peut être `null` quand
+le résultat est qualitatif.
+
+**Le contrôle qui mord.** Quand `value` est un nombre, le validateur vérifie
+qu'il **se retrouve dans `quoted`**, séparateurs ôtés — la même fonction
+`value_in_quote` que le catalogue, celle que `scripts/check_provenance.py` a
+prise en défaut sur `12500` contre `12,500,000`. Ce qui est attrapé n'est pas la
+source absente, qui se voit, mais la **faute de recopie**, qui ne se voit pas.
+
+Un nombre **dérivé** par nous — un rapport entre deux niveaux que les auteurs
+citent séparément, par exemple — n'a pas à figurer dans la citation : il porte
+`"derived": true`, et le contrôle numérique est alors levé. Le `note` doit dire
+comment il a été obtenu.
+
+**Et un nombre écrit en toutes lettres.** Un papier peut écrire « *Seven of the
+strategies fail* » : il n'y a aucun chiffre à retrouver. L'entrée porte alors
+`"spelled_out": "Seven"`, et le validateur vérifie que **le mot** est dans la
+citation. Ce qu'il ne vérifie pas — que « Seven » vaut 7 — reste un geste
+humain, et le champ existe pour le **nommer** plutôt que pour le cacher derrière
+`derived`, qui signifierait à tort qu'un calcul a eu lieu.
+
+**Et quand le TEXTE EXTRAIT ne dit pas ce que le papier dit.** Un PDF scanné, une
+notation mathématique perdue, un tableau mis à plat : le texte où `quoted` est
+cherchée peut être abîmé là où la page est claire. L'entrée porte alors **deux**
+chaînes :
+
+```json
+{
+  "name": "afternoon_spread_bp",
+  "value": 3.4,
+  "quoted": "the average effective spread widens to 3.4 basis points after 14:00",
+  "quoted_source": "the average effective spread widens to 3.4 basis p0ints after 14:00",
+  "quoted_repair": "ocr"
+}
+```
+
+`quoted` reste ce que le papier dit ; `quoted_source` est ce que le **texte**
+porte, mot pour mot, et c'est elle qui est cherchée et qui fait foi pour le
+contrôle numérique. `quoted_repair` dit **pourquoi** les deux diffèrent, dans une
+liste **close** :
+
+| Motif | Quand |
+|---|---|
+| `ocr` | le PDF est un scan et son texte est corrompu |
+| `math_notation` | le papier écrit un symbole que l'extraction ne rend pas |
+| `table` | la citation vient d'un tableau, lu en cellules par l'extraction |
+
+**Ce que cela n'autorise pas, et c'est l'essentiel.** Il faut toujours **une
+chaîne présente à la lettre** dans le texte. Une réparation déplace ce qui est
+cherché, jamais ce qui est exigé. **Une paraphrase ne fournit aucune chaîne et
+reste une faute** : si la phrase du papier ne dit pas exactement ce qu'on
+voudrait lui faire dire, on cite ce qu'elle dit, ou on ne cite pas.
+
+Un motif hors de la liste, un `quoted_source` sans motif, un motif sans
+`quoted_source` : le validateur refuse les trois.
+
+**Et quand l'extraction disloque LE NOMBRE LUI-MÊME.** Le cas ci-dessus suppose
+un texte abîmé *autour* d'un chiffre intact. Il arrive que le chiffre soit la
+victime : `pypdf` rend `−3.02` par `−3 . 02` quand le papier l'écrit en
+italique, et `T = 496,512` par `T51,724z2885496,512` quand il colle une égalité
+entière. Aucune comparaison numérique ne peut plus aboutir, alors même que
+`quoted_source` est bien présente à la lettre.
+
+L'entrée porte alors, **en plus** de la réparation, un `spelled_out` qui donne
+le nombre **tel que la citation l'écrit** :
+
+```json
+{
+  "name": "overnight_sorted_hedge_intraday_3f_alpha_monthly_pct",
+  "value": -3.02,
+  "quoted": "alpha of −3.02% per month with a t-statistic of −9.74)",
+  "quoted_source": "alpha of −3 . 02% per month with a t -statistic of −9 . 74 )",
+  "quoted_repair": "math_notation",
+  "spelled_out": "−3 . 02"
+}
+```
+
+C'est la règle 4 appliquée telle qu'elle est écrite — *« une `value` numérique
+introuvable dans sa `quoted`, sauf `derived: true` ou `spelled_out` »* — et non
+une exception nouvelle. Le champ avait été décrit pour les nombres **en
+toutes lettres** ; sa fonction est plus générale, et c'est celle-ci : **nommer
+le geste humain qui relie une `value` à une citation où aucune machine ne la
+reconnaît.**
+
+**Ce que cela n'affaiblit pas.** `spelled_out` doit toujours se retrouver à la
+lettre dans la citation, laquelle doit toujours se retrouver à la lettre dans le
+texte. Un extracteur qui voudrait loger un chiffre inventé devrait donc
+fabriquer une chaîne réellement présente dans le PDF — ce qui est exactement ce
+que `F2` interdit.
+
+**Ce que cela ne vérifie pas**, et qui reste un geste humain nommé : que
+`−3 . 02` *vaille* `-3.02`. Comme pour « Seven » et 7, le champ existe pour
+**montrer** cette lecture, pas pour la garantir. Quand le décodage n'est pas
+évident, la `note` le rend vérifiable : pour Andersen (2003), l'extraction rend
+`=` par `5` et `'` par `9`, ce que confirment quatre occurrences indépendantes
+du même papier — `K541`, `P53`, `p(J9)50`, `J9512`.
+
+---
+
+## `horizon` et `signal_construction` — `null` se justifie
+
+```json
+"horizon": {"value": null, "reason": "le papier ne prédit rien ; il décrit une propriété des données"}
+```
+
+Un `null` nu est refusé. C'est la règle du catalogue (`CLAUDE.md` § Les
+interdits) appliquée ici : l'inconnu s'écrit, il ne se tait pas.
+
+---
+
+## `signal_construction` — la forme attendue quand il n'est pas `null`
+
+C'est un **objet**, comme `universe` et `horizon` : une `value` en prose, et
+ses `quoted`.
+
+```json
+"signal_construction": {
+  "value": "Score = (clôture de la première demi-heure − ouverture de séance) / ouverture, calculé à l'ouverture + 30 min, appliqué dans le même sens à la dernière demi-heure.",
+  "quoted": ["we define the first half-hour return as", "predicts the last half-hour return"]
+}
+```
+
+**C'est la faute la plus fréquente du corpus, et de loin.** Au moins **sept
+extracteurs indépendants**, appartenant à **trois familles de modèles
+différentes**, ont écrit à la place un objet structuré de leur invention —
+`{"sampling": …, "components": […], "model": …}` — **sans la clé `value`**, que
+le schéma exige et que le validateur refuse.
+
+Aucun de ces extracteurs n'avait vu les fautes des autres. Sept fois la même
+erreur n'est pas sept inattentions : **c'est cette section qui manquait.** Le
+schéma ne montrait que le cas `null` ci-dessus, jamais la forme normale.
+
+Des sous-clés supplémentaires restent **autorisées** si elles éclairent la
+construction. `value` doit être là.
+
+---
+
+## `what_is_missing` — une liste
+
+```json
+"what_is_missing": [
+  "aucun multiplicateur de contrat, aucun frais",
+  "la fenêtre horaire est donnée en heure locale, sans fuseau nommé",
+  "le critère de sélection des jours n'est pas chiffré"
+]
+```
+
+Une **liste de chaînes**, comme `transposability.what_does_not_transfer`. Ce
+qui manque au papier s'énumère ; une prose continue se lit moins bien et se
+compte mal.
+
+---
+
+## `transposability` — ce qui en survit chez nous
+
+Trois sous-champs, tous exigés :
+
+- `what_transfers` — ce qui vaut sur neuf futures intraday ;
+- `what_does_not_transfer` — une **liste**, non vide ; un papier dont *tout*
+  transfère n'a pas été lu avec assez d'attention ;
+- `what_aligns_well` — ce qui, au contraire, tombe juste.
+
+**Pourquoi c'est obligatoire.** C'est ce champ qui a déjà fait écarter une cible
+de réplication — sa métrique était un rendement net par trade, la nôtre un IC —
+et qui en a cadré une autre, dont seul le motif transférait. Une fiche sans lui
+dit ce qu'un papier affirme, pas ce qu'il vaut ici. Les cas sont dans
+`decisions/`, pas ici : ce document est lu par l'extracteur.
+
+---
+
+## Ce que le validateur refuse
+
+    python corpus/validate_fiches.py
+
+1. un champ obligatoire absent ;
+2. `horizon` ou `signal_construction` à `null` **sans** `reason` ;
+3. une entrée de `reported_results` sans `name` ou sans `quoted` ;
+4. une `value` numérique **introuvable** dans sa `quoted`, sauf `derived: true`
+   ou `spelled_out` — et `spelled_out` doit alors se retrouver dans la citation ;
+5. `what_does_not_transfer` vide ;
+6. un `source` incomplet, un `source_url` qui n'est pas une URL, un `retrieved`
+   mal daté ;
+7. un `fiche_id` qui ne correspond pas au nom du fichier.
+
+`corpus/check_fiches_guard.py` le montre en train de refuser, sur des fiches
+délibérément fautives — même discipline que `scripts/check_provenance.py`. **Un
+garde qui n'a jamais rien refusé est un garde que personne n'a testé.**
+
+---
+
+## Ce que ce schéma ne dit pas
+
+Le **triage** — décider qu'un papier est implémentable — n'est pas ici. C'est
+l'autre moitié de la porte 07, et elle exige un seuil chiffré écrit avant mesure
+(`L06` : *un compte juste n'est pas un compte de choses justes*).
+
+
+---
+
+## IDENTITÉ DE LA FICHE
+
+- `fiche_id` : `assessing-the-profitability-of-timely-opening-ra-W2911858053`
+- `source.pdf` : `corpus/pdf/assessing-the-profitability-of-timely-opening-ra-W2911858053.pdf`
+- `source.source_url` : `https://ieeexplore.ieee.org/ielx7/6287639/8600701/08641124.pdf`
+- `source.retrieved` : `2026-09-29`
+- `written_by` : le nom de la session qui extrait
+- `written` : `2026-10-07`
+
+---
+
+# PARTIE 2 — LA RECETTE
+
+La fiche que tu complètes est celle que tu viens d'écrire en PARTIE 1.
+
+# Consigne de recette — La Fabrique, `D34`
+
+Tu complètes **une fiche** de papier académique par sa **recette** : la formule,
+les entrées, le timing, les paramètres et les ambiguïtés du signal, **cités mot
+pour mot** dans le texte du papier. Un codeur lira ta recette et rien d'autre du
+papier : ce que tu n'écris pas, il devra le deviner ; ce que tu inventes, il le
+codera.
+
+## Ce que tu rends
+
+Un **seul fichier JSON**, écrit à `corpus/recettes/assessing-the-profitability-of-timely-opening-ra-W2911858053.json`. Rien d'autre.
+
+## Le format
+
+Exemple **fabriqué** — il cite un papier qui n'existe pas (`L17`) :
+
+```json
+{
+  "fiche_id": "assessing-the-profitability-of-timely-opening-ra-W2911858053",
+  "written": "AAAA-MM-JJ",
+  "written_by": "<modèle>",
+  "formula": {
+    "statement": "score = rendement de l'ouverture à la barre notée, divisé par sa volatilité",
+    "quoted": "we scale the return since the open by its trailing volatility",
+    "reason": null
+  },
+  "inputs": [
+    {"name": "open_return", "description": "rendement depuis l'ouverture de la séance",
+      "known_at": "à la clôture de la barre notée", "quoted": "the return since the open"}
+  ],
+  "timing": {
+    "statement": "le score se pose 45 minutes avant la clôture",
+    "quoted": "the signal is formed 45 minutes before the close",
+    "reason": null
+  },
+  "parameters": [
+    {"name": "formation_minutes", "value": 45, "unit": "minutes",
+      "quoted": "the signal is formed 45 minutes before the close"},
+    {"name": "volatility_window_days", "value": null, "unit": "days",
+      "quoted": null, "reason": "le papier dit « trailing » sans donner la longueur"}
+  ],
+  "ambiguities": [
+    {"question": "la volatilité est-elle calculée sur les rendements journaliers ou intraday ?",
+      "resolution": null, "quoted": null}
+  ],
+  "market": {
+    "studied": "le contrat à terme sur l'indice S&P 500, séance régulière",
+    "quoted": "we use one-minute prices of the S&P 500 index futures",
+    "exact_roots": ["ES"],
+    "sessions": ["US"],
+    "sessions_quoted": "from the 9:30 open to the 16:00 close",
+    "sessions_reason": null
+  }
+}
+```
+
+## Les règles, vérifiées par une machine
+
+- **`quoted`** est une phrase du papier, **à la lettre**, ou un extrait coupé
+  par `...`. Une paraphrase est refusée. Le contrôle cherche la chaîne dans le
+  texte ci-dessous, casse et espaces repliés.
+- **Si le texte extrait abîme la phrase** (formule mathématique mal rendue,
+  tableau mis à plat, scan) : écris la phrase telle que le papier la dit dans
+  `quoted`, telle que le texte la porte dans `quoted_source`, et le motif dans
+  `quoted_repair`, parmi `math_notation`, `ocr`, `table`. C'est `quoted_source` qui est cherchée.
+- **Chaque `value` numérique se retrouve dans sa citation.** Un nombre que tu as
+  calculé toi-même porte `"derived": true` et un `note` qui dit comment.
+- **Tout ce que le papier ne dit pas est `null`**, avec `reason` non vide.
+  **N'invente jamais une valeur plausible** : c'est un interdit constitutionnel
+  du projet. Un `null` est bruyant, une valeur inventée est invisible.
+- `formula`, `timing` et au moins une entrée sont exigés. `quoted` peut y être
+  `null`, avec sa raison.
+- **Les ambiguïtés sont le cœur du travail.** Chaque question dont la réponse
+  change le calcul — une fenêtre, une normalisation, un traitement des jours
+  fériés, un signe — s'écrit ici, avec la réponse du papier si elle existe
+  (`resolution` et `quoted`), ou `null` s'il n'en donne pas.
+- **`market` dit sur quel marché le papier mesure** (`D38`) — c'est lui qui
+  fixe les cellules de la mesure, avant tout résultat :
+  - `studied` : le marché, en tes mots ; `quoted` : la phrase du papier qui le
+    nomme, à la lettre ;
+  - `exact_roots` : parmi **nos** instruments, ceux qui sont **ce marché même**
+    ou son équivalent direct — et eux seuls :
+    - `ES` : E-mini S&P 500 (l'indice S&P 500, ses contrats, le SPY)
+    - `NQ` : E-mini Nasdaq-100 (l'indice Nasdaq-100, ses contrats, le QQQ)
+    - `YM` : E-mini Dow (le Dow Jones Industrial Average, ses contrats, le DIA)
+    - `GC` : l'or (contrat COMEX, or au comptant)
+    - `CL` : le pétrole brut WTI (contrat NYMEX)
+    - `6E` : l'euro contre dollar (EUR/USD)
+    - `6B` : la livre contre dollar (GBP/USD)
+    - `6J` : le yen contre dollar (USD/JPY, JPY/USD)
+    - `6A` : le dollar australien contre dollar (AUD/USD)
+    Des actions individuelles, un indice étranger (Chine, Moyen-Orient…), le
+    bitcoin, des obligations : **aucun** de nos instruments n'est ce marché,
+    `exact_roots` vaut `[]`, et c'est une réponse valable. Ne rapproche pas
+    « par ressemblance » : la classe est ajoutée par le code, pas par toi ;
+  - `sessions` : nos fenêtres (heure de New York) que les données du papier
+    couvrent — `ASIA` 19:00–03:00, `EUROPE` 03:00–09:30, `US` 09:30–16:00 —
+    avec `sessions_quoted` ; ou `null` avec `sessions_reason` si le papier ne
+    le dit pas.
+
+## Ce que tu ne fais pas
+
+Tu ne codes rien, tu ne mesures rien, tu ne juges pas si l'idée est bonne. Tu
+dis **ce que le papier dit**, et où il se tait.
+
+---
+
+## LE TEXTE DU PAPIER (pour les deux parties)
+
+Received January 1, 2019, accepted January 13, 2019, date of publication February 13, 2019, date of current version March 25, 2019.
+Digital Object Identifier 10.1 109/ACCESS.2019.2899177
+Assessing the Profitability of Timely Opening
+Range Breakout on Index Futures Markets
+YI-CHENG TSAI1,2, MU-EN WU
+ 3, JIA-HAO SYU 1,4, CHIN-LAUNG LEI 2,
+CHUNG-SHU WU 5, JAN-MING HO 1,6, AND CHUAN-JU WANG
+ 6
+1Institute of Information Science, Academia Sinica, Taipei 11529, Taiwan
+2Department of Electrical Engineering, National Taiwan University, Taipei 10617, Taiwan
+3Department of Information and Finance Management, National Taipei University of Technology, Taipei 10608, Taiwan
+4Department of Computer Science and Information Engineering, National Taiwan University, Taipei 10617, Taiwan
+5Chung-Hua Institution for Economic Research, Taipei 10672, Taiwan
+6Research Center of Information Technology Innovation, Academia Sinica, Taipei 11529, Taiwan
+Corresponding author: Chuan-Ju Wang (cjwang@citi.sinica.edu.tw)
+ABSTRACT This paper presents a timely open range breakout (TORB) strategies for index futures market
+trading via using one-minute intraday data. We observe that the trading volumes and ﬂuctuations in returns
+on each one-minute interval of trading hours in the futures markets reach their peaks at the opening and
+closing of the underlying stock markets. With these observations, we align the active hours of an index
+futures market with its underlying stock market and test the proposed TORB strategies on the DJIA, S&P
+500, NASDAQ, HSI, and TAIEX index futures from 2003 to 2013. In the experiments, the proposed strategy
+achieves over 8% annual returns with p-values less than 3% in all of the ﬁve markets; the best performance,
+20.28% annual returns at a p-value of 3.1×10−5%, is reached in the TAIEX. For each market, we also ﬁnd
+the best probing time, which is relatively short in the U.S. market and relatively long in Asian markets.
+Furthermore, we conduct experiments on a TAIEX futures transaction dataset to analyze the relationship
+between the TORB signals and trader behavior, and ﬁnd that the TORB signals are in the same direction as
+institutional traders, especially foreign investment institutions.
+INDEX TERMS Index futures, open range breakout, technical analysis, traders’ behavior, trading strategy.
+I. INTRODUCTION
+With the development of information technology, a consid-
+erable amount of data has been generated and thus can be
+utilized to produce useful information and insights to better
+solve various problems in many ﬁelds including ﬁnance,
+social science, and environmental science [1]. Data science
+provides a scientiﬁc way to capture and verify the informa-
+tion behind the data, which promotes productivity, improves
+efﬁciency, and supports innovation [2]. In the ﬁled of ﬁnance,
+many studies, including research related to trading, credit
+rating, and fraud detection, have been done through various
+data analytic techniques [3], among which backtesting on
+historical data is a common approach to calculate the prof-
+itability of a trading system and is used to ﬁnd proﬁtable
+strategies [4].
+The associate editor coordinating the review of this manuscript and
+approving it for publication was Jinsong Wu.
+In this paper, we propose several TORB (timely open range
+breakout) strategies for index futures market trading which
+are proﬁtable in recent years, in which we use one-minute
+transaction data in more than ten years to assess the proﬁtabil-
+ity of the proposed strategies. The parameters for the TORB
+strategies are selected based on the following three observa-
+tions. First, trading volumes and ﬂuctuations in returns on
+each one-minute interval during trading hours on the futures
+markets reach their peaks at the opening of the underlying
+stock markets. Thus, we provide two market ﬂuctuation mea-
+surements for each one-minute interval during the trading
+hours: the per-minute mean volume, denoted by PMMV
+and the per-minute variance of return, denoted by PMVR.
+These two measurements are used to deﬁne a time period
+with high volumes and large ﬂuctuations as active hours; we
+observe that a futures market’s active hours are the same as
+the opening hours of the underlying stock market. Second,
+stock market ﬂuctuations are inﬂuenced by events occurring
+during and after the market. Although the markets do not
+VOLUME 7, 2019
+2169-3536 
+ 2019 IEEE. Translations and content mining are permitted for academic research only.
+Personal use is also permitted, but republication/redistribution requires IEEE permission.
+See http://www.ieee.org/publications_standards/publications/rights/index.html for more information.
+32061
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+respond in real time to events occurring after the market,
+it seems that the market picks up the information in the early
+stage of market opening, and impacts market dynamics on
+the same day. Finally, the higher frequency data contains
+more information for technical analysis [5], which means that
+using higher frequency data may improve the performance
+of a technical trading strategy. Based on these three obser-
+vations, the following hypothesis is proposed. The dynamic
+of prices in the early stage of market opening reveals more
+information in a trading day; therefore, it is proﬁtable by
+using the information in the one-minute movements in prices
+during this period to forecast the price for the rest time on the
+same day.
+To test this hypothesis, we set up the TORB strategy
+parameters using the information picked up by the market
+in the early stage of market opening and then conduct prof-
+itability tests on the Dow Jones Industrial Average Index
+(DJIA), Standard & Poor’s 500 (S&P 500), NASDAQ, Hang
+Seng Index (HSI), and Taiwan Stock Exchange Capitalization
+Weighted Stock Index (TAIEX) index futures markets from
+2003 to 2013. The experimental results show that the TORB
+strategy in each market achieves over 8% annual return with
+a p-value of less than 3% of t-test with transaction costs,
+signiﬁcantly rejecting the null hypothesis that the return from
+TORB strategies equals zero; additionally, the best perfor-
+mance in our experiments reaches a 20 .28% annual return
+in the TAIEX with p-value equal to 1 × 10−4%. Further-
+more, experiments in sub-periods from 2003 to 2007 and
+from 2007 to 2013 are conducted to demonstrate that the
+performance of TORB strategies does not change before or
+after the ﬁnancial crisis.
+Moreover, the experiments indicate that the TORB strate-
+gies perform better than the TRB strategies deﬁned in [6].
+While TRB and TORB strategies share the same concept,
+TRB strategies set up the parameters by using daily data.
+The results show that there are no signiﬁcant results ( p-value
+less than 5%) in a proﬁtability test of TRB strategies on
+the DJIA, S&P 500, HSI, and TAIEX futures indexes in the
+full time period. The only exception is the NASDAQ index
+future, which earns signiﬁcant proﬁts using TRB strategies;
+however, there are no signiﬁcant results in the two sub-period
+tests. Overall, the annual returns from the best TRB strategies
+are smaller than the annual returns from TORB strategies
+in all of the ﬁve futures markets tested in the experiments.
+Our experimental results are consistent with the ﬁndings
+in [5], which states that higher frequency data contains more
+information for technical analysis.
+In addition to attesting the proﬁtability of the
+TORB strategies, we also investigate the relationship between
+TORB signals and the behavior of informed traders. Gen-
+erally speaking, informed traders are those who can predict
+market returns using private information. Previous literature
+has investigated what kind of traders are informed traders,
+e.g., [7]–[11]. In 2014, Hendershott et al . [11] show that
+institutional traders are informed by investigating the net buy
+positions of institutions from 2003 to 2005 for NYSE-listed
+stocks with all news announcements from Reuters. They ﬁnd
+that institutions’ net buy positions increases (decreases) more
+than ﬁve days prior to the announcement of good (bad) news,
+as measured by the sentiment of the news. This implies that
+institutions tend to trade in the same direction more than ﬁve
+days before the news breaks. Additionally, Chang et al . [9]
+use data from Taiwan to show that institutional traders are
+informed, and also ﬁnd that foreign institutional investors
+have greater predictive power than other kinds of institutional
+traders. Tsai et al. [12] present the persistent behavior hypoth-
+esis for ﬁnancial markets, which is tested statistically on ﬁve
+stock indices from 2001 to 2014; they also study the impact
+of investor behavior over market price of TAIEX futures.
+In the experiments, we use a unique one-minute transaction
+data set from the TAIEX futures market to investigate the
+relationship between TORB signals and the net buy positions
+of different kinds of traders. It is worth mentioning that the
+signals from the best TORB strategy are positively related
+to the net buy positions of institutional traders before and
+after breakout, meaning that TORB signals catch the trading
+direction of institutional traders, which is positively related to
+the market return; the inverse results are found for individual
+traders.
+The rest of the paper is organized as follows. Section II
+presents the related work, and Section III presents the param-
+eter settings for the proposed TORB strategies. Empirical
+data and experimental results are introduced and discussed
+in Section IV. Section V concludes the paper.
+II. LITERATURE REVIEW
+Technical analysis is one of the most popular methods for
+developing trading strategies [13]. In contrast to fundamental
+analysis, which uses macroeconomics and corporate informa-
+tion regarding assets including earnings per share (EPS), sales
+margins, dividend yields and other information, technical
+analysis forecasts the future movement of prices using present
+and past prices. For instance, in 2009, Schulmeister [5] inves-
+tigates how technical trading systems exploit momentum and
+reversal effects in the S&P 500 spot and futures markets and
+ﬁnds that technical trading systems using 30-minute-price
+information perform better than those using lower-frequency
+information. In 2018, Alhashel and Hansz [14] apply vari-
+ous popular technical trading rules to Asian property mar-
+ket indices to investigate the proﬁtability of these rules and
+ﬁnd that technical indicators are predictive in some markets
+and thus can generate returns that exceed the buy-and-hold
+strategy.
+The proﬁtability of technical analysis strategies has been
+studied extensively. In 1992, Brock et al . [6] test two of
+the most popular trading rules – the moving average (MA)
+and trading range break (TRB) – using 90 years of Dow
+Jones Index data and ﬁnd signiﬁcant results in proﬁtability
+tests with both standard statistical analysis and bootstrap
+techniques. In 2009, Zhu and Zhou [15] modify the MA
+trading rule to adjust asset allocation. In the same year,
+Neely et al. [16] use previously studied trading rules, such as
+32062 VOLUME 7, 2019
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+MA, to test the inter-temporal stability of excess returns in
+the foreign exchange market and ﬁnd positive excess returns
+from MA during the 1970s and 1980s, though the proﬁt
+opportunities disappeared in the early 1990s. They conclude
+that this outcome is consistent with the adaptive markets
+hypothesis [17]. In 2010, Szakmary et al . [18] investigate
+commodity futures markets using a monthly dataset spanning
+48 years and 28 markets; the results show that trend-following
+trading strategies yield positive mean excess returns net of
+transactions costs in at least 22 out of the 28 markets. In 2018,
+Ahmad et al . [19] test the applicability of moving aver-
+age (MA) investment timing strategy on individual stocks and
+portfolios, and they ﬁnd MA strategy substantially beats the
+buy-and-hold strategy by yielding higher average returns and
+Sharpe ratios, lower standard deviations, and much success
+ratios across portfolios.
+Open range breakout (ORB) [20] is a common technical
+trading strategy based on momentum effects. A trader sets a
+predetermined threshold of upper and lower bounds to denote
+the open range, and the trading strategy is to long (or short)
+a position as the market price moves beyond the upper (or
+lower) bound. Several ORB variants have been discussed in
+recent studies (see [21]–[23]). In 2010, Cekirdekci studies
+various trading strategies based on 30-minute open range
+breakouts, and demonstrates proﬁtability by back-testing on
+250 stocks from various industry groups between 2005 and
+2010 [21]. Two ORB variants based on average true range
+and volatility breakout are considered in [22], which pro-
+vides the evidence for the ORB strategy proﬁtability in the
+Bucharest Exchange Trade index. Chang et al . show the
+ORB strategy proﬁtability based on a normally distributed
+return on the day the open range is broken; their result
+shows the characteristics of an increased success rate in a
+fair game [23]. However, it has been shown in the liter-
+ature that the performance of technical analysis has been
+deteriorating in recent years (see [5], [16], [21], [24]). For
+the ORB trading strategy, Borda et al . in 2010 state that
+22 stocks perform well with ORB from 2005 to 2010 in U.S.
+markets; but these 22 stocks are from 250 stocks of their
+test, which means most of the stocks are unproﬁtable [21].
+Moreover, their strategies are limited to stock trading and
+cannot be used in derivatives trading. In 2017, Lund-
+ström et al . [25] study the returns of ORB across volatil-
+ity states for long time series data of crude oil and S&P
+500 future contracts, and their results indicate that the average
+ORB return increases with the volatility of the underlying
+asset.
+III. METHODOLOGY
+In this section, we describe the mechanism to set the param-
+eters of TORB strategies in futures markets. Section III-A
+deﬁnes the two variables PMMV and PMVR which are
+used to identify active hours for futures market trading.
+In Section III-B, we describe the trading rules of the proposed
+TORB strategies.
+FIGURE 1. The (a) long (buy) and (b) short (sell) positions in TORB. The
+curve denotes the futures price; tb and te denote the beginning and the
+ending of the observed period, respectively; tp denotes the end of the
+observed period and is an independent variable in our experiments. The
+resistance/support levels are the highest/lowest prices of the duration
+[tb, tp], and the time of entering the market is the time that the price
+crosses over the resistance level. (a) Long (buy) position.
+A. DEFINITIONS OF PMMV AND PMVR
+We ﬁrst deﬁne the two variables PMMV and PMVR that
+measure the ﬂuctuations of futures markets. Let Vt,d be the
+trading volume in the one-minute interval t on day d, where
+t0 < t < T and t0 and T are the open and the close times of
+the futures markets, respectively. PMMV is deﬁned as
+PMMV t=
+N∑
+d=1
+Vt,d
+N , (1)
+where N is the total number of trading days. Let Pt,d be
+the close price in the one-minute interval t on day d. Thus,
+the one-minute return is denoted as
+rt,d= log(Pt,d )− log(Pt−1,d ).
+PMVR is deﬁned as
+PMVRt= V ar(rt,d ). (2)
+The above two measures in Equations (1) and (2) are used to
+identify active hours for futures market trading.
+B. TORB TRADING RULES
+The TORB trading signals are illustrated in Figure 1 and
+described as follows: We set the resistance (support) levels as
+the highest (lowest) prices for a predetermined period termed
+the observed period. The trading signal is revealed once the
+price exceeds the upper bound or falls below the lower bound.
+We consider two cases:
+1) If the price moves above the resistance level, then the
+buying strength is greater than the selling pressure, and
+the price will continue to move up with this trend.
+VOLUME 7, 2019 32063
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+TABLE 1. E-mini DJIA daily returns.
+2) If the price drops below the support level, then the
+selling strength is greater than the buying pressure,
+and the price will continue to move down with this
+trend.
+To build a TORB strategy with the intraday data, we must
+determine three time points: the beginning time-point of the
+observed period, the end time point of the observed period,
+and the time point of the closing position. The beginning
+of observed period, denoted as tb, is set to the beginning of
+the active hours, and the time point of the closing position,
+denoted as te is set to the end of the active hours; the end of
+the observed period is the probe time tp, where tb < tp < te.
+The sufﬁcient conditions for the buying and selling signals of
+day d are
+Pt′,d > max(Ptb,d,··· , Ptp,d )⇒ Buy, (3)
+Pt′,d < min(Ptb,d,··· , Ptp,d )⇒ Sell, (4)
+where Pt′,d is the price at time t′ on day d and tp< t′< te. If
+there is a trading signal on a day, the position closes at te on
+that day.
+IV. EXPERIMENTAL RESULTS AND DISCUSSION
+Two data sets are adopted in our experiments: The ﬁrst one
+contains one-minute intraday data of the ﬁve futures mar-
+kets and the second one contains transaction data for the
+TAIEX index futures. For the ﬁrst data set, we investigate
+the spot month E-mini futures of the DJIA (from 2003/1/2 to
+2013/12/2), S&P 500 (from 2001/1/2 to 2013/12/2), and
+NASDAQ 100 (from 2001/1/2 to 2013/12/2) plus two
+spot month futures indexes, the HSI in Hong Kong (from
+2003/1/2 to 2011/3/4), 1 and the TAIEX in Taiwan (from
+2001/1/2 to 2013/11/28). In addition to the full time period,
+to account for the global ﬁnancial crisis during 2007 to 2008,
+test results are presented for the two sub-periods before and
+after 2007/1/1. The second data set contains transaction data
+1Although the spot month futures data for HSI is from 2003/1/2 to
+2013/12/2, due to the changes in trading times beginning on 2011/3/7,
+we conduct experiments only on the data from 2003/1/2 to 2011/3/4.
+TABLE 2. E-mini S&P daily returns.
+TABLE 3. E-mini-NASDAQ daily returns.
+TABLE 4. HSI daily returns.
+for the TAIEX index futures from 2006/7/1 to 2013/12/31, 2
+which is utilized to test the relationship between TORB sig-
+nals and trader behavior.
+This section presents the experimental results, including
+the identiﬁcation of active hours in Section IV -A, the TORB
+proﬁtability tests in Section IV -B, and the relationships
+2The data is non-public and customized by Taiwan Futures Exchange,
+summarizing the one-minute transactions of the buys and sells of all traders,
+dealers, domestic institutions, and foreign investment institutions.
+32064 VOLUME 7, 2019
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+TABLE 5. TAIEX daily returns.
+FIGURE 2. E-mini DJIA PMMV and PMVR. There are three major peaks for
+PMMV and PMVR from 2003 to 2013, including 8:30 (the opening time of
+the underlying market), 9:00, and 15:00 (the closing time of the
+underlying market).
+TABLE 6. Best strategies in the full samples test of TORB.
+between TORB signals and trader behavior in Section IV -C.
+Before we present the experimental results, Tables 1 to 5
+show the statistics of daily returns of the ﬁve future mar-
+kets, in which returns are measured as percentage differences
+in the logarithm of the future prices. In the ﬁve futures,
+the means of the daily returns are positive, except for the
+E-mini NASDAQ in the 2003–2007 sub-period, which also
+shows the largest standard deviation. In the full time period,
+FIGURE 3. E-mini S&P PMMV and PMVR. There are two major peaks for
+PMVR in E-mini S&P, including 8:30 (the opening time of the underlying
+market) and 9:00. Also, there are two small corresponding peaks for
+PMMV. For the case of PMMV, there is a major peak near the closing time
+(15:00) of the underlying market.
+FIGURE 4. E-mini NASDAQ PMMV and PMVR. There are two major peaks
+for PMVR, including 8:30 (the opening time of the underlying market) and
+9:00. Also, there are two small corresponding peaks for PMMV. For the
+case of PMMV, there is a major peak near the closing time (15:00) of the
+underlying market.
+TABLE 7. Best strategies in the sub-period (01–07) test of TORB.
+all ﬁve futures markets have negative skewness; in sub-
+periods 2007 to 2013, except for the HSI, all futures have
+negative skewness, which is probably due to the global ﬁnan-
+cial crisis. However, the skewness values are small in all
+VOLUME 7, 2019 32065
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+FIGURE 5. HSI PMMV and PMVR. There are two major peaks for PMVR,
+including 12:30 (the start time of the lunch break of the underlying
+market) and 16:00 (the closing time of the underlying market). For the
+case of PMMV, there are five major peaks, including 09:45 and 16:15 (the
+opening and the closing time of the futures market), 10:00 and 16:00 (the
+opening and the closing time of the underlying market), and 12:30 (the
+start time of the lunch break of the underlying market).
+FIGURE 6. TAIEX PMMV and PMVR. There are four major peaks for PMVR
+and PMMV, including 08:45 and 09:00 (the opening time of the futures
+market and the underlying market), 13:45 and 13:30 (the closing time of
+the futures market and the underlying market).
+TABLE 8. Best strategies in the sub-period (07–13) test of TORB.
+futures except the TAIEX. In addition, ρ(i) denotes the esti-
+mated i days lag auto-correlation, and the marks ∗,∗∗, and
+∗∗∗ represent the signiﬁcance at the 10, 5, and 1% levels,
+FIGURE 7. Trading number, average annual return, and one-tailed p-value
+of DJIA in the full samples test.
+respectively. As shown in the tables, for the E-mini DJIA,
+the ﬁrst-order serial correlations in both the full time period
+and the second sub-period are signiﬁcantly negative, but the
+other-order serial correlations are rather small; for the E-mini
+S&P 500 and the E-mini NASDAQ, there are signiﬁcant
+negative serial correlations in the ﬁrst two orders.
+A. ACTIVE HOURS
+Figures 2 to 6 illustrate the PMMV and PMVR for each
+minute for the ﬁve futures markets. Figure 2 shows for both
+PMMV and PMVR a peak around 8:30, which is the open-
+ing time of the underlying market, and the values between
+8:30 and 9:00 are generally larger than those at other time
+points; additionally, there is another PMMV peak around
+15:00, the closing time of the underlying market, and a
+PMVR peak around 15:15, the closing time of the E-mini
+DJIA. For both E-mini S&P in Figure 3 and E-mini NASDAQ
+in Figure 4, there are peaks for both PMMV and PMVR
+around the opening and closing times of the underlying mar-
+kets. Observe from Figure 5 for HSI that there are peaks not
+only around the opening (10:00) and closing (16:00) times
+of the underlying market, but also a peak around 14:30 for
+both PMVR and PMMV, which is due to the lunch break
+from 12:30 to 14:30. Figure 6 shows that the TAIEX has
+four peaks: Two around the opening time (9:00) and closing
+time (13:30) of the underlying market, and the other two
+32066 VOLUME 7, 2019
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+FIGURE 8. Trading number, average annual return, and one-tailed p-value
+of DJIA in the sub-period (03–07) test.
+TABLE 9. Best strategies in the full samples test of TRB.
+around the opening time (8:46) and closing time (13:44)
+of the futures market. To summarize the results of PMVR
+and PMMV in these ﬁve futures markets, we conclude that
+there are peaks around the opening and closing times of the
+underlying market; therefore, we set the active hours as the
+opening to closing times of the underlying market for each
+future market in the following experiments.
+B. TORB PROFITABILITY TEST
+After establishing the active hours, we use Equations (3) and
+(4) to build TORB strategies with the probe time as a parame-
+ter. Figure 7 shows the back-testing results for the DJIA in the
+full time period. The top of the ﬁgure shows the numbers of
+the TORB transactions, in which the number of transactions
+decreases when the probe time moves away from the begin-
+ning of the active hours; in this case, the boundary is larger,
+FIGURE 9. Trading number, average annual return, and one-tailed p-value
+of DJIA in the sub-period (07–13) test.
+TABLE 10. Best strategies in the sub-period (01–07) test of TRB.
+TABLE 11. Best strategies in the sub-period (07–13) test of TRB.
+and the probability decreases for the price to break out of the
+boundary on the same day. The second illustrates the average
+annual returns of the TORB strategies with transaction costs;3
+3Here we follow Schulmeister’s estimation to assume an overall transac-
+tion cost of 0.01% (per trade) [5].
+VOLUME 7, 2019 32067
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+TABLE 12. Average daily volumes (buy positions plus sell positions).
+FIGURE 10. Trading number, average annual return, and one-tailed
+p-value of S&P in the full samples test.
+from the ﬁgure, we observe that strategies with the probe
+time in the early stages earn a signiﬁcantly higher annual
+return. The third and the bottom ones are the t-statistic and
+the one-tailed p-value of the t-test, respectively, with respect
+to the null hypothesis that the TORB returns equal zero.
+When the probe time is within ﬁve minutes, there are four
+strategies that signiﬁcantly reject the null hypothesis with the
+p-value less than 5%. Note that since the sub-period results
+are similar to those of the full time period (see Figures 8
+and 9), we show only the results for the full time period for the
+rest of the markets. Figures 10 and 11 are the results for the
+S&P 500 and the NASDAQ, respectively, in which the results
+are similar to those for the DJIA, and again the probe time
+within the ﬁrst 5 minutes earns the highest annual returns with
+signiﬁcant p-values. Similar to the results in the US market,
+as shown in Figure 13, TORB strategies on the HSI earn
+signiﬁcantly higher returns in the early stages of the stock
+market opening; additionally, TORB strategies also earn
+FIGURE 11. Trading number, average annual return, and one-tailed
+p-value of NASDAQ in the full samples test.
+signiﬁcantly higher returns with probe times around 150 min-
+utes. The phenomenon may be due to the difference in market
+structures and market efﬁciency; for example, the lunch break
+from 12:30 to 14:30 in the Hong Kong market may affect the
+performance of the technical analysis. Figure 13 shows that
+the strategies on the TAIEX with probe times less than 200
+minutes earn signiﬁcantly higher returns.
+Table 6 tabulates the best strategies in the ﬁve markets in
+the full time period, where the best strategies are deﬁned
+as those that earn the most proﬁt in the full time periods.
+The best strategies for the E-mini DJIA, E-mini S&P 500,
+and E-mini NASDAQ are all with short probe times (4, 1,
+and 1 minutes, respectively), whereas for the HIS and the
+TAIEX, the probe times of the best strategies are 151 minutes
+and 37 minutes, respectively. The average annual returns of
+the best strategies in all markets are greater than 8%, with
+p-values less than 3%. Additionally, as shown in
+Tables 7 and 8, except for the E-mini DJIA in the sub-period
+32068 VOLUME 7, 2019
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+TABLE 13. TORB returns and net buy positions of different traders.
+FIGURE 12. Trading number, average annual return, and one-tailed
+p-value of HSI in the full samples test.
+from 2003 to 2007 and the E-mini S&P in the sub-period from
+2007 to 2013, the best strategies earn signiﬁcantly higher
+returns.
+To compare the TORB strategies with TRB strategies,
+we brieﬂy describe the TRB strategies in [6]: The TRB ini-
+tiates a buy (sell) signal when the price is greater (less) than
+the product of (1+ X ) and the local maximum (minimum) of
+the price in the previous D days, where X is the percentage
+band (e.g., 0, 1, 2%). When the buy (sell) signals are revealed,
+we open the positions and hold them for ten days. 4 Table 9
+4In the experiments, we test D= 2 to D= 200 with bands as X= 0 or
+X= 1%.
+demonstrates the best TRB strategies in the ﬁve markets in the
+full time period. The experimental results suggest that there is
+no signiﬁcant result (p-value less than 5%) in the proﬁtability
+tests for all TRB strategies on the DJIA, S&P 500, HSI,
+TAIEX futures indexes in the full time periods. Although the
+best strategy in the full time period on the NASDAQ earns
+signiﬁcant proﬁts ( p− value= 4.37%), the annual return
+5.58% is much less than the annual return 17.51% of the best
+TORB strategy on the same market. In addition, in the two
+sub-period tests shown in Tables 10 and 11, there is no sig-
+niﬁcant result on the NASDAQ. We therefore conclude that
+there is no consistently signiﬁcant result from the probability
+tests of TRB strategies on these ﬁve futures markets in these
+two sub-period tests.
+C. RELATIONSHIP BETWEEN TORB SIGNALS AND TRADER
+BEHAVIOR
+This subsection examines the relationship between TORB
+signals and trader behavior with the transaction and price data
+from the TAIEX futures market. Table 12 summarizes the
+daily volumes (buy positions plus sell positions) for different
+kinds of traders. From the table, the average daily volume of
+all traders is about 175,663.5; we observe that the daily vol-
+ume for individual traders is about twice that for institutional
+traders.
+Table 13 shows the returns of the TORB strategies (second
+column) and the net buy positions for different kinds of
+traders (third, fourth, and ﬁfth columns) before breakout (BB)
+and after breakout (AB). The data is group by the TORB
+buy (sell) signals and the data with the TORB buy (sell)
+signals is tabulated in the row of GB (GS, respectively). The
+numbers in parentheses are the t-statistics of the t-test under
+the null hypothesis that the data in GB (GS) and the all
+data have equal means and equal but unknown variances. As
+shown in the table, while the numbers of the net buy positions
+for institutional traders are positively related to the TORB
+returns before and after breakout, those for individual traders
+are negatively related to the TORB returns before and after
+breakout. The results suggest that by following the TORB sig-
+nals, one trades in the same direction as institutional traders,
+and thus obtains positive returns. Additionally, in Table 14,
+VOLUME 7, 2019 32069
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+TABLE 14. TORB returns and net buy positions of different types of institutional traders.
+FIGURE 13. Trading number, average annual return, and one-tailed
+p-value of TAIEX in the full samples test.
+we detail the returns of the TORB strategies and the numbers
+of the net buy positions for different types of institutional
+traders before and after breakout. We observe that the returns
+of the TORB strategies are all positively related to the three
+types of institutional traders after breakout; in particular,
+the returns are signiﬁcantly and positively related to foreign
+investment institutions both before and after breakout. These
+results are consistent with the ﬁndings in [9], which claim
+that the TORB signals are positively related to the trading
+direction of foreign investment institutions, who are usually
+considered the most informed traders in the Taiwan market.
+Lots of analysts and traders in investment institutions have
+conducted in-depth analysis to develop trading strategies.
+However, the directions of trading positions of TORB signals
+are almost the same as those of the positions of invest-
+ment institutions. In addition, we use statistical veriﬁcation
+(t-statistic, p-value) to assess the proﬁtability of our pro-
+posed solution, TORB. Previous experiments in ﬁve futures
+markets have shown that the TORB strategy has signiﬁcant
+proﬁtability in all markets to achieve higher returns than the
+TRB strategy does. Further, we propose PMMV , PMVR to
+observe the market volatility, and align the active hours of
+TORB at the most appropriate times which are the opening
+and closing time of the underlying index market. At the last
+time parameter (tp), probing time, we examine all the param-
+eters to get the best return and conﬁdence in proﬁtability.
+Based on the observations of the markets (PMMV , PMVR),
+statistical veriﬁcation of proﬁtability ( t-statistics, p-values)
+and the analogy analysis of trader behavior, the proposed
+TORB strategy is attested to be proﬁtable.
+V. CONCLUSIONS
+This paper proposes proﬁtable TORB strategies for trading on
+the index futures market. We test the proﬁtability of the pro-
+posed strategies with E-mini-DJIA, E-mini S&P 500, E-mini
+NASDAQ, HSI, and TAIEX. The proﬁtability tests show that
+the TORB strategies in each futures market achieve an over
+8% annual return with p-value less than 3% in the t-test; the
+best performance, a 20.28% annual return with a 1× 10−4%
+p-value, is reached in the TAIEX. In addition, the TORB
+strategies perform consistently in the two sub-periods before
+and after the ﬁnancial crisis in 2007; in contrast, there is no
+consistent result in the probability test of the TRB strategies
+in these ﬁve futures markets, which is in line with the ﬁnd-
+ings in [5]. Our experimental results suggest that by using
+the one-minute price information, TORB strategies capture
+more useful information than TRB strategies, and thus earn
+signiﬁcantly higher proﬁts. We also conduct experiments on
+unique transactions data from the TAIEX futures market, one
+interesting ﬁnding of which is that by following the TORB
+signals, we trade in the same direction as institutional traders,
+especially foreign investment institutions.
+REFERENCES
+[1] J. Wu, S. Guo, J. Li, and D. Zeng, ‘‘Big data meet green challenges: Big
+data toward green applications,’’IEEE Syst. J., vol. 10, no. 3, pp. 888–900,
+Sep. 2016.
+32070 VOLUME 7, 2019
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+[2] J. Wu, S. Guo, H. Huang, W. Liu, and Y . Xiang, ‘‘Information and com-
+munications technologies for sustainable development goals: State-of-the-
+art, needs and perspectives,’’ IEEE Commun. Surveys Tuts., vol. 20, no. 3,
+pp. 2389–2406, 3rd Quart., 2018.
+[3] F. Provost and T. Fawcet, Data Science and its Relationship to Big Data
+and Data-Driven Decision Making . New Rochelle, NY , USA: Mary Ann
+Liebert, 2013.
+[4] D. V ezeris, C. Schinas, and G. Papaschinopoulos, ‘‘Proﬁtability edge by
+dynamic back testing optimal period selection for technical parameters
+optimization, in trading systems with forecasting,’’Comput. Econ., vol. 51,
+no. 4, pp. 761–807, 2018.
+[5] S. Schulmeister, ‘‘Proﬁtability of technical stock trading: Has it moved
+from daily to intraday data?’’ Rev. Financial Econ. , vol. 18, no. 4,
+pp. 190–201, 2009.
+[6] W. Brock, J. Lakonishok, and B. LeBaron, ‘‘Simple technical trading rules
+and the stochastic properties of stock returns,’’ J. Finance, vol. 47, no. 5,
+pp. 1731–1764, 1992.
+[7] E. Boehmer and E. K. Kelley, ‘‘Institutional investors and the informational
+efﬁciency of prices,’’ Rev. Financial Stud., vol. 22, no. 9, pp. 3563–3594,
+2009.
+[8] J. Y . Campbell, T. Ramadorai, and A. Schwartz, ‘‘Caught on tape: Insti-
+tutional trading, stock returns, and earnings announcements,’’ J. Financial
+Econ., vol. 92, no. 1, pp. 66–91, 2009.
+[9] C.-C. Chang, P .-F. Hsieh, and H.-N. Lai, ‘‘Do informed option investors
+predict stock returns? Evidence from the taiwan stock exchange,’’ J. Bank-
+ing Finance, vol. 33, no. 4, pp. 757–764, 2009.
+[10] A. Boulatov, T. Hendershott, and D. Livdan, ‘‘Informed trading and port-
+folio returns,’’ Rev. Econ. Stud., vol. 80, no. 1, pp. 35–72, 2013.
+[11] T. Hendershott, D. Livdan, and N. Schürhoff, ‘‘Are institutions informed
+about news?’’ J. Financial Econ., vol. 117, no. 2, pp. 249–287, 2015.
+[12] Y .-C. Tsai, C.-L. Lei, W. Cheung, C.-S. Wu, J.-M. Ho, and
+C.-J. Wang, ‘‘Exploring the persistent behavior of ﬁnancial markets,’’
+Finance Res. Lett., vol. 24, pp. 199–220, 2018.
+[13] C.-H. Park and S. H. Irwin, ‘‘What do we know about the proﬁtability of
+technical analysis?’’ J. Econ. Surv., vol. 21, no. 4, pp. 786–826, 2007.
+[14] B. S. Alhashel, F. W. Almudhaf, and J. A. Hansz, ‘‘Can technical analysis
+generate superior returns in securitized property markets? evidence from
+east asia markets,’’ Paciﬁc-Basin Finance J., vol. 47, pp. 92–108, 2018.
+[15] Y . Zhu and G. Zhou, ‘‘Technical analysis: An asset allocation perspec-
+tive on the use of moving averages,’’ J. Financial Econ. , vol. 92, no. 3,
+pp. 519–544, 2009.
+[16] C. J. Neely, P . A. Weller, and J. M. Ulrich, ‘‘The adaptive markets hypoth-
+esis: Evidence from the foreign exchange market,’’ J. Financial Quant.
+Anal., vol. 44, no. 2, pp. 467–488, 2009.
+[17] A. W. Lo, ‘‘The adaptive markets hypothesis: Market efﬁciency from an
+evolutionary perspective,’’J. Portfolio Manage., vol. 30, no. 5, pp. 15–29,
+2004.
+[18] A. C. Szakmary, S. Qia, and S. C. Sharma, ‘‘Trend-following trading
+strategies in commodity futures: A re-examination,’’ J. Banking, Finance,
+vol. 34, no. 2, pp. 409–426, 2010.
+[19] M. I. Ahmad, W. Ghohui, M. Hasan, A. Sattar, M. Ahmad, and
+R. U. Rehman, ‘‘Performance of moving average investment timing strat-
+egy in UK stock market: Individual stocks versus portfolios,’’ J. Econ.
+Social Stud., vol. 7, no. 2, pp. 5–21, 2018.
+[20] T. Crabel, Day Trading With Short Term Price Patterns Opening Range
+Breakout. Madison, WI, USA: Traders Press, 1990.
+[21] M. E. Cekirdekci, ‘‘Trading system development: Trading the opening
+range breakouts,’’ Ph.D. dissertation, Worcester Polytech. Inst., Worcester,
+MA, USA, 2010.
+[22] M. Borda, I. Nistor, and M. Gherman, ‘‘Opening range trading strategies
+aplied on daily and intra day data: The case of bet index,’’ Rev. Econ. Stud.
+Res. Virgil Madgearu, vol. 4, no. 2, pp. 79–96, 2011.
+[23] U. Holmberg and C. Lönnbark, and C. Lundström, ‘‘Assessing the prof-
+itability of intraday opening range breakout strategies,’’Finance Res. Lett.,
+vol. 10, no. 1, pp. 27–33, 2013.
+[24] W. Cheung, K. S. Lam, and H. Y eung, ‘‘Intertemporal proﬁtability and
+the stability of technical analysis: Evidences from the hong kong stock
+exchange,’’Appl. Econ., vol. 43, no. 15, pp. 1945–1963, 2011.
+[25] C. Lundström, ‘‘Day trading returns across volatility states,’’ Dept. Eco-
+nomics,. Umeå Univ., Umeå, Sweden, Tech. Rep., 2017.
+YI-CHENG TSAI received the bachelor’s and master’s degrees from the
+Department of Electrical Engineering, National Taiwan University, Taipei,
+Taiwan, in 2004 and 2006, respectively, where he is currently pursuing
+the Ph.D. degree. His research interests include computational ﬁnance, risk
+management, investment behavior, and ﬁnancial data analysis.
+MU-EN WU received the bachelor’s degree from the Department of Mathe-
+matics, National Tsing-Hua University, Taiwan, in 2002, the master’s degree
+from the Department of Applied Mathematics, National Chiao Tung Uni-
+versity, in 2014, and the Ph.D. degree from the Department of Computer
+Science, National Tsing-Hua University, in 2009. He is currently an Assistant
+Professor with the Department of Information and Finance Management,
+National Taipei University of Technology, Taipei, Taiwan. He has authored
+or co-authored over 50 papers in referred journals and conferences in the
+area of information security, cryptography, and ﬁnancial data analysis. His
+research interests include cryptography, money management, and ﬁnancial
+data analysis.
+JIA-HAO SYU is currently pursuing the bachelor’s degree with the Depart-
+ment of Computer Science and Information Engineering, National Taiwan
+University, Taipei, Taiwan. He is going to enter the master’s program of the
+Department of Computer Science and Information Engineering, National
+Taiwan University, in 2019. His research interests include ﬁnancial data
+analysis, computational ﬁnance, investment behavior, and data science.
+CHIN-LAUNG LEI received the B.S. degree in electrical engineering from
+National Taiwan University, Taipei, in 1980, and the Ph.D. degree in com-
+puter science from The University of Texas at Austin, in 1986. From 1986 to
+1988, he was an Assistant Professor with the Computer and Information Sci-
+ence Department, The Ohio State University, Columbus, OH, USA. In 1988,
+he joined the faculty of the Department of Electrical Engineering, National
+Taiwan University, where he is currently a Professor. He has published more
+than 250 technical articles in scientiﬁc journals and conference proceedings.
+His current research interests include information security, cloud computing,
+and data science. He is a co-winner of the ﬁrst IEEE LICS Test-of-Time
+Award.
+CHUNG-SHU WU has been the President of the Chung-Hua Institution for
+Economic Research, since 2011. He is also an Adjunct Research Fellow of
+the Institute of Economics, Academia Sinica, and an Adjunct Professor of
+the Department of Economics, National Taiwan University.
+JAN-MING HO received the B.S. degree in electrical engineering from
+National Cheng Kung University, in 1978, the M.S. degree from the Institute
+of Electronics, National Chiao Tung University, in 1980, and the Ph.D.
+degree in electrical engineering and computer science from Northwestern
+University, in 1989. He joined the Institute of Information Science, Academia
+Sinica, as an Associate Research Fellow, in 1989, and was promoted to
+Research Fellow, in 1994, where he served as a Deputy Director of the Insti-
+tute, from 2000 to 2003. From 2004 to 2006, he was the Director General of
+the Division of Planning and Evaluation, National Science Council. He vis-
+ited the IBMs T. J. Watson Research Center, in 1987 and 1988, the Leonardo
+Fibonacci Institute for the Foundations of Computer Science, Italy, in 1992,
+and the Dagstuhl Seminar on Applied Combinatorial Methods in VLSI/CAD,
+Germany, in 1993. His research interests include the integration of theory
+and applications, including combinatorial optimization, information retrieval
+and extraction, multimedia network protocols, bioinformatics, and digital
+library and archive technologies. He also published results in the ﬁeld of
+VLSI/CAD physical design. He has served as a Board Member for several
+NPOs, including the Institute of Information and Computing Machinery
+(IICM), the Frontier Foundation, Taiwan, the Y .T. Lee Foundation Science
+Education, and the WuSanLien Foundation on Taiwanese History. He served
+as the President of the Software Liberty Association Taiwan, from 2004 to
+2008, and the President of IICM, from 2007 to 2009.
+CHUAN-JU WANG received the Ph.D. degree in computer science
+and information engineering from National Taiwan University, in 2011.
+Before joining the Research Center of Information Technology Innovation,
+Academia Sinica, as an Assistant Research Fellow, in 2016, she was an
+Associate Professor with the University of Taipei, Taiwan. Her research
+interests include computational ﬁnance and data analytics.
+VOLUME 7, 2019 32071

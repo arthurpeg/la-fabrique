@@ -1,0 +1,169 @@
+{
+  "fiche_id": "assessing-the-profitability-of-timely-opening-ra-W2911858053",
+  "written": "2026-10-07",
+  "written_by": "claude-opus-5-5 (lecteur isole, consigne D55)",
+  "formula": {
+    "statement": "Pour le jour d : R_d = max(P_tb,d, ..., P_tp,d) et S_d = min(P_tb,d, ..., P_tp,d), où P_t,d est la clôture de la barre d'une minute t. Pour toute minute t' avec tp < t' < te : si P_t',d > R_d, score = +1 (achat) ; si P_t',d < S_d, score = -1 (vente) ; sinon 0. Une fois le signal apparu, la position est tenue jusqu'à te, fin des heures actives, le même jour.",
+    "quoted": "P_{t′,d} > max(P_{tb,d}, ···, P_{tp,d}) ⇒ Buy, (3)",
+    "quoted_source": "Pt′,d > max(Ptb,d,··· , Ptp,d )⇒ Buy, (3)",
+    "quoted_repair": "math_notation",
+    "reason": null,
+    "also_quoted": [
+      "Pt′,d < min(Ptb,d,··· , Ptp,d )⇒ Sell, (4)",
+      "where Pt′,d is the price at time t′ on day d and tp< t′< te.",
+      "there is a trading signal on a day, the position closes at te on"
+    ]
+  },
+  "inputs": [
+    {
+      "name": "close_1min",
+      "description": "prix de clôture de chaque barre d'une minute du contrat spot month",
+      "known_at": "à la fin de la minute t",
+      "quoted": "the close price in the one-minute interval t on day d"
+    },
+    {
+      "name": "opening_range_high",
+      "description": "résistance : maximum des clôtures minute de tb à tp inclus",
+      "known_at": "à la fin de la minute tp",
+      "quoted": "the highest (lowest) prices for a predetermined period termed"
+    },
+    {
+      "name": "opening_range_low",
+      "description": "support : minimum des clôtures minute de tb à tp inclus",
+      "known_at": "à la fin de la minute tp",
+      "quoted": "the highest (lowest) prices for a predetermined period termed"
+    },
+    {
+      "name": "active_hours",
+      "description": "tb = ouverture du marché d'actions sous-jacent, te = sa clôture",
+      "known_at": "connu d'avance (calendrier de séance)",
+      "quoted": "is set to the beginning of the active hours, and the time point of the closing position, denoted as te is set to the end of the active hours"
+    }
+  ],
+  "timing": {
+    "statement": "Fenêtre d'observation [tb, tp] à partir de l'ouverture cash ; le signal se pose à la première minute t' strictement postérieure à tp dont la clôture franchit une borne ; la position est fermée à te (clôture cash) le même jour. Pour les marchés US, tb = 8:30 et te = 15:00 dans l'horloge des figures (heure de Chicago, non nommée par le papier), soit 9:30 et 16:00 à New York.",
+    "quoted": "the end of the observed period is the probe time tp, where tb < tp < te.",
+    "reason": null,
+    "also_quoted": [
+      "we set the active hours as the",
+      "8:30 (the opening time of the underlying market)",
+      "15:00 (the closing time of the underlying market)"
+    ]
+  },
+  "parameters": [
+    {
+      "name": "probe_time_minutes_ES",
+      "value": 1,
+      "unit": "minutes après tb",
+      "quoted": "and E-mini NASDAQ are all with short probe times (4, 1, and 1 minutes, respectively)",
+      "note": "Meilleur tp sur E-mini S&P 500, choisi in-sample sur l'échantillon complet."
+    },
+    {
+      "name": "probe_time_minutes_NQ",
+      "value": 1,
+      "unit": "minutes après tb",
+      "quoted": "and E-mini NASDAQ are all with short probe times (4, 1, and 1 minutes, respectively)",
+      "note": "Meilleur tp sur E-mini NASDAQ 100, choisi in-sample."
+    },
+    {
+      "name": "probe_time_minutes_YM",
+      "value": 4,
+      "unit": "minutes après tb",
+      "quoted": "and E-mini NASDAQ are all with short probe times (4, 1, and 1 minutes, respectively)",
+      "note": "Meilleur tp sur E-mini DJIA, choisi in-sample."
+    },
+    {
+      "name": "probe_time_scan_range",
+      "value": null,
+      "unit": "minutes",
+      "quoted": null,
+      "reason": "le papier balaie tp (figures 7 à 13) sans donner le pas ni la borne de la grille dans le texte"
+    },
+    {
+      "name": "transaction_cost_per_trade",
+      "value": 0.01,
+      "unit": "% par trade",
+      "quoted": "tion cost of 0.01% (per trade) [5]."
+    },
+    {
+      "name": "max_trades_per_day",
+      "value": null,
+      "unit": "trades",
+      "quoted": null,
+      "reason": "le papier dit seulement que la position est fermée à te s'il y a un signal dans la journée, sans dire qu'un seul trade est pris ni ce qui se passe si l'autre borne est franchie ensuite"
+    },
+    {
+      "name": "tick_size_and_multiplier",
+      "value": null,
+      "unit": null,
+      "quoted": null,
+      "reason": "le papier ne donne ni tick ni multiplicateur ; les rendements sont en pourcentage"
+    }
+  ],
+  "ambiguities": [
+    {
+      "question": "Les bornes sont-elles le max/min des clôtures minute ou des plus hauts/plus bas minute ?",
+      "resolution": "Les équations (3)-(4) utilisent P_t,d, défini comme la clôture minute ; la légende de la figure 1 parle de « highest/lowest prices », sans préciser. On code sur les clôtures, en signalant l'écart.",
+      "quoted": "the close price in the one-minute interval t on day d"
+    },
+    {
+      "question": "La cassure se teste-t-elle sur la clôture de la minute t' ou en intra-minute (plus haut/plus bas) ?",
+      "resolution": "P_t',d est le prix à la minute t' ; par cohérence avec la définition de P, la clôture.",
+      "quoted": "where Pt′,d is the price at time t′ on day d and tp< t′< te."
+    },
+    {
+      "question": "La minute tp est-elle incluse dans la fenêtre d'observation, et la cassure doit-elle être stricte ?",
+      "resolution": "Le max porte sur P_tb..P_tp (tp inclus) ; inégalités strictes, t' strictement après tp.",
+      "quoted": "where Pt′,d is the price at time t′ on day d and tp< t′< te."
+    },
+    {
+      "question": "Quel est le prix d'entrée : clôture de la minute de cassure, ouverture de la minute suivante, ou niveau de la borne ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Quel est le prix de sortie à te : clôture de la minute te, ou dernière minute avant te ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Que se passe-t-il si les deux bornes sont franchies le même jour (cassure haussière puis baissière) ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Dans quel fuseau sont exprimées les heures ?",
+      "resolution": "Non nommé. Les heures US citées (8:30 ouverture, 15:00 clôture du sous-jacent, 15:15 clôture de l'E-mini DJIA) correspondent à l'heure de Chicago ; pour nous, 9:30-16:00 New York. C'est une lecture, pas une affirmation du papier.",
+      "quoted": "a PMVR peak around 15:15, the closing time of the E-mini DJIA"
+    },
+    {
+      "question": "Comment le meilleur tp est-il choisi, et sur quelles données ?",
+      "resolution": "Celui qui rapporte le plus sur la période complète : sélection in-sample, sans walk-forward ni correction pour tests multiples.",
+      "quoted": "as those that earn the most proﬁt in the full time periods."
+    },
+    {
+      "question": "Le t-test et le rendement annuel portent-ils sur tous les jours ou seulement sur les jours avec trade ? Comment est faite l'annualisation ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Comment le contrat spot month est-il roulé, et comment sont traités les demi-séances et jours fériés ?",
+      "resolution": null,
+      "quoted": null
+    },
+    {
+      "question": "Les heures actives sont-elles fixes sur toute la période, malgré les changements d'horaires de séance ?",
+      "resolution": "Pour le HSI, l'échantillon est coupé au changement d'horaires du 2011/3/7 ; rien n'est dit pour les marchés US.",
+      "quoted": "due to the changes in trading times beginning on 2011/3/7,"
+    }
+  ],
+  "market": {
+    "studied": "Futures E-mini sur le Dow Jones Industrial Average, le S&P 500 et le NASDAQ 100 (contrat spot month, barres d'une minute), plus les futures sur le Hang Seng et le TAIEX, hors de notre univers.",
+    "quoted": "we investigate the spot month E-mini futures of the DJIA (from 2003/1/2 to",
+    "exact_roots": ["ES", "NQ", "YM"],
+    "sessions": ["US"],
+    "sessions_quoted": "we set the active hours as the",
+    "sessions_reason": null,
+    "sessions_note": "Les heures actives vont de l'ouverture à la clôture du marché d'actions sous-jacent (8:30-15:00 dans l'horloge des figures, soit 9:30-16:00 New York)."
+  }
+}

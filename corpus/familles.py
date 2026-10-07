@@ -13,8 +13,9 @@ composante de 194 papiers sur 308).
 2. `--verser` : contrôle mécanique (chaque papier une fois, valeurs dans la liste
    fermée) puis ajout à `corpus/familles_lectures.json`.
 3. `--classer` : le code vectorise les mécanismes (le modèle de la base), forme
-   des familles dont **chaque paire** dépasse `SEUIL` (lien complet), et classe les familles par promesse :
-   nombre de papiers à effet positif chiffré, puis nombre de `oui`, puis taille.
+   des familles dont **chaque paire** dépasse `SEUIL` (lien complet), et classe les
+   familles par promesse : nombre de papiers à effet positif chiffré, puis
+   nombre de `oui`, puis taille.
    Sortie : `scripts/out/familles.json`.
 
 Aucun rendement, aucun IC : seulement ce que les papiers disent d'eux-mêmes.

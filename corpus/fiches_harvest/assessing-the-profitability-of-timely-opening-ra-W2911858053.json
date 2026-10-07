@@ -1,0 +1,153 @@
+{
+  "fiche_id": "assessing-the-profitability-of-timely-opening-ra-W2911858053",
+  "written": "2026-10-07",
+  "written_by": "claude-opus-5-5 (lecteur isole, consigne D55)",
+  "source": {
+    "authors": "Yi-Cheng Tsai, Mu-En Wu, Jia-Hao Syu, Chin-Laung Lei, Chung-Shu Wu, Jan-Ming Ho, Chuan-Ju Wang",
+    "title": "Assessing the Profitability of Timely Opening Range Breakout on Index Futures Markets",
+    "year": 2019,
+    "source_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08641124.pdf",
+    "pdf": "corpus/pdf/assessing-the-profitability-of-timely-opening-ra-W2911858053.pdf",
+    "retrieved": "2026-09-29",
+    "peer_reviewed": true,
+    "venue": "IEEE Access, vol. 7, 2019, pp. 32061-32071"
+  },
+  "claim": {
+    "value": "La dynamique des prix minute par minute au tout début de la séance du marché sous-jacent porte une information sur la direction du reste de la journée : une cassure du plus haut (plus bas) de la période d'observation [tb, tp], tp choisi par balayage, prédit une poursuite dans le même sens jusqu'à la clôture du sous-jacent (TORB, timely open range breakout).",
+    "quoted": [
+      "The dynamic of prices in the early stage of market opening reveals more information in a trading day",
+      "during this period to forecast the price for the rest time on the same day."
+    ]
+  },
+  "universe": {
+    "value": "Contrats front-month (spot month) E-mini DJIA (2003/1/2-2013/12/2), E-mini S&P 500 et E-mini NASDAQ 100 (2001/1/2-2013/12/2), futures HSI (2003/1/2-2011/3/4) et TAIEX (2001/1/2-2013/11/28), en barres d'une minute ; plus un jeu non public de transactions par type d'intervenant sur le future TAIEX (2006/7/1-2013/12/31).",
+    "quoted": [
+      "we investigate the spot month E-mini futures of the DJIA (from 2003/1/2 to",
+      "2013/12/2), S&P 500 (from 2001/1/2 to 2013/12/2), and",
+      "NASDAQ 100 (from 2001/1/2 to 2013/12/2) plus two",
+      "for the TAIEX index futures from 2006/7/1 to 2013/12/31"
+    ]
+  },
+  "horizon": {
+    "value": "Intraday : entrée à la première cassure après la probe time tp, sortie à te, fin des heures actives (clôture du marché d'actions sous-jacent), le même jour. Au plus un trade par jour.",
+    "quoted": [
+      "there is a trading signal on a day, the position closes at te on",
+      "we set the active hours as the"
+    ]
+  },
+  "signal_construction": {
+    "value": "1) Heures actives : de l'ouverture à la clôture du marché d'actions sous-jacent (choix motivé par les pics de PMMV, volume moyen par minute, et PMVR, variance du rendement log par minute). 2) tb = début des heures actives ; te = fin des heures actives ; tp = probe time, tb < tp < te, paramètre balayé. 3) Résistance = max des prix de clôture minute P_t,d sur [tb, tp] ; support = min sur la même fenêtre. 4) Pour t' dans (tp, te) : P_t',d > résistance => achat ; P_t',d < support => vente. 5) Position fermée à te le même jour. Coût de 0.01 % par trade. Le meilleur tp est retenu par marché a posteriori, sur l'échantillon complet.",
+    "quoted": [
+      "We set the resistance (support) levels as",
+      "the highest (lowest) prices for a predetermined period termed",
+      "The trading signal is revealed once the",
+      "is set to the beginning of the active hours, and the time point of the closing position, denoted as te is set to the end of the active hours",
+      "where Pt′,d is the price at time t′ on day d and tp< t′< te.",
+      "the close price in the one-minute interval t on day d"
+    ],
+    "equations_quoted_source": [
+      "Pt′,d > max(Ptb,d,··· , Ptp,d )⇒ Buy, (3)",
+      "Pt′,d < min(Ptb,d,··· , Ptp,d )⇒ Sell, (4)"
+    ]
+  },
+  "reported_results": [
+    {
+      "name": "torb_best_annual_return_all_five_markets_min_pct",
+      "value": 8,
+      "unit": "% par an",
+      "quoted": "achieves over 8% annual returns with p-values less than 3%",
+      "note": "Meilleure stratégie par marché (tp optimisé in-sample), nette de coûts, échantillon complet. Le chiffre par marché est dans le Tableau 6, perdu par l'extraction."
+    },
+    {
+      "name": "torb_best_annual_return_taiex_pct",
+      "value": 20.28,
+      "unit": "% par an",
+      "quoted": "20.28% annual returns at a p-value of 3.1×10−5%, is reached in the TAIEX.",
+      "note": "TAIEX, hors de notre univers. Le papier donne ailleurs une p-value de 1 × 10−4% pour le même résultat : incohérence interne."
+    },
+    {
+      "name": "torb_best_annual_return_nasdaq_pct",
+      "value": 17.51,
+      "unit": "% par an",
+      "quoted": "5.58% is much less than the annual return 17.51% of the best",
+      "note": "Meilleure TORB sur E-mini NASDAQ 100, échantillon complet, à comparer à 5.58 % pour la meilleure TRB (Brock et al.)."
+    },
+    {
+      "name": "trb_best_annual_return_nasdaq_pct",
+      "value": 5.58,
+      "unit": "% par an",
+      "quoted": "5.58% is much less than the annual return 17.51% of the best",
+      "note": "Seule TRB significative (p = 4.37 %), et non significative dans les deux sous-périodes."
+    },
+    {
+      "name": "best_probe_time_es_minutes",
+      "value": 1,
+      "unit": "minutes",
+      "quoted": "and E-mini NASDAQ are all with short probe times (4, 1, and 1 minutes, respectively)",
+      "note": "Dans l'ordre E-mini DJIA = 4, E-mini S&P 500 = 1, E-mini NASDAQ = 1 minute(s)."
+    },
+    {
+      "name": "best_probe_time_ym_minutes",
+      "value": 4,
+      "unit": "minutes",
+      "quoted": "and E-mini NASDAQ are all with short probe times (4, 1, and 1 minutes, respectively)",
+      "note": "E-mini DJIA."
+    },
+    {
+      "name": "best_probe_time_taiex_minutes",
+      "value": 37,
+      "unit": "minutes",
+      "quoted": "the probe times of the best strategies are 151 minutes and 37 minutes, respectively.",
+      "note": "HSI = 151 min, TAIEX = 37 min (hors univers ; repris pour le contraste US court / Asie long)."
+    },
+    {
+      "name": "ym_significant_strategies_probe_within_5min",
+      "value": 4,
+      "unit": "stratégies",
+      "spelled_out": "four",
+      "quoted": "there are four strategies that",
+      "note": "E-mini DJIA, échantillon complet : avec tp dans les cinq premières minutes, quatre stratégies rejettent H0 (rendement nul) à p < 5 %."
+    },
+    {
+      "name": "transaction_cost_per_trade_pct",
+      "value": 0.01,
+      "unit": "% par trade",
+      "quoted": "tion cost of 0.01% (per trade) [5].",
+      "note": "Hypothèse reprise de Schulmeister, pas un coût mesuré."
+    },
+    {
+      "name": "subperiod_exceptions",
+      "value": null,
+      "quoted": "from 2003 to 2007 and the E-mini S&P in the sub-period from 2007 to 2013, the best strategies earn",
+      "note": "Les meilleures stratégies ne sont pas significatives pour E-mini DJIA en 2003-2007 et pour E-mini S&P en 2007-2013 : la robustesse sous-période n'est pas uniforme sur les marchés US."
+    },
+    {
+      "name": "trb_no_significance",
+      "value": null,
+      "quoted": "there is no consistently signiﬁcant result from the probability",
+      "note": "La TRB journalière (Brock et al., D = 2 à 200, X = 0 ou 1 %, détention 10 jours) ne donne pas de résultat constant."
+    }
+  ],
+  "what_is_missing": [
+    "les tableaux 6 à 8 (meilleure stratégie par marché, nombre de trades, t-stat, p-value) sont perdus par l'extraction : seuls les chiffres repris dans le texte sont disponibles",
+    "aucune correction pour le balayage de tp : le meilleur tp est choisi sur l'échantillon même où il est évalué (biais de sélection non traité)",
+    "la méthode d'annualisation et la base du t-test (jours sans trade inclus ou non) ne sont pas décrites",
+    "prix d'entrée exact non précisé : clôture de la minute de cassure, ou niveau de la résistance",
+    "aucune règle si les deux bornes sont franchies le même jour, ni stop",
+    "le roulement du contrat spot month n'est pas décrit",
+    "aucune mesure de Sharpe, de drawdown ni d'IC ; pas de multiplicateur ni de tick",
+    "le fuseau horaire n'est pas nommé ; les heures US (8:30, 15:00) sont visiblement en heure de Chicago"
+  ],
+  "transposability": {
+    "what_transfers": "La règle est entièrement calculable en OHLCV 1 minute sur ES, NQ, YM : max/min des clôtures de l'ouverture cash (9:30 New York) à tp, cassure ensuite, sortie à 16:00 New York. Un score directionnel (+1/-1/0) ou un score continu (distance à la borne) peut être posé à chaque minute après tp.",
+    "what_does_not_transfer": [
+      "HSI et TAIEX ne sont pas dans notre univers ; le meilleur résultat (TAIEX, 20.28 %) ne nous concerne pas",
+      "la partie comportement des intervenants repose sur des données de transactions TAIEX non publiques, absentes chez nous",
+      "la métrique est un rendement annuel net par stratégie avec t-test, pas un IC : les chiffres ne sont pas comparables à notre rapport d'IC",
+      "le tp optimal (1 à 4 minutes) est choisi in-sample sur 2001-2013 ; rien ne dit qu'il tient sur 2016-2023",
+      "GC, CL et les devises (6E, 6B, 6J, 6A) n'ont pas de marché d'actions sous-jacent : la notion d'heures actives alignées sur l'ouverture cash ne s'y définit pas telle quelle",
+      "le coût de 0.01 % par trade est une hypothèse, pas un coût mesuré sur nos contrats"
+    ],
+    "what_aligns_well": "Barres d'une minute, futures sur indices US (E-mini DJIA, S&P 500, NASDAQ 100), séance US 9:30-16:00 New York : c'est exactement notre format et trois de nos instruments. L'horizon intraday (sortie à la clôture cash) se prête à un IC sur le rendement jusqu'à 16:00."
+  }
+}

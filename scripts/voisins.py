@@ -81,7 +81,34 @@ def vecteur(texte: str) -> str:
     return to_pgvector([float(x) for x in v], len(v))
 
 
-def chercher(fiche_id: str, n_voisins: int, n_passages: int) -> dict:
+def imposer(api, paper_id: str, q: str, n_passages: int) -> dict | None:
+    """Un papier donné, noté comme un voisin trouvé : moyenne de ses TOP meilleurs
+    morceaux contre la graine, ses meilleurs passages."""
+    import numpy as np  # noqa: PLC0415
+
+    rows = api.appel("GET", f"/rest/v1/chunks?select=content,section,page,embedding"
+                            f"&paper_id=eq.{paper_id}") or []
+    meta = api.appel("GET", f"/rest/v1/papers?select=title&id=eq.{paper_id}") or []
+    if not rows or not meta:
+        return None
+    g = np.array(json.loads(q))
+    g = g / np.linalg.norm(g)
+    notes = []
+    for r in rows:
+        e = np.array(json.loads(r["embedding"]))
+        notes.append((float(e @ g / np.linalg.norm(e)), r))
+    notes.sort(key=lambda x: -x[0])
+    return {"paper_id": paper_id, "title": meta[0]["title"], "imposed": True,
+            "similarity": round(sum(s for s, _ in notes[:TOP]) / TOP, 4),
+            "passages": [{"section": r["section"], "page": r["page"], "similarity": round(s, 4),
+                          "content": r["content"]} for s, r in notes[:n_passages]]}
+
+
+def chercher(fiche_id: str, n_voisins: int, n_passages: int,
+             avec: list[str] | None = None) -> dict:
+    """`avec` : identifiants en base de papiers à joindre aux candidats même si la
+    recherche ne les tire pas (les autres membres d'une famille). Ils passent par
+    le même trieur que les autres : être imposé n'est pas être gardé."""
     from embed_api import Api  # noqa: PLC0415
 
     ff = fiche_files()
@@ -90,8 +117,9 @@ def chercher(fiche_id: str, n_voisins: int, n_passages: int) -> dict:
     fiche = json.loads(ff[fiche_id].read_text(encoding="utf-8"))
     titre_graine = (fiche.get("source") or {}).get("title") or ""
     api = Api()
+    q = vecteur(representation(fiche))
     morceaux = api.appel("POST", "/rest/v1/rpc/vector_search", {
-        "query_embedding": vecteur(representation(fiche)),
+        "query_embedding": q,
         "match_count": max(PLANCHER, n_voisins * LARGEUR)}) or []
 
     fiches_par_papier = {}
@@ -121,13 +149,26 @@ def chercher(fiche_id: str, n_voisins: int, n_passages: int) -> dict:
     # 0,29 (meilleur morceau seul) à 0,37.
     for v in voisins.values():
         v["similarity"] = round(sum(v.pop("_s")[:TOP]) / TOP, 4)
+    # Les papiers imposés (une famille de `corpus/familles.py`) que la recherche
+    # n'a pas tirés : leurs morceaux sont lus en base et notés de la même façon.
+    for pid in avec or []:
+        if pid in voisins or pid in papier_graine:
+            continue
+        v = imposer(api, pid, q, n_passages)
+        if v:
+            v["fiche_id"] = fiches_par_papier.get(pid)
+            v["hypothesis"] = testees.get(v["fiche_id"])
+            voisins[pid] = v
     # Deux copies d'un même papier parmi les voisins : on garde la mieux notée.
     classes: list[dict] = []
-    for v in sorted(voisins.values(), key=lambda v: -v["similarity"]):
+    imposes = set(avec or [])
+    for v in sorted(voisins.values(), key=lambda v: (v["paper_id"] not in imposes,
+                                                     -v["similarity"])):
         if not any(meme_papier(v["title"], w["title"]) for w in classes):
             classes.append(v)
-        if len(classes) == n_voisins:
+        if len(classes) == n_voisins + len(imposes):
             break
+    classes.sort(key=lambda v: -v["similarity"])
     # L'année et les auteurs de chaque voisin, lus en base : sans eux, une synthèse
     # devrait les deviner (D53, essai du 2026-10-05).
     if classes:

@@ -1,0 +1,232 @@
+{
+  "fiche_id": "synthese-dossier-assessing-the-profitability-of-timely-opening-ra-W2911858053",
+  "written": "2026-10-07",
+  "written_by": "claude-opus-5-5 (session de synthese isolee, consigne D47)",
+  "source": {
+    "authors": "Synthèse de : Yi-Cheng Tsai, Mu-En Wu, Jia-Hao Syu, Chin-Laung Lei, Chung-Shu Wu, Jan-Ming Ho, Chuan-Ju Wang ; Muzhao Jin, Fearghal Joseph Kearney, Youwei Li, Yung Chiang Yang",
+    "title": "Synthèse — la direction prise par les prix au tout début de la séance se prolonge jusqu'à la clôture (cassure du range d'ouverture, momentum intraday)",
+    "year": 2019,
+    "source_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08641124.pdf",
+    "retrieved": "2026-10-07",
+    "peer_reviewed": false
+  },
+  "claim": {
+    "value": "Les prix du tout début de la séance portent une information sur la direction du reste de la journée, et cette direction se prolonge : une cassure du plus haut (plus bas) des clôtures minute de la période d'observation [tb, tp] prédit une poursuite dans le même sens jusqu'à la clôture du sous-jacent (graine, futures sur indices). Un voisin documente le même prolongement, mesuré par le rendement de la première demi-heure, sur des futures de matières premières chinois.",
+    "quoted": [
+      "The dynamic of prices in the early stage of market opening reveals more information in a trading day",
+      "during this period to forecast the price for the rest time on the same day.",
+      "with the first half-hour return significantly predicting the last half-hour return across all four commodity futures markets"
+    ]
+  },
+  "universe": {
+    "value": "Graine : contrats front-month E-mini DJIA, E-mini S&P 500, E-mini NASDAQ 100, futures HSI et TAIEX, barres d'une minute, 2001-2013. Voisin complete (base-9cabf734) : quatre futures de matières premières chinois (cuivre, acier, tourteau de soja, soja), demi-heures et quarts d'heure.",
+    "quoted": [
+      "we investigate the spot month E-mini futures of the DJIA (from 2003/1/2 to",
+      "NASDAQ 100 (from 2001/1/2 to 2013/12/2) plus two",
+      "As all Chinese futures markets have a short break of 15 minutes from 10:15-10:30 each trading day we exclude this 15-minute period from our analysis."
+    ]
+  },
+  "horizon": {
+    "value": "Intraday : entrée à la première cassure après tp, sortie à te (fin des heures actives, clôture du marché sous-jacent), le même jour ; au plus un trade par jour. Le voisin vise la dernière demi-heure et le reste de la journée.",
+    "quoted": [
+      "there is a trading signal on a day, the position closes at te on",
+      "to trade both the last and the rest-of-day periods"
+    ]
+  },
+  "signal_construction": {
+    "value": "Version retenue : la TORB de la graine, sans ajout. 1) Heures actives = de l'ouverture à la clôture du marché d'actions sous-jacent ; tb = début des heures actives, te = fin. 2) tp (probe time), tb < tp < te, est le seul paramètre : résistance = max des clôtures minute sur [tb, tp], support = min sur la même fenêtre. 3) Pour chaque minute t' dans (tp, te) : score = +1 dès la première clôture minute au-dessus de la résistance, -1 dès la première sous le support, 0 tant qu'aucune borne n'est franchie ; une fois posé, le score est tenu jusqu'à te (au plus un trade par jour). 4) Cible : rendement de l'entrée jusqu'à te, le même jour. Valeurs de tp citées par la graine, toutes choisies in-sample : 1 min (E-mini S&P 500, E-mini NASDAQ), 4 min (E-mini DJIA), 37 min (TAIEX), 151 min (HSI) ; la valeur à utiliser chez nous n'est fixée par aucun papier hors échantillon et doit être pré-enregistrée. Aucun conditionnement à un régime (volume relatif, volatilité) n'est retenu.",
+    "quoted": [
+      "We set the resistance (support) levels as",
+      "the highest (lowest) prices for a predetermined period termed",
+      "The trading signal is revealed once the",
+      "is set to the beginning of the active hours, and the time point of the closing position, denoted as te is set to the end of the active hours",
+      "where Pt′,d is the price at time t′ on day d and tp< t′< te.",
+      "the close price in the one-minute interval t on day d"
+    ],
+    "equations_quoted_source": [
+      "Pt′,d > max(Ptb,d,··· , Ptp,d )⇒ Buy, (3)",
+      "Pt′,d < min(Ptb,d,··· , Ptp,d )⇒ Sell, (4)"
+    ],
+    "parameters": {
+      "tp_minutes": {
+        "value": null,
+        "reason": "la graine balaie tp et retient le meilleur par marché sur l'échantillon complet (1, 4, 37, 151 min) ; aucun papier ne donne une valeur fixée hors échantillon, et la synthèse ne la choisit pas"
+      }
+    }
+  },
+  "reported_results": [
+    {
+      "name": "torb_best_annual_return_all_five_markets_min_pct",
+      "value": 8,
+      "unit": "% par an",
+      "quoted": "achieves over 8% annual returns with p-values less than 3%",
+      "from_fiche": "assessing-the-profitability-of-timely-opening-ra-W2911858053",
+      "note": "Meilleure stratégie par marché, tp optimisé in-sample, nette de coûts."
+    },
+    {
+      "name": "torb_best_annual_return_nasdaq_pct",
+      "value": 17.51,
+      "unit": "% par an",
+      "quoted": "5.58% is much less than the annual return 17.51% of the best",
+      "from_fiche": "assessing-the-profitability-of-timely-opening-ra-W2911858053",
+      "note": "Meilleure TORB sur E-mini NASDAQ 100, contre 5.58 % pour la meilleure TRB journalière."
+    },
+    {
+      "name": "best_probe_time_es_minutes",
+      "value": 1,
+      "unit": "minutes",
+      "quoted": "and E-mini NASDAQ are all with short probe times (4, 1, and 1 minutes, respectively)",
+      "from_fiche": "assessing-the-profitability-of-timely-opening-ra-W2911858053",
+      "note": "E-mini DJIA = 4, E-mini S&P 500 = 1, E-mini NASDAQ = 1 minute(s) ; choisis in-sample."
+    },
+    {
+      "name": "best_probe_time_ym_minutes",
+      "value": 4,
+      "unit": "minutes",
+      "quoted": "and E-mini NASDAQ are all with short probe times (4, 1, and 1 minutes, respectively)",
+      "from_fiche": "assessing-the-profitability-of-timely-opening-ra-W2911858053",
+      "note": "E-mini DJIA."
+    },
+    {
+      "name": "best_probe_time_taiex_minutes",
+      "value": 37,
+      "unit": "minutes",
+      "quoted": "the probe times of the best strategies are 151 minutes and 37 minutes, respectively.",
+      "from_fiche": "assessing-the-profitability-of-timely-opening-ra-W2911858053",
+      "note": "HSI = 151 min, TAIEX = 37 min : contraste US court / Asie long."
+    },
+    {
+      "name": "ym_significant_strategies_probe_within_5min",
+      "value": 4,
+      "unit": "stratégies",
+      "spelled_out": "four",
+      "quoted": "there are four strategies that",
+      "from_fiche": "assessing-the-profitability-of-timely-opening-ra-W2911858053",
+      "note": "E-mini DJIA : avec tp dans les cinq premières minutes, quatre stratégies rejettent H0 à p < 5 %."
+    },
+    {
+      "name": "subperiod_exceptions",
+      "value": null,
+      "quoted": "from 2003 to 2007 and the E-mini S&P in the sub-period from 2007 to 2013, the best strategies earn",
+      "from_fiche": "assessing-the-profitability-of-timely-opening-ra-W2911858053",
+      "note": "Les meilleures stratégies ne sont pas significatives pour E-mini DJIA en 2003-2007 et E-mini S&P en 2007-2013."
+    },
+    {
+      "name": "transaction_cost_per_trade_pct",
+      "value": 0.01,
+      "unit": "% par trade",
+      "quoted": "tion cost of 0.01% (per trade) [5].",
+      "from_fiche": "assessing-the-profitability-of-timely-opening-ra-W2911858053",
+      "note": "Hypothèse reprise de Schulmeister, pas un coût mesuré."
+    },
+    {
+      "name": "commodity_first_half_hour_predicts_last_half_hour",
+      "value": 4,
+      "unit": "marchés",
+      "spelled_out": "four",
+      "quoted": "with the first half-hour return significantly predicting the last half-hour return across all four commodity futures markets",
+      "from_fiche": "base-9cabf734",
+      "note": "Le prolongement de la direction d'ouverture tient sur les quatre futures de matières premières chinois étudiés : c'est le marché que la graine n'a pas."
+    },
+    {
+      "name": "commodity_rest_of_day_strategy_abnormal_profits",
+      "value": null,
+      "quoted": "the intraday time-series momentum trading strategies that use the first half-hour return as a signal to trade both the last and the rest-of-day periods earn abnormal profits beyond those achieved by common benchmarks",
+      "from_fiche": "base-9cabf734",
+      "note": "Horizon reste-de-journée, le même que celui de la graine (sortie à la clôture)."
+    },
+    {
+      "name": "commodity_results_gross_of_costs",
+      "value": null,
+      "quoted": "The returns comparison presented in Table 7 is based on gross returns that do not take transaction costs into account.",
+      "from_fiche": "base-9cabf734",
+      "note": "Contrairement à la graine (0.01 % par trade), les profits du voisin sont bruts."
+    },
+    {
+      "name": "commodity_holds_at_15min_frequency",
+      "value": null,
+      "quoted": "We confirm that this dynamic also holds when specifying a 15-minute time frequency.",
+      "from_fiche": "base-9cabf734",
+      "note": "Robustesse à une fenêtre d'ouverture plus courte (15 min au lieu de 30)."
+    }
+  ],
+  "what_is_missing": [
+    "aucun papier retenu ne fixe tp hors échantillon : la graine choisit le meilleur tp par marché sur l'échantillon complet, sans correction pour le balayage",
+    "les tableaux 6 à 8 de la graine sont perdus par l'extraction ; seuls les chiffres repris dans le texte sont disponibles",
+    "prix d'entrée exact (clôture de la minute de cassure ou niveau de la borne), règle si les deux bornes sont franchies le même jour, et roulement des contrats : non décrits par la graine",
+    "le voisin base-9cabf734 n'est connu que par quatre passages : ni ses coefficients, ni ses t-stats, ni ses heures de séance exactes ne sont disponibles ici",
+    "aucun papier retenu ne traite des devises, ni de futures de matières premières américains (GC, CL)",
+    "aucun IC nulle part : les métriques sont des rendements annuels avec t-test (graine) et des profits bruts contre benchmarks (voisin)",
+    "fuseau horaire non nommé dans la graine ; heures de séance chinoises du voisin non transposables telles quelles"
+  ],
+  "transposability": {
+    "what_transfers": "La TORB se calcule entièrement en OHLCV 1 minute : max/min des clôtures de l'ouverture cash (9:30 New York) à tp, cassure ensuite, sortie à la clôture cash, sur ES, NQ, YM. Le voisin base-9cabf734 indique que le prolongement de la direction d'ouverture existe aussi sur des futures de matières premières, ce qui ouvre la question pour nos futures sans marché d'actions sous-jacent, à condition de définir leur séance.",
+    "what_does_not_transfer": [
+      "HSI, TAIEX et les futures chinois de matières premières ne sont pas dans notre univers",
+      "les tp optimaux (1 à 4 min aux US) sont choisis in-sample sur 2001-2013 ; rien ne dit qu'ils tiennent sur 2016-2023",
+      "pour GC, CL et les devises, la notion d'heures actives alignées sur une ouverture cash ne se définit pas telle quelle ; le voisin utilise les séances chinoises, qui ne nous fournissent aucune heure",
+      "les métriques (rendement annuel net, profits bruts) ne sont pas des IC et ne sont pas comparables à notre rapport d'IC",
+      "le coût de 0.01 % par trade est une hypothèse ; le voisin ne compte aucun coût"
+    ],
+    "what_aligns_well": "Barres d'une minute, futures E-mini sur DJIA, S&P 500 et NASDAQ 100, séance US : notre format et trois de nos instruments. Le score +1/-1/0 posé à chaque minute après tp, tenu jusqu'à la clôture cash, se prête directement à un IC sur le rendement jusqu'à la clôture."
+  },
+  "synthesis": {
+    "dossier": "assessing-the-profitability-of-timely-opening-ra-W2911858053",
+    "roles": {
+      "base-9cabf734": {
+        "role": "complete",
+        "why": "Même mécanisme (la direction prise en début de séance se prolonge le reste de la journée), même signe, et un marché que la graine n'a pas : quatre futures de matières premières, avec un horizon reste-de-journée et une robustesse à 15 minutes, cités."
+      },
+      "zarattini-2024-profitable-day-trading-us-equity": {
+        "role": "deja_teste",
+        "why": "Même famille (ORB, cassure du range des premières minutes), mais le papier a déjà son hypothèse H14 ; ce qu'il ajoute à la graine (filtre de volume relatif, sens de la première bougie, stop ATR, sélection transversale d'actions) relève de sa propre hypothèse ou d'un régime, et la synthèse ne ferait que la refaire."
+      },
+      "baltussen-2021-hedging-demand-intraday-momentum": {
+        "role": "deja_teste",
+        "why": "Momentum intraday voisin (rendement du reste de la journée qui prédit la dernière demi-heure, demande de couverture), déjà couvert par sa propre hypothèse H05 ; le reprendre referait H05."
+      },
+      "base-dc9fd2e3": {
+        "role": "hors_sujet",
+        "why": "Proche par les mots (prédiction précoce du sens de la séance), pas par le mécanisme : classification par indicateurs techniques (MTM, ROC) à des instants répartis dans la journée sur l'Ibex 35, sans affirmation citée d'un prolongement de la direction d'ouverture."
+      }
+    },
+    "apport": "nouveau",
+    "sources": [
+      "assessing-the-profitability-of-timely-opening-ra-W2911858053",
+      "base-9cabf734"
+    ],
+    "ignored": [
+      "zarattini-2024-profitable-day-trading-us-equity : deja_teste (H14) ; ses ajouts sont son hypothèse propre ou un conditionnement de régime",
+      "baltussen-2021-hedging-demand-intraday-momentum : deja_teste (H05) ; prédicteur reste-de-journée vers dernière demi-heure, autre construction déjà testée",
+      "base-dc9fd2e3 : hors_sujet ; classifieur précoce par indicateurs techniques sur l'Ibex 35, sans mécanisme de prolongement de l'ouverture"
+    ],
+    "mechanism": "Le début de séance concentre l'information et le volume ; la direction que les prix y prennent n'est pas absorbée tout de suite et se prolonge jusqu'à la clôture. La graine la lit comme la cassure d'un range d'ouverture, le voisin comme le signe du rendement de la première demi-heure.",
+    "agreements": [
+      "le signe : continuation de la direction d'ouverture, chez la graine comme chez le voisin retenu (et chez les deux voisins déjà testés)",
+      "l'horizon : intraday, sans position overnight, jusqu'à la clôture ou la dernière demi-heure",
+      "une fenêtre d'ouverture courte suffit : 1 à 4 min aux US pour la graine, 15 min encore valide pour le voisin"
+    ],
+    "disagreements": [
+      "construction : cassure du max/min des clôtures sur [tb, tp] (graine) contre signe du rendement de la première demi-heure (base-9cabf734)",
+      "fenêtre d'ouverture : 1 à 4 min (US) et 37 / 151 min (TAIEX / HSI) pour la graine, choisies in-sample ; 30 et 15 min pour base-9cabf734",
+      "horizon cible : clôture du sous-jacent pour la graine ; dernière demi-heure et reste de la journée pour base-9cabf734",
+      "marché : futures sur indices actions (graine) contre futures de matières premières chinois (base-9cabf734)",
+      "coûts : résultats nets de 0.01 % par trade chez la graine, bruts chez base-9cabf734",
+      "explication : information révélée à l'ouverture (graine) contre fourniture de liquidité des day traders et préférence horaire des informés (base-9cabf734)",
+      "robustesse : la graine n'est pas significative sur E-mini DJIA 2003-2007 ni E-mini S&P 2007-2013 ; le voisin ne donne pas de sous-périodes dans les passages cités"
+    ],
+    "contributions": [
+      "base-9cabf734 : le marché des futures de matières premières (quatre contrats, effet significatif sur les quatre), l'horizon reste-de-journée explicitement tradé, et la tenue de l'effet à une fréquence de 15 minutes"
+    ],
+    "criteria_applied": [
+      "1. accord : sur le signe, accord complet ; sur la construction, la cassure de range est celle de la graine (et du voisin ORB écarté comme déjà testé), le rendement de première demi-heure celle de base-9cabf734 : pas de majorité nette parmi les sources, la graine garde sa famille",
+      "2. transposabilité : les deux se calculent en OHLCV 1 minute sur nos futures d'indices ; la TORB est mesurée sur trois de nos instruments (E-mini DJIA, S&P 500, NASDAQ 100), le rendement de première demi-heure seulement sur des futures chinois : la TORB l'emporte",
+      "3. parcimonie : un seul paramètre (tp) dans la version retenue ; aucun filtre, stop ou conditionnement ajouté",
+      "4. traçabilité : tb, te, résistance, support, règles d'achat/vente et sortie à te sont cités dans la graine ; la valeur de tp reste null faute d'une valeur fixée hors échantillon"
+    ],
+    "chosen_from": [
+      "assessing-the-profitability-of-timely-opening-ra-W2911858053"
+    ],
+    "why": "La TORB de la graine est la seule construction mesurée sur nos propres instruments (E-mini US) en barres d'une minute ; le voisin retenu en confirme le signe et l'étend aux matières premières sans imposer sa construction."
+  }
+}

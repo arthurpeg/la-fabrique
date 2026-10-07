@@ -345,14 +345,14 @@ def gardes_de_graine(graine: str, ff: dict[str, Path]) -> None:
                          "synthèse referait la même hypothèse (D52)")
 
 
-def do_candidats(graine: str, n: int) -> int:
+def do_candidats(graine: str, n: int, avec: list[str] | None = None) -> int:
     """Étape 1 (D53) : les candidats de la recherche, et la consigne du trieur."""
     from grappes import texte  # noqa: PLC0415
     from voisins import chercher  # noqa: PLC0415
 
     ff = fiches()
     gardes_de_graine(graine, ff)
-    d = chercher(graine, n, PASSAGES)
+    d = chercher(graine, n, PASSAGES, avec)
     for i, v in enumerate(d["neighbors"], 1):
         v["cid"] = f"c{i:02d}"
     f_tri, f_consigne, f_labels = tri_de(graine)
@@ -591,13 +591,15 @@ def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description="La synthèse d'un dossier de voisins — D47")
     ap.add_argument("--candidats", metavar="FICHE_GRAINE")
     ap.add_argument("--n", type=int, default=CANDIDATS)
+    ap.add_argument("--avec", nargs="*", default=[], metavar="PAPER_ID",
+                    help="papiers en base joints aux candidats (une famille, corpus/familles.py)")
     ap.add_argument("--prepare", metavar="FICHE_GRAINE")
     ap.add_argument("--record", type=Path)
     ap.add_argument("--check", type=Path)
     ap.add_argument("--status", action="store_true")
     a = ap.parse_args(argv)
     if a.candidats:
-        return do_candidats(a.candidats, a.n)
+        return do_candidats(a.candidats, a.n, a.avec)
     if a.prepare:
         return do_prepare(a.prepare)
     if a.record:

@@ -1,0 +1,180 @@
+{
+ "generated": "2026-10-07T08:46+00:00",
+ "seed": {
+  "fiche_id": "assessing-the-profitability-of-timely-opening-ra-W2911858053",
+  "title": "Assessing the Profitability of Timely Opening Range Breakout on Index Futures Markets",
+  "hypothesis": null,
+  "representation": "Assessing the Profitability of Timely Opening Range Breakout on Index Futures Markets \nLa dynamique des prix minute par minute au tout début de la séance du marché sous-jacent porte une information sur la direction du reste de la journée : une cassure du plus haut (plus bas) de la période d'observation [tb, tp], tp choisi par balayage, prédit une poursuite dans le même sens jusqu'à la clôture du sous-jacent (TORB, timely open range breakout). \n1) Heures actives : de l'ouverture à la clôture du marché d'actions sous-jacent (choix motivé par les pics de PMMV, volume moyen par minute, et PMVR, variance du rendement log par minute). 2) tb = début des heures actives ; te = fin des heures actives ; tp = probe time, tb < tp < te, paramètre balayé. 3) Résistance = max des prix de clôture minute P_t,d sur [tb, tp] ; support = min sur la même fenêtre. 4) Pour t' dans (tp, te) : P_t',d > résistance => achat ; P_t',d < support => vente. 5) Position fermée à te le même jour. Coût de 0.01 % par trade. Le meilleur tp est retenu par marché a posteriori, sur l'échantillon complet. \nContrats front-month (spot month) E-mini DJIA (2003/1/2-2013/12/2), E-mini S&P 500 et E-mini NASDAQ 100 (2001/1/2-2013/12/2), futures HSI (2003/1/2-2011/3/4) et TAIEX (2001/1/2-2013/11/28), en barres d'une minute ; plus un jeu non public de transactions par type d'intervenant sur le future TAIEX (2006/7/1-2013/12/31). \nIntraday : entrée à la première cassure après la probe time tp, sortie à te, fin des heures actives (clôture du marché d'actions sous-jacent), le même jour. Au plus un trade par jour.",
+  "dossier_of": "synthese-dossier-assessing-the-profitability-of-timely-opening-ra-W2911858053"
+ },
+ "model": "BAAI/bge-base-en-v1.5",
+ "neighbors": [
+  {
+   "paper_id": "9cabf734-e412-4f3e-b92f-0e1fe3e313eb",
+   "title": "Intraday time‐series momentum: Evidence from China",
+   "fiche_id": null,
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "results",
+     "page": 22,
+     "similarity": 0.805,
+     "content": "21 \n \nOverall, these findings indicate that the intraday time-series momentum trading strategies \nthat use the first half-hour return as a signal to trade both the last and the rest-of-day periods \nearn abnormal profits beyond those achieved by common benchmarks. \nThe returns comparison presented in Table 7 is based on gross returns that do not take \ntransaction costs into account. It should be noted that trading costs vary according to the \nstrategy followed. For instance, the trading costs for our two proposed strategies and the \n“always long” benchmark are relatively high given that they require daily rebalancing. This is \nin contrast to the “buy-and-hold” benchmark which has much lower trading costs as it only \nrequires trades to be made at the beginning and the end of the sample period, as well as when \nthe futures contracts are rolled over. \n5. Robustness Checks \nThe use of half-hour returns is in line with earlier studies on intraday time-series momentum \nin financial markets (Gao et al., 2018; Gao et al., 2019, Sun et al., 2016; Komarov, 2017). \nHowever, can intraday time-series momentum also be observed at other time frequencies? We \nadopt a 15-minute time frequency to empirically test this. As all Chinese futures markets have \na short break of 15 minutes from 10:15-10:30 each trading day we exclude this 15-minute \nperiod from our analysis. \nTable 8 reports the predictability of the last 15-minute returns using the first and second-\nto-last 15-minute returns."
+    },
+    {
+     "section": "conclusion",
+     "page": 23,
+     "similarity": 0.7974,
+     "content": "22 \n \nTable 9 shows the impact of trading volume and volatility on intraday time-series \nmomentum using a 15-minute return period. In Panel A, we observe that except for soybean \nmeal, the predictability of the last 15-minute return using the first 15-minute return is greater \nin the high volume group than in others. When we study the impact of volatility in Panel B, \nonly copper and steel perform well in the high volatility group. \n[Insert Table 9 Around Here] \nTherefore, combined with our original 30-minute frequency analysis, we can say that the \nfirst metals trading sessions with the highest volume or volatility possess the strongest intraday \ntime-series momentum. This finding aligns with our hypothesis about the impact of margins \non agricultural futures intraday price evolution. \n6. Conclusion \nAs the world’s largest copper, steel, soybean meal markets and the world’s second largest \nsoybean market, Chinese commodity futures are of great importance. Meanwhile, both market \npractitioners and academic scholars have studied the time-series momentum properties of \nvarious markets, demonstrating its use in constructing profitable trading strategies. This paper \nlies at the intersection of both topics by focusing on intraday time-series momentum in the \nimportant Chinese futures market. \nWe find that the first trading session return can accurately predict the last return across \nChinese commodity futures. We hypothesize that such intraday time-series momentum is"
+    },
+    {
+     "section": "intro",
+     "page": 6,
+     "similarity": 0.7952,
+     "content": "5 \n \nstudies are based on stocks or stock indices, with intraday momentum in commodity markets \nremaining an open research question. \nWe present evidence consistent with Gao et al. (2018), with the first half-hour return \nsignificantly predicting the last half-hour return across all four commodity futures markets. We \nprovide two explanations for this intraday momentum. The first explanation is the liquidity \nprovision of intraday traders. For instance, day traders provide liquidity by taking the opposing \ndirection to the rest of the market, however, these day traders subsequently close their positions \nat the end of the day in order to avoid overnight risk. Since trades occur more rapidly at the \nbeginning and end of a given trading day (Hora, 2006), many of the day traders provide \nliquidity in the morning and subsequently close out their positions at the end of the day, causing \nprices during the last trading session to move in the same direction as the first. The second \nexplanation is the trading time preference of the strategically informed traders. The informed \ntraders prefer to trade during high trading volume periods to camouflage their information and \nlimit their price impact. Therefore, the informed traders primarily execute their transactions at \nthe beginning and near the end of the day because of the U-shape intraday trading volume \npattern (Hora, 2006). \nWe also find that for metals futures, the opening trading sessions with the highest volume"
+    },
+    {
+     "section": "intro",
+     "page": 6,
+     "similarity": 0.7928,
+     "content": "eginning and near the end of the day because of the U-shape intraday trading volume \npattern (Hora, 2006). \nWe also find that for metals futures, the opening trading sessions with the highest volume \nor volatility have the greatest intraday time-series momentum predictability. We confirm that \nthis dynamic also holds when specifying a 15-minute time frequency. However, we didn’t find \nthe above phenomenon for agricultural futures, with one possible explanation being the high \nproportion of noise traders active in the market. Furthermore, we also find, that using intraday \ntime-series momentum as a trading strategy earns greater abnormal profits relative to “always \nlong” and “buy-and-hold” strategies."
+    }
+   ],
+   "similarity": 0.7992,
+   "year": 2019,
+   "authors": [
+    "Muzhao Jin",
+    "Fearghal Joseph Kearney",
+    "Youwei Li",
+    "Yung Chiang Yang"
+   ],
+   "cid": "c03"
+  },
+  {
+   "paper_id": "183be5ef-fc5f-4ca2-aeb3-b92661aa3f5f",
+   "title": "A Profitable Day Trading Strategy For The U.S. Equity Market",
+   "fiche_id": "zarattini-2024-profitable-day-trading-us-equity",
+   "hypothesis": "H14",
+   "passages": [
+    {
+     "section": "intro",
+     "page": 6,
+     "similarity": 0.8059,
+     "content": "Recently, we provided significant evidence of profitability for a 5-minute ORB applied on\nQQQ and TQQQ ETFs [23]. We introduced the use of stop losses and large profit targets\nand found that a 5-minute ORB on TQQQ would have earned an outstanding return of\n1,484% between 2016 and 2023, while a passive investment in the QQQ ETF would have\nearned only 169%.\nIn this paper, our goal was to apply the 5-minute ORB framework developed in our pre-\nvious work [23], but instead of utilizing only QQQ or TQQQ, we expanded the study to\nall US stocks traded between 2016 and 2023, and assessed if trading volume and other\nparameters have any statistically meaningful forecasting power on day trading profitabil-\nity.\n2 Strategy Definition\nAs previously referenced, a 5-minute ORB strategy is a trading strategy that focuses\non catching a breakout from the initial range in the first 5 minutes of the trading day\n[23, 4, 5]. In this current work, we introduced a crucial parameter to this ORB strategy.\nIf the first 5-minute candlestick was bearish (meaning it closed below its opening price),\nour system would only take a short position. We would not go for a long position even\nif the price broke above the 5-minute opening range candlestick. Similarly, if the first\n5-minute candlestick was bullish (meaning it closed above the opening price), we would\nstick to taking only a long position. We would avoid taking a short position, even if the"
+    },
+    {
+     "section": "intro",
+     "page": 12,
+     "similarity": 0.7888,
+     "content": "imbalance\nbetween demand and supply in the first few minutes of the trading session. The hypothe-\nsis is that this imbalance will persist throughout the session, creating exploitable intraday\ntrends. While the direction of the demand-supply imbalance can be inferred from the\nopening range, its abnormality can be assessed by comparing its current opening range\nvolume to its recent average.\nIn the following section, we introduce a straightforward metric to measure the abnormal-\nity of the opening range volume. We will also examine whether this metric effectively\npredicts the subsequent realized PnL of the ORB strategy.\n4For the purposes of simplicity, the risk-free rate was not included in the regression analysis. Nev-\nertheless, throughout the backtesting period, the risk-free rate in the US was negligible and, therefore,\nshould not have a significant impact on the results.\n11\nElectronic copy available at: https://ssrn.com/abstract=4729284"
+    },
+    {
+     "section": "intro",
+     "page": 5,
+     "similarity": 0.7879,
+     "content": "In his seminal work in 1992, Brock et al. [8] demonstrated the effectiveness of simple\ntechnical trading rules, specifically the moving average and ORBs, applied on almost\n100 years of Dow Jones Index data. His findings were pivotal in challenging the random\nwalk hypothesis, a financial theory stating that stock market prices evolve according to\na random walk and thus cannot be predicted, and emphasized the potential of techni-\ncal analysis strategies in market prediction. In 2009, Schulmeister [18] focused on the\nfrequency of data in technical trading. By analyzing S&P 500 data from 1960 to 2000,\nand the futures market from 1983 to 2000, Schulmeister demonstrated that models using\n30-minute interval data were more profitable than those relying on daily data, suggesting\na shift toward higher frequency trading in technical analysis.\nIn 2012, Holmberg et al. [13] studied the profitability of volatility ORBs on US crude\noil futures prices from 1983 until 2011. Their results showed that a volatility ORB was\nsignificantly profitable, but the profitability was mostly generated in the last decade\n(2000-2011). In 2018, Tsai et al. [19] further expanded the research on ORB strategies\nby assessing their performance across multiple indices (Dow Jones Industrial Average,\nS&P 500, and Nasdaq) and for different opening range time frames. The results showed\nthat the most significant profits occur when the opening range length is within 5 minutes\nfrom the open."
+    },
+    {
+     "section": "intro",
+     "page": 5,
+     "similarity": 0.7876,
+     "content": "l Average,\nS&P 500, and Nasdaq) and for different opening range time frames. The results showed\nthat the most significant profits occur when the opening range length is within 5 minutes\nfrom the open. Their research did not consider any profit target or stop loss mechanisms.\nIn 2017, Lundstr¨ om [16] examined ORB returns in different volatility states based on\nlong-term crude oil data and S&P 500 futures contracts, and he found that the prof-\nitability of ORB grows with the volatility of the underlyng asset.\nTo improve the system and generate larger returns compared to the overall market, Wu et\nal. in 2020 introduced an evolutionary approach by utilizing a genetic algorithm in their\nORB-based model [21]. Their method optimized thresholds and protective closing strate-\ngies, significantly enhancing profitability and reducing risks. This study was conducted\non Taiwan Index Futures between 2007 and 2018 and showed that the introduction of\na profit target is detrimental for overall profitability. The study showed enhanced prof-\nitability once a stop loss mechanism was introduced.\n4\nElectronic copy available at: https://ssrn.com/abstract=4729284"
+    }
+   ],
+   "similarity": 0.7942,
+   "year": 2023,
+   "authors": [
+    "Zarattini",
+    "Aziz"
+   ],
+   "cid": "c11"
+  },
+  {
+   "paper_id": "997bc72a-5846-4aeb-a9f3-59b58f577aaa",
+   "title": "Hedging demand and market intraday momentum",
+   "fiche_id": "baltussen-2021-hedging-demand-intraday-momentum",
+   "hypothesis": "H05",
+   "passages": [
+    {
+     "section": "results",
+     "page": 6,
+     "similarity": 0.7933,
+     "content": "report the results \nfor equity, bond, commodity, and currency futures, respec- \ntively. \nTo the best of our knowledge, there is no pooled out- \nof-sample R 2 measure, so we deﬁne a measure that rep- \nresents a pooled OOS R 2 . Deﬁne F t as the futures available \nat day t and n (F t ) the number of futures available on day \nt . We deﬁne r LH, f,t as the last half-hour return for future \nf ∈ F t on day t, ˆ r LH, f,t our prediction for the last half hour, \nand ¯r LH, f,t the historical average last half-hour return until \nt −1 . Then, R 2 \nOOS is deﬁned as: \nR 2 \nOOS = 1 −\n∑ T \nt=1 \n∑ \nf∈ F t \n(r LH, f,t −ˆ r LH, f,t ) 2 \nn (F t ) \n∑ T \nt=1 \n∑ \nf∈ F t \n(r LH, f,t −¯r LH, f,t ) 2 \nn (F t ) \n. (10) \nGao et al. (2018) examine for ten equity ETFs and one \nbond ETF how the return in each of the 30-minute in- \ntervals during the day predicts the return in the last half \nan hour. They ﬁnd r ONF H to have the strongest predictive \npower, followed by r SLH . Panel A of Table 2 conﬁrms this \npattern in an extended sample period and across different \nstock markets. Column (1) ﬁnds a strong predictive power \nin r ONF H on a stand-alone basis. Column (2) presents the \nresults for Eq. (6) ; r ONF H is again highly signiﬁcant ( t-value \n= 6.46), followed by r SLH ( t-value = 4.82). Interestingly, the \nreturns in other 30-minute intervals, when combined into \none r M variable, are also signiﬁcant in predicting r LH ( t- \nvalue = 4.43). In other words, all returns during the day"
+    },
+    {
+     "section": "results",
+     "page": 23,
+     "similarity": 0.7927,
+     "content": "∗∗ 1 . 72 \n(3 . 30) \n∗∗∗ 0.34 0.26 ∗∗∗\nSB 2 . 19 \n(2 . 26) \n∗∗ 0.09 −0.09 ∗ 1 . 89 \n(1 . 93) \n∗ 0 . 71 \n(1 . 11) 9 . 41 \n(4 . 07) \n∗∗∗ 0.66 0.29 ∗∗∗ 2 . 07 \n(4 . 24) \n∗∗∗ 0.29 0.08 ∗∗∗\nFC 0 . 06 \n(0 . 08) −0.01 −0.06 0 . 01 \n(0 . 02) −1 . 04 \n(−1 . 22) \n1 . 99 \n(0 . 83) 0.03 −0.19 −0 . 34 \n(−0 . 72) \n−0.00 −0.04 \nLC −0 . 01 \n(−0 . 01) \n−0.01 −0.05 −0 . 03 \n(−0 . 04) \n0 . 01 \n(0 . 01) 6 . 14 \n(2 . 77) \n∗∗∗ 0.19 0.01 ∗∗ 0 . 42 \n(1 . 03) 0.00 −0.05 \nLH 0 . 56 \n(0 . 87) 0.00 −0.04 0 . 58 \n(0 . 89) −0 . 98 \n(−1 . 18) \n3 . 30 \n(1 . 76) \n∗ 0.08 −0.06 0 . 03 \n(0 . 06) −0.01 −0.06 \nTable B4 \nMarket intraday momentum: individual currency futures results. This table shows the pooled (Panel A) and individual (Panel B) results of regressing the \nlast half-hour return ( r LH ) on a constant and the ﬁrst half-hour return ( r ONF H ), return from the ﬁrst half hour until the last hour ( r M ) and second-to-last half \nhour ( r SLH ), and the return until the last half hour ( r ROD ), for currency futures. Trading hours are based on volume plots. Intercepts are not reported. Panel \nA: T -statistics that account for clustering on time and market (in case the number of clusters exceeds ten) are in parentheses; see Cameron et al. (2011) . \nPanel B: Newey and West (1986) robust t-statistics are in parentheses. Samples range from December 1974 to May 2020. Signiﬁcance at the 1%, 5%, and \n10% level is denoted by ∗∗∗ , ∗∗, or ∗, respectively. Adjusted R 2 , R 2"
+    },
+    {
+     "section": "results",
+     "page": 10,
+     "similarity": 0.7906,
+     "content": "G. Baltussen, Z. Da, S. Lammers et al. Journal of Financial Economics 142 (2021) 377–403 \nTable 4 \nMarket intraday momentum: seasonality robustness. This table shows the pooled regression results of regressing the last half-hour return ( r LH ) on a \nconstant and the ﬁrst half-hour return ( r ONF H ), return from the ﬁrst half hour until the last hour ( r M ) and second-to-last half hour ( r SLH ), the return until \nthe last half hour ( r ROD ), and the last half-hour return of the previous day ( r LH t−1 ) for equity index futures (Panel A), government bond futures (Panel B), \ncommodity futures (Panel C), and currency futures (Panel D). Trading hours of equity futures are based on the trading hours of their underlying markets; \nfor other futures trading hours are matched to their volume patterns. The intercept is not reported. T -statistics in parentheses are computed using standard \nerrors that account for clustering on time and market (in case number of clusters exceeds ten), see Cameron et al. (2011) . Samples range from December \n1974 to May 2020. Signiﬁcance at the 1%, 5%, and 10% level is denoted by ∗∗∗ , ∗∗, or ∗, respectively. Adjusted R 2 and slope coeﬃcients are multiplied by \n100. \nPanel A Equity futures Panel B Bond futures \nβONF H 4 . 76 \n(6 . 66) \n∗∗∗ 4 . 63 \n(6 . 55) \n∗∗∗ 1 . 59 \n(4 . 68) \n∗∗∗ 1 . 66 \n(5 . 02) \n∗∗∗\nβM 2 . 97 \n(4 . 54) \n∗∗∗ 1 . 98 \n(6 . 00) \n∗∗∗\nβSLH 8 . 83 \n(4 . 95) \n∗∗∗ 3 . 13 \n(1 . 69) \n∗\nβROD 4 . 14 \n(7 . 50) \n∗∗∗ 1 . 90 \n(6 . 01) \n∗∗∗"
+    },
+    {
+     "section": "results",
+     "page": 6,
+     "similarity": 0.7872,
+     "content": "sider categorical groups for metals, ener- \ngies, and softs. \nTable 1 lists the tickers and trading hours for all the \nfutures contracts we used in the paper. \n3. Market intraday momentum everywhere \nIn this section, we show a robust market intraday mo- \nmentum effect in all four asset classes we examine. \nWe consider several regression speciﬁcations for pre- \ndicting the last half-an-hour return( r LH ). In the ﬁrst spec- \niﬁcation, the only predictor is the return from previous \nclose to the end of the ﬁrst half an hour ( r ONF H ), as in \nGao et al. (2018) : \nr LH,t = α + βONF H · r ONF H,t + ε t . (5) \nIn the second speciﬁcation, we consider multiple pre- \ndictors. In addition to r ONF H , we also include the return \nduring the middle of the day ( r M ) and the return in the \nsecond-to-last half an hour ( r SLH ): \nr LH,t = α + βONF H · r ONF H,t + βM · r M,t + βSLH · r SLH,t + ε t . \n(6) \nIn the third speciﬁcation, we combine the returns from \nall three periods into the return during the rest of the day \n( r ROD ): \nr LH,t = α + βROD · r ROD,t + ε t . (7) \nWe also compute the out-of-sample (OOS) R 2 to mea- \nsure the out-of-sample predictability for each individual \nmarket. A positive OOS R 2 implies that the model makes \nbetter forecasts, i.e., has a lower mean squared predic- \ntion error (MSPE), than when using the recursive historical \nmean as a prediction for the last half-hour return. For each \nindividual market, we make forecasts using an expanding"
+    }
+   ],
+   "similarity": 0.7922,
+   "year": 2021,
+   "authors": [
+    "Baltussen",
+    "Da",
+    "Lammers",
+    "Martens"
+   ],
+   "cid": "c16"
+  },
+  {
+   "paper_id": "dc9fd2e3-3699-47c0-8e1c-dfb863b96d6f",
+   "title": "Early prediction of Ibex 35 movements",
+   "fiche_id": null,
+   "hypothesis": null,
+   "passages": [
+    {
+     "section": "methodology",
+     "page": 4,
+     "similarity": 0.7989,
+     "content": "ds and\nfound that yields were statistically different in the first\n4 h after the opening of transactions.\nAmong the most recent articles, we can mention the\nMiralles-Quir/C19os et al. ( 2015)'s paper. They follow Chen's\n(2013) findings and identify intraday patterns by analyz-\ning and evaluating the most profitable strategies depend-\ning on whether we enter at certain times of the day from\nthe opening of the market until its closing, as well as the\nlinkage with the American market. Several hypotheses\nare contrasted such as the strategy of entering the market\nlong or short at 09:14:59 depending on how prices are\nbetween 09:04:59 and 09:00:01. They conclude that inves-\ntors should wait until the second part of the trading day\nand evaluate the effects of the opening of the market in\nNew York to decide whether to enter or not at the end of\nthe session.\nConsidering the conflicting results provided by the\nempirical evidence, this research argues that the move-\nment of the indexes can be predicted to some extent and\ncould therefore be used to implement market timing\nstrategies using as a complement an “early warning ”\nindicator or signal of market movement. So, the following\nresearch question is proposed:\nRQ1. To what extent is the capital market pre-\ndictable by setting the time horizon at the end\nof a session and using only high-frequency\nintraday data in the form of historical prices\nand/or technical indicators based on those\nprices?"
+    },
+    {
+     "section": "results",
+     "page": 12,
+     "similarity": 0.7816,
+     "content": "early predicting the rise or fall of the Ibex 35.\nIn the second problem, the window (Table\n4)i s\nbetween the required minimum of 24 and 356.68 min\n(i.e., about 6 h after the opening of the session).\nSelecting the combinations that can be efficient\n(shown in bold in Table 4), we can see that there are four\nkey moments in the day. Once again, it can be seen that\nfor this problem, the MTM and ROC oscillators obtain\nthe best results in accuracy and earliness. This way, we\ncan see that there are four key moments: 9:24, 11:09:36,\n13:49:02, and 14:56:04 h.\nTherefore, to the best of our knowledge, we found a\nnew phenomenon in the Spanish market. We observed\nthat the predictive power of prices and indicators occurs\nin a time window, and that the highest predictive value is\nconcentrated in a narrow time range. In addition, the\nfinding that, depending on our objective, the time win-\ndow is modified as it has been shown is equally relevant.\nIn this way, performing a transversal analysis, we can\nsee that the indicator that presents the best combinations\nof accuracy and earliness is the MTM indicator with a\ndelay of 12 intervals for the first objective, except at\n9:24 min, which is the ROC (5), whereas for the second\nproblem, the most relevant is the ROC with a “lag” of\n5 intervals, and the MTM indicators 1 and 5.\n5 | CONCLUSIONS\nThe capital market can be considered as a betting market\nin which each trader bets on the outcome of a certain"
+    },
+    {
+     "section": "methodology",
+     "page": 4,
+     "similarity": 0.7792,
+     "content": "of the last half-hour before the market closes on\nthe same trading day in the SPY ETF.\nCaporale et al. (\n2016) also point out some of these\nintraday patterns and anomalies, such as half-day effects,\nabnormally low returns in the middle of a trading ses-\nsion, accompanied by a sharp drop in trading volumes;\nlast-minute and first-minute effects (with the last trading\nhour being the best and the first hour being the worst in\nterms of performance); and the time of day anomaly\n(with stocks tending to rise in the first 45 and last 15 min\nof the trading day).\nThe presence of intraday patterns in price behavior is\nespecially relevant for this research, and specifically in the\nIBEX 35, because this supports the hypothesis that certain\npredictions can be made about intraday price movements,\nfollowing the idea suggested by Bildik (\n2001) that there\nare significant potential gains if investors use trading sys-\ntems based on intraday seasonality in share returns.\nIn the case of the Spanish market, some of these pat-\nterns have also been detected, different effects and pat-\nterns on profitability and volatility being studied (García-\nMachado & Rybczy /C19nski, 2017; Ortiz et al., 2015).\nCamino ( 1996) investigated the intraday effect by\ndividing the IBEX-35 index into 15-min periods and\nfound that yields were statistically different in the first\n4 h after the opening of transactions.\nAmong the most recent articles, we can mention the\nMiralles-Quir/C19os et al. ( 2015)'s paper."
+    },
+    {
+     "section": "methodology",
+     "page": 6,
+     "similarity": 0.772,
+     "content": "estors, against sudden\nfalls in the market (Wang, 2014) so that forecasts of its\nmovement are relevant in order to establish effective trad-\ning strategies (Leung et al., 2000) and that investors can\nhedge against possible marke t risks and speculators and\narbitrageurs detect opportunities to make profits by trading\nin the stock market index (Manish & Thenmozhi,2005).\nWe follow in this paper a technical approach, which\nconsiders that previous market behavior patterns are\nrepeated based on the decisions to buy and sell an asset\non its previous price patterns, trading volumes, and,\npotentially, other public information (Jiang et al.,\n2019),\nand there are very significant studies that confirm its use-\nfulness to beat the market (being the most used for this\npurpose in short-term investment horizons) (Evans\net al.,\n2013). Hu et al. ( 2015) made a comprehensive\nreview of the literature in 2015 and concluded that the\nmost existing studies applying soft computing and neural\nnetwork for financial forecasting are based on technical\nanalysis.\nThe data used in this paper are high frequency and\nhave been acquired from BME Market Data, belonging to\nGrupo Bolsas y Mercados Españoles, which is specialized\nin the processing, generation, and commercialization of\nthe information coming from the different Regulated\nMarkets and Multilateral Trading Systems of the BME\nGroup. They refer to Ibex 35 prices obtained from\nJanuary 2, 2015 to October 20, 2017. This means a total of"
+    }
+   ],
+   "similarity": 0.7865,
+   "year": 2022,
+   "authors": [
+    "Marta Miranda García",
+    "María‐Jesús Segovia‐Vargas",
+    "Usue Mori",
+    "Jose Antonio Lozano"
+   ],
+   "cid": "c30"
+  }
+ ],
+ "triage": {
+  "candidates": 32,
+  "kept": 4,
+  "labels": "corpus/dossiers/tri-assessing-the-profitability-of-timely-opening-ra-W2911858053.labels.json"
+ }
+}

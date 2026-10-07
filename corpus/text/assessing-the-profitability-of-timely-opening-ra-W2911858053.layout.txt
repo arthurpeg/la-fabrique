@@ -1,0 +1,829 @@
+Received January 1, 2019, accepted January 13, 2019, date of publication February 13, 2019, date of current version March 25, 2019.
+
+Digital Object Identifier 10.1109/ACCESS.2019.2899177
+
+Assessing the Profitability of Timely Opening
+Range Breakout on Index Futures Markets
+
+YI-CHENG TSAI1,2, MU-EN WU                 3, JIA-HAO SYU1,4, CHIN-LAUNG LEI2,
+CHUNG-SHU WU5, JAN-MING HO1,6, AND CHUAN-JU WANG                                     6
+1InstituteofInformationScience,AcademiaSinica,Taipei11529,Taiwan
+2DepartmentofElectricalEngineering,NationalTaiwanUniversity,Taipei10617,Taiwan
+3DepartmentofInformationandFinanceManagement,NationalTaipeiUniversityofTechnology,Taipei10608,Taiwan
+4DepartmentofComputerScienceandInformationEngineering,NationalTaiwanUniversity,Taipei10617,Taiwan
+5Chung-HuaInstitutionforEconomicResearch,Taipei10672,Taiwan
+6ResearchCenterofInformationTechnologyInnovation,AcademiaSinica,Taipei11529,Taiwan
+Correspondingauthor:Chuan-JuWang(cjwang@citi.sinica.edu.tw)
+
+
+
+  ABSTRACT Thispaperpresentsatimelyopenrangebreakout(TORB)strategiesforindexfuturesmarket
+  tradingviausingone-minuteintradaydata.Weobservethatthetradingvolumesandﬂuctuationsinreturns
+  on each one-minute interval of trading hours in the futures markets reach their peaks at the opening and
+  closing of the underlying stock markets. With these observations, we align the active hours of an index
+  futures market with its underlying stock market and test the proposed TORB strategies on the DJIA, S&P
+  500,NASDAQ,HSI,andTAIEXindexfuturesfrom2003to2013.Intheexperiments,theproposedstrategy
+  achievesover8%annualreturnswithp-valueslessthan3%inalloftheﬁvemarkets;thebestperformance,
+  20.28%annualreturnsatap-valueof3.1×10−5%,isreachedintheTAIEX.Foreachmarket,wealsoﬁnd
+  the best probing time, which is relatively short in the U.S. market and relatively long in Asian markets.
+  Furthermore, we conduct experiments on a TAIEX futures transaction dataset to analyze the relationship
+  betweentheTORBsignalsandtraderbehavior,andﬁndthattheTORBsignalsareinthesamedirectionas
+  institutionaltraders,especiallyforeigninvestmentinstitutions.
+
+
+  INDEXTERMS Indexfutures,openrangebreakout,technicalanalysis,traders’behavior,tradingstrategy.
+
+
+
+
+I. INTRODUCTION                                                                   Inthispaper,weproposeseveralTORB(timelyopenrange
+With the development of information technology, a consid-                      breakout) strategies for index futures market trading which
+erable amount of data has been generated and thus can be                       are proﬁtable in recent years, in which we use one-minute
+utilized to produce useful information and insights to better                  transactiondatainmorethantenyearstoassesstheproﬁtabil-
+solve various problems in many ﬁelds including ﬁnance,                         ity of the proposed strategies. The parameters for the TORB
+social science, and environmental science[1]. Data science                     strategies are selected based on the following three observa-
+provides a scientiﬁc way to capture and verify the informa-                    tions. First, trading volumes and ﬂuctuations in returns on
+tion behind the data, which promotes productivity, improves                    eachone-minuteintervalduringtradinghoursonthefutures
+efﬁciency,andsupportsinnovation[2].Intheﬁledofﬁnance,                          markets reach their peaks at the opening of the underlying
+many studies, including research related to trading, credit                    stockmarkets.Thus,weprovidetwomarketﬂuctuationmea-
+rating, and fraud detection, have been done through various                    surements for each one-minute interval during the trading
+data analytic techniques[3], among which backtesting on                        hours: the per-minute mean volume, denoted by PMMV
+historical data is a common approach to calculate the prof-                    and the per-minute variance of return, denoted by PMVR.
+itability of a trading system and is used to ﬁnd proﬁtable                     These two measurements are used to deﬁne a time period
+strategies[4].                                                                 withhighvolumesandlargeﬂuctuationsasactivehours;we
+                                                                               observe that a futures market’s active hours are the same as
+                                                                               the opening hours of the underlying stock market. Second,
+   The associate editor coordinating the review of this manuscript and         stockmarketﬂuctuationsareinﬂuencedbyeventsoccurring
+approvingitforpublicationwasJinsongWu.                                         during and after the market. Although the markets do not
+
+
+                                   2169-3536
+ 2019 IEEE. Translations and content mining are permitted for academic research only.
+VOLUME 7, 2019                          Personal use is also permitted, but republication/redistribution requires IEEE permission.
+                                  See http://www.ieee.org/publications_standards/publications/rights/index.html for more information.                                                   32061
+                                                                               Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+
+
+
+respond in real time to events occurring after the market,                    stockswithallnewsannouncementsfromReuters.Theyﬁnd
+itseemsthatthemarketpicksuptheinformationintheearly                           thatinstitutions’netbuypositionsincreases(decreases)more
+stage of market opening, and impacts market dynamics on                       thanﬁvedayspriortotheannouncementofgood(bad)news,
+the same day. Finally, the higher frequency data contains                     as measured by the sentiment of the news. This implies that
+moreinformationfortechnicalanalysis[5],whichmeansthat                         institutionstendtotradeinthesamedirectionmorethanﬁve
+using higher frequency data may improve the performance                       days before the news breaks. Additionally, Chang et al. [9]
+of a technical trading strategy. Based on these three obser-                  use data from Taiwan to show that institutional traders are
+vations, the following hypothesis is proposed. The dynamic                    informed, and also ﬁnd that foreign institutional investors
+of prices in the early stage of market opening reveals more                   havegreaterpredictivepowerthanotherkindsofinstitutional
+information in a trading day; therefore, it is proﬁtable by                   traders.Tsaietal.[12]presentthepersistentbehaviorhypoth-
+usingtheinformationintheone-minutemovementsinprices                           esisforﬁnancialmarkets,whichistestedstatisticallyonﬁve
+duringthisperiodtoforecastthepricefortheresttimeonthe                         stock indices from 2001 to 2014; they also study the impact
+sameday.                                                                      of investor behavior over market price of TAIEX futures.
+  To test this hypothesis, we set up the TORB strategy                        In the experiments, we use a unique one-minute transaction
+parameters using the information picked up by the market                      data set from the TAIEX futures market to investigate the
+in the early stage of market opening and then conduct prof-                   relationshipbetweenTORBsignalsandthenetbuypositions
+itability tests on the Dow Jones Industrial Average Index                     of different kinds of traders. It is worth mentioning that the
+(DJIA),Standard&Poor’s500(S&P500),NASDAQ,Hang                                 signals from the best TORB strategy are positively related
+SengIndex(HSI),andTaiwanStockExchangeCapitalization                           to the net buy positions of institutional traders before and
+Weighted Stock Index (TAIEX) index futures markets from                       afterbreakout,meaningthatTORBsignalscatchthetrading
+2003to2013.TheexperimentalresultsshowthattheTORB                              directionofinstitutionaltraders,whichispositivelyrelatedto
+strategyineachmarketachievesover8%annualreturnwith                            themarketreturn;theinverseresultsarefoundforindividual
+a p-value of less than 3% of t-test with transaction costs,                   traders.
+signiﬁcantlyrejectingthenullhypothesisthatthereturnfrom                         The rest of the paper is organized as follows. SectionII
+TORB strategies equals zero; additionally, the best perfor-                   presentstherelatedwork,andSectionIIIpresentstheparam-
+mance in our experiments reaches a 20.28% annual return                       eter settings for the proposed TORB strategies. Empirical
+in the TAIEX with p-value equal to 1× 10−4%. Further-                         data and experimental results are introduced and discussed
+more, experiments in sub-periods from 2003 to 2007 and                        inSectionIV.SectionVconcludesthepaper.
+from 2007 to 2013 are conducted to demonstrate that the
+performance of TORB strategies does not change before or                      II. LITERATUREREVIEW
+aftertheﬁnancialcrisis.                                                       Technical analysis is one of the most popular methods for
+  Moreover, the experiments indicate that the TORB strate-                    developingtradingstrategies[13].Incontrasttofundamental
+gies perform better than the TRB strategies deﬁned in[6].                     analysis,whichusesmacroeconomicsandcorporateinforma-
+While TRB and TORB strategies share the same concept,                         tionregardingassetsincludingearningspershare(EPS),sales
+TRB strategies set up the parameters by using daily data.                     margins, dividend yields and other information, technical
+Theresultsshowthattherearenosigniﬁcantresults(p-value                         analysisforecaststhefuturemovementofpricesusingpresent
+less than 5%) in a proﬁtability test of TRB strategies on                     andpastprices.Forinstance,in2009,Schulmeister[5]inves-
+the DJIA, S&P 500, HSI, and TAIEX futures indexes in the                      tigateshowtechnicaltradingsystemsexploitmomentumand
+full time period. The only exception is the NASDAQ index                      reversaleffectsintheS&P500spotandfuturesmarketsand
+future, which earns signiﬁcant proﬁts using TRB strategies;                   ﬁnds that technical trading systems using 30-minute-price
+however,therearenosigniﬁcantresultsinthetwosub-period                         informationperformbetterthanthoseusinglower-frequency
+tests.Overall,theannualreturnsfromthebestTRBstrategies                        information. In 2018, Alhashel and Hansz[14] apply vari-
+are smaller than the annual returns from TORB strategies                      ous popular technical trading rules to Asian property mar-
+in all of the ﬁve futures markets tested in the experiments.                  ket indices to investigate the proﬁtability of these rules and
+Our experimental results are consistent with the ﬁndings                      ﬁnd that technical indicators are predictive in some markets
+in[5],whichstatesthathigherfrequencydatacontainsmore                          and thus can generate returns that exceed the buy-and-hold
+informationfortechnicalanalysis.                                              strategy.
+  In   addition   to   attesting   the   proﬁtability   of   the                The proﬁtability of technical analysis strategies has been
+TORBstrategies,wealsoinvestigatetherelationshipbetween                        studied extensively. In 1992, Brock et al. [6] test two of
+TORB signals and the behavior of informed traders. Gen-                       the most popular trading rules – the moving average (MA)
+erally speaking, informed traders are those who can predict                   and trading range break (TRB) – using 90 years of Dow
+market returns using private information. Previous literature                 Jones Index data and ﬁnd signiﬁcant results in proﬁtability
+has investigated what kind of traders are informed traders,                   tests with both standard statistical analysis and bootstrap
+e.g.,[7]–[11]. In 2014, Hendershott et al. [11] show that                     techniques. In 2009, Zhu and Zhou [15] modify the MA
+institutionaltradersareinformedbyinvestigatingthenetbuy                       trading rule to adjust asset allocation. In the same year,
+positions of institutions from 2003 to 2005 for NYSE-listed                   Neelyetal.[16]usepreviouslystudiedtradingrules,suchas
+
+
+32062                                                                                                                                                                                                                                                                                  VOLUME 7, 2019
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+
+
+
+MA, to test the inter-temporal stability of excess returns in
+theforeignexchangemarketandﬁndpositiveexcessreturns
+from MA during the 1970s and 1980s, though the proﬁt
+opportunitiesdisappearedintheearly1990s.Theyconclude
+that this outcome is consistent with the adaptive markets
+hypothesis[17]. In 2010, Szakmary et al. [18] investigate
+commodityfuturesmarketsusingamonthlydatasetspanning
+48yearsand28markets;theresultsshowthattrend-following
+trading strategies yield positive mean excess returns net of
+transactionscostsinatleast22outofthe28markets.In2018,
+Ahmad et al.[19] test the applicability of moving aver-
+age(MA)investmenttimingstrategyonindividualstocksand
+portfolios, and they ﬁnd MA strategy substantially beats the
+buy-and-holdstrategybyyieldinghigheraveragereturnsand
+Sharpe ratios, lower standard deviations, and much success
+ratiosacrossportfolios.
+   Open range breakout (ORB)[20] is a common technical
+trading strategy based on momentum effects. A trader sets a
+predeterminedthresholdofupperandlowerboundstodenote                            FIGURE1.  The (a) long (buy) and (b) short (sell) positions in TORB. The
+the open range, and the trading strategy is to long (or short)                 curve denotes the futures price; tb and te denote the beginning and the
+a position as the market price moves beyond the upper (or                      ending of the observed period, respectively; tp denotes the end of the
+                                                                               observed period and is an independent variable in our experiments. The
+lower) bound. Several ORB variants have been discussed in                      resistance/support levels are the highest/lowest prices of the duration
+recent studies (see [21]–[23]). In 2010, Cekirdekci studies                    [tb, tp], and the time of entering the market is the time that the price
+                                                                               crosses over the resistance level. (a) Long (buy) position.
+various trading strategies based on 30-minute open range
+breakouts, and demonstrates proﬁtability by back-testing on
+250 stocks from various industry groups between 2005 and                        A. DEFINITIONS OFPMMV ANDPMVR
+2010[21]. Two ORB variants based on average true range                         We ﬁrst deﬁne the two variables PMMV and PMVR that
+and volatility breakout are considered in[22], which pro-                      measure the ﬂuctuations of futures markets. Let Vt,d be the
+vides the evidence for the ORB strategy proﬁtability in the                    trading volume in the one-minute interval t on day d, where
+Bucharest Exchange Trade index. Chang et al. show the                          t0< t< T and t0 and T aretheopenandtheclosetimesof
+ORB strategy proﬁtability based on a normally distributed                      thefuturesmarkets,respectively.PMMVisdeﬁnedas
+return on the day the open range is broken; their result                                                              N∑
+shows the characteristics of an increased success rate in a
+fair game[23]. However, it has been shown in the liter-                                               PMMVt=         d=1Vt,d
+ature that the performance of technical analysis has been                                                               N  ,                          (1)
+deteriorating in recent years (see[5],[16],[21],[24]). For                     where N  is the total number of trading days. Let Pt,d be
+the ORB trading strategy, Borda et al. in 2010 state that                      the close price in the one-minute interval t on day d. Thus,
+22stocksperformwellwithORBfrom2005to2010inU.S.                                 theone-minutereturnisdenotedas
+markets; but these 22 stocks are from 250 stocks of their                                       rt,d= log(Pt,d)−log(Pt−1,d).
+test, which means most of the stocks are unproﬁtable[21].
+Moreover, their strategies are limited to stock trading and                    PMVRisdeﬁnedas
+cannot  be  used  in  derivatives  trading.  In  2017,  Lund-                                          PMVRt= Var(rt,d).                          (2)
+ström et al.[25] study the returns of ORB across volatil-
+ity states for long time series data of crude oil and S&P                      TheabovetwomeasuresinEquations(1)and(2)areusedto
+500futurecontracts,andtheirresultsindicatethattheaverage                       identifyactivehoursforfuturesmarkettrading.
+ORB return increases with the volatility of the underlying
+asset.                                                                          B. TORB TRADING RULES
+                                                                               The TORB trading signals are illustrated in Figure1and
+                                                                               describedasfollows:Wesettheresistance(support)levelsas
+III. METHODOLOGY                                                               thehighest(lowest)pricesforapredeterminedperiodtermed
+Inthissection,wedescribethemechanismtosettheparam-                             the observed period. The trading signal is revealed once the
+eters of TORB strategies in futures markets. SectionIII-A                      priceexceedstheupperboundorfallsbelowthelowerbound.
+deﬁnes the two variables PMMV and PMVR which are                               Weconsidertwocases:
+used to identify active hours for futures market trading.                         1)If the price moves above the resistance level, then the
+InSectionIII-B,wedescribethetradingrulesoftheproposed                                  buyingstrengthisgreaterthanthesellingpressure,and
+TORBstrategies.                                                                        thepricewillcontinuetomoveupwiththistrend.
+
+
+VOLUME 7, 2019                                                                                                                                                                                                                                           32063
+                                                                                      Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+
+
+
+
+TABLE1.  E-mini DJIA daily returns.                                                  TABLE2.  E-mini S&P daily returns.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                     TABLE3.  E-mini-NASDAQ daily returns.
+   2)If the price drops below the support level, then the
+       selling strength is greater than the buying pressure,
+       and the price will continue to move down with this
+       trend.
+   TobuildaTORBstrategywiththeintradaydata,wemust
+determine three time points: the beginning time-point of the
+observed period, the end time point of the observed period,
+and the time point of the closing position. The beginning
+of observed period, denoted as tb, is set to the beginning of
+the active hours, and the time point of the closing position,
+denoted as te is set to the end of the active hours; the end of
+theobservedperiodistheprobetime tp,where tb< tp< te.
+Thesufﬁcientconditionsforthebuyingandsellingsignalsof
+dayd are
+                                                                                     TABLE4.  HSI daily returns.
+             Pt′,d> max(Ptb,d,···,Ptp,d)⇒ Buy,           (3)
+             Pt′,d< min(Ptb,d,···,Ptp,d)⇒ Sell,            (4)
+
+wherePt′,d isthepriceattimet′ ondayd andtp< t′< te.If
+there is a trading signal on a day, the position closes at te on
+thatday.
+
+IV. EXPERIMENTALRESULTSANDDISCUSSION
+Two data sets are adopted in our experiments: The ﬁrst one
+contains one-minute intraday data of the ﬁve futures mar-
+kets and the second one contains transaction data for the
+TAIEX index futures. For the ﬁrst data set, we investigate
+thespotmonthE-minifuturesoftheDJIA(from2003/1/2to
+2013/12/2), S&P 500 (from 2001/1/2 to 2013/12/2), and
+NASDAQ  100  (from  2001/1/2  to  2013/12/2)  plus  two
+spot month futures indexes, the HSI in Hong Kong (from                               for the TAIEX index futures from 2006/7/1 to 2013/12/31,2
+2003/1/2 to 2011/3/4),1 and the TAIEX in Taiwan (from                                which is utilized to test the relationship between TORB sig-
+2001/1/2 to 2013/11/28). In addition to the full time period,                        nalsandtraderbehavior.
+toaccountfortheglobalﬁnancialcrisisduring2007to2008,                                    This section presents the experimental results, including
+test results are presented for the two sub-periods before and                        theidentiﬁcationofactivehoursinSectionIV-A,theTORB
+after2007/1/1.Theseconddatasetcontainstransactiondata                                proﬁtability  tests  in  SectionIV-B,  and  the  relationships
+
+  1Although the spot month futures data for HSI is from 2003/1/2 to                    2The data is non-public and customized by Taiwan Futures Exchange,
+2013/12/2, due to the changes in trading times beginning on 2011/3/7,                summarizingtheone-minutetransactionsofthebuysandsellsofalltraders,
+weconductexperimentsonlyonthedatafrom2003/1/2to2011/3/4.                             dealers,domesticinstitutions,andforeigninvestmentinstitutions.
+
+
+32064                                                                                                                                                                                                                                                                                  VOLUME 7, 2019
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+
+
+
+
+TABLE5.  TAIEX daily returns.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                             FIGURE3.  E-mini S&PPMMV andPMVR. There are two major peaks for
+                                                                                             PMVR in E-mini S&P, including 8:30 (the opening time of the underlying
+                                                                                             market) and 9:00. Also, there are two small corresponding peaks for
+                                                                                             PMMV. For the case of PMMV, there is a major peak near the closing time
+                                                                                             (15:00) of the underlying market.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIGURE2.  E-mini DJIAPMMV andPMVR. There are three major peaks for
+PMMV and PMVR from 2003 to 2013, including 8:30 (the opening time of
+the underlying market), 9:00, and 15:00 (the closing time of the
+underlying market).
+
+                                                                                             FIGURE4.  E-mini NASDAQPMMV andPMVR. There are two major peaks
+TABLE6.  Best strategies in the full samples test of TORB.                                   for PMVR, including 8:30 (the opening time of the underlying market) and
+                                                                                             9:00. Also, there are two small corresponding peaks for PMMV. For the
+                                                                                             case of PMMV, there is a major peak near the closing time (15:00) of the
+                                                                                             underlying market.
+
+
+                                                                                             TABLE7.  Best strategies in the sub-period (01–07) test of TORB.
+
+
+
+
+
+
+
+between TORB signals and trader behavior in SectionIV-C.
+Before we present the experimental results, Tables1to5
+show the statistics of daily returns of the ﬁve future mar-
+kets,inwhichreturnsaremeasuredaspercentagedifferences
+in the logarithm of the future prices. In the ﬁve futures,                                   all ﬁve futures markets have negative skewness; in sub-
+the means of the daily returns are positive, except for the                                  periods 2007 to 2013, except for the HSI, all futures have
+E-mini NASDAQ in the 2003–2007 sub-period, which also                                        negativeskewness,whichisprobablyduetotheglobalﬁnan-
+shows the largest standard deviation. In the full time period,                               cial crisis. However, the skewness values are small in all
+
+
+VOLUME 7, 2019                                                                                                                                                                                                                                           32065
+                                                                                         Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIGURE5.  HSIPMMV andPMVR. There are two major peaks for PMVR,
+including 12:30 (the start time of the lunch break of the underlying
+market) and 16:00 (the closing time of the underlying market). For the
+case of PMMV, there are five major peaks, including 09:45 and 16:15 (the
+opening and the closing time of the futures market), 10:00 and 16:00 (the
+opening and the closing time of the underlying market), and 12:30 (the
+start time of the lunch break of the underlying market).
+
+
+
+
+
+
+
+
+
+                                                                                       FIGURE7.  Trading number, average annual return, and one-tailed p-value
+                                                                                       of DJIA in the full samples test.
+
+
+                                                                                       respectively. As shown in the tables, for the E-mini DJIA,
+                                                                                       the ﬁrst-order serial correlations in both the full time period
+                                                                                       and the second sub-period are signiﬁcantly negative, but the
+                                                                                       other-orderserialcorrelationsarerathersmall;fortheE-mini
+                                                                                       S&P 500 and the E-mini NASDAQ, there are signiﬁcant
+                                                                                       negativeserialcorrelationsintheﬁrsttwoorders.
+
+                                                                                       A. ACTIVE HOURS
+FIGURE6.  TAIEXPMMV andPMVR. There are four major peaks for PMVR                       Figures2to6illustrate the              PMMV and PMVR for each
+and PMMV, including 08:45 and 09:00 (the opening time of the futures                   minute for the ﬁve futures markets. Figure2shows for both
+market and the underlying market), 13:45 and 13:30 (the closing time of
+the futures market and the underlying market).                                         PMMV andPMVR a peak around 8:30, which is the open-
+                                                                                       ing time of the underlying market, and the values between
+TABLE8.  Best strategies in the sub-period (07–13) test of TORB.                       8:30 and 9:00 are generally larger than those at other time
+                                                                                       points; additionally, there is another PMMV peak around
+                                                                                       15:00, the closing time of the underlying market, and a
+                                                                                       PMVR peak around 15:15, the closing time of the E-mini
+                                                                                       DJIA.ForbothE-miniS&PinFigure3andE-miniNASDAQ
+                                                                                       in Figure4, there are peaks for both         PMMV and PMVR
+                                                                                       aroundtheopeningandclosingtimesoftheunderlyingmar-
+                                                                                       kets.ObservefromFigure5forHSIthattherearepeaksnot
+                                                                                       only around the opening (10:00) and closing (16:00) times
+                                                                                       of the underlying market, but also a peak around 14:30 for
+                                                                                       bothPMVR andPMMV, which is due to the lunch break
+futures except the TAIEX. In addition,ρ(i) denotes the esti-                           from 12:30 to 14:30. Figure6shows that the TAIEX has
+mated i days lag auto-correlation, and the marks∗,∗∗, and                              four peaks: Two around the opening time (9:00) and closing
+∗∗∗ represent the signiﬁcance at the 10, 5, and 1% levels,                             time (13:30) of the underlying market, and the other two
+
+
+32066                                                                                                                                                                                                                                                                                  VOLUME 7, 2019
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIGURE8.  Trading number, average annual return, and one-tailed p-value                  FIGURE9.  Trading number, average annual return, and one-tailed p-value
+of DJIA in the sub-period (03–07) test.                                                  of DJIA in the sub-period (07–13) test.
+
+
+TABLE9.  Best strategies in the full samples test of TRB.                                TABLE10.  Best strategies in the sub-period (01–07) test of TRB.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                         TABLE11.  Best strategies in the sub-period (07–13) test of TRB.
+around the opening time (8:46) and closing time (13:44)
+of the futures market. To summarize the results of PMVR
+andPMMV in these ﬁve futures markets, we conclude that
+there are peaks around the opening and closing times of the
+underlying market; therefore, we set the active hours as the
+opening to closing times of the underlying market for each
+futuremarketinthefollowingexperiments.
+
+B. TORB PROFITABILITY TEST
+Afterestablishingtheactivehours,weuseEquations(3)and
+(4)tobuildTORBstrategieswiththeprobetimeasaparame-                                       andtheprobabilitydecreasesforthepricetobreakoutofthe
+ter.Figure7showstheback-testingresultsfortheDJIAinthe                                    boundaryonthesameday.Thesecondillustratestheaverage
+full time period. The top of the ﬁgure shows the numbers of                              annualreturnsoftheTORBstrategieswithtransactioncosts;3
+the TORB transactions, in which the number of transactions
+decreases when the probe time moves away from the begin-                                    3Here we follow Schulmeister’s estimation to assume an overall transac-
+ning of the active hours; in this case, the boundary is larger,                          tioncostof0.01%(pertrade)[5].
+
+
+VOLUME 7, 2019                                                                                                                                                                                                                                           32067
+                                                                                       Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+
+
+
+
+TABLE12.  Average daily volumes (buy positions plus sell positions).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIGURE10.  Trading number, average annual return, and one-tailed                     FIGURE11.  Trading number, average annual return, and one-tailed
+p-value of S&P in the full samples test.                                             p-value of NASDAQ in the full samples test.
+
+
+from the ﬁgure, we observe that strategies with the probe                            signiﬁcantlyhigherreturnswithprobetimesaround150min-
+time in the early stages earn a signiﬁcantly higher annual                           utes.Thephenomenonmaybeduetothedifferenceinmarket
+return. The third and the bottom ones are the t-statistic and                        structuresandmarketefﬁciency;forexample,thelunchbreak
+theone-tailedp-valueofthet-test,respectively,withrespect                             from12:30to14:30intheHongKongmarketmayaffectthe
+to the null hypothesis that the TORB returns equal zero.                             performance of the technical analysis. Figure13shows that
+When the probe time is within ﬁve minutes, there are four                            the strategies on the TAIEX with probe times less than 200
+strategiesthatsigniﬁcantlyrejectthenullhypothesiswiththe                             minutesearnsigniﬁcantlyhigherreturns.
+p-value less than 5%. Note that since the sub-period results                            Table6tabulates the best strategies in the ﬁve markets in
+are similar to those of the full time period (see Figures8                           the full time period, where the best strategies are deﬁned
+and9),weshowonlytheresultsforthefulltimeperiodforthe                                 as those that earn the most proﬁt in the full time periods.
+rest of the markets. Figures10and11are the results for the                           The best strategies for the E-mini DJIA, E-mini S&P 500,
+S&P500andtheNASDAQ,respectively,inwhichtheresults                                    and E-mini NASDAQ are all with short probe times (4, 1,
+are similar to those for the DJIA, and again the probe time                          and 1 minutes, respectively), whereas for the HIS and the
+withintheﬁrst5minutesearnsthehighestannualreturnswith                                TAIEX,theprobetimesofthebeststrategiesare151minutes
+signiﬁcant p-values. Similar to the results in the US market,                        and 37 minutes, respectively. The average annual returns of
+as shown in Figure13, TORB strategies on the HSI earn                                the best strategies in all markets are greater than 8%, with
+signiﬁcantly higher returns in the early stages of the stock                         p-values   less   than   3%.   Additionally,   as   shown   in
+market  opening;  additionally,  TORB  strategies  also  earn                        Tables7and8,exceptfortheE-miniDJIAinthesub-period
+
+
+32068                                                                                                                                                                                                                                                                                  VOLUME 7, 2019
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+
+
+
+
+TABLE13.  TORB returns and net buy positions of different traders.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                demonstratesthebestTRBstrategiesintheﬁvemarketsinthe
+                                                                                fulltimeperiod.Theexperimentalresultssuggestthatthereis
+                                                                                nosigniﬁcantresult(p-valuelessthan5%)intheproﬁtability
+                                                                                tests for all TRB strategies on the DJIA, S&P 500, HSI,
+                                                                                TAIEXfuturesindexesinthefulltimeperiods.Althoughthe
+                                                                                best strategy in the full time period on the NASDAQ earns
+                                                                                signiﬁcant proﬁts (p− value= 4.37%), the annual return
+                                                                                5.58%ismuchlessthantheannualreturn17.51%ofthebest
+                                                                                TORB strategy on the same market. In addition, in the two
+                                                                                sub-period tests shown inTables10and11, there is no sig-
+                                                                                niﬁcant result on the NASDAQ. We therefore conclude that
+                                                                                thereisnoconsistentlysigniﬁcantresultfromtheprobability
+                                                                                testsofTRBstrategiesontheseﬁvefuturesmarketsinthese
+                                                                                twosub-periodtests.
+
+
+                                                                                C. RELATIONSHIP BETWEEN TORB SIGNALS AND TRADER
+                                                                                BEHAVIOR
+                                                                                This subsection examines the relationship between TORB
+                                                                                signalsandtraderbehaviorwiththetransactionandpricedata
+                                                                                from the TAIEX futures market. Table12summarizes the
+                                                                                dailyvolumes(buypositionsplussellpositions)fordifferent
+                                                                                kindsoftraders.Fromthetable,theaveragedailyvolumeof
+                                                                                all traders is about 175,663.5; we observe that the daily vol-
+                                                                                umeforindividualtradersisabouttwicethatforinstitutional
+                                                                                traders.
+FIGURE12.  Trading number, average annual return, and one-tailed                   Table13showsthereturnsoftheTORBstrategies(second
+p-value of HSI in the full samples test.                                        column) and the net buy positions for different kinds of
+                                                                                traders(third,fourth,andﬁfthcolumns)beforebreakout(BB)
+from2003to2007andtheE-miniS&Pinthesub-periodfrom                                and after breakout (AB). The data is group by the TORB
+2007 to 2013, the best strategies earn signiﬁcantly higher                      buy (sell) signals and the data with the TORB buy (sell)
+returns.                                                                        signals is tabulated in the row ofGB (GS, respectively). The
+   To compare the TORB strategies with TRB strategies,                          numbersinparenthesesarethet-statisticsofthet-testunder
+we brieﬂy describe the TRB strategies in[6]: The TRB ini-                       the null hypothesis that the data in GB (GS) and the all
+tiates a buy (sell) signal when the price is greater (less) than                datahaveequalmeansandequalbutunknownvariances.As
+theproductof(1+X)andthelocalmaximum(minimum)of                                  showninthetable,whilethenumbersofthenetbuypositions
+the price in the previous D days, where X is the percentage                     for institutional traders are positively related to the TORB
+band(e.g.,0,1,2%).Whenthebuy(sell)signalsarerevealed,                           returnsbeforeandafterbreakout,thoseforindividualtraders
+we open the positions and hold them for ten days.4 Table9                       are negatively related to the TORB returns before and after
+                                                                                breakout.TheresultssuggestthatbyfollowingtheTORBsig-
+  4In the experiments, we test D= 2 to D= 200 with bands as X= 0 or             nals,onetradesinthesamedirectionasinstitutionaltraders,
+X= 1%.                                                                          and thus obtains positive returns. Additionally, in Table14,
+
+
+VOLUME 7, 2019                                                                                                                                                                                                                                           32069
+                                                                                    Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+
+
+
+
+TABLE14.  TORB returns and net buy positions of different types of institutional traders.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                  However,thedirectionsoftradingpositionsofTORBsignals
+                                                                                  are almost the same as those of the positions of invest-
+                                                                                  ment institutions. In addition, we use statistical veriﬁcation
+                                                                                  (t-statistic, p-value) to assess the proﬁtability of our pro-
+                                                                                  posed solution, TORB. Previous experiments in ﬁve futures
+                                                                                  markets have shown that the TORB strategy has signiﬁcant
+                                                                                  proﬁtability in all markets to achieve higher returns than the
+                                                                                  TRB strategy does. Further, we propose PMMV, PMVR to
+                                                                                  observe the market volatility, and align the active hours of
+                                                                                  TORB at the most appropriate times which are the opening
+                                                                                  and closing time of the underlying index market. At the last
+                                                                                  timeparameter(tp),probingtime,weexaminealltheparam-
+                                                                                  eters to get the best return and conﬁdence in proﬁtability.
+                                                                                  Based on the observations of the markets (PMMV, PMVR),
+                                                                                  statistical veriﬁcation of proﬁtability (t-statistics, p-values)
+                                                                                  and the analogy analysis of trader behavior, the proposed
+                                                                                  TORBstrategyisattestedtobeproﬁtable.
+                                                                                  V. CONCLUSIONS
+                                                                                  ThispaperproposesproﬁtableTORBstrategiesfortradingon
+                                                                                  theindexfuturesmarket.Wetesttheproﬁtabilityofthepro-
+                                                                                  posedstrategieswithE-mini-DJIA,E-miniS&P500,E-mini
+                                                                                  NASDAQ,HSI,andTAIEX.Theproﬁtabilitytestsshowthat
+                                                                                  the TORB strategies in each futures market achieve an over
+                                                                                  8%annualreturnwith p-valuelessthan3%inthe t-test;the
+                                                                                  bestperformance,a20.28%annualreturnwitha1×10−4%
+FIGURE13.  Trading number, average annual return, and one-tailed                  p-value, is reached in the TAIEX. In addition, the TORB
+p-value of TAIEX in the full samples test.                                        strategiesperformconsistentlyinthetwosub-periodsbefore
+                                                                                  and after the ﬁnancial crisis in 2007; in contrast, there is no
+                                                                                  consistent result in the probability test of the TRB strategies
+wedetailthereturnsoftheTORBstrategiesandthenumbers                                in these ﬁve futures markets, which is in line with the ﬁnd-
+of the net buy positions for different types of institutional                     ings in[5]. Our experimental results suggest that by using
+tradersbeforeandafterbreakout.Weobservethatthereturns                             the one-minute price information, TORB strategies capture
+of the TORB strategies are all positively related to the three                    more useful information than TRB strategies, and thus earn
+types of institutional traders after breakout; in particular,                     signiﬁcantlyhigherproﬁts.Wealsoconductexperimentson
+the returns are signiﬁcantly and positively related to foreign                    uniquetransactionsdatafromtheTAIEXfuturesmarket,one
+investmentinstitutionsbothbeforeandafterbreakout.These                            interesting ﬁnding of which is that by following the TORB
+results are consistent with the ﬁndings in[9], which claim                        signals,wetradeinthesamedirectionasinstitutionaltraders,
+that the TORB signals are positively related to the trading                       especiallyforeigninvestmentinstitutions.
+direction of foreign investment institutions, who are usually                     REFERENCES
+consideredthemostinformedtradersintheTaiwanmarket.                                 [1]J. Wu, S. Guo, J. Li, and D. Zeng, ‘‘Big data meet green challenges: Big
+   Lotsofanalystsandtradersininvestmentinstitutionshave                                 datatowardgreenapplications,’’IEEESyst.J.,vol.10,no.3,pp.888–900,
+conducted in-depth analysis to develop trading strategies.                              Sep.2016.
+
+
+32070                                                                                                                                                                                                                                                                                  VOLUME 7, 2019
+Y.-C. Tsai et al.: Assessing the Profitability of TORB on Index Futures Markets
+
+
+
+
+ [2]J. Wu, S. Guo, H. Huang, W. Liu, and Y. Xiang, ‘‘Information and com-                       YI-CHENG TSAI received the bachelor’s and master’s degrees from the
+      municationstechnologiesforsustainabledevelopmentgoals:State-of-the-                       Department of Electrical Engineering, National Taiwan University, Taipei,
+      art,needsandperspectives,’’IEEECommun.SurveysTuts.,vol.20,no.3,                           Taiwan, in 2004 and 2006, respectively, where he is currently pursuing
+      pp.2389–2406,3rdQuart.,2018.                                                              the Ph.D. degree. His research interests include computational ﬁnance, risk
+ [3]F. Provost and T. Fawcet,     Data Science and its Relationship to Big Data                 management,investmentbehavior,andﬁnancialdataanalysis.
+      and Data-Driven Decision Making. New Rochelle, NY, USA: Mary Ann                          MU-ENWU receivedthebachelor’sdegreefromtheDepartmentofMathe-
+      Liebert,2013.                                                                             matics,NationalTsing-HuaUniversity,Taiwan,in2002,themaster’sdegree
+ [4]D. Vezeris, C. Schinas, and G. Papaschinopoulos, ‘‘Proﬁtability edge by                     from the Department of Applied Mathematics, National Chiao Tung Uni-
+      dynamic back testing optimal period selection for technical parameters                    versity, in 2014, and the Ph.D. degree from the Department of Computer
+      optimization,intradingsystemswithforecasting,’’Comput.Econ.,vol.51,                       Science,NationalTsing-HuaUniversity,in2009.HeiscurrentlyanAssistant
+      no.4,pp.761–807,2018.                                                                     Professor with the Department of Information and Finance Management,
+ [5]S. Schulmeister, ‘‘Proﬁtability of technical stock trading: Has it moved                    National Taipei University of Technology, Taipei, Taiwan. He has authored
+      from  daily  to  intraday  data?’’  Rev.  Financial  Econ.,  vol.  18,  no.  4,           or co-authored over 50 papers in referred journals and conferences in the
+      pp.190–201,2009.                                                                          area of information security, cryptography, and ﬁnancial data analysis. His
+ [6]W.Brock,J.Lakonishok,andB.LeBaron,‘‘Simpletechnicaltradingrules                             research interests include cryptography, money management, and ﬁnancial
+      and the stochastic properties of stock returns,’’ J. Finance, vol. 47, no. 5,             dataanalysis.
+      pp.1731–1764,1992.
+ [7]E.BoehmerandE.K.Kelley,‘‘Institutionalinvestorsandtheinformational                          JIA-HAO SYU iscurrentlypursuingthebachelor’sdegreewiththeDepart-
+      efﬁciency of prices,’’ Rev. Financial Stud., vol. 22, no. 9, pp. 3563–3594,               ment of Computer Science and Information Engineering, National Taiwan
+      2009.                                                                                     University,Taipei,Taiwan.Heisgoingtoenterthemaster’sprogramofthe
+ [8]J. Y. Campbell, T. Ramadorai, and A. Schwartz, ‘‘Caught on tape: Insti-                     Department of Computer Science and Information Engineering, National
+      tutionaltrading,stockreturns,andearningsannouncements,’’J.Financial                       Taiwan University, in 2019. His research interests include ﬁnancial data
+      Econ.,vol.92,no.1,pp.66–91,2009.                                                          analysis,computationalﬁnance,investmentbehavior,anddatascience.
+ [9]C.-C. Chang, P.-F. Hsieh, and H.-N. Lai, ‘‘Do informed option investors
+      predictstockreturns?Evidencefromthetaiwanstockexchange,’’J.Bank-                          CHIN-LAUNG LEI received the B.S. degree in electrical engineering from
+      ingFinance,vol.33,no.4,pp.757–764,2009.                                                   National Taiwan University, Taipei, in 1980, and the Ph.D. degree in com-
+[10]A. Boulatov, T. Hendershott, and D. Livdan, ‘‘Informed trading and port-                    putersciencefromTheUniversityofTexasatAustin,in1986.From1986to
+      folioreturns,’’Rev.Econ.Stud.,vol.80,no.1,pp.35–72,2013.                                  1988,hewasanAssistantProfessorwiththeComputerandInformationSci-
+[11]T. Hendershott, D. Livdan, and N. Schürhoff, ‘‘Are institutions informed                    enceDepartment,TheOhioStateUniversity,Columbus,OH,USA.In1988,
+      aboutnews?’’J.FinancialEcon.,vol.117,no.2,pp.249–287,2015.                                he joined the faculty of the Department of Electrical Engineering, National
+[12]Y.-C.   Tsai,   C.-L.   Lei,   W.   Cheung,   C.-S.   Wu,   J.-M.   Ho,   and               TaiwanUniversity,whereheiscurrentlyaProfessor.Hehaspublishedmore
+      C.-J. Wang, ‘‘Exploring the persistent behavior of ﬁnancial markets,’’                    than250technicalarticlesinscientiﬁcjournalsandconferenceproceedings.
+      FinanceRes.Lett.,vol.24,pp.199–220,2018.                                                  Hiscurrentresearchinterestsincludeinformationsecurity,cloudcomputing,
+[13]C.-H. Park and S. H. Irwin, ‘‘What do we know about the proﬁtability of                     and data science. He is a co-winner of the ﬁrst IEEE LICS Test-of-Time
+      technicalanalysis?’’J.Econ.Surv.,vol.21,no.4,pp.786–826,2007.                             Award.
+[14]B.S.Alhashel,F.W.Almudhaf,andJ.A.Hansz,‘‘Cantechnicalanalysis
+      generate superior returns in securitized property markets? evidence from                  CHUNG-SHU WU hasbeenthePresidentoftheChung-HuaInstitutionfor
+      eastasiamarkets,’’Paciﬁc-BasinFinanceJ.,vol.47,pp.92–108,2018.                            Economic Research, since 2011. He is also an Adjunct Research Fellow of
+[15]Y. Zhu and G. Zhou, ‘‘Technical analysis: An asset allocation perspec-                      the Institute of Economics, Academia Sinica, and an Adjunct Professor of
+      tive on the use of moving averages,’’ J. Financial Econ., vol. 92, no. 3,                 theDepartmentofEconomics,NationalTaiwanUniversity.
+      pp.519–544,2009.                                                                          JAN-MING HO received the B.S. degree in electrical engineering from
+[16]C.J.Neely,P.A.Weller,andJ.M.Ulrich,‘‘Theadaptivemarketshypoth-                              NationalChengKungUniversity,in1978,theM.S.degreefromtheInstitute
+      esis: Evidence from the foreign exchange market,’’ J. Financial Quant.                    of Electronics, National Chiao Tung University, in 1980, and the Ph.D.
+      Anal.,vol.44,no.2,pp.467–488,2009.                                                        degree in electrical engineering and computer science from Northwestern
+[17]A. W. Lo, ‘‘The adaptive markets hypothesis: Market efﬁciency from an                       University,in1989.HejoinedtheInstituteofInformationScience,Academia
+      evolutionaryperspective,’’J.PortfolioManage.,vol.30,no.5,pp.15–29,                        Sinica, as an Associate Research Fellow, in 1989, and was promoted to
+      2004.                                                                                     ResearchFellow,in1994,whereheservedasaDeputyDirectoroftheInsti-
+[18]A. C. Szakmary, S. Qia, and S. C. Sharma, ‘‘Trend-following trading                         tute,from2000to2003.From2004to2006,hewastheDirectorGeneralof
+      strategiesincommodityfutures:Are-examination,’’ J. Banking, Finance,                      theDivisionofPlanningandEvaluation,NationalScienceCouncil.Hevis-
+      vol.34,no.2,pp.409–426,2010.                                                              itedtheIBMsT.J.WatsonResearchCenter,in1987and1988,theLeonardo
+[19]M.  I.  Ahmad,  W.  Ghohui,  M.  Hasan,  A.  Sattar,  M.  Ahmad,  and                       FibonacciInstitutefortheFoundationsofComputerScience,Italy,in1992,
+      R.U.Rehman,‘‘Performanceofmovingaverageinvestmenttimingstrat-                             andtheDagstuhlSeminaronAppliedCombinatorialMethodsinVLSI/CAD,
+      egy in UK stock market: Individual stocks versus portfolios,’’ J. Econ.                   Germany, in 1993. His research interests include the integration of theory
+      SocialStud.,vol.7,no.2,pp.5–21,2018.
+[20]T. Crabel,       Day Trading With Short Term Price Patterns Opening Range                   andapplications,includingcombinatorialoptimization,informationretrieval
+      Breakout.Madison,WI,USA:TradersPress,1990.                                                and extraction, multimedia network protocols, bioinformatics, and digital
+[21]M. E. Cekirdekci, ‘‘Trading system development: Trading the opening                         library and archive technologies. He also published results in the ﬁeld of
+      rangebreakouts,’’Ph.D.dissertation,WorcesterPolytech.Inst.,Worcester,                     VLSI/CAD physical design. He has served as a Board Member for several
+      MA,USA,2010.                                                                              NPOs, including the Institute of Information and Computing Machinery
+[22]M. Borda, I. Nistor, and M. Gherman, ‘‘Opening range trading strategies                     (IICM), the Frontier Foundation, Taiwan, the Y.T. Lee Foundation Science
+      apliedondailyandintradaydata:Thecaseofbetindex,’’Rev.Econ.Stud.                           Education,andtheWuSanLienFoundationonTaiwaneseHistory.Heserved
+      Res.VirgilMadgearu,vol.4,no.2,pp.79–96,2011.                                              as the President of the Software Liberty Association Taiwan, from 2004 to
+[23]U. Holmberg and C. Lönnbark, and C. Lundström, ‘‘Assessing the prof-                        2008,andthePresidentofIICM,from2007to2009.
+      itabilityofintradayopeningrangebreakoutstrategies,’’FinanceRes.Lett.,                     CHUAN-JU  WANG  received  the  Ph.D.  degree  in  computer  science
+      vol.10,no.1,pp.27–33,2013.                                                                and information engineering from National Taiwan University, in 2011.
+[24]W. Cheung, K. S. Lam, and H. Yeung, ‘‘Intertemporal proﬁtability and                        Before joining the Research Center of Information Technology Innovation,
+      the stability of technical analysis: Evidences from the hong kong stock                   Academia Sinica, as an Assistant Research Fellow, in 2016, she was an
+      exchange,’’Appl.Econ.,vol.43,no.15,pp.1945–1963,2011.                                     Associate Professor with the University of Taipei, Taiwan. Her research
+[25]C. Lundström, ‘‘Day trading returns across volatility states,’’ Dept. Eco-                  interestsincludecomputationalﬁnanceanddataanalytics.
+      nomics,.UmeåUniv.,Umeå,Sweden,Tech.Rep.,2017.
+
+
+
+VOLUME 7, 2019                                                                                                                                                                                                                                           32071
